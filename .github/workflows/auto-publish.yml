@@ -1,7 +1,7 @@
 name: Auto Publish Ultra Content
 on:
   schedule:
-    - cron: '0 9 * * *'  # Tous les jours à 9h UTC (11h heure française)
+    - cron: '0 9 * * *'  # Tous les jours à 9h UTC (11h française)
   workflow_dispatch:  # Permet de déclencher manuellement
 
 jobs:
