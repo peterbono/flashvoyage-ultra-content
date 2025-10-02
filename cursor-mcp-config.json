@@ -1,0 +1,52 @@
+{
+  "mcpServers": {
+    "wordpress": {
+      "command": "node",
+      "args": ["wordpress-mcp-server.js"],
+      "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage",
+      "env": {
+        "WORDPRESS_URL": "https://flashvoyage.com/",
+        "WORDPRESS_USERNAME": "admin7817",
+        "WORDPRESS_APP_PASSWORD": "GjLl 9W0k lKwf LSOT PXur RYGR"
+      }
+    },
+    "flashvoyages-content-generator": {
+      "command": "node",
+      "args": ["flashvoyages-content-generator.js"],
+      "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage",
+      "env": {
+        "WORDPRESS_URL": "https://flashvoyage.com/",
+        "WORDPRESS_USERNAME": "admin7817",
+        "WORDPRESS_APP_PASSWORD": "GjLl 9W0k lKwf LSOT PXur RYGR"
+      }
+    },
+    "flashvoyages-rss-monitor": {
+      "command": "node",
+      "args": ["flashvoyages-rss-monitor.js"],
+      "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage"
+    },
+    "flashvoyages-affiliate-manager": {
+      "command": "node",
+      "args": ["flashvoyages-affiliate-manager.js"],
+      "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage",
+      "env": {
+        "SKYSCANNER_AFFILIATE_ID": "",
+        "BOOKING_AFFILIATE_ID": "",
+        "GETYOURGUIDE_AFFILIATE_ID": "",
+        "KIWI_AFFILIATE_ID": "",
+        "AIRBNB_AFFILIATE_ID": ""
+      }
+    },
+    "flashvoyages-orchestrator": {
+      "command": "node",
+      "args": ["flashvoyages-orchestrator.js"],
+      "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage",
+      "env": {
+        "WORDPRESS_URL": "https://flashvoyage.com/",
+        "WORDPRESS_USERNAME": "admin7817",
+        "WORDPRESS_APP_PASSWORD": "GjLl 9W0k lKwf LSOT PXur RYGR"
+      }
+    }
+  }
+}
+
