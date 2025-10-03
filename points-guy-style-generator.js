@@ -5,10 +5,16 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const WORDPRESS_URL = process.env.WORDPRESS_URL || 'https://flashvoyage.com/';
-const WORDPRESS_USERNAME = process.env.WORDPRESS_USERNAME || 'admin7817';
-const WORDPRESS_APP_PASSWORD = process.env.WORDPRESS_APP_PASSWORD || 'GjLl 9W0k lKwf LSOT PXur RYGR';
-const PEXELS_API_KEY = process.env.PEXELS_API_KEY || 'qNCjwU6WA9168C8204HQ4V1sD8FsWtAyb6dfIrI0LRNRU9ntfMkhevmA';
+const WORDPRESS_URL = process.env.WORDPRESS_URL;
+const WORDPRESS_USERNAME = process.env.WORDPRESS_USERNAME;
+const WORDPRESS_APP_PASSWORD = process.env.WORDPRESS_APP_PASSWORD;
+const PEXELS_API_KEY = process.env.PEXELS_API_KEY;
+
+// Vérification des variables d'environnement requises
+if (!WORDPRESS_URL || !WORDPRESS_USERNAME || !WORDPRESS_APP_PASSWORD || !PEXELS_API_KEY) {
+  console.error('❌ Variables d\'environnement manquantes. Vérifiez votre fichier .env');
+  process.exit(1);
+}
 
 class PointsGuyStyleGenerator {
   constructor() {

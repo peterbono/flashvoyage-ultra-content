@@ -26,12 +26,12 @@ git push -u origin main
 2. Cliquer "New repository secret"
 3. Ajouter ces secrets :
 
-| Nom du Secret | Valeur |
-|---------------|--------|
-| `WORDPRESS_URL` | `https://flashvoyage.com/` |
-| `WORDPRESS_USERNAME` | `admin7817` |
-| `WORDPRESS_APP_PASSWORD` | `GjLl 9W0k lKwf LSOT PXur RYGR` |
-| `PEXELS_API_KEY` | `qNCjwU6WA9168C8204HQ4V1sD8FsWtAyb6dfIrI0LRNRU9ntfMkhevmA` |
+| Nom du Secret | Description | Comment obtenir |
+|---------------|-------------|-----------------|
+| `WORDPRESS_URL` | URL de votre site WordPress | `https://votre-site.com/` |
+| `WORDPRESS_USERNAME` | Nom d'utilisateur WordPress | Votre nom d'utilisateur admin |
+| `WORDPRESS_APP_PASSWORD` | Mot de passe d'application | Générer dans WordPress > Profil > Applications |
+| `PEXELS_API_KEY` | Clé API Pexels | Inscription gratuite sur pexels.com/api |
 
 ### 4. **Activer GitHub Actions**
 1. Aller dans l'onglet "Actions"

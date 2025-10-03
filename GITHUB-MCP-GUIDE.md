@@ -78,10 +78,10 @@ Une fois le MCP server configuré, vous pouvez utiliser ces outils dans Cursor :
   "arguments": {
     "repository": "votre-username/flashvoyage-ultra-content",
     "secrets": {
-      "WORDPRESS_URL": "https://flashvoyage.com/",
-      "WORDPRESS_USERNAME": "admin7817",
-      "WORDPRESS_APP_PASSWORD": "GjLl 9W0k lKwf LSOT PXur RYGR",
-      "PEXELS_API_KEY": "qNCjwU6WA9168C8204HQ4V1sD8FsWtAyb6dfIrI0LRNRU9ntfMkhevmA"
+      "WORDPRESS_URL": "https://votre-site.com/",
+      "WORDPRESS_USERNAME": "votre_username",
+      "WORDPRESS_APP_PASSWORD": "votre_app_password",
+      "PEXELS_API_KEY": "votre_pexels_api_key"
     }
   }
 }

@@ -5,9 +5,9 @@
       "args": ["wordpress-mcp-server.js"],
       "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage",
       "env": {
-        "WORDPRESS_URL": "https://flashvoyage.com/",
-        "WORDPRESS_USERNAME": "admin7817",
-        "WORDPRESS_APP_PASSWORD": "GjLl 9W0k lKwf LSOT PXur RYGR"
+        "WORDPRESS_URL": "${WORDPRESS_URL}",
+        "WORDPRESS_USERNAME": "${WORDPRESS_USERNAME}",
+        "WORDPRESS_APP_PASSWORD": "${WORDPRESS_APP_PASSWORD}"
       }
     },
     "flashvoyages-content-generator": {
@@ -15,9 +15,9 @@
       "args": ["flashvoyages-content-generator.js"],
       "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage",
       "env": {
-        "WORDPRESS_URL": "https://flashvoyage.com/",
-        "WORDPRESS_USERNAME": "admin7817",
-        "WORDPRESS_APP_PASSWORD": "GjLl 9W0k lKwf LSOT PXur RYGR"
+        "WORDPRESS_URL": "${WORDPRESS_URL}",
+        "WORDPRESS_USERNAME": "${WORDPRESS_USERNAME}",
+        "WORDPRESS_APP_PASSWORD": "${WORDPRESS_APP_PASSWORD}"
       }
     },
     "flashvoyages-rss-monitor": {
@@ -42,9 +42,9 @@
       "args": ["flashvoyages-orchestrator.js"],
       "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage",
       "env": {
-        "WORDPRESS_URL": "https://flashvoyage.com/",
-        "WORDPRESS_USERNAME": "admin7817",
-        "WORDPRESS_APP_PASSWORD": "GjLl 9W0k lKwf LSOT PXur RYGR"
+        "WORDPRESS_URL": "${WORDPRESS_URL}",
+        "WORDPRESS_USERNAME": "${WORDPRESS_USERNAME}",
+        "WORDPRESS_APP_PASSWORD": "${WORDPRESS_APP_PASSWORD}"
       }
     },
     "github": {
