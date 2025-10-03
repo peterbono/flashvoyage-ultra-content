@@ -62,9 +62,15 @@ class UltraFreshComplete {
     try {
       console.log('🔍 Scraping Reddit r/travel...');
       
+      // Délai pour respecter les rate limits Reddit
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       const response = await axios.get(ALTERNATIVE_SOURCES.reddit.url, {
-        headers: { 'User-Agent': this.userAgent },
-        timeout: 10000
+        headers: { 
+          'User-Agent': 'FlashVoyagesBot/1.0 (Travel Content Generator; +https://flashvoyage.com)',
+          'Accept': 'application/json'
+        },
+        timeout: 15000
       });
 
       const posts = response.data.data?.children || [];
