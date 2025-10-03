@@ -18,9 +18,12 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
           
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm cache clean --force
+          npm install
         
       - name: Start RSS Server
         run: |
