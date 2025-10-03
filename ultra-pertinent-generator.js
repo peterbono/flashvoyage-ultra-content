@@ -31,6 +31,90 @@ const AIRPORT_CODES = {
 class UltraPertinentGenerator {
   constructor() {
     this.flightAPIs = new FlightDataAPIs();
+    this.publishedArticles = new Set(); // Cache des articles déjà publiés
+  }
+
+  async loadPublishedArticles() {
+    try {
+      console.log('📚 Chargement des articles déjà publiés...');
+      const response = await axios.get(`${WORDPRESS_URL}/wp-json/wp/v2/posts?per_page=100&status=publish`, {
+        auth: {
+          username: WORDPRESS_USERNAME,
+          password: WORDPRESS_APP_PASSWORD
+        }
+      });
+      
+      // Extraire les titres des articles existants (français et potentiellement anglais)
+      response.data.forEach(post => {
+        const title = post.title.rendered.toLowerCase().trim();
+        this.publishedArticles.add(title);
+        
+        // Essayer de détecter si c'est un titre traduit et ajouter la version anglaise potentielle
+        if (title.includes('coree') || title.includes('chine') || title.includes('japon')) {
+          // C'est probablement un titre traduit, on peut essayer de deviner l'original
+          const englishGuess = title
+            .replace(/coree/gi, 'korea')
+            .replace(/chine/gi, 'china')
+            .replace(/japon/gi, 'japan')
+            .replace(/vols/gi, 'flights')
+            .replace(/voyage/gi, 'travel');
+          this.publishedArticles.add(englishGuess);
+        }
+      });
+      
+      console.log(`✅ ${this.publishedArticles.size} articles déjà publiés chargés`);
+    } catch (error) {
+      console.warn('⚠️ Impossible de charger les articles existants:', error.message);
+    }
+  }
+
+  isArticleAlreadyPublished(title) {
+    const normalizedTitle = title.toLowerCase().trim();
+    return this.publishedArticles.has(normalizedTitle);
+  }
+
+  generateFOMOTitle(originalTitle, destination, articleType) {
+    const destinationFrench = destination === 'china' ? 'Chine' :
+                             destination === 'korea' ? 'Corée du Sud' :
+                             destination === 'japan' ? 'Japon' :
+                             destination === 'vietnam' ? 'Vietnam' :
+                             destination === 'thailand' ? 'Thaïlande' :
+                             destination === 'singapore' ? 'Singapour' :
+                             destination === 'malaysia' ? 'Malaisie' :
+                             destination === 'indonesia' ? 'Indonésie' :
+                             destination === 'philippines' ? 'Philippines' :
+                             destination === 'taiwan' ? 'Taïwan' :
+                             destination === 'hong kong' ? 'Hong Kong' :
+                             destination;
+
+    const fomoTemplates = {
+      'transport': [
+        `🚨 URGENT : Nouveaux vols vers ${destinationFrench} - Prix en chute libre !`,
+        `✈️ ${destinationFrench} : Vols directs rétablis - Réservez MAINTENANT !`,
+        `🔥 OFFRE LIMITÉE : Vols ${destinationFrench} à prix cassés !`,
+        `⚡ ${destinationFrench} : Compagnies aériennes en guerre des prix !`,
+        `🎯 ${destinationFrench} : Vols directs confirmés - Ne ratez pas ça !`
+      ],
+      'formalités': [
+        `🎉 RÉVOLUTION : ${destinationFrench} simplifie les visas !`,
+        `🚀 ${destinationFrench} : Visa gratuit pour les Français !`,
+        `⚡ URGENT : Nouvelles règles visa ${destinationFrench} !`,
+        `🔥 ${destinationFrench} : Formalités réduites de 50% !`,
+        `🎯 ${destinationFrench} : Visa express en 24h !`
+      ],
+      'actualité': [
+        `🚨 ${destinationFrench} : Changement MAJEUR pour les voyageurs !`,
+        `⚡ URGENT : ${destinationFrench} modifie ses règles !`,
+        `🔥 ${destinationFrench} : Nouvelle réglementation en vigueur !`,
+        `🎯 ${destinationFrench} : Décision qui change tout !`,
+        `🚀 ${destinationFrench} : Révolution pour le tourisme !`
+      ]
+    };
+
+    const templates = fomoTemplates[articleType] || fomoTemplates['actualité'];
+    const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
+    
+    return randomTemplate;
   }
 
   async callRSSMonitorMCP(method, params) {
@@ -463,6 +547,9 @@ class UltraPertinentGenerator {
     console.log('🚀 Génération d\'un article ultra-pertinent FlashVoyages\n');
 
     try {
+      // 0. Charger les articles déjà publiés pour éviter les doublons
+      await this.loadPublishedArticles();
+
       // 1. Récupérer toutes les actualités RSS
       console.log('🔍 Récupération de toutes les actualités RSS...');
       const allRssArticles = await this.callRSSMonitorMCP('monitor_feeds', { feedType: 'all' });
@@ -475,6 +562,12 @@ class UltraPertinentGenerator {
 
       for (const article of allRssArticles) {
         try {
+          // Vérifier si l'article n'a pas déjà été publié (vérifier seulement le titre original pour éviter les limites de traduction)
+          if (this.isArticleAlreadyPublished(article.title)) {
+            console.log(`⏭️ Article déjà publié ignoré: ${article.title.substring(0, 50)}...`);
+            continue;
+          }
+
           // Simulation du scoring pour les données de test
           const isFlightNews = article.title.toLowerCase().includes('flight');
           const isVisaNews = article.title.toLowerCase().includes('visa');
@@ -557,24 +650,12 @@ class UltraPertinentGenerator {
       console.log('🧠 Génération de l\'analyse ultra-pertinente...');
       const ultraAnalysis = await this.generateUltraPertinentAnalysis(bestArticle, bestArticle.title, bestArticle.destination);
       
-      // 5. Créer le contenu final
-      const destinationFrench = bestArticle.destination === 'china' ? 'Chine' : 
-                               bestArticle.destination === 'korea' ? 'Corée du Sud' :
-                               bestArticle.destination === 'japan' ? 'Japon' :
-                               bestArticle.destination === 'vietnam' ? 'Vietnam' :
-                               bestArticle.destination === 'thailand' ? 'Thaïlande' :
-                               bestArticle.destination === 'singapore' ? 'Singapour' :
-                               bestArticle.destination === 'malaysia' ? 'Malaisie' :
-                               bestArticle.destination === 'indonesia' ? 'Indonésie' :
-                               bestArticle.destination === 'philippines' ? 'Philippines' :
-                               bestArticle.destination === 'taiwan' ? 'Taïwan' :
-                               bestArticle.destination === 'hong kong' ? 'Hong Kong' :
-                               bestArticle.destination;
+      // 5. Créer le contenu final avec titre FOMO
+      const fomoTitle = this.generateFOMOTitle(bestArticle.title, bestArticle.destination, bestArticle.articleType);
+      console.log(`🎯 Titre FOMO généré: ${fomoTitle}\n`);
 
-      // Traduction avec Google Translate
+      // Traduction avec Google Translate pour le contenu
       const translatedTitle = await translate(bestArticle.title, { to: 'fr' }).then(res => res.text);
-      
-      const fullFrenchTitle = `🌏 ${destinationFrench} : ${translatedTitle}`;
 
       const finalContent = `
 <p><strong>📰 Actualité :</strong> ${translatedTitle}</p>
@@ -608,7 +689,7 @@ ${ultraAnalysis}
       const tagIds = await this.getOrCreateTags(['actualite', 'voyage', bestArticle.destination, bestArticle.articleType, 'strategique', 'ultra-pertinent', 'donnees-reelles']);
 
       const articleResponse = await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts`, {
-        title: fullFrenchTitle,
+        title: fomoTitle,
         content: finalContent,
         status: 'publish',
         categories: [categoryId],
@@ -620,6 +701,9 @@ ${ultraAnalysis}
           password: WORDPRESS_APP_PASSWORD
         }
       });
+
+      // Ajouter l'article au cache des articles publiés
+      this.publishedArticles.add(bestArticle.title.toLowerCase().trim());
 
       console.log('🎉 Article ultra-pertinent publié avec succès !');
       console.log(`🔗 URL: ${articleResponse.data.link}`);
