@@ -34,8 +34,8 @@ jobs:
           AMADEUS_CLIENT_ID: ${{ secrets.AMADEUS_CLIENT_ID }}
           AMADEUS_CLIENT_SECRET: ${{ secrets.AMADEUS_CLIENT_SECRET }}
           
-      - name: Generate and Publish Ultra Pertinent Content
-        run: node ultra-pertinent-generator.js
+      - name: Generate and Publish Ultra Strategic Content
+        run: node ultra-strategic-generator.js
         env:
           WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
           WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
@@ -47,7 +47,7 @@ jobs:
       - name: Notify Success
         if: success()
         run: |
-          echo "✅ Article ultra-pertinent publié avec succès !"
+          echo "✅ Article ultra-stratégique publié avec succès !"
           echo "📅 Date: $(date)"
           echo "🌏 FlashVoyages - Votre spécialiste du voyage en Asie"
           echo "✈️ Données Amadeus intégrées"
