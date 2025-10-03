@@ -92,3 +92,16 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Screenshots and debug files
+.cursor/screenshots/
+*.png
+*.jpg
+*.jpeg
+
+# Analysis and cleanup scripts
+analyze-*.js
+cleanup-*.js
+fix-*.js
+test-*.js
+debug-*.js

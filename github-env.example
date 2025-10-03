@@ -1,9 +1,0 @@
-# Configuration GitHub pour l'automatisation
-GITHUB_TOKEN=your_github_token_here
-GITHUB_USERNAME=your_github_username
-
-# Instructions pour obtenir le token GitHub:
-# 1. Aller sur https://github.com/settings/tokens
-# 2. Cliquer "Generate new token" > "Generate new token (classic)"
-# 3. Sélectionner les scopes: repo, workflow, admin:org
-# 4. Copier le token et le coller ici
