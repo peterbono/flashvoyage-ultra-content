@@ -12,6 +12,7 @@ yarn-error.log*
 .env.production.local
 
 # Logs
+logs
 *.log
 daily_content_log.log
 
@@ -71,9 +72,6 @@ jspm_packages/
 # TernJS port file
 .tern-port
 
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
-
 # OS generated files
 .DS_Store
 .DS_Store?
@@ -88,20 +86,25 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+*~
 
 # Temporary files
 *.tmp
 *.temp
 
-# Screenshots and debug files
-.cursor/screenshots/
+# Screenshots
+screenshots/
 *.png
 *.jpg
 *.jpeg
 
-# Analysis and cleanup scripts
-analyze-*.js
-cleanup-*.js
-fix-*.js
-test-*.js
-debug-*.js
+# Debug files
+debug-*
+test-*
+analyze-*
+fix-*
+cleanup-*
+verify-*
+check-*
+setup-*
+configure-*
