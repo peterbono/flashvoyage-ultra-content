@@ -1,0 +1,64 @@
+name: Auto Publish Ultra Content with Reddit
+on:
+  schedule:
+    - cron: '0 9 * * *'  # Tous les jours à 9h UTC (11h française)
+  workflow_dispatch:  # Permet de déclencher manuellement
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    name: Generate and Publish Ultra Content with Reddit
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Start Reddit Enhanced Content Generator
+        run: |
+          node reddit-enhanced-content-generator.js &
+          sleep 5
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          
+      - name: Test Reddit Integration
+        run: node test-reddit-integration.js
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          
+      - name: Publish Content with Reddit
+        run: node reddit-enhanced-auto-publisher.js
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          
+      - name: Notify Success
+        if: success()
+        run: |
+          echo "✅ Contenu ultra-spécialisé avec Reddit publié avec succès !"
+          echo "📅 Date: $(date)"
+          echo "🌏 FlashVoyages - Votre spécialiste du voyage en Asie"
+          echo "🔗 Contenu basé sur de vrais conseils d'expats Reddit"
+          
+      - name: Notify Failure
+        if: failure()
+        run: |
+          echo "❌ Erreur lors de la publication du contenu Reddit"
+          echo "📅 Date: $(date)"
+          echo "🔍 Vérifiez les logs pour plus de détails"

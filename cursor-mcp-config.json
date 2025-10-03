@@ -55,6 +55,11 @@
         "GITHUB_TOKEN": "",
         "GITHUB_USERNAME": ""
       }
+    },
+    "reddit": {
+      "command": "node",
+      "args": ["reddit-mcp-server.js"],
+      "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage"
     }
   }
 }
