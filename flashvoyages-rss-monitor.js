@@ -28,26 +28,52 @@ class FlashVoyagesRSSMonitor {
     );
 
     // Sources RSS pour l'Asie et le voyage
+        // Sources RSS vérifiées et fonctionnelles
     this.rssFeeds = {
-      'airlines': [
-        'https://www.airfrance.fr/rss/actualites',
-        'https://www.singaporeair.com/rss/news',
-        'https://www.cathaypacific.com/rss/news'
+      'travel_news': [
+        'http://rss.cnn.com/rss/edition_travel.rss',
+        'https://skift.com/feed/'
       ],
-      'tourism_boards': [
-        'https://www.tourismthailand.org/rss/news',
-        'https://www.jnto.go.jp/rss/news',
-        'https://www.vietnam.travel/rss/news'
-      ],
-      'travel_deals': [
-        'https://www.skyscanner.fr/rss/deals',
-        'https://www.kayak.fr/rss/deals',
-        'https://www.momondo.fr/rss/deals'
-      ],
-      'visa_immigration': [
-        'https://www.diplomatie.gouv.fr/rss/actualites',
-        'https://www.service-public.fr/rss/actualites'
+      'asia_news': [
+        'https://news.google.com/rss/search?q=travel+asia&hl=en&gl=US&ceid=US:en',
+        'https://news.google.com/rss/search?q=travel+japan&hl=en&gl=US&ceid=US:en',
+        'https://news.google.com/rss/search?q=travel+thailand&hl=en&gl=US&ceid=US:en',
+        'https://news.google.com/rss/search?q=travel+korea&hl=en&gl=US&ceid=US:en',
+        'https://news.google.com/rss/search?q=travel+singapore&hl=en&gl=US&ceid=US:en',
+        'https://news.google.com/rss/search?q=travel+vietnam&hl=en&gl=US&ceid=US:en',
+        'https://news.google.com/rss/search?q=travel+philippines&hl=en&gl=US&ceid=US:en'
       ]
+    };
+    
+    // Configuration des APIs d'actualité
+    this.newsAPIs = {
+      'newsapi': {
+        baseUrl: 'https://newsapi.org/v2/everything',
+        apiKey: process.env.NEWSAPI_KEY || '',
+        queries: [
+          'travel asia',
+          'japan travel',
+          'thailand travel',
+          'korea travel',
+          'singapore travel',
+          'vietnam travel',
+          'philippines travel'
+        ]
+      },
+      'guardian': {
+        baseUrl: 'https://content.guardianapis.com/search',
+        apiKey: process.env.GUARDIAN_API_KEY || '',
+        queries: [
+          'travel',
+          'asia',
+          'japan',
+          'thailand',
+          'korea',
+          'singapore',
+          'vietnam',
+          'philippines'
+        ]
+      }
     };
 
     this.setupHandlers();

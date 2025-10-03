@@ -13,16 +13,24 @@
     "build": "vercel build",
     "deploy": "vercel --prod"
   },
-  "keywords": ["flashvoyage", "content", "automation", "travel", "asia"],
+  "keywords": [
+    "flashvoyage",
+    "content",
+    "automation",
+    "travel",
+    "asia"
+  ],
   "author": "FlashVoyages",
   "license": "ISC",
   "description": "Système de génération de contenu ultra-spécialisé pour FlashVoyages",
   "dependencies": {
+    "@vitalets/google-translate-api": "^9.2.1",
     "axios": "^1.7.2",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
     "@vercel/node": "^3.0.0"
