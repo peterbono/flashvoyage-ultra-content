@@ -555,7 +555,7 @@ class UltraFreshComplete {
         }
       }
 
-      console.log('❌ Tous les proxies Reddit ont échoué');
+      console.log('⚠️ Reddit bloqué - Utilisation des sources alternatives uniquement');
       return [];
     } catch (error) {
       console.error('❌ Erreur Reddit Proxy:', error.message);
