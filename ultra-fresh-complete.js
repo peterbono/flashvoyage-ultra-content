@@ -161,36 +161,6 @@ const REDDIT_PROXY_SERVICES = [
   }
 ];
 
-// Articles de fallback si aucune source ne fonctionne
-const FALLBACK_ARTICLES = [
-  {
-    title: "Vietnam vs Indonésie : Le match novembre 2025 pour nomades",
-    content: "Comparaison détaillée des coûts, visa, météo et qualité de vie entre Vietnam et Indonésie pour les digital nomades en novembre 2025.",
-    link: "https://flashvoyage.com/vietnam-vs-indonesie-novembre-2025",
-    source: "FlashVoyages Editorial",
-    type: "comparison",
-    relevance: 85,
-    date: new Date().toISOString()
-  },
-  {
-    title: "Guide complet des visas nomades en Asie 2025",
-    content: "Tout ce qu'il faut savoir sur les visas pour digital nomades en Asie : Vietnam, Thaïlande, Singapour, Malaisie et plus.",
-    link: "https://flashvoyage.com/visas-nomades-asie-2025",
-    source: "FlashVoyages Editorial",
-    type: "guide",
-    relevance: 80,
-    date: new Date().toISOString()
-  },
-  {
-    title: "Coût de la vie nomade en Asie : Budget mensuel détaillé",
-    content: "Analyse complète des coûts de vie pour digital nomades en Asie : logement, nourriture, transport, coworking par pays.",
-    link: "https://flashvoyage.com/cout-vie-nomade-asie-2025",
-    source: "FlashVoyages Editorial",
-    type: "budget",
-    relevance: 75,
-    date: new Date().toISOString()
-  }
-];
 
 // Classe principale
 class UltraFreshComplete {
@@ -467,11 +437,9 @@ class UltraFreshComplete {
       const googleNomadArticles = await this.scrapeGoogleNewsNomad();
       allArticles.push(...googleNomadArticles);
 
-      // Si toujours aucun article, utiliser les fallbacks
+      // Si aucune source ne fonctionne, on continue avec 0 articles
       if (allArticles.length === 0) {
-        console.log('🔄 Aucune source ne fonctionne - Utilisation des articles de fallback');
-        const fallbackArticles = this.getFallbackArticles();
-        allArticles.push(...fallbackArticles);
+        console.log('⚠️ Aucune source ne fonctionne - Aucun article généré');
       }
     } else {
       console.log('💻 Mode local - Utilisation de toutes les sources\n');
@@ -668,14 +636,6 @@ class UltraFreshComplete {
     }
   }
 
-  // Utiliser les articles de fallback
-  getFallbackArticles() {
-    console.log('🔄 Utilisation des articles de fallback...');
-    return FALLBACK_ARTICLES.map(article => ({
-      ...article,
-      relevance: this.calculateRelevance(article.title, article.content, ['nomad', 'digital nomad', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore'])
-    }));
-  }
 
   // Détecter si on est sur GitHub Actions
   isGitHubActions() {
