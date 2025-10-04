@@ -7,7 +7,7 @@ import UltraFreshComplete from './ultra-fresh-complete.js';
 import ContentValidator from './content-validator.js';
 import ContentTemplates from './content-templates-fixed.js';
 import NomadePersonaDetector from './nomade-persona-detector.js';
-import NomadeTemplates from './nomade-templates.js';
+// import NomadeTemplates from './nomade-templates.js'; // Supprimé - remplacé par nomade-asia-templates.js
 import NomadeAsiaTemplates from './nomade-asia-templates.js';
 import EnhancedNomadeTemplates from './enhanced-nomade-templates.js';
 import IntelligentArticleFilter from './intelligent-article-filter.js';
@@ -37,7 +37,7 @@ class UltraStrategicGenerator {
     this.validator = new ContentValidator();
     this.templates = new ContentTemplates();
     this.nomadeDetector = new NomadePersonaDetector();
-    this.nomadeTemplates = new NomadeTemplates();
+    // this.nomadeTemplates = new NomadeTemplates(); // Supprimé - remplacé par nomade-asia-templates.js
     this.nomadeAsiaTemplates = new NomadeAsiaTemplates();
     this.enhancedTemplates = new EnhancedNomadeTemplates();
     
@@ -240,7 +240,7 @@ class UltraStrategicGenerator {
       console.log(`🏠 Génération de contenu nomade pour: ${personaDetection.persona}`);
       
       // Utiliser les templates nomades
-      const nomadeContent = this.nomadeTemplates.fillTemplate(personaDetection.persona, article);
+      const nomadeContent = this.nomadeAsiaTemplates.fillTemplate(personaDetection.persona, article);
       
       // Valider le contenu généré
       const validation = this.validator.validateArticle({
