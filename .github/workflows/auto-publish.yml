@@ -23,18 +23,6 @@ jobs:
           npm cache clean --force
           npm install
         
-      - name: Start RSS Server
-        run: |
-          node rss-http-server.js &
-          sleep 10
-        env:
-          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
-          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
-          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
-          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
-          AMADEUS_CLIENT_ID: ${{ secrets.AMADEUS_CLIENT_ID }}
-          AMADEUS_CLIENT_SECRET: ${{ secrets.AMADEUS_CLIENT_SECRET }}
-          
       - name: Generate and Publish Ultra Strategic Content
         run: node ultra-strategic-generator.js
         env:
@@ -44,6 +32,7 @@ jobs:
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           AMADEUS_CLIENT_ID: ${{ secrets.AMADEUS_CLIENT_ID }}
           AMADEUS_CLIENT_SECRET: ${{ secrets.AMADEUS_CLIENT_SECRET }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           
       - name: Notify Success
         if: success()

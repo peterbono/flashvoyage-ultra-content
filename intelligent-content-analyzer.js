@@ -11,6 +11,11 @@ class IntelligentContentAnalyzer {
   // Analyser intelligemment le contenu d'un article
   async analyzeContent(article) {
     try {
+      // Vérifier si la clé API est disponible
+      if (!this.apiKey) {
+        console.log('⚠️ Clé OpenAI non disponible - Utilisation du fallback');
+        return this.getFallbackAnalysis(article);
+      }
       const prompt = `Tu es un expert éditorial pour FlashVoyages.com, spécialisé dans le voyage en Asie.
 
 ARTICLE À ANALYSER:
@@ -72,6 +77,81 @@ Réponds UNIQUEMENT en JSON valide:
       console.error('❌ Erreur analyse intelligente:', error.message);
       return this.getFallbackAnalysis(article);
     }
+  }
+
+  // Analyse de fallback quand OpenAI n'est pas disponible
+  getFallbackAnalysis(article) {
+    console.log('🔄 Utilisation de l\'analyse de fallback...');
+    
+    // Analyse basique basée sur les mots-clés
+    const title = article.title.toLowerCase();
+    const content = (article.content || '').toLowerCase();
+    const text = `${title} ${content}`;
+    
+    // Détection de catégorie
+    let category = 'voyage_general';
+    if (text.includes('nomad') || text.includes('digital nomad') || text.includes('remote work')) {
+      category = 'nomade_asie';
+    } else if (text.includes('visa') || text.includes('residence') || text.includes('fiscal')) {
+      category = 'nomade_asie';
+    } else if (text.includes('coliving') || text.includes('coworking')) {
+      category = 'nomade_asie';
+    }
+    
+    // Détection d'angle
+    let angle = 'informatif';
+    if (text.includes('comparaison') || text.includes('vs') || text.includes('match')) {
+      angle = 'comparatif';
+    } else if (text.includes('guide') || text.includes('comment') || text.includes('tutorial')) {
+      angle = 'pratique';
+    }
+    
+    // Recommandation
+    let recommendation = 'template_fixe';
+    if (category === 'nomade_asie' && text.includes('visa')) {
+      recommendation = 'llm_generation';
+    }
+    
+    return {
+      category,
+      angle,
+      audience: 'Digital nomades et voyageurs Asie',
+      keywords: this.extractKeywords(text),
+      cta: 'Découvrez nos guides nomades Asie',
+      destinations: this.extractDestinations(text),
+      recommendation,
+      confidence: 0.6,
+      reason: 'Analyse de fallback basée sur les mots-clés'
+    };
+  }
+
+  // Extraire les mots-clés du texte
+  extractKeywords(text) {
+    const keywords = [];
+    const nomadKeywords = ['nomad', 'digital nomad', 'remote work', 'coliving', 'coworking', 'visa', 'residence', 'fiscal'];
+    const asiaKeywords = ['asia', 'asie', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia'];
+    
+    nomadKeywords.forEach(keyword => {
+      if (text.includes(keyword)) keywords.push(keyword);
+    });
+    
+    asiaKeywords.forEach(keyword => {
+      if (text.includes(keyword)) keywords.push(keyword);
+    });
+    
+    return keywords.slice(0, 5); // Max 5 mots-clés
+  }
+
+  // Extraire les destinations du texte
+  extractDestinations(text) {
+    const destinations = [];
+    const asiaCountries = ['vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong'];
+    
+    asiaCountries.forEach(country => {
+      if (text.includes(country)) destinations.push(country);
+    });
+    
+    return destinations.length > 0 ? destinations.join(', ') : 'Asie';
   }
 
   // Générer du contenu intelligent avec LLM
