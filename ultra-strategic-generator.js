@@ -4,6 +4,15 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 import { translate } from '@vitalets/google-translate-api';
 import UltraFreshComplete from './ultra-fresh-complete.js';
+import ContentValidator from './content-validator.js';
+import ContentTemplates from './content-templates-fixed.js';
+import NomadePersonaDetector from './nomade-persona-detector.js';
+import NomadeTemplates from './nomade-templates.js';
+import NomadeAsiaTemplates from './nomade-asia-templates.js';
+import EnhancedNomadeTemplates from './enhanced-nomade-templates.js';
+import IntelligentArticleFilter from './intelligent-article-filter.js';
+import GenericTemplates from './generic-templates.js';
+import IntelligentContentAnalyzer from './intelligent-content-analyzer.js';
 
 dotenv.config();
 
@@ -25,6 +34,18 @@ class UltraStrategicGenerator {
   constructor() {
     this.scraper = new UltraFreshComplete();
     this.publishedArticles = new Set();
+    this.validator = new ContentValidator();
+    this.templates = new ContentTemplates();
+    this.nomadeDetector = new NomadePersonaDetector();
+    this.nomadeTemplates = new NomadeTemplates();
+    this.nomadeAsiaTemplates = new NomadeAsiaTemplates();
+    this.enhancedTemplates = new EnhancedNomadeTemplates();
+    
+    // Mode intelligent toujours activé
+    this.intelligentFilter = new IntelligentArticleFilter();
+    this.genericTemplates = new GenericTemplates();
+    this.intelligentAnalyzer = new IntelligentContentAnalyzer();
+    console.log('🧠 Mode intelligent activé par défaut');
   }
 
   // Charger les articles déjà publiés
@@ -58,98 +79,244 @@ class UltraStrategicGenerator {
   // Générer un contenu stratégique avec GPT-4
   async generateStrategicContent(article) {
     try {
-      console.log('🧠 Génération de contenu stratégique avec GPT-4...');
+      console.log('🧠 Génération de contenu stratégique intelligente...');
       
-      const prompt = `Tu es un expert en voyage en Asie pour FlashVoyages.com. 
-
-POSITIONNEMENT FLASHVOYAGES:
-- Cible: Voyageurs français passionnés d'Asie (budget moyen à élevé)
-- Ton: Expert, confident, proche (comme Voyage Pirate mais pour l'Asie)
-- Valeur: Expertise + bons plans + économies concrètes
-- Objectif: Conversion et fidélisation
-
-ARTICLE À ANALYSER:
-- Titre: ${article.title}
-- Source: ${article.source}
-- Type: ${article.type}
-- Contenu: ${article.content}
-- Pertinence: ${article.relevance}/100
-
-GÉNÈRE UN ARTICLE STRATÉGIQUE QUI INCLUT:
-
-1. TITRE FOMO OPTIMISÉ:
-- Court, percutant, sans redondance
-- Émoji stratégique (1 seul)
-- Promesse d'économie claire
-- Urgence justifiée
-
-2. CIBLE DÉFINIE:
-- Profil précis du voyageur français
-- Budget et motivations
-- Niveau d'expérience Asie
-
-3. INTÉRÊT ÉCONOMIQUE CONCRET:
-- Économies chiffrées précises
-- Comparaison avant/après
-- ROI du voyage
-- Coûts cachés évités
-
-4. CONTENU STRATÉGIQUE:
-- Expertise FlashVoyages visible
-- Conseils pratiques exclusifs
-- Pièges à éviter
-- Timing optimal
-- Alternatives si indisponible
-
-5. STRUCTURE OPTIMISÉE:
-- Hook percutant
-- Valeur immédiate
-- Preuve sociale
-- Call-to-action fort
-
-RÉPONDS UNIQUEMENT EN JSON:
-{
-  "title": "Titre optimisé",
-  "target_audience": "Cible précise",
-  "economic_value": "Valeur économique chiffrée",
-  "content": "Contenu HTML complet",
-  "cta": "Call-to-action",
-  "expertise_score": "Score d'expertise 1-10"
-}`;
-
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        model: 'gpt-4-turbo',
-        messages: [
-          {
-            role: 'system',
-            content: 'Tu es un expert en rédaction stratégique pour un site de voyage spécialisé Asie. Tu génères du contenu optimisé pour la conversion et la fidélisation.'
-          },
-          {
-            role: 'user',
-            content: prompt
-          }
-        ],
-        max_tokens: 2000,
-        temperature: 0.7
-      }, {
-        headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      const content = response.data.choices[0].message.content;
-      return JSON.parse(content);
+      // Détecter si c'est une question de comparaison Vietnam/Indonésie
+      const isVietnamIndonesiaQuestion = this.isVietnamIndonesiaQuestion(article);
+      
+      if (isVietnamIndonesiaQuestion) {
+        console.log('🌴 Détection question Vietnam vs Indonésie - Utilisation template amélioré');
+        return this.enhancedTemplates.generateComparisonTemplate(article);
+      }
+      
+      // 1. Analyse intelligente avec LLM
+      console.log('🧠 Analyse intelligente du contenu...');
+      const intelligentAnalysis = await this.intelligentAnalyzer.analyzeContent(article);
+      console.log(`📊 Analyse LLM: ${intelligentAnalysis.pertinence}/100`);
+      console.log(`   Catégorie: ${intelligentAnalysis.categorie}`);
+      console.log(`   Angle: ${intelligentAnalysis.angle}`);
+      console.log(`   Recommandation: ${intelligentAnalysis.recommandation}`);
+      console.log(`   Raison: ${intelligentAnalysis.raison}`);
+      
+      // 2. Générer le contenu selon la recommandation
+      if (intelligentAnalysis.recommandation === 'generation_llm') {
+        console.log('🤖 Génération intelligente avec LLM...');
+        return await this.intelligentAnalyzer.generateIntelligentContent(article, intelligentAnalysis);
+      } else {
+        console.log('📝 Utilisation des templates fixes...');
+        return this.generateGenericContent(article, intelligentAnalysis.categorie, intelligentAnalysis);
+      }
 
     } catch (error) {
-      console.warn('⚠️ Erreur GPT-4, utilisation du fallback:', error.message);
+      console.warn('⚠️ Erreur génération intelligente, utilisation du fallback:', error.message);
       return this.generateFallbackContent(article);
     }
   }
 
+  // Détecter si c'est une question de comparaison Vietnam/Indonésie
+  isVietnamIndonesiaQuestion(article) {
+    const text = `${article.title} ${article.content}`.toLowerCase();
+    return text.includes('vietnam') && text.includes('indonesia') && 
+           (text.includes('november') || text.includes('novembre') || text.includes('choosing') || text.includes('choisir'));
+  }
+
+  // Générer du contenu générique avec templates adaptatifs
+  generateGenericContent(article, templateName, relevanceAnalysis) {
+    try {
+      console.log(`📝 Génération de contenu générique avec template: ${templateName}`);
+      
+      // Utiliser les templates génériques
+      const genericContent = this.genericTemplates.fillTemplate(templateName, article);
+      
+      // Valider le contenu généré
+      const validation = this.validator.validateArticle({
+        title: genericContent.title,
+        content: genericContent.content,
+        type: article.type
+      });
+      
+      if (!validation.isValid) {
+        console.warn('⚠️ Erreurs de validation détectées:', validation.errors);
+      }
+      
+      return {
+        title: genericContent.title,
+        target_audience: genericContent.target_audience,
+        ton: genericContent.ton,
+        keywords: genericContent.keywords,
+        cta: genericContent.cta,
+        urgence: genericContent.urgence,
+        destinations: genericContent.destinations,
+        economic_value: this.getGenericEconomicValue(templateName, relevanceAnalysis),
+        content: genericContent.content,
+        expertise_score: this.getGenericExpertiseScore(relevanceAnalysis),
+        validation: validation
+      };
+      
+    } catch (error) {
+      console.warn('⚠️ Erreur génération générique, utilisation du fallback:', error.message);
+      return this.generateFallbackContent(article);
+    }
+  }
+
+  // Obtenir la valeur économique pour les templates génériques
+  getGenericEconomicValue(templateName, relevanceAnalysis) {
+    const economicValues = {
+      'voyage_general': 'Économies potentielles: 200-800€ par voyage',
+      'asie_general': 'Économies potentielles: 300-1000€ par voyage en Asie',
+      'general': 'Information utile pour optimiser vos voyages'
+    };
+    
+    return economicValues[templateName] || 'Information utile pour vos voyages';
+  }
+
+  // Obtenir le score d'expertise pour les templates génériques
+  getGenericExpertiseScore(relevanceAnalysis) {
+    if (relevanceAnalysis.relevancePercentage > 80) return "9/10";
+    if (relevanceAnalysis.relevancePercentage > 60) return "8/10";
+    if (relevanceAnalysis.relevancePercentage > 40) return "7/10";
+    return "6/10";
+  }
+
+  // Générer du contenu nomade Asie avec templates variés
+  generateNomadeAsiaContent(article, templateName, relevanceAnalysis) {
+    try {
+      console.log(`🏠 Génération de contenu nomade Asie avec template: ${templateName}`);
+      
+      // Utiliser les templates nomades Asie variés
+      const nomadeContent = this.nomadeAsiaTemplates.fillTemplate(templateName, article);
+      
+      // Valider le contenu généré
+      const validation = this.validator.validateArticle({
+        title: nomadeContent.title,
+        content: nomadeContent.content,
+        type: article.type
+      });
+      
+      if (!validation.isValid) {
+        console.warn('⚠️ Erreurs de validation détectées:', validation.errors);
+      }
+      
+      return {
+        title: nomadeContent.title,
+        target_audience: nomadeContent.target_audience,
+        economic_value: this.getNomadeAsiaEconomicValue(templateName, relevanceAnalysis),
+        content: nomadeContent.content,
+        cta: nomadeContent.cta,
+        expertise_score: this.getNomadeAsiaExpertiseScore(relevanceAnalysis),
+        validation: validation
+      };
+      
+    } catch (error) {
+      console.warn('⚠️ Erreur génération nomade Asie, utilisation du fallback:', error.message);
+      return this.generateFallbackContent(article);
+    }
+  }
+
+  // Obtenir la valeur économique pour les templates nomades Asie
+  getNomadeAsiaEconomicValue(templateName, relevanceAnalysis) {
+    const economicValues = {
+      'nomade_hebergement': 'Économies potentielles: 200-800€ par mois + communauté active',
+      'nomade_visa': 'Économies potentielles: 100-500€ en frais administratifs + stabilité',
+      'nomade_budget': 'Économies potentielles: 200-600€ par mois + qualité de vie',
+      'nomade_communaute': 'Valeur ajoutée: Networking, opportunités, bien-être',
+      'nomade_tech': 'Économies potentielles: 100-500€ vs Europe + innovation'
+    };
+    
+    return economicValues[templateName] || 'Économies potentielles: 300-800€ par mois';
+  }
+
+  // Obtenir le score d'expertise pour les templates nomades Asie
+  getNomadeAsiaExpertiseScore(relevanceAnalysis) {
+    if (relevanceAnalysis.relevancePercentage > 80) return "9/10";
+    if (relevanceAnalysis.relevancePercentage > 60) return "8/10";
+    if (relevanceAnalysis.relevancePercentage > 40) return "7/10";
+    return "6/10";
+  }
+
+  // Générer du contenu nomade spécialisé
+  async generateNomadeContent(article, personaDetection) {
+    try {
+      console.log(`🏠 Génération de contenu nomade pour: ${personaDetection.persona}`);
+      
+      // Utiliser les templates nomades
+      const nomadeContent = this.nomadeTemplates.fillTemplate(personaDetection.persona, article);
+      
+      // Valider le contenu généré
+      const validation = this.validator.validateArticle({
+        title: nomadeContent.title,
+        content: nomadeContent.content,
+        type: article.type
+      });
+      
+      if (!validation.isValid) {
+        console.warn('⚠️ Erreurs de validation détectées:', validation.errors);
+      }
+      
+      return {
+        title: nomadeContent.title,
+        target_audience: nomadeContent.target_audience,
+        economic_value: this.getNomadeEconomicValue(personaDetection.persona),
+        content: nomadeContent.content,
+        cta: nomadeContent.cta,
+        expertise_score: "9/10"
+      };
+      
+    } catch (error) {
+      console.warn('⚠️ Erreur génération nomade, utilisation du fallback:', error.message);
+      return this.generateFallbackContent(article);
+    }
+  }
+
+  // Obtenir la valeur économique pour les nomades
+  getNomadeEconomicValue(persona) {
+    const economicValues = {
+      'nomade_coliving_visa_asie': 'Économies potentielles: 500-1500€ par mois + visa simplifié',
+      'nomade_coliving_asie': 'Économies potentielles: 300-800€ par mois + communauté active',
+      'nomade_visa_asie': 'Économies potentielles: 200-500€ en frais administratifs + démarches simplifiées',
+      'nomade_budget_asie': 'Économies potentielles: 200-600€ par mois + séjour prolongé possible'
+    };
+    
+    return economicValues[persona] || 'Économies potentielles: 300-800€ par mois';
+  }
+
   // Contenu de fallback si GPT-4 échoue
   generateFallbackContent(article) {
-    const timeAgo = this.getTimeAgo(article.date);
+    try {
+      // Utiliser les templates structurés
+      const templateType = this.getTemplateType(article.type);
+      const content = this.templates.generateContent(templateType, article);
+      
+      // Valider le contenu généré
+      const validation = this.validator.validateArticle({
+        title: content.title,
+        content: content.content,
+        type: article.type
+      });
+      
+      if (!validation.isValid) {
+        console.warn('⚠️ Erreurs de validation détectées:', validation.errors);
+        // Utiliser le contenu malgré les erreurs, mais les logger
+      }
+      
+      return {
+        title: content.title,
+        target_audience: "Voyageurs français passionnés d'Asie (budget 2000-5000€/voyage)",
+        economic_value: content.economicValue,
+        content: content.content,
+        cta: "Réserve maintenant pour profiter de cette offre",
+        expertise_score: "8/10",
+        validation: validation
+      };
+    } catch (error) {
+      console.warn('⚠️ Erreur template, utilisation du fallback basique:', error.message);
+      return this.generateBasicFallback(article);
+    }
+  }
+
+  // Fallback basique en cas d'erreur de template
+  generateBasicFallback(article) {
+    const validityPeriod = this.getValidityPeriod(article);
     
     return {
       title: `🔥 URGENT : ${article.title.replace(/^[🔥🚨⚡🎯]+/, '').trim()}`,
@@ -170,7 +337,7 @@ RÉPONDS UNIQUEMENT EN JSON:
 
 <ul>
 <li><strong>${article.type} :</strong> ${article.content}</li>
-<li><strong>Quand :</strong> ${timeAgo}</li>
+<li><strong>Validité :</strong> ${validityPeriod}</li>
 <li><strong>Pour qui :</strong> Voyageurs français passionnés d'Asie</li>
 <li><strong>Économies :</strong> 300-800€ par voyage</li>
 </ul>
@@ -197,6 +364,19 @@ RÉPONDS UNIQUEMENT EN JSON:
     };
   }
 
+  // Déterminer le type de template à utiliser
+  getTemplateType(articleType) {
+    const templateMapping = {
+      'bon_plan': 'bon_plan',
+      'formalites': 'formalites',
+      'transport': 'transport',
+      'safety': 'formalites',
+      'tourism': 'bon_plan'
+    };
+    
+    return templateMapping[articleType] || 'bon_plan';
+  }
+
   // Méthodes utilitaires
   getTimeAgo(dateString) {
     const now = new Date();
@@ -213,6 +393,28 @@ RÉPONDS UNIQUEMENT EN JSON:
       const diffDays = Math.floor(diffHours / 24);
       return `${diffDays} jours`;
     }
+  }
+
+  // Générer une période de validité cohérente
+  getValidityPeriod(article) {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    
+    // Templates de validité selon le type d'article
+    const validityTemplates = {
+      'bon_plan': `Offre valable jusqu'en décembre ${currentYear}`,
+      'transport': `Disponible jusqu'en mars ${currentYear + 1}`,
+      'formalités': `Règlement en vigueur jusqu'en juin ${currentYear + 1}`,
+      'safety': `Mesures applicables jusqu'en décembre ${currentYear}`,
+      'tourism': `Saison touristique ${currentYear}-${currentYear + 1}`
+    };
+    
+    // Si c'est un bon plan en fin d'année, étendre à l'année suivante
+    if (article.type === 'bon_plan' && currentMonth >= 10) {
+      return `Offre valable jusqu'en mars ${currentYear + 1}`;
+    }
+    
+    return validityTemplates[article.type] || `Valide jusqu'en décembre ${currentYear}`;
   }
 
   // Rechercher une image Pexels
@@ -316,9 +518,20 @@ RÉPONDS UNIQUEMENT EN JSON:
         return;
       }
 
-      // Trouver le meilleur article non publié
+      // Filtrer les articles pertinents avec le mode intelligent
+      console.log('🧠 Filtrage intelligent des articles...');
+      const relevantArticles = this.intelligentFilter.filterRelevantArticles(articles, 5); // Seuil réduit à 5%
+      
+      if (relevantArticles.length === 0) {
+        console.log('❌ Aucun article pertinent trouvé');
+        return;
+      }
+
+      console.log(`✅ ${relevantArticles.length} articles pertinents trouvés`);
+
+      // Trouver le meilleur article non publié parmi les pertinents
       let bestArticle = null;
-      for (const article of articles) {
+      for (const article of relevantArticles) {
         if (!this.isArticleAlreadyPublished(article.title)) {
           bestArticle = article;
           break;
@@ -326,13 +539,22 @@ RÉPONDS UNIQUEMENT EN JSON:
       }
 
       if (!bestArticle) {
-        console.log('❌ Tous les articles ont déjà été publiés');
+        console.log('❌ Tous les articles pertinents ont déjà été publiés');
         return;
       }
 
       console.log(`✅ Article sélectionné: ${bestArticle.title}`);
       console.log(`📊 Pertinence: ${bestArticle.relevance}/100`);
       console.log(`🏷️ Type: ${bestArticle.type}`);
+      
+      // Afficher l'analyse de pertinence
+      if (bestArticle.relevanceAnalysis) {
+        const analysis = bestArticle.relevanceAnalysis;
+        console.log(`🧠 Analyse intelligente:`);
+        console.log(`   Catégorie: ${analysis.category}`);
+        console.log(`   Scores: Nomade(${analysis.nomadeScore}) Asie(${analysis.asiaScore}) Voyage(${analysis.travelScore})`);
+        console.log(`   Pertinence: ${analysis.relevancePercentage.toFixed(1)}%`);
+      }
 
       // Générer le contenu stratégique avec GPT-4
       const strategicContent = await this.generateStrategicContent(bestArticle);
