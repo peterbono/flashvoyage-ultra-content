@@ -103,6 +103,15 @@ const ALTERNATIVE_SOURCES = {
   }
 };
 
+// Configuration Reddit API
+const REDDIT_API_CONFIG = {
+  clientId: process.env.REDDIT_CLIENT_ID || 'YeScY2wdzpu22LBogcHpeQ',
+  clientSecret: process.env.REDDIT_CLIENT_SECRET || 'X74jO9XTcxnbqWzWXCRJn2dYXtEX_Q',
+  userAgent: 'FlashVoyagesBot/1.0 (Travel Content Generator; +https://flashvoyage.com)',
+  username: process.env.REDDIT_USERNAME || '',
+  password: process.env.REDDIT_PASSWORD || ''
+};
+
 // Sources RSS alternatives fiables pour GitHub Actions
 const FALLBACK_RSS_SOURCES = {
   travel_blogs: [
@@ -444,9 +453,16 @@ class UltraFreshComplete {
       const fallbackRSSArticles = await this.scrapeFallbackRSS();
       allArticles.push(...fallbackRSSArticles);
 
-      // Tentative Reddit via proxy
-      const redditProxyArticles = await this.scrapeRedditViaProxy();
-      allArticles.push(...redditProxyArticles);
+      // Tentative Reddit via API officielle (priorité)
+      const redditOfficialArticles = await this.scrapeRedditOfficial();
+      allArticles.push(...redditOfficialArticles);
+      
+      // Si pas d'articles via API, essayer le proxy
+      if (redditOfficialArticles.length === 0) {
+        console.log('⚠️ Reddit API échoué, tentative via proxy...');
+        const redditProxyArticles = await this.scrapeRedditViaProxy();
+        allArticles.push(...redditProxyArticles);
+      }
 
       // Google News (fonctionne généralement)
       const googleArticles = await this.scrapeGoogleNews();
@@ -528,6 +544,94 @@ class UltraFreshComplete {
     } else {
       const diffDays = Math.floor(diffHours / 24);
       return `${diffDays} jours`;
+    }
+  }
+
+  // Scraper Reddit via API officielle
+  async scrapeRedditOfficial() {
+    try {
+      console.log('🔍 Scraping Reddit via API officielle...');
+      
+      // Authentification Reddit
+      const authResponse = await axios.post('https://www.reddit.com/api/v1/access_token', 
+        `grant_type=client_credentials&client_id=${REDDIT_API_CONFIG.clientId}&client_secret=${REDDIT_API_CONFIG.clientSecret}`,
+        {
+          headers: {
+            'User-Agent': REDDIT_API_CONFIG.userAgent,
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          timeout: 10000
+        }
+      );
+      
+      const accessToken = authResponse.data.access_token;
+      
+      // Scraper r/travel
+      const travelResponse = await axios.get('https://oauth.reddit.com/r/travel/hot.json?limit=10', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'User-Agent': REDDIT_API_CONFIG.userAgent
+        },
+        timeout: 10000
+      });
+      
+      // Scraper r/digitalnomad
+      const nomadResponse = await axios.get('https://oauth.reddit.com/r/digitalnomad/hot.json?limit=10', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'User-Agent': REDDIT_API_CONFIG.userAgent
+        },
+        timeout: 10000
+      });
+      
+      const allArticles = [];
+      
+      // Traiter r/travel
+      if (travelResponse.data?.data?.children) {
+        travelResponse.data.data.children.forEach(post => {
+          const data = post.data;
+          const relevance = this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit.keywords);
+          
+          if (relevance >= 30) {
+            allArticles.push({
+              title: data.title,
+              link: `https://reddit.com${data.permalink}`,
+              content: data.selftext || '',
+              date: new Date(data.created_utc * 1000).toISOString(),
+              source: 'Reddit r/travel (API)',
+              type: 'community',
+              relevance: relevance
+            });
+          }
+        });
+      }
+      
+      // Traiter r/digitalnomad
+      if (nomadResponse.data?.data?.children) {
+        nomadResponse.data.data.children.forEach(post => {
+          const data = post.data;
+          const relevance = this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit.keywords);
+          
+          if (relevance >= 30) {
+            allArticles.push({
+              title: data.title,
+              link: `https://reddit.com${data.permalink}`,
+              content: data.selftext || '',
+              date: new Date(data.created_utc * 1000).toISOString(),
+              source: 'Reddit Digital Nomad (API)',
+              type: 'nomade',
+              relevance: relevance
+            });
+          }
+        });
+      }
+      
+      console.log(`✅ Reddit API: ${allArticles.length} articles trouvés`);
+      return allArticles;
+      
+    } catch (error) {
+      console.log(`❌ Erreur Reddit API: ${error.message}`);
+      return [];
     }
   }
 
