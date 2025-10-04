@@ -107,36 +107,26 @@ const ALTERNATIVE_SOURCES = {
 const FALLBACK_RSS_SOURCES = {
   travel_blogs: [
     {
-      name: 'BBC Travel',
-      url: 'https://www.bbc.com/travel/rss.xml',
-      keywords: ['travel', 'tourism', 'destination', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
+      name: 'Google News Asia Travel',
+      url: 'https://news.google.com/rss/search?q=asia+travel&hl=en&gl=US&ceid=US:en',
+      keywords: ['asia', 'travel', 'tourism', 'destination', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
     },
     {
-      name: 'Lonely Planet News',
-      url: 'https://www.lonelyplanet.com/news/rss',
-      keywords: ['travel', 'tourism', 'destination', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
-    },
-    {
-      name: 'Travel + Leisure',
-      url: 'https://www.travelandleisure.com/rss',
-      keywords: ['travel', 'tourism', 'destination', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
+      name: 'Google News Digital Nomad',
+      url: 'https://news.google.com/rss/search?q=digital+nomad+asia&hl=en&gl=US&ceid=US:en',
+      keywords: ['digital nomad', 'remote work', 'nomad', 'coliving', 'coworking', 'visa', 'residence', 'tax', 'fiscal', 'budget', 'cost', 'living', 'accommodation', 'food', 'transport', 'internet', 'wifi', 'weather', 'season', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
     }
   ],
   nomad_sources: [
     {
-      name: 'Nomad List Blog',
-      url: 'https://nomadlist.com/blog/rss',
-      keywords: ['nomad', 'digital nomad', 'remote work', 'coliving', 'coworking', 'visa', 'residence', 'tax', 'fiscal', 'budget', 'cost', 'living', 'accommodation', 'food', 'transport', 'internet', 'wifi', 'weather', 'season', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
-    },
-    {
-      name: 'Remote Year Blog',
-      url: 'https://remoteyear.com/blog/rss',
-      keywords: ['nomad', 'digital nomad', 'remote work', 'coliving', 'coworking', 'visa', 'residence', 'tax', 'fiscal', 'budget', 'cost', 'living', 'accommodation', 'food', 'transport', 'internet', 'wifi', 'weather', 'season', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
-    },
-    {
-      name: 'Coliving.com Blog',
-      url: 'https://coliving.com/blog/rss',
+      name: 'Google News Coliving Asia',
+      url: 'https://news.google.com/rss/search?q=coliving+asia&hl=en&gl=US&ceid=US:en',
       keywords: ['coliving', 'coworking', 'nomad', 'digital nomad', 'remote work', 'visa', 'residence', 'tax', 'fiscal', 'budget', 'cost', 'living', 'accommodation', 'food', 'transport', 'internet', 'wifi', 'weather', 'season', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
+    },
+    {
+      name: 'Google News Visa Asia',
+      url: 'https://news.google.com/rss/search?q=visa+asia+digital+nomad&hl=en&gl=US&ceid=US:en',
+      keywords: ['visa', 'residence', 'tax', 'fiscal', 'nomad', 'digital nomad', 'remote work', 'coliving', 'coworking', 'budget', 'cost', 'living', 'accommodation', 'food', 'transport', 'internet', 'wifi', 'weather', 'season', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
     }
   ]
 };
@@ -147,16 +137,34 @@ const REDDIT_PROXY_SERVICES = [
     name: 'Reddit API Proxy',
     url: 'https://api.reddit.com/r/travel/hot.json?limit=10',
     headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      'Accept': 'application/json'
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Accept': 'application/json',
+      'Accept-Language': 'en-US,en;q=0.9',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'DNT': '1',
+      'Connection': 'keep-alive',
+      'Upgrade-Insecure-Requests': '1',
+      'Sec-Fetch-Dest': 'document',
+      'Sec-Fetch-Mode': 'navigate',
+      'Sec-Fetch-Site': 'none',
+      'Cache-Control': 'max-age=0'
     }
   },
   {
     name: 'Reddit JSON Proxy',
     url: 'https://www.reddit.com/r/travel/hot.json?limit=10&raw_json=1',
     headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      'Accept': 'application/json'
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Accept': 'application/json',
+      'Accept-Language': 'en-US,en;q=0.9',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'DNT': '1',
+      'Connection': 'keep-alive',
+      'Upgrade-Insecure-Requests': '1',
+      'Sec-Fetch-Dest': 'document',
+      'Sec-Fetch-Mode': 'navigate',
+      'Sec-Fetch-Site': 'none',
+      'Cache-Control': 'max-age=0'
     }
   }
 ];
