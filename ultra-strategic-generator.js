@@ -52,19 +52,47 @@ class UltraStrategicGenerator {
   async loadPublishedArticles() {
     try {
       console.log('📚 Chargement des articles déjà publiés...');
-      const response = await axios.get(`${WORDPRESS_URL}/wp-json/wp/v2/posts?per_page=100&status=publish`, {
-        auth: {
-          username: WORDPRESS_USERNAME,
-          password: WORDPRESS_APP_PASSWORD
+      
+      let allArticles = [];
+      let page = 1;
+      const perPage = 100;
+      
+      // Récupérer tous les articles (plusieurs pages)
+      while (true) {
+        const response = await axios.get(`${WORDPRESS_URL}/wp-json/wp/v2/posts?per_page=${perPage}&page=${page}&status=publish&_fields=id,title,date`, {
+          auth: {
+            username: WORDPRESS_USERNAME,
+            password: WORDPRESS_APP_PASSWORD
+          },
+          timeout: 10000
+        });
+        
+        if (!response.data || !Array.isArray(response.data) || response.data.length === 0) {
+          break;
+        }
+        
+        allArticles = allArticles.concat(response.data);
+        page++;
+        
+        // Limiter à 10 pages max (1000 articles) pour éviter les timeouts
+        if (page > 10) break;
+      }
+      
+      // Analyser les titres et extraire les mots-clés
+      allArticles.forEach(post => {
+        if (post.title && post.title.rendered) {
+          const title = post.title.rendered.toLowerCase().trim();
+          this.publishedArticles.add(title);
+          
+          // Extraire les mots-clés principaux du titre
+          const keywords = title.match(/\b(visa|nomade|asie|pays|top|guide|comment|où|quand|pourquoi)\b/g);
+          if (keywords) {
+            keywords.forEach(keyword => this.publishedArticles.add(keyword));
+          }
         }
       });
       
-      response.data.forEach(post => {
-        const title = post.title.rendered.toLowerCase().trim();
-        this.publishedArticles.add(title);
-      });
-      
-      console.log(`✅ ${this.publishedArticles.size} articles déjà publiés chargés`);
+      console.log(`✅ ${allArticles.length} articles analysés, ${this.publishedArticles.size} éléments uniques chargés`);
     } catch (error) {
       console.warn('⚠️ Impossible de charger les articles existants:', error.message);
     }
@@ -73,7 +101,32 @@ class UltraStrategicGenerator {
   // Vérifier si l'article est déjà publié
   isArticleAlreadyPublished(title) {
     const normalizedTitle = title.toLowerCase().trim();
-    return this.publishedArticles.has(normalizedTitle);
+    
+    // Vérification exacte
+    if (this.publishedArticles.has(normalizedTitle)) {
+      return true;
+    }
+    
+    // Vérification de similarité (éviter les variations du même sujet)
+    const titleWords = normalizedTitle.split(/\s+/);
+    const commonWords = ['visa', 'nomade', 'asie', 'pays', 'top', 'guide', 'comment', 'où', 'quand', 'pourquoi'];
+    
+    for (const publishedTitle of this.publishedArticles) {
+      const publishedWords = publishedTitle.split(/\s+/);
+      
+      // Compter les mots en commun
+      const commonCount = titleWords.filter(word => 
+        publishedWords.includes(word) && commonWords.includes(word)
+      ).length;
+      
+      // Si plus de 3 mots-clés en commun, considérer comme similaire
+      if (commonCount >= 3) {
+        console.log(`⚠️ Article similaire détecté: "${publishedTitle}" vs "${normalizedTitle}"`);
+        return true;
+      }
+    }
+    
+    return false;
   }
 
   // Générer un contenu stratégique avec GPT-4

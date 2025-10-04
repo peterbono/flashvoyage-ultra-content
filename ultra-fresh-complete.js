@@ -127,6 +127,16 @@ const FALLBACK_RSS_SOURCES = {
       name: 'Google News Visa Asia',
       url: 'https://news.google.com/rss/search?q=visa+asia+digital+nomad&hl=en&gl=US&ceid=US:en',
       keywords: ['visa', 'residence', 'tax', 'fiscal', 'nomad', 'digital nomad', 'remote work', 'coliving', 'coworking', 'budget', 'cost', 'living', 'accommodation', 'food', 'transport', 'internet', 'wifi', 'weather', 'season', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
+    },
+    {
+      name: 'NomadList RSS',
+      url: 'https://nomadlist.com/feed.xml',
+      keywords: ['nomad', 'digital nomad', 'remote work', 'travel', 'location', 'cost', 'living', 'accommodation', 'food', 'transport', 'internet', 'wifi', 'weather', 'season', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
+    },
+    {
+      name: 'Remote Year Blog',
+      url: 'https://www.remoteyear.com/blog/rss.xml',
+      keywords: ['remote work', 'nomad', 'travel', 'digital nomad', 'workation', 'coliving', 'coworking', 'visa', 'residence', 'tax', 'fiscal', 'budget', 'cost', 'living', 'accommodation', 'food', 'transport', 'internet', 'wifi', 'weather', 'season', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
     }
   ]
 };
