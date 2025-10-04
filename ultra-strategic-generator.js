@@ -59,12 +59,16 @@ class UltraStrategicGenerator {
       
       // Récupérer tous les articles (plusieurs pages)
       while (true) {
-        const response = await axios.get(`${WORDPRESS_URL}/wp-json/wp/v2/posts?per_page=${perPage}&page=${page}&status=publish&_fields=id,title,date`, {
+        const response = await axios.get(`${WORDPRESS_URL}/wp-json/wp/v2/posts?per_page=${perPage}&page=${page}&status=publish`, {
           auth: {
             username: WORDPRESS_USERNAME,
             password: WORDPRESS_APP_PASSWORD
           },
-          timeout: 10000
+          timeout: 15000,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
         });
         
         if (!response.data || !Array.isArray(response.data) || response.data.length === 0) {
@@ -630,8 +634,17 @@ class UltraStrategicGenerator {
       let bestArticle = null;
       for (const article of relevantArticles) {
         if (!this.isArticleAlreadyPublished(article.title)) {
-          bestArticle = article;
-          break;
+          // Vérification supplémentaire : éviter les articles trop similaires
+          const titleWords = article.title.toLowerCase().split(/\s+/);
+          const commonWords = ['visa', 'nomade', 'asie', 'pays', 'top', 'guide', 'comment', 'où', 'quand', 'pourquoi', 'digital', 'nomad'];
+          const hasCommonWords = commonWords.some(word => titleWords.includes(word));
+          
+          if (!hasCommonWords) {
+            bestArticle = article;
+            break;
+          } else {
+            console.log('⚠️ Article potentiellement similaire détecté, passage au suivant...');
+          }
         }
       }
 

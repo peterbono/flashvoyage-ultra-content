@@ -129,14 +129,14 @@ const FALLBACK_RSS_SOURCES = {
       keywords: ['visa', 'residence', 'tax', 'fiscal', 'nomad', 'digital nomad', 'remote work', 'coliving', 'coworking', 'budget', 'cost', 'living', 'accommodation', 'food', 'transport', 'internet', 'wifi', 'weather', 'season', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
     },
     {
-      name: 'NomadList RSS',
-      url: 'https://nomadlist.com/feed.xml',
-      keywords: ['nomad', 'digital nomad', 'remote work', 'travel', 'location', 'cost', 'living', 'accommodation', 'food', 'transport', 'internet', 'wifi', 'weather', 'season', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
+      name: 'Google News Nomad Budget',
+      url: 'https://news.google.com/rss/search?q=digital+nomad+budget+asia&hl=en&gl=US&ceid=US:en',
+      keywords: ['digital nomad', 'budget', 'cost', 'living', 'asia', 'nomad', 'remote work', 'cheap', 'affordable', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
     },
     {
-      name: 'Remote Year Blog',
-      url: 'https://www.remoteyear.com/blog/rss.xml',
-      keywords: ['remote work', 'nomad', 'travel', 'digital nomad', 'workation', 'coliving', 'coworking', 'visa', 'residence', 'tax', 'fiscal', 'budget', 'cost', 'living', 'accommodation', 'food', 'transport', 'internet', 'wifi', 'weather', 'season', 'asia', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
+      name: 'Google News Nomad Community',
+      url: 'https://news.google.com/rss/search?q=digital+nomad+community+asia&hl=en&gl=US&ceid=US:en',
+      keywords: ['digital nomad', 'community', 'meetup', 'coworking', 'coliving', 'asia', 'nomad', 'remote work', 'networking', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
     }
   ]
 };
