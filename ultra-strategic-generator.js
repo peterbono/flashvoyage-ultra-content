@@ -102,7 +102,7 @@ class UltraStrategicGenerator {
       if (intelligentAnalysis.recommandation === 'generation_llm') {
         console.log('🤖 Génération intelligente avec LLM...');
         const llmContent = await this.intelligentAnalyzer.generateIntelligentContent(article, intelligentAnalysis);
-        return this.normalizeLLMContent(llmContent);
+        return this.normalizeLLMContent(llmContent, article);
       } else {
         console.log('📝 Utilisation des templates fixes...');
         return this.generateGenericContent(article, intelligentAnalysis.categorie, intelligentAnalysis);
@@ -122,7 +122,7 @@ class UltraStrategicGenerator {
   }
 
   // Normaliser le contenu LLM pour le format attendu
-  normalizeLLMContent(llmContent) {
+  normalizeLLMContent(llmContent, sourceArticle = null) {
     console.log('🔍 Contenu LLM brut:', Object.keys(llmContent));
     
     let finalContent = '';
@@ -151,9 +151,16 @@ class UltraStrategicGenerator {
     
     console.log('✅ Contenu normalisé:', finalContent.substring(0, 100) + '...');
     
+    // Valider le contenu si on a l'article source
+    let validation = null;
+    if (sourceArticle) {
+      validation = this.intelligentAnalyzer.validateGeneratedContent(llmContent, sourceArticle);
+    }
+    
     return {
       ...llmContent,
-      content: finalContent.trim()
+      content: finalContent.trim(),
+      validation: validation
     };
   }
 

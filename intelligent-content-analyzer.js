@@ -154,15 +154,68 @@ Réponds UNIQUEMENT en JSON valide:
     return destinations.length > 0 ? destinations.join(', ') : 'Asie';
   }
 
+  // Extraire le contenu complet de l'article source
+  async extractFullContent(article) {
+    try {
+      if (!article.link || article.link.includes('news.google.com')) {
+        console.log('⚠️ Lien Google News - Utilisation du contenu disponible');
+        return article.content || 'Contenu non disponible';
+      }
+
+      console.log('🔍 Extraction du contenu complet de l\'article source...');
+      
+      const response = await axios.get(article.link, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.5',
+          'Accept-Encoding': 'gzip, deflate, br',
+          'DNT': '1',
+          'Connection': 'keep-alive',
+          'Upgrade-Insecure-Requests': '1'
+        },
+        timeout: 10000
+      });
+
+      // Extraction simple du contenu principal
+      const html = response.data;
+      const contentMatch = html.match(/<article[^>]*>(.*?)<\/article>/s) || 
+                          html.match(/<main[^>]*>(.*?)<\/main>/s) ||
+                          html.match(/<div[^>]*class="[^"]*content[^"]*"[^>]*>(.*?)<\/div>/s);
+      
+      if (contentMatch) {
+        // Nettoyer le HTML et extraire le texte
+        const content = contentMatch[1]
+          .replace(/<script[^>]*>.*?<\/script>/gs, '')
+          .replace(/<style[^>]*>.*?<\/style>/gs, '')
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+        
+        console.log(`✅ Contenu extrait: ${content.length} caractères`);
+        return content.substring(0, 3000); // Limiter à 3000 caractères
+      }
+
+      console.log('⚠️ Impossible d\'extraire le contenu - Utilisation du contenu disponible');
+      return article.content || 'Contenu non disponible';
+    } catch (error) {
+      console.log(`⚠️ Erreur extraction contenu: ${error.message}`);
+      return article.content || 'Contenu non disponible';
+    }
+  }
+
   // Générer du contenu intelligent avec LLM
   async generateIntelligentContent(article, analysis) {
     try {
+      // Extraire le contenu complet de l'article source
+      const fullContent = await this.extractFullContent(article);
+      
       const prompt = `Tu es un expert éditorial pour FlashVoyages.com, spécialisé dans le voyage en Asie.
 
-ARTICLE SOURCE:
+ARTICLE SOURCE COMPLET:
 - Titre: ${article.title}
 - Source: ${article.source}
-- Contenu: ${article.content}
+- Contenu complet: ${fullContent}
 - Lien: ${article.link}
 
 ANALYSE ÉDITORIALE:
@@ -177,10 +230,20 @@ MISSION: Créer un article éditorial de qualité qui transforme cette source en
 
 GUIDELINES FLASHVOYAGES:
 - Cible: Digital nomades et voyageurs passionnés d'Asie
+- Style: Expert, data-driven, avec des conseils pratiques concrets
+- Ton: Professionnel mais accessible, avec une touche personnelle
+- Structure: Introduction engageante, développement détaillé, conclusion actionnable
 - Ton: Expert, confident, proche, conversationnel
 - Style: Comme Voyage Pirate mais pour l'Asie
 - Objectif: Valeur ajoutée, conseils pratiques, économies concrètes
 - Structure: H5, listes, sections, CTA
+
+INSTRUCTIONS SPÉCIFIQUES:
+1. EXTRACTION DE DONNÉES: Utilise les informations spécifiques de l'article source (prix, dates, lieux, détails concrets)
+2. PERSONNALISATION: Adapte le contenu à l'audience nomade asiatique
+3. VALEUR AJOUTÉE: Ajoute des conseils pratiques, des alternatives, des astuces
+4. STRUCTURE: Utilise des H5 pour organiser, des listes pour les détails, des CTA pour l'action
+5. SPÉCIFICITÉ: Évite les généralités, utilise des données précises de l'article source
 
 CONTENU REQUIS:
 1. Titre accrocheur avec emoji
@@ -278,6 +341,85 @@ Réponds UNIQUEMENT en JSON valide:
 
 <p><em>Cet article a été analysé par notre équipe FlashVoyages.</em></p>`
     };
+  }
+
+  // Valider le contenu généré
+  validateGeneratedContent(llmContent, sourceArticle) {
+    const validation = {
+      score: 0,
+      issues: [],
+      strengths: []
+    };
+
+    // Vérifier la longueur du contenu
+    if (llmContent.content && llmContent.content.length > 500) {
+      validation.score += 20;
+      validation.strengths.push('Contenu de longueur appropriée');
+    } else {
+      validation.issues.push('Contenu trop court');
+    }
+
+    // Vérifier la présence de données spécifiques
+    const hasSpecificData = /(\d+|\$|€|%|km|m²|heures?|jours?|mois?|années?)/.test(llmContent.content || '');
+    if (hasSpecificData) {
+      validation.score += 25;
+      validation.strengths.push('Contient des données spécifiques');
+    } else {
+      validation.issues.push('Manque de données spécifiques');
+    }
+
+    // Vérifier la structure (présence de H5)
+    const hasStructure = /<h5>/.test(llmContent.content || '');
+    if (hasStructure) {
+      validation.score += 15;
+      validation.strengths.push('Structure bien organisée');
+    } else {
+      validation.issues.push('Structure manquante');
+    }
+
+    // Vérifier la pertinence nomade
+    const nomadKeywords = ['nomade', 'digital nomad', 'remote work', 'coworking', 'coliving', 'visa', 'residence'];
+    const hasNomadContent = nomadKeywords.some(keyword => 
+      (llmContent.content || '').toLowerCase().includes(keyword)
+    );
+    if (hasNomadContent) {
+      validation.score += 20;
+      validation.strengths.push('Contenu pertinent pour les nomades');
+    } else {
+      validation.issues.push('Manque de pertinence nomade');
+    }
+
+    // Vérifier la présence d'un CTA
+    if (llmContent.cta && llmContent.cta.length > 10) {
+      validation.score += 10;
+      validation.strengths.push('CTA présent et engageant');
+    } else {
+      validation.issues.push('CTA manquant ou trop court');
+    }
+
+    // Vérifier l'évitement des généralités
+    const genericPhrases = ['pays à définir', 'lieu à préciser', 'information non disponible'];
+    const hasGenericContent = genericPhrases.some(phrase => 
+      (llmContent.content || '').toLowerCase().includes(phrase)
+    );
+    if (!hasGenericContent) {
+      validation.score += 10;
+      validation.strengths.push('Évite les généralités');
+    } else {
+      validation.issues.push('Contient des généralités à éviter');
+    }
+
+    validation.score = Math.min(validation.score, 100);
+    
+    console.log(`📊 Validation contenu: ${validation.score}/100`);
+    if (validation.issues.length > 0) {
+      console.log(`⚠️ Problèmes: ${validation.issues.join(', ')}`);
+    }
+    if (validation.strengths.length > 0) {
+      console.log(`✅ Points forts: ${validation.strengths.join(', ')}`);
+    }
+
+    return validation;
   }
 }
 
