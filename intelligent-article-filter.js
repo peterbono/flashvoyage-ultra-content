@@ -95,23 +95,27 @@ class IntelligentArticleFilter {
   }
 
   // Filtrer les articles pertinents
-  filterRelevantArticles(articles, minRelevance = 30) {
+  filterRelevantArticles(articles, minRelevance = 5) {
     const filteredArticles = [];
     
     articles.forEach(article => {
       const analysis = this.analyzeRelevance(article);
       
-      if (analysis.relevancePercentage >= minRelevance) {
+      // Utiliser la pertinence de l'article si disponible, sinon utiliser l'analyse
+      const relevance = article.relevance || analysis.relevancePercentage;
+      
+      if (relevance >= minRelevance) {
         filteredArticles.push({
           ...article,
-          relevanceAnalysis: analysis
+          relevanceAnalysis: analysis,
+          relevance: relevance
         });
       }
     });
     
     // Trier par pertinence
     return filteredArticles.sort((a, b) => 
-      b.relevanceAnalysis.relevancePercentage - a.relevanceAnalysis.relevancePercentage
+      (b.relevance || 0) - (a.relevance || 0)
     );
   }
 
