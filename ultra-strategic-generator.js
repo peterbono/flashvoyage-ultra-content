@@ -101,7 +101,8 @@ class UltraStrategicGenerator {
       // 2. Générer le contenu selon la recommandation
       if (intelligentAnalysis.recommandation === 'generation_llm') {
         console.log('🤖 Génération intelligente avec LLM...');
-        return await this.intelligentAnalyzer.generateIntelligentContent(article, intelligentAnalysis);
+        const llmContent = await this.intelligentAnalyzer.generateIntelligentContent(article, intelligentAnalysis);
+        return this.normalizeLLMContent(llmContent);
       } else {
         console.log('📝 Utilisation des templates fixes...');
         return this.generateGenericContent(article, intelligentAnalysis.categorie, intelligentAnalysis);
@@ -118,6 +119,35 @@ class UltraStrategicGenerator {
     const text = `${article.title} ${article.content}`.toLowerCase();
     return text.includes('vietnam') && text.includes('indonesia') && 
            (text.includes('november') || text.includes('novembre') || text.includes('choosing') || text.includes('choisir'));
+  }
+
+  // Normaliser le contenu LLM pour le format attendu
+  normalizeLLMContent(llmContent) {
+    // Si le LLM a généré un format avec intro/content séparés, les combiner
+    if (llmContent.intro && llmContent.content) {
+      return {
+        ...llmContent,
+        content: `${llmContent.intro}\n\n${llmContent.content}`
+      };
+    }
+    
+    // Si le LLM a généré un format avec signature, l'ajouter au content
+    if (llmContent.signature && llmContent.content) {
+      return {
+        ...llmContent,
+        content: `${llmContent.content}\n\n${llmContent.signature}`
+      };
+    }
+    
+    // Si le LLM a généré un format avec cta séparé, l'ajouter au content
+    if (llmContent.cta && llmContent.content && !llmContent.content.includes(llmContent.cta)) {
+      return {
+        ...llmContent,
+        content: `${llmContent.content}\n\n<p><strong>👉 ${llmContent.cta}</strong></p>`
+      };
+    }
+    
+    return llmContent;
   }
 
   // Générer du contenu générique avec templates adaptatifs
