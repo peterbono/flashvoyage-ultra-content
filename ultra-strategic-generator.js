@@ -123,31 +123,38 @@ class UltraStrategicGenerator {
 
   // Normaliser le contenu LLM pour le format attendu
   normalizeLLMContent(llmContent) {
-    // Si le LLM a généré un format avec intro/content séparés, les combiner
-    if (llmContent.intro && llmContent.content) {
-      return {
-        ...llmContent,
-        content: `${llmContent.intro}\n\n${llmContent.content}`
-      };
+    console.log('🔍 Contenu LLM brut:', Object.keys(llmContent));
+    
+    let finalContent = '';
+    
+    // Construire le contenu final en combinant toutes les parties
+    if (llmContent.intro) {
+      finalContent += llmContent.intro + '\n\n';
     }
     
-    // Si le LLM a généré un format avec signature, l'ajouter au content
-    if (llmContent.signature && llmContent.content) {
-      return {
-        ...llmContent,
-        content: `${llmContent.content}\n\n${llmContent.signature}`
-      };
+    if (llmContent.content) {
+      finalContent += llmContent.content + '\n\n';
     }
     
-    // Si le LLM a généré un format avec cta séparé, l'ajouter au content
-    if (llmContent.cta && llmContent.content && !llmContent.content.includes(llmContent.cta)) {
-      return {
-        ...llmContent,
-        content: `${llmContent.content}\n\n<p><strong>👉 ${llmContent.cta}</strong></p>`
-      };
+    if (llmContent.signature) {
+      finalContent += llmContent.signature + '\n\n';
     }
     
-    return llmContent;
+    if (llmContent.cta && !finalContent.includes(llmContent.cta)) {
+      finalContent += `<p><strong>👉 ${llmContent.cta}</strong></p>\n\n`;
+    }
+    
+    // Si on n'a pas de contenu final, utiliser le contenu de base
+    if (!finalContent.trim()) {
+      finalContent = llmContent.content || 'Contenu non disponible';
+    }
+    
+    console.log('✅ Contenu normalisé:', finalContent.substring(0, 100) + '...');
+    
+    return {
+      ...llmContent,
+      content: finalContent.trim()
+    };
   }
 
   // Générer du contenu générique avec templates adaptatifs
