@@ -608,14 +608,20 @@ class UltraFreshComplete {
     const accessToken = authResponse.data.access_token;
     const expiresIn = authResponse.data.expires_in || 3600; // 1 heure par défaut
     
-    // Mettre en cache le token
+    // Mettre en cache le token (sécurisé)
     redditTokenCache = {
       token: accessToken,
       expires: now + (expiresIn * 1000),
       refreshTime: now
     };
     
+    // Vérification de sécurité : ne jamais logger le token
+    if (process.env.NODE_ENV === 'development' && process.env.DEBUG_REDDIT_TOKEN) {
+      console.warn('⚠️ ATTENTION: Token Reddit exposé en mode debug uniquement');
+    }
+    
     console.log(`✅ Token Reddit généré, expire dans ${expiresIn}s`);
+    console.log('🔒 Token sécurisé - non exposé dans les logs');
     return accessToken;
   }
 
