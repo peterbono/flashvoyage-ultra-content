@@ -146,6 +146,21 @@ const FALLBACK_RSS_SOURCES = {
       name: 'Google News Nomad Community',
       url: 'https://news.google.com/rss/search?q=digital+nomad+community+asia&hl=en&gl=US&ceid=US:en',
       keywords: ['digital nomad', 'community', 'meetup', 'coworking', 'coliving', 'asia', 'nomad', 'remote work', 'networking', 'vietnam', 'thailand', 'japan', 'korea', 'singapore', 'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong']
+    },
+    {
+      name: 'Google News Vietnam Travel',
+      url: 'https://news.google.com/rss/search?q=vietnam+travel+digital+nomad&hl=en&gl=US&ceid=US:en',
+      keywords: ['vietnam', 'travel', 'nomad', 'digital nomad', 'ho chi minh', 'hanoi', 'da nang', 'visa', 'coliving', 'coworking', 'budget', 'cost', 'living']
+    },
+    {
+      name: 'Google News Thailand Travel',
+      url: 'https://news.google.com/rss/search?q=thailand+travel+digital+nomad&hl=en&gl=US&ceid=US:en',
+      keywords: ['thailand', 'travel', 'nomad', 'digital nomad', 'bangkok', 'chiang mai', 'phuket', 'visa', 'coliving', 'coworking', 'budget', 'cost', 'living']
+    },
+    {
+      name: 'Google News Japan Travel',
+      url: 'https://news.google.com/rss/search?q=japan+travel+digital+nomad&hl=en&gl=US&ceid=US:en',
+      keywords: ['japan', 'travel', 'nomad', 'digital nomad', 'tokyo', 'osaka', 'kyoto', 'visa', 'coliving', 'coworking', 'budget', 'cost', 'living']
     }
   ]
 };
@@ -682,6 +697,8 @@ async scrapeRedditOfficial() {
     
     if (error.response?.status === 401) {
       console.log('🔑 Erreur d\'authentification Reddit - Vérifiez REDDIT_CLIENT_ID et REDDIT_CLIENT_SECRET');
+      console.log('💡 Note: Reddit bloque souvent les requêtes automatisées sur GitHub Actions');
+      console.log('✅ Le système bascule automatiquement sur les sources alternatives');
     } else if (error.code === 'ECONNRESET') {
       console.log('🌐 Connexion fermée par Reddit - Rate limiting possible');
     } else if (error.code === 'ETIMEDOUT') {
