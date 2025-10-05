@@ -558,6 +558,15 @@ async scrapeRedditOfficial() {
       return [];
     }
     
+    // Debug pour GitHub Actions
+    console.log('🔍 Debug Reddit credentials:');
+    console.log('Client ID présent:', !!REDDIT_API_CONFIG.clientId);
+    console.log('Client Secret présent:', !!REDDIT_API_CONFIG.clientSecret);
+    console.log('User-Agent:', REDDIT_API_CONFIG.userAgent);
+    
+    // Délai avant authentification Reddit
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
     // Authentification Reddit avec client_credentials
     const authResponse = await axios.post('https://www.reddit.com/api/v1/access_token', 
       `grant_type=client_credentials&client_id=${REDDIT_API_CONFIG.clientId}&client_secret=${REDDIT_API_CONFIG.clientSecret}`,
@@ -566,7 +575,7 @@ async scrapeRedditOfficial() {
           'User-Agent': REDDIT_API_CONFIG.userAgent,
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        timeout: 10000
+        timeout: 15000
       }
     );
     
