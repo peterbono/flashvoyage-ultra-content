@@ -105,8 +105,8 @@ const ALTERNATIVE_SOURCES = {
 
 // Configuration Reddit API
 const REDDIT_API_CONFIG = {
-  clientId: process.env.REDDIT_CLIENT_ID || 'YeScY2wdzpu22LBogcHpeQ',
-  clientSecret: process.env.REDDIT_CLIENT_SECRET || 'X74jO9XTcxnbqWzWXCRJn2dYXtEX_Q',
+  clientId: process.env.REDDIT_CLIENT_ID,
+  clientSecret: process.env.REDDIT_CLIENT_SECRET,
   userAgent: 'FlashVoyagesBot/1.0 (Travel Content Generator; +https://flashvoyage.com)',
   username: process.env.REDDIT_USERNAME || '',
   password: process.env.REDDIT_PASSWORD || ''
@@ -552,6 +552,12 @@ async scrapeRedditOfficial() {
   try {
     console.log('🔍 Scraping Reddit via API officielle...');
     
+    // Vérifier que les credentials sont présents
+    if (!REDDIT_API_CONFIG.clientId || !REDDIT_API_CONFIG.clientSecret) {
+      console.log('❌ Credentials Reddit manquants - Passage aux sources alternatives');
+      return [];
+    }
+    
     // Authentification Reddit
     const authResponse = await axios.post('https://www.reddit.com/api/v1/access_token', 
       `grant_type=client_credentials&client_id=${REDDIT_API_CONFIG.clientId}&client_secret=${REDDIT_API_CONFIG.clientSecret}`,
@@ -665,7 +671,9 @@ async scrapeRedditOfficial() {
   } catch (error) {
     console.log(`❌ Erreur Reddit API: ${error.message}`);
     
-    if (error.code === 'ECONNRESET') {
+    if (error.response?.status === 401) {
+      console.log('🔑 Erreur d\'authentification Reddit - Vérifiez REDDIT_CLIENT_ID et REDDIT_CLIENT_SECRET');
+    } else if (error.code === 'ECONNRESET') {
       console.log('🌐 Connexion fermée par Reddit - Rate limiting possible');
     } else if (error.code === 'ETIMEDOUT') {
       console.log('⏰ Timeout - Reddit trop lent');
