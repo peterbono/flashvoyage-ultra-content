@@ -13,6 +13,7 @@ import EnhancedNomadeTemplates from './enhanced-nomade-templates.js';
 import IntelligentArticleFilter from './intelligent-article-filter.js';
 import GenericTemplates from './generic-templates.js';
 import IntelligentContentAnalyzer from './intelligent-content-analyzer.js';
+import RateLimitManager from './rate-limit-manager.js';
 
 dotenv.config();
 
@@ -45,6 +46,7 @@ class UltraStrategicGenerator {
     this.intelligentFilter = new IntelligentArticleFilter();
     this.genericTemplates = new GenericTemplates();
     this.intelligentAnalyzer = new IntelligentContentAnalyzer();
+    this.rateLimitManager = new RateLimitManager();
     
     // Cache local pour les articles publiés
     this.cacheFile = './published-articles-cache.json';
@@ -293,10 +295,34 @@ class UltraStrategicGenerator {
       validation = this.intelligentAnalyzer.validateGeneratedContent(llmContent, sourceArticle);
     }
     
+    // Validation critique avec ContentValidator
+    const articleToValidate = {
+      title: llmContent.title || 'Titre manquant',
+      content: finalContent.trim()
+    };
+    
+    const criticalValidation = this.validator.validateArticle(articleToValidate);
+    
+    // Si erreurs critiques, rejeter
+    if (!criticalValidation.isValid) {
+      console.error('❌ ERREURS CRITIQUES DÉTECTÉES:');
+      criticalValidation.errors.forEach(error => console.error(`  - ${error}`));
+      throw new Error(`Contenu rejeté: ${criticalValidation.errors.join(', ')}`);
+    }
+    
+    // Si warnings, les afficher mais continuer
+    if (criticalValidation.warnings.length > 0) {
+      console.warn('⚠️ AVERTISSEMENTS DE QUALITÉ:');
+      criticalValidation.warnings.forEach(warning => console.warn(`  - ${warning}`));
+    }
+    
+    console.log(`✅ Validation réussie - Score: ${criticalValidation.score}/100`);
+    
     return {
       ...llmContent,
       content: finalContent.trim(),
-      validation: validation
+      validation: validation,
+      qualityScore: criticalValidation.score
     };
   }
 

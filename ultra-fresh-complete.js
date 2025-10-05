@@ -112,6 +112,13 @@ const REDDIT_API_CONFIG = {
   password: process.env.REDDIT_PASSWORD || ''
 };
 
+// Cache pour les tokens Reddit
+let redditTokenCache = {
+  token: null,
+  expires: 0,
+  refreshTime: 0
+};
+
 // Sources RSS alternatives fiables pour GitHub Actions
 const FALLBACK_RSS_SOURCES = {
   travel_blogs: [
@@ -562,22 +569,17 @@ class UltraFreshComplete {
     }
   }
 
-// Scraper Reddit via API officielle
-async scrapeRedditOfficial() {
-  try {
-    console.log('🔍 Scraping Reddit via API officielle...');
+  // Obtenir un token Reddit valide (avec cache et refresh)
+  async getValidRedditToken() {
+    const now = Date.now();
     
-    // Vérifier que les credentials sont présents
-    if (!REDDIT_API_CONFIG.clientId || !REDDIT_API_CONFIG.clientSecret) {
-      console.log('❌ Credentials Reddit manquants - Passage aux sources alternatives');
-      return [];
+    // Vérifier si le token est encore valide (avec marge de 5 minutes)
+    if (redditTokenCache.token && now < redditTokenCache.expires - 300000) {
+      console.log('🔄 Utilisation du token Reddit en cache');
+      return redditTokenCache.token;
     }
     
-    // Debug pour GitHub Actions
-    console.log('🔍 Debug Reddit credentials:');
-    console.log('Client ID présent:', !!REDDIT_API_CONFIG.clientId);
-    console.log('Client Secret présent:', !!REDDIT_API_CONFIG.clientSecret);
-    console.log('User-Agent:', REDDIT_API_CONFIG.userAgent);
+    console.log('🔑 Génération d\'un nouveau token Reddit...');
     
     // Délai avant authentification Reddit
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -595,6 +597,38 @@ async scrapeRedditOfficial() {
     );
     
     const accessToken = authResponse.data.access_token;
+    const expiresIn = authResponse.data.expires_in || 3600; // 1 heure par défaut
+    
+    // Mettre en cache le token
+    redditTokenCache = {
+      token: accessToken,
+      expires: now + (expiresIn * 1000),
+      refreshTime: now
+    };
+    
+    console.log(`✅ Token Reddit généré, expire dans ${expiresIn}s`);
+    return accessToken;
+  }
+
+  // Scraper Reddit via API officielle
+  async scrapeRedditOfficial() {
+  try {
+    console.log('🔍 Scraping Reddit via API officielle...');
+    
+    // Vérifier que les credentials sont présents
+    if (!REDDIT_API_CONFIG.clientId || !REDDIT_API_CONFIG.clientSecret) {
+      console.log('❌ Credentials Reddit manquants - Passage aux sources alternatives');
+      return [];
+    }
+    
+    // Debug pour GitHub Actions
+    console.log('🔍 Debug Reddit credentials:');
+    console.log('Client ID présent:', !!REDDIT_API_CONFIG.clientId);
+    console.log('Client Secret présent:', !!REDDIT_API_CONFIG.clientSecret);
+    console.log('User-Agent:', REDDIT_API_CONFIG.userAgent);
+    
+    // Vérifier et rafraîchir le token si nécessaire
+    const accessToken = await this.getValidRedditToken();
       
     // Scraper r/travel avec retry
     let travelResponse;
