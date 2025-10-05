@@ -553,14 +553,14 @@ async scrapeRedditOfficial() {
     console.log('🔍 Scraping Reddit via API officielle...');
     
     // Vérifier que les credentials sont présents
-    if (!REDDIT_API_CONFIG.clientId || !REDDIT_API_CONFIG.clientSecret || !REDDIT_API_CONFIG.username || !REDDIT_API_CONFIG.password) {
+    if (!REDDIT_API_CONFIG.clientId || !REDDIT_API_CONFIG.clientSecret) {
       console.log('❌ Credentials Reddit manquants - Passage aux sources alternatives');
       return [];
     }
     
-    // Authentification Reddit avec username/password
+    // Authentification Reddit avec client_credentials
     const authResponse = await axios.post('https://www.reddit.com/api/v1/access_token', 
-      `grant_type=password&username=${REDDIT_API_CONFIG.username}&password=${REDDIT_API_CONFIG.password}&client_id=${REDDIT_API_CONFIG.clientId}&client_secret=${REDDIT_API_CONFIG.clientSecret}`,
+      `grant_type=client_credentials&client_id=${REDDIT_API_CONFIG.clientId}&client_secret=${REDDIT_API_CONFIG.clientSecret}`,
       {
         headers: {
           'User-Agent': REDDIT_API_CONFIG.userAgent,
