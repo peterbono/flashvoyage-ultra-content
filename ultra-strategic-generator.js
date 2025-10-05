@@ -45,7 +45,48 @@ class UltraStrategicGenerator {
     this.intelligentFilter = new IntelligentArticleFilter();
     this.genericTemplates = new GenericTemplates();
     this.intelligentAnalyzer = new IntelligentContentAnalyzer();
+    
+    // Cache local pour les articles publiés
+    this.cacheFile = './published-articles-cache.json';
+    this.cacheExpiry = 24 * 60 * 60 * 1000; // 24 heures
+    
     console.log('🧠 Mode intelligent activé par défaut');
+  }
+
+  // Charger le cache local
+  async loadCache() {
+    try {
+      const fs = await import('fs');
+      if (fs.existsSync(this.cacheFile)) {
+        const cacheData = JSON.parse(fs.readFileSync(this.cacheFile, 'utf8'));
+        const now = Date.now();
+        
+        if (now - cacheData.timestamp < this.cacheExpiry) {
+          console.log('📚 Chargement du cache local...');
+          this.publishedArticles = new Set(cacheData.articles);
+          console.log(`✅ ${this.publishedArticles.size} articles chargés depuis le cache`);
+          return true;
+        }
+      }
+    } catch (error) {
+      console.log('⚠️ Erreur chargement cache:', error.message);
+    }
+    return false;
+  }
+
+  // Sauvegarder le cache local
+  async saveCache() {
+    try {
+      const fs = await import('fs');
+      const cacheData = {
+        timestamp: Date.now(),
+        articles: Array.from(this.publishedArticles)
+      };
+      fs.writeFileSync(this.cacheFile, JSON.stringify(cacheData, null, 2));
+      console.log('💾 Cache sauvegardé localement');
+    } catch (error) {
+      console.log('⚠️ Erreur sauvegarde cache:', error.message);
+    }
   }
 
   // Charger les articles déjà publiés
@@ -53,40 +94,53 @@ class UltraStrategicGenerator {
     try {
       console.log('📚 Chargement des articles déjà publiés...');
       
+      // Essayer d'abord le cache local
+      if (await this.loadCache()) {
+        return;
+      }
+      
       let allArticles = [];
       let page = 1;
       const perPage = 100;
       
       // Récupérer tous les articles (plusieurs pages)
       while (true) {
-        const response = await axios.get(`${WORDPRESS_URL}/wp-json/wp/v2/posts?per_page=${perPage}&page=${page}&status=publish`, {
-          auth: {
-            username: WORDPRESS_USERNAME,
-            password: WORDPRESS_APP_PASSWORD
-          },
-          timeout: 15000,
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+        try {
+          // L'API WordPress est publique, pas besoin d'auth
+          const response = await axios.get(`${WORDPRESS_URL}/wp-json/wp/v2/posts?per_page=${perPage}&page=${page}&status=publish&_fields=id,title,date`, {
+            timeout: 15000,
+            headers: {
+              'Accept': 'application/json',
+              'User-Agent': 'FlashVoyagesBot/1.0'
+            }
+          });
+          
+          if (!response.data || !Array.isArray(response.data) || response.data.length === 0) {
+            break;
           }
-        });
-        
-        if (!response.data || !Array.isArray(response.data) || response.data.length === 0) {
-          break;
+          
+          allArticles = allArticles.concat(response.data);
+          page++;
+          
+          // Limiter à 10 pages max (1000 articles) pour éviter les timeouts
+          if (page > 10) break;
+          
+        } catch (error) {
+          // Si erreur 400 (page inexistante), arrêter la pagination
+          if (error.response?.status === 400 && error.response?.data?.code === 'rest_post_invalid_page_number') {
+            console.log('✅ Fin des pages WordPress atteinte');
+            break;
+          }
+          // Sinon, propager l'erreur
+          throw error;
         }
-        
-        allArticles = allArticles.concat(response.data);
-        page++;
-        
-        // Limiter à 10 pages max (1000 articles) pour éviter les timeouts
-        if (page > 10) break;
       }
       
       // Analyser les titres et extraire les mots-clés
       allArticles.forEach(post => {
         if (post.title && post.title.rendered) {
-          const title = post.title.rendered.toLowerCase().trim();
-          this.publishedArticles.add(title);
+        const title = post.title.rendered.toLowerCase().trim();
+        this.publishedArticles.add(title);
           
           // Extraire les mots-clés principaux du titre
           const keywords = title.match(/\b(visa|nomade|asie|pays|top|guide|comment|où|quand|pourquoi)\b/g);
@@ -97,8 +151,33 @@ class UltraStrategicGenerator {
       });
       
       console.log(`✅ ${allArticles.length} articles analysés, ${this.publishedArticles.size} éléments uniques chargés`);
+      
+      // Sauvegarder le cache
+      await this.saveCache();
     } catch (error) {
       console.warn('⚠️ Impossible de charger les articles existants:', error.message);
+      
+      // Essayer de charger le cache même en cas d'erreur
+      await this.loadCache();
+    }
+  }
+
+  // Forcer le rechargement des articles (ignorer le cache)
+  async forceRefreshArticles() {
+    try {
+      console.log('🔄 Force refresh des articles publiés...');
+      
+      // Supprimer le cache
+      const fs = await import('fs');
+      if (fs.existsSync(this.cacheFile)) {
+        fs.unlinkSync(this.cacheFile);
+        console.log('🗑️ Cache supprimé');
+      }
+      
+      // Recharger depuis WordPress
+      await this.loadPublishedArticles();
+    } catch (error) {
+      console.error('❌ Erreur force refresh:', error.message);
     }
   }
 
@@ -253,7 +332,7 @@ class UltraStrategicGenerator {
         expertise_score: this.getGenericExpertiseScore(relevanceAnalysis),
         validation: validation
       };
-      
+
     } catch (error) {
       console.warn('⚠️ Erreur génération générique, utilisation du fallback:', error.message);
       return this.generateFallbackContent(article);
@@ -307,7 +386,7 @@ class UltraStrategicGenerator {
         expertise_score: this.getNomadeAsiaExpertiseScore(relevanceAnalysis),
         validation: validation
       };
-      
+
     } catch (error) {
       console.warn('⚠️ Erreur génération nomade Asie, utilisation du fallback:', error.message);
       return this.generateFallbackContent(article);
@@ -362,7 +441,7 @@ class UltraStrategicGenerator {
         cta: nomadeContent.cta,
         expertise_score: "9/10"
       };
-      
+
     } catch (error) {
       console.warn('⚠️ Erreur génération nomade, utilisation du fallback:', error.message);
       return this.generateFallbackContent(article);
@@ -640,8 +719,8 @@ class UltraStrategicGenerator {
           const hasCommonWords = commonWords.some(word => titleWords.includes(word));
           
           if (!hasCommonWords) {
-            bestArticle = article;
-            break;
+          bestArticle = article;
+          break;
           } else {
             console.log('⚠️ Article potentiellement similaire détecté, passage au suivant...');
           }

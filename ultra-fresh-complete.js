@@ -547,42 +547,75 @@ class UltraFreshComplete {
     }
   }
 
-  // Scraper Reddit via API officielle
-  async scrapeRedditOfficial() {
-    try {
-      console.log('🔍 Scraping Reddit via API officielle...');
+// Scraper Reddit via API officielle
+async scrapeRedditOfficial() {
+  try {
+    console.log('🔍 Scraping Reddit via API officielle...');
+    
+    // Authentification Reddit
+    const authResponse = await axios.post('https://www.reddit.com/api/v1/access_token', 
+      `grant_type=client_credentials&client_id=${REDDIT_API_CONFIG.clientId}&client_secret=${REDDIT_API_CONFIG.clientSecret}`,
+      {
+        headers: {
+          'User-Agent': REDDIT_API_CONFIG.userAgent,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        timeout: 10000
+      }
+    );
+    
+    const accessToken = authResponse.data.access_token;
       
-      // Authentification Reddit
-      const authResponse = await axios.post('https://www.reddit.com/api/v1/access_token', 
-        `grant_type=client_credentials&client_id=${REDDIT_API_CONFIG.clientId}&client_secret=${REDDIT_API_CONFIG.clientSecret}`,
-        {
+    // Scraper r/travel avec retry
+    let travelResponse;
+    let retries = 3;
+    while (retries > 0) {
+      try {
+        travelResponse = await axios.get('https://oauth.reddit.com/r/travel/hot.json?limit=10', {
           headers: {
-            'User-Agent': REDDIT_API_CONFIG.userAgent,
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Authorization': `Bearer ${accessToken}`,
+            'User-Agent': REDDIT_API_CONFIG.userAgent
           },
-          timeout: 10000
+          timeout: 15000
+        });
+        break;
+      } catch (error) {
+        retries--;
+        if (retries > 0) {
+          console.log(`⚠️ Retry Reddit r/travel (${3 - retries}/3)...`);
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        } else {
+          throw error;
         }
-      );
+      }
+    }
+    
+    // Délai entre les requêtes pour éviter le rate limiting
+    await new Promise(resolve => setTimeout(resolve, 1000));
       
-      const accessToken = authResponse.data.access_token;
-      
-      // Scraper r/travel
-      const travelResponse = await axios.get('https://oauth.reddit.com/r/travel/hot.json?limit=10', {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'User-Agent': REDDIT_API_CONFIG.userAgent
-        },
-        timeout: 10000
-      });
-      
-      // Scraper r/digitalnomad
-      const nomadResponse = await axios.get('https://oauth.reddit.com/r/digitalnomad/hot.json?limit=10', {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'User-Agent': REDDIT_API_CONFIG.userAgent
-        },
-        timeout: 10000
-      });
+    // Scraper r/digitalnomad avec retry
+    let nomadResponse;
+    retries = 3;
+    while (retries > 0) {
+      try {
+        nomadResponse = await axios.get('https://oauth.reddit.com/r/digitalnomad/hot.json?limit=10', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'User-Agent': REDDIT_API_CONFIG.userAgent
+          },
+          timeout: 15000
+        });
+        break;
+      } catch (error) {
+        retries--;
+        if (retries > 0) {
+          console.log(`⚠️ Retry Reddit r/digitalnomad (${3 - retries}/3)...`);
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        } else {
+          throw error;
+        }
+      }
+    }
       
       const allArticles = [];
       
@@ -629,10 +662,21 @@ class UltraFreshComplete {
       console.log(`✅ Reddit API: ${allArticles.length} articles trouvés`);
       return allArticles;
       
-    } catch (error) {
-      console.log(`❌ Erreur Reddit API: ${error.message}`);
-      return [];
+  } catch (error) {
+    console.log(`❌ Erreur Reddit API: ${error.message}`);
+    
+    if (error.code === 'ECONNRESET') {
+      console.log('🌐 Connexion fermée par Reddit - Rate limiting possible');
+    } else if (error.code === 'ETIMEDOUT') {
+      console.log('⏰ Timeout - Reddit trop lent');
+    } else if (error.response?.status === 429) {
+      console.log('⏰ Rate limit Reddit - Attendez avant de réessayer');
+    } else if (error.response?.status === 403) {
+      console.log('🚫 Accès refusé Reddit - Vérifiez les permissions');
     }
+    
+    return [];
+  }
   }
 
   // Scraper Reddit via proxy (pour contourner GitHub Actions)
