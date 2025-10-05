@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import dotenv from 'dotenv';
+import { Buffer } from 'buffer';
 
 dotenv.config();
 
@@ -584,11 +585,19 @@ class UltraFreshComplete {
     // Délai avant authentification Reddit
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Authentification Reddit avec client_credentials
+    // Authentification Reddit avec password flow (correct pour script personnel)
+    const credentials = Buffer.from(`${REDDIT_API_CONFIG.clientId}:${REDDIT_API_CONFIG.clientSecret}`).toString('base64');
+    const form = new URLSearchParams();
+    form.append('grant_type', 'password');
+    form.append('username', REDDIT_API_CONFIG.username);
+    form.append('password', REDDIT_API_CONFIG.password);
+    form.append('scope', 'read');
+    
     const authResponse = await axios.post('https://www.reddit.com/api/v1/access_token', 
-      `grant_type=client_credentials&client_id=${REDDIT_API_CONFIG.clientId}&client_secret=${REDDIT_API_CONFIG.clientSecret}`,
+      form.toString(),
       {
         headers: {
+          'Authorization': `Basic ${credentials}`,
           'User-Agent': REDDIT_API_CONFIG.userAgent,
           'Content-Type': 'application/x-www-form-urlencoded'
         },
@@ -615,8 +624,8 @@ class UltraFreshComplete {
   try {
     console.log('🔍 Scraping Reddit via API officielle...');
     
-    // Vérifier que les credentials sont présents
-    if (!REDDIT_API_CONFIG.clientId || !REDDIT_API_CONFIG.clientSecret) {
+    // Vérifier que tous les credentials sont présents (password flow)
+    if (!REDDIT_API_CONFIG.clientId || !REDDIT_API_CONFIG.clientSecret || !REDDIT_API_CONFIG.username || !REDDIT_API_CONFIG.password) {
       console.log('❌ Credentials Reddit manquants - Passage aux sources alternatives');
       return [];
     }
@@ -625,6 +634,8 @@ class UltraFreshComplete {
     console.log('🔍 Debug Reddit credentials:');
     console.log('Client ID présent:', !!REDDIT_API_CONFIG.clientId);
     console.log('Client Secret présent:', !!REDDIT_API_CONFIG.clientSecret);
+    console.log('Username présent:', !!REDDIT_API_CONFIG.username);
+    console.log('Password présent:', !!REDDIT_API_CONFIG.password);
     console.log('User-Agent:', REDDIT_API_CONFIG.userAgent);
     
     // Vérifier et rafraîchir le token si nécessaire
