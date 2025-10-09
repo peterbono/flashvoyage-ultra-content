@@ -434,7 +434,7 @@ class UltraFreshComplete {
       }
 
       console.log(`✅ Google News Nomade: ${articles.length} articles trouvés`);
-      return articles;
+    return articles;
 
     } catch (error) {
       console.error('❌ Erreur Google News Nomade:', error.message);
@@ -502,16 +502,16 @@ class UltraFreshComplete {
       console.log('💻 Mode local - Utilisation de toutes les sources\n');
       
       // Scraper Reddit (mode local)
-      const redditArticles = await this.scrapeReddit();
-      allArticles.push(...redditArticles);
+    const redditArticles = await this.scrapeReddit();
+    allArticles.push(...redditArticles);
 
       // Scraper Reddit Nomade (mode local)
       const redditNomadArticles = await this.scrapeRedditNomad();
       allArticles.push(...redditNomadArticles);
 
-      // Scraper Google News
-      const googleArticles = await this.scrapeGoogleNews();
-      allArticles.push(...googleArticles);
+    // Scraper Google News
+    const googleArticles = await this.scrapeGoogleNews();
+    allArticles.push(...googleArticles);
 
       // Scraper Google News Nomade
       const googleNomadArticles = await this.scrapeGoogleNewsNomad();
