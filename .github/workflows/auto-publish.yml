@@ -1,7 +1,7 @@
 name: Auto Publish Ultra Content
 on:
-  schedule:
-    - cron: '0 9 * * *'  # Tous les jours à 9h UTC (11h française)
+  # schedule:
+  #   - cron: '0 9 * * *'  # Tous les jours à 9h UTC (11h française) - PAUSÉ
   workflow_dispatch:  # Permet de déclencher manuellement
 
 jobs:
@@ -46,6 +46,7 @@ jobs:
           echo "🌏 FlashVoyages - Votre spécialiste du voyage en Asie"
           echo "✈️ Données Amadeus intégrées"
           echo "📡 740 articles RSS analysés"
+          echo "⚠️  PUBLICATION MANUELLE - Automatisation en pause"
           
       - name: Notify Failure
         if: failure()
