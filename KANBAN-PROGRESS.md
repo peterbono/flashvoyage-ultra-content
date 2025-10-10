@@ -349,6 +349,11 @@
 - **Widgets** : Intégration Travelpayouts selon le contenu
 - **Backlinks** : Détection automatique d'articles connexes
 
+### **Templates à créer (Plus tard) :**
+- **Template Guide** : Step-by-step pratique à créer
+- **Template Comparaison** : enhanced-nomade-templates.js à améliorer
+- **Template Destination** : Spécificités locales à adapter
+
 ### **Opportunités :**
 - **Sources multiples** : Reddit + Google News + Blogs déjà configurés
 - **IA fonctionnelle** : GPT-4 avec analyse sentiment
