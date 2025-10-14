@@ -48,6 +48,12 @@ export class AdvancedRedditAnalyzer {
       // === PROFIL NOMADE ===
       nomad_profile: this.detectNomadProfile(postData),
       
+      // === QUOTES HIGHLIGHT ===
+      best_quotes: this.extractBestQuotes(postData),
+      
+      // === USERNAME REDDIT ===
+      reddit_username: this.extractRedditUsername(postData),
+      
       // === PROFIL PROFESSIONNEL ===
       professional_profile: this.detectProfessionalProfile(postData),
       
@@ -68,6 +74,44 @@ export class AdvancedRedditAnalyzer {
     };
 
     return analysis;
+  }
+
+  /**
+   * Extraire le username Reddit du lien ou du titre
+   */
+  extractRedditUsername(postData) {
+    // Essayer d'extraire du lien : https://reddit.com/r/digitalnomad/comments/.../username/
+    if (postData.link) {
+      const match = postData.link.match(/\/comments\/[^\/]+\/[^\/]+\/?([^\/]+)?/);
+      if (match && match[1]) {
+        return match[1];
+      }
+      
+      // Alternative: /u/username ou /user/username
+      const userMatch = postData.link.match(/\/(?:u|user)\/([^\/\s]+)/);
+      if (userMatch) {
+        return userMatch[1];
+      }
+    }
+    
+    // Générer un username générique basé sur le contenu
+    const content = (postData.content || postData.title || '').toLowerCase();
+    
+    if (content.includes('indonesia') || content.includes('indonésie')) {
+      return 'nomade_indonesie';
+    } else if (content.includes('thailand') || content.includes('thaïlande')) {
+      return 'nomade_thailande';
+    } else if (content.includes('vietnam')) {
+      return 'nomade_vietnam';
+    } else if (content.includes('japan') || content.includes('japon')) {
+      return 'nomade_japon';
+    } else if (content.includes('bali')) {
+      return 'nomade_bali';
+    } else if (content.includes('digital nomad')) {
+      return 'digital_nomade';
+    }
+    
+    return 'nomade_asie'; // Fallback par défaut
   }
 
   /**
@@ -1312,6 +1356,255 @@ export class AdvancedRedditAnalyzer {
     }
     
     return patterns;
+  }
+
+  /**
+   * EXTRACTION DES MEILLEURES QUOTES POUR HIGHLIGHT
+   */
+  extractBestQuotes(postData) {
+    const content = postData.content || postData.selftext || '';
+    const title = postData.title || '';
+    
+    // Extraire toutes les phrases potentielles
+    const sentences = this.extractSentences(content);
+    
+    // Catégoriser les quotes selon leur type
+    const quotes = {
+      financial: this.extractFinancialQuotes(sentences),
+      emotional: this.extractEmotionalQuotes(sentences),
+      advice: this.extractAdviceQuotes(sentences),
+      transformation: this.extractTransformationQuotes(sentences)
+    };
+    
+    // Sélectionner la meilleure quote pour chaque type
+    const bestQuotes = {
+      hook: this.selectBestQuote(quotes.financial, 'financial'),
+      credibility: this.selectBestQuote(quotes.emotional, 'emotional'),
+      impact: this.selectBestQuote(quotes.advice, 'advice'),
+      transformation: this.selectBestQuote(quotes.transformation, 'transformation')
+    };
+    
+    return {
+      all_quotes: quotes,
+      best_quotes: bestQuotes,
+      selected_quote: this.selectOptimalQuote(bestQuotes)
+    };
+  }
+
+  /**
+   * Extraire les phrases du contenu
+   */
+  extractSentences(text) {
+    // Nettoyer le texte
+    const cleanText = text
+      .replace(/\[.*?\]/g, '') // Supprimer les liens markdown
+      .replace(/\(.*?\)/g, '') // Supprimer les parenthèses
+      .replace(/\n+/g, ' ') // Remplacer les retours à la ligne
+      .trim();
+    
+    // Diviser en phrases
+    const sentences = cleanText
+      .split(/[.!?]+/)
+      .map(s => s.trim())
+      .filter(s => s.length > 20 && s.length < 200) // Phrases de 20-200 caractères
+      .filter(s => !s.match(/^\d+$/)) // Exclure les nombres seuls
+      .filter(s => s.includes(' ')); // Au moins un espace
+    
+    return sentences;
+  }
+
+  /**
+   * Extraire les quotes financières
+   */
+  extractFinancialQuotes(sentences) {
+    const financialKeywords = [
+      'revenus', 'salaire', 'gains', 'économies', 'ROI', 'chiffres', '€', '$', 'K',
+      'budget', 'coût', 'prix', 'argent', 'financier', 'profit', 'bénéfice'
+    ];
+    
+    return sentences.filter(sentence => 
+      financialKeywords.some(keyword => 
+        sentence.toLowerCase().includes(keyword.toLowerCase())
+      )
+    ).map(quote => ({
+      text: quote,
+      type: 'financial',
+      score: this.scoreFinancialQuote(quote)
+    }));
+  }
+
+  /**
+   * Extraire les quotes émotionnelles
+   */
+  extractEmotionalQuotes(sentences) {
+    const emotionalKeywords = [
+      'changé', 'révolutionné', 'transformé', 'réussi', 'surmonté', 'défi',
+      'incroyable', 'fantastique', 'amazing', 'love', 'perfect', 'wow',
+      'difficile', 'challenging', 'overwhelmed', 'stressed', 'anxious'
+    ];
+    
+    return sentences.filter(sentence => 
+      emotionalKeywords.some(keyword => 
+        sentence.toLowerCase().includes(keyword.toLowerCase())
+      )
+    ).map(quote => ({
+      text: quote,
+      type: 'emotional',
+      score: this.scoreEmotionalQuote(quote)
+    }));
+  }
+
+  /**
+   * Extraire les quotes de conseils
+   */
+  extractAdviceQuotes(sentences) {
+    const adviceKeywords = [
+      'conseil', 'astuce', 'secret', 'recommandation', 'éviter', 'faire',
+      'should', 'must', 'need to', 'recommend', 'suggest', 'tip'
+    ];
+    
+    return sentences.filter(sentence => 
+      adviceKeywords.some(keyword => 
+        sentence.toLowerCase().includes(keyword.toLowerCase())
+      )
+    ).map(quote => ({
+      text: quote,
+      type: 'advice',
+      score: this.scoreAdviceQuote(quote)
+    }));
+  }
+
+  /**
+   * Extraire les quotes de transformation
+   */
+  extractTransformationQuotes(sentences) {
+    const transformationKeywords = [
+      'avant', 'après', 'transition', 'évolution', 'progression',
+      'de', 'à', 'passé de', 'maintenant', 'aujourd\'hui'
+    ];
+    
+    return sentences.filter(sentence => 
+      transformationKeywords.some(keyword => 
+        sentence.toLowerCase().includes(keyword.toLowerCase())
+      )
+    ).map(quote => ({
+      text: quote,
+      type: 'transformation',
+      score: this.scoreTransformationQuote(quote)
+    }));
+  }
+
+  /**
+   * Sélectionner la meilleure quote d'un type
+   */
+  selectBestQuote(quotes, type) {
+    if (!quotes || quotes.length === 0) return null;
+    
+    // Trier par score décroissant
+    const sortedQuotes = quotes.sort((a, b) => b.score - a.score);
+    
+    return {
+      text: sortedQuotes[0].text,
+      type: type,
+      score: sortedQuotes[0].score
+    };
+  }
+
+  /**
+   * Sélectionner la quote optimale pour l'article
+   */
+  selectOptimalQuote(bestQuotes) {
+    // Priorité : financial > emotional > advice > transformation
+    const priority = ['financial', 'emotional', 'advice', 'transformation'];
+    
+    for (const type of priority) {
+      if (bestQuotes[type] && bestQuotes[type].score > 0.5) {
+        return bestQuotes[type];
+      }
+    }
+    
+    // Fallback : première quote disponible
+    const availableQuotes = Object.values(bestQuotes).filter(q => q !== null);
+    return availableQuotes.length > 0 ? availableQuotes[0] : null;
+  }
+
+  /**
+   * Scorer une quote financière
+   */
+  scoreFinancialQuote(quote) {
+    let score = 0;
+    
+    // Présence de chiffres
+    if (/\d+/.test(quote)) score += 0.3;
+    
+    // Mots-clés financiers
+    const financialWords = ['revenus', 'salaire', 'gains', 'économies', '€', '$', 'K'];
+    const financialCount = financialWords.filter(word => 
+      quote.toLowerCase().includes(word.toLowerCase())
+    ).length;
+    score += financialCount * 0.2;
+    
+    // Longueur optimale (50-150 caractères)
+    if (quote.length >= 50 && quote.length <= 150) score += 0.2;
+    
+    return Math.min(score, 1);
+  }
+
+  /**
+   * Scorer une quote émotionnelle
+   */
+  scoreEmotionalQuote(quote) {
+    let score = 0;
+    
+    // Mots-clés émotionnels
+    const emotionalWords = ['changé', 'révolutionné', 'transformé', 'réussi', 'incroyable'];
+    const emotionalCount = emotionalWords.filter(word => 
+      quote.toLowerCase().includes(word.toLowerCase())
+    ).length;
+    score += emotionalCount * 0.3;
+    
+    // Longueur optimale
+    if (quote.length >= 40 && quote.length <= 120) score += 0.2;
+    
+    return Math.min(score, 1);
+  }
+
+  /**
+   * Scorer une quote de conseil
+   */
+  scoreAdviceQuote(quote) {
+    let score = 0;
+    
+    // Mots-clés de conseil
+    const adviceWords = ['conseil', 'astuce', 'secret', 'recommandation'];
+    const adviceCount = adviceWords.filter(word => 
+      quote.toLowerCase().includes(word.toLowerCase())
+    ).length;
+    score += adviceCount * 0.3;
+    
+    // Longueur optimale
+    if (quote.length >= 30 && quote.length <= 100) score += 0.2;
+    
+    return Math.min(score, 1);
+  }
+
+  /**
+   * Scorer une quote de transformation
+   */
+  scoreTransformationQuote(quote) {
+    let score = 0;
+    
+    // Mots-clés de transformation
+    const transformationWords = ['avant', 'après', 'transition', 'évolution'];
+    const transformationCount = transformationWords.filter(word => 
+      quote.toLowerCase().includes(word.toLowerCase())
+    ).length;
+    score += transformationCount * 0.3;
+    
+    // Longueur optimale
+    if (quote.length >= 40 && quote.length <= 130) score += 0.2;
+    
+    return Math.min(score, 1);
   }
 }
 

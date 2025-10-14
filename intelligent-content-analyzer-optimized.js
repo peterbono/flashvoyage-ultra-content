@@ -202,8 +202,12 @@ INSTRUCTIONS SPÉCIFIQUES:
 5. SPÉCIFICITÉ: Évite les généralités, utilise des données précises
 
 CONTENU REQUIS:
-1. Titre accrocheur avec emoji
-2. Introduction personnalisée
+1. Titre accrocheur (sans emoji, avec mention "témoignage Reddit" à la fin)
+2. Introduction FOMO + Curation FlashVoyages (OBLIGATOIRE)
+   Format: "Pendant que vous [action], d'autres [résultat]. Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui montre comment [transformation]."
+   Exemples:
+   - "Pendant que vous hésitez, d'autres agissent. Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui montre comment un nomade a triplé ses revenus en Indonésie."
+   - "Pendant que vous planifiez, d'autres apprennent de leurs erreurs. Nous avons analysé ce témoignage Reddit qui détaille les erreurs à éviter en Thaïlande."
 3. Développement structuré selon le type
 4. Conseils pratiques et concrets
 5. CTA spécifique

@@ -3,12 +3,15 @@
 import UltraStrategicGenerator from './ultra-strategic-generator.js';
 import ContentEnhancer from './content-enhancer.js';
 import IntelligentContentAnalyzerOptimized from './intelligent-content-analyzer-optimized.js';
+import { CompleteLinkingStrategy } from './complete-linking-strategy.js';
+import { OPENAI_API_KEY } from './config.js';
 
 class EnhancedUltraGenerator extends UltraStrategicGenerator {
   constructor() {
     super();
     this.contentEnhancer = new ContentEnhancer();
     this.intelligentAnalyzer = new IntelligentContentAnalyzerOptimized();
+    this.linkingStrategy = new CompleteLinkingStrategy();
     
     // Initialiser les composants nécessaires
     this.initializeComponents();
@@ -24,6 +27,16 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   async generateAndPublishEnhancedArticle() {
     try {
       console.log('🚀 Génération d\'article stratégique amélioré...\n');
+
+      // 0. Mettre à jour la base de données d'articles (pour liens internes à jour)
+      console.log('📚 Mise à jour de la base de données d\'articles...');
+      try {
+        await this.linkingStrategy.internalAnalyzer.loadArticlesDatabase('articles-database.json');
+        console.log('✅ Base de données chargée\n');
+      } catch (error) {
+        console.warn('⚠️ Impossible de charger la base d\'articles:', error.message);
+        console.warn('   → Les liens internes ne seront pas générés\n');
+      }
 
       // 1. Récupérer les sources
       const sources = await this.scraper.scrapeAllSources();
@@ -77,10 +90,22 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         null // Pas d'ID d'article pour éviter l'auto-référence
       );
 
-      // 6. Construction de l'article final
+      // 6. Générer le quote highlight si disponible
+      let quoteHighlight = '';
+      if (analysis.best_quotes && analysis.best_quotes.selected_quote) {
+        console.log('💬 Génération du quote highlight...');
+        const redditUsername = analysis.reddit_username || null;
+        quoteHighlight = this.templates.generateQuoteHighlight(
+          analysis.best_quotes.selected_quote,
+          redditUsername
+        );
+        console.log(`✅ Quote highlight généré (${redditUsername ? `u/${redditUsername}` : 'anonyme'})`);
+      }
+
+      // 7. Construction de l'article final
       const finalArticle = {
         title: generatedContent.title,
-        content: enhanced.content,
+        content: enhanced.content.replace('{quote_highlight}', quoteHighlight),
         excerpt: this.generateExcerpt(enhanced.content),
         status: 'publish',
         categories: await this.getCategoriesForContent(analysis),
@@ -92,7 +117,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         enhancements: {
           widgets: enhanced.widgets,
           internalLinks: enhanced.internalLinks,
-          validation: enhanced.validation
+          validation: enhanced.validation,
+          quoteHighlight: quoteHighlight ? 'Oui' : 'Non'
         }
       };
 
@@ -103,13 +129,43 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         tags: finalArticle.tags
       });
 
-      // 7. Validation finale
+      // 7. Enrichissement avec liens internes et externes
+      console.log('🔗 Enrichissement avec liens intelligents...');
+      try {
+        const linkingStrategyResult = await this.linkingStrategy.createStrategy(
+          finalArticle.content,
+          finalArticle.title,
+          null // Pas d'ID car nouvel article
+        );
+
+        console.log(`✅ Stratégie de liens créée: ${linkingStrategyResult.total_links} liens suggérés`);
+        console.log(`   - Liens internes: ${linkingStrategyResult.breakdown.internal}`);
+        console.log(`   - Liens externes: ${linkingStrategyResult.breakdown.external}`);
+
+        // Intégrer tous les liens
+        const enrichedContent = this.linkingStrategy.integrateAllLinks(
+          finalArticle.content,
+          linkingStrategyResult
+        );
+
+        // Mettre à jour le contenu avec les liens
+        finalArticle.content = enrichedContent;
+        finalArticle.enhancements.internalLinks = linkingStrategyResult.breakdown.internal;
+        finalArticle.enhancements.externalLinks = linkingStrategyResult.breakdown.external;
+
+        console.log('✅ Liens intégrés avec succès');
+      } catch (linkError) {
+        console.warn('⚠️ Erreur lors de l\'enrichissement des liens:', linkError.message);
+        console.warn('   → Article publié sans enrichissement de liens');
+      }
+
+      // 8. Validation finale
       const validation = this.validateFinalArticle(finalArticle);
       if (!validation.isValid) {
         throw new Error(`Article invalide: ${validation.errors.join(', ')}`);
       }
 
-      // 8. Publication WordPress
+      // 9. Publication WordPress
       console.log('📝 Publication sur WordPress...');
       const publishedArticle = await this.publishToWordPress(finalArticle);
       
@@ -117,9 +173,23 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       console.log('🔗 Lien:', publishedArticle.link);
       console.log('📊 Améliorations:', {
         widgets: enhanced.widgets.length,
-        internalLinks: enhanced.internalLinks.length,
-        validationScore: enhanced.validation.score
+        internalLinks: finalArticle.enhancements.internalLinks || 0,
+        externalLinks: finalArticle.enhancements.externalLinks || 0,
+        validationScore: enhanced.validation.score,
+        quoteHighlight: finalArticle.enhancements.quoteHighlight
       });
+
+      // 10. Mettre à jour la base de données d'articles (pour les prochains articles)
+      console.log('\n📚 Mise à jour de la base de données...');
+      try {
+        const { WordPressArticlesCrawler } = await import('./wordpress-articles-crawler.js');
+        const crawler = new WordPressArticlesCrawler();
+        await crawler.crawlAllArticles();
+        console.log('✅ Base de données mise à jour avec le nouvel article\n');
+      } catch (error) {
+        console.warn('⚠️ Impossible de mettre à jour la base:', error.message);
+        console.warn('   → Relancez manuellement: node wordpress-articles-crawler.js\n');
+      }
 
       return publishedArticle;
 
@@ -132,10 +202,10 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   // Obtenir les catégories selon l'analyse
   async getCategoriesForContent(analysis) {
     const categoryMapping = {
-      'TEMOIGNAGE_SUCCESS_STORY': 'Témoignages',
-      'TEMOIGNAGE_ECHEC_LEÇONS': 'Témoignages',
-      'TEMOIGNAGE_TRANSITION': 'Témoignages',
-      'TEMOIGNAGE_COMPARAISON': 'Témoignages',
+      'TEMOIGNAGE_SUCCESS_STORY': 'Digital Nomades Asie',
+      'TEMOIGNAGE_ECHEC_LEÇONS': 'Digital Nomades Asie',
+      'TEMOIGNAGE_TRANSITION': 'Digital Nomades Asie',
+      'TEMOIGNAGE_COMPARAISON': 'Digital Nomades Asie',
       'GUIDE_PRATIQUE': 'Guides Pratiques',
       'COMPARAISON_DESTINATIONS': 'Comparaisons',
       'ACTUALITE_NOMADE': 'Actualités',
@@ -154,8 +224,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       'visa': 'Visa & Formalités',
       'logement': 'Logement & Coliving',
       'transport': 'Transport & Mobilité',
-      'santé': 'Santé & Sécurité',
-      'finance': 'Budget & Finance',
+      'santé': 'Santé & Assurance',
+      'finance': 'Finance & Fiscalité',
       'communauté': 'Communauté & Réseau',
       'travail': 'Travail & Productivité',
       'voyage': 'Voyage & Découverte'
@@ -170,10 +240,10 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     
     // Tags par type de contenu
     const typeTags = {
-      'TEMOIGNAGE_SUCCESS_STORY': ['Témoignage', 'Succès', 'Inspiration'],
-      'TEMOIGNAGE_ECHEC_LEÇONS': ['Témoignage', 'Échec', 'Leçons'],
-      'TEMOIGNAGE_TRANSITION': ['Témoignage', 'Transition', 'Changement'],
-      'TEMOIGNAGE_COMPARAISON': ['Témoignage', 'Comparaison', 'Expérience'],
+      'TEMOIGNAGE_SUCCESS_STORY': ['Témoignage', 'Succès', 'Inspiration', 'Nomadisme Digital'],
+      'TEMOIGNAGE_ECHEC_LEÇONS': ['Témoignage', 'Échec', 'Leçons', 'Nomadisme Digital'],
+      'TEMOIGNAGE_TRANSITION': ['Témoignage', 'Transition', 'Changement', 'Nomadisme Digital'],
+      'TEMOIGNAGE_COMPARAISON': ['Témoignage', 'Comparaison', 'Expérience', 'Nomadisme Digital'],
       'GUIDE_PRATIQUE': ['Guide', 'Pratique', 'Tutoriel'],
       'COMPARAISON_DESTINATIONS': ['Comparaison', 'Destination', 'Choix'],
       'ACTUALITE_NOMADE': ['Actualité', 'Nouvelle', 'Tendance'],

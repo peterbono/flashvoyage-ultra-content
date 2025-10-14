@@ -56,10 +56,10 @@ class ContentValidator {
       this.warnings.push(`Mots répétés dans le titre: ${duplicates.join(', ')}`);
     }
     
-    // Vérifier les emojis excessifs
+    // Vérifier les emojis - INTERDICTION TOTALE pour les témoignages
     const emojiCount = (title.match(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu) || []).length;
-    if (emojiCount > 2) {
-      this.warnings.push('Trop d\'emojis dans le titre');
+    if (emojiCount > 0) {
+      this.errors.push('Emojis interdits dans le titre pour les témoignages');
     }
   }
 
@@ -68,6 +68,9 @@ class ContentValidator {
     if (!content || content.length < 100) {
       this.errors.push('Contenu trop court');
     }
+    
+    // NOUVEAU: Détecter les répétitions d'introductions
+    this.detectRepetitiveIntroductions(content);
     
     // Vérifier les incohérences temporelles
     const timePatterns = [
@@ -93,6 +96,51 @@ class ContentValidator {
         }
       });
     }
+  }
+
+  // NOUVEAU: Détecter les répétitions d'introductions
+  detectRepetitiveIntroductions(content) {
+    const sentences = content.split(/[.!?]/).filter(s => s.trim().length > 20);
+    const starts = sentences.map(s => s.trim().substring(0, 30).toLowerCase());
+    
+    // Détecter les patterns répétitifs
+    const repetitivePatterns = [
+      'en tant que nomade digital',
+      'en tant que développeur',
+      'en tant qu\'entrepreneur',
+      'mon parcours de nomade',
+      'grâce à mon expérience',
+      'après 8 mois de nomadisme'
+    ];
+    
+    const patternCounts = {};
+    repetitivePatterns.forEach(pattern => {
+      const count = starts.filter(start => start.includes(pattern)).length;
+      if (count > 0) {
+        patternCounts[pattern] = count;
+      }
+    });
+    
+    // Signaler les répétitions excessives
+    Object.entries(patternCounts).forEach(([pattern, count]) => {
+      if (count > 2) {
+        this.errors.push(`Répétition excessive de l'introduction: "${pattern}" (${count} fois)`);
+      } else if (count > 1) {
+        this.warnings.push(`Introduction répétée: "${pattern}" (${count} fois)`);
+      }
+    });
+    
+    // Détecter les répétitions générales
+    const startCounts = {};
+    starts.forEach(start => {
+      startCounts[start] = (startCounts[start] || 0) + 1;
+    });
+    
+    Object.entries(startCounts).forEach(([start, count]) => {
+      if (count > 1) {
+        this.warnings.push(`Phrase répétée: "${start.substring(0, 20)}..." (${count} fois)`);
+      }
+    });
   }
 
   // Valider la cohérence temporelle

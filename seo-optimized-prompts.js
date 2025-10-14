@@ -192,7 +192,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:
 
   /**
    * PROMPT DE VALIDATION SEO
-   * Vérification qualité + SEO
+   * Vérification qualité + SEO + NOUVELLES RÈGLES
    */
   getValidationPrompt(content) {
     return `Tu es un expert SEO pour FlashVoyages.com.
@@ -208,6 +208,18 @@ VALIDATION REQUISE:
 5. CTA clair et actionnable
 6. Contenu unique et valeur ajoutée
 7. Optimisation pour agents IA (données structurées)
+8. **NOUVEAU:** Absence d'emojis dans le titre (pour témoignages)
+9. **NOUVEAU:** Absence de répétitions d'introductions
+10. **NOUVEAU:** Fluidité de lecture optimale
+11. **NOUVEAU:** Diversité des formulations d'introduction
+12. **NOUVEAU:** Évitement des patterns répétitifs
+
+RÈGLES SPÉCIFIQUES TÉMOIGNAGES:
+- Titre SANS emoji (interdiction totale)
+- Maximum 2 phrases commençant par la même expression
+- Varier les introductions : "Mon parcours", "Grâce à", "Après X mois", "Mon expérience"
+- Éviter : "En tant que nomade digital" répété plus de 2 fois
+- Fluidité : Chaque paragraphe doit avoir une introduction différente
 
 RÉPONDRE UNIQUEMENT EN JSON VALIDE:
 {
@@ -216,7 +228,10 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:
   "score_utilisateur": 88,
   "problemes": [],
   "recommandations": [],
-  "validation": true
+  "validation": true,
+  "repetitions_detectees": [],
+  "emojis_titre": false,
+  "fluidite_lecture": "excellente"
 }`;
   }
 }

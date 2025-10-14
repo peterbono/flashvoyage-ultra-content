@@ -11,7 +11,7 @@ class TemplatesTemoignageComplets {
       
       // A. TEMPLATE SUCCESS STORY (15% du contenu)
       success_story: {
-        title: "Comment {prenom} a {objectif} en {destination} : {resultat}",
+        title: "Comment {prenom} a {objectif} en {destination} : {resultat} (témoignage Reddit)",
         target_audience: "Digital nomades cherchant inspiration et motivation",
         ton: "Inspirant, motivant, authentique",
         keywords: "success story nomade, réussite asie, transformation lifestyle",
@@ -21,6 +21,10 @@ class TemplatesTemoignageComplets {
         
         content: `
 <p><strong>Source :</strong> <a href="{sourceLink}" target="_blank" rel="noopener">{title}</a> - {source}</p>
+
+<p>{intro_fomo_curation}</p>
+
+{quote_highlight}
 
 <h2>Comment {prenom} a {objectif} en {destination} : {resultat}</h2>
 
@@ -76,7 +80,7 @@ class TemplatesTemoignageComplets {
 
       // B. TEMPLATE ÉCHEC & LEÇONS (10% du contenu)
       echec_lecons: {
-        title: "Mon échec en {destination} : {erreur} et les leçons apprises",
+        title: "Mon échec en {destination} : {erreur} et les leçons apprises (témoignage Reddit)",
         target_audience: "Digital nomades pour éviter les erreurs courantes",
         ton: "Humble, préventif, éducatif",
         keywords: "erreur nomade, leçon voyage, prévention asie",
@@ -86,6 +90,10 @@ class TemplatesTemoignageComplets {
         
         content: `
 <p><strong>Source :</strong> <a href="{sourceLink}" target="_blank" rel="noopener">{title}</a> - {source}</p>
+
+<p>{intro_fomo_curation}</p>
+
+{quote_highlight}
 
 <h2>Mon échec en {destination} : {erreur} et les leçons apprises</h2>
 
@@ -140,7 +148,7 @@ class TemplatesTemoignageComplets {
 
       // C. TEMPLATE TRANSITION (10% du contenu)
       transition: {
-        title: "Ma transition de {situation_avant} à {situation_apres} en {destination}",
+        title: "Ma transition de {situation_avant} à {situation_apres} en {destination} (témoignage Reddit)",
         target_audience: "Digital nomades en période de changement",
         ton: "Réfléchi, adaptatif, encourageant",
         keywords: "transition nomade, changement lifestyle, adaptation asie",
@@ -150,6 +158,10 @@ class TemplatesTemoignageComplets {
         
         content: `
 <p><strong>Source :</strong> <a href="{sourceLink}" target="_blank" rel="noopener">{title}</a> - {source}</p>
+
+<p>{intro_fomo_curation}</p>
+
+{quote_highlight}
 
 <h2>Ma transition de {situation_avant} à {situation_apres} en {destination}</h2>
 
@@ -206,7 +218,7 @@ class TemplatesTemoignageComplets {
 
       // D. TEMPLATE COMPARAISON D'EXPÉRIENCE (5% du contenu)
       comparaison_experience: {
-        title: "{destination_a} vs {destination_b} : mon expérience comparative",
+        title: "{destination_a} vs {destination_b} : mon expérience comparative (témoignage Reddit)",
         target_audience: "Digital nomades hésitant entre plusieurs destinations",
         ton: "Comparatif, objectif, informatif",
         keywords: "comparaison nomade, destination asie, choix voyage",
@@ -216,6 +228,10 @@ class TemplatesTemoignageComplets {
         
         content: `
 <p><strong>Source :</strong> <a href="{sourceLink}" target="_blank" rel="noopener">{title}</a> - {source}</p>
+
+<p>{intro_fomo_curation}</p>
+
+{quote_highlight}
 
 <h2>{destination_a} vs {destination_b} : mon expérience comparative</h2>
 
@@ -245,14 +261,46 @@ class TemplatesTemoignageComplets {
 
 <h3>Comparaison détaillée</h3>
 <p><strong>Tableau comparatif :</strong></p>
-<table>
-<tr><th>Critère</th><th>{destination_a}</th><th>{destination_b}</th><th>Gagnant</th></tr>
-<tr><td>Coût de vie</td><td>{note_cout_a}/10</td><td>{note_cout_b}/10</td><td>{gagnant_cout}</td></tr>
-<tr><td>Qualité de vie</td><td>{note_qualite_a}/10</td><td>{note_qualite_b}/10</td><td>{gagnant_qualite}</td></tr>
-<tr><td>Communauté</td><td>{note_communaute_a}/10</td><td>{note_communaute_b}/10</td><td>{gagnant_communaute}</td></tr>
-<tr><td>Infrastructure</td><td>{note_infra_a}/10</td><td>{note_infra_b}/10</td><td>{gagnant_infra}</td></tr>
-<tr><td>Opportunités</td><td>{note_opp_a}/10</td><td>{note_opp_b}/10</td><td>{gagnant_opp}</td></tr>
+<!-- wp:table -->
+<figure class="wp-block-table">
+<table class="has-fixed-layout">
+<thead>
+<tr>
+<th>Critère</th>
+<th>{destination_a}</th>
+<th>{destination_b}</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Coût de vie</td>
+<td>{note_cout_a}</td>
+<td>{note_cout_b}</td>
+</tr>
+<tr>
+<td>Qualité de vie</td>
+<td>{note_qualite_a}</td>
+<td>{note_qualite_b}</td>
+</tr>
+<tr>
+<td>Communauté</td>
+<td>{note_communaute_a}</td>
+<td>{note_communaute_b}</td>
+</tr>
+<tr>
+<td>Infrastructure</td>
+<td>{note_infra_a}</td>
+<td>{note_infra_b}</td>
+</tr>
+<tr>
+<td>Opportunités</td>
+<td>{note_opp_a}</td>
+<td>{note_opp_b}</td>
+</tr>
+</tbody>
 </table>
+</figure>
+<!-- /wp:table -->
 
 <h3>Ma recommandation</h3>
 <p><strong>Verdict final (100-120 mots) :</strong></p>
@@ -317,6 +365,7 @@ class TemplatesTemoignageComplets {
   extractDataByType(type, data) {
     const baseData = {
       sourceLink: data.permalink || '#',
+      intro_fomo_curation: this.generateFomoCurationIntro(type, data),
       title: data.title || 'Témoignage',
       source: 'Reddit',
       prenom: this.extractPrenom(data.content),
@@ -379,6 +428,69 @@ class TemplatesTemoignageComplets {
       default:
         return baseData;
     }
+  }
+
+  /**
+   * Génère une intro FOMO + curation selon le type de témoignage
+   */
+  generateFomoCurationIntro(type, data) {
+    const fomoIntros = {
+      success_story: [
+        "Pendant que vous hésitez, d'autres agissent. Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui montre comment un nomade a transformé sa vie en {destination}.",
+        "Ce témoignage Reddit a retenu notre attention : un développeur français raconte comment il a {resultat} en {destination}. Chez FlashVoyages, nous l'avons analysé pour vous.",
+        "Nous avons sélectionné ce témoignage Reddit pour vous : pendant que vous hésitez, un nomade a déjà {resultat} en {destination}.",
+        "Chez FlashVoyages, nous avons analysé ce témoignage Reddit : un développeur français a {resultat} en {destination}. Voici ce que vous devez savoir."
+      ],
+      echec_lecons: [
+        "Cette erreur coûteuse a retenu notre attention. Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit pour vous éviter les mêmes pièges en {destination}.",
+        "Pendant que vous planifiez, d'autres apprennent de leurs erreurs. Nous avons analysé ce témoignage Reddit qui détaille les erreurs à éviter en {destination}.",
+        "Ce témoignage Reddit nous a interpellés : un nomade raconte son échec en {destination}. Chez FlashVoyages, nous l'avons sélectionné pour vous.",
+        "Nous avons sélectionné ce témoignage Reddit pour vous : un nomade partage les erreurs qui lui ont coûté cher en {destination}."
+      ],
+      transition: [
+        "Cette transformation nous a marqués. Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui raconte une transition réussie vers le nomadisme en {destination}.",
+        "Pendant que vous réfléchissez, d'autres transforment leur vie. Nous avons analysé ce témoignage Reddit d'une transition réussie en {destination}.",
+        "Ce témoignage Reddit a retenu notre attention : une transition réussie vers le nomadisme en {destination}. Chez FlashVoyages, nous l'avons sélectionné pour vous.",
+        "Nous avons sélectionné ce témoignage Reddit pour vous : une transition réussie vers le nomadisme en {destination}."
+      ],
+      comparaison_experience: [
+        "Cette comparaison nous a interpellés. Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui compare {destination_a} et {destination_b}.",
+        "Pendant que vous hésitez entre destinations, d'autres ont testé. Nous avons analysé ce témoignage Reddit qui compare {destination_a} et {destination_b}.",
+        "Ce témoignage Reddit nous a marqués : une comparaison détaillée entre {destination_a} et {destination_b}. Chez FlashVoyages, nous l'avons sélectionné pour vous.",
+        "Nous avons sélectionné ce témoignage Reddit pour vous : une comparaison détaillée entre {destination_a} et {destination_b}."
+      ]
+    };
+
+    const intros = fomoIntros[type] || fomoIntros.success_story;
+    const randomIntro = intros[Math.floor(Math.random() * intros.length)];
+    
+    // Remplacer les placeholders
+    return randomIntro
+      .replace(/{destination}/g, this.extractDestination(data.content) || 'Asie')
+      .replace(/{destination_a}/g, this.extractDestinationA(data.content) || 'Vietnam')
+      .replace(/{destination_b}/g, this.extractDestinationB(data.content) || 'Thaïlande')
+      .replace(/{resultat}/g, this.extractResultat(data.content) || 'réussi sa transformation');
+  }
+
+  /**
+   * Extraction des destinations pour les comparaisons
+   */
+  extractDestinationA(content) {
+    const destinations = ['Vietnam', 'Thaïlande', 'Indonésie', 'Japon', 'Corée du Sud'];
+    return destinations.find(dest => content.toLowerCase().includes(dest.toLowerCase())) || 'Vietnam';
+  }
+
+  extractDestinationB(content) {
+    const destinations = ['Vietnam', 'Thaïlande', 'Indonésie', 'Japon', 'Corée du Sud'];
+    const found = destinations.filter(dest => content.toLowerCase().includes(dest.toLowerCase()));
+    return found.length > 1 ? found[1] : 'Thaïlande';
+  }
+
+  extractResultat(content) {
+    if (content.includes('triplé') || content.includes('triple')) return 'triplé ses revenus';
+    if (content.includes('doublé') || content.includes('double')) return 'doublé ses revenus';
+    if (content.includes('réussi') || content.includes('succès')) return 'réussi sa transformation';
+    return 'transformé sa vie';
   }
 
   // Méthodes d'extraction génériques
@@ -468,6 +580,32 @@ class TemplatesTemoignageComplets {
   extractSituationApres(content) {
     const situations = ['nomade digital', 'entrepreneur', 'consultant indépendant', 'coach en ligne'];
     return situations[Math.floor(Math.random() * situations.length)];
+  }
+
+  /**
+   * GÉNÉRER LE BLOC QUOTE HIGHLIGHT
+   */
+  generateQuoteHighlight(selectedQuote, redditUsername = null) {
+    if (!selectedQuote || !selectedQuote.text) {
+      return '';
+    }
+
+    const quoteText = selectedQuote.text;
+    
+    // Format du cite avec username si disponible
+    let citeText = 'Témoignage Reddit';
+    if (redditUsername) {
+      citeText = `Témoignage de u/${redditUsername} sur Reddit`;
+    }
+
+    return `<!-- wp:pullquote -->
+<figure class="wp-block-pullquote" style="padding: 16px; margin-bottom: 0">
+  <blockquote>
+    <p>${quoteText}</p>
+    <p><cite>${citeText}</cite></p>
+  </blockquote>
+</figure>
+<!-- /wp:pullquote -->`;
   }
 
   extractDureeAvant(content) {

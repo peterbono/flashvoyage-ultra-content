@@ -338,7 +338,7 @@
 2. **Créer** Template Comparaison (destinations/coûts)
 3. **Optimiser** prompts GPT pour cohérence
 4. **Générer** 10 articles variés pour test
-5. **Finaliser** système de sélection automatique des widgets
+5. **✅ TERMINÉ** : Système de sélection automatique des widgets (déjà fonctionnel)
 
 ---
 
