@@ -316,6 +316,8 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   "destinations": "${analysis.destination}",
   "content": "IMPORTANT: Génère un article COMPLET de 500-700 mots minimum avec cette structure détaillée:
   
+  <p><strong>Source :</strong> <a href=\"${article.link}\" target=\"_blank\" rel=\"noopener\">${article.title}</a> - ${article.source}</p>
+  
   <h2>Le contexte du témoignage</h2>
   <p>Développe le contexte complet (100-150 mots): Qui est la personne? Quelle est sa situation? Pourquoi ce témoignage est important?</p>
   

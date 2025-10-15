@@ -84,6 +84,10 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         contentToEnhance = JSON.stringify(generatedContent);
       }
       
+      // Ajouter le lien source Reddit au début du contenu
+      const sourceLink = `<p><strong>Source :</strong> <a href="${selectedArticle.link}" target="_blank" rel="noopener">${selectedArticle.title}</a> - ${selectedArticle.source}</p>\n\n`;
+      contentToEnhance = sourceLink + contentToEnhance;
+      
       console.log('📝 Contenu à améliorer:', contentToEnhance.substring(0, 200) + '...');
       
       const enhanced = await this.contentEnhancer.enhanceContent(
