@@ -31,7 +31,7 @@ class ArticleFinalizer {
     const enhancements = { ...article.enhancements };
 
     // 1. Remplacer les placeholders de widgets
-    const widgetResult = this.replaceWidgetPlaceholders(finalContent, analysis);
+    const widgetResult = await this.replaceWidgetPlaceholders(finalContent, analysis);
     finalContent = widgetResult.content;
     enhancements.widgetsReplaced = widgetResult.count;
 
