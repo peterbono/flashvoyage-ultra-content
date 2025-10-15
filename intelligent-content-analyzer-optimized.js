@@ -307,14 +307,35 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
       case 'ACTUALITE_NOMADE':
         return basePrompt + `
 {
-  "title": "📰 {sujet} : Impact pour les nomades en {destination}",
+  "title": "{sujet} : Témoignage Reddit et analyse FlashVoyages",
   "target_audience": "${analysis.audience}",
-  "ton": "Informé, réactif, pratique",
+  "ton": "Informé, réactif, pratique, personnel",
   "keywords": "${analysis.keywords}",
   "cta": "${analysis.cta}",
   "urgence": "${analysis.urgence}",
   "destinations": "${analysis.destination}",
-  "content": "Structure: Contexte → Impact → Conseils pratiques → Actions à prendre"
+  "content": "IMPORTANT: Génère un article COMPLET de 500-700 mots minimum avec cette structure détaillée:
+  
+  <h2>Le contexte du témoignage</h2>
+  <p>Développe le contexte complet (100-150 mots): Qui est la personne? Quelle est sa situation? Pourquoi ce témoignage est important?</p>
+  
+  <h2>L'expérience détaillée</h2>
+  <p>Décris l'expérience en détail (150-200 mots): Les faits concrets, les chiffres, les dates, les lieux précis, les défis rencontrés</p>
+  
+  <h2>Les leçons et conseils pratiques</h2>
+  <p>Liste 5-7 conseils actionnables (150-200 mots):</p>
+  <ul>
+    <li>Conseil 1 avec explication détaillée</li>
+    <li>Conseil 2 avec explication détaillée</li>
+    <li>Conseil 3 avec explication détaillée</li>
+    <li>Conseil 4 avec explication détaillée</li>
+    <li>Conseil 5 avec explication détaillée</li>
+  </ul>
+  
+  <h2>Les actions à prendre maintenant</h2>
+  <p>Donne des actions concrètes (100-150 mots): Que faire immédiatement? Quelles ressources utiliser? Comment se préparer?</p>
+  
+  <p><em>Cet article a été analysé par notre équipe FlashVoyages — votre spécialiste du nomadisme en Asie.</em></p>"
 }`;
 
       case 'CONSEIL_PRATIQUE':
