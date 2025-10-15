@@ -200,6 +200,7 @@ INSTRUCTIONS SPÉCIFIQUES:
 3. VALEUR AJOUTÉE: Ajoute des conseils pratiques et des astuces
 4. STRUCTURE: Utilise des H2/H3 pour organiser, des listes pour les détails
 5. SPÉCIFICITÉ: Évite les généralités, utilise des données précises
+6. LONGUEUR: MINIMUM 500 mots, IDÉAL 700-1000 mots. Développe chaque section en détail avec des exemples concrets, des chiffres, des conseils actionnables
 
 CONTENU REQUIS:
 1. Titre accrocheur (sans emoji, avec mention "témoignage Reddit" à la fin)

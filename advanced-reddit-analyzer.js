@@ -55,7 +55,10 @@ export class AdvancedRedditAnalyzer {
       reddit_username: this.extractRedditUsername(postData),
       
       // === QUOTE PRINCIPALE (pour le highlight) ===
-      reddit_quote: this.extractBestQuotes(postData)[0] || null,
+      reddit_quote: this.extractBestQuotes(postData)?.selected_quote || 
+                    this.extractBestQuotes(postData)?.best_quotes?.hook ||
+                    this.extractBestQuotes(postData)?.best_quotes?.transformation ||
+                    null,
       
       // === PROFIL PROFESSIONNEL ===
       professional_profile: this.detectProfessionalProfile(postData),

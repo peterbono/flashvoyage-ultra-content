@@ -452,17 +452,29 @@ class ArticleFinalizer {
         'Destinations': 6
       };
 
-      // Mapping manuel pour les tags courants
+      // Mapping manuel pour les tags courants (étendu)
       const tagMap = {
         'Actualité': 1,
         'Nouvelle': 2,
         'Tendance': 3,
         'Nomade Digital': 4,
-        'Digital Nomad': 5,
+        'Digital Nomad': 4, // Même ID que Nomade Digital
         'Visa': 6,
         'Budget': 7,
         'Débutant': 8,
-        'Expérimenté': 9
+        'Premier voyage': 8, // Même ID que Débutant
+        'Expérimenté': 9,
+        'Espagne': 10,
+        'Thaïlande': 11,
+        'Indonésie': 12,
+        'Vietnam': 13,
+        'Japon': 14,
+        'Corée du Sud': 15,
+        'Portugal': 16,
+        'Témoignage': 17,
+        'Guide': 18,
+        'Conseil': 19,
+        'Astuce': 20
       };
 
       const categoryIds = categories
