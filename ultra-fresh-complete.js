@@ -1004,7 +1004,8 @@ class UltraFreshComplete {
               smartDecision: smart.decision,
               smartScores: smart.scores,
               affiliateSlots: smart.affiliate_slots || [],
-              geo: this.extractGeoMeta(data.title)
+              geo: this.extractGeoMeta(data.title),
+              widget_plan: this.generateWidgetPlan(smart.affiliate_slots || [], this.extractGeoMeta(data.title))
             });
           }
         });
@@ -1051,7 +1052,8 @@ class UltraFreshComplete {
               smartDecision: smart.decision,
               smartScores: smart.scores,
               affiliateSlots: smart.affiliate_slots || [],
-              geo: this.extractGeoMeta(data.title)
+              geo: this.extractGeoMeta(data.title),
+              widget_plan: this.generateWidgetPlan(smart.affiliate_slots || [], this.extractGeoMeta(data.title))
             });
           }
         });
@@ -1309,7 +1311,7 @@ UltraFreshComplete.prototype.computeSmartScore = function(postData, subredditSta
   // 3. Engagement normalisé
   const hoursSince = (Date.now() - created_utc * 1000) / 3600000;
   const engagementVelocity = (ups + num_comments) / Math.max(hoursSince, 1);
-  const subNorm = subredditStats?.medianEngagement || 10;
+  const subNorm = subredditStats?.medianEngagement || 12;
   scores.engagement = Math.min(15, (engagementVelocity / subNorm) * 10);
 
   // 4. Qualité linguistique
