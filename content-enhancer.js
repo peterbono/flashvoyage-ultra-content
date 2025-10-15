@@ -61,22 +61,12 @@ class ContentEnhancer {
   integrateEnhancements(content, widgetsHTML, linksHTML) {
     let enhancedContent = content;
     
-    // Remplacer les placeholders de widgets s'ils existent
-    if (enhancedContent.includes('{TRAVELPAYOUTS_FLIGHTS_WIDGET}') || 
-        enhancedContent.includes('{TRAVELPAYOUTS_HOTELS_WIDGET}')) {
-      // Remplacer les placeholders par les widgets réels
-      enhancedContent = enhancedContent.replace(/\{TRAVELPAYOUTS_\w+_WIDGET\}/g, (match) => {
-        const widgetKey = match.replace(/\{TRAVELPAYOUTS_(\w+)_WIDGET\}/, '$1').toLowerCase();
-        return `{{TRAVELPAYOUTS_${widgetKey.toUpperCase()}_WIDGET}}`;
-      });
-    }
-    
-    // Ajouter les widgets si pas déjà présents
-    if (widgetsHTML && !enhancedContent.includes('Outils recommandés')) {
-      enhancedContent += '\n\n' + widgetsHTML;
-    }
+    // DÉSACTIVÉ: Ne plus ajouter de section "Outils recommandés" en fin d'article
+    // Le placement contextuel intelligent (ContextualWidgetPlacer) gère maintenant
+    // l'insertion des widgets dans le flow du contenu avec accroches style TPG
     
     // Ajouter les liens internes si pas déjà présents
+    // (La section "Articles connexes" est gérée par contextual-link-integrator.js)
     if (linksHTML && !enhancedContent.includes('Articles connexes')) {
       enhancedContent += '\n\n' + linksHTML;
     }

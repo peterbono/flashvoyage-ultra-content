@@ -76,12 +76,12 @@ class ArticleFinalizer {
     if (!hasPlaceholders) {
       console.log('   ℹ️ Pas de placeholders détectés, utilisation du placement intelligent\n');
       
-      // Préparer les scripts de widgets
+      // Préparer les scripts de widgets (uniquement ceux qui existent réellement)
       const widgetScripts = {
         flights: this.selectBestFlightWidget(context),
         hotels: this.selectBestHotelWidget(context),
-        insurance: this.selectBestInsuranceWidget(context),
-        transport: this.selectBestTransportWidget(context)
+        // insurance: désactivé car pas de widgets d'assurance dans Travelpayouts
+        // transport: this.selectBestTransportWidget(context)
       };
       
       // Utiliser le placement contextuel intelligent

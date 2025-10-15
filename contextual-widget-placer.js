@@ -3,7 +3,7 @@
 /**
  * CONTEXTUAL WIDGET PLACER
  * Utilise GPT-4o pour analyser le contenu et placer les widgets
- * de manière contextuelle et humanisée avec FOMO doux
+ * de manière contextuelle avec accroches sobres style The Points Guy
  */
 
 import OpenAI from 'openai';
@@ -13,31 +13,43 @@ class ContextualWidgetPlacer {
   constructor() {
     this.openai = new OpenAI({ apiKey: OPENAI_API_KEY });
     
-    // Phrases d'accroche FOMO doux par type de widget
+    // Phrases d'accroche style TPG (sobre, informatif, direct)
     this.accroches = {
       flights: [
-        "Pour votre vol, on a comparé les prix et trouvé les meilleures offres du moment. Réservez maintenant pour profiter des tarifs les plus bas :",
-        "Voici les vols les moins chers que nous avons trouvés pour vous. Les places à ces prix partent vite :",
-        "On a déniché ces pépites pour votre vol. Profitez-en avant que les prix ne remontent :",
-        "Comparez les prix des vols et réservez au meilleur moment. Nos partenaires vous garantissent les meilleurs tarifs :"
+        "Comparez les prix des vols et réservez :",
+        "Trouvez les meilleures offres de vols :",
+        "Consultez les tarifs actuels :",
+        "Voici les meilleures options de vol :"
       ],
       hotels: [
-        "Pour l'hébergement, voici les options les mieux notées par les nomades digitaux. Les places partent vite, surtout en haute saison :",
-        "On a sélectionné ces hébergements pour leur excellent rapport qualité-prix. Réservez maintenant pour garantir votre place :",
-        "Voici où les autres nomades logent. Ces adresses sont très demandées, on vous conseille de réserver rapidement :",
-        "Comparez les hébergements et trouvez celui qui vous correspond. Les meilleurs deals sont ici :"
+        "Comparez les hébergements et réservez :",
+        "Trouvez votre logement idéal :",
+        "Consultez les options d'hébergement :",
+        "Voici les meilleures adresses :"
       ],
       insurance: [
-        "Pour voyager l'esprit tranquille, voici les assurances les plus recommandées par la communauté nomade :",
-        "Protégez-vous avec une assurance adaptée. On a comparé les offres pour vous :",
-        "Ne partez pas sans assurance ! Voici les meilleures options pour les nomades digitaux :",
-        "Comparez les assurances voyage et choisissez celle qui vous convient. La sécurité avant tout :"
+        "Comparez les assurances voyage :",
+        "Protégez votre voyage avec une assurance adaptée :",
+        "Voici les options d'assurance recommandées :",
+        "Consultez les offres d'assurance :"
       ],
       transport: [
-        "Pour vos déplacements sur place, voici les meilleures options de transport :",
-        "Découvrez comment vous déplacer facilement une fois sur place :",
-        "On a trouvé les meilleurs moyens de transport locaux pour vous :",
-        "Comparez les options de transport et réservez à l'avance pour économiser :"
+        "Comparez les options de transport :",
+        "Trouvez le meilleur moyen de vous déplacer :",
+        "Consultez les solutions de transport :",
+        "Voici les options de transport local :"
+      ],
+      productivity: [
+        "Découvrez les outils essentiels pour travailler en nomade :",
+        "Voici les outils recommandés :",
+        "Consultez les solutions de productivité :",
+        "Optimisez votre travail à distance :"
+      ],
+      activities: [
+        "Découvrez les activités disponibles :",
+        "Réservez vos activités à l'avance :",
+        "Voici les meilleures expériences locales :",
+        "Consultez les activités recommandées :"
       ]
     };
   }
@@ -62,22 +74,19 @@ CONTEXTE:
 - Destination: ${articleContext.destination || 'Asie'}
 - Audience: ${articleContext.audience || 'Nomades digitaux'}
 
-WIDGETS DISPONIBLES:
-1. FLIGHTS (vols)
-2. HOTELS (hébergement)
-3. INSURANCE (assurance)
-4. TRANSPORT (transport local)
+WIDGETS DISPONIBLES (UNIQUEMENT CEUX-CI):
+1. FLIGHTS (vols) - Formulaire de recherche Kiwi.com
+2. HOTELS (hébergement) - Formulaire de recherche Hotellook
 
 RÈGLES D'ANALYSE:
-1. Identifie les sections (H2) qui parlent de:
-   - Vols, transport aérien, "comment s'y rendre" → FLIGHTS
-   - Logement, hébergement, "où dormir" → HOTELS
-   - Sécurité, santé, formalités → INSURANCE
-   - Déplacements locaux, mobilité → TRANSPORT
+1. Identifie les sections (H2/H3) qui parlent de:
+   - Vols, transport aérien, "comment s'y rendre", voyage, déplacement → FLIGHTS
+   - Logement, hébergement, "où dormir", coliving, hôtel → HOTELS
 
 2. Place le widget JUSTE APRÈS le paragraphe qui introduit le sujet
-3. Maximum 3 widgets par article (les plus pertinents)
+3. Maximum 2 widgets par article (1 FLIGHTS + 1 HOTELS si pertinent)
 4. Évite de mettre plusieurs widgets d'affilée
+5. NE SUGGÈRE QUE flights et hotels (pas insurance, pas transport)
 
 RÉPONSE EN JSON UNIQUEMENT (PAS DE TEXTE AVANT OU APRÈS):
 {
@@ -226,16 +235,17 @@ ${widgetScript}
    * Génère une accroche personnalisée selon le contexte
    */
   generateCustomAccroche(widgetType, context) {
+    // Style TPG: sobre et informatif
     const templates = {
       flights: [
-        `Pour votre vol vers ${context.destination}, on a trouvé les meilleures offres. Réservez maintenant :`,
-        `Comparez les prix des vols pour ${context.destination} et économisez jusqu'à 30% :`,
-        `Les nomades recommandent ces compagnies pour ${context.destination}. Profitez des meilleurs tarifs :`
+        `Comparez les vols pour ${context.destination} :`,
+        `Trouvez votre vol pour ${context.destination} :`,
+        `Consultez les tarifs pour ${context.destination} :`
       ],
       hotels: [
-        `Voici où loger à ${context.destination} selon les autres nomades. Les places partent vite :`,
-        `On a sélectionné les meilleurs hébergements de ${context.destination} pour vous :`,
-        `Comparez les logements à ${context.destination} et réservez au meilleur prix :`
+        `Trouvez votre hébergement à ${context.destination} :`,
+        `Comparez les logements à ${context.destination} :`,
+        `Consultez les options à ${context.destination} :`
       ]
     };
 
