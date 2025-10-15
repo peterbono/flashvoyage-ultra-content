@@ -338,25 +338,75 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   // Publier sur WordPress
   async publishToWordPress(article) {
     try {
-      // Simuler la publication pour le test
-      console.log('📝 Simulation de publication WordPress...');
-      console.log('📰 Titre:', article.title);
-      console.log('📄 Contenu:', article.content.substring(0, 200) + '...');
-      console.log('🏷️ Catégories:', article.categories);
-      console.log('🔖 Tags:', article.tags);
+      const axios = (await import('axios')).default;
+      const { WORDPRESS_URL, WORDPRESS_USERNAME, WORDPRESS_APP_PASSWORD } = await import('./config.js');
+      
+      console.log('📝 Publication sur WordPress...');
+      
+      // Préparer les données WordPress
+      const wordpressData = {
+        title: article.title,
+        content: article.content,
+        status: 'publish',
+        excerpt: article.excerpt || '',
+        // Retirer categories et tags temporairement (nécessitent des IDs numériques)
+        // categories: article.categories || [],
+        // tags: article.tags || [],
+        meta: {
+          description: article.meta?.description || article.excerpt || '',
+          keywords: article.meta?.keywords || '',
+          'og:title': article.meta?.['og:title'] || article.title,
+          'og:description': article.meta?.['og:description'] || article.excerpt || ''
+        }
+      };
+      
+      // Authentification
+      const auth = Buffer.from(`${WORDPRESS_USERNAME}:${WORDPRESS_APP_PASSWORD}`).toString('base64');
+      
+      // Publication
+      const response = await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts`, wordpressData, {
+        headers: {
+          'Authorization': `Basic ${auth}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const publishedArticle = response.data;
+      
+      console.log('✅ Article publié sur WordPress !');
+      console.log(`   ID: ${publishedArticle.id}`);
+      console.log(`   URL: ${publishedArticle.link}`);
       
       return {
-        id: Math.floor(Math.random() * 10000),
-        title: article.title,
-        link: `https://flashvoyages.com/${article.title.toLowerCase().replace(/\s+/g, '-')}`,
-        status: 'published',
+        id: publishedArticle.id,
+        title: publishedArticle.title.rendered,
+        link: publishedArticle.link,
+        status: publishedArticle.status,
         enhancements: article.enhancements
       };
     } catch (error) {
       console.error('❌ Erreur publication WordPress:', error.message);
+      if (error.response) {
+        console.error('   Détails:', error.response.data);
+      }
       throw error;
     }
   }
 }
 
 export default EnhancedUltraGenerator;
+
+// Exécution si lancé directement
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const generator = new EnhancedUltraGenerator();
+  generator.generateAndPublishEnhancedArticle()
+    .then(() => {
+      console.log('\n✅ Processus terminé avec succès !');
+      process.exit(0);
+    })
+    .catch(error => {
+      console.error('\n❌ Erreur fatale:', error.message);
+      console.error(error.stack);
+      process.exit(1);
+    });
+}
