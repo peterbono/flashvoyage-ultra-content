@@ -379,6 +379,44 @@ class UltraFreshComplete {
     return slots.sort((a,b)=>b.score-a.score).slice(0,4);
   }
 
+  // Build a provider-agnostic widget brief for the LLM (no positions decided here)
+  generateWidgetPlan(affiliateSlots, geo) {
+    const intents = Array.isArray(affiliateSlots) ? affiliateSlots.slice(0, 4) : [];
+    const geo_defaults = geo || { country: null, city: null };
+    return {
+      intents, // [{slot, score}]
+      providers: {
+        flights: "Travelpayouts-Aviasales",
+        hotels: "Travelpayouts-Hotels",
+        transport: "12Go",
+        activities: "Klook",
+        esim: "Airalo",
+        insurance: "SafetyWing",
+        coworking: "Curated"
+      },
+      presets: {
+        flights: "search_bar",
+        hotels: "search_bar",
+        transport: "route_tiles",
+        activities: "route_tiles",
+        esim: "compact_card",
+        insurance: "compact_card",
+        coworking: "compact_card"
+      },
+      caps: { desktop_max: 3, mobile_max: 2, min_paragraph_gap: 3, allow_above_fold: false },
+      constraints: { disclosure_required: true, nofollow_sponsored: true, sensitive_page_soft_limit: true, visa_pages_max_widgets: 1 },
+      geo_defaults,
+      tracking: {
+        utm_source: "flashvoyages",
+        utm_medium: "affiliate",
+        utm_campaign: `${geo_defaults.country || 'asia'}_${geo_defaults.city || 'general'}`,
+        sub_id_schema: "{articleId}|{slot}|{country}_{city}"
+      },
+      inventory: { flights: "unknown", hotels: "unknown", transport: "ok", activities: "ok", esim: "ok", insurance: "ok" },
+      hints: []
+    };
+  }
+
   // After final pick, update titles memory (for future uniqueness)
   updateRecentTitlesMemory(finalArticles) {
     const mem = this.loadRecentTitles();
@@ -461,7 +499,8 @@ class UltraFreshComplete {
             smartDecision: smart.decision,
             smartScores: smart.scores,
             affiliateSlots: smart.affiliate_slots || [],
-            geo: this.extractGeoMeta(data.title)
+            geo: this.extractGeoMeta(data.title),
+            widget_plan: this.generateWidgetPlan(smart.affiliate_slots || [], this.extractGeoMeta(data.title))
           });
         }
       });
@@ -509,7 +548,8 @@ class UltraFreshComplete {
             type: 'news',
             relevance: this.calculateRelevance(title, '', ALTERNATIVE_SOURCES.google_news.keywords),
             affiliateSlots: this.mapAffiliateSlots(title),
-            geo: this.extractGeoMeta(title)
+            geo: this.extractGeoMeta(title),
+            widget_plan: this.generateWidgetPlan(this.mapAffiliateSlots(title), this.extractGeoMeta(title))
           });
         }
       }
@@ -592,7 +632,8 @@ class UltraFreshComplete {
             smartDecision: smart.decision,
             smartScores: smart.scores,
             affiliateSlots: smart.affiliate_slots || [],
-            geo: this.extractGeoMeta(data.title)
+            geo: this.extractGeoMeta(data.title),
+            widget_plan: this.generateWidgetPlan(smart.affiliate_slots || [], this.extractGeoMeta(data.title))
           });
         }
       });
@@ -640,7 +681,8 @@ class UltraFreshComplete {
             type: 'nomade',
             relevance: this.calculateRelevance(title, '', ALTERNATIVE_SOURCES.google_news_nomad.keywords),
             affiliateSlots: this.mapAffiliateSlots(title),
-            geo: this.extractGeoMeta(title)
+            geo: this.extractGeoMeta(title),
+            widget_plan: this.generateWidgetPlan(this.mapAffiliateSlots(title), this.extractGeoMeta(title))
           });
         }
       }
@@ -773,6 +815,7 @@ class UltraFreshComplete {
       console.log(`   Il y a: ${timeAgo}`);
       console.log(`   Lien: ${article.link}`);
       console.log(`   Widgets: ${(article.affiliateSlots||[]).map(s=>s.slot+':'+s.score).join(', ')}`);
+      console.log(`   Plan: ${(article.widget_plan?.intents||[]).map(i=>i.slot+':'+i.score).join(', ')}`);
       console.log('');
     });
   }
@@ -1053,15 +1096,48 @@ class UltraFreshComplete {
           });
 
           if (response.data && response.data.data && response.data.data.children) {
-            const articles = response.data.data.children.map(post => ({
-              title: post.data.title,
-              link: `https://reddit.com${post.data.permalink}`,
-              content: post.data.selftext || '',
-              date: new Date(post.data.created_utc * 1000).toISOString(),
-              source: 'Reddit r/travel (Proxy)',
-              type: 'community',
-              relevance: this.calculateRelevance(post.data.title, post.data.selftext, ALTERNATIVE_SOURCES.reddit.keywords)
-            }));
+            const children = response.data.data.children;
+            const articles = [];
+            for (const post of children) {
+              const data = post.data;
+              const relevance = this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit.keywords);
+              // Calculate SmartScore for proxy results as well
+              const smart = this.computeSmartScore(data, this.loadSubredditStats('r/travel'));
+              
+              if (relevance >= 30) {
+                const audit = {
+                  post_id: data.id,
+                  subreddit: 'r/travel',
+                  title: data.title,
+                  url: `https://reddit.com${data.permalink}`,
+                  created_utc: data.created_utc,
+                  age_hours: Math.round((Date.now() - data.created_utc * 1000) / 3600000),
+                  scores: smart.scores,
+                  total: Math.round(smart.total),
+                  decision: smart.decision,
+                  contextual: smart.contextual || false,
+                  reasons: smart.reasons || []
+                };
+                this.writeSmartAudit(audit);
+
+                const geo = this.extractGeoMeta(data.title);
+                articles.push({
+                  title: data.title,
+                  link: `https://reddit.com${data.permalink}`,
+                  content: data.selftext || '',
+                  date: new Date(data.created_utc * 1000).toISOString(),
+                  source: 'Reddit r/travel (Proxy)',
+                  type: 'community',
+                  relevance: relevance,
+                  smartScore: Math.round(smart.total),
+                  smartDecision: smart.decision,
+                  smartScores: smart.scores,
+                  affiliateSlots: smart.affiliate_slots || [],
+                  geo,
+                  widget_plan: this.generateWidgetPlan(smart.affiliate_slots || [], geo)
+                });
+              }
+            }
 
             console.log(`✅ Reddit Proxy: ${articles.length} articles trouvés via ${proxy.name}`);
             return articles;
@@ -1150,7 +1226,10 @@ class UltraFreshComplete {
             date: pubDate || new Date().toISOString(),
             source: sourceName,
             type: 'rss',
-            relevance: this.calculateRelevance(title, '', keywords)
+            relevance: this.calculateRelevance(title, '', keywords),
+            affiliateSlots: this.mapAffiliateSlots(title),
+            geo: this.extractGeoMeta(title),
+            widget_plan: this.generateWidgetPlan(this.mapAffiliateSlots(title), this.extractGeoMeta(title))
           });
         }
       }
@@ -1166,31 +1245,6 @@ class UltraFreshComplete {
   isGitHubActions() {
     return process.env.GITHUB_ACTIONS === 'true';
   }
-}
-
-// Fonction principale
-async function main() {
-  const scraper = new UltraFreshComplete();
-  
-  try {
-    const articles = await scraper.scrapeAllSources();
-    scraper.displayResults(articles);
-    
-    console.log('✅ Scraping ultra-fraîche terminé avec succès !');
-    console.log(`📈 ${articles.length} articles pertinents trouvés`);
-    console.log('\n🎯 PROCHAINES ÉTAPES:');
-    console.log('1. Intégrer avec le système IA hybride');
-    console.log('2. Configurer la publication automatique');
-    console.log('3. Mettre en place le monitoring');
-    
-  } catch (error) {
-    console.error('❌ Erreur lors du scraping:', error.message);
-  }
-}
-
-// Exécution
-if (import.meta.url === `file://${process.argv[1]}`) {
-  main();
 }
 
 
@@ -1331,5 +1385,31 @@ UltraFreshComplete.prototype.computeSmartScore = function(postData, subredditSta
 // Exemple d'utilisation future :
 // const smartResult = this.computeSmartScore(post.data, { medianEngagement: 12 });
 // console.log(smartResult);
+
+
+// Fonction principale
+async function main() {
+  const scraper = new UltraFreshComplete();
+  
+  try {
+    const articles = await scraper.scrapeAllSources();
+    scraper.displayResults(articles);
+    
+    console.log('✅ Scraping ultra-fraîche terminé avec succès !');
+    console.log(`📈 ${articles.length} articles pertinents trouvés`);
+    console.log('\n🎯 PROCHAINES ÉTAPES:');
+    console.log('1. Intégrer avec le système IA hybride');
+    console.log('2. Configurer la publication automatique');
+    console.log('3. Mettre en place le monitoring');
+    
+  } catch (error) {
+    console.error('❌ Erreur lors du scraping:', error.message);
+  }
+}
+
+// Exécution
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main();
+}
 
 export default UltraFreshComplete;

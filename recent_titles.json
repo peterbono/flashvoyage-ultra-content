@@ -9,15 +9,18 @@
     "Why are people in Phuket so much less friendly than in Bangkok?",
     "What’s the one thing you thought you’d love about being a digital nomad that turned out to be overrated?",
     "How to make and keep lifelong friends as a nomad?",
-    "EF or contiki for South Korea?"
+    "EF or contiki for South Korea?",
+    "moving to Thailand via DTV visa as remote worker",
+    "Socializing - First solo travel (Japan, 3-4 weeks)"
   ],
   "countries": {
-    "unknown": 16,
+    "unknown": 23,
     "vietnam": 1,
-    "japan": 1
+    "japan": 2,
+    "thailand": 1
   },
   "cities": {
-    "unknown": 15,
+    "unknown": 24,
     "singapore": 1,
     "bangkok": 2
   },
