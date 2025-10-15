@@ -3,6 +3,7 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 import { Buffer } from 'buffer';
+import fs from 'fs';
 
 dotenv.config();
 
@@ -219,6 +220,170 @@ class UltraFreshComplete {
     this.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36';
   }
 
+  // -- SmartScore helpers --
+  loadSubredditStats(subreddit) {
+    // Minimal rolling stats stub; improve by persisting medians per subreddit.
+    try {
+      const raw = fs.readFileSync('./subreddit_stats.json', 'utf-8');
+      const db = JSON.parse(raw);
+      return db[subreddit] || { medianEngagement: 12 };
+    } catch {
+      return { medianEngagement: 12 };
+    }
+  }
+
+  writeSmartAudit(entry) {
+    try {
+      fs.appendFileSync('./smartscore_audit.jsonl', JSON.stringify(entry) + '\n', 'utf-8');
+    } catch (e) {
+      console.warn('⚠️ Audit write failed:', e.message);
+    }
+  }
+
+  consolidateSecondarySources(primaryCandidate, pool) {
+    // Very lightweight consolidation: look for 1-2 articles in the pool sharing at least one Asia keyword.
+    const asiaKeywords = ['thailand','vietnam','philippines','indonesia','japan','singapore','malaysia','taiwan','hong kong','chiang mai','bangkok','ho chi minh','bali','asia'];
+    const title = (primaryCandidate.title || '').toLowerCase();
+    const matches = pool.filter(a => {
+      const t = (a.title || '').toLowerCase();
+      return asiaKeywords.some(k => title.includes(k) && t.includes(k)) && a.link !== primaryCandidate.link;
+    }).slice(0, 2);
+
+    const consolidation = {
+      secondary_count: matches.length,
+      secondary_links: matches.map(m => m.link)
+    };
+
+    // Heuristic: bump actionability/credibility if we found corroboration.
+    if (matches.length > 0 && primaryCandidate.smartScores) {
+      primaryCandidate.smartScores.actionability = Math.min(
+        15,
+        (primaryCandidate.smartScores.actionability || 0) + 2 * matches.length
+      );
+      primaryCandidate.smartScores.credibility = Math.min(
+        5,
+        (primaryCandidate.smartScores.credibility || 0) + 1
+      );
+      // Recompute total using weights already defined globally
+      const recomputedTotal = Object.entries(SMART_SCORE_WEIGHTS)
+        .reduce((sum, [key, weight]) => sum + ((primaryCandidate.smartScores[key] || 0) * (weight / 10)), 0)
+        + (primaryCandidate.smartScores.penalties || 0);
+      primaryCandidate.smartScore = Math.round(recomputedTotal);
+      primaryCandidate.smartDecision =
+        recomputedTotal >= SMART_SCORE_THRESHOLDS.publish_primary
+          ? 'primary_source'
+          : recomputedTotal >= SMART_SCORE_THRESHOLDS.require_secondary
+          ? 'secondary_source'
+          : 'reject';
+      primaryCandidate.consolidation = consolidation;
+    }
+
+    return primaryCandidate;
+  }
+
+  // -- Memory helpers for uniqueness & diversity --
+  loadRecentTitles() {
+    try {
+      const raw = fs.readFileSync('./recent_titles.json', 'utf-8');
+      return JSON.parse(raw);
+    } catch {
+      return { titles: [], countries: {}, cities: {}, weekStamp: this.getWeekStamp() };
+    }
+  }
+
+  saveRecentTitles(db) {
+    try {
+      fs.writeFileSync('./recent_titles.json', JSON.stringify(db, null, 2), 'utf-8');
+    } catch (e) {
+      console.warn('⚠️ Save recent_titles failed:', e.message);
+    }
+  }
+
+  getWeekStamp() {
+    const d = new Date();
+    const onejan = new Date(d.getFullYear(), 0, 1);
+    return `${d.getFullYear()}-W${Math.ceil((((d - onejan) / 86400000) + onejan.getDay() + 1) / 7)}`;
+  }
+
+  // Simple bigram Jaccard similarity
+  similarityBigram(a, b) {
+    const grams = s => {
+      const tokens = (s || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+      const res = new Set();
+      for (let i = 0; i < tokens.length - 1; i++) res.add(tokens[i] + ' ' + tokens[i + 1]);
+      return res;
+    };
+    const A = grams(a), B = grams(b);
+    if (A.size === 0 || B.size === 0) return 0;
+    let inter = 0;
+    for (const g of A) if (B.has(g)) inter++;
+    return inter / (A.size + B.size - inter);
+  }
+
+  // Diversity governance: enforce per-week caps (max 2 posts per city)
+  applyDiversityQuotas(sortedArticles) {
+    const mem = this.loadRecentTitles();
+    const week = this.getWeekStamp();
+    if (mem.weekStamp !== week) {
+      mem.countries = {};
+      mem.cities = {};
+      mem.weekStamp = week;
+    }
+    const pick = [];
+    for (const a of sortedArticles) {
+      const meta = this.extractGeoMeta(a.title);
+      const country = meta.country || 'unknown';
+      const city = meta.city || 'unknown';
+      const cityCount = mem.cities[city] || 0;
+
+      // Max 2 articles par ville / semaine
+      if (city !== 'unknown' && cityCount >= 2) continue;
+
+      pick.push(a);
+      mem.cities[city] = (mem.cities[city] || 0) + 1;
+      mem.countries[country] = (mem.countries[country] || 0) + 1;
+    }
+    this.saveRecentTitles(mem);
+    return pick;
+  }
+
+  // Extract simple geo entities from title for diversity (very lightweight)
+  extractGeoMeta(title) {
+    const t = (title || '').toLowerCase();
+    const countries = ['thailand','vietnam','philippines','indonesia','japan','singapore','malaysia','taiwan','hong kong'];
+    const cities = ['bangkok','chiang mai','phuket','krabi','pattaya','ho chi minh','hanoi','da nang','bali','jakarta','manila','cebu','tokyo','osaka','kyoto','singapore'];
+    const foundCountry = countries.find(c => t.includes(c)) || null;
+    const foundCity = cities.find(c => t.includes(c)) || null;
+    return { country: foundCountry, city: foundCity };
+  }
+
+  // Map content signals to affiliate slots (for the generator downstream)
+  mapAffiliateSlots(text) {
+    const slots = [];
+    const add = (slot, score) => slots.push({ slot, score });
+    const s = (text || '').toLowerCase();
+    if (/(flight|airport|airline|visa run|cheap flight)/.test(s)) add('flights', 8);
+    if (/(hotel|hostel|airbnb|guesthouse|resort)/.test(s)) add('hotels', 8);
+    if (/(sim|esim|wifi|internet|4g|5g)/.test(s)) add('esim', 7);
+    if (/(coworking|coliving|workspace|wework)/.test(s)) add('coworking', 7);
+    if (/(insurance|health|medical|travel insurance)/.test(s)) add('insurance', 6);
+    if (/(bus|train|ferry|taxi|grab|bolt|metro|bts|mrt)/.test(s)) add('transport', 7);
+    if (/(tour|activity|ticket|attraction|temple|island tour)/.test(s)) add('activities', 6);
+    return slots.sort((a,b)=>b.score-a.score).slice(0,4);
+  }
+
+  // After final pick, update titles memory (for future uniqueness)
+  updateRecentTitlesMemory(finalArticles) {
+    const mem = this.loadRecentTitles();
+    const titles = mem.titles || [];
+    finalArticles.slice(0, 20).forEach(a => {
+      const t = (a.title || '').trim();
+      if (t && !titles.includes(t)) titles.push(t);
+    });
+    mem.titles = titles.slice(-200); // keep last 200
+    this.saveRecentTitles(mem);
+  }
+
   // Scraper Reddit
   async scrapeReddit() {
     try {
@@ -253,15 +418,28 @@ class UltraFreshComplete {
         const selftext = (data.selftext || '').toLowerCase();
         
         // Vérifier la pertinence Asie
-        const isRelevant = ALTERNATIVE_SOURCES.reddit.keywords.some(keyword => 
+        const isRelevant = ALTERNATIVE_SOURCES.reddit.keywords.some(keyword =>
           title.includes(keyword) || selftext.includes(keyword)
         );
 
         if (isRelevant) {
-          const relevance = this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit.keywords);
-          // Boost de pertinence pour les posts r/travel
-          const boostedRelevance = Math.min(90, relevance + 30);
-          
+          // Compute SmartScore
+          const smart = this.computeSmartScore(data, this.loadSubredditStats('r/travel'));
+          const audit = {
+            post_id: data.id,
+            subreddit: 'r/travel',
+            title: data.title,
+            url: 'https://reddit.com' + data.permalink,
+            created_utc: data.created_utc,
+            age_hours: Math.round((Date.now() - data.created_utc * 1000) / 3600000),
+            scores: smart.scores,
+            total: Math.round(smart.total),
+            decision: smart.decision,
+            contextual: smart.contextual || false,
+            reasons: smart.reasons || []
+          };
+          this.writeSmartAudit(audit);
+
           relevantPosts.push({
             title: data.title,
             link: 'https://reddit.com' + data.permalink,
@@ -269,9 +447,14 @@ class UltraFreshComplete {
             date: new Date(data.created_utc * 1000).toISOString(),
             source: 'Reddit r/travel',
             type: 'community',
-            relevance: boostedRelevance,
+            relevance: Math.min(90, (this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit.keywords) + 30)),
             upvotes: data.ups,
-            comments: data.num_comments
+            comments: data.num_comments,
+            smartScore: Math.round(smart.total),
+            smartDecision: smart.decision,
+            smartScores: smart.scores,
+            affiliateSlots: smart.affiliate_slots || [],
+            geo: this.extractGeoMeta(data.title)
           });
         }
       });
@@ -364,15 +547,28 @@ class UltraFreshComplete {
         const text = `${data.title} ${data.selftext || ''}`.toLowerCase();
         
         // Vérifier si le post contient des mots-clés nomades
-        const hasNomadeKeywords = ALTERNATIVE_SOURCES.reddit_nomad.keywords.some(keyword => 
+        const hasNomadeKeywords = ALTERNATIVE_SOURCES.reddit_nomad.keywords.some(keyword =>
           text.includes(keyword.toLowerCase())
         );
         
         if (hasNomadeKeywords && data.ups > 2) { // Réduire le seuil d'upvotes
-          const relevance = this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit_nomad.keywords);
-          // Boost de pertinence pour les posts Reddit nomades
-          const boostedRelevance = Math.min(95, relevance + 40);
-          
+          // Compute SmartScore
+          const smart = this.computeSmartScore(data, this.loadSubredditStats('r/digitalnomad'));
+          const audit = {
+            post_id: data.id,
+            subreddit: 'r/digitalnomad',
+            title: data.title,
+            url: `https://reddit.com${data.permalink}`,
+            created_utc: data.created_utc,
+            age_hours: Math.round((Date.now() - data.created_utc * 1000) / 3600000),
+            scores: smart.scores,
+            total: Math.round(smart.total),
+            decision: smart.decision,
+            contextual: smart.contextual || false,
+            reasons: smart.reasons || []
+          };
+          this.writeSmartAudit(audit);
+
           relevantPosts.push({
             title: data.title,
             link: `https://reddit.com${data.permalink}`,
@@ -380,9 +576,14 @@ class UltraFreshComplete {
             date: new Date(data.created_utc * 1000).toISOString(),
             source: 'Reddit Digital Nomad',
             type: 'nomade',
-            relevance: boostedRelevance,
+            relevance: Math.min(95, (this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit_nomad.keywords) + 40)),
             upvotes: data.ups,
-            comments: data.num_comments
+            comments: data.num_comments,
+            smartScore: Math.round(smart.total),
+            smartDecision: smart.decision,
+            smartScores: smart.scores,
+            affiliateSlots: smart.affiliate_slots || [],
+            geo: this.extractGeoMeta(data.title)
           });
         }
       });
@@ -520,16 +721,28 @@ class UltraFreshComplete {
 
     // Contenu simulé supprimé - utilisation uniquement de vrais flux RSS
 
-    // Trier par pertinence et date
+    // Trier avec priorité au SmartScore puis date
     allArticles.sort((a, b) => {
-      if (b.relevance !== a.relevance) {
-        return b.relevance - a.relevance;
-      }
+      const as = typeof a.smartScore === 'number' ? a.smartScore : -1;
+      const bs = typeof b.smartScore === 'number' ? b.smartScore : -1;
+      if (bs !== as) return bs - as;
+      if (b.relevance !== a.relevance) return (b.relevance || 0) - (a.relevance || 0);
       return new Date(b.date) - new Date(a.date);
     });
 
-    console.log(`\n🎯 Total: ${allArticles.length} articles ultra-fraîches trouvés`);
-    return allArticles;
+    // Si le meilleur candidat est "secondary_source", tenter une consolidation rapide
+    if (allArticles.length > 0 && allArticles[0].smartDecision === 'secondary_source') {
+      const improved = this.consolidateSecondarySources(allArticles[0], allArticles.slice(1, 20));
+      allArticles[0] = improved;
+    }
+
+    // Appliquer les quotas de diversité (max 2 par ville/semaine)
+    const diversified = this.applyDiversityQuotas(allArticles);
+    // Mettre à jour la mémoire des titres après sélection
+    this.updateRecentTitlesMemory(diversified);
+
+    console.log(`\n🎯 Total: ${diversified.length} articles ultra-fraîches trouvés (après quotas)`);
+    return diversified;
   }
 
   // Afficher les résultats
@@ -548,6 +761,7 @@ class UltraFreshComplete {
       console.log(`   Pertinence: ${article.relevance}/100`);
       console.log(`   Il y a: ${timeAgo}`);
       console.log(`   Lien: ${article.link}`);
+      console.log(`   Widgets: ${(article.affiliateSlots||[]).map(s=>s.slot+':'+s.score).join(', ')}`);
       console.log('');
     });
   }
@@ -918,5 +1132,143 @@ async function main() {
 if (import.meta.url === `file://${process.argv[1]}`) {
   main();
 }
+
+
+// === SMART REDDIT SOURCE SCORING v2 ===
+// Nouveau moteur d'évaluation de posts Reddit pour FlashVoyages Asie
+
+// Pondérations des sous-scores
+const SMART_SCORE_WEIGHTS = {
+  relevance_asia_nomad: 20,
+  actionability: 15,
+  engagement: 15,
+  quality: 10,
+  comments_value: 10,
+  freshness_momentum: 10,
+  credibility: 5,
+  monetization_fit: 10,
+  uniqueness: 5
+};
+
+// Seuils de décision
+const SMART_SCORE_THRESHOLDS = {
+  publish_primary: 70,
+  require_secondary: 60
+};
+
+// Liste contextuelle sensible (non blacklist)
+const CONTEXTUAL_TOPICS = ['politics', 'relationships', 'safety', 'scam', 'corruption', 'housing'];
+
+// Calcul du SmartScore complet d’un post Reddit
+UltraFreshComplete.prototype.computeSmartScore = function(postData, subredditStats) {
+  const { title, selftext, ups, num_comments, created_utc, author, permalink } = postData;
+  const text = `${title} ${selftext || ''}`.toLowerCase();
+
+  const reasons = [];
+  const contextual = (CONTEXTUAL_TOPICS || []).some(t => text.includes(t));
+
+  const scores = {
+    relevance_asia_nomad: 0,
+    actionability: 0,
+    engagement: 0,
+    quality: 0,
+    comments_value: 0,
+    freshness_momentum: 0,
+    credibility: 0,
+    monetization_fit: 0,
+    uniqueness: 0,
+    penalties: 0
+  };
+
+  // 1. Pertinence Asie / Nomad
+  const asiaKeywords = ['asia','thailand','vietnam','philippines','indonesia','japan','singapore','malaysia','taiwan','hong kong','chiang mai','bangkok','ho chi minh','bali'];
+  if (asiaKeywords.some(k => text.includes(k))) scores.relevance_asia_nomad += 10;
+  if (text.includes('nomad') || text.includes('visa') || text.includes('coworking') || text.includes('coliving')) scores.relevance_asia_nomad += 10;
+  if (scores.relevance_asia_nomad >= 10) reasons.push('Asie détectée');
+  if (scores.relevance_asia_nomad >= 20) reasons.push('Nomad/visa/coworking détecté');
+
+  // 2. Actionnabilité
+  if (/(price|cost|guide|visa|how to|where|address|recommend|tips|avoid)/i.test(text)) scores.actionability += 10;
+  if (/(http|www|\.com)/i.test(text)) scores.actionability += 5;
+  if (scores.actionability >= 10) reasons.push('Signaux actionnables (prix/guide/tips)');
+
+  // 3. Engagement normalisé
+  const hoursSince = (Date.now() - created_utc * 1000) / 3600000;
+  const engagementVelocity = (ups + num_comments) / Math.max(hoursSince, 1);
+  const subNorm = subredditStats?.medianEngagement || 10;
+  scores.engagement = Math.min(15, (engagementVelocity / subNorm) * 10);
+
+  // 4. Qualité linguistique
+  const wordCount = selftext ? selftext.split(/\s+/).length : 0;
+  if (wordCount > 120) scores.quality += 5;
+  if (!/(fuck|hate|stupid|idiot)/i.test(text)) scores.quality += 5;
+
+  // 5. Valeur commentaires (placeholder)
+  scores.comments_value = Math.min(10, Math.log1p(num_comments) * 2);
+
+  // 6. Fraîcheur
+  if (hoursSince < 48) scores.freshness_momentum += 10;
+  else if (hoursSince < 168) scores.freshness_momentum += 5;
+  if (scores.freshness_momentum >= 10) reasons.push('Fraîcheur <48h');
+
+  // 7. Crédibilité
+  if (author && author.length > 2) scores.credibility += 3;
+  if (ups > 10) scores.credibility += 2;
+
+  // 8. Fit monétisation
+  if (/(flight|hotel|insurance|coworking|coliving|wifi|sim|transport|taxi|bus|ferry)/i.test(text)) scores.monetization_fit += 10;
+
+  // 9. Unicité vs mémoire récente (30 jours glissants approximés)
+  let uniqueness = 5;
+  try {
+    const mem = this.loadRecentTitles();
+    const maxSim = (mem.titles || []).reduce((m, t) => Math.max(m, this.similarityBigram(title, t)), 0);
+    if (maxSim >= 0.5) uniqueness = 1;
+    else if (maxSim >= 0.35) uniqueness = 3;
+    else uniqueness = 5;
+  } catch { /* keep default */ }
+  scores.uniqueness = uniqueness;
+
+  // 8bis. Affiliate slots mapping (for downstream generator)
+  const affiliateSlots = this.mapAffiliateSlots(text);
+
+  // 10. Pénalités
+  if (!asiaKeywords.some(k => text.includes(k))) {
+    // Si travel terms présents → malus léger, sinon malus fort
+    scores.penalties -= /(travel|visa|cost|coworking|coliving|flight|hotel)/.test(text) ? 5 : 10;
+  }
+  if (/(politics|relationship|religion)/i.test(text) && !/(travel|visa|safety|culture|dating|coliving)/i.test(text))
+    scores.penalties -= 15;
+
+  // Règle contextualisée: si topic sensible détecté, exiger un minimum d'actionnabilité
+  if (contextual && scores.actionability < 8) {
+    scores.penalties -= 10;
+    reasons.push('Contexte sensible sans actionnabilité suffisante (-10)');
+  }
+
+  // Calcul du total pondéré
+  const total = Object.entries(SMART_SCORE_WEIGHTS)
+    .reduce((sum, [key, weight]) => sum + (scores[key] * (weight / 10)), 0) + scores.penalties;
+
+  return {
+    title,
+    url: `https://reddit.com${permalink}`,
+    scores,
+    total,
+    decision:
+      total >= SMART_SCORE_THRESHOLDS.publish_primary
+        ? 'primary_source'
+        : total >= SMART_SCORE_THRESHOLDS.require_secondary
+        ? 'secondary_source'
+        : 'reject',
+    contextual,
+    reasons,
+    affiliate_slots: affiliateSlots
+  };
+};
+
+// Exemple d'utilisation future :
+// const smartResult = this.computeSmartScore(post.data, { medianEngagement: 12 });
+// console.log(smartResult);
 
 export default UltraFreshComplete;
