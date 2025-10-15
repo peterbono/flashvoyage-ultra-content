@@ -5,6 +5,8 @@ import ContentEnhancer from './content-enhancer.js';
 import IntelligentContentAnalyzerOptimized from './intelligent-content-analyzer-optimized.js';
 import { CompleteLinkingStrategy } from './complete-linking-strategy.js';
 import ArticleFinalizer from './article-finalizer.js';
+import WidgetPlanBuilder from './widget-plan-builder.js';
+import ContextualWidgetPlacer from './contextual-widget-placer-v2.js';
 import { OPENAI_API_KEY } from './config.js';
 
 class EnhancedUltraGenerator extends UltraStrategicGenerator {
@@ -14,6 +16,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     this.intelligentAnalyzer = new IntelligentContentAnalyzerOptimized();
     this.linkingStrategy = new CompleteLinkingStrategy();
     this.articleFinalizer = new ArticleFinalizer();
+    this.widgetPlanBuilder = new WidgetPlanBuilder();
+    this.contextualWidgetPlacer = new ContextualWidgetPlacer();
     
     // Initialiser les composants nécessaires
     this.initializeComponents();
@@ -165,16 +169,50 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         console.warn('   → Article publié sans enrichissement de liens');
       }
 
-      // 8. Finalisation de l'article (widgets, quote, FOMO, image)
+      // 8. Construire le plan de widgets et placer contextuellement
+      console.log('🎯 Construction du plan de widgets...');
+      const widgetPlan = this.widgetPlanBuilder.buildWidgetPlan(
+        analysis.affiliateSlots || [],
+        analysis.geo || {},
+        {
+          type: analysis.type || 'temoignage',
+          destination: analysis.destination || 'Asie',
+          audience: 'Nomades digitaux',
+          hasItineraryContent: finalArticle.content.includes('itinéraire') || finalArticle.content.includes('programme'),
+          hasGettingThereSection: finalArticle.content.includes('Comment s\'y rendre') || finalArticle.content.includes('Transport'),
+          hasInternetSection: finalArticle.content.includes('Internet') || finalArticle.content.includes('WiFi'),
+          hasSafetySection: finalArticle.content.includes('Sécurité') || finalArticle.content.includes('Sûr'),
+          hasBudgetSection: finalArticle.content.includes('Budget') || finalArticle.content.includes('Coût'),
+          hasVisaContent: finalArticle.content.includes('visa') || finalArticle.content.includes('Visa'),
+          hasSensitiveContent: finalArticle.content.includes('politique') || finalArticle.content.includes('religion')
+        },
+        `article_${Date.now()}`
+      );
+
+      console.log('🎯 Placement contextuel des widgets...');
+      const contentWithWidgets = await this.contextualWidgetPlacer.placeWidgetsIntelligently(
+        finalArticle.content,
+        {
+          type: analysis.type || 'temoignage',
+          destination: analysis.destination || 'Asie',
+          audience: 'Nomades digitaux'
+        },
+        widgetPlan.widget_plan
+      );
+
+      // Mettre à jour le contenu avec les widgets
+      finalArticle.content = contentWithWidgets;
+
+      // 8b. Finalisation de l'article (quote, FOMO, image)
       const finalizedArticle = await this.articleFinalizer.finalizeArticle(finalArticle, analysis);
       
-      // 8b. Récupérer l'image featured
+      // 8c. Récupérer l'image featured
       const featuredImage = await this.articleFinalizer.getFeaturedImage(finalizedArticle, analysis);
       if (featuredImage) {
         finalizedArticle.featuredImage = featuredImage;
       }
       
-      // 8c. Mapper les catégories et tags vers IDs
+      // 8d. Mapper les catégories et tags vers IDs
       const categoriesAndTags = await this.articleFinalizer.getCategoriesAndTagsIds(
         finalizedArticle.categories || [],
         finalizedArticle.tags || []
