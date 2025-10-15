@@ -12,10 +12,12 @@
 
 import axios from 'axios';
 import { REAL_TRAVELPAYOUTS_WIDGETS } from './travelpayouts-real-widgets-database.js';
+import ContextualWidgetPlacer from './contextual-widget-placer.js';
 
 class ArticleFinalizer {
   constructor() {
     this.widgets = REAL_TRAVELPAYOUTS_WIDGETS;
+    this.widgetPlacer = new ContextualWidgetPlacer();
   }
 
   /**
@@ -57,8 +59,9 @@ class ArticleFinalizer {
 
   /**
    * Remplace les placeholders {{TRAVELPAYOUTS_XXX_WIDGET}} par les vrais widgets
+   * NOUVELLE VERSION: Placement contextuel intelligent avec LLM
    */
-  replaceWidgetPlaceholders(content, analysis) {
+  async replaceWidgetPlaceholders(content, analysis) {
     console.log('🔧 Remplacement des widgets Travelpayouts...');
     
     let updatedContent = content;
@@ -66,6 +69,42 @@ class ArticleFinalizer {
 
     // Détecter le contexte de l'article
     const context = this.analyzeArticleContext(content, analysis);
+    
+    // Vérifier s'il y a des placeholders à remplacer
+    const hasPlaceholders = content.includes('{{TRAVELPAYOUTS') || content.includes('{TRAVELPAYOUTS');
+    
+    if (!hasPlaceholders) {
+      console.log('   ℹ️ Pas de placeholders détectés, utilisation du placement intelligent\n');
+      
+      // Préparer les scripts de widgets
+      const widgetScripts = {
+        flights: this.selectBestFlightWidget(context),
+        hotels: this.selectBestHotelWidget(context),
+        insurance: this.selectBestInsuranceWidget(context),
+        transport: this.selectBestTransportWidget(context)
+      };
+      
+      // Utiliser le placement contextuel intelligent
+      const articleContext = {
+        type: analysis?.type || 'Témoignage',
+        destination: analysis?.destinations?.[0] || context.hasDestination || 'Asie',
+        audience: analysis?.target_audience || 'Nomades digitaux'
+      };
+      
+      updatedContent = await this.widgetPlacer.placeWidgetsIntelligently(
+        updatedContent,
+        articleContext,
+        widgetScripts
+      );
+      
+      return {
+        content: updatedContent,
+        count: 3 // Estimation
+      };
+    }
+    
+    // Sinon, remplacement classique des placeholders
+    console.log('   ℹ️ Placeholders détectés, remplacement classique\n');
 
     // Remplacer FLIGHTS
     if (updatedContent.includes('{{TRAVELPAYOUTS_FLIGHTS_WIDGET}}') || 
