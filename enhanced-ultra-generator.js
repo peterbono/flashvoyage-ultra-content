@@ -4,6 +4,7 @@ import UltraStrategicGenerator from './ultra-strategic-generator.js';
 import ContentEnhancer from './content-enhancer.js';
 import IntelligentContentAnalyzerOptimized from './intelligent-content-analyzer-optimized.js';
 import { CompleteLinkingStrategy } from './complete-linking-strategy.js';
+import ArticleFinalizer from './article-finalizer.js';
 import { OPENAI_API_KEY } from './config.js';
 
 class EnhancedUltraGenerator extends UltraStrategicGenerator {
@@ -12,6 +13,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     this.contentEnhancer = new ContentEnhancer();
     this.intelligentAnalyzer = new IntelligentContentAnalyzerOptimized();
     this.linkingStrategy = new CompleteLinkingStrategy();
+    this.articleFinalizer = new ArticleFinalizer();
     
     // Initialiser les composants nécessaires
     this.initializeComponents();
@@ -159,27 +161,31 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         console.warn('   → Article publié sans enrichissement de liens');
       }
 
-      // 8. Validation finale
-      const validation = this.validateFinalArticle(finalArticle);
+      // 8. Finalisation de l'article (widgets, quote, FOMO, image)
+      const finalizedArticle = await this.articleFinalizer.finalizeArticle(finalArticle, analysis);
+
+      // 9. Validation finale
+      const validation = this.validateFinalArticle(finalizedArticle);
       if (!validation.isValid) {
         throw new Error(`Article invalide: ${validation.errors.join(', ')}`);
       }
 
-      // 9. Publication WordPress
+      // 10. Publication WordPress
       console.log('📝 Publication sur WordPress...');
-      const publishedArticle = await this.publishToWordPress(finalArticle);
+      const publishedArticle = await this.publishToWordPress(finalizedArticle);
       
       console.log('✅ Article publié avec succès!');
       console.log('🔗 Lien:', publishedArticle.link);
       console.log('📊 Améliorations:', {
-        widgets: enhanced.widgets.length,
-        internalLinks: finalArticle.enhancements.internalLinks || 0,
-        externalLinks: finalArticle.enhancements.externalLinks || 0,
-        validationScore: enhanced.validation.score,
-        quoteHighlight: finalArticle.enhancements.quoteHighlight
+        widgetsReplaced: finalizedArticle.enhancements.widgetsReplaced || 0,
+        internalLinks: finalizedArticle.enhancements.internalLinks || 0,
+        externalLinks: finalizedArticle.enhancements.externalLinks || 0,
+        quoteHighlight: finalizedArticle.enhancements.quoteHighlight || 'Non',
+        fomoIntro: finalizedArticle.enhancements.fomoIntro || 'Non',
+        validationScore: enhanced.validation.score
       });
 
-      // 10. Mettre à jour la base de données d'articles (pour les prochains articles)
+      // 11. Mettre à jour la base de données d'articles (pour les prochains articles)
       console.log('\n📚 Mise à jour de la base de données...');
       try {
         const { WordPressArticlesCrawler } = await import('./wordpress-articles-crawler.js');
