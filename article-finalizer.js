@@ -233,18 +233,27 @@ class ArticleFinalizer {
   selectBestInsuranceWidget(context) {
     const { insurance } = this.widgets;
 
+    // Si pas de widgets d'assurance disponibles, retourner un placeholder
+    if (!insurance) {
+      return `<!-- Widget assurance à ajouter -->`;
+    }
+
     // Si nomade digital, utiliser SafetyWing
-    if (context.hasNomad) {
-      return insurance.safetyWing.banner.script;
+    if (context.hasNomad && insurance.safetyWing) {
+      return insurance.safetyWing.banner?.script || `<!-- Widget SafetyWing à configurer -->`;
     }
 
     // Si visa, utiliser Insubuy
-    if (context.hasVisa) {
-      return insurance.insubuy.banner.script;
+    if (context.hasVisa && insurance.insubuy) {
+      return insurance.insubuy.banner?.script || `<!-- Widget Insubuy à configurer -->`;
     }
 
-    // Par défaut, SafetyWing
-    return insurance.safetyWing.banner.script;
+    // Par défaut, retourner le premier widget disponible ou placeholder
+    if (insurance.safetyWing) {
+      return insurance.safetyWing.banner?.script || `<!-- Widget SafetyWing à configurer -->`;
+    }
+
+    return `<!-- Widget assurance à ajouter -->`;
   }
 
   /**
