@@ -12,14 +12,14 @@
     "EF or contiki for South Korea?"
   ],
   "countries": {
-    "unknown": 8,
+    "unknown": 16,
     "vietnam": 1,
     "japan": 1
   },
   "cities": {
-    "unknown": 8,
+    "unknown": 15,
     "singapore": 1,
-    "bangkok": 1
+    "bangkok": 2
   },
   "weekStamp": "2025-W42"
 }

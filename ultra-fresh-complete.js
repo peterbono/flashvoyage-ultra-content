@@ -335,9 +335,16 @@ class UltraFreshComplete {
       const country = meta.country || 'unknown';
       const city = meta.city || 'unknown';
       const cityCount = mem.cities[city] || 0;
+      const countryCount = mem.countries[country] || 0;
 
       // Max 2 articles par ville / semaine
       if (city !== 'unknown' && cityCount >= 2) continue;
+      
+      // Exemple de règle douce: viser au moins 3 pays distincts sur la semaine.
+      // Ici on n'impose pas un hard block, mais on peut sauter un 3e/4e article d'un même pays
+      if (country !== 'unknown' && countryCount >= 3) {
+        continue; // saute les surplus pays
+      }
 
       pick.push(a);
       mem.cities[city] = (mem.cities[city] || 0) + 1;
@@ -500,7 +507,9 @@ class UltraFreshComplete {
             date: pubDate,
             source: 'Google News Asia',
             type: 'news',
-            relevance: this.calculateRelevance(title, '', ALTERNATIVE_SOURCES.google_news.keywords)
+            relevance: this.calculateRelevance(title, '', ALTERNATIVE_SOURCES.google_news.keywords),
+            affiliateSlots: this.mapAffiliateSlots(title),
+            geo: this.extractGeoMeta(title)
           });
         }
       }
@@ -629,7 +638,9 @@ class UltraFreshComplete {
             date: pubDate,
             source: 'Google News Digital Nomad',
             type: 'nomade',
-            relevance: this.calculateRelevance(title, '', ALTERNATIVE_SOURCES.google_news_nomad.keywords)
+            relevance: this.calculateRelevance(title, '', ALTERNATIVE_SOURCES.google_news_nomad.keywords),
+            affiliateSlots: this.mapAffiliateSlots(title),
+            geo: this.extractGeoMeta(title)
           });
         }
       }
@@ -921,6 +932,23 @@ class UltraFreshComplete {
           const relevance = this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit.keywords);
           
           if (relevance >= 30) {
+            // ✅ Calculer SmartScore ici aussi
+            const smart = this.computeSmartScore(data, this.loadSubredditStats('r/travel'));
+            const audit = {
+              post_id: data.id,
+              subreddit: 'r/travel',
+              title: data.title,
+              url: `https://reddit.com${data.permalink}`,
+              created_utc: data.created_utc,
+              age_hours: Math.round((Date.now() - data.created_utc * 1000) / 3600000),
+              scores: smart.scores,
+              total: Math.round(smart.total),
+              decision: smart.decision,
+              contextual: smart.contextual || false,
+              reasons: smart.reasons || []
+            };
+            this.writeSmartAudit(audit);
+
             allArticles.push({
               title: data.title,
               link: `https://reddit.com${data.permalink}`,
@@ -928,7 +956,12 @@ class UltraFreshComplete {
               date: new Date(data.created_utc * 1000).toISOString(),
               source: 'Reddit r/travel (API)',
               type: 'community',
-              relevance: relevance
+              relevance: relevance,
+              smartScore: Math.round(smart.total),
+              smartDecision: smart.decision,
+              smartScores: smart.scores,
+              affiliateSlots: smart.affiliate_slots || [],
+              geo: this.extractGeoMeta(data.title)
             });
           }
         });
@@ -938,9 +971,31 @@ class UltraFreshComplete {
       if (nomadResponse.data?.data?.children) {
         nomadResponse.data.data.children.forEach(post => {
           const data = post.data;
-          const relevance = this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit.keywords);
-          
+          // ⚠️ utiliser le bon dictionnaire
+          const relevance = this.calculateRelevance(
+            data.title, 
+            data.selftext, 
+            ALTERNATIVE_SOURCES.reddit_nomad.keywords
+          );
+
           if (relevance >= 30) {
+            // ✅ Calculer SmartScore ici aussi
+            const smart = this.computeSmartScore(data, this.loadSubredditStats('r/digitalnomad'));
+            const audit = {
+              post_id: data.id,
+              subreddit: 'r/digitalnomad',
+              title: data.title,
+              url: `https://reddit.com${data.permalink}`,
+              created_utc: data.created_utc,
+              age_hours: Math.round((Date.now() - data.created_utc * 1000) / 3600000),
+              scores: smart.scores,
+              total: Math.round(smart.total),
+              decision: smart.decision,
+              contextual: smart.contextual || false,
+              reasons: smart.reasons || []
+            };
+            this.writeSmartAudit(audit);
+
             allArticles.push({
               title: data.title,
               link: `https://reddit.com${data.permalink}`,
@@ -948,7 +1003,12 @@ class UltraFreshComplete {
               date: new Date(data.created_utc * 1000).toISOString(),
               source: 'Reddit Digital Nomad (API)',
               type: 'nomade',
-              relevance: relevance
+              relevance: relevance,
+              smartScore: Math.round(smart.total),
+              smartDecision: smart.decision,
+              smartScores: smart.scores,
+              affiliateSlots: smart.affiliate_slots || [],
+              geo: this.extractGeoMeta(data.title)
             });
           }
         });
@@ -1237,8 +1297,9 @@ UltraFreshComplete.prototype.computeSmartScore = function(postData, subredditSta
     // Si travel terms présents → malus léger, sinon malus fort
     scores.penalties -= /(travel|visa|cost|coworking|coliving|flight|hotel)/.test(text) ? 5 : 10;
   }
-  if (/(politics|relationship|religion)/i.test(text) && !/(travel|visa|safety|culture|dating|coliving)/i.test(text))
+  if (/(politics|relationship|relationships|religion)/i.test(text) && !/(travel|visa|safety|culture|dating|coliving)/i.test(text)) {
     scores.penalties -= 15;
+  }
 
   // Règle contextualisée: si topic sensible détecté, exiger un minimum d'actionnabilité
   if (contextual && scores.actionability < 8) {
