@@ -213,6 +213,14 @@ CONTENU REQUIS:
 5. CTA spécifique
 6. Signature FlashVoyages
 
+FORMAT HTML OBLIGATOIRE:
+- Utilise <h2> pour les titres principaux (PAS ##)
+- Utilise <h3> pour les sous-titres (PAS ###)
+- Utilise <p> pour les paragraphes
+- Utilise <ul><li> pour les listes
+- Utilise <strong> pour le gras
+- JAMAIS de Markdown (##, ###, **, etc.)
+
 RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
 
     // Prompts spécialisés par type

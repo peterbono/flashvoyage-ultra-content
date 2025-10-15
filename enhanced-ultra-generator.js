@@ -163,6 +163,20 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
 
       // 8. Finalisation de l'article (widgets, quote, FOMO, image)
       const finalizedArticle = await this.articleFinalizer.finalizeArticle(finalArticle, analysis);
+      
+      // 8b. Récupérer l'image featured
+      const featuredImage = await this.articleFinalizer.getFeaturedImage(finalizedArticle, analysis);
+      if (featuredImage) {
+        finalizedArticle.featuredImage = featuredImage;
+      }
+      
+      // 8c. Mapper les catégories et tags vers IDs
+      const categoriesAndTags = await this.articleFinalizer.getCategoriesAndTagsIds(
+        finalizedArticle.categories || [],
+        finalizedArticle.tags || []
+      );
+      finalizedArticle.categoryIds = categoriesAndTags.categories;
+      finalizedArticle.tagIds = categoriesAndTags.tags;
 
       // 9. Validation finale
       const validation = this.validateFinalArticle(finalizedArticle);
@@ -355,9 +369,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         content: article.content,
         status: 'publish',
         excerpt: article.excerpt || '',
-        // Retirer categories et tags temporairement (nécessitent des IDs numériques)
-        // categories: article.categories || [],
-        // tags: article.tags || [],
+        categories: article.categoryIds || [],
+        tags: article.tagIds || [],
         meta: {
           description: article.meta?.description || article.excerpt || '',
           keywords: article.meta?.keywords || '',
@@ -382,6 +395,41 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       console.log('✅ Article publié sur WordPress !');
       console.log(`   ID: ${publishedArticle.id}`);
       console.log(`   URL: ${publishedArticle.link}`);
+      
+      // Uploader l'image featured si disponible
+      if (article.featuredImage) {
+        try {
+          console.log('🖼️ Upload de l\'image featured...');
+          
+          // Télécharger l'image
+          const imageResponse = await axios.get(article.featuredImage.url, {
+            responseType: 'arraybuffer'
+          });
+          
+          // Uploader sur WordPress
+          const uploadResponse = await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/media`, imageResponse.data, {
+            headers: {
+              'Authorization': `Basic ${auth}`,
+              'Content-Type': 'image/jpeg',
+              'Content-Disposition': `attachment; filename="featured-${publishedArticle.id}.jpg"`
+            }
+          });
+          
+          // Associer l'image à l'article
+          await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts/${publishedArticle.id}`, {
+            featured_media: uploadResponse.data.id
+          }, {
+            headers: {
+              'Authorization': `Basic ${auth}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          console.log('✅ Image featured ajoutée');
+        } catch (imageError) {
+          console.warn('⚠️ Erreur upload image:', imageError.message);
+        }
+      }
       
       return {
         id: publishedArticle.id,
