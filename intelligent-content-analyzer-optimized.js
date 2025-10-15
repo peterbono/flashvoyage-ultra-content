@@ -335,6 +335,13 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   <h2>Les actions à prendre maintenant</h2>
   <p>Donne des actions concrètes (100-150 mots): Que faire immédiatement? Quelles ressources utiliser? Comment se préparer?</p>
   
+  <h3>Préparer votre voyage</h3>
+  <p>IMPORTANT: Mentionne OBLIGATOIREMENT les aspects pratiques du voyage (50-100 mots):
+  - Comment se rendre sur place (vols, routes aériennes)
+  - Où loger une fois sur place (types d'hébergement, quartiers recommandés)
+  - Budget transport et logement estimé
+  Cela permettra d'insérer des outils de comparaison utiles pour le lecteur.</p>
+  
   <p><em>Cet article a été analysé par notre équipe FlashVoyages — votre spécialiste du nomadisme en Asie.</em></p>"
 }`;
 
