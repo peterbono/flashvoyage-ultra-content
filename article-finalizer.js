@@ -58,6 +58,31 @@ class ArticleFinalizer {
   }
 
   /**
+   * Compte les vrais widgets placés dans le contenu
+   */
+  countActualWidgets(content) {
+    const widgetPatterns = [
+      /Selon notre analyse de milliers de vols/gi,
+      /D'après notre expérience avec des centaines de nomades/gi,
+      /Notre partenaire Kiwi\.com/gi,
+      /Notre outil compare les prix/gi,
+      /Comparez les prix et réservez/gi,
+      /Trouvez les meilleures offres/gi
+    ];
+    
+    let count = 0;
+    widgetPatterns.forEach(pattern => {
+      const matches = content.match(pattern);
+      if (matches) {
+        count += matches.length;
+      }
+    });
+    
+    console.log(`   📊 Widgets détectés: ${count}`);
+    return count;
+  }
+
+  /**
    * Remplace les placeholders {{TRAVELPAYOUTS_XXX_WIDGET}} par les vrais widgets
    * NOUVELLE VERSION: Placement contextuel intelligent avec LLM
    */
@@ -91,15 +116,18 @@ class ArticleFinalizer {
         audience: analysis?.target_audience || 'Nomades digitaux'
       };
       
-      updatedContent = await this.widgetPlacer.placeWidgetsIntelligently(
+      const placementResult = await this.widgetPlacer.placeWidgetsIntelligently(
         updatedContent,
         articleContext,
         widgetScripts
       );
       
+      // Compter les vrais widgets placés au lieu d'estimer
+      const widgetCount = this.countActualWidgets(placementResult);
+      
       return {
-        content: updatedContent,
-        count: 3 // Estimation
+        content: placementResult,
+        count: widgetCount
       };
     }
     
@@ -257,9 +285,9 @@ class ArticleFinalizer {
       return hotels.hotellook.searchForm.script;
     }
 
-    // Si budget/prix, utiliser Booking
+    // Si budget/prix, utiliser Hotellook (Booking n'est pas disponible)
     if (context.hasBudget) {
-      return hotels.booking.searchForm.script;
+      return hotels.hotellook.searchForm.script;
     }
 
     // Par défaut, Hotellook
@@ -434,28 +462,53 @@ class ArticleFinalizer {
         return null;
       }
 
-      // Construire la requête selon le contexte
-      let query = 'digital nomad working laptop';
-      
-      if (analysis?.destinations) {
-        const destination = analysis.destinations[0];
-        if (destination) {
-          query += ` ${destination}`;
-        }
+      // Construire la requête selon le contexte avec plus de variété
+      const baseQueries = [
+        'digital nomad working laptop',
+        'remote work travel asia',
+        'nomade digital coworking',
+        'laptop beach sunset',
+        'digital nomad lifestyle',
+        'remote work coffee shop',
+        'travel laptop backpack',
+        'nomade digital asie'
+      ];
+
+      // Ajouter la destination si disponible
+      let destination = '';
+      if (analysis?.destinations && analysis.destinations.length > 0) {
+        destination = analysis.destinations[0];
       }
+
+      // Sélectionner une query aléatoire
+      const randomQuery = baseQueries[Math.floor(Math.random() * baseQueries.length)];
+      let query = randomQuery;
+      
+      if (destination) {
+        query += ` ${destination}`;
+      }
+
+      // Ajouter un paramètre de page aléatoire pour plus de diversité
+      const randomPage = Math.floor(Math.random() * 3) + 1; // Pages 1-3
+
+      console.log(`   🔍 Query: "${query}" (page ${randomPage})`);
 
       const response = await axios.get('https://api.pexels.com/v1/search', {
         headers: { 'Authorization': PEXELS_API_KEY },
         params: {
           query,
-          per_page: 5,
-          orientation: 'landscape'
+          per_page: 10, // Plus d'images pour choisir
+          orientation: 'landscape',
+          page: randomPage
         }
       });
 
       if (response.data.photos && response.data.photos.length > 0) {
-        const image = response.data.photos[0];
-        console.log(`   ✅ Image trouvée: ${image.alt}`);
+        // Sélectionner une image aléatoire parmi les 10 premières
+        const randomIndex = Math.floor(Math.random() * Math.min(response.data.photos.length, 5));
+        const image = response.data.photos[randomIndex];
+        
+        console.log(`   ✅ Image sélectionnée (${randomIndex + 1}/${response.data.photos.length}): ${image.alt}`);
         return {
           url: image.src.large,
           alt: image.alt,

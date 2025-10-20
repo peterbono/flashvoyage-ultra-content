@@ -1357,6 +1357,24 @@ UltraFreshComplete.prototype.computeSmartScore = function(postData, subredditSta
     scores.penalties -= 15;
   }
 
+  // 11. Détection de sujets sensibles/identitaires
+  const contextualSensitive = /(dark|black|skin|race|racism|discrimination|ethnicity|minority)/i.test(text);
+  if (contextualSensitive) {
+    reasons.push('Sujet identitaire/sensible détecté');
+  }
+
+  // 12. Rejet des contenus problématiques
+  if (contextualSensitive && (scores.monetization_fit || 0) < 1 && scores.actionability < 5) {
+    scores.penalties -= 25;
+    reasons.push('Sujet identitaire sans valeur pratique → rejet');
+  }
+
+  // 13. Interdiction primary_source si pas de monétisation
+  if ((scores.monetization_fit || 0) === 0) {
+    scores.penalties -= 10;
+    reasons.push('Aucun mot affiliable détecté → limites monétisation');
+  }
+
   // Règle contextualisée: si topic sensible détecté, exiger un minimum d'actionnabilité
   if (contextual && scores.actionability < 8) {
     scores.penalties -= 10;
@@ -1367,17 +1385,23 @@ UltraFreshComplete.prototype.computeSmartScore = function(postData, subredditSta
   const total = Object.entries(SMART_SCORE_WEIGHTS)
     .reduce((sum, [key, weight]) => sum + (scores[key] * (weight / 10)), 0) + scores.penalties;
 
+  // 14. Rejet final des contenus problématiques
+  let finalDecision = 'reject';
+  if (contextualSensitive && (scores.monetization_fit || 0) === 0) {
+    finalDecision = 'reject';
+    reasons.push('Sujet sensible + pas de monétisation → rejet définitif');
+  } else if (total >= SMART_SCORE_THRESHOLDS.publish_primary) {
+    finalDecision = 'primary_source';
+  } else if (total >= SMART_SCORE_THRESHOLDS.require_secondary) {
+    finalDecision = 'secondary_source';
+  }
+
   return {
     title,
     url: `https://reddit.com${permalink}`,
     scores,
     total,
-    decision:
-      total >= SMART_SCORE_THRESHOLDS.publish_primary
-        ? 'primary_source'
-        : total >= SMART_SCORE_THRESHOLDS.require_secondary
-        ? 'secondary_source'
-        : 'reject',
+    decision: finalDecision,
     contextual,
     reasons,
     affiliate_slots: affiliateSlots

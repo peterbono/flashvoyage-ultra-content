@@ -30,24 +30,34 @@ class InternalLinksManager {
       let hasMore = true;
 
       while (hasMore) {
-        const response = await axios.get(`${this.wordpressUrl}/wp-json/wp/v2/posts`, {
-          params: {
-            per_page: 100,
-            page: page,
-            status: 'publish',
-            _fields: 'id,title,slug,excerpt,content,link,categories,tags,date'
-          },
-          auth: {
-            username: this.username,
-            password: this.password
-          }
-        });
+        try {
+          const response = await axios.get(`${this.wordpressUrl}/wp-json/wp/v2/posts`, {
+            params: {
+              per_page: 100,
+              page: page,
+              status: 'publish',
+              _fields: 'id,title,slug,excerpt,content,link,categories,tags,date'
+            },
+            auth: {
+              username: this.username,
+              password: this.password
+            }
+          });
 
-        if (response.data.length === 0) {
-          hasMore = false;
-        } else {
-          articles.push(...response.data);
-          page++;
+          if (response.data.length === 0) {
+            hasMore = false;
+          } else {
+            articles.push(...response.data);
+            page++;
+          }
+        } catch (error) {
+          if (error.response?.status === 400) {
+            console.log('   ℹ️ Fin de la pagination (page ' + page + ')');
+            hasMore = false;
+          } else {
+            console.error('   ❌ Erreur récupération articles:', error.message);
+            throw error;
+          }
         }
       }
 

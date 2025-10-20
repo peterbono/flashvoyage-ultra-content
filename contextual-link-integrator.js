@@ -125,6 +125,107 @@ class ContextualLinkIntegrator {
   }
 
   /**
+   * Nettoie la section "Articles connexes" pour ne garder que les vrais liens
+   */
+  cleanRelatedArticlesSection(htmlContent, suggestedLinks = []) {
+    // Trouver la section "Articles connexes"
+    const relatedSectionStart = htmlContent.indexOf('<h3>Articles connexes</h3>');
+    if (relatedSectionStart === -1) return htmlContent;
+
+    // Trouver la fin de la section (prochaine balise h2, h3 ou fin de contenu)
+    const nextSectionStart = htmlContent.indexOf('<h2>', relatedSectionStart);
+    const nextH3Start = htmlContent.indexOf('<h3>', relatedSectionStart + 1);
+    const endOfContent = htmlContent.length;
+    
+    const sectionEnd = Math.min(
+      nextSectionStart !== -1 ? nextSectionStart : endOfContent,
+      nextH3Start !== -1 ? nextH3Start : endOfContent
+    );
+
+    // Extraire la section
+    const beforeSection = htmlContent.substring(0, relatedSectionStart);
+    const afterSection = htmlContent.substring(sectionEnd);
+    
+    // Créer une nouvelle section propre avec seulement les vrais liens
+    const cleanSection = `\n\n<h3>Articles connexes</h3>\n<ul>\n`;
+    
+    // Chercher les vrais liens dans la section existante
+    const linkMatches = htmlContent.substring(relatedSectionStart, sectionEnd).match(/<li><a[^>]*href="([^"]*)"[^>]*>([^<]*)<\/a><\/li>/g);
+    
+    if (linkMatches && linkMatches.length > 0) {
+      // Garder seulement les 3 premiers vrais liens
+      const limitedLinks = linkMatches.slice(0, 3);
+      const cleanedLinks = limitedLinks.map(link => {
+        return link.replace(/<li><a[^>]*href="([^"]*)"[^>]*>([^<]*)<\/a><\/li>/, (match, url, title) => {
+          // Nettoyer le titre
+          let cleanTitle = title
+            .replace(/&#8217;/g, "'")
+            .replace(/Source\s*:\s*/gi, '')
+            .replace(/\s*–\s*Reddit\s+Digital\s+Nomad.*$/gi, '')
+            .replace(/\s*–\s*Guide\s+FlashVoyages.*$/gi, '')
+            .trim();
+          
+          if (cleanTitle.length > 80) {
+            cleanTitle = cleanTitle.substring(0, 77) + '...';
+          }
+          
+          console.log(`✅ Lien nettoyé: ${cleanTitle.substring(0, 60)}...`);
+          return `<li><a href="${url}" target="_self" style="${this.linkStyle}">${cleanTitle}</a></li>`;
+        });
+      });
+      
+      return beforeSection + cleanSection + cleanedLinks.join('\n') + '\n</ul>\n' + afterSection;
+    }
+    
+    // Si pas de vrais liens, recréer la section avec les liens suggérés
+    console.log('⚠️ Aucun vrai lien trouvé, recréation de la section avec liens suggérés');
+    
+    // Utiliser les liens suggérés pour recréer la section
+    if (suggestedLinks && suggestedLinks.length > 0) {
+      const uniqueLinks = [];
+      const seenUrls = new Set();
+
+      suggestedLinks.forEach(link => {
+        if (!seenUrls.has(link.article_url)) {
+          uniqueLinks.push(link);
+          seenUrls.add(link.article_url);
+        }
+      });
+
+      const topLinks = uniqueLinks
+        .sort((a, b) => b.relevance_score - a.relevance_score)
+        .slice(0, 3);
+
+      if (topLinks.length > 0) {
+        let newSection = `\n\n<h3>Articles connexes</h3>\n<ul>\n`;
+        
+        topLinks.forEach(link => {
+          let cleanTitle = link.article_title
+            .replace(/&#8217;/g, "'")
+            .replace(/Source\s*:\s*/gi, '')
+            .replace(/\s*–\s*Reddit\s+Digital\s+Nomad.*$/gi, '')
+            .replace(/\s*–\s*Guide\s+FlashVoyages.*$/gi, '')
+            .trim();
+          
+          if (cleanTitle.length > 80) {
+            cleanTitle = cleanTitle.substring(0, 77) + '...';
+          }
+          
+          newSection += `<li><a href="${link.article_url}" target="_self" style="${this.linkStyle}">${cleanTitle}</a></li>\n`;
+          console.log(`✅ Lien ajouté: ${cleanTitle.substring(0, 60)}...`);
+        });
+        
+        newSection += `</ul>\n`;
+        return beforeSection + newSection + afterSection;
+      }
+    }
+    
+    // Si vraiment aucun lien, supprimer la section
+    console.log('⚠️ Aucun lien disponible, suppression de la section');
+    return beforeSection + afterSection;
+  }
+
+  /**
    * Ajouter une section "Articles connexes" en fin d'article
    */
   addRelatedArticlesSection(htmlContent, suggestedLinks, maxDisplay = 3) {
@@ -133,7 +234,10 @@ class ContextualLinkIntegrator {
 
     // Vérifier si une section existe déjà
     if (htmlContent.includes('<h3>Articles connexes</h3>')) {
-      console.log('⚠️ Section "Articles connexes" déjà présente - Ignoré\n');
+      console.log('⚠️ Section "Articles connexes" déjà présente - Nettoyage...');
+      
+      // Nettoyer la section existante pour ne garder que les vrais liens
+      htmlContent = this.cleanRelatedArticlesSection(htmlContent, suggestedLinks);
       return htmlContent;
     }
 
@@ -161,8 +265,19 @@ class ContextualLinkIntegrator {
     let relatedSection = `\n\n<h3>Articles connexes</h3>\n<ul>\n`;
 
     topLinks.forEach(link => {
-      // Nettoyer le titre (enlever les HTML entities)
-      const cleanTitle = link.article_title.replace(/&#8217;/g, "'");
+      // Nettoyer le titre (enlever les HTML entities et les "Source :")
+      let cleanTitle = link.article_title
+        .replace(/&#8217;/g, "'")
+        .replace(/Source\s*:\s*/gi, '') // Enlever "Source :"
+        .replace(/\s*–\s*Reddit\s+Digital\s+Nomad.*$/gi, '') // Enlever "– Reddit Digital Nomad..."
+        .replace(/\s*–\s*Guide\s+FlashVoyages.*$/gi, '') // Enlever "– Guide FlashVoyages..."
+        .trim();
+      
+      // Limiter la longueur du titre
+      if (cleanTitle.length > 80) {
+        cleanTitle = cleanTitle.substring(0, 77) + '...';
+      }
+      
       relatedSection += `<li><a href="${link.article_url}" target="_self" style="${this.linkStyle}">${cleanTitle}</a></li>\n`;
       console.log(`✅ Ajouté: ${cleanTitle.substring(0, 60)}...`);
     });

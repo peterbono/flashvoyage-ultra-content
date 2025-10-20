@@ -131,10 +131,14 @@ Réponds UNIQUEMENT en JSON valide.`;
       console.log(`📊 Widgets sélectionnés: ${analysis.selected_widgets.length}`);
       console.log(`💭 Raisonnement: ${analysis.reasoning}`);
 
+      // Limiter à 1-2 widgets maximum pour éviter les doublons
+      const limitedWidgets = analysis.selected_widgets.slice(0, 2);
+      console.log(`🎯 Widgets limités à: ${limitedWidgets.length}`);
+      
       // Placer les widgets dans le contenu
       const enhancedContent = await this.insertWidgetsContextually(
         content, 
-        analysis.selected_widgets, 
+        limitedWidgets, 
         widgetPlan
       );
 

@@ -133,20 +133,207 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:
     }
   }
 
-  // Générer du contenu intelligent avec LLM selon le type détecté
+  // Générer du contenu intelligent avec 2 appels LLM séquentiels
   async generateIntelligentContent(article, analysis) {
     try {
       // Extraire le contenu complet de l'article source
       const fullContent = await this.extractFullContent(article);
       
-      // Sélectionner le prompt selon le type de contenu
-      const prompt = this.getPromptByType(analysis.type_contenu, article, analysis, fullContent);
+      // APPEL 1 : Extraction et structure
+      console.log('🧠 Appel 1 : Extraction et structure...');
+      const extractionResult = await this.extractAndStructure(article, analysis, fullContent);
       
+      // APPEL 2 : Génération finale
+      console.log('🧠 Appel 2 : Génération finale...');
+      const finalContent = await this.generateFinalArticle(extractionResult, analysis);
+      
+      return finalContent;
+
+    } catch (error) {
+      console.error('❌ Erreur génération intelligente:', error.message);
+      // Refuser de publier plutôt que de créer du faux contenu
+      throw new Error(`ERREUR TECHNIQUE: Impossible de générer le contenu pour "${article.title}". Refus de publier du contenu générique.`);
+    }
+  }
+
+  // APPEL 1 : Extraction et structure avec contexte système
+  async extractAndStructure(article, analysis, fullContent) {
+    const systemMessage = `Tu es un expert FlashVoyages spécialisé dans l'analyse de témoignages Reddit. 
+
+Extrait les éléments clés selon la structure SUCCESS_STORY:
+- Défi initial et objectifs
+- Stratégies gagnantes (3-5 points)
+- Résultats concrets (chiffres, pourcentages)
+- Coûts détaillés (breakdown mensuel)
+- Erreurs commises et leçons
+- Spécificités locales
+- Comparaisons avec autres destinations
+- Conseils pratiques pour reproduire
+
+Réponds UNIQUEMENT en JSON avec ces clés: citations, donnees_cles, structure, enseignements, defis, strategies, resultats, couts, erreurs, specificites, comparaisons, conseils.`;
+
+    const userMessage = `TITRE: ${article.title}
+CONTENU: ${fullContent.substring(0, 300)}`;
+
+    console.log(`📏 Taille system: ${systemMessage.length} caractères`);
+    console.log(`📏 Taille user: ${userMessage.length} caractères`);
+
+    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+      model: 'gpt-4o',
+      messages: [
+        { role: 'system', content: systemMessage },
+        { role: 'user', content: userMessage }
+      ],
+      max_tokens: 800,
+      temperature: 0.7,
+      response_format: { type: "json_object" }
+    }, {
+      headers: {
+        'Authorization': `Bearer ${this.apiKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const content = JSON.parse(response.data.choices[0].message.content);
+    console.log('✅ Extraction terminée:', Object.keys(content));
+    return content;
+  }
+
+  // APPEL 2 : Génération finale avec contexte système
+  async generateFinalArticle(extraction, analysis) {
+    const systemMessage = `Tu es un expert FlashVoyages. Crée un article de qualité exceptionnelle avec la STRUCTURE IMMERSIVE:
+
+STRUCTURE IMMERSIVE OBLIGATOIRE:
+1. INTRODUCTION FOMO + CURATION (OBLIGATOIRE)
+   Format: "Pendant que vous hésitez, d'autres agissent. Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui montre comment [transformation]."
+
+2. TÉMOIGNAGE AVEC CITATIONS DIRECTES (OBLIGATOIRE) - 3 citations minimum
+   - Utilise les citations RÉELLES de l'article source
+   - Encadre en <blockquote> ou <em>
+   - Adapte le contexte selon le sujet réel
+
+3. TRANSITIONS NARRATEUR (OBLIGATOIRE)
+   - "L'auteur explique:", "Dans son témoignage:", "Il précise:"
+   - Crée des liens fluides entre les sections
+
+4. SCÈNES SENSORIELLES (OBLIGATOIRE)
+   - Bruits, odeurs, sensations du témoignage
+   - "Le bruit des scooters", "L'odeur des épices", "La chaleur humide"
+
+5. QUESTIONS RHÉTORIQUES (OBLIGATOIRE)
+   - "Imaginez-vous...", "Et si vous...", "Que feriez-vous si..."
+   - 2-3 questions par section
+
+6. VARIATION DU RYTHME (OBLIGATOIRE)
+   - Phrases courtes et percutantes
+   - Phrases plus longues pour expliquer et respirer
+
+7. CONTEXTE DES CITATIONS (OBLIGATOIRE)
+   - 'L'auteur écrit:', 'Dans les commentaires un lecteur a dit:'
+   - Toujours préciser d'où vient la citation (Reddit)
+
+8. MISE EN PERSPECTIVE (OBLIGATOIRE)
+   - Terminer chaque section par un enseignement pratique
+   - Quel piège à éviter, quelle leçon pour le lecteur nomade
+
+TON: Inspirant, motivant, authentique
+FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <ul><li>, <strong>, <table>
+LONGUEUR: 1500-2000 mots
+
+Réponds UNIQUEMENT en JSON avec cette structure: { "article": { "titre": "...", "introduction": "...", "citations": [...], "developpement": "...", "conseils_pratiques": "...", "signature": "..." } }`;
+
+    const userMessage = `TITRE: ${extraction.title || 'Témoignage Reddit'}
+CITATIONS: ${extraction.citations || 'Citations'}
+DONNÉES: ${extraction.donnees_cles || 'Données'}
+ENSEIGNEMENTS: ${extraction.enseignements || 'Enseignements'}
+DÉFIS: ${extraction.defis || 'Défis'}
+STRATÉGIES: ${extraction.strategies || 'Stratégies'}
+RÉSULTATS: ${extraction.resultats || 'Résultats'}
+COÛTS: ${extraction.couts || 'Coûts'}
+ERREURS: ${extraction.erreurs || 'Erreurs'}
+SPÉCIFICITÉS: ${extraction.specificites || 'Spécificités'}
+COMPARAISONS: ${extraction.comparaisons || 'Comparaisons'}
+CONSEILS: ${extraction.conseils || 'Conseils'}`;
+
+    console.log(`📏 Taille system: ${systemMessage.length} caractères`);
+    console.log(`📏 Taille user: ${userMessage.length} caractères`);
+
+    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+      model: 'gpt-4o',
+      messages: [
+        { role: 'system', content: systemMessage },
+        { role: 'user', content: userMessage }
+      ],
+      max_tokens: 1500,
+      temperature: 0.7,
+      response_format: { type: "json_object" }
+    }, {
+      headers: {
+        'Authorization': `Bearer ${this.apiKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const content = JSON.parse(response.data.choices[0].message.content);
+    console.log('✅ Article final généré:', Object.keys(content));
+    
+    // Reconstruire le contenu final à partir de la structure article
+    if (content.article) {
+      const article = content.article;
+      const finalContent = {
+        title: article.titre || 'Témoignage Reddit décrypté par FlashVoyages',
+        content: [
+          article.introduction,
+          ...(article.citations || []),
+          article.developpement,
+          article.conseils_pratiques,
+          article.signature
+        ].filter(Boolean).join('\n\n')
+      };
+      console.log('📄 Contenu final reconstruit:', finalContent.title);
+      return finalContent;
+    }
+    
+    return content;
+  }
+
+  // Génération de contenu simple en cas d'erreur - UNIQUEMENT avec vraies données
+  async generateSimpleContent(article, analysis) {
+    try {
+      const fullContent = await this.extractFullContent(article);
+      
+      // Vérifier qu'on a du vrai contenu
+      if (!fullContent || fullContent.length < 100) {
+        throw new Error(`CONTENU INSUFFISANT: Impossible d'extraire le contenu de "${article.title}". Refus de publier.`);
+      }
+      
+      const simplePrompt = `Crée un article FlashVoyages basé sur ce témoignage Reddit RÉEL:
+
+TITRE REDDIT: ${article.title}
+CONTENU REDDIT COMPLET: ${fullContent.substring(0, 500)}
+
+IMPORTANT: Utilise UNIQUEMENT les informations du témoignage Reddit fourni. Ne pas inventer de citations ou de données.
+
+Génère un article complet avec:
+1. Introduction FOMO basée sur le contenu réel
+2. Citations directes du Reddit (extrait du contenu fourni)
+3. Transitions du narrateur
+4. Scènes sensorielles basées sur le témoignage
+5. Questions rhétoriques
+6. Enseignements pratiques
+
+Format HTML: <h2>, <h3>, <p>, <blockquote>, <ul><li>, <strong>
+Longueur: 700-1000 mots
+Titre en français
+
+Réponse JSON:`;
+
       const response = await axios.post('https://api.openai.com/v1/chat/completions', {
         model: 'gpt-4',
-        messages: [{ role: 'user', content: prompt }],
-        max_tokens: 2500,
-        temperature: 0.7
+        messages: [{ role: 'user', content: simplePrompt }],
+        max_tokens: 2000,
+        temperature: 0.7,
+        response_format: { type: "json_object" }
       }, {
         headers: {
           'Authorization': `Bearer ${this.apiKey}`,
@@ -154,16 +341,14 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:
         }
       });
 
-      const rawContent = response.data.choices[0].message.content;
-      console.log('🔍 Réponse LLM brute:', rawContent.substring(0, 200) + '...');
-      
-      const content = JSON.parse(rawContent);
-      console.log('✅ Contenu parsé:', Object.keys(content));
+      const content = JSON.parse(response.data.choices[0].message.content);
+      console.log('✅ Contenu simple généré avec vraies données:', Object.keys(content));
       return content;
 
     } catch (error) {
-      console.error('❌ Erreur génération intelligente:', error.message);
-      return this.getFallbackContent(article, analysis);
+      console.error('❌ Erreur génération simple:', error.message);
+      // Refuser de publier plutôt que de créer du faux contenu
+      throw new Error(`ERREUR TECHNIQUE: Impossible de générer le contenu pour "${article.title}". Refus de publier du contenu générique.`);
     }
   }
 
@@ -174,7 +359,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:
 ARTICLE SOURCE COMPLET:
 - Titre: ${article.title}
 - Source: ${article.source}
-- Contenu complet: ${fullContent}
+- Contenu complet: ${fullContent.substring(0, 200)}
 - Lien: ${article.link}
 
 ANALYSE ÉDITORIALE:
@@ -229,7 +414,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
       case 'TEMOIGNAGE_SUCCESS_STORY':
         return basePrompt + `
 {
-  "title": "🌍 Comment {prenom} a {objectif} en {destination} : {resultat}",
+  "title": "🌍 ${article.title} - Témoignage Reddit décrypté par FlashVoyages",
   "target_audience": "${analysis.audience}",
   "ton": "Inspirant, motivant, authentique",
   "keywords": "${analysis.keywords}",
@@ -249,7 +434,20 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   "cta": "${analysis.cta}",
   "urgence": "${analysis.urgence}",
   "destinations": "${analysis.destination}",
-  "content": "Structure: Introduction → Erreur → Conséquences → Gestion → Leçons"
+  "content": "STRUCTURE IMMERSIVE TÉMOIGNAGE (même que SUCCESS_STORY):
+  
+  1. INTRODUCTION FOMO + CURATION (OBLIGATOIRE)
+  2. TÉMOIGNAGE AVEC CITATIONS DIRECTES (OBLIGATOIRE) - 3 citations minimum
+  3. TRANSITIONS NARRATEUR (OBLIGATOIRE)
+  4. SCÈNES SENSORIELLES (OBLIGATOIRE)
+  5. QUESTIONS RHÉTORIQUES (OBLIGATOIRE)
+  6. VARIATION DU RYTHME (OBLIGATOIRE)
+  7. CONTEXTE DES CITATIONS (OBLIGATOIRE)
+  8. MISE EN PERSPECTIVE (OBLIGATOIRE)
+  
+  TON: Humble, préventif, éducatif. L'émotion doit émerger du contenu.
+  FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <em>, <strong>. JAMAIS de Markdown.
+  LONGUEUR: MINIMUM 700 mots, IDÉAL 900-1200 mots."
 }`;
 
       case 'TEMOIGNAGE_TRANSITION':
@@ -262,7 +460,22 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   "cta": "${analysis.cta}",
   "urgence": "${analysis.urgence}",
   "destinations": "${analysis.destination}",
-  "content": "Structure: Introduction → Avant → Processus → Après → Conseils"
+  "content": "IMPORTANT: Analyse le contenu RÉEL de l'article source et adapte le contenu en conséquence.
+
+  Si l'article parle de:
+  - Rêve réalisé → Structure: Rêve → Défis → Réalisation → Conseils
+  - Transition de vie → Structure: Avant → Pendant → Après → Leçons
+  - Défis surmontés → Structure: Problème → Solutions → Résultats → Conseils
+  
+  STRUCTURE:
+  1. Introduction FOMO: "Pendant que vous hésitez, d'autres agissent. Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui montre comment [transformation]."
+  2. Citations directes du Reddit (3+ en <blockquote>)
+  3. Transitions du narrateur
+  4. Mise en perspective
+  
+  TON: Réfléchi, adaptatif, encourageant. L'émotion doit émerger du contenu réel.
+  FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <em>, <strong>. JAMAIS de Markdown.
+  LONGUEUR: MINIMUM 700 mots, IDÉAL 900-1200 mots."
 }`;
 
       case 'TEMOIGNAGE_COMPARAISON':
@@ -275,7 +488,20 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   "cta": "${analysis.cta}",
   "urgence": "${analysis.urgence}",
   "destinations": "${analysis.destination}",
-  "content": "Structure: Introduction → Critères → Expérience A → Expérience B → Comparaison → Recommandation"
+  "content": "STRUCTURE IMMERSIVE TÉMOIGNAGE (même que SUCCESS_STORY):
+  
+  1. INTRODUCTION FOMO + CURATION (OBLIGATOIRE)
+  2. TÉMOIGNAGE AVEC CITATIONS DIRECTES (OBLIGATOIRE) - 3 citations minimum
+  3. TRANSITIONS NARRATEUR (OBLIGATOIRE)
+  4. SCÈNES SENSORIELLES (OBLIGATOIRE)
+  5. QUESTIONS RHÉTORIQUES (OBLIGATOIRE)
+  6. VARIATION DU RYTHME (OBLIGATOIRE)
+  7. CONTEXTE DES CITATIONS (OBLIGATOIRE)
+  8. MISE EN PERSPECTIVE (OBLIGATOIRE)
+  
+  TON: Comparatif, objectif, informatif. L'émotion doit émerger du contenu.
+  FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <em>, <strong>. JAMAIS de Markdown.
+  LONGUEUR: MINIMUM 700 mots, IDÉAL 900-1200 mots."
 }`;
 
       case 'GUIDE_PRATIQUE':
@@ -372,6 +598,49 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   "destinations": "${analysis.destination}",
   "content": "Structure: Introduction → Développement → Conseils → Conclusion"
 }`;
+    }
+  }
+
+  // Sélection intelligente du contenu Reddit
+  async selectSmartContent(article) {
+    try {
+      const fullContent = await this.extractFullContent(article);
+      
+      // Analyser le contenu pour extraire les éléments clés
+      const lines = fullContent.split('\n').filter(line => line.trim().length > 0);
+      
+      // Identifier les meilleures citations (phrases avec "I", "We", "My", etc.)
+      const personalQuotes = lines.filter(line => 
+        /^(I|We|My|Our|I'm|We're|I've|We've)/.test(line.trim()) && 
+        line.length > 20 && 
+        line.length < 200
+      );
+      
+      // Identifier les détails clés (chiffres, résultats, conseils)
+      const keyDetails = lines.filter(line => 
+        /\d+/.test(line) || 
+        /(success|failed|learned|advice|tip|recommend|suggest)/i.test(line)
+      );
+      
+      // Identifier le contexte essentiel (première phrase, dernière phrase)
+      const context = [
+        lines[0], // Première phrase
+        lines[lines.length - 1] // Dernière phrase
+      ].filter(Boolean);
+      
+      // Construire le contenu sélectionné
+      const selectedContent = [
+        ...context,
+        ...personalQuotes.slice(0, 3), // Top 3 citations personnelles
+        ...keyDetails.slice(0, 2) // Top 2 détails clés
+      ].join('\n\n');
+      
+      console.log(`🎯 Contenu sélectionné: ${selectedContent.length} caractères (${personalQuotes.length} citations, ${keyDetails.length} détails)`);
+      return selectedContent;
+      
+    } catch (error) {
+      console.log('⚠️ Erreur sélection intelligente, utilisation du contenu complet');
+      return await this.extractFullContent(article);
     }
   }
 
@@ -516,28 +785,10 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
     return destinations.length > 0 ? destinations.join(', ') : 'Asie';
   }
 
-  // Contenu de fallback
+  // Contenu de fallback - UNIQUEMENT si erreur technique, PAS de fausses données
   getFallbackContent(article, analysis) {
-    return {
-      title: `🌏 ${article.title} - Guide FlashVoyages`,
-      target_audience: analysis.audience,
-      ton: 'Expert, confident, pratique',
-      keywords: analysis.keywords,
-      cta: analysis.cta,
-      urgence: analysis.urgence,
-      destinations: analysis.destination,
-      content: `<p><strong>Source :</strong> <a href="${article.link}" target="_blank" rel="noopener">${article.title}</a> - ${article.source}</p>
-
-<p>Salut nomade ! Cette information sur ${analysis.sous_categorie} en ${analysis.destination} va t'aider dans tes projets. Chez FlashVoyages, on analyse tout ce qui peut t'être utile pour ton nomadisme en Asie.</p>
-
-<h3>Pourquoi cette info est importante</h3>
-<p>Cette nouvelle sur ${analysis.sous_categorie} en ${analysis.destination} peut avoir un impact direct sur ton expérience nomade. On te donne notre analyse d'experts.</p>
-
-<h3>Notre conseil FlashVoyages</h3>
-<p>Basé sur notre expérience terrain, voici ce que nous recommandons pour les nomades en ${analysis.destination}.</p>
-
-<p><em>Cet article a été analysé par notre équipe FlashVoyages — votre spécialiste du nomadisme en Asie.</em></p>`
-    };
+    // Si erreur technique, on refuse de publier plutôt que de créer du faux contenu
+    throw new Error(`ERREUR TECHNIQUE: Impossible de générer le contenu pour "${article.title}". Refus de publier du contenu générique.`);
   }
 }
 
