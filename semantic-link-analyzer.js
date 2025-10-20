@@ -47,7 +47,6 @@ class SemanticLinkAnalyzer {
         id: article.id,
         title: article.title,
         url: article.url,
-        excerpt: article.excerpt,
         categories: article.categories.map(c => c.name).join(', '),
         tags: article.tags.map(t => t.name).join(', ')
       }));
@@ -110,6 +109,8 @@ ${textContent}
 
 ARTICLES DISPONIBLES POUR LIENS INTERNES:
 ${JSON.stringify(availableArticles, null, 2)}
+
+⚠️ IMPORTANT: Pour article_title, utilise TOUJOURS le champ "title" (pas "excerpt") !
 
 TA MISSION:
 Identifie les ${maxLinks} meilleurs opportunités de liens internes pour cet article.

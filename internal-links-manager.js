@@ -280,7 +280,7 @@ class InternalLinksManager {
     let html = '<h3>Articles connexes</h3>\n<p><strong>Liens internes :</strong></p>\n<ul>\n';
     
     links.forEach(link => {
-      html += `  <li><a href="${link.link}">${link.title}</a> - ${link.excerpt}</li>\n`;
+      html += `  <li><a href="${link.link}">${link.title}</a></li>\n`;
     });
     
     html += '</ul>\n';
