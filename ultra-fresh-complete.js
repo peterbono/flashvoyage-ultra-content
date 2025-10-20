@@ -463,7 +463,7 @@ class UltraFreshComplete {
         const selftext = (data.selftext || '').toLowerCase();
         
         // Vérifier la pertinence Asie
-        const isRelevant = ALTERNATIVE_SOURCES.reddit.keywords.some(keyword =>
+        const isRelevant = ALTERNATIVE_SOURCES.reddit.keywords.some(keyword => 
           title.includes(keyword) || selftext.includes(keyword)
         );
 

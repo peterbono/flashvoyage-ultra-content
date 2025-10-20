@@ -67,7 +67,11 @@ class ArticleFinalizer {
       /Notre partenaire Kiwi\.com/gi,
       /Notre outil compare les prix/gi,
       /Comparez les prix et réservez/gi,
-      /Trouvez les meilleures offres/gi
+      /Trouvez les meilleures offres/gi,
+      /Notre partenaire Hotellook/gi,
+      /Trouvez votre hébergement idéal/gi,
+      /trpwdg\.com\/content/gi,
+      /travelpayouts-widget/gi
     ];
     
     let count = 0;

@@ -145,7 +145,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:
       
       // APPEL 2 : Génération finale
       console.log('🧠 Appel 2 : Génération finale...');
-      const finalContent = await this.generateFinalArticle(extractionResult, analysis);
+      const finalContent = await this.generateFinalArticle(extractionResult, analysis, article);
       
       return finalContent;
 
@@ -173,7 +173,7 @@ Extrait les éléments clés selon la structure SUCCESS_STORY:
 Réponds UNIQUEMENT en JSON avec ces clés: citations, donnees_cles, structure, enseignements, defis, strategies, resultats, couts, erreurs, specificites, comparaisons, conseils.`;
 
     const userMessage = `TITRE: ${article.title}
-CONTENU: ${fullContent.substring(0, 300)}`;
+CONTENU: ${fullContent.substring(0, 1000)}`;
 
     console.log(`📏 Taille system: ${systemMessage.length} caractères`);
     console.log(`📏 Taille user: ${userMessage.length} caractères`);
@@ -200,7 +200,7 @@ CONTENU: ${fullContent.substring(0, 300)}`;
   }
 
   // APPEL 2 : Génération finale avec contexte système
-  async generateFinalArticle(extraction, analysis) {
+  async generateFinalArticle(extraction, analysis, article) {
     const systemMessage = `Tu es un expert FlashVoyages. Crée un article de qualité exceptionnelle avec la STRUCTURE IMMERSIVE:
 
 STRUCTURE IMMERSIVE OBLIGATOIRE:
@@ -209,7 +209,10 @@ STRUCTURE IMMERSIVE OBLIGATOIRE:
 
 2. TÉMOIGNAGE AVEC CITATIONS DIRECTES (OBLIGATOIRE) - 3 citations minimum
    - Utilise les citations RÉELLES de l'article source
-   - Encadre en <blockquote> ou <em>
+   - Format OBLIGATOIRE EXACT (en string simple):
+     <blockquote>Citation textuelle du Reddit...</blockquote>
+     <p>Témoignage de [nom_utilisateur] sur [source]</p>
+   - IMPORTANT: Génère les citations comme des strings simples, pas des objets
    - Adapte le contexte selon le sujet réel
 
 3. TRANSITIONS NARRATEUR (OBLIGATOIRE)
@@ -284,7 +287,16 @@ CONSEILS: ${extraction.conseils || 'Conseils'}`;
         title: article.titre || 'Témoignage Reddit décrypté par FlashVoyages',
         content: [
           article.introduction,
-          ...(article.citations || []),
+          ...(article.citations || []).map(citation => {
+            if (typeof citation === 'string') {
+              return citation;
+            }
+            // Si c'est un objet, essayer d'extraire le texte
+            const text = citation.text || citation.quote || citation.content || citation;
+            const auteur = citation.auteur || citation.author || citation.user || (article.author ? `u/${article.author}` : 'utilisateur Reddit');
+            const source = citation.source || 'Reddit';
+            return `<blockquote>${text}</blockquote>\n<p>Témoignage de ${auteur} sur ${source}</p>`;
+          }),
           article.developpement,
           article.conseils_pratiques,
           article.signature
@@ -310,17 +322,27 @@ CONSEILS: ${extraction.conseils || 'Conseils'}`;
       const simplePrompt = `Crée un article FlashVoyages basé sur ce témoignage Reddit RÉEL:
 
 TITRE REDDIT: ${article.title}
-CONTENU REDDIT COMPLET: ${fullContent.substring(0, 500)}
+CONTENU REDDIT COMPLET: ${fullContent.substring(0, 1200)}
 
 IMPORTANT: Utilise UNIQUEMENT les informations du témoignage Reddit fourni. Ne pas inventer de citations ou de données.
 
 Génère un article complet avec:
 1. Introduction FOMO basée sur le contenu réel
-2. Citations directes du Reddit (extrait du contenu fourni)
+2. Citations directes du Reddit (extrait du contenu fourni) avec attribution complète
 3. Transitions du narrateur
 4. Scènes sensorielles basées sur le témoignage
 5. Questions rhétoriques
 6. Enseignements pratiques
+
+FORMAT CITATIONS OBLIGATOIRE EXACT (en string simple):
+<blockquote>Citation textuelle du Reddit...</blockquote>
+<p>Témoignage de [nom_utilisateur] sur [source]</p>
+
+EXEMPLE:
+<blockquote>J'ai commencé avec 2500€/mois et maintenant je gagne 12000€/mois</blockquote>
+<p>Témoignage de u/nomade_indonesie sur Reddit</p>
+
+IMPORTANT: Génère les citations comme des strings simples, pas des objets JSON
 
 Format HTML: <h2>, <h3>, <p>, <blockquote>, <ul><li>, <strong>
 Longueur: 700-1000 mots
@@ -359,7 +381,7 @@ Réponse JSON:`;
 ARTICLE SOURCE COMPLET:
 - Titre: ${article.title}
 - Source: ${article.source}
-- Contenu complet: ${fullContent.substring(0, 200)}
+- Contenu complet: ${fullContent.substring(0, 800)}
 - Lien: ${article.link}
 
 ANALYSE ÉDITORIALE:
@@ -469,7 +491,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   
   STRUCTURE:
   1. Introduction FOMO: "Pendant que vous hésitez, d'autres agissent. Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui montre comment [transformation]."
-  2. Citations directes du Reddit (3+ en <blockquote>)
+  2. Citations directes du Reddit (3+ en <blockquote> avec attribution complète)
   3. Transitions du narrateur
   4. Mise en perspective
   
