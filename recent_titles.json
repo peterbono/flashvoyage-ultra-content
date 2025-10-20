@@ -24,14 +24,15 @@
     "I have never traveled before",
     "Korean International Shipping Question",
     "Quit everything and move to Asia? Help me decide...",
-    "Short term Digital Nomads, where do you book your stay? (Thailand)"
+    "Short term Digital Nomads, where do you book your stay? (Thailand)",
+    "Looking for more Pai’s"
   ],
   "countries": {
-    "unknown": 54,
-    "thailand": 2
+    "unknown": 95,
+    "thailand": 3
   },
   "cities": {
-    "unknown": 54,
+    "unknown": 96,
     "chiang mai": 2
   },
   "weekStamp": "2025-W43"

@@ -1,11 +1,11 @@
-import ContextualLinksAnalyzer from './contextual-links-analyzer.js';
+import { SemanticLinkAnalyzer } from './semantic-link-analyzer.js';
 import { ContextualLinkIntegrator } from './contextual-link-integrator.js';
 import InternalLinksManager from './internal-links-manager.js';
 import { ExternalLinksDetector } from './external-links-detector.js';
 
 export class CompleteLinkingStrategy {
   constructor() {
-    this.internalAnalyzer = new ContextualLinksAnalyzer();
+    this.internalAnalyzer = new SemanticLinkAnalyzer();
     this.linkIntegrator = new ContextualLinkIntegrator();
     this.internalManager = new InternalLinksManager();
     this.externalDetector = new ExternalLinksDetector();
@@ -20,15 +20,35 @@ export class CompleteLinkingStrategy {
     console.log('==========================\n');
     
     // Utiliser semantic-link-analyzer pour les suggestions de liens internes
-    const internalLinks = [];
+    const articleContent = article.content || article.text || '';
+    const articleTitle = article.title || 'Article sans titre';
+    
+    let internalLinks = [];
+    if (!articleContent) {
+      console.log('⚠️ Pas de contenu disponible pour l\'analyse des liens internes');
+    } else {
+      const analysis = await this.internalAnalyzer.analyzeAndSuggestLinks(
+        articleContent,
+        articleTitle,
+        maxInternalLinks
+      );
+      internalLinks = analysis.suggested_links || [];
+    }
 
     // Phase 2: Liens externes
     console.log('\n📊 PHASE 2: LIENS EXTERNES');
     console.log('==========================\n');
     
-    const externalLinks = await this.externalDetector.detectExternalLinkOpportunities(
-      article.content
-    );
+    let externalLinks = [];
+    if (articleContent) {
+      try {
+        externalLinks = await this.externalDetector.detectExternalLinkOpportunities(
+          articleContent
+        );
+      } catch (error) {
+        console.log('⚠️ Erreur lors de la détection des liens externes:', error.message);
+      }
+    }
 
     // Phase 3: Stratégie globale
     console.log('\n📊 PHASE 3: STRATÉGIE GLOBALE');
@@ -78,14 +98,14 @@ export class CompleteLinkingStrategy {
 
     // Intégrer les liens internes
     console.log('📌 Intégration des liens internes...\n');
-    let enrichedContent = this.linkIntegrator.integrateInternalLinks(
+    let enrichedContent = this.linkIntegrator.integrateLinks(
       htmlContent,
       strategyResult.internal_links
     );
 
     // Intégrer les liens externes
     console.log('\n📌 Intégration des liens externes...\n');
-    enrichedContent = this.linkIntegrator.integrateExternalLinks(
+    enrichedContent = this.linkIntegrator.integrateLinks(
       enrichedContent,
       strategyResult.external_links
     );

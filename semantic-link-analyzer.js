@@ -129,7 +129,7 @@ CRITÈRES DE SÉLECTION:
 
 POUR CHAQUE LIEN SUGGÉRÉ, FOURNIS:
 - article_id: L'ID de l'article
-- article_title: Le titre de l'article
+- article_title: Utilise le champ "title" de l'article (PAS "excerpt")
 - article_url: L'URL de l'article
 - anchor_text: Le texte d'ancrage (DOIT exister dans le contenu ci-dessus)
 - placement_context: Où placer le lien (ex: "dans la section sur les coûts")

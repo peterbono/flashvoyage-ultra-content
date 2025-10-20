@@ -163,6 +163,7 @@ class ContextualLinkIntegrator {
             .replace(/Source\s*:\s*/gi, '')
             .replace(/\s*–\s*Reddit\s+Digital\s+Nomad.*$/gi, '')
             .replace(/\s*–\s*Guide\s+FlashVoyages.*$/gi, '')
+            .replace(/🌏\s*/g, '') // Supprimer les emojis
             .trim();
           
           if (cleanTitle.length > 80) {
@@ -200,11 +201,16 @@ class ContextualLinkIntegrator {
         let newSection = `\n\n<h3>Articles connexes</h3>\n<ul>\n`;
         
         topLinks.forEach(link => {
-          let cleanTitle = link.article_title
+          // Utiliser le vrai titre au lieu de l'excerpt
+          let cleanTitle = link.title || link.article_title;
+          
+          // Nettoyer le titre
+          cleanTitle = cleanTitle
             .replace(/&#8217;/g, "'")
             .replace(/Source\s*:\s*/gi, '')
             .replace(/\s*–\s*Reddit\s+Digital\s+Nomad.*$/gi, '')
             .replace(/\s*–\s*Guide\s+FlashVoyages.*$/gi, '')
+            .replace(/🌏\s*/g, '') // Supprimer les emojis
             .trim();
           
           if (cleanTitle.length > 80) {
