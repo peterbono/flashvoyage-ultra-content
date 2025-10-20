@@ -50,14 +50,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         throw new Error('Aucune source disponible');
       }
 
-      // 2. Filtrer et analyser intelligemment
-      const filteredSources = this.intelligentFilter.filterRelevantArticles(sources);
-      if (filteredSources.length === 0) {
-        throw new Error('Aucun contenu pertinent après filtrage');
-      }
-
-      // 3. Filtrer les articles rejetés par le scoring
-      const validSources = filteredSources.filter(article => {
+      // 2. Filtrer les articles rejetés par le scoring
+      const validSources = sources.filter(article => {
         // Ignorer les articles rejetés par le scoring
         if (article.smartDecision === 'reject') {
           console.log(`⚠️ Article rejeté ignoré: ${article.title}`);

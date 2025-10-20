@@ -5,14 +5,7 @@ import dotenv from 'dotenv';
 import { translate } from '@vitalets/google-translate-api';
 import UltraFreshComplete from './ultra-fresh-complete.js';
 import ContentValidator from './content-validator.js';
-import ContentTemplates from './content-templates-fixed.js';
-import NomadePersonaDetector from './nomade-persona-detector.js';
-// import NomadeTemplates from './nomade-templates.js'; // Supprimé - remplacé par nomade-asia-templates.js
-import NomadeAsiaTemplates from './nomade-asia-templates.js';
-import EnhancedNomadeTemplates from './enhanced-nomade-templates.js';
-import IntelligentArticleFilter from './intelligent-article-filter.js';
-import GenericTemplates from './generic-templates.js';
-import IntelligentContentAnalyzer from './intelligent-content-analyzer.js';
+// Templates supprimés - utilisation de l'analyseur intelligent
 import RateLimitManager from './rate-limit-manager.js';
 
 dotenv.config();
@@ -36,16 +29,7 @@ class UltraStrategicGenerator {
     this.scraper = new UltraFreshComplete();
     this.publishedArticles = new Set();
     this.validator = new ContentValidator();
-    this.templates = new ContentTemplates();
-    this.nomadeDetector = new NomadePersonaDetector();
-    // this.nomadeTemplates = new NomadeTemplates(); // Supprimé - remplacé par nomade-asia-templates.js
-    this.nomadeAsiaTemplates = new NomadeAsiaTemplates();
-    this.enhancedTemplates = new EnhancedNomadeTemplates();
-    
-    // Mode intelligent toujours activé
-    this.intelligentFilter = new IntelligentArticleFilter();
-    this.genericTemplates = new GenericTemplates();
-    this.intelligentAnalyzer = new IntelligentContentAnalyzer();
+    // Templates supprimés - utilisation de l'analyseur intelligent
     this.rateLimitManager = new RateLimitManager();
     
     // Cache local pour les articles publiés
