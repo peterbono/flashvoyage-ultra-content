@@ -209,8 +209,19 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         widgetPlan.widget_plan
       );
 
-      // Mettre à jour le contenu avec les widgets
-      finalArticle.content = contentWithWidgets;
+      // Ajout de liens nomades contextuels
+      console.log('🔗 Ajout de liens nomades contextuels...');
+      const contentWithNomadLinks = await this.contextualWidgetPlacer.insertNomadLinks(
+        contentWithWidgets,
+        {
+          type: analysis.type || 'temoignage',
+          destination: analysis.destination || 'Asie',
+          audience: 'Nomades digitaux'
+        }
+      );
+
+      // Mettre à jour le contenu avec les widgets et liens nomades
+      finalArticle.content = contentWithNomadLinks;
 
       // 8b. Finalisation de l'article (quote, FOMO, image)
       const finalizedArticle = await this.articleFinalizer.finalizeArticle(finalArticle, analysis);
@@ -270,37 +281,35 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     }
   }
 
-  // Obtenir les catégories selon l'analyse
+  // Obtenir UNE SEULE catégorie principale selon l'analyse
   async getCategoriesForContent(analysis, generatedContent = null) {
     // Analyser les destinations mentionnées dans le contenu généré (enrichi)
     const contentToAnalyze = generatedContent || analysis.contenu || '';
     const destinations = this.extractDestinationsFromContent(contentToAnalyze);
     
-    // Si une destination spécifique est trouvée, l'utiliser comme catégorie principale
+    // Si une destination spécifique est trouvée, utiliser la catégorie "Destinations"
     if (destinations.length > 0) {
-      const mainCategory = this.getDestinationCategory(destinations[0]);
-      const subCategory = this.getSubCategory(analysis.sous_categorie);
-      console.log(`🏷️ Catégorie spécifique: ${mainCategory}`);
-      return [mainCategory, subCategory].filter(Boolean);
+      const destinationCategory = this.getDestinationCategory(destinations[0]);
+      console.log(`🏷️ Catégorie destination: ${destinationCategory}`);
+      return [destinationCategory]; // UNE SEULE catégorie
     }
     
-    // Fallback vers les catégories génériques
+    // Fallback vers les catégories par type de contenu
     const categoryMapping = {
       'TEMOIGNAGE_SUCCESS_STORY': 'Digital Nomades Asie',
       'TEMOIGNAGE_ECHEC_LEÇONS': 'Digital Nomades Asie',
       'TEMOIGNAGE_TRANSITION': 'Digital Nomades Asie',
       'TEMOIGNAGE_COMPARAISON': 'Digital Nomades Asie',
-      'GUIDE_PRATIQUE': 'Guides Pratiques',
-      'COMPARAISON_DESTINATIONS': 'Comparaisons',
-      'ACTUALITE_NOMADE': 'Actualités',
-      'CONSEIL_PRATIQUE': 'Conseils'
+      'GUIDE_PRATIQUE': 'Digital Nomades Asie',
+      'COMPARAISON_DESTINATIONS': 'Digital Nomades Asie',
+      'ACTUALITE_NOMADE': 'Digital Nomades Asie',
+      'CONSEIL_PRATIQUE': 'Digital Nomades Asie'
     };
 
-    const mainCategory = categoryMapping[analysis.type_contenu] || 'Conseils';
-    const subCategory = this.getSubCategory(analysis.sous_categorie);
-    console.log(`🏷️ Catégorie générique: ${mainCategory}`);
+    const mainCategory = categoryMapping[analysis.type_contenu] || 'Digital Nomades Asie';
+    console.log(`🏷️ Catégorie par type: ${mainCategory}`);
     
-    return [mainCategory, subCategory].filter(Boolean);
+    return [mainCategory]; // UNE SEULE catégorie
   }
 
   // Extraire les destinations du contenu généré
@@ -397,21 +406,38 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     return destinations;
   }
   
-  // Obtenir la catégorie de destination (redirection vers sous-catégories existantes)
+  // Obtenir la catégorie de destination intelligente (UNE SEULE catégorie)
   getDestinationCategory(destination) {
+    // Mapping vers les catégories WordPress existantes (TOUTES les sous-catégories)
     const destinationMapping = {
-      'thailand': 'Japon', // Redirection vers Japon (Asie)
-      'vietnam': 'Philippines', // Redirection vers Philippines (Asie du Sud-Est)
-      'indonesia': 'Philippines', // Redirection vers Philippines (Asie du Sud-Est)
-      'japan': 'Japon',
-      'philippines': 'Philippines',
-      'malaysia': 'Philippines', // Redirection vers Philippines (Asie du Sud-Est)
-      'singapore': 'Philippines', // Redirection vers Philippines (Asie du Sud-Est)
-      'spain': 'Japon', // Redirection vers Japon (Asie)
-      'portugal': 'Japon' // Redirection vers Japon (Asie)
+      // Sous-catégories spécifiques existantes (parent: 1)
+      'vietnam': 'Vietnam', // ID: 59 (parent: 1)
+      'thailand': 'Thaïlande', // ID: 60 (parent: 1)
+      'japan': 'Japon', // ID: 61 (parent: 1)
+      'singapore': 'Singapour', // ID: 62 (parent: 1)
+      'korea': 'Corée du Sud', // ID: 63 (parent: 1)
+      'philippines': 'Philippines', // ID: 64 (parent: 1)
+      'indonesia': 'Indonésie', // ID: 182 (parent: 1)
+      
+      // Destinations sans sous-catégorie → catégorie principale "Destinations"
+      'malaysia': 'Destinations',
+      'taiwan': 'Destinations',
+      'hong kong': 'Destinations',
+      'spain': 'Destinations',
+      'portugal': 'Destinations',
+      'france': 'Destinations',
+      'germany': 'Destinations',
+      'italy': 'Destinations',
+      'netherlands': 'Destinations',
+      'china': 'Destinations',
+      'india': 'Destinations',
+      'australia': 'Destinations',
+      'new zealand': 'Destinations',
+      'brazil': 'Destinations',
+      'mexico': 'Destinations'
     };
     
-    return destinationMapping[destination] || 'Japon'; // Fallback vers Japon
+    return destinationMapping[destination] || 'Destinations';
   }
 
   // Obtenir la sous-catégorie

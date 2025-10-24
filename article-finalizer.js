@@ -528,49 +528,63 @@ class ArticleFinalizer {
       const { WORDPRESS_URL, WORDPRESS_USERNAME, WORDPRESS_APP_PASSWORD } = await import('./config.js');
       const auth = Buffer.from(`${WORDPRESS_USERNAME}:${WORDPRESS_APP_PASSWORD}`).toString('base64');
 
-      // Mapping manuel pour les catégories courantes
+      // Mapping manuel pour les catégories courantes (IDs WordPress réels)
       const categoryMap = {
-        'Actualités': 1,
-        'Guides': 2,
-        'Témoignages': 3,
-        'Visa & Formalités': 4,
-        'Budget & Finances': 5,
-        'Destinations': 6,
-        'Digital Nomades Asie': 7,
-        'Japon': 61, // ID existant
-        'Philippines': 64, // ID existant
+        'Destinations': 1, // ID réel WordPress
+        'Digital Nomades Asie': 138, // ID réel WordPress
+        
+        // Sous-catégories de Destinations (parent: 1)
+        'Vietnam': 59, // ID réel WordPress
+        'Thaïlande': 60, // ID réel WordPress
+        'Japon': 61, // ID réel WordPress
+        'Singapour': 62, // ID réel WordPress
+        'Corée du Sud': 63, // ID réel WordPress
+        'Philippines': 64, // ID réel WordPress
+        'Indonésie': 182, // ID réel WordPress
+        
+        // Autres catégories
         'Communauté & Réseau': 17,
-        'Logement & Coliving': 18,
+        'Logement & Coliving': 140, // ID réel WordPress
         'Transport & Mobilité': 19,
         'Santé & Assurance': 20,
-        'Finance & Fiscalité': 21,
+        'Finance & Fiscalité': 143, // ID réel WordPress
         'Travail & Productivité': 22,
-        'Voyage & Découverte': 23
+        'Voyage & Découverte': 23,
+        'Guides Pratiques': 165, // ID réel WordPress
+        'Comparaisons': 167, // ID réel WordPress
+        'Analyses': 168 // ID réel WordPress
       };
 
-      // Mapping manuel pour les tags courants (étendu)
+      // Mapping manuel pour les tags courants (IDs WordPress réels)
       const tagMap = {
-        'Actualité': 1,
-        'Nouvelle': 2,
-        'Tendance': 3,
-        'Nomade Digital': 4,
-        'Digital Nomad': 4, // Même ID que Nomade Digital
-        'Visa': 6,
-        'Budget': 7,
-        'Débutant': 8,
-        'Premier voyage': 8, // Même ID que Débutant
-        'Expérimenté': 9,
-        'Espagne': 10,
-        'Thaïlande': 11,
-        'Indonésie': 12,
-        'Vietnam': 13,
-        'Japon': 14,
-        'Corée du Sud': 15,
-        'Portugal': 16,
-        'Témoignage': 17,
-        'Guide': 18,
-        'Conseil': 19,
-        'Astuce': 20
+        // Tags génériques
+        'Asie': 172, // ID réel WordPress
+        'Budget': 87, // ID réel WordPress
+        'Débutant': 150, // ID réel WordPress
+        
+        // Tags par type de contenu
+        'Témoignage': 155, // ID réel WordPress (Témoignages)
+        'Témoignages': 155, // Même ID
+        'Guide': 84, // ID réel WordPress
+        'Guide Local': 106, // ID réel WordPress
+        'Guides pratiques': 55, // ID réel WordPress
+        'Nomadisme Digital': 176, // ID réel WordPress
+        'Visa': 77, // ID réel WordPress
+        
+        // Tags par destination
+        'Thaïlande': 75, // ID réel WordPress
+        'Indonésie': 177, // ID réel WordPress
+        'Vietnam': 95, // ID réel WordPress
+        'Japon': 76, // ID réel WordPress
+        
+        // Tags par audience
+        'communauté': 192, // ID à vérifier
+        'voyage': 193, // ID à vérifier
+        'travail': 194, // ID à vérifier
+        'logement': 195, // ID à vérifier
+        'finance': 196, // ID à vérifier
+        'santé': 197, // ID à vérifier
+        'transport': 198 // ID à vérifier
       };
 
       const categoryIds = categories

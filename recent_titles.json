@@ -32,20 +32,21 @@
     "Heathrow to Bali",
     "Confused between South Korea, Japan and China",
     "Turning my new Marrakech apartment into a digital nomad spot - would love your feedback",
-    "Singapore for Christmas"
+    "Singapore for Christmas",
+    "Travel consent form question. Traveling with minor sister, parents have no passports.",
+    "Travel destinations for late December",
+    "Dominica as a digital nomad?",
+    "Using sites like Going or Travelzoo with specific dates, i.e. Christmas week 2025 for a beach holiday?",
+    "Dubai or Thailand where did you connect more with other digital nomads?"
   ],
   "countries": {
-    "unknown": 178,
     "thailand": 3,
-    "vietnam": 3,
-    "japan": 3,
+    "unknown": 28,
     "singapore": 2
   },
   "cities": {
-    "unknown": 183,
-    "chiang mai": 2,
-    "bali": 2,
+    "unknown": 31,
     "singapore": 2
   },
-  "weekStamp": "2025-W43"
+  "weekStamp": "2025-W44"
 }

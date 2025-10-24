@@ -9,11 +9,13 @@
 import OpenAI from 'openai';
 import { OPENAI_API_KEY } from './config.js';
 import { RealStatsScraper } from './real-stats-scraper.js';
+import { NomadPartnersLinkGenerator } from './nomad-partners-links.js';
 
 class ContextualWidgetPlacer {
   constructor() {
     this.openai = new OpenAI({ apiKey: OPENAI_API_KEY });
     this.statsScraper = new RealStatsScraper();
+    this.nomadLinkGenerator = new NomadPartnersLinkGenerator();
     
     // Contextes + accroches style TPG (valeur ajoutée + sobre)
     this.widgetIntros = {
@@ -86,6 +88,12 @@ CONTEXTE:
 - Destination: ${articleContext.destination || 'Asie'}
 - Audience: ${articleContext.audience || 'Nomades digitaux'}
 
+ANALYSE SÉMANTIQUE REQUISE:
+- Identifie tous les mots-clés liés à l'hébergement (coliving, coworking, logement, hébergement, appartement, etc.)
+- Identifie tous les mots-clés liés aux transports (vols, avion, transport, déplacement, voyage, etc.)
+- Identifie tous les mots-clés liés aux formalités (visa, passeport, formalités, documents, etc.)
+- Identifie tous les mots-clés liés au budget (coût, prix, budget, économique, etc.)
+
 PLAN DE WIDGETS:
 ${JSON.stringify(widgetPlan, null, 2)}
 
@@ -103,10 +111,15 @@ ${Object.entries(widgetPlan.providers).map(([slot, provider]) =>
 ).join('\n')}
 
 INSTRUCTIONS:
-1. Analyse le contenu pour identifier les sections pertinentes
-2. Sélectionne 1-3 widgets les plus pertinents selon les intents
-3. Place-les contextuellement dans le contenu
-4. Génère des accroches sobres et informatives
+1. ANALYSE SÉMANTIQUE: Identifie les mots-clés contextuels dans le contenu
+2. MAPPING CONTEXTUEL: Associe chaque section à l'intent le plus pertinent :
+   - Si le contenu parle de "vols", "transport", "déplacement", "voyage", "arrivée", "départ" → widget FLIGHTS
+   - Si le contenu parle de "connectivité", "eSIM", "internet", "téléphone" → widget CONNECTIVITY
+   - Si le contenu parle de "coliving", "coworking", "hébergement", "logement", "appartement" → LIEN EXTERNE (Coliving.com, Outsite, Selina)
+   - Si le contenu parle de "budget", "finance", "argent", "coût", "prix" → LIEN EXTERNE (Wise, Revolut, N26)
+   - Si le contenu parle de "assurance", "santé", "protection" → LIEN EXTERNE (SafetyWing, World Nomads)
+3. PLACEMENT INTELLIGENT: Place les widgets dans les sections qui correspondent sémantiquement
+4. ACCROCHES CONTEXTUELLES: Génère des accroches qui correspondent au contexte réel du contenu
 5. Respecte toutes les contraintes du plan
 
 RÉPONSE ATTENDUE (JSON):
@@ -154,6 +167,129 @@ Réponds UNIQUEMENT en JSON valide.`;
       console.error('❌ Erreur placement widgets:', error.message);
       return content; // Retourner le contenu original en cas d'erreur
     }
+  }
+
+  /**
+   * Insère des liens externes nomades contextuels
+   */
+  async insertNomadLinks(content, articleContext) {
+    try {
+      console.log('\n🔗 INSERTION DE LIENS NOMADES');
+      console.log('==============================\n');
+
+      const nomadLink = this.nomadLinkGenerator.generateContextualLink(content, articleContext);
+      
+      console.log(`📊 Lien nomade sélectionné: ${nomadLink.name}`);
+      console.log(`🔗 URL: ${nomadLink.url}`);
+      console.log(`📝 Description: ${nomadLink.description}`);
+
+      // Générer l'accroche contextuelle
+      const contextualIntro = this.generateNomadLinkIntro(nomadLink, content);
+      
+      // Créer une intégration textuelle naturelle
+      const linkHtml = `
+<p>${contextualIntro} <a href="${nomadLink.url}" target="_blank" rel="noopener"><strong>${nomadLink.name}</strong></a> ${nomadLink.description}</p>
+`;
+
+      // Trouver un endroit approprié pour insérer le lien
+      const insertionPoint = this.findBestInsertionPoint(content);
+      if (insertionPoint) {
+        const enhancedContent = content.replace(insertionPoint, insertionPoint + linkHtml);
+        console.log('✅ Lien nomade inséré avec succès');
+        return enhancedContent;
+      }
+
+      return content;
+
+    } catch (error) {
+      console.error('❌ Erreur insertion lien nomade:', error.message);
+      return content;
+    }
+  }
+
+  /**
+   * Génère une accroche contextuelle pour le lien nomade
+   */
+  generateNomadLinkIntro(nomadLink, content) {
+    // Analyser le contexte de l'article pour créer une intro naturelle
+    const lowerContent = content.toLowerCase();
+    
+    // Intros contextuelles basées sur le contenu de l'article
+    const contextualIntros = {
+      // Si l'article parle de voyage avec des mineurs
+      minors_travel: [
+        "D'ailleurs, pour les familles qui voyagent avec des enfants,",
+        "Au passage, les parents qui voyagent avec des mineurs",
+        "En complément, voyager avec des enfants nécessite souvent"
+      ],
+      // Si l'article parle de préparation/documents
+      preparation: [
+        "Une fois les documents en ordre,",
+        "Après avoir préparé tous les documents nécessaires,",
+        "Les formalités administratives réglées,"
+      ],
+      // Si l'article parle de sécurité/précautions
+      safety: [
+        "La sécurité financière est tout aussi importante que la sécurité physique,",
+        "Outre les précautions administratives,",
+        "Une fois les aspects sécuritaires couverts,"
+      ],
+      // Si l'article parle de voyage/expérience
+      travel_experience: [
+        "Au fil de mes voyages,",
+        "En tant que nomade digital,",
+        "Pour optimiser mes déplacements,"
+      ],
+      // Fallback générique
+      generic: [
+        "Pour les nomades digitaux,",
+        "Les voyageurs modernes",
+        "Gérer ses finances en voyage nécessite"
+      ]
+    };
+
+    // Déterminer le contexte le plus approprié
+    let context = 'generic';
+    if (lowerContent.includes('mineur') || lowerContent.includes('enfant') || lowerContent.includes('famille')) {
+      context = 'minors_travel';
+    } else if (lowerContent.includes('préparation') || lowerContent.includes('document') || lowerContent.includes('formulaire')) {
+      context = 'preparation';
+    } else if (lowerContent.includes('sécurité') || lowerContent.includes('précaution') || lowerContent.includes('protection')) {
+      context = 'safety';
+    } else if (lowerContent.includes('voyage') || lowerContent.includes('expérience') || lowerContent.includes('découverte') || lowerContent.includes('aventure')) {
+      context = 'travel_experience';
+    }
+
+    const availableIntros = contextualIntros[context];
+    return availableIntros[Math.floor(Math.random() * availableIntros.length)];
+  }
+
+  /**
+   * Trouve le meilleur point d'insertion pour le lien
+   */
+  findBestInsertionPoint(content) {
+    // Chercher des sections pertinentes
+    const sections = [
+      'h3', 'h2', 'Conseils', 'Guide', 'Astuces', 'Recommandations'
+    ];
+    
+    for (const section of sections) {
+      const regex = new RegExp(`<${section}[^>]*>.*?</${section}>`, 'gi');
+      const matches = content.match(regex);
+      if (matches && matches.length > 0) {
+        return matches[matches.length - 1]; // Prendre la dernière section
+      }
+    }
+    
+    // Fallback : chercher n'importe quel H2 ou H3
+    const fallbackRegex = /<h[23][^>]*>.*?<\/h[23]>/gi;
+    const fallbackMatches = content.match(fallbackRegex);
+    if (fallbackMatches && fallbackMatches.length > 0) {
+      return fallbackMatches[fallbackMatches.length - 1];
+    }
+    
+    // Dernier recours : insérer à la fin
+    return '</p>';
   }
 
   /**
