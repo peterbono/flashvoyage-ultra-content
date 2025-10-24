@@ -94,33 +94,9 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
   },
 
   // ===== HÔTELS =====
+  // HOTELLOOK SUPPRIMÉ - Plus de partenaire
   hotels: {
-    hotellook: {
-      searchForm: {
-        brand: "hotellook.com",
-        type: "Hotels Search Form",
-        reward: "40%",
-        category: "Hotels & Accomodations",
-        script: `<script async src="https://trpwdg.com/content?currency=eur&trs=463418&shmarker=676421&show_hotels=true&powered_by=true&locale=fr&searchUrl=search.hotellook.com&primary_override=%23FF8E01&color_button=%23FF8E01&color_icons=%23FF8E01&secondary=%233FABDB&dark=%23262626&light=%23ffffff&special=%23C4C4C4&color_focused=%23FF8E01&border_radius=5&plain=false&promo_id=7873&campaign_id=101" charset="utf-8"></script>`,
-        context: "Articles sur hébergement, guides d'hôtels, coliving"
-      },
-      hotelsWidget: {
-        brand: "hotellook.com",
-        type: "Hotels & Accomodations",
-        reward: "40%",
-        category: "Hotels & Accomodations",
-        script: `<script async src="https://trpwdg.com/content?currency=eur&trs=463418&shmarker=676421&host=search.hotellook.com&locale=fr&nobooking=&powered_by=true&width=940&primary=%23ff8e00&special=%23e0e0e0&promo_id=4063&campaign_id=101" charset="utf-8"></script>`,
-        context: "Articles sur hébergement, coliving, logement nomade"
-      },
-      hotelsMap: {
-        brand: "hotellook.com",
-        type: "Hotels & Accomodations",
-        reward: "40%",
-        category: "Hotels & Accomodations",
-        script: `<script async src="https://trpwdg.com/content?currency=eur&trs=463418&shmarker=676421&search_host=search.hotellook.com&locale=fr&powered_by=true&draggable=true&disable_zoom=false&show_logo=true&scrollwheel=false&color=%2307AF61&contrast_color=%23ffffff&width=1000&height=500&lat=7.893587&lng=98.29682&zoom=14&radius=60&stars=0&rating_from=0&rating_to=10&promo_id=4285&campaign_id=101" charset="utf-8"></script>`,
-        context: "Articles géographiques sur hébergement, guides par ville"
-      }
-    }
+    // Section vide - Hotellook retiré
   },
 
   // ===== SIM CARDS / CONNECTIVITÉ =====
@@ -244,9 +220,10 @@ export class RealTravelpayoutsWidgetSelector {
    * Sélectionne un widget d'hôtel
    */
   selectHotelWidget(destination) {
+    // HOTELLOOK SUPPRIMÉ - Retourner un widget de vol à la place
     return {
-      widget: this.widgets.hotels.hotellook.searchForm,
-      reason: "Formulaire de recherche d'hébergement"
+      widget: this.widgets.flights.aviasales.searchForm,
+      reason: "Hotellook supprimé - Widget de vol en remplacement"
     };
   }
 

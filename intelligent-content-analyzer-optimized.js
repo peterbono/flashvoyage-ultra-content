@@ -171,6 +171,7 @@ Extrait les éléments clés selon la structure SUCCESS_STORY:
 - Comparaisons avec autres destinations
 - Conseils pratiques pour reproduire
 
+IMPORTANT: Traduis TOUTES les citations en français. Si le contenu Reddit est en anglais, traduis-le en français naturel et fluide.
 Réponds UNIQUEMENT en JSON avec ces clés: citations, donnees_cles, structure, enseignements, defis, strategies, resultats, couts, erreurs, specificites, comparaisons, conseils.`;
 
     const userMessage = `TITRE: ${article.title}
@@ -216,6 +217,7 @@ STRUCTURE IMMERSIVE OBLIGATOIRE:
    - IMPORTANT: Utilise UNIQUEMENT l'author Reddit fourni dans les données pour les citations
    - JAMAIS d'inventer de pseudos - utilise SEULEMENT l'author réel
    - Le titre de l'article NE DOIT PAS contenir le nom de l'auteur
+   - TRADUIS TOUTES les citations en français si elles sont en anglais
    - Génère les citations comme des strings simples, pas des objets
 
 3. TRANSITIONS NARRATEUR (OBLIGATOIRE)
@@ -249,6 +251,7 @@ FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <ul><li>, <strong>, <table>
 LONGUEUR: 1500-2000 mots
 
 IMPORTANT: Le titre de l'article NE DOIT PAS contenir le nom de l'auteur Reddit. Utilise l'author UNIQUEMENT dans les citations.
+TRADUCTION: Traduis TOUTES les citations en français si elles sont en anglais.
 
 Réponds UNIQUEMENT en JSON avec cette structure: { "article": { "titre": "...", "introduction": "...", "citations": [...], "developpement": "...", "conseils_pratiques": "...", "signature": "..." } }`;
 
