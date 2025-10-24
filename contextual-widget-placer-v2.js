@@ -33,12 +33,12 @@ class ContextualWidgetPlacer {
       ],
       hotels: [
         {
-          context: "L'hébergement représente une part importante du budget voyage. Notre partenaire Hotellook compare les prix de nombreux sites de réservation pour vous aider à économiser.",
-          cta: "Trouvez votre hébergement idéal :"
+          context: "Les vols représentent une part importante du budget voyage. Notre partenaire Aviasales compare les prix de nombreuses compagnies pour vous aider à économiser.",
+          cta: "Comparez les prix de vols :"
         },
         {
-          context: "Les prix d'hébergement peuvent varier selon le site de réservation. Notre outil agrège toutes les offres pour vous garantir le meilleur tarif.",
-          cta: "Comparez les hébergements :"
+          context: "Les prix des vols peuvent varier selon la compagnie. Notre outil agrège toutes les offres pour vous garantir le meilleur tarif.",
+          cta: "Trouvez les meilleures offres :"
         }
       ],
       transport: [

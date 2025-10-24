@@ -68,7 +68,7 @@ class ArticleFinalizer {
       /Notre outil compare les prix/gi,
       /Comparez les prix et réservez/gi,
       /Trouvez les meilleures offres/gi,
-      /Notre partenaire Hotellook/gi,
+      /Notre partenaire Aviasales/gi,
       /Trouvez votre hébergement idéal/gi,
       /trpwdg\.com\/content/gi,
       /travelpayouts-widget/gi
@@ -282,20 +282,10 @@ class ArticleFinalizer {
    * Sélectionne le meilleur widget d'hébergement selon le contexte
    */
   selectBestHotelWidget(context) {
-    const { hotels } = this.widgets;
+    const { flights } = this.widgets;
 
-    // Si nomade digital, utiliser Hotellook
-    if (context.hasNomad) {
-      return hotels.hotellook.searchForm.script;
-    }
-
-    // Si budget/prix, utiliser Hotellook (Booking n'est pas disponible)
-    if (context.hasBudget) {
-      return hotels.hotellook.searchForm.script;
-    }
-
-    // Par défaut, Hotellook
-    return hotels.hotellook.searchForm.script;
+    // HOTELLOOK SUPPRIMÉ - Utiliser Aviasales en remplacement
+    return flights.aviasales.searchForm.script;
   }
 
   /**
@@ -545,7 +535,17 @@ class ArticleFinalizer {
         'Témoignages': 3,
         'Visa & Formalités': 4,
         'Budget & Finances': 5,
-        'Destinations': 6
+        'Destinations': 6,
+        'Digital Nomades Asie': 7,
+        'Japon': 61, // ID existant
+        'Philippines': 64, // ID existant
+        'Communauté & Réseau': 17,
+        'Logement & Coliving': 18,
+        'Transport & Mobilité': 19,
+        'Santé & Assurance': 20,
+        'Finance & Fiscalité': 21,
+        'Travail & Productivité': 22,
+        'Voyage & Découverte': 23
       };
 
       // Mapping manuel pour les tags courants (étendu)

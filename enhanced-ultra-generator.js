@@ -127,7 +127,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         content: enhanced.content.replace('{quote_highlight}', quoteHighlight),
         excerpt: this.generateExcerpt(enhanced.content),
         status: 'publish',
-        categories: await this.getCategoriesForContent(analysis),
+        categories: await this.getCategoriesForContent(analysis, enhanced.content),
         tags: await this.getTagsForContent(analysis),
         meta: {
           description: this.generateMetaDescription(generatedContent.title, analysis),
@@ -271,7 +271,20 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   }
 
   // Obtenir les catégories selon l'analyse
-  async getCategoriesForContent(analysis) {
+  async getCategoriesForContent(analysis, generatedContent = null) {
+    // Analyser les destinations mentionnées dans le contenu généré (enrichi)
+    const contentToAnalyze = generatedContent || analysis.contenu || '';
+    const destinations = this.extractDestinationsFromContent(contentToAnalyze);
+    
+    // Si une destination spécifique est trouvée, l'utiliser comme catégorie principale
+    if (destinations.length > 0) {
+      const mainCategory = this.getDestinationCategory(destinations[0]);
+      const subCategory = this.getSubCategory(analysis.sous_categorie);
+      console.log(`🏷️ Catégorie spécifique: ${mainCategory}`);
+      return [mainCategory, subCategory].filter(Boolean);
+    }
+    
+    // Fallback vers les catégories génériques
     const categoryMapping = {
       'TEMOIGNAGE_SUCCESS_STORY': 'Digital Nomades Asie',
       'TEMOIGNAGE_ECHEC_LEÇONS': 'Digital Nomades Asie',
@@ -285,8 +298,120 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
 
     const mainCategory = categoryMapping[analysis.type_contenu] || 'Conseils';
     const subCategory = this.getSubCategory(analysis.sous_categorie);
+    console.log(`🏷️ Catégorie générique: ${mainCategory}`);
     
     return [mainCategory, subCategory].filter(Boolean);
+  }
+
+  // Extraire les destinations du contenu généré
+  extractDestinationsFromContent(content) {
+    const destinations = [];
+    const contentToAnalyze = (content || '').toLowerCase();
+    
+    const destinationKeywords = {
+      'thailand': ['thailand', 'thaïlande', 'bangkok', 'chiang mai', 'phuket', 'krabi', 'pattaya', 'pad thaï', 'tuk-tuk'],
+      'vietnam': ['vietnam', 'hanoi', 'ho chi minh', 'saigon', 'da nang', 'hue', 'nha trang'],
+      'indonesia': ['indonesia', 'indonésie', 'bali', 'jakarta', 'ubud', 'yogyakarta', 'bandung'],
+      'japan': ['japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'nagoya', 'fukuoka'],
+      'philippines': ['philippines', 'manila', 'cebu', 'davao', 'boracay', 'palawan'],
+      'malaysia': ['malaysia', 'malaisie', 'kuala lumpur', 'penang', 'langkawi', 'johor'],
+      'singapore': ['singapore', 'singapour'],
+      'spain': ['spain', 'espagne', 'madrid', 'barcelona', 'barcelone', 'valencia', 'seville', 'bilbao', 'siesta'],
+      'portugal': ['portugal', 'lisbon', 'lisbonne', 'porto', 'coimbra', 'faro', 'tage']
+    };
+    
+    // Compter les mentions pour chaque destination
+    const destinationScores = {};
+    
+    for (const [country, keywords] of Object.entries(destinationKeywords)) {
+      let score = 0;
+      keywords.forEach(keyword => {
+        const matches = (contentToAnalyze.match(new RegExp(keyword, 'g')) || []).length;
+        score += matches;
+      });
+      
+      if (score > 0) {
+        destinationScores[country] = score;
+        console.log(`🎯 Destination détectée: ${country} (score: ${score})`);
+      }
+    }
+    
+    // Retourner la destination avec le score le plus élevé
+    if (Object.keys(destinationScores).length > 0) {
+      const bestDestination = Object.entries(destinationScores)
+        .sort(([,a], [,b]) => b - a)[0][0];
+      destinations.push(bestDestination);
+      console.log(`🏆 Destination principale: ${bestDestination}`);
+    }
+    
+    return destinations;
+  }
+
+  // Extraire les destinations de l'analyse
+  extractDestinationsFromAnalysis(analysis) {
+    const destinations = [];
+    
+    // Analyser le contenu ET le titre pour les destinations
+    const contentToAnalyze = [
+      analysis.contenu || '',
+      analysis.titre || '',
+      analysis.title || ''
+    ].join(' ').toLowerCase();
+    
+    const destinationKeywords = {
+      'thailand': ['thailand', 'thaïlande', 'bangkok', 'chiang mai', 'phuket', 'krabi', 'pattaya', 'pad thaï', 'tuk-tuk'],
+      'vietnam': ['vietnam', 'hanoi', 'ho chi minh', 'saigon', 'da nang', 'hue', 'nha trang'],
+      'indonesia': ['indonesia', 'indonésie', 'bali', 'jakarta', 'ubud', 'yogyakarta', 'bandung'],
+      'japan': ['japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'nagoya', 'fukuoka'],
+      'philippines': ['philippines', 'manila', 'cebu', 'davao', 'boracay', 'palawan'],
+      'malaysia': ['malaysia', 'malaisie', 'kuala lumpur', 'penang', 'langkawi', 'johor'],
+      'singapore': ['singapore', 'singapour'],
+      'spain': ['spain', 'espagne', 'madrid', 'barcelona', 'barcelone', 'valencia', 'seville', 'bilbao', 'siesta'],
+      'portugal': ['portugal', 'lisbon', 'lisbonne', 'porto', 'coimbra', 'faro', 'tage']
+    };
+    
+    // Compter les mentions pour chaque destination
+    const destinationScores = {};
+    
+    for (const [country, keywords] of Object.entries(destinationKeywords)) {
+      let score = 0;
+      keywords.forEach(keyword => {
+        const matches = (contentToAnalyze.match(new RegExp(keyword, 'g')) || []).length;
+        score += matches;
+      });
+      
+      if (score > 0) {
+        destinationScores[country] = score;
+        console.log(`🎯 Destination détectée: ${country} (score: ${score})`);
+      }
+    }
+    
+    // Retourner la destination avec le score le plus élevé
+    if (Object.keys(destinationScores).length > 0) {
+      const bestDestination = Object.entries(destinationScores)
+        .sort(([,a], [,b]) => b - a)[0][0];
+      destinations.push(bestDestination);
+      console.log(`🏆 Destination principale: ${bestDestination}`);
+    }
+    
+    return destinations;
+  }
+  
+  // Obtenir la catégorie de destination (redirection vers sous-catégories existantes)
+  getDestinationCategory(destination) {
+    const destinationMapping = {
+      'thailand': 'Japon', // Redirection vers Japon (Asie)
+      'vietnam': 'Philippines', // Redirection vers Philippines (Asie du Sud-Est)
+      'indonesia': 'Philippines', // Redirection vers Philippines (Asie du Sud-Est)
+      'japan': 'Japon',
+      'philippines': 'Philippines',
+      'malaysia': 'Philippines', // Redirection vers Philippines (Asie du Sud-Est)
+      'singapore': 'Philippines', // Redirection vers Philippines (Asie du Sud-Est)
+      'spain': 'Japon', // Redirection vers Japon (Asie)
+      'portugal': 'Japon' // Redirection vers Japon (Asie)
+    };
+    
+    return destinationMapping[destination] || 'Japon'; // Fallback vers Japon
   }
 
   // Obtenir la sous-catégorie

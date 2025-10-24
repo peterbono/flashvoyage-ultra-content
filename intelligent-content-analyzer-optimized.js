@@ -171,8 +171,9 @@ Extrait les éléments clés selon la structure SUCCESS_STORY:
 - Comparaisons avec autres destinations
 - Conseils pratiques pour reproduire
 
-IMPORTANT: Traduis TOUTES les citations en français. Si le contenu Reddit est en anglais, traduis-le en français naturel et fluide.
-Réponds UNIQUEMENT en JSON avec ces clés: citations, donnees_cles, structure, enseignements, defis, strategies, resultats, couts, erreurs, specificites, comparaisons, conseils.`;
+         IMPORTANT: Traduis TOUTES les citations en français. Si le contenu Reddit est en anglais, traduis-le en français naturel et fluide.
+         
+         Réponds UNIQUEMENT en JSON avec ces clés: citations, donnees_cles, structure, enseignements, defis, strategies, resultats, couts, erreurs, specificites, comparaisons, conseils.`;
 
     const userMessage = `TITRE: ${article.title}
 CONTENU: ${fullContent.substring(0, 1000)}`;
@@ -245,6 +246,13 @@ STRUCTURE IMMERSIVE OBLIGATOIRE:
 8. MISE EN PERSPECTIVE (OBLIGATOIRE)
    - Terminer chaque section par un enseignement pratique
    - Quel piège à éviter, quelle leçon pour le lecteur nomade
+
+9. ENRICHISSEMENT DESTINATIONS (OBLIGATOIRE)
+   - Intègre subtilement des mentions de destinations spécifiques dans le contenu
+   - Utilise des destinations populaires: Thaïlande, Vietnam, Indonésie, Japon, Philippines, Malaisie, Singapour, Espagne, Portugal
+   - Mentionne des villes: Bangkok, Ho Chi Minh, Bali, Tokyo, Manille, Kuala Lumpur, Singapour, Barcelone, Lisbonne
+   - Intègre naturellement dans les conseils et exemples
+   - Évite les listes génériques, privilégie les mentions contextuelles
 
 TON: Inspirant, motivant, authentique
 FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <ul><li>, <strong>, <table>
