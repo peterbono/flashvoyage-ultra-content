@@ -219,12 +219,14 @@ STRUCTURE IMMERSIVE OBLIGATOIRE:
    - Génère les citations comme des strings simples, pas des objets
 
 3. TRANSITIONS NARRATEUR (OBLIGATOIRE)
-   - "L'auteur explique:", "Dans son témoignage:", "Il précise:"
+   - Utilise les transitions naturelles basées sur le contenu Reddit réel
    - Crée des liens fluides entre les sections
+   - Évite les phrases modèles répétitives
 
 4. SCÈNES SENSORIELLES (OBLIGATOIRE)
    - Bruits, odeurs, sensations du témoignage
-   - "Le bruit des scooters", "L'odeur des épices", "La chaleur humide"
+   - Utilise UNIQUEMENT les détails du témoignage Reddit réel
+   - JAMAIS d'inventer de scènes génériques
 
 5. QUESTIONS RHÉTORIQUES (OBLIGATOIRE)
    - "Imaginez-vous...", "Et si vous...", "Que feriez-vous si..."

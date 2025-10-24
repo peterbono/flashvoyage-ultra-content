@@ -31,18 +31,21 @@
     "Should I do Korea &amp; Japan or just Japan? (Itinerary included)",
     "Heathrow to Bali",
     "Confused between South Korea, Japan and China",
-    "Turning my new Marrakech apartment into a digital nomad spot - would love your feedback"
+    "Turning my new Marrakech apartment into a digital nomad spot - would love your feedback",
+    "Singapore for Christmas"
   ],
   "countries": {
-    "unknown": 163,
+    "unknown": 166,
     "thailand": 3,
     "vietnam": 3,
-    "japan": 3
+    "japan": 3,
+    "singapore": 2
   },
   "cities": {
-    "unknown": 168,
+    "unknown": 171,
     "chiang mai": 2,
-    "bali": 2
+    "bali": 2,
+    "singapore": 2
   },
   "weekStamp": "2025-W43"
 }

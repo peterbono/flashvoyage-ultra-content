@@ -8,40 +8,42 @@
 
 import OpenAI from 'openai';
 import { OPENAI_API_KEY } from './config.js';
+import { RealStatsScraper } from './real-stats-scraper.js';
 
 class ContextualWidgetPlacer {
   constructor() {
     this.openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+    this.statsScraper = new RealStatsScraper();
     
     // Contextes + accroches style TPG (valeur ajoutée + sobre)
     this.widgetIntros = {
       flights: [
         {
-          context: "Selon notre analyse de milliers de vols vers l'Asie, réserver 6 à 8 semaines à l'avance permet d'économiser jusqu'à 40% sur les billets. Notre outil compare les prix de 500+ compagnies en temps réel.",
+          context: "Réserver en avance permet souvent d'économiser sur les billets d'avion. Notre outil compare les prix de nombreuses compagnies en temps réel.",
           cta: "Comparez les prix et réservez :"
         },
         {
-          context: "D'après notre expérience avec des centaines de nomades, les vols en milieu de semaine (mardi-jeudi) sont en moyenne 25% moins chers. Notre partenaire Kiwi.com agrège les tarifs de toutes les compagnies.",
+          context: "Les vols en milieu de semaine sont souvent moins chers. Notre partenaire Kiwi.com agrège les tarifs de toutes les compagnies.",
           cta: "Trouvez les meilleures offres :"
         },
         {
-          context: "Les prix des vols varient jusqu'à 300€ selon le site de réservation. Notre outil compare automatiquement les tarifs pour vous garantir le meilleur prix.",
+          context: "Les prix des vols varient selon le site de réservation. Notre outil compare automatiquement les tarifs pour vous garantir le meilleur prix.",
           cta: "Consultez les tarifs actuels :"
         }
       ],
       hotels: [
         {
-          context: "Les nomades digitaux dépensent en moyenne 30% de leur budget en hébergement. Notre partenaire Hotellook compare les prix de 200+ sites de réservation pour vous aider à économiser.",
+          context: "L'hébergement représente une part importante du budget voyage. Notre partenaire Hotellook compare les prix de nombreux sites de réservation pour vous aider à économiser.",
           cta: "Trouvez votre hébergement idéal :"
         },
         {
-          context: "D'après notre analyse de 1000+ réservations, les prix peuvent varier de 40% pour la même chambre selon le site. Notre outil agrège toutes les offres pour vous garantir le meilleur tarif.",
+          context: "Les prix d'hébergement peuvent varier selon le site de réservation. Notre outil agrège toutes les offres pour vous garantir le meilleur tarif.",
           cta: "Comparez les hébergements :"
         }
       ],
       transport: [
         {
-          context: "Les transports locaux représentent 15% du budget voyage. Notre partenaire 12Go compare bus, trains et ferries pour optimiser vos trajets.",
+          context: "Les transports locaux représentent une part du budget voyage. Notre partenaire 12Go compare bus, trains et ferries pour optimiser vos trajets.",
           cta: "Planifiez vos déplacements :"
         }
       ],
@@ -172,25 +174,14 @@ Réponds UNIQUEMENT en JSON valide.`;
         continue;
       }
 
-      // Utiliser un contexte différent pour chaque widget
-      const availableIntros = this.widgetIntros[widget.slot] || [{
-        context: `Notre partenaire ${widgetPlan.providers[widget.slot]} vous aide à optimiser votre voyage.`,
-        cta: "Consultez les options :"
-      }];
+      // Générer un contexte FOMO avec stats réelles
+      console.log(`📊 Génération de stats réelles pour ${widget.slot}...`);
+      const fomoData = await this.statsScraper.generateFOMOContext(widget.slot, widgetPlan.geo_defaults);
       
-      // Trouver un contexte non utilisé
-      let intro = null;
-      for (const candidateIntro of availableIntros) {
-        if (!usedContexts.has(candidateIntro.context)) {
-          intro = candidateIntro;
-          break;
-        }
-      }
-      
-      if (!intro) {
-        console.log(`⚠️ Tous les contextes ${widget.slot} déjà utilisés, widget ignoré`);
-        continue;
-      }
+      const intro = {
+        context: fomoData.context,
+        cta: this.getCTAText(widget.slot)
+      };
 
       // Vérifier si ce contexte est déjà utilisé
       if (usedContexts.has(intro.context)) {
@@ -282,6 +273,21 @@ ${widgetScript}
     }
     
     return content + '\n\n' + widgetBlock;
+  }
+
+  /**
+   * Génère le texte CTA selon le type de widget
+   */
+  getCTAText(widgetSlot) {
+    const ctaTexts = {
+      flights: "Comparez les prix et réservez :",
+      hotels: "Trouvez votre hébergement idéal :",
+      transport: "Planifiez vos déplacements :",
+      esim: "Restez connecté partout :",
+      insurance: "Protégez votre voyage :",
+      activities: "Découvrez les activités :"
+    };
+    return ctaTexts[widgetSlot] || "Consultez les options :";
   }
 
   /**
