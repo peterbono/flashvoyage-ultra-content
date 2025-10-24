@@ -125,6 +125,18 @@ export class NomadPartnersLinkGenerator {
   generateContextualLink(content, context) {
     const text = content.toLowerCase();
     
+    // VÉRIFICATION CONTEXTUELLE INTELLIGENTE
+    // Si le contenu parle de 'familles avec enfants' → Assurance famille, pas crypto/coliving
+    if (text.includes('voyager avec des enfants') || 
+        (text.includes('famille') && text.includes('enfant'))) {
+      return this.getInsuranceLink(); // Assurance pour familles
+    }
+    
+    // Si le contenu parle de 'coliving' → Liens coliving, pas hôtels
+    if (text.includes('coliving') || text.includes('coworking')) {
+      return this.getAccommodationLink(); // Coliving approprié
+    }
+    
     // Détection des mots-clés
     if (this.hasAccommodationKeywords(text)) {
       return this.getAccommodationLink();
@@ -154,6 +166,11 @@ export class NomadPartnersLinkGenerator {
       'coliving', 'coworking', 'hébergement', 'logement', 'appartement',
       'chambre', 'studio', 'airbnb', 'booking', 'hostel', 'auberge'
     ];
+    // Éviter les faux positifs
+    const excludeKeywords = ['mineur', 'enfant', 'famille'];
+    if (excludeKeywords.some(keyword => text.includes(keyword))) {
+      return false;
+    }
     return keywords.some(keyword => text.includes(keyword));
   }
 
@@ -176,6 +193,11 @@ export class NomadPartnersLinkGenerator {
       'assurance', 'santé', 'médical', 'protection', 'sécurité',
       'risque', 'couverture', 'mutuelle', 'sécurité sociale'
     ];
+    // Priorité pour les familles avec enfants
+    const familyKeywords = ['mineur', 'enfant', 'famille'];
+    if (familyKeywords.some(keyword => text.includes(keyword))) {
+      return true;
+    }
     return keywords.some(keyword => text.includes(keyword));
   }
 

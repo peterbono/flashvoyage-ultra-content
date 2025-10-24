@@ -118,9 +118,19 @@ INSTRUCTIONS:
    - Si le contenu parle de "coliving", "coworking", "hébergement", "logement", "appartement" → LIEN EXTERNE (Coliving.com, Outsite, Selina)
    - Si le contenu parle de "budget", "finance", "argent", "coût", "prix" → LIEN EXTERNE (Wise, Revolut, N26)
    - Si le contenu parle de "assurance", "santé", "protection" → LIEN EXTERNE (SafetyWing, World Nomads)
+   - IMPORTANT: Si le contenu parle de "coliving" → ÉVITE le widget FLIGHTS (incohérent)
+   - IMPORTANT: Si le contenu parle de "vols" → ÉVITE les liens externes coliving (incohérent)
 3. PLACEMENT INTELLIGENT: Place les widgets dans les sections qui correspondent sémantiquement
 4. ACCROCHES CONTEXTUELLES: Génère des accroches qui correspondent au contexte réel du contenu
-5. Respecte toutes les contraintes du plan
+5. VÉRIFICATION CONTEXTUELLE INTELLIGENTE OBLIGATOIRE: 
+   - Si le contenu parle de 'coliving' → INTERDIT de suggérer des widgets FLIGHTS/AVIASALES
+   - Si le contenu parle de 'vols' → INTERDIT de suggérer des liens coliving
+   - Si le contenu parle de 'familles avec enfants' → INTERDIT de suggérer des liens crypto/coliving
+   - Si le contenu parle de 'mineur' sans contexte familial → INTERDIT de suggérer des liens familiaux
+   - Si le contenu parle de 'voyager avec des enfants' → INTERDIT de suggérer des liens crypto
+   - Vérifie que chaque widget est logiquement cohérent avec le contexte réel
+   - REFUSE catégoriquement tout placement incohérent
+6. Respecte toutes les contraintes du plan
 
 RÉPONSE ATTENDUE (JSON):
 {
@@ -154,10 +164,14 @@ Réponds UNIQUEMENT en JSON valide.`;
       const limitedWidgets = analysis.selected_widgets.slice(0, 2);
       console.log(`🎯 Widgets limités à: ${limitedWidgets.length}`);
       
+      // VÉRIFICATION CONTEXTUELLE OBLIGATOIRE AVANT PLACEMENT
+      const validatedWidgets = this.validateWidgetContext(content, limitedWidgets);
+      console.log(`🔍 Widgets validés: ${validatedWidgets.length}/${limitedWidgets.length}`);
+      
       // Placer les widgets dans le contenu
       const enhancedContent = await this.insertWidgetsContextually(
         content, 
-        limitedWidgets, 
+        validatedWidgets, 
         widgetPlan
       );
 
@@ -170,6 +184,53 @@ Réponds UNIQUEMENT en JSON valide.`;
   }
 
   /**
+   * Valide le contexte des widgets avant placement
+   */
+  validateWidgetContext(content, widgets) {
+    const lowerContent = content.toLowerCase();
+    const validatedWidgets = [];
+    
+    for (const widget of widgets) {
+      let isValid = true;
+      
+      // VÉRIFICATION CONTEXTUELLE STRICTE - TOUS LES MOTS-CLÉS D'HÉBERGEMENT
+      const accommodationKeywords = [
+        'coliving', 'coworking', 'hébergement', 'logement', 'appartement',
+        'chambre', 'chambres', 'studio', 'airbnb', 'booking', 'hostel', 'auberge'
+      ];
+      
+      const hasAccommodationKeywords = accommodationKeywords.some(keyword => 
+        lowerContent.includes(keyword)
+      );
+      
+      // INTERDIT de placer des widgets FLIGHTS/HOTELS quand on parle d'hébergement
+      if (hasAccommodationKeywords && (widget.slot === 'flights' || widget.slot === 'hotels')) {
+        console.log(`❌ Widget ${widget.slot.toUpperCase()} rejeté - Contexte hébergement détecté`);
+        isValid = false;
+      }
+      
+      // VÉRIFICATION CONTEXTUELLE FAMILIALE
+      const familyKeywords = ['famille', 'enfant', 'mineur', 'parents'];
+      const hasFamilyKeywords = familyKeywords.some(keyword => 
+        lowerContent.includes(keyword)
+      );
+      
+      // INTERDIT de placer des widgets crypto/coliving pour familles
+      if (hasFamilyKeywords && (widget.slot === 'flights' || widget.slot === 'hotels')) {
+        console.log(`❌ Widget ${widget.slot.toUpperCase()} rejeté - Contexte familial détecté`);
+        isValid = false;
+      }
+      
+      if (isValid) {
+        validatedWidgets.push(widget);
+        console.log(`✅ Widget ${widget.slot} validé`);
+      }
+    }
+    
+    return validatedWidgets;
+  }
+
+  /**
    * Insère des liens externes nomades contextuels
    */
   async insertNomadLinks(content, articleContext) {
@@ -177,28 +238,8 @@ Réponds UNIQUEMENT en JSON valide.`;
       console.log('\n🔗 INSERTION DE LIENS NOMADES');
       console.log('==============================\n');
 
-      const nomadLink = this.nomadLinkGenerator.generateContextualLink(content, articleContext);
-      
-      console.log(`📊 Lien nomade sélectionné: ${nomadLink.name}`);
-      console.log(`🔗 URL: ${nomadLink.url}`);
-      console.log(`📝 Description: ${nomadLink.description}`);
-
-      // Générer l'accroche contextuelle
-      const contextualIntro = this.generateNomadLinkIntro(nomadLink, content);
-      
-      // Créer une intégration textuelle naturelle
-      const linkHtml = `
-<p>${contextualIntro} <a href="${nomadLink.url}" target="_blank" rel="noopener"><strong>${nomadLink.name}</strong></a> ${nomadLink.description}</p>
-`;
-
-      // Trouver un endroit approprié pour insérer le lien
-      const insertionPoint = this.findBestInsertionPoint(content);
-      if (insertionPoint) {
-        const enhancedContent = content.replace(insertionPoint, insertionPoint + linkHtml);
-        console.log('✅ Lien nomade inséré avec succès');
-        return enhancedContent;
-      }
-
+      // SUPPRESSION COMPLÈTE DES LIENS NOMADES
+      console.log('❌ Liens nomades SUPPRIMÉS - Section désactivée');
       return content;
 
     } catch (error) {
@@ -213,6 +254,60 @@ Réponds UNIQUEMENT en JSON valide.`;
   generateNomadLinkIntro(nomadLink, content) {
     // Analyser le contexte de l'article pour créer une intro naturelle
     const lowerContent = content.toLowerCase();
+    
+    // VÉRIFICATION CONTEXTUELLE INTELLIGENTE
+    // Si le contenu parle de 'familles avec enfants' → Évite les liens nomades digitaux
+    if (lowerContent.includes('famille') && lowerContent.includes('enfant') && 
+        (nomadLink.name.includes('Revolut') || nomadLink.name.includes('Wise') || nomadLink.name.includes('N26'))) {
+      return null; // Pas d'intro si contexte familial + banque nomade
+    }
+    
+    // Si le contenu parle de 'coliving' → Utilise des liens coliving, pas hôtels
+    if (lowerContent.includes('coliving') && nomadLink.name.includes('Hotel')) {
+      return null; // Pas d'intro si coliving + hôtel
+    }
+    
+    // Si le contenu parle de 'coliving' → ÉVITE les liens financiers (incohérent)
+    if (lowerContent.includes('coliving') && 
+        (nomadLink.name.includes('Wise') || nomadLink.name.includes('Revolut') || nomadLink.name.includes('N26'))) {
+      return null; // Pas d'intro si coliving + banque nomade
+    }
+    
+    // Si le contenu parle de 'voyager avec des enfants' → ÉVITE les liens crypto/coliving
+    if (lowerContent.includes('voyager avec des enfants') && 
+        (nomadLink.name.includes('Binance') || nomadLink.name.includes('Coliving') || nomadLink.name.includes('Outsite'))) {
+      return null; // Pas d'intro si familles + crypto/coliving
+    }
+    
+    // Si le contenu parle de 'familles qui voyagent avec des enfants' → ÉVITE les liens crypto/coliving
+    if (lowerContent.includes('familles qui voyagent avec des enfants') && 
+        (nomadLink.name.includes('Binance') || nomadLink.name.includes('Coliving') || nomadLink.name.includes('Outsite'))) {
+      return null; // Pas d'intro si familles + crypto/coliving
+    }
+    
+    // Si le contenu parle de 'familles avec enfants' → ÉVITE les liens nomades digitaux
+    if ((lowerContent.includes('famille') && lowerContent.includes('enfant')) && 
+        (nomadLink.name.includes('Binance') || nomadLink.name.includes('Coliving') || nomadLink.name.includes('Outsite') || nomadLink.name.includes('Revolut') || nomadLink.name.includes('Wise') || nomadLink.name.includes('N26'))) {
+      return null; // Pas d'intro si familles + nomades digitaux
+    }
+    
+    // Si le contenu parle de 'parents qui voyagent avec des mineurs' → ÉVITE les liens crypto
+    if (lowerContent.includes('parents qui voyagent avec des mineurs') && 
+        nomadLink.name.includes('Binance')) {
+      return null; // Pas d'intro si parents + mineurs + crypto
+    }
+    
+    // Si le contenu parle de 'coliving' → ÉVITE les liens crypto
+    if (lowerContent.includes('coliving') && 
+        nomadLink.name.includes('Binance')) {
+      return null; // Pas d'intro si coliving + crypto
+    }
+    
+    // Si le contenu parle de 'mineur' sans contexte familial → Évite les liens familiaux
+    if (lowerContent.includes('mineur') && !lowerContent.includes('famille') && 
+        (nomadLink.name.includes('SafetyWing') || nomadLink.name.includes('World Nomads'))) {
+      return null; // Pas d'intro si mineur sans famille + assurance
+    }
     
     // Intros contextuelles basées sur le contenu de l'article
     const contextualIntros = {
@@ -250,7 +345,10 @@ Réponds UNIQUEMENT en JSON valide.`;
 
     // Déterminer le contexte le plus approprié
     let context = 'generic';
-    if (lowerContent.includes('mineur') || lowerContent.includes('enfant') || lowerContent.includes('famille')) {
+    
+    // VÉRIFICATION INTELLIGENTE : Seulement si le contexte JUSTIFIE l'intro
+    if (lowerContent.includes('famille') && lowerContent.includes('enfant') && 
+        (lowerContent.includes('voyager avec des enfants') || lowerContent.includes('familles qui voyagent'))) {
       context = 'minors_travel';
     } else if (lowerContent.includes('préparation') || lowerContent.includes('document') || lowerContent.includes('formulaire')) {
       context = 'preparation';
@@ -262,6 +360,69 @@ Réponds UNIQUEMENT en JSON valide.`;
 
     const availableIntros = contextualIntros[context];
     return availableIntros[Math.floor(Math.random() * availableIntros.length)];
+  }
+
+  /**
+   * Vérifie si le contexte justifie le lien nomade - APPROCHE SMART ET ÉLÉGANTE
+   */
+  isContextAppropriate(nomadLink, content) {
+    const lowerContent = content.toLowerCase();
+    
+    // VÉRIFICATION CONTEXTUELLE INTELLIGENTE
+    // Si le contenu parle de 'familles avec enfants' → Évite les liens nomades digitaux
+    if (lowerContent.includes('famille') && lowerContent.includes('enfant') && 
+        (nomadLink.name.includes('Revolut') || nomadLink.name.includes('Wise') || nomadLink.name.includes('N26'))) {
+      return false; // Contexte familial + banque nomade = incohérent
+    }
+    
+    // Si le contenu parle de 'coliving' → Utilise des liens coliving, pas hôtels
+    if (lowerContent.includes('coliving') && nomadLink.name.includes('Hotel')) {
+      return false; // Coliving + hôtel = incohérent
+    }
+    
+    // Si le contenu parle de 'coliving' → ÉVITE les liens financiers (incohérent)
+    if (lowerContent.includes('coliving') && 
+        (nomadLink.name.includes('Wise') || nomadLink.name.includes('Revolut') || nomadLink.name.includes('N26'))) {
+      return false; // Coliving + banque nomade = incohérent
+    }
+    
+    // Si le contenu parle de 'voyager avec des enfants' → ÉVITE les liens crypto/coliving
+    if (lowerContent.includes('voyager avec des enfants') && 
+        (nomadLink.name.includes('Binance') || nomadLink.name.includes('Coliving') || nomadLink.name.includes('Outsite'))) {
+      return false; // Familles + crypto/coliving = incohérent
+    }
+    
+    // Si le contenu parle de 'familles qui voyagent avec des enfants' → ÉVITE les liens crypto/coliving
+    if (lowerContent.includes('familles qui voyagent avec des enfants') && 
+        (nomadLink.name.includes('Binance') || nomadLink.name.includes('Coliving') || nomadLink.name.includes('Outsite'))) {
+      return false; // Familles + crypto/coliving = incohérent
+    }
+    
+    // Si le contenu parle de 'familles avec enfants' → ÉVITE les liens nomades digitaux
+    if ((lowerContent.includes('famille') && lowerContent.includes('enfant')) && 
+        (nomadLink.name.includes('Binance') || nomadLink.name.includes('Coliving') || nomadLink.name.includes('Outsite') || nomadLink.name.includes('Revolut') || nomadLink.name.includes('Wise') || nomadLink.name.includes('N26'))) {
+      return false; // Familles + nomades digitaux = incohérent
+    }
+    
+    // Si le contenu parle de 'parents qui voyagent avec des mineurs' → ÉVITE les liens crypto
+    if (lowerContent.includes('parents qui voyagent avec des mineurs') && 
+        nomadLink.name.includes('Binance')) {
+      return false; // Parents + mineurs + crypto = incohérent
+    }
+    
+    // Si le contenu parle de 'coliving' → ÉVITE les liens crypto
+    if (lowerContent.includes('coliving') && 
+        nomadLink.name.includes('Binance')) {
+      return false; // Coliving + crypto = incohérent
+    }
+    
+    // Si le contenu parle de 'mineur' sans contexte familial → Évite les liens familiaux
+    if (lowerContent.includes('mineur') && !lowerContent.includes('famille') && 
+        (nomadLink.name.includes('SafetyWing') || nomadLink.name.includes('World Nomads'))) {
+      return false; // Mineur sans famille + assurance = incohérent
+    }
+    
+    return true; // Par défaut, accepter si contexte cohérent
   }
 
   /**
@@ -314,8 +475,31 @@ Réponds UNIQUEMENT en JSON valide.`;
       console.log(`📊 Génération de stats réelles pour ${widget.slot}...`);
       const fomoData = await this.statsScraper.generateFOMOContext(widget.slot, widgetPlan.geo_defaults);
       
+      // VÉRIFICATION CONTEXTUELLE STRICTE - INTERDIRE les widgets inappropriés
+      const lowerContent = content.toLowerCase();
+      
+      // INTERDIRE TOUS les widgets pour les familles
+      if (lowerContent.includes('famille') && lowerContent.includes('enfant')) {
+        console.log('❌ Widget INTERDIT - Contexte familial détecté');
+        continue; // Passer au widget suivant
+      }
+      
+      // INTERDIRE les widgets FLIGHTS si le contenu parle d'hébergement
+      if (widget.slot === 'flights' && (lowerContent.includes('chambre') || lowerContent.includes('hébergement') || lowerContent.includes('coliving') || lowerContent.includes('hébergements') || lowerContent.includes('Comparez les hébergements'))) {
+        console.log('❌ Widget FLIGHTS INTERDIT - Contexte hébergement détecté');
+        continue; // Passer au widget suivant
+      }
+      
+      // INTERDIRE les widgets HOTELS si le contenu parle de vols
+      if (widget.slot === 'hotels' && (lowerContent.includes('vol') || lowerContent.includes('avion'))) {
+        console.log('❌ Widget HOTELS INTERDIT - Contexte vols détecté');
+        continue; // Passer au widget suivant
+      }
+      
+      let context = fomoData.context;
+      
       const intro = {
-        context: fomoData.context,
+        context: context,
         cta: this.getCTAText(widget.slot)
       };
 

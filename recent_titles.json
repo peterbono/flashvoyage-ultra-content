@@ -37,15 +37,17 @@
     "Travel destinations for late December",
     "Dominica as a digital nomad?",
     "Using sites like Going or Travelzoo with specific dates, i.e. Christmas week 2025 for a beach holiday?",
-    "Dubai or Thailand where did you connect more with other digital nomads?"
+    "Dubai or Thailand where did you connect more with other digital nomads?",
+    "Exploring Japan… As a Japanese Person"
   ],
   "countries": {
     "thailand": 3,
-    "unknown": 28,
-    "singapore": 2
+    "unknown": 119,
+    "singapore": 2,
+    "japan": 1
   },
   "cities": {
-    "unknown": 31,
+    "unknown": 123,
     "singapore": 2
   },
   "weekStamp": "2025-W44"

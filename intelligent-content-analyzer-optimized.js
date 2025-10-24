@@ -208,32 +208,40 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
 
 STRUCTURE IMMERSIVE OBLIGATOIRE:
 1. INTRODUCTION FOMO + CURATION (OBLIGATOIRE)
-   Format: "Pendant que vous hésitez, d'autres agissent. Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui montre comment [transformation]."
+   Format: Crée une intro spécifique basée sur le contenu réel du témoignage. Utilise les mots-clés, destinations, et expériences mentionnées dans le texte source. Évite les formules génériques comme "Pendant que vous...". Focus sur l'expérience concrète du témoignage.
 
 2. TÉMOIGNAGE AVEC CITATIONS DIRECTES (OBLIGATOIRE) - 3 citations minimum
    - Utilise les citations RÉELLES de l'article source
    - Format OBLIGATOIRE EXACT (en string simple):
      <blockquote>Citation textuelle du Reddit...</blockquote>
      <p>Témoignage de [AUTHOR_REDDIT_REEL] sur [source]</p>
+   - IMPORTANT: Mentionne la source UNE SEULE FOIS au début, puis utilise des variantes: "Un membre de la communauté r/digitalnomad", "Un voyageur de la communauté Reddit", "Cette expérience révèle", "Ce témoignage montre"
    - IMPORTANT: Utilise UNIQUEMENT l'author Reddit fourni dans les données pour les citations
    - JAMAIS d'inventer de pseudos - utilise SEULEMENT l'author réel
    - Le titre de l'article NE DOIT PAS contenir le nom de l'auteur
    - TRADUIS TOUTES les citations en français si elles sont en anglais
    - Génère les citations comme des strings simples, pas des objets
+   - VARIATION: Après la première citation avec attribution complète, utilise des variantes: "Cette expérience révèle", "Ce témoignage montre", "Son parcours illustre", "Cette approche démontre", "Cette stratégie permet", "Cette méthode révèle"
+   - ATTRIBUTION CONTEXTUELLE: Remplace les pseudos Reddit par "Un membre de la communauté r/digitalnomad", "Un voyageur de la communauté Reddit", "Un nomade de la plateforme"
+   - ÉVITE: "Pour [pseudo]", "L'auteur raconte", "Il explique" - utilise plutôt "Cette expérience", "Ce témoignage", "Son parcours"
 
 3. TRANSITIONS NARRATEUR (OBLIGATOIRE)
    - Utilise les transitions naturelles basées sur le contenu Reddit réel
    - Crée des liens fluides entre les sections
    - Évite les phrases modèles répétitives
+   - ÉVITE les pseudos Reddit dans le texte: "Pour [pseudo]", "L'auteur raconte"
+   - UTILISE: "Cette expérience", "Ce témoignage", "Son parcours", "Cette approche"
 
-4. SCÈNES SENSORIELLES (OBLIGATOIRE)
-   - Bruits, odeurs, sensations du témoignage
-   - Utilise UNIQUEMENT les détails du témoignage Reddit réel
-   - JAMAIS d'inventer de scènes génériques
+4. CONSEILS PRATIQUES (OBLIGATOIRE)
+   - Remplace les descriptions sensoriel par des conseils actionnables
+   - Focus sur la valeur ajoutée concrète
+   - Utilise des données réelles du témoignage
+   - Évite les descriptions génériques et sensationnelles
+
 
 5. QUESTIONS RHÉTORIQUES (OBLIGATOIRE)
-   - "Imaginez-vous...", "Et si vous...", "Que feriez-vous si..."
-   - 2-3 questions par section
+   - "Comment cette approche pourrait-elle vous aider...", "Que feriez-vous si...", "Comment optimiser..."
+   - 2-3 questions par section, focus sur l'action
 
 6. VARIATION DU RYTHME (OBLIGATOIRE)
    - Phrases courtes et percutantes
@@ -435,10 +443,10 @@ INSTRUCTIONS SPÉCIFIQUES:
 CONTENU REQUIS:
 1. Titre accrocheur (sans emoji, avec mention "témoignage Reddit" à la fin)
 2. Introduction FOMO + Curation FlashVoyages (OBLIGATOIRE)
-   Format: "Pendant que vous [action], d'autres [résultat]. Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui montre comment [transformation]."
+   Format: Crée une intro spécifique basée sur le contenu réel. Utilise les mots-clés, destinations, et expériences du témoignage. Évite les formules génériques.
    Exemples:
-   - "Pendant que vous hésitez, d'autres agissent. Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui montre comment un nomade a triplé ses revenus en Indonésie."
-   - "Pendant que vous planifiez, d'autres apprennent de leurs erreurs. Nous avons analysé ce témoignage Reddit qui détaille les erreurs à éviter en Thaïlande."
+   - "Un nomade digital partage comment il a transformé sa vie en Thaïlande, découvrant de nouvelles saveurs et une nouvelle facette de lui-même."
+   - "Un voyageur révèle les leçons apprises lors de son aventure en Asie, où chaque rencontre est devenue une leçon de vie."
 3. Développement structuré selon le type
 4. Conseils pratiques et concrets
 5. CTA spécifique
@@ -481,12 +489,12 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   "destinations": "${analysis.destination}",
   "content": "STRUCTURE IMMERSIVE TÉMOIGNAGE (même que SUCCESS_STORY):
   
-  1. INTRODUCTION FOMO + CURATION (OBLIGATOIRE)
-  2. TÉMOIGNAGE AVEC CITATIONS DIRECTES (OBLIGATOIRE) - 3 citations minimum
-  3. TRANSITIONS NARRATEUR (OBLIGATOIRE)
-  4. SCÈNES SENSORIELLES (OBLIGATOIRE)
-  5. QUESTIONS RHÉTORIQUES (OBLIGATOIRE)
-  6. VARIATION DU RYTHME (OBLIGATOIRE)
+  1. INTRODUCTION FOMO + CURATION (OBLIGATOIRE) - Spécifique au contenu réel
+  2. TÉMOIGNAGE AVEC CITATIONS DIRECTES (OBLIGATOIRE) - 3 citations minimum, source mentionnée UNE FOIS
+  3. TRANSITIONS NARRATEUR (OBLIGATOIRE) - Variantes pour éviter répétitions
+  4. CONSEILS PRATIQUES (OBLIGATOIRE) - Basés sur l'expérience réelle, actionnables
+  5. QUESTIONS RHÉTORIQUES (OBLIGATOIRE) - Spécifiques au contenu
+  6. VARIATION DU RYTHME (OBLIGATOIRE) - Évite les formules répétitives
   7. CONTEXTE DES CITATIONS (OBLIGATOIRE)
   8. MISE EN PERSPECTIVE (OBLIGATOIRE)
   
@@ -535,12 +543,12 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   "destinations": "${analysis.destination}",
   "content": "STRUCTURE IMMERSIVE TÉMOIGNAGE (même que SUCCESS_STORY):
   
-  1. INTRODUCTION FOMO + CURATION (OBLIGATOIRE)
-  2. TÉMOIGNAGE AVEC CITATIONS DIRECTES (OBLIGATOIRE) - 3 citations minimum
-  3. TRANSITIONS NARRATEUR (OBLIGATOIRE)
-  4. SCÈNES SENSORIELLES (OBLIGATOIRE)
-  5. QUESTIONS RHÉTORIQUES (OBLIGATOIRE)
-  6. VARIATION DU RYTHME (OBLIGATOIRE)
+  1. INTRODUCTION FOMO + CURATION (OBLIGATOIRE) - Spécifique au contenu réel
+  2. TÉMOIGNAGE AVEC CITATIONS DIRECTES (OBLIGATOIRE) - 3 citations minimum, source mentionnée UNE FOIS
+  3. TRANSITIONS NARRATEUR (OBLIGATOIRE) - Variantes pour éviter répétitions
+  4. CONSEILS PRATIQUES (OBLIGATOIRE) - Basés sur l'expérience réelle, actionnables
+  5. QUESTIONS RHÉTORIQUES (OBLIGATOIRE) - Spécifiques au contenu
+  6. VARIATION DU RYTHME (OBLIGATOIRE) - Évite les formules répétitives
   7. CONTEXTE DES CITATIONS (OBLIGATOIRE)
   8. MISE EN PERSPECTIVE (OBLIGATOIRE)
   
