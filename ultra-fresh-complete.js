@@ -485,6 +485,7 @@ class UltraFreshComplete {
           };
           this.writeSmartAudit(audit);
 
+          console.log(`🔍 DEBUG: Author Reddit récupéré: ${data.author}`);
           relevantPosts.push({
             title: data.title,
             link: 'https://reddit.com' + data.permalink,
@@ -495,6 +496,7 @@ class UltraFreshComplete {
             relevance: Math.min(90, (this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit.keywords) + 30)),
             upvotes: data.ups,
             comments: data.num_comments,
+            author: data.author, // AJOUT DE L'AUTHOR REDDIT
             smartScore: Math.round(smart.total),
             smartDecision: smart.decision,
             smartScores: smart.scores,
@@ -628,6 +630,7 @@ class UltraFreshComplete {
             relevance: Math.min(95, (this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit_nomad.keywords) + 40)),
             upvotes: data.ups,
             comments: data.num_comments,
+            author: data.author, // AJOUT DE L'AUTHOR REDDIT
             smartScore: Math.round(smart.total),
             smartDecision: smart.decision,
             smartScores: smart.scores,

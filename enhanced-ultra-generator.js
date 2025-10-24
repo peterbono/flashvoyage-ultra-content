@@ -66,6 +66,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
 
       const selectedArticle = validSources[0];
       console.log('📰 Article sélectionné:', selectedArticle.title);
+      console.log('🔍 DEBUG: Author dans selectedArticle:', selectedArticle.author);
 
       // 3. Analyse intelligente du contenu
       console.log('🧠 Analyse intelligente du contenu...');

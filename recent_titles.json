@@ -25,15 +25,24 @@
     "Korean International Shipping Question",
     "Quit everything and move to Asia? Help me decide...",
     "Short term Digital Nomads, where do you book your stay? (Thailand)",
-    "Looking for more Pai’s"
+    "Looking for more Pai’s",
+    "40+ Travellers: What's Changed in the Last Couple of Decades?",
+    "Vietnam e-visa port of entry",
+    "Should I do Korea &amp; Japan or just Japan? (Itinerary included)",
+    "Heathrow to Bali",
+    "Confused between South Korea, Japan and China",
+    "Turning my new Marrakech apartment into a digital nomad spot - would love your feedback"
   ],
   "countries": {
-    "unknown": 155,
-    "thailand": 3
+    "unknown": 163,
+    "thailand": 3,
+    "vietnam": 3,
+    "japan": 3
   },
   "cities": {
-    "unknown": 156,
-    "chiang mai": 2
+    "unknown": 168,
+    "chiang mai": 2,
+    "bali": 2
   },
   "weekStamp": "2025-W43"
 }

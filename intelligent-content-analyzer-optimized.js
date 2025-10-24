@@ -136,6 +136,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:
   // Générer du contenu intelligent avec 2 appels LLM séquentiels
   async generateIntelligentContent(article, analysis) {
     try {
+      console.log('🔍 DEBUG: Author dans article:', article.author);
       // Extraire le contenu complet de l'article source
       const fullContent = await this.extractFullContent(article);
       
@@ -211,9 +212,11 @@ STRUCTURE IMMERSIVE OBLIGATOIRE:
    - Utilise les citations RÉELLES de l'article source
    - Format OBLIGATOIRE EXACT (en string simple):
      <blockquote>Citation textuelle du Reddit...</blockquote>
-     <p>Témoignage de [nom_utilisateur] sur [source]</p>
-   - IMPORTANT: Génère les citations comme des strings simples, pas des objets
-   - Adapte le contexte selon le sujet réel
+     <p>Témoignage de [AUTHOR_REDDIT_REEL] sur [source]</p>
+   - IMPORTANT: Utilise UNIQUEMENT l'author Reddit fourni dans les données pour les citations
+   - JAMAIS d'inventer de pseudos - utilise SEULEMENT l'author réel
+   - Le titre de l'article NE DOIT PAS contenir le nom de l'auteur
+   - Génère les citations comme des strings simples, pas des objets
 
 3. TRANSITIONS NARRATEUR (OBLIGATOIRE)
    - "L'auteur explique:", "Dans son témoignage:", "Il précise:"
@@ -243,9 +246,12 @@ TON: Inspirant, motivant, authentique
 FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <ul><li>, <strong>, <table>
 LONGUEUR: 1500-2000 mots
 
+IMPORTANT: Le titre de l'article NE DOIT PAS contenir le nom de l'auteur Reddit. Utilise l'author UNIQUEMENT dans les citations.
+
 Réponds UNIQUEMENT en JSON avec cette structure: { "article": { "titre": "...", "introduction": "...", "citations": [...], "developpement": "...", "conseils_pratiques": "...", "signature": "..." } }`;
 
     const userMessage = `TITRE: ${extraction.title || 'Témoignage Reddit'}
+AUTHOR_REDDIT_REEL: ${article.author}
 CITATIONS: ${extraction.citations || 'Citations'}
 DONNÉES: ${extraction.donnees_cles || 'Données'}
 ENSEIGNEMENTS: ${extraction.enseignements || 'Enseignements'}
@@ -293,7 +299,11 @@ CONSEILS: ${extraction.conseils || 'Conseils'}`;
             }
             // Si c'est un objet, essayer d'extraire le texte
             const text = citation.text || citation.quote || citation.content || citation;
-            const auteur = citation.auteur || citation.author || citation.user || (article.author ? `u/${article.author}` : 'utilisateur Reddit');
+            // JAMAIS DE FAKE DATA - Utiliser SEULEMENT les vraies données
+            if (!article.author) {
+              throw new Error(`ERREUR CRITIQUE: Pas d'author Reddit disponible pour "${article.title}". Refus de publier avec des données inventées.`);
+            }
+            const auteur = `u/${article.author}`;
             const source = citation.source || 'Reddit';
             return `<blockquote>${text}</blockquote>\n<p>Témoignage de ${auteur} sur ${source}</p>`;
           }),

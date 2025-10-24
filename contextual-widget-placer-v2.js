@@ -23,6 +23,10 @@ class ContextualWidgetPlacer {
         {
           context: "D'après notre expérience avec des centaines de nomades, les vols en milieu de semaine (mardi-jeudi) sont en moyenne 25% moins chers. Notre partenaire Kiwi.com agrège les tarifs de toutes les compagnies.",
           cta: "Trouvez les meilleures offres :"
+        },
+        {
+          context: "Les prix des vols varient jusqu'à 300€ selon le site de réservation. Notre outil compare automatiquement les tarifs pour vous garantir le meilleur prix.",
+          cta: "Consultez les tarifs actuels :"
         }
       ],
       hotels: [
@@ -155,15 +159,45 @@ Réponds UNIQUEMENT en JSON valide.`;
    */
   async insertWidgetsContextually(content, selectedWidgets, widgetPlan) {
     let enhancedContent = content;
+    const usedContexts = new Set(); // Éviter la duplication
 
     for (const widget of selectedWidgets) {
       const widgetScript = this.getWidgetScript(widget.slot, widgetPlan);
       if (!widgetScript) continue;
 
-      const intro = this.widgetIntros[widget.slot]?.[0] || {
+      // Vérifier si le contexte existe déjà
+      const existingContext = this.findExistingContext(enhancedContent, widget.slot);
+      if (existingContext) {
+        console.log(`⚠️ Contexte ${widget.slot} déjà présent, widget ignoré`);
+        continue;
+      }
+
+      // Utiliser un contexte différent pour chaque widget
+      const availableIntros = this.widgetIntros[widget.slot] || [{
         context: `Notre partenaire ${widgetPlan.providers[widget.slot]} vous aide à optimiser votre voyage.`,
         cta: "Consultez les options :"
-      };
+      }];
+      
+      // Trouver un contexte non utilisé
+      let intro = null;
+      for (const candidateIntro of availableIntros) {
+        if (!usedContexts.has(candidateIntro.context)) {
+          intro = candidateIntro;
+          break;
+        }
+      }
+      
+      if (!intro) {
+        console.log(`⚠️ Tous les contextes ${widget.slot} déjà utilisés, widget ignoré`);
+        continue;
+      }
+
+      // Vérifier si ce contexte est déjà utilisé
+      if (usedContexts.has(intro.context)) {
+        console.log(`⚠️ Contexte déjà utilisé, passage au suivant`);
+        continue;
+      }
+      usedContexts.add(intro.context);
 
       const widgetBlock = `
 <p>${intro.context}</p>
@@ -177,12 +211,30 @@ ${widgetScript}
       } else if (widget.position === 'before_section') {
         enhancedContent = this.insertBeforeSection(enhancedContent, widget.section_title, widgetBlock);
       } else {
-        // Position par défaut: fin d'article
-        enhancedContent += widgetBlock;
+        // Position par défaut: avant la section "Articles connexes" ou fin d'article
+        enhancedContent = this.insertBeforeRelatedArticles(enhancedContent, widgetBlock);
       }
     }
 
     return enhancedContent;
+  }
+
+  /**
+   * Vérifie si un contexte similaire existe déjà
+   */
+  findExistingContext(content, slot) {
+    const patterns = {
+      flights: /Selon notre analyse de milliers de vols|D'après notre expérience avec des centaines de nomades|Les prix des vols varient/gi,
+      hotels: /Les nomades digitaux dépensent|D'après notre analyse de 1000\+ réservations/gi,
+      transport: /Les transports locaux représentent/gi,
+      esim: /Les données mobiles coûtent/gi,
+      insurance: /Les assurances voyage/gi
+    };
+
+    const pattern = patterns[slot];
+    if (!pattern) return false;
+
+    return pattern.test(content);
   }
 
   /**
@@ -229,6 +281,23 @@ ${widgetScript}
       return content.slice(0, sectionIndex) + widgetBlock + '\n\n' + content.slice(sectionIndex);
     }
     
+    return content + '\n\n' + widgetBlock;
+  }
+
+  /**
+   * Insère le widget avant la section "Articles connexes" ou à la fin
+   */
+  insertBeforeRelatedArticles(content, widgetBlock) {
+    // Chercher la section "Articles connexes"
+    const relatedSectionRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
+    const match = content.match(relatedSectionRegex);
+    
+    if (match) {
+      const sectionIndex = content.indexOf(match[0]);
+      return content.slice(0, sectionIndex) + widgetBlock + '\n\n' + content.slice(sectionIndex);
+    }
+    
+    // Si pas de section "Articles connexes", placer à la fin
     return content + '\n\n' + widgetBlock;
   }
 }
