@@ -9,6 +9,7 @@
 import OpenAI from 'openai';
 import { OPENAI_API_KEY } from './config.js';
 import { RealStatsScraper } from './real-stats-scraper.js';
+import { REAL_TRAVELPAYOUTS_WIDGETS } from './travelpayouts-real-widgets-database.js';
 import { NomadPartnersLinkGenerator } from './nomad-partners-links.js';
 
 class ContextualWidgetPlacer {
@@ -110,16 +111,24 @@ ${Object.entries(widgetPlan.providers).map(([slot, provider]) =>
   `- ${slot.toUpperCase()}: ${provider} (${widgetPlan.presets[slot]})`
 ).join('\n')}
 
+IMPORTANT: Tu ne peux suggérer QUE les widgets listés ci-dessus. 
+Ne suggère JAMAIS de widgets qui ne sont pas dans cette liste (comme 'budget', 'crypto', etc.).
+
 INSTRUCTIONS:
 1. ANALYSE SÉMANTIQUE: Identifie les mots-clés contextuels dans le contenu
 2. MAPPING CONTEXTUEL: Associe chaque section à l'intent le plus pertinent :
-   - Si le contenu parle de "vols", "transport", "déplacement", "voyage", "arrivée", "départ" → widget FLIGHTS
-   - Si le contenu parle de "connectivité", "eSIM", "internet", "téléphone" → widget CONNECTIVITY
+   - Si le contenu parle de "vols", "transport", "déplacement", "voyage", "arrivée", "départ", "aéroport", "compagnie aérienne", "billet", "réservation vol" → widget FLIGHTS
+   - Si le contenu mentionne des villes/destinations comme "Bangkok", "Lisbonne", "Ho Chi Minh", "Barcelone", "Kuala Lumpur", "Tokyo", "Singapour", "Bali", "Paris", "Londres", "New York" → widget FLIGHTS
+   - Si le contenu parle de "visa", "e-visa", "formalités", "entrée", "sortie", "frontière" → widget FLIGHTS (car les visas impliquent des voyages)
+   - Si le contenu parle de "connectivité", "eSIM", "internet", "téléphone", "SIM" → widget ESIM
    - Si le contenu parle de "coliving", "coworking", "hébergement", "logement", "appartement" → LIEN EXTERNE (Coliving.com, Outsite, Selina)
    - Si le contenu parle de "budget", "finance", "argent", "coût", "prix" → LIEN EXTERNE (Wise, Revolut, N26)
    - Si le contenu parle de "assurance", "santé", "protection" → LIEN EXTERNE (SafetyWing, World Nomads)
    - IMPORTANT: Si le contenu parle de "coliving" → ÉVITE le widget FLIGHTS (incohérent)
    - IMPORTANT: Si le contenu parle de "vols" → ÉVITE les liens externes coliving (incohérent)
+
+⚠️ ATTENTION CRITIQUE: Si tu vois des noms de villes/destinations dans le contenu (Tokyo, Barcelone, Bali, etc.), tu DOIS suggérer un widget FLIGHTS. C'est OBLIGATOIRE !
+
 3. PLACEMENT INTELLIGENT: Place les widgets dans les sections qui correspondent sémantiquement
 4. ACCROCHES CONTEXTUELLES: Génère des accroches qui correspondent au contexte réel du contenu
 5. VÉRIFICATION CONTEXTUELLE INTELLIGENTE OBLIGATOIRE: 
@@ -193,20 +202,39 @@ Réponds UNIQUEMENT en JSON valide.`;
     for (const widget of widgets) {
       let isValid = true;
       
-      // VÉRIFICATION CONTEXTUELLE STRICTE - TOUS LES MOTS-CLÉS D'HÉBERGEMENT
+      // VÉRIFICATION CONTEXTUELLE INTELLIGENTE - COMPARAISON DES PROPORTIONS
       const accommodationKeywords = [
         'coliving', 'coworking', 'hébergement', 'logement', 'appartement',
         'chambre', 'chambres', 'studio', 'airbnb', 'booking', 'hostel', 'auberge'
       ];
       
-      const hasAccommodationKeywords = accommodationKeywords.some(keyword => 
-        lowerContent.includes(keyword)
-      );
+      const flightKeywords = [
+        'vol', 'vols', 'avion', 'transport', 'déplacement', 'voyage', 'arrivée', 'départ',
+        'aéroport', 'compagnie aérienne', 'billet', 'réservation vol'
+      ];
       
-      // INTERDIT de placer des widgets FLIGHTS/HOTELS quand on parle d'hébergement
-      if (hasAccommodationKeywords && (widget.slot === 'flights' || widget.slot === 'hotels')) {
-        console.log(`❌ Widget ${widget.slot.toUpperCase()} rejeté - Contexte hébergement détecté`);
-        isValid = false;
+      // Compter les mentions
+      const accommodationMentions = accommodationKeywords.reduce((count, keyword) => {
+        return count + (lowerContent.split(keyword).length - 1);
+      }, 0);
+      
+      const flightMentions = flightKeywords.reduce((count, keyword) => {
+        return count + (lowerContent.split(keyword).length - 1);
+      }, 0);
+      
+      console.log(`📊 Mentions détectées - Hébergement: ${accommodationMentions}, Vols: ${flightMentions}`);
+      
+      // LOGIQUE INTELLIGENTE : Rejeter seulement si hébergement DOMINE
+      if (widget.slot === 'flights') {
+        if (accommodationMentions > flightMentions && accommodationMentions > 0) {
+          console.log(`❌ Widget ${widget.slot.toUpperCase()} rejeté - Hébergement domine (${accommodationMentions} vs ${flightMentions})`);
+          isValid = false;
+        } else if (accommodationMentions > 0 && flightMentions === 0) {
+          console.log(`❌ Widget ${widget.slot.toUpperCase()} rejeté - Hébergement sans contexte vol`);
+          isValid = false;
+        } else {
+          console.log(`✅ Widget ${widget.slot.toUpperCase()} validé - Contexte vol approprié`);
+        }
       }
       
       // VÉRIFICATION CONTEXTUELLE FAMILIALE
@@ -471,30 +499,19 @@ Réponds UNIQUEMENT en JSON valide.`;
         continue;
       }
 
-      // Générer un contexte FOMO avec stats réelles
+      // Générer un contexte FOMO avec stats réelles (avec fallback)
       console.log(`📊 Génération de stats réelles pour ${widget.slot}...`);
-      const fomoData = await this.statsScraper.generateFOMOContext(widget.slot, widgetPlan.geo_defaults);
-      
-      // VÉRIFICATION CONTEXTUELLE STRICTE - INTERDIRE les widgets inappropriés
-      const lowerContent = content.toLowerCase();
-      
-      // INTERDIRE TOUS les widgets pour les familles
-      if (lowerContent.includes('famille') && lowerContent.includes('enfant')) {
-        console.log('❌ Widget INTERDIT - Contexte familial détecté');
-        continue; // Passer au widget suivant
+      let fomoData;
+      try {
+        fomoData = await this.statsScraper.generateFOMOContext(widget.slot, widgetPlan.geo_defaults);
+      } catch (error) {
+        console.log(`⚠️ Erreur scraping stats: ${error.message}`);
+        console.log(`❌ Impossible de générer des stats réelles - Widget ignoré`);
+        continue; // Passer au widget suivant au lieu d'inventer des données
       }
       
-      // INTERDIRE les widgets FLIGHTS si le contenu parle d'hébergement
-      if (widget.slot === 'flights' && (lowerContent.includes('chambre') || lowerContent.includes('hébergement') || lowerContent.includes('coliving') || lowerContent.includes('hébergements') || lowerContent.includes('Comparez les hébergements'))) {
-        console.log('❌ Widget FLIGHTS INTERDIT - Contexte hébergement détecté');
-        continue; // Passer au widget suivant
-      }
-      
-      // INTERDIRE les widgets HOTELS si le contenu parle de vols
-      if (widget.slot === 'hotels' && (lowerContent.includes('vol') || lowerContent.includes('avion'))) {
-        console.log('❌ Widget HOTELS INTERDIT - Contexte vols détecté');
-        continue; // Passer au widget suivant
-      }
+      // VÉRIFICATION CONTEXTUELLE DÉJÀ FAITE DANS validateWidgetContext()
+      // Pas besoin de double vérification ici
       
       let context = fomoData.context;
       
@@ -552,31 +569,87 @@ ${widgetScript}
    * Obtient le script du widget selon le slot
    */
   getWidgetScript(slot, widgetPlan) {
-    // Simulation - en réalité, on récupérerait le vrai script
-    const scripts = {
-      flights: `<div class="travelpayouts-widget" data-widget="flights" data-provider="${widgetPlan.providers.flights}"></div>`,
-      hotels: `<div class="travelpayouts-widget" data-widget="hotels" data-provider="${widgetPlan.providers.hotels}"></div>`,
-      transport: `<div class="12go-widget" data-widget="transport"></div>`,
-      esim: `<div class="airalo-widget" data-widget="esim"></div>`,
-      insurance: `<div class="safetywing-widget" data-widget="insurance"></div>`
-    };
-
-    return scripts[slot] || null;
+    console.log(`🔍 Récupération du script pour ${slot}...`);
+    
+    // Utiliser les vrais scripts Travelpayouts
+    const widgetCategory = REAL_TRAVELPAYOUTS_WIDGETS[slot];
+    if (!widgetCategory) {
+      console.log(`⚠️ Pas de catégorie widget disponible pour ${slot}`);
+      return null;
+    }
+    
+    // Pour les vols, utiliser searchForm qui a origin/destination par défaut
+    if (slot === 'flights') {
+      const provider = Object.keys(widgetCategory)[0]; // kiwi, aviasales, etc.
+      const searchFormWidget = widgetCategory[provider]['searchForm'];
+      
+      if (searchFormWidget && searchFormWidget.script) {
+        console.log(`✅ Script trouvé pour ${slot}: ${searchFormWidget.brand} - ${searchFormWidget.type}`);
+        return searchFormWidget.script;
+      }
+    }
+    
+    // Pour les autres slots, prendre le premier widget disponible
+    const provider = Object.keys(widgetCategory)[0]; // kiwi, aviasales, etc.
+    const widgetType = Object.keys(widgetCategory[provider])[0]; // popularRoutes, searchForm, etc.
+    const widgetData = widgetCategory[provider][widgetType];
+    
+    if (!widgetData || !widgetData.script) {
+      console.log(`⚠️ Pas de script disponible pour ${slot}.${provider}.${widgetType}`);
+      return null;
+    }
+    
+    console.log(`✅ Script trouvé pour ${slot}: ${widgetData.brand} - ${widgetData.type}`);
+    return widgetData.script;
   }
 
   /**
    * Insère le widget après une section
    */
   insertAfterSection(content, sectionTitle, widgetBlock) {
-    const sectionRegex = new RegExp(`(<h[2-3][^>]*>${sectionTitle}[^<]*</h[2-3]>)`, 'i');
+    console.log(`🔍 Recherche de la section: "${sectionTitle}"`);
+    
+    // Essai 1: Recherche exacte
+    const sectionRegex = new RegExp(`(<h[2-3][^>]*>${sectionTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^<]*</h[2-3]>)`, 'i');
     const match = content.match(sectionRegex);
     
     if (match) {
+      console.log(`✅ Section trouvée: "${sectionTitle}"`);
+      console.log(`🔍 Match trouvé: "${match[0]}"`);
       const sectionIndex = content.indexOf(match[0]);
+      const afterSection = content.indexOf('</h2>', sectionIndex) + 5;
+      if (afterSection > sectionIndex) {
+        return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
+      } else {
+        console.log(`⚠️ Position invalide, fallback en fin d'article`);
+        return content + '\n\n' + widgetBlock;
+      }
+    }
+    
+    // Essai 2: Recherche partielle
+    const partialRegex = new RegExp(`(<h[2-3][^>]*>[^<]*${sectionTitle}[^<]*</h[2-3]>)`, 'i');
+    const partialMatch = content.match(partialRegex);
+    
+    if (partialMatch) {
+      console.log(`✅ Section trouvée (partielle): "${sectionTitle}"`);
+      const sectionIndex = content.indexOf(partialMatch[0]);
       const afterSection = content.indexOf('</h2>', sectionIndex) + 5;
       return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
     }
     
+    // Essai 3: Recherche de mots-clés dans les titres
+    const keywordRegex = new RegExp(`(<h[2-3][^>]*>[^<]*(?:${sectionTitle.split(' ').join('|')})[^<]*</h[2-3]>)`, 'i');
+    const keywordMatch = content.match(keywordRegex);
+    
+    if (keywordMatch) {
+      console.log(`✅ Section trouvée (mots-clés): "${sectionTitle}"`);
+      const sectionIndex = content.indexOf(keywordMatch[0]);
+      const afterSection = content.indexOf('</h2>', sectionIndex) + 5;
+      return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
+    }
+    
+    // Fallback: Insérer avant la fin de l'article
+    console.log(`⚠️ Section "${sectionTitle}" non trouvée, insertion en fin d'article`);
     return content + '\n\n' + widgetBlock;
   }
 

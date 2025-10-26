@@ -5,28 +5,28 @@
 
 export class WidgetPlanBuilder {
   constructor() {
-    // Mapping des providers par slot
+    // Mapping des providers par slot - UNIQUEMENT CEUX QUI EXISTENT VRAIMENT
     this.providers = {
       flights: "Travelpayouts-Aviasales",
-      hotels: "Travelpayouts-Hotels", 
-      transport: "12Go",
-      activities: "Klook",
-      esim: "Airalo",
-      insurance: "SafetyWing",
-      coworking: "NomadList",
-      productivity: "Notion"
+      esim: "Airalo"
+      // hotels: SUPPRIMÉ - Pas de widgets hotels disponibles
+      // transport: SUPPRIMÉ - Pas de widgets transport disponibles  
+      // activities: SUPPRIMÉ - Pas de widgets activities disponibles
+      // insurance: SUPPRIMÉ - Pas de widgets insurance disponibles
+      // coworking: SUPPRIMÉ - Pas de widgets coworking disponibles
+      // productivity: SUPPRIMÉ - Pas de widgets productivity disponibles
     };
 
-    // Presets de rendu recommandés
+    // Presets de rendu recommandés - UNIQUEMENT CEUX QUI EXISTENT VRAIMENT
     this.presets = {
       flights: "search_bar",
-      hotels: "search_bar", 
-      transport: "route_tiles",
-      esim: "compact_card",
-      insurance: "compact_card",
-      activities: "compact_card",
-      coworking: "compact_card",
-      productivity: "compact_card"
+      esim: "compact_card"
+      // hotels: SUPPRIMÉ - Pas de widgets hotels disponibles
+      // transport: SUPPRIMÉ - Pas de widgets transport disponibles
+      // activities: SUPPRIMÉ - Pas de widgets activities disponibles
+      // insurance: SUPPRIMÉ - Pas de widgets insurance disponibles
+      // coworking: SUPPRIMÉ - Pas de widgets coworking disponibles
+      // productivity: SUPPRIMÉ - Pas de widgets productivity disponibles
     };
 
     // Contraintes par défaut
@@ -142,8 +142,53 @@ export class WidgetPlanBuilder {
     return {
       country: geo.country || 'thailand',
       city: geo.city || 'bangkok',
-      nearest_hub: this.getNearestHub(geo.city)
+      nearest_hub: this.getNearestHub(geo.city),
+      // Configuration pour les widgets de vols
+      origin: 'PAR', // Paris par défaut pour les vols depuis la France
+      destination: this.getDestinationFromCity(geo.city || 'bangkok')
     };
+  }
+
+  /**
+   * Convertit une ville en code aéroport de destination
+   */
+  getDestinationFromCity(city) {
+    const cityToAirport = {
+      'bangkok': 'BKK',
+      'ho chi minh': 'SGN',
+      'hanoi': 'HAN',
+      'singapore': 'SIN',
+      'kuala lumpur': 'KUL',
+      'jakarta': 'CGK',
+      'manila': 'MNL',
+      'tokyo': 'NRT',
+      'osaka': 'KIX',
+      'seoul': 'ICN',
+      'barcelone': 'BCN',
+      'lisbonne': 'LIS',
+      'madrid': 'MAD',
+      'rome': 'FCO',
+      'londres': 'LHR',
+      'berlin': 'TXL',
+      'amsterdam': 'AMS',
+      'vietnam': 'SGN', // Par défaut Ho Chi Minh pour Vietnam
+      'thailand': 'BKK', // Par défaut Bangkok pour Thaïlande
+      'indonesia': 'CGK', // Par défaut Jakarta pour Indonésie
+      'malaysia': 'KUL', // Par défaut Kuala Lumpur pour Malaisie
+      'philippines': 'MNL', // Par défaut Manille pour Philippines
+      'japan': 'NRT', // Par défaut Tokyo pour Japon
+      'singapore': 'SIN', // Singapour
+      'korea': 'ICN', // Par défaut Séoul pour Corée
+      'spain': 'BCN', // Par défaut Barcelone pour Espagne
+      'portugal': 'LIS', // Par défaut Lisbonne pour Portugal
+      'italy': 'FCO', // Par défaut Rome pour Italie
+      'uk': 'LHR', // Par défaut Londres pour UK
+      'germany': 'TXL', // Par défaut Berlin pour Allemagne
+      'netherlands': 'AMS' // Par défaut Amsterdam pour Pays-Bas
+    };
+    
+    const normalizedCity = city.toLowerCase().trim();
+    return cityToAirport[normalizedCity] || 'BKK'; // Bangkok par défaut
   }
 
   /**

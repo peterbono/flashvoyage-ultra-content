@@ -34,13 +34,21 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     try {
       console.log('🚀 Génération d\'article stratégique amélioré...\n');
 
-      // 0. Mettre à jour la base de données d'articles (pour liens internes à jour)
+      // 0. Mettre à jour la base de données d'articles AVANT génération des liens
       console.log('📚 Mise à jour de la base de données d\'articles...');
       try {
+        // D'ABORD : Crawler WordPress pour avoir la DB à jour
+        const { WordPressArticlesCrawler } = await import('./wordpress-articles-crawler.js');
+        const crawler = new WordPressArticlesCrawler();
+        await crawler.crawlAllArticles();
+        crawler.saveToFile('articles-database.json'); // SAUVEGARDE EXPLICITE
+        console.log('✅ Base de données WordPress mise à jour');
+        
+        // ENSUITE : Charger la DB fraîchement mise à jour
         await this.linkingStrategy.internalAnalyzer.loadArticlesDatabase('articles-database.json');
-        console.log('✅ Base de données chargée\n');
+        console.log('✅ Base de données chargée pour liens internes\n');
       } catch (error) {
-        console.warn('⚠️ Impossible de charger la base d\'articles:', error.message);
+        console.warn('⚠️ Impossible de mettre à jour/charger la base d\'articles:', error.message);
         console.warn('   → Les liens internes ne seront pas générés\n');
       }
 
@@ -178,50 +186,10 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         console.warn('   → Article publié sans enrichissement de liens');
       }
 
-      // 8. Construire le plan de widgets et placer contextuellement
-      console.log('🎯 Construction du plan de widgets...');
-      const widgetPlan = this.widgetPlanBuilder.buildWidgetPlan(
-        analysis.affiliateSlots || [],
-        analysis.geo || {},
-        {
-          type: analysis.type || 'temoignage',
-          destination: analysis.destination || 'Asie',
-          audience: 'Nomades digitaux',
-          hasItineraryContent: finalArticle.content.includes('itinéraire') || finalArticle.content.includes('programme'),
-          hasGettingThereSection: finalArticle.content.includes('Comment s\'y rendre') || finalArticle.content.includes('Transport'),
-          hasInternetSection: finalArticle.content.includes('Internet') || finalArticle.content.includes('WiFi'),
-          hasSafetySection: finalArticle.content.includes('Sécurité') || finalArticle.content.includes('Sûr'),
-          hasBudgetSection: finalArticle.content.includes('Budget') || finalArticle.content.includes('Coût'),
-          hasVisaContent: finalArticle.content.includes('visa') || finalArticle.content.includes('Visa'),
-          hasSensitiveContent: finalArticle.content.includes('politique') || finalArticle.content.includes('religion')
-        },
-        `article_${Date.now()}`
-      );
-
-      console.log('🎯 Placement contextuel des widgets...');
-      const contentWithWidgets = await this.contextualWidgetPlacer.placeWidgetsIntelligently(
-        finalArticle.content,
-        {
-          type: analysis.type || 'temoignage',
-          destination: analysis.destination || 'Asie',
-          audience: 'Nomades digitaux'
-        },
-        widgetPlan.widget_plan
-      );
-
-      // Ajout de liens nomades contextuels
-      console.log('🔗 Ajout de liens nomades contextuels...');
-      const contentWithNomadLinks = await this.contextualWidgetPlacer.insertNomadLinks(
-        contentWithWidgets,
-        {
-          type: analysis.type || 'temoignage',
-          destination: analysis.destination || 'Asie',
-          audience: 'Nomades digitaux'
-        }
-      );
-
-      // Mettre à jour le contenu avec les widgets et liens nomades
-      finalArticle.content = contentWithNomadLinks;
+      // 8. Placement des widgets DÉPLACÉ vers article-finalizer pour éviter les doublons
+      console.log('🎯 Placement des widgets géré dans article-finalizer...');
+      // Le placement intelligent des widgets est maintenant centralisé dans article-finalizer.js
+      // pour utiliser la logique corrigée et éviter les conflits
 
       // 8b. Finalisation de l'article (quote, FOMO, image)
       const finalizedArticle = await this.articleFinalizer.finalizeArticle(finalArticle, analysis);
@@ -261,12 +229,13 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         validationScore: enhanced.validation.score
       });
 
-      // 11. Mettre à jour la base de données d'articles (pour les prochains articles)
-      console.log('\n📚 Mise à jour de la base de données...');
+      // 11. Mise à jour finale de la base de données (inclut le nouvel article)
+      console.log('\n📚 Mise à jour finale de la base de données...');
       try {
         const { WordPressArticlesCrawler } = await import('./wordpress-articles-crawler.js');
         const crawler = new WordPressArticlesCrawler();
         await crawler.crawlAllArticles();
+        crawler.saveToFile('articles-database.json'); // SAUVEGARDE EXPLICITE
         console.log('✅ Base de données mise à jour avec le nouvel article\n');
       } catch (error) {
         console.warn('⚠️ Impossible de mettre à jour la base:', error.message);

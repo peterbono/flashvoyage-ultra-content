@@ -12,12 +12,14 @@
 
 import axios from 'axios';
 import { REAL_TRAVELPAYOUTS_WIDGETS } from './travelpayouts-real-widgets-database.js';
-import ContextualWidgetPlacer from './contextual-widget-placer.js';
+import ContextualWidgetPlacer from './contextual-widget-placer-v2.js';
+import WidgetPlanBuilder from './widget-plan-builder.js';
 
 class ArticleFinalizer {
   constructor() {
     this.widgets = REAL_TRAVELPAYOUTS_WIDGETS;
     this.widgetPlacer = new ContextualWidgetPlacer();
+    this.widgetPlanBuilder = new WidgetPlanBuilder();
   }
 
   /**
@@ -113,7 +115,19 @@ class ArticleFinalizer {
         // transport: this.selectBestTransportWidget(context)
       };
       
-      // Utiliser le placement contextuel intelligent
+      // Créer un widgetPlan avec le WidgetPlanBuilder existant
+      const widgetPlan = this.widgetPlanBuilder.buildWidgetPlan(
+        analysis.affiliateSlots || [],
+        analysis.geo || {},
+        {
+          type: analysis?.type || 'Témoignage',
+          destination: analysis?.destinations?.[0] || context.hasDestination || 'Asie',
+          audience: analysis?.target_audience || 'Nomades digitaux'
+        },
+        `article_${Date.now()}`
+      );
+      
+      // Utiliser le placement contextuel intelligent AVEC VALIDATION
       const articleContext = {
         type: analysis?.type || 'Témoignage',
         destination: analysis?.destinations?.[0] || context.hasDestination || 'Asie',
@@ -123,7 +137,7 @@ class ArticleFinalizer {
       const placementResult = await this.widgetPlacer.placeWidgetsIntelligently(
         updatedContent,
         articleContext,
-        widgetScripts
+        widgetPlan.widget_plan
       );
       
       // Compter les vrais widgets placés au lieu d'estimer
