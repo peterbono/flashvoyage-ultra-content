@@ -42,11 +42,29 @@ export class CompleteLinkingStrategy {
     let externalLinks = [];
     if (articleContent) {
       try {
-        externalLinks = await this.externalDetector.detectExternalLinkOpportunities(
-          articleContent
+        // Extraire le texte brut depuis le HTML pour la détection
+        const plainText = articleContent
+          .replace(/<[^>]*>/g, ' ')  // Supprimer les tags HTML
+          .replace(/\s+/g, ' ')      // Normaliser les espaces
+          .trim();
+        
+        // Appeler detectOpportunities avec les deux paramètres requis (maintenant async)
+        const opportunities = await this.externalDetector.detectOpportunities(
+          articleContent,  // HTML pour référence
+          plainText        // Texte brut pour analyse
         );
+        
+        // Convertir les opportunités en format de liens externes
+        externalLinks = opportunities.map(opp => ({
+          anchor_text: opp.anchor_text,
+          url: opp.url,
+          relevance_score: this.getRelevanceScore(opp),
+          type: opp.type,
+          reason: opp.reason
+        }));
       } catch (error) {
         console.log('⚠️ Erreur lors de la détection des liens externes:', error.message);
+        console.error(error);
       }
     }
 
@@ -92,23 +110,43 @@ export class CompleteLinkingStrategy {
     };
   }
 
+  /**
+   * Convertit une priorité d'opportunité externe en score de pertinence
+   */
+  getRelevanceScore(opportunity) {
+    const priorityScores = {
+      'high': 9,
+      'medium': 7,
+      'low': 5
+    };
+    return priorityScores[opportunity.priority] || 6;
+  }
+
   integrateAllLinks(htmlContent, strategyResult) {
     console.log('\n🔗 INTÉGRATION DE TOUS LES LIENS');
     console.log('================================\n');
 
+    // Vérifier que htmlContent est une string
+    if (typeof htmlContent !== 'string') {
+      console.error('❌ htmlContent doit être une string, reçu:', typeof htmlContent);
+      return typeof htmlContent === 'object' && htmlContent !== null ? String(htmlContent) : '';
+    }
+
     // Intégrer les liens internes
     console.log('📌 Intégration des liens internes...\n');
-    let enrichedContent = this.linkIntegrator.integrateLinks(
+    const internalResult = this.linkIntegrator.integrateLinks(
       htmlContent,
-      strategyResult.internal_links
+      strategyResult.internal_links || []
     );
+    let enrichedContent = internalResult.content || internalResult || htmlContent;
 
     // Intégrer les liens externes
     console.log('\n📌 Intégration des liens externes...\n');
-    enrichedContent = this.linkIntegrator.integrateLinks(
+    const externalResult = this.linkIntegrator.integrateLinks(
       enrichedContent,
-      strategyResult.external_links
+      strategyResult.external_links || []
     );
+    enrichedContent = externalResult.content || externalResult || enrichedContent;
 
     // Ajouter la section "Articles connexes"
     console.log('\n📚 AJOUT DE LA SECTION "ARTICLES CONNEXES"');
@@ -116,7 +154,7 @@ export class CompleteLinkingStrategy {
     
     enrichedContent = this.linkIntegrator.addRelatedArticlesSection(
       enrichedContent,
-      strategyResult.internal_links
+      strategyResult.internal_links || []
     );
 
     console.log('\n✅ Liens intégrés avec succès');

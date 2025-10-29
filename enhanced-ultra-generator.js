@@ -159,10 +159,15 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // 7. Enrichissement avec liens internes et externes
       console.log('🔗 Enrichissement avec liens intelligents...');
       try {
+        // Corriger : passer un objet avec content et title au lieu de 2 strings
         const linkingStrategyResult = await this.linkingStrategy.createStrategy(
-          finalArticle.content,
-          finalArticle.title,
-          null // Pas d'ID car nouvel article
+          {
+            content: finalArticle.content,
+            title: finalArticle.title,
+            id: null // Pas d'ID car nouvel article
+          },
+          5, // maxInternalLinks
+          3  // maxExternalLinks
         );
 
         console.log(`✅ Stratégie de liens créée: ${linkingStrategyResult.total_links} liens suggérés`);
@@ -170,13 +175,20 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         console.log(`   - Liens externes: ${linkingStrategyResult.breakdown.external}`);
 
         // Intégrer tous les liens
+        // S'assurer que finalArticle.content est une string
+        const contentToEnrich = typeof finalArticle.content === 'string' 
+          ? finalArticle.content 
+          : String(finalArticle.content || '');
+        
         const enrichedContent = this.linkingStrategy.integrateAllLinks(
-          finalArticle.content,
+          contentToEnrich,
           linkingStrategyResult
         );
 
-        // Mettre à jour le contenu avec les liens
-        finalArticle.content = enrichedContent;
+        // Mettre à jour le contenu avec les liens (s'assurer que c'est une string)
+        finalArticle.content = typeof enrichedContent === 'string' 
+          ? enrichedContent 
+          : (enrichedContent?.content || String(enrichedContent || ''));
         finalArticle.enhancements.internalLinks = linkingStrategyResult.breakdown.internal;
         finalArticle.enhancements.externalLinks = linkingStrategyResult.breakdown.external;
 

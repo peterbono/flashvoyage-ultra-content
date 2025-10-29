@@ -1,10 +1,22 @@
 /**
  * DÉTECTEUR DE LIENS EXTERNES INTELLIGENTS
  * Identifie les opportunités de liens externes vers des ressources utiles
+ * Utilise une approche hybride : LLM intelligent + base de données de fallback
  */
+
+import { OpenAI } from 'openai';
+import { OPENAI_API_KEY } from './config.js';
 
 export class ExternalLinksDetector {
   constructor() {
+    // Initialiser OpenAI si disponible (pour détection intelligente)
+    this.useLLM = Boolean(OPENAI_API_KEY);
+    if (this.useLLM) {
+      this.openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+      console.log('✅ Détection LLM activée pour liens externes');
+    } else {
+      console.log('⚠️ Détection LLM désactivée (pas de clé API) - Utilisation base figée uniquement');
+    }
     // Base de données de liens externes connus
     this.knownLinks = {
       // Groupes Facebook
@@ -73,17 +85,29 @@ export class ExternalLinksDetector {
 
   /**
    * Détecte les opportunités de liens externes dans un texte
+   * Approche hybride : LLM intelligent + base figée en fallback
    * @param {string} content - Contenu HTML de l'article
    * @param {string} plainText - Contenu texte brut
    * @returns {Array} - Liste des opportunités de liens
    */
-  detectOpportunities(content, plainText) {
+  async detectOpportunities(content, plainText) {
     console.log('\n🔍 DÉTECTION DE LIENS EXTERNES:');
     console.log('==============================\n');
 
     const opportunities = [];
 
-    // 1. Chercher les entités connues dans le texte
+    // APPROCHE HYBRIDE : Détection LLM intelligente en priorité
+    if (this.useLLM) {
+      try {
+        const llmOpportunities = await this.detectWithLLM(plainText, content);
+        console.log(`🤖 Détection LLM: ${llmOpportunities.length} opportunités trouvées`);
+        opportunities.push(...llmOpportunities);
+      } catch (error) {
+        console.warn('⚠️ Erreur détection LLM, fallback sur base figée:', error.message);
+      }
+    }
+
+    // FALLBACK : Chercher les entités connues dans le texte (base figée)
     for (const [name, url] of Object.entries(this.knownLinks)) {
       const regex = new RegExp(`\\b${this.escapeRegex(name)}\\b`, 'gi');
       const matches = plainText.match(regex);
@@ -129,6 +153,97 @@ export class ExternalLinksDetector {
     console.log(`\n📊 Total: ${uniqueOpportunities.length} opportunités de liens externes\n`);
 
     return uniqueOpportunities;
+  }
+
+  /**
+   * Détection intelligente avec LLM
+   * Le LLM analyse le contenu et suggère des liens externes pertinents
+   */
+  async detectWithLLM(plainText, htmlContent) {
+    const maxLength = 4000; // Limiter pour éviter les coûts excessifs
+    const textSnippet = plainText.length > maxLength 
+      ? plainText.substring(0, maxLength) + '...' 
+      : plainText;
+
+    // OPTIMISATION COÛTS : Séparer system (instructions fixes) et user (contenu variable)
+    // Les tokens system sont généralement moins chers ou facturés différemment
+    const systemPrompt = `Tu es un expert en liens externes pour articles de voyage/nomadisme digital.
+
+MISSION: Analyser le contenu fourni et identifier des opportunités de liens externes pertinents et utiles.
+
+RÈGLES DE DÉTECTION:
+1. Détecte les mentions de :
+   - Destinations/Villes → Groupes Facebook locaux (ex: "Bali" → "Digital Nomads Bali")
+   - Mots-clés "coworking", "espace de travail" → Coworking spaces locaux
+   - Compagnies aériennes → Sites officiels
+   - Outils/services nomades → Sites officiels
+   - Communautés Reddit → Liens r/subreddit
+
+2. Génère des liens vers des ressources UTILES et LÉGITIMES :
+   - Groupes Facebook officiels de nomades digitaux
+   - Coworking spaces populaires (Hubud, Dojo Bali, Outpost, etc.)
+   - Sites officiels de compagnies aériennes
+   - Outils nomades populaires (Nomad List, Workaway, etc.)
+   - Subreddits pertinents (r/digitalnomad, r/bali, r/vietnam, etc.)
+
+3. Évite :
+   - Les liens de marques non mentionnées explicitement
+   - Les liens vers des sites suspects ou non vérifiés
+   - Les duplications
+
+FORMAT DE RÉPONSE (JSON uniquement):
+{
+  "opportunities": [
+    {
+      "anchor_text": "Digital Nomads Bali",
+      "url": "https://www.facebook.com/groups/digitalnomadsbali",
+      "type": "facebook_group",
+      "priority": "high",
+      "reason": "L'article mentionne Bali, groupe Facebook pertinent pour nomades"
+    }
+  ]
+}
+
+IMPORTANT: 
+- Maximum 5 opportunités par analyse
+- Uniquement des liens vers des sites légitimes et vérifiables
+- Anchor text naturel (tel que mentionné ou variante pertinente)
+- Réponds UNIQUEMENT en JSON valide.`;
+
+    const userPrompt = `CONTENU ARTICLE À ANALYSER:
+${textSnippet}`;
+
+    try {
+      const response = await this.openai.chat.completions.create({
+        model: 'gpt-4o',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        temperature: 0.3,
+        max_tokens: 800,
+        response_format: { type: 'json_object' }
+      });
+
+      const result = JSON.parse(response.choices[0].message.content);
+      const opportunities = result.opportunities || [];
+
+      // Valider et formater les opportunités
+      return opportunities
+        .filter(opp => opp.url && opp.anchor_text)
+        .map(opp => ({
+          anchor_text: opp.anchor_text,
+          url: opp.url,
+          type: opp.type || 'other',
+          priority: opp.priority || 'medium',
+          reason: opp.reason || 'Détecté par LLM',
+          occurrences: 1
+        }));
+
+    } catch (error) {
+      console.error('❌ Erreur détection LLM:', error.message);
+      throw error;
+    }
   }
 
   /**
@@ -191,10 +306,10 @@ export class ExternalLinksDetector {
    * @param {string} content - Contenu HTML
    * @param {string} plainText - Contenu texte brut
    * @param {number} maxLinks - Nombre max de liens à suggérer
-   * @returns {Array} - Liste des liens suggérés
+   * @returns {Promise<Array>} - Liste des liens suggérés
    */
-  suggestLinks(content, plainText, maxLinks = 8) {
-    const opportunities = this.detectOpportunities(content, plainText);
+  async suggestLinks(content, plainText, maxLinks = 8) {
+    const opportunities = await this.detectOpportunities(content, plainText);
 
     // Trier par priorité puis par occurrences
     const sorted = opportunities.sort((a, b) => {
