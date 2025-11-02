@@ -129,7 +129,11 @@ INSTRUCTIONS:
 
 ⚠️ ATTENTION CRITIQUE: Si tu vois des noms de villes/destinations dans le contenu (Tokyo, Barcelone, Bali, etc.), tu DOIS suggérer un widget FLIGHTS. C'est OBLIGATOIRE !
 
-3. PLACEMENT INTELLIGENT: Place les widgets dans les sections qui correspondent sémantiquement
+3. PLACEMENT INTELLIGENT ET STRATÉGIQUE: 
+   - Place les widgets dans le MILIEU de l'article (après le contenu principal, AVANT "Articles connexes")
+   - Évite de placer APRÈS "Articles connexes" (visibilité réduite)
+   - Privilégie les sections contextuelles (ex: après une mention de destination, après une section sur les transports)
+   - Si aucune section contextuelle n'existe, place AVANT "Articles connexes" (pas après)
 4. ACCROCHES CONTEXTUELLES: Génère des accroches qui correspondent au contexte réel du contenu
 5. VÉRIFICATION CONTEXTUELLE INTELLIGENTE OBLIGATOIRE: 
    - Si le contenu parle de 'coliving' → INTERDIT de suggérer des widgets FLIGHTS/AVIASALES
@@ -609,48 +613,60 @@ ${widgetScript}
   insertAfterSection(content, sectionTitle, widgetBlock) {
     console.log(`🔍 Recherche de la section: "${sectionTitle}"`);
     
+    // STRATÉGIE: Si c'est "Articles connexes", placer AVANT (pas après) pour meilleure visibilité
+    if (sectionTitle.toLowerCase().includes('articles connexes') || sectionTitle.toLowerCase().includes('related articles')) {
+      return this.insertBeforeRelatedArticles(content, widgetBlock);
+    }
+    
     // Essai 1: Recherche exacte
-    const sectionRegex = new RegExp(`(<h[2-3][^>]*>${sectionTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^<]*</h[2-3]>)`, 'i');
+    const sectionRegex = new RegExp(`(<h([2-3])[^>]*>${sectionTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^<]*</h[2-3]>)`, 'i');
     const match = content.match(sectionRegex);
     
     if (match) {
       console.log(`✅ Section trouvée: "${sectionTitle}"`);
       console.log(`🔍 Match trouvé: "${match[0]}"`);
       const sectionIndex = content.indexOf(match[0]);
-      const afterSection = content.indexOf('</h2>', sectionIndex) + 5;
+      const headingLevel = match[2]; // h2 ou h3
+      const closingTag = `</h${headingLevel}>`;
+      const afterSection = content.indexOf(closingTag, sectionIndex) + closingTag.length;
+      
       if (afterSection > sectionIndex) {
         return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
       } else {
-        console.log(`⚠️ Position invalide, fallback en fin d'article`);
-        return content + '\n\n' + widgetBlock;
+        console.log(`⚠️ Position invalide, fallback avant "Articles connexes"`);
+        return this.insertBeforeRelatedArticles(content, widgetBlock);
       }
     }
     
     // Essai 2: Recherche partielle
-    const partialRegex = new RegExp(`(<h[2-3][^>]*>[^<]*${sectionTitle}[^<]*</h[2-3]>)`, 'i');
+    const partialRegex = new RegExp(`(<h([2-3])[^>]*>[^<]*${sectionTitle}[^<]*</h[2-3]>)`, 'i');
     const partialMatch = content.match(partialRegex);
     
     if (partialMatch) {
       console.log(`✅ Section trouvée (partielle): "${sectionTitle}"`);
       const sectionIndex = content.indexOf(partialMatch[0]);
-      const afterSection = content.indexOf('</h2>', sectionIndex) + 5;
+      const headingLevel = partialMatch[2]; // h2 ou h3
+      const closingTag = `</h${headingLevel}>`;
+      const afterSection = content.indexOf(closingTag, sectionIndex) + closingTag.length;
       return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
     }
     
     // Essai 3: Recherche de mots-clés dans les titres
-    const keywordRegex = new RegExp(`(<h[2-3][^>]*>[^<]*(?:${sectionTitle.split(' ').join('|')})[^<]*</h[2-3]>)`, 'i');
+    const keywordRegex = new RegExp(`(<h([2-3])[^>]*>[^<]*(?:${sectionTitle.split(' ').join('|')})[^<]*</h[2-3]>)`, 'i');
     const keywordMatch = content.match(keywordRegex);
     
     if (keywordMatch) {
       console.log(`✅ Section trouvée (mots-clés): "${sectionTitle}"`);
       const sectionIndex = content.indexOf(keywordMatch[0]);
-      const afterSection = content.indexOf('</h2>', sectionIndex) + 5;
+      const headingLevel = keywordMatch[2]; // h2 ou h3
+      const closingTag = `</h${headingLevel}>`;
+      const afterSection = content.indexOf(closingTag, sectionIndex) + closingTag.length;
       return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
     }
     
-    // Fallback: Insérer avant la fin de l'article
-    console.log(`⚠️ Section "${sectionTitle}" non trouvée, insertion en fin d'article`);
-    return content + '\n\n' + widgetBlock;
+    // Fallback: Insérer avant "Articles connexes" (stratégiquement mieux)
+    console.log(`⚠️ Section "${sectionTitle}" non trouvée, insertion avant "Articles connexes"`);
+    return this.insertBeforeRelatedArticles(content, widgetBlock);
   }
 
   /**
