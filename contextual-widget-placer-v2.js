@@ -618,6 +618,22 @@ ${widgetScript}
       return this.insertBeforeRelatedArticles(content, widgetBlock);
     }
     
+    // Vérifier si "Articles connexes" existe dans le contenu
+    const relatedSectionRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
+    const relatedSectionMatch = content.match(relatedSectionRegex);
+    const relatedSectionIndex = relatedSectionMatch ? content.indexOf(relatedSectionMatch[0]) : -1;
+    
+    // Fonction helper pour vérifier si la position est APRÈS "Articles connexes"
+    const checkPositionBeforeRelated = (sectionIndex, afterSectionPos) => {
+      if (relatedSectionIndex === -1) return true; // Pas de section "Articles connexes", OK
+      // Vérifier si la position trouvée est APRÈS "Articles connexes"
+      if (afterSectionPos > relatedSectionIndex) {
+        console.log(`⚠️ Section "${sectionTitle}" trouvée APRÈS "Articles connexes", placement AVANT "Articles connexes" à la place`);
+        return false; // Position invalide, utiliser fallback
+      }
+      return true; // Position OK
+    };
+    
     // Essai 1: Recherche exacte
     const sectionRegex = new RegExp(`(<h([2-3])[^>]*>${sectionTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^<]*</h[2-3]>)`, 'i');
     const match = content.match(sectionRegex);
@@ -630,10 +646,10 @@ ${widgetScript}
       const closingTag = `</h${headingLevel}>`;
       const afterSection = content.indexOf(closingTag, sectionIndex) + closingTag.length;
       
-      if (afterSection > sectionIndex) {
+      if (afterSection > sectionIndex && checkPositionBeforeRelated(sectionIndex, afterSection)) {
         return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
       } else {
-        console.log(`⚠️ Position invalide, fallback avant "Articles connexes"`);
+        console.log(`⚠️ Position invalide ou après "Articles connexes", fallback avant "Articles connexes"`);
         return this.insertBeforeRelatedArticles(content, widgetBlock);
       }
     }
@@ -648,7 +664,13 @@ ${widgetScript}
       const headingLevel = partialMatch[2]; // h2 ou h3
       const closingTag = `</h${headingLevel}>`;
       const afterSection = content.indexOf(closingTag, sectionIndex) + closingTag.length;
-      return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
+      
+      if (checkPositionBeforeRelated(sectionIndex, afterSection)) {
+        return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
+      } else {
+        console.log(`⚠️ Section trouvée APRÈS "Articles connexes", placement AVANT "Articles connexes"`);
+        return this.insertBeforeRelatedArticles(content, widgetBlock);
+      }
     }
     
     // Essai 3: Recherche de mots-clés dans les titres
@@ -661,7 +683,13 @@ ${widgetScript}
       const headingLevel = keywordMatch[2]; // h2 ou h3
       const closingTag = `</h${headingLevel}>`;
       const afterSection = content.indexOf(closingTag, sectionIndex) + closingTag.length;
-      return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
+      
+      if (checkPositionBeforeRelated(sectionIndex, afterSection)) {
+        return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
+      } else {
+        console.log(`⚠️ Section trouvée APRÈS "Articles connexes", placement AVANT "Articles connexes"`);
+        return this.insertBeforeRelatedArticles(content, widgetBlock);
+      }
     }
     
     // Fallback: Insérer avant "Articles connexes" (stratégiquement mieux)
