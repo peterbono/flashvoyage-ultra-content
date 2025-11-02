@@ -75,6 +75,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const selectedArticle = validSources[0];
       console.log('📰 Article sélectionné:', selectedArticle.title);
       console.log('🔍 DEBUG: Author dans selectedArticle:', selectedArticle.author);
+      console.log('📋 DEBUG: Source de l\'article sélectionné:', selectedArticle.source);
+      console.log('📋 DEBUG: Type de l\'article:', selectedArticle.type);
+      console.log('📋 DEBUG: Link de l\'article:', selectedArticle.link);
 
       // 3. Analyse intelligente du contenu
       console.log('🧠 Analyse intelligente du contenu...');
@@ -105,8 +108,48 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         contentToEnhance = JSON.stringify(generatedContent);
       }
       
-      // Ajouter le lien source Reddit au début du contenu
-      const sourceLink = `<p><strong>Source :</strong> <a href="${selectedArticle.link}" target="_blank" rel="noopener">${selectedArticle.title}</a> - ${selectedArticle.source}</p>\n\n`;
+      // Ajouter le lien source au début du contenu (variable selon la source: Reddit, CNN, Skift, etc.)
+      // CORRECTION: Détecter la source réelle depuis l'URL si source est incorrecte
+      const articleLink = selectedArticle.link || '#';
+      const articleTitle = selectedArticle.title || 'Article sans titre';
+      
+      // Détecter la source réelle depuis l'URL si la propriété source n'est pas fiable
+      let sourceName = selectedArticle.source || 'Source inconnue';
+      
+      // Vérifier l'URL pour détecter la vraie source
+      if (articleLink.includes('reddit.com')) {
+        // C'est un article Reddit
+        if (articleLink.includes('digitalnomad')) {
+          sourceName = 'Reddit Digital Nomad';
+        } else if (articleLink.includes('travel')) {
+          sourceName = 'Reddit r/travel';
+        } else {
+          sourceName = 'Reddit';
+        }
+      } else if (articleLink.includes('skift.com')) {
+        sourceName = 'Skift';
+      } else if (articleLink.includes('cnn.com')) {
+        sourceName = 'CNN Travel';
+      }
+      
+      // Vérifier aussi le type et l'auteur pour confirmer Reddit
+      if (selectedArticle.author && selectedArticle.type === 'community') {
+        // Si l'article a un auteur et est de type community, c'est probablement Reddit
+        if (!articleLink.includes('reddit.com') && !sourceName.includes('Reddit')) {
+          // Corriger la source si elle est incorrecte
+          sourceName = selectedArticle.source || 'Reddit';
+        }
+      }
+      
+      console.log('📋 DEBUG avant génération lien source:');
+      console.log('   - sourceName (original):', selectedArticle.source);
+      console.log('   - sourceName (corrigé):', sourceName);
+      console.log('   - articleLink:', articleLink);
+      console.log('   - articleTitle:', articleTitle);
+      console.log('   - article.author:', selectedArticle.author);
+      console.log('   - article.type:', selectedArticle.type);
+      
+      const sourceLink = `<p><strong>Source :</strong> <a href="${articleLink}" target="_blank" rel="noopener">${articleTitle}</a> - ${sourceName}</p>\n\n`;
       contentToEnhance = sourceLink + contentToEnhance;
       
       console.log('📝 Contenu à améliorer:', contentToEnhance.substring(0, 200) + '...');

@@ -1277,7 +1277,16 @@ class UltraFreshComplete {
         const description = descriptionMatches[i]?.replace(/<description><!\[CDATA\[(.*?)\]\]><\/description>/, '$1') || 
                            descriptionMatches[i]?.replace(/<description>(.*?)<\/description>/, '$1') || '';
 
-        if (title && link) {
+        // CORRECTION: Filtrer les titres de flux RSS (ex: "Skift", "CNN Travel")
+        // Ce sont des entrées qui ne sont pas des articles mais des métadonnées du flux
+        const titleLower = title.toLowerCase().trim();
+        const isFeedTitle = titleLower === sourceName.toLowerCase() || 
+                           titleLower === 'feed' ||
+                           titleLower === 'rss feed' ||
+                           (link && (link === 'https://skift.com/' || link === 'https://skift.com' || link.includes('skift.com/feed'))) ||
+                           (link && (link === 'http://rss.cnn.com/rss/edition_travel.rss' || link.includes('cnn.com/rss')));
+        
+        if (title && link && !isFeedTitle) {
           articles.push({
             title: title.trim(),
             link: link.trim(),
@@ -1301,6 +1310,7 @@ class UltraFreshComplete {
 
 
   // Calculer le score d'urgence d'un article
+  // CORRECTION: Ne pas donner boost automatique aux sources pro sans mots-clés urgents
   calculateUrgencyScore(article) {
     const text = `${article.title} ${article.content || ''}`.toLowerCase();
     const source = article.source ? article.source.toLowerCase() : '';
@@ -1313,9 +1323,9 @@ class UltraFreshComplete {
       'fermeture', 'réouverture', 'restriction', 'interdiction'
     ];
     
-    // Source professionnelle = boost
-    const isProfessionalNews = source.includes('cnn') || 
-                                source.includes('skift') || 
+    // Source professionnelle
+    const isProfessionalNews = source.includes('cnn') ||
+                                source.includes('skift') ||
                                 source.includes('travel news') ||
                                 article.type === 'news';
     
@@ -1328,15 +1338,18 @@ class UltraFreshComplete {
     const hasUrgentKeyword = urgentKeywords.some(keyword => text.includes(keyword));
     
     // Calculer le score d'urgence
+    // CORRECTION: Source pro sans mots-clés urgents = low (pas medium automatique)
     if (hasUrgentKeyword && isProfessionalNews && isFresh) {
       return 'high'; // Actualité urgente + source pro + fraîche
-    } else if ((hasUrgentKeyword || isProfessionalNews) && isFresh) {
-      return 'medium'; // Actualité importante ou source pro + fraîche
-    } else if (hasUrgentKeyword || isProfessionalNews) {
-      return 'medium'; // Actualité importante ou source pro
+    } else if (hasUrgentKeyword && isFresh) {
+      return 'medium'; // Actualité importante + fraîche
+    } else if (hasUrgentKeyword) {
+      return 'medium'; // Actualité importante
     }
     
-    return 'low'; // Pas d'urgence
+    // Source pro sans mots-clés urgents = low (pas de boost automatique)
+    // Cela permet à Reddit d'être sélectionné si son SmartScore est meilleur
+    return 'low'; // Pas d'urgence (news pro sans mots-clés urgents inclus)
   }
 
   // Détecter si on est sur GitHub Actions
