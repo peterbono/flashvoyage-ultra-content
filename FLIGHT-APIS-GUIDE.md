@@ -95,19 +95,14 @@
 - Taïwan (Taipei)
 - Hong Kong
 
-## 🔧 **Test du système**
+## 🔧 **Note**
 
-```bash
-# Tester le générateur ultra-pertinent
-node ultra-pertinent-generator.js
+⚠️ Ce guide documente un système d'APIs qui n'est plus utilisé.
 
-# Vérifier le statut des APIs
-node -e "
-import FlightDataAPIs from './flight-data-apis.js';
-const apis = new FlightDataAPIs();
-console.log(apis.getQuotaStatus());
-"
-```
+Le système actuel utilise `real-stats-scraper.js` qui :
+- Scrape Google Flights et Kayak en priorité
+- Utilise des données publiques en fallback
+- Ne dépend plus des APIs Amadeus/Skyscanner/Kiwi
 
 ## 🎯 **Avantages pour FlashVoyages**
 
