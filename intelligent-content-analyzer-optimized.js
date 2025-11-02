@@ -264,6 +264,15 @@ STRUCTURE IMMERSIVE OBLIGATOIRE:
 
 TON: Inspirant, motivant, authentique
 FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <ul><li>, <strong>, <table>
+Pour les tableaux (si nécessaire), utilise le format WordPress natif:
+<!-- wp:table -->
+<figure class="wp-block-table">
+<table class="has-fixed-layout">
+<thead><tr><th>...</th></tr></thead>
+<tbody><tr><td>...</td></tr></tbody>
+</table>
+</figure>
+<!-- /wp:table -->
 LONGUEUR: 1500-2000 mots
 
 IMPORTANT: Le titre de l'article NE DOIT PAS contenir le nom de l'auteur Reddit. Utilise l'author UNIQUEMENT dans les citations.
