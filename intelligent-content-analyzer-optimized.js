@@ -593,9 +593,62 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
 }`;
 
       case 'ACTUALITE_NOMADE':
-        return basePrompt + `
+        // Détecter si c'est une actualité professionnelle (CNN, Skift) ou un témoignage Reddit
+        const isProfessionalNews = article.source && 
+          (article.source.toLowerCase().includes('cnn') || 
+           article.source.toLowerCase().includes('skift') || 
+           article.source.toLowerCase().includes('travel news') ||
+           article.type === 'news');
+        
+        if (isProfessionalNews) {
+          // Template pour actualités professionnelles (CNN, Skift)
+          return basePrompt + `
 {
-  "title": "{sujet} : Témoignage Reddit et analyse FlashVoyages",
+  "title": "${article.title} : Ce que cela signifie pour les nomades en ${analysis.destination || 'Asie'}",
+  "target_audience": "${analysis.audience}",
+  "ton": "Informé, réactif, pratique, expert",
+  "keywords": "${analysis.keywords}",
+  "cta": "${analysis.cta}",
+  "urgence": "${analysis.urgence}",
+  "destinations": "${analysis.destination}",
+  "content": "IMPORTANT: Génère un article d'ACTUALITÉ professionnelle de 600-800 mots minimum avec cette structure:
+  
+  <p><strong>Source :</strong> <a href=\"${article.link}\" target=\"_blank\" rel=\"noopener\">${article.title}</a> - ${article.source}</p>
+  
+  <h2>L'actualité en bref</h2>
+  <p>Résume l'actualité de manière claire et factuelle (100-150 mots): Quel est l'événement? Quand s'est-il produit? Où? Qui est concerné? Utilise des données concrètes du texte source.</p>
+  
+  <h2>Impact pour les nomades digitaux</h2>
+  <p>Analyse l'impact concret pour la communauté nomade (150-200 mots): Comment cette actualité affecte-t-elle les nomades? Quelles sont les implications pratiques? Utilise des exemples concrets.</p>
+  
+  <h2>Actions à prendre immédiatement</h2>
+  <p>Liste 4-6 actions concrètes à prendre (150-200 mots):</p>
+  <ul>
+    <li>Action 1 : Description détaillée avec explication pratique</li>
+    <li>Action 2 : Description détaillée avec explication pratique</li>
+    <li>Action 3 : Description détaillée avec explication pratique</li>
+    <li>Action 4 : Description détaillée avec explication pratique</li>
+  </ul>
+  
+  <h2>Conseils pratiques FlashVoyages</h2>
+  <p>Ajoute 3-5 conseils pratiques spécifiques basés sur l'actualité (150-200 mots): Comment adapter sa stratégie? Quelles précautions prendre? Comment optimiser sa situation?</p>
+  
+  <h3>Préparer votre voyage</h3>
+  <p>IMPORTANT: Mentionne OBLIGATOIREMENT les aspects pratiques du voyage liés à cette actualité (50-100 mots):
+  - Comment se rendre sur place (vols, routes aériennes impactées)
+  - Où loger une fois sur place (types d'hébergement, quartiers recommandés)
+  - Budget transport et logement estimé
+  Cela permettra d'insérer des outils de comparaison utiles pour le lecteur.</p>
+  
+  <p><em>Cet article a été analysé par notre équipe FlashVoyages — votre spécialiste du nomadisme en Asie.</em></p>
+  
+  TON: Journalistique, factuel, mais avec une approche pratique pour nomades. Évite les formules génériques, utilise les données précises de l'actualité source."
+}`;
+        } else {
+          // Template pour témoignages Reddit (fallback)
+          return basePrompt + `
+{
+  "title": "${article.title} : Témoignage Reddit et analyse FlashVoyages",
   "target_audience": "${analysis.audience}",
   "ton": "Informé, réactif, pratique, personnel",
   "keywords": "${analysis.keywords}",
@@ -634,6 +687,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   
   <p><em>Cet article a été analysé par notre équipe FlashVoyages — votre spécialiste du nomadisme en Asie.</em></p>"
 }`;
+        }
 
       case 'CONSEIL_PRATIQUE':
         return basePrompt + `

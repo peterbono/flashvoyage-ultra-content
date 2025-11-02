@@ -758,17 +758,45 @@ class UltraFreshComplete {
     } else {
       console.log('💻 Mode local - Utilisation de toutes les sources\n');
       
-      // Scraper Reddit (mode local)
-    const redditArticles = await this.scrapeReddit();
-    allArticles.push(...redditArticles);
+      // PRIORITÉ 1: Sources professionnelles d'actualités (CNN, Skift)
+      console.log('📰 Scraping sources professionnelles d\'actualités...');
+      try {
+        // CNN Travel RSS
+        const cnnArticles = await this.scrapeRSSFeed(
+          'http://rss.cnn.com/rss/edition_travel.rss',
+          'CNN Travel',
+          ['asia', 'travel', 'thailand', 'japan', 'korea', 'singapore', 'vietnam', 'philippines', 'indonesia', 'visa', 'nomad']
+        );
+        allArticles.push(...cnnArticles);
+        console.log(`✅ CNN Travel: ${cnnArticles.length} articles trouvés`);
+      } catch (error) {
+        console.log(`⚠️ CNN Travel échoué: ${error.message}`);
+      }
+
+      try {
+        // Skift RSS
+        const skiftArticles = await this.scrapeRSSFeed(
+          'https://skift.com/feed/',
+          'Skift',
+          ['asia', 'travel', 'tourism', 'hotel', 'airline', 'visa', 'nomad', 'digital nomad', 'remote work']
+        );
+        allArticles.push(...skiftArticles);
+        console.log(`✅ Skift: ${skiftArticles.length} articles trouvés`);
+      } catch (error) {
+        console.log(`⚠️ Skift échoué: ${error.message}`);
+      }
+
+      // PRIORITÉ 2: Reddit (mode local)
+      const redditArticles = await this.scrapeReddit();
+      allArticles.push(...redditArticles);
 
       // Scraper Reddit Nomade (mode local)
       const redditNomadArticles = await this.scrapeRedditNomad();
       allArticles.push(...redditNomadArticles);
 
-    // Scraper Google News
-    const googleArticles = await this.scrapeGoogleNews();
-    allArticles.push(...googleArticles);
+      // PRIORITÉ 3: Google News
+      const googleArticles = await this.scrapeGoogleNews();
+      allArticles.push(...googleArticles);
 
       // Scraper Google News Nomade
       const googleNomadArticles = await this.scrapeGoogleNewsNomad();
@@ -777,12 +805,28 @@ class UltraFreshComplete {
 
     // Contenu simulé supprimé - utilisation uniquement de vrais flux RSS
 
-    // Trier avec priorité au SmartScore puis date
+    // Calculer l'urgence pour chaque article (AVANT le tri)
+    allArticles.forEach(article => {
+      article.urgencyScore = this.calculateUrgencyScore(article);
+    });
+
+    // Trier avec priorité ABSOLUE à l'urgence, puis SmartScore puis date
     allArticles.sort((a, b) => {
+      // PRIORITÉ 1: Urgence (high = 3, medium = 2, low = 1)
+      const urgencyOrder = { 'high': 3, 'medium': 2, 'low': 1, undefined: 0 };
+      const aUrgency = urgencyOrder[a.urgencyScore] || 0;
+      const bUrgency = urgencyOrder[b.urgencyScore] || 0;
+      if (bUrgency !== aUrgency) return bUrgency - aUrgency;
+      
+      // PRIORITÉ 2: SmartScore (pour Reddit)
       const as = typeof a.smartScore === 'number' ? a.smartScore : -1;
       const bs = typeof b.smartScore === 'number' ? b.smartScore : -1;
       if (bs !== as) return bs - as;
+      
+      // PRIORITÉ 3: Relevance
       if (b.relevance !== a.relevance) return (b.relevance || 0) - (a.relevance || 0);
+      
+      // PRIORITÉ 4: Date (plus récent en premier)
       return new Date(b.date) - new Date(a.date);
     });
 
@@ -1212,26 +1256,36 @@ class UltraFreshComplete {
       const xmlText = response.data;
       const articles = [];
       
+      // Détecter si c'est une source d'actualité professionnelle
+      const isProfessionalNews = sourceName && 
+        (sourceName.toLowerCase().includes('cnn') || 
+         sourceName.toLowerCase().includes('skift') || 
+         sourceName.toLowerCase().includes('travel news'));
+      
       // Extraction simple des articles
       const titleMatches = xmlText.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/g) || xmlText.match(/<title>(.*?)<\/title>/g) || [];
       const linkMatches = xmlText.match(/<link>(.*?)<\/link>/g) || [];
       const pubDateMatches = xmlText.match(/<pubDate>(.*?)<\/pubDate>/g) || [];
+      const descriptionMatches = xmlText.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/g) || 
+                                 xmlText.match(/<description>(.*?)<\/description>/g) || [];
 
       for (let i = 0; i < Math.min(titleMatches.length, 5); i++) {
         const title = titleMatches[i]?.replace(/<title><!\[CDATA\[(.*?)\]\]><\/title>/, '$1') || 
                      titleMatches[i]?.replace(/<title>(.*?)<\/title>/, '$1') || '';
         const link = linkMatches[i]?.replace(/<link>(.*?)<\/link>/, '$1') || '';
         const pubDate = pubDateMatches[i]?.replace(/<pubDate>(.*?)<\/pubDate>/, '$1') || '';
+        const description = descriptionMatches[i]?.replace(/<description><!\[CDATA\[(.*?)\]\]><\/description>/, '$1') || 
+                           descriptionMatches[i]?.replace(/<description>(.*?)<\/description>/, '$1') || '';
 
         if (title && link) {
           articles.push({
             title: title.trim(),
             link: link.trim(),
-            content: '',
+            content: description ? description.trim().substring(0, 500) : '',
             date: pubDate || new Date().toISOString(),
             source: sourceName,
-            type: 'rss',
-            relevance: this.calculateRelevance(title, '', keywords),
+            type: isProfessionalNews ? 'news' : 'rss', // Type 'news' pour CNN/Skift
+            relevance: this.calculateRelevance(title, description || '', keywords),
             affiliateSlots: this.mapAffiliateSlots(title),
             geo: this.extractGeoMeta(title),
             widget_plan: this.generateWidgetPlan(this.mapAffiliateSlots(title), this.extractGeoMeta(title))
@@ -1245,6 +1299,45 @@ class UltraFreshComplete {
     }
   }
 
+
+  // Calculer le score d'urgence d'un article
+  calculateUrgencyScore(article) {
+    const text = `${article.title} ${article.content || ''}`.toLowerCase();
+    const source = article.source ? article.source.toLowerCase() : '';
+    
+    // Mots-clés urgents
+    const urgentKeywords = [
+      'visa', 'nouveau visa', 'changement visa', 'réglementation',
+      'alerte', 'important', 'urgent', 'immédiat', 'breaking',
+      'nouveau', 'changement', 'mise à jour', 'announcement',
+      'fermeture', 'réouverture', 'restriction', 'interdiction'
+    ];
+    
+    // Source professionnelle = boost
+    const isProfessionalNews = source.includes('cnn') || 
+                                source.includes('skift') || 
+                                source.includes('travel news') ||
+                                article.type === 'news';
+    
+    // Fraîcheur (< 24h = boost)
+    const hoursSince = article.date ? 
+      (Date.now() - new Date(article.date).getTime()) / 3600000 : 999;
+    const isFresh = hoursSince < 24;
+    
+    // Détecter mots-clés urgents
+    const hasUrgentKeyword = urgentKeywords.some(keyword => text.includes(keyword));
+    
+    // Calculer le score d'urgence
+    if (hasUrgentKeyword && isProfessionalNews && isFresh) {
+      return 'high'; // Actualité urgente + source pro + fraîche
+    } else if ((hasUrgentKeyword || isProfessionalNews) && isFresh) {
+      return 'medium'; // Actualité importante ou source pro + fraîche
+    } else if (hasUrgentKeyword || isProfessionalNews) {
+      return 'medium'; // Actualité importante ou source pro
+    }
+    
+    return 'low'; // Pas d'urgence
+  }
 
   // Détecter si on est sur GitHub Actions
   isGitHubActions() {
