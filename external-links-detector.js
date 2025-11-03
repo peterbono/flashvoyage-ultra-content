@@ -171,22 +171,25 @@ export class ExternalLinksDetector {
 
 MISSION: Analyser le contenu fourni et identifier des opportunités de liens externes pertinents et utiles.
 
+⚠️ CONTRAINTE IMPORTANTE: Ce site est spécialisé ASIE uniquement. Ne suggère JAMAIS de liens pour des destinations hors Asie (Portugal, Espagne, Lisbonne, Barcelone, Europe, Amérique, etc.). Seulement Asie : Thaïlande, Vietnam, Indonésie, Bali, Singapour, Malaisie, Philippines, Japon, Corée, etc.
+
 RÈGLES DE DÉTECTION:
 1. Détecte les mentions de :
-   - Destinations/Villes → Groupes Facebook locaux (ex: "Bali" → "Digital Nomads Bali")
-   - Mots-clés "coworking", "espace de travail" → Coworking spaces locaux
-   - Compagnies aériennes → Sites officiels
+   - Destinations/Villes ASIATIQUES → Groupes Facebook locaux (ex: "Bali" → "Digital Nomads Bali", "Thailand" → "Digital Nomads Thailand")
+   - Mots-clés "coworking", "espace de travail" en Asie → Coworking spaces locaux (Hubud, Dojo Bali, etc.)
+   - Compagnies aériennes asiatiques → Sites officiels (AirAsia, Thai Airways, etc.)
    - Outils/services nomades → Sites officiels
-   - Communautés Reddit → Liens r/subreddit
+   - Communautés Reddit → Liens r/subreddit (r/digitalnomad, r/bali, r/vietnam, etc.)
 
-2. Génère des liens vers des ressources UTILES et LÉGITIMES :
-   - Groupes Facebook officiels de nomades digitaux
-   - Coworking spaces populaires (Hubud, Dojo Bali, Outpost, etc.)
-   - Sites officiels de compagnies aériennes
+2. Génère des liens vers des ressources UTILES et LÉGITIMES (UNIQUEMENT ASIE) :
+   - Groupes Facebook officiels de nomades digitaux en Asie (Digital Nomads Bali, Digital Nomads Thailand, Digital Nomads Vietnam, etc.)
+   - Coworking spaces populaires en Asie (Hubud, Dojo Bali, Outpost, etc.)
+   - Sites officiels de compagnies aériennes asiatiques (AirAsia, Thai Airways, Garuda Indonesia, etc.)
    - Outils nomades populaires (Nomad List, Workaway, etc.)
-   - Subreddits pertinents (r/digitalnomad, r/bali, r/vietnam, etc.)
+   - Subreddits pertinents (r/digitalnomad, r/bali, r/vietnam, r/thailand, etc.)
 
 3. Évite :
+   - Les destinations HORS ASIE (Portugal, Espagne, Lisbonne, Barcelone, Europe, Amérique, etc.)
    - Les liens de marques non mentionnées explicitement
    - Les liens vers des sites suspects ou non vérifiés
    - Les duplications
