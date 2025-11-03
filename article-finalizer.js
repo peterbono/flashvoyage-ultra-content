@@ -458,6 +458,7 @@ class ArticleFinalizer {
 
   /**
    * Récupère l'image featured depuis Pexels
+   * CORRECTION: Évite les images déjà utilisées dans d'autres articles
    */
   async getFeaturedImage(article, analysis) {
     console.log('🖼️ Recherche d\'image featured...');
@@ -469,6 +470,10 @@ class ArticleFinalizer {
         console.log('   ⚠️ Clé Pexels non disponible');
         return null;
       }
+
+      // CORRECTION: Charger les images déjà utilisées pour éviter les doublons
+      const usedImages = await this.loadUsedPexelsImages();
+      console.log(`   📋 ${usedImages.size} images déjà utilisées détectées`);
 
       // Construire la requête selon le contexte avec plus de variété
       const baseQueries = [
@@ -488,40 +493,99 @@ class ArticleFinalizer {
         destination = analysis.destinations[0];
       }
 
-      // Sélectionner une query aléatoire
-      const randomQuery = baseQueries[Math.floor(Math.random() * baseQueries.length)];
-      let query = randomQuery;
-      
-      if (destination) {
-        query += ` ${destination}`;
+      // Essayer plusieurs queries et pages pour trouver une image non utilisée
+      let selectedImage = null;
+      let attempts = 0;
+      const maxAttempts = 5;
+
+      while (!selectedImage && attempts < maxAttempts) {
+        // Sélectionner une query aléatoire
+        const randomQuery = baseQueries[Math.floor(Math.random() * baseQueries.length)];
+        let query = randomQuery;
+        
+        if (destination) {
+          query += ` ${destination}`;
+        }
+
+        // Ajouter un paramètre de page aléatoire pour plus de diversité
+        // Augmenter la page si on a déjà essayé plusieurs fois
+        const randomPage = Math.floor(Math.random() * (3 + attempts)) + 1; // Pages 1-3, puis 1-4, etc.
+
+        console.log(`   🔍 Query: "${query}" (page ${randomPage}, tentative ${attempts + 1}/${maxAttempts})`);
+
+        const response = await axios.get('https://api.pexels.com/v1/search', {
+          headers: { 'Authorization': PEXELS_API_KEY },
+          params: {
+            query,
+            per_page: 20, // Plus d'images pour avoir plus de choix
+            orientation: 'landscape',
+            page: randomPage
+          }
+        });
+
+        if (response.data.photos && response.data.photos.length > 0) {
+          // Filtrer les images déjà utilisées
+          const availableImages = response.data.photos.filter(photo => {
+            const imageUrl = photo.src.large || photo.src.original;
+            const imageId = photo.id;
+            // Vérifier par URL ou ID Pexels
+            return !usedImages.has(imageUrl) && !usedImages.has(imageId.toString());
+          });
+
+          if (availableImages.length > 0) {
+            // Sélectionner une image aléatoire parmi celles disponibles
+            const randomIndex = Math.floor(Math.random() * Math.min(availableImages.length, 10));
+            selectedImage = availableImages[randomIndex];
+            
+            console.log(`   ✅ Image sélectionnée (${randomIndex + 1}/${availableImages.length} disponible, ${response.data.photos.length - availableImages.length} déjà utilisées): ${selectedImage.alt}`);
+            
+            // Stocker l'image utilisée pour éviter les futurs doublons
+            await this.saveUsedPexelsImage(selectedImage);
+            
+            return {
+              url: selectedImage.src.large,
+              alt: selectedImage.alt,
+              photographer: selectedImage.photographer,
+              pexelsId: selectedImage.id, // Stocker l'ID Pexels pour référence future
+              pexelsUrl: selectedImage.src.large
+            };
+          } else {
+            console.log(`   ⚠️ Toutes les images de cette page sont déjà utilisées (${response.data.photos.length} images)`);
+          }
+        }
+
+        attempts++;
       }
 
-      // Ajouter un paramètre de page aléatoire pour plus de diversité
-      const randomPage = Math.floor(Math.random() * 3) + 1; // Pages 1-3
-
-      console.log(`   🔍 Query: "${query}" (page ${randomPage})`);
-
-      const response = await axios.get('https://api.pexels.com/v1/search', {
-        headers: { 'Authorization': PEXELS_API_KEY },
-        params: {
-          query,
-          per_page: 10, // Plus d'images pour choisir
-          orientation: 'landscape',
-          page: randomPage
-        }
-      });
-
-      if (response.data.photos && response.data.photos.length > 0) {
-        // Sélectionner une image aléatoire parmi les 10 premières
-        const randomIndex = Math.floor(Math.random() * Math.min(response.data.photos.length, 5));
-        const image = response.data.photos[randomIndex];
+      if (!selectedImage) {
+        console.log('   ⚠️ Aucune image non utilisée trouvée après plusieurs tentatives');
+        // Fallback: retourner une image même si elle est déjà utilisée (mieux que pas d'image)
+        console.log('   ⚠️ Utilisation d\'une image déjà utilisée (fallback)');
+        const response = await axios.get('https://api.pexels.com/v1/search', {
+          headers: { 'Authorization': PEXELS_API_KEY },
+          params: {
+            query: baseQueries[0],
+            per_page: 10,
+            orientation: 'landscape',
+            page: Math.floor(Math.random() * 10) + 1 // Page plus élevée pour trouver des images différentes
+          }
+        });
         
-        console.log(`   ✅ Image sélectionnée (${randomIndex + 1}/${response.data.photos.length}): ${image.alt}`);
-        return {
-          url: image.src.large,
-          alt: image.alt,
-          photographer: image.photographer
-        };
+        if (response.data.photos && response.data.photos.length > 0) {
+          const randomIndex = Math.floor(Math.random() * response.data.photos.length);
+          const image = response.data.photos[randomIndex];
+          
+          console.log(`   ✅ Image sélectionnée (fallback): ${image.alt}`);
+          await this.saveUsedPexelsImage(image);
+          
+          return {
+            url: image.src.large,
+            alt: image.alt,
+            photographer: image.photographer,
+            pexelsId: image.id,
+            pexelsUrl: image.src.large
+          };
+        }
       }
 
       console.log('   ⚠️ Aucune image trouvée');
@@ -529,6 +593,96 @@ class ArticleFinalizer {
     } catch (error) {
       console.error('   ❌ Erreur recherche image:', error.message);
       return null;
+    }
+  }
+
+  /**
+   * Charge les URLs Pexels déjà utilisées depuis la base de données d'articles
+   */
+  async loadUsedPexelsImages() {
+    const usedImages = new Set();
+    
+    try {
+      const fs = await import('fs');
+      const path = await import('path');
+      
+      // Charger depuis articles-database.json
+      const dbPath = path.join(process.cwd(), 'articles-database.json');
+      if (fs.existsSync(dbPath)) {
+        const dbContent = fs.readFileSync(dbPath, 'utf-8');
+        const db = JSON.parse(dbContent);
+        
+        if (db.articles && Array.isArray(db.articles)) {
+          for (const article of db.articles) {
+            // Vérifier si l'article a une URL Pexels stockée
+            if (article.pexels_url) {
+              usedImages.add(article.pexels_url);
+            }
+            if (article.pexels_id) {
+              usedImages.add(article.pexels_id.toString());
+            }
+            // Vérifier aussi dans featured_image si c'est une URL Pexels
+            if (article.featured_image && article.featured_image.includes('pexels.com')) {
+              usedImages.add(article.featured_image);
+            }
+          }
+        }
+      }
+      
+      // Charger aussi depuis un fichier dédié si existe
+      const usedImagesPath = path.join(process.cwd(), 'used-pexels-images.json');
+      if (fs.existsSync(usedImagesPath)) {
+        const usedImagesContent = fs.readFileSync(usedImagesPath, 'utf-8');
+        const usedImagesList = JSON.parse(usedImagesContent);
+        if (Array.isArray(usedImagesList)) {
+          usedImagesList.forEach(url => usedImages.add(url));
+        }
+      }
+    } catch (error) {
+      console.warn('   ⚠️ Erreur chargement images utilisées:', error.message);
+    }
+    
+    return usedImages;
+  }
+
+  /**
+   * Sauvegarde une URL Pexels utilisée pour éviter les doublons futurs
+   */
+  async saveUsedPexelsImage(image) {
+    try {
+      const fs = await import('fs');
+      const path = await import('path');
+      
+      const usedImagesPath = path.join(process.cwd(), 'used-pexels-images.json');
+      let usedImages = [];
+      
+      // Charger les images déjà stockées
+      if (fs.existsSync(usedImagesPath)) {
+        const content = fs.readFileSync(usedImagesPath, 'utf-8');
+        usedImages = JSON.parse(content);
+      }
+      
+      // Ajouter la nouvelle image (par URL et ID)
+      const imageUrl = image.src.large || image.src.original;
+      const imageId = image.id.toString();
+      
+      if (!usedImages.includes(imageUrl)) {
+        usedImages.push(imageUrl);
+      }
+      if (!usedImages.includes(imageId)) {
+        usedImages.push(imageId);
+      }
+      
+      // Limiter à 500 images pour éviter un fichier trop gros
+      if (usedImages.length > 500) {
+        usedImages = usedImages.slice(-500); // Garder les 500 dernières
+      }
+      
+      // Sauvegarder
+      fs.writeFileSync(usedImagesPath, JSON.stringify(usedImages, null, 2));
+      console.log(`   💾 Image sauvegardée dans used-pexels-images.json (${usedImages.length} images totales)`);
+    } catch (error) {
+      console.warn('   ⚠️ Erreur sauvegarde image utilisée:', error.message);
     }
   }
 

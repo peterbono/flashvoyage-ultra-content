@@ -110,3 +110,6 @@ verify-*
 check-*
 setup-*
 configure-*
+
+# Used images tracking (local file to avoid duplicates)
+used-pexels-images.json
