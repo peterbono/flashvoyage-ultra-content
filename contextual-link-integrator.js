@@ -25,8 +25,11 @@ class ContextualLinkIntegrator {
   /**
    * Intégrer les liens suggérés dans le contenu HTML
    * Différencie les liens INTERNES (cherche ancre exacte) et EXTERNES (insertion contextuelle)
+   * @param {string} htmlContent - Contenu HTML de l'article
+   * @param {Array} suggestedLinks - Liste des liens suggérés
+   * @param {Object} context - Contexte de l'article (articleType, destination, etc.)
    */
-  async integrateLinks(htmlContent, suggestedLinks) {
+  async integrateLinks(htmlContent, suggestedLinks, context = {}) {
     console.log('🔗 INTÉGRATION DES LIENS CONTEXTUELS');
     console.log('====================================\n');
 
@@ -175,7 +178,8 @@ class ContextualLinkIntegrator {
           nearbyLinks[0].url,
           nearbyLinks[0].title,
           nearbyKeyword,
-          nearbyPosition
+          nearbyPosition,
+          context
         );
         
         if (insertionResult.inserted) {
@@ -189,7 +193,8 @@ class ContextualLinkIntegrator {
           updatedContent,
           nearbyLinks,
           nearbyKeyword,
-          nearbyPosition
+          nearbyPosition,
+          context
         );
         
         if (insertionResult.inserted) {
@@ -235,8 +240,8 @@ class ContextualLinkIntegrator {
         const fallbackMatch = this.findAnchorInContent(updatedContent, link.anchor_text);
         if (!fallbackMatch) {
           console.log(`⏭️ [INTERNE] Ancre "${candidateAnchor}" non trouvée - Lien ignoré`);
-          linksSkipped++;
-          continue;
+        linksSkipped++;
+        continue;
         }
         // Utiliser le fallback
         anchorMatch = fallbackMatch;
@@ -288,8 +293,15 @@ class ContextualLinkIntegrator {
         continue;
       }
 
-      // 8. Créer le lien HTML
-      const linkHtml = this.createLink(finalAnchor, linkUrl, linkTitle);
+      // 8. Créer le lien HTML avec contexte
+      const linkPosition = enrichedPosition !== -1 ? enrichedPosition : validation.position;
+      const slot = this.determineSlot(linkPosition, updatedContent);
+      const linkContext = {
+        articleType: context.articleType || 'temoignage',
+        destination: context.destination || '',
+        slot: slot
+      };
+      const linkHtml = this.createLink(finalAnchor, linkUrl, linkTitle, linkContext);
 
       // 9. Remplacer l'occurrence validée par le lien dans le HTML
       const beforeLength = updatedContent.length;
@@ -412,13 +424,164 @@ class ContextualLinkIntegrator {
   /**
    * Créer un lien HTML avec le style approprié
    */
-  createLink(anchorText, url, title) {
+  createLink(anchorText, url, title, context = {}) {
     // Déterminer si c'est un lien interne ou externe
     const isInternal = url.includes('flashvoyage.com');
     const target = isInternal ? '_self' : '_blank';
+    
+    // Déterminer si c'est un lien affilié ou non affilié
+    const isAffiliate = this.isAffiliateLink(url);
+    const articleType = context.articleType || 'temoignage';
+    const destination = context.destination || '';
+    const slot = context.slot || '';
+    
+    // Construire les attributs data-*
+    let dataAttributes = '';
+    
+    if (isAffiliate) {
+      // Liens affiliés : data-afftrack, data-slot, data-article-type, data-destination
+      const afftrack = this.generateAffTrack(url, destination, slot);
+      dataAttributes = ` data-afftrack="${afftrack}" data-slot="${slot}" data-article-type="${articleType}" data-destination="${destination}"`;
+    } else if (!isInternal) {
+      // Liens externes non affiliés : data-outtrack, data-slot, data-article-type, data-destination
+      const outtrack = this.generateOutTrack(url, destination, slot);
+      dataAttributes = ` data-outtrack="${outtrack}" data-slot="${slot}" data-article-type="${articleType}" data-destination="${destination}"`;
+      // Ajouter rel="noopener noreferrer nofollow" pour les liens externes non affiliés
+      const rel = ' rel="noopener noreferrer nofollow"';
+      return `<a href="${url}" target="${target}"${rel}${dataAttributes} style="${this.linkStyle}">${anchorText}</a>`;
+    }
+    
     const rel = isInternal ? '' : ' rel="noopener"';
+    return `<a href="${url}" target="${target}"${rel}${dataAttributes} style="${this.linkStyle}">${anchorText}</a>`;
+  }
 
-    return `<a href="${url}" target="${target}"${rel} style="${this.linkStyle}">${anchorText}</a>`;
+  /**
+   * Détermine le slot (position) d'un lien dans l'article
+   * @param {number} position - Position du lien dans le contenu
+   * @param {string} htmlContent - Contenu HTML de l'article
+   * @returns {string} - Slot du lien (intro, lecon-1, checklist, conclusion, etc.)
+   */
+  determineSlot(position, htmlContent) {
+    if (!htmlContent || position < 0) return 'general';
+    
+    // Extraire le contenu avant la position pour analyser le contexte
+    const contentBefore = htmlContent.substring(0, position);
+    
+    // Détecter les sections H2 pour identifier le slot
+    const h2Matches = contentBefore.match(/<h2[^>]*>([^<]+)<\/h2>/gi);
+    if (h2Matches) {
+      const lastH2 = h2Matches[h2Matches.length - 1];
+      const h2Text = lastH2.replace(/<[^>]*>/g, '').toLowerCase();
+      
+      // Identifier le slot basé sur le titre H2
+      if (h2Text.includes('introduction') || h2Text.includes('intro')) return 'intro';
+      if (h2Text.includes('leçon') || h2Text.includes('lecons')) {
+        // Extraire le numéro de la leçon si présent
+        const lessonMatch = h2Text.match(/leçon\s*(\d+)|lecons\s*(\d+)/i);
+        if (lessonMatch) {
+          const lessonNum = lessonMatch[1] || lessonMatch[2] || '1';
+          return `lecon-${lessonNum}`;
+        }
+        return 'lecon-1';
+      }
+      if (h2Text.includes('checklist')) return 'checklist';
+      if (h2Text.includes('conclusion') || h2Text.includes('prépare')) return 'conclusion';
+      if (h2Text.includes('ressource')) return 'ressources';
+      if (h2Text.includes('glossaire')) return 'glossaire';
+      if (h2Text.includes('chronologie') || h2Text.includes('timeline')) return 'timeline';
+    }
+    
+    // Si pas de H2, déterminer basé sur la position dans l'article
+    const contentLength = htmlContent.length;
+    const positionPercent = (position / contentLength) * 100;
+    
+    if (positionPercent < 10) return 'intro';
+    if (positionPercent < 30) return 'developpement-1';
+    if (positionPercent < 60) return 'developpement-2';
+    if (positionPercent < 85) return 'developpement-3';
+    return 'conclusion';
+  }
+
+  /**
+   * Détermine si un lien est affilié (Airalo, Kiwi, Aviasales, etc.)
+   */
+  isAffiliateLink(url) {
+    if (!url) return false;
+    const affiliateDomains = [
+      'airalo.com',
+      'kiwi.com',
+      'aviasales.com',
+      'travelpayouts.com',
+      'trpwdg.com'
+    ];
+    return affiliateDomains.some(domain => url.toLowerCase().includes(domain));
+  }
+
+  /**
+   * Génère l'identifiant data-afftrack pour les liens affiliés
+   * Format: [partenaire]-[usage]-[destination]
+   */
+  generateAffTrack(url, destination, slot) {
+    let partner = 'unknown';
+    let usage = 'general';
+    
+    // Identifier le partenaire
+    if (url.includes('airalo.com') || url.includes('airalo')) {
+      partner = 'airalo';
+      usage = 'esim';
+    } else if (url.includes('kiwi.com') || url.includes('kiwi')) {
+      partner = 'kiwi';
+      usage = 'vol';
+    } else if (url.includes('aviasales.com') || url.includes('aviasales')) {
+      partner = 'aviasales';
+      usage = 'vol';
+    } else if (url.includes('travelpayouts.com') || url.includes('trpwdg.com')) {
+      partner = 'travelpayouts';
+      usage = 'widget';
+    }
+    
+    // Normaliser la destination (enlever espaces, caractères spéciaux)
+    const normalizedDest = destination.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+    
+    // Normaliser le slot (enlever espaces, caractères spéciaux)
+    const normalizedSlot = slot.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+    
+    // Construire l'identifiant
+    const afftrack = normalizedDest 
+      ? `${partner}-${usage}-${normalizedDest}${normalizedSlot ? '-' + normalizedSlot : ''}`
+      : `${partner}-${usage}${normalizedSlot ? '-' + normalizedSlot : ''}`;
+    
+    return afftrack;
+  }
+
+  /**
+   * Génère l'identifiant data-outtrack pour les liens externes non affiliés
+   * Format: [marque]-[contexte]-[destination]
+   */
+  generateOutTrack(url, destination, slot) {
+    // Extraire le domaine/marque de l'URL
+    let brand = 'unknown';
+    try {
+      const urlObj = new URL(url);
+      const hostname = urlObj.hostname.replace(/^www\./, '');
+      // Extraire le nom de domaine principal (ex: airbnb.com -> airbnb)
+      brand = hostname.split('.')[0].toLowerCase();
+    } catch (e) {
+      // Si l'URL n'est pas valide, utiliser "unknown"
+    }
+    
+    // Normaliser la destination
+    const normalizedDest = destination.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+    
+    // Normaliser le slot/contexte
+    const normalizedSlot = slot.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+    
+    // Construire l'identifiant
+    const outtrack = normalizedDest
+      ? `${brand}-${normalizedSlot || 'general'}-${normalizedDest}`
+      : `${brand}-${normalizedSlot || 'general'}`;
+    
+    return outtrack;
   }
 
   /**
@@ -659,9 +822,15 @@ class ContextualLinkIntegrator {
   /**
    * Insérer un seul lien externe (structure simple)
    */
-  insertSingleExternalLink(htmlContent, anchorText, url, title, keyword, position) {
-    const linkHtml = this.createLink(anchorText, url, title);
+  insertSingleExternalLink(htmlContent, anchorText, url, title, keyword, position, context = {}) {
     const insertionPoint = position.position + (position.keywordLength || keyword.length);
+    const slot = this.determineSlot(insertionPoint, htmlContent);
+    const linkContext = {
+      articleType: context.articleType || 'temoignage',
+      destination: context.destination || '',
+      slot: slot
+    };
+    const linkHtml = this.createLink(anchorText, url, title, linkContext);
     const beforeText = htmlContent.substring(0, insertionPoint);
     const afterText = htmlContent.substring(insertionPoint);
     
@@ -714,10 +883,10 @@ class ContextualLinkIntegrator {
   /**
    * Insérer plusieurs liens externes avec une phrase structurée générée par LLM
    */
-  async insertMultipleExternalLinks(htmlContent, links, keyword, position) {
+  async insertMultipleExternalLinks(htmlContent, links, keyword, position, context = {}) {
     if (!this.useLLM || !this.openai) {
       // Fallback sans LLM : structure simple
-      return this.insertMultipleExternalLinksFallback(htmlContent, links, keyword, position);
+      return this.insertMultipleExternalLinksFallback(htmlContent, links, keyword, position, context);
     }
 
     try {
@@ -777,7 +946,13 @@ Génère une phrase de transition naturelle qui introduit ces liens de manière 
       
       // Remplacer les références aux liens par les ancres réelles
       // Ex: "Dojo Bali, Hubud Bali et Digital Nomads Bali"
-      const linkHtmls = links.map(link => this.createLink(link.anchor, link.url, link.title));
+      const slot = this.determineSlot(insertionPoint, htmlContent);
+      const linkContext = {
+        articleType: context.articleType || 'temoignage',
+        destination: context.destination || '',
+        slot: slot
+      };
+      const linkHtmls = links.map(link => this.createLink(link.anchor, link.url, link.title, linkContext));
       
       // Construire la phrase avec les liens
       let finalText = transitionText;
@@ -805,20 +980,26 @@ Génère une phrase de transition naturelle qui introduit ces liens de manière 
       
     } catch (error) {
       console.warn('⚠️ Erreur génération LLM pour phrase de transition, fallback:', error.message);
-      return this.insertMultipleExternalLinksFallback(htmlContent, links, keyword, position);
+      return this.insertMultipleExternalLinksFallback(htmlContent, links, keyword, position, context);
     }
   }
 
   /**
    * Fallback pour insérer plusieurs liens sans LLM
    */
-  insertMultipleExternalLinksFallback(htmlContent, links, keyword, position) {
+  insertMultipleExternalLinksFallback(htmlContent, links, keyword, position, context = {}) {
     const insertionPoint = position.position + (position.keywordLength || keyword.length);
     const beforeText = htmlContent.substring(0, insertionPoint);
     const afterText = htmlContent.substring(insertionPoint);
     
-    // Construire les liens HTML
-    const linkHtmls = links.map(link => this.createLink(link.anchor, link.url, link.title));
+    // Construire les liens HTML avec contexte
+    const slot = this.determineSlot(insertionPoint, htmlContent);
+    const linkContext = {
+      articleType: context.articleType || 'temoignage',
+      destination: context.destination || '',
+      slot: slot
+    };
+    const linkHtmls = links.map(link => this.createLink(link.anchor, link.url, link.title, linkContext));
     
     // Structure simple : "Si vous êtes à la recherche de..., nous vous recommandons..."
     let transitionText = 'Si vous êtes à la recherche d\'espaces de coworking ou de communautés de nomades digitaux, nous vous recommandons de découvrir ';

@@ -72,14 +72,48 @@ const ALTERNATIVE_SOURCES = {
     name: 'Reddit Travel',
     url: 'https://www.reddit.com/r/travel/new.json',
     type: 'community',
-    keywords: ['asia', 'thailand', 'japan', 'korea', 'singapore', 'vietnam'],
+    // UNIQUEMENT les destinations officielles: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
+    keywords: [
+      // Indonésie
+      'indonesia', 'indonésie', 'bali', 'jakarta', 'yogyakarta', 'bandung', 'surabaya', 'medan', 'ubud', 'seminyak', 'canggu', 'lombok',
+      // Vietnam
+      'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
+      // Thaïlande
+      'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'chiangmai', 'phuket', 'krabi', 'pattaya', 'koh samui', 'koh phangan', 'koh tao', 'pai', 'ayutthaya', 'sukhothai',
+      // Japon
+      'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'hokkaido', 'hokkaidō', 'hiroshima', 'nara', 'sapporo', 'fukuoka', 'okinawa', 'yokohama', 'nagoya', 'sendai',
+      // Corée du Sud
+      'korea', 'corée', 'south korea', 'corée du sud', 'seoul', 'séoul', 'busan', 'pusan', 'jeju', 'jeju island', 'incheon', 'daegu', 'gwangju', 'ulsan',
+      // Philippines
+      'philippines', 'philippine', 'manila', 'cebu', 'boracay', 'palawan', 'el nido', 'coron', 'siargao', 'bohol', 'davao', 'baguio', 'makati',
+      // Singapour
+      'singapore', 'singapour'
+    ],
     working: true
   },
   reddit_nomad: {
     name: 'Reddit Digital Nomad',
     url: 'https://www.reddit.com/r/digitalnomad/new.json',
     type: 'nomade',
-    keywords: ['digital nomad', 'nomade numérique', 'coliving', 'visa', 'asie', 'asia'],
+    // UNIQUEMENT les destinations officielles: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
+    keywords: [
+      // Mots-clés nomades génériques
+      'digital nomad', 'nomade numérique', 'coliving', 'visa',
+      // Indonésie
+      'indonesia', 'indonésie', 'bali', 'jakarta', 'yogyakarta', 'bandung', 'surabaya', 'medan', 'ubud', 'seminyak', 'canggu', 'lombok',
+      // Vietnam
+      'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
+      // Thaïlande
+      'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'chiangmai', 'phuket', 'krabi', 'pattaya', 'koh samui', 'koh phangan', 'koh tao', 'pai', 'ayutthaya', 'sukhothai',
+      // Japon
+      'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'hokkaido', 'hokkaidō', 'hiroshima', 'nara', 'sapporo', 'fukuoka', 'okinawa', 'yokohama', 'nagoya', 'sendai',
+      // Corée du Sud
+      'korea', 'corée', 'south korea', 'corée du sud', 'seoul', 'séoul', 'busan', 'pusan', 'jeju', 'jeju island', 'incheon', 'daegu', 'gwangju', 'ulsan',
+      // Philippines
+      'philippines', 'philippine', 'manila', 'cebu', 'boracay', 'palawan', 'el nido', 'coron', 'siargao', 'bohol', 'davao', 'baguio', 'makati',
+      // Singapour
+      'singapore', 'singapour'
+    ],
     working: true
   },
   reddit_expats: {
@@ -355,10 +389,26 @@ class UltraFreshComplete {
   }
 
   // Extract simple geo entities from title for diversity (very lightweight)
+  // UNIQUEMENT les destinations de la liste officielle: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
   extractGeoMeta(title) {
     const t = (title || '').toLowerCase();
-    const countries = ['thailand','vietnam','philippines','indonesia','japan','singapore','malaysia','taiwan','hong kong'];
-    const cities = ['bangkok','chiang mai','phuket','krabi','pattaya','ho chi minh','hanoi','da nang','bali','jakarta','manila','cebu','tokyo','osaka','kyoto','singapore'];
+    const countries = ['thailand','thaïlande','vietnam','philippines','indonesia','indonésie','japan','japon','korea','corée','singapore','singapour'];
+    const cities = [
+      // Thaïlande
+      'bangkok','chiang mai','chiangmai','phuket','krabi','pattaya','koh samui','koh phangan','koh tao','pai',
+      // Vietnam
+      'ho chi minh','hanoi','hồ chí minh','hà nội','da nang','đà nẵng','hue','huế','hoi an','hội an','nha trang','sapa','sa pa',
+      // Indonésie
+      'bali','jakarta','yogyakarta','bandung','surabaya','medan','ubud','seminyak','canggu','lombok',
+      // Philippines
+      'manila','cebu','boracay','palawan','el nido','coron','siargao','bohol','davao','baguio','makati',
+      // Japon
+      'tokyo','kyoto','osaka','hokkaido','hokkaidō','hiroshima','nara','sapporo','fukuoka','okinawa','yokohama','nagoya','sendai',
+      // Corée du Sud
+      'seoul','séoul','busan','pusan','jeju','jeju island','incheon','daegu','gwangju','ulsan',
+      // Singapour
+      'singapore','singapour'
+    ];
     const foundCountry = countries.find(c => t.includes(c)) || null;
     const foundCity = cities.find(c => t.includes(c)) || null;
     return { country: foundCountry, city: foundCity };
@@ -1405,12 +1455,52 @@ UltraFreshComplete.prototype.computeSmartScore = function(postData, subredditSta
     penalties: 0
   };
 
-  // 1. Pertinence Asie / Nomad
-  const asiaKeywords = ['asia','thailand','vietnam','philippines','indonesia','japan','singapore','malaysia','taiwan','hong kong','chiang mai','bangkok','ho chi minh','bali'];
-  if (asiaKeywords.some(k => text.includes(k))) scores.relevance_asia_nomad += 10;
-  if (text.includes('nomad') || text.includes('visa') || text.includes('coworking') || text.includes('coliving')) scores.relevance_asia_nomad += 10;
-  if (scores.relevance_asia_nomad >= 10) reasons.push('Asie détectée');
-  if (scores.relevance_asia_nomad >= 20) reasons.push('Nomad/visa/coworking détecté');
+  // 1. Pertinence Asie / Nomad - UNIQUEMENT les destinations de la liste officielle
+  // Liste officielle: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
+  const asiaKeywords = [
+    // Indonésie
+    'indonesia', 'indonésie', 'bali', 'jakarta', 'yogyakarta', 'bandung', 'surabaya', 'medan', 'ubud', 'seminyak', 'canggu', 'lombok',
+    // Vietnam
+    'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
+    // Thaïlande
+    'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'chiangmai', 'phuket', 'krabi', 'pattaya', 'koh samui', 'koh phangan', 'koh tao', 'pai', 'ayutthaya', 'sukhothai',
+    // Japon
+    'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'hokkaido', 'hokkaidō', 'hiroshima', 'nara', 'sapporo', 'fukuoka', 'okinawa', 'yokohama', 'nagoya', 'sendai',
+    // Corée du Sud
+    'korea', 'corée', 'south korea', 'corée du sud', 'seoul', 'séoul', 'busan', 'pusan', 'jeju', 'jeju island', 'incheon', 'daegu', 'gwangju', 'ulsan',
+    // Philippines
+    'philippines', 'philippine', 'manila', 'cebu', 'boracay', 'palawan', 'el nido', 'coron', 'siargao', 'bohol', 'davao', 'baguio', 'makati',
+    // Singapour
+    'singapore', 'singapour'
+  ];
+  const nonAsiaDestinations = ['istanbul','turkey','turquie','portugal','spain','espagne','lisbon','lisbonne','barcelona','barcelone','greece','grèce','cyprus','france','paris','london','londres','italy','italie','rome','europe','america','usa','brazil','brésil','rio','mexico','mexique','malaysia','malaisie','taiwan','hong kong'];
+  
+  // Vérifier d'abord si une destination non-asiatique est mentionnée
+  const hasNonAsiaDestination = nonAsiaDestinations.some(dest => text.includes(dest));
+  
+  // Si une destination non-asiatique est mentionnée ET qu'aucune destination asiatique n'est mentionnée, pénaliser FORTEMENT
+  if (hasNonAsiaDestination && !asiaKeywords.some(k => text.includes(k))) {
+    scores.relevance_asia_nomad = 0;
+    scores.penalties -= 50; // Pénalité TRÈS forte pour destinations hors Asie (rejet automatique)
+    reasons.push('Destination hors Asie détectée - REJET');
+  } else {
+    // Sinon, appliquer le scoring normal
+    if (asiaKeywords.some(k => text.includes(k))) {
+      scores.relevance_asia_nomad += 10;
+      reasons.push('Asie détectée');
+    }
+    // Les mots-clés nomades ne donnent des points QUE si une destination asiatique est aussi mentionnée
+    if ((text.includes('nomad') || text.includes('visa') || text.includes('coworking') || text.includes('coliving')) && asiaKeywords.some(k => text.includes(k))) {
+      scores.relevance_asia_nomad += 10;
+      reasons.push('Nomad/visa/coworking détecté');
+    }
+    // BONUS pour les articles Reddit sur les destinations asiatiques : donner des points supplémentaires pour l'actionnabilité
+    if (asiaKeywords.some(k => text.includes(k)) && scores.actionability === 0) {
+      // Si c'est une destination asiatique mais pas d'actionnabilité, donner un bonus plus important
+      scores.actionability += 10;
+      reasons.push('Bonus actionnabilité (destination Asie)');
+    }
+  }
 
   // 2. Actionnabilité
   if (/(price|cost|guide|visa|how to|where|address|recommend|tips|avoid)/i.test(text)) scores.actionability += 10;
@@ -1458,9 +1548,17 @@ UltraFreshComplete.prototype.computeSmartScore = function(postData, subredditSta
   const affiliateSlots = this.mapAffiliateSlots(text);
 
   // 10. Pénalités
-  if (!asiaKeywords.some(k => text.includes(k))) {
+  const hasAsiaKeyword = asiaKeywords.some(k => text.includes(k));
+  if (!hasAsiaKeyword) {
     // Si travel terms présents → malus léger, sinon malus fort
     scores.penalties -= /(travel|visa|cost|coworking|coliving|flight|hotel)/.test(text) ? 5 : 10;
+  } else {
+    // BONUS pour les articles sur les destinations asiatiques : réduire les pénalités si pas de monétisation
+    // Les articles Reddit sur les destinations asiatiques sont acceptables même sans mots-clés affiliables
+    if ((scores.monetization_fit || 0) === 0) {
+      // Pas de pénalité supplémentaire si c'est une destination asiatique
+      // (la pénalité de -10 est déjà appliquée plus bas, mais on ne l'augmente pas)
+    }
   }
   if (/(politics|relationship|relationships|religion)/i.test(text) && !/(travel|visa|safety|culture|dating|coliving)/i.test(text)) {
     scores.penalties -= 15;
@@ -1479,9 +1577,17 @@ UltraFreshComplete.prototype.computeSmartScore = function(postData, subredditSta
   }
 
   // 13. Interdiction primary_source si pas de monétisation
+  // MAIS : Réduire la pénalité pour les articles Reddit sur les destinations asiatiques
   if ((scores.monetization_fit || 0) === 0) {
-    scores.penalties -= 10;
-    reasons.push('Aucun mot affiliable détecté → limites monétisation');
+    if (hasAsiaKeyword) {
+      // Pénalité très réduite pour les articles Reddit sur les destinations asiatiques
+      // Les articles Reddit sur les destinations asiatiques sont acceptables même sans mots-clés affiliables
+      scores.penalties -= 2;
+      reasons.push('Aucun mot affiliable détecté → pénalité très réduite (destination Asie)');
+    } else {
+      scores.penalties -= 10;
+      reasons.push('Aucun mot affiliable détecté → limites monétisation');
+    }
   }
 
   // Règle contextualisée: si topic sensible détecté, exiger un minimum d'actionnabilité
@@ -1496,7 +1602,12 @@ UltraFreshComplete.prototype.computeSmartScore = function(postData, subredditSta
 
   // 14. Rejet final des contenus problématiques
   let finalDecision = 'reject';
-  if (contextualSensitive && (scores.monetization_fit || 0) === 0) {
+  
+  // REJET AUTOMATIQUE pour destinations non-asiatiques (spécialisation Asie)
+  if (hasNonAsiaDestination && !asiaKeywords.some(k => text.includes(k))) {
+    finalDecision = 'reject';
+    reasons.push('Destination hors Asie → REJET AUTOMATIQUE (spécialisation Asie)');
+  } else if (contextualSensitive && (scores.monetization_fit || 0) === 0) {
     finalDecision = 'reject';
     reasons.push('Sujet sensible + pas de monétisation → rejet définitif');
   } else if (total >= SMART_SCORE_THRESHOLDS.publish_primary) {

@@ -58,13 +58,57 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         throw new Error('Aucune source disponible');
       }
 
-      // 2. Filtrer les articles rejetés par le scoring
+      // 2. Filtrer les articles rejetés par le scoring ET les destinations non-asiatiques
+      // UNIQUEMENT les destinations de la liste officielle: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
+      const asiaDestinations = [
+        // Indonésie
+        'indonesia', 'indonésie', 'bali', 'jakarta', 'yogyakarta', 'bandung', 'surabaya', 'medan', 'ubud', 'seminyak', 'canggu', 'lombok',
+        // Vietnam
+        'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
+        // Thaïlande
+        'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'chiangmai', 'phuket', 'krabi', 'pattaya', 'koh samui', 'koh phangan', 'koh tao', 'pai', 'ayutthaya', 'sukhothai',
+        // Japon
+        'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'hokkaido', 'hokkaidō', 'hiroshima', 'nara', 'sapporo', 'fukuoka', 'okinawa', 'yokohama', 'nagoya', 'sendai',
+        // Corée du Sud
+        'korea', 'corée', 'south korea', 'corée du sud', 'seoul', 'séoul', 'busan', 'pusan', 'jeju', 'jeju island', 'incheon', 'daegu', 'gwangju', 'ulsan',
+        // Philippines
+        'philippines', 'philippine', 'manila', 'cebu', 'boracay', 'palawan', 'el nido', 'coron', 'siargao', 'bohol', 'davao', 'baguio', 'makati',
+        // Singapour
+        'singapore', 'singapour'
+      ];
+      const nonAsiaDestinations = ['istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'lisbon', 'lisbonne', 'barcelona', 'barcelone', 'greece', 'grèce', 'cyprus', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'america', 'usa', 'brazil', 'brésil', 'rio', 'mexico', 'mexique'];
+      
       const validSources = sources.filter(article => {
-        // Ignorer les articles rejetés par le scoring
+        const articleText = `${article.title || ''} ${article.content || ''} ${article.selftext || ''}`.toLowerCase();
+        const hasNonAsiaDestination = nonAsiaDestinations.some(dest => articleText.includes(dest));
+        const hasAsiaDestination = asiaDestinations.some(dest => articleText.includes(dest));
+        
+        // FILTRE 0: UNIQUEMENT les articles Reddit (type: 'community' ou 'nomade') pour le format témoignage
+        // Les sources non-Reddit (Skift, CNN, etc.) seront retravaillées plus tard dans un autre template
+        if (article.type !== 'community' && article.type !== 'nomade') {
+          console.log(`🚫 Article rejeté (source non-Reddit, format témoignage requis): ${article.title} (type: ${article.type})`);
+          return false;
+        }
+        
+        // FILTRE 1: Rejeter TOUS les articles qui mentionnent des destinations non-asiatiques
+        // Même s'ils mentionnent aussi des destinations asiatiques, on veut uniquement des articles sur l'Asie
+        if (hasNonAsiaDestination) {
+          console.log(`🚫 Article rejeté (destination non-asiatique détectée): ${article.title}`);
+          return false;
+        }
+        
+        // FILTRE 2: Exiger qu'au moins une destination asiatique soit mentionnée
+        if (!hasAsiaDestination) {
+          console.log(`🚫 Article rejeté (aucune destination asiatique): ${article.title}`);
+          return false;
+        }
+        
+        // FILTRE 3: Ignorer les articles rejetés par le scoring
         if (article.smartDecision === 'reject') {
           console.log(`⚠️ Article rejeté ignoré: ${article.title}`);
           return false;
         }
+        
         return true;
       });
 
@@ -81,7 +125,17 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
 
       // 3. Analyse intelligente du contenu
       console.log('🧠 Analyse intelligente du contenu...');
+      console.log('🔍 DEBUG: selectedArticle.geo:', selectedArticle.geo);
       const analysis = await this.intelligentAnalyzer.analyzeContent(selectedArticle);
+      // S'assurer que analysis.geo utilise les informations de l'article source Reddit
+      if (!analysis.geo && selectedArticle.geo) {
+        analysis.geo = selectedArticle.geo;
+        console.log('✅ analysis.geo assigné depuis selectedArticle.geo:', analysis.geo);
+      } else if (analysis.geo) {
+        console.log('✅ analysis.geo déjà défini:', analysis.geo);
+      } else {
+        console.log('⚠️ analysis.geo non défini, selectedArticle.geo:', selectedArticle.geo);
+      }
       console.log('✅ Analyse terminée:', analysis.type_contenu);
 
       // 4. Génération de contenu intelligent
@@ -192,6 +246,17 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         }
       };
 
+      // VALIDATION FINALE: Vérifier qu'aucune destination non-asiatique n'est mentionnée dans le contenu final
+      const finalContentText = `${finalArticle.title} ${finalArticle.content}`.toLowerCase();
+      const finalNonAsiaDestinations = ['portugal', 'spain', 'espagne', 'lisbon', 'lisbonne', 'barcelona', 'barcelone', 'madrid', 'porto', 'france', 'paris', 'italy', 'italie', 'rome', 'greece', 'grèce', 'turkey', 'turquie', 'istanbul', 'europe', 'america', 'usa', 'brazil', 'brésil', 'mexico', 'mexique'];
+      const hasNonAsiaDestination = finalNonAsiaDestinations.some(dest => finalContentText.includes(dest));
+      
+      if (hasNonAsiaDestination) {
+        console.error(`❌ ERREUR CRITIQUE: Destination non-asiatique détectée dans le contenu final !`);
+        console.error(`   Contenu rejeté avant publication`);
+        throw new Error(`ERREUR CRITIQUE: Destination non-asiatique détectée dans le contenu final. Article rejeté.`);
+      }
+      
       console.log('📊 Article final construit:', {
         title: finalArticle.title,
         contentLength: finalArticle.content.length,
@@ -223,9 +288,16 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           ? finalArticle.content 
           : String(finalArticle.content || '');
         
-        const enrichedContent = this.linkingStrategy.integrateAllLinks(
+        // Préparer le contexte pour les liens (articleType, destination)
+        const linkContext = {
+          articleType: analysis.type || analysis.type_contenu || 'temoignage',
+          destination: analysis.destination || analysis.destinations?.[0] || ''
+        };
+        
+        const enrichedContent = await this.linkingStrategy.integrateAllLinks(
           contentToEnrich,
-          linkingStrategyResult
+          linkingStrategyResult,
+          linkContext
         );
 
         // Mettre à jour le contenu avec les liens (s'assurer que c'est une string)
@@ -337,20 +409,21 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   }
 
   // Extraire les destinations du contenu généré
+  // UNIQUEMENT les destinations asiatiques officielles: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
   extractDestinationsFromContent(content) {
     const destinations = [];
     const contentToAnalyze = (content || '').toLowerCase();
     
+    // UNIQUEMENT les destinations asiatiques officielles
     const destinationKeywords = {
       'thailand': ['thailand', 'thaïlande', 'bangkok', 'chiang mai', 'phuket', 'krabi', 'pattaya', 'pad thaï', 'tuk-tuk'],
       'vietnam': ['vietnam', 'hanoi', 'ho chi minh', 'saigon', 'da nang', 'hue', 'nha trang'],
-      'indonesia': ['indonesia', 'indonésie', 'bali', 'jakarta', 'ubud', 'yogyakarta', 'bandung'],
+      'indonesia': ['indonesia', 'indonésie', 'bali', 'jakarta', 'ubud', 'yogyakarta', 'bandung', 'canggu', 'seminyak', 'lombok'],
       'japan': ['japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'nagoya', 'fukuoka'],
       'philippines': ['philippines', 'manila', 'cebu', 'davao', 'boracay', 'palawan'],
-      'malaysia': ['malaysia', 'malaisie', 'kuala lumpur', 'penang', 'langkawi', 'johor'],
-      'singapore': ['singapore', 'singapour'],
-      'spain': ['spain', 'espagne', 'madrid', 'barcelona', 'barcelone', 'valencia', 'seville', 'bilbao', 'siesta'],
-      'portugal': ['portugal', 'lisbon', 'lisbonne', 'porto', 'coimbra', 'faro', 'tage']
+      'korea': ['korea', 'corée', 'south korea', 'corée du sud', 'seoul', 'séoul', 'busan', 'pusan', 'jeju'],
+      'singapore': ['singapore', 'singapour']
+      // SUPPRIMÉ: 'spain', 'portugal', 'malaysia' - destinations non-asiatiques interdites
     };
     
     // Compter les mentions pour chaque destination
@@ -370,11 +443,19 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     }
     
     // Retourner la destination avec le score le plus élevé
+    // VALIDATION: Rejeter les destinations non-asiatiques
+    const nonAsiaDestinations = ['spain', 'portugal', 'france', 'italy', 'greece', 'turkey', 'europe', 'america', 'usa', 'brazil', 'mexico', 'malaysia'];
     if (Object.keys(destinationScores).length > 0) {
       const bestDestination = Object.entries(destinationScores)
-        .sort(([,a], [,b]) => b - a)[0][0];
-      destinations.push(bestDestination);
-      console.log(`🏆 Destination principale: ${bestDestination}`);
+        .filter(([dest]) => !nonAsiaDestinations.includes(dest.toLowerCase()))
+        .sort(([,a], [,b]) => b - a)[0];
+      
+      if (bestDestination) {
+        destinations.push(bestDestination[0]);
+        console.log(`🏆 Destination principale: ${bestDestination[0]}`);
+      } else {
+        console.log(`⚠️ Aucune destination asiatique trouvée dans le contenu`);
+      }
     }
     
     return destinations;

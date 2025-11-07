@@ -99,6 +99,7 @@ ANALYSE REQUISE:
 RÉPONDRE UNIQUEMENT EN JSON VALIDE:
 {
   "type_contenu": "TEMOIGNAGE_SUCCESS_STORY",
+  "type": "TEMOIGNAGE_SUCCESS_STORY",
   "sous_categorie": "visa",
   "angle": "inspirant",
   "audience": "nomades_debutants_vietnam",
@@ -110,7 +111,14 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:
   "recommandation": "generation_llm",
   "template_specifique": "success_story",
   "raison": "Récit de réussite avec conseils pratiques pour débutants"
-}`;
+}
+
+IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour les témoignages, utilisez les valeurs exactes:
+- "TEMOIGNAGE_SUCCESS_STORY" pour les récits de réussite
+- "TEMOIGNAGE_ECHEC_LEÇONS" pour les échecs et leçons apprises
+- "TEMOIGNAGE_TRANSITION" pour les transitions de vie
+- "TEMOIGNAGE_COMPARAISON" pour les comparaisons
+- Et les autres types de contenu selon la liste ci-dessus.`;
 
       const response = await axios.post('https://api.openai.com/v1/chat/completions', {
         model: 'gpt-4',
@@ -125,6 +133,8 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:
       });
 
       const analysis = JSON.parse(response.data.choices[0].message.content);
+      // Verrouiller le type pour le plan de widgets
+      analysis.type = analysis.type_contenu || analysis.type || 'Témoignage';
       return analysis;
 
     } catch (error) {
@@ -204,7 +214,47 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
 
   // APPEL 2 : Génération finale avec contexte système
   async generateFinalArticle(extraction, analysis, article) {
+    // Construire la section marketing d'affiliation pour les témoignages
+    const isTemoignage = analysis.type_contenu && analysis.type_contenu.startsWith('TEMOIGNAGE_');
+    const marketingSection = isTemoignage ? `
+16. SECTION "Leçons clés pour les nomades numériques à [DESTINATION]" (OBLIGATOIRE pour témoignages)
+   - Crée un H2 exact : "Leçons clés pour les nomades numériques à [NOM DU PAYS/VILLE]"
+   - Ajoute 3 à 5 sous-parties (paragraphes ou H3) avec ce schéma :
+     - Problème concret tiré du témoignage
+     - Leçon actionnable
+     - Mention explicite d'un besoin de vol ou de connectivité si pertinent :
+       - Vols : phrases du type "Avant de partir / pour organiser votre trajet vers [DESTINATION], comparez les vols vers [DESTINATION] avec un comparateur dédié."
+       - Connectivité : phrases du type "Pour éviter les mauvaises surprises avec Internet, équipez-vous d'une eSIM avant d'atterrir à [DESTINATION]."
+
+17. SECTION "Checklist pratique avant de partir pour [DESTINATION]" (OBLIGATOIRE pour témoignages)
+   - Crée un H2 exact : "Checklist pratique avant de partir pour [DESTINATION]"
+   - Liste 5 à 7 bullet points, dont obligatoirement :
+     - un point avec le mot-clé "vols vers [DESTINATION]" ou "comparer les vols"
+     - un point avec les mots-clés "eSIM", "connexion internet", "SIM"
+     - un point "vérifier le visa / formalités"
+   - Le texte doit rester neutre (pas de ton pub), mais contenir ces mots-clés pour que le système de widgets et les sélecteurs de liens puissent accrocher.
+
+18. SECTION FINALE "Préparez votre prochain départ" (OBLIGATOIRE pour témoignages)
+   - Crée un H2 exact : "Préparez votre prochain départ"
+   - Rédige un paragraphe court (2–3 phrases) qui résume :
+     - l'intérêt de planifier les vols
+     - l'intérêt d'avoir une eSIM prête
+   - NE PAS insérer de <script> dans le texte : juste des phrases incitatives naturelles.
+   - À la fin du paragraphe, insère exactement la ligne suivante pour marquer l'emplacement d'un widget vols :
+     {{TRAVELPAYOUTS_FLIGHTS_WIDGET}}
+   - Si le témoignage mentionne la connexion internet, ajoute en plus une ligne :
+     {{TRAVELPAYOUTS_CONNECTIVITY_WIDGET}}` : '';
+
     const systemMessage = `Tu es un expert FlashVoyages. Crée un article de qualité exceptionnelle avec la STRUCTURE IMMERSIVE:
+
+⚠️ CONTRAINTE CRITIQUE ABSOLUE: Ce site est spécialisé ASIE uniquement. 
+- NE MENTIONNE JAMAIS de destinations non-asiatiques (Portugal, Espagne, Lisbonne, Barcelone, Madrid, Porto, France, Paris, Italie, Rome, Grèce, Turquie, Istanbul, Europe, Amérique, USA, Brésil, Mexique, etc.)
+- Utilise UNIQUEMENT des destinations asiatiques: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
+- Si le témoignage mentionne une destination non-asiatique, remplace-la par une destination asiatique équivalente ou ignore-la complètement
+- Si le témoignage parle de Lisbonne, remplace par Bangkok ou Bali
+- Si le témoignage parle de Portugal, remplace par Thaïlande ou Vietnam
+- Si le témoignage parle de Barcelone, remplace par Tokyo ou Singapour
+- ⚠️ INTERDIT ABSOLU: Ne mentionne JAMAIS Lisbonne, Barcelone, Madrid, Porto, ou toute autre ville/destination non-asiatique dans le titre, le contenu, ou les exemples
 
 STRUCTURE IMMERSIVE OBLIGATOIRE:
 1. INTRODUCTION FOMO + CURATION (OBLIGATOIRE)
@@ -225,42 +275,179 @@ STRUCTURE IMMERSIVE OBLIGATOIRE:
    - ATTRIBUTION CONTEXTUELLE: Remplace les pseudos Reddit par "Un membre de la communauté r/digitalnomad", "Un voyageur de la communauté Reddit", "Un nomade de la plateforme"
    - ÉVITE: "Pour [pseudo]", "L'auteur raconte", "Il explique" - utilise plutôt "Cette expérience", "Ce témoignage", "Son parcours"
 
-3. TRANSITIONS NARRATEUR (OBLIGATOIRE)
+3. ENCAPSULATION DES ÉMOTIONS / RÉACTIONS (OBLIGATOIRE)
+   - ⚠️ IMPORTANT : Les sections d'émotions doivent être dans le DÉVELOPPEMENT, PAS dans les CITATIONS
+   - Après chaque citation ou étape clé du témoignage, ajoute un bloc dédié aux émotions ressenties
+   - Format OBLIGATOIRE EXACT :
+     <p>🧠 Ce que [nom/alias Reddit] a probablement ressenti à ce moment-là :</p>
+     <blockquote>Exemple : Une montée de stress et d'incompréhension en découvrant que son visa était invalide malgré les promesses de l'agence.</blockquote>
+   - ⚠️ Le <blockquote> est correct pour les émotions (c'est une interprétation analytique, pas une citation Reddit)
+   - ⚠️ Mais ces sections doivent être dans le champ "developpement", PAS dans "citations"
+   - Les "citations" contiennent UNIQUEMENT les vraies citations Reddit avec attribution
+   - Les "émotions" sont des interprétations analytiques que tu ajoutes dans le développement
+   - Fais une interprétation analytique des émotions non verbalisées par l'utilisateur Reddit
+   - Renforce la dimension empathique et la crédibilité rédactionnelle
+   - Identifie ce que la personne a probablement ressenti à chaque étape clé (stress, soulagement, frustration, joie, incompréhension, etc.)
+   - Base-toi sur le contexte du témoignage pour interpréter les émotions de manière crédible
+   - Utilise des formulations comme "probablement ressenti", "sans doute éprouvé", "a dû vivre"
+
+4. TRANSITIONS NARRATEUR (OBLIGATOIRE)
    - Utilise les transitions naturelles basées sur le contenu Reddit réel
    - Crée des liens fluides entre les sections
    - Évite les phrases modèles répétitives
    - ÉVITE les pseudos Reddit dans le texte: "Pour [pseudo]", "L'auteur raconte"
    - UTILISE: "Cette expérience", "Ce témoignage", "Son parcours", "Cette approche"
 
-4. CONSEILS PRATIQUES (OBLIGATOIRE)
+5. CONSEILS PRATIQUES (OBLIGATOIRE)
    - Remplace les descriptions sensoriel par des conseils actionnables
    - Focus sur la valeur ajoutée concrète
    - Utilise des données réelles du témoignage
    - Évite les descriptions génériques et sensationnelles
 
 
-5. QUESTIONS RHÉTORIQUES (OBLIGATOIRE)
+6. QUESTIONS RHÉTORIQUES (OBLIGATOIRE)
    - "Comment cette approche pourrait-elle vous aider...", "Que feriez-vous si...", "Comment optimiser..."
    - 2-3 questions par section, focus sur l'action
 
-6. VARIATION DU RYTHME (OBLIGATOIRE)
+7. VARIATION DU RYTHME (OBLIGATOIRE)
    - Phrases courtes et percutantes
    - Phrases plus longues pour expliquer et respirer
 
-7. CONTEXTE DES CITATIONS (OBLIGATOIRE)
+8. CONTEXTE DES CITATIONS (OBLIGATOIRE)
    - 'L'auteur écrit:', 'Dans les commentaires un lecteur a dit:'
    - Toujours préciser d'où vient la citation (Reddit)
 
-8. MISE EN PERSPECTIVE (OBLIGATOIRE)
+9. MISE EN PERSPECTIVE (OBLIGATOIRE)
    - Terminer chaque section par un enseignement pratique
    - Quel piège à éviter, quelle leçon pour le lecteur nomade
 
-9. ENRICHISSEMENT DESTINATIONS (OBLIGATOIRE)
+10. SYSTÈME DE TAGS PSYCHOLOGIQUES / META-LECTURE (OBLIGATOIRE)
+   - ⚠️ OBLIGATOIRE : Tu DOIS générer au moins 2-3 sections de tags psychologiques dans le développement
+   - À chaque fin de section ou de leçon, génère une mini-analyse psychologique
+   - Format OBLIGATOIRE EXACT :
+     <p>🧩 Leçon transversale :</p>
+     <blockquote>Cette situation reflète un biais classique de [biais d'autorité / confiance naïve / effet d'urgence / biais de confirmation / biais de disponibilité / effet Dunning-Kruger / biais de planification / biais d'optimisme / biais de négativité / etc.].</blockquote>
+   - ⚠️ Cette section DOIT être présente dans le champ "developpement" ou "tags_psychologiques"
+   - Transforme le témoignage en lecture comportementale applicable par le lecteur
+   - Identifie les biais cognitifs, erreurs de jugement, ou patterns comportementaux sous-jacents
+   - Exemples de biais à identifier :
+     - Biais d'autorité : faire confiance aveuglément à une source "officielle"
+     - Confiance naïve : croire sans vérifier les promesses
+     - Effet d'urgence : prendre des décisions sous pression temporelle
+     - Biais de confirmation : chercher des informations qui confirment ses croyances
+     - Biais de disponibilité : surestimer la probabilité d'événements récents ou médiatisés
+     - Effet Dunning-Kruger : surestimer ses compétences
+     - Biais de planification : sous-estimer le temps ou les coûts nécessaires
+     - Biais d'optimisme : surestimer les chances de succès
+     - Biais de négativité : donner plus de poids aux expériences négatives
+   - Base-toi sur le contexte du témoignage pour identifier le biais le plus pertinent
+   - Cette analyse apporte un niveau d'utilité éditoriale supérieur en transformant une expérience personnelle en leçon comportementale universelle
+
+11. RÉÉCRITURE VOLONTAIRE DE L'ÉCHEC (OBLIGATOIRE)
+   - ⚠️ OBLIGATOIRE : Tu DOIS générer cette section dans le développement
+   - Force une section qui reformule l'erreur ou l'échec en "checklist préventive inversée"
+   - Format OBLIGATOIRE EXACT :
+     <p>⛔️ Ce que [nom/alias Reddit] aurait dû faire :</p>
+     <ul>
+     <li>Action préventive 1</li>
+     <li>Action préventive 2</li>
+     <li>Action préventive 3</li>
+     </ul>
+   - ⚠️ IMPORTANT : N'utilise PAS de [ ] devant les bullet points, juste des <li> simples
+   - ⚠️ Cette section DOIT être présente dans le champ "developpement" ou "reecriture_echec"
+   - Transforme chaque erreur mentionnée dans le témoignage en action préventive concrète
+   - Crée une double couche de valeur : la narration + un outil de prévention directe
+   - Identifie les erreurs commises et reformule-les en checklist d'actions à faire pour éviter ces erreurs
+   - Base-toi sur le contexte du témoignage pour identifier les erreurs et les transformer en actions préventives
+   - Cette approche frontale et directe différencie le contenu de la concurrence
+   - Exemples de transformation :
+     - Erreur : "J'ai fait confiance à une agence sans vérifier" → Action : "[ ] Vérifier les avis et références de l'agence avant de signer"
+     - Erreur : "Je n'ai pas vérifié mon visa avant de partir" → Action : "[ ] Vérifier la validité du visa avant de réserver les vols"
+     - Erreur : "Je n'ai pas souscrit d'assurance" → Action : "[ ] Souscrire une assurance voyage avant le départ"
+
+12. TIMELINE INTERACTIVE SIMPLIFIÉE (OBLIGATOIRE)
+   - ⚠️ OBLIGATOIRE : Tu DOIS générer cette section dans le développement
+   - Génère une structure de timeline des événements clés du témoignage
+   - Format OBLIGATOIRE EXACT :
+     <p>📅 Chronologie de l'expérience :</p>
+     <ul>
+     <li>Janv. 2023 : arrivée à Lisbonne</li>
+     <li>Fév. 2023 : dépôt de dossier visa</li>
+     <li>Mars 2023 : 1er red flag administratif</li>
+     <li>...</li>
+     </ul>
+   - ⚠️ Cette section DOIT être présente dans le champ "developpement" ou "timeline"
+   - Identifie les dates et événements clés mentionnés dans le témoignage
+   - Organise-les chronologiquement (du plus ancien au plus récent)
+   - Utilise les dates mentionnées dans le témoignage (mois, année, ou période approximative)
+   - Si aucune date précise n'est mentionnée, utilise des périodes approximatives basées sur le contexte (ex: "Début 2023", "Mi-2023", "Fin 2023")
+   - Inclut les événements marquants : arrivée, dépôt de dossier, problèmes rencontrés, solutions trouvées, résultats obtenus
+   - Même sans interactivité, ce bloc fixe l'ancrage temporel du témoignage
+   - Les concurrents laissent tout ça implicite, toi tu le rends visible et lisible
+   - Base-toi sur le contexte du témoignage pour identifier les événements clés et leurs dates
+
+13. ENRICHISSEMENT DESTINATIONS (OBLIGATOIRE)
+   - ⚠️ CRITIQUE : Ce site est spécialisé ASIE uniquement. NE MENTIONNE JAMAIS de destinations non-asiatiques (Portugal, Espagne, Lisbonne, Barcelone, Europe, Amérique, etc.)
    - Intègre subtilement des mentions de destinations spécifiques dans le contenu
-   - Utilise des destinations populaires: Thaïlande, Vietnam, Indonésie, Japon, Philippines, Malaisie, Singapour, Espagne, Portugal
-   - Mentionne des villes: Bangkok, Ho Chi Minh, Bali, Tokyo, Manille, Kuala Lumpur, Singapour, Barcelone, Lisbonne
+   - Utilise UNIQUEMENT des destinations asiatiques: Thaïlande, Vietnam, Indonésie, Japon, Corée du Sud, Philippines, Singapour
+   - Mentionne UNIQUEMENT des villes asiatiques: Bangkok, Ho Chi Minh, Bali, Tokyo, Manille, Singapour, Séoul, Canggu, etc.
+   - ⚠️ INTERDIT: Ne mentionne JAMAIS Lisbonne, Barcelone, Madrid, Porto, ou toute autre ville/destination non-asiatique
    - Intègre naturellement dans les conseils et exemples
    - Évite les listes génériques, privilégie les mentions contextuelles
+
+14. GLOSSAIRE IMPLICITE INTÉGRÉ (CONDITIONNEL)
+   - ⚠️ CRITIQUE : Cette section doit être générée UNIQUEMENT s'il y a vraiment des termes techniques, acronymes, sigles, ou expressions spécifiques mentionnés dans le témoignage
+   - ⚠️ Si aucun terme technique n'est mentionné, NE GÉNÈRE PAS cette section (laisse le champ "glossaire" vide ou null)
+   - ⚠️ NE CRÉE PAS de termes inventés ou génériques (comme "D8", "NIF", "SEF") si ils ne sont PAS explicitement mentionnés dans le témoignage
+   - ⚠️ EXEMPLE À NE PAS FAIRE : Si le témoignage parle de "Canggu" et "Bali" sans mentionner de termes techniques, NE GÉNÈRE PAS un glossaire avec "D8", "NIF", "SEF Portugal" car ces termes ne sont PAS mentionnés
+   - Si des termes techniques sont présents, ajoute à la fin du témoignage un glossaire des termes techniques ou spécifiques utilisés
+   - Format OBLIGATOIRE EXACT (si des termes techniques sont présents) :
+     <p>📖 Termes utilisés dans ce récit :</p>
+     <ul>
+     <li>D8 : visa long séjour portugais pour travailleurs indépendants</li>
+     <li>NIF : numéro fiscal portugais</li>
+     <li>...</li>
+     </ul>
+   - ⚠️ Ne crée PAS de termes génériques ou inventés si aucun terme technique n'est réellement mentionné dans le témoignage
+   - Identifie UNIQUEMENT les termes techniques, acronymes, sigles, ou expressions spécifiques RÉELLEMENT mentionnés dans le témoignage
+   - Inclut les termes liés aux visas, formalités administratives, documents officiels, procédures spécifiques
+   - Fournit une définition claire et concise pour chaque terme
+   - Élève la lisibilité pour les lecteurs moins expérimentés
+   - Aucun concurrent ne structure ça en bas de page, c'est un micro-bloc mais un fort différenciateur UX
+   - Base-toi sur le contexte du témoignage pour identifier les termes à expliquer
+   - Exemples de termes à inclure :
+     - Acronymes de visas (D8, D7, Golden Visa, etc.)
+     - Numéros fiscaux (NIF, NIE, etc.)
+     - Documents officiels (CPF, CNPJ, etc.)
+     - Procédures administratives spécifiques
+     - Termes techniques liés au nomadisme digital
+
+15. INDEXATION INTERNE STRUCTURÉE (CONDITIONNEL)
+   - ⚠️ CRITIQUE : Cette section doit être générée UNIQUEMENT s'il y a vraiment des ressources (services, sites, démarches) mentionnées dans le témoignage
+   - ⚠️ Si aucune ressource n'est mentionnée, NE GÉNÈRE PAS cette section (laisse le champ "indexation" vide ou null)
+   - ⚠️ NE CRÉE PAS de ressources inventées ou génériques (comme "Site officiel SEF Portugal", "Agence locale X") si elles ne sont PAS explicitement mentionnées dans le témoignage
+   - ⚠️ EXEMPLE À NE PAS FAIRE : Si le témoignage parle de "Canggu" et "Bali" sans mentionner de sites officiels ou d'agences, NE GÉNÈRE PAS une indexation avec "Site officiel SEF Portugal" car cette ressource n'est PAS mentionnée
+   - Si des ressources sont mentionnées, ajoute une ancre de référencement pour chaque ressource RÉELLEMENT mentionnée
+   - Format OBLIGATOIRE EXACT (si des ressources sont mentionnées) :
+     <p>🧭 Ressource mentionnée :</p>
+     <ul>
+     <li><a href="...">Site officiel SEF Portugal</a></li>
+     <li><a href="...">Agence locale X utilisée (non recommandée)</a></li>
+     <li>...</li>
+     </ul>
+   - ⚠️ Ne crée PAS de ressources génériques ou inventées si aucune ressource n'est réellement mentionnée dans le témoignage
+   - Identifie UNIQUEMENT les ressources RÉELLEMENT mentionnées dans le témoignage : sites officiels, agences, services, démarches administratives
+   - Crée des liens vers les ressources officielles (sites gouvernementaux, services publics, etc.)
+   - Pour les agences ou services utilisés mais non recommandés, indique-le clairement dans le libellé du lien
+   - Pour les ressources recommandées, crée des liens vers les sites officiels
+   - Prépare ton propre hub d'autorité en créant une base de liens internes utiles en bas de chaque témoignage
+   - Base-toi sur le contexte du témoignage pour identifier toutes les ressources mentionnées
+   - Exemples de ressources à inclure :
+     - Sites officiels gouvernementaux (SEF Portugal, consulat, etc.)
+     - Agences ou services utilisés (avec mention si recommandé ou non)
+     - Démarches administratives mentionnées
+     - Services de nomadisme digital mentionnés
+     - Outils ou plateformes utilisés dans le témoignage${marketingSection}
 
 TON: Inspirant, motivant, authentique
 FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <ul><li>, <strong>, <table>
@@ -278,7 +465,36 @@ LONGUEUR: 1500-2000 mots
 IMPORTANT: Le titre de l'article NE DOIT PAS contenir le nom de l'auteur Reddit. Utilise l'author UNIQUEMENT dans les citations.
 TRADUCTION: Traduis TOUTES les citations en français si elles sont en anglais.
 
-Réponds UNIQUEMENT en JSON avec cette structure: { "article": { "titre": "...", "introduction": "...", "citations": [...], "developpement": "...", "conseils_pratiques": "...", "signature": "..." } }`;
+⚠️ STRUCTURE JSON OBLIGATOIRE - TOUTES LES SECTIONS DOIVENT ÊTRE GÉNÉRÉES :
+{
+  "article": {
+    "titre": "...",
+    "introduction": "...",
+    "citations": [...],
+    "developpement": "...",
+    "emotions": "...",  // ⚠️ OBLIGATOIRE : Sections d'émotions (🧠) intégrées dans le développement
+    "tags_psychologiques": "...",  // ⚠️ OBLIGATOIRE : Sections de tags psychologiques (🧩) intégrées dans le développement
+    "reecriture_echec": "...",  // ⚠️ OBLIGATOIRE : Section de réécriture de l'échec (⛔️) intégrée dans le développement
+    "timeline": "...",  // ⚠️ OBLIGATOIRE : Section timeline (📅) intégrée dans le développement
+    "glossaire": "...",  // ⚠️ CONDITIONNEL : Section glossaire (📖) UNIQUEMENT si des termes techniques sont mentionnés dans le témoignage. Sinon, laisse vide ou null.
+    "indexation": "...",  // ⚠️ CONDITIONNEL : Section indexation (🧭) UNIQUEMENT si des ressources sont mentionnées dans le témoignage. Sinon, laisse vide ou null.
+    "conseils_pratiques": "...",
+    "signature": "..."
+  }
+}
+
+⚠️ IMPORTANT :
+- Les sections "emotions", "tags_psychologiques", "reecriture_echec", "timeline" doivent être INTÉGRÉES dans le champ "developpement" (pas séparées)
+- Les sections "glossaire" et "indexation" doivent être à la fin, après "conseils_pratiques" (SEULEMENT si elles sont générées)
+- Les émotions (🧠) doivent être dans le développement, PAS dans les citations
+- Toutes les sections doivent utiliser les formats EXACTS définis dans le prompt système
+- ⚠️ "glossaire" et "indexation" sont STRICTEMENT CONDITIONNELS : ne les génère QUE s'il y a vraiment des termes techniques ou des ressources mentionnées dans le témoignage
+- ⚠️ NE CRÉE PAS de contenu inventé ou générique pour ces sections
+- ⚠️ Si aucun terme technique n'est mentionné dans le témoignage, laisse "glossaire" vide ou null (PAS de termes inventés comme "D8", "NIF" si ils ne sont pas mentionnés)
+- ⚠️ Si aucune ressource n'est mentionnée dans le témoignage, laisse "indexation" vide ou null (PAS de ressources inventées comme "Site officiel SEF Portugal" si il n'est pas mentionné)
+- ⚠️ Vérifie TOUJOURS dans le contenu du témoignage avant de générer ces sections : si les termes/ressources ne sont pas explicitement mentionnés, NE GÉNÈRE PAS ces sections
+
+Réponds UNIQUEMENT en JSON avec cette structure complète.`;
 
     const userMessage = `TITRE: ${extraction.title || 'Témoignage Reddit'}
 AUTHOR_REDDIT_REEL: ${article.author}
@@ -319,16 +535,47 @@ CONSEILS: ${extraction.conseils || 'Conseils'}`;
     // Reconstruire le contenu final à partir de la structure article
     if (content.article) {
       const article = content.article;
+      
+      // Construire le développement avec toutes les sections intégrées
+      let developpementComplet = article.developpement || '';
+      
+      // Intégrer les sections dans le développement (si elles sont séparées, les fusionner)
+      if (article.emotions && !developpementComplet.includes('🧠')) {
+        developpementComplet += '\n\n' + article.emotions;
+      }
+      if (article.tags_psychologiques && !developpementComplet.includes('🧩')) {
+        developpementComplet += '\n\n' + article.tags_psychologiques;
+      }
+      if (article.reecriture_echec && !developpementComplet.includes('⛔️')) {
+        developpementComplet += '\n\n' + article.reecriture_echec;
+      }
+      if (article.timeline && !developpementComplet.includes('📅')) {
+        developpementComplet += '\n\n' + article.timeline;
+      }
+      
       const finalContent = {
         title: article.titre || 'Témoignage Reddit décrypté par FlashVoyages',
         content: [
           article.introduction,
+          // Citations : UNIQUEMENT les vraies citations Reddit, PAS les émotions
           ...(article.citations || []).map(citation => {
             if (typeof citation === 'string') {
+              // Vérifier que ce n'est pas une section d'émotions
+              if (citation.includes('🧠') || citation.includes('Ce que') && citation.includes('ressenti')) {
+                console.log('⚠️ Section d\'émotions détectée dans les citations - déplacée vers le développement');
+                developpementComplet += '\n\n' + citation;
+                return null; // Ne pas inclure dans les citations
+              }
               return citation;
             }
             // Si c'est un objet, essayer d'extraire le texte
             const text = citation.text || citation.quote || citation.content || citation;
+            // Vérifier que ce n'est pas une section d'émotions
+            if (typeof text === 'string' && (text.includes('🧠') || (text.includes('Ce que') && text.includes('ressenti')))) {
+              console.log('⚠️ Section d\'émotions détectée dans les citations - déplacée vers le développement');
+              developpementComplet += '\n\n' + text;
+              return null; // Ne pas inclure dans les citations
+            }
             // JAMAIS DE FAKE DATA - Utiliser SEULEMENT les vraies données
             if (!article.author) {
               throw new Error(`ERREUR CRITIQUE: Pas d'author Reddit disponible pour "${article.title}". Refus de publier avec des données inventées.`);
@@ -336,9 +583,12 @@ CONSEILS: ${extraction.conseils || 'Conseils'}`;
             const auteur = `u/${article.author}`;
             const source = citation.source || 'Reddit';
             return `<blockquote>${text}</blockquote>\n<p>Témoignage de ${auteur} sur ${source}</p>`;
-          }),
-          article.developpement,
+          }).filter(Boolean), // Filtrer les null
+          developpementComplet,
           article.conseils_pratiques,
+          // Sections finales : glossaire et indexation (seulement si présents)
+          article.glossaire && article.glossaire.trim() ? article.glossaire : null,
+          article.indexation && article.indexation.trim() ? article.indexation : null,
           article.signature
         ].filter(Boolean).join('\n\n')
       };
@@ -858,6 +1108,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
     
     return {
       type_contenu: typeContenu,
+      type: typeContenu, // Verrouiller le type pour le plan de widgets
       sous_categorie: sousCategorie,
       angle: 'pratique',
       audience: audience,

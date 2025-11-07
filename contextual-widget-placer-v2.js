@@ -86,10 +86,12 @@ ${content}
 
 CONTEXTE:
 - Type: ${articleContext.type || 'Témoignage'}
+${articleContext.type && articleContext.type.startsWith('TEMOIGNAGE_') ? '- Si le type est "Témoignage", tu dois viser entre 2 et 3 placements de widgets maximum, bien intégrés dans le flux (pas en intro, pas tout en bas).' : ''}
 - Destination: ${articleContext.destination || 'Asie'}
 - Audience: ${articleContext.audience || 'Nomades digitaux'}
 
 ANALYSE SÉMANTIQUE REQUISE:
+- ⚠️ CRITIQUE : Identifie TOUTES les villes/destinations mentionnées dans le contenu (noms de villes, pays, régions, destinations touristiques) - peu importe leur nom, détecte-les automatiquement
 - Identifie tous les mots-clés liés à l'hébergement (coliving, coworking, logement, hébergement, appartement, etc.)
 - Identifie tous les mots-clés liés aux transports (vols, avion, transport, déplacement, voyage, etc.)
 - Identifie tous les mots-clés liés aux formalités (visa, passeport, formalités, documents, etc.)
@@ -115,10 +117,15 @@ IMPORTANT: Tu ne peux suggérer QUE les widgets listés ci-dessus.
 Ne suggère JAMAIS de widgets qui ne sont pas dans cette liste (comme 'budget', 'crypto', etc.).
 
 INSTRUCTIONS:
-1. ANALYSE SÉMANTIQUE: Identifie les mots-clés contextuels dans le contenu
+${articleContext.type && articleContext.type.startsWith('TEMOIGNAGE_') ? `- Pour les contenus de type "Témoignage", tu DOIS placer au moins 1 widget FLIGHTS et, si le texte contient des mots-clés liés à la connectivité (eSIM, internet, SIM), au moins 1 widget ESIM.
+- Ne jamais dépasser 3 widgets au total pour un témoignage.
+
+` : ''}1. ANALYSE SÉMANTIQUE: Identifie les mots-clés contextuels dans le contenu
 2. MAPPING CONTEXTUEL: Associe chaque section à l'intent le plus pertinent :
    - Si le contenu parle de "vols", "transport", "déplacement", "voyage", "arrivée", "départ", "aéroport", "compagnie aérienne", "billet", "réservation vol" → widget FLIGHTS
-   - Si le contenu mentionne des villes/destinations comme "Bangkok", "Lisbonne", "Ho Chi Minh", "Barcelone", "Kuala Lumpur", "Tokyo", "Singapour", "Bali", "Paris", "Londres", "New York" → widget FLIGHTS
+   - ⚠️ CRITIQUE : Si le contenu mentionne UNE VILLE ou UNE DESTINATION (peu importe son nom), tu DOIS suggérer un widget FLIGHTS. C'est OBLIGATOIRE !
+   - ⚠️ Détecte automatiquement TOUTES les villes/destinations mentionnées dans le contenu (noms de villes, pays, régions, destinations touristiques) et suggère un widget FLIGHTS pour chacune
+   - ⚠️ Ne te limite PAS à une liste de villes - détecte TOUTES les villes/destinations mentionnées, même si elles ne sont pas dans une liste d'exemples
    - Si le contenu parle de "visa", "e-visa", "formalités", "entrée", "sortie", "frontière" → widget FLIGHTS (car les visas impliquent des voyages)
    - Si le contenu parle de "connectivité", "eSIM", "internet", "téléphone", "SIM" → widget ESIM
    - Si le contenu parle de "coliving", "coworking", "hébergement", "logement", "appartement" → LIEN EXTERNE (Coliving.com, Outsite, Selina)
@@ -127,7 +134,7 @@ INSTRUCTIONS:
    - IMPORTANT: Si le contenu parle de "coliving" → ÉVITE le widget FLIGHTS (incohérent)
    - IMPORTANT: Si le contenu parle de "vols" → ÉVITE les liens externes coliving (incohérent)
 
-⚠️ ATTENTION CRITIQUE: Si tu vois des noms de villes/destinations dans le contenu (Tokyo, Barcelone, Bali, etc.), tu DOIS suggérer un widget FLIGHTS. C'est OBLIGATOIRE !
+⚠️ ATTENTION CRITIQUE: Détecte automatiquement TOUTES les villes/destinations mentionnées dans le contenu (peu importe leur nom) et suggère un widget FLIGHTS. C'est OBLIGATOIRE pour toute mention de ville/destination !
 
 3. PLACEMENT INTELLIGENT ET STRATÉGIQUE: 
    - Place les widgets dans le MILIEU de l'article (après le contenu principal, AVANT "Articles connexes")
@@ -173,9 +180,12 @@ Réponds UNIQUEMENT en JSON valide.`;
       console.log(`📊 Widgets sélectionnés: ${analysis.selected_widgets.length}`);
       console.log(`💭 Raisonnement: ${analysis.reasoning}`);
 
-      // Limiter à 1-2 widgets maximum pour éviter les doublons
-      const limitedWidgets = analysis.selected_widgets.slice(0, 2);
-      console.log(`🎯 Widgets limités à: ${limitedWidgets.length}`);
+      // Limiter les widgets selon le type de contenu
+      // Pour les témoignages: 2-3 widgets max, pour les autres: 2 max
+      const isTemoignage = articleContext.type && articleContext.type.startsWith('TEMOIGNAGE_');
+      const maxWidgets = isTemoignage ? 3 : 2;
+      const limitedWidgets = analysis.selected_widgets.slice(0, maxWidgets);
+      console.log(`🎯 Widgets limités à: ${limitedWidgets.length} (max: ${maxWidgets} pour ${isTemoignage ? 'témoignage' : 'autre type'})`);
       
       // VÉRIFICATION CONTEXTUELLE OBLIGATOIRE AVANT PLACEMENT
       const validatedWidgets = this.validateWidgetContext(content, limitedWidgets);
@@ -539,7 +549,58 @@ ${widgetScript}
 
       // Insérer le widget selon la position
       if (widget.position === 'after_section') {
-        enhancedContent = this.insertAfterSection(enhancedContent, widget.section_title, widgetBlock);
+        // Essayer d'abord de trouver la section par titre
+        let inserted = this.insertAfterSection(enhancedContent, widget.section_title, widgetBlock);
+        
+        // Si la section n'a pas été trouvée, chercher le texte mentionnant les vols/connectivité
+        if (inserted === enhancedContent && widget.slot === 'flights') {
+          // Chercher le texte mentionnant les vols
+          const flightTextPatterns = [
+            /comparez les vols[^<]*/i,
+            /comparer les vols[^<]*/i,
+            /planification des vols[^<]*/i,
+            /vols vers[^<]*/i,
+            /billet d'avion[^<]*/i
+          ];
+          
+          for (const pattern of flightTextPatterns) {
+            const match = enhancedContent.match(pattern);
+            if (match) {
+              const matchIndex = enhancedContent.indexOf(match[0]);
+              const afterMatch = enhancedContent.indexOf('</p>', matchIndex);
+              if (afterMatch !== -1) {
+                console.log(`✅ Texte mentionnant les vols trouvé, placement du widget après`);
+                inserted = enhancedContent.slice(0, afterMatch + 4) + '\n\n' + widgetBlock + '\n\n' + enhancedContent.slice(afterMatch + 4);
+                break;
+              }
+            }
+          }
+        }
+        
+        // Si la section n'a pas été trouvée et que c'est un widget eSIM, chercher le texte mentionnant la connectivité
+        if (inserted === enhancedContent && widget.slot === 'esim') {
+          const esimTextPatterns = [
+            /eSIM[^<]*/i,
+            /connexion internet[^<]*/i,
+            /carte SIM[^<]*/i,
+            /équipez-vous d'une eSIM[^<]*/i
+          ];
+          
+          for (const pattern of esimTextPatterns) {
+            const match = enhancedContent.match(pattern);
+            if (match) {
+              const matchIndex = enhancedContent.indexOf(match[0]);
+              const afterMatch = enhancedContent.indexOf('</p>', matchIndex);
+              if (afterMatch !== -1) {
+                console.log(`✅ Texte mentionnant la connectivité trouvé, placement du widget après`);
+                inserted = enhancedContent.slice(0, afterMatch + 4) + '\n\n' + widgetBlock + '\n\n' + enhancedContent.slice(afterMatch + 4);
+                break;
+              }
+            }
+          }
+        }
+        
+        enhancedContent = inserted;
       } else if (widget.position === 'before_section') {
         enhancedContent = this.insertBeforeSection(enhancedContent, widget.section_title, widgetBlock);
       } else {
@@ -582,14 +643,31 @@ ${widgetScript}
       return null;
     }
     
-    // Pour les vols, utiliser searchForm qui a origin/destination par défaut
+    // Pour les vols, utiliser searchForm avec les destinations dynamiques depuis widgetPlan
     if (slot === 'flights') {
       const provider = Object.keys(widgetCategory)[0]; // kiwi, aviasales, etc.
       const searchFormWidget = widgetCategory[provider]['searchForm'];
       
       if (searchFormWidget && searchFormWidget.script) {
+        // Récupérer les destinations depuis widgetPlan.geo_defaults
+        console.log(`🔍 DEBUG getWidgetScript: widgetPlan.geo_defaults:`, widgetPlan?.geo_defaults);
+        const origin = widgetPlan?.geo_defaults?.origin || 'PAR';
+        const destination = widgetPlan?.geo_defaults?.destination || 'BKK';
+        
+        console.log(`🔍 DEBUG getWidgetScript: origin=${origin}, destination=${destination}`);
+        
+        // Générer le script avec les bonnes destinations
+        let dynamicScript = searchFormWidget.script;
+        
+        // Remplacer les destinations par défaut par les destinations réelles
+        dynamicScript = dynamicScript.replace(/default_origin=PAR/g, `default_origin=${origin}`);
+        dynamicScript = dynamicScript.replace(/default_destination=BKK/g, `default_destination=${destination}`);
+        dynamicScript = dynamicScript.replace(/from_name=paris_fr/g, `from_name=${origin.toLowerCase()}_fr`);
+        dynamicScript = dynamicScript.replace(/to_name=bangkok_th/g, `to_name=${destination.toLowerCase()}_th`);
+        
         console.log(`✅ Script trouvé pour ${slot}: ${searchFormWidget.brand} - ${searchFormWidget.type}`);
-        return searchFormWidget.script;
+        console.log(`   📍 Destinations: ${origin} → ${destination}`);
+        return dynamicScript;
       }
     }
     

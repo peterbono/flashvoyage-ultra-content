@@ -139,13 +139,18 @@ export class WidgetPlanBuilder {
    * Construit les valeurs géographiques par défaut
    */
   buildGeoDefaults(geo) {
+    console.log(`🔍 DEBUG buildGeoDefaults: geo reçu:`, geo);
+    const city = geo.city || geo.country || 'bangkok';
+    const destination = this.getDestinationFromCity(city);
+    console.log(`🔍 DEBUG buildGeoDefaults: city=${city}, destination=${destination}`);
+    
     return {
       country: geo.country || 'thailand',
       city: geo.city || 'bangkok',
       nearest_hub: this.getNearestHub(geo.city),
       // Configuration pour les widgets de vols
       origin: 'PAR', // Paris par défaut pour les vols depuis la France
-      destination: this.getDestinationFromCity(geo.city || 'bangkok')
+      destination: destination
     };
   }
 
@@ -154,31 +159,108 @@ export class WidgetPlanBuilder {
    */
   getDestinationFromCity(city) {
     const cityToAirport = {
+      // Thaïlande
       'bangkok': 'BKK',
+      'chiang mai': 'CNX',
+      'chiangmai': 'CNX',
+      'phuket': 'HKT',
+      'krabi': 'KBV',
+      'pattaya': 'BKK', // Utilise Bangkok
+      'koh samui': 'USM',
+      'koh phangan': 'USM', // Utilise Koh Samui
+      'koh tao': 'USM', // Utilise Koh Samui
+      'pai': 'CNX', // Utilise Chiang Mai
+      'thailand': 'BKK', // Par défaut Bangkok pour Thaïlande
+      'thaïlande': 'BKK',
+      // Vietnam
       'ho chi minh': 'SGN',
       'hanoi': 'HAN',
-      'singapore': 'SIN',
-      'kuala lumpur': 'KUL',
+      'hồ chí minh': 'SGN',
+      'hà nội': 'HAN',
+      'da nang': 'DAD',
+      'đà nẵng': 'DAD',
+      'hue': 'HUI',
+      'huế': 'HUI',
+      'hoi an': 'DAD', // Utilise Da Nang
+      'hội an': 'DAD',
+      'nha trang': 'CXR',
+      'sapa': 'HAN', // Utilise Hanoi
+      'sa pa': 'HAN',
+      'vietnam': 'SGN', // Par défaut Ho Chi Minh pour Vietnam
+      'viet nam': 'SGN',
+      // Indonésie
       'jakarta': 'CGK',
+      'bali': 'DPS',
+      'denpasar': 'DPS',
+      'canggu': 'DPS', // Utilise Denpasar (Bali)
+      'ubud': 'DPS', // Utilise Denpasar (Bali)
+      'seminyak': 'DPS', // Utilise Denpasar (Bali)
+      'lombok': 'LOP',
+      'yogyakarta': 'JOG',
+      'bandung': 'BDO',
+      'surabaya': 'SUB',
+      'medan': 'KNO',
+      'indonesia': 'DPS', // Par défaut Denpasar (Bali) pour Indonésie
+      'indonésie': 'DPS',
+      // Philippines
       'manila': 'MNL',
+      'cebu': 'CEB',
+      'boracay': 'MNL', // Utilise Manila
+      'palawan': 'PPS',
+      'el nido': 'PPS', // Utilise Puerto Princesa
+      'coron': 'USU',
+      'siargao': 'IAO',
+      'bohol': 'TAG',
+      'davao': 'DVO',
+      'baguio': 'MNL', // Utilise Manila
+      'makati': 'MNL', // Utilise Manila
+      'philippines': 'MNL', // Par défaut Manille pour Philippines
+      'philippine': 'MNL',
+      // Japon
       'tokyo': 'NRT',
+      'kyoto': 'KIX', // Utilise Osaka
       'osaka': 'KIX',
+      'hokkaido': 'CTS',
+      'hokkaidō': 'CTS',
+      'hiroshima': 'HIJ',
+      'nara': 'KIX', // Utilise Osaka
+      'sapporo': 'CTS',
+      'fukuoka': 'FUK',
+      'okinawa': 'OKA',
+      'yokohama': 'NRT', // Utilise Tokyo
+      'nagoya': 'NGO',
+      'sendai': 'SDJ',
+      'japan': 'NRT', // Par défaut Tokyo pour Japon
+      'japon': 'NRT',
+      // Corée du Sud
       'seoul': 'ICN',
+      'séoul': 'ICN',
+      'busan': 'PUS',
+      'pusan': 'PUS',
+      'jeju': 'CJU',
+      'jeju island': 'CJU',
+      'incheon': 'ICN', // Utilise Seoul
+      'daegu': 'TAE',
+      'gwangju': 'KWJ',
+      'ulsan': 'USN',
+      'korea': 'ICN', // Par défaut Séoul pour Corée
+      'corée': 'ICN',
+      'south korea': 'ICN',
+      'corée du sud': 'ICN',
+      // Singapour
+      'singapore': 'SIN',
+      'singapour': 'SIN',
+      // Destinations non-asiatiques (pour rejet)
       'barcelone': 'BCN',
       'lisbonne': 'LIS',
+      'istanbul': 'IST',
       'madrid': 'MAD',
       'rome': 'FCO',
       'londres': 'LHR',
       'berlin': 'TXL',
       'amsterdam': 'AMS',
-      'vietnam': 'SGN', // Par défaut Ho Chi Minh pour Vietnam
-      'thailand': 'BKK', // Par défaut Bangkok pour Thaïlande
-      'indonesia': 'CGK', // Par défaut Jakarta pour Indonésie
-      'malaysia': 'KUL', // Par défaut Kuala Lumpur pour Malaisie
-      'philippines': 'MNL', // Par défaut Manille pour Philippines
-      'japan': 'NRT', // Par défaut Tokyo pour Japon
-      'singapore': 'SIN', // Singapour
-      'korea': 'ICN', // Par défaut Séoul pour Corée
+      'turkey': 'IST', // Par défaut Istanbul pour Turquie
+      'turquie': 'IST',
       'spain': 'BCN', // Par défaut Barcelone pour Espagne
       'portugal': 'LIS', // Par défaut Lisbonne pour Portugal
       'italy': 'FCO', // Par défaut Rome pour Italie

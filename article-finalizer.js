@@ -116,6 +116,7 @@ class ArticleFinalizer {
       };
       
       // Créer un widgetPlan avec le WidgetPlanBuilder existant
+      console.log('🔍 DEBUG article-finalizer: analysis.geo:', analysis.geo);
       const widgetPlan = this.widgetPlanBuilder.buildWidgetPlan(
         analysis.affiliateSlots || [],
         analysis.geo || {},
@@ -126,6 +127,7 @@ class ArticleFinalizer {
         },
         `article_${Date.now()}`
       );
+      console.log('🔍 DEBUG article-finalizer: widgetPlan.geo_defaults:', widgetPlan?.widget_plan?.geo_defaults);
       
       // Utiliser le placement contextuel intelligent AVEC VALIDATION
       const articleContext = {
@@ -152,16 +154,42 @@ class ArticleFinalizer {
     // Sinon, remplacement classique des placeholders
     console.log('   ℹ️ Placeholders détectés, remplacement classique\n');
 
-    // Remplacer FLIGHTS
+    // Créer un widgetPlan pour obtenir les destinations dynamiques
+    const widgetPlan = this.widgetPlanBuilder.buildWidgetPlan(
+      analysis.affiliateSlots || [],
+      analysis.geo || {},
+      {
+        type: analysis?.type || 'Témoignage',
+        destination: analysis?.destinations?.[0] || context.hasDestination || 'Asie',
+        audience: analysis?.target_audience || 'Nomades digitaux'
+      },
+      `article_${Date.now()}`
+    );
+
+    // Remplacer FLIGHTS avec script dynamique
     if (updatedContent.includes('{{TRAVELPAYOUTS_FLIGHTS_WIDGET}}') || 
         updatedContent.includes('{TRAVELPAYOUTS_FLIGHTS_WIDGET}')) {
-      const flightWidget = this.selectBestFlightWidget(context);
+      // Utiliser le script dynamique depuis widgetPlan.geo_defaults
+      const dynamicFlightWidget = this.widgetPlacer.getWidgetScript('flights', widgetPlan.widget_plan);
+      const flightWidget = dynamicFlightWidget || this.selectBestFlightWidget(context);
       updatedContent = updatedContent.replace(
         /\{\{?TRAVELPAYOUTS_FLIGHTS_WIDGET\}\}?/g,
         flightWidget
       );
       replacementCount++;
-      console.log('   ✅ Widget FLIGHTS remplacé');
+      console.log('   ✅ Widget FLIGHTS remplacé (script dynamique)');
+    }
+
+    // Remplacer CONNECTIVITY (Airalo)
+    if (updatedContent.includes('{{TRAVELPAYOUTS_CONNECTIVITY_WIDGET}}') ||
+        updatedContent.includes('{TRAVELPAYOUTS_CONNECTIVITY_WIDGET}')) {
+      const connectivityWidget = this.widgets.connectivity?.airalo?.esimSearch?.script || '';
+      updatedContent = updatedContent.replace(
+        /\{\{?TRAVELPAYOUTS_CONNECTIVITY_WIDGET\}\}?/g,
+        connectivityWidget
+      );
+      replacementCount++;
+      console.log('   ✅ Widget CONNECTIVITY (Airalo) remplacé');
     }
 
     // Remplacer HOTELS

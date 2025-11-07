@@ -122,7 +122,7 @@ export class CompleteLinkingStrategy {
     return priorityScores[opportunity.priority] || 6;
   }
 
-  integrateAllLinks(htmlContent, strategyResult) {
+  async integrateAllLinks(htmlContent, strategyResult, context = {}) {
     console.log('\n🔗 INTÉGRATION DE TOUS LES LIENS');
     console.log('================================\n');
 
@@ -132,19 +132,27 @@ export class CompleteLinkingStrategy {
       return typeof htmlContent === 'object' && htmlContent !== null ? String(htmlContent) : '';
     }
 
+    // Préparer le contexte pour les liens (articleType, destination)
+    const linkContext = {
+      articleType: context.articleType || (strategyResult.articleType || 'temoignage'),
+      destination: context.destination || (strategyResult.destination || '')
+    };
+
     // Intégrer les liens internes
     console.log('📌 Intégration des liens internes...\n');
-    const internalResult = this.linkIntegrator.integrateLinks(
+    const internalResult = await this.linkIntegrator.integrateLinks(
       htmlContent,
-      strategyResult.internal_links || []
+      strategyResult.internal_links || [],
+      linkContext
     );
     let enrichedContent = internalResult.content || internalResult || htmlContent;
 
     // Intégrer les liens externes
     console.log('\n📌 Intégration des liens externes...\n');
-    const externalResult = this.linkIntegrator.integrateLinks(
+    const externalResult = await this.linkIntegrator.integrateLinks(
       enrichedContent,
-      strategyResult.external_links || []
+      strategyResult.external_links || [],
+      linkContext
     );
     enrichedContent = externalResult.content || externalResult || enrichedContent;
 

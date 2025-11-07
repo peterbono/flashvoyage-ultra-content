@@ -30,12 +30,23 @@ class ContentValidator {
     
     // Validation de la structure
     this.validateStructure(article);
+    
+    // Validation de la qualité du contenu (signaux d'affiliation)
+    this.validateContentQuality(article.content);
+
+    // Calculer le score et vérifier le potentiel d'affiliation
+    const score = this.calculateQualityScore();
+    const affiliationWarnings = this.warnings.filter(w => 
+      w.includes('signal affilié') || w.includes('affiliation')
+    );
+    const hasLowAffiliationPotential = affiliationWarnings.length >= 2;
 
     return {
       isValid: this.errors.length === 0,
       errors: this.errors,
       warnings: this.warnings,
-      score: this.calculateQualityScore()
+      score: score,
+      lowAffiliationPotential: hasLowAffiliationPotential
     };
   }
 
@@ -204,6 +215,23 @@ class ContentValidator {
     }
   }
 
+  // Valider la qualité du contenu (signaux d'affiliation)
+  validateContentQuality(content) {
+    if (!content) return;
+    
+    // Vérifier la présence de signaux d'affiliation minimum
+    const hasFlightsSignal = /vols?\s+vers|compar(er|aison) des vols|billet d'avion/gi.test(content);
+    const hasEsimSignal = /eSIM|carte\s+eSIM|connexion\s+internet|data\s+mobile/gi.test(content);
+    
+    if (!hasFlightsSignal) {
+      this.warnings.push('Aucun signal affilié "vols" détecté (comparaison de vols, billet, etc.).');
+    }
+    
+    if (!hasEsimSignal) {
+      this.warnings.push('Aucun signal affilié "eSIM / connexion internet" détecté.');
+    }
+  }
+
   // Calculer un score de qualité
   calculateQualityScore() {
     const totalChecks = this.errors.length + this.warnings.length;
@@ -211,7 +239,16 @@ class ContentValidator {
     
     const errorWeight = 3;
     const warningWeight = 1;
-    const penalty = (this.errors.length * errorWeight) + (this.warnings.length * warningWeight);
+    
+    // Pénalité supplémentaire pour les warnings d'affiliation (monétisation)
+    const affiliationWarnings = this.warnings.filter(w => 
+      w.includes('signal affilié') || w.includes('affiliation')
+    );
+    const affiliationPenalty = affiliationWarnings.length * 2; // Double pénalité pour l'affiliation
+    
+    const penalty = (this.errors.length * errorWeight) + 
+                    (this.warnings.length * warningWeight) + 
+                    affiliationPenalty;
     
     return Math.max(0, 100 - penalty);
   }
@@ -243,6 +280,7 @@ class ContentValidator {
       timestamp: new Date().toISOString(),
       isValid: validation.isValid,
       score: validation.score,
+      lowAffiliationPotential: validation.lowAffiliationPotential || false,
       summary: {
         errors: validation.errors.length,
         warnings: validation.warnings.length
