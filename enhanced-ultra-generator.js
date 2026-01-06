@@ -446,6 +446,21 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         console.log(`✅ Pattern propagé dans pipelineContext: story_type=${analysis.pattern.story_type} theme=${analysis.pattern.theme_primary}`);
       }
       
+      // PHASE 3: Propager story dans pipelineContext si disponible
+      if (analysis.story) {
+        pipelineContext.story = analysis.story;
+        const sectionsCount = [
+          analysis.story.story.context.summary ? 1 : 0,
+          analysis.story.story.central_event ? 1 : 0,
+          analysis.story.story.critical_moment ? 1 : 0,
+          analysis.story.story.resolution ? 1 : 0,
+          analysis.story.story.author_lessons.length,
+          analysis.story.story.community_insights.length,
+          analysis.story.story.open_questions.length
+        ].reduce((a, b) => a + b, 0);
+        console.log(`✅ Story propagée dans pipelineContext: sections=${sectionsCount} missing=${analysis.story.meta?.missing_sections?.length || 0}`);
+      }
+      
       // Recalculer catégories et tags avec final_destination
       finalArticle.categories = await this.getCategoriesForContent(analysis, finalArticle.content);
       finalArticle.tags = await this.getTagsForContent(analysis);

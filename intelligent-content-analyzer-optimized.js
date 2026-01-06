@@ -4,6 +4,7 @@ import axios from 'axios';
 import { OPENAI_API_KEY } from './config.js';
 import { extractRedditForAnalysis, isDestinationQuestion, extractMainDestination } from './reddit-extraction-adapter.js';
 import { detectRedditPattern } from './reddit-pattern-detector.js';
+import { compileRedditStory } from './reddit-story-compiler.js';
 
 // 2) Utilitaire pour sécuriser tous les JSON.parse
 function safeJsonParse(str, label = 'json') {
@@ -248,6 +249,54 @@ class IntelligentContentAnalyzerOptimized {
         } else {
           redditData = { pattern };
         }
+        
+        // PHASE 3: Story Compiler (derrière flag ENABLE_STORY_COMPILER)
+        if (process.env.ENABLE_STORY_COMPILER === '1' && article) {
+          try {
+            const storyInput = {
+              reddit: {
+                title: article.title || '',
+                selftext: article.content || article.source_text || article.selftext || '',
+                author: article.author || '',
+                created_utc: article.created_utc || null,
+                url: article.link || article.url || '',
+                subreddit: article.subreddit || '',
+                comments: article.comments_snippets ? article.comments_snippets.map(c => ({ body: c })) : []
+              },
+              extraction: redditData.reddit_extraction || {},
+              pattern: pattern,
+              geo: article.geo || {},
+              source: {
+                id: article.id || null,
+                score: article.upvotes || null
+              }
+            };
+            
+            const compiledStory = compileRedditStory(storyInput);
+            
+            // Logger unique
+            const sectionsCount = [
+              compiledStory.story.context.summary ? 1 : 0,
+              compiledStory.story.central_event ? 1 : 0,
+              compiledStory.story.critical_moment ? 1 : 0,
+              compiledStory.story.resolution ? 1 : 0,
+              compiledStory.story.author_lessons.length,
+              compiledStory.story.community_insights.length,
+              compiledStory.story.open_questions.length
+            ].reduce((a, b) => a + b, 0);
+            
+            console.log(`✅ STORY_COMPILED: sections=${sectionsCount} missing=${compiledStory.meta.missing_sections.length} events=${compiledStory.story.central_event ? 1 : 0} community=${compiledStory.story.community_insights.length}`);
+            
+            // Stocker dans redditData pour propagation
+            if (redditData) {
+              redditData.story = compiledStory;
+            } else {
+              redditData = { story: compiledStory };
+            }
+          } catch (error) {
+            console.warn('⚠️ Erreur story compilation (fallback silencieux):', error.message);
+          }
+        }
       } catch (error) {
         console.warn('⚠️ Erreur pattern detection (fallback silencieux):', error.message);
       }
@@ -267,6 +316,14 @@ class IntelligentContentAnalyzerOptimized {
           // PHASE 2: Ajouter pattern si disponible
           if (redditData.pattern) {
             fallback.pattern = redditData.pattern;
+          }
+          // PHASE 3: Ajouter story si disponible
+          if (redditData.story) {
+            fallback.story = redditData.story;
+          }
+          // PHASE 3: Ajouter story si disponible
+          if (redditData.story) {
+            fallback.story = redditData.story;
           }
         }
         return fallback;
@@ -395,6 +452,11 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
       // PHASE 2: Ajouter pattern si disponible (même en mode LLM)
       if (redditData && redditData.pattern) {
         analysis.pattern = redditData.pattern;
+      }
+      
+      // PHASE 3: Ajouter story si disponible (même en mode LLM)
+      if (redditData && redditData.story) {
+        analysis.story = redditData.story;
       }
       
       // Ajouter les données Reddit si disponibles
