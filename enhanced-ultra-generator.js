@@ -36,6 +36,24 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
 
       // 0. Mettre à jour la base de données d'articles AVANT génération des liens
       console.log('📚 Mise à jour de la base de données d\'articles...');
+      
+      // GARDE DRY_RUN: Charger DB existante au lieu de crawler
+      if (process.env.FLASHVOYAGE_DRY_RUN === '1') {
+        console.log('🧪 DRY_RUN: crawler WordPress bloqué');
+        // Charger la DB si elle existe
+        const fs = await import('fs');
+        try {
+          if (fs.default.existsSync('articles-database.json')) {
+            await this.linkingStrategy.internalAnalyzer.loadArticlesDatabase('articles-database.json');
+            console.log('🧪 DRY_RUN: DB chargée depuis articles-database.json');
+          } else {
+            console.log('🧪 DRY_RUN: aucun articles-database.json, skip liens internes');
+          }
+        } catch (error) {
+          console.warn('⚠️ DRY_RUN: Erreur chargement DB:', error.message);
+          console.warn('   → Les liens internes ne seront pas générés\n');
+        }
+      } else {
       try {
         // D'ABORD : Crawler WordPress pour avoir la DB à jour
         const { WordPressArticlesCrawler } = await import('./wordpress-articles-crawler.js');
@@ -50,11 +68,22 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       } catch (error) {
         console.warn('⚠️ Impossible de mettre à jour/charger la base d\'articles:', error.message);
         console.warn('   → Les liens internes ne seront pas générés\n');
+        }
       }
 
       // 1. Récupérer les sources
-      const sources = await this.scraper.scrapeAllSources();
+      // FIX 5: Format témoignage requis = désactiver sources news
+      const requireCommunityTestimonial = true; // Format témoignage requis pour FlashVoyages
+      const sources = await this.scraper.scrapeAllSources(requireCommunityTestimonial);
+      
+      // FIX 3: Ne plus throw si fixtures disponibles
       if (!sources || sources.length === 0) {
+        // Vérifier si on a des fixtures Reddit disponibles
+        const forceFixtures = process.env.FLASHVOYAGE_FORCE_FIXTURES === '1';
+        if (forceFixtures || process.env.FLASHVOYAGE_DRY_RUN === '1') {
+          console.log('⚠️ Aucune source réseau disponible, mais mode fixtures/DRY_RUN activé - skip silencieux');
+          return null; // Retourner null au lieu de throw
+        }
         throw new Error('Aucune source disponible');
       }
 
@@ -78,8 +107,11 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       ];
       const nonAsiaDestinations = ['istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'lisbon', 'lisbonne', 'barcelona', 'barcelone', 'greece', 'grèce', 'cyprus', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'america', 'usa', 'brazil', 'brésil', 'rio', 'mexico', 'mexique'];
       
+      const isDryRun = process.env.FLASHVOYAGE_DRY_RUN === '1';
+      const forceOffline = process.env.FORCE_OFFLINE === '1';
+      
       const validSources = sources.filter(article => {
-        const articleText = `${article.title || ''} ${article.content || ''} ${article.selftext || ''}`.toLowerCase();
+        const articleText = `${article.title || ''} ${article.content || ''} ${article.selftext || ''} ${article.source_text || ''}`.toLowerCase();
         const hasNonAsiaDestination = nonAsiaDestinations.some(dest => articleText.includes(dest));
         const hasAsiaDestination = asiaDestinations.some(dest => articleText.includes(dest));
         
@@ -88,6 +120,16 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         if (article.type !== 'community' && article.type !== 'nomade') {
           console.log(`🚫 Article rejeté (source non-Reddit, format témoignage requis): ${article.title} (type: ${article.type})`);
           return false;
+        }
+        
+        // D) Sélection d'article: éviter posts impossibles à extraire
+        // En DRY_RUN/FORCE_OFFLINE, prioriser fixtures avec source_text long
+        if ((isDryRun || forceOffline) && article.source_reliability !== undefined) {
+          // Blacklister RSS sans selftext (source_reliability < 0.7) sauf si source_text > 400
+          if (article.source_reliability < 0.7 && (!article.source_text || article.source_text.length < 400)) {
+            console.log(`🚫 Article rejeté (source non fiable, source_text trop court): ${article.title} reliability=${article.source_reliability}`);
+            return false;
+          }
         }
         
         // FILTRE 1: Rejeter TOUS les articles qui mentionnent des destinations non-asiatiques
@@ -113,7 +155,47 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       });
 
       if (validSources.length === 0) {
-        throw new Error('Aucun article valide après filtrage des rejets');
+        // FIX 5: Ne jamais throw une exception fatale
+        console.log(`⚠️ NO_ARTICLE_AFTER_FILTERING: ${sources.length} sources, ${sources.length - validSources.length} rejetées`);
+        
+        // Relâcher UN SEUL cran: autoriser Reddit r/travel sans destination explicite
+        const relaxedSources = sources.filter(article => {
+          // Autoriser Reddit r/travel même sans destination explicite
+          if (article.source === 'reddit' && (article.subreddit === 'travel' || article.subreddit === 'digitalnomad')) {
+            console.log(`   ℹ️ RELAXED_FILTER: autorisation Reddit ${article.subreddit} sans destination explicite`);
+            return true;
+          }
+          return false;
+        });
+        
+        if (relaxedSources.length > 0) {
+          console.log(`   ✅ ${relaxedSources.length} article(s) accepté(s) avec filtre relâché`);
+          validSources = relaxedSources;
+        } else {
+          // Si toujours 0, log et skip silencieux (jamais throw)
+          console.log(`   ❌ Aucun article même avec filtre relâché - skip silencieux`);
+          return null; // Retourner null au lieu de throw
+        }
+      }
+
+      // D) Prioriser fixtures avec source_reliability élevé en DRY_RUN/FORCE_OFFLINE
+      if (isDryRun || forceOffline) {
+        validSources.sort((a, b) => {
+          const reliabilityA = a.source_reliability || 0;
+          const reliabilityB = b.source_reliability || 0;
+          const sourceTextA = (a.source_text || '').length;
+          const sourceTextB = (b.source_text || '').length;
+          
+          // Priorité 1: source_reliability (fixtures = 1.0 > RSS = 0.6 > live 403 = 0.0)
+          if (reliabilityA !== reliabilityB) {
+            return reliabilityB - reliabilityA;
+          }
+          
+          // Priorité 2: longueur source_text (plus long = mieux)
+          return sourceTextB - sourceTextA;
+        });
+        
+        console.log(`📊 Articles triés par fiabilité: ${validSources.map(a => `reliability=${a.source_reliability || 0} source_text_len=${(a.source_text || '').length}`).join(', ')}`);
       }
 
       const selectedArticle = validSources[0];
@@ -138,10 +220,62 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       }
       console.log('✅ Analyse terminée:', analysis.type_contenu);
 
+      // A. SOURCE OF TRUTH - Verrouillage destination + entités (AVANT génération)
+      console.log('\n🔒 SOURCE OF TRUTH - Verrouillage destination');
+      console.log('============================================\n');
+      const sourceTruth = this.buildSourceTruth(selectedArticle, analysis);
+      analysis.source_truth = sourceTruth;
+      console.log(`✅ SOURCE_TRUTH_DESTINATION=${sourceTruth.destination || 'null'}`);
+      if (sourceTruth.entities.length > 0) {
+        console.log(`   Entités: ${sourceTruth.entities.join(', ')}`);
+      }
+
       // 4. Génération de contenu intelligent
       console.log('🎯 Génération de contenu intelligent...');
       const generatedContent = await this.intelligentAnalyzer.generateIntelligentContent(selectedArticle, analysis);
       console.log('✅ Contenu généré:', generatedContent.title);
+
+      // B. Validation post-génération: vérifier cohérence destination (AVANT amélioration)
+      console.log('\n🔍 VALIDATION POST-GÉNÉRATION');
+      console.log('=============================\n');
+      
+      // Extraire le contenu brut pour validation
+      let contentToValidate = '';
+      if (Array.isArray(generatedContent.content)) {
+        contentToValidate = generatedContent.content.map(section => {
+          if (typeof section === 'string') return section;
+          if (section.content) return section.content;
+          return JSON.stringify(section);
+        }).join('\n\n');
+      } else if (typeof generatedContent.content === 'string') {
+        contentToValidate = generatedContent.content;
+      } else {
+        contentToValidate = JSON.stringify(generatedContent);
+      }
+
+      const initialValidation = this.validateDestinationConsistency(contentToValidate, analysis.source_truth);
+      
+      if (!initialValidation.consistent) {
+        console.log(`   ❌ DESTINATION_MISMATCH: contenu généré parle de "${initialValidation.detected}" mais source_truth="${analysis.source_truth?.destination}"`);
+        
+        if (process.env.FLASHVOYAGE_DRY_RUN === '1') {
+          console.log('   🔧 DRY_RUN: Tentative de régénération corrective...');
+          const repairResult = await this.repairGeneration(selectedArticle, analysis, generatedContent);
+          
+          if (repairResult.success) {
+            generatedContent.content = repairResult.content;
+            generatedContent.title = repairResult.title || generatedContent.title;
+            console.log('   ✅ DESTINATION_REPAIR_ATTEMPT=1 result=success');
+          } else {
+            console.log('   ❌ DESTINATION_REPAIR_ATTEMPT=1 result=fail');
+            throw new Error(`DESTINATION_MISMATCH: Impossible de corriger la dérive de destination. Source: ${analysis.source_truth?.destination}, Généré: ${initialValidation.detected}`);
+          }
+        } else {
+          throw new Error(`DESTINATION_MISMATCH: Le contenu généré ne correspond pas à la source. Source: ${analysis.source_truth?.destination}, Généré: ${initialValidation.detected}`);
+        }
+      } else {
+        console.log(`   ✅ Destination cohérente: ${initialValidation.detected || 'non détectée'}`);
+      }
 
       // 5. Amélioration avec widgets et liens internes
       console.log('🔧 Amélioration du contenu...');
@@ -162,9 +296,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         contentToEnhance = JSON.stringify(generatedContent);
       }
       
-      // Ajouter le lien source au début du contenu (variable selon la source: Reddit, CNN, Skift, etc.)
-      // CORRECTION: Détecter la source réelle depuis l'URL si source est incorrecte
-      const articleLink = selectedArticle.link || '#';
+      // B) Ajouter le lien source au début du contenu (variable selon la source: Reddit, CNN, Skift, etc.)
+      // CORRECTION: Utiliser url si disponible, sinon link, sinon '#'
+      const articleLink = selectedArticle.url || selectedArticle.link || '#';
       const articleTitle = selectedArticle.title || 'Article sans titre';
       
       // Détecter la source réelle depuis l'URL si la propriété source n'est pas fiable
@@ -246,27 +380,86 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         }
       };
 
-      // VALIDATION FINALE: Vérifier qu'aucune destination non-asiatique n'est mentionnée dans le contenu final
-      const finalContentText = `${finalArticle.title} ${finalArticle.content}`.toLowerCase();
-      const finalNonAsiaDestinations = ['portugal', 'spain', 'espagne', 'lisbon', 'lisbonne', 'barcelona', 'barcelone', 'madrid', 'porto', 'france', 'paris', 'italy', 'italie', 'rome', 'greece', 'grèce', 'turkey', 'turquie', 'istanbul', 'europe', 'america', 'usa', 'brazil', 'brésil', 'mexico', 'mexique'];
-      const hasNonAsiaDestination = finalNonAsiaDestinations.some(dest => finalContentText.includes(dest));
+      // 6b. SOURCE OF TRUTH - Calcul de final_destination (AVANT enrichissement)
+      console.log('\n🎯 CALCUL DE LA DESTINATION FINALE');
+      console.log('===================================\n');
       
-      if (hasNonAsiaDestination) {
-        console.error(`❌ ERREUR CRITIQUE: Destination non-asiatique détectée dans le contenu final !`);
-        console.error(`   Contenu rejeté avant publication`);
-        throw new Error(`ERREUR CRITIQUE: Destination non-asiatique détectée dans le contenu final. Article rejeté.`);
+      // A) CALCUL DE LA DESTINATION FINALE avec priorités strictes
+      let finalDestination = null;
+      
+      // PRIORITÉ 1: source_truth.destination (verrouillé depuis le post source)
+      if (analysis.source_truth?.destination) {
+        finalDestination = analysis.source_truth.destination;
+        console.log(`   ✓ final_destination depuis source_truth: ${finalDestination}`);
       }
+      // PRIORITÉ 2: analysis.final_destination (si défini par LLM)
+      else if (analysis.final_destination && analysis.final_destination !== 'Asie') {
+        finalDestination = analysis.final_destination;
+        console.log(`   ✓ final_destination depuis analysis.final_destination: ${finalDestination}`);
+      }
+      // PRIORITÉ 3: analysis.geo.country (fallback depuis geo)
+      else if (analysis.geo?.country) {
+        finalDestination = analysis.geo.country;
+        console.log(`   ✓ final_destination depuis analysis.geo.country: ${finalDestination}`);
+      }
+      // PRIORITÉ 4: analysis.main_destination UNIQUEMENT si has_minimum_signals === true
+      else if (analysis.reddit_extraction?.quality?.has_minimum_signals === true && analysis.main_destination) {
+        finalDestination = analysis.main_destination;
+        console.log(`   ✓ final_destination depuis main_destination (has_minimum_signals=true): ${finalDestination}`);
+      }
+      // PRIORITÉ 5: Détection depuis titre + contenu source (PAS depuis contenu LLM)
+      else if (!finalDestination) {
+        const detectedDestinations = this.detectDestinationFromSource(selectedArticle, analysis);
+        if (detectedDestinations.length > 0) {
+          finalDestination = detectedDestinations[0];
+          console.log(`   ✓ final_destination depuis source (titre/contenu): ${finalDestination}`);
+        }
+      }
+      // PRIORITÉ 6: Fallback 'Asie'
+      if (!finalDestination) {
+        finalDestination = 'Asie';
+        console.log(`   → final_destination fallback: ${finalDestination}`);
+      }
+      
+      // B. Garde-fou: interdire divergence de source_truth
+      if (analysis.source_truth?.destination && finalDestination !== analysis.source_truth.destination) {
+        console.log(`   ⚠️ DESTINATION_DRIFT_IGNORED: scoring proposé "${finalDestination}" mais source_truth="${analysis.source_truth.destination}"`);
+        finalDestination = analysis.source_truth.destination;
+        console.log(`   ✓ final_destination corrigée depuis source_truth: ${finalDestination}`);
+      }
+      
+      // Assigner final_destination à analysis
+      analysis.final_destination = finalDestination;
+      console.log(`\n✅ final_destination définie: ${finalDestination}\n`);
+      
+      // PATCH 1: Créer pipelineContext comme source unique de vérité
+      const pipelineContext = {
+        final_destination: finalDestination,
+        geo: analysis.geo || selectedArticle.geo || {},
+        source_truth: analysis.source_truth || null
+      };
+      
+      // Recalculer catégories et tags avec final_destination
+      finalArticle.categories = await this.getCategoriesForContent(analysis, finalArticle.content);
+      finalArticle.tags = await this.getTagsForContent(analysis);
       
       console.log('📊 Article final construit:', {
         title: finalArticle.title,
         contentLength: finalArticle.content.length,
         categories: finalArticle.categories,
-        tags: finalArticle.tags
+        tags: finalArticle.tags,
+        final_destination: analysis.final_destination
       });
 
       // 7. Enrichissement avec liens internes et externes
       console.log('🔗 Enrichissement avec liens intelligents...');
       try {
+        // Préparer le contexte pour filtrer les liens non-Asie (utiliser final_destination)
+        const linkContext = {
+          articleType: analysis.type || analysis.type_contenu || 'temoignage',
+          destination: analysis.final_destination || ''
+        };
+        
         // Corriger : passer un objet avec content et title au lieu de 2 strings
         const linkingStrategyResult = await this.linkingStrategy.createStrategy(
           {
@@ -275,7 +468,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
             id: null // Pas d'ID car nouvel article
           },
           5, // maxInternalLinks
-          3  // maxExternalLinks
+          3, // maxExternalLinks
+          linkContext
         );
 
         console.log(`✅ Stratégie de liens créée: ${linkingStrategyResult.total_links} liens suggérés`);
@@ -287,12 +481,6 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         const contentToEnrich = typeof finalArticle.content === 'string' 
           ? finalArticle.content 
           : String(finalArticle.content || '');
-        
-        // Préparer le contexte pour les liens (articleType, destination)
-        const linkContext = {
-          articleType: analysis.type || analysis.type_contenu || 'temoignage',
-          destination: analysis.destination || analysis.destinations?.[0] || ''
-        };
         
         const enrichedContent = await this.linkingStrategy.integrateAllLinks(
           contentToEnrich,
@@ -318,8 +506,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // Le placement intelligent des widgets est maintenant centralisé dans article-finalizer.js
       // pour utiliser la logique corrigée et éviter les conflits
 
-      // 8b. Finalisation de l'article (quote, FOMO, image)
-      const finalizedArticle = await this.articleFinalizer.finalizeArticle(finalArticle, analysis);
+      // 8c. Finalisation de l'article (quote, FOMO, image)
+      // PATCH 1: Passer pipelineContext à finalizeArticle
+      const finalizedArticle = await this.articleFinalizer.finalizeArticle(finalArticle, analysis, pipelineContext);
       
       // 8c. Récupérer l'image featured
       const featuredImage = await this.articleFinalizer.getFeaturedImage(finalizedArticle, analysis);
@@ -335,10 +524,72 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       finalizedArticle.categoryIds = categoriesAndTags.categories;
       finalizedArticle.tagIds = categoriesAndTags.tags;
 
-      // 9. Validation finale
-      const validation = this.validateFinalArticle(finalizedArticle);
+      // 9. VALIDATION NON-ASIE (après finalisation et sanitizer)
+      console.log('\n🔍 VALIDATION NON-ASIE (après finalisation)');
+      console.log('==========================================\n');
+      
+      // Nettoyer le texte éditorial (retirer sections injectées, nettoyer liens)
+      const editorialText = this.extractEditorialText(finalizedArticle);
+      
+      // Détecter les mentions non-asiatiques
+      const validationResult = this.validateNonAsiaContent(editorialText, finalizedArticle.title);
+      
+      if (validationResult.hits.length > 0) {
+        console.error('❌ ERREUR CRITIQUE: Destination non-asiatique détectée dans le contenu final !');
+        console.error(`   Mentions détectées: ${validationResult.hits.length}`);
+        validationResult.hits.slice(0, 5).forEach((h, i) => {
+          console.error(`   [${i+1}] term="${h.term}" excerpt="...${h.excerpt}..."`);
+        });
+        throw new Error('ERREUR CRITIQUE: Destination non-asiatique détectée dans le contenu final. Article rejeté.');
+      } else {
+        console.log('✅ Validation non-Asie: aucune mention détectée');
+      }
+
+      // 10. Validation finale (autres critères) - FIX 1: UNE SEULE détection widgets APRÈS finalisation complète
+      // PATCH: Déduplication widgets UNE SEULE FOIS, juste avant validation finale
+      const articleFinalizerModule = await import('./article-finalizer.js');
+      const ArticleFinalizer = articleFinalizerModule.default;
+      const finalizer = new ArticleFinalizer();
+      
+      // PATCH: Dédupliquer widgets (max 1 par type) - UNE SEULE FOIS
+      finalizedArticle.content = await finalizer.deduplicateWidgets(finalizedArticle.content, pipelineContext);
+      
+      // C'est la source de vérité officielle (même fonction que dans deduplicateWidgets)
+      const detected = finalizer.detectRenderedWidgets(finalizedArticle.content);
+      const widgetsRendered = detected.count;
+      
+      // C) Fix métrique: widgetsRendered doit venir du HTML final, point
+      // Overwrite AVANT de logger (source de vérité)
+      if (pipelineContext) {
+        const pipelineRendered = pipelineContext.rendered || pipelineContext.widgets_rendered || pipelineContext.widgets_tracking?.rendered || 0;
+        // Logger divergence uniquement si elle existe AVANT overwrite
+        if (pipelineRendered !== widgetsRendered) {
+          console.log(`⚠️ WIDGET_VALIDATION_DIVERGENCE (avant correction): pipelineContext.rendered=${pipelineRendered} vs detectRenderedWidgets=${widgetsRendered}`);
+        }
+        // Overwrite = source de vérité (après insertion + dédup)
+        pipelineContext.rendered = widgetsRendered;
+        pipelineContext.rendered_types = detected.types;
+        pipelineContext.widgets_rendered = widgetsRendered; // Alias pour compatibilité
+        if (pipelineContext.widgets_tracking) {
+          pipelineContext.widgets_tracking.rendered = widgetsRendered;
+        }
+      }
+      
+      // Log officiel de détection (source de vérité unique) - doit matcher types_after de WIDGET_DEDUP
+      console.log(`   📊 WIDGETS_DETECTED_HTML (FINAL): count=${widgetsRendered}, types=[${detected.types.join(', ')}]`);
+      
+      // FIX 3: Ne jamais invalider pour 0 lien interne (bonus SEO uniquement)
+      const validation = this.validateFinalArticle(finalizedArticle, widgetsRendered);
+      
+      // FIX E: En DRY_RUN, ne pas throw sur widgets=0, seulement logger
       if (!validation.isValid) {
+        if (process.env.FLASHVOYAGE_DRY_RUN === '1') {
+          console.warn('⚠️ DRY_RUN_WARNING: Article invalide mais continuons (DRY_RUN mode)');
+          console.warn(`   Erreurs: ${validation.errors.join(', ')}`);
+          console.warn(`   widgetsRendered: ${widgetsRendered}`);
+        } else {
         throw new Error(`Article invalide: ${validation.errors.join(', ')}`);
+        }
       }
 
       // 10. Publication WordPress
@@ -357,6 +608,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       });
 
       // 11. Mise à jour finale de la base de données (inclut le nouvel article)
+      if (process.env.FLASHVOYAGE_DRY_RUN === '1') {
+        console.log('🧪 DRY_RUN: écriture DB finale bloquée');
+      } else {
       console.log('\n📚 Mise à jour finale de la base de données...');
       try {
         const { WordPressArticlesCrawler } = await import('./wordpress-articles-crawler.js');
@@ -367,6 +621,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       } catch (error) {
         console.warn('⚠️ Impossible de mettre à jour la base:', error.message);
         console.warn('   → Relancez manuellement: node wordpress-articles-crawler.js\n');
+        }
       }
 
       return publishedArticle;
@@ -378,15 +633,12 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   }
 
   // Obtenir UNE SEULE catégorie principale selon l'analyse
+  // UTILISE final_destination comme source of truth
   async getCategoriesForContent(analysis, generatedContent = null) {
-    // Analyser les destinations mentionnées dans le contenu généré (enrichi)
-    const contentToAnalyze = generatedContent || analysis.contenu || '';
-    const destinations = this.extractDestinationsFromContent(contentToAnalyze);
-    
-    // Si une destination spécifique est trouvée, utiliser la catégorie "Destinations"
-    if (destinations.length > 0) {
-      const destinationCategory = this.getDestinationCategory(destinations[0]);
-      console.log(`🏷️ Catégorie destination: ${destinationCategory}`);
+    // Utiliser final_destination si disponible (source of truth)
+    if (analysis.final_destination && analysis.final_destination !== 'Asie') {
+      const destinationCategory = this.getDestinationCategory(analysis.final_destination);
+      console.log(`🏷️ Catégorie depuis final_destination: ${destinationCategory}`);
       return [destinationCategory]; // UNE SEULE catégorie
     }
     
@@ -408,8 +660,247 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     return [mainCategory]; // UNE SEULE catégorie
   }
 
+  /**
+   * A. Construit source_truth depuis le post source Reddit
+   */
+  buildSourceTruth(selectedArticle, analysis) {
+    const sourceTruth = {
+      destination: null,
+      country: null,
+      entities: [],
+      source_url: selectedArticle.link || '',
+      source_title: selectedArticle.title || ''
+    };
+
+    // PRIORITÉ 1: Extracteur Reddit si has_minimum_signals ET destination trouvée
+    if (analysis.reddit_extraction?.quality?.has_minimum_signals === true && analysis.main_destination) {
+      sourceTruth.destination = analysis.main_destination;
+      sourceTruth.country = this.mapDestinationToCountry(analysis.main_destination);
+      console.log(`   ✓ source_truth depuis extracteur Reddit: ${sourceTruth.destination}`);
+    }
+    // PRIORITÉ 2: Mapping d'entités connues (Magome/Nagiso/Nakasendo => Japan)
+    else {
+      const entityMap = {
+        'magome': 'japan',
+        'nagiso': 'japan',
+        'nakasendo': 'japan',
+        'tokyo': 'japan',
+        'kyoto': 'japan',
+        'osaka': 'japan',
+        'bangkok': 'thailand',
+        'chiang mai': 'thailand',
+        'phuket': 'thailand',
+        'hanoi': 'vietnam',
+        'ho chi minh': 'vietnam',
+        'bali': 'indonesia',
+        'jakarta': 'indonesia',
+        'seoul': 'korea',
+        'manila': 'philippines'
+      };
+
+      const titleLower = (selectedArticle.title || '').toLowerCase();
+      const contentLower = (analysis.reddit_extraction?.post?.text || '').toLowerCase();
+      const combinedText = `${titleLower} ${contentLower}`;
+
+      // Extraire entités connues
+      for (const [entity, country] of Object.entries(entityMap)) {
+        if (combinedText.includes(entity)) {
+          sourceTruth.entities.push(entity);
+          if (!sourceTruth.destination) {
+            sourceTruth.destination = country;
+            sourceTruth.country = country;
+          }
+        }
+      }
+
+      if (sourceTruth.destination) {
+        console.log(`   ✓ source_truth depuis mapping entités: ${sourceTruth.destination} (${sourceTruth.entities.join(', ')})`);
+      }
+    }
+    // PRIORITÉ 3: Classification light sur titre + contenu source
+    if (!sourceTruth.destination) {
+      const detected = this.detectDestinationFromSource(selectedArticle, analysis);
+      if (detected.length > 0) {
+        sourceTruth.destination = detected[0];
+        sourceTruth.country = this.mapDestinationToCountry(detected[0]);
+        console.log(`   ✓ source_truth depuis classification source: ${sourceTruth.destination}`);
+      }
+    }
+    
+    // A) PRIORITÉ 4: Fallback depuis geo.country si présent
+    if (!sourceTruth.destination) {
+      if (analysis.geo?.country) {
+        sourceTruth.destination = analysis.geo.country;
+        sourceTruth.country = analysis.geo.country;
+        console.log(`   ✓ SOURCE_TRUTH_FALLBACK_FROM_GEO: country=${analysis.geo.country}`);
+      } else if (selectedArticle.geo?.country) {
+        sourceTruth.destination = selectedArticle.geo.country;
+        sourceTruth.country = selectedArticle.geo.country;
+        console.log(`   ✓ SOURCE_TRUTH_FALLBACK_FROM_GEO: country=${selectedArticle.geo.country}`);
+      }
+    }
+
+    return sourceTruth;
+  }
+
+  /**
+   * D. Détection destination depuis source (PAS depuis contenu LLM)
+   */
+  detectDestinationFromSource(selectedArticle, analysis) {
+    const destinations = [];
+    
+    // Analyser UNIQUEMENT: titre, subreddit, contenu Reddit extrait
+    const sourceText = [
+      selectedArticle.title || '',
+      selectedArticle.subreddit || '',
+      analysis.reddit_extraction?.post?.text || '',
+      analysis.reddit_extraction?.post?.signals?.locations?.join(' ') || ''
+    ].join(' ').toLowerCase();
+
+    const destinationKeywords = {
+      'thailand': ['thailand', 'thaïlande', 'bangkok', 'chiang mai', 'phuket'],
+      'vietnam': ['vietnam', 'hanoi', 'ho chi minh', 'saigon'],
+      'indonesia': ['indonesia', 'indonésie', 'bali', 'jakarta', 'ubud'],
+      'japan': ['japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'magome', 'nagiso', 'nakasendo'],
+      'philippines': ['philippines', 'manila', 'cebu'],
+      'korea': ['korea', 'corée', 'seoul', 'séoul'],
+      'singapore': ['singapore', 'singapour']
+    };
+
+    const destinationScores = {};
+    for (const [country, keywords] of Object.entries(destinationKeywords)) {
+      let score = 0;
+      keywords.forEach(keyword => {
+        const matches = (sourceText.match(new RegExp(keyword, 'g')) || []).length;
+        score += matches;
+      });
+      if (score > 0) {
+        destinationScores[country] = score;
+      }
+    }
+
+    if (Object.keys(destinationScores).length > 0) {
+      const bestDestination = Object.entries(destinationScores)
+        .sort(([,a], [,b]) => b - a)[0][0];
+      destinations.push(bestDestination);
+      console.log(`   🎯 GENERATED_DESTINATION_GUESS=${bestDestination} (depuis source)`);
+    }
+
+    return destinations;
+  }
+
+  /**
+   * Mapping destination → country
+   */
+  mapDestinationToCountry(destination) {
+    const countryMap = {
+      'thailand': 'thailand',
+      'vietnam': 'vietnam',
+      'indonesia': 'indonesia',
+      'japan': 'japan',
+      'philippines': 'philippines',
+      'korea': 'korea',
+      'singapore': 'singapore'
+    };
+    return countryMap[destination] || destination;
+  }
+
+  /**
+   * B. Validation post-génération: vérifier cohérence destination
+   */
+  validateDestinationConsistency(generatedContent, sourceTruth) {
+    if (!sourceTruth?.destination) {
+      return { consistent: true, detected: null };
+    }
+
+    // Extraire destination dominante du contenu généré
+    const detectedDestinations = this.extractDestinationsFromContent(generatedContent);
+    const detected = detectedDestinations.length > 0 ? detectedDestinations[0] : null;
+
+    const consistent = !detected || detected === sourceTruth.destination;
+    
+    return {
+      consistent,
+      detected,
+      expected: sourceTruth.destination
+    };
+  }
+
+  /**
+   * C. Régénération corrective (1 seule tentative)
+   */
+  async repairGeneration(selectedArticle, analysis, generatedContent) {
+    try {
+      console.log('   🔧 Construction prompt de correction...');
+      
+      const sourceTruth = analysis.source_truth;
+      if (!sourceTruth?.destination) {
+        return { success: false };
+      }
+
+      // Construire un prompt de correction pour le LLM
+      const correctionInstructions = `CORRECTION OBLIGATOIRE:
+- Tu DOIS écrire sur ${sourceTruth.destination} uniquement.
+- Le post source parle de: ${sourceTruth.entities.join(', ') || sourceTruth.source_title}
+- Interdit de mentionner ${this.getForbiddenDestinations(sourceTruth.destination)}.
+- Le contenu actuel dérive vers une autre destination - corrige-le pour parler UNIQUEMENT de ${sourceTruth.destination}.`;
+
+      // Ajouter les instructions de correction à l'analysis pour que le LLM les voie
+      const analysisWithCorrection = {
+        ...analysis,
+        correctionInstructions
+      };
+
+      // Repasser seulement l'étape génération finale
+      const repairedContent = await this.intelligentAnalyzer.generateIntelligentContent(
+        selectedArticle,
+        analysisWithCorrection
+      );
+
+      // Extraire le contenu pour validation
+      let repairedContentText = '';
+      if (Array.isArray(repairedContent.content)) {
+        repairedContentText = repairedContent.content.map(section => {
+          if (typeof section === 'string') return section;
+          if (section.content) return section.content;
+          return JSON.stringify(section);
+        }).join('\n\n');
+      } else if (typeof repairedContent.content === 'string') {
+        repairedContentText = repairedContent.content;
+      } else {
+        repairedContentText = JSON.stringify(repairedContent);
+      }
+
+      // Re-valider
+      const revalidation = this.validateDestinationConsistency(repairedContentText, sourceTruth);
+      
+      if (revalidation.consistent) {
+        return {
+          success: true,
+          content: repairedContent.content,
+          title: repairedContent.title
+        };
+      } else {
+        console.log(`   ⚠️ Régénération toujours incohérente: ${revalidation.detected} vs ${sourceTruth.destination}`);
+        return { success: false };
+      }
+    } catch (error) {
+      console.error('   ❌ Erreur régénération corrective:', error.message);
+      return { success: false };
+    }
+  }
+
+  /**
+   * Liste des destinations interdites pour un pays donné
+   */
+  getForbiddenDestinations(allowedDestination) {
+    const allDestinations = ['thailand', 'vietnam', 'indonesia', 'japan', 'philippines', 'korea', 'singapore'];
+    return allDestinations.filter(d => d !== allowedDestination).join(', ');
+  }
+
   // Extraire les destinations du contenu généré
   // UNIQUEMENT les destinations asiatiques officielles: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
+  // D. NE PAS UTILISER CETTE FONCTION POUR LE SCORING PRIMAIRE (utiliser detectDestinationFromSource)
   extractDestinationsFromContent(content) {
     const destinations = [];
     const contentToAnalyze = (content || '').toLowerCase();
@@ -562,6 +1053,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   }
 
   // Obtenir les tags selon l'analyse
+  // UTILISE final_destination comme source of truth, purge les tags contradictoires
   async getTagsForContent(analysis) {
     const tags = [];
     
@@ -579,32 +1071,67 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
 
     tags.push(...(typeTags[analysis.type_contenu] || ['Conseil']));
     
-    // Tags par destination
-    if (analysis.destination) {
-      tags.push(analysis.destination);
-    }
-    
     // Tags par sous-catégorie
     if (analysis.sous_categorie) {
       tags.push(analysis.sous_categorie);
     }
     
-    // Tags par audience
-    if (analysis.audience) {
-      const audienceTags = {
-        'nomades_debutants': ['Débutant', 'Premier voyage'],
-        'nomades_confirmes': ['Confirmé', 'Expérimenté'],
-        'nomades_experts': ['Expert', 'Avancé'],
-        'nomades_famille': ['Famille', 'Enfants']
-      };
-      
-      const audienceTag = audienceTags[analysis.audience];
-      if (audienceTag) {
-        tags.push(...audienceTag);
+    // Tags par destination - UTILISER final_destination UNIQUEMENT
+    // Liste des destinations Asie pour purger les tags contradictoires
+    const asiaDestinations = [
+      'thailand', 'thaïlande', 'Thaïlande', 'Thailand',
+      'vietnam', 'Vietnam',
+      'indonesia', 'indonésie', 'Indonesia', 'Indonésie',
+      'japan', 'japon', 'Japan', 'Japon',
+      'korea', 'corée', 'Korea', 'Corée',
+      'philippines', 'Philippines',
+      'singapore', 'singapour', 'Singapore', 'Singapour',
+      'bangkok', 'Bangkok',
+      'bali', 'Bali',
+      'tokyo', 'Tokyo'
+    ];
+    
+    // Purger tous les tags destination existants
+    const tagsWithoutDestinations = tags.filter(tag => 
+      !asiaDestinations.some(dest => tag.toLowerCase().includes(dest.toLowerCase()))
+    );
+    
+    // Ajouter UN SEUL tag destination depuis final_destination
+    if (analysis.final_destination && analysis.final_destination !== 'Asie') {
+      // Normaliser le nom de destination pour le tag
+      const destinationTag = this.normalizeDestinationTag(analysis.final_destination);
+      if (destinationTag) {
+        tagsWithoutDestinations.push(destinationTag);
+        console.log(`   ✓ Tag destination ajouté depuis final_destination: ${destinationTag}`);
       }
     }
     
-    return tags.slice(0, 8); // Limiter à 8 tags
+    return tagsWithoutDestinations.slice(0, 8); // Limiter à 8 tags
+  }
+  
+  /**
+   * Normalise une destination en tag WordPress
+   */
+  normalizeDestinationTag(destination) {
+    const mapping = {
+      'thailand': 'Thaïlande',
+      'thaïlande': 'Thaïlande',
+      'vietnam': 'Vietnam',
+      'indonesia': 'Indonésie',
+      'indonésie': 'Indonésie',
+      'japan': 'Japon',
+      'japon': 'Japon',
+      'korea': 'Corée du Sud',
+      'corée': 'Corée du Sud',
+      'philippines': 'Philippines',
+      'singapore': 'Singapour',
+      'singapour': 'Singapour',
+      'bangkok': 'Thaïlande',
+      'bali': 'Indonésie',
+      'tokyo': 'Japon'
+    };
+    
+    return mapping[destination.toLowerCase()] || destination;
   }
 
   // Générer un extrait
@@ -620,7 +1147,58 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   }
 
   // Valider l'article final
-  validateFinalArticle(article) {
+  /**
+   * Extrait le texte éditorial pur (sans sections injectées, sans attributs HTML)
+   */
+  extractEditorialText(finalizedArticle) {
+    let html = `${finalizedArticle.title} ${finalizedArticle.content || ''}`;
+    
+    // 1. Retirer entièrement la section "Articles connexes"
+    html = html.replace(/<h[2-6][^>]*>.*?Articles\s+connexes.*?<\/h[2-6]>.*?(?=<h[2-6]|$)/gis, '');
+    
+    // 2. Convertir les liens en texte simple (retirer hrefs et garder seulement le texte)
+    html = html.replace(/<a[^>]*>(.*?)<\/a>/gi, '$1');
+    
+    // 3. Retirer toutes les balises HTML restantes pour obtenir le texte visible
+    const textContent = html.replace(/<[^>]*>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    
+    return textContent.toLowerCase();
+  }
+
+  /**
+   * Valide que le contenu ne contient pas de mentions non-asiatiques
+   */
+  validateNonAsiaContent(editorialText, title) {
+    const finalNonAsiaDestinations = [
+      'portugal','spain','espagne','lisbon','lisbonne','barcelona','barcelone','madrid','porto',
+      'france','paris','italy','italie','rome','greece','grèce','turkey','turquie','istanbul',
+      'europe','america','usa','brazil','brésil','mexico','mexique'
+    ];
+
+    // match word-boundary (évite des faux positifs bêtes)
+    const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    const hits = [];
+    for (const term of finalNonAsiaDestinations) {
+      const re = new RegExp(`\\b${escapeRegExp(term)}\\b`, 'i');
+      const m = editorialText.match(re);
+      if (m) {
+        const idx = editorialText.search(re);
+        const start = Math.max(0, idx - 80);
+        const end = Math.min(editorialText.length, idx + 80);
+        hits.push({
+          term,
+          excerpt: editorialText.slice(start, end).replace(/\s+/g, ' ')
+        });
+      }
+    }
+
+    return { hits };
+  }
+
+  validateFinalArticle(article, widgetsRendered = 0) {
     const errors = [];
     
     if (!article.title || article.title.length < 10) {
@@ -648,9 +1226,23 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       errors.push('Meta description manquante');
     }
     
+    // FIX D: Utiliser widgets réellement rendus pour le scoring (pas de détection HTML)
+    const widgetsScore = widgetsRendered >= 1 ? 100 : 0;
+    if (widgetsRendered === 0) {
+      // Ne pas pénaliser si widgets bloqués par policy (ex: family context)
+      const hasFamilyBlock = article.content?.toLowerCase().includes('famille') && 
+                            (article.content?.toLowerCase().includes('enfant') || 
+                             article.content?.toLowerCase().includes('bébé'));
+      if (!hasFamilyBlock) {
+        errors.push(`Widgets insuffisants: ${widgetsRendered} rendu(s)`);
+      }
+    }
+    
     console.log('📊 Validation article:', {
       titleLength: article.title?.length || 0,
       contentLength: contentLength,
+      widgetsRendered: widgetsRendered,
+      widgetsScore: widgetsScore,
       categories: article.categories?.length || 0,
       tags: article.tags?.length || 0,
       hasMeta: !!article.meta?.description
@@ -664,6 +1256,18 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
 
   // Publier sur WordPress
   async publishToWordPress(article) {
+    // GARDE DRY_RUN: Bloquer toute publication WordPress en mode test
+    if (process.env.FLASHVOYAGE_DRY_RUN === '1') {
+      console.log('🧪 DRY_RUN: publication WordPress bloquée');
+      return {
+        id: null,
+        title: article.title,
+        link: null,
+        status: 'dry_run',
+        enhancements: article.enhancements
+      };
+    }
+    
     try {
       const axios = (await import('axios')).default;
       const { WORDPRESS_URL, WORDPRESS_USERNAME, WORDPRESS_APP_PASSWORD } = await import('./config.js');

@@ -4,8 +4,7 @@
  * INTÉGRATEUR CONTEXTUEL - INSÉRER LES LIENS INTELLIGEMMENT DANS L'ARTICLE
  */
 
-import { OpenAI } from 'openai';
-import { OPENAI_API_KEY } from './config.js';
+import { getOpenAIClient, isOpenAIAvailable } from './openai-client.js';
 
 class ContextualLinkIntegrator {
   constructor() {
@@ -13,13 +12,106 @@ class ContextualLinkIntegrator {
     this.maxLinksPerArticle = 15;
     
     // Initialiser OpenAI pour générer des phrases de transition
-    this.useLLM = Boolean(OPENAI_API_KEY);
+    // Initialisation lazy - pas d'import OpenAI au top-level
+    this.useLLM = isOpenAIAvailable();
+    this.openai = null; // Initialisé lazy via getOpenAIClient() dans les méthodes async
     if (this.useLLM) {
-      this.openai = new OpenAI({ apiKey: OPENAI_API_KEY });
-      console.log('✅ Génération LLM activée pour phrases de transition');
+      console.log('✅ Génération LLM activée pour phrases de transition (initialisation lazy)');
     } else {
-      console.log('⚠️ Génération LLM désactivée (pas de clé API) - Utilisation structure par défaut');
+      console.log('⚠️ Génération LLM désactivée (FORCE_OFFLINE=1 ou pas de clé API) - Utilisation structure par défaut');
     }
+  }
+
+  /**
+   * Normalise un texte (accents, espaces, casse) - VERSION UNIQUE
+   */
+  normalizeText(s) {
+    return (s ?? "")
+      .toString()
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")      // accents
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+  }
+
+  /**
+   * Convertit HTML en texte visible (sans balises) - VERSION UNIQUE
+   */
+  htmlToText(html) {
+    const text = (html ?? "")
+      .replace(/<script[\s\S]*?<\/script>/gi, " ")
+      .replace(/<style[\s\S]*?<\/style>/gi, " ")
+      .replace(/<\/?[^>]+>/g, " ")        // strip tags
+      .replace(/&nbsp;/g, " ")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&#8217;/g, "'")
+      .replace(/&#8211;/g, "-")
+      .replace(/&#8212;/g, "--")
+      .replace(/&#[0-9]+;/g, " ")
+      .replace(/&[a-z]+;/gi, " ");
+    
+    return this.normalizeText(text);
+  }
+
+  /**
+   * Ajoute des variantes FR/EN pour les destinations critiques
+   */
+  addDestinationVariants(keywords) {
+    const variants = new Set(keywords);
+    
+    const destinationMap = {
+      'thailand': ['thaïlande', 'thailand'],
+      'thaïlande': ['thailand', 'thaïlande'],
+      'japan': ['japon', 'japan'],
+      'japon': ['japan', 'japon'],
+      'indonesia': ['indonésie', 'indonesia'],
+      'indonésie': ['indonesia', 'indonésie'],
+      'vietnam': ['viêt nam', 'vietnam', 'viet nam'],
+      'viêt nam': ['vietnam', 'viet nam', 'viêt nam'],
+      'bangkok': ['bangkok'],
+      'bali': ['bali'],
+      'tokyo': ['tokyo'],
+      'singapore': ['singapour', 'singapore'],
+      'singapour': ['singapore', 'singapour']
+    };
+    
+    for (const keyword of keywords) {
+      const keywordLower = keyword.toLowerCase();
+      for (const [key, values] of Object.entries(destinationMap)) {
+        if (keywordLower.includes(key) || values.some(v => keywordLower.includes(v))) {
+          values.forEach(v => variants.add(v));
+          variants.add(key);
+        }
+      }
+    }
+    
+    return Array.from(variants);
+  }
+
+  /**
+   * Helper pour garantir qu'une RegExp a le flag 'g' (requis pour matchAll)
+   */
+  withGlobalFlag(re) {
+    if (!(re instanceof RegExp)) {
+      throw new Error("withGlobalFlag expects RegExp");
+    }
+    const flags = re.flags.includes("g") ? re.flags : re.flags + "g";
+    return new RegExp(re.source, flags);
+  }
+  
+  /**
+   * Export du helper pour les tests
+   */
+  static withGlobalFlag(re) {
+    if (!(re instanceof RegExp)) {
+      throw new Error("withGlobalFlag expects RegExp");
+    }
+    const flags = re.flags.includes("g") ? re.flags : re.flags + "g";
+    return new RegExp(re.source, flags);
   }
 
   /**
@@ -94,8 +186,9 @@ class ContextualLinkIntegrator {
     // NOUVELLE APPROCHE: Regrouper les liens externes par mot-clé avant insertion
     const externalLinksByKeyword = new Map(); // keyword -> array of {anchor, url, title, relevance_score}
     const internalLinks = [];
+    const externalLinksToIntegrate = []; // Liste réelle des liens externes à intégrer
 
-    // Séparer les liens internes et externes, et regrouper les externes par mot-clé
+    // Séparer les liens internes et externes
     for (const link of sortedLinks) {
       const linkUrl = link.article_url || link.url;
       const linkTitle = link.article_title || link.anchor_text;
@@ -104,41 +197,81 @@ class ContextualLinkIntegrator {
       const isExternalLink = linkUrl && !linkUrl.includes('flashvoyage.com') && !linkUrl.startsWith('/');
       
       if (isExternalLink) {
-        // Trouver le mot-clé pour ce lien externe
-        const keywordResult = this.findKeywordForExternalLink(updatedContent, link.anchor_text, linkTitle);
-        
-        if (keywordResult && keywordResult.keyword) {
-          // Regrouper par mot-clé
-          if (!externalLinksByKeyword.has(keywordResult.keyword)) {
-            externalLinksByKeyword.set(keywordResult.keyword, {
-              keyword: keywordResult.keyword,
-              position: keywordResult.position,
-              links: []
-            });
-          }
-          
-          externalLinksByKeyword.get(keywordResult.keyword).links.push({
-            anchor: link.anchor_text,
-            url: linkUrl,
-            title: linkTitle,
-            relevance_score: link.relevance_score || 5
-          });
-        } else {
-          console.log(`⏭️ [EXTERNE] Pas de contexte trouvé pour "${link.anchor_text}" - Ignoré`);
-          linksSkipped++;
-        }
+        externalLinksToIntegrate.push({
+          anchor: link.anchor_text,
+          url: linkUrl,
+          title: linkTitle,
+          relevance_score: link.relevance_score || 5
+        });
       } else {
         // Liens internes à traiter séparément
         internalLinks.push(link);
       }
     }
 
+    // FIX 1: Logs standardisés AVANT la phase d'intégration
+    console.log(`\n📊 EXTERNAL_LINKS_DETECTED: ${externalLinksToIntegrate.length}`);
+    console.log(`📊 EXTERNAL_LINKS_TO_INTEGRATE: ${externalLinksToIntegrate.length} (après dédup)`);
+
+    // NOUVEAU: Construire UNE fois le texte normalisé depuis le HTML
+    const normalizedText = this.htmlToText(updatedContent);
+
+    // Trouver les mots-clés pour chaque lien externe (avec variantes FR/EN)
+    for (const link of externalLinksToIntegrate) {
+      // Extraire les mots-clés depuis l'ancre et le titre
+      const anchorKeywords = this.extractKeywordsFromAnchor(link.anchor);
+      const titleKeywords = this.extractKeywords(link.title || link.anchor);
+      const allKeywords = [...anchorKeywords, ...titleKeywords];
+      
+      // FIX 4: Ajouter variantes FR/EN pour destinations critiques
+      const keywordsWithVariants = this.addDestinationVariants(allKeywords);
+      
+      // Chercher dans le texte normalisé (pas dans le HTML)
+      let foundKeyword = null;
+      let foundPosition = -1;
+      
+      for (const keyword of keywordsWithVariants) {
+        // Ignorer les mots trop courts ou génériques
+        const forbidden = ['les', 'des', 'une', 'pour', 'dans', 'avec', 'the', 'a', 'de', 'du', 'la', 'le', 'un'];
+        if (keyword.length < 4 || forbidden.includes(keyword.toLowerCase())) {
+          continue;
+        }
+        
+        const normalizedKeyword = this.normalizeText(keyword);
+        const keywordIndex = normalizedText.indexOf(normalizedKeyword);
+        
+        if (keywordIndex !== -1) {
+          foundKeyword = keyword;
+          foundPosition = keywordIndex;
+          break; // Prendre le premier match
+        }
+      }
+      
+      if (foundKeyword && foundPosition !== -1) {
+        // Regrouper par mot-clé trouvé
+        if (!externalLinksByKeyword.has(foundKeyword)) {
+          externalLinksByKeyword.set(foundKeyword, {
+            keyword: foundKeyword,
+            position: { position: foundPosition, keywordLength: foundKeyword.length },
+            links: []
+          });
+        }
+        
+        externalLinksByKeyword.get(foundKeyword).links.push(link);
+      } else {
+        console.log(`⏭️ [EXTERNE] Pas de contexte trouvé pour "${link.anchor}" - Ignoré`);
+        linksSkipped++;
+      }
+    }
+
     // CORRECTION: Trier les liens externes par position pour détecter les liens proches
-    // et les regrouper même si mots-clés différents
     const sortedExternalLinks = Array.from(externalLinksByKeyword.entries())
       .sort((a, b) => a[1].position.position - b[1].position.position);
     
-    // Insérer les liens externes groupés par mot-clé
+    // FIX 5: Tracking des liens externes insérés
+    let externalLinksInserted = 0;
+    
+    // Insérer les liens externes groupés par mot-clé (isolation par lien)
     for (let i = 0; i < sortedExternalLinks.length; i++) {
       if (linksIntegrated >= this.maxLinksPerArticle) {
         console.log(`⚠️ Limite de ${this.maxLinksPerArticle} liens atteinte`);
@@ -170,41 +303,57 @@ class ContextualLinkIntegrator {
         }
       }
 
-      // Si un seul lien (ou groupe non regroupé), insertion simple
-      if (nearbyLinks.length === 1) {
-        const insertionResult = this.insertSingleExternalLink(
-          updatedContent,
-          nearbyLinks[0].anchor,
-          nearbyLinks[0].url,
-          nearbyLinks[0].title,
-          nearbyKeyword,
-          nearbyPosition,
-          context
-        );
-        
-        if (insertionResult.inserted) {
-          updatedContent = insertionResult.content;
-          linksIntegrated++;
-          console.log(`✅ ${linksIntegrated}. [EXTERNE] "${nearbyLinks[0].anchor}" → ${nearbyLinks[0].title.substring(0, 50)}...`);
+      // NOUVEAU: Isolation par lien avec try/catch
+      try {
+        // Si un seul lien (ou groupe non regroupé), insertion simple
+        if (nearbyLinks.length === 1) {
+          const link = nearbyLinks[0];
+          const insertionResult = this.insertSingleExternalLink(
+            updatedContent,
+            link.anchor,
+            link.url,
+            link.title,
+            nearbyKeyword,
+            nearbyPosition,
+            context
+          );
+          
+          if (insertionResult.inserted) {
+            updatedContent = insertionResult.content;
+            linksIntegrated++;
+            externalLinksInserted++;
+            console.log(`✅ EXTERNAL_LINK_INSERTED: label="${link.anchor}", url="${link.url}", method="single"`);
+          } else {
+            console.log(`⏭️ EXTERNAL_LINK_SKIPPED: label="${link.anchor}", reason="insertion failed"`);
+          }
+        } else {
+          // Plusieurs liens (même mot-clé ou liens proches) → générer une phrase structurée
+          const insertionResult = await this.insertMultipleExternalLinks(
+            updatedContent,
+            nearbyLinks,
+            nearbyKeyword,
+            nearbyPosition,
+            context
+          );
+          
+          if (insertionResult.inserted) {
+            updatedContent = insertionResult.content;
+            linksIntegrated += nearbyLinks.length;
+            externalLinksInserted += nearbyLinks.length;
+            console.log(`✅ EXTERNAL_LINK_INSERTED: ${nearbyLinks.length} liens groupés, method="multiple"`);
+            nearbyLinks.forEach(link => {
+              console.log(`   - label="${link.anchor}", url="${link.url}"`);
+            });
+          } else {
+            console.log(`⏭️ EXTERNAL_LINK_SKIPPED: ${nearbyLinks.length} liens groupés, reason="insertion failed"`);
+          }
         }
-      } else {
-        // Plusieurs liens (même mot-clé ou liens proches) → générer une phrase structurée
-        const insertionResult = await this.insertMultipleExternalLinks(
-          updatedContent,
-          nearbyLinks,
-          nearbyKeyword,
-          nearbyPosition,
-          context
-        );
-        
-        if (insertionResult.inserted) {
-          updatedContent = insertionResult.content;
-          linksIntegrated += nearbyLinks.length;
-          console.log(`✅ ${linksIntegrated - nearbyLinks.length + 1}-${linksIntegrated}. [EXTERNE] ${nearbyLinks.length} liens groupés pour "${nearbyKeyword}"`);
-          nearbyLinks.forEach(link => {
-            console.log(`   - "${link.anchor}" → ${link.title.substring(0, 40)}...`);
-          });
-        }
+      } catch (error) {
+        // Isolation: un lien qui échoue ne bloque pas les autres
+        const linkLabels = nearbyLinks.map(l => l.anchor).join(', ');
+        console.error(`❌ EXTERNAL_LINK_ERROR: label="${linkLabels}", error="${error.message}"`);
+        console.error(`   → Continuation avec les autres liens...`);
+        // Continuer avec le prochain lien
       }
     }
 
@@ -256,7 +405,12 @@ class ContextualLinkIntegrator {
       );
 
       if (!validation.valid) {
-        console.log(`⏭️ [INTERNE] Contexte insuffisant pour "${candidateAnchor}" (${validation.reason}) - Lien ignoré`);
+        // FIX C: Log distinct pour CONTEXT_NOT_FOUND
+        if (validation.reason && (validation.reason.includes('contexte') || validation.reason.includes('insuffisant') || validation.reason.includes('introuvable'))) {
+          console.log(`   ⚠️ INTERNAL_LINK_REJECTED_CONTEXT_NOT_FOUND: anchor="${candidateAnchor}" reason="${validation.reason}"`);
+        } else {
+          console.log(`⏭️ [INTERNE] Contexte insuffisant pour "${candidateAnchor}" (${validation.reason}) - Lien ignoré`);
+        }
         linksSkipped++;
         continue;
       }
@@ -314,7 +468,7 @@ class ContextualLinkIntegrator {
       // Pattern: ancre avec limites de mots, mais peut contenir des balises HTML entre les mots
       const anchorWords = anchorLower.split(/\s+/).filter(w => w.length > 0);
       const anchorPattern = anchorWords.map(w => this.escapeRegex(w)).join('\\s*(?:<[^>]*>)?\\s*');
-      const htmlAnchorRegex = new RegExp(`(\\b${anchorPattern}\\b)`, 'gi');
+      const htmlAnchorRegex = this.withGlobalFlag(new RegExp(`(\\b${anchorPattern}\\b)`, 'gi'));
       
       // Trouver toutes les occurrences dans le HTML
       const allMatches = [...updatedContent.matchAll(htmlAnchorRegex)];
@@ -359,7 +513,7 @@ class ContextualLinkIntegrator {
         console.log(`🔧 [DEBUG] Fallback: recherche simple de "${finalAnchor}" dans HTML`);
         
         // Recherche simple de l'ancre dans le HTML (sans limites de mots strictes)
-        const simpleAnchorRegex = new RegExp(`(${escapedAnchor})`, 'gi');
+        const simpleAnchorRegex = this.withGlobalFlag(new RegExp(`(${escapedAnchor})`, 'gi'));
         const simpleMatches = [...updatedContent.matchAll(simpleAnchorRegex)];
         
         for (const match of simpleMatches) {
@@ -410,13 +564,17 @@ class ContextualLinkIntegrator {
     console.log(`  - Liens intégrés: ${linksIntegrated}`);
     console.log(`  - Liens ignorés: ${linksSkipped}`);
     console.log(`  - Total de liens dans l'article: ${this.countLinks(updatedContent)}`);
+    console.log(`  - Liens externes suggérés: ${externalLinksToIntegrate.length}`);
+    console.log(`  - Liens externes insérés: ${externalLinksInserted}`);
 
     return {
       content: updatedContent,
       stats: {
         integrated: linksIntegrated,
         skipped: linksSkipped,
-        total: this.countLinks(updatedContent)
+        total: this.countLinks(updatedContent),
+        externalLinksSuggested: externalLinksToIntegrate.length,
+        externalLinksInserted: externalLinksInserted
       }
     };
   }
@@ -745,8 +903,8 @@ class ContextualLinkIntegrator {
       return null;
     }
     
-    // Chercher le premier mot-clé pertinent dans le contenu principal (pas au début)
-    const plainContent = mainContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+    // NOUVEAU: Convertir HTML en texte visible puis normaliser (utiliser htmlToText unique)
+    const htmlNorm = this.htmlToText(mainContent);
     
     for (const keyword of anchorKeywords) {
       // Ignorer les mots trop courts ou génériques (minimum 4 caractères)
@@ -755,64 +913,24 @@ class ContextualLinkIntegrator {
         continue;
       }
       
-      const keywordRegex = new RegExp(`\\b${this.escapeRegex(keyword)}\\b`, 'i');
-      const match = plainContent.match(keywordRegex);
+      // Normaliser le mot-clé pour matching
+      const normalizedKeyword = this.normalizeText(keyword);
       
-      if (match) {
-        const index = plainContent.toLowerCase().indexOf(match[0].toLowerCase());
-        console.log(`🔍 [DEBUG EXTERNE] Mot-clé "${keyword}" trouvé dans le contenu à l'index ${index}`);
-        
-        // CORRECTION: Vérifier qu'il y a suffisamment de contexte avant le mot-clé
-        // Si le mot-clé est au début du contenu principal (moins de 10 caractères avant), ignorer
-        // Réduit de 20 à 10 pour permettre plus de liens externes
-        const beforeKeyword = plainContent.substring(0, index).trim();
-        if (beforeKeyword.length < 10) {
-          console.log(`⏭️ [EXTERNE] Mot-clé "${keyword}" au début du contenu (${beforeKeyword.length} chars avant) - Ignoré`);
-          continue;
-        }
-        
-        // Vérifier que ce n'est pas déjà dans un lien (ajuster l'index avec contentStartIndex)
-        const adjustedIndex = index + contentStartIndex;
-        if (this.isKeywordInLink(htmlContent, adjustedIndex, keyword)) {
-          console.log(`⏭️ [EXTERNE] Mot-clé "${keyword}" déjà dans un lien - Ignoré`);
-          continue;
-        }
-        
-        // Vérifier que le contexte est approprié
-        const context = this.getContextAround(plainContent, index, keyword.length);
-        if (!this.isValidExternalLinkContext(context, keyword)) {
-          console.log(`⏭️ [EXTERNE] Contexte invalide pour "${keyword}" - Ignoré`);
-          continue;
-        }
-        
-        // Trouver la position exacte dans le HTML (ajuster avec contentStartIndex)
-        const htmlMatch = this.findKeywordInHTML(mainContent, keyword, index);
-        if (!htmlMatch) {
-          console.log(`⏭️ [EXTERNE] Mot-clé "${keyword}" non trouvé dans le HTML - Ignoré`);
-          continue;
-        }
-        
-        // Ajuster la position pour tenir compte du début exclu
-        const adjustedPosition = htmlMatch.position + contentStartIndex;
-        
-        // Vérifier que ce n'est pas au début d'un paragraphe dans le HTML
-        const htmlBefore = htmlContent.substring(0, adjustedPosition);
-        const isAtParagraphStart = /<p[^>]*>\s*$/i.test(htmlBefore) || /<strong[^>]*>\s*$/i.test(htmlBefore);
-        
-        if (isAtParagraphStart) {
-          console.log(`⏭️ [EXTERNE] Mot-clé "${keyword}" au début d'un paragraphe - Ignoré`);
-          continue;
-        }
-        
-        console.log(`✅ [DEBUG EXTERNE] Mot-clé "${keyword}" validé et prêt pour insertion à la position ${adjustedPosition}`);
+      // Chercher dans le texte normalisé
+      const keywordIndex = htmlNorm.indexOf(normalizedKeyword);
+      
+      if (keywordIndex !== -1) {
+        // Trouvé dans le texte normalisé - retourner la position approximative
+        // La position exacte sera trouvée dans insertSingleExternalLink (Pass 1)
         return {
           keyword: keyword,
-          position: adjustedPosition,
-          keywordLength: htmlMatch.keywordLength,
-          htmlMatch: htmlMatch
+          position: { position: keywordIndex + contentStartIndex, keywordLength: normalizedKeyword.length }
         };
       } else {
-        console.log(`⏭️ [EXTERNE] Mot-clé "${keyword}" non trouvé dans le contenu principal`);
+        // Log détaillé en DRY_RUN si pas trouvé
+        if (process.env.FLASHVOYAGE_DRY_RUN === '1') {
+          console.log(`⏭️ [EXTERNE] Mot-clé "${keyword}" (normalisé: "${normalizedKeyword}") non trouvé dans le contenu normalisé`);
+        }
       }
     }
     
@@ -821,63 +939,106 @@ class ContextualLinkIntegrator {
 
   /**
    * Insérer un seul lien externe (structure simple)
+   * FIX 3: Stratégie d'insertion robuste (2 passes)
    */
   insertSingleExternalLink(htmlContent, anchorText, url, title, keyword, position, context = {}) {
-    const insertionPoint = position.position + (position.keywordLength || keyword.length);
-    const slot = this.determineSlot(insertionPoint, htmlContent);
+    const slot = this.determineSlot(position.position, htmlContent);
     const linkContext = {
       articleType: context.articleType || 'temoignage',
       destination: context.destination || '',
       slot: slot
     };
     const linkHtml = this.createLink(anchorText, url, title, linkContext);
-    const beforeText = htmlContent.substring(0, insertionPoint);
-    const afterText = htmlContent.substring(insertionPoint);
     
-    // CORRECTION: Vérifier qu'il y a suffisamment de contexte avant le mot-clé
-    // Si le mot-clé est au début de l'article ou sans contexte, ne pas insérer
-    const plainBefore = beforeText.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-    const contextBefore = plainBefore.substring(Math.max(0, plainBefore.length - 100));
+    // PASS 1: Chercher une occurrence dans le HTML avec regex safe (case-insensitive) sur le mot exact
+    const keywordEscaped = this.escapeRegex(keyword);
+    const keywordRegex = this.withGlobalFlag(new RegExp(`\\b${keywordEscaped}\\b`, 'i'));
+    const matches = [...htmlContent.matchAll(keywordRegex)];
     
-    // Vérifier qu'il y a au moins 20 caractères de contexte avant le mot-clé
-    if (plainBefore.length < 20) {
-      console.log(`⏭️ [EXTERNE] Pas assez de contexte avant "${keyword}" (${plainBefore.length} chars) - Ignoré`);
-      return { inserted: false, content: htmlContent };
-    }
-    
-    // Vérifier que ce n'est pas au début d'un paragraphe (après <p> ou <strong>)
-    const htmlBefore = htmlContent.substring(0, insertionPoint);
-    const isAtParagraphStart = /<p[^>]*>\s*$/i.test(htmlBefore) || /<strong[^>]*>\s*$/i.test(htmlBefore);
-    
-    if (isAtParagraphStart) {
-      console.log(`⏭️ [EXTERNE] Mot-clé "${keyword}" au début d'un paragraphe - Ignoré`);
-      return { inserted: false, content: htmlContent };
-    }
-    
-    // Vérifier le contexte avant pour déterminer la meilleure structure
-    const contextBeforeShort = contextBefore.substring(Math.max(0, contextBefore.length - 50));
-    
-    // Si le contexte avant contient "à", "en", "dans", utiliser une structure avec parenthèses
-    if (contextBeforeShort.match(/\b(à|en|dans|sur)\s+$/i)) {
-      // Structure: "[mot-clé] (comme [lien])"
-      const separator = ' (comme ';
-      const closing = ')';
-      const newContent = beforeText + separator + linkHtml + closing + afterText;
+    for (const match of matches) {
+      const matchIndex = match.index;
+      
+      // Vérifier que ce n'est pas déjà dans un lien
+      if (this.isKeywordInLink(htmlContent, matchIndex, keyword)) {
+        continue;
+      }
+      
+      // Vérifier que ce n'est pas dans une balise
+      if (this.isInExistingTag(htmlContent, matchIndex)) {
+        continue;
+      }
+      
+      // Vérifier le contexte avant
+      const beforeText = htmlContent.substring(0, matchIndex);
+      const plainBefore = beforeText.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+      
+      if (plainBefore.length < 20) {
+        continue;
+      }
+      
+      // Vérifier que ce n'est pas au début d'un paragraphe
+      const isAtParagraphStart = /<p[^>]*>\s*$/i.test(beforeText) || /<strong[^>]*>\s*$/i.test(beforeText);
+      if (isAtParagraphStart) {
+        continue;
+      }
+      
+      // Trouvé ! Insérer le lien
+      const afterText = htmlContent.substring(matchIndex + match[0].length);
+      const contextBeforeShort = plainBefore.substring(Math.max(0, plainBefore.length - 50));
+      
+      // Structure selon contexte
+      let newContent;
+      if (contextBeforeShort.match(/\b(à|en|dans|sur)\s+$/i)) {
+        newContent = beforeText + ' (comme ' + linkHtml + ')' + afterText;
+      } else {
+        newContent = beforeText + ', notamment ' + linkHtml + afterText;
+      }
       
       return {
         inserted: true,
         content: newContent
       };
-    } else {
-      // Structure: "[mot-clé], notamment [lien]"
-      const separator = ', notamment ';
-      const newContent = beforeText + separator + linkHtml + afterText;
-      
-      return {
-        inserted: true,
-        content: newContent
-      };
     }
+    
+    // PASS 2: Fallback si Pass 1 échoue mais que text contient le keyword
+    const normalizedText = this.htmlToText(htmlContent);
+    const normalizedKeyword = this.normalizeText(keyword);
+    
+    if (normalizedText.includes(normalizedKeyword)) {
+      // Fallback: insérer après la section "Source : ... sur Reddit" ou après le premier <p>
+      const sourceRegex = /<p[^>]*>.*?<strong>Source\s*:.*?sur\s+reddit.*?<\/p>/i;
+      const sourceMatch = htmlContent.match(sourceRegex);
+      
+      if (sourceMatch) {
+        // Insérer après la section source
+        const sourceEnd = sourceMatch.index + sourceMatch[0].length;
+        const newContent = htmlContent.substring(0, sourceEnd) + ' <p>Pour en savoir plus, consultez ' + linkHtml + '.</p>' + htmlContent.substring(sourceEnd);
+        return { inserted: true, content: newContent };
+      }
+      
+      // Fallback: après le premier <h2> ou après le premier <p>
+      const firstH2 = htmlContent.match(/<h2[^>]*>/i);
+      if (firstH2) {
+        const h2End = firstH2.index + firstH2[0].length;
+        const afterH2 = htmlContent.substring(h2End);
+        const firstP = afterH2.match(/<p[^>]*>.*?<\/p>/i);
+        if (firstP) {
+          const pEnd = h2End + firstP.index + firstP[0].length;
+          const newContent = htmlContent.substring(0, pEnd) + ' <p>Pour en savoir plus, consultez ' + linkHtml + '.</p>' + htmlContent.substring(pEnd);
+          return { inserted: true, content: newContent };
+        }
+      }
+      
+      // Dernier fallback: après le premier <p>
+      const firstP = htmlContent.match(/<p[^>]*>.*?<\/p>/i);
+      if (firstP) {
+        const pEnd = firstP.index + firstP[0].length;
+        const newContent = htmlContent.substring(0, pEnd) + ' <p>Pour en savoir plus, consultez ' + linkHtml + '.</p>' + htmlContent.substring(pEnd);
+        return { inserted: true, content: newContent };
+      }
+    }
+    
+    return { inserted: false, content: htmlContent };
   }
 
   /**
@@ -929,6 +1090,10 @@ ${links.map((link, i) => `${i + 1}. ${link.anchor} (${link.title})`).join('\n')}
 
 Génère une phrase de transition naturelle qui introduit ces liens de manière contextuelle.`;
 
+      if (!this.openai) {
+        throw new Error('OpenAI non disponible (FORCE_OFFLINE=1 ou clé API manquante)');
+      }
+      
       const response = await this.openai.chat.completions.create({
         model: 'gpt-4o',
         messages: [
@@ -1333,6 +1498,263 @@ Génère une phrase de transition naturelle qui introduit ces liens de manière 
   }
 
   /**
+   * Convertit HTML en texte visible (strip tags, decode entities, collapse whitespace)
+   */
+  htmlToVisibleText(html) {
+    if (!html) return '';
+    
+    // 1. Strip tags HTML (sauf contenu texte)
+    let text = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ');
+    text = text.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ');
+    text = text.replace(/<[^>]*>/g, ' ');
+    
+    // 2. Decode entités HTML
+    text = text
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#8217;/g, "'")
+      .replace(/&#8211;/g, '-')
+      .replace(/&#8212;/g, '--')
+      .replace(/&#[0-9]+;/g, ' ')
+      .replace(/&[a-z]+;/gi, ' ');
+    
+    // 3. Collapse whitespace
+    text = text.replace(/\s+/g, ' ').trim();
+    
+    return text;
+  }
+
+  /**
+   * Normalise un texte pour matching (lowercase, normalize apostrophes/quotes, collapse spaces)
+   */
+  normalizeText(s) {
+    if (!s) return '';
+    
+    // 1. Lowercase
+    let normalized = s.toLowerCase();
+    
+    // 2. Normalize apostrophes/quotes
+    normalized = normalized
+      .replace(/[''`]/g, "'")
+      .replace(/["""]/g, '"');
+    
+    // 3. Collapse spaces
+    normalized = normalized.replace(/\s+/g, ' ').trim();
+    
+    return normalized;
+  }
+
+  /**
+   * Trouve la position équivalente dans le texte visible depuis le texte normalisé
+   */
+  findEquivalentPosition(visibleText, normalizedText, normalizedIndex, normalizedLength) {
+    // Approximation : la position normalisée correspond approximativement à la position visible
+    const ratio = visibleText.length / Math.max(normalizedText.length, 1);
+    const approximateIndex = Math.floor(normalizedIndex * ratio);
+    
+    // Extraire le mot-clé depuis le texte normalisé
+    const keyword = normalizedText.substring(normalizedIndex, normalizedIndex + normalizedLength);
+    
+    // Chercher autour de la position approximative (±100 chars)
+    const searchWindow = 100;
+    const searchStart = Math.max(0, approximateIndex - searchWindow);
+    const searchEnd = Math.min(visibleText.length, approximateIndex + searchWindow);
+    const searchText = visibleText.substring(searchStart, searchEnd);
+    
+    // Normaliser le texte de recherche pour matching
+    const normalizedSearch = this.normalizeText(searchText);
+    const keywordInSearch = normalizedSearch.indexOf(keyword);
+    
+    if (keywordInSearch !== -1) {
+      return searchStart + keywordInSearch;
+    }
+    
+    // Fallback : retourner l'approximation
+    return approximateIndex;
+  }
+
+  /**
+   * Trouve la position dans le HTML original depuis le texte visible
+   */
+  findKeywordInHTMLFromVisibleText(htmlOriginal, visibleText, visibleTextIndex, keywordLength) {
+    // Extraire une fenêtre d'extrait autour de la position dans le texte visible
+    const windowSize = 80;
+    const excerptStart = Math.max(0, visibleTextIndex - windowSize);
+    const excerptEnd = Math.min(visibleText.length, visibleTextIndex + keywordLength + windowSize);
+    const excerpt = visibleText.substring(excerptStart, excerptEnd);
+    
+    // Chercher cet extrait dans le HTML original (insensible à la casse)
+    const excerptRegex = this.withGlobalFlag(new RegExp(this.escapeRegex(excerpt.substring(0, 20)), 'i'));
+    const matches = [...htmlOriginal.matchAll(excerptRegex)];
+    
+    for (const match of matches) {
+      const htmlIndex = match.index;
+      
+      // Vérifier que ce n'est pas dans une balise
+      const htmlBefore = htmlOriginal.substring(0, htmlIndex);
+      const openTags = (htmlBefore.match(/<[^>]*>/g) || []).length;
+      const closeTags = (htmlBefore.match(/<\/[^>]*>/g) || []).length;
+      const isInTag = openTags > closeTags;
+      
+      if (!isInTag) {
+        // Trouver la position exacte du mot-clé dans cette zone
+        const htmlWindow = htmlOriginal.substring(Math.max(0, htmlIndex - 200), Math.min(htmlOriginal.length, htmlIndex + 200));
+        const htmlWindowText = this.htmlToVisibleText(htmlWindow);
+        const keywordInWindow = htmlWindowText.indexOf(visibleText.substring(visibleTextIndex, visibleTextIndex + keywordLength));
+        
+        if (keywordInWindow !== -1) {
+          return {
+            position: Math.max(0, htmlIndex - 200) + keywordInWindow,
+            keywordLength: keywordLength
+          };
+        }
+      }
+    }
+    
+    return null;
+  }
+
+  /**
+   * Vérifie si une position est dans une balise existante (<a>, <strong>, etc.)
+   */
+  isInExistingTag(html, position) {
+    const htmlBefore = html.substring(0, position);
+    const htmlAfter = html.substring(position);
+    
+    // Vérifier si on est dans une balise <a>
+    const lastOpenA = htmlBefore.lastIndexOf('<a');
+    const lastCloseA = htmlBefore.lastIndexOf('</a>');
+    if (lastOpenA > lastCloseA) {
+      const nextCloseA = htmlAfter.indexOf('</a>');
+      if (nextCloseA !== -1) {
+        return true; // Dans une balise <a>
+      }
+    }
+    
+    // Vérifier si on est dans une balise <strong>
+    const lastOpenStrong = htmlBefore.lastIndexOf('<strong');
+    const lastCloseStrong = htmlBefore.lastIndexOf('</strong>');
+    if (lastOpenStrong > lastCloseStrong) {
+      const nextCloseStrong = htmlAfter.indexOf('</strong>');
+      if (nextCloseStrong !== -1) {
+        return true; // Dans une balise <strong>
+      }
+    }
+    
+    return false;
+  }
+
+  /**
+   * Normalise un texte pour matching amélioré (strip HTML, decode entités, lowercase, remove diacritics, collapse whitespace)
+   * @deprecated Utiliser htmlToVisibleText() + normalizeText() à la place
+   */
+  normalizeTextForMatching(text) {
+    if (!text) return '';
+    
+    // 1. Strip HTML
+    let normalized = text.replace(/<[^>]*>/g, ' ');
+    
+    // 2. Decode entités HTML
+    normalized = normalized
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#8217;/g, "'")
+      .replace(/&#8211;/g, '-')
+      .replace(/&#8212;/g, '--')
+      .replace(/&[a-z]+;/gi, ' ');
+    
+    // 3. Lowercase
+    normalized = normalized.toLowerCase();
+    
+    // 4. Remove diacritics (simplifié - garde les caractères accentués pour le français)
+    // Pour l'instant, on garde les accents car ils sont importants en français
+    
+    // 5. Collapse whitespace
+    normalized = normalized.replace(/\s+/g, ' ').trim();
+    
+    return normalized;
+  }
+  
+  /**
+   * Trouve la position originale dans le texte non normalisé
+   */
+  findOriginalPosition(originalText, normalizedText, normalizedIndex, normalizedLength) {
+    // Approximation simple : la position normalisée correspond approximativement à la position originale
+    // Pour un matching plus précis, on pourrait utiliser une map de correspondance
+    // Pour l'instant, on utilise une approximation basée sur le ratio
+    const ratio = originalText.length / Math.max(normalizedText.length, 1);
+    const approximateIndex = Math.floor(normalizedIndex * ratio);
+    
+    // Chercher le mot-clé autour de cette position approximative
+    const searchWindow = 100;
+    const searchStart = Math.max(0, approximateIndex - searchWindow);
+    const searchEnd = Math.min(originalText.length, approximateIndex + searchWindow);
+    const searchText = originalText.substring(searchStart, searchEnd).toLowerCase();
+    
+    // Extraire le mot-clé original depuis le texte normalisé
+    const normalizedKeyword = normalizedText.substring(normalizedIndex, normalizedIndex + normalizedLength);
+    
+    // Chercher une correspondance approximative
+    const words = normalizedKeyword.split(/\s+/).filter(w => w.length > 0);
+    if (words.length > 0) {
+      // Chercher le premier mot significatif
+      const firstWord = words[0];
+      const firstWordIndex = searchText.indexOf(firstWord);
+      if (firstWordIndex !== -1) {
+        return searchStart + firstWordIndex;
+      }
+    }
+    
+    // Fallback : retourner l'approximation
+    return approximateIndex;
+  }
+
+  /**
+   * Trouve une occurrence précédente de l'ancre dans le HTML (fallback)
+   */
+  findPreviousOccurrence(htmlContent, anchor, currentIndex) {
+    const plainContent = htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+    const anchorLower = anchor.toLowerCase().trim();
+    const plainLower = plainContent.toLowerCase();
+    
+    // Chercher toutes les occurrences avant la position courante
+    let searchIndex = 0;
+    let bestMatch = null;
+    
+    while (true) {
+      const foundIndex = plainLower.indexOf(anchorLower, searchIndex);
+      if (foundIndex === -1 || foundIndex >= currentIndex) break;
+      
+      // Vérifier que ce n'est pas dans une balise
+      const htmlBefore = htmlContent.substring(0, foundIndex * 2); // Approximation
+      const isInLink = this.isAlreadyLinked(htmlContent.substring(0, foundIndex * 2), anchor);
+      const isInTag = this.isInExistingTag(htmlContent.substring(0, foundIndex * 2), foundIndex * 2);
+      
+      if (!isInLink && !isInTag) {
+        // Extraire contexte
+        const contextBefore = plainContent.substring(Math.max(0, foundIndex - 50), foundIndex).trim();
+        const contextAfter = plainContent.substring(foundIndex + anchor.length, Math.min(plainContent.length, foundIndex + anchor.length + 50)).trim();
+        
+        bestMatch = {
+          position: foundIndex * 2, // Approximation
+          contextBefore,
+          contextAfter
+        };
+      }
+      
+      searchIndex = foundIndex + 1;
+    }
+    
+    return bestMatch;
+  }
+
+  /**
    * Échapper les caractères spéciaux pour regex
    */
   escapeRegex(string) {
@@ -1519,7 +1941,7 @@ Génère une phrase de transition naturelle qui introduit ces liens de manière 
     }
     
     // Essai 1: Recherche exacte (case-insensitive)
-    const exactRegex = new RegExp(`\\b${this.escapeRegex(anchorText)}\\b`, 'gi');
+    const exactRegex = this.withGlobalFlag(new RegExp(`\\b${this.escapeRegex(anchorText)}\\b`, 'gi'));
     const exactMatches = [...plainContent.matchAll(exactRegex)];
     
     // Chercher la première occurrence qui n'est pas dans un titre
@@ -1551,7 +1973,7 @@ Génère une phrase de transition naturelle qui introduit ces liens de manière 
       // Chercher une séquence qui contient au moins 70% des mots
       const minWords = Math.ceil(anchorWords.length * 0.7);
       const wordsPattern = anchorWords.map(w => this.escapeRegex(w)).join('|');
-      const flexibleRegex = new RegExp(`\\b(?:${wordsPattern})\\b`, 'gi');
+      const flexibleRegex = this.withGlobalFlag(new RegExp(`\\b(?:${wordsPattern})\\b`, 'gi'));
       const matches = [...plainContent.matchAll(flexibleRegex)];
       
       if (matches.length >= minWords) {
@@ -1628,7 +2050,7 @@ Génère une phrase de transition naturelle qui introduit ces liens de manière 
     const significantWords = anchorWords.filter(w => w.length > 4);
     if (significantWords.length > 0) {
       const significantPattern = significantWords.map(w => this.escapeRegex(w)).join('|');
-      const partialRegex = new RegExp(`\\b(?:${significantPattern})\\b`, 'gi');
+      const partialRegex = this.withGlobalFlag(new RegExp(`\\b(?:${significantPattern})\\b`, 'gi'));
       const partialMatches = [...plainContent.matchAll(partialRegex)];
       
       // Chercher la première occurrence qui n'est pas dans un titre
@@ -1963,33 +2385,69 @@ Génère une phrase de transition naturelle qui introduit ces liens de manière 
     );
     const isNearHtmlEnd = htmlAfterAnchor.match(/^[\s<>]*<\/p>|^[\s<>]*<\/div>|^[\s<>]*<h[1-6]>/i) !== null;
     
-    // Validations renforcées
+    // Validations renforcées - RÈGLES STRICTES UNIQUEMENT si ancre est dans <a>, <strong>, script/style
+    const isInExistingLink = this.isAlreadyLinked(htmlContent, finalAnchor);
+    const isInStrong = this.isInExistingTag(htmlContent, actualIndex);
+    
+    // Vérifier si dans script/style
+    const htmlBeforeScript = htmlContent.substring(0, actualIndex);
+    const lastScriptOpen = htmlBeforeScript.lastIndexOf('<script');
+    const lastScriptClose = htmlBeforeScript.lastIndexOf('</script>');
+    const isInScript = lastScriptOpen > lastScriptClose;
+    
+    const lastStyleOpen = htmlBeforeScript.lastIndexOf('<style');
+    const lastStyleClose = htmlBeforeScript.lastIndexOf('</style>');
+    const isInStyle = lastStyleOpen > lastStyleClose;
+    
+    // REJET STRICT uniquement si dans balise existante
+    if (isInExistingLink || isInStrong || isInScript || isInStyle) {
+      return {
+        valid: false,
+        anchor: finalAnchor,
+        position: actualIndex,
+        context: { before: contextBefore, after: contextAfter },
+        reason: isInExistingLink ? 'déjà dans un lien' : (isInStrong ? 'dans balise <strong>' : (isInScript ? 'dans script' : 'dans style'))
+      };
+    }
+    
+    // Validations souples pour le reste
     const checks = {
-      hasEnoughContextBefore: contextBefore.length >= 10,
-      hasEnoughContextAfter: contextAfter.length >= 20 && !isAtParagraphEnd && !isNearHtmlEnd,
-      notAtSentenceStart: !contextBefore.match(/[.!?]\s*$/) || contextBefore.length >= 20,
-      notAtSentenceEnd: !isAtSentenceEnd && !isAtParagraphEnd && !isNearHtmlEnd,
+      hasEnoughContextBefore: contextBefore.length >= 5, // Réduit de 10 à 5
+      hasEnoughContextAfter: contextAfter.length >= 10 || !isAtParagraphEnd, // Réduit de 20 à 10
+      notAtSentenceStart: !contextBefore.match(/[.!?]\s*$/) || contextBefore.length >= 10, // Réduit de 20 à 10
+      notAtSentenceEnd: !isAtSentenceEnd || !isAtParagraphEnd, // Plus souple
       anchorLength: finalAnchor.length >= 10 && finalAnchor.length <= 70,
-      hasRealContentAfter: extendedAfter.length > 20 || (!isAtParagraphEnd && !isNearHtmlEnd)
+      hasRealContentAfter: extendedAfter.length > 10 || !isAtParagraphEnd // Réduit de 20 à 10
     };
     
     // Raison de rejet si validation échoue (ordre de priorité)
     let rejectionReason = null;
-    if (!checks.hasRealContentAfter) {
+    if (!checks.hasRealContentAfter && isAtParagraphEnd) {
       rejectionReason = 'fin de paragraphe/section détectée';
-    } else if (!checks.hasEnoughContextBefore) {
+    } else if (!checks.hasEnoughContextBefore && contextBefore.length < 5) {
       rejectionReason = 'contexte avant insuffisant';
-    } else if (!checks.hasEnoughContextAfter) {
+    } else if (!checks.hasEnoughContextAfter && isAtParagraphEnd) {
       rejectionReason = 'contexte après insuffisant (fin de phrase/paragraphe)';
-    } else if (!checks.notAtSentenceStart && contextBefore.length < 20) {
-      rejectionReason = 'trop proche du début de phrase';
-    } else if (!checks.notAtSentenceEnd) {
-      rejectionReason = 'trop proche de la fin de phrase/paragraphe';
     } else if (!checks.anchorLength) {
       rejectionReason = 'longueur ancre inappropriée';
     }
     
     const allValid = !rejectionReason;
+    
+    // FALLBACK 1: Si rejeté mais pas dans balise, chercher occurrence précédente
+    if (!allValid && !isInExistingLink && !isInStrong && !isInScript && !isInStyle) {
+      const fallbackMatch = this.findPreviousOccurrence(htmlContent, finalAnchor, actualIndex);
+      if (fallbackMatch) {
+        console.log(`🔄 [INTERNE] Fallback: occurrence précédente trouvée à la position ${fallbackMatch.position}`);
+        return {
+          valid: true,
+          anchor: finalAnchor,
+          position: fallbackMatch.position,
+          context: { before: fallbackMatch.contextBefore, after: fallbackMatch.contextAfter },
+          checks: { ...checks, fallback: true }
+        };
+      }
+    }
     
     return {
       valid: allValid,

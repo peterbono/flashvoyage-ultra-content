@@ -52,6 +52,9 @@ export class WidgetPlanBuilder {
       .sort((a, b) => b.score - a.score)
       .slice(0, 4); // Max 4 slots
 
+    // Récupérer final_destination depuis articleContext (source of truth)
+    const finalDestination = articleContext?.final_destination || articleContext?.analysis?.final_destination || null;
+
     // Construire le plan
     const widgetPlan = {
       intents: intents,
@@ -59,7 +62,7 @@ export class WidgetPlanBuilder {
       presets: this.buildPresets(intents),
       caps: this.buildCaps(articleContext),
       constraints: this.buildConstraints(articleContext),
-      geo_defaults: this.buildGeoDefaults(geo),
+      geo_defaults: this.buildGeoDefaults(geo, finalDestination),
       tracking: this.buildTracking(articleId, geo),
       inventory: this.checkInventory(intents),
       hints: this.extractHints(articleContext)
@@ -137,21 +140,87 @@ export class WidgetPlanBuilder {
 
   /**
    * Construit les valeurs géographiques par défaut
+   * RÈGLE STRICTE: Pas de fallback "Bangkok" toxique
    */
-  buildGeoDefaults(geo) {
+  buildGeoDefaults(geo, final_destination = null) {
     console.log(`🔍 DEBUG buildGeoDefaults: geo reçu:`, geo);
-    const city = geo.city || geo.country || 'bangkok';
-    const destination = this.getDestinationFromCity(city);
-    console.log(`🔍 DEBUG buildGeoDefaults: city=${city}, destination=${destination}`);
+    console.log(`🔍 DEBUG buildGeoDefaults: final_destination:`, final_destination);
     
-    return {
-      country: geo.country || 'thailand',
-      city: geo.city || 'bangkok',
-      nearest_hub: this.getNearestHub(geo.city),
-      // Configuration pour les widgets de vols
-      origin: 'PAR', // Paris par défaut pour les vols depuis la France
-      destination: destination
+    // RÈGLE 1: Utiliser final_destination si disponible (source of truth)
+    if (final_destination && final_destination !== 'Asie') {
+      const geoFromFinal = this.buildFromCountry(final_destination);
+      if (geoFromFinal) {
+        console.log(`   ✓ Geo construite depuis final_destination: ${final_destination}`);
+        return geoFromFinal;
+      }
+    }
+    
+    // RÈGLE 2: Utiliser geo.country si disponible
+    if (geo?.country) {
+      const geoFromCountry = this.buildFromCountry(geo.country);
+      if (geoFromCountry) {
+        console.log(`   ✓ Geo construite depuis geo.country: ${geo.country}`);
+        return geoFromCountry;
+      }
+    }
+    
+    // E) RÈGLE 3: Utiliser geo.city si disponible (avec nearest_hub correct)
+    if (geo?.city) {
+      const nearestHub = this.getNearestHub(geo.city);
+      const destination = this.getDestinationFromCity(geo.city);
+      if (destination && nearestHub) {
+        console.log(`   ✓ Geo construite depuis geo.city: ${geo.city}, nearest_hub=${nearestHub}`);
+        return {
+          country: geo.country || null,
+          city: geo.city,
+          nearest_hub: nearestHub,
+          origin: 'PAR',
+          destination: destination
+        };
+      }
+    }
+    
+    // RÈGLE 4: Pas de fallback toxique - retourner null
+    console.log('   ⚠️ Geo insuffisante → retour null (pas de fallback Bangkok)');
+    return null;
+  }
+  
+  /**
+   * Construit les geo_defaults depuis un pays
+   */
+  buildFromCountry(country) {
+    if (!country) return null;
+    
+    const countryLower = country.toLowerCase();
+    const COUNTRY_HUBS = {
+      'japan': { hub: 'TYO', city: 'tokyo', country: 'japan' },
+      'japon': { hub: 'TYO', city: 'tokyo', country: 'japan' },
+      'thailand': { hub: 'BKK', city: 'bangkok', country: 'thailand' },
+      'thaïlande': { hub: 'BKK', city: 'bangkok', country: 'thailand' },
+      'vietnam': { hub: 'SGN', city: 'ho chi minh', country: 'vietnam' },
+      'indonesia': { hub: 'DPS', city: 'bali', country: 'indonesia' },
+      'indonésie': { hub: 'DPS', city: 'bali', country: 'indonesia' },
+      'philippines': { hub: 'MNL', city: 'manila', country: 'philippines' },
+      'singapore': { hub: 'SIN', city: 'singapore', country: 'singapore' },
+      'singapour': { hub: 'SIN', city: 'singapore', country: 'singapore' },
+      'korea': { hub: 'ICN', city: 'seoul', country: 'korea' },
+      'corée': { hub: 'ICN', city: 'seoul', country: 'korea' }
     };
+    
+    // Chercher une correspondance (exacte ou partielle)
+    for (const [key, value] of Object.entries(COUNTRY_HUBS)) {
+      if (countryLower.includes(key) || key.includes(countryLower)) {
+        return {
+          country: value.country,
+          city: value.city,
+          nearest_hub: value.hub,
+          origin: 'PAR',
+          destination: value.hub
+        };
+      }
+    }
+    
+    return null;
   }
 
   /**
@@ -331,8 +400,11 @@ export class WidgetPlanBuilder {
 
   /**
    * Obtient le hub aéroportuaire le plus proche
+   * RÈGLE STRICTE: Pas de fallback "BKK" toxique
    */
   getNearestHub(city) {
+    if (!city) return null;
+    
     const hubMap = {
       'bangkok': 'BKK',
       'chiang mai': 'CNX', 
@@ -343,10 +415,15 @@ export class WidgetPlanBuilder {
       'jakarta': 'CGK',
       'manila': 'MNL',
       'tokyo': 'NRT',
-      'singapore': 'SIN'
+      'singapore': 'SIN',
+      'seoul': 'ICN'
     };
 
-    return hubMap[city?.toLowerCase()] || 'BKK';
+    const hub = hubMap[city.toLowerCase()];
+    if (!hub) {
+      console.log(`   ⚠️ Hub non trouvé pour ${city} → retour null (pas de fallback BKK)`);
+    }
+    return hub || null;
   }
 }
 

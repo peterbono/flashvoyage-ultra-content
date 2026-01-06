@@ -4,18 +4,18 @@
  * Utilise une approche hybride : LLM intelligent + base de données de fallback
  */
 
-import { OpenAI } from 'openai';
-import { OPENAI_API_KEY } from './config.js';
+import { getOpenAIClient, isOpenAIAvailable } from './openai-client.js';
 
 export class ExternalLinksDetector {
   constructor() {
     // Initialiser OpenAI si disponible (pour détection intelligente)
-    this.useLLM = Boolean(OPENAI_API_KEY);
+    // Initialisation lazy - pas d'import OpenAI au top-level
+    this.useLLM = isOpenAIAvailable();
+    this.openai = null; // Initialisé lazy via getOpenAIClient() dans les méthodes async
     if (this.useLLM) {
-      this.openai = new OpenAI({ apiKey: OPENAI_API_KEY });
-      console.log('✅ Détection LLM activée pour liens externes');
+      console.log('✅ Détection LLM activée pour liens externes (initialisation lazy)');
     } else {
-      console.log('⚠️ Détection LLM désactivée (pas de clé API) - Utilisation base figée uniquement');
+      console.log('⚠️ Détection LLM désactivée (FORCE_OFFLINE=1 ou pas de clé API) - Utilisation base figée uniquement');
     }
     // Base de données de liens externes connus
     this.knownLinks = {
@@ -127,7 +127,14 @@ export class ExternalLinksDetector {
 
     // 2. Chercher les patterns génériques
     for (const pattern of this.patterns) {
-      const matches = [...plainText.matchAll(pattern.regex)];
+      // FIX A: Garantir que la regex a le flag 'g' pour matchAll (avec helper robuste)
+      let regexWithG = pattern.regex;
+      if (!(regexWithG instanceof RegExp)) {
+        regexWithG = new RegExp(String(regexWithG), 'gi');
+      } else if (!regexWithG.flags.includes('g')) {
+        regexWithG = new RegExp(regexWithG.source, regexWithG.flags + 'g');
+      }
+      const matches = [...plainText.matchAll(regexWithG)];
       
       for (const match of matches) {
         const extractedName = match[1].trim();
@@ -217,6 +224,10 @@ IMPORTANT:
 ${textSnippet}`;
 
     try {
+      if (!this.openai) {
+        throw new Error('OpenAI non disponible (FORCE_OFFLINE=1 ou clé API manquante)');
+      }
+      
       const response = await this.openai.chat.completions.create({
         model: 'gpt-4o',
         messages: [

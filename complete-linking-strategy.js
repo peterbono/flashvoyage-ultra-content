@@ -11,7 +11,7 @@ export class CompleteLinkingStrategy {
     this.externalDetector = new ExternalLinksDetector();
   }
 
-  async createStrategy(article, maxInternalLinks = 5, maxExternalLinks = 3) {
+  async createStrategy(article, maxInternalLinks = 5, maxExternalLinks = 3, linkContext = {}) {
     console.log('\n🎯 STRATÉGIE COMPLÈTE DE LIENS');
     console.log('==============================\n');
 
@@ -30,7 +30,9 @@ export class CompleteLinkingStrategy {
       const analysis = await this.internalAnalyzer.analyzeAndSuggestLinks(
         articleContent,
         articleTitle,
-        maxInternalLinks
+        maxInternalLinks,
+        article.id || null,
+        linkContext
       );
       internalLinks = analysis.suggested_links || [];
     }

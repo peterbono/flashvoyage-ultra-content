@@ -10,6 +10,25 @@
  * - Vérifie l'intro FOMO
  */
 
+// Polyfill File pour Node 18 (nécessaire pour cheerio/undici)
+if (typeof globalThis.File === 'undefined') {
+  try {
+    // Essayer d'importer fetch-blob si disponible
+    const { File } = await import('fetch-blob/file.js');
+    globalThis.File = File;
+  } catch (e) {
+    // Fallback: créer un polyfill minimal
+    globalThis.File = class File {
+      constructor(bits, name, options = {}) {
+        this.name = name;
+        this.size = bits.length;
+        this.type = options.type || '';
+        this.lastModified = options.lastModified || Date.now();
+      }
+    };
+  }
+}
+
 import axios from 'axios';
 import { REAL_TRAVELPAYOUTS_WIDGETS } from './travelpayouts-real-widgets-database.js';
 import ContextualWidgetPlacer from './contextual-widget-placer-v2.js';
@@ -23,17 +42,129 @@ class ArticleFinalizer {
   }
 
   /**
-   * Finalise l'article complet
+   * Supprime les phrases contenant des termes non-Asie (sanitizer post-LLM)
+   * Version simple qui préserve le HTML en supprimant les paragraphes entiers
+   * Logs détaillés en DRY_RUN
    */
-  async finalizeArticle(article, analysis) {
+  stripNonAsiaSentences(html, finalDestination = null) {
+    const NON_ASIA = [
+      'portugal','spain','espagne','lisbon','lisbonne','barcelona','barcelone','madrid','porto',
+      'france','paris','italy','italie','rome','greece','grèce','turkey','turquie','istanbul',
+      'europe','america','usa','brazil','brésil','mexico','mexique'
+    ];
+    
+    // FIX 2: Whitelist pour éviter faux positifs
+    const WHITELIST = ['from', 'arome', 'chrome', 'chromosome', 'promote', 'promotion', 'promoteur'];
+    
+    const isDryRun = process.env.FLASHVOYAGE_DRY_RUN === '1';
+    const removedParagraphs = [];
+    const triggerTerms = new Set();
+    
+    // Normaliser la destination finale pour exclusion
+    const finalDestLower = finalDestination ? finalDestination.toLowerCase() : null;
+    
+    // Split par paragraphes HTML (plus sûr que par phrases)
+    const paragraphs = html.split(/<\/p>|<\/div>/);
+    
+    const filtered = paragraphs.filter(paragraph => {
+      // Extraire le texte du paragraphe
+      const paraText = paragraph.replace(/<[^>]*>/g, ' ').toLowerCase();
+      
+      // FIX 2: Ne jamais supprimer les titres
+      if (/<h[1-6][^>]*>/.test(paragraph)) {
+        return true;
+      }
+      
+      // FIX 2: Ne jamais supprimer si le paragraphe contient la destination finale validée
+      if (finalDestLower && paraText.includes(finalDestLower)) {
+        return true;
+      }
+      
+      // FIX 2: Match uniquement sur mots entiers avec word boundaries
+      const foundTerms = NON_ASIA.filter(term => {
+        // Vérifier si le terme est dans la whitelist (substring)
+        if (WHITELIST.some(w => paraText.includes(w))) {
+          return false; // Ignorer si whitelist match
+        }
+        
+        // Match sur mot entier uniquement
+        const wordBoundaryRegex = new RegExp(`\\b${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+        return wordBoundaryRegex.test(paraText);
+      });
+      
+      if (foundTerms.length > 0) {
+        // Enregistrer pour les logs
+        foundTerms.forEach(term => triggerTerms.add(term));
+        
+        if (isDryRun) {
+          // Extraire la phrase exacte supprimée (max 200 chars)
+          const fullText = paragraph.replace(/<[^>]*>/g, ' ').trim();
+          const excerpt = fullText.substring(0, 200);
+          removedParagraphs.push({
+            term: foundTerms[0],
+            excerpt: excerpt + (excerpt.length >= 200 ? '...' : '')
+          });
+        }
+        
+        return false; // Supprimer ce paragraphe
+      }
+      
+      return true; // Garder ce paragraphe
+    });
+    
+    // Logs détaillés en DRY_RUN uniquement
+    if (isDryRun && removedParagraphs.length > 0) {
+      console.log(`🧹 Sanitizer: ${removedParagraphs.length} paragraphe(s) supprimé(s)`);
+      console.log(`   Termes déclencheurs: ${Array.from(triggerTerms).join(', ')}`);
+      removedParagraphs.slice(0, 3).forEach((item, i) => {
+        console.log(`   [${i+1}] term="${item.term}" phrase="...${item.excerpt}..."`);
+      });
+    } else if (!isDryRun && removedParagraphs.length > 0) {
+      // Log minimal en production
+      console.log(`🧹 Sanitizer: ${removedParagraphs.length} paragraphe(s) supprimé(s)`);
+    }
+    
+    // Reconstruire le HTML
+    return filtered.join('');
+  }
+
+  /**
+   * Finalise l'article complet
+   * PATCH 1: Accepte pipelineContext pour propagation final_destination
+   */
+  async finalizeArticle(article, analysis, pipelineContext = null) {
     console.log('\n🎨 FINALISATION DE L\'ARTICLE');
     console.log('==============================\n');
+    
+    // PATCH 1: Créer pipelineContext si non fourni (fallback)
+    if (!pipelineContext) {
+      pipelineContext = {
+        final_destination: analysis.final_destination || null,
+        geo: analysis.geo || {},
+        source_truth: analysis.source_truth || null
+      };
+    }
+    
+    // SANITIZER POST-LLM: Supprimer les phrases contenant des termes non-Asie
+    // 3) Corriger "finalDestination is not defined" - déclarer et normaliser en lowercase
+    const finalDestinationRaw = pipelineContext?.final_destination ?? analysis?.final_destination ?? null;
+    const finalDestination = finalDestinationRaw ? finalDestinationRaw.toLowerCase() : null;
+    if (analysis?.main_destination || analysis?.destination || finalDestination) {
+      const beforeLength = article.content.length;
+      // FIX 2: Passer final_destination pour exclusion
+      article.content = this.stripNonAsiaSentences(article.content, finalDestination);
+      const afterLength = article.content.length;
+      if (beforeLength !== afterLength) {
+        console.log(`🧹 Sanitizer: ${beforeLength - afterLength} caractères supprimés (phrases non-Asie)`);
+      }
+    }
 
     let finalContent = article.content;
     const enhancements = { ...article.enhancements };
 
     // 1. Remplacer les placeholders de widgets
-    const widgetResult = await this.replaceWidgetPlaceholders(finalContent, analysis);
+    // PATCH 1: Passer pipelineContext
+    const widgetResult = await this.replaceWidgetPlaceholders(finalContent, analysis, pipelineContext);
     finalContent = widgetResult.content;
     enhancements.widgetsReplaced = widgetResult.count;
 
@@ -47,10 +178,16 @@ class ArticleFinalizer {
     finalContent = fomoResult.content;
     enhancements.fomoIntro = fomoResult.hasFomo ? 'Oui' : 'Non';
 
+    // 4. Vérifier et ajouter CTA si manquant
+    const ctaResult = this.ensureCTA(finalContent, analysis);
+    finalContent = ctaResult.content;
+    enhancements.ctaPresent = ctaResult.hasCTA ? 'Oui' : 'Non';
+
     console.log('✅ Finalisation terminée:');
     console.log(`   - Widgets remplacés: ${enhancements.widgetsReplaced}`);
     console.log(`   - Quote highlight: ${enhancements.quoteHighlight}`);
-    console.log(`   - Intro FOMO: ${enhancements.fomoIntro}\n`);
+    console.log(`   - Intro FOMO: ${enhancements.fomoIntro}`);
+    console.log(`   - CTA présent: ${enhancements.ctaPresent}\n`);
 
     return {
       ...article,
@@ -60,40 +197,226 @@ class ArticleFinalizer {
   }
 
   /**
-   * Compte les vrais widgets placés dans le contenu
+   * 1. Détection unique des widgets rendus dans le HTML final
+   * Source de vérité unique pour toute validation
    */
-  countActualWidgets(content) {
-    const widgetPatterns = [
+  /**
+   * PATCH 2: Déduplication widgets (max 1 par type)
+   */
+  /**
+   * PATCH 2: Déduplique les widgets (max 1 par type)
+   * Garde le premier, supprime les suivants
+   * Utilise detectRenderedWidgets() pour le comptage (cohérence avec FINAL)
+   */
+  async deduplicateWidgets(html, pipelineContext = null) {
+    // Garde-fou : éviter appels multiples
+    if (pipelineContext?.widgets_dedup_done === true) {
+      console.log('⚠️ WIDGET_DEDUP déjà effectué - skip');
+      return html;
+    }
+    
+    // Compter AVANT déduplication via detectRenderedWidgets (même fonction que FINAL)
+    const beforeDetected = this.detectRenderedWidgets(html);
+    const beforeCount = beforeDetected.count;
+    const typesBefore = [...beforeDetected.types];
+    
+    let dedupedHtml = html;
+    
+    // Essayer avec cheerio si disponible (import dynamique)
+    try {
+      const cheerioModule = await import('cheerio');
+      const cheerio = cheerioModule.default || cheerioModule;
+      const $ = cheerio.load(html, { decodeEntities: false });
+      const widgetTypes = new Set();
+      let removedCount = 0;
+      
+      // Identifier et dédupliquer widgets flights (garder le premier, supprimer les suivants)
+      $('form[class*="kiwi"], form[class*="travelpayouts"], script[src*="kiwi"], script[src*="travelpayouts"], form[data-widget-type="flights"]').each((i, elem) => {
+        if (widgetTypes.has('flights')) {
+          $(elem).remove();
+          removedCount++;
+        } else {
+          widgetTypes.add('flights');
+        }
+      });
+      
+      // Identifier et dédupliquer widgets connectivity (garder le premier, supprimer les suivants)
+      $('script[src*="airalo"], div[class*="airalo"], script[src*="esim"], div[class*="esim"], script[data-widget-type="connectivity"], script[data-widget-type="esim"]').each((i, elem) => {
+        if (widgetTypes.has('connectivity')) {
+          $(elem).remove();
+          removedCount++;
+        } else {
+          widgetTypes.add('connectivity');
+        }
+      });
+      
+      dedupedHtml = $.html();
+    } catch (error) {
+      // Fallback regex si cheerio indisponible
+      // Dédupliquer flights (garder le premier, supprimer les suivants)
+      const flightsPattern = /(<form[^>]*(?:kiwi|travelpayouts)[^>]*>[\s\S]*?<\/form>)/gi;
+      let flightsCount = 0;
+      dedupedHtml = dedupedHtml.replace(flightsPattern, (match) => {
+        flightsCount++;
+        return flightsCount > 1 ? '' : match;
+      });
+      
+      // Dédupliquer connectivity (garder le premier, supprimer les suivants)
+      const connectivityPattern = /(<(?:script|div)[^>]*(?:airalo|esim)[^>]*>[\s\S]*?<\/(?:script|div)>)/gi;
+      let connectivityCount = 0;
+      dedupedHtml = dedupedHtml.replace(connectivityPattern, (match) => {
+        connectivityCount++;
+        return connectivityCount > 1 ? '' : match;
+      });
+    }
+    
+    // Compter APRÈS déduplication via detectRenderedWidgets (même fonction que FINAL)
+    const afterDetected = this.detectRenderedWidgets(dedupedHtml);
+    const afterCount = afterDetected.count;
+    const typesAfter = [...afterDetected.types];
+    
+    // Marquer comme fait
+    if (pipelineContext) {
+      pipelineContext.widgets_dedup_done = true;
+    }
+    
+    // PATCH 2: Log obligatoire après dédup (toujours, même si pas de changement)
+    console.log(`🧹 WIDGET_DEDUP: before=${beforeCount} after=${afterCount} removed=${beforeCount - afterCount} types_before=[${typesBefore.join(', ')}] types_after=[${typesAfter.join(', ')}]`);
+    
+    return dedupedHtml;
+  }
+
+  detectRenderedWidgets(html) {
+    const detected = {
+      count: 0,
+      types: [],
+      details: []
+    };
+
+    // Marqueurs robustes pour widget FLIGHTS Kiwi.com
+    const kiwiMarkers = [
+      /<form[^>]*kiwi[^>]*>/gi,
+      /<form[^>]*travelpayouts[^>]*>/gi,
+      /data-widget-type=["']flights["']/gi,
+      /class=["'][^"']*kiwi[^"']*["']/gi,
+      /class=["'][^"']*travelpayouts[^"']*["']/gi,
+      /trpwdg\.com\/content/gi,
+      /travelpayouts-widget/gi,
+      /kiwi\.com.*widget/gi,
+      /<!-- FLASHVOYAGE_WIDGET:flights/gi,
+      /<!-- FLASHVOYAGE_WIDGET:fallback/gi
+    ];
+
+    // C) Marqueurs pour widget CONNECTIVITY (eSIM/Airalo)
+    const connectivityMarkers = [
+      /airalo/gi,
+      /esim/gi,
+      /e-sim/gi,
+      /data-widget-type=["']connectivity["']/gi,
+      /data-widget-type=["']esim["']/gi,
+      /class=["'][^"']*airalo[^"']*["']/gi,
+      /<!-- FLASHVOYAGE_WIDGET:connectivity/gi,
+      /<!-- FLASHVOYAGE_WIDGET:esim/gi
+    ];
+
+    // Marqueurs textuels (moins fiables mais fallback)
+    const textMarkers = [
       /Selon notre analyse de milliers de vols/gi,
       /D'après notre expérience avec des centaines de nomades/gi,
       /Notre partenaire Kiwi\.com/gi,
-      /Notre outil compare les prix/gi,
-      /Comparez les prix et réservez/gi,
-      /Trouvez les meilleures offres/gi,
-      /Notre partenaire Aviasales/gi,
-      /Trouvez votre hébergement idéal/gi,
-      /trpwdg\.com\/content/gi,
-      /travelpayouts-widget/gi
+      /Notre outil compare les prix/gi
     ];
-    
-    let count = 0;
-    widgetPatterns.forEach(pattern => {
-      const matches = content.match(pattern);
-      if (matches) {
-        count += matches.length;
+
+    // Détecter marqueurs HTML robustes pour FLIGHTS (max 1 par type)
+    let flightsFound = false;
+    for (const marker of kiwiMarkers) {
+      const matches = html.match(marker);
+      if (matches && !flightsFound) {
+        detected.count += 1; // PATCH 2: Compter max 1 par type
+        flightsFound = true;
+        if (!detected.types.includes('flights')) {
+          detected.types.push('flights');
+        }
+        detected.details.push({
+          type: 'flights',
+          marker: marker.toString(),
+          matches: matches.length
+        });
+        break; // PATCH 2: Arrêter après première détection
       }
-    });
-    
-    console.log(`   📊 Widgets détectés: ${count}`);
-    return count;
+    }
+
+    // C) Détecter marqueurs pour CONNECTIVITY (max 1 par type)
+    let connectivityFound = false;
+    for (const marker of connectivityMarkers) {
+      const matches = html.match(marker);
+      if (matches && !connectivityFound) {
+        detected.count += 1; // PATCH 2: Compter max 1 par type
+        connectivityFound = true;
+        if (!detected.types.includes('connectivity')) {
+          detected.types.push('connectivity');
+        }
+        detected.details.push({
+          type: 'connectivity',
+          marker: marker.toString(),
+          matches: matches.length
+        });
+        break; // PATCH 2: Arrêter après première détection
+      }
+    }
+
+    // Si aucun marqueur HTML trouvé, fallback sur textuels (moins fiable)
+    if (detected.count === 0) {
+      for (const marker of textMarkers) {
+        const matches = html.match(marker);
+        if (matches) {
+          detected.count += matches.length;
+          if (!detected.types.includes('flights')) {
+            detected.types.push('flights');
+          }
+        }
+      }
+    }
+
+    // FIX 1: Ne pas logger ici (détection intermédiaire)
+    // La détection finale sera loggée dans enhanced-ultra-generator après finalisation complète
+    // console.log(`   📊 WIDGETS_DETECTED_HTML: count=${detected.count}, types=[${detected.types.join(', ')}]`);
+    return detected;
+  }
+
+  /**
+   * Compte les vrais widgets placés dans le contenu (DEPRECATED - utiliser detectRenderedWidgets)
+   * FIX A: Ne plus appeler detectRenderedWidgets ici (détection intermédiaire interdite)
+   */
+  countActualWidgets(content) {
+    // FIX A: Retourner 0 pour éviter toute détection intermédiaire
+    // La détection finale sera faite UNE SEULE FOIS dans enhanced-ultra-generator après finalisation complète
+    return 0; // Informatif uniquement, pas de détection HTML ici
   }
 
   /**
    * Remplace les placeholders {{TRAVELPAYOUTS_XXX_WIDGET}} par les vrais widgets
    * NOUVELLE VERSION: Placement contextuel intelligent avec LLM
+   * PATCH 1: Accepte pipelineContext pour propagation final_destination
+   * PATCH 3: Ajoute widget_render_mode pour éviter double injection
    */
-  async replaceWidgetPlaceholders(content, analysis) {
+  async replaceWidgetPlaceholders(content, analysis, pipelineContext = null) {
     console.log('🔧 Remplacement des widgets Travelpayouts...');
+    
+    // PATCH 3: Garde-fou un seul mode de rendu
+    if (pipelineContext && pipelineContext.widget_render_mode) {
+      console.log(`⚠️ WIDGET_RENDER_MODE déjà défini: ${pipelineContext.widget_render_mode} - Skip pour éviter double injection`);
+      return { content, count: 0 };
+    }
+    
+    // PATCH 1: Créer pipelineContext si non fourni
+    if (!pipelineContext) {
+      pipelineContext = {
+        final_destination: analysis.final_destination || null,
+        geo: analysis.geo || {},
+        source_truth: analysis.source_truth || null
+      };
+    }
     
     let updatedContent = content;
     let replacementCount = 0;
@@ -103,6 +426,15 @@ class ArticleFinalizer {
     
     // Vérifier s'il y a des placeholders à remplacer
     const hasPlaceholders = content.includes('{{TRAVELPAYOUTS') || content.includes('{TRAVELPAYOUTS');
+    
+    // PATCH 3: Définir widget_render_mode
+    if (hasPlaceholders) {
+      pipelineContext.widget_render_mode = 'classic';
+      console.log(`✅ WIDGET_RENDER_MODE=classic`);
+    } else {
+      pipelineContext.widget_render_mode = 'smart';
+      console.log(`✅ WIDGET_RENDER_MODE=smart`);
+    }
     
     if (!hasPlaceholders) {
       console.log('   ℹ️ Pas de placeholders détectés, utilisation du placement intelligent\n');
@@ -115,38 +447,139 @@ class ArticleFinalizer {
         // transport: this.selectBestTransportWidget(context)
       };
       
-      // Créer un widgetPlan avec le WidgetPlanBuilder existant
-      console.log('🔍 DEBUG article-finalizer: analysis.geo:', analysis.geo);
+      // PATCH 1: Utiliser pipelineContext.final_destination comme source unique (priorité stricte)
+      // 3) Corriger "finalDestination is not defined" - déclarer et normaliser en lowercase
+      const finalDestinationRaw = pipelineContext?.final_destination ?? analysis?.final_destination ?? null;
+      const finalDestination = finalDestinationRaw ? finalDestinationRaw.toLowerCase() : null;
+      const geo = pipelineContext?.geo ?? analysis?.geo ?? {};
+      
+      // PATCH 1: Log obligatoire avant buildGeoDefaults
+      console.log(`✅ GEO_DEFAULTS_INPUT: final_destination=${finalDestination || 'null'} geo_country=${geo?.country || 'null'} geo_city=${geo?.city || 'null'}`);
+      
+      const geoDefaults = this.widgetPlanBuilder.buildGeoDefaults(geo, finalDestination);
+      
+      // Log explicite pour diagnostic
+      if (!geoDefaults) {
+        console.log('⚠️ WIDGET_PIPELINE_ABORTED: geo_defaults_missing');
+        console.log(`   Keys disponibles: geo=${JSON.stringify(geo)}, final_destination=${finalDestination}`);
+        console.log('   → Widgets FLIGHTS seront désactivés proprement');
+      } else {
+        console.log(`✅ geo_defaults calculé: ${JSON.stringify(geoDefaults)}`);
+      }
+      
+      // FIX B: Créer un contexte unique partagé (utiliser celui passé en paramètre si disponible)
+      if (!pipelineContext) {
+        pipelineContext = {};
+      }
+      pipelineContext.geo_defaults = geoDefaults;
+      pipelineContext.final_destination = finalDestination;
+      pipelineContext.geo = geo;
+      pipelineContext.analysis = analysis;
+      
+      // Créer widgetPlan avec geo_defaults pré-calculé
       const widgetPlan = this.widgetPlanBuilder.buildWidgetPlan(
         analysis.affiliateSlots || [],
-        analysis.geo || {},
+        geo,
         {
           type: analysis?.type || 'Témoignage',
-          destination: analysis?.destinations?.[0] || context.hasDestination || 'Asie',
-          audience: analysis?.target_audience || 'Nomades digitaux'
+          destination: finalDestination || 'Asie',
+          audience: analysis?.target_audience || 'Nomades digitaux',
+          final_destination: finalDestination,
+          analysis: analysis
         },
         `article_${Date.now()}`
       );
-      console.log('🔍 DEBUG article-finalizer: widgetPlan.geo_defaults:', widgetPlan?.widget_plan?.geo_defaults);
       
-      // Utiliser le placement contextuel intelligent AVEC VALIDATION
-      const articleContext = {
-        type: analysis?.type || 'Témoignage',
-        destination: analysis?.destinations?.[0] || context.hasDestination || 'Asie',
-        audience: analysis?.target_audience || 'Nomades digitaux'
-      };
+      // FORCER geo_defaults dans widgetPlan ET dans context (source unique)
+      if (widgetPlan?.widget_plan) {
+        widgetPlan.widget_plan.geo_defaults = geoDefaults;
+      }
+      pipelineContext.widget_plan = widgetPlan?.widget_plan || null;
       
-      const placementResult = await this.widgetPlacer.placeWidgetsIntelligently(
-        updatedContent,
-        articleContext,
-        widgetPlan.widget_plan
-      );
+      console.log('🔍 DEBUG article-finalizer: pipelineContext.geo_defaults:', pipelineContext.geo_defaults ? 'PRESENT' : 'NULL');
+      console.log('🔍 DEBUG article-finalizer: widgetPlan.geo_defaults:', widgetPlan?.widget_plan?.geo_defaults ? 'PRESENT' : 'NULL');
       
-      // Compter les vrais widgets placés au lieu d'estimer
-      const widgetCount = this.countActualWidgets(placementResult);
+      // A) Court-circuit widget_plan LLM en offline + fallback placement déterministe
+      const offline = process.env.FORCE_OFFLINE === '1';
+      const apiKey = process.env.OPENAI_API_KEY;
+      
+      let placementResult;
+      let widgetCount = 0;
+      let finalHtml = updatedContent;
+      
+      if (offline || !apiKey || apiKey.startsWith('invalid-')) {
+        console.log('⚠️ OFFLINE_WIDGET_PLACEMENT: skipping LLM widget_plan');
+        
+        // B) Toujours générer le script FLIGHTS en offline (pas dépendre du widget_plan)
+        const widgetScripts = {};
+        if (geoDefaults && geoDefaults.destination) {
+          // Créer un widgetPlan minimal pour getWidgetScript
+          const minimalWidgetPlan = { geo_defaults: geoDefaults };
+          widgetScripts.flights = this.widgetPlacer.getWidgetScript('flights', minimalWidgetPlan, pipelineContext);
+          widgetScripts.connectivity = this.widgetPlacer.getWidgetScript('connectivity', minimalWidgetPlan, pipelineContext);
+        }
+        
+        // Fallback déterministe: insérer widgets avant "Articles connexes" sinon après le 2e <p>
+        finalHtml = this.placeWidgetsOffline(updatedContent, widgetScripts);
+        pipelineContext.widget_plan = { mode: 'offline', selected: Object.keys(widgetScripts).filter(k => widgetScripts[k]) };
+        
+        // Mettre à jour pipelineContext.rendered après insertion OFFLINE
+        const detectedAfterInsert = this.detectRenderedWidgets(finalHtml);
+        widgetCount = detectedAfterInsert.count;
+        if (pipelineContext) {
+          pipelineContext.rendered = widgetCount;
+          pipelineContext.rendered_types = detectedAfterInsert.types;
+          if (pipelineContext.widgets_tracking) {
+            pipelineContext.widgets_tracking.rendered = widgetCount;
+          }
+        }
+        
+        placementResult = { content: finalHtml, count: widgetCount };
+      } else {
+        // Utiliser le placement contextuel intelligent AVEC VALIDATION
+        const articleContext = {
+          type: analysis?.type || 'Témoignage',
+          destination: analysis?.destinations?.[0] || context.hasDestination || 'Asie',
+          audience: analysis?.target_audience || 'Nomades digitaux'
+        };
+        
+        // FIX C: Passer pipelineContext au lieu de widgetPlan seul
+        placementResult = await this.widgetPlacer.placeWidgetsIntelligently(
+          updatedContent,
+          articleContext,
+          widgetPlan.widget_plan,
+          pipelineContext // Passer le contexte complet
+        );
+        
+        // MISSION 2: Utiliser le count retourné par placeWidgetsIntelligently (inclut fallback)
+        // Si placementResult est un objet avec count, l'utiliser, sinon compter depuis le HTML
+        if (typeof placementResult === 'object' && placementResult !== null) {
+          if (placementResult.count !== undefined) {
+            widgetCount = placementResult.count;
+          }
+          if (placementResult.content) {
+            finalHtml = placementResult.content;
+          } else if (typeof placementResult === 'string') {
+            finalHtml = placementResult;
+          }
+        } else if (typeof placementResult === 'string') {
+          finalHtml = placementResult;
+        }
+      }
+      
+      // Fallback: compter depuis le HTML si count n'est pas disponible
+      if (widgetCount === 0) {
+        widgetCount = this.countActualWidgets(finalHtml);
+      }
+      
+      // MISSION 2: Utiliser le tracking depuis pipelineContext si disponible
+      if (pipelineContext?.widgets_tracking) {
+        widgetCount = pipelineContext.widgets_tracking.rendered || widgetCount;
+        console.log(`📊 Widgets tracking final: rendered=${widgetCount} (depuis pipelineContext)`);
+      }
       
       return {
-        content: placementResult,
+        content: finalHtml,
         count: widgetCount
       };
     }
@@ -154,17 +587,35 @@ class ArticleFinalizer {
     // Sinon, remplacement classique des placeholders
     console.log('   ℹ️ Placeholders détectés, remplacement classique\n');
 
+    // PATCH 1: Utiliser pipelineContext.final_destination aussi en mode classic
+    // 3) Corriger "finalDestination is not defined" - déclarer et normaliser en lowercase
+    const finalDestinationRaw = pipelineContext?.final_destination ?? analysis?.final_destination ?? null;
+    const finalDestination = finalDestinationRaw ? finalDestinationRaw.toLowerCase() : null;
+    const geo = pipelineContext?.geo ?? analysis?.geo ?? {};
+    
+    // PATCH 1: Log obligatoire avant buildGeoDefaults (mode classic aussi)
+    console.log(`✅ GEO_DEFAULTS_INPUT: final_destination=${finalDestination || 'null'} geo_country=${geo?.country || 'null'} geo_city=${geo?.city || 'null'}`);
+
     // Créer un widgetPlan pour obtenir les destinations dynamiques
     const widgetPlan = this.widgetPlanBuilder.buildWidgetPlan(
       analysis.affiliateSlots || [],
-      analysis.geo || {},
+      geo,
       {
         type: analysis?.type || 'Témoignage',
         destination: analysis?.destinations?.[0] || context.hasDestination || 'Asie',
-        audience: analysis?.target_audience || 'Nomades digitaux'
+        audience: analysis?.target_audience || 'Nomades digitaux',
+        final_destination: finalDestination // PATCH 1: Passer final_destination normalisé
       },
       `article_${Date.now()}`
     );
+    
+    // PATCH 1: Forcer geo_defaults avec final_destination
+    if (widgetPlan?.widget_plan && finalDestination) {
+      const geoDefaults = this.widgetPlanBuilder.buildGeoDefaults(geo, finalDestination);
+      if (geoDefaults) {
+        widgetPlan.widget_plan.geo_defaults = geoDefaults;
+      }
+    }
 
     // Remplacer FLIGHTS avec script dynamique
     if (updatedContent.includes('{{TRAVELPAYOUTS_FLIGHTS_WIDGET}}') || 
@@ -303,6 +754,49 @@ class ArticleFinalizer {
   /**
    * Sélectionne le meilleur widget de vols selon le contexte
    */
+  // A) Placement déterministe en mode OFFLINE
+  placeWidgetsOffline(html, widgetScripts) {
+    let out = html;
+
+    const flights = widgetScripts.flights || '';
+    const connectivity = widgetScripts.connectivity || '';
+
+    // 1) si "Articles connexes" existe => insertion juste avant
+    const idxRelated = out.indexOf('Articles connexes');
+    if (idxRelated !== -1) {
+      const insertAt = out.lastIndexOf('<', idxRelated); // robuste: avant le titre
+      const block = `${flights}\n${connectivity}`.trim();
+      if (block) {
+        out = out.slice(0, insertAt) + block + '\n' + out.slice(insertAt);
+        console.log('✅ OFFLINE_WIDGET_PLACEMENT_MODE=BEFORE_RELATED');
+        return out;
+      }
+    }
+
+    // 2) sinon après le 2e paragraphe </p>
+    let p2 = -1;
+    for (let i = 0; i < 2; i++) {
+      p2 = out.indexOf('</p>', p2 + 1);
+      if (p2 === -1) break;
+    }
+    if (p2 !== -1) {
+      const block = `${flights}\n${connectivity}`.trim();
+      if (block) {
+        out = out.slice(0, p2 + 4) + '\n' + block + '\n' + out.slice(p2 + 4);
+        console.log('✅ OFFLINE_WIDGET_PLACEMENT_MODE=AFTER_P2');
+        return out;
+      }
+    }
+
+    // 3) sinon fin
+    const block = `${flights}\n${connectivity}`.trim();
+    if (block) {
+      out += '\n' + block;
+      console.log('✅ OFFLINE_WIDGET_PLACEMENT_MODE=END');
+    }
+    return out;
+  }
+
   selectBestFlightWidget(context) {
     const { flights } = this.widgets;
 
@@ -472,16 +966,109 @@ class ArticleFinalizer {
       fomoIntro = `<p><strong>Pendant que vous cherchez des informations, d'autres vivent l'expérience.</strong> Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit pour vous inspirer.</p>\n\n`;
     }
 
-    // Insérer au début du contenu (après la source)
-    const sourceEnd = content.indexOf('</p>', content.indexOf('Source :'));
-    if (sourceEnd > -1) {
-      content = content.slice(0, sourceEnd + 4) + '\n\n' + fomoIntro + content.slice(sourceEnd + 4);
-      console.log('   ✅ Intro FOMO ajoutée');
-      return { content, hasFomo: true };
+    // FIX E: Insertion déterministe avec fallback robuste (4 niveaux)
+    let insertionMethod = '';
+    let newContent = content;
+    
+    // Niveau 1: Après le premier <p> non vide (hors "Source:")
+    const firstPRegex = /<p[^>]*>(?!.*Source\s*:)[^<]+<\/p>/i;
+    const firstPMatch = content.match(firstPRegex);
+    if (firstPMatch) {
+      const firstPEnd = firstPMatch.index + firstPMatch[0].length;
+      newContent = content.slice(0, firstPEnd) + '\n\n' + fomoIntro + content.slice(firstPEnd);
+      insertionMethod = 'AFTER_FIRST_P';
     }
+    // Niveau 2: Après le premier <h2>
+    else {
+      const firstH2Regex = /<h2[^>]*>.*?<\/h2>/i;
+      const firstH2Match = content.match(firstH2Regex);
+      if (firstH2Match) {
+        const firstH2End = firstH2Match.index + firstH2Match[0].length;
+        newContent = content.slice(0, firstH2End) + '\n\n' + fomoIntro + content.slice(firstH2End);
+        insertionMethod = 'AFTER_FIRST_H2';
+      }
+      // Niveau 3: Avant la section "Articles connexes"
+      else {
+        const relatedSectionRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
+        const relatedSectionMatch = content.match(relatedSectionRegex);
+        if (relatedSectionMatch) {
+          const relatedSectionIndex = relatedSectionMatch.index;
+          newContent = content.slice(0, relatedSectionIndex) + '\n\n' + fomoIntro + content.slice(relatedSectionIndex);
+          insertionMethod = 'BEFORE_RELATED';
+        }
+        // Niveau 4: Prepend au début
+        else {
+          newContent = fomoIntro + '\n\n' + content;
+          insertionMethod = 'PREPEND';
+        }
+      }
+    }
+    
+    console.log(`   ✅ FOMO_INSERTED: method=${insertionMethod}`);
+    return { content: newContent, hasFomo: true };
+  }
 
-    console.log('   ⚠️ Impossible d\'ajouter l\'intro FOMO');
-    return { content, hasFomo: false };
+  /**
+   * Vérifie et ajoute un CTA si manquant
+   * FIX 4: CTA automatique injecté avant "Articles connexes"
+   */
+  ensureCTA(content, analysis) {
+    // Détecter si un CTA existe déjà
+    const ctaPatterns = [
+      /comparer.*vols|réserver.*vol|voir.*vols|découvrir.*offres|guide complet|réserver maintenant|comparer les prix|trouver.*vol|meilleur.*prix/i,
+      /<a[^>]*>(comparer|réserver|voir|découvrir|guide|trouver|meilleur)/i,
+      /<button[^>]*>(comparer|réserver|voir|découvrir|guide|trouver|meilleur)/i
+    ];
+    
+    const hasCTA = ctaPatterns.some(pattern => pattern.test(content));
+    
+    if (hasCTA) {
+      return { content, hasCTA: true };
+    }
+    
+    // Déterminer le widget principal pour le CTA
+    const mainWidget = analysis?.selected_widgets?.[0]?.slot || 'flights';
+    let ctaText = '';
+    
+    switch (mainWidget) {
+      case 'flights':
+        ctaText = 'Comparer les prix des vols et réserver votre billet';
+        break;
+      case 'hotels':
+        ctaText = 'Trouver votre hébergement idéal';
+        break;
+      case 'esim':
+      case 'connectivity':
+        ctaText = 'Équipez-vous d\'une eSIM pour rester connecté';
+        break;
+      default:
+        ctaText = 'Découvrir les meilleures offres';
+    }
+    
+    // Insérer le CTA juste avant "Articles connexes"
+    const relatedSectionRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
+    const relatedSectionMatch = content.match(relatedSectionRegex);
+    
+    const ctaBlock = `<p><strong>${ctaText}</strong></p>`;
+    
+    if (relatedSectionMatch) {
+      const relatedSectionIndex = relatedSectionMatch.index;
+      const newContent = content.slice(0, relatedSectionIndex) + '\n\n' + ctaBlock + '\n\n' + content.slice(relatedSectionIndex);
+      console.log(`✅ CTA ajouté automatiquement avant "Articles connexes"`);
+      return { content: newContent, hasCTA: true };
+    }
+    
+    // Si pas de section "Articles connexes", insérer avant la fin
+    const lastP = content.lastIndexOf('</p>');
+    if (lastP !== -1) {
+      const newContent = content.slice(0, lastP + 4) + '\n\n' + ctaBlock + '\n\n' + content.slice(lastP + 4);
+      console.log(`✅ CTA ajouté automatiquement avant la fin`);
+      return { content: newContent, hasCTA: true };
+    }
+    
+    // Dernier recours: ajouter à la fin
+    console.log(`✅ CTA ajouté automatiquement à la fin`);
+    return { content: content + '\n\n' + ctaBlock, hasCTA: true };
   }
 
   /**
@@ -489,6 +1076,12 @@ class ArticleFinalizer {
    * CORRECTION: Évite les images déjà utilisées dans d'autres articles
    */
   async getFeaturedImage(article, analysis) {
+    // GARDE DRY_RUN: Bloquer tout upload d'image en mode test
+    if (process.env.FLASHVOYAGE_DRY_RUN === '1') {
+      console.log('🧪 DRY_RUN: recherche d\'image featured bloquée');
+      return null;
+    }
+    
     console.log('🖼️ Recherche d\'image featured...');
 
     try {

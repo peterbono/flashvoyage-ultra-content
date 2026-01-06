@@ -111,6 +111,20 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
         context: "Articles sur connectivité, eSIM, guides technologiques pour nomades"
       }
     }
+  },
+  
+  // ===== ESIM (alias pour connectivity) =====
+  esim: {
+    airalo: {
+      esimSearch: {
+        brand: "Airalo.com",
+        type: "Esim Search Form",
+        reward: "12%",
+        category: "SIM-cards",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&locale=en&powered_by=true&color_button=%23f2685f&color_focused=%23f2685f&secondary=%23FFFFFF&dark=%2311100f&light=%23FFFFFF&special=%23C4C4C4&border_radius=5&plain=false&no_labels=true&promo_id=8588&campaign_id=541" charset="utf-8"></script>`,
+        context: "Articles sur connectivité, eSIM, guides technologiques pour nomades"
+      }
+    }
   }
 };
 

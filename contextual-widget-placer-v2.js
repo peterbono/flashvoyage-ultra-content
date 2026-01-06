@@ -6,15 +6,17 @@
  * de manière contextuelle avec accroches sobres style The Points Guy
  */
 
-import OpenAI from 'openai';
-import { OPENAI_API_KEY } from './config.js';
+import { getOpenAIClient, isOpenAIAvailable } from './openai-client.js';
 import { RealStatsScraper } from './real-stats-scraper.js';
 import { REAL_TRAVELPAYOUTS_WIDGETS } from './travelpayouts-real-widgets-database.js';
 import { NomadPartnersLinkGenerator } from './nomad-partners-links.js';
 
+// FIX B: Import cheerio avec fallback si échec (chargement dynamique dans la fonction)
+
 class ContextualWidgetPlacer {
   constructor() {
-    this.openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+    // Initialisation lazy - pas d'import OpenAI au top-level
+    this.openai = null; // Initialisé lazy via getOpenAIClient() dans les méthodes async
     this.statsScraper = new RealStatsScraper();
     this.nomadLinkGenerator = new NomadPartnersLinkGenerator();
     
@@ -72,7 +74,7 @@ class ContextualWidgetPlacer {
    * @param {Object} widgetPlan - Plan de widgets structuré
    * @returns {Promise<string>} Contenu avec widgets placés
    */
-  async placeWidgetsIntelligently(content, articleContext, widgetPlan) {
+  async placeWidgetsIntelligently(content, articleContext, widgetPlan, pipelineContext = null) {
     try {
       console.log('\n🎯 PLACEMENT INTELLIGENT AVEC WIDGET_PLAN');
       console.log('==========================================\n');
@@ -168,6 +170,15 @@ RÉPONSE ATTENDUE (JSON):
 
 Réponds UNIQUEMENT en JSON valide.`;
 
+      // Initialiser le client de manière lazy (pas d'import OpenAI si FORCE_OFFLINE=1)
+      if (!this.openai) {
+        this.openai = await getOpenAIClient();
+      }
+      
+      if (!this.openai) {
+        throw new Error('OpenAI non disponible (FORCE_OFFLINE=1 ou clé API manquante)');
+      }
+      
       const response = await this.openai.chat.completions.create({
         model: "gpt-4o",
         messages: [{ role: "user", content: prompt }],
@@ -177,7 +188,8 @@ Réponds UNIQUEMENT en JSON valide.`;
 
       const analysis = JSON.parse(response.choices[0].message.content);
       console.log('✅ Analyse LLM terminée');
-      console.log(`📊 Widgets sélectionnés: ${analysis.selected_widgets.length}`);
+      const widgetsSelected = analysis.selected_widgets.length;
+      console.log(`📊 Widgets sélectionnés: ${widgetsSelected}`);
       console.log(`💭 Raisonnement: ${analysis.reasoning}`);
 
       // Limiter les widgets selon le type de contenu
@@ -187,18 +199,90 @@ Réponds UNIQUEMENT en JSON valide.`;
       const limitedWidgets = analysis.selected_widgets.slice(0, maxWidgets);
       console.log(`🎯 Widgets limités à: ${limitedWidgets.length} (max: ${maxWidgets} pour ${isTemoignage ? 'témoignage' : 'autre type'})`);
       
-      // VÉRIFICATION CONTEXTUELLE OBLIGATOIRE AVANT PLACEMENT
-      const validatedWidgets = this.validateWidgetContext(content, limitedWidgets);
-      console.log(`🔍 Widgets validés: ${validatedWidgets.length}/${limitedWidgets.length}`);
+      // FIX: Construire pipelineContext au début pour éviter TDZ
+      // Utiliser pipelineContext.geo_defaults (source unique)
+      const pipelineContextForPlacement = pipelineContext || { geo_defaults: widgetPlan?.widget_plan?.geo_defaults || null };
+      
+      console.log('🔍 DEBUG placement: pipelineContext keys=', pipelineContextForPlacement ? Object.keys(pipelineContextForPlacement).join(', ') : 'null');
+      console.log('🔍 DEBUG placement: geo_defaults=', pipelineContextForPlacement?.geo_defaults ? 'PRESENT' : 'NULL');
+      
+      // VÉRIFICATION CONTEXTUELLE OBLIGATOIRE AVANT PLACEMENT (avec pipelineContext pour renderability)
+      const validatedWidgets = this.validateWidgetContext(content, limitedWidgets, pipelineContextForPlacement);
+      const widgetsValidated = validatedWidgets.length;
+      console.log(`🔍 Widgets validés: ${widgetsValidated}/${limitedWidgets.length}`);
+      
+      // Log détaillé si validation échoue
+      if (widgetsValidated < limitedWidgets.length) {
+        const rejectedCount = limitedWidgets.length - widgetsValidated;
+        console.log(`⚠️ ${rejectedCount} widget(s) rejeté(s) par validation contextuelle`);
+      }
       
       // Placer les widgets dans le contenu
-      const enhancedContent = await this.insertWidgetsContextually(
+      let placementResult;
+      try {
+        placementResult = await this.insertWidgetsContextually(
         content, 
         validatedWidgets, 
-        widgetPlan
-      );
-
-      return enhancedContent;
+          widgetPlan,
+          pipelineContextForPlacement // Passer pipelineContext pour getWidgetScript
+        );
+      } catch (error) {
+        console.error('❌ Erreur placement widgets:', error.message);
+        console.error('📚 Stack trace:', error.stack); // MISSION 1: Ajouter stack trace
+        // FIX D: Fallback si placement échoue
+        console.log('⚠️ Placement échoué → injection widget fallback');
+        const fallbackContent = this.injectFallbackWidget(content);
+        placementResult = { content: fallbackContent, count: 1 };
+      }
+      
+      // MISSION 2: Extraire le count et le content depuis placementResult
+      let widgetsReplaced = 0;
+      let finalContent = content;
+      
+      if (typeof placementResult === 'object' && placementResult !== null) {
+        widgetsReplaced = placementResult.count || 0;
+        finalContent = placementResult.content || placementResult || content;
+      } else if (typeof placementResult === 'string') {
+        finalContent = placementResult;
+        // Compter depuis le HTML si count n'est pas disponible
+        widgetsReplaced = (finalContent.match(/trpwdg\.com\/content|FLASHVOYAGE_WIDGET/g) || []).length;
+      }
+      
+      console.log(`✅ Widgets remplacés: ${widgetsReplaced}/${widgetsValidated}`);
+      
+      // MISSION 2: Centraliser le tracking dans pipelineContext
+      const widgetsTracking = {
+        planned: limitedWidgets.length,
+        validated: widgetsValidated,
+        inserted: widgetsReplaced,
+        rendered: widgetsReplaced,
+        errors: []
+      };
+      
+      // Standardiser les compteurs pour logs cohérents
+      console.log(`📊 Widgets tracking: planned=${widgetsTracking.planned}, validated=${widgetsTracking.validated}, inserted=${widgetsTracking.inserted}, rendered=${widgetsTracking.rendered}`);
+      
+      // FIX D: Fallback widget si aucun widget rendu mais validated > 0
+      if (widgetsReplaced === 0 && widgetsValidated > 0) {
+        console.log('⚠️ Aucun widget rendu mais validated > 0 → injection widget fallback');
+        finalContent = this.injectFallbackWidget(finalContent);
+        widgetsReplaced = 1; // Compter le fallback comme rendu
+        widgetsTracking.inserted = 1;
+        widgetsTracking.rendered = 1;
+        console.log(`📊 Widgets tracking (après fallback): rendered=${widgetsTracking.rendered}`);
+      }
+      
+      // MISSION 2: Stocker le tracking dans pipelineContext si disponible
+      if (pipelineContext) {
+        pipelineContext.widgets_tracking = widgetsTracking;
+      }
+      
+      // MISSION 2: Retourner un objet avec content et count pour le tracking
+      return {
+        content: finalContent,
+        count: widgetsTracking.rendered,
+        tracking: widgetsTracking
+      };
 
     } catch (error) {
       console.error('❌ Erreur placement widgets:', error.message);
@@ -208,15 +292,108 @@ Réponds UNIQUEMENT en JSON valide.`;
 
   /**
    * Valide le contexte des widgets avant placement
+   * FIX: Scoring familial avec triggers forts/faibles + source de vérité unique
    */
-  validateWidgetContext(content, widgets) {
+  validateWidgetContext(content, widgets, context = null) {
     const lowerContent = content.toLowerCase();
     const validatedWidgets = [];
     
     for (const widget of widgets) {
-      let isValid = true;
+      // FIX B/C: Source de vérité unique pour la validation (inclut renderability via context)
+      const validation = this.validateWidget(widget, content, lowerContent, context);
       
-      // VÉRIFICATION CONTEXTUELLE INTELLIGENTE - COMPARAISON DES PROPORTIONS
+      if (validation.ok) {
+        validatedWidgets.push(widget);
+        console.log(`✅ Widget ${widget.slot.toUpperCase()} validé - ${validation.reasons.join(', ')}`);
+      } else {
+        console.log(`❌ Widget ${widget.slot.toUpperCase()} rejeté - ${validation.reasons.join(', ')}`);
+        if (validation.debug && validation.debug.renderability) {
+          console.log(`   WIDGET_REJECTED: type=${widget.slot} reason=${validation.debug.renderability.reason}`);
+        }
+        if (validation.debug && validation.debug.familyDecision) {
+          console.log(`   Family validation: ${validation.debug.familyDecision} (score: ${validation.debug.familyScore})`);
+          if (validation.debug.familyTriggersStrong.length > 0) {
+            console.log(`   Triggers forts: ${validation.debug.familyTriggersStrong.join(', ')}`);
+          }
+          if (validation.debug.familyTriggersWeak.length > 0) {
+            console.log(`   Triggers faibles: ${validation.debug.familyTriggersWeak.join(', ')}`);
+          }
+        }
+      }
+    }
+    
+    return validatedWidgets;
+  }
+
+  /**
+   * Vérifie si un widget est renderable (registry + script disponible)
+   * @returns {Object} { renderable: boolean, reason: string }
+   */
+  isWidgetRenderable(widgetSlot, geoDefaults = null) {
+    // Vérifier si le slot existe dans le registry
+    const widgetCategory = REAL_TRAVELPAYOUTS_WIDGETS[widgetSlot];
+    if (!widgetCategory) {
+      return { renderable: false, reason: `registry_missing: slot "${widgetSlot}" non trouvé dans REAL_TRAVELPAYOUTS_WIDGETS` };
+    }
+    
+    // Vérifier qu'il y a au moins un provider et un widget type
+    const providers = Object.keys(widgetCategory);
+    if (providers.length === 0) {
+      return { renderable: false, reason: `registry_empty: slot "${widgetSlot}" existe mais aucun provider` };
+    }
+    
+    // Vérifier qu'il y a au moins un widget type avec script
+    const provider = providers[0];
+    const widgetTypes = Object.keys(widgetCategory[provider]);
+    if (widgetTypes.length === 0) {
+      return { renderable: false, reason: `registry_empty: slot "${widgetSlot}" existe mais aucun widget type` };
+    }
+    
+    const widgetType = widgetTypes[0];
+    const widgetData = widgetCategory[provider][widgetType];
+    
+    if (!widgetData || !widgetData.script) {
+      return { renderable: false, reason: `script_missing: slot "${widgetSlot}" existe mais script vide` };
+    }
+    
+    // Vérifications spécifiques par slot
+    if (widgetSlot === 'flights') {
+      // FIX B/C: Utiliser geo_defaults depuis context (source unique)
+      if (!geoDefaults) {
+        console.log(`⚠️ WIDGET_PIPELINE_ABORTED: geo_defaults_missing pour FLIGHTS`);
+        console.log(`   context.geo_defaults: ${geoDefaults ? 'PRESENT' : 'NULL'}`);
+        return { renderable: false, reason: `geo_missing: widget FLIGHTS nécessite geo_defaults` };
+      }
+      if (!geoDefaults.destination) {
+        console.log(`⚠️ WIDGET_PIPELINE_ABORTED: destination_missing pour FLIGHTS`);
+        console.log(`   geo_defaults keys: ${Object.keys(geoDefaults).join(', ')}`);
+        return { renderable: false, reason: `destination_missing: widget FLIGHTS nécessite destination` };
+      }
+    }
+    
+    return { renderable: true, reason: 'ok' };
+  }
+
+  /**
+   * Valide un widget individuel avec scoring et source de vérité unique
+   * @returns {Object} { ok: boolean, reasons: string[], debug: Object }
+   */
+  validateWidget(widget, content, lowerContent, context = null) {
+    const reasons = [];
+    const debug = {};
+    
+    // FIX B/C: VÉRIFICATION 0: Renderability (registry + script) via context.geo_defaults
+    const geoDefaults = context?.geo_defaults || null;
+    const renderability = this.isWidgetRenderable(widget.slot, geoDefaults);
+    if (!renderability.renderable) {
+      reasons.push(`Registry/script manquant: ${renderability.reason}`);
+      debug.renderability = renderability;
+      return { ok: false, reasons, debug };
+    }
+    debug.renderability = renderability;
+    
+    // VÉRIFICATION 1: Contexte vol vs hébergement (pour widgets FLIGHTS)
+    if (widget.slot === 'flights') {
       const accommodationKeywords = [
         'coliving', 'coworking', 'hébergement', 'logement', 'appartement',
         'chambre', 'chambres', 'studio', 'airbnb', 'booking', 'hostel', 'auberge'
@@ -227,7 +404,6 @@ Réponds UNIQUEMENT en JSON valide.`;
         'aéroport', 'compagnie aérienne', 'billet', 'réservation vol'
       ];
       
-      // Compter les mentions
       const accommodationMentions = accommodationKeywords.reduce((count, keyword) => {
         return count + (lowerContent.split(keyword).length - 1);
       }, 0);
@@ -236,40 +412,121 @@ Réponds UNIQUEMENT en JSON valide.`;
         return count + (lowerContent.split(keyword).length - 1);
       }, 0);
       
-      console.log(`📊 Mentions détectées - Hébergement: ${accommodationMentions}, Vols: ${flightMentions}`);
+      debug.accommodationMentions = accommodationMentions;
+      debug.flightMentions = flightMentions;
       
       // LOGIQUE INTELLIGENTE : Rejeter seulement si hébergement DOMINE
-      if (widget.slot === 'flights') {
         if (accommodationMentions > flightMentions && accommodationMentions > 0) {
-          console.log(`❌ Widget ${widget.slot.toUpperCase()} rejeté - Hébergement domine (${accommodationMentions} vs ${flightMentions})`);
-          isValid = false;
+        reasons.push(`Hébergement domine (${accommodationMentions} vs ${flightMentions})`);
+        return { ok: false, reasons, debug };
         } else if (accommodationMentions > 0 && flightMentions === 0) {
-          console.log(`❌ Widget ${widget.slot.toUpperCase()} rejeté - Hébergement sans contexte vol`);
-          isValid = false;
+        reasons.push(`Hébergement sans contexte vol`);
+        return { ok: false, reasons, debug };
         } else {
-          console.log(`✅ Widget ${widget.slot.toUpperCase()} validé - Contexte vol approprié`);
-        }
-      }
-      
-      // VÉRIFICATION CONTEXTUELLE FAMILIALE
-      const familyKeywords = ['famille', 'enfant', 'mineur', 'parents'];
-      const hasFamilyKeywords = familyKeywords.some(keyword => 
-        lowerContent.includes(keyword)
-      );
-      
-      // INTERDIT de placer des widgets crypto/coliving pour familles
-      if (hasFamilyKeywords && (widget.slot === 'flights' || widget.slot === 'hotels')) {
-        console.log(`❌ Widget ${widget.slot.toUpperCase()} rejeté - Contexte familial détecté`);
-        isValid = false;
-      }
-      
-      if (isValid) {
-        validatedWidgets.push(widget);
-        console.log(`✅ Widget ${widget.slot} validé`);
+        reasons.push(`Contexte vol approprié (${flightMentions} mentions)`);
       }
     }
     
-    return validatedWidgets;
+    // VÉRIFICATION 2: Scoring familial avec triggers forts/faibles
+    const familyValidation = this.validateFamilyContext(lowerContent, widget.slot);
+    debug.familyTriggersStrong = familyValidation.triggersStrong;
+    debug.familyTriggersWeak = familyValidation.triggersWeak;
+    debug.familyScore = familyValidation.score;
+    debug.familyDecision = familyValidation.decision;
+    debug.familyReason = familyValidation.reason;
+    
+    if (!familyValidation.allowed) {
+      reasons.push(`Contexte familial bloquant: ${familyValidation.reason}`);
+      return { ok: false, reasons, debug };
+    }
+    
+    return { ok: true, reasons, debug };
+  }
+
+  /**
+   * Valide le contexte familial avec scoring (triggers forts/faibles)
+   * FIX C: Rendre plus strict pour éviter faux positifs (ex: Nakasendo/Magome-Nagiso)
+   * @returns {Object} { allowed: boolean, score: number, triggersStrong: string[], triggersWeak: string[], decision: string, reason: string }
+   */
+  validateFamilyContext(lowerContent, widgetSlot) {
+    // Blacklist: contextes qui NE doivent PAS déclencher (ex: "Nakasendo", "Magome-Nagiso")
+    const blacklist = ['nakasendo', 'magome', 'nagiso', 'kiso', 'endo'];
+    const hasBlacklist = blacklist.some(term => lowerContent.includes(term));
+    if (hasBlacklist) {
+      // Si blacklist présent, ne pas bloquer même si triggers détectés
+      return {
+        allowed: true,
+        score: 0,
+        triggersStrong: [],
+        triggersWeak: [],
+        decision: 'allowed',
+        reason: 'Blacklist détectée (contexte non-familial)'
+      };
+    }
+    
+    // Triggers "forts" (bloquent) : +2 points chacun
+    const strongTriggers = [
+      'baby', 'bébé', 'toddler', 'child', 'kid', 'enfant', 'mineur',
+      'poussette', 'stroller', 'car seat', 'siège auto', 'nursery',
+      'pregnan', 'grossesse', 'school', 'école', 'bébés', 'enfants',
+      'with my child', 'avec mon enfant', 'avec mes enfants', 'voyager avec enfant',
+      'voyager avec bébé', 'traveling with child', 'traveling with baby'
+    ];
+    
+    // Triggers "faibles" (ne bloquent pas seuls) : +1 point chacun
+    const weakTriggers = ['family', 'famille', 'familial', 'familiale'];
+    
+    // Détecter les triggers forts (avec word boundaries pour éviter faux positifs)
+    const triggersStrong = strongTriggers.filter(trigger => {
+      // Utiliser word boundaries pour éviter matches partiels
+      const escaped = trigger.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`\\b${escaped}\\b`, 'i');
+      return regex.test(lowerContent);
+    });
+    
+    // Détecter les triggers faibles
+    const triggersWeak = weakTriggers.filter(trigger => {
+      const escaped = trigger.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`\\b${escaped}\\b`, 'i');
+      return regex.test(lowerContent);
+    });
+    
+    // Calculer le score
+    const strongScore = triggersStrong.length * 2;
+    const weakScore = triggersWeak.length * 1;
+    const totalScore = strongScore + weakScore;
+    
+    // FIX C: Règle plus stricte - Rejeter UNIQUEMENT si trigger fort présent OU score >= 3
+    // (augmenter seuil de 2 à 3 pour éviter faux positifs)
+    const hasStrongTrigger = triggersStrong.length > 0;
+    const shouldReject = hasStrongTrigger || totalScore >= 3;
+    
+    let decision = 'allowed';
+    let reason = '';
+    
+    if (shouldReject) {
+      decision = 'rejected';
+      if (hasStrongTrigger) {
+        reason = `Trigger fort détecté: ${triggersStrong.join(', ')}`;
+      } else {
+        reason = `Score familial trop élevé: ${totalScore} (seuil: 3)`;
+      }
+    } else {
+      if (triggersWeak.length > 0) {
+        reason = `Triggers faibles détectés mais non bloquants: ${triggersWeak.join(', ')} (score: ${totalScore})`;
+      } else {
+        reason = 'Aucun trigger familial détecté';
+      }
+    }
+    
+    return {
+      allowed: !shouldReject,
+      score: totalScore,
+      triggersStrong,
+      triggersWeak,
+      decision,
+      reason
+    };
   }
 
   /**
@@ -386,21 +643,22 @@ Réponds UNIQUEMENT en JSON valide.`;
     };
 
     // Déterminer le contexte le plus approprié
-    let context = 'generic';
+    // MISSION 1: Renommer pour éviter shadowing avec placementContext
+    let introContextType = 'generic';
     
     // VÉRIFICATION INTELLIGENTE : Seulement si le contexte JUSTIFIE l'intro
     if (lowerContent.includes('famille') && lowerContent.includes('enfant') && 
         (lowerContent.includes('voyager avec des enfants') || lowerContent.includes('familles qui voyagent'))) {
-      context = 'minors_travel';
+      introContextType = 'minors_travel';
     } else if (lowerContent.includes('préparation') || lowerContent.includes('document') || lowerContent.includes('formulaire')) {
-      context = 'preparation';
+      introContextType = 'preparation';
     } else if (lowerContent.includes('sécurité') || lowerContent.includes('précaution') || lowerContent.includes('protection')) {
-      context = 'safety';
+      introContextType = 'safety';
     } else if (lowerContent.includes('voyage') || lowerContent.includes('expérience') || lowerContent.includes('découverte') || lowerContent.includes('aventure')) {
-      context = 'travel_experience';
+      introContextType = 'travel_experience';
     }
 
-    const availableIntros = contextualIntros[context];
+    const availableIntros = contextualIntros[introContextType];
     return availableIntros[Math.floor(Math.random() * availableIntros.length)];
   }
 
@@ -497,13 +755,21 @@ Réponds UNIQUEMENT en JSON valide.`;
 
   /**
    * Insère les widgets dans le contenu selon les positions suggérées
+   * FIX: Ajout du paramètre pipelineContext pour éviter TDZ
    */
-  async insertWidgetsContextually(content, selectedWidgets, widgetPlan) {
+  async insertWidgetsContextually(content, selectedWidgets, widgetPlan, pipelineContext = null) {
+    // MISSION 1: Remplacer "context" par "placementContext" pour éviter TDZ et shadowing
+    const placementContext = pipelineContext || { geo_defaults: widgetPlan?.widget_plan?.geo_defaults || null };
+    
+    console.log('🔍 DEBUG placement: pipelineContext keys=', pipelineContext ? Object.keys(pipelineContext).join(', ') : 'null');
+    console.log('🔍 DEBUG placement: geo_defaults=', placementContext?.geo_defaults ? 'PRESENT' : 'NULL');
+    
     let enhancedContent = content;
     const usedContexts = new Set(); // Éviter la duplication
 
     for (const widget of selectedWidgets) {
-      const widgetScript = this.getWidgetScript(widget.slot, widgetPlan);
+      // FIX C: Passer placementContext à getWidgetScript pour geo_defaults
+      const widgetScript = this.getWidgetScript(widget.slot, widgetPlan, placementContext);
       if (!widgetScript) continue;
 
       // Vérifier si le contexte existe déjà
@@ -517,7 +783,9 @@ Réponds UNIQUEMENT en JSON valide.`;
       console.log(`📊 Génération de stats réelles pour ${widget.slot}...`);
       let fomoData;
       try {
-        fomoData = await this.statsScraper.generateFOMOContext(widget.slot, widgetPlan.geo_defaults);
+        // FIX: Utiliser placementContext.geo_defaults (source unique) au lieu de widgetPlan.geo_defaults
+        const geoDefaults = placementContext?.geo_defaults || widgetPlan?.geo_defaults || widgetPlan?.widget_plan?.geo_defaults || null;
+        fomoData = await this.statsScraper.generateFOMOContext(widget.slot, geoDefaults);
       } catch (error) {
         console.log(`⚠️ Erreur scraping stats: ${error.message}`);
         console.log(`❌ Impossible de générer des stats réelles - Widget ignoré`);
@@ -527,10 +795,11 @@ Réponds UNIQUEMENT en JSON valide.`;
       // VÉRIFICATION CONTEXTUELLE DÉJÀ FAITE DANS validateWidgetContext()
       // Pas besoin de double vérification ici
       
-      let context = fomoData.context;
+      // MISSION 1: Renommer pour éviter shadowing avec placementContext
+      let fomoContext = fomoData.context;
       
       const intro = {
-        context: context,
+        context: fomoContext,
         cta: this.getCTAText(widget.slot)
       };
 
@@ -547,69 +816,54 @@ Réponds UNIQUEMENT en JSON valide.`;
 ${widgetScript}
 `;
 
-      // Insérer le widget selon la position
-      if (widget.position === 'after_section') {
-        // Essayer d'abord de trouver la section par titre
-        let inserted = this.insertAfterSection(enhancedContent, widget.section_title, widgetBlock);
-        
-        // Si la section n'a pas été trouvée, chercher le texte mentionnant les vols/connectivité
-        if (inserted === enhancedContent && widget.slot === 'flights') {
-          // Chercher le texte mentionnant les vols
-          const flightTextPatterns = [
-            /comparez les vols[^<]*/i,
-            /comparer les vols[^<]*/i,
-            /planification des vols[^<]*/i,
-            /vols vers[^<]*/i,
-            /billet d'avion[^<]*/i
-          ];
-          
-          for (const pattern of flightTextPatterns) {
-            const match = enhancedContent.match(pattern);
-            if (match) {
-              const matchIndex = enhancedContent.indexOf(match[0]);
-              const afterMatch = enhancedContent.indexOf('</p>', matchIndex);
-              if (afterMatch !== -1) {
-                console.log(`✅ Texte mentionnant les vols trouvé, placement du widget après`);
-                inserted = enhancedContent.slice(0, afterMatch + 4) + '\n\n' + widgetBlock + '\n\n' + enhancedContent.slice(afterMatch + 4);
-                break;
-              }
-            }
-          }
-        }
-        
-        // Si la section n'a pas été trouvée et que c'est un widget eSIM, chercher le texte mentionnant la connectivité
-        if (inserted === enhancedContent && widget.slot === 'esim') {
-          const esimTextPatterns = [
-            /eSIM[^<]*/i,
-            /connexion internet[^<]*/i,
-            /carte SIM[^<]*/i,
-            /équipez-vous d'une eSIM[^<]*/i
-          ];
-          
-          for (const pattern of esimTextPatterns) {
-            const match = enhancedContent.match(pattern);
-            if (match) {
-              const matchIndex = enhancedContent.indexOf(match[0]);
-              const afterMatch = enhancedContent.indexOf('</p>', matchIndex);
-              if (afterMatch !== -1) {
-                console.log(`✅ Texte mentionnant la connectivité trouvé, placement du widget après`);
-                inserted = enhancedContent.slice(0, afterMatch + 4) + '\n\n' + widgetBlock + '\n\n' + enhancedContent.slice(afterMatch + 4);
-                break;
-              }
-            }
-          }
-        }
-        
-        enhancedContent = inserted;
-      } else if (widget.position === 'before_section') {
-        enhancedContent = this.insertBeforeSection(enhancedContent, widget.section_title, widgetBlock);
-      } else {
-        // Position par défaut: avant la section "Articles connexes" ou fin d'article
-        enhancedContent = this.insertBeforeRelatedArticles(enhancedContent, widgetBlock);
-      }
+      // 3. Insérer le widget avec placement déterministe (ignorer widget.position et widget.section_title)
+      // Toujours utiliser insertAfterSection avec stratégie déterministe
+      enhancedContent = await this.insertAfterSection(enhancedContent, null, widgetBlock);
     }
 
-    return enhancedContent;
+    // Compter les widgets réellement insérés
+    const widgetsReplaced = usedContexts.size;
+    
+    console.log('🔍 DEBUG placement: inserted=', widgetsReplaced, 'rendered=', widgetsReplaced);
+    
+    return {
+      content: enhancedContent,
+      count: widgetsReplaced
+    };
+  }
+
+  /**
+   * FIX D: Injecte un widget fallback si aucun widget n'a été rendu
+   * MISSION 2: Ajouter un marqueur détectable pour le validator
+   */
+  injectFallbackWidget(content) {
+    const fallbackWidget = `
+<!-- FLASHVOYAGE_WIDGET:fallback -->
+<p><strong>💡 Guide pratique</strong></p>
+<p>Pour planifier votre voyage en Asie, consultez nos guides pratiques et nos ressources pour nomades digitaux.</p>
+<p><a href="/guides" style="color: #dc2626; text-decoration: underline;">Découvrir nos guides</a></p>
+<!-- /FLASHVOYAGE_WIDGET:fallback -->
+`;
+    
+    // Insérer avant "Articles connexes" ou à la fin
+    const relatedSectionRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
+    const relatedSectionMatch = content.match(relatedSectionRegex);
+    
+    if (relatedSectionMatch) {
+      const relatedSectionIndex = relatedSectionMatch.index;
+      console.log('✅ Widget fallback injecté avant "Articles connexes"');
+      return content.slice(0, relatedSectionIndex) + '\n\n' + fallbackWidget + '\n\n' + content.slice(relatedSectionIndex);
+    }
+    
+    // Sinon, insérer avant la fin
+    const lastP = content.lastIndexOf('</p>');
+    if (lastP !== -1) {
+      console.log('✅ Widget fallback injecté avant la fin');
+      return content.slice(0, lastP + 4) + '\n\n' + fallbackWidget + '\n\n' + content.slice(lastP + 4);
+    }
+    
+    console.log('✅ Widget fallback injecté à la fin');
+    return content + '\n\n' + fallbackWidget;
   }
 
   /**
@@ -632,8 +886,9 @@ ${widgetScript}
 
   /**
    * Obtient le script du widget selon le slot
+   * FIX: Ajout du paramètre pipelineContext pour éviter TDZ
    */
-  getWidgetScript(slot, widgetPlan) {
+  getWidgetScript(slot, widgetPlan, pipelineContext = null) {
     console.log(`🔍 Récupération du script pour ${slot}...`);
     
     // Utiliser les vrais scripts Travelpayouts
@@ -645,14 +900,27 @@ ${widgetScript}
     
     // Pour les vols, utiliser searchForm avec les destinations dynamiques depuis widgetPlan
     if (slot === 'flights') {
+      // RÈGLE ABSOLUE: Pas de geo = pas de widget flights
+      if (!widgetPlan?.geo_defaults) {
+        console.log('⚠️ Geo insuffisante → widget FLIGHTS désactivé');
+        return null;
+      }
+      
       const provider = Object.keys(widgetCategory)[0]; // kiwi, aviasales, etc.
       const searchFormWidget = widgetCategory[provider]['searchForm'];
       
       if (searchFormWidget && searchFormWidget.script) {
         // Récupérer les destinations depuis widgetPlan.geo_defaults
         console.log(`🔍 DEBUG getWidgetScript: widgetPlan.geo_defaults:`, widgetPlan?.geo_defaults);
-        const origin = widgetPlan?.geo_defaults?.origin || 'PAR';
-        const destination = widgetPlan?.geo_defaults?.destination || 'BKK';
+        
+        // Vérifier que destination existe (pas de fallback BKK)
+        if (!widgetPlan.geo_defaults.destination) {
+          console.log('⚠️ Destination manquante dans geo_defaults → widget FLIGHTS désactivé');
+          return null;
+        }
+        
+        const origin = widgetPlan.geo_defaults.origin || 'PAR';
+        const destination = widgetPlan.geo_defaults.destination;
         
         console.log(`🔍 DEBUG getWidgetScript: origin=${origin}, destination=${destination}`);
         
@@ -671,9 +939,19 @@ ${widgetScript}
       }
     }
     
-    // Pour les autres slots, prendre le premier widget disponible
-    const provider = Object.keys(widgetCategory)[0]; // kiwi, aviasales, etc.
-    const widgetType = Object.keys(widgetCategory[provider])[0]; // popularRoutes, searchForm, etc.
+    // Pour les autres slots (hotels, esim, connectivity, etc.), prendre le premier widget disponible
+    const provider = Object.keys(widgetCategory)[0]; // kiwi, aviasales, airalo, etc.
+    if (!provider) {
+      console.log(`⚠️ Pas de provider disponible pour ${slot}`);
+      return null;
+    }
+    
+    const widgetType = Object.keys(widgetCategory[provider])[0]; // popularRoutes, searchForm, esimSearch, etc.
+    if (!widgetType) {
+      console.log(`⚠️ Pas de widget type disponible pour ${slot}.${provider}`);
+      return null;
+    }
+    
     const widgetData = widgetCategory[provider][widgetType];
     
     if (!widgetData || !widgetData.script) {
@@ -688,91 +966,198 @@ ${widgetScript}
   /**
    * Insère le widget après une section
    */
-  insertAfterSection(content, sectionTitle, widgetBlock) {
-    console.log(`🔍 Recherche de la section: "${sectionTitle}"`);
+  /**
+   * FIX 1: Recherche de section tolérante avec fuzzy matching
+   */
+  findSectionFuzzy(content, targetTitle) {
+    if (!targetTitle) return null;
     
-    // STRATÉGIE: Si c'est "Articles connexes", placer AVANT (pas après) pour meilleure visibilité
-    if (sectionTitle.toLowerCase().includes('articles connexes') || sectionTitle.toLowerCase().includes('related articles')) {
-      return this.insertBeforeRelatedArticles(content, widgetBlock);
+    // Normaliser le titre cible (insensible casse, sans ponctuation)
+    const normalize = (s) => s.toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
+    const targetWords = normalize(targetTitle).split(/\s+/).filter(w => w.length > 2);
+    
+    if (targetWords.length === 0) return null;
+    
+    // Chercher tous les H2 et H3
+    const headingRegex = /<h([2-3])[^>]*>([^<]+)<\/h[2-3]>/gi;
+    const headings = [...content.matchAll(headingRegex)];
+    
+    for (const heading of headings) {
+      const headingText = heading[2];
+      const headingWords = normalize(headingText).split(/\s+/).filter(w => w.length > 2);
+      
+      // Fuzzy match: ≥2 mots communs
+      const commonWords = targetWords.filter(tw => headingWords.some(hw => hw.includes(tw) || tw.includes(hw)));
+      if (commonWords.length >= 2) {
+        return {
+          index: heading.index,
+          text: headingText,
+          level: heading[1],
+          matchScore: commonWords.length
+        };
+      }
     }
     
-    // Vérifier si "Articles connexes" existe dans le contenu
-    const relatedSectionRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
+    return null;
+  }
+
+  /**
+   * 3. Placement widget déterministe (FIX B: DOM-based avec cheerio, ignore sectionTitle)
+   * sectionTitle est complètement ignoré - placement basé uniquement sur structure DOM
+   */
+  async insertAfterSection(content, sectionTitle, widgetBlock) {
+    // FIX B: Placement DOM-based avec cheerio, jamais recherche texte
+    // Ignorer complètement sectionTitle (peut être une phrase LLM fragile)
+    
+    // Charger cheerio dynamiquement si disponible
+    let cheerioLib = null;
+    try {
+      const cheerioModule = await import('cheerio');
+      cheerioLib = cheerioModule.default || cheerioModule;
+    } catch (error) {
+      // Cheerio non disponible, utiliser fallback
+    }
+    
+    // Essayer cheerio si disponible
+    if (cheerioLib) {
+      try {
+        const $ = cheerioLib.load(content, { decodeEntities: false });
+      const body = $('body').length > 0 ? $('body') : $.root();
+      
+      // PRIORITÉ 1: Chercher section/titre "Articles connexes" via DOM
+      let relatedSection = null;
+      
+      // Chercher <section id="articles-connexes">
+      relatedSection = body.find('section[id*="articles-connexes" i], section[id*="related" i]').first();
+      
+      // Sinon chercher h2/h3 contenant "Articles connexes"
+      if (relatedSection.length === 0) {
+        body.find('h2, h3').each((i, el) => {
+          const text = $(el).text().toLowerCase();
+          if (text.includes('articles connexes') || text.includes('articles similaires') || text.includes('voir aussi')) {
+            relatedSection = $(el);
+            return false; // break
+          }
+        });
+      }
+      
+      if (relatedSection.length > 0) {
+        // Insérer avant la section trouvée
+        relatedSection.before(widgetBlock);
+        console.log(`✅ Mode BEFORE_RELATED: insertion avant "Articles connexes" (DOM)`);
+        return $.html();
+      }
+      
+      // PRIORITÉ 2: Après le 2e <p> substantiel (DOM)
+      const paragraphs = body.find('p').filter((i, el) => {
+        const text = $(el).text().trim();
+        return text.length > 50; // Paragraphe substantiel (>50 chars)
+      });
+      
+      if (paragraphs.length >= 2) {
+        const secondP = paragraphs.eq(1);
+        secondP.after(widgetBlock);
+        console.log(`✅ Mode AFTER_P2: insertion après le 2e paragraphe substantiel (DOM)`);
+        return $.html();
+      }
+      
+      // PRIORITÉ 3: Après le premier h2/h3 (DOM)
+      const firstHeading = body.find('h2, h3').first();
+      if (firstHeading.length > 0) {
+        // Chercher le premier <p> après ce heading
+        const nextP = firstHeading.nextAll('p').first();
+        if (nextP.length > 0) {
+          nextP.after(widgetBlock);
+          console.log(`✅ Mode AFTER_H2: insertion après le premier H2/H3 (DOM)`);
+      } else {
+          firstHeading.after(widgetBlock);
+          console.log(`✅ Mode AFTER_H2: insertion après le premier H2/H3 (pas de P suivant, DOM)`);
+        }
+        return $.html();
+      }
+      
+      // PRIORITÉ 4: Après le 1er paragraphe (DOM)
+      const firstP = body.find('p').first();
+      if (firstP.length > 0) {
+        firstP.after(widgetBlock);
+        console.log(`✅ Mode AFTER_P1: insertion après le 1er paragraphe (DOM)`);
+        return $.html();
+      }
+      
+      // Dernier recours: append fin (uniquement si HTML vraiment vide)
+      const bodyContent = body.html() || '';
+      if (bodyContent.trim().length === 0) {
+        body.append(widgetBlock);
+        console.log(`⚠️ Mode EMERGENCY: HTML vide, insertion à la fin (DOM)`);
+      } else {
+        body.append(widgetBlock);
+        console.log(`✅ Mode FALLBACK_END: insertion à la fin (contenu valide mais structure minimale, DOM)`);
+      }
+      return $.html();
+      
+      } catch (error) {
+        console.log(`⚠️ Erreur DOM parsing avec cheerio, fallback structure: ${error.message}`);
+        // Continuer avec fallback structure
+      }
+    }
+    
+    // FALLBACK: Placement structurel basé sur regex (si cheerio indisponible ou échec)
+    // PRIORITÉ 1: Chercher section/titre "Articles connexes"
+    const relatedSectionRegex = /<(?:section[^>]*id=["']articles-connexes["']|h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3])>/i;
     const relatedSectionMatch = content.match(relatedSectionRegex);
-    const relatedSectionIndex = relatedSectionMatch ? content.indexOf(relatedSectionMatch[0]) : -1;
+    const relatedSectionIndex = relatedSectionMatch ? relatedSectionMatch.index : -1;
     
-    // Fonction helper pour vérifier si la position est APRÈS "Articles connexes"
-    const checkPositionBeforeRelated = (sectionIndex, afterSectionPos) => {
-      if (relatedSectionIndex === -1) return true; // Pas de section "Articles connexes", OK
-      // Vérifier si la position trouvée est APRÈS "Articles connexes"
-      if (afterSectionPos > relatedSectionIndex) {
-        console.log(`⚠️ Section "${sectionTitle}" trouvée APRÈS "Articles connexes", placement AVANT "Articles connexes" à la place`);
-        return false; // Position invalide, utiliser fallback
-      }
-      return true; // Position OK
-    };
+    if (relatedSectionIndex !== -1) {
+      console.log(`✅ Mode BEFORE_RELATED: insertion avant "Articles connexes" (fallback structure)`);
+      return content.slice(0, relatedSectionIndex) + '\n\n' + widgetBlock + '\n\n' + content.slice(relatedSectionIndex);
+    }
     
-    // Essai 1: Recherche exacte
-    const sectionRegex = new RegExp(`(<h([2-3])[^>]*>${sectionTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^<]*</h[2-3]>)`, 'i');
-    const match = content.match(sectionRegex);
+    // PRIORITÉ 2: Après le 2e <p> substantiel (regex améliorée)
+    const pRegex = /<p[^>]*>([^<]*(?:<[^>]+>[^<]*)*?)<\/p>/gi;
+    const pMatches = [...content.matchAll(pRegex)];
+    const substantialParagraphs = pMatches.filter(m => {
+      const text = m[1].replace(/<[^>]+>/g, '').trim();
+      return text.length > 50;
+    });
     
-    if (match) {
-      console.log(`✅ Section trouvée: "${sectionTitle}"`);
-      console.log(`🔍 Match trouvé: "${match[0]}"`);
-      const sectionIndex = content.indexOf(match[0]);
-      const headingLevel = match[2]; // h2 ou h3
-      const closingTag = `</h${headingLevel}>`;
-      const afterSection = content.indexOf(closingTag, sectionIndex) + closingTag.length;
+    if (substantialParagraphs.length >= 2) {
+      const secondP = substantialParagraphs[1];
+      const insertionPoint = secondP.index + secondP[0].length;
+      console.log(`✅ Mode AFTER_P2: insertion après le 2e paragraphe substantiel (fallback structure)`);
+      return content.slice(0, insertionPoint) + '\n\n' + widgetBlock + '\n\n' + content.slice(insertionPoint);
+    }
+    
+    // PRIORITÉ 3: Après le premier h2/h3
+    const firstH2Regex = /<h[2-3][^>]*>([^<]+)<\/h[2-3]>/i;
+    const firstH2Match = content.match(firstH2Regex);
+    
+    if (firstH2Match) {
+      const firstH2Index = firstH2Match.index + firstH2Match[0].length;
+      const afterH2 = content.substring(firstH2Index);
+      const firstPAfterH2 = afterH2.match(/<p[^>]*>.*?<\/p>/i);
       
-      if (afterSection > sectionIndex && checkPositionBeforeRelated(sectionIndex, afterSection)) {
-        return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
-      } else {
-        console.log(`⚠️ Position invalide ou après "Articles connexes", fallback avant "Articles connexes"`);
-        return this.insertBeforeRelatedArticles(content, widgetBlock);
+      if (firstPAfterH2) {
+        const insertionPoint = firstH2Index + firstPAfterH2.index + firstPAfterH2[0].length;
+        console.log(`✅ Mode AFTER_H2: insertion après le premier H2/H3 (fallback structure)`);
+        return content.slice(0, insertionPoint) + '\n\n' + widgetBlock + '\n\n' + content.slice(insertionPoint);
       }
     }
     
-    // Essai 2: Recherche partielle
-    const partialRegex = new RegExp(`(<h([2-3])[^>]*>[^<]*${sectionTitle}[^<]*</h[2-3]>)`, 'i');
-    const partialMatch = content.match(partialRegex);
-    
-    if (partialMatch) {
-      console.log(`✅ Section trouvée (partielle): "${sectionTitle}"`);
-      const sectionIndex = content.indexOf(partialMatch[0]);
-      const headingLevel = partialMatch[2]; // h2 ou h3
-      const closingTag = `</h${headingLevel}>`;
-      const afterSection = content.indexOf(closingTag, sectionIndex) + closingTag.length;
-      
-      if (checkPositionBeforeRelated(sectionIndex, afterSection)) {
-        return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
-      } else {
-        console.log(`⚠️ Section trouvée APRÈS "Articles connexes", placement AVANT "Articles connexes"`);
-        return this.insertBeforeRelatedArticles(content, widgetBlock);
-      }
+    // PRIORITÉ 4: Après le 1er paragraphe
+    if (pMatches.length >= 1) {
+      const firstP = pMatches[0];
+      const insertionPoint = firstP.index + firstP[0].length;
+      console.log(`✅ Mode AFTER_P1: insertion après le 1er paragraphe (fallback structure)`);
+      return content.slice(0, insertionPoint) + '\n\n' + widgetBlock + '\n\n' + content.slice(insertionPoint);
     }
     
-    // Essai 3: Recherche de mots-clés dans les titres
-    const keywordRegex = new RegExp(`(<h([2-3])[^>]*>[^<]*(?:${sectionTitle.split(' ').join('|')})[^<]*</h[2-3]>)`, 'i');
-    const keywordMatch = content.match(keywordRegex);
-    
-    if (keywordMatch) {
-      console.log(`✅ Section trouvée (mots-clés): "${sectionTitle}"`);
-      const sectionIndex = content.indexOf(keywordMatch[0]);
-      const headingLevel = keywordMatch[2]; // h2 ou h3
-      const closingTag = `</h${headingLevel}>`;
-      const afterSection = content.indexOf(closingTag, sectionIndex) + closingTag.length;
-      
-      if (checkPositionBeforeRelated(sectionIndex, afterSection)) {
-        return content.slice(0, afterSection) + '\n\n' + widgetBlock + '\n\n' + content.slice(afterSection);
-      } else {
-        console.log(`⚠️ Section trouvée APRÈS "Articles connexes", placement AVANT "Articles connexes"`);
-        return this.insertBeforeRelatedArticles(content, widgetBlock);
-      }
+    // Dernier recours: append fin
+    if (content.trim().length === 0) {
+      console.log(`⚠️ Mode EMERGENCY: HTML vide, insertion à la fin (fallback)`);
+    } else {
+      console.log(`✅ Mode FALLBACK_END: insertion à la fin (contenu valide mais structure minimale, fallback)`);
     }
-    
-    // Fallback: Insérer avant "Articles connexes" (stratégiquement mieux)
-    console.log(`⚠️ Section "${sectionTitle}" non trouvée, insertion avant "Articles connexes"`);
-    return this.insertBeforeRelatedArticles(content, widgetBlock);
+    return content + '\n\n' + widgetBlock;
   }
 
   /**

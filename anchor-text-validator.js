@@ -5,16 +5,16 @@
 
 export class AnchorTextValidator {
   constructor() {
-    // Patterns de texte invalide à détecter
+    // Whitelist Unicode safe pour ancres valides
+    // Autoriser: Lettres Unicode (\p{L}), Marques (\p{M}), Chiffres (\p{N}), Espaces, ponctuation de base
+    this.validPattern = /^[\p{L}\p{M}\p{N}\s'’\-.,:;!?()]+$/u;
+    
+    // Patterns de texte invalide à détecter (HTML, URLs, code uniquement)
     this.invalidPatterns = [
       /\bComparer les prix\b/i,  // Fragment de widget
       /\b(https?:\/\/|www\.)/i,  // URLs
-      /\b[A-Z]{3,}\b/,            // Acronymes longs (probablement du code)
       /[<>{}[\]]/,                // Balises HTML ou code
-      /\s{2,}/,                   // Espaces multiples
-      /^\s|\s$/,                  // Espaces en début/fin
-      /\d{5,}/,                   // Longues séquences de chiffres
-      /[^\w\s\-'àâäéèêëïîôùûüÿçœæ]/gi  // Caractères spéciaux suspects (sauf ponctuation de base)
+      /\d{10,}/,                  // Très longues séquences de chiffres (probablement du code)
     ];
 
     // Mots interdits (fragments de code, widgets, etc.)
@@ -35,118 +35,107 @@ export class AnchorTextValidator {
   }
 
   /**
+   * FIX 3: Normalise une ancre avant validation
+   */
+  normalizeAnchor(anchorText) {
+    return anchorText
+      .trim()
+      .replace(/\s+/g, ' ') // Collapse espaces
+      .replace(/[''"]/g, "'") // Normaliser apostrophes
+      .replace(/[-–—]/g, '-') // Normaliser tirets
+      .trim();
+  }
+
+  /**
    * Valide une ancre de lien
+   * FIX 3: Normalisation avant validation + suggestion automatique
    * @param {string} anchorText - Le texte de l'ancre à valider
    * @returns {Object} - { valid: boolean, reason: string, suggestion: string }
    */
   validate(anchorText) {
+    // FIX 3: Normaliser l'ancre avant validation
+    const normalized = this.normalizeAnchor(anchorText);
+    
     // 1. Vérifier la longueur
-    if (anchorText.length < this.minLength) {
+    if (normalized.length < this.minLength) {
       return {
         valid: false,
-        reason: `Ancre trop courte (${anchorText.length} caractères, min: ${this.minLength})`,
-        suggestion: null
+        reason: `Ancre trop courte (${normalized.length} caractères, min: ${this.minLength})`,
+        suggestion: normalized.length > 0 ? normalized : null
       };
     }
 
-    if (anchorText.length > this.maxLength) {
+    if (normalized.length > this.maxLength) {
       return {
         valid: false,
-        reason: `Ancre trop longue (${anchorText.length} caractères, max: ${this.maxLength})`,
-        suggestion: anchorText.substring(0, this.maxLength)
+        reason: `Ancre trop longue (${normalized.length} caractères, max: ${this.maxLength})`,
+        suggestion: normalized.substring(0, this.maxLength)
       };
     }
 
-    // 2. Vérifier les patterns invalides
+    // FIX 3: Autoriser /, -, ' dans les ancres (ex: r/digitalnomad)
+    const validPatternExtended = /^[\p{L}\p{M}\p{N}\s'’\-.,:;!?()\/]+$/u;
+    
+    // 2. Vérifier la whitelist Unicode étendue
+    if (!validPatternExtended.test(normalized)) {
+      const cleaned = this.cleanAnchorText(normalized);
+      return {
+        valid: false,
+        reason: 'Contient des caractères non autorisés (HTML, URLs, caractères de contrôle)',
+        suggestion: cleaned || normalized
+      };
+    }
+    
+    // 3. Vérifier les patterns invalides (HTML, URLs, code)
     for (const pattern of this.invalidPatterns) {
-      if (pattern.test(anchorText)) {
+      if (pattern.test(normalized)) {
+        const cleaned = this.cleanAnchorText(normalized);
         return {
           valid: false,
           reason: `Contient un pattern invalide: ${pattern}`,
-          suggestion: this.cleanAnchorText(anchorText)
+          suggestion: cleaned || normalized
         };
       }
     }
 
-    // 3. Vérifier les mots interdits
-    const lowerAnchor = anchorText.toLowerCase();
+    // 4. Vérifier les mots interdits
+    const lowerAnchor = normalized.toLowerCase();
     for (const word of this.forbiddenWords) {
       if (lowerAnchor.includes(word)) {
+        const cleaned = this.cleanAnchorText(normalized);
         return {
           valid: false,
           reason: `Contient un mot interdit: "${word}"`,
-          suggestion: this.cleanAnchorText(anchorText)
+          suggestion: cleaned || normalized
         };
       }
-    }
-
-    // 4. Vérifier la cohérence grammaticale basique
-    const grammarCheck = this.checkBasicGrammar(anchorText);
-    if (!grammarCheck.valid) {
-      return grammarCheck;
     }
 
     // Tout est OK
     return {
       valid: true,
       reason: 'Ancre valide',
-      suggestion: null
+      suggestion: normalized
     };
   }
 
-  /**
-   * Vérifie la cohérence grammaticale basique
-   */
-  checkBasicGrammar(text) {
-    // Vérifier qu'il n'y a pas de mots en majuscules au milieu
-    const words = text.split(/\s+/);
-    
-    for (let i = 1; i < words.length; i++) {
-      const word = words[i];
-      // Si un mot au milieu commence par une majuscule (sauf noms propres connus)
-      if (/^[A-Z]/.test(word) && !this.isProperNoun(word)) {
-        return {
-          valid: false,
-          reason: 'Majuscule inattendue au milieu du texte',
-          suggestion: text.toLowerCase()
-        };
-      }
-    }
-
-    // Vérifier qu'il n'y a pas de ponctuation bizarre
-    if (/[.!?;:]{2,}/.test(text)) {
-      return {
-        valid: false,
-        reason: 'Ponctuation multiple suspecte',
-        suggestion: text.replace(/[.!?;:]{2,}/g, '')
-      };
-    }
-
-    return { valid: true };
-  }
-
-  /**
-   * Vérifie si un mot est un nom propre connu
-   */
-  isProperNoun(word) {
-    const properNouns = [
-      'Bali', 'Jakarta', 'Indonésie', 'Thaïlande', 'Bangkok', 
-      'Paris', 'France', 'Asie', 'Reddit', 'FlashVoyages',
-      'Hubud', 'Canggu', 'Ubud'
-    ];
-    return properNouns.includes(word);
-  }
 
   /**
    * Nettoie une ancre de texte
+   * FIX 3: Nettoyage amélioré avec préservation de /, -, '
    */
   cleanAnchorText(text) {
     let cleaned = text;
 
     // Supprimer les patterns invalides
     cleaned = cleaned.replace(/Comparer les prix/gi, '');
-    cleaned = cleaned.replace(/\s{2,}/g, ' ');
+    cleaned = cleaned.replace(/<[^>]*>/g, ''); // Supprimer HTML
+    cleaned = cleaned.replace(/https?:\/\/[^\s]+/gi, ''); // Supprimer URLs
+    cleaned = cleaned.replace(/\s{2,}/g, ' '); // Collapse espaces
     cleaned = cleaned.trim();
+
+    // FIX 3: Autoriser /, -, ' (ex: r/digitalnomad, co-living, l'asie)
+    cleaned = cleaned.replace(/[^\w\s'’\-.,:;!?()\/]/g, '');
 
     return cleaned || null;
   }

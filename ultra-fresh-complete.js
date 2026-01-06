@@ -247,11 +247,247 @@ const REDDIT_PROXY_SERVICES = [
 ];
 
 
+// Headers réalistes pour Reddit (FIX 1)
+function getRealisticRedditHeaders() {
+  return {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,application/json;q=0.9,*/*;q=0.8',
+    'Accept-Language': 'fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7',
+    'Referer': 'https://www.reddit.com/',
+    'Connection': 'keep-alive',
+    'Cache-Control': 'no-cache'
+  };
+}
+
 // Classe principale
 class UltraFreshComplete {
   constructor() {
     this.articles = [];
     this.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36';
+  }
+  
+  // FIX 2: Cascade JSON -> RSS -> fixtures pour Reddit
+  async fetchRedditWithCascade(subreddit, keywords, extractGeoMeta, computeSmartScore, calculateRelevance, generateWidgetPlan, loadSubredditStats, writeSmartAudit) {
+    // 1) FORCE_OFFLINE doit forcer Reddit en fixtures
+    const forceOffline = process.env.FORCE_OFFLINE === '1';
+    const forceFixtures = process.env.FLASHVOYAGE_FORCE_FIXTURES === '1';
+    const fixtureFile = subreddit === 'travel' 
+      ? './data/fixtures/reddit-travel.json'
+      : './data/fixtures/reddit-digitalnomad.json';
+    
+    // Si FORCE_OFFLINE=1, retourner directement les fixtures (aucun fetch réseau)
+    if (forceOffline) {
+      console.log(`🔒 FORCE_OFFLINE=1: utilisation fixtures Reddit pour r/${subreddit}`);
+      return this.loadRedditFixtures(fixtureFile, subreddit, keywords, extractGeoMeta, generateWidgetPlan);
+    }
+    
+    // A. Tenter endpoint JSON
+    if (!forceFixtures) {
+      try {
+        const jsonUrl = `https://www.reddit.com/r/${subreddit}/hot.json?limit=25&raw_json=1`;
+        const response = await axios.get(jsonUrl, {
+          headers: getRealisticRedditHeaders(),
+          timeout: 20000
+        });
+        
+        const posts = response.data.data?.children || [];
+        const relevantPosts = [];
+        
+        posts.forEach(post => {
+          const data = post.data;
+          const title = data.title.toLowerCase();
+          const selftext = (data.selftext || '').toLowerCase();
+          
+          const isRelevant = keywords.some(keyword => 
+            title.includes(keyword) || selftext.includes(keyword)
+          );
+          
+          if (isRelevant) {
+            const smart = computeSmartScore(data, loadSubredditStats(`r/${subreddit}`));
+            const audit = {
+              post_id: data.id,
+              subreddit: `r/${subreddit}`,
+              title: data.title,
+              url: 'https://reddit.com' + data.permalink,
+              created_utc: data.created_utc,
+              age_hours: Math.round((Date.now() - data.created_utc * 1000) / 3600000),
+              scores: smart.scores,
+              total: Math.round(smart.total),
+              decision: smart.decision,
+              contextual: smart.contextual || false,
+              reasons: smart.reasons || []
+            };
+            writeSmartAudit(audit);
+            
+            // Construire source_text
+            const selftext = data.selftext || '';
+            const source_text = `${data.title}\n\n${selftext}`;
+            
+            relevantPosts.push({
+              id: data.id,
+              subreddit: `r/${subreddit}`,
+              title: data.title,
+              link: 'https://reddit.com' + data.permalink,
+              content: selftext,
+              source_text: source_text,
+              date: new Date(data.created_utc * 1000).toISOString(),
+              source: `Reddit r/${subreddit}`,
+              type: subreddit === 'travel' ? 'community' : 'nomade',
+              relevance: Math.min(90, (calculateRelevance(data.title, selftext, keywords) + 30)),
+              upvotes: data.ups,
+              comments: data.num_comments,
+              author: data.author,
+              created_utc: data.created_utc,
+              smartScore: Math.round(smart.total),
+              smartDecision: smart.decision,
+              smartScores: smart.scores,
+              affiliateSlots: smart.affiliate_slots || [],
+              geo: extractGeoMeta(data.title),
+              widget_plan: generateWidgetPlan(smart.affiliate_slots || [], extractGeoMeta(data.title)),
+              source_reliability: 1.0, // JSON live = fiable
+              is_degraded_source: false
+            });
+          }
+        });
+        
+        if (relevantPosts.length > 0) {
+          console.log(`✅ REDDIT_OK: mode=json count=${relevantPosts.length} sub=r/${subreddit}`);
+          return relevantPosts;
+        }
+      } catch (error) {
+        const status = error.response?.status || 'unknown';
+        console.log(`⚠️ REDDIT_FETCH_FAIL: status=${status} sub=r/${subreddit} reason=${error.message}`);
+        
+        // Si 403/429/5xx, passer à RSS
+        if (status === 403 || status === 429 || (status >= 500 && status < 600)) {
+          console.log(`   → REDDIT_FALLBACK: mode=rss sub=r/${subreddit}`);
+        } else {
+          // Autre erreur, passer directement aux fixtures
+          console.log(`   → REDDIT_FALLBACK: mode=fixtures sub=r/${subreddit} reason=network_error`);
+          return this.loadRedditFixtures(fixtureFile, subreddit, keywords, extractGeoMeta, generateWidgetPlan);
+        }
+      }
+    }
+    
+    // B. Fallback RSS
+    if (!forceFixtures) {
+      try {
+        const rssUrl = `https://www.reddit.com/r/${subreddit}/.rss`;
+        const response = await axios.get(rssUrl, {
+          headers: getRealisticRedditHeaders(),
+          timeout: 20000
+        });
+        
+        const xmlText = response.data;
+        const relevantPosts = [];
+        
+        // Parser RSS simple
+        const titleMatches = xmlText.match(/<title>(.*?)<\/title>/g) || [];
+        const linkMatches = xmlText.match(/<link>(.*?)<\/link>/g) || [];
+        const authorMatches = xmlText.match(/<dc:creator>(.*?)<\/dc:creator>/g) || [];
+        
+        for (let i = 1; i < Math.min(titleMatches.length, 25); i++) { // Skip first (feed title)
+          const title = titleMatches[i]?.replace(/<title>(.*?)<\/title>/, '$1') || '';
+          const link = linkMatches[i]?.replace(/<link>(.*?)<\/link>/, '$1') || '';
+          const author = authorMatches[i]?.replace(/<dc:creator>(.*?)<\/dc:creator>/, '$1') || 'unknown';
+          
+          if (title && link) {
+            const titleLower = title.toLowerCase();
+            const isRelevant = keywords.some(keyword => titleLower.includes(keyword));
+            
+            if (isRelevant) {
+              // RSS n'a souvent pas de selftext, donc source_text minimal
+              const source_text = `${title}\n\n${title}`; // Fallback minimal
+              
+              relevantPosts.push({
+                title: title,
+                link: link,
+                content: '',
+                source_text: source_text,
+                date: new Date().toISOString(),
+                source: `Reddit r/${subreddit}`,
+                type: subreddit === 'travel' ? 'community' : 'nomade',
+                relevance: 75,
+                upvotes: 0,
+                comments: 0,
+                author: author,
+                smartScore: 50,
+                smartDecision: 'secondary_source',
+                smartScores: {},
+                affiliateSlots: [],
+                geo: extractGeoMeta(title),
+                widget_plan: generateWidgetPlan([], extractGeoMeta(title)),
+                source_reliability: 0.6, // RSS = moins fiable (pas de selftext)
+                is_degraded_source: true // RSS sans contenu = dégradé
+              });
+            }
+          }
+        }
+        
+        if (relevantPosts.length > 0) {
+          console.log(`✅ REDDIT_OK: mode=rss count=${relevantPosts.length} sub=r/${subreddit}`);
+          return relevantPosts;
+        }
+      } catch (error) {
+        console.log(`⚠️ REDDIT_FALLBACK: mode=rss failed, reason=${error.message}`);
+      }
+    }
+    
+    // C. Fallback fixtures
+    console.log(`⚠️ REDDIT_FALLBACK_FIXTURES: reason=${forceFixtures ? 'forced' : 'network_failed'} sub=r/${subreddit}`);
+    return this.loadRedditFixtures(fixtureFile, subreddit, keywords, extractGeoMeta, generateWidgetPlan);
+  }
+  
+  // Charger fixtures Reddit
+  loadRedditFixtures(fixtureFile, subreddit, keywords, extractGeoMeta, generateWidgetPlan) {
+    try {
+      const fixtures = JSON.parse(fs.readFileSync(fixtureFile, 'utf-8'));
+      
+      // B) Validation source_text et enrichissement + garantie url + geo
+      const validFixtures = fixtures.filter(item => {
+        // B) Construire url standard si manquant
+        if (!item.url && item.id) {
+          item.url = `https://reddit.com/r/${subreddit}/comments/${item.id}/`;
+        }
+        
+        // Construire source_text si manquant
+        if (!item.source_text) {
+          const selftext = item.selftext || item.content || '';
+          const title = item.title || '';
+          const comments = (item.comments_snippets || []).join('\n\n');
+          item.source_text = `${title}\n\n${selftext}${comments ? '\n\n---\n\n' + comments : ''}`;
+        }
+        
+        // Valider longueur minimale
+        if (!item.source_text || item.source_text.length < 200) {
+          console.log(`⚠️ FIXTURE_INVALID: missing source_text id=${item.id || 'unknown'} sub=r/${subreddit}`);
+          return false;
+        }
+        
+        // B) Garantir geo existe
+        if (!item.geo) {
+          item.geo = extractGeoMeta(item.title);
+        }
+        
+        // Ajouter source_reliability si manquant
+        if (item.source_reliability === undefined) {
+          item.source_reliability = 1.0; // Fixtures = fiables
+        }
+        
+        // Ajouter is_degraded_source si manquant
+        if (item.is_degraded_source === undefined) {
+          item.is_degraded_source = false;
+        }
+        
+        return true;
+      });
+      
+      console.log(`✅ REDDIT_OK: mode=fixtures count=${validFixtures.length} sub=r/${subreddit}`);
+      return validFixtures;
+    } catch (error) {
+      console.error(`❌ Erreur chargement fixtures: ${error.message}`);
+      return [];
+    }
   }
 
   // -- SmartScore helpers --
@@ -479,91 +715,21 @@ class UltraFreshComplete {
     this.saveRecentTitles(mem);
   }
 
-  // Scraper Reddit
+  // Scraper Reddit (FIX 2: cascade JSON -> RSS -> fixtures)
   async scrapeReddit() {
-    try {
-      console.log('🔍 Scraping Reddit r/travel...');
-      
-      // Délai pour respecter les rate limits Reddit
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      const response = await axios.get(ALTERNATIVE_SOURCES.reddit.url, {
-        headers: { 
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'application/json, text/plain, */*',
-          'Accept-Language': 'en-US,en;q=0.9',
-          'Accept-Encoding': 'gzip, deflate, br',
-          'DNT': '1',
-          'Connection': 'keep-alive',
-          'Upgrade-Insecure-Requests': '1',
-          'Sec-Fetch-Dest': 'document',
-          'Sec-Fetch-Mode': 'navigate',
-          'Sec-Fetch-Site': 'none',
-          'Cache-Control': 'max-age=0'
-        },
-        timeout: 20000
-      });
-
-      const posts = response.data.data?.children || [];
-      const relevantPosts = [];
-
-      posts.forEach(post => {
-        const data = post.data;
-        const title = data.title.toLowerCase();
-        const selftext = (data.selftext || '').toLowerCase();
-        
-        // Vérifier la pertinence Asie
-        const isRelevant = ALTERNATIVE_SOURCES.reddit.keywords.some(keyword => 
-          title.includes(keyword) || selftext.includes(keyword)
-        );
-
-        if (isRelevant) {
-          // Compute SmartScore
-          const smart = this.computeSmartScore(data, this.loadSubredditStats('r/travel'));
-          const audit = {
-            post_id: data.id,
-            subreddit: 'r/travel',
-            title: data.title,
-            url: 'https://reddit.com' + data.permalink,
-            created_utc: data.created_utc,
-            age_hours: Math.round((Date.now() - data.created_utc * 1000) / 3600000),
-            scores: smart.scores,
-            total: Math.round(smart.total),
-            decision: smart.decision,
-            contextual: smart.contextual || false,
-            reasons: smart.reasons || []
-          };
-          this.writeSmartAudit(audit);
-
-          console.log(`🔍 DEBUG: Author Reddit récupéré: ${data.author}`);
-          relevantPosts.push({
-            title: data.title,
-            link: 'https://reddit.com' + data.permalink,
-            content: data.selftext || '',
-            date: new Date(data.created_utc * 1000).toISOString(),
-            source: 'Reddit r/travel',
-            type: 'community',
-            relevance: Math.min(90, (this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit.keywords) + 30)),
-            upvotes: data.ups,
-            comments: data.num_comments,
-            author: data.author, // AJOUT DE L'AUTHOR REDDIT
-            smartScore: Math.round(smart.total),
-            smartDecision: smart.decision,
-            smartScores: smart.scores,
-            affiliateSlots: smart.affiliate_slots || [],
-            geo: this.extractGeoMeta(data.title),
-            widget_plan: this.generateWidgetPlan(smart.affiliate_slots || [], this.extractGeoMeta(data.title))
-          });
-        }
-      });
-
-      console.log(`✅ Reddit: ${relevantPosts.length} posts pertinents trouvés`);
-      return relevantPosts;
-
-    } catch (error) {
-      console.error('❌ Erreur Reddit:', error.message);
-      return [];
-    }
+    console.log('🔍 Scraping Reddit r/travel...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    return await this.fetchRedditWithCascade(
+      'travel',
+      ALTERNATIVE_SOURCES.reddit.keywords,
+      (title) => this.extractGeoMeta(title),
+      (data, stats) => this.computeSmartScore(data, stats),
+      (title, text, keywords) => this.calculateRelevance(title, text, keywords),
+      (slots, geo) => this.generateWidgetPlan(slots, geo),
+      (sub) => this.loadSubredditStats(sub),
+      (audit) => this.writeSmartAudit(audit)
+    );
   }
 
   // Scraper Google News
@@ -616,88 +782,21 @@ class UltraFreshComplete {
   }
 
   // Scraper Reddit Nomade
+  // Scraper Reddit Nomad (FIX 2: cascade JSON -> RSS -> fixtures)
   async scrapeRedditNomad() {
-    try {
-      console.log('🔍 Scraping Reddit Digital Nomad...');
-      
-      // Délai pour respecter les rate limits
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      const response = await axios.get(ALTERNATIVE_SOURCES.reddit_nomad.url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'application/json, text/plain, */*',
-          'Accept-Language': 'en-US,en;q=0.9',
-          'Accept-Encoding': 'gzip, deflate, br',
-          'DNT': '1',
-          'Connection': 'keep-alive',
-          'Upgrade-Insecure-Requests': '1',
-          'Sec-Fetch-Dest': 'document',
-          'Sec-Fetch-Mode': 'navigate',
-          'Sec-Fetch-Site': 'none',
-          'Cache-Control': 'max-age=0'
-        },
-        timeout: 20000
-      });
-
-      const posts = response.data.data.children;
-      const relevantPosts = [];
-
-      posts.forEach(post => {
-        const data = post.data;
-        const text = `${data.title} ${data.selftext || ''}`.toLowerCase();
-        
-        // Vérifier si le post contient des mots-clés nomades
-        const hasNomadeKeywords = ALTERNATIVE_SOURCES.reddit_nomad.keywords.some(keyword =>
-          text.includes(keyword.toLowerCase())
-        );
-        
-        if (hasNomadeKeywords && data.ups > 2) { // Réduire le seuil d'upvotes
-          // Compute SmartScore
-          const smart = this.computeSmartScore(data, this.loadSubredditStats('r/digitalnomad'));
-          const audit = {
-            post_id: data.id,
-            subreddit: 'r/digitalnomad',
-            title: data.title,
-            url: `https://reddit.com${data.permalink}`,
-            created_utc: data.created_utc,
-            age_hours: Math.round((Date.now() - data.created_utc * 1000) / 3600000),
-            scores: smart.scores,
-            total: Math.round(smart.total),
-            decision: smart.decision,
-            contextual: smart.contextual || false,
-            reasons: smart.reasons || []
-          };
-          this.writeSmartAudit(audit);
-
-          relevantPosts.push({
-            title: data.title,
-            link: `https://reddit.com${data.permalink}`,
-            content: data.selftext || '',
-            date: new Date(data.created_utc * 1000).toISOString(),
-            source: 'Reddit Digital Nomad',
-            type: 'nomade',
-            relevance: Math.min(95, (this.calculateRelevance(data.title, data.selftext, ALTERNATIVE_SOURCES.reddit_nomad.keywords) + 40)),
-            upvotes: data.ups,
-            comments: data.num_comments,
-            author: data.author, // AJOUT DE L'AUTHOR REDDIT
-            smartScore: Math.round(smart.total),
-            smartDecision: smart.decision,
-            smartScores: smart.scores,
-            affiliateSlots: smart.affiliate_slots || [],
-            geo: this.extractGeoMeta(data.title),
-            widget_plan: this.generateWidgetPlan(smart.affiliate_slots || [], this.extractGeoMeta(data.title))
-          });
-        }
-      });
-
-      console.log(`✅ Reddit Nomade: ${relevantPosts.length} posts pertinents trouvés`);
-      return relevantPosts;
-
-    } catch (error) {
-      console.error('❌ Erreur Reddit Nomade:', error.message);
-      return [];
-    }
+    console.log('🔍 Scraping Reddit Digital Nomad...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    return await this.fetchRedditWithCascade(
+      'digitalnomad',
+      ALTERNATIVE_SOURCES.reddit_nomad.keywords,
+      (title) => this.extractGeoMeta(title),
+      (data, stats) => this.computeSmartScore(data, stats),
+      (title, text, keywords) => this.calculateRelevance(title, text, keywords),
+      (slots, geo) => this.generateWidgetPlan(slots, geo),
+      (sub) => this.loadSubredditStats(sub),
+      (audit) => this.writeSmartAudit(audit)
+    );
   }
 
   // Scraper Google News Nomade
@@ -770,8 +869,13 @@ class UltraFreshComplete {
   }
 
   // Scraper toutes les sources
-  async scrapeAllSources() {
+  async scrapeAllSources(requireCommunityTestimonial = false) {
     console.log('🚀 Démarrage du scraping ultra-fraîche...\n');
+    
+    // FIX 5: Désactiver scraping news si format témoignage requis
+    if (requireCommunityTestimonial) {
+      console.log('💬 Format témoignage requis - Désactivation des sources news (CNN, Skift, Google News)\n');
+    }
     
     const allArticles = [];
     const isGitHubActions = this.isGitHubActions();
@@ -794,12 +898,14 @@ class UltraFreshComplete {
         allArticles.push(...redditProxyArticles);
       }
 
-      // Google News (fonctionne généralement)
-      const googleArticles = await this.scrapeGoogleNews();
-      allArticles.push(...googleArticles);
+      // FIX 5: Google News uniquement si format témoignage non requis
+      if (!requireCommunityTestimonial) {
+        const googleArticles = await this.scrapeGoogleNews();
+        allArticles.push(...googleArticles);
 
-      const googleNomadArticles = await this.scrapeGoogleNewsNomad();
-      allArticles.push(...googleNomadArticles);
+        const googleNomadArticles = await this.scrapeGoogleNewsNomad();
+        allArticles.push(...googleNomadArticles);
+      }
 
       // Si aucune source ne fonctionne, on continue avec 0 articles
       if (allArticles.length === 0) {
@@ -808,49 +914,63 @@ class UltraFreshComplete {
     } else {
       console.log('💻 Mode local - Utilisation de toutes les sources\n');
       
-      // PRIORITÉ 1: Sources professionnelles d'actualités (CNN, Skift)
-      console.log('📰 Scraping sources professionnelles d\'actualités...');
+      // FIX 5: Sources professionnelles d'actualités uniquement si format témoignage non requis
+      if (!requireCommunityTestimonial) {
+        // PRIORITÉ 1: Sources professionnelles d'actualités (CNN, Skift)
+        console.log('📰 Scraping sources professionnelles d\'actualités...');
+        try {
+          // CNN Travel RSS
+          const cnnArticles = await this.scrapeRSSFeed(
+            'http://rss.cnn.com/rss/edition_travel.rss',
+            'CNN Travel',
+            ['asia', 'travel', 'thailand', 'japan', 'korea', 'singapore', 'vietnam', 'philippines', 'indonesia', 'visa', 'nomad']
+          );
+          allArticles.push(...cnnArticles);
+          console.log(`✅ CNN Travel: ${cnnArticles.length} articles trouvés`);
+        } catch (error) {
+          console.log(`⚠️ CNN Travel échoué: ${error.message}`);
+        }
+
+        try {
+          // Skift RSS
+          const skiftArticles = await this.scrapeRSSFeed(
+            'https://skift.com/feed/',
+            'Skift',
+            ['asia', 'travel', 'tourism', 'hotel', 'airline', 'visa', 'nomad', 'digital nomad', 'remote work']
+          );
+          allArticles.push(...skiftArticles);
+          console.log(`✅ Skift: ${skiftArticles.length} articles trouvés`);
+        } catch (error) {
+          console.log(`⚠️ Skift échoué: ${error.message}`);
+        }
+
+        // PRIORITÉ 3: Google News
+        const googleArticles = await this.scrapeGoogleNews();
+        allArticles.push(...googleArticles);
+
+        // Scraper Google News Nomade
+        const googleNomadArticles = await this.scrapeGoogleNewsNomad();
+        allArticles.push(...googleNomadArticles);
+      }
+
+      // PRIORITÉ 2: Reddit (mode local) - TOUJOURS activé (source principale pour témoignages)
+      console.log('🔍 Scraping Reddit (source principale pour témoignages)...');
       try {
-        // CNN Travel RSS
-        const cnnArticles = await this.scrapeRSSFeed(
-          'http://rss.cnn.com/rss/edition_travel.rss',
-          'CNN Travel',
-          ['asia', 'travel', 'thailand', 'japan', 'korea', 'singapore', 'vietnam', 'philippines', 'indonesia', 'visa', 'nomad']
-        );
-        allArticles.push(...cnnArticles);
-        console.log(`✅ CNN Travel: ${cnnArticles.length} articles trouvés`);
+        const redditArticles = await this.scrapeReddit();
+        allArticles.push(...redditArticles);
+        console.log(`✅ Reddit: ${redditArticles.length} articles trouvés`);
       } catch (error) {
-        console.log(`⚠️ CNN Travel échoué: ${error.message}`);
+        console.log(`⚠️ Reddit échoué: ${error.message}`);
       }
 
       try {
-        // Skift RSS
-        const skiftArticles = await this.scrapeRSSFeed(
-          'https://skift.com/feed/',
-          'Skift',
-          ['asia', 'travel', 'tourism', 'hotel', 'airline', 'visa', 'nomad', 'digital nomad', 'remote work']
-        );
-        allArticles.push(...skiftArticles);
-        console.log(`✅ Skift: ${skiftArticles.length} articles trouvés`);
+        // Scraper Reddit Nomade (mode local) - TOUJOURS activé
+        const redditNomadArticles = await this.scrapeRedditNomad();
+        allArticles.push(...redditNomadArticles);
+        console.log(`✅ Reddit Nomade: ${redditNomadArticles.length} articles trouvés`);
       } catch (error) {
-        console.log(`⚠️ Skift échoué: ${error.message}`);
+        console.log(`⚠️ Reddit Nomade échoué: ${error.message}`);
       }
-
-      // PRIORITÉ 2: Reddit (mode local)
-      const redditArticles = await this.scrapeReddit();
-      allArticles.push(...redditArticles);
-
-      // Scraper Reddit Nomade (mode local)
-      const redditNomadArticles = await this.scrapeRedditNomad();
-      allArticles.push(...redditNomadArticles);
-
-      // PRIORITÉ 3: Google News
-      const googleArticles = await this.scrapeGoogleNews();
-      allArticles.push(...googleArticles);
-
-      // Scraper Google News Nomade
-      const googleNomadArticles = await this.scrapeGoogleNewsNomad();
-      allArticles.push(...googleNomadArticles);
     }
 
     // Contenu simulé supprimé - utilisation uniquement de vrais flux RSS

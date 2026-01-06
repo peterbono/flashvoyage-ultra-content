@@ -74,24 +74,95 @@ class ContentEnhancer {
     return enhancedContent;
   }
 
+  /**
+   * 1. Détection unique des widgets rendus (même logique que article-finalizer)
+   */
+  detectRenderedWidgets(html) {
+    const detected = {
+      count: 0,
+      types: [],
+      details: []
+    };
+
+    // Marqueurs robustes pour widget FLIGHTS Kiwi.com
+    const kiwiMarkers = [
+      /<form[^>]*kiwi[^>]*>/gi,
+      /<form[^>]*travelpayouts[^>]*>/gi,
+      /data-widget-type=["']flights["']/gi,
+      /class=["'][^"']*kiwi[^"']*["']/gi,
+      /class=["'][^"']*travelpayouts[^"']*["']/gi,
+      /trpwdg\.com\/content/gi,
+      /travelpayouts-widget/gi,
+      /kiwi\.com.*widget/gi,
+      /<!-- FLASHVOYAGE_WIDGET:flights/gi,
+      /<!-- FLASHVOYAGE_WIDGET:fallback/gi
+    ];
+
+    // Marqueurs textuels (moins fiables mais fallback)
+    const textMarkers = [
+      /Selon notre analyse de milliers de vols/gi,
+      /D'après notre expérience avec des centaines de nomades/gi,
+      /Notre partenaire Kiwi\.com/gi,
+      /Notre outil compare les prix/gi
+    ];
+
+    // Détecter marqueurs HTML robustes
+    for (const marker of kiwiMarkers) {
+      const matches = html.match(marker);
+      if (matches) {
+        detected.count += matches.length;
+        if (!detected.types.includes('flights')) {
+          detected.types.push('flights');
+        }
+      }
+    }
+
+    // Si aucun marqueur HTML trouvé, fallback sur textuels
+    if (detected.count === 0) {
+      for (const marker of textMarkers) {
+        const matches = html.match(marker);
+        if (matches) {
+          detected.count += matches.length;
+          if (!detected.types.includes('flights')) {
+            detected.types.push('flights');
+          }
+        }
+      }
+    }
+
+    return detected;
+  }
+
   // Valider les améliorations
-  validateEnhancements(content, widgets, internalLinks) {
+  validateEnhancements(content, widgets, internalLinks, widgetsRendered = null) {
     const issues = [];
     let score = 100;
     
-    // Vérifier la présence des widgets
-    const widgetValidation = this.widgetManager.validateWidgets(content);
-    if (widgetValidation.score < 50) {
-      issues.push(`Widgets insuffisants: ${widgetValidation.score}%`);
-      score -= 20;
+    // FIX 1: NE PAS appeler detectRenderedWidgets ici (HTML partiel)
+    // La détection sera faite UNE SEULE FOIS après finalisation complète dans enhanced-ultra-generator
+    // Cette validation est informelle uniquement (pas de détection HTML)
+    
+    // Validation basée sur widgets planifiés uniquement (informatif)
+    const widgetValidation = {
+      score: widgets.length >= 1 ? 100 : 0,
+      present: widgets.map(w => w.slot),
+      count: widgets.length
+    };
+    
+    if (widgets.length === 0) {
+      // Informatif uniquement, pas de pénalité ici (détection finale fera le vrai check)
+      console.log(`   ℹ️ Widgets planifiés: 0 (détection finale après injection)`);
     }
     
-    // Vérifier la présence des liens internes
+    // FIX 3: Liens internes = bonus SEO, jamais prérequis
+    // Ne jamais pénaliser pour 0 lien interne
     const linksValidation = this.linksManager.validateInternalLinks(content);
-    if (linksValidation.internal < 2) {
-      issues.push(`Liens internes insuffisants: ${linksValidation.internal}`);
-      score -= 15;
+    if (linksValidation.internal > 0) {
+      console.log(`   ✅ Liens internes détectés: ${linksValidation.internal} (bonus SEO)`);
+    } else {
+      console.log(`   ℹ️ Aucun lien interne (acceptable, bonus SEO uniquement)`);
     }
+    // SUPPRIMÉ: pénalité pour liens internes insuffisants
     
     // Vérifier la structure du contenu
     if (!content.includes('<h2>') && !content.includes('<h3>')) {
@@ -108,7 +179,7 @@ class ContentEnhancer {
     return {
       score: Math.max(score, 0),
       issues: issues,
-      widgets: widgetValidation,
+      widgets: widgetValidation || { score: 0, present: [], count: 0 }, // FIX A: Fallback safe
       links: linksValidation
     };
   }

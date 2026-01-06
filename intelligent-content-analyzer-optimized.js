@@ -2,19 +2,236 @@
 
 import axios from 'axios';
 import { OPENAI_API_KEY } from './config.js';
+import { extractRedditForAnalysis, isDestinationQuestion, extractMainDestination } from './reddit-extraction-adapter.js';
+
+// 2) Utilitaire pour sécuriser tous les JSON.parse
+function safeJsonParse(str, label = 'json') {
+  if (!str || typeof str !== 'string' || str.trim().length === 0) {
+    throw new Error(`SAFE_JSON_PARSE_EMPTY: ${label}`);
+  }
+  try {
+    return JSON.parse(str);
+  } catch (e) {
+    const preview = str.slice(0, 200).replace(/\s+/g, ' ');
+    throw new Error(`SAFE_JSON_PARSE_FAIL: ${label} msg=${e.message} preview="${preview}"`);
+  }
+}
+
+// C) Wrapper LLM avec retry + fallback template DRY_RUN
+async function callOpenAIWithRetry(config, retries = 3) {
+  const timeout = parseInt(process.env.OPENAI_TIMEOUT_MS || '60000', 10);
+  const isDryRun = process.env.FLASHVOYAGE_DRY_RUN === '1';
+  const forceOffline = process.env.FORCE_OFFLINE === '1';
+  
+  const backoffDelays = [1000, 3000, 7000];
+  
+  // En FORCE_OFFLINE, simuler timeout immédiatement
+  if (forceOffline && !config.apiKey) {
+    console.log(`⚠️ DRYRUN_LLM_FALLBACK_TEMPLATE_USED: reason=FORCE_OFFLINE`);
+    return generateTemplateFallback(config.sourceText, config.article, config.type);
+  }
+  
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const response = await axios.post('https://api.openai.com/v1/chat/completions', config.body, {
+        headers: {
+          'Authorization': `Bearer ${config.apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        timeout: timeout
+      });
+      
+      return response.data;
+    } catch (error) {
+      const isRetryable = error.code === 'ETIMEDOUT' || 
+                         error.code === 'ECONNRESET' || 
+                         error.response?.status === 429 ||
+                         error.response?.status === 401; // Invalid API key
+      
+      if (isRetryable && attempt < retries) {
+        const delay = backoffDelays[attempt - 1];
+        console.log(`⚠️ LLM_RETRY: attempt=${attempt}/${retries} reason=${error.code || error.response?.status || 'unknown'} delay=${delay}ms`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      
+      // Si après retries ça échoue
+      if (attempt === retries) {
+        if (isDryRun || forceOffline) {
+          // Fallback template en DRY_RUN
+          console.log(`⚠️ DRYRUN_LLM_FALLBACK_TEMPLATE_USED: reason=${error.code || error.response?.status || 'unknown'}`);
+          return generateTemplateFallback(config.sourceText, config.article, config.type);
+        } else {
+          // En PROD, throw
+          throw error;
+        }
+      }
+    }
+  }
+}
+
+// Fallback template déterministe (C)
+function generateTemplateFallback(sourceText, article, type = 'analysis') {
+  if (!sourceText || sourceText.length < 200) {
+    throw new Error('Fallback template refusé: source_text < 200 chars');
+  }
+  
+  // Extraire phrases clés du source_text
+  const sentences = sourceText
+    .split(/[.!?]\s+/)
+    .filter(s => s.length > 20 && s.length < 200)
+    .slice(0, 10);
+  
+  const bullets = sentences.slice(0, 6).map(s => s.trim());
+  
+  if (type === 'analysis') {
+    return {
+      choices: [{
+        message: {
+          content: JSON.stringify({
+            type_contenu: 'TEMOIGNAGE_SUCCESS_STORY',
+            sous_categorie: 'Voyage en Asie',
+            angle: 'Expérience authentique',
+            audience: 'Digital nomades et voyageurs',
+            destination: article.geo?.country || 'Asie',
+            ton: 'Authentique et inspirant',
+            template_specifique: 'success_story',
+            raison: 'Témoignage basé sur expérience réelle'
+          })
+        }
+      }]
+    };
+  } else if (type === 'extraction') {
+    return {
+      choices: [{
+        message: {
+          content: JSON.stringify({
+            citations: bullets.slice(0, 3),
+            donnees_cles: bullets.slice(0, 4),
+            structure: 'Témoignage',
+            enseignements: bullets.slice(0, 3),
+            conseils: bullets.slice(0, 5)
+          })
+        }
+      }]
+    };
+  } else if (type === 'generation') {
+    // Générer HTML basique avec template
+    const intro = `Ce témoignage décrit une expérience de voyage en ${article.geo?.country || 'Asie'}.`;
+    const sections = [
+      '<h2>Contexte</h2>',
+      `<p>${intro}</p>`,
+      '<h2>Problème</h2>',
+      `<p>${bullets[0] || 'Expérience de voyage'}</p>`,
+      '<h2>Ce que dit la source</h2>',
+      `<ul>${bullets.slice(0, 4).map(b => `<li>${b}</li>`).join('')}</ul>`,
+      '<h2>Conseils actionnables</h2>',
+      `<ul>${bullets.slice(4, 8).map(b => `<li>${b}</li>`).join('')}</ul>`,
+      '<h2>Check-list pratique</h2>',
+      `<ul>${bullets.slice(0, 6).map(b => `<li>${b}</li>`).join('')}</ul>`
+    ].join('\n\n');
+    
+    return {
+      choices: [{
+        message: {
+          content: JSON.stringify({
+            article: {
+              titre: article.title || 'Témoignage de voyage',
+              developpement: sections,
+              conclusion: 'Cette expérience illustre les défis et opportunités du voyage en Asie.'
+            }
+          })
+        }
+      }]
+    };
+  }
+  
+  throw new Error('Type de fallback non supporté');
+}
 
 class IntelligentContentAnalyzerOptimized {
   constructor() {
     this.apiKey = OPENAI_API_KEY;
   }
 
+  // 3) Implémenter un fallback OFFLINE complet
+  buildOfflineFallbackArticle(selectedArticle, analysis) {
+    const title = selectedArticle?.title || 'Témoignage voyage: retours et leçons';
+    const author = selectedArticle?.author || 'un membre de la communauté';
+    const sourceName = selectedArticle?.sourceName || selectedArticle?.source || 'Communauté';
+    const link = selectedArticle?.link || selectedArticle?.url || '#';
+
+    const country = analysis?.geo?.country || selectedArticle?.geo?.country || null;
+    const city = analysis?.geo?.city || selectedArticle?.geo?.city || null;
+
+    // Contenu simple mais structuré, avec H2, et ancré sur les signaux disponibles
+    const h2Place = city ? `${city}` : (country ? `${country}` : 'Asie');
+    const content = `
+<p><strong>Source :</strong> <a href="${link}" target="_blank" rel="noopener">${title}</a> - ${sourceName}</p>
+<p>${author} partage un retour d'expérience centré sur ${h2Place}. Voici une synthèse structurée basée sur les informations disponibles en mode offline.</p>
+
+<h2>Ce qui ressort du témoignage</h2>
+<ul>
+  <li>Contexte: installation / voyage et premiers repères</li>
+  <li>Points d'attention: budget, logistique, visa, santé, connectivité</li>
+  <li>Leçons: ce qui aurait dû être anticipé</li>
+</ul>
+
+<h2>Conseils pratiques</h2>
+<ul>
+  <li>Valider les démarches administratives et les sources officielles</li>
+  <li>Prévoir une marge budget + santé + imprévus</li>
+  <li>Structurer un plan de mobilité (vols, hub, itinéraire)</li>
+</ul>
+
+<h2>Checklist rapide</h2>
+<ul>
+  <li>Assurance + documents</li>
+  <li>eSIM / data</li>
+  <li>Plan B logement + transport</li>
+</ul>
+`.trim();
+
+    return {
+      title: title,
+      content: content
+    };
+  }
+
   // Analyser intelligemment le contenu d'un article avec les 4 types de témoignage
   async analyzeContent(article) {
+    // Extraire les sémantiques Reddit si c'est un article Reddit (DRY_RUN safe)
+    let redditData = null;
+    if (article.link && article.link.includes('reddit.com')) {
+      try {
+        redditData = await extractRedditForAnalysis(article);
+        if (redditData) {
+          console.log('✅ reddit_extraction attached');
+          if (redditData.reddit_extraction.quality.has_minimum_signals) {
+            console.log('   ✓ has_minimum_signals: true');
+          } else {
+            console.log('   ⚠️ has_minimum_signals: false');
+          }
+        }
+      } catch (error) {
+        console.warn('⚠️ Erreur extraction Reddit (fallback silencieux):', error.message);
+        redditData = null;
+      }
+    }
+    
     try {
       // Vérifier si la clé API est disponible
       if (!this.apiKey) {
         console.log('⚠️ Clé OpenAI non disponible - Utilisation du fallback');
-        return this.getFallbackAnalysis(article);
+        const fallback = this.getFallbackAnalysis(article);
+        // Ajouter reddit data même en fallback
+        if (redditData) {
+          fallback.reddit_extraction = redditData.reddit_extraction;
+          fallback.reddit_signals_compact = redditData.reddit_signals_compact;
+          fallback.is_destination_question = redditData.is_destination_question;
+          fallback.main_destination = redditData.main_destination;
+        }
+        return fallback;
       }
 
       const prompt = `Tu es un expert éditorial pour FlashVoyages.com, spécialisé dans le voyage en Asie.
@@ -120,31 +337,97 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
 - "TEMOIGNAGE_COMPARAISON" pour les comparaisons
 - Et les autres types de contenu selon la liste ci-dessus.`;
 
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        model: 'gpt-4',
-        messages: [{ role: 'user', content: prompt }],
-        max_tokens: 600,
-        temperature: 0.3
-      }, {
-        headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
-          'Content-Type': 'application/json'
-        }
+      const responseData = await callOpenAIWithRetry({
+        apiKey: this.apiKey,
+        body: {
+          model: 'gpt-4',
+          messages: [{ role: 'user', content: prompt }],
+          max_tokens: 600,
+          temperature: 0.3
+        },
+        sourceText: article.content || article.source_text || '',
+        article: article,
+        type: 'analysis'
       });
 
-      const analysis = JSON.parse(response.data.choices[0].message.content);
+      const analysis = safeJsonParse(responseData.choices[0].message.content, 'call1_response');
       // Verrouiller le type pour le plan de widgets
       analysis.type = analysis.type_contenu || analysis.type || 'Témoignage';
+      
+      // Ajouter les données Reddit si disponibles
+      if (redditData) {
+        analysis.reddit_extraction = redditData.reddit_extraction;
+        analysis.reddit_signals_compact = redditData.reddit_signals_compact;
+        analysis.is_destination_question = redditData.is_destination_question;
+        analysis.main_destination = redditData.main_destination;
+        
+        // RÈGLE CRITIQUE: Si c'est une question "où partir", forcer COMPARAISON_DESTINATIONS ou GUIDE_PRATIQUE
+        if (redditData.is_destination_question) {
+          console.log('🔍 Détection question destination - Forçage type COMPARAISON_DESTINATIONS ou GUIDE_PRATIQUE');
+          if (analysis.type_contenu !== 'COMPARAISON_DESTINATIONS' && analysis.type_contenu !== 'GUIDE_PRATIQUE') {
+            analysis.type_contenu = 'COMPARAISON_DESTINATIONS';
+            analysis.type = 'COMPARAISON_DESTINATIONS';
+            console.log('   → Type changé en COMPARAISON_DESTINATIONS');
+          }
+        }
+        
+        // RÈGLE CRITIQUE: Ne pas inventer de destination principale
+        // La destination doit venir du post (mentions fortes) ou consensus commentaires
+        if (redditData.main_destination) {
+          // Destination validée par l'extracteur (post ou consensus)
+          analysis.destination = redditData.main_destination;
+          console.log(`   ✓ Destination validée: ${redditData.main_destination}`);
+        } else {
+          // FIX 4: Ne pas logger "Destination non validée" si elle sera validée plus tard par scoring
+          // Vérifier si une destination peut être reconstruite depuis le contenu
+          const canBeReconstructed = redditData.main_destination || 
+                                     (redditData.reddit_extraction?.post?.signals?.locations?.length > 0);
+          
+          if (analysis.destination && !redditData.is_destination_question) {
+            // Si le LLM a inventé une destination et que ce n'est pas une question, la retirer
+            // Mais seulement si l'extracteur ne peut pas la valider plus tard
+            if (!canBeReconstructed) {
+              console.log(`   ⚠️ Destination "${analysis.destination}" non validée par extracteur - retirée`);
+              analysis.destination = 'Asie'; // Fallback générique
+            } else {
+              // Destination peut être validée plus tard, ne pas logger d'erreur
+              console.log(`   ℹ️ Destination "${analysis.destination}" sera validée par scoring pipeline`);
+            }
+          } else if (redditData.is_destination_question) {
+            // Question destination = pas de destination principale
+            analysis.destination = 'Asie';
+            console.log('   → Question destination: pas de destination principale, fallback "Asie"');
+          }
+        }
+      }
+      
       return analysis;
 
     } catch (error) {
       console.error('❌ Erreur analyse intelligente:', error.message);
-      return this.getFallbackAnalysis(article);
+      const fallback = this.getFallbackAnalysis(article);
+      // Ajouter reddit data même en cas d'erreur si disponible
+      if (redditData) {
+        fallback.reddit_extraction = redditData.reddit_extraction;
+        fallback.reddit_signals_compact = redditData.reddit_signals_compact;
+        fallback.is_destination_question = redditData.is_destination_question;
+        fallback.main_destination = redditData.main_destination;
+      }
+      return fallback;
     }
   }
 
   // Générer du contenu intelligent avec 2 appels LLM séquentiels
   async generateIntelligentContent(article, analysis) {
+    // 1) Court-circuit OFFLINE au tout début (avant tout appel LLM / JSON.parse)
+    const offline = process.env.FORCE_OFFLINE === '1';
+    const apiKey = process.env.OPENAI_API_KEY;
+    
+    if (offline || !apiKey || apiKey.startsWith('invalid-')) {
+      console.log('⚠️ OFFLINE_CONTENT_FALLBACK: skipping LLM + JSON parsing');
+      return this.buildOfflineFallbackArticle(article, analysis);
+    }
+    
     try {
       console.log('🔍 DEBUG: Author dans article:', article.author);
       // Extraire le contenu complet de l'article source
@@ -162,7 +445,13 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
 
     } catch (error) {
       console.error('❌ Erreur génération intelligente:', error.message);
-      // Refuser de publier plutôt que de créer du faux contenu
+      // 4) Modifier la logique "Refus de publier du contenu générique"
+      const offline = process.env.FORCE_OFFLINE === '1';
+      if (offline) {
+        console.log(`⚠️ OFFLINE_FALLBACK_ON_ERROR: ${error.message}`);
+        return this.buildOfflineFallbackArticle(article, analysis);
+      }
+      // ONLINE: si LLM fail → throw (retry géré par l'appelant)
       throw new Error(`ERREUR TECHNIQUE: Impossible de générer le contenu pour "${article.title}". Refus de publier du contenu générique.`);
     }
   }
@@ -191,23 +480,24 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
     console.log(`📏 Taille system: ${systemMessage.length} caractères`);
     console.log(`📏 Taille user: ${userMessage.length} caractères`);
 
-    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-      model: 'gpt-4o',
-      messages: [
-        { role: 'system', content: systemMessage },
-        { role: 'user', content: userMessage }
-      ],
-      max_tokens: 800,
-      temperature: 0.7,
-      response_format: { type: "json_object" }
-    }, {
-      headers: {
-        'Authorization': `Bearer ${this.apiKey}`,
-        'Content-Type': 'application/json'
-      }
+    const responseData = await callOpenAIWithRetry({
+      apiKey: this.apiKey,
+      body: {
+        model: 'gpt-4o',
+        messages: [
+          { role: 'system', content: systemMessage },
+          { role: 'user', content: userMessage }
+        ],
+        max_tokens: 800,
+        temperature: 0.7,
+        response_format: { type: "json_object" }
+      },
+      sourceText: fullContent,
+      article: article,
+      type: 'extraction'
     });
 
-    const content = JSON.parse(response.data.choices[0].message.content);
+    const content = safeJsonParse(responseData.choices[0].message.content, 'extractAndStructure_response');
     console.log('✅ Extraction terminée:', Object.keys(content));
     return content;
   }
@@ -245,8 +535,11 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
    - Si le témoignage mentionne la connexion internet, ajoute en plus une ligne :
      {{TRAVELPAYOUTS_CONNECTIVITY_WIDGET}}` : '';
 
-    const systemMessage = `Tu es un expert FlashVoyages. Crée un article de qualité exceptionnelle avec la STRUCTURE IMMERSIVE:
+    // C. Ajouter instructions de correction si présentes
+    const correctionBlock = analysis.correctionInstructions ? `\n\n🚨 CORRECTION OBLIGATOIRE:\n${analysis.correctionInstructions}\n` : '';
 
+    const systemMessage = `Tu es un expert FlashVoyages. Crée un article de qualité exceptionnelle avec la STRUCTURE IMMERSIVE:
+${correctionBlock}
 ⚠️ CONTRAINTE CRITIQUE ABSOLUE: Ce site est spécialisé ASIE uniquement. 
 - NE MENTIONNE JAMAIS de destinations non-asiatiques (Portugal, Espagne, Lisbonne, Barcelone, Madrid, Porto, France, Paris, Italie, Rome, Grèce, Turquie, Istanbul, Europe, Amérique, USA, Brésil, Mexique, etc.)
 - Utilise UNIQUEMENT des destinations asiatiques: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
@@ -513,23 +806,24 @@ CONSEILS: ${extraction.conseils || 'Conseils'}`;
     console.log(`📏 Taille system: ${systemMessage.length} caractères`);
     console.log(`📏 Taille user: ${userMessage.length} caractères`);
 
-    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-      model: 'gpt-4o',
-      messages: [
-        { role: 'system', content: systemMessage },
-        { role: 'user', content: userMessage }
-      ],
-      max_tokens: 1500,
-      temperature: 0.7,
-      response_format: { type: "json_object" }
-    }, {
-      headers: {
-        'Authorization': `Bearer ${this.apiKey}`,
-        'Content-Type': 'application/json'
-      }
+    const responseData = await callOpenAIWithRetry({
+      apiKey: this.apiKey,
+      body: {
+        model: 'gpt-4o',
+        messages: [
+          { role: 'system', content: systemMessage },
+          { role: 'user', content: userMessage }
+        ],
+        max_tokens: 1500,
+        temperature: 0.7,
+        response_format: { type: "json_object" }
+      },
+      sourceText: extraction.citations?.join(' ') || userMessage,
+      article: article,
+      type: 'generation'
     });
 
-    const content = JSON.parse(response.data.choices[0].message.content);
+    const content = safeJsonParse(responseData.choices[0].message.content, 'extractAndStructure_response');
     console.log('✅ Article final généré:', Object.keys(content));
     
     // Reconstruire le contenu final à partir de la structure article
@@ -640,20 +934,21 @@ Titre en français
 
 Réponse JSON:`;
 
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        model: 'gpt-4',
-        messages: [{ role: 'user', content: simplePrompt }],
-        max_tokens: 2000,
-        temperature: 0.7,
-        response_format: { type: "json_object" }
-      }, {
-        headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
-          'Content-Type': 'application/json'
-        }
+      const responseData = await callOpenAIWithRetry({
+        apiKey: this.apiKey,
+        body: {
+          model: 'gpt-4',
+          messages: [{ role: 'user', content: simplePrompt }],
+          max_tokens: 2000,
+          temperature: 0.7,
+          response_format: { type: "json_object" }
+        },
+        sourceText: article.content || article.source_text || '',
+        article: article,
+        type: 'generation'
       });
 
-      const content = JSON.parse(response.data.choices[0].message.content);
+      const content = safeJsonParse(responseData.choices[0].message.content, 'call2_response');
       console.log('✅ Contenu simple généré avec vraies données:', Object.keys(content));
       return content;
 
@@ -1010,51 +1305,84 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
     }
   }
 
-  // Extraction du contenu complet (même méthode que l'original)
+  // Extraction du contenu complet (B) Ne jamais refetch si source_text disponible
   async extractFullContent(article) {
     try {
+      // B) Si source_text existe et >200 chars, utiliser directement
+      if (article.source_text && article.source_text.length > 200) {
+        console.log(`✅ SOURCE_TEXT_FROM_FIXTURES: len=${article.source_text.length}`);
+        return article.source_text;
+      }
+      
       if (!article.link || article.link.includes('news.google.com')) {
         console.log('⚠️ Lien Google News - Utilisation du contenu disponible');
-        return article.content || 'Contenu non disponible';
+        return article.content || article.source_text || 'Contenu non disponible';
       }
 
       console.log('🔍 Extraction du contenu complet de l\'article source...');
       
-      const response = await axios.get(article.link, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-          'Accept-Language': 'en-US,en;q=0.5',
-          'Accept-Encoding': 'gzip, deflate, br',
-          'DNT': '1',
-          'Connection': 'keep-alive',
-          'Upgrade-Insecure-Requests': '1'
-        },
-        timeout: 10000
-      });
-
-      const html = response.data;
-      const contentMatch = html.match(/<article[^>]*>(.*?)<\/article>/s) || 
-                          html.match(/<main[^>]*>(.*?)<\/main>/s) ||
-                          html.match(/<div[^>]*class="[^"]*content[^"]*"[^>]*>(.*?)<\/div>/s);
+      const isDryRun = process.env.FLASHVOYAGE_DRY_RUN === '1';
+      const forceOffline = process.env.FORCE_OFFLINE === '1';
       
-      if (contentMatch) {
-        const content = contentMatch[1]
-          .replace(/<script[^>]*>.*?<\/script>/gs, '')
-          .replace(/<style[^>]*>.*?<\/style>/gs, '')
-          .replace(/<[^>]+>/g, ' ')
-          .replace(/\s+/g, ' ')
-          .trim();
-        
-        console.log(`✅ Contenu extrait: ${content.length} caractères`);
-        return content.substring(0, 3000);
+      // En DRY_RUN/FORCE_OFFLINE, ne pas faire de fetch réseau si on a un fallback
+      if ((isDryRun || forceOffline) && article.content && article.content.length > 200) {
+        console.log('⚠️ DRY_RUN/FORCE_OFFLINE: utilisation contenu disponible sans fetch réseau');
+        return article.content;
       }
+      
+      try {
+        const response = await axios.get(article.link, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'DNT': '1',
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1'
+          },
+          timeout: 10000
+        });
 
-      console.log('⚠️ Impossible d\'extraire le contenu - Utilisation du contenu disponible');
-      return article.content || 'Contenu non disponible';
+        const html = response.data;
+        const contentMatch = html.match(/<article[^>]*>(.*?)<\/article>/s) || 
+                            html.match(/<main[^>]*>(.*?)<\/main>/s) ||
+                            html.match(/<div[^>]*class="[^"]*content[^"]*"[^>]*>(.*?)<\/div>/s);
+        
+        if (contentMatch) {
+          const content = contentMatch[1]
+            .replace(/<script[^>]*>.*?<\/script>/gs, '')
+            .replace(/<style[^>]*>.*?<\/style>/gs, '')
+            .replace(/<[^>]+>/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+          
+          console.log(`✅ Contenu extrait: ${content.length} caractères`);
+          return content.substring(0, 3000);
+        }
+
+        console.log('⚠️ Impossible d\'extraire le contenu - Utilisation du contenu disponible');
+        return article.content || article.source_text || 'Contenu non disponible';
+      } catch (error) {
+        const status = error.response?.status;
+        console.log(`⚠️ SOURCE_CONTENT_FETCH_FAIL: status=${status || 'unknown'} url=${article.link} reason=${error.message}`);
+        
+        // Si 403/429 et DRY_RUN, utiliser fallback minimal
+        if ((status === 403 || status === 429) && isDryRun) {
+          const fallback = article.content || article.source_text || (article.title ? `${article.title}\n\n${article.title}` : 'Contenu non disponible');
+          if (fallback.length > 200) {
+            console.log(`⚠️ Utilisation fallback dégradé: len=${fallback.length}`);
+            article.is_degraded_source = true;
+            return fallback;
+          }
+        }
+        
+        // Fallback final
+        return article.content || article.source_text || 'Contenu non disponible';
+      }
     } catch (error) {
       console.log(`⚠️ Erreur extraction contenu: ${error.message}`);
-      return article.content || 'Contenu non disponible';
+      return article.content || article.source_text || 'Contenu non disponible';
     }
   }
 
