@@ -3,6 +3,7 @@
 import axios from 'axios';
 import { OPENAI_API_KEY } from './config.js';
 import { extractRedditForAnalysis, isDestinationQuestion, extractMainDestination } from './reddit-extraction-adapter.js';
+import { detectRedditPattern } from './reddit-pattern-detector.js';
 
 // 2) Utilitaire pour sécuriser tous les JSON.parse
 function safeJsonParse(str, label = 'json') {
@@ -202,7 +203,9 @@ class IntelligentContentAnalyzerOptimized {
   async analyzeContent(article) {
     // Extraire les sémantiques Reddit si c'est un article Reddit (DRY_RUN safe)
     let redditData = null;
-    if (article.link && article.link.includes('reddit.com')) {
+    const isRedditArticle = article.link && article.link.includes('reddit.com');
+    
+    if (isRedditArticle) {
       try {
         redditData = await extractRedditForAnalysis(article);
         if (redditData) {
@@ -219,6 +222,37 @@ class IntelligentContentAnalyzerOptimized {
       }
     }
     
+    // INTÉGRATION PHASE 2: Pattern Detector (derrière flag ENABLE_PATTERN_DETECTOR)
+    // Appelé même si extractRedditForAnalysis échoue (fonction pure, pas de dépendance)
+    if (process.env.ENABLE_PATTERN_DETECTOR === '1' && (isRedditArticle || article.subreddit)) {
+      try {
+        const patternInput = {
+          title: article.title || '',
+          body: article.content || article.source_text || article.selftext || '',
+          comments: article.comments_snippets ? article.comments_snippets.map(c => ({ body: c })) : [],
+          meta: {
+            subreddit: article.subreddit || '',
+            author: article.author || '',
+            url: article.link || article.url || ''
+          }
+        };
+        
+        const pattern = detectRedditPattern(patternInput);
+        
+        // Logger unique
+        console.log(`✅ PATTERN_DETECTED: story_type=${pattern.story_type} theme=${pattern.theme_primary} emotion=${pattern.emotional_load.label} events=${pattern.exploitable_events.count} complexity=${pattern.complexity.label} comments=${pattern.comments_utility.label}`);
+        
+        // Stocker dans redditData pour propagation
+        if (redditData) {
+          redditData.pattern = pattern;
+        } else {
+          redditData = { pattern };
+        }
+      } catch (error) {
+        console.warn('⚠️ Erreur pattern detection (fallback silencieux):', error.message);
+      }
+    }
+    
     try {
       // Vérifier si la clé API est disponible
       if (!this.apiKey) {
@@ -230,6 +264,10 @@ class IntelligentContentAnalyzerOptimized {
           fallback.reddit_signals_compact = redditData.reddit_signals_compact;
           fallback.is_destination_question = redditData.is_destination_question;
           fallback.main_destination = redditData.main_destination;
+          // PHASE 2: Ajouter pattern si disponible
+          if (redditData.pattern) {
+            fallback.pattern = redditData.pattern;
+          }
         }
         return fallback;
       }
@@ -354,12 +392,21 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
       // Verrouiller le type pour le plan de widgets
       analysis.type = analysis.type_contenu || analysis.type || 'Témoignage';
       
+      // PHASE 2: Ajouter pattern si disponible (même en mode LLM)
+      if (redditData && redditData.pattern) {
+        analysis.pattern = redditData.pattern;
+      }
+      
       // Ajouter les données Reddit si disponibles
       if (redditData) {
         analysis.reddit_extraction = redditData.reddit_extraction;
         analysis.reddit_signals_compact = redditData.reddit_signals_compact;
         analysis.is_destination_question = redditData.is_destination_question;
         analysis.main_destination = redditData.main_destination;
+        // PHASE 2: Ajouter pattern si disponible
+        if (redditData.pattern) {
+          analysis.pattern = redditData.pattern;
+        }
         
         // RÈGLE CRITIQUE: Si c'est une question "où partir", forcer COMPARAISON_DESTINATIONS ou GUIDE_PRATIQUE
         if (redditData.is_destination_question) {

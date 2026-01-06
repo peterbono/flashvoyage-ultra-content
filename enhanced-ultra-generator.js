@@ -218,6 +218,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       } else {
         console.log('⚠️ analysis.geo non défini, selectedArticle.geo:', selectedArticle.geo);
       }
+      
       console.log('✅ Analyse terminée:', analysis.type_contenu);
 
       // A. SOURCE OF TRUTH - Verrouillage destination + entités (AVANT génération)
@@ -438,6 +439,12 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         geo: analysis.geo || selectedArticle.geo || {},
         source_truth: analysis.source_truth || null
       };
+      
+      // PHASE 2: Propager pattern dans pipelineContext si disponible
+      if (analysis.pattern) {
+        pipelineContext.pattern = analysis.pattern;
+        console.log(`✅ Pattern propagé dans pipelineContext: story_type=${analysis.pattern.story_type} theme=${analysis.pattern.theme_primary}`);
+      }
       
       // Recalculer catégories et tags avec final_destination
       finalArticle.categories = await this.getCategoriesForContent(analysis, finalArticle.content);
