@@ -232,8 +232,35 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       }
 
       // 4. Génération de contenu intelligent
+      // PHASE 4.1: Construire extracted, pattern, story depuis selectedArticle et analysis
       console.log('🎯 Génération de contenu intelligent...');
-      const generatedContent = await this.intelligentAnalyzer.generateIntelligentContent(selectedArticle, analysis);
+      
+      // Construire extracted depuis selectedArticle
+      const extracted = {
+        title: selectedArticle.title || '',
+        author: selectedArticle.author || '',
+        selftext: selectedArticle.source_text || selectedArticle.content || selectedArticle.selftext || '',
+        comments: selectedArticle.comments_snippets ? selectedArticle.comments_snippets.map(c => ({ body: c })) : [],
+        geo: selectedArticle.geo || analysis.geo || {},
+        meta: {
+          subreddit: selectedArticle.subreddit || '',
+          url: selectedArticle.link || selectedArticle.url || '',
+          source: selectedArticle.source || 'Communauté'
+        }
+      };
+      
+      // Vérifier que pattern et story sont présents
+      if (!analysis.pattern) {
+        throw new Error('SOURCE OF TRUTH VIOLATION: analysis.pattern is required for generateIntelligentContent');
+      }
+      if (!analysis.story) {
+        throw new Error('SOURCE OF TRUTH VIOLATION: analysis.story is required for generateIntelligentContent');
+      }
+      
+      const generatedContent = await this.intelligentAnalyzer.generateIntelligentContent(
+        { extracted, pattern: analysis.pattern, story: analysis.story },
+        analysis
+      );
       console.log('✅ Contenu généré:', generatedContent.title);
 
       // B. Validation post-génération: vérifier cohérence destination (AVANT amélioration)
@@ -873,9 +900,29 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         correctionInstructions
       };
 
+      // PHASE 4.1: Construire extracted, pattern, story pour repairGeneration
+      const extracted = {
+        title: selectedArticle.title || '',
+        author: selectedArticle.author || '',
+        selftext: selectedArticle.source_text || selectedArticle.content || selectedArticle.selftext || '',
+        comments: selectedArticle.comments_snippets ? selectedArticle.comments_snippets.map(c => ({ body: c })) : [],
+        geo: selectedArticle.geo || analysis.geo || {},
+        meta: {
+          subreddit: selectedArticle.subreddit || '',
+          url: selectedArticle.link || selectedArticle.url || '',
+          source: selectedArticle.source || 'Communauté'
+        }
+      };
+      
+      // Vérifier que pattern et story sont présents
+      if (!analysis.pattern || !analysis.story) {
+        console.warn('⚠️ repairGeneration: pattern ou story manquant, impossible de réparer');
+        return { success: false };
+      }
+      
       // Repasser seulement l'étape génération finale
       const repairedContent = await this.intelligentAnalyzer.generateIntelligentContent(
-        selectedArticle,
+        { extracted, pattern: analysis.pattern, story: analysis.story },
         analysisWithCorrection
       );
 
