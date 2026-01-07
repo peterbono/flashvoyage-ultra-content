@@ -487,6 +487,51 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         ].reduce((a, b) => a + b, 0);
         console.log(`✅ Story propagée dans pipelineContext: sections=${sectionsCount} missing=${analysis.story.meta?.missing_sections?.length || 0}`);
       }
+
+      // PHASE 5.C: Décider les placements d'affiliation si activé
+      if (process.env.ENABLE_AFFILIATE_INJECTOR === '1' && analysis.pattern && analysis.story) {
+        try {
+          const { decideAffiliatePlacements } = await import('./contextual-affiliate-injector.js');
+          
+          // Construire extracted depuis selectedArticle
+          const extracted = {
+            title: selectedArticle.title || '',
+            author: selectedArticle.author || '',
+            selftext: selectedArticle.source_text || selectedArticle.content || selectedArticle.selftext || '',
+            comments: selectedArticle.comments_snippets ? selectedArticle.comments_snippets.map(c => ({ body: c })) : [],
+            geo: selectedArticle.geo || analysis.geo || {},
+            meta: {
+              subreddit: selectedArticle.subreddit || '',
+              url: selectedArticle.link || selectedArticle.url || '',
+              source: selectedArticle.source || 'Communauté'
+            }
+          };
+
+          // Construire geo_defaults temporaire pour decideAffiliatePlacements
+          // (sera recalculé dans article-finalizer, mais on a besoin d'une version ici)
+          const tempGeoDefaults = {
+            country: analysis.geo?.country || selectedArticle.geo?.country || finalDestination?.toLowerCase() || 'asia',
+            city: analysis.geo?.city || selectedArticle.geo?.city || null,
+            nearest_hub: null, // Sera calculé dans article-finalizer
+            origin: 'PAR'
+          };
+
+          const affiliatePlan = decideAffiliatePlacements({
+            extracted,
+            pattern: analysis.pattern,
+            story: analysis.story,
+            geo_defaults: tempGeoDefaults
+          });
+
+          pipelineContext.affiliate_plan = affiliatePlan;
+          console.log(`✅ Affiliate plan créé: ${affiliatePlan.placements.length} placement(s) - types=[${affiliatePlan.placements.map(p => p.id).join(', ')}]`);
+        } catch (error) {
+          console.warn('⚠️ Erreur création affiliate plan (fallback silencieux):', error.message);
+          pipelineContext.affiliate_plan = { placements: [], debug: {} };
+        }
+      } else {
+        pipelineContext.affiliate_plan = { placements: [], debug: {} };
+      }
       
       // Recalculer catégories et tags avec final_destination
       finalArticle.categories = await this.getCategoriesForContent(analysis, finalArticle.content);

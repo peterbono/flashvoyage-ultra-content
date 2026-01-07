@@ -183,6 +183,37 @@ class ArticleFinalizer {
     finalContent = ctaResult.content;
     enhancements.ctaPresent = ctaResult.hasCTA ? 'Oui' : 'Non';
 
+    // PHASE 5.C: Injecter les modules d'affiliation si activé
+    if (process.env.ENABLE_AFFILIATE_INJECTOR === '1' && pipelineContext?.affiliate_plan?.placements?.length > 0) {
+      try {
+        const { renderAffiliateModule } = await import('./affiliate-module-renderer.js');
+        const affiliatePlan = pipelineContext.affiliate_plan;
+        const geoDefaults = pipelineContext.geo_defaults || {};
+        
+        let injectedCount = 0;
+        const injectedTypes = [];
+        
+        for (const placement of affiliatePlan.placements) {
+          const moduleHtml = renderAffiliateModule(placement, geoDefaults);
+          if (!moduleHtml) continue;
+          
+          // Injecter selon l'anchor
+          const injected = this.injectAffiliateModule(finalContent, moduleHtml, placement.anchor);
+          if (injected !== finalContent) {
+            finalContent = injected;
+            injectedCount++;
+            injectedTypes.push(placement.id);
+          }
+        }
+        
+        if (injectedCount > 0) {
+          console.log(`✅ AFFILIATE_INJECTED: count=${injectedCount} types=[${injectedTypes.join(', ')}]`);
+        }
+      } catch (error) {
+        console.warn('⚠️ Erreur injection modules affiliation (fallback silencieux):', error.message);
+      }
+    }
+
     console.log('✅ Finalisation terminée:');
     console.log(`   - Widgets remplacés: ${enhancements.widgetsReplaced}`);
     console.log(`   - Quote highlight: ${enhancements.quoteHighlight}`);
@@ -536,17 +567,17 @@ class ArticleFinalizer {
         
         placementResult = { content: finalHtml, count: widgetCount };
       } else {
-        // Utiliser le placement contextuel intelligent AVEC VALIDATION
-        const articleContext = {
-          type: analysis?.type || 'Témoignage',
-          destination: analysis?.destinations?.[0] || context.hasDestination || 'Asie',
-          audience: analysis?.target_audience || 'Nomades digitaux'
-        };
-        
+      // Utiliser le placement contextuel intelligent AVEC VALIDATION
+      const articleContext = {
+        type: analysis?.type || 'Témoignage',
+        destination: analysis?.destinations?.[0] || context.hasDestination || 'Asie',
+        audience: analysis?.target_audience || 'Nomades digitaux'
+      };
+      
         // FIX C: Passer pipelineContext au lieu de widgetPlan seul
         placementResult = await this.widgetPlacer.placeWidgetsIntelligently(
-          updatedContent,
-          articleContext,
+        updatedContent,
+        articleContext,
           widgetPlan.widget_plan,
           pipelineContext // Passer le contexte complet
         );
@@ -1006,6 +1037,137 @@ class ArticleFinalizer {
     
     console.log(`   ✅ FOMO_INSERTED: method=${insertionMethod}`);
     return { content: newContent, hasFomo: true };
+  }
+
+  /**
+   * PHASE 5.C: Injecte un module d'affiliation selon l'anchor
+   * @param {string} html - HTML du contenu
+   * @param {string} moduleHtml - HTML du module à injecter
+   * @param {string} anchor - Anchor de placement (before_related, after_context, after_central_event, etc.)
+   * @returns {string} HTML avec module injecté
+   */
+  injectAffiliateModule(html, moduleHtml, anchor) {
+    if (!moduleHtml || !anchor) return html;
+
+    switch (anchor) {
+      case 'before_related':
+        // Juste avant "Articles connexes"
+        const relatedRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
+        const relatedMatch = html.match(relatedRegex);
+        if (relatedMatch) {
+          const insertIndex = relatedMatch.index;
+          return html.slice(0, insertIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(insertIndex);
+        }
+        // Fallback: fin de document
+        return html + '\n\n' + moduleHtml;
+
+      case 'after_context':
+        // Après le 1er H2
+        const firstH2Regex = /<h2[^>]*>.*?<\/h2>/i;
+        const firstH2Match = html.match(firstH2Regex);
+        if (firstH2Match) {
+          const insertIndex = firstH2Match.index + firstH2Match[0].length;
+          return html.slice(0, insertIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(insertIndex);
+        }
+        // Fallback: après le 1er <p>
+        const firstPRegex = /<p[^>]*>.*?<\/p>/i;
+        const firstPMatch = html.match(firstPRegex);
+        if (firstPMatch) {
+          const insertIndex = firstPMatch.index + firstPMatch[0].length;
+          return html.slice(0, insertIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(insertIndex);
+        }
+        // Fallback: fin de document
+        return html + '\n\n' + moduleHtml;
+
+      case 'after_central_event':
+        // Après section qui décrit l'événement central si identifiable, sinon fallback après 2e H2
+        // Chercher un H2 qui pourrait décrire l'événement central (ex: "Événement", "Problème", "Situation")
+        const centralEventRegex = /<h2[^>]*>(?:Événement|Problème|Situation|Incident|Défi)[^<]*<\/h2>/i;
+        const centralEventMatch = html.match(centralEventRegex);
+        if (centralEventMatch) {
+          const insertIndex = centralEventMatch.index + centralEventMatch[0].length;
+          // Chercher la fin de la section (prochain H2 ou fin de paragraphe)
+          const afterSection = html.slice(insertIndex);
+          const nextH2Match = afterSection.match(/<h2[^>]*>/i);
+          if (nextH2Match) {
+            const sectionEnd = insertIndex + nextH2Match.index;
+            return html.slice(0, sectionEnd) + '\n\n' + moduleHtml + '\n\n' + html.slice(sectionEnd);
+          }
+          // Sinon après quelques paragraphes
+          const afterParagraphs = afterSection.match(/(<p[^>]*>.*?<\/p>\s*){1,3}/i);
+          if (afterParagraphs) {
+            const sectionEnd = insertIndex + afterParagraphs[0].length;
+            return html.slice(0, sectionEnd) + '\n\n' + moduleHtml + '\n\n' + html.slice(sectionEnd);
+          }
+        }
+        // Fallback: après le 2e H2
+        const h2Matches = html.matchAll(/<h2[^>]*>.*?<\/h2>/gi);
+        const h2Array = Array.from(h2Matches);
+        if (h2Array.length >= 2) {
+          const secondH2 = h2Array[1];
+          const insertIndex = secondH2.index + secondH2[0].length;
+          return html.slice(0, insertIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(insertIndex);
+        }
+        // Fallback: après le 1er H2
+        if (h2Array.length >= 1) {
+          const firstH2 = h2Array[0];
+          const insertIndex = firstH2.index + firstH2[0].length;
+          return html.slice(0, insertIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(insertIndex);
+        }
+        // Fallback: fin de document
+        return html + '\n\n' + moduleHtml;
+
+      case 'after_critical_moment':
+        // Après section "Moment critique" si identifiable, sinon après 2e H2
+        const criticalMomentRegex = /<h2[^>]*>(?:Moment critique|Point critique|Tournant)[^<]*<\/h2>/i;
+        const criticalMomentMatch = html.match(criticalMomentRegex);
+        if (criticalMomentMatch) {
+          const insertIndex = criticalMomentMatch.index + criticalMomentMatch[0].length;
+          const afterSection = html.slice(insertIndex);
+          const nextH2Match = afterSection.match(/<h2[^>]*>/i);
+          if (nextH2Match) {
+            const sectionEnd = insertIndex + nextH2Match.index;
+            return html.slice(0, sectionEnd) + '\n\n' + moduleHtml + '\n\n' + html.slice(sectionEnd);
+          }
+        }
+        // Fallback: après le 2e H2 (même logique que after_central_event)
+        const h2Matches2 = html.matchAll(/<h2[^>]*>.*?<\/h2>/gi);
+        const h2Array2 = Array.from(h2Matches2);
+        if (h2Array2.length >= 2) {
+          const secondH2 = h2Array2[1];
+          const insertIndex = secondH2.index + secondH2[0].length;
+          return html.slice(0, insertIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(insertIndex);
+        }
+        // Fallback: fin de document
+        return html + '\n\n' + moduleHtml;
+
+      case 'after_resolution':
+        // Après section "Résolution" si identifiable, sinon fin de document
+        const resolutionRegex = /<h2[^>]*>(?:Résolution|Solution|Conclusion)[^<]*<\/h2>/i;
+        const resolutionMatch = html.match(resolutionRegex);
+        if (resolutionMatch) {
+          const insertIndex = resolutionMatch.index + resolutionMatch[0].length;
+          const afterSection = html.slice(insertIndex);
+          const nextH2Match = afterSection.match(/<h2[^>]*>/i);
+          if (nextH2Match) {
+            const sectionEnd = insertIndex + nextH2Match.index;
+            return html.slice(0, sectionEnd) + '\n\n' + moduleHtml + '\n\n' + html.slice(sectionEnd);
+          }
+        }
+        // Fallback: avant "Articles connexes" ou fin
+        const relatedRegex2 = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
+        const relatedMatch2 = html.match(relatedRegex2);
+        if (relatedMatch2) {
+          const insertIndex = relatedMatch2.index;
+          return html.slice(0, insertIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(insertIndex);
+        }
+        // Fallback: fin de document
+        return html + '\n\n' + moduleHtml;
+
+      default:
+        // Fallback: fin de document
+        return html + '\n\n' + moduleHtml;
+    }
   }
 
   /**
