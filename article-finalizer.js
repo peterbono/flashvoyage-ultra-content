@@ -8,6 +8,29 @@
  * - Ajoute les catégories/tags
  * - Vérifie le quote highlight
  * - Vérifie l'intro FOMO
+ * 
+ * PHASE 6.0 - CONTRAT D'ENTRÉE EXPLICITE
+ * ======================================
+ * 
+ * INPUTS ATTENDUS :
+ * - article (Object) : Article avec content (string HTML final)
+ * - analysis (Object) : Analyse de l'article
+ * - pipelineContext (Object, optionnel) : Contexte du pipeline avec :
+ *   - pipelineContext.story (Object) : Story compilée (Phase 3)
+ *   - pipelineContext.pattern (Object) : Pattern détecté (Phase 2)
+ *   - pipelineContext.affiliate_plan (Object, optionnel) : Plan d'affiliation (Phase 5.C)
+ *   - pipelineContext.geo_defaults (Object) : Géolocalisation par défaut
+ *   - pipelineContext.final_destination (string) : Destination finale
+ *   - pipelineContext.geo (Object) : Informations géographiques
+ * 
+ * INTERDICTIONS ABSOLUES (ce que le finalizer n'a PAS le droit de faire) :
+ * - ❌ Ne pas inventer de contenu
+ * - ❌ Ne pas appeler de LLM
+ * - ❌ Ne pas modifier la story (pipelineContext.story est en lecture seule)
+ * - ❌ Ne pas modifier le pattern (pipelineContext.pattern est en lecture seule)
+ * - ❌ Ne pas modifier l'affiliate_plan (pipelineContext.affiliate_plan est en lecture seule)
+ * 
+ * Le finalizer est un module de RENDU uniquement, pas de GÉNÉRATION.
  */
 
 // Polyfill File pour Node 18 (nécessaire pour cheerio/undici)
@@ -133,6 +156,13 @@ class ArticleFinalizer {
    * PATCH 1: Accepte pipelineContext pour propagation final_destination
    */
   async finalizeArticle(article, analysis, pipelineContext = null) {
+    // PHASE 6.0: Log d'entrée unique (preuve d'exécution)
+    const htmlLength = article?.content ? (typeof article.content === 'string' ? article.content.length : 0) : 0;
+    const hasStory = Boolean(pipelineContext?.story);
+    const hasPattern = Boolean(pipelineContext?.pattern);
+    const hasAffiliatePlan = Boolean(pipelineContext?.affiliate_plan?.placements?.length > 0);
+    console.log(`✅ FINALIZER_INPUT_READY: has_story=${hasStory} has_pattern=${hasPattern} has_affiliate_plan=${hasAffiliatePlan} html_length=${htmlLength}`);
+    
     console.log('\n🎨 FINALISATION DE L\'ARTICLE');
     console.log('==============================\n');
     
@@ -214,6 +244,44 @@ class ArticleFinalizer {
       }
     }
 
+    // PHASE 6.1: QA Report déterministe
+    const qaReport = this.runQAReport(finalContent, pipelineContext, analysis);
+    finalContent = qaReport.finalHtml;
+    
+    // Log synthèse QA
+    const passCount = qaReport.checks.filter(c => c.status === 'pass').length;
+    const warnCount = qaReport.checks.filter(c => c.status === 'warn').length;
+    const failCount = qaReport.checks.filter(c => c.status === 'fail').length;
+    const actionsCount = qaReport.actions.length;
+    console.log(`✅ FINALIZER_QA: pass=${passCount} warn=${warnCount} fail=${failCount} actions=${actionsCount} html_before=${qaReport.metrics.html_length_before} html_after=${qaReport.metrics.html_length_after}`);
+    
+    // PHASE 6.1: Log détaillé des issues si présentes
+    if (qaReport.issues.length > 0) {
+      console.log(`📋 FINALIZER_QA_ISSUES: ${qaReport.issues.length} issue(s) détectée(s):`);
+      qaReport.issues.forEach((issue, idx) => {
+        console.log(`   [${idx + 1}] ${issue.code}: ${issue.message} (severity: ${issue.severity})`);
+        if (issue.evidence) {
+          console.log(`       Evidence: ${JSON.stringify(issue.evidence)}`);
+        }
+      });
+    }
+    
+    // PHASE 6.1: Log des checks qui ont échoué
+    if (failCount > 0) {
+      const failedChecks = qaReport.checks.filter(c => c.status === 'fail');
+      console.log(`❌ FINALIZER_QA_FAILED_CHECKS: ${failedChecks.length} check(s) en échec:`);
+      failedChecks.forEach((check, idx) => {
+        console.log(`   [${idx + 1}] ${check.name}: ${check.details}`);
+      });
+    }
+    
+    // PHASE 6.1: Flag strict - throw si fail en mode strict
+    if (process.env.FINALIZER_STRICT === '1' && failCount > 0) {
+      const failMessages = qaReport.checks.filter(c => c.status === 'fail').map(c => c.name).join(', ');
+      const issuesSummary = qaReport.issues.slice(0, 3).map(i => `${i.code}: ${i.message}`).join('; ');
+      throw new Error(`SOURCE_OF_TRUTH_VIOLATION: Finalizer QA failed (${failCount} check(s)): ${failMessages}. Issues: ${issuesSummary}`);
+    }
+
     console.log('✅ Finalisation terminée:');
     console.log(`   - Widgets remplacés: ${enhancements.widgetsReplaced}`);
     console.log(`   - Quote highlight: ${enhancements.quoteHighlight}`);
@@ -223,7 +291,8 @@ class ArticleFinalizer {
     return {
       ...article,
       content: finalContent,
-      enhancements
+      enhancements,
+      qaReport // PHASE 6.1: Exposer le rapport QA
     };
   }
 
@@ -1037,6 +1106,1383 @@ class ArticleFinalizer {
     
     console.log(`   ✅ FOMO_INSERTED: method=${insertionMethod}`);
     return { content: newContent, hasFomo: true };
+  }
+
+  /**
+   * PHASE 6.2: Normalise un texte pour comparaison (strip HTML, decode entities, normalize whitespace)
+   * @param {string} text - Texte à normaliser
+   * @returns {string} Texte normalisé
+   */
+  normalizeTextForComparison(text) {
+    if (!text || typeof text !== 'string') return '';
+    
+    // Décoder les entités HTML
+    let normalized = text
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, "'")
+      .replace(/&nbsp;/g, ' ');
+    
+    // Supprimer les balises HTML
+    normalized = normalized.replace(/<[^>]*>/g, '');
+    
+    // Normaliser les espaces
+    normalized = normalized.replace(/\s+/g, ' ').trim();
+    
+    // Supprimer la ponctuation finale
+    normalized = normalized.replace(/[.,;:!?]+$/, '');
+    
+    return normalized.toLowerCase();
+  }
+
+  /**
+   * PHASE 6.2: Calcule la similarité Jaccard entre deux textes (tokens)
+   * @param {string} text1 - Premier texte
+   * @param {string} text2 - Deuxième texte
+   * @returns {number} Similarité entre 0 et 1
+   */
+  jaccardSimilarity(text1, text2) {
+    const normalize = (t) => {
+      return t.toLowerCase()
+        .replace(/[^\w\s]/g, ' ')
+        .split(/\s+/)
+        .filter(w => w.length > 2); // Filtrer les mots trop courts
+    };
+    
+    const tokens1 = new Set(normalize(text1));
+    const tokens2 = new Set(normalize(text2));
+    
+    if (tokens1.size === 0 && tokens2.size === 0) return 1;
+    if (tokens1.size === 0 || tokens2.size === 0) return 0;
+    
+    const intersection = new Set([...tokens1].filter(x => tokens2.has(x)));
+    const union = new Set([...tokens1, ...tokens2]);
+    
+    return intersection.size / union.size;
+  }
+
+  /**
+   * PHASE 6.1: Supprime les paragraphes dupliqués exacts
+   * PHASE 6.2: Amélioré avec normalisation agressive et détection quasi-doublons
+   * @param {string} html - HTML à nettoyer
+   * @param {Object} report - Rapport QA pour enregistrer les actions
+   * @returns {string} HTML sans doublons
+   */
+  removeDuplicateParagraphs(html, report) {
+    const paragraphRegex = /<p\b[^>]*>[\s\S]*?<\/p>/gi;
+    const matches = [...html.matchAll(paragraphRegex)];
+
+    if (matches.length < 2) return html;
+
+    const seen = new Map();
+    const toRemove = [];
+
+    for (const m of matches) {
+      const raw = m[0];
+      const start = m.index ?? -1;
+      if (start < 0) continue;
+
+      // PHASE 6.2: Normalisation agressive
+      const normalized = this.normalizeTextForComparison(raw);
+      
+      if (!normalized || normalized.length < 20) continue;
+
+      // Vérifier doublons exacts
+      if (seen.has(normalized)) {
+        toRemove.push({ start, end: start + raw.length, type: 'exact' });
+      } else {
+        // Vérifier quasi-doublons (similarité Jaccard > 0.9)
+        let isQuasiDuplicate = false;
+        for (const [seenNormalized, seenStart] of seen.entries()) {
+          const similarity = this.jaccardSimilarity(normalized, seenNormalized);
+          if (similarity > 0.9) {
+            toRemove.push({ start, end: start + raw.length, type: 'quasi', similarity });
+            isQuasiDuplicate = true;
+            break;
+          }
+        }
+        if (!isQuasiDuplicate) {
+          seen.set(normalized, start);
+        }
+      }
+    }
+
+    if (toRemove.length === 0) return html;
+
+    toRemove.sort((a, b) => b.start - a.start);
+
+    let output = html;
+    for (const r of toRemove) {
+      output = output.slice(0, r.start) + output.slice(r.end);
+    }
+
+    const exactCount = toRemove.filter(r => r.type === 'exact').length;
+    const quasiCount = toRemove.filter(r => r.type === 'quasi').length;
+    report.actions.push({ 
+      type: 'removed_duplicate_paragraphs', 
+      details: `count=${toRemove.length} (exact=${exactCount}, quasi=${quasiCount})` 
+    });
+    report.metrics.removed_duplicates_count = (report.metrics.removed_duplicates_count || 0) + toRemove.length;
+
+    return output;
+  }
+
+  /**
+   * PHASE 6.1: QA Report déterministe
+   * @param {string} html - HTML final de l'article
+   * @param {Object} pipelineContext - Contexte du pipeline
+   * @param {Object} analysis - Analyse de l'article
+   * @returns {Object} Rapport QA avec checks, actions, issues, metrics
+   */
+  runQAReport(html, pipelineContext, analysis) {
+    const report = {
+      checks: [],
+      actions: [],
+      issues: [],
+      metrics: {
+        html_length_before: html.length,
+        html_length_after: html.length,
+        h2_count: 0,
+        quote_count: 0,
+        affiliate_count: 0,
+        widgets_count: 0,
+        internal_links: 0,
+        external_links: 0,
+        repetition_score: 0
+      }
+    };
+
+    let finalHtml = html;
+
+    // Calculer métriques de base
+    const h2Matches = html.matchAll(/<h2[^>]*>/g);
+    report.metrics.h2_count = Array.from(h2Matches).length;
+    
+    const quoteMatches = html.matchAll(/<blockquote[^>]*>|<!-- wp:pullquote/g);
+    report.metrics.quote_count = Array.from(quoteMatches).length;
+    
+    const affiliateMatches = html.matchAll(/class="affiliate-module"|data-placement-id=/g);
+    report.metrics.affiliate_count = Array.from(affiliateMatches).length;
+    
+    const widgetMatches = html.matchAll(/travelpayouts|kiwi\.com|airalo/g);
+    report.metrics.widgets_count = Array.from(widgetMatches).length;
+    
+    const internalLinkMatches = html.matchAll(/<a[^>]*href="[^"]*flashvoyage[^"]*"/g);
+    report.metrics.internal_links = Array.from(internalLinkMatches).length;
+    
+    const externalLinkMatches = html.matchAll(/<a[^>]*href="https?:\/\/(?!.*flashvoyage)[^"]*"/g);
+    report.metrics.external_links = Array.from(externalLinkMatches).length;
+
+    // CHECK A: Cohérence structure "FlashVoyage Premium"
+    const hasIntro = /<p[^>]*>.*?<\/p>/i.test(html);
+    const hasMin2H2 = report.metrics.h2_count >= 2;
+    const hasRelatedSection = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i.test(html);
+    
+    if (!hasIntro || !hasMin2H2 || !hasRelatedSection) {
+      report.checks.push({
+        name: 'structure_flashvoyage_premium',
+        status: 'warn',
+        details: `intro=${hasIntro} h2_count=${report.metrics.h2_count} has_related=${hasRelatedSection}`
+      });
+      
+      // Action corrective minimale: insérer H2 manquant si possible
+      if (!hasMin2H2 && report.metrics.h2_count === 1) {
+        const firstH2Match = html.match(/<h2[^>]*>.*?<\/h2>/i);
+        if (firstH2Match) {
+          const insertIndex = firstH2Match.index + firstH2Match[0].length;
+          const newH2 = '<h2>Conseils pratiques</h2>';
+          finalHtml = html.slice(0, insertIndex) + '\n\n' + newH2 + '\n\n' + html.slice(insertIndex);
+          report.actions.push({ type: 'inserted_missing_h2', details: 'Conseils pratiques' });
+          report.metrics.h2_count++;
+        }
+      }
+    } else {
+      report.checks.push({
+        name: 'structure_flashvoyage_premium',
+        status: 'pass',
+        details: 'Structure complète'
+      });
+    }
+
+    // CHECK B: Citations Reddit / traçabilité
+    const hasEvidenceSnippets = pipelineContext?.story?.evidence?.source_snippets?.length > 0;
+    // Vérifier sur finalHtml (qui peut avoir été modifié par CHECK A)
+    const hasRedditCitation = /<blockquote[^>]*>.*?<\/blockquote>|<!-- wp:pullquote/i.test(finalHtml);
+    
+    if (hasEvidenceSnippets && !hasRedditCitation) {
+      // Insérer une citation depuis evidence.source_snippets
+      const snippets = pipelineContext.story.evidence.source_snippets;
+      let inserted = false;
+      
+      for (const snippet of snippets) {
+        // Accepter différents formats de snippets
+        let snippetText = '';
+        if (typeof snippet === 'string') {
+          snippetText = snippet;
+        } else if (snippet && typeof snippet === 'object') {
+          // Essayer différentes propriétés possibles
+          snippetText = snippet.text || snippet.content || snippet.body || snippet.quote || 
+                       snippet.excerpt || snippet.snippet || JSON.stringify(snippet);
+        }
+        
+        // Nettoyer et valider
+        if (!snippetText || typeof snippetText !== 'string') continue;
+        snippetText = snippetText.trim();
+        if (snippetText.length < 20) continue;
+        
+        // Prendre les 240 premiers caractères
+        const citationText = snippetText.substring(0, 240).trim();
+        if (citationText.length < 20) continue;
+        
+        // Échapper HTML
+        const escapedText = citationText
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+        
+        const citationBlock = `
+<blockquote>
+  <p>${escapedText}</p>
+  <p><cite>Extrait Reddit</cite></p>
+</blockquote>
+`;
+        
+        // Insérer après le 1er H2 ou après l'intro (toujours sur finalHtml)
+        const firstH2Match = finalHtml.match(/<h2[^>]*>.*?<\/h2>/i);
+        if (firstH2Match) {
+          const insertIndex = firstH2Match.index + firstH2Match[0].length;
+          finalHtml = finalHtml.slice(0, insertIndex) + '\n\n' + citationBlock + '\n\n' + finalHtml.slice(insertIndex);
+          inserted = true;
+          report.actions.push({ type: 'inserted_reddit_citation', details: `snippet_length=${citationText.length}` });
+          report.metrics.quote_count++;
+          break;
+        } else {
+          const firstPMatch = finalHtml.match(/<p[^>]*>.*?<\/p>/i);
+          if (firstPMatch) {
+            const insertIndex = firstPMatch.index + firstPMatch[0].length;
+            finalHtml = finalHtml.slice(0, insertIndex) + '\n\n' + citationBlock + '\n\n' + finalHtml.slice(insertIndex);
+            inserted = true;
+            report.actions.push({ type: 'inserted_reddit_citation', details: `snippet_length=${citationText.length}` });
+            report.metrics.quote_count++;
+            break;
+          } else {
+            // Fallback: insérer au début du contenu
+            finalHtml = citationBlock + '\n\n' + finalHtml;
+            inserted = true;
+            report.actions.push({ type: 'inserted_reddit_citation', details: `snippet_length=${citationText.length} (fallback: début)` });
+            report.metrics.quote_count++;
+            break;
+          }
+        }
+      }
+      
+      if (!inserted) {
+        // PHASE 6.2.3: Si aucun snippet valide, WARN (pas FAIL) + log explicite
+        const validSnippetsCount = snippets.filter(s => {
+          let snippetText = '';
+          if (typeof s === 'string') {
+            snippetText = s;
+          } else if (s && typeof s === 'object') {
+            snippetText = s.text || s.content || s.body || s.quote || s.excerpt || s.snippet || '';
+          }
+          return snippetText && snippetText.trim().length >= 20;
+        }).length;
+        
+        if (validSnippetsCount === 0) {
+          // Aucun snippet valide → WARN
+          report.checks.push({
+            name: 'reddit_citation_traceability',
+            status: 'warn',
+            details: `evidence_snippets existent (${snippets.length} snippet(s)) mais tous invalides (< 20 chars ou vides)`
+          });
+          console.log(`⚠️ FINALIZER_QA_WARN: snippets invalid - ${snippets.length} snippets but none valid`);
+        } else {
+          // Snippets valides mais insertion échouée → FAIL
+          report.checks.push({
+            name: 'reddit_citation_traceability',
+            status: 'fail',
+            details: `evidence_snippets existent (${snippets.length} snippet(s), ${validSnippetsCount} valides) mais insertion échouée`
+          });
+          report.issues.push({
+            code: 'SOURCE_OF_TRUTH_VIOLATION',
+            severity: 'high',
+            message: 'missing_reddit_citation: evidence.source_snippets.length > 0 mais aucune citation insérée malgré snippets valides',
+            evidence: { snippets_count: snippets.length, valid_snippets_count: validSnippetsCount }
+          });
+        }
+      } else {
+        report.checks.push({
+          name: 'reddit_citation_traceability',
+          status: 'pass',
+          details: 'Citation Reddit insérée depuis evidence.source_snippets'
+        });
+      }
+    } else if (hasEvidenceSnippets && hasRedditCitation) {
+      report.checks.push({
+        name: 'reddit_citation_traceability',
+        status: 'pass',
+        details: 'Citation Reddit présente'
+      });
+    } else {
+      report.checks.push({
+        name: 'reddit_citation_traceability',
+        status: 'warn',
+        details: 'Pas de evidence_snippets disponible'
+      });
+    }
+
+    // PHASE 6.2.4: CHECK C amélioré - CTA/Affiliate plan: conformité stricte
+    const affiliatePlan = pipelineContext?.affiliate_plan;
+    const hasAffiliatePlan = affiliatePlan?.placements?.length > 0;
+    const enableAffiliateInjector = process.env.ENABLE_AFFILIATE_INJECTOR === '1';
+    
+    if (hasAffiliatePlan && enableAffiliateInjector) {
+      const expectedCount = affiliatePlan.placements.length;
+      
+      // Recompter avec une méthode plus précise sur finalHtml
+      const affiliateModuleRegex = /<div class="affiliate-module"|data-placement-id=/g;
+      const actualCountPrecise = (finalHtml.match(affiliateModuleRegex) || []).length;
+      
+      if (actualCountPrecise === 0) {
+        // PHASE 6.2.4: FAIL (pas warn) si 0 module
+        report.checks.push({
+          name: 'affiliate_conformance',
+          status: 'fail',
+          details: `plan=${expectedCount} injected=0`
+        });
+        report.issues.push({
+          code: 'AFFILIATE_INJECTION_FAILED',
+          severity: 'high',
+          message: `affiliate_plan has ${expectedCount} placements but 0 modules detected in HTML`,
+          evidence: { expected: expectedCount, actual: actualCountPrecise }
+        });
+      } else if (actualCountPrecise < expectedCount) {
+        report.checks.push({
+          name: 'affiliate_conformance',
+          status: 'warn',
+          details: `plan=${expectedCount} injected=${actualCountPrecise}`
+        });
+      } else {
+        report.checks.push({
+          name: 'affiliate_conformance',
+          status: 'pass',
+          details: `All ${expectedCount} modules injected`
+        });
+      }
+    } else if (hasAffiliatePlan && !enableAffiliateInjector) {
+      report.checks.push({
+        name: 'affiliate_conformance',
+        status: 'warn',
+        details: 'affiliate_plan exists but ENABLE_AFFILIATE_INJECTOR=0'
+      });
+    } else if (!hasAffiliatePlan) {
+      // PHASE 6.2.4: Si affiliate_plan.length === 0, interdire modules "par défaut"
+      const affiliateModuleRegex = /<div class="affiliate-module"|data-placement-id=/g;
+      const unexpectedModules = (finalHtml.match(affiliateModuleRegex) || []).length;
+      
+      if (unexpectedModules > 0) {
+        report.checks.push({
+          name: 'affiliate_conformance',
+          status: 'warn',
+          details: `affiliate_plan is empty but ${unexpectedModules} module(s) detected (should be removed)`
+        });
+        report.actions.push({ 
+          type: 'remove_unexpected_affiliate_modules', 
+          details: `count=${unexpectedModules}` 
+        });
+        // Optionnel: supprimer les modules inattendus
+        // finalHtml = finalHtml.replace(/<div class="affiliate-module"[^>]*>[\s\S]*?<\/div>/g, '');
+      } else {
+        report.checks.push({
+          name: 'affiliate_conformance',
+          status: 'pass',
+          details: 'No affiliate plan and no unexpected modules'
+        });
+      }
+    } else {
+      report.checks.push({
+        name: 'affiliate_conformance',
+        status: 'pass',
+        details: 'No affiliate plan or injector disabled'
+      });
+    }
+
+    // CHECK D: Anti-répétitions
+    // PHASE 6.1: Supprimer les paragraphes dupliqués exacts (fonction dédiée)
+    finalHtml = this.removeDuplicateParagraphs(finalHtml, report);
+    const removedDuplicatesCount = report.metrics.removed_duplicates_count || 0;
+    
+    // Détecter H2 dupliqués
+    const h2Titles = [];
+    const h2Matches2 = finalHtml.matchAll(/<h2[^>]*>(.*?)<\/h2>/g);
+    for (const match of h2Matches2) {
+      const title = match[1].trim();
+      if (h2Titles.includes(title) && title.length > 3) {
+        // Renommer le second avec suffixe
+        const suffix = ' (suite)';
+        finalHtml = finalHtml.replace(match[0], `<h2>${title}${suffix}</h2>`);
+        report.actions.push({ type: 'renamed_duplicate_h2', details: `title="${title}"` });
+      } else {
+        h2Titles.push(title);
+      }
+    }
+    
+    // Détecter "Articles connexes" dupliquée
+    const relatedMatches = finalHtml.match(/<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/gi);
+    if (relatedMatches && relatedMatches.length > 1) {
+      // Supprimer les doublons (garder le premier)
+      let first = true;
+      finalHtml = finalHtml.replace(/<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/gi, (match) => {
+        if (first) {
+          first = false;
+          return match;
+        }
+        removedDuplicatesCount++;
+        return '';
+      });
+      report.actions.push({ type: 'removed_duplicate_related_section', details: `count=${relatedMatches.length - 1}` });
+    }
+    
+    // Détecter blocs affiliate dupliqués
+    const affiliateModuleMatches = finalHtml.matchAll(/<div class="affiliate-module"[^>]*>[\s\S]*?<\/div>/g);
+    const seenModules = new Set();
+    let removedAffiliateDuplicates = 0;
+    for (const match of affiliateModuleMatches) {
+      const normalized = match[0].replace(/\s+/g, ' ').trim();
+      if (seenModules.has(normalized)) {
+        finalHtml = finalHtml.replace(match[0], '');
+        removedAffiliateDuplicates++;
+      } else {
+        seenModules.add(normalized);
+      }
+    }
+    if (removedAffiliateDuplicates > 0) {
+      report.actions.push({ type: 'removed_duplicate_affiliate_modules', details: `count=${removedAffiliateDuplicates}` });
+    }
+    
+    if (removedDuplicatesCount > 0 || removedAffiliateDuplicates > 0) {
+      report.checks.push({
+        name: 'anti_repetitions',
+        status: 'pass',
+        details: `removed_duplicates=${removedDuplicatesCount + removedAffiliateDuplicates}`
+      });
+    } else {
+      report.checks.push({
+        name: 'anti_repetitions',
+        status: 'pass',
+        details: 'No duplicates detected'
+      });
+    }
+    
+    report.metrics.repetition_score = removedDuplicatesCount + removedAffiliateDuplicates;
+
+    // CHECK E: Placement des blocs
+    // Vérifier que "Articles connexes" est à la fin
+    const relatedSectionRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
+    const relatedMatch = finalHtml.match(relatedSectionRegex);
+    
+    if (relatedMatch) {
+      const relatedIndex = relatedMatch.index;
+      const contentAfterRelated = finalHtml.slice(relatedIndex + relatedMatch[0].length);
+      
+      // Si du contenu significatif après "Articles connexes", déplacer
+      if (contentAfterRelated.trim().length > 100) {
+        // Extraire le bloc "Articles connexes" complet
+        const relatedBlockEnd = finalHtml.indexOf('</h2>', relatedIndex) + 5;
+        const nextH2After = contentAfterRelated.match(/<h2[^>]*>/i);
+        const blockEnd = nextH2After ? relatedIndex + relatedMatch[0].length + nextH2After.index : finalHtml.length;
+        
+        const relatedBlock = finalHtml.slice(relatedIndex, blockEnd);
+        const htmlWithoutRelated = finalHtml.slice(0, relatedIndex) + finalHtml.slice(blockEnd);
+        
+        // Insérer à la fin
+        finalHtml = htmlWithoutRelated + '\n\n' + relatedBlock;
+        report.actions.push({ type: 'moved_related_section_to_end', details: 'Articles connexes déplacée à la fin' });
+      }
+      
+      report.checks.push({
+        name: 'block_placement',
+        status: 'pass',
+        details: 'Articles connexes en position correcte'
+      });
+    } else {
+      report.checks.push({
+        name: 'block_placement',
+        status: 'warn',
+        details: 'Section "Articles connexes" absente'
+      });
+    }
+
+    // PHASE 6.2.1: CHECK F - Anti-invention (hard check)
+    this.checkInventionGuard(finalHtml, pipelineContext, report);
+    
+    // PHASE 6.3: CHECK G - Story Alignment + Quality Gate (hard check avec auto-fix)
+    finalHtml = this.checkAndFixStoryAlignment(finalHtml, pipelineContext, report);
+    
+    // PHASE 6.2.3: CHECK B amélioré - Citations Reddit obligatoires et robustes
+    // (déjà implémenté, mais améliorer la logique si nécessaire)
+    
+    // PHASE 6.2.4: CHECK C amélioré - CTA/Affiliate plan: conformité stricte
+    // (déjà implémenté, mais améliorer la logique si nécessaire)
+    
+    // Mettre à jour métriques finales
+    report.metrics.html_length_after = finalHtml.length;
+    
+    report.finalHtml = finalHtml;
+    return report;
+  }
+
+  /**
+   * PHASE 6.2.1: Anti-invention guard
+   * Détecte les claims chiffrés, lieux, affirmations factuelles non sourcées
+   */
+  checkInventionGuard(html, pipelineContext, report) {
+    const extracted = pipelineContext?.extracted || {};
+    const story = pipelineContext?.story || {};
+    
+    // PHASE 6.2.1: Nettoyer le HTML pour exclure les segments non-narratifs
+    let htmlForInventionCheck = html;
+    
+    // Supprimer les scripts
+    htmlForInventionCheck = htmlForInventionCheck.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
+    
+    // Supprimer les styles
+    htmlForInventionCheck = htmlForInventionCheck.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
+    
+    // Supprimer les modules affiliate (avec variantes de quotes et balises imbriquées)
+    // Pattern robuste: div avec class affiliate-module et tout son contenu jusqu'à la fermeture (gestion des div imbriquées)
+    // Utiliser une approche récursive pour gérer les balises imbriquées
+    const removeAffiliateModules = (html) => {
+      const affiliatePattern = /<div[^>]*(?:class=["'][^"']*affiliate-module[^"']*["']|data-placement-id)[^>]*>([\s\S]*?)<\/div>/gi;
+      let result = html;
+      let match;
+      let changed = true;
+      
+      while (changed) {
+        changed = false;
+        match = affiliatePattern.exec(result);
+        if (match) {
+          // Vérifier si le contenu contient d'autres divs affiliate (imbriqués)
+          const innerContent = match[1];
+          if (innerContent && /affiliate-module|data-placement-id/i.test(innerContent)) {
+            // Récursivement supprimer les modules imbriqués
+            const cleanedInner = removeAffiliateModules(innerContent);
+            result = result.replace(match[0], '');
+            changed = true;
+          } else {
+            result = result.replace(match[0], '');
+            changed = true;
+          }
+          affiliatePattern.lastIndex = 0; // Reset pour réessayer
+        }
+      }
+      return result;
+    };
+    
+    htmlForInventionCheck = removeAffiliateModules(htmlForInventionCheck);
+    
+    // Supprimer les éléments avec data-widget, travelpayouts, tp.png, Kiwi.com, Airalo, WIDGET_
+    htmlForInventionCheck = htmlForInventionCheck.replace(/<[^>]*(?:data-widget|travelpayouts|tp\.png|kiwi\.com|airalo|WIDGET_)[^>]*>[\s\S]*?<\/[^>]+>/gi, '');
+    
+    // Supprimer les blocs CTA auto (heuristique: H2 "Passer à l'action" / "Outils utiles" / "Réserver" + contenu jusqu'au prochain H2)
+    // Pattern amélioré: capture tout jusqu'au prochain H2 ou H3 ou fin de document
+    htmlForInventionCheck = htmlForInventionCheck.replace(/<h2[^>]*>(?:Passer à l'action|Outils utiles|Réserver|Comparer|CTA)[^<]*<\/h2>[\s\S]*?(?=<h[2-3]|$)/gi, '');
+    
+    // Supprimer les blocs avec class="flashvoyage-cta" ou similaire (plus robuste)
+    htmlForInventionCheck = htmlForInventionCheck.replace(/<[^>]*class=["'][^"']*cta[^"']*["'][^>]*>[\s\S]*?<\/[^>]+>/gi, '');
+    htmlForInventionCheck = htmlForInventionCheck.replace(/<[^>]*class=["'][^"']*cta[^"']*[^>]*>[\s\S]*?<\/[^>]+>/gi, '');
+    
+    // Supprimer le bloc "Articles connexes" (de <h2>Articles connexes</h2> jusqu'à la fin OU jusqu'au prochain <h2>)
+    const relatedSectionMatch = htmlForInventionCheck.match(/<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>[\s\S]*/i);
+    if (relatedSectionMatch) {
+      const relatedIndex = relatedSectionMatch.index;
+      htmlForInventionCheck = htmlForInventionCheck.substring(0, relatedIndex);
+    }
+    
+    // Construire vocabulary whitelist
+    const whitelistTokens = new Set();
+    
+    // Ajouter tokens depuis extracted.title + extracted.selftext
+    const extractedText = `${extracted.title || ''} ${extracted.selftext || ''}`.toLowerCase();
+    const extractedTokens = this.extractTokens(extractedText);
+    extractedTokens.forEach(t => whitelistTokens.add(t));
+    
+    // Ajouter tokens depuis story.evidence.source_snippets
+    const snippets = story?.evidence?.source_snippets || [];
+    
+    // Vérifier si on a assez de contenu source pour valider (sinon whitelist trop petite = faux positifs)
+    // PHASE 6.2: Être plus tolérant - accepter même avec peu de contenu si on a des snippets
+    const hasEnoughSourceContent = (extracted.selftext || '').length >= 50 || 
+                                   extractedTokens.length >= 10 || 
+                                   snippets.length > 0;
+    snippets.forEach(snippet => {
+      let snippetText = '';
+      if (typeof snippet === 'string') {
+        snippetText = snippet;
+      } else if (snippet && typeof snippet === 'object') {
+        snippetText = snippet.text || snippet.content || snippet.body || snippet.quote || 
+                     snippet.excerpt || snippet.snippet || '';
+      }
+      if (snippetText) {
+        const snippetTokens = this.extractTokens(snippetText.toLowerCase());
+        snippetTokens.forEach(t => whitelistTokens.add(t));
+      }
+    });
+    
+    // Ajouter tokens depuis commentaires si présents
+    const comments = extracted.comments || [];
+    comments.forEach(comment => {
+      const commentText = (typeof comment === 'string' ? comment : comment.body || '').toLowerCase();
+      const commentTokens = this.extractTokens(commentText);
+      commentTokens.forEach(t => whitelistTokens.add(t));
+    });
+    
+    // PHASE 6.2.1: Extraire le texte de l'article HTML nettoyé (sans balises)
+    const articleText = htmlForInventionCheck.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+    
+    // PHASE 6.2.1: Initialiser debug pour invention_guard
+    const debugClaims = [];
+    
+    const issues = [];
+    
+    // Détecter claims chiffrés non sourcés
+    const numericClaims = [
+      /\b\d+[€$]\b/gi,  // Montants
+      /\b\d+\s*(euros?|dollars?|baht|yen)\b/gi,  // Montants avec devise
+      /\bx\d+\b/gi,  // Multiplicateurs (x2, x3)
+      /\b\d+\s*%\b/gi,  // Pourcentages
+      /\ben\s+\d+\s+(jours?|mois|années?|semaines?)\b/gi,  // Durées
+      /\b\d+\s+(jours?|mois|années?|semaines?)\b/gi  // Durées simples
+    ];
+    
+    for (const pattern of numericClaims) {
+      const matches = articleText.match(pattern);
+      if (matches) {
+        for (const match of matches) {
+          if (!hasEnoughSourceContent) continue; // Skip si pas assez de contenu source
+          
+          // Vérifier si le claim exact ou un claim similaire est dans la source
+          const numericValue = match.replace(/[^\d]/g, '');
+          const matchLower = match.toLowerCase();
+          
+          // Vérifier dans extractedText
+          const claimInExtracted = extractedText.includes(numericValue) || extractedText.includes(matchLower);
+          
+          // Vérifier dans snippets
+          const claimInSnippets = snippets.some(s => {
+            const sText = typeof s === 'string' ? s : (s.snippet || s.text || '');
+            if (!sText) return false;
+            const sTextLower = sText.toLowerCase();
+            return sTextLower.includes(numericValue) || sTextLower.includes(matchLower);
+          });
+          
+          const claimInSource = claimInExtracted || claimInSnippets;
+          
+          if (!claimInSource) {
+            // Ignorer les très petits nombres isolés (probablement faux positifs)
+            const numValue = parseInt(numericValue);
+            // Accepter les nombres >= 7 (pour "7 jours") ou les pourcentages/multiplicateurs
+            // Mais être strict : si le nombre est significatif (> 50) ou si c'est un pourcentage/multiplicateur, c'est suspect
+            if (numValue && (numValue >= 7 || match.includes('%') || match.includes('x'))) {
+              const context = articleText.substring(Math.max(0, articleText.indexOf(match) - 50), Math.min(articleText.length, articleText.indexOf(match) + match.length + 50)).substring(0, 100);
+              const claimIdx = debugClaims.length;
+              
+              // PHASE 6.2.1: Logger le claim détecté
+              console.log(`❌ INVENTION_GUARD_CLAIM: type=numeric text="${match}" context="${context.substring(0, 40)}..." idx=${claimIdx}`);
+              
+              debugClaims.push({
+                type: 'numeric',
+                text: match,
+                context: context.substring(0, 100),
+                idx: claimIdx
+              });
+              
+              issues.push({
+                type: 'numeric_claim',
+                value: match,
+                context: context
+              });
+            }
+          }
+        }
+      }
+    }
+    
+    // Détecter lieux (villes/pays) non sourcés
+    const locationPatterns = [
+      /\b(Paris|Londres|Berlin|Madrid|Rome|Barcelone|Amsterdam|Vienne|Prague|Budapest|Lisbonne|Porto|Athènes|Stockholm|Oslo|Copenhague|Helsinki|Dublin|Edimbourg|Bruxelles|Zurich|Genève|Lyon|Marseille|Nice|Bordeaux|Toulouse|Nantes|Strasbourg|Lille|Rennes|Montpellier|Reims|Saint-Étienne|Toulon|Grenoble|Dijon|Angers|Nîmes|Villeurbanne|Saint-Denis|Le Havre|Aix-en-Provence|Clermont-Ferrand|Brest|Limoges|Tours|Amiens|Perpignan|Metz|Besançon|Boulogne-Billancourt|Orléans|Mulhouse|Rouen|Caen|Nancy|Argenteuil|Montreuil|Roubaix|Tourcoing|Nanterre|Avignon|Créteil|Dunkirk|Poitiers|Asnières-sur-Seine|Versailles|Courbevoie|Vitry-sur-Seine|Colombes|Aulnay-sous-Bois|La Rochelle|Rueil-Malmaison|Champigny-sur-Marne|Antibes|Bourges|Cannes|Calais|Béziers|Mérignac|Saint-Maur-des-Fossés|Pau|Bayonne|Biarritz|Annecy|Chambéry|Évian|Chamonix|Megève|Courchevel|Val-d'Isère|Tignes|La Plagne|Les Arcs|Les Menuires|Méribel|Val-Thorens|Les Deux Alpes|Alpe d'Huez|Serre-Ponçon|Briançon|Gap|Digne-les-Bains|Nice|Cannes|Monaco|Menton|Villefranche-sur-Mer|Beaulieu-sur-Mer|Èze|Saint-Jean-Cap-Ferrat|Antibes|Juan-les-Pins|Grasse|Vallauris|Mougins|Le Cannet|Cagnes-sur-Mer|Vence|Saint-Paul-de-Vence|Biot|Valbonne|Opio|Pégomas|La Roquette-sur-Siagne|Mouans-Sartoux|Peymeinade|Le Tignet|Spéracèdes|Escragnolles|Andon|Caille|Séranon|Saint-Vallier-de-Thiey|Gréolières|Coursegoules|Bezaudun-les-Alpes|Bézaudun|Conségudes|Les Mujouls|Aiglun|Sigale|Toudon|Bonson|Gilette|Revest-les-Roches|Touët-sur-Var|Malaussène|Villars-sur-Var|Tourette-du-Château|Rigaud|Sallagriffon|Séranon|Andon|Caille|Escragnolles|Spéracèdes|Le Tignet|Peymeinade|Mouans-Sartoux|La Roquette-sur-Siagne|Pégomas|Biot|Valbonne|Opio|Vence|Saint-Paul-de-Vence|Cagnes-sur-Mer|Le Cannet|Mougins|Vallauris|Grasse|Juan-les-Pins|Antibes|Saint-Jean-Cap-Ferrat|Èze|Beaulieu-sur-Mer|Villefranche-sur-Mer|Menton|Monaco|Cannes|Nice|Digne-les-Bains|Gap|Serre-Ponçon|Briançon|Alpe d'Huez|Les Deux Alpes|Val-Thorens|Méribel|Les Menuires|Les Arcs|La Plagne|Tignes|Val-d'Isère|Courchevel|Megève|Chamonix|Évian|Chambéry|Annecy|Biarritz|Bayonne|Pau|Saint-Maur-des-Fossés|Mérignac|Béziers|Calais|Cannes|Bourges|Antibes|Champigny-sur-Marne|Rueil-Malmaison|La Rochelle|Aulnay-sous-Bois|Colombes|Vitry-sur-Seine|Courbevoie|Versailles|Asnières-sur-Seine|Poitiers|Dunkirk|Créteil|Avignon|Nanterre|Tourcoing|Roubaix|Montreuil|Argenteuil|Nancy|Caen|Rouen|Mulhouse|Orléans|Boulogne-Billancourt|Rennes|Lille|Strasbourg|Nantes|Bordeaux|Toulouse|Marseille|Lyon|Genève|Zurich|Bruxelles|Edimbourg|Dublin|Helsinki|Copenhague|Oslo|Stockholm|Athènes|Porto|Lisbonne|Budapest|Prague|Vienne|Amsterdam|Barcelone|Rome|Madrid|Berlin|Londres)\b/gi,
+      /\b(Thailand|Vietnam|Japan|China|India|Indonesia|Philippines|Malaysia|Singapore|South Korea|Taiwan|Hong Kong|Myanmar|Cambodia|Laos|Bangladesh|Sri Lanka|Nepal|Bhutan|Maldives|Mongolia|North Korea|Brunei|East Timor|Macau|Bangkok|Chiang Mai|Phuket|Pattaya|Hua Hin|Krabi|Koh Samui|Koh Phangan|Koh Tao|Ayutthaya|Sukhothai|Lampang|Nan|Mae Hong Son|Pai|Mae Sot|Tak|Uttaradit|Phitsanulok|Phichit|Phetchabun|Loei|Nong Khai|Udon Thani|Khon Kaen|Nakhon Ratchasima|Korat|Surin|Sisaket|Ubon Ratchathani|Yasothon|Roi Et|Kalasin|Maha Sarakham|Khon Kaen|Udon Thani|Nong Khai|Loei|Phetchabun|Phichit|Phitsanulok|Uttaradit|Tak|Mae Sot|Pai|Mae Hong Son|Nan|Lampang|Sukhothai|Ayutthaya|Koh Tao|Koh Phangan|Koh Samui|Krabi|Hua Hin|Pattaya|Phuket|Chiang Mai|Bangkok|Ho Chi Minh|Hanoi|Da Nang|Hue|Hoi An|Nha Trang|Dalat|Sapa|Ha Long|Phu Quoc|Can Tho|Mekong Delta|Tokyo|Kyoto|Osaka|Yokohama|Nagoya|Fukuoka|Sapporo|Sendai|Hiroshima|Kobe|Okinawa|Nara|Kamakura|Nikko|Hakone|Mount Fuji|Shirakawa-go|Takayama|Kanazawa|Matsumoto|Nagano|Shizuoka|Hamamatsu|Okayama|Kurashiki|Matsue|Tottori|Kumamoto|Kagoshima|Miyazaki|Oita|Beppu|Nagasaki|Sasebo|Fukuoka|Kitakyushu|Yamaguchi|Hiroshima|Okayama|Takamatsu|Tokushima|Kochi|Matsuyama|Uwajima|Oita|Beppu|Miyazaki|Kagoshima|Kumamoto|Saga|Nagasaki|Sasebo|Fukuoka|Kitakyushu|Yamaguchi|Hiroshima|Okayama|Takamatsu|Tokushima|Kochi|Matsuyama|Uwajima|Oita|Beppu|Miyazaki|Kagoshima|Kumamoto|Saga|Nagasaki|Sasebo|Bali|Jakarta|Yogyakarta|Bandung|Surabaya|Medan|Makassar|Semarang|Palembang|Denpasar|Ubud|Canggu|Sanur|Nusa Dua|Jimbaran|Kuta|Legian|Seminyak|Kerobokan|Pererenan|Echo Beach|Bingin|Uluwatu|Padang Padang|Dreamland|Balangan|Nyang Nyang|Suluban|Impossibles|Bingin|Padang Padang|Uluwatu|Dreamland|Balangan|Nyang Nyang|Suluban|Impossibles|Bingin|Padang Padang|Uluwatu|Dreamland|Balangan|Nyang Nyang|Suluban|Impossibles|Manila|Cebu|Davao|Iloilo|Bacolod|Cagayan de Oro|Zamboanga|Angeles|Olongapo|Baguio|Tagaytay|Boracay|Palawan|El Nido|Coron|Puerto Princesa|Siargao|Bohol|Cebu|Davao|Iloilo|Bacolod|Cagayan de Oro|Zamboanga|Angeles|Olongapo|Baguio|Tagaytay|Kuala Lumpur|Penang|Malacca|Langkawi|Cameron Highlands|Ipoh|Johor Bahru|Kota Kinabalu|Kuching|Miri|Sibu|Bintulu|Limbang|Lawas|Marudi|Mukah|Dalat|Bintulu|Limbang|Lawas|Marudi|Mukah|Dalat|Singapore|Sentosa|Marina Bay|Orchard Road|Chinatown|Little India|Kampong Glam|Geylang|Tiong Bahru|Joo Chiat|Katong|East Coast|West Coast|Jurong|Woodlands|Yishun|Ang Mo Kio|Toa Payoh|Bishan|Serangoon|Punggol|Sengkang|Hougang|Tampines|Pasir Ris|Changi|Seoul|Busan|Incheon|Daegu|Daejeon|Gwangju|Ulsan|Jeju|Jeonju|Gyeongju|Andong|Suwon|Yongin|Seongnam|Bucheon|Ansan|Anyang|Goyang|Namyangju|Hwaseong|Gimpo|Pyeongtaek|Siheung|Gunpo|Uijeongbu|Osan|Icheon|Anseong|Gwangmyeong|Hanam|Guri|Uiwang|Gwacheon|Namyangju|Yangju|Paju|Gimhae|Jinju|Tongyeong|Geoje|Masan|Changwon|Jinhae|Gimhae|Jinju|Tongyeong|Geoje|Masan|Changwon|Jinhae|Taipei|Kaohsiung|Taichung|Tainan|Hsinchu|Keelung|Chiayi|Taitung|Hualien|Yilan|Pingtung|Miaoli|Changhua|Nantou|Yunlin|Chiayi|Tainan|Kaohsiung|Pingtung|Taitung|Hualien|Yilan|Keelung|Taipei|New Taipei|Taoyuan|Hsinchu|Miaoli|Changhua|Nantou|Yunlin|Hong Kong|Kowloon|New Territories|Lantau|Lamma|Cheung Chau|Peng Chau|Tai O|Stanley|Repulse Bay|Deep Water Bay|Aberdeen|Pok Fu Lam|Cyberport|Discovery Bay|Tung Chung|Tsing Yi|Ma Wan|Lantau|Discovery Bay|Tung Chung|Tsing Yi|Ma Wan|Macau|Taipa|Coloane|Cotai|Macau Peninsula|Taipa|Coloane|Cotai)\b/gi
+    ];
+    
+    for (const pattern of locationPatterns) {
+      const matches = articleText.match(pattern);
+      if (matches) {
+        for (const match of matches) {
+          if (!hasEnoughSourceContent) continue; // Skip si pas assez de contenu source
+          
+          const normalizedMatch = match.toLowerCase().trim();
+          
+          // Vérifier si le lieu est explicitement dans la source
+          const locationInExtracted = extractedText.includes(normalizedMatch);
+          const locationInSnippets = snippets.some(s => {
+            const sText = typeof s === 'string' ? s : (s.snippet || s.text || '');
+            if (!sText) return false;
+            return sText.toLowerCase().includes(normalizedMatch);
+          });
+          const locationInSource = locationInExtracted || locationInSnippets;
+          
+          if (!locationInSource && !whitelistTokens.has(normalizedMatch)) {
+            // Si le lieu n'est pas dans la source, c'est une invention
+            const context = articleText.substring(Math.max(0, articleText.indexOf(match) - 50), Math.min(articleText.length, articleText.indexOf(match) + match.length + 50)).substring(0, 100);
+            const claimIdx = debugClaims.length;
+            
+            // PHASE 6.2.1: Logger le claim détecté
+            console.log(`❌ INVENTION_GUARD_CLAIM: type=location text="${match}" context="${context.substring(0, 40)}..." idx=${claimIdx}`);
+            
+            debugClaims.push({
+              type: 'location',
+              text: match,
+              context: context.substring(0, 100),
+              idx: claimIdx
+            });
+            
+            issues.push({
+              type: 'location_claim',
+              value: match,
+              context: context
+            });
+          }
+        }
+      }
+    }
+    
+    // Détecter affirmations factuelles trop spécifiques
+    const factualClaims = [
+      /\bla loi dit\b/gi,
+      /\best obligatoire\b/gi,
+      /\best interdit\b/gi,
+      /\bdoit être\b/gi,
+      /\brequis\b/gi,
+      /\bnécessaire\b/gi
+    ];
+    
+    for (const pattern of factualClaims) {
+      const matches = articleText.match(pattern);
+      if (matches) {
+        for (const match of matches) {
+          const contextStart = Math.max(0, articleText.indexOf(match) - 100);
+          const contextEnd = Math.min(articleText.length, articleText.indexOf(match) + match.length + 100);
+          const context = articleText.substring(contextStart, contextEnd).toLowerCase();
+          const contextTokens = this.extractTokens(context);
+          
+          const hasWhitelistToken = contextTokens.some(t => whitelistTokens.has(t));
+          // FAIL si : pas de token whitelist ET on a assez de contenu source pour valider
+          if (!hasWhitelistToken && hasEnoughSourceContent) {
+            const claimIdx = debugClaims.length;
+            
+            // PHASE 6.2.1: Logger le claim détecté
+            console.log(`❌ INVENTION_GUARD_CLAIM: type=factual text="${match}" context="${context.substring(0, 40)}..." idx=${claimIdx}`);
+            
+            debugClaims.push({
+              type: 'factual',
+              text: match,
+              context: context.substring(0, 150),
+              idx: claimIdx
+            });
+            
+            issues.push({
+              type: 'factual_claim',
+              value: match,
+              context: context.substring(0, 150)
+            });
+          }
+        }
+      }
+    }
+    
+    // PHASE 6.2.1: Exposer les claims dans report.debug (max 10)
+    if (!report.debug) report.debug = {};
+    report.debug.invention_guard = {
+      claims: debugClaims.slice(0, 10)
+    };
+    
+    if (issues.length > 0) {
+      report.checks.push({
+        name: 'invention_guard',
+        status: 'fail',
+        details: `${issues.length} claim(s) non sourcé(s) détecté(s)`
+      });
+      
+      issues.forEach(issue => {
+        report.issues.push({
+          code: 'SOURCE_OF_TRUTH_VIOLATION',
+          severity: 'high',
+          message: `invention_detected: ${issue.type} "${issue.value}" non sourcé dans whitelist`,
+          evidence: { type: issue.type, value: issue.value, context: issue.context }
+        });
+      });
+    } else {
+      report.checks.push({
+        name: 'invention_guard',
+        status: 'pass',
+        details: 'Aucune invention détectée'
+      });
+    }
+  }
+
+  /**
+   * PHASE 6.3.1: Helper pour vérifier si un texte est utilisable
+   */
+  hasUsableText(x, min = 1) {
+    return typeof x === 'string' && x.trim().length >= min;
+  }
+
+  /**
+   * PHASE 6.3.1: Helper pour vérifier si une liste est utilisable
+   */
+  hasUsableList(arr, minItemChars = 10) {
+    if (!Array.isArray(arr) || arr.length === 0) return false;
+    return arr.some(item => {
+      const text = typeof item === 'string' ? item : (item.value || item.text || item.summary || item.quote || '');
+      return this.hasUsableText(text, minItemChars);
+    });
+  }
+
+  /**
+   * PHASE 6.3.A: Helper pour déterminer si une section est vraiment requise
+   * Basé uniquement sur le contenu exploitable dans story
+   * IMPORTANT: si summary est null|undefined|"" ET pas de bullets => NOT required
+   */
+  isSectionRequired(sectionKey, story) {
+    switch (sectionKey) {
+      case 'context':
+        return this.hasUsableText(story.context?.summary, 10) || this.hasUsableList(story.context?.bullets, 10);
+      case 'central_event':
+        return this.hasUsableText(story.central_event?.summary, 10) || this.hasUsableList(story.central_event?.bullets, 10);
+      case 'critical_moment':
+        return this.hasUsableText(story.critical_moment?.summary, 10) || this.hasUsableList(story.critical_moment?.bullets, 10);
+      case 'resolution':
+        return this.hasUsableText(story.resolution?.summary, 10) || this.hasUsableList(story.resolution?.bullets, 10);
+      case 'author_lessons':
+        return this.hasUsableList(story.author_lessons, 10);
+      case 'open_questions':
+        // required si array non vide (pas basé sur longueur des items)
+        return Array.isArray(story.open_questions) && story.open_questions.length > 0;
+      case 'community_insights':
+        // required si array non vide (pas basé sur longueur des items)
+        return Array.isArray(story.community_insights) && story.community_insights.length > 0;
+      case 'related':
+        return false; // "Articles connexes" n'est pas une section required story_alignment
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * PHASE 6.3.B: Helper pour déterminer si une section peut être insérée
+   * Plus strict: seuils différents selon le type de section
+   */
+  canInsert(sectionKey, story) {
+    switch (sectionKey) {
+      case 'context':
+        return this.hasUsableText(story.context?.summary, 20) || this.hasUsableList(story.context?.bullets, 20);
+      case 'central_event':
+        return this.hasUsableText(story.central_event?.summary, 20) || this.hasUsableList(story.central_event?.bullets, 20);
+      case 'critical_moment':
+        return this.hasUsableText(story.critical_moment?.summary, 20) || this.hasUsableList(story.critical_moment?.bullets, 20);
+      case 'resolution':
+        return this.hasUsableText(story.resolution?.summary, 20) || this.hasUsableList(story.resolution?.bullets, 20);
+      case 'author_lessons':
+        return this.hasUsableList(story.author_lessons, 20);
+      case 'open_questions':
+        // insertable si hasUsableList(open_questions, 15) - items de 18 chars passent
+        return this.hasUsableList(story.open_questions, 15);
+      case 'community_insights':
+        // insertable seulement si hasUsableList(community_insights, 30) (strict exprès)
+        return this.hasUsableList(story.community_insights, 30);
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * PHASE 6.3.C: Extraire toutes les sections présentes dans le HTML
+   * Retourne une map { canonicalKey: { h2Index, contentText, contentLen } }
+   */
+  extractSections(html, sectionDefinitions) {
+    const sections = {};
+    const h2Matches = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
+    
+    for (const m of h2Matches) {
+      const h2Title = m[1].trim();
+      const h2Lower = h2Title.toLowerCase();
+      
+      // Chercher la section canonique correspondante
+      // Priorité au titre canonique exact, puis aux synonymes
+      for (const [sectionKey, sectionDef] of Object.entries(sectionDefinitions)) {
+        const titleLower = sectionDef.title.toLowerCase();
+        // Match exact du titre canonique (priorité)
+        const matchesTitle = h2Lower === titleLower;
+        // Match avec synonymes
+        const matchesSynonym = !matchesTitle && sectionDef.synonyms.some(s => {
+          const synLower = s.toLowerCase();
+          return h2Lower === synLower || h2Lower.includes(synLower);
+        });
+        
+        if (matchesTitle || matchesSynonym) {
+          // Extraire le contenu jusqu'au prochain H2
+          const h2Index = m.index;
+          const nextH2Index = h2Matches.find(h => h.index > h2Index)?.index || html.length;
+          const sectionContent = html.substring(h2Index + m[0].length, nextH2Index);
+          const textContent = sectionContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+          
+          sections[sectionKey] = {
+            h2Index,
+            contentText: textContent,
+            contentLen: textContent.length,
+            h2Title: h2Title
+          };
+          break; // Une section ne peut correspondre qu'à une seule clé canonique
+        }
+      }
+    }
+    
+    return sections;
+  }
+
+  /**
+   * PHASE 6.3: Story Alignment + Quality Gate avec auto-fix
+   * Vérifie la présence/ordre des sections et auto-corrige si possible
+   * @param {string} html - HTML de l'article
+   * @param {Object} pipelineContext - Contexte du pipeline
+   * @param {Object} report - Rapport QA
+   * @returns {string} HTML corrigé
+   */
+  checkAndFixStoryAlignment(html, pipelineContext, report) {
+    const story = pipelineContext?.story?.story || {};
+    const MIN_SECTION_CHARS = 60; // PHASE 6.3.F: Seuil pour "too short"
+    
+    // PHASE 6.3.1: Définir les sections et leurs synonymes (inclure les titres canoniques)
+    const sectionDefinitions = {
+      context: {
+        synonyms: ['contexte', 'context', 'situation', 'cadre'],
+        title: 'Contexte',
+        order: 1
+      },
+      central_event: {
+        synonyms: ['événement central', 'event', 'le fait déclencheur', 'ce qui s\'est passé'],
+        title: 'Événement central',
+        order: 2
+      },
+      critical_moment: {
+        synonyms: ['moment critique', 'critical moment', 'le tournant', 'point de bascule'],
+        title: 'Moment critique',
+        order: 3
+      },
+      resolution: {
+        synonyms: ['résolution', 'resolution', 'issue', 'ce qui a été fait'],
+        title: 'Résolution',
+        order: 4
+      },
+      author_lessons: {
+        synonyms: ['leçons', 'ce que l\'auteur retient', 'à retenir \\(auteur\\)'],
+        title: 'Ce que l\'auteur retient',
+        order: 5
+      },
+      community_insights: {
+        synonyms: ['insights communauté', 'réactions', 'ce que la communauté ajoute', 'communauté', 'community', 'ce que la communauté apporte'],
+        title: 'Ce que la communauté apporte',
+        order: 6
+      },
+      open_questions: {
+        synonyms: ['questions ouvertes', 'ce qui reste', 'à clarifier', 'questions encore ouvertes'],
+        title: 'Questions encore ouvertes',
+        order: 7
+      }
+    };
+    
+    // PHASE 6.3.A: Déterminer les sections réellement requises (post-story)
+    // Ne compte PAS "Articles connexes" dans required/present/too_short (section structurelle, pas story)
+    const storyData = story.story || story; // Support both story.story and story directly
+    const requiredKeys = [];
+    for (const [sectionKey, sectionDef] of Object.entries(sectionDefinitions)) {
+      if (sectionKey === 'related') continue; // Exclure "Articles connexes" du scan alignment
+      if (this.isSectionRequired(sectionKey, storyData)) {
+        requiredKeys.push(sectionKey);
+        // Ajouter le titre canonique aux synonymes pour qu'il soit détecté
+        sectionDef.synonyms.unshift(sectionDef.title.toLowerCase());
+      }
+    }
+    
+    let finalHtml = html;
+    const insertedSections = [];
+    const violations = []; // severity='high' -> FAIL
+    const warnings = []; // severity='low' -> WARN
+    let reordered = false;
+    
+    // PHASE 6.3.C: Parser sections présentes AVANT auto-fix
+    const sectionsBefore = this.extractSections(finalHtml, sectionDefinitions);
+    const presentBefore = Object.keys(sectionsBefore);
+    
+    // PHASE 6.3.D: Identifier les sections manquantes et vérifier si elles sont insertables
+    const missingSections = requiredKeys.filter(key => !presentBefore.includes(key));
+    
+    for (const sectionKey of missingSections) {
+      if (this.canInsert(sectionKey, story)) {
+        // Section manquante mais insertable -> on va l'insérer
+        const sectionDef = sectionDefinitions[sectionKey];
+        
+        // Construire le contenu de la section
+        let sourceContent = null;
+        switch (sectionKey) {
+          case 'context':
+            sourceContent = story.context?.summary?.trim() || story.context?.bullets;
+            break;
+          case 'central_event':
+            sourceContent = story.central_event?.summary?.trim() || story.central_event?.bullets;
+            break;
+          case 'critical_moment':
+            sourceContent = story.critical_moment?.summary?.trim() || story.critical_moment?.bullets;
+            break;
+          case 'resolution':
+            sourceContent = story.resolution?.summary?.trim() || story.resolution?.bullets;
+            break;
+          case 'author_lessons':
+            sourceContent = story.author_lessons || [];
+            break;
+          case 'community_insights':
+            sourceContent = story.community_insights || [];
+            break;
+          case 'open_questions':
+            sourceContent = story.open_questions || [];
+            break;
+        }
+        
+        if (!sourceContent || (Array.isArray(sourceContent) && sourceContent.length === 0)) {
+          // Pas de source exploitable -> violation
+          violations.push({
+            section: sectionKey,
+            reason: `Section "${sectionDef.title}" requise mais non constructible (pas de matière exploitable)`,
+            type: 'missing_required_section'
+          });
+          continue;
+        }
+        
+        // Construire le HTML de la section
+        let sectionHtml = '';
+        if (Array.isArray(sourceContent)) {
+          sectionHtml = `<h2>${sectionDef.title}</h2>\n<ul>\n`;
+          for (const item of sourceContent) {
+            const text = typeof item === 'string' ? item : (item.value || item.text || item.summary || '');
+            if (text && text.trim()) {
+              sectionHtml += `  <li>${this.escapeHtml(text)}</li>\n`;
+            }
+          }
+          sectionHtml += '</ul>\n';
+        } else {
+          const text = typeof sourceContent === 'string' ? sourceContent : (sourceContent.summary || sourceContent.text || '');
+          if (text && text.trim()) {
+            const escapedText = this.escapeHtml(text.substring(0, 500));
+            sectionHtml = `<h2>${sectionDef.title}</h2>\n<p>${escapedText}</p>\n`;
+          }
+        }
+        
+        if (sectionHtml) {
+          // Trouver la position d'insertion
+          let insertIndex = 0;
+          const sectionsBeforeThis = requiredKeys
+            .filter(s => {
+              const def = sectionDefinitions[s];
+              return def && def.order < sectionDef.order && presentBefore.includes(s);
+            })
+            .sort((a, b) => sectionDefinitions[a].order - sectionDefinitions[b].order);
+          
+          if (sectionsBeforeThis.length > 0) {
+            const lastBefore = sectionsBeforeThis[sectionsBeforeThis.length - 1];
+            const beforeSection = sectionsBefore[lastBefore];
+            if (beforeSection) {
+              // Trouver la fin de cette section (prochain H2 ou fin)
+              const h2Matches = [...finalHtml.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
+              const nextH2Index = h2Matches.find(h => h.index > beforeSection.h2Index)?.index || finalHtml.length;
+              insertIndex = nextH2Index;
+            }
+          } else {
+            // Insérer après le premier H2 ou après l'intro
+            const firstH2Match = finalHtml.match(/<h2[^>]*>/i);
+            if (firstH2Match) {
+              const h2Matches = [...finalHtml.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
+              const nextH2Index = h2Matches.find(h => h.index > firstH2Match.index)?.index || finalHtml.length;
+              insertIndex = nextH2Index;
+            } else {
+              const firstPMatch = finalHtml.match(/<p[^>]*>.*?<\/p>/i);
+              if (firstPMatch) {
+                insertIndex = firstPMatch.index + firstPMatch[0].length;
+              }
+            }
+          }
+          
+          finalHtml = finalHtml.slice(0, insertIndex) + '\n' + sectionHtml + '\n' + finalHtml.slice(insertIndex);
+          insertedSections.push(sectionKey);
+          report.actions.push({
+            type: 'inserted_missing_section',
+            details: `section=${sectionKey} title="${sectionDef.title}"`
+          });
+        }
+      } else {
+        // PHASE 6.3.C: Section required mais non insertable -> FAIL
+        const sectionDef = sectionDefinitions[sectionKey];
+        let reason = `Section "${sectionDef.title}" requise mais non constructible (pas de matière exploitable)`;
+        if (sectionKey === 'community_insights') {
+          const count = Array.isArray(story.community_insights) ? story.community_insights.length : 0;
+          reason = `story.community_insights.length=${count} but no community section found and insights are not insertable`;
+        } else if (sectionKey === 'open_questions') {
+          reason = `open_questions present but not insertable and section missing`;
+        }
+        violations.push({
+          section: sectionKey,
+          reason: reason,
+          type: 'missing_required_section'
+        });
+      }
+    }
+    
+    // PHASE 6.3.D: RE-parser le HTML final après auto-fix
+    const sectionsAfter = this.extractSections(finalHtml, sectionDefinitions);
+    const presentAfter = Object.keys(sectionsAfter);
+    
+    // PHASE 6.3.F: Détecter les sections "too short" (même si H2 existe)
+    // Ne jamais "warn" sur une section requise si la story n'a pas assez de matière
+    for (const sectionKey of requiredKeys) {
+      if (presentAfter.includes(sectionKey)) {
+        const section = sectionsAfter[sectionKey];
+        const sectionDef = sectionDefinitions[sectionKey];
+        
+        // Calculer expectedText à partir de story.story[sectionKey] ou story[sectionKey]
+        let expectedText = '';
+        const storyData = story.story || story; // Support both story.story and story directly
+        const storySection = storyData?.[sectionKey];
+        if (storySection) {
+          if (typeof storySection === 'string') {
+            expectedText = storySection;
+          } else if (storySection.summary) {
+            expectedText = storySection.summary;
+          } else if (Array.isArray(storySection.bullets)) {
+            expectedText = storySection.bullets.map(b => typeof b === 'string' ? b : (b.value || b.text || b.summary || '')).join(' ');
+          } else if (Array.isArray(storySection)) {
+            // Pour author_lessons, community_insights, open_questions
+            expectedText = storySection.map(item => {
+              const text = typeof item === 'string' ? item : (item.value || item.text || item.summary || item.quote || '');
+              return text;
+            }).join(' ');
+          }
+        }
+        const expectedLen = expectedText.trim().length;
+        const actualLen = section.contentLen;
+        
+        // Émettre STORY_ALIGNMENT_VIOLATION: too_short seulement si:
+        // 1. La section est requise
+        // 2. ET expectedLen >= MIN_SECTION_CHARS (la story a assez de matière)
+        // 3. ET actualLen < MIN_SECTION_CHARS (mais le HTML est trop court)
+        // 4. ET la section n'a pas été auto-insérée (sinon c'est normal qu'elle soit courte)
+        if (expectedLen >= MIN_SECTION_CHARS && actualLen < MIN_SECTION_CHARS && !insertedSections.includes(sectionKey)) {
+          warnings.push({
+            section: sectionKey,
+            reason: `Section "${sectionDef.title}" présente mais trop courte (${actualLen} chars, attendu >= ${MIN_SECTION_CHARS} d'après story)`,
+            type: 'section_too_short'
+          });
+        }
+      }
+    }
+    
+    // PHASE 6.3.6: Vérifier l'ordre et calculer reordered
+    // Comparer la liste canonique des H2 avant/après reorder
+    if (requiredKeys.length > 1 && presentAfter.length === requiredKeys.length) {
+      const expectedSequence = requiredKeys.map(s => sectionDefinitions[s].title.toLowerCase());
+      const actualSequence = [];
+      
+      const h2Matches = [...finalHtml.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
+      for (const m of h2Matches) {
+        const h2Title = m[1].trim().toLowerCase();
+        for (const sectionKey of requiredKeys) {
+          const sectionDef = sectionDefinitions[sectionKey];
+          const titleLower = sectionDef.title.toLowerCase();
+          // Match exact du titre canonique ou synonyme
+          if (h2Title === titleLower || sectionDef.synonyms.some(s => {
+            const synLower = s.toLowerCase();
+            return h2Title === synLower || h2Title.includes(synLower);
+          })) {
+            actualSequence.push(titleLower);
+            break;
+          }
+        }
+      }
+      
+      if (actualSequence.length === requiredKeys.length) {
+        const expectedStr = expectedSequence.join('|');
+        const actualStr = actualSequence.join('|');
+        
+        // Comparer avec la séquence AVANT (si disponible)
+        const beforeSequence = [];
+        const h2MatchesBefore = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
+        for (const m of h2MatchesBefore) {
+          const h2Title = m[1].trim().toLowerCase();
+          for (const sectionKey of requiredKeys) {
+            const sectionDef = sectionDefinitions[sectionKey];
+            const titleLower = sectionDef.title.toLowerCase();
+            if (h2Title === titleLower || sectionDef.synonyms.some(s => {
+              const synLower = s.toLowerCase();
+              return h2Title === synLower || h2Title.includes(synLower);
+            })) {
+              beforeSequence.push(titleLower);
+              break;
+            }
+          }
+        }
+        
+        // PHASE 6.3.6: Reordered = true uniquement si ordre change
+        if (beforeSequence.length === requiredKeys.length) {
+          const beforeStr = beforeSequence.join('|');
+          if (beforeStr !== actualStr) {
+            reordered = true;
+            report.actions.push({
+              type: 'reordered_sections',
+              details: `before=${beforeStr} after=${actualStr}`
+            });
+          }
+        } else if (expectedStr !== actualStr && insertedSections.length === 0) {
+          // Si on n'a pas de séquence avant ET pas d'insertion, comparer avec attendu
+          reordered = true;
+          report.actions.push({
+            type: 'reordered_sections',
+            details: `expected=${expectedStr} actual=${actualStr}`
+          });
+        }
+      }
+    }
+    
+    // PHASE 6.3.4: Calculer le status selon les règles (post-fix)
+    // Vérifier les violations persistantes (sections required mais absentes et non insertables)
+    const unresolvedViolations = violations.filter(v => {
+      // Une violation est résolue si la section est maintenant présente
+      return !presentAfter.includes(v.section);
+    });
+    
+    // PHASE 6.3.4: Calculer failCount et warnCount
+    // failCount: required sections encore absentes (missing) OU required sections dont la donnée est non insérable et absente
+    const missingRequired = requiredKeys.filter(key => !presentAfter.includes(key));
+    const failCount = unresolvedViolations.length + missingRequired.length;
+    
+    // warnCount: sections présentes mais "trop courtes"
+    const tooShortWarnings = warnings.filter(w => w.type === 'section_too_short');
+    const warnCount = tooShortWarnings.length;
+    
+    // PHASE 6.3.4: Status final = fonction des violations post-fix
+    let status;
+    if (failCount > 0) {
+      status = 'fail';
+    } else if (warnCount > 0) {
+      status = 'warn';
+    } else {
+      status = 'pass';
+    }
+    
+    // PHASE 6.3.E: Calculer les métriques finales
+    const presentCount = presentAfter.length;
+    const insertedCount = insertedSections.length;
+    
+    report.checks.push({
+      name: 'story_alignment',
+      status: status,
+      details: `required=${requiredKeys.length} present=${presentCount} inserted=${insertedCount} reordered=${reordered ? 1 : 0}`
+    });
+    
+    // PHASE 6.3.E: Ajouter les violations et warnings au rapport
+    unresolvedViolations.forEach(violation => {
+      report.issues.push({
+        code: 'STORY_ALIGNMENT_VIOLATION',
+        severity: 'high',
+        message: violation.reason,
+        evidence: { section: violation.section, type: violation.type },
+        check: 'story_alignment'
+      });
+    });
+    
+    // PHASE 6.3.F: "too short" = WARN seulement (severity low)
+    tooShortWarnings.forEach(warning => {
+      report.issues.push({
+        code: 'STORY_ALIGNMENT_VIOLATION',
+        severity: 'low',
+        message: warning.reason,
+        evidence: { section: warning.section, type: warning.type },
+        check: 'story_alignment'
+      });
+    });
+    // Warnings d'ordre ne sont pas ajoutés comme issues (non bloquants)
+    
+    // PHASE 6.3.4: Exposer dans report.debug
+    if (!report.debug) report.debug = {};
+    report.debug.alignment = {
+      required_sections: requiredKeys,
+      detected_sections: presentAfter,
+      inserted_sections: insertedSections,
+      reordered: reordered,
+      missing_after_fix: unresolvedViolations.map(v => v.section)
+    };
+    
+    // PHASE 6.3.4: Log unique
+    console.log(`✅ FINALIZER_ALIGNMENT: required=${requiredKeys.length} present=${presentCount} inserted=${insertedCount} reordered=${reordered ? 1 : 0} status=${status}`);
+    
+    return finalHtml;
+  }
+  
+  /**
+   * PHASE 6.3: Échapper HTML pour sécurité
+   */
+  escapeHtml(text) {
+    if (!text || typeof text !== 'string') return '';
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  /**
+   * PHASE 6.2: Extrait les tokens d'un texte (normalisé, sans stopwords)
+   */
+  extractTokens(text) {
+    if (!text || typeof text !== 'string') return [];
+    
+    // Stopwords FR/EN courants
+    const stopwords = new Set([
+      'le', 'la', 'les', 'un', 'une', 'des', 'de', 'du', 'et', 'ou', 'mais', 'donc', 'car', 'ne', 'pas', 'plus', 'très', 'tout', 'tous', 'toute', 'toutes',
+      'the', 'a', 'an', 'and', 'or', 'but', 'so', 'because', 'not', 'no', 'very', 'all', 'every', 'each',
+      'je', 'tu', 'il', 'elle', 'nous', 'vous', 'ils', 'elles', 'ce', 'cette', 'ces', 'son', 'sa', 'ses',
+      'i', 'you', 'he', 'she', 'we', 'they', 'it', 'this', 'that', 'these', 'those', 'his', 'her', 'its',
+      'être', 'avoir', 'faire', 'dire', 'aller', 'voir', 'savoir', 'vouloir', 'pouvoir', 'devoir',
+      'be', 'have', 'do', 'say', 'go', 'see', 'know', 'want', 'can', 'must', 'should', 'will', 'would'
+    ]);
+    
+    // Normaliser: lowercase, strip accents basique, remove punctuation
+    let normalized = text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .replace(/[^\w\s]/g, ' ') // Remove punctuation
+      .replace(/\s+/g, ' ')
+      .trim();
+    
+    // Split en tokens et filtrer stopwords + tokens trop courts
+    const tokens = normalized
+      .split(/\s+/)
+      .filter(t => t.length > 2 && !stopwords.has(t));
+    
+    return tokens;
   }
 
   /**
