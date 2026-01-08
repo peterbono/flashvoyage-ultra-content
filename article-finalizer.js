@@ -1623,6 +1623,9 @@ class ArticleFinalizer {
     // PHASE 6.3: CHECK G - Story Alignment + Quality Gate (hard check avec auto-fix)
     finalHtml = this.checkAndFixStoryAlignment(finalHtml, pipelineContext, report);
     
+    // PHASE 6.4: Ajouter wrappers premium (takeaways, community, open-questions)
+    finalHtml = this.addPremiumWrappers(finalHtml, pipelineContext, report);
+    
     // PHASE 6.2.3: CHECK B amélioré - Citations Reddit obligatoires et robustes
     // (déjà implémenté, mais améliorer la logique si nécessaire)
     
@@ -2439,6 +2442,157 @@ class ArticleFinalizer {
     return finalHtml;
   }
   
+  /**
+   * PHASE 6.4: Ajouter wrappers premium (takeaways, community, open-questions)
+   * Ajoute des wrappers HTML strictement pilotés par story.*, sans invention
+   */
+  addPremiumWrappers(html, pipelineContext, report) {
+    const story = pipelineContext?.story?.story || pipelineContext?.story || {};
+    const MIN_SECTION_CHARS = 60; // Seuil pour "too short" warning
+    
+    // Définir les wrappers à ajouter (ordre: takeaways -> community -> open-questions)
+    const wrapperDefs = [
+      {
+        key: 'takeaways',
+        dataAttr: 'takeaways',
+        title: 'Ce qu\'il faut retenir',
+        storyKey: 'author_lessons',
+        minItemChars: 10 // Utilise hasUsableList avec min 10
+      },
+      {
+        key: 'community',
+        dataAttr: 'community',
+        title: 'Ce que dit la communauté',
+        storyKey: 'community_insights',
+        minItemChars: 30 // Strict comme dans canInsert
+      },
+      {
+        key: 'open-questions',
+        dataAttr: 'open-questions',
+        title: 'Questions ouvertes',
+        storyKey: 'open_questions',
+        minItemChars: 15 // Comme dans canInsert
+      }
+    ];
+    
+    let finalHtml = html;
+    const insertedWrappers = [];
+    const wrappersToInsert = []; // Stocker tous les wrappers à insérer (ordre: takeaways -> community -> open-questions)
+    
+    // Vérifier si chaque wrapper doit être ajouté et construire le HTML
+    for (const wrapperDef of wrapperDefs) {
+      const storyData = story[wrapperDef.storyKey];
+      
+      // Vérifier si le contenu est "usable"
+      let hasUsableContent = false;
+      if (Array.isArray(storyData)) {
+        hasUsableContent = this.hasUsableList(storyData, wrapperDef.minItemChars);
+      } else if (storyData && typeof storyData === 'object') {
+        // Support pour objets avec value/text/summary/quote
+        const text = storyData.value || storyData.text || storyData.summary || storyData.quote || '';
+        hasUsableContent = this.hasUsableText(text, wrapperDef.minItemChars);
+      } else if (typeof storyData === 'string') {
+        hasUsableContent = this.hasUsableText(storyData, wrapperDef.minItemChars);
+      }
+      
+      if (!hasUsableContent) {
+        continue; // Pas de contenu usable -> ne rien insérer
+      }
+      
+      // Vérifier l'idempotence: ne pas dupliquer si déjà présent
+      const existingWrapperRegex = new RegExp(`<section[^>]*data-fv-block=["']${wrapperDef.dataAttr}["'][^>]*>`, 'i');
+      if (existingWrapperRegex.test(finalHtml)) {
+        continue; // Déjà présent -> idempotent
+      }
+      
+      // Construire le wrapper HTML
+      let wrapperHtml = `<section data-fv-block="${wrapperDef.dataAttr}">\n  <h2>${wrapperDef.title}</h2>\n  <ul>\n`;
+      
+      // Extraire les items et construire les <li>
+      let items = [];
+      if (Array.isArray(storyData)) {
+        items = storyData;
+      } else if (storyData && typeof storyData === 'object') {
+        // Si c'est un objet unique, le traiter comme un item
+        items = [storyData];
+      } else if (typeof storyData === 'string') {
+        items = [storyData];
+      }
+      
+      let totalTextLength = 0;
+      for (const item of items) {
+        // Extraction: item.value || item.text || item.summary || item.quote || string
+        const text = typeof item === 'string' 
+          ? item 
+          : (item.value || item.text || item.summary || item.quote || '');
+        
+        const trimmedText = text ? text.trim() : '';
+        if (trimmedText) {
+          wrapperHtml += `    <li>${this.escapeHtml(trimmedText)}</li>\n`;
+          totalTextLength += trimmedText.length;
+        }
+      }
+      
+      wrapperHtml += `  </ul>\n</section>\n`;
+      
+      // Vérifier "too short" warning (si totalTextLength < MIN_SECTION_CHARS)
+      if (totalTextLength < MIN_SECTION_CHARS) {
+        report.issues.push({
+          code: 'STORY_ALIGNMENT_VIOLATION',
+          message: `Wrapper "${wrapperDef.title}" inséré mais trop court (${totalTextLength} chars, attendu >= ${MIN_SECTION_CHARS})`,
+          severity: 'low',
+          check: 'premium_wrappers'
+        });
+        report.checks.push({
+          name: 'premium_wrapper_length',
+          status: 'warn',
+          details: `Wrapper "${wrapperDef.title}" trop court (${totalTextLength} < ${MIN_SECTION_CHARS})`
+        });
+      }
+      
+      // Stocker le wrapper pour insertion groupée
+      wrappersToInsert.push({
+        key: wrapperDef.key,
+        title: wrapperDef.title,
+        html: wrapperHtml
+      });
+    }
+    
+    // Insérer tous les wrappers en une seule fois (ordre préservé: takeaways -> community -> open-questions)
+    if (wrappersToInsert.length > 0) {
+      const allWrappersHtml = '\n\n' + wrappersToInsert.map(w => w.html).join('\n\n') + '\n\n';
+      
+      // Trouver la position d'insertion: avant "Articles connexes" si existe, sinon en fin
+      const relatedSectionRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
+      const relatedMatch = finalHtml.match(relatedSectionRegex);
+      
+      if (relatedMatch) {
+        // Insérer juste avant "Articles connexes"
+        const insertIndex = relatedMatch.index;
+        finalHtml = finalHtml.slice(0, insertIndex) + allWrappersHtml + finalHtml.slice(insertIndex);
+      } else {
+        // Insérer en fin de contenu
+        finalHtml = finalHtml + allWrappersHtml;
+      }
+      
+      // Enregistrer les actions
+      for (const wrapper of wrappersToInsert) {
+        insertedWrappers.push(wrapper.key);
+        report.actions.push({
+          type: 'inserted_premium_wrapper',
+          details: `wrapper=${wrapper.key} title="${wrapper.title}"`
+        });
+      }
+    }
+    
+    // Log synthèse
+    if (insertedWrappers.length > 0) {
+      console.log(`✅ PREMIUM_WRAPPERS: inserted=${insertedWrappers.length} wrappers=[${insertedWrappers.join(', ')}]`);
+    }
+    
+    return finalHtml;
+  }
+
   /**
    * PHASE 6.3: Échapper HTML pour sécurité
    */
