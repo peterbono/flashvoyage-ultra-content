@@ -1632,6 +1632,9 @@ class ArticleFinalizer {
     // PHASE 6.2.4: CHECK C amélioré - CTA/Affiliate plan: conformité stricte
     // (déjà implémenté, mais améliorer la logique si nécessaire)
     
+    // PHASE 6.5: Blocking Gate - Quality Gate bloquant
+    this.applyBlockingGate(report);
+    
     // Mettre à jour métriques finales
     report.metrics.html_length_after = finalHtml.length;
     
@@ -1922,10 +1925,12 @@ class ArticleFinalizer {
       
       issues.forEach(issue => {
         report.issues.push({
-          code: 'SOURCE_OF_TRUTH_VIOLATION',
+          code: 'SOURCE_OF_TRUTH_VIOLATION_FINALIZER', // PHASE 6.5: Code bloquant normalisé
+          alias: 'SOURCE_OF_TRUTH_VIOLATION', // Alias pour compatibilité
           severity: 'high',
           message: `invention_detected: ${issue.type} "${issue.value}" non sourcé dans whitelist`,
-          evidence: { type: issue.type, value: issue.value, context: issue.context }
+          evidence: { type: issue.type, value: issue.value, context: issue.context },
+          check: 'invention_guard'
         });
       });
     } else {
@@ -2591,6 +2596,78 @@ class ArticleFinalizer {
     }
     
     return finalHtml;
+  }
+
+  /**
+   * PHASE 6.5: Blocking Gate - Quality Gate bloquant
+   * Inspecte report.issues et définit report.blocking et report.status pour violations critiques
+   */
+  applyBlockingGate(report) {
+    // Codes d'issues bloquantes
+    const BLOCKING_ISSUE_CODES = [
+      'SOURCE_OF_TRUTH_VIOLATION_FINALIZER',
+      'SOURCE_OF_TRUTH_VIOLATION', // Alias pour compatibilité
+      'AFFILIATE_INJECTION_FAILED',
+      'AFFILIATE_PLAN_NOT_RESPECTED_FINALIZER'
+    ];
+    
+    // Identifier les issues bloquantes
+    const blockingIssues = report.issues.filter(issue => {
+      const code = issue.code || '';
+      const alias = issue.alias || '';
+      return BLOCKING_ISSUE_CODES.includes(code) || BLOCKING_ISSUE_CODES.includes(alias);
+    });
+    
+    // Définir report.blocking et report.blocking_reasons
+    report.blocking = blockingIssues.length > 0;
+    report.blocking_reasons = blockingIssues.map(issue => ({
+      code: issue.code || issue.alias || 'UNKNOWN',
+      message: issue.message || 'No message',
+      check: issue.check || 'unknown'
+    }));
+    
+    // PHASE 6.5: Forcer report.status = 'fail' UNIQUEMENT si blocking=true
+    // Les autres warnings (STORY_ALIGNMENT_VIOLATION avec severity=low, etc.) ne doivent pas bloquer
+    if (report.blocking) {
+      // Trouver le check global ou le créer
+      let globalCheck = report.checks.find(c => c.name === 'finalizer_blocking_gate');
+      if (!globalCheck) {
+        globalCheck = {
+          name: 'finalizer_blocking_gate',
+          status: 'fail',
+          details: `${blockingIssues.length} blocking issue(s) detected`
+        };
+        report.checks.push(globalCheck);
+      } else {
+        globalCheck.status = 'fail';
+        globalCheck.details = `${blockingIssues.length} blocking issue(s) detected`;
+      }
+      
+      // Définir report.status = 'fail' pour indiquer un échec bloquant
+      report.status = 'fail';
+      
+      // Log bloquant
+      console.log(`❌ FINALIZER_BLOCKING: blocking=true reasons=[${report.blocking_reasons.map(r => r.code).join(', ')}]`);
+    } else {
+      // Ajouter un check pass pour indiquer que le gate a été vérifié
+      report.checks.push({
+        name: 'finalizer_blocking_gate',
+        status: 'pass',
+        details: 'No blocking issues detected'
+      });
+      
+      // PHASE 6.5: Si pas de blocking, le status reste 'pass' ou 'warn' selon les autres checks
+      // Ne pas forcer 'fail' si seulement des warnings non-bloquants
+      const hasBlockingFail = report.checks.some(c => 
+        c.status === 'fail' && 
+        (c.name === 'invention_guard' || c.name === 'affiliate_conformance' || c.name === 'finalizer_blocking_gate')
+      );
+      if (!hasBlockingFail) {
+        // Si pas de fail bloquant, le status peut être 'pass' ou 'warn'
+        const hasWarn = report.checks.some(c => c.status === 'warn');
+        report.status = hasWarn ? 'warn' : 'pass';
+      }
+    }
   }
 
   /**
