@@ -717,9 +717,9 @@ class UltraFreshComplete {
 
   // Scraper Reddit (FIX 2: cascade JSON -> RSS -> fixtures)
   async scrapeReddit() {
-    console.log('🔍 Scraping Reddit r/travel...');
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+      console.log('🔍 Scraping Reddit r/travel...');
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
     return await this.fetchRedditWithCascade(
       'travel',
       ALTERNATIVE_SOURCES.reddit.keywords,
@@ -784,9 +784,9 @@ class UltraFreshComplete {
   // Scraper Reddit Nomade
   // Scraper Reddit Nomad (FIX 2: cascade JSON -> RSS -> fixtures)
   async scrapeRedditNomad() {
-    console.log('🔍 Scraping Reddit Digital Nomad...');
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+      console.log('🔍 Scraping Reddit Digital Nomad...');
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
     return await this.fetchRedditWithCascade(
       'digitalnomad',
       ALTERNATIVE_SOURCES.reddit_nomad.keywords,
@@ -900,11 +900,11 @@ class UltraFreshComplete {
 
       // FIX 5: Google News uniquement si format témoignage non requis
       if (!requireCommunityTestimonial) {
-        const googleArticles = await this.scrapeGoogleNews();
-        allArticles.push(...googleArticles);
+      const googleArticles = await this.scrapeGoogleNews();
+      allArticles.push(...googleArticles);
 
-        const googleNomadArticles = await this.scrapeGoogleNewsNomad();
-        allArticles.push(...googleNomadArticles);
+      const googleNomadArticles = await this.scrapeGoogleNewsNomad();
+      allArticles.push(...googleNomadArticles);
       }
 
       // Si aucune source ne fonctionne, on continue avec 0 articles
@@ -916,41 +916,41 @@ class UltraFreshComplete {
       
       // FIX 5: Sources professionnelles d'actualités uniquement si format témoignage non requis
       if (!requireCommunityTestimonial) {
-        // PRIORITÉ 1: Sources professionnelles d'actualités (CNN, Skift)
-        console.log('📰 Scraping sources professionnelles d\'actualités...');
-        try {
-          // CNN Travel RSS
-          const cnnArticles = await this.scrapeRSSFeed(
-            'http://rss.cnn.com/rss/edition_travel.rss',
-            'CNN Travel',
-            ['asia', 'travel', 'thailand', 'japan', 'korea', 'singapore', 'vietnam', 'philippines', 'indonesia', 'visa', 'nomad']
-          );
-          allArticles.push(...cnnArticles);
-          console.log(`✅ CNN Travel: ${cnnArticles.length} articles trouvés`);
-        } catch (error) {
-          console.log(`⚠️ CNN Travel échoué: ${error.message}`);
-        }
+      // PRIORITÉ 1: Sources professionnelles d'actualités (CNN, Skift)
+      console.log('📰 Scraping sources professionnelles d\'actualités...');
+      try {
+        // CNN Travel RSS
+        const cnnArticles = await this.scrapeRSSFeed(
+          'http://rss.cnn.com/rss/edition_travel.rss',
+          'CNN Travel',
+          ['asia', 'travel', 'thailand', 'japan', 'korea', 'singapore', 'vietnam', 'philippines', 'indonesia', 'visa', 'nomad']
+        );
+        allArticles.push(...cnnArticles);
+        console.log(`✅ CNN Travel: ${cnnArticles.length} articles trouvés`);
+      } catch (error) {
+        console.log(`⚠️ CNN Travel échoué: ${error.message}`);
+      }
 
-        try {
-          // Skift RSS
-          const skiftArticles = await this.scrapeRSSFeed(
-            'https://skift.com/feed/',
-            'Skift',
-            ['asia', 'travel', 'tourism', 'hotel', 'airline', 'visa', 'nomad', 'digital nomad', 'remote work']
-          );
-          allArticles.push(...skiftArticles);
-          console.log(`✅ Skift: ${skiftArticles.length} articles trouvés`);
-        } catch (error) {
-          console.log(`⚠️ Skift échoué: ${error.message}`);
-        }
+      try {
+        // Skift RSS
+        const skiftArticles = await this.scrapeRSSFeed(
+          'https://skift.com/feed/',
+          'Skift',
+          ['asia', 'travel', 'tourism', 'hotel', 'airline', 'visa', 'nomad', 'digital nomad', 'remote work']
+        );
+        allArticles.push(...skiftArticles);
+        console.log(`✅ Skift: ${skiftArticles.length} articles trouvés`);
+      } catch (error) {
+        console.log(`⚠️ Skift échoué: ${error.message}`);
+      }
 
-        // PRIORITÉ 3: Google News
-        const googleArticles = await this.scrapeGoogleNews();
-        allArticles.push(...googleArticles);
+      // PRIORITÉ 3: Google News
+      const googleArticles = await this.scrapeGoogleNews();
+      allArticles.push(...googleArticles);
 
-        // Scraper Google News Nomade
-        const googleNomadArticles = await this.scrapeGoogleNewsNomad();
-        allArticles.push(...googleNomadArticles);
+      // Scraper Google News Nomade
+      const googleNomadArticles = await this.scrapeGoogleNewsNomad();
+      allArticles.push(...googleNomadArticles);
       }
 
       // PRIORITÉ 2: Reddit (mode local) - TOUJOURS activé (source principale pour témoignages)

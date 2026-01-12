@@ -198,11 +198,11 @@ class ContextualLinkIntegrator {
       
       if (isExternalLink) {
         externalLinksToIntegrate.push({
-          anchor: link.anchor_text,
-          url: linkUrl,
-          title: linkTitle,
-          relevance_score: link.relevance_score || 5
-        });
+            anchor: link.anchor_text,
+            url: linkUrl,
+            title: linkTitle,
+            relevance_score: link.relevance_score || 5
+          });
       } else {
         // Liens internes à traiter séparément
         internalLinks.push(link);
@@ -305,43 +305,43 @@ class ContextualLinkIntegrator {
 
       // NOUVEAU: Isolation par lien avec try/catch
       try {
-        // Si un seul lien (ou groupe non regroupé), insertion simple
-        if (nearbyLinks.length === 1) {
+      // Si un seul lien (ou groupe non regroupé), insertion simple
+      if (nearbyLinks.length === 1) {
           const link = nearbyLinks[0];
-          const insertionResult = this.insertSingleExternalLink(
-            updatedContent,
+        const insertionResult = this.insertSingleExternalLink(
+          updatedContent,
             link.anchor,
             link.url,
             link.title,
-            nearbyKeyword,
-            nearbyPosition,
-            context
-          );
-          
-          if (insertionResult.inserted) {
-            updatedContent = insertionResult.content;
-            linksIntegrated++;
+          nearbyKeyword,
+          nearbyPosition,
+          context
+        );
+        
+        if (insertionResult.inserted) {
+          updatedContent = insertionResult.content;
+          linksIntegrated++;
             externalLinksInserted++;
             console.log(`✅ EXTERNAL_LINK_INSERTED: label="${link.anchor}", url="${link.url}", method="single"`);
           } else {
             console.log(`⏭️ EXTERNAL_LINK_SKIPPED: label="${link.anchor}", reason="insertion failed"`);
-          }
-        } else {
-          // Plusieurs liens (même mot-clé ou liens proches) → générer une phrase structurée
-          const insertionResult = await this.insertMultipleExternalLinks(
-            updatedContent,
-            nearbyLinks,
-            nearbyKeyword,
-            nearbyPosition,
-            context
-          );
-          
-          if (insertionResult.inserted) {
-            updatedContent = insertionResult.content;
-            linksIntegrated += nearbyLinks.length;
+        }
+      } else {
+        // Plusieurs liens (même mot-clé ou liens proches) → générer une phrase structurée
+        const insertionResult = await this.insertMultipleExternalLinks(
+          updatedContent,
+          nearbyLinks,
+          nearbyKeyword,
+          nearbyPosition,
+          context
+        );
+        
+        if (insertionResult.inserted) {
+          updatedContent = insertionResult.content;
+          linksIntegrated += nearbyLinks.length;
             externalLinksInserted += nearbyLinks.length;
             console.log(`✅ EXTERNAL_LINK_INSERTED: ${nearbyLinks.length} liens groupés, method="multiple"`);
-            nearbyLinks.forEach(link => {
+          nearbyLinks.forEach(link => {
               console.log(`   - label="${link.anchor}", url="${link.url}"`);
             });
           } else {
@@ -409,7 +409,7 @@ class ContextualLinkIntegrator {
         if (validation.reason && (validation.reason.includes('contexte') || validation.reason.includes('insuffisant') || validation.reason.includes('introuvable'))) {
           console.log(`   ⚠️ INTERNAL_LINK_REJECTED_CONTEXT_NOT_FOUND: anchor="${candidateAnchor}" reason="${validation.reason}"`);
         } else {
-          console.log(`⏭️ [INTERNE] Contexte insuffisant pour "${candidateAnchor}" (${validation.reason}) - Lien ignoré`);
+        console.log(`⏭️ [INTERNE] Contexte insuffisant pour "${candidateAnchor}" (${validation.reason}) - Lien ignoré`);
         }
         linksSkipped++;
         continue;
@@ -957,7 +957,7 @@ class ContextualLinkIntegrator {
     
     for (const match of matches) {
       const matchIndex = match.index;
-      
+    
       // Vérifier que ce n'est pas déjà dans un lien
       if (this.isKeywordInLink(htmlContent, matchIndex, keyword)) {
         continue;
@@ -970,27 +970,27 @@ class ContextualLinkIntegrator {
       
       // Vérifier le contexte avant
       const beforeText = htmlContent.substring(0, matchIndex);
-      const plainBefore = beforeText.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-      
-      if (plainBefore.length < 20) {
+    const plainBefore = beforeText.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    
+    if (plainBefore.length < 20) {
         continue;
-      }
-      
+    }
+    
       // Vérifier que ce n'est pas au début d'un paragraphe
       const isAtParagraphStart = /<p[^>]*>\s*$/i.test(beforeText) || /<strong[^>]*>\s*$/i.test(beforeText);
-      if (isAtParagraphStart) {
+    if (isAtParagraphStart) {
         continue;
-      }
-      
+    }
+    
       // Trouvé ! Insérer le lien
       const afterText = htmlContent.substring(matchIndex + match[0].length);
       const contextBeforeShort = plainBefore.substring(Math.max(0, plainBefore.length - 50));
-      
+    
       // Structure selon contexte
       let newContent;
-      if (contextBeforeShort.match(/\b(à|en|dans|sur)\s+$/i)) {
+    if (contextBeforeShort.match(/\b(à|en|dans|sur)\s+$/i)) {
         newContent = beforeText + ' (comme ' + linkHtml + ')' + afterText;
-      } else {
+    } else {
         newContent = beforeText + ', notamment ' + linkHtml + afterText;
       }
       
@@ -1093,7 +1093,7 @@ Génère une phrase de transition naturelle qui introduit ces liens de manière 
       if (!this.openai) {
         throw new Error('OpenAI non disponible (FORCE_OFFLINE=1 ou clé API manquante)');
       }
-      
+
       const response = await this.openai.chat.completions.create({
         model: 'gpt-4o',
         messages: [

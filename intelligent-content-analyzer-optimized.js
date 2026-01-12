@@ -436,10 +436,10 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
       const responseData = await callOpenAIWithRetry({
         apiKey: this.apiKey,
         body: {
-          model: 'gpt-4',
-          messages: [{ role: 'user', content: prompt }],
-          max_tokens: 600,
-          temperature: 0.3
+        model: 'gpt-4',
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 600,
+        temperature: 0.3
         },
         sourceText: article.content || article.source_text || '',
         article: article,
@@ -613,14 +613,14 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
     const responseData = await callOpenAIWithRetry({
       apiKey: this.apiKey,
       body: {
-        model: 'gpt-4o',
-        messages: [
-          { role: 'system', content: systemMessage },
-          { role: 'user', content: userMessage }
-        ],
-        max_tokens: 800,
-        temperature: 0.7,
-        response_format: { type: "json_object" }
+      model: 'gpt-4o',
+      messages: [
+        { role: 'system', content: systemMessage },
+        { role: 'user', content: userMessage }
+      ],
+      max_tokens: 800,
+      temperature: 0.7,
+      response_format: { type: "json_object" }
       },
       sourceText: fullContent,
       article: extracted, // Utiliser extracted comme article pour compatibilité
@@ -830,14 +830,14 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
     const responseData = await callOpenAIWithRetry({
       apiKey: this.apiKey,
       body: {
-        model: 'gpt-4o',
-        messages: [
-          { role: 'system', content: systemMessage },
-          { role: 'user', content: userMessage }
-        ],
-        max_tokens: 1500,
-        temperature: 0.7,
-        response_format: { type: "json_object" }
+      model: 'gpt-4o',
+      messages: [
+        { role: 'system', content: systemMessage },
+        { role: 'user', content: userMessage }
+      ],
+      max_tokens: 1500,
+      temperature: 0.7,
+      response_format: { type: "json_object" }
       },
       sourceText: extraction.citations?.join(' ') || userMessage,
       article: extracted, // Utiliser extracted comme article pour compatibilité
@@ -971,11 +971,11 @@ Réponse JSON:`;
       const responseData = await callOpenAIWithRetry({
         apiKey: this.apiKey,
         body: {
-          model: 'gpt-4',
-          messages: [{ role: 'user', content: simplePrompt }],
-          max_tokens: 2000,
-          temperature: 0.7,
-          response_format: { type: "json_object" }
+        model: 'gpt-4',
+        messages: [{ role: 'user', content: simplePrompt }],
+        max_tokens: 2000,
+        temperature: 0.7,
+        response_format: { type: "json_object" }
         },
         sourceText: article.content || article.source_text || '',
         article: article,
@@ -1365,37 +1365,37 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
       }
       
       try {
-        const response = await axios.get(article.link, {
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'DNT': '1',
-            'Connection': 'keep-alive',
-            'Upgrade-Insecure-Requests': '1'
-          },
-          timeout: 10000
-        });
+      const response = await axios.get(article.link, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.5',
+          'Accept-Encoding': 'gzip, deflate, br',
+          'DNT': '1',
+          'Connection': 'keep-alive',
+          'Upgrade-Insecure-Requests': '1'
+        },
+        timeout: 10000
+      });
 
-        const html = response.data;
-        const contentMatch = html.match(/<article[^>]*>(.*?)<\/article>/s) || 
-                            html.match(/<main[^>]*>(.*?)<\/main>/s) ||
-                            html.match(/<div[^>]*class="[^"]*content[^"]*"[^>]*>(.*?)<\/div>/s);
+      const html = response.data;
+      const contentMatch = html.match(/<article[^>]*>(.*?)<\/article>/s) || 
+                          html.match(/<main[^>]*>(.*?)<\/main>/s) ||
+                          html.match(/<div[^>]*class="[^"]*content[^"]*"[^>]*>(.*?)<\/div>/s);
+      
+      if (contentMatch) {
+        const content = contentMatch[1]
+          .replace(/<script[^>]*>.*?<\/script>/gs, '')
+          .replace(/<style[^>]*>.*?<\/style>/gs, '')
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
         
-        if (contentMatch) {
-          const content = contentMatch[1]
-            .replace(/<script[^>]*>.*?<\/script>/gs, '')
-            .replace(/<style[^>]*>.*?<\/style>/gs, '')
-            .replace(/<[^>]+>/g, ' ')
-            .replace(/\s+/g, ' ')
-            .trim();
-          
-          console.log(`✅ Contenu extrait: ${content.length} caractères`);
-          return content.substring(0, 3000);
-        }
+        console.log(`✅ Contenu extrait: ${content.length} caractères`);
+        return content.substring(0, 3000);
+      }
 
-        console.log('⚠️ Impossible d\'extraire le contenu - Utilisation du contenu disponible');
+      console.log('⚠️ Impossible d\'extraire le contenu - Utilisation du contenu disponible');
         return article.content || article.source_text || 'Contenu non disponible';
       } catch (error) {
         const status = error.response?.status;

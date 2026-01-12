@@ -170,13 +170,13 @@ export class WidgetPlanBuilder {
       const destination = this.getDestinationFromCity(geo.city);
       if (destination && nearestHub) {
         console.log(`   ✓ Geo construite depuis geo.city: ${geo.city}, nearest_hub=${nearestHub}`);
-        return {
+    return {
           country: geo.country || null,
           city: geo.city,
           nearest_hub: nearestHub,
           origin: 'PAR',
-          destination: destination
-        };
+      destination: destination
+    };
       }
     }
     

@@ -85,7 +85,7 @@ export class AnchorTextValidator {
         suggestion: cleaned || normalized
       };
     }
-    
+
     // 3. Vérifier les patterns invalides (HTML, URLs, code)
     for (const pattern of this.invalidPatterns) {
       if (pattern.test(normalized)) {
@@ -116,8 +116,8 @@ export class AnchorTextValidator {
       valid: true,
       reason: 'Ancre valide',
       suggestion: normalized
-    };
-  }
+      };
+    }
 
 
   /**

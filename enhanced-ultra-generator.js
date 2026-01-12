@@ -604,6 +604,15 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // PATCH 1: Passer pipelineContext à finalizeArticle
       const finalizedArticle = await this.articleFinalizer.finalizeArticle(finalArticle, analysis, pipelineContext);
       
+      // PHASE 6.5: Vérifier le blocking gate
+      if (finalizedArticle.qaReport?.blocking === true) {
+        const reasons = finalizedArticle.qaReport.blocking_reasons || [];
+        const reasonsStr = reasons.map(r => `${r.code}: ${r.message}`).join('; ');
+        console.error(`\n❌ FINALIZER_BLOCKING_GATE_FAILED: ${reasons.length} blocking issue(s) detected`);
+        console.error(`   Reasons: ${reasonsStr}`);
+        throw new Error(`SOURCE_OF_TRUTH_VIOLATION_FINALIZER: Finalizer blocking gate failed. ${reasonsStr}`);
+      }
+      
       // 8c. Récupérer l'image featured
       const featuredImage = await this.articleFinalizer.getFeaturedImage(finalizedArticle, analysis);
       if (featuredImage) {

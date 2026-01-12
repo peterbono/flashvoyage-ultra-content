@@ -245,7 +245,7 @@ class ArticleFinalizer {
     }
 
     // PHASE 6.1: QA Report déterministe
-    const qaReport = this.runQAReport(finalContent, pipelineContext, analysis);
+    const qaReport = await this.runQAReport(finalContent, pipelineContext, analysis);
     finalContent = qaReport.finalHtml;
     
     // Log synthèse QA
@@ -1236,7 +1236,7 @@ class ArticleFinalizer {
    * @param {Object} analysis - Analyse de l'article
    * @returns {Object} Rapport QA avec checks, actions, issues, metrics
    */
-  runQAReport(html, pipelineContext, analysis) {
+  async runQAReport(html, pipelineContext, analysis) {
     const report = {
       checks: [],
       actions: [],
@@ -1631,6 +1631,9 @@ class ArticleFinalizer {
     
     // PHASE 6.2.4: CHECK C amélioré - CTA/Affiliate plan: conformité stricte
     // (déjà implémenté, mais améliorer la logique si nécessaire)
+    
+    // PHASE 7.1.d: Anti-Hallucination Guard (non bloquant par défaut)
+    await this.checkAntiHallucination(finalHtml, pipelineContext, report);
     
     // PHASE 6.5: Blocking Gate - Quality Gate bloquant
     this.applyBlockingGate(report);
@@ -2608,14 +2611,22 @@ class ArticleFinalizer {
       'SOURCE_OF_TRUTH_VIOLATION_FINALIZER',
       'SOURCE_OF_TRUTH_VIOLATION', // Alias pour compatibilité
       'AFFILIATE_INJECTION_FAILED',
-      'AFFILIATE_PLAN_NOT_RESPECTED_FINALIZER'
+      'AFFILIATE_PLAN_NOT_RESPECTED_FINALIZER',
+      'ANTI_HALLUCINATION_BLOCK' // PHASE 7.1.d: Anti-hallucination blocking (si severity=high)
     ];
     
     // Identifier les issues bloquantes
     const blockingIssues = report.issues.filter(issue => {
       const code = issue.code || '';
       const alias = issue.alias || '';
-      return BLOCKING_ISSUE_CODES.includes(code) || BLOCKING_ISSUE_CODES.includes(alias);
+      const isBlockingCode = BLOCKING_ISSUE_CODES.includes(code) || BLOCKING_ISSUE_CODES.includes(alias);
+      
+      // Pour ANTI_HALLUCINATION_BLOCK, vérifier que severity=high (mode bloquant activé)
+      if (code === 'ANTI_HALLUCINATION_BLOCK') {
+        return isBlockingCode && issue.severity === 'high';
+      }
+      
+      return isBlockingCode;
     });
     
     // Définir report.blocking et report.blocking_reasons
@@ -2667,6 +2678,96 @@ class ArticleFinalizer {
         const hasWarn = report.checks.some(c => c.status === 'warn');
         report.status = hasWarn ? 'warn' : 'pass';
       }
+    }
+  }
+
+  /**
+   * PHASE 7.1.d: Anti-Hallucination Guard
+   * Détecte les hallucinations dans le texte éditorial en comparant avec le truth pack
+   */
+  async checkAntiHallucination(html, pipelineContext, report) {
+    try {
+      // Importer le guard dynamiquement
+      const { runAntiHallucinationGuard } = await import('./src/anti-hallucination/anti-hallucination-guard.js');
+      
+      const extracted = pipelineContext?.extracted || {};
+      
+      // Exécuter le guard
+      const guardResult = await runAntiHallucinationGuard({
+        html,
+        extracted,
+        context: pipelineContext
+      });
+      
+      // Log standard
+      const reasonsStr = guardResult.reasons.length > 0 
+        ? guardResult.reasons.join(', ') 
+        : 'none';
+      console.log(`✅ ANTI_HALLUCINATION: status=${guardResult.status} blocking=${guardResult.blocking} reasons=[${reasonsStr}]`);
+      
+      // Si blocking=true, ajouter une issue
+      // Par défaut, ne pas bloquer sauf si ENABLE_ANTI_HALLUCINATION_BLOCKING === "1"
+      const shouldBlock = process.env.ENABLE_ANTI_HALLUCINATION_BLOCKING === '1';
+      
+      // Déterminer le status du check
+      let checkStatus = 'pass';
+      if (guardResult.blocking) {
+        // Si blocking=true et flag activé → fail, sinon → warn
+        checkStatus = shouldBlock ? 'fail' : 'warn';
+      } else if (guardResult.status === 'warn') {
+        checkStatus = 'warn';
+      }
+      
+      report.checks.push({
+        name: 'anti_hallucination',
+        status: checkStatus,
+        details: guardResult.reasons.length > 0 
+          ? `${guardResult.reasons.length} issue(s): ${reasonsStr}` 
+          : 'No hallucinations detected'
+      });
+      
+      // Si blocking=true, ajouter une issue
+      if (guardResult.blocking) {
+        report.issues.push({
+          code: 'ANTI_HALLUCINATION_BLOCK',
+          severity: shouldBlock ? 'high' : 'medium',
+          message: `Anti-hallucination guard detected ${guardResult.reasons.length} blocking issue(s)`,
+          evidence: guardResult.evidence,
+          check: 'anti_hallucination'
+        });
+      }
+      
+      // Ajouter les warnings (non bloquants)
+      if (guardResult.status === 'warn' && !guardResult.blocking) {
+        guardResult.evidence.forEach(evidence => {
+          report.issues.push({
+            code: 'ANTI_HALLUCINATION_WARNING',
+            severity: 'low',
+            message: evidence.why,
+            evidence: { type: evidence.type, text: evidence.text },
+            check: 'anti_hallucination'
+          });
+        });
+      }
+      
+      // Exposer dans debug si présent
+      if (!report.debug) report.debug = {};
+      report.debug.anti_hallucination = {
+        status: guardResult.status,
+        blocking: guardResult.blocking,
+        reasons: guardResult.reasons,
+        evidence_count: guardResult.evidence.length,
+        included_len: guardResult.debug?.included_len || 0
+      };
+      
+    } catch (error) {
+      // En cas d'erreur, logger mais ne pas bloquer
+      console.warn('⚠️ Erreur anti-hallucination guard (fallback silencieux):', error.message);
+      report.checks.push({
+        name: 'anti_hallucination',
+        status: 'warn',
+        details: `Error: ${error.message}`
+      });
     }
   }
 

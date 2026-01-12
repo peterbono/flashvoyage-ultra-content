@@ -178,7 +178,7 @@ Réponds UNIQUEMENT en JSON valide.`;
       if (!this.openai) {
         throw new Error('OpenAI non disponible (FORCE_OFFLINE=1 ou clé API manquante)');
       }
-      
+
       const response = await this.openai.chat.completions.create({
         model: "gpt-4o",
         messages: [{ role: "user", content: prompt }],
@@ -424,9 +424,9 @@ Réponds UNIQUEMENT en JSON valide.`;
         return { ok: false, reasons, debug };
         } else {
         reasons.push(`Contexte vol approprié (${flightMentions} mentions)`);
+        }
       }
-    }
-    
+      
     // VÉRIFICATION 2: Scoring familial avec triggers forts/faibles
     const familyValidation = this.validateFamilyContext(lowerContent, widget.slot);
     debug.familyTriggersStrong = familyValidation.triggersStrong;
@@ -1016,7 +1016,7 @@ ${widgetScript}
       cheerioLib = cheerioModule.default || cheerioModule;
     } catch (error) {
       // Cheerio non disponible, utiliser fallback
-    }
+      }
     
     // Essayer cheerio si disponible
     if (cheerioLib) {
@@ -1046,14 +1046,14 @@ ${widgetScript}
         relatedSection.before(widgetBlock);
         console.log(`✅ Mode BEFORE_RELATED: insertion avant "Articles connexes" (DOM)`);
         return $.html();
-      }
-      
+    }
+    
       // PRIORITÉ 2: Après le 2e <p> substantiel (DOM)
       const paragraphs = body.find('p').filter((i, el) => {
         const text = $(el).text().trim();
         return text.length > 50; // Paragraphe substantiel (>50 chars)
       });
-      
+    
       if (paragraphs.length >= 2) {
         const secondP = paragraphs.eq(1);
         secondP.after(widgetBlock);
@@ -1074,8 +1074,8 @@ ${widgetScript}
           console.log(`✅ Mode AFTER_H2: insertion après le premier H2/H3 (pas de P suivant, DOM)`);
         }
         return $.html();
-      }
-      
+    }
+    
       // PRIORITÉ 4: Après le 1er paragraphe (DOM)
       const firstP = body.find('p').first();
       if (firstP.length > 0) {
@@ -1110,7 +1110,7 @@ ${widgetScript}
     if (relatedSectionIndex !== -1) {
       console.log(`✅ Mode BEFORE_RELATED: insertion avant "Articles connexes" (fallback structure)`);
       return content.slice(0, relatedSectionIndex) + '\n\n' + widgetBlock + '\n\n' + content.slice(relatedSectionIndex);
-    }
+      }
     
     // PRIORITÉ 2: Après le 2e <p> substantiel (regex améliorée)
     const pRegex = /<p[^>]*>([^<]*(?:<[^>]+>[^<]*)*?)<\/p>/gi;
