@@ -1,0 +1,54 @@
+{
+  "articles": [
+    {
+      "id": 1,
+      "slug": "guide-visa-thailande",
+      "title": "Guide complet du visa Thaïlande pour nomades digitaux",
+      "url": "https://flashvoyage.com/guide-visa-thailande/",
+      "category": "visa",
+      "keywords": ["visa", "thaïlande", "thailand", "nomade", "digital", "working", "remote"],
+      "excerpt": "Tout ce qu'il faut savoir sur les visas en Thaïlande pour les nomades digitaux."
+    },
+    {
+      "id": 2,
+      "slug": "coworking-bangkok",
+      "title": "Les meilleurs espaces de coworking à Bangkok",
+      "url": "https://flashvoyage.com/coworking-bangkok/",
+      "category": "coworking",
+      "keywords": ["coworking", "bangkok", "espace", "travail", "nomade", "digital"],
+      "excerpt": "Découvrez les meilleurs espaces de coworking à Bangkok pour les nomades digitaux."
+    },
+    {
+      "id": 3,
+      "slug": "cout-vie-bangkok",
+      "title": "Coût de la vie à Bangkok : budget mensuel pour nomades",
+      "url": "https://flashvoyage.com/cout-vie-bangkok/",
+      "category": "budget",
+      "keywords": ["budget", "coût", "vie", "bangkok", "mensuel", "nomade"],
+      "excerpt": "Détails du coût de la vie à Bangkok pour les nomades digitaux."
+    },
+    {
+      "id": 4,
+      "slug": "visa-vietnam",
+      "title": "Visa Vietnam : guide pour nomades digitaux",
+      "url": "https://flashvoyage.com/visa-vietnam/",
+      "category": "visa",
+      "keywords": ["visa", "vietnam", "nomade", "digital", "working", "remote"],
+      "excerpt": "Comment obtenir un visa pour le Vietnam en tant que nomade digital."
+    },
+    {
+      "id": 5,
+      "slug": "quartiers-bangkok",
+      "title": "Où vivre à Bangkok : guide des meilleurs quartiers",
+      "url": "https://flashvoyage.com/quartiers-bangkok/",
+      "category": "logement",
+      "keywords": ["quartier", "bangkok", "vivre", "logement", "nomade"],
+      "excerpt": "Les meilleurs quartiers de Bangkok pour les nomades digitaux."
+    }
+  ],
+  "blacklist": [
+    "spam",
+    "test",
+    "draft"
+  ]
+}
