@@ -1,13 +1,88 @@
 name: Auto Publish Ultra Content
 on:
+  # DÉSACTIVÉ: Auto-publish complètement désactivé
   # schedule:
-  #   - cron: '0 9 * * *'  # Tous les jours à 9h UTC (11h française) - PAUSÉ
-  workflow_dispatch:  # Permet de déclencher manuellement
+  #   - cron: '0 9 * * *'  # Tous les jours à 9h UTC (11h française) - DÉSACTIVÉ
+  # push:
+  #   branches:
+  #     - main  # DÉSACTIVÉ
+  # pull_request:
+  #   branches:
+  #     - main  # DÉSACTIVÉ
+  workflow_dispatch:  # UNIQUEMENT déclenchement manuel
 
 jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+    name: Quality Gate Tests
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install dependencies
+        run: |
+          npm cache clean --force
+          npm install
+          
+      - name: Run Alignment Tests
+        run: node scripts/test-article-finalizer-alignment.js
+        env:
+          FORCE_OFFLINE: '1'
+          FLASHVOYAGE_DRY_RUN: '1'
+          
+      - name: Run Anti-Invention Tests
+        run: node scripts/test-article-finalizer-anti-invention.js
+        env:
+          FORCE_OFFLINE: '1'
+          FLASHVOYAGE_DRY_RUN: '1'
+          
+      - name: Run Blocking Source of Truth Tests
+        run: node scripts/test-article-finalizer-blocking-source-of-truth.js
+        env:
+          FORCE_OFFLINE: '1'
+          FLASHVOYAGE_DRY_RUN: '1'
+          
+      - name: Run Blocking Affiliate Tests
+        run: node scripts/test-article-finalizer-blocking-affiliate.js
+        env:
+          FORCE_OFFLINE: '1'
+          FLASHVOYAGE_DRY_RUN: '1'
+          
+      - name: Run Anti-Hallucination Tests
+        run: node scripts/test-phase-7.js
+        env:
+          FORCE_OFFLINE: '1'
+          FLASHVOYAGE_DRY_RUN: '1'
+          ENABLE_ANTI_HALLUCINATION_BLOCKING: '1'
+          
+      - name: Run SEO Quality Gate Tests
+        run: node scripts/test-seo-quality-gate.js
+        env:
+          FORCE_OFFLINE: '1'
+          FLASHVOYAGE_DRY_RUN: '1'
+          
+      - name: Run E2E Pipeline Quality Gate Tests
+        run: node scripts/test-pipeline-quality-gate-offline.js
+        env:
+          FORCE_OFFLINE: '1'
+          FLASHVOYAGE_DRY_RUN: '1'
+          
+      - name: Check for Blocking Issues
+        run: |
+          echo "✅ Tous les tests quality gate sont passés"
+          echo "📅 Date: $(date)"
+          echo "🔍 Aucun blocking détecté - Publication autorisée"
+          
   publish:
     runs-on: ubuntu-latest
     name: Generate and Publish Ultra Content
+    needs: quality-gate  # Ne s'exécute que si quality-gate passe
     
     steps:
       - name: Checkout code
@@ -46,7 +121,7 @@ jobs:
           echo "🌏 FlashVoyages - Votre spécialiste du voyage en Asie"
           echo "✈️ Données Amadeus intégrées"
           echo "📡 740 articles RSS analysés"
-          echo "⚠️  PUBLICATION MANUELLE - Automatisation en pause"
+          echo "✅ Quality gate passée - Publication validée"
           
       - name: Notify Failure
         if: failure()
