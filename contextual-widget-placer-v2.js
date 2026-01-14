@@ -811,9 +811,11 @@ Réponds UNIQUEMENT en JSON valide.`;
       usedContexts.add(intro.context);
 
       const widgetBlock = `
+<div data-fv-segment="affiliate">
 <p>${intro.context}</p>
 <p><strong>${intro.cta}</strong></p>
 ${widgetScript}
+</div>
 `;
 
       // 3. Insérer le widget avec placement déterministe (ignorer widget.position et widget.section_title)
@@ -913,13 +915,15 @@ ${widgetScript}
         // Récupérer les destinations depuis widgetPlan.geo_defaults
         console.log(`🔍 DEBUG getWidgetScript: widgetPlan.geo_defaults:`, widgetPlan?.geo_defaults);
         
-        // Vérifier que destination existe (pas de fallback BKK)
-        if (!widgetPlan.geo_defaults.destination) {
-          console.log('⚠️ Destination manquante dans geo_defaults → widget FLIGHTS désactivé');
+        // RÈGLE ABSOLUE: Pas de destination OU pas d'origin = pas de widget
+        if (!widgetPlan.geo_defaults.destination || !widgetPlan.geo_defaults.origin) {
+          console.log('⚠️ Origin ou Destination manquante dans geo_defaults → widget FLIGHTS désactivé');
+          console.log(`   origin: ${widgetPlan.geo_defaults.origin || 'MANQUANT'}`);
+          console.log(`   destination: ${widgetPlan.geo_defaults.destination || 'MANQUANT'}`);
           return null;
         }
         
-        const origin = widgetPlan.geo_defaults.origin || 'PAR';
+        const origin = widgetPlan.geo_defaults.origin;
         const destination = widgetPlan.geo_defaults.destination;
         
         console.log(`🔍 DEBUG getWidgetScript: origin=${origin}, destination=${destination}`);

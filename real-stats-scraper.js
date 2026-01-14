@@ -272,11 +272,25 @@ export class RealStatsScraper {
 
   /**
    * Génère des contextes FOMO avec stats réelles
+   * RÈGLE ABSOLUE: Pas de geo = pas de FOMO (refus de publier avec des données inventées)
    */
   async generateFOMOContext(widgetType, geoData = {}) {
-    const origin = geoData.origin || 'PAR';
-    const destination = geoData.destination || 'BKK';
-    const city = geoData.city || 'Bangkok';
+    // RÈGLE ABSOLUE: Vérifier que les données géo sont présentes
+    if (widgetType === 'flights') {
+      if (!geoData.origin || !geoData.destination) {
+        throw new Error(`ERREUR CRITIQUE: origin ou destination manquant pour widget flights. Refus de générer un FOMO avec des données inventées.`);
+      }
+    }
+    
+    if (widgetType === 'hotels') {
+      if (!geoData.city) {
+        throw new Error(`ERREUR CRITIQUE: city manquant pour widget hotels. Refus de générer un FOMO avec des données inventées.`);
+      }
+    }
+    
+    const origin = geoData.origin;
+    const destination = geoData.destination;
+    const city = geoData.city;
 
     let stats;
     let context;

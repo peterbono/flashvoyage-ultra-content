@@ -689,18 +689,50 @@ function analyzeComments(flatComments, postText) {
   const consensus = [];
   const additionalFacts = [];
   
+  console.log(`🔍 DEBUG analyzeComments: Analyse de ${flatComments.length} commentaires`);
+  
+  // DEBUG: Afficher les 3 premiers commentaires
+  if (flatComments.length > 0) {
+    console.log(`🔍 DEBUG Premier commentaire (score ${flatComments[0].score}): ${flatComments[0].body.substring(0, 100)}...`);
+  }
+  if (flatComments.length > 1) {
+    console.log(`🔍 DEBUG Deuxième commentaire (score ${flatComments[1].score}): ${flatComments[1].body.substring(0, 100)}...`);
+  }
+  
   const postLower = postText.toLowerCase();
   const postSentences = postText.split(/[.!?]+/).filter(s => s.trim().length > 20);
   
   // 1. Insights (conseils ou retours d'expérience distincts)
+  let skippedTooShort = 0;
+  let skippedNoPattern = 0;
+  
   for (const comment of flatComments) {
     const body = cleanRedditText(comment.body);
-    if (body.length < 50) continue; // Filtrer one-liners
+    if (body.length < 50) {
+      skippedTooShort++;
+      continue; // Filtrer one-liners
+    }
     
     const lowerBody = body.toLowerCase();
     
-    // Détecter conseil ou retour d'expérience
-    if (/\b(i\s+recommend|i\s+suggest|my\s+experience|in\s+my\s+case|je\s+recommande|mon\s+expérience|dans\s+mon\s+cas)\b/i.test(body)) {
+    // Détecter conseil ou retour d'expérience (ASSOUPLIR LES REGEX)
+    const insightPatterns = [
+      /\b(i\s+recommend|i\s+suggest|you\s+should|try|consider|i('d| would)\s+say)\b/i,
+      /\b(my\s+experience|in\s+my\s+case|when\s+i\s+was|i('ve| have)\s+(been|lived|stayed))\b/i,
+      /\b(je\s+recommande|mon\s+expérience|dans\s+mon\s+cas|j'ai\s+vécu)\b/i,
+      /\b(vietnam|thailand|bali|malaysia|philippines)\b/i, // Mention de destination = insight potentiel
+      /\b(cheap|budget|cost|price|affordable)\b/i // Mention de coût = insight potentiel
+    ];
+    
+    let matchedPattern = false;
+    for (const pattern of insightPatterns) {
+      if (pattern.test(body)) {
+        matchedPattern = true;
+        break;
+      }
+    }
+    
+    if (matchedPattern) {
       const quote = extractSentenceQuote(body, 0, 300);
       insights.push({
         value: quote.substring(0, 150),
@@ -709,34 +741,48 @@ function analyzeComments(flatComments, postText) {
         author: comment.author,
         score: comment.score
       });
+    } else {
+      skippedNoPattern++;
     }
   }
   
-  // 2. Warnings
+  console.log(`🔍 DEBUG Insights: ${insights.length} trouvés, ${skippedTooShort} trop courts, ${skippedNoPattern} sans pattern`);
+  
+  // 2. Warnings (ASSOUPLIR)
   const warningPatterns = [
-    /\b(beware|warning|attention|avoid|scam|arnaque|danger|risque)\s+([^.!?]+)/gi,
-    /\b(attention|attention|évite|évitez|danger|risque)\s+([^.!?]+)/gi
+    /\b(beware|warning|attention|avoid|don't|don't|careful|watch\s+out|scam|arnaque|danger|risque)\s+([^.!?]+)/gi,
+    /\b(not\s+recommend|wouldn't\s+recommend|avoid|skip|évite|évitez|pas\s+recommand)\s+([^.!?]+)/gi,
+    /\b(problem|issue|difficult|hard|tough|expensive|problème|difficulté)\s+([^.!?]+)/gi
   ];
   
   for (const comment of flatComments) {
     const body = cleanRedditText(comment.body);
+    if (body.length < 30) continue; // Filtrer commentaires trop courts
+    
     const lowerBody = body.toLowerCase();
     
+    // Check si le commentaire contient un pattern de warning
+    let hasWarningPattern = false;
     for (const pattern of warningPatterns) {
-      let match;
-      while ((match = pattern.exec(body)) !== null) {
-        const value = match[2] || match[0];
-        const quote = extractSentenceQuote(body, match.index, 200);
-        warnings.push({
-          value: value.trim().substring(0, 100),
-          quote,
-          source: `comment:${comment.id}`,
-          author: comment.author,
-          score: comment.score
-        });
+      if (pattern.test(body)) {
+        hasWarningPattern = true;
+        break;
       }
     }
+    
+    if (hasWarningPattern && comment.score >= 1) { // Limiter aux warnings avec upvotes
+      const quote = extractSentenceQuote(body, 0, 250);
+      warnings.push({
+        value: quote.substring(0, 100),
+        quote,
+        source: `comment:${comment.id}`,
+        author: comment.author,
+        score: comment.score
+      });
+    }
   }
+  
+  console.log(`🔍 DEBUG Warnings: ${warnings.length} trouvés`);
   
   // 3. Contradictions (commentaire contredit le post) - STRICT
   const contradictionMarkers = [
@@ -853,34 +899,29 @@ function analyzeComments(flatComments, postText) {
     }
   }
   
-  // Construire consensus: keys présentes dans ≥2 commentaires différents
-  for (const [key, commentIds] of consensusMap.entries()) {
-    if (commentIds.size >= 2) {
-      // Récupérer les quotes des commentaires concernés
-      const evidenceQuotes = [];
-      for (const commentId of commentIds) {
-        const comment = flatComments.find(c => c.id === commentId);
-        if (comment) {
-          const body = cleanRedditText(comment.body);
-          const quote = extractSentenceQuote(body, 0, 200);
-          evidenceQuotes.push({
-            quote,
-            source: `comment:${comment.id}`,
-            author: comment.author,
-            score: comment.score
-          });
-        }
-      }
-      
-      if (evidenceQuotes.length >= 2) {
-        consensus.push({
-          value: key.substring(0, 150),
-          count: commentIds.size,
-          examples: evidenceQuotes.slice(0, 2) // Max 2 exemples
-        });
-      }
-    }
+  // SIMPLIFIÉ: Tout commentaire populaire (score ≥ 4) = consensus communauté
+  const consensusComments = flatComments
+    .filter(c => c.score >= 4 && cleanRedditText(c.body).length >= 40)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5); // Top 5 commentaires max
+  
+  for (const comment of consensusComments) {
+    const body = cleanRedditText(comment.body);
+    const quote = extractSentenceQuote(body, 0, 250);
+    consensus.push({
+      value: quote.substring(0, 100),
+      quote,
+      count: comment.score, // Score = nombre d'upvotes
+      examples: [{
+        quote,
+        source: `comment:${comment.id}`,
+        author: comment.author,
+        score: comment.score
+      }]
+    });
   }
+  
+  console.log(`🔍 DEBUG Consensus: ${consensus.length} trouvés`);
   
   // 5. Additional facts (nouveaux coûts, lieux, démarches)
   for (const comment of flatComments) {
@@ -1033,7 +1074,12 @@ export function extractRedditSemantics(thread) {
   };
   
   // Analyser commentaires
+  console.log(`🔍 DEBUG Extractor: ${flatComments.length} commentaires reçus`);
   const commentAnalysis = analyzeComments(flatComments, fullPostText);
+  console.log(`🔍 DEBUG Extractor: insights=${commentAnalysis.insights.length} warnings=${commentAnalysis.warnings.length} consensus=${commentAnalysis.consensus.length}`);
+  
+  // Extraire destination principale (première location détectée)
+  const mainDestination = signals.locations[0] || null;
   
   // Construire output
   const output = {
@@ -1046,6 +1092,9 @@ export function extractRedditSemantics(thread) {
       author: post.author || '[deleted]',
       created_utc: post.created_utc || 0
     },
+    destination: mainDestination,
+    destinations: signals.locations,
+    geo: mainDestination ? { city: mainDestination, country: null } : {},
     post: {
       clean_text: postText,
       signals,

@@ -1056,7 +1056,11 @@ class SeoOptimizer {
           // Construire le nouveau heading
           let newHeading = mapping.template;
           for (const [key, value] of Object.entries(replacements)) {
-            newHeading = newHeading.replace(`{${key}}`, value);
+            // Capitaliser la première lettre pour les noms de lieux
+            const capitalizedValue = key === 'place' || key === 'primaryTopic' 
+              ? value.charAt(0).toUpperCase() + value.slice(1)
+              : value;
+            newHeading = newHeading.replace(`{${key}}`, capitalizedValue);
           }
           
           // Vérifier que tous les tokens ajoutés sont dans la whitelist

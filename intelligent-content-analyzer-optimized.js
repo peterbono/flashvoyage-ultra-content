@@ -1,19 +1,96 @@
 #!/usr/bin/env node
 
 import axios from 'axios';
-import { OPENAI_API_KEY } from './config.js';
+import { OPENAI_API_KEY, DRY_RUN, FORCE_OFFLINE } from './config.js';
 import { extractRedditForAnalysis, isDestinationQuestion, extractMainDestination } from './reddit-extraction-adapter.js';
 import { detectRedditPattern } from './reddit-pattern-detector.js';
 import { compileRedditStory } from './reddit-story-compiler.js';
 
-// 2) Utilitaire pour sécuriser tous les JSON.parse
+// 2) Utilitaire pour sécuriser tous les JSON.parse avec réparation automatique
 function safeJsonParse(str, label = 'json') {
   if (!str || typeof str !== 'string' || str.trim().length === 0) {
     throw new Error(`SAFE_JSON_PARSE_EMPTY: ${label}`);
   }
+  
   try {
     return JSON.parse(str);
   } catch (e) {
+    // Tentative de réparation si JSON incomplet (tronqué)
+    if (e.message.includes('Unexpected end of JSON input') || e.message.includes('end of data')) {
+      console.warn(`⚠️ JSON tronqué détecté pour ${label} - Tentative de réparation...`);
+      
+      // Stratégie 1: Chercher le dernier objet/array valide
+      let repaired = str.trim();
+      
+      // Si le JSON commence par { mais ne se termine pas par }, essayer de fermer
+      if (repaired.startsWith('{') && !repaired.endsWith('}')) {
+        // Compter les accolades ouvertes/fermées
+        let openBraces = 0;
+        let lastValidPos = -1;
+        for (let i = 0; i < repaired.length; i++) {
+          if (repaired[i] === '{') openBraces++;
+          if (repaired[i] === '}') openBraces--;
+          if (openBraces === 0 && i > 0) {
+            lastValidPos = i;
+          }
+        }
+        
+        if (lastValidPos > 0) {
+          repaired = repaired.substring(0, lastValidPos + 1);
+          try {
+            return JSON.parse(repaired);
+          } catch (e2) {
+            // Si ça échoue, continuer avec les autres stratégies
+          }
+        }
+        
+        // Stratégie 2: Fermer toutes les structures ouvertes
+        let openCount = (repaired.match(/\{/g) || []).length;
+        let closeCount = (repaired.match(/\}/g) || []).length;
+        let missingCloses = openCount - closeCount;
+        
+        if (missingCloses > 0) {
+          // Retirer les virgules finales et fermer les structures
+          repaired = repaired.replace(/,\s*$/, '');
+          for (let i = 0; i < missingCloses; i++) {
+            repaired += '}';
+          }
+          
+          try {
+            return JSON.parse(repaired);
+          } catch (e3) {
+            // Si ça échoue encore, essayer d'extraire un objet partiel
+          }
+        }
+      }
+      
+      // Stratégie 3: Extraire un objet JSON partiel valide
+      const jsonMatch = repaired.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        try {
+          return JSON.parse(jsonMatch[0]);
+        } catch (e4) {
+          // Dernière tentative: créer un objet minimal avec ce qui est disponible
+          console.warn(`⚠️ Réparation JSON échouée pour ${label} - Utilisation d'un objet minimal`);
+          return {
+            citations: [],
+            donnees_cles: { titre: label, contenu: 'JSON tronqué - contenu non disponible' },
+            structure: {},
+            enseignements: [],
+            defis: [],
+            strategies: [],
+            resultats: [],
+            couts: [],
+            erreurs: [],
+            specificites: [],
+            comparaisons: [],
+            conseils: []
+          };
+        }
+      }
+    }
+    
+    // Si aucune réparation n'a fonctionné, throw avec preview
     const preview = str.slice(0, 200).replace(/\s+/g, ' ');
     throw new Error(`SAFE_JSON_PARSE_FAIL: ${label} msg=${e.message} preview="${preview}"`);
   }
@@ -22,8 +99,8 @@ function safeJsonParse(str, label = 'json') {
 // C) Wrapper LLM avec retry + fallback template DRY_RUN
 async function callOpenAIWithRetry(config, retries = 3) {
   const timeout = parseInt(process.env.OPENAI_TIMEOUT_MS || '60000', 10);
-  const isDryRun = process.env.FLASHVOYAGE_DRY_RUN === '1';
-  const forceOffline = process.env.FORCE_OFFLINE === '1';
+  const isDryRun = DRY_RUN;
+  const forceOffline = FORCE_OFFLINE;
   
   const backoffDelays = [1000, 3000, 7000];
   
@@ -156,6 +233,77 @@ class IntelligentContentAnalyzerOptimized {
     this.apiKey = OPENAI_API_KEY;
   }
 
+  /**
+   * Traduit un texte anglais en français
+   * @param {string} text - Texte à traduire
+   * @returns {Promise<string>} Texte traduit en français
+   */
+  async translateToFrench(text) {
+    if (!text || !text.trim()) return text;
+    
+    const isDryRun = DRY_RUN;
+    
+    // Sans clé API, retourner le texte tel quel (pas de traduction)
+    if (!this.apiKey) {
+      console.warn(`⚠️ Traduction désactivée (pas de clé API): texte non traduit`);
+      return text;
+    }
+    
+    // NOTE: On ne bloque PLUS la traduction en mode FORCE_OFFLINE
+    // car la traduction est essentielle pour la qualité du contenu
+    
+    try {
+      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+        model: 'gpt-4o-mini', // Modèle moins cher pour la traduction
+        messages: [
+          {
+            role: 'system',
+            content: 'Tu es un traducteur professionnel. Traduis le texte fourni de l\'anglais vers le français. Garde le ton et le style du texte original. Réponds uniquement avec la traduction, sans commentaires.'
+          },
+          {
+            role: 'user',
+            content: text
+          }
+        ],
+        temperature: 0.3,
+        max_tokens: Math.min(1000, text.length * 2) // Limiter les tokens
+      }, {
+        headers: {
+          'Authorization': `Bearer ${this.apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        timeout: 10000 // Timeout court pour la traduction
+      });
+      
+      const translated = response.data.choices[0].message.content.trim();
+      console.log(`✅ Texte traduit: ${text.substring(0, 50)}... → ${translated.substring(0, 50)}...`);
+      return translated;
+    } catch (error) {
+      console.warn(`⚠️ Erreur lors de la traduction: ${error.message}. Texte non traduit.`);
+      return text; // Retourner le texte original en cas d'erreur
+    }
+  }
+
+  /**
+   * Détecte si un texte est majoritairement en anglais
+   * @param {string} text - Texte à analyser
+   * @returns {Object} { isEnglish: boolean, ratio: number }
+   */
+  detectEnglishContent(text) {
+    if (!text || !text.trim()) return { isEnglish: false, ratio: 0 };
+    
+    const englishWordsPattern = /\b(the|a|an|is|are|was|were|have|has|had|will|would|can|could|should|this|that|these|those|I|you|he|she|it|we|they|in|on|at|to|for|of|with|from|by|as|be|been|being|do|does|did|get|got|go|went|come|came|see|saw|know|knew|think|thought|say|said|make|made|take|took|give|gave|find|found|work|worked|use|used|try|tried|want|wanted|need|needed|like|liked|look|looked|running|business|abroad|anyone|built|trade|services|themselves|moved|company|digital|nomad|currently|early|20s|always|planned|stay|self|employed|cleaner|painter|own|home|improvement|however|recently|been|considering|career|change|question|questions|has|anyone|built|up|then|moved|running|domestic|training|painting|decorating|hi|r\/travel|happy|following|last|year|survey|decided|make|few|changes|things|like|flair|how|subreddit|run|concerns|regarding|rules|details|asking|too|much|mod|team|easier|original|author|provide|all|information|commenters|pick|out|still|available|here|wiki)\b/gi;
+    const englishWords = (text.match(englishWordsPattern) || []).length;
+    const totalWords = text.split(/\s+/).length;
+    const ratio = totalWords > 0 ? englishWords / totalWords : 0;
+    
+    // Considérer comme anglais si >30% de mots anglais et au moins 5 mots
+    return {
+      isEnglish: ratio > 0.3 && totalWords >= 5,
+      ratio: ratio
+    };
+  }
+
   // 3) Implémenter un fallback OFFLINE complet
   // PHASE 4.1: Utilise extracted au lieu de selectedArticle
   buildOfflineFallbackArticle(extracted, analysis) {
@@ -224,9 +372,9 @@ class IntelligentContentAnalyzerOptimized {
       }
     }
     
-    // INTÉGRATION PHASE 2: Pattern Detector (derrière flag ENABLE_PATTERN_DETECTOR)
-    // Appelé même si extractRedditForAnalysis échoue (fonction pure, pas de dépendance)
-    if (process.env.ENABLE_PATTERN_DETECTOR === '1' && (isRedditArticle || article.subreddit)) {
+    // OBSOLETE: Pattern Detector appelé ici (double détection inutile, déjà dans pipeline-runner.js)
+    // Le flag ENABLE_PATTERN_DETECTOR est désactivé car redondant avec pipeline-runner.js:runPatternDetector()
+    if (false && process.env.ENABLE_PATTERN_DETECTOR === '1' && (isRedditArticle || article.subreddit)) {
       try {
         const patternInput = {
           title: article.title || '',
@@ -251,8 +399,9 @@ class IntelligentContentAnalyzerOptimized {
           redditData = { pattern };
         }
         
-        // PHASE 3: Story Compiler (derrière flag ENABLE_STORY_COMPILER)
-        if (process.env.ENABLE_STORY_COMPILER === '1' && article) {
+        // OBSOLETE: Story Compiler appelé ici (double détection inutile, déjà dans pipeline-runner.js)
+        // Le flag ENABLE_STORY_COMPILER est désactivé car redondant avec pipeline-runner.js:runStoryCompiler()
+        if (false && process.env.ENABLE_STORY_COMPILER === '1' && article) {
           try {
             const storyInput = {
               reddit: {
@@ -438,7 +587,7 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
         body: {
         model: 'gpt-4',
         messages: [{ role: 'user', content: prompt }],
-        max_tokens: 600,
+        max_tokens: 1500, // Augmenté pour éviter les troncatures
         temperature: 0.3
         },
         sourceText: article.content || article.source_text || '',
@@ -446,7 +595,18 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
         type: 'analysis'
       });
 
-      const analysis = safeJsonParse(responseData.choices[0].message.content, 'call1_response');
+      // Vérifier que la réponse contient du contenu
+      if (!responseData.choices || !responseData.choices[0] || !responseData.choices[0].message || !responseData.choices[0].message.content) {
+        throw new Error('Réponse LLM invalide: contenu manquant (analyzeContent)');
+      }
+      
+      const rawContent = responseData.choices[0].message.content;
+      const finishReason = responseData.choices[0].finish_reason;
+      if (finishReason === 'length') {
+        console.warn('⚠️ Réponse LLM tronquée (finish_reason=length) dans analyzeContent - Tentative de réparation JSON');
+      }
+      
+      const analysis = safeJsonParse(rawContent, 'call1_response');
       // Verrouiller le type pour le plan de widgets
       analysis.type = analysis.type_contenu || analysis.type || 'Témoignage';
       
@@ -477,6 +637,20 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
           if (analysis.type_contenu !== 'COMPARAISON_DESTINATIONS' && analysis.type_contenu !== 'GUIDE_PRATIQUE') {
             analysis.type_contenu = 'COMPARAISON_DESTINATIONS';
             analysis.type = 'COMPARAISON_DESTINATIONS';
+            // FIX: S'assurer que analysis.pattern est défini quand on force le type
+            if (!analysis.pattern) {
+              analysis.pattern = {
+                story_type: 'comparison',
+                theme_primary: 'destination_comparison',
+                themes_secondary: [],
+                emotional_load: { score: 0, label: 'low', signals: [] },
+                exploitable_events: { count: 0, events: [] },
+                complexity: { score: 0, label: 'low', signals: [] },
+                comments_utility: { score: 0, label: 'low', signals: [], sample_count: 0 },
+                confidence: { score: 0.7, notes: ['Pattern créé automatiquement pour COMPARAISON_DESTINATIONS'] }
+              };
+              console.log('   → Pattern créé pour COMPARAISON_DESTINATIONS');
+            }
             console.log('   → Type changé en COMPARAISON_DESTINATIONS');
           }
         }
@@ -545,7 +719,7 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
     console.log('✅ ULTRA_FRESH_INPUT_READY: extracted + pattern + story received');
     
     // 1) Court-circuit OFFLINE au tout début (avant tout appel LLM / JSON.parse)
-    const offline = process.env.FORCE_OFFLINE === '1';
+    const offline = FORCE_OFFLINE;
     const apiKey = process.env.OPENAI_API_KEY;
     
     if (offline || !apiKey || apiKey.startsWith('invalid-')) {
@@ -554,12 +728,12 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
     }
     
     try {
-      console.log('🔍 DEBUG: Author dans extracted:', extracted.author);
-      // Utiliser extracted.selftext directement (plus de extractFullContent)
-      const fullContent = extracted.selftext || '';
+      console.log('🔍 DEBUG: Author dans extracted:', extracted.source?.author || extracted.author);
+      // Utiliser extracted.post.clean_text ou extracted.selftext (compatibilité)
+      const fullContent = extracted.post?.clean_text || extracted.selftext || extracted.post?.selftext || '';
       
       if (!fullContent || fullContent.length < 200) {
-        throw new Error(`CONTENU INSUFFISANT: extracted.selftext length=${fullContent.length} < 200`);
+        throw new Error(`CONTENU INSUFFISANT: extracted.post.clean_text length=${fullContent.length} < 200`);
       }
       
       // APPEL 1 : Extraction et structure
@@ -575,11 +749,17 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
     } catch (error) {
       console.error('❌ Erreur génération intelligente:', error.message);
       // 4) Modifier la logique "Refus de publier du contenu générique"
-      const offline = process.env.FORCE_OFFLINE === '1';
+      const offline = FORCE_OFFLINE;
       if (offline) {
         console.log(`⚠️ OFFLINE_FALLBACK_ON_ERROR: ${error.message}`);
         return this.buildOfflineFallbackArticle(extracted, analysis);
       }
+      // Si c'est une erreur de parsing JSON, essayer un fallback même en production
+      if (error.message.includes('SAFE_JSON_PARSE_FAIL') || error.message.includes('JSON') || error.message.includes('Unexpected end')) {
+        console.warn('⚠️ Erreur parsing JSON en production - Fallback vers contenu offline');
+        return this.buildOfflineFallbackArticle(extracted, analysis);
+      }
+      
       // ONLINE: si LLM fail → throw (retry géré par l'appelant)
       throw new Error(`ERREUR TECHNIQUE: Impossible de générer le contenu pour "${extracted.title}". Refus de publier du contenu générique.`);
     }
@@ -618,7 +798,7 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
         { role: 'system', content: systemMessage },
         { role: 'user', content: userMessage }
       ],
-      max_tokens: 800,
+      max_tokens: 2000, // Augmenté pour éviter les troncatures
       temperature: 0.7,
       response_format: { type: "json_object" }
       },
@@ -627,7 +807,20 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
       type: 'extraction'
     });
 
-    const content = safeJsonParse(responseData.choices[0].message.content, 'extractAndStructure_response');
+    // Vérifier que la réponse contient du contenu
+    if (!responseData.choices || !responseData.choices[0] || !responseData.choices[0].message || !responseData.choices[0].message.content) {
+      throw new Error('Réponse LLM invalide: contenu manquant');
+    }
+    
+    const rawContent = responseData.choices[0].message.content;
+    
+    // Vérifier si la réponse est tronquée (finish_reason = 'length')
+    const finishReason = responseData.choices[0].finish_reason;
+    if (finishReason === 'length') {
+      console.warn('⚠️ Réponse LLM tronquée (finish_reason=length) - Tentative de réparation JSON');
+    }
+    
+    const content = safeJsonParse(rawContent, 'extractAndStructure_response');
     console.log('✅ Extraction terminée:', Object.keys(content));
     return content;
   }
@@ -689,9 +882,55 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
     const storyCentralEvent = story.story.central_event?.summary || null;
     const storyCriticalMoment = story.story.critical_moment?.summary || null;
     const storyResolution = story.story.resolution?.summary || null;
-    const storyAuthorLessons = story.story.author_lessons || [];
-    const storyCommunityInsights = story.story.community_insights || [];
-    const storyOpenQuestions = story.story.open_questions || [];
+    // Extraire les leçons de l'auteur (peuvent être des objets { lesson, evidence_snippet } ou des strings)
+    const storyAuthorLessonsRaw = story.story.author_lessons || [];
+    const storyAuthorLessons = storyAuthorLessonsRaw.map(item => {
+      if (typeof item === 'string') return item;
+      return item.lesson || item.value || item.text || item.summary || '';
+    }).filter(l => l && l.trim());
+    
+    const storyCommunityInsightsRaw = story.story.community_insights || [];
+    let storyCommunityInsights = storyCommunityInsightsRaw.map(item => {
+      if (typeof item === 'string') return item;
+      return item.value || item.text || item.summary || item.quote || item.insight || '';
+    }).filter(i => i && i.trim());
+    
+    // DÉDUPLICATION NORMALISÉE des insights AVANT envoi au LLM
+    if (storyCommunityInsights.length > 0) {
+      const normalize = (text) => text.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
+      const seen = new Set();
+      const uniqueInsights = [];
+      for (const insight of storyCommunityInsights) {
+        const normalized = normalize(insight);
+        if (!seen.has(normalized)) {
+          seen.add(normalized);
+          uniqueInsights.push(insight);
+        }
+      }
+      if (uniqueInsights.length < storyCommunityInsights.length) {
+        console.log(`   🧹 Insights dédupliqués: ${storyCommunityInsights.length} → ${uniqueInsights.length} (${storyCommunityInsights.length - uniqueInsights.length} doublons supprimés)`);
+      }
+      storyCommunityInsights = uniqueInsights;
+    }
+    
+    // TRADUCTION DES INSIGHTS COMMUNAUTAIRES EN FRANÇAIS
+    if (storyCommunityInsights.length > 0) {
+      const insightsText = storyCommunityInsights.join('\n');
+      const englishDetection = this.detectEnglishContent(insightsText);
+      
+      if (englishDetection.isEnglish && englishDetection.ratio > 0.3) {
+        console.log(`🌐 Insights communauté détectés en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+        const translatedText = await this.translateToFrench(insightsText);
+        // Re-splitter les insights traduits
+        storyCommunityInsights = translatedText.split('\n').filter(i => i.trim());
+      }
+    }
+    
+    const storyOpenQuestionsRaw = story.story.open_questions || [];
+    const storyOpenQuestions = storyOpenQuestionsRaw.map(item => {
+      if (typeof item === 'string') return item;
+      return item.value || item.text || item.summary || item.question || '';
+    }).filter(q => q && q.trim());
 
     // Extraire les citations depuis evidence
     const evidenceSnippets = story.evidence?.source_snippets || [];
@@ -700,13 +939,40 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
       .map(s => s.snippet.substring(0, 200))
       .slice(0, 5); // Max 5 citations
 
-    const systemMessage = `Tu es un expert FlashVoyages. Crée un article premium "FlashVoyage Premium" avec une structure stricte basée sur le squelette narratif fourni.
+    const systemMessage = `Tu es un expert FlashVoyages. Rédige un article engageant basé sur le témoignage Reddit.
+
+📝 RÈGLES POUR LE TITRE (OBLIGATOIRE):
+- Format SEO optimisé avec DESTINATION + THÈME/ACTION
+- Exemples BONS:
+  ✅ "Visa Nomade Digital en Thaïlande : Mon Retour d'Expérience 2024"
+  ✅ "Vivre à Bali avec 1000€/mois : Budget Réaliste pour Nomades"
+  ✅ "Arnaque eSIM en Indonésie : Comment je l'ai évitée"
+- Exemples MAUVAIS (trop fades):
+  ❌ "Témoignage voyage: retours et leçons"
+  ❌ "Mon expérience en Asie"
+- Le titre DOIT contenir une destination asiatique précise (ville ou pays)
+- Le titre DOIT être actionnable et spécifique
+- Maximum 70 caractères pour le SEO
+
+⚠️ INTERDICTION DE RÉPÉTER LE BLOCKQUOTE:
+- Le blockquote principal apparaît UNE SEULE FOIS dans l'article
+- NE JAMAIS répéter le titre du post Reddit dans le corps de l'article
 
 ${correctionBlock}
 ⚠️ CONTRAINTE CRITIQUE ABSOLUE: Ce site est spécialisé ASIE uniquement. 
 - NE MENTIONNE JAMAIS de destinations non-asiatiques (Portugal, Espagne, Lisbonne, Barcelone, Madrid, Porto, France, Paris, Italie, Rome, Grèce, Turquie, Istanbul, Europe, Amérique, USA, Brésil, Mexique, etc.)
 - Utilise UNIQUEMENT des destinations asiatiques: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
 - Si le témoignage mentionne une destination non-asiatique, remplace-la par une destination asiatique équivalente ou ignore-la complètement
+
+🌐 LANGUE OBLIGATOIRE: TOUT le contenu doit être en FRANÇAIS. 
+- ❌ INTERDIT: "Indonesia just launched..." → ✅ CORRECT: "L'Indonésie vient de lancer..."
+- ❌ INTERDIT: "Thailand LTR visa is available..." → ✅ CORRECT: "Le visa LTR de Thaïlande est disponible..."
+- ❌ INTERDIT: "Vietnam doesn't have..." → ✅ CORRECT: "Le Vietnam n'a pas..."
+- ❌ INTERDIT: "The regular tourist visa..." → ✅ CORRECT: "Le visa touristique régulier..."
+- ❌ INTERDIT: "Requirements are reasonable..." → ✅ CORRECT: "Les exigences sont raisonnables..."
+- Traduis TOUS les textes anglais en français AVANT de les mettre dans le JSON
+- Ne laisse AUCUN texte en anglais dans le contenu final
+- VÉRIFIE que chaque champ du JSON est en français avant de répondre
 
 🚨 GARDE-FOUS EXPLICITES (SOURCE OF TRUTH):
 - N'invente aucun fait
@@ -715,7 +981,7 @@ ${correctionBlock}
 - Priorité absolue à la fidélité de la source
 - Toutes les sections doivent être traçables au story.evidence
 
-📐 STRUCTURE OBLIGATOIRE "FLASHVOYAGE PREMIUM" (dans cet ordre exact) :
+📐 STRUCTURE OBLIGATOIRE (dans cet ordre exact) :
 
 1. CONTEXTE (OBLIGATOIRE)
    - Reformulation neutre de story.context.summary
@@ -744,22 +1010,31 @@ ${correctionBlock}
    - SÉPARÉ visuellement de la communauté
 
 6. CE QUE LA COMMUNAUTÉ APPORTE (CONDITIONNEL)
+   ⚠️ ATTENTION : UNE SEULE FOIS ! Ne JAMAIS créer "Ce que dit la communauté" ou toute variante
    - Séparé visuellement de l'auteur (H2 distinct)
    - Basé uniquement sur story.community_insights
    - Format: <h2>Ce que la communauté apporte</h2><ul><li>Insight 1</li></ul>
    - Si vide → section absente
    - AUCUNE fusion avec l'auteur
+   - ❌ NE PAS créer "Ce que dit la communauté" ou "Ce que la communauté apporte (suite)"
 
-7. QUESTIONS ENCORE OUVERTES (CONDITIONNEL)
-   - Basé uniquement sur story.open_questions
-   - Format: <ul><li>Question 1</li><li>Question 2</li></ul>
-   - Si vide → section absente
+7. NOS RECOMMANDATIONS (OBLIGATOIRE - MARKETING-FIRST)
+   ⚠️ NE JAMAIS utiliser "Questions ouvertes" - c'est anti-marketing !
+   - TOUJOURS donner des recommandations FERMES et ACTIONNABLES
+   - Format: <h2>🎯 Nos recommandations : Par où commencer ?</h2>
+   - Structure: 3 options classées (🥇 #1, 🥈 #2, 🥉 #3)
+   - Pour chaque option: budget réaliste, avantages (✅), inconvénients (⚠️)
+   - Inclure CTAs clairs: "Voir les forfaits", "Comparer les prix", etc.
+   - Budgets RÉALISTES (jamais < 700 USD/mois pour Asie)
+   - Basé sur story evidence + extracted locations
+   - Si données insuffisantes: recommander destinations génériques (Vietnam, Thaïlande, Malaisie)
 
-📝 UTILISATION CONTRÔLÉE DES CITATIONS REDDIT :
-- Citations ≤ 2 lignes maximum
-- Toujours entre guillemets français : « ... »
-- Toujours attribuées : « ... » — ${extracted.author || 'auteur Reddit'}
-- Uniquement si cela renforce la compréhension, jamais décoratif
+📝 INTERDICTION STRICTE - NE JAMAIS GÉNÉRER DE <blockquote> :
+- ❌ INTERDIT TOTAL : <blockquote>, <cite>, <q> ou tout élément similaire
+- ❌ MÊME PAS pour des citations Reddit - le système les ajoutera automatiquement
+- Si tu génères un <blockquote>, l'article sera REJETÉ
+- Citations courtes (≤ 2 lignes) UNIQUEMENT entre guillemets : « ... »
+- Attribution : « ... » — ${extracted.author || 'auteur Reddit'}
 - Utilise les citations disponibles depuis story.evidence.source_snippets
 
 🎯 TON ET STYLE :
@@ -772,7 +1047,13 @@ ${correctionBlock}
 ${marketingSection}
 
 FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <blockquote>, <strong>
-LONGUEUR: 1200-1800 mots (plus dense, zéro répétition)
+LONGUEUR MINIMALE OBLIGATOIRE: 2000-3000 mots
+⚠️ IMPORTANT: Chaque section doit être DÉVELOPPÉE et DÉTAILLÉE
+- Contexte: minimum 200 mots avec tous les détails disponibles
+- Événement central: minimum 300 mots avec chronologie précise
+- Moment critique: minimum 200 mots si disponible
+- Résolution: minimum 200 mots si disponible
+- Développe TOUS les points issus du story, ne résume pas !
 
 ⚠️ STRUCTURE JSON OBLIGATOIRE :
 {
@@ -784,7 +1065,7 @@ LONGUEUR: 1200-1800 mots (plus dense, zéro répétition)
     "resolution": "...",  // Section 4 (si story.resolution.summary existe, sinon null)
     "lecons_auteur": "...",  // Section 5 (si story.author_lessons non vide, sinon null)
     "insights_communaute": "...",  // Section 6 (si story.community_insights non vide, sinon null)
-    "questions_ouvertes": "...",  // Section 7 (si story.open_questions non vide, sinon null)
+    "recommandations": "...",  // Section 7 OBLIGATOIRE (3 options classées avec budgets + CTAs)
     "citations": [...],  // Citations courtes depuis evidence (max 5)
     "signature": "..."
   }
@@ -801,6 +1082,30 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 
     // PHASE 4.2: User message basé sur story, pattern, extracted
     // PHASE 4.2: User message basé sur story, pattern, extracted
+    // ENRICHISSEMENT: Extraire les données structurées depuis extracted
+    const extractedSignals = extracted.post?.signals || {};
+    const extractedComments = extracted.comments || {};
+    
+    // Formater les données extraites pour le prompt
+    const locationsData = extractedSignals.locations?.slice(0, 5).join(', ') || '';
+    const datesData = extractedSignals.dates?.slice(0, 3).join(', ') || '';
+    const costsData = extractedSignals.costs?.slice(0, 5).join(', ') || '';
+    const eventsData = extractedSignals.events?.slice(0, 3).join(', ') || '';
+    const problemsData = extractedSignals.problems?.slice(0, 3).join(', ') || '';
+    
+    // Insights communauté
+    const insightsData = extractedComments.insights?.slice(0, 3)
+      .map(i => `"${i.value}"`)
+      .join(', ') || '';
+    
+    const warningsData = extractedComments.warnings?.slice(0, 2)
+      .map(w => `"${w.value}"`)
+      .join(', ') || '';
+    
+    const consensusData = extractedComments.consensus?.slice(0, 2)
+      .map(c => `"${c.value}" (${c.count}x)`)
+      .join(', ') || '';
+
     const userMessage = `TITRE: ${extracted.title || 'Témoignage Reddit'}
 AUTEUR: ${extracted.author || 'auteur Reddit'}
 
@@ -809,6 +1114,16 @@ AUTEUR: ${extracted.author || 'auteur Reddit'}
 - Thème: ${pattern.theme_primary || 'non spécifié'}
 - Charge émotionnelle: ${pattern.emotional_load?.label || 'non spécifiée'}
 - Complexité: ${pattern.complexity?.label || 'non spécifiée'}
+
+📍 DONNÉES EXTRAITES (à intégrer naturellement):
+${locationsData ? `- Destinations: ${locationsData}` : ''}
+${datesData ? `- Dates: ${datesData}` : ''}
+${costsData ? `- Coûts: ${costsData}` : ''}
+${eventsData ? `- Événements: ${eventsData}` : ''}
+${problemsData ? `- Problèmes: ${problemsData}` : ''}
+${insightsData ? `- Insights communauté: ${insightsData}` : ''}
+${warningsData ? `- Warnings communauté: ${warningsData}` : ''}
+${consensusData ? `- Consensus: ${consensusData}` : ''}
 
 📖 SQUELETTE NARRATIF (story):
 ${storyContext ? `CONTEXTE: ${storyContext}` : 'CONTEXTE: null (section absente)'}
@@ -826,6 +1141,21 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
 
     console.log(`📏 Taille system: ${systemMessage.length} caractères`);
     console.log(`📏 Taille user: ${userMessage.length} caractères`);
+    
+    // DEBUG: Afficher les données disponibles
+    console.log(`\n🔍 DEBUG DONNÉES DISPONIBLES POUR LE LLM:`);
+    console.log(`   📍 Locations: ${locationsData || 'VIDE'}`);
+    console.log(`   📅 Dates: ${datesData || 'VIDE'}`);
+    console.log(`   💰 Coûts: ${costsData || 'VIDE'}`);
+    console.log(`   🎯 Événements: ${eventsData || 'VIDE'}`);
+    console.log(`   ⚠️  Problèmes: ${problemsData || 'VIDE'}`);
+    console.log(`   💬 Insights: ${insightsData || 'VIDE'}`);
+    console.log(`   🚨 Warnings: ${warningsData || 'VIDE'}`);
+    console.log(`   ✅ Consensus: ${consensusData || 'VIDE'}`);
+    console.log(`   📖 Story Context: ${storyContext ? storyContext.substring(0, 80) + '...' : 'NULL'}`);
+    console.log(`   📖 Story Lessons: ${storyAuthorLessons.length} leçons`);
+    console.log(`   📖 Story Insights: ${storyCommunityInsights.length} insights`);
+    console.log(`   📖 Story Questions: ${storyOpenQuestions.length} questions\n`);
 
     const responseData = await callOpenAIWithRetry({
       apiKey: this.apiKey,
@@ -835,17 +1165,42 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
         { role: 'system', content: systemMessage },
         { role: 'user', content: userMessage }
       ],
-      max_tokens: 1500,
+      max_tokens: 4000, // Augmenté pour article plus riche
       temperature: 0.7,
       response_format: { type: "json_object" }
       },
-      sourceText: extraction.citations?.join(' ') || userMessage,
+      sourceText: (Array.isArray(extraction.citations) ? extraction.citations.join(' ') : (extraction.citations || '')) || userMessage,
       article: extracted, // Utiliser extracted comme article pour compatibilité
       type: 'generation'
     });
 
-    const content = safeJsonParse(responseData.choices[0].message.content, 'extractAndStructure_response');
+    // Vérifier que la réponse contient du contenu
+    if (!responseData.choices || !responseData.choices[0] || !responseData.choices[0].message || !responseData.choices[0].message.content) {
+      throw new Error('Réponse LLM invalide: contenu manquant (generateFinalArticle)');
+    }
+    
+    const rawContent = responseData.choices[0].message.content;
+    const finishReason = responseData.choices[0].finish_reason;
+    if (finishReason === 'length') {
+      console.warn('⚠️ Réponse LLM tronquée (finish_reason=length) dans generateFinalArticle - Tentative de réparation JSON');
+    }
+    
+    const content = safeJsonParse(rawContent, 'generateFinalArticle_response');
     console.log('✅ Article final généré:', Object.keys(content));
+    
+    // PHASE 4.1.5: TRADUCTION FORCÉE du JSON avant reconstruction HTML
+    if (content.article) {
+      console.log('🌐 Traduction forcée de TOUS les champs JSON...');
+      for (const [key, value] of Object.entries(content.article)) {
+        if (typeof value === 'string' && value.length > 20) {
+          const englishDetection = this.detectEnglishContent(value);
+          if (englishDetection.isEnglish && englishDetection.ratio > 0.3) {
+            console.log(`   🔄 Traduction champ "${key}": ${Math.round(englishDetection.ratio * 100)}% anglais`);
+            content.article[key] = await this.translateToFrench(value);
+          }
+        }
+      }
+    }
     
     // PHASE 4.2: Reconstruire le contenu final à partir de la structure "FlashVoyage Premium"
     if (content.article) {
@@ -856,57 +1211,222 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
       
       // 1. Contexte (si présent)
       if (article.contexte && article.contexte.trim()) {
-        sections.push(`<h2>Contexte</h2>\n${article.contexte}`);
+        const contexteText = article.contexte.trim();
+        const englishDetection = this.detectEnglishContent(contexteText);
+        let finalContexte = contexteText;
+        if (englishDetection.isEnglish) {
+          console.log(`🌐 Section "Contexte" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+          finalContexte = await this.translateToFrench(contexteText);
+        }
+        sections.push(`<h2>Contexte</h2>\n${finalContexte}`);
       }
       
       // 2. Événement central (si présent)
       if (article.evenement_central && article.evenement_central.trim()) {
-        sections.push(`<h2>Événement central</h2>\n${article.evenement_central}`);
+        const evenementText = article.evenement_central.trim();
+        const englishDetection = this.detectEnglishContent(evenementText);
+        let finalEvenement = evenementText;
+        if (englishDetection.isEnglish) {
+          console.log(`🌐 Section "Événement central" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+          finalEvenement = await this.translateToFrench(evenementText);
+        }
+        sections.push(`<h2>Événement central</h2>\n${finalEvenement}`);
       }
       
-      // 3. Moment critique (si présent)
+      // 3. Moment critique (si présent) - TRADUCTION FORCÉE
       if (article.moment_critique && article.moment_critique.trim()) {
-        sections.push(`<h2>Moment critique</h2>\n${article.moment_critique}`);
+        const momentText = article.moment_critique.trim();
+        console.log(`🌐 Section "Moment critique": traduction forcée en français...`);
+        // TOUJOURS traduire
+        const finalMoment = await this.translateToFrench(momentText);
+        sections.push(`<h2>Moment critique</h2>\n<p>${finalMoment}</p>`);
       }
       
-      // 4. Résolution (si présente)
-      if (article.resolution && article.resolution.trim()) {
-        sections.push(`<h2>Résolution / Situation actuelle</h2>\n${article.resolution}`);
-      }
+      // 4. Résolution (si présente) - DÉSACTIVÉ pour éviter doublons avec story.resolution
+      // La résolution est déjà gérée par le finalizer via story.resolution
+      // if (article.resolution && article.resolution.trim()) {
+      //   const resolutionText = article.resolution.trim();
+      //   const englishDetection = this.detectEnglishContent(resolutionText);
+      //   let finalResolution = resolutionText;
+      //   if (englishDetection.isEnglish) {
+      //     console.log(`🌐 Section "Résolution" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+      //     finalResolution = await this.translateToFrench(resolutionText);
+      //   }
+      //   sections.push(`<h2>Résolution / Situation actuelle</h2>\n${finalResolution}`);
+      // }
       
       // 5. Citations (si présentes)
       if (article.citations && article.citations.length > 0) {
-        const citationsFormatted = article.citations
+        const redditTitle = (extracted?.source?.title || extracted?.title || '').trim();
+        const redditTitleLower = redditTitle.toLowerCase();
+        const citationsToProcess = article.citations
           .filter(c => c && typeof c === 'string' && c.trim().length > 0)
-          .slice(0, 5) // Max 5 citations
-          .map(citation => {
+          .filter(c => {
+            const lower = c.toLowerCase().trim();
+            // FILTRER titre Reddit exact
+            if (redditTitle && lower === redditTitleLower) return false;
+            // FILTRER titre dupliqué (détection de répétition)
+            if (redditTitle) {
+              const words = redditTitle.split(' ');
+              if (words.length >= 3) {
+                // Vérifier si les 3 premiers mots du titre apparaissent 2x dans la citation
+                const firstThreeWords = words.slice(0, 3).join(' ').toLowerCase();
+                const occurrences = (c.toLowerCase().match(new RegExp(firstThreeWords.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
+                if (occurrences >= 2) return false;
+              }
+            }
+            // FILTRER citations trop courtes (pays seuls)
+            if (lower.length < 10 || lower === 'thailand' || lower === 'vietnam' || lower === 'indonesia') return false;
+            return true;
+          })
+          .slice(0, 5); // Max 5 citations
+        
+        // Traiter les citations avec await (nécessite Promise.all)
+        const citationsFormatted = await Promise.all(
+          citationsToProcess.map(async (citation) => {
             // Format: « citation » — auteur
-            const cleanCitation = citation.replace(/^["']|["']$/g, '').trim();
+            let cleanCitation = citation.replace(/^["']|["']$/g, '').trim();
+            
+            // Nettoyer les guillemets doubles et les attributions répétées
+            cleanCitation = cleanCitation.replace(/^«\s*«\s*|»\s*»\s*$/g, '').trim();
+            cleanCitation = cleanCitation.replace(/\s*—\s*auteur Reddit\s*—\s*auteur Reddit/gi, '').trim();
+            cleanCitation = cleanCitation.replace(/\s*—\s*auteur Reddit/gi, '').trim();
+            
+            // Détecter si la citation est en anglais et la traduire si nécessaire
+            const englishDetection = this.detectEnglishContent(cleanCitation);
+            
+            if (englishDetection.isEnglish) {
+              console.log(`🌐 Citation détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+              cleanCitation = await this.translateToFrench(cleanCitation);
+            }
+            
             if (cleanCitation.length > 0 && cleanCitation.length <= 200) {
               return `<p>« ${cleanCitation} » — ${extracted.author || 'auteur Reddit'}</p>`;
             }
             return null;
           })
-          .filter(Boolean);
+        );
         
-        if (citationsFormatted.length > 0) {
-          sections.push(`<h2>Citations</h2>\n${citationsFormatted.join('\n')}`);
+        const filteredCitations = citationsFormatted.filter(Boolean);
+        
+        if (filteredCitations.length > 0) {
+          sections.push(`<h2>Citations</h2>\n${filteredCitations.join('\n')}`);
         }
       }
       
       // 6. Ce que l'auteur retient (si présent)
-      if (article.lecons_auteur && article.lecons_auteur.trim()) {
-        sections.push(`<h2>Ce que l'auteur retient</h2>\n${article.lecons_auteur}`);
+      if (article.lecons_auteur) {
+        // Formater lecons_auteur correctement (peut être string, array, ou object)
+        let leconsFormatted = '';
+        if (typeof article.lecons_auteur === 'string') {
+          leconsFormatted = article.lecons_auteur.trim();
+        } else if (Array.isArray(article.lecons_auteur)) {
+          // Si c'est un array, créer une liste
+          const items = article.lecons_auteur
+            .map(item => {
+              if (typeof item === 'string') return item.trim();
+              return item.lesson || item.value || item.text || item.summary || '';
+            })
+            .filter(item => item && item.trim());
+          if (items.length > 0) {
+            // Helper pour échapper HTML
+            const escapeHtml = (text) => {
+              if (typeof text !== 'string') return '';
+              return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+            };
+            leconsFormatted = `<ul>${items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`;
+          }
+        } else if (typeof article.lecons_auteur === 'object') {
+          // Si c'est un objet, essayer d'extraire le contenu
+          leconsFormatted = article.lecons_auteur.lesson || article.lecons_auteur.value || article.lecons_auteur.text || article.lecons_auteur.summary || '';
+          if (typeof leconsFormatted !== 'string') {
+            leconsFormatted = '';
+          }
+        }
+        
+        if (leconsFormatted && leconsFormatted.trim() && !leconsFormatted.includes('[object Object]')) {
+          sections.push(`<h2>Ce que l'auteur retient</h2>\n${leconsFormatted}`);
+        } else {
+          console.warn('⚠️ lecons_auteur invalide ou contient [object Object], section ignorée');
+        }
       }
       
       // 7. Ce que la communauté apporte (si présent, SÉPARÉ visuellement)
       if (article.insights_communaute && article.insights_communaute.trim()) {
-        sections.push(`<h2>Ce que la communauté apporte</h2>\n${article.insights_communaute}`);
+        // Nettoyer les H2 dupliqués que le LLM pourrait avoir générés
+        let cleanedInsights = article.insights_communaute.trim();
+        
+        // Supprimer tout H2 "Ce que la communauté apporte" déjà présent dans le contenu
+        cleanedInsights = cleanedInsights.replace(/<h2[^>]*>Ce que la communauté apporte[^<]*<\/h2>\s*/gi, '');
+        
+        // DEBUG: Détecter et supprimer les <li> dupliqués
+        console.log(`🔍 DEBUG insights_communaute avant déduplication: ${cleanedInsights.length} caractères`);
+        
+        // Extraire tous les <li> et dédupliquer avec NORMALISATION
+        const liMatches = cleanedInsights.match(/<li[^>]*>.*?<\/li>/gi);
+        if (liMatches && liMatches.length > 0) {
+          console.log(`   Trouvé ${liMatches.length} éléments <li>`);
+          
+          // Fonction de normalisation pour comparaison sémantique
+          const normalize = (text) => {
+            return text
+              .toLowerCase()
+              .replace(/<[^>]*>/g, '') // Supprimer HTML
+              .replace(/[^\w\s]/g, '') // Supprimer ponctuation
+              .replace(/\s+/g, ' ')    // Normaliser espaces
+              .trim();
+          };
+          
+          // Dédupliquer en comparant le contenu NORMALISÉ
+          const seen = new Map();
+          const uniqueLi = [];
+          
+          for (const li of liMatches) {
+            const normalized = normalize(li);
+            if (!seen.has(normalized)) {
+              seen.set(normalized, true);
+              uniqueLi.push(li);
+            }
+          }
+          
+          console.log(`   Après déduplication normalisée: ${uniqueLi.length} éléments <li> uniques`);
+          
+          if (uniqueLi.length < liMatches.length) {
+            // Reconstruire le HTML avec seulement les <li> uniques
+            cleanedInsights = cleanedInsights.replace(/<ul[^>]*>.*?<\/ul>/gis, '');
+            cleanedInsights += `\n<ul>\n${uniqueLi.join('\n')}\n</ul>`;
+            console.log(`   ✅ ${liMatches.length - uniqueLi.length} doublons supprimés (normalisation sémantique)`);
+          }
+        }
+        
+        // Si après nettoyage il reste du contenu, l'ajouter avec UN SEUL H2
+        if (cleanedInsights.trim()) {
+          sections.push(`<h2>Ce que la communauté apporte</h2>\n${cleanedInsights}`);
+        }
       }
       
-      // 8. Questions encore ouvertes (si présentes)
-      if (article.questions_ouvertes && article.questions_ouvertes.trim()) {
-        sections.push(`<h2>Questions encore ouvertes</h2>\n${article.questions_ouvertes}`);
+      // 8. Nos recommandations (OBLIGATOIRE - remplace "questions ouvertes")
+      if (article.recommandations && article.recommandations.trim()) {
+        // Détecter si le contenu est en anglais et le traduire si nécessaire
+        const recoText = article.recommandations.trim();
+        const englishDetection = this.detectEnglishContent(recoText);
+        
+        let finalReco = recoText;
+        if (englishDetection.isEnglish) {
+          console.log(`🌐 Section "Recommandations" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+          finalReco = await this.translateToFrench(recoText);
+        }
+        
+        sections.push(finalReco); // Le titre H2 est déjà inclus dans le contenu
+      } else {
+        // Fallback si le LLM n'a pas généré de recommandations (ne devrait jamais arriver)
+        console.warn('⚠️ Aucune recommandation générée par le LLM - ajout de recommandations génériques');
+        sections.push(`<h2>🎯 Nos recommandations</h2>\n<p>Nous recommandons de privilégier l'Asie du Sud-Est pour un budget maîtrisé et des infrastructures fiables.</p>`);
       }
       
       // 9. Signature (si présente)
@@ -914,9 +1434,15 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
         sections.push(article.signature);
       }
       
+      let htmlContent = sections.filter(Boolean).join('\n\n');
+      
+      // SUPPRESSION DES BLOCKQUOTES GÉNÉRÉS PAR LE LLM (le finalizer les rajoutera traduits)
+      htmlContent = htmlContent.replace(/<blockquote[^>]*>.*?<\/blockquote>/gs, '');
+      console.log('🧹 Blockquotes LLM supprimés (le finalizer les réinsérera traduits)');
+      
       const finalContent = {
         title: article.titre || 'Témoignage Reddit décrypté par FlashVoyages',
-        content: sections.filter(Boolean).join('\n\n')
+        content: htmlContent
       };
       
       console.log('📄 Contenu final reconstruit (FlashVoyage Premium):', finalContent.title);
@@ -982,7 +1508,18 @@ Réponse JSON:`;
         type: 'generation'
       });
 
-      const content = safeJsonParse(responseData.choices[0].message.content, 'call2_response');
+      // Vérifier que la réponse contient du contenu
+      if (!responseData.choices || !responseData.choices[0] || !responseData.choices[0].message || !responseData.choices[0].message.content) {
+        throw new Error('Réponse LLM invalide: contenu manquant (generateSimpleContent)');
+      }
+      
+      const rawContent = responseData.choices[0].message.content;
+      const finishReason = responseData.choices[0].finish_reason;
+      if (finishReason === 'length') {
+        console.warn('⚠️ Réponse LLM tronquée (finish_reason=length) dans generateSimpleContent - Tentative de réparation JSON');
+      }
+      
+      const content = safeJsonParse(rawContent, 'call2_response');
       console.log('✅ Contenu simple généré avec vraies données:', Object.keys(content));
       return content;
 
@@ -1355,8 +1892,8 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
 
       console.log('🔍 Extraction du contenu complet de l\'article source...');
       
-      const isDryRun = process.env.FLASHVOYAGE_DRY_RUN === '1';
-      const forceOffline = process.env.FORCE_OFFLINE === '1';
+      const isDryRun = DRY_RUN;
+      const forceOffline = FORCE_OFFLINE;
       
       // En DRY_RUN/FORCE_OFFLINE, ne pas faire de fetch réseau si on a un fallback
       if ((isDryRun || forceOffline) && article.content && article.content.length > 200) {

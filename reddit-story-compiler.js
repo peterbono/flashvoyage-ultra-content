@@ -62,8 +62,12 @@ export function compileRedditStory(input) {
   // 5. AUTHOR_LESSONS
   story.author_lessons = compileAuthorLessons(fullText, pattern, evidence);
   
-  // 6. COMMUNITY_INSIGHTS
-  if (pattern.comments_utility && pattern.comments_utility.label !== 'low' && comments.length > 0) {
+  // 6. COMMUNITY_INSIGHTS (UTILISER extracted.comments.insights/warnings/consensus)
+  // Si l'extraction contient des insights, les utiliser directement
+  if (extraction.comments && extraction.comments.insights && extraction.comments.insights.length > 0) {
+    story.community_insights = compileExtractedInsights(extraction.comments, evidence);
+  } else if (pattern.comments_utility && pattern.comments_utility.label !== 'low' && comments.length > 0) {
+    // Fallback: ancienne méthode (non recommandé)
     story.community_insights = compileCommunityInsights(comments, evidence);
   }
   
@@ -388,6 +392,121 @@ function compileResolution(fullText, pattern, evidence, missingSections) {
 }
 
 /**
+ * Compile les insights communautaires depuis l'extraction (insights/warnings/consensus)
+ */
+function compileExtractedInsights(extraction, evidence) {
+  const insights = [];
+  
+  // DÉDUPLICATION NORMALISÉE : Fonction de normalisation pour comparaison sémantique
+  const normalize = (text) => {
+    if (!text) return '';
+    return String(text)
+      .toLowerCase()
+      .replace(/[^\w\s]/g, '') // Supprimer ponctuation
+      .replace(/\s+/g, ' ')    // Normaliser espaces
+      .trim();
+  };
+  
+  const seen = new Set();
+  
+  // 1. Insights (conseils et retours d'expérience) avec DÉDUPLICATION
+  if (extraction.insights && Array.isArray(extraction.insights)) {
+    for (const insight of extraction.insights) {
+      const value = insight.value || insight.quote;
+      const normalized = normalize(value);
+      
+      // Ignorer si déjà vu (comparaison normalisée)
+      if (seen.has(normalized)) continue;
+      seen.add(normalized);
+      
+      insights.push({
+        type: 'insight',
+        value: value,
+        score: insight.score || 0
+      });
+      
+      evidence.source_snippets.push({
+        section: 'community_insights',
+        snippet: insight.quote || insight.value,
+        origin: 'comment',
+        comment_id: insight.source || null
+      });
+      
+      // Max 5 insights uniques
+      if (insights.length >= 5) break;
+    }
+  }
+  
+  // 2. Warnings (avertissements et problèmes) avec DÉDUPLICATION
+  if (extraction.warnings && Array.isArray(extraction.warnings)) {
+    for (const warning of extraction.warnings) {
+      const value = warning.value || warning.quote;
+      const normalized = normalize(value);
+      
+      // Ignorer si déjà vu (même check que insights)
+      if (seen.has(normalized)) continue;
+      seen.add(normalized);
+      
+      insights.push({
+        type: 'warning',
+        value: value,
+        score: warning.score || 0
+      });
+      
+      evidence.source_snippets.push({
+        section: 'community_insights',
+        snippet: warning.quote || warning.value,
+        origin: 'comment',
+        comment_id: warning.source || null
+      });
+      
+      // Max 3 warnings uniques
+      if (insights.filter(i => i.type === 'warning').length >= 3) break;
+    }
+  }
+  
+  // 3. Consensus (opinions populaires) avec DÉDUPLICATION
+  if (extraction.consensus && Array.isArray(extraction.consensus)) {
+    for (const consensus of extraction.consensus) {
+      const value = consensus.value || consensus.quote;
+      const normalized = normalize(value);
+      
+      // Ignorer si déjà vu (même check que insights)
+      if (seen.has(normalized)) continue;
+      seen.add(normalized);
+      
+      insights.push({
+        type: 'consensus',
+        value: value,
+        score: consensus.score || consensus.count || 0
+      });
+      
+      evidence.source_snippets.push({
+        section: 'community_insights',
+        snippet: consensus.quote || consensus.value,
+        origin: 'comment',
+        comment_id: consensus.source || null
+      });
+      
+      // Max 3 consensus uniques
+      if (insights.filter(i => i.type === 'consensus').length >= 3) break;
+    }
+  }
+  
+  console.log(`🔍 DEBUG compileExtractedInsights: ${insights.length} insights compilés (${extraction.insights?.length || 0} insights + ${extraction.warnings?.length || 0} warnings + ${extraction.consensus?.length || 0} consensus)`);
+  
+  return insights;
+}
+
+/**
+ * Fallback: Compile les insights communautaires depuis commentaires bruts (ancienne méthode)
+ */
+function compileCommunityInsights(comments, evidence) {
+  console.log(`⚠️ compileCommunityInsights fallback appelé (non recommandé)`);
+  return []; // Retourner vide pour forcer l'utilisation de compileExtractedInsights
+}
+
+/**
  * Compile les leçons de l'auteur
  */
 function compileAuthorLessons(fullText, pattern, evidence) {
@@ -421,44 +540,7 @@ function compileAuthorLessons(fullText, pattern, evidence) {
   return lessons;
 }
 
-/**
- * Compile les insights de la communauté
- */
-function compileCommunityInsights(comments, evidence) {
-  const insights = [];
-  
-  // Chercher des commentaires avec conseils/recommandations
-  const advicePatterns = [
-    /(recommend|suggest|advice|tip|conseil|recommandation|suggestion)/gi,
-    /(you should|you could|try|essayez|devriez)/gi
-  ];
-  
-  for (const comment of comments.slice(0, 5)) {
-    const commentText = comment.body || comment.text || '';
-    if (commentText.length < 20) continue;
-    
-    for (const pattern of advicePatterns) {
-      if (pattern.test(commentText)) {
-        const insight = commentText.substring(0, 200);
-        insights.push({
-          insight,
-          from: 'comment',
-          evidence_snippet: insight,
-          comment_id: comment.id || null
-        });
-        evidence.source_snippets.push({
-          section: 'community_insights',
-          snippet: insight,
-          origin: 'comment',
-          comment_id: comment.id || null
-        });
-        break;
-      }
-    }
-  }
-  
-  return insights;
-}
+// ❌ ANCIENNE VERSION SUPPRIMÉE - Utiliser compileExtractedInsights() à la place
 
 /**
  * Compile les questions ouvertes
