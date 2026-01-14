@@ -818,9 +818,9 @@ ${widgetScript}
 </div>
 `;
 
-      // 3. Insérer le widget avec placement déterministe (ignorer widget.position et widget.section_title)
-      // Toujours utiliser insertAfterSection avec stratégie déterministe
-      enhancedContent = await this.insertAfterSection(enhancedContent, null, widgetBlock);
+      // 3. Insérer le widget APRÈS le contenu principal (pas au milieu)
+      // Stratégie : insérer avant "Articles connexes" ou à la fin du contenu
+      enhancedContent = await this.insertAfterContent(enhancedContent, widgetBlock);
     }
 
     // Compter les widgets réellement insérés
@@ -1006,8 +1006,59 @@ ${widgetScript}
   }
 
   /**
+   * Insère le widget APRÈS le contenu principal (avant "Articles connexes" ou à la fin)
+   * Évite l'insertion au milieu du contenu
+   */
+  async insertAfterContent(content, widgetBlock) {
+    // Chercher "Articles connexes" ou sections finales
+    const relatedSectionRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
+    const relatedSectionMatch = content.match(relatedSectionRegex);
+    
+    if (relatedSectionMatch) {
+      const relatedSectionIndex = relatedSectionMatch.index;
+      console.log('✅ Widget inséré avant "Articles connexes"');
+      return content.slice(0, relatedSectionIndex) + '\n\n' + widgetBlock + '\n\n' + content.slice(relatedSectionIndex);
+    }
+    
+    // Chercher "Nos recommandations" (dernière section avant articles connexes)
+    const recommandationsRegex = /<h2[^>]*>🎯 Nos recommandations[^<]*<\/h2>/i;
+    const recommandationsMatch = content.match(recommandationsRegex);
+    
+    if (recommandationsMatch) {
+      // Trouver la fin de cette section (prochain H2 ou fin)
+      const startIndex = recommandationsMatch.index;
+      const afterRecommandations = content.substring(startIndex);
+      const nextH2 = afterRecommandations.indexOf('<h2>', recommandationsMatch[0].length);
+      
+      if (nextH2 > 0) {
+        const insertIndex = startIndex + nextH2;
+        console.log('✅ Widget inséré après "Nos recommandations"');
+        return content.slice(0, insertIndex) + '\n\n' + widgetBlock + '\n\n' + content.slice(insertIndex);
+      }
+    }
+    
+    // Sinon, insérer à la fin du contenu (avant les balises de fermeture)
+    const lastH2 = content.lastIndexOf('<h2>');
+    if (lastH2 > 0) {
+      // Trouver la fin de la dernière section
+      const afterLastH2 = content.substring(lastH2);
+      const sectionEnd = afterLastH2.indexOf('</p>', 500); // Chercher après 500 chars
+      if (sectionEnd > 0) {
+        const insertIndex = lastH2 + sectionEnd + 4;
+        console.log('✅ Widget inséré après la dernière section');
+        return content.slice(0, insertIndex) + '\n\n' + widgetBlock + '\n\n' + content.slice(insertIndex);
+      }
+    }
+    
+    // Fallback : insérer à la toute fin
+    console.log('✅ Widget inséré à la fin du contenu');
+    return content + '\n\n' + widgetBlock;
+  }
+
+  /**
    * 3. Placement widget déterministe (FIX B: DOM-based avec cheerio, ignore sectionTitle)
    * sectionTitle est complètement ignoré - placement basé uniquement sur structure DOM
+   * @deprecated Utiliser insertAfterContent() à la place
    */
   async insertAfterSection(content, sectionTitle, widgetBlock) {
     // FIX B: Placement DOM-based avec cheerio, jamais recherche texte

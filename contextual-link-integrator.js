@@ -5,6 +5,7 @@
  */
 
 import { getOpenAIClient, isOpenAIAvailable } from './openai-client.js';
+import { DRY_RUN } from './config.js';
 
 class ContextualLinkIntegrator {
   constructor() {
@@ -928,7 +929,7 @@ class ContextualLinkIntegrator {
         };
       } else {
         // Log détaillé en DRY_RUN si pas trouvé
-        if (process.env.FLASHVOYAGE_DRY_RUN === '1') {
+        if (DRY_RUN) {
           console.log(`⏭️ [EXTERNE] Mot-clé "${keyword}" (normalisé: "${normalizedKeyword}") non trouvé dans le contenu normalisé`);
         }
       }

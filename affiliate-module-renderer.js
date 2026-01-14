@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import { REAL_TRAVELPAYOUTS_WIDGETS } from './travelpayouts-real-widgets-database.js';
+
 /**
  * AFFILIATE MODULE RENDERER
  * Phase 5.B - Renderer neutre "module éditorial" pour les placements d'affiliation
@@ -82,49 +84,36 @@ function generateWidgetScript(placement, geo_defaults) {
 
   switch (id) {
     case 'flights':
-      // Placeholder pour widget flights (Kiwi.com / Travelpayouts)
-      return `<!-- Widget Flights -->
-<div id="travelpayouts-flights-widget" data-origin="${payload.origin || 'PAR'}" data-destination="${payload.destination || 'BKK'}" data-country="${payload.country || 'asia'}"></div>
-<script>
-  // Widget flights sera injecté ici
-  // Exemple: Kiwi.com widget ou Travelpayouts flights widget
-</script>`;
+      // Widget Flights - pas géré ici, géré par le finalizer via Travelpayouts database
+      return `<!-- Widget Flights géré par finalizer -->`;
 
     case 'esim':
-      // Placeholder pour widget eSIM (Airalo)
-      return `<!-- Widget eSIM / Connectivity -->
-<div id="travelpayouts-connectivity-widget" data-destination="${payload.destination || 'asia'}" data-multi-country="${payload.multi_country || false}"></div>
-<script>
-  // Widget eSIM sera injecté ici
-  // Exemple: Airalo widget ou Travelpayouts connectivity widget
-</script>`;
+      // VRAI WIDGET eSIM Airalo
+      const esimWidget = REAL_TRAVELPAYOUTS_WIDGETS.esim?.airalo?.esimSearch;
+      if (esimWidget && esimWidget.script) {
+        return esimWidget.script;
+      }
+      return `<!-- Widget eSIM non trouvé -->`;
 
     case 'insurance':
-      // Placeholder pour widget insurance
-      return `<!-- Widget Insurance -->
-<div id="travelpayouts-insurance-widget" data-destination="${payload.destination || 'asia'}"></div>
-<script>
-  // Widget insurance sera injecté ici
-  // Exemple: SafetyWing widget ou Travelpayouts insurance widget
-</script>`;
+      // VRAI WIDGET Insurance SafetyWing
+      const insuranceWidget = REAL_TRAVELPAYOUTS_WIDGETS.insurance?.safetywing?.nomadInsurance;
+      if (insuranceWidget && insuranceWidget.script) {
+        return insuranceWidget.script;
+      }
+      return `<!-- Widget Insurance non trouvé -->`;
 
     case 'accommodation':
-      // Placeholder pour widget accommodation
-      return `<!-- Widget Accommodation -->
-<div id="travelpayouts-accommodation-widget" data-destination="${payload.destination || 'asia'}" data-city="${payload.city || ''}"></div>
-<script>
-  // Widget accommodation sera injecté ici
-  // Exemple: Booking.com widget ou Travelpayouts hotels widget
-</script>`;
+      // VRAI WIDGET Accommodation Booking.com
+      const hotelWidget = REAL_TRAVELPAYOUTS_WIDGETS.hotels?.booking?.hotelMap;
+      if (hotelWidget && hotelWidget.script) {
+        return hotelWidget.script;
+      }
+      return `<!-- Widget Accommodation non trouvé -->`;
 
     case 'coworking':
-      // Placeholder pour widget coworking
-      return `<!-- Widget Coworking -->
-<div id="travelpayouts-coworking-widget" data-destination="${payload.destination || 'asia'}" data-city="${payload.city || ''}"></div>
-<script>
-  // Widget coworking sera injecté ici
-  // Exemple: Coworking space finder widget
-</script>`;
+      // Pas de widget Travelpayouts pour coworking, on met un lien vers une page partenaire
+      return `<p><a href="https://www.coworker.com/?ref=flashvoyage" target="_blank" rel="nofollow">Trouver un espace de coworking</a></p>`;
 
     default:
       return `<!-- Widget ${id} -->`;

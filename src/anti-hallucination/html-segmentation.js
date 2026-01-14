@@ -133,7 +133,27 @@ function excludeSegmentsRegex(html) {
     result = result.replace(match[0], '');
   }
   
-  // 5. Exclure scripts et styles (déjà fait dans extractTextFromHtml, mais on les compte ici)
+  // 5. Exclure les paragraphes contenant des prix de widgets (pattern: prix suivi d'un script de widget)
+  // Pattern pour détecter les contextes FOMO avec prix (ex: "197€ - 787€" suivi d'un script)
+  const widgetPricePattern = /<p>[^<]*\d+[€$][^<]*<\/p>\s*<p><strong>[^<]*<\/strong><\/p>\s*<script[^>]*>[\s\S]*?<\/script>/gi;
+  while ((match = widgetPricePattern.exec(result)) !== null) {
+    excluded.affiliate++;
+    result = result.replace(match[0], '');
+  }
+  
+  // 6. Exclure les textes de navigation/boilerplate (ex: "extrait reddit suite", "suite", etc.)
+  const navigationPatterns = [
+    /<p>[^<]*(?:extrait\s+reddit\s+suite|suite\s+du\s+texte|voir\s+plus|lire\s+la\s+suite)[^<]*<\/p>/gi,
+    /<cite>Extrait\s+Reddit<\/cite>/gi
+  ];
+  for (const pattern of navigationPatterns) {
+    while ((match = pattern.exec(result)) !== null) {
+      excluded.other++;
+      result = result.replace(match[0], '');
+    }
+  }
+  
+  // 7. Exclure scripts et styles (déjà fait dans extractTextFromHtml, mais on les compte ici)
   const scriptPattern = /<script[^>]*>[\s\S]*?<\/script>/gi;
   const stylePattern = /<style[^>]*>[\s\S]*?<\/style>/gi;
   const scriptMatches = result.match(scriptPattern);
@@ -213,7 +233,31 @@ function excludeSegmentsCheerio(html, cheerioLib) {
     }
   });
   
-  // 5. Exclure scripts et styles
+  // 5. Exclure les paragraphes contenant des prix de widgets (pattern: prix suivi d'un script de widget)
+  $('p').each((i, el) => {
+    const text = $(el).text();
+    // Si le paragraphe contient un prix (ex: "197€ - 787€") et est suivi d'un script de widget
+    if (/\d+[€$]/.test(text)) {
+      const nextSibling = $(el).next();
+      if (nextSibling.length > 0 && (nextSibling.is('script') || nextSibling.find('script').length > 0)) {
+        excluded.affiliate++;
+        $(el).remove();
+      }
+    }
+  });
+  
+  // 6. Exclure les textes de navigation/boilerplate (ex: "extrait reddit suite", "suite", etc.)
+  $('p, cite').each((i, el) => {
+    const text = $(el).text().toLowerCase();
+    if (text.includes('extrait reddit suite') || text.includes('suite du texte') || 
+        text.includes('voir plus') || text.includes('lire la suite') ||
+        text.includes('extrait reddit')) {
+      excluded.other++;
+      $(el).remove();
+    }
+  });
+  
+  // 7. Exclure scripts et styles
   $('script, style').each((i, el) => {
     excluded.other++;
     $(el).remove();

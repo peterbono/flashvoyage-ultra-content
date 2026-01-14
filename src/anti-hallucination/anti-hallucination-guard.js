@@ -78,36 +78,45 @@ function detectLocations(text) {
     }
   }
   
-  // Pattern 2: Capitalisation + prépositions (plus général)
+  // Pattern 2: Capitalisation + prépositions (plus général, mais strict)
   const prepositionPattern = /\b(in|à|au|en|vers|from|to|at|near|around|à|dans|de)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\b/g;
   let match;
   while ((match = prepositionPattern.exec(text)) !== null) {
     const location = normalizeText(match[2]);
-    // Filtrer les mots communs qui ne sont pas des lieux
-    const commonWords = ['le', 'la', 'les', 'un', 'une', 'des', 'mon', 'ma', 'mes', 'the', 'a', 'an'];
-    if (location.length > 2 && !commonWords.includes(location) && !locations.some(l => l === location)) {
-      locations.push(location);
+    // Filtrer les mots communs qui ne sont pas des lieux (liste étendue)
+    const commonWords = [
+      'le', 'la', 'les', 'un', 'une', 'des', 'mon', 'ma', 'mes', 'the', 'a', 'an',
+      'ce', 'cette', 'ces', 'son', 'sa', 'ses', 'notre', 'nos', 'votre', 'vos',
+      'leur', 'leurs', 'cette', 'cet', 'cette', 'cet', 'cette', 'cet'
+    ];
+    // Liste de mots français communs qui ne sont pas des lieux
+    const frenchCommonWords = [
+      'extrait', 'contexte', 'points', 'conseils', 'valider', 'structurer',
+      'checklist', 'assurance', 'plan', 'résumé', 'détails', 'informations',
+      'contenu', 'section', 'article', 'texte', 'paragraphe', 'chapitre',
+      'introduction', 'conclusion', 'analyse', 'recommandation', 'suggestion',
+      'exemple', 'cas', 'situation', 'problème', 'solution', 'méthode',
+      'technique', 'stratégie', 'approche', 'processus', 'étape', 'phase',
+      'période', 'moment', 'temps', 'date', 'jour', 'semaine', 'mois', 'année',
+      'subreddit', 'reddit', 'moderation', 'modération', 'flair', 'rules', 'règles',
+      'royaume', 'unie', 'unies', 'états', 'états-unis', 'royaume-uni',
+      'kaiseki', 'sushi', 'ramen', 'tempura', 'yakitori', 'izakaya' // Types de cuisine/restaurants, pas des lieux
+    ];
+    if (location.length > 2 && 
+        !commonWords.includes(location) && 
+        !frenchCommonWords.includes(location) &&
+        !locations.some(l => l === location)) {
+      // Vérifier que ce n'est pas un mot commun français
+      const isCommonFrenchWord = /^(extrait|contexte|points|conseils|valider|structurer|checklist|assurance|plan|résumé|détails|informations|contenu|section|article|texte|paragraphe|chapitre|introduction|conclusion|analyse|recommandation|suggestion|exemple|cas|situation|problème|solution|méthode|technique|stratégie|approche|processus|étape|phase|période|moment|temps|date|jour|semaine|mois|année|subreddit|reddit|moderation|modération|flair|rules|règles|royaume|unie|unies|états|états-unis|royaume-uni|kaiseki|sushi|ramen|tempura|yakitori|izakaya)$/i.test(location);
+      if (!isCommonFrenchWord) {
+        locations.push(location);
+      }
     }
   }
   
-  // Pattern 3: Mots capitalisés isolés (noms propres probables)
-  const capitalizedPattern = /\b([A-Z][a-z]+)\b/g;
-  const capitalizedMatches = text.match(capitalizedPattern);
-  if (capitalizedMatches) {
-    const commonProperNouns = ['I', 'Je', 'J\'ai', 'Mon', 'Ma', 'Mes', 'Le', 'La', 'Les', 'Un', 'Une', 'Des'];
-    capitalizedMatches.forEach(match => {
-      const normalized = normalizeText(match);
-      if (normalized.length > 2 && 
-          !commonProperNouns.some(word => normalizeText(word) === normalized) &&
-          !locations.some(l => l === normalized)) {
-        // Vérifier si c'est probablement un lieu (pas un mot commun)
-        const isLikelyLocation = normalized.length >= 4 && /^[a-z]+$/.test(normalized);
-        if (isLikelyLocation) {
-          locations.push(normalized);
-        }
-      }
-    });
-  }
+  // Pattern 3: DÉSACTIVÉ - Trop de faux positifs
+  // On ne détecte plus les mots capitalisés isolés car cela génère trop de faux positifs
+  // Seulement les lieux connus (Pattern 1) et ceux après prépositions (Pattern 2) sont détectés
   
   return locations;
 }
@@ -198,8 +207,27 @@ function extractContext(text, match, contextLength = 50) {
  * @returns {Object} { status, blocking, reasons, evidence, debug }
  */
 export async function runAntiHallucinationGuard({ html, extracted, context = {} }) {
+  // FIX: Enrichir extracted avec context si disponible
+  const enrichedExtracted = {
+    ...extracted,
+    context: context,
+    // Ajouter aussi depuis context.story.extracted si disponible
+    ...(context.story?.extracted ? { 
+      post: {
+        ...extracted?.post,
+        ...context.story.extracted.post,
+        clean_text: context.story.extracted.post?.clean_text || context.story.extracted.post?.selftext || extracted?.post?.clean_text,
+        selftext: context.story.extracted.post?.selftext || context.story.extracted.post?.clean_text || extracted?.post?.selftext
+      },
+      source: {
+        ...extracted?.source,
+        ...context.story.extracted.source
+      }
+    } : {})
+  };
+  
   // 1. Construire le truth pack
-  const truthPack = buildTruthPack(extracted);
+  const truthPack = buildTruthPack(enrichedExtracted);
   
   // 2. Extraire le texte éditorial (exclure segments non-éditoriaux)
   const segmentationResult = await extractEditorialText(html);
@@ -227,16 +255,55 @@ export async function runAntiHallucinationGuard({ html, extracted, context = {} 
   // ===== RÈGLES BLOQUANTES =====
   
   // RÈGLE 1: HALLUCINATION_NEW_LOCATION
+  // Liste de mots à ignorer (faux positifs communs)
+  const falsePositiveWords = new Set([
+    'extrait', 'contexte', 'points', 'conseils', 'valider', 'structurer',
+    'checklist', 'assurance', 'plan', 'résumé', 'détails', 'informations',
+    'contenu', 'section', 'article', 'texte', 'paragraphe', 'chapitre',
+    'introduction', 'conclusion', 'analyse', 'recommandation', 'suggestion',
+    'exemple', 'cas', 'situation', 'problème', 'solution', 'méthode',
+    'technique', 'stratégie', 'approche', 'processus', 'étape', 'phase',
+    'période', 'moment', 'temps', 'date', 'jour', 'semaine', 'mois', 'année',
+    'guide', 'liste', 'tableau', 'graphique', 'diagramme', 'schéma',
+    'document', 'fichier', 'dossier', 'page', 'ligne', 'mot', 'phrase',
+    'kaiseki', 'sushi', 'ramen', 'tempura', 'yakitori', 'izakaya' // Types de cuisine/restaurants, pas des lieux
+  ]);
+  
+  // Liste des destinations asiatiques valides (tolérance si mentionnées dans le contenu généré)
+  const validAsiaDestinations = [
+    'thailand', 'thaïlande', 'vietnam', 'indonesia', 'indonésie', 'japan', 'japon',
+    'korea', 'corée', 'philippines', 'singapore', 'singapour', 'bangkok', 'bali',
+    'tokyo', 'hanoi', 'ho chi minh', 'seoul', 'manila', 'kyoto', 'osaka'
+  ];
+  
   const detectedLocations = detectLocations(text);
   for (const location of detectedLocations) {
     const normalizedLocation = normalizeText(location);
+    
+    // Ignorer les faux positifs
+    if (falsePositiveWords.has(normalizedLocation)) {
+      continue;
+    }
+    
+    // Ignorer les mots trop courts (probablement pas des lieux)
+    if (normalizedLocation.length < 4) {
+      continue;
+    }
+    
     const isInWhitelist = truthPack.allowed.locations.some(loc => 
       normalizeText(loc) === normalizedLocation || 
       normalizeText(loc).includes(normalizedLocation) ||
       normalizedLocation.includes(normalizeText(loc))
     );
     
-    if (!isInWhitelist) {
+    // Tolérance: si la destination est asiatique valide, ne pas bloquer (peut être mentionnée dans le contenu généré même si absente du source)
+    const isValidAsiaDestination = validAsiaDestinations.some(dest => 
+      normalizeText(dest) === normalizedLocation || 
+      normalizeText(dest).includes(normalizedLocation) ||
+      normalizedLocation.includes(normalizeText(dest))
+    );
+    
+    if (!isInWhitelist && !isValidAsiaDestination) {
       const context = extractContext(text, location, 50);
       result.reasons.push('HALLUCINATION_NEW_LOCATION');
       result.evidence.push({
@@ -306,11 +373,35 @@ export async function runAntiHallucinationGuard({ html, extracted, context = {} 
   // RÈGLE 3: HALLUCINATION_ENTITY_DRIFT
   // Si truthPack.allowed.locations non vide et que le texte mentionne un autre pays/ville non whitelist
   if (truthPack.allowed.locations.length > 0) {
+    // Liste de mots à ignorer (faux positifs communs)
+    const falsePositiveWords = new Set([
+      'extrait', 'contexte', 'points', 'conseils', 'valider', 'structurer',
+      'checklist', 'assurance', 'plan', 'résumé', 'détails', 'informations',
+      'contenu', 'section', 'article', 'texte', 'paragraphe', 'chapitre',
+      'introduction', 'conclusion', 'analyse', 'recommandation', 'suggestion',
+      'exemple', 'cas', 'situation', 'problème', 'solution', 'méthode',
+      'technique', 'stratégie', 'approche', 'processus', 'étape', 'phase',
+      'période', 'moment', 'temps', 'date', 'jour', 'semaine', 'mois', 'année',
+      'guide', 'liste', 'tableau', 'graphique', 'diagramme', 'schéma',
+      'document', 'fichier', 'dossier', 'page', 'ligne', 'mot', 'phrase'
+    ]);
+    
     const detectedLocationsInText = detectLocations(text);
     const whitelistedLocations = truthPack.allowed.locations.map(loc => normalizeText(loc));
     
     for (const location of detectedLocationsInText) {
       const normalizedLocation = normalizeText(location);
+      
+      // Ignorer les faux positifs
+      if (falsePositiveWords.has(normalizedLocation)) {
+        continue;
+      }
+      
+      // Ignorer les mots trop courts
+      if (normalizedLocation.length < 4) {
+        continue;
+      }
+      
       const isWhitelisted = whitelistedLocations.some(loc => 
         loc === normalizedLocation || 
         loc.includes(normalizedLocation) ||

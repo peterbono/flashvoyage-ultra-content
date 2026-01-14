@@ -1533,14 +1533,16 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   
   // Publier sur WordPress
   async publishToWordPress(article) {
-    // GARDE DRY_RUN: Bloquer toute publication WordPress en mode test
-    if (DRY_RUN) {
-      console.log('🧪 DRY_RUN: publication WordPress bloquée');
+    // GARDE DRY_RUN/FORCE_OFFLINE: Bloquer toute publication WordPress en mode test
+    if (DRY_RUN || FORCE_OFFLINE) {
+      console.log(`🧪 ${DRY_RUN ? 'DRY_RUN' : 'FORCE_OFFLINE'}: publication WordPress bloquée`);
+      // Générer une URL fictive pour les tests
+      const fakeUrl = `https://flashvoyage.com/temoignage-voyage-retours-et-lecons-test-${Date.now()}/`;
       return {
         id: null,
         title: article.title,
-        link: null,
-        status: 'dry_run',
+        link: fakeUrl,
+        status: DRY_RUN ? 'dry_run' : 'force_offline',
         enhancements: article.enhancements
       };
     }

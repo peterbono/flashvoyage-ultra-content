@@ -137,7 +137,133 @@ export function buildTruthPack(extracted) {
     'locations'
   ];
   const rawLocations = extractStringsDeep(extracted, locationPaths);
-  const locations = uniq(rawLocations.map(normalizeText)).filter(l => l.length > 0);
+  
+  // AMÉLIORATION: Extraire aussi depuis le texte brut du post
+  const textPaths = [
+    'post.clean_text',
+    'post.selftext',
+    'post.text',
+    'reddit_extraction.post.clean_text',
+    'reddit_extraction.post.selftext',
+    'source_text',
+    'content',
+    'title'  // Ajouter aussi le titre
+  ];
+  const rawTexts = extractStringsDeep(extracted, textPaths);
+  
+  // FIX: Ajouter aussi directement depuis extracted.post.clean_text si disponible
+  if (extracted?.post?.clean_text && typeof extracted.post.clean_text === 'string') {
+    rawTexts.push(extracted.post.clean_text);
+  }
+  if (extracted?.post?.selftext && typeof extracted.post.selftext === 'string') {
+    rawTexts.push(extracted.post.selftext);
+  }
+  
+  // Ajouter aussi le titre depuis source
+  if (extracted.source?.title) rawTexts.push(extracted.source.title);
+  if (extracted.title) rawTexts.push(extracted.title);
+  
+  // FIX: Ajouter aussi depuis input.post si disponible (depuis pipeline-runner)
+  if (extracted.input?.post?.selftext) {
+    rawTexts.push(extracted.input.post.selftext);
+  }
+  if (extracted.input?.post?.title) {
+    rawTexts.push(extracted.input.post.title);
+  }
+  
+  // FIX CRITIQUE: Si extracted est vide, essayer de récupérer depuis context
+  // Le pipeline-runner passe parfois le texte via context
+  if (rawTexts.length === 0 && extracted.context) {
+    const context = extracted.context;
+    if (context.story?.extracted?.post?.selftext) {
+      rawTexts.push(context.story.extracted.post.selftext);
+    }
+    if (context.story?.extracted?.post?.clean_text) {
+      rawTexts.push(context.story.extracted.post.clean_text);
+    }
+    if (context.story?.extracted?.source?.title) {
+      rawTexts.push(context.story.extracted.source.title);
+    }
+  }
+  
+  const combinedText = rawTexts.join(' ').toLowerCase();
+  
+  // Liste des destinations asiatiques connues pour extraction depuis texte (liste étendue)
+  // Avec équivalents français/anglais
+  const knownAsiaLocations = [
+    'kuala lumpur', 'malaisie', 'malaysia', 'singapore', 'singapour',
+    'thailand', 'thaïlande', 'vietnam', 'indonesia', 'indonésie',
+    'japan', 'japon', 'korea', 'corée', 'philippines',
+    'bangkok', 'chiang mai', 'phuket', 'ho chi minh', 'hanoi',
+    'tokyo', 'kyoto', 'osaka', 'seoul', 'bali', 'jakarta', 'manila',
+    'penang', 'langkawi', 'george town', 'ipoh', 'melaka', 'malacca',
+    'kl', 'selangor', 'sabah', 'sarawak', 'borneo', 'phnom penh',
+    'siem reap', 'yangon', 'rangoon', 'myanmar', 'burma', 'laos',
+    'vientiane', 'luang prabang', 'macau', 'hong kong', 'taipei', 'taiwan'
+  ];
+  
+  // Mapping équivalents français/anglais
+  const locationEquivalents = {
+    'malaisie': 'malaysia',
+    'thaïlande': 'thailand',
+    'indonésie': 'indonesia',
+    'japon': 'japan',
+    'corée': 'korea',
+    'singapour': 'singapore'
+  };
+  
+  // Extraire les locations depuis le texte brut (pattern plus flexible)
+  for (const loc of knownAsiaLocations) {
+    // Pattern flexible : peut être dans le texte même sans word boundary exacte
+    // Utiliser un pattern qui cherche le mot complet mais tolère les variations
+    const escapedLoc = loc.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Chercher le mot complet, avec ou sans accents, avec ou sans majuscules
+    const regex = new RegExp(`\\b${escapedLoc}\\b|${escapedLoc}`, 'gi');
+    if (regex.test(combinedText)) {
+      const normalizedLoc = normalizeText(loc);
+      // Vérifier qu'on ne l'a pas déjà ajouté
+      if (!rawLocations.some(l => normalizeText(l) === normalizedLoc)) {
+        rawLocations.push(loc);
+      }
+    }
+  }
+  
+  // AMÉLIORATION: Extraire aussi les lieux depuis les valeurs des objets evidence.locations
+  // Si extracted.post.evidence.locations est un array d'objets avec .value
+  if (extracted.post?.evidence?.locations && Array.isArray(extracted.post.evidence.locations)) {
+    for (const locObj of extracted.post.evidence.locations) {
+      if (locObj && typeof locObj === 'object' && locObj.value) {
+        const locValue = String(locObj.value);
+        const normalizedLoc = normalizeText(locValue);
+        if (!rawLocations.some(l => normalizeText(l) === normalizedLoc)) {
+          rawLocations.push(locValue);
+        }
+      } else if (typeof locObj === 'string') {
+        const normalizedLoc = normalizeText(locObj);
+        if (!rawLocations.some(l => normalizeText(l) === normalizedLoc)) {
+          rawLocations.push(locObj);
+        }
+      }
+    }
+  }
+  
+  let locations = uniq(rawLocations.map(normalizeText)).filter(l => l.length > 0);
+  
+  // FIX: Ajouter les équivalents français/anglais
+  const normalizedLocations = new Set(locations);
+  for (const [fr, en] of Object.entries(locationEquivalents)) {
+    const normalizedFr = normalizeText(fr);
+    const normalizedEn = normalizeText(en);
+    if (normalizedLocations.has(normalizedFr) && !normalizedLocations.has(normalizedEn)) {
+      locations.push(en);
+      normalizedLocations.add(normalizedEn);
+    }
+    if (normalizedLocations.has(normalizedEn) && !normalizedLocations.has(normalizedFr)) {
+      locations.push(fr);
+      normalizedLocations.add(normalizedFr);
+    }
+  }
+  locations = uniq(locations.map(normalizeText)).filter(l => l.length > 0);
   
   // Extraire dates
   const datePaths = [
@@ -163,12 +289,88 @@ export function buildTruthPack(extracted) {
     'costs'
   ];
   const rawCosts = extractStringsDeep(extracted, costPaths);
-  // Normaliser les coûts : "500€", "$50-100/month", "80k" -> tokens exacts
-  const numbers = uniq(rawCosts.map(cost => {
-    const normalized = normalizeText(cost);
-    // Garder le format original pour matching exact
-    return normalized;
-  })).filter(n => n.length > 0);
+  
+  // AMÉLIORATION: Extraire aussi les nombres depuis le texte brut
+  const numbersFromText = [];
+  // Patterns pour détecter les nombres (âges, durées, montants) - plus flexibles
+  const numberPatterns = [
+    /\b(\d+)\s*(ans?|years?|années?|year|an)\b/gi,  // "70 ans", "25 years", "70 ans"
+    /\b(\d+)\s*(jours?|days?|jour|day)\b/gi,  // "7 jours", "2 days"
+    /\b(\d+)\s*(semaines?|weeks?|semaine|week)\b/gi,  // "2 semaines", "3 weeks"
+    /\b(\d+)\s*(mois|months?|month)\b/gi,  // "6 mois", "12 months"
+    /\b(\d+)\s*(€|\$|usd|eur|dollars?|euros?)\b/gi,  // "500€", "$100", "500 dollars"
+    /\b(\d+)\s*(%|percent|pourcent)\b/gi,  // "50%", "50 percent"
+    /\b(\d+)\s*(k|thousand|mille)\b/gi,  // "80k", "5 thousand"
+    /\b(\d+)\s*(heures?|hours?|heure|hour)\b/gi,  // "3 heures", "2 hours"
+    /\b(\d+)\s*(minutes?|minute|min)\b/gi  // "30 minutes", "15 min"
+  ];
+  
+  for (const pattern of numberPatterns) {
+    // Créer une nouvelle regex à chaque fois pour éviter les problèmes avec lastIndex
+    const regex = new RegExp(pattern.source, pattern.flags);
+    let match;
+    while ((match = regex.exec(combinedText)) !== null) {
+      const numberStr = `${match[1]} ${match[2] || ''}`.trim();
+      if (numberStr.length > 0) {
+        const normalized = normalizeText(numberStr);
+        if (!numbersFromText.includes(normalized)) {
+          numbersFromText.push(normalized);
+        }
+      }
+    }
+  }
+  
+  // DEBUG: Log pour comprendre ce qui est extrait
+  if (numbersFromText.length > 0) {
+    console.log(`🔍 TRUTH_PACK_DEBUG: Nombres extraits depuis texte: ${numbersFromText.join(', ')}`);
+  }
+  
+  // Combiner les coûts extraits et les nombres depuis le texte
+  // NORMALISATION: Ajouter les équivalents français pour les nombres anglais
+  const allNumbers = [...rawCosts, ...numbersFromText];
+  const numbersWithTranslations = [];
+  
+  allNumbers.forEach(num => {
+    const normalized = normalizeText(num);
+    numbersWithTranslations.push(normalized);
+    
+    // Ajouter les traductions FR/EN pour les unités
+    const translations = {
+      'years': 'ans',
+      'year': 'an',
+      'days': 'jours',
+      'day': 'jour',
+      'weeks': 'semaines',
+      'week': 'semaine',
+      'months': 'mois',
+      'month': 'mois',
+      'hours': 'heures',
+      'hour': 'heure',
+      'minutes': 'minutes',
+      'minute': 'minute'
+    };
+    
+    // Pour chaque traduction, créer la version équivalente
+    for (const [en, fr] of Object.entries(translations)) {
+      if (normalized.includes(en)) {
+        numbersWithTranslations.push(normalized.replace(en, fr));
+      } else if (normalized.includes(fr)) {
+        // Inverser: ajouter aussi la version anglaise
+        for (const [enKey, frKey] of Object.entries(translations)) {
+          if (frKey === fr) {
+            numbersWithTranslations.push(normalized.replace(fr, enKey));
+          }
+        }
+      }
+    }
+  });
+  
+  const numbers = uniq(numbersWithTranslations).filter(n => n.length > 0);
+  
+  // DEBUG: Log pour comprendre ce qui est extrait
+  if (numbers.length === 0 && combinedText.length > 0) {
+    console.log(`⚠️ TRUTH_PACK_DEBUG: Aucun nombre extrait depuis texte (${combinedText.substring(0, 200)}...)`);
+  }
   
   // Extraire events
   const eventPaths = [

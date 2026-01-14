@@ -3,7 +3,7 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 import { translate } from '@vitalets/google-translate-api';
-import UltraFreshComplete from './ultra-fresh-complete.js';
+import UltraFreshComplete from './_OBSOLETE_ultra-fresh-complete.js';
 import ContentValidator from './content-validator.js';
 // Templates supprimés - utilisation de l'analyseur intelligent
 import RateLimitManager from './rate-limit-manager.js';
@@ -16,9 +16,11 @@ const WORDPRESS_APP_PASSWORD = process.env.WORDPRESS_APP_PASSWORD;
 const PEXELS_API_KEY = process.env.PEXELS_API_KEY;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-// Vérification des variables d'environnement requises
-if (!WORDPRESS_URL || !WORDPRESS_USERNAME || !WORDPRESS_APP_PASSWORD || !PEXELS_API_KEY) {
+// Vérification des variables d'environnement requises (sauf en mode FORCE_OFFLINE)
+const FORCE_OFFLINE = process.env.FORCE_OFFLINE === '1';
+if (!FORCE_OFFLINE && (!WORDPRESS_URL || !WORDPRESS_USERNAME || !WORDPRESS_APP_PASSWORD || !PEXELS_API_KEY)) {
   console.error('❌ Variables d\'environnement manquantes. Vérifiez votre fichier .env');
+  console.error('   (Ou utilisez FORCE_OFFLINE=1 pour le mode offline)');
   process.exit(1);
 }
 
@@ -28,15 +30,47 @@ class UltraStrategicGenerator {
   constructor() {
     this.scraper = new UltraFreshComplete();
     this.publishedArticles = new Set();
+    this.publishedRedditUrls = new Set(); // Track Reddit URLs to avoid duplicates
+    this.redditUrlsCacheFile = './published-reddit-urls.json'; // Cache persistant
     this.validator = new ContentValidator();
     // Templates supprimés - utilisation de l'analyseur intelligent
     this.rateLimitManager = new RateLimitManager();
+    
+    // Initialiser l'analyseur intelligent IMMÉDIATEMENT (pas de lazy)
+    // Import synchrone pour éviter les problèmes
+    try {
+      // Utiliser import() de manière synchrone dans le constructeur n'est pas possible
+      // On va l'initialiser dans une méthode async appelée au démarrage
+      this.intelligentAnalyzer = null;
+      this._analyzerInitialized = false;
+    } catch (error) {
+      console.error('❌ Erreur initialisation analyseur intelligent:', error.message);
+      throw error; // Ne pas continuer sans l'analyseur intelligent
+    }
     
     // Cache local pour les articles publiés
     this.cacheFile = './published-articles-cache.json';
     this.cacheExpiry = 24 * 60 * 60 * 1000; // 24 heures
     
     console.log('🧠 Mode intelligent activé par défaut');
+  }
+  
+  // Initialiser l'analyseur intelligent - DOIT être appelé avant generateStrategicContent
+  async initializeIntelligentAnalyzer() {
+    if (this._analyzerInitialized && this.intelligentAnalyzer) {
+      return this.intelligentAnalyzer;
+    }
+    
+    try {
+      const IntelligentContentAnalyzerOptimized = (await import('./intelligent-content-analyzer-optimized.js')).default;
+      this.intelligentAnalyzer = new IntelligentContentAnalyzerOptimized();
+      this._analyzerInitialized = true;
+      console.log('✅ Analyseur intelligent initialisé');
+      return this.intelligentAnalyzer;
+    } catch (error) {
+      console.error('❌ ERREUR CRITIQUE: Impossible d\'initialiser l\'analyseur intelligent:', error.message);
+      throw new Error(`ANALYZER_INIT_FAILED: ${error.message}`);
+    }
   }
 
   // Charger le cache local
@@ -75,15 +109,48 @@ class UltraStrategicGenerator {
     }
   }
 
+  // NOUVEAU: Charger le cache des URLs Reddit
+  async loadRedditUrlsCache() {
+    try {
+      const fs = await import('fs');
+      if (fs.existsSync(this.redditUrlsCacheFile)) {
+        const urls = JSON.parse(fs.readFileSync(this.redditUrlsCacheFile, 'utf8'));
+        this.publishedRedditUrls = new Set(urls);
+        console.log(`📋 ${this.publishedRedditUrls.size} URLs Reddit chargées depuis le cache`);
+        return true;
+      }
+    } catch (error) {
+      console.log('⚠️ Erreur chargement cache URLs Reddit:', error.message);
+    }
+    return false;
+  }
+
+  // NOUVEAU: Sauvegarder le cache des URLs Reddit
+  async saveRedditUrlsCache() {
+    try {
+      const fs = await import('fs');
+      const urls = Array.from(this.publishedRedditUrls);
+      fs.writeFileSync(this.redditUrlsCacheFile, JSON.stringify(urls, null, 2));
+      console.log(`💾 ${urls.length} URLs Reddit sauvegardées dans le cache`);
+    } catch (error) {
+      console.log('⚠️ Erreur sauvegarde cache URLs Reddit:', error.message);
+    }
+  }
+
   // Charger les articles déjà publiés
   async loadPublishedArticles() {
     try {
       console.log('📚 Chargement des articles déjà publiés...');
       
-      // Essayer d'abord le cache local
-      if (await this.loadCache()) {
-        return;
-      }
+      // Charger le cache des URLs Reddit
+      await this.loadRedditUrlsCache();
+      
+      // Essayer d'abord le cache local des titres
+      const cacheLoaded = await this.loadCache();
+      
+      // TOUJOURS crawler WordPress pour mettre à jour les URLs Reddit (même si cache existe)
+      // Car les URLs Reddit peuvent changer ou être ajoutées
+      console.log('📚 Crawl WordPress pour extraire les URLs Reddit (mise à jour)...');
       
       let allArticles = [];
       let page = 1;
@@ -93,7 +160,7 @@ class UltraStrategicGenerator {
       while (true) {
         try {
           // L'API WordPress est publique, pas besoin d'auth
-          const response = await axios.get(`${WORDPRESS_URL}/wp-json/wp/v2/posts?per_page=${perPage}&page=${page}&status=publish&_fields=id,title,date`, {
+          const response = await axios.get(`${WORDPRESS_URL}/wp-json/wp/v2/posts?per_page=${perPage}&page=${page}&status=publish&_fields=id,title,date,content`, {
             timeout: 15000,
             headers: {
               'Accept': 'application/json',
@@ -134,9 +201,34 @@ class UltraStrategicGenerator {
             keywords.forEach(keyword => this.publishedArticles.add(keyword));
           }
         }
+        
+        // NOUVEAU: Extraire l'URL Reddit source depuis le contenu
+        // Améliorer le regex pour gérer les guillemets encodés par WordPress
+        if (post.content && post.content.rendered) {
+          const content = post.content.rendered;
+          // Pattern 1: href="https://reddit.com/..."
+          let redditUrlMatch = content.match(/href=["'](https?:\/\/reddit\.com\/r\/\w+\/comments\/[\w\/]+)["']/i);
+          if (!redditUrlMatch) {
+            // Pattern 2: href=&quot;https://reddit.com/...&quot; (encodé)
+            redditUrlMatch = content.match(/href=&quot;(https?:\/\/reddit\.com\/r\/\w+\/comments\/[\w\/]+)&quot;/i);
+          }
+          if (!redditUrlMatch) {
+            // Pattern 3: https://reddit.com/... (sans href)
+            redditUrlMatch = content.match(/(https?:\/\/reddit\.com\/r\/\w+\/comments\/[\w\/]+)/i);
+          }
+          if (redditUrlMatch) {
+            const redditUrl = redditUrlMatch[1];
+            this.publishedRedditUrls.add(redditUrl);
+            console.log(`   📋 URL Reddit extraite: ${redditUrl.substring(0, 60)}...`);
+          }
+        }
       });
       
-      console.log(`✅ ${allArticles.length} articles analysés, ${this.publishedArticles.size} éléments uniques chargés`);
+      console.log(`✅ ${allArticles.length} articles analysés, ${this.publishedArticles.size} titres uniques`);
+      console.log(`   📋 ${this.publishedRedditUrls.size} URLs Reddit dans le cache`);
+      
+      // Sauvegarder le cache des URLs Reddit
+      await this.saveRedditUrlsCache();
       
       // Sauvegarder le cache
       await this.saveCache();
@@ -168,10 +260,16 @@ class UltraStrategicGenerator {
   }
 
   // Vérifier si l'article est déjà publié
-  isArticleAlreadyPublished(title) {
+  isArticleAlreadyPublished(title, redditUrl = null) {
+    // PRIORITÉ 1: Vérifier l'URL Reddit source (plus fiable)
+    if (redditUrl && this.publishedRedditUrls.has(redditUrl)) {
+      console.log(`⚠️ Article Reddit déjà publié (URL): ${redditUrl}`);
+      return true;
+    }
+    
     const normalizedTitle = title.toLowerCase().trim();
     
-    // Vérification exacte
+    // Vérification exacte du titre
     if (this.publishedArticles.has(normalizedTitle)) {
       return true;
     }
@@ -199,16 +297,26 @@ class UltraStrategicGenerator {
   }
 
   // Générer un contenu stratégique avec GPT-4
+  // NOTE: Cette méthode utilise this.intelligentAnalyzer qui DOIT être initialisé
+  // par la classe enfant (EnhancedUltraGenerator) dans son constructeur
   async generateStrategicContent(article) {
     try {
       console.log('🧠 Génération de contenu stratégique intelligente...');
+      
+      // Vérifier que l'analyseur intelligent est disponible (initialisé par la classe enfant)
+      if (!this.intelligentAnalyzer) {
+        throw new Error('ANALYZER_NOT_INITIALIZED: this.intelligentAnalyzer doit être initialisé par la classe enfant (EnhancedUltraGenerator)');
+      }
       
       // Détecter si c'est une question de comparaison Vietnam/Indonésie
       const isVietnamIndonesiaQuestion = this.isVietnamIndonesiaQuestion(article);
       
       if (isVietnamIndonesiaQuestion) {
-        console.log('🌴 Détection question Vietnam vs Indonésie - Utilisation template amélioré');
-        return this.enhancedTemplates.generateComparisonTemplate(article);
+        console.log('🌴 Détection question Vietnam vs Indonésie - Utilisation analyseur intelligent');
+        // Utiliser l'analyseur intelligent pour les questions de comparaison
+        const intelligentAnalysis = await this.intelligentAnalyzer.analyzeContent(article);
+        const llmContent = await this.intelligentAnalyzer.generateIntelligentContent(article, intelligentAnalysis);
+        return this.normalizeLLMContent(llmContent, article);
       }
       
       // 1. Analyse intelligente avec LLM
@@ -231,8 +339,9 @@ class UltraStrategicGenerator {
       }
 
     } catch (error) {
-      console.warn('⚠️ Erreur génération intelligente, utilisation du fallback:', error.message);
-      return this.generateFallbackContent(article);
+      console.error('❌ ERREUR CRITIQUE génération intelligente:', error.message);
+      // PAS DE FALLBACK - L'analyseur intelligent est OBLIGATOIRE
+      throw new Error(`GENERATION_FAILED: ${error.message}`);
     }
   }
 
@@ -275,7 +384,7 @@ class UltraStrategicGenerator {
     
     // Valider le contenu si on a l'article source
     let validation = null;
-    if (sourceArticle) {
+    if (sourceArticle && this.intelligentAnalyzer && this.intelligentAnalyzer.validateGeneratedContent) {
       validation = this.intelligentAnalyzer.validateGeneratedContent(llmContent, sourceArticle);
     }
     
@@ -344,8 +453,9 @@ class UltraStrategicGenerator {
       };
 
     } catch (error) {
-      console.warn('⚠️ Erreur génération générique, utilisation du fallback:', error.message);
-      return this.generateFallbackContent(article);
+      console.error('❌ ERREUR CRITIQUE génération générique:', error.message);
+      // PAS DE FALLBACK - Utiliser l'analyseur intelligent
+      throw new Error(`GENERIC_GENERATION_FAILED: ${error.message}`);
     }
   }
 
@@ -398,8 +508,9 @@ class UltraStrategicGenerator {
       };
 
     } catch (error) {
-      console.warn('⚠️ Erreur génération nomade Asie, utilisation du fallback:', error.message);
-      return this.generateFallbackContent(article);
+      console.error('❌ ERREUR CRITIQUE génération nomade Asie:', error.message);
+      // PAS DE FALLBACK - Utiliser l'analyseur intelligent
+      throw new Error(`NOMADE_ASIA_GENERATION_FAILED: ${error.message}`);
     }
   }
 
@@ -453,8 +564,9 @@ class UltraStrategicGenerator {
       };
 
     } catch (error) {
-      console.warn('⚠️ Erreur génération nomade, utilisation du fallback:', error.message);
-      return this.generateFallbackContent(article);
+      console.error('❌ ERREUR CRITIQUE génération nomade:', error.message);
+      // PAS DE FALLBACK - Utiliser l'analyseur intelligent
+      throw new Error(`NOMADE_GENERATION_FAILED: ${error.message}`);
     }
   }
 
@@ -499,8 +611,9 @@ class UltraStrategicGenerator {
         validation: validation
       };
     } catch (error) {
-      console.warn('⚠️ Erreur template, utilisation du fallback basique:', error.message);
-      return this.generateBasicFallback(article);
+      console.error('❌ ERREUR CRITIQUE template:', error.message);
+      // PAS DE FALLBACK - Utiliser l'analyseur intelligent
+      throw new Error(`TEMPLATE_GENERATION_FAILED: ${error.message}`);
     }
   }
 
@@ -708,14 +821,24 @@ class UltraStrategicGenerator {
         return;
       }
 
-      // Filtrer les articles pertinents avec le mode intelligent
+      // Filtrer les articles pertinents (filtrage simple basé sur les destinations asiatiques)
       console.log('🧠 Filtrage intelligent des articles...');
-      const relevantArticles = this.intelligentFilter.filterRelevantArticles(articles, 5); // Seuil réduit à 5%
+      
+      // Filtrage basique : garder les articles avec destinations asiatiques
+      const asiaDestinations = ['indonesia', 'indonésie', 'bali', 'vietnam', 'thailand', 'thaïlande', 'japan', 'japon', 'korea', 'corée', 'philippines', 'singapore', 'singapour'];
+      const relevantArticles = articles.filter(article => {
+        const titleLower = (article.title || '').toLowerCase();
+        const contentLower = (article.content || article.source_text || '').toLowerCase();
+        const text = `${titleLower} ${contentLower}`;
+        return asiaDestinations.some(dest => text.includes(dest));
+      });
       
       if (relevantArticles.length === 0) {
         console.log('❌ Aucun article pertinent trouvé');
         return;
       }
+      
+      console.log(`✅ ${relevantArticles.length} articles pertinents trouvés sur ${articles.length}`);
 
       console.log(`✅ ${relevantArticles.length} articles pertinents trouvés`);
 
@@ -814,7 +937,7 @@ class UltraStrategicGenerator {
       console.log(`🧠 Expertise: ${strategicContent.expertise_score}`);
       console.log(`🌏 Source: ${bestArticle.source}`);
       console.log(`🏷️ Type: ${bestArticle.type}`);
-      console.log(`⚡ Urgence: ${bestArticle.urgency}`);
+      console.log(`⚡ Urgence: ${bestArticle.urgency || strategicContent.urgence || 'non définie'}`);
       if (imageId) {
         console.log(`🖼️ Image: ${imageId}`);
       }
@@ -838,14 +961,21 @@ class UltraStrategicGenerator {
 }
 
 // Fonction principale
+// ATTENTION: Ce script ne devrait PAS être utilisé directement
+// Utiliser enhanced-ultra-generator.js qui suit le plan du pipeline complet
 async function main() {
-  const generator = new UltraStrategicGenerator();
-  await generator.generateAndPublishStrategicArticle();
+  console.error('❌ ERREUR: ultra-strategic-generator.js ne suit pas le plan du pipeline complet');
+  console.error('❌ Utilisez enhanced-ultra-generator.js pour le pipeline complet avec analyseur intelligent');
+  console.error('❌ Arrêt du script pour éviter d\'utiliser le mauvais orchestrateur\n');
+  process.exit(1);
 }
 
 // Exécution
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main();
+  main().catch(error => {
+    console.error('❌ Erreur fatale:', error.message);
+    process.exit(1);
+  });
 }
 
 export default UltraStrategicGenerator;

@@ -7,10 +7,10 @@
  * IMPORT DYNAMIQUE LAZY: Aucun import OpenAI au top-level pour éviter "File is not defined"
  */
 
-import { OPENAI_API_KEY } from './config.js';
+import { OPENAI_API_KEY, FORCE_OFFLINE, DRY_RUN } from './config.js';
 
-const forceOffline = process.env.FORCE_OFFLINE === '1';
-const isDryRun = process.env.FLASHVOYAGE_DRY_RUN === '1';
+const forceOffline = FORCE_OFFLINE;
+const isDryRun = DRY_RUN;
 
 // Créer le client UNE SEULE FOIS (lazy import)
 let openaiClient = null;

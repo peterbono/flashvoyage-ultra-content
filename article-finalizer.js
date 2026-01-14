@@ -265,6 +265,16 @@ class ArticleFinalizer {
     // PHASE 6.0.5: Nettoyer les duplications de sections H2
     finalContent = this.removeDuplicateSections(finalContent);
     
+    // PHASE 6.0.6: Nettoyer les duplications de blockquotes
+    finalContent = this.removeDuplicateBlockquotes(finalContent);
+    
+    // PHASE 6.0.7: Nettoyer le texte parasite du renforcement SEO
+    finalContent = this.removeParasiticText(finalContent);
+    
+    // PHASE 6.0.8: Remplacer "Questions encore ouvertes" par "Nos recommandations"
+    finalContent = finalContent.replace(/<h2[^>]*>Questions (encore )?ouvertes[^<]*<\/h2>/gi, '<h2>🎯 Nos recommandations : Par où commencer ?</h2>');
+    finalContent = finalContent.replace(/Questions (encore )?ouvertes/gi, 'Nos recommandations');
+    
     // PHASE 6.1: QA Report déterministe
     const qaReport = await this.runQAReport(finalContent, pipelineContext, analysis);
     finalContent = qaReport.finalHtml;
@@ -2375,6 +2385,136 @@ class ArticleFinalizer {
     
     if (duplicatesFound > 0) {
       console.log(`   ✅ ${duplicatesFound} duplication(s) de sections nettoyée(s)`);
+    }
+    
+    return cleanedHtml;
+  }
+
+  /**
+   * Supprime les blockquotes dupliqués
+   * @param {string} html - HTML de l'article
+   * @returns {string} HTML nettoyé
+   */
+  removeDuplicateBlockquotes(html) {
+    console.log('🧹 removeDuplicateBlockquotes: Début du nettoyage...');
+    
+    // Extraire tous les blockquotes avec leur position
+    const blockquoteRegex = /<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi;
+    const blockquotes = [];
+    let match;
+    const allMatches = [];
+    
+    // Collecter tous les matches d'abord
+    while ((match = blockquoteRegex.exec(html)) !== null) {
+      allMatches.push({
+        fullMatch: match[0],
+        content: match[1].replace(/<[^>]+>/g, '').trim(), // Texte sans HTML
+        index: match.index
+      });
+    }
+    
+    if (allMatches.length <= 1) {
+      return html; // Pas de duplication possible
+    }
+    
+    // Normaliser pour comparaison (plus robuste)
+    const normalize = (text) => {
+      // Nettoyer le texte plus agressivement
+      return text
+        .toLowerCase()
+        .replace(/<[^>]+>/g, '') // Supprimer HTML
+        .replace(/[^\w\s]/g, '') // Supprimer ponctuation
+        .replace(/\s+/g, ' ') // Normaliser espaces
+        .trim()
+        .substring(0, 200); // Prendre les 200 premiers caractères pour meilleure détection
+    };
+    
+    // Trouver les doublons (garder le premier, marquer les suivants)
+    const seen = new Map();
+    const duplicates = [];
+    
+    for (let i = 0; i < allMatches.length; i++) {
+      const normalized = normalize(allMatches[i].content);
+      if (normalized.length < 20) continue; // Ignorer blockquotes trop courts
+      
+      if (seen.has(normalized)) {
+        duplicates.push(allMatches[i]);
+      } else {
+        seen.set(normalized, allMatches[i]);
+      }
+    }
+    
+    if (duplicates.length === 0) {
+      console.log('   ✅ Aucun blockquote dupliqué détecté');
+      return html; // Pas de doublons
+    }
+    
+    // Supprimer les doublons (du plus récent au plus ancien pour préserver les indices)
+    let cleanedHtml = html;
+    let removedCount = 0;
+    
+    // Trier par index décroissant pour supprimer du plus récent au plus ancien
+    duplicates.sort((a, b) => b.index - a.index);
+    
+    for (const duplicate of duplicates) {
+      // Échapper les caractères spéciaux regex
+      const escapedMatch = duplicate.fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      // Remplacer par chaîne vide (supprimer)
+      cleanedHtml = cleanedHtml.replace(escapedMatch, '');
+      removedCount++;
+      console.log(`   🧹 Blockquote dupliqué supprimé: "${duplicate.content.substring(0, 60)}..."`);
+    }
+    
+    if (removedCount > 0) {
+      console.log(`   ✅ ${removedCount} blockquote(s) dupliqué(s) supprimé(s)`);
+    }
+    
+    return cleanedHtml;
+  }
+
+  /**
+   * Supprime le texte parasite ajouté par le renforcement SEO
+   * @param {string} html - HTML de l'article
+   * @returns {string} HTML nettoyé
+   */
+  removeParasiticText(html) {
+    console.log('🧹 removeParasiticText: Nettoyage du texte parasite...');
+    
+    let cleanedHtml = html;
+    let removedCount = 0;
+    
+    // Pattern 1: "est également un point important à considérer" (répétitif)
+    const parasiticPattern1 = /\s+est également un point important à considérer\./gi;
+    const matches1 = cleanedHtml.match(parasiticPattern1);
+    if (matches1) {
+      cleanedHtml = cleanedHtml.replace(parasiticPattern1, '');
+      removedCount += matches1.length;
+      console.log(`   🧹 ${matches1.length} occurrence(s) de "est également un point important à considérer" supprimée(s)`);
+    }
+    
+    // Pattern 2: "est également un point important à considérer" avec variations
+    const parasiticPattern2 = /\s+(est|sont)\s+également\s+un\s+point\s+important\s+à\s+considérer[\.\s]*/gi;
+    const matches2 = cleanedHtml.match(parasiticPattern2);
+    if (matches2 && matches2.length > removedCount) {
+      cleanedHtml = cleanedHtml.replace(parasiticPattern2, '');
+      const additionalRemoved = matches2.length - removedCount;
+      removedCount = matches2.length;
+      console.log(`   🧹 ${additionalRemoved} occurrence(s) supplémentaire(s) supprimée(s)`);
+    }
+    
+    // Pattern 3: Répétitions de mots isolés (ex: "Indonesia est également... health est également...")
+    const parasiticPattern3 = /\s+(\w+)\s+est également un point important à considérer\.\s+(\w+)\s+est également un point important à considérer\./gi;
+    const matches3 = cleanedHtml.match(parasiticPattern3);
+    if (matches3) {
+      cleanedHtml = cleanedHtml.replace(parasiticPattern3, '');
+      removedCount += matches3.length;
+      console.log(`   🧹 ${matches3.length} répétition(s) de mots isolés supprimée(s)`);
+    }
+    
+    if (removedCount > 0) {
+      console.log(`   ✅ ${removedCount} texte(s) parasite(s) supprimé(s)`);
+    } else {
+      console.log('   ✅ Aucun texte parasite détecté');
     }
     
     return cleanedHtml;

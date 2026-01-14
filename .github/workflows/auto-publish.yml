@@ -98,8 +98,8 @@ jobs:
           npm cache clean --force
           npm install
         
-      - name: Generate and Publish Ultra Strategic Content
-        run: node ultra-strategic-generator.js
+            - name: Generate and Publish Ultra Strategic Content
+              run: node enhanced-ultra-generator.js
         env:
           WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
           WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}

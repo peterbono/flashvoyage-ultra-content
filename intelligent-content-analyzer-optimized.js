@@ -234,6 +234,49 @@ class IntelligentContentAnalyzerOptimized {
   }
 
   /**
+   * Traduit les blockquotes en anglais dans un texte HTML
+   */
+  async translateBlockquotesInText(html) {
+    if (!html || typeof html !== 'string') return html;
+    
+    // Extraire tous les blockquotes
+    const blockquoteRegex = /<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi;
+    const blockquotes = [];
+    let match;
+    
+    while ((match = blockquoteRegex.exec(html)) !== null) {
+      blockquotes.push({
+        fullMatch: match[0],
+        content: match[1],
+        index: match.index
+      });
+    }
+    
+    if (blockquotes.length === 0) return html;
+    
+    // Traduire chaque blockquote
+    let translatedHtml = html;
+    for (const blockquote of blockquotes) {
+      const contentText = blockquote.content.replace(/<[^>]+>/g, '').trim();
+      if (contentText.length > 10) {
+        const englishDetection = this.detectEnglishContent(contentText);
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.3) {
+          console.log(`   🔄 Traduction blockquote: "${contentText.substring(0, 50)}..." (${Math.round(englishDetection.ratio * 100)}% EN)`);
+          const translated = await this.translateToFrench(contentText);
+          // Remplacer le contenu du blockquote
+          const translatedBlockquote = blockquote.fullMatch.replace(
+            blockquote.content,
+            `<p>${translated}</p>`
+          );
+          translatedHtml = translatedHtml.replace(blockquote.fullMatch, translatedBlockquote);
+        }
+      }
+    }
+    
+    return translatedHtml;
+  }
+
+  /**
    * Traduit un texte anglais en français
    * @param {string} text - Texte à traduire
    * @returns {Promise<string>} Texte traduit en français
@@ -1049,27 +1092,50 @@ ${marketingSection}
 FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <blockquote>, <strong>
 LONGUEUR MINIMALE OBLIGATOIRE: 2000-3000 mots
 ⚠️ IMPORTANT: Chaque section doit être DÉVELOPPÉE et DÉTAILLÉE
-- Contexte: minimum 200 mots avec tous les détails disponibles
-- Événement central: minimum 300 mots avec chronologie précise
+- Contexte: minimum 200 mots avec TOUS les détails disponibles (durées, lieux, chiffres)
+- Événement central: minimum 300 mots avec chronologie précise et détails concrets
 - Moment critique: minimum 200 mots si disponible
 - Résolution: minimum 200 mots si disponible
 - Développe TOUS les points issus du story, ne résume pas !
 
-⚠️ STRUCTURE JSON OBLIGATOIRE :
+🚨 EXPLOITATION OBLIGATOIRE DES DONNÉES EXTRAITES:
+- INTÈGRE TOUS les détails temporels mentionnés (ex: "3 months", "6 months")
+- INTÈGRE TOUS les lieux spécifiques (ex: "Punspace", "CAMP", "Khao Soi")
+- INTÈGRE TOUS les chiffres concrets (ex: "$50-100/month", budgets, durées)
+- INTÈGRE TOUS les entités extraites (noms de lieux, coworking spaces, spécialités locales)
+- DÉVELOPPE les questions de la communauté avec les réponses disponibles
+- UTILISE 90% minimum des données fournies dans "DONNÉES EXTRAITES"
+- Ne laisse AUCUNE information pertinente de côté
+
+⚠️ STRUCTURE JSON OBLIGATOIRE (ORDRE STRICT) :
 {
   "article": {
     "titre": "...",
-    "contexte": "...",  // Section 1 (si story.context.summary existe)
+    "contexte": "...",  // Section 1 - TOUJOURS EN PREMIER (si story.context.summary existe)
     "evenement_central": "...",  // Section 2 (si story.central_event.summary existe, sinon null)
     "moment_critique": "...",  // Section 3 (si story.critical_moment.summary existe, sinon null)
     "resolution": "...",  // Section 4 (si story.resolution.summary existe, sinon null)
     "lecons_auteur": "...",  // Section 5 (si story.author_lessons non vide, sinon null)
-    "insights_communaute": "...",  // Section 6 (si story.community_insights non vide, sinon null)
+    "insights_communaute": "...",  // Section 6 - TOUJOURS EN FRANÇAIS (si story.community_insights non vide, sinon null)
     "recommandations": "...",  // Section 7 OBLIGATOIRE (3 options classées avec budgets + CTAs)
     "citations": [...],  // Citations courtes depuis evidence (max 5)
     "signature": "..."
   }
 }
+
+⚠️ ORDRE STRICT DES SECTIONS HTML :
+1. Contexte (TOUJOURS en premier)
+2. Événement central
+3. Moment critique
+4. Résolution
+5. Leçons auteur
+6. Insights communauté (TOUJOURS en français)
+7. Recommandations
+
+⚠️ TRADUCTION OBLIGATOIRE :
+- Les insights_communaute sont DÉJÀ traduits en français dans le prompt
+- NE JAMAIS générer du contenu en anglais dans insights_communaute
+- Si tu génères du contenu en anglais, l'article sera REJETÉ
 
 ⚠️ RÈGLES ABSOLUES :
 - Si une section story est null/vide → champ JSON = null (pas de création)
@@ -1115,7 +1181,7 @@ AUTEUR: ${extracted.author || 'auteur Reddit'}
 - Charge émotionnelle: ${pattern.emotional_load?.label || 'non spécifiée'}
 - Complexité: ${pattern.complexity?.label || 'non spécifiée'}
 
-📍 DONNÉES EXTRAITES (à intégrer naturellement):
+📍 DONNÉES EXTRAITES (OBLIGATOIRE: intégrer 90% minimum):
 ${locationsData ? `- Destinations: ${locationsData}` : ''}
 ${datesData ? `- Dates: ${datesData}` : ''}
 ${costsData ? `- Coûts: ${costsData}` : ''}
@@ -1124,6 +1190,15 @@ ${problemsData ? `- Problèmes: ${problemsData}` : ''}
 ${insightsData ? `- Insights communauté: ${insightsData}` : ''}
 ${warningsData ? `- Warnings communauté: ${warningsData}` : ''}
 ${consensusData ? `- Consensus: ${consensusData}` : ''}
+
+📋 ENTITÉS EXTRAITES (à mentionner dans l'article):
+${extracted.entities?.length > 0 ? extracted.entities.slice(0, 10).join(', ') : 'Aucune'}
+
+📝 TEXTE COMPLET DU POST REDDIT (source de vérité):
+${extracted.post?.clean_text || extracted.source_text || 'Non disponible'}
+
+💬 COMMENTAIRES DÉTAILLÉS (à exploiter):
+${extracted.comments_snippets?.length > 0 ? extracted.comments_snippets.slice(0, 5).map((c, i) => `${i+1}. ${c}`).join('\n') : 'Aucun commentaire disponible'}
 
 📖 SQUELETTE NARRATIF (story):
 ${storyContext ? `CONTEXTE: ${storyContext}` : 'CONTEXTE: null (section absente)'}
@@ -1207,17 +1282,20 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
       const article = content.article;
       
       // Construire le contenu dans l'ordre strict de la structure obligatoire
+      // ORDRE ABSOLU : Contexte → Événement central → Moment critique → Résolution
       const sections = [];
       
-      // 1. Contexte (si présent)
+      // 1. Contexte (TOUJOURS EN PREMIER si présent)
       if (article.contexte && article.contexte.trim()) {
         const contexteText = article.contexte.trim();
         const englishDetection = this.detectEnglishContent(contexteText);
         let finalContexte = contexteText;
-        if (englishDetection.isEnglish) {
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
           console.log(`🌐 Section "Contexte" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
           finalContexte = await this.translateToFrench(contexteText);
         }
+        // Nettoyer les blockquotes en anglais dans le contenu
+        finalContexte = await this.translateBlockquotesInText(finalContexte);
         sections.push(`<h2>Contexte</h2>\n${finalContexte}`);
       }
       
@@ -1226,10 +1304,12 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
         const evenementText = article.evenement_central.trim();
         const englishDetection = this.detectEnglishContent(evenementText);
         let finalEvenement = evenementText;
-        if (englishDetection.isEnglish) {
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
           console.log(`🌐 Section "Événement central" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
           finalEvenement = await this.translateToFrench(evenementText);
         }
+        // Nettoyer les blockquotes en anglais dans le contenu
+        finalEvenement = await this.translateBlockquotesInText(finalEvenement);
         sections.push(`<h2>Événement central</h2>\n${finalEvenement}`);
       }
       
@@ -1238,7 +1318,9 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
         const momentText = article.moment_critique.trim();
         console.log(`🌐 Section "Moment critique": traduction forcée en français...`);
         // TOUJOURS traduire
-        const finalMoment = await this.translateToFrench(momentText);
+        let finalMoment = await this.translateToFrench(momentText);
+        // Nettoyer les blockquotes en anglais dans le contenu
+        finalMoment = await this.translateBlockquotesInText(finalMoment);
         sections.push(`<h2>Moment critique</h2>\n<p>${finalMoment}</p>`);
       }
       
@@ -1404,8 +1486,31 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
           }
         }
         
-        // Si après nettoyage il reste du contenu, l'ajouter avec UN SEUL H2
+        // TRADUIRE les insights en français AVANT ajout
         if (cleanedInsights.trim()) {
+          // Extraire le texte des <li> pour traduction
+          const liTexts = cleanedInsights.match(/<li[^>]*>(.*?)<\/li>/gi);
+          if (liTexts && liTexts.length > 0) {
+            const allText = liTexts.map(li => li.replace(/<[^>]+>/g, '').trim()).join('\n');
+            const englishDetection = this.detectEnglishContent(allText);
+            if (englishDetection.isEnglish && englishDetection.ratio > 0.3) {
+              console.log(`🌐 Insights communauté détectés en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+              const translatedText = await this.translateToFrench(allText);
+              const translatedLines = translatedText.split('\n').filter(l => l.trim());
+              
+              // Reconstruire les <li> traduits
+              if (translatedLines.length === liTexts.length) {
+                const translatedLis = liTexts.map((li, idx) => {
+                  const translatedContent = translatedLines[idx] || li.replace(/<[^>]+>/g, '').trim();
+                  return li.replace(/>([^<]+)</, `>${translatedContent}<`);
+                });
+                cleanedInsights = cleanedInsights.replace(/<ul[^>]*>.*?<\/ul>/gis, '');
+                cleanedInsights = `<ul>\n${translatedLis.map(li => `  ${li}`).join('\n')}\n</ul>`;
+                console.log(`   ✅ ${translatedLines.length} insight(s) traduit(s)`);
+              }
+            }
+          }
+          
           sections.push(`<h2>Ce que la communauté apporte</h2>\n${cleanedInsights}`);
         }
       }
@@ -1413,11 +1518,16 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
       // 8. Nos recommandations (OBLIGATOIRE - remplace "questions ouvertes")
       if (article.recommandations && article.recommandations.trim()) {
         // Détecter si le contenu est en anglais et le traduire si nécessaire
-        const recoText = article.recommandations.trim();
+        let recoText = article.recommandations.trim();
+        
+        // REMPLACER "Questions encore ouvertes" ou "Questions ouvertes" par "Nos recommandations"
+        recoText = recoText.replace(/<h2[^>]*>Questions (encore )?ouvertes[^<]*<\/h2>/gi, '<h2>🎯 Nos recommandations : Par où commencer ?</h2>');
+        recoText = recoText.replace(/Questions (encore )?ouvertes/gi, 'Nos recommandations');
+        
         const englishDetection = this.detectEnglishContent(recoText);
         
         let finalReco = recoText;
-        if (englishDetection.isEnglish) {
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
           console.log(`🌐 Section "Recommandations" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
           finalReco = await this.translateToFrench(recoText);
         }
@@ -1426,7 +1536,7 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
       } else {
         // Fallback si le LLM n'a pas généré de recommandations (ne devrait jamais arriver)
         console.warn('⚠️ Aucune recommandation générée par le LLM - ajout de recommandations génériques');
-        sections.push(`<h2>🎯 Nos recommandations</h2>\n<p>Nous recommandons de privilégier l'Asie du Sud-Est pour un budget maîtrisé et des infrastructures fiables.</p>`);
+        sections.push(`<h2>🎯 Nos recommandations : Par où commencer ?</h2>\n<p>Nous recommandons de privilégier l'Asie du Sud-Est pour un budget maîtrisé et des infrastructures fiables.</p>`);
       }
       
       // 9. Signature (si présente)
@@ -1436,9 +1546,26 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
       
       let htmlContent = sections.filter(Boolean).join('\n\n');
       
-      // SUPPRESSION DES BLOCKQUOTES GÉNÉRÉS PAR LE LLM (le finalizer les rajoutera traduits)
+      // POST-PROCESSING 1 : Supprimer TOUS les blockquotes générés par le LLM (editorial-enhancer les ajoutera traduits)
+      const blockquotesBefore = (htmlContent.match(/<blockquote[^>]*>.*?<\/blockquote>/gs) || []).length;
       htmlContent = htmlContent.replace(/<blockquote[^>]*>.*?<\/blockquote>/gs, '');
-      console.log('🧹 Blockquotes LLM supprimés (le finalizer les réinsérera traduits)');
+      if (blockquotesBefore > 0) {
+        console.log(`🧹 ${blockquotesBefore} blockquote(s) LLM supprimé(s) (editorial-enhancer les réinsérera traduits)`);
+      }
+      
+      // POST-PROCESSING 2 : Remplacer "Questions encore ouvertes" par "Nos recommandations"
+      htmlContent = htmlContent.replace(/<h2[^>]*>Questions (encore )?ouvertes[^<]*<\/h2>/gi, '<h2>🎯 Nos recommandations : Par où commencer ?</h2>');
+      htmlContent = htmlContent.replace(/Questions (encore )?ouvertes/gi, 'Nos recommandations');
+      
+      // POST-PROCESSING 3 : Réorganiser si nécessaire (forcer Contexte en premier)
+      const contexteMatch = htmlContent.match(/<h2>Contexte<\/h2>[\s\S]*?(?=<h2>|$)/i);
+      if (contexteMatch && htmlContent.indexOf('<h2>Contexte</h2>') > 0) {
+        console.log('⚠️ Contexte n\'est pas en premier → réorganisation...');
+        const contexteSection = contexteMatch[0];
+        const reste = htmlContent.replace(contexteSection, '').trim();
+        htmlContent = contexteSection + '\n\n' + reste;
+        console.log('   ✅ Contexte déplacé en premier');
+      }
       
       const finalContent = {
         title: article.titre || 'Témoignage Reddit décrypté par FlashVoyages',
