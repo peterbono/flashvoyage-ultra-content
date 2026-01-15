@@ -139,6 +139,14 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         // Charger les articles déjà publiés (titres + URLs Reddit)
         await this.loadPublishedArticles();
         
+        // EN MODE OFFLINE : Vider le cache Reddit URLs pour permettre la génération avec fixtures
+        if (FORCE_OFFLINE) {
+          console.log('🧪 FORCE_OFFLINE: vidage du cache Reddit URLs pour permettre génération avec fixtures');
+          this.publishedRedditUrls.clear();
+          await this.saveRedditUrlsCache();
+          console.log('   ✅ Cache Reddit URLs vidé');
+        }
+        
         // ENSUITE : Charger la DB fraîchement mise à jour
         await this.linkingStrategy.internalAnalyzer.loadArticlesDatabase('articles-database.json');
         console.log('✅ Base de données chargée pour liens internes\n');

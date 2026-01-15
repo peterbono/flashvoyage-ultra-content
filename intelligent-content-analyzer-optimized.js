@@ -1062,7 +1062,10 @@ ${correctionBlock}
    - ❌ NE PAS créer "Ce que dit la communauté" ou "Ce que la communauté apporte (suite)"
 
 7. NOS RECOMMANDATIONS (OBLIGATOIRE - MARKETING-FIRST)
+   ⚠️ INTERDICTION ABSOLUE : "Questions ouvertes", "Questions encore ouvertes", "Questions ouvertes", "Questions"
    ⚠️ NE JAMAIS utiliser "Questions ouvertes" - c'est anti-marketing !
+   ⚠️ Si tu génères "Questions ouvertes", l'article sera REJETÉ
+   ⚠️ TOUJOURS utiliser "Nos recommandations" ou "🎯 Nos recommandations"
    - TOUJOURS donner des recommandations FERMES et ACTIONNABLES
    - Format: <h2>🎯 Nos recommandations : Par où commencer ?</h2>
    - Structure: 3 options classées (🥇 #1, 🥈 #2, 🥉 #3)
@@ -1546,18 +1549,7 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
       
       let htmlContent = sections.filter(Boolean).join('\n\n');
       
-      // POST-PROCESSING 1 : Supprimer TOUS les blockquotes générés par le LLM (editorial-enhancer les ajoutera traduits)
-      const blockquotesBefore = (htmlContent.match(/<blockquote[^>]*>.*?<\/blockquote>/gs) || []).length;
-      htmlContent = htmlContent.replace(/<blockquote[^>]*>.*?<\/blockquote>/gs, '');
-      if (blockquotesBefore > 0) {
-        console.log(`🧹 ${blockquotesBefore} blockquote(s) LLM supprimé(s) (editorial-enhancer les réinsérera traduits)`);
-      }
-      
-      // POST-PROCESSING 2 : Remplacer "Questions encore ouvertes" par "Nos recommandations"
-      htmlContent = htmlContent.replace(/<h2[^>]*>Questions (encore )?ouvertes[^<]*<\/h2>/gi, '<h2>🎯 Nos recommandations : Par où commencer ?</h2>');
-      htmlContent = htmlContent.replace(/Questions (encore )?ouvertes/gi, 'Nos recommandations');
-      
-      // POST-PROCESSING 3 : Réorganiser si nécessaire (forcer Contexte en premier)
+      // POST-PROCESSING 1 : Réorganiser si nécessaire (forcer Contexte en premier)
       const contexteMatch = htmlContent.match(/<h2>Contexte<\/h2>[\s\S]*?(?=<h2>|$)/i);
       if (contexteMatch && htmlContent.indexOf('<h2>Contexte</h2>') > 0) {
         console.log('⚠️ Contexte n\'est pas en premier → réorganisation...');
@@ -1565,6 +1557,31 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
         const reste = htmlContent.replace(contexteSection, '').trim();
         htmlContent = contexteSection + '\n\n' + reste;
         console.log('   ✅ Contexte déplacé en premier');
+      }
+      
+      // POST-PROCESSING 2 : Supprimer TOUS les blockquotes générés par le LLM (editorial-enhancer les ajoutera traduits)
+      const blockquotesBefore = (htmlContent.match(/<blockquote[^>]*>.*?<\/blockquote>/gs) || []).length;
+      htmlContent = htmlContent.replace(/<blockquote[^>]*>.*?<\/blockquote>/gs, '');
+      if (blockquotesBefore > 0) {
+        console.log(`🧹 ${blockquotesBefore} blockquote(s) LLM supprimé(s) (editorial-enhancer les réinsérera traduits)`);
+      }
+      
+      // POST-PROCESSING 3 : Remplacer "Questions encore ouvertes" par "Nos recommandations"
+      htmlContent = htmlContent.replace(/<h2[^>]*>Questions (encore )?ouvertes[^<]*<\/h2>/gi, '<h2>🎯 Nos recommandations : Par où commencer ?</h2>');
+      htmlContent = htmlContent.replace(/Questions (encore )?ouvertes/gi, 'Nos recommandations');
+      
+      // SUPPRESSION/REMPLACEMENT DE "Questions ouvertes" (interdit)
+      if (htmlContent.match(/<h2[^>]*>.*Questions.*ouvertes.*<\/h2>/i)) {
+        console.log('⚠️ Section "Questions ouvertes" détectée → suppression...');
+        htmlContent = htmlContent.replace(/<h2[^>]*>.*Questions.*ouvertes.*<\/h2>[\s\S]*?(?=<h2>|$)/gi, '');
+        console.log('   ✅ Section "Questions ouvertes" supprimée');
+      }
+      
+      // SUPPRESSION/REMPLACEMENT DE "Questions ouvertes" (interdit)
+      if (htmlContent.match(/<h2[^>]*>.*Questions.*ouvertes.*<\/h2>/i)) {
+        console.log('⚠️ Section "Questions ouvertes" détectée → suppression...');
+        htmlContent = htmlContent.replace(/<h2[^>]*>.*Questions.*ouvertes.*<\/h2>[\s\S]*?(?=<h2>|$)/gi, '');
+        console.log('   ✅ Section "Questions ouvertes" supprimée');
       }
       
       const finalContent = {

@@ -28,6 +28,7 @@ import IntelligentContentAnalyzerOptimized from './intelligent-content-analyzer-
 import { decideAffiliatePlacements } from './contextual-affiliate-injector.js';
 import SeoOptimizer from './seo-optimizer.js';
 import EditorialEnhancer from './editorial-enhancer.js';
+import SerpCompetitiveEnhancer from './serp-competitive-enhancer.js';
 import ArticleFinalizer from './article-finalizer.js';
 import { runAntiHallucinationGuard } from './src/anti-hallucination/anti-hallucination-guard.js';
 import PipelineReport from './pipeline-report.js';
@@ -42,6 +43,7 @@ class PipelineRunner {
     this.generator = new IntelligentContentAnalyzerOptimized();
     this.seoOptimizer = new SeoOptimizer();
     this.editorialEnhancer = new EditorialEnhancer();
+    this.serpEnhancer = new SerpCompetitiveEnhancer();
     this.finalizer = new ArticleFinalizer();
   }
 
@@ -199,6 +201,18 @@ class PipelineRunner {
       } else {
         console.warn('⚠️ Editorial Enhancer a échoué, continuation sans amélioration');
         pipelineReport.endStep('editorial-enhancer', null, { status: 'skip' });
+      }
+
+      // ÉTAPE 6.6: SERP Competitive Enhancer (dépassement concurrentiel)
+      console.log('\n📋 ÉTAPE 6.6: SERP Competitive Enhancer (serp-competitive-enhancer)');
+      pipelineReport.startStep('serp-competitive-enhancer');
+      const serpResult = await this.runSerpEnhancer(generated.content, pipelineContext, pipelineReport);
+      if (serpResult) {
+        generated.content = serpResult.html;
+        pipelineReport.endStep('serp-competitive-enhancer', serpResult, { status: 'pass' });
+      } else {
+        console.warn('⚠️ SERP Enhancer a échoué, continuation sans amélioration');
+        pipelineReport.endStep('serp-competitive-enhancer', null, { status: 'skip' });
       }
 
       // ÉTAPE 7: Finalizer
@@ -455,6 +469,24 @@ class PipelineRunner {
     } catch (error) {
       console.error(`   ❌ Editorial Enhancer: ${error.message}`);
       pipelineReport.addError('editorial-enhancer', error.message, error.stack);
+      return null;
+    }
+  }
+
+  /**
+   * ÉTAPE 6.6: SERP Competitive Enhancer (dépassement concurrentiel)
+   */
+  async runSerpEnhancer(html, pipelineContext, pipelineReport) {
+    try {
+      const result = await this.serpEnhancer.enhanceArticle(html, pipelineContext);
+      if (result && result.html) {
+        console.log(`   ✅ SERP Competitive Enhancer: améliorations appliquées`);
+        return result;
+      }
+      return null;
+    } catch (error) {
+      console.error(`   ❌ SERP Competitive Enhancer: ${error.message}`);
+      pipelineReport.addError('serp-competitive-enhancer', error.message, error.stack);
       return null;
     }
   }

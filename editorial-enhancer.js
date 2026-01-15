@@ -19,19 +19,15 @@ const ENABLE_EDITORIAL_ENHANCER = parseBool(process.env.ENABLE_EDITORIAL_ENHANCE
 class EditorialEnhancer {
   constructor() {
     this.enabled = ENABLE_EDITORIAL_ENHANCER;
-    // Import pour traduction (lazy initialization)
+    // Import pour traduction
     this.intelligentAnalyzer = null;
-    this._analyzerInitialized = false;
+    this._initAnalyzer();
   }
 
   async _initAnalyzer() {
-    if (this._analyzerInitialized) return;
-    
     try {
       const IntelligentContentAnalyzerOptimized = (await import('./intelligent-content-analyzer-optimized.js')).default;
       this.intelligentAnalyzer = new IntelligentContentAnalyzerOptimized();
-      this._analyzerInitialized = true;
-      console.log('✅ Editorial Enhancer: IntelligentAnalyzer initialisé pour traduction');
     } catch (error) {
       console.warn('⚠️ Impossible d\'initialiser IntelligentContentAnalyzer pour traduction:', error.message);
     }
@@ -82,8 +78,8 @@ class EditorialEnhancer {
     // 1️⃣ Ajouter des blocs de citations Reddit explicites (avec traduction)
     enhancedHtml = await this.addRedditCitations(enhancedHtml, story, extraction, enhancements);
 
-    // 2️⃣ Ajouter une section FAQ SEO structurée (avec traduction)
-    enhancedHtml = await this.addFAQSection(enhancedHtml, story, pattern, enhancements);
+    // 2️⃣ Ajouter une section FAQ SEO structurée
+    enhancedHtml = this.addFAQSection(enhancedHtml, story, pattern, enhancements);
 
     // 3️⃣ Renforcer la sémantique SEO (répétition intelligente)
     enhancedHtml = this.reinforceSemanticSEO(enhancedHtml, story, pattern, extraction, enhancements);
@@ -109,9 +105,6 @@ class EditorialEnhancer {
    * Format strict: <blockquote data-source="reddit">Texte exact traduit</blockquote>
    */
   async addRedditCitations(html, story, extraction, enhancements) {
-    // Initialiser l'analyzer si pas encore fait
-    await this._initAnalyzer();
-    
     if (!story.evidence?.source_snippets || story.evidence.source_snippets.length === 0) {
       return html;
     }
@@ -233,12 +226,8 @@ ${citationsHtml}\n`;
   /**
    * 2️⃣ Ajouter une section FAQ SEO structurée
    * Basée sur open_questions + community_insights + story contextuelle
-   * TRADUITE EN FRANÇAIS
    */
-  async addFAQSection(html, story, pattern, enhancements) {
-    // Initialiser l'analyzer si pas encore fait
-    await this._initAnalyzer();
-    
+  addFAQSection(html, story, pattern, enhancements) {
     console.log('\n❓ 2️⃣ Section FAQ SEO...');
 
     const questions = [];
@@ -284,31 +273,12 @@ ${citationsHtml}\n`;
     // Limiter à 5 questions max
     const selectedQuestions = questions.slice(0, 5);
 
-    // Construire la FAQ HTML avec TRADUCTION
-    const faqItemsPromises = selectedQuestions.map(async (q, index) => {
-      let question = q.question;
-      let answer = q.answer || this.generateAnswerFromContext(q.question, story, pattern);
-      
-      // TRADUIRE question et answer si anglais
-      if (this.intelligentAnalyzer) {
-        const questionEnglish = this.intelligentAnalyzer.detectEnglishContent(question);
-        if (questionEnglish.isEnglish && questionEnglish.ratio > 0.3) {
-          console.log(`   🔄 Traduction question FAQ: "${question.substring(0, 50)}..."`);
-          question = await this.intelligentAnalyzer.translateToFrench(question);
-        }
-        
-        const answerEnglish = this.intelligentAnalyzer.detectEnglishContent(answer);
-        if (answerEnglish.isEnglish && answerEnglish.ratio > 0.3) {
-          console.log(`   🔄 Traduction réponse FAQ: "${answer.substring(0, 50)}..."`);
-          answer = await this.intelligentAnalyzer.translateToFrench(answer);
-        }
-      }
-      
-      return `    <h3>${this.escapeHtml(question)}</h3>
+    // Construire la FAQ HTML
+    const faqItems = selectedQuestions.map((q, index) => {
+      const answer = q.answer || this.generateAnswerFromContext(q.question, story, pattern);
+      return `    <h3>${this.escapeHtml(q.question)}</h3>
     <p>${this.escapeHtml(answer)}</p>`;
-    });
-    
-    const faqItems = (await Promise.all(faqItemsPromises)).join('\n\n');
+    }).join('\n\n');
 
     const faqSection = `\n\n<h2>Questions fréquentes</h2>
 ${faqItems}\n`;
