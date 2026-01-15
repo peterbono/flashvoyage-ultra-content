@@ -7,6 +7,7 @@
 import { getOpenAIClient, isOpenAIAvailable } from './openai-client.js';
 import fs from 'fs';
 import { AnchorTextValidator } from './anchor-text-validator.js';
+import { DRY_RUN, FORCE_OFFLINE } from './config.js';
 
 class SemanticLinkAnalyzer {
   constructor(apiKey) {
@@ -159,8 +160,8 @@ class SemanticLinkAnalyzer {
     console.log('🔄 Envoi à OpenAI pour analyse...\n');
 
     // D) Guard FORCE_OFFLINE / DRY_RUN: pas d'appel OpenAI si API key invalide
-    const forceOffline = process.env.FORCE_OFFLINE === '1';
-    const isDryRun = process.env.FLASHVOYAGE_DRY_RUN === '1';
+    const forceOffline = FORCE_OFFLINE;
+    const isDryRun = DRY_RUN;
     
     // Initialiser le client de manière lazy (pas d'import OpenAI si FORCE_OFFLINE=1)
     const client = await this.getClient();
