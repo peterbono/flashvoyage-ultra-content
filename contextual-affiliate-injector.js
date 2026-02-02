@@ -180,6 +180,47 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
     debug.skipped.coworking = 'no theme or keyword match';
   }
 
+  // 6. OPPORTUNITÉS DANS SECTION "ERREURS À ÉVITER"
+  // Détecter si l'article mentionne des erreurs, problèmes, ou conseils d'évitement
+  const errorsKeywords = ['mistake', 'error', 'wrong', 'avoid', 'don\'t', 'shouldn\'t', 'problem', 'issue', 'difficulty', 'challenge', 'erreur', 'éviter', 'problème', 'difficulté'];
+  const errorsKeywordMatch = errorsKeywords.some(kw => fullText.includes(kw));
+  // Vérifier aussi si le story contient des erreurs fréquentes
+  const hasErrorsSection = story?.story?.community_insights && 
+                          (story.story.community_insights.toLowerCase().includes('error') ||
+                           story.story.community_insights.toLowerCase().includes('mistake') ||
+                           story.story.community_insights.toLowerCase().includes('éviter') ||
+                           story.story.community_insights.toLowerCase().includes('erreur'));
+  
+  if (errorsKeywordMatch || hasErrorsSection) {
+    const reasons = [];
+    if (errorsKeywordMatch) {
+      const matchedKw = errorsKeywords.find(kw => fullText.includes(kw));
+      reasons.push(`matched_keywords: ${matchedKw}`);
+    }
+    if (hasErrorsSection) reasons.push('errors section detected in story');
+    
+    // Proposer un placement d'assurance ou eSIM selon le contexte (les erreurs nécessitent souvent ces outils)
+    // Priorité à l'assurance si keywords santé/sécurité, sinon eSIM
+    const hasHealthKeywords = ['sick', 'hospital', 'medical', 'injury', 'accident'].some(kw => fullText.includes(kw));
+    const placementId = hasHealthKeywords ? 'insurance' : 'esim';
+    
+    placements.push({
+      id: placementId,
+      priority: 6,
+      anchor: 'after_errors',
+      reason: reasons,
+      confidence: errorsKeywordMatch && hasErrorsSection ? 70 : errorsKeywordMatch ? 60 : 50,
+      payload: {
+        type: placementId,
+        destination: geo_defaults?.country || 'asia',
+        origin: geo_defaults?.origin || null
+      }
+    });
+    debug.matched[`errors_${placementId}`] = { reasons, confidence: placements[placements.length - 1].confidence };
+  } else {
+    debug.skipped.errors_placement = 'no error keywords or errors section detected';
+  }
+
   // GOUVERNANCE ANTI-SPAM
   // Déduplication par id
   const uniquePlacements = [];

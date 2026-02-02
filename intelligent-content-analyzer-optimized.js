@@ -1,10 +1,51 @@
 #!/usr/bin/env node
 
 import axios from 'axios';
+import fs from 'fs';
 import { OPENAI_API_KEY, DRY_RUN, FORCE_OFFLINE } from './config.js';
 import { extractRedditForAnalysis, isDestinationQuestion, extractMainDestination } from './reddit-extraction-adapter.js';
 import { detectRedditPattern } from './reddit-pattern-detector.js';
 import { compileRedditStory } from './reddit-story-compiler.js';
+
+// Helper pour logger en NDJSON
+function debugLog(location, message, data, hypothesisId) {
+  const logEntry = JSON.stringify({
+    location,
+    message,
+    data,
+    timestamp: Date.now(),
+    sessionId: 'debug-session',
+    runId: 'run1',
+    hypothesisId
+  }) + '\n';
+  try {
+    const logPath = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor/debug.log';
+    // Créer le répertoire s'il n'existe pas
+    const logDir = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor';
+    if (!fs.existsSync(logDir)) {
+      fs.mkdirSync(logDir, { recursive: true });
+    }
+    fs.appendFileSync(logPath, logEntry);
+  } catch (e) {
+    console.error('DEBUG LOG ERROR:', e.message);
+  }
+}
+
+// Helper pour décoder les entités HTML courantes et numériques
+function decodeHtmlEntities(text) {
+  // D'abord décoder les entités HTML numériques (&#8217;, &#39;, etc.)
+  text = text.replace(/&#(\d+);/g, (match, code) => {
+    return String.fromCharCode(parseInt(code, 10));
+  });
+  // Puis décoder les entités HTML nommées courantes
+  return text
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&apos;/g, "'");
+}
 
 // 2) Utilitaire pour sécuriser tous les JSON.parse avec réparation automatique
 function safeJsonParse(str, label = 'json') {
@@ -320,9 +361,16 @@ class IntelligentContentAnalyzerOptimized {
       
       const translated = response.data.choices[0].message.content.trim();
       console.log(`✅ Texte traduit: ${text.substring(0, 50)}... → ${translated.substring(0, 50)}...`);
+      // #region agent log
+      const stillEnglish = !/[àâäéèêëïîôùûüÿç]/.test(translated) && /^[A-Z][a-z]+/.test(translated);
+      debugLog('intelligent-content-analyzer-optimized.js:322', 'translateToFrench terminé', {originalLength:text.length,translatedLength:translated.length,originalSample:text.substring(0,60),translatedSample:translated.substring(0,60),stillEnglish:stillEnglish}, 'C');
+      // #endregion
       return translated;
     } catch (error) {
       console.warn(`⚠️ Erreur lors de la traduction: ${error.message}. Texte non traduit.`);
+      // #region agent log
+      debugLog('intelligent-content-analyzer-optimized.js:326', 'translateToFrench ERREUR', {error:error.message,textSample:text.substring(0,60)}, 'C');
+      // #endregion
       return text; // Retourner le texte original en cas d'erreur
     }
   }
@@ -869,6 +917,114 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
   }
 
   // APPEL 2 : Génération finale avec contexte système
+  /**
+   * Extrait les vrais points clés du témoignage (approche expert content writer)
+   * Basé sur le contenu réel plutôt qu'une grille générique
+   * @param {Object} extracted - Données extraites
+   * @param {Object} story - Story compilée
+   * @param {Object} pattern - Pattern détecté
+   * @returns {Array} Points clés avec {label, value}
+   */
+  extractRealKeyPoints(extracted, story, pattern) {
+    const keyPoints = [];
+    
+    // PRIORITÉ 1: LEÇON PRINCIPALE (le plus actionnable pour le lecteur)
+    const authorLessons = story?.story?.author_lessons || [];
+    if (authorLessons.length > 0) {
+      const firstLesson = typeof authorLessons[0] === 'string' 
+        ? authorLessons[0] 
+        : (authorLessons[0].lesson || authorLessons[0].value || authorLessons[0].text || '');
+      if (firstLesson && firstLesson.length > 15 && firstLesson.length < 100) {
+        keyPoints.push({ label: 'Leçon principale', value: firstLesson.trim() });
+      }
+    }
+    
+    // PRIORITÉ 2: INSIGHT COMMUNAUTÉ (conseil pratique)
+    const communityInsights = story?.story?.community_insights || [];
+    if (communityInsights.length > 0) {
+      const firstInsight = typeof communityInsights[0] === 'string'
+        ? communityInsights[0]
+        : (communityInsights[0].value || communityInsights[0].text || communityInsights[0].insight || '');
+      if (firstInsight && firstInsight.length > 20 && firstInsight.length < 100) {
+        keyPoints.push({ label: 'Conseil communauté', value: firstInsight.trim() });
+      }
+    }
+    
+    // PRIORITÉ 3: ÉVÉNEMENT CLÉ / MOMENT DÉCISIF (contexte narratif)
+    const centralEvent = story?.story?.central_event?.summary;
+    const criticalMoment = story?.story?.critical_moment?.summary;
+    if (centralEvent && centralEvent.length > 20 && centralEvent.length < 200) {
+      // Extraire la phrase la plus percutante (première phrase ou plus courte)
+      const sentences = centralEvent.split(/[.!?]\s+/).filter(s => s.length > 15 && s.length < 100);
+      if (sentences.length > 0) {
+        // Prioriser les phrases plus courtes (plus percutantes)
+        const keySentence = sentences.sort((a, b) => a.length - b.length)[0].trim();
+        keyPoints.push({ label: 'Événement clé', value: keySentence });
+      }
+    } else if (criticalMoment && criticalMoment.length > 20 && criticalMoment.length < 200) {
+      const sentences = criticalMoment.split(/[.!?]\s+/).filter(s => s.length > 15 && s.length < 100);
+      if (sentences.length > 0) {
+        const keySentence = sentences.sort((a, b) => a.length - b.length)[0].trim();
+        keyPoints.push({ label: 'Moment décisif', value: keySentence });
+      }
+    }
+    
+    // PRIORITÉ 4: RÉSULTAT/RÉSOLUTION (impact)
+    const resolution = story?.story?.resolution?.summary;
+    if (resolution && resolution.length > 20 && resolution.length < 200) {
+      const sentences = resolution.split(/[.!?]\s+/).filter(s => s.length > 15 && s.length < 100);
+      if (sentences.length > 0) {
+        const keySentence = sentences.sort((a, b) => a.length - b.length)[0].trim();
+        keyPoints.push({ label: 'Résultat', value: keySentence });
+      }
+    }
+    
+    // PRIORITÉ 5: DÉFI PRINCIPAL (si pattern = warning ou challenges présents)
+    if (pattern?.story_type === 'warning' || pattern?.story_type === 'challenge') {
+      const challenges = story?.story?.evidence?.challenges || [];
+      if (challenges.length > 0) {
+        const firstChallenge = typeof challenges[0] === 'string' ? challenges[0] : (challenges[0].text || challenges[0].challenge || '');
+        if (firstChallenge && firstChallenge.length > 15 && firstChallenge.length < 100) {
+          keyPoints.push({ label: 'Défi rencontré', value: firstChallenge.trim() });
+        }
+      }
+    }
+    
+    // PRIORITÉ 6: BUDGET (seulement si réellement mentionné avec un montant spécifique)
+    const budgetData = story?.story?.evidence?.budget_data || extracted?.costs || [];
+    if (budgetData.length > 0) {
+      const budgetValue = Array.isArray(budgetData) ? budgetData[0] : budgetData;
+      // Vérifier que c'est un montant réel (chiffres + devise) et pas "Non spécifié"
+      if (budgetValue && typeof budgetValue === 'string' && 
+          /[\d€$]/.test(budgetValue) && 
+          budgetValue.length < 80 &&
+          !/non\s+(spécifié|mentionné|disponible)/i.test(budgetValue)) {
+        keyPoints.push({ label: 'Budget', value: budgetValue });
+      }
+    }
+    
+    // PRIORITÉ 7: DURÉE (seulement si spécifique et mentionnée avec chiffres)
+    const duration = story?.story?.context?.duration;
+    if (duration && 
+        duration !== 'Non spécifié' && 
+        /\d+/.test(duration) && // Doit contenir au moins un chiffre
+        /(\d+\s*(mois|semaines?|jours?|ans?)|plusieurs|quelques)/i.test(duration)) {
+      keyPoints.push({ label: 'Durée', value: duration });
+    }
+    
+    // PRIORITÉ 8: DESTINATION (seulement si spécifique, pas générique)
+    const destination = extracted?.destination || story?.story?.context?.location;
+    if (destination && 
+        destination !== 'Asie' && 
+        destination !== 'Non spécifié' &&
+        !/^(asie|asia)$/i.test(destination)) {
+      keyPoints.push({ label: 'Destination', value: destination });
+    }
+    
+    // Limiter à 5 points clés maximum pour garder le focus
+    return keyPoints.slice(0, 5);
+  }
+
   // PHASE 4.1: Utilise extracted, pattern, story au lieu de article brut
   async generateFinalArticle(extraction, analysis, extracted, pattern, story) {
     // Construire la section marketing d'affiliation pour les témoignages
@@ -986,15 +1142,24 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
 
 📝 RÈGLES POUR LE TITRE (OBLIGATOIRE):
 - Format SEO optimisé avec DESTINATION + THÈME/ACTION
+- ⚠️ JAMAIS D'EMOJI DANS LE TITRE - Les emojis sont INTERDITS dans les titres H1 et H2
 - Exemples BONS:
   ✅ "Visa Nomade Digital en Thaïlande : Mon Retour d'Expérience 2024"
   ✅ "Vivre à Bali avec 1000€/mois : Budget Réaliste pour Nomades"
   ✅ "Arnaque eSIM en Indonésie : Comment je l'ai évitée"
-- Exemples MAUVAIS (trop fades):
+- Exemples MAUVAIS (trop fades ou avec emojis):
   ❌ "Témoignage voyage: retours et leçons"
   ❌ "Mon expérience en Asie"
+  ❌ "🎯 Nos recommandations" (emoji interdit)
+  ❌ "⚠️ Limites et biais" (emoji interdit)
 - Le titre DOIT contenir une destination asiatique précise (ville ou pays)
 - Le titre DOIT être actionnable et spécifique
+
+⚠️ RÈGLE ABSOLUE - EMOJIS INTERDITS DANS LES TITRES H2:
+- JAMAIS d'emoji au début ou dans un titre H2
+- Les emojis sont autorisés UNIQUEMENT dans le corps du texte (paragraphes, listes)
+- Exemples CORRECTS: <h2>Limites et biais de ce témoignage</h2>, <h2>Nos recommandations</h2>
+- Exemples INTERDITS: <h2>⚠️ Limites et biais</h2>, <h2>🎯 Nos recommandations</h2>, <h2>💬 Ce que dit le témoignage</h2>
 - Maximum 70 caractères pour le SEO
 
 ⚠️ INTERDICTION DE RÉPÉTER LE BLOCKQUOTE:
@@ -1008,14 +1173,22 @@ ${correctionBlock}
 - Si le témoignage mentionne une destination non-asiatique, remplace-la par une destination asiatique équivalente ou ignore-la complètement
 
 🌐 LANGUE OBLIGATOIRE: TOUT le contenu doit être en FRANÇAIS. 
-- ❌ INTERDIT: "Indonesia just launched..." → ✅ CORRECT: "L'Indonésie vient de lancer..."
-- ❌ INTERDIT: "Thailand LTR visa is available..." → ✅ CORRECT: "Le visa LTR de Thaïlande est disponible..."
-- ❌ INTERDIT: "Vietnam doesn't have..." → ✅ CORRECT: "Le Vietnam n'a pas..."
-- ❌ INTERDIT: "The regular tourist visa..." → ✅ CORRECT: "Le visa touristique régulier..."
-- ❌ INTERDIT: "Requirements are reasonable..." → ✅ CORRECT: "Les exigences sont raisonnables..."
+- ❌ INTERDIT ABSOLU: "Indonesia just launched..." → ✅ CORRECT: "L'Indonésie vient de lancer..."
+- ❌ INTERDIT ABSOLU: "Thailand LTR visa is available..." → ✅ CORRECT: "Le visa LTR de Thaïlande est disponible..."
+- ❌ INTERDIT ABSOLU: "Vietnam doesn't have..." → ✅ CORRECT: "Le Vietnam n'a pas..."
+- ❌ INTERDIT ABSOLU: "The regular tourist visa..." → ✅ CORRECT: "Le visa touristique régulier..."
+- ❌ INTERDIT ABSOLU: "Requirements are reasonable..." → ✅ CORRECT: "Les exigences sont raisonnables..."
+- ❌ INTERDIT ABSOLU: "Essential for Vietnam" → ✅ CORRECT: "Essentiel pour le Vietnam"
+- ❌ INTERDIT ABSOLU: "Underestimating" → ✅ CORRECT: "Sous-estimer"
+- ❌ INTERDIT ABSOLU: "Not budgeting" → ✅ CORRECT: "Ne pas prévoir de budget"
+- ❌ INTERDIT ABSOLU: "Fatigue setting in" → ✅ CORRECT: "La fatigue s'installe"
+- ❌ INTERDIT ABSOLU: "Critical Moment" → ✅ CORRECT: "Moment critique"
+- ❌ INTERDIT ABSOLU: "What Reddit testimonials" → ✅ CORRECT: "Ce que les témoignages Reddit"
 - Traduis TOUS les textes anglais en français AVANT de les mettre dans le JSON
-- Ne laisse AUCUN texte en anglais dans le contenu final
+- Ne laisse AUCUN texte en anglais dans le contenu final (0% anglais toléré)
 - VÉRIFIE que chaque champ du JSON est en français avant de répondre
+- Si tu détectes du texte anglais dans le témoignage source, traduis-le immédiatement
+- Les phrases mixtes FR/EN sont INTERDITES - tout doit être 100% français
 
 🚨 GARDE-FOUS EXPLICITES (SOURCE OF TRUTH):
 - N'invente aucun fait
@@ -1026,7 +1199,24 @@ ${correctionBlock}
 
 📐 STRUCTURE OBLIGATOIRE (dans cet ordre exact) :
 
-1. CONTEXTE (OBLIGATOIRE)
+⚠️ IMPORTANT : Le Quick Guide est une section SÉPARÉE, pas un sous-titre dans une autre section !
+
+0. QUICK GUIDE (OBLIGATOIRE - TOUJOURS EN PREMIER, AVANT TOUT H2)
+   - C'est la PREMIÈRE chose que le lecteur voit
+   - NE PAS mettre dans une section "Ce que dit le témoignage" ou autre H2
+   - Format HTML EXACT (copier tel quel) :
+     <div class="quick-guide">
+     <h3>Points clés de ce témoignage</h3>
+     <ul>
+     <li><strong>Destination</strong> : [destination EXACTE du témoignage, ex: Malaisie, Ipoh]</li>
+     <li><strong>Durée</strong> : [durée mentionnée dans le témoignage]</li>
+     <li><strong>Budget</strong> : [budget si mentionné, sinon "Non spécifié"]</li>
+     <li><strong>Type d'expérience</strong> : [nomade digital / backpacking / expatriation / tourisme]</li>
+     <li><strong>Difficulté</strong> : [Facile / Moyenne / Difficile]</li>
+     </ul>
+     </div>
+
+1. CONTEXTE (OBLIGATOIRE - PREMIER H2 DE L'ARTICLE)
    - Reformulation neutre de story.context.summary
    - Pas d'analyse, pas de jugement
    - Si story.context.summary est null → section absente
@@ -1035,6 +1225,7 @@ ${correctionBlock}
    - Basé uniquement sur story.central_event.summary
    - Si null → section absente (ne pas inventer)
    - Reformulation neutre, pas de dramatisation
+   - ⚠️ TITRE UNIQUEMENT EN FRANÇAIS : <h2>Événement central</h2> (JAMAIS d'anglais dans le titre)
 
 3. MOMENT CRITIQUE (CONDITIONNEL)
    - Basé uniquement sur story.critical_moment.summary
@@ -1065,15 +1256,48 @@ ${correctionBlock}
    ⚠️ INTERDICTION ABSOLUE : "Questions ouvertes", "Questions encore ouvertes", "Questions ouvertes", "Questions"
    ⚠️ NE JAMAIS utiliser "Questions ouvertes" - c'est anti-marketing !
    ⚠️ Si tu génères "Questions ouvertes", l'article sera REJETÉ
-   ⚠️ TOUJOURS utiliser "Nos recommandations" ou "🎯 Nos recommandations"
+   ⚠️ TOUJOURS utiliser "Nos recommandations" (SANS EMOJI dans le H2)
    - TOUJOURS donner des recommandations FERMES et ACTIONNABLES
-   - Format: <h2>🎯 Nos recommandations : Par où commencer ?</h2>
-   - Structure: 3 options classées (🥇 #1, 🥈 #2, 🥉 #3)
-   - Pour chaque option: budget réaliste, avantages (✅), inconvénients (⚠️)
+   - Format: <h2>Nos recommandations : Par où commencer ?</h2> (PAS d'emoji)
+   - Structure: 3 options classées (#1, #2, #3)
+   - Pour chaque option: budget réaliste, avantages, inconvénients
    - Inclure CTAs clairs: "Voir les forfaits", "Comparer les prix", etc.
    - Budgets RÉALISTES (jamais < 700 USD/mois pour Asie)
-   - Basé sur story evidence + extracted locations
-   - Si données insuffisantes: recommander destinations génériques (Vietnam, Thaïlande, Malaisie)
+   
+   ⚠️ RECOMMANDATIONS COHÉRENTES AVEC LE SUJET DE L'ARTICLE (CRITIQUE - VALIDATION STRICTE):
+   - Les recommandations DOIVENT être 100% liées à la DESTINATION EXACTE du témoignage
+   - EXEMPLE CONCRET pour cet article:
+     * Si destination = Malaisie → recommander: Ipoh, Penang, Langkawi, Kuala Lumpur (PAS Vietnam, PAS Thaïlande)
+     * Si destination = Vietnam → recommander: Hanoï, Ho Chi Minh, Da Nang, Hoi An (PAS Bali, PAS Japon)
+     * Si destination = Bali → recommander: Ubud, Canggu, Seminyak, Lombok (PAS Malaisie, PAS Vietnam)
+   - JAMAIS de recommandations génériques "Asie" ou destinations sans rapport
+   - Les 3 options (#1, #2, #3) doivent être dans le MÊME PAYS ou pays voisin direct
+   - Basé sur: extracted.destination, story.context.location
+   - ⚠️ VALIDATION LIENS PARTENAIRES (CRITIQUE):
+     * Si recommandation = logement/hôtel → lien DOIT pointer vers booking.com (PAS airalo.com, PAS kiwi.com)
+     * Si recommandation = vols/avion → lien DOIT pointer vers kiwi.com (PAS airalo.com, PAS booking.com)
+     * Si recommandation = eSIM/connexion → lien DOIT pointer vers airalo.com (PAS booking.com, PAS kiwi.com)
+   - Les textes des liens ("Voir les forfaits", "Comparer les prix", "En savoir plus") DOIVENT correspondre au type de service
+
+8. CE QUE LES TÉMOIGNAGES REDDIT NE DISENT PAS EXPLICITEMENT (OBLIGATOIRE - SERP)
+   ⚠️ CRITIQUE: Cette section est OBLIGATOIRE pour le SEO (15 points SERP)
+   - Format: <h2>Ce que les témoignages Reddit ne disent pas explicitement</h2>
+   - Contenu: Paragraphe expliquant ce qui manque dans les témoignages Reddit
+   - Exemples de ce qui n'est pas dit:
+     * Coûts réels détaillés (logement, nourriture, transport)
+     * Contraintes administratives (visas, formalités)
+     * Impact sur le bien-être mental et physique
+     * Temporalité réelle (délais, ajustements)
+   - Basé sur: story.evidence ou extracted (ne pas inventer)
+   - Si story.evidence manquant → utiliser template générique mais cohérent
+
+9. ANGLES UNIQUES (OBLIGATOIRE - SERP - 30 points)
+   ⚠️ CRITIQUE: Inclure TOUS les 3 angles suivants pour score SERP optimal (10 points chacun):
+   - Budget détaillé: MENTIONNER EXPLICITEMENT "budget réel", "budget détaillé", "coûts réels", ou "dépenses réelles" - Intégrer dans Contexte, Résolution, ou Nos recommandations
+   - Timeline/Chronologie: MENTIONNER EXPLICITEMENT "chronologie", "timeline", "étapes du voyage", "période", ou "durée du séjour" - Intégrer dans Contexte ou Événement central
+   - Contraintes réelles: MENTIONNER EXPLICITEMENT "contraintes", "difficultés", "obstacles", "problèmes pratiques", ou "défis" - Intégrer dans Ce que les autres ne disent pas ou Erreurs fréquentes
+   - Ces angles doivent être intégrés naturellement dans les sections existantes avec les mots-clés EXACTS ci-dessus
+   - Ne pas créer une section séparée, mais les mentionner dans le contenu avec les mots-clés requis
 
 📝 INTERDICTION STRICTE - NE JAMAIS GÉNÉRER DE <blockquote> :
 - ❌ INTERDIT TOTAL : <blockquote>, <cite>, <q> ou tout élément similaire
@@ -1089,6 +1313,256 @@ ${correctionBlock}
 - Thème principal: ${pattern.theme_primary || 'non spécifié'}
 - Reformulation neutre, pas de réécriture libre
 - Réorganisation stricte à partir du squelette story
+
+🌟 STRUCTURE IMMERSIVE OBLIGATOIRE (15 éléments pour qualité premium) :
+
+1. INTRODUCTION FOMO + CURATION (OBLIGATOIRE)
+   - Crée une intro spécifique basée sur le contenu réel du témoignage
+   - Utilise les mots-clés, destinations, et expériences mentionnées dans le texte source
+   - Évite les formules génériques comme "Pendant que vous..."
+   - Focus sur l'expérience concrète du témoignage
+
+2. ANALYSE ÉMOTIONNELLE INTÉGRÉE (PAS DE SECTION SÉPARÉE)
+   - ⚠️ INTERDIT : Ne génère PAS de label isolé comme "<p>🧠 Ce que le voyageur a ressenti :</p>" suivi de rien
+   - ⚠️ OBLIGATOIRE : Intègre l'analyse émotionnelle DANS le texte narratif de chaque section
+   - Exemple CORRECT : "À ce moment-là, le voyageur a probablement ressenti une montée de stress face à cette situation inattendue. L'incompréhension devait être totale..."
+   - Exemple INTERDIT : "<p>🧠 Ce que le voyageur a ressenti :</p>" (label seul sans contenu)
+   - Fais une interprétation analytique des émotions dans le flux narratif
+   - Utilise des formulations comme "probablement ressenti", "sans doute éprouvé", "a dû vivre"
+
+3. ANALYSE COMPORTEMENTALE INTÉGRÉE (PAS DE SECTION SÉPARÉE)
+   - ⚠️ INTERDIT : Ne génère PAS de label isolé comme "<p>🧩 Leçon transversale :</p>" suivi de rien
+   - ⚠️ OBLIGATOIRE : Intègre l'analyse comportementale DANS le texte narratif
+   - Exemple CORRECT : "Cette situation illustre un biais de planification classique : sous-estimer les délais administratifs. C'est une erreur fréquente chez les voyageurs qui..."
+   - Exemple INTERDIT : "<p>🧩 Leçon transversale :</p>" (label seul sans contenu)
+   - Identifie les biais cognitifs et intègre-les naturellement dans le récit
+
+4. ERREURS À ÉVITER (SECTION COMPLÈTE OBLIGATOIRE)
+   - ⚠️ OBLIGATOIRE : Cette section doit avoir un CONTENU COMPLET, pas juste un label
+   - Format CORRECT :
+     <h3>Ce qu'il aurait fallu faire différemment</h3>
+     <p>Pour éviter ces difficultés, voici les actions préventives recommandées :</p>
+     <ul>
+     <li>Action préventive 1 avec explication</li>
+     <li>Action préventive 2 avec explication</li>
+     <li>Action préventive 3 avec explication</li>
+     </ul>
+   - ⚠️ INTERDIT : "<p>⛔️ Ce que le voyageur aurait dû faire :</p>" suivi de rien
+   - Transforme chaque erreur en action préventive concrète avec explication
+
+5. CHRONOLOGIE DE L'EXPÉRIENCE (SECTION COMPLÈTE OBLIGATOIRE)
+   - ⚠️ OBLIGATOIRE : Cette section doit avoir un CONTENU COMPLET, pas juste un label
+   - Format CORRECT :
+     <h3>Chronologie du voyage</h3>
+     <ul>
+     <li><strong>Janvier 2023</strong> : Arrivée à [destination], premières impressions...</li>
+     <li><strong>Février 2023</strong> : Découverte de [lieu], rencontre avec...</li>
+     <li><strong>Mars 2023</strong> : Incident avec [problème], résolution par...</li>
+     </ul>
+   - ⚠️ INTERDIT : "<p>📅 Chronologie de l'expérience :</p>" suivi de rien ou d'une liste vide
+   - Identifie les dates et événements clés du témoignage
+   - Si aucune date précise, utilise des périodes approximatives
+
+6. TRANSITIONS NARRATEUR (OBLIGATOIRE)
+   - Utilise les transitions naturelles basées sur le contenu Reddit réel
+   - Crée des liens fluides entre les sections
+   - Évite les phrases modèles répétitives
+   - ÉVITE les pseudos Reddit dans le texte: "Pour [pseudo]", "L'auteur raconte"
+   - UTILISE: "Cette expérience", "Ce témoignage", "Son parcours", "Cette approche", "Cette stratégie", "Cette méthode"
+   - VARIATION: Après la première citation avec attribution complète, utilise des variantes: "Cette expérience révèle", "Ce témoignage montre", "Son parcours illustre", "Cette approche démontre", "Cette stratégie permet", "Cette méthode révèle"
+   - ATTRIBUTION CONTEXTUELLE: Remplace les pseudos Reddit par "Un membre de la communauté r/digitalnomad", "Un voyageur de la communauté Reddit", "Un nomade de la plateforme"
+
+7. QUESTIONS RHÉTORIQUES (OBLIGATOIRE)
+   - 2-3 questions par section, focus sur l'action
+   - Exemples: "Comment cette approche pourrait-elle vous aider...", "Que feriez-vous si...", "Comment optimiser..."
+   - Questions spécifiques au contenu, pas génériques
+
+8. VARIATION DU RYTHME (OBLIGATOIRE)
+   - Phrases courtes et percutantes pour l'impact
+   - Phrases plus longues pour expliquer et respirer
+   - Évite les formules répétitives
+
+9. MISE EN PERSPECTIVE (OBLIGATOIRE)
+   - Terminer chaque section par un enseignement pratique
+   - Quel piège à éviter, quelle leçon pour le lecteur nomade
+   - Transforme chaque section en valeur actionnable
+
+10. GLOSSAIRE IMPLICITE INTÉGRÉ (📖) - CONDITIONNEL
+   - ⚠️ CRITIQUE : Cette section doit être générée UNIQUEMENT s'il y a vraiment des termes techniques, acronymes, sigles, ou expressions spécifiques mentionnés dans le témoignage
+   - ⚠️ Si aucun terme technique n'est mentionné, NE GÉNÈRE PAS cette section (laisse le champ "glossaire" vide ou null)
+   - ⚠️ NE CRÉE PAS de termes inventés ou génériques (comme "D8", "NIF", "SEF") si ils ne sont PAS explicitement mentionnés dans le témoignage
+   - Si des termes techniques sont présents, ajoute à la fin du témoignage un glossaire des termes techniques ou spécifiques utilisés
+   - Format OBLIGATOIRE EXACT (si des termes techniques sont présents) :
+     <p>📖 Termes utilisés dans ce récit :</p>
+     <ul>
+     <li>Terme : définition</li>
+     <li>...</li>
+     </ul>
+   - Identifie UNIQUEMENT les termes techniques, acronymes, sigles, ou expressions spécifiques RÉELLEMENT mentionnés dans le témoignage
+   - Fournit une définition claire et concise pour chaque terme
+   - Élève la lisibilité pour les lecteurs moins expérimentés
+
+11. INDEXATION INTERNE STRUCTURÉE (🧭) - CONDITIONNEL
+   - ⚠️ CRITIQUE : Cette section doit être générée UNIQUEMENT s'il y a vraiment des ressources (services, sites, démarches) mentionnées dans le témoignage
+   - ⚠️ Si aucune ressource n'est mentionnée, NE GÉNÈRE PAS cette section (laisse le champ "indexation" vide ou null)
+   - ⚠️ NE CRÉE PAS de ressources inventées ou génériques si elles ne sont PAS explicitement mentionnées dans le témoignage
+   - Si des ressources sont mentionnées, ajoute une ancre de référencement pour chaque ressource RÉELLEMENT mentionnée
+   - Format OBLIGATOIRE EXACT (si des ressources sont mentionnées) :
+     <p>🧭 Ressource mentionnée :</p>
+     <ul>
+     <li><a href="...">Site officiel [nom]</a></li>
+     <li><a href="...">Agence locale X utilisée (non recommandée)</a></li>
+     <li>...</li>
+     </ul>
+   - Identifie UNIQUEMENT les ressources RÉELLEMENT mentionnées dans le témoignage : sites officiels, agences, services, démarches administratives
+   - Crée des liens vers les ressources officielles (sites gouvernementaux, services publics, etc.)
+   - Pour les agences ou services utilisés mais non recommandés, indique-le clairement dans le libellé du lien
+   - Prépare ton propre hub d'autorité en créant une base de liens internes utiles en bas de chaque témoignage
+
+12. CONTEXTE DES CITATIONS (OBLIGATOIRE)
+   - Toujours préciser d'où vient la citation (Reddit)
+   - Format: "Témoignage de [auteur] sur r/[subreddit]"
+   - Mentionne la source UNE SEULE FOIS au début, puis utilise des variantes
+
+13. ENRICHISSEMENT DESTINATIONS (OBLIGATOIRE)
+   - ⚠️ CRITIQUE : Ce site est spécialisé ASIE uniquement. NE MENTIONNE JAMAIS de destinations non-asiatiques
+   - Intègre subtilement des mentions de destinations spécifiques dans le contenu
+   - Utilise UNIQUEMENT des destinations asiatiques: Thaïlande, Vietnam, Indonésie, Japon, Corée du Sud, Philippines, Singapour
+   - Mentionne UNIQUEMENT des villes asiatiques: Bangkok, Ho Chi Minh, Bali, Tokyo, Manille, Singapour, Séoul, Canggu, etc.
+   - Intègre naturellement dans les conseils et exemples
+   - Évite les listes génériques, privilégie les mentions contextuelles
+
+14. CONSEILS PRATIQUES (OBLIGATOIRE)
+   - Remplace les descriptions sensorielles par des conseils actionnables
+   - Focus sur la valeur ajoutée concrète
+   - Utilise des données réelles du témoignage
+   - Évite les descriptions génériques et sensationnelles
+
+15. CONTENU SENSORIEL BASÉ SUR TÉMOIGNAGE (OBLIGATOIRE)
+   - Utilise les détails sensoriels mentionnés dans le témoignage réel
+   - Pas d'invention, uniquement ce qui est mentionné dans la source
+   - Renforce l'authenticité et l'immersion
+
+📊 SECTIONS ANALYTIQUES OBLIGATOIRES (pour dépasser les concurrents SERP) :
+
+A. "Limites et biais de ce témoignage" (OBLIGATOIRE)
+   - Format: <h2>⚠️ Limites et biais de ce témoignage</h2>
+   - Contenu OBLIGATOIRE :
+     - Cas non généralisables (situation spécifique, contexte unique)
+     - Biais potentiels (biais de confirmation, biais d'optimisme, etc.)
+     - Ce que le témoignage ne couvre pas (angles manquants)
+     - Distinction claire : faits / ressentis / interprétations
+   - **Objectif** : Renforcer E-E-A-T, montrer expertise critique
+   - Cette section DOIT être présente dans le JSON sous "limites_biais"
+
+B. "Ce que les témoignages Reddit ne disent pas explicitement" (OBLIGATOIRE - CRITIQUE SERP)
+   ⚠️ CRITIQUE: Cette section est OBLIGATOIRE pour le SEO (15 points SERP)
+   - Format: <h2>Ce que les témoignages Reddit ne disent pas explicitement</h2> (SANS emoji dans le H2)
+   - Contenu OBLIGATOIRE (MINIMUM 2-3 paragraphes avec exemples concrets) :
+     - Angles sous-traités par les témoignages (coûts réels cachés, temporalité réelle, contraintes non mentionnées)
+     - Coûts réels associés au voyage (logement à long terme, dépenses quotidiennes) - MENTIONNER EXPLICITEMENT "coûts réels", "budget réel", ou "dépenses réelles"
+     - Contraintes liées à la fatigue de voyage (impact sur bien-être mental et physique) - MENTIONNER EXPLICITEMENT "contraintes", "difficultés", ou "obstacles"
+     - Temporalité réelle du voyage (délais administratifs, ajustements nécessaires) - MENTIONNER EXPLICITEMENT "chronologie", "timeline", ou "étapes du voyage"
+     - Questions utilisateur non traitées dans les témoignages
+     - Ce que les autres articles n'osent pas dire
+   - EXEMPLES CONCRETS À INCLURE :
+     * "Les témoignages omettent souvent les coûts réels cachés comme..."
+     * "La chronologie réelle du voyage révèle que..."
+     * "Les contraintes pratiques non mentionnées incluent..."
+   - Basé sur: story.evidence ou extracted (ne pas inventer)
+   - Si story.evidence manquant → utiliser template générique mais cohérent avec exemples spécifiques à la destination
+   - **Objectif** : Profondeur analytique, valeur ajoutée unique
+   - Cette section DOIT être présente dans le JSON sous "ce_que_les_autres_ne_disent_pas"
+
+C. "Erreurs fréquentes signalées par les voyageurs" (OBLIGATOIRE si applicable)
+   - Format: <h2>Erreurs fréquentes à éviter</h2> (SANS emoji dans le H2)
+   - Contenu (si erreurs mentionnées dans les commentaires Reddit) :
+     - Erreurs récurrentes mentionnées dans les commentaires Reddit
+     - Patterns d'échec identifiés
+     - Prévention concrète
+   - **Objectif** : Couvrir l'intent préventif, valeur pratique
+   - Cette section DOIT être présente dans le JSON sous "erreurs_frequentes" (peut être null si aucune erreur)
+
+D. ANGLES UNIQUES (OBLIGATOIRE - CRITIQUE SERP - 30 points)
+   ⚠️ CRITIQUE: Inclure TOUS les 3 angles suivants pour score SERP optimal (10 points chacun, total 30 points):
+   
+   1. Budget détaillé (OBLIGATOIRE):
+      - MENTIONNER EXPLICITEMENT les mots-clés: "budget réel", "budget détaillé", "coûts réels", ou "dépenses réelles"
+      - Intégrer dans "Contexte", "Résolution", "Nos recommandations", ou "Ce que les autres ne disent pas"
+      - Si disponible dans story.evidence ou extracted → utiliser ces données précises
+      - Sinon → générer un budget réaliste basé sur la destination (ex: "Le budget réel pour un séjour en [destination] oscille entre X et Y USD/mois selon la ville")
+      - Format exemple: "Les coûts réels associés à ce type de voyage incluent..."
+   
+   2. Timeline/Chronologie (OBLIGATOIRE):
+      - MENTIONNER EXPLICITEMENT les mots-clés: "chronologie", "timeline", "étapes du voyage", "période", ou "durée du séjour"
+      - Intégrer dans "Contexte" ou "Événement central"
+      - Utiliser les dates/étapes disponibles dans story.evidence ou extracted
+      - Format exemple: "De [mois] à [mois], il parcourt... En [mois], il voyage... En [mois], il est..."
+      - Si dates manquantes → mentionner la chronologie générale du voyage
+   
+   3. Contraintes réelles (OBLIGATOIRE):
+      - MENTIONNER EXPLICITEMENT les mots-clés: "contraintes", "difficultés", "obstacles", "problèmes pratiques", ou "défis"
+      - Intégrer dans "Ce que les autres ne disent pas" ou "Erreurs fréquentes"
+      - Mentionner les contraintes pratiques : visas, logistique, fatigue, adaptation culturelle
+      - Format exemple: "Les contraintes réelles non mentionnées incluent..."
+   
+   - Ces angles doivent être intégrés naturellement dans les sections existantes (Contexte, Résolution, etc.)
+   - Ne pas créer une section séparée, mais les mentionner dans le contenu avec les mots-clés EXACTS ci-dessus
+   - Si story.evidence contient ces informations → les utiliser
+   - Si manquant → mentionner génériquement mais de manière pertinente avec les mots-clés requis
+
+🎯 RENFORCEMENT E-E-A-T EXPLICITE (sans storytelling artificiel) :
+
+- Expliciter la source des informations (Reddit, témoignage, retour d'expérience)
+- Distinguer clairement : faits / ressentis / interprétations
+- Format dans le contenu :
+  - <p><strong>Source :</strong> Témoignage Reddit de [auteur] sur r/[subreddit], [date]</p>
+  - <p><strong>Fait vérifiable :</strong> [fait]</p>
+  - <p><strong>Interprétation :</strong> [interprétation basée sur contexte]</p>
+- Ajouter des sections "limites", "biais", "cas non généralisables"
+- Éviter : emphase émotionnelle artificielle, formules marketing, généralisation abusive
+
+🔍 PROFONDEUR ANALYTIQUE (angles sous-traités) :
+
+Traite systématiquement ces angles pour dépasser les concurrents :
+- **Coûts réels** : Breakdown détaillé, coûts cachés, variations saisonnières
+- **Temporalité** : Durées réelles vs annoncées, délais administratifs, timing optimal
+- **Contraintes** : Limitations pratiques, cas non couverts, prérequis non mentionnés
+- **Questions utilisateur** : Questions fréquentes non traitées dans les témoignages
+
+✅ VALIDATION ANTI-SPAM SERP :
+
+- Chaque section doit apporter une information absente chez ≥50% des concurrents
+- Pas de reformulation creuse ou de remplissage
+- Augmenter la profondeur, pas la longueur
+- Si une section n'apporte pas de valeur unique → ne pas la générer
+
+🔗 OPPORTUNITÉS DE LIENS INTERNES (stratégie de maillage) :
+
+- Identifie 5-10 passages dans le contenu où un lien interne serait naturel
+- Pour chaque opportunité, indique :
+  - Le passage (phrase ou paragraphe)
+  - Le type de page cible (guide pratique, comparaison, page pilier)
+  - Le thème/sujet (visa, assurance, eSIM, budget, sécurité, logement)
+  - L'ancre suggérée (2-5 mots avec mots-clés de la cible)
+- Placement stratégique (par priorité) :
+  1. Dans les 30% premiers de l'article (Google et lecteurs voient tôt)
+  2. Sous chaque H2/H3 quand un sous-thème correspond à une page existante
+  3. Juste avant "Nos recommandations" (liaison vers guides/réponses)
+  4. Dans "Articles connexes" (liste courte et utile)
+- Densité recommandée :
+  - Article 2000-3000 mots : 5-10 liens internes
+  - +1 lien interne par ~250-350 mots si le contenu le justifie
+  - Jamais "spam" : pas plus de 1 lien interne par paragraphe
+- Priorisation des cibles :
+  1. Pages clés (money/pilier) : assurance voyage, eSIM, visa, logement, budget, sécurité
+  2. Pages fraîches : contenu récemment publié (accélère discovery)
+  3. Pages contextuelles : même pays, même type de problème, même intention
+- Ancres précises (2-5 mots) :
+  - Décrivent le sujet de la page cible (mots-clés principaux de la cible)
+  - Éviter : "ici", "en savoir plus", "cet article", "lien"
+  - Varier sans changer le sens (pas de répétition exacte)
+- Note : Le LLM génère les opportunités, mais l'insertion réelle des liens se fait en post-traitement par le système qui vérifie l'existence des pages dans articles-database.json
 
 ${marketingSection}
 
@@ -1114,13 +1588,41 @@ LONGUEUR MINIMALE OBLIGATOIRE: 2000-3000 mots
 {
   "article": {
     "titre": "...",
-    "contexte": "...",  // Section 1 - TOUJOURS EN PREMIER (si story.context.summary existe)
-    "evenement_central": "...",  // Section 2 (si story.central_event.summary existe, sinon null)
+    "quick_guide": "...",  // Section 0 - OBLIGATOIRE - Quick Guide avec points clés (destination, durée, budget, type, difficulté)
+    "contexte": "...",  // Section 1 - TOUJOURS APRÈS LE QUICK GUIDE (si story.context.summary existe)
+    "evenement_central": "...",  // Section 2 (si story.central_event.summary existe, sinon null) - ⚠️ CONTENU UNIQUEMENT, PAS DE TITRE H2, TOUJOURS EN FRANÇAIS
     "moment_critique": "...",  // Section 3 (si story.critical_moment.summary existe, sinon null)
     "resolution": "...",  // Section 4 (si story.resolution.summary existe, sinon null)
     "lecons_auteur": "...",  // Section 5 (si story.author_lessons non vide, sinon null)
     "insights_communaute": "...",  // Section 6 - TOUJOURS EN FRANÇAIS (si story.community_insights non vide, sinon null)
     "recommandations": "...",  // Section 7 OBLIGATOIRE (3 options classées avec budgets + CTAs)
+    "limites_biais": "...",  // NOUVEAU : Section obligatoire "Limites et biais de ce témoignage"
+    "ce_que_les_autres_ne_disent_pas": "...",  // NOUVEAU : Section obligatoire "Ce que les témoignages Reddit ne disent pas explicitement" - ⚠️ CONTENU UNIQUEMENT, PAS DE TITRE H2, TOUJOURS EN FRANÇAIS, JAMAIS "What Reddit testimonials don't explicitly say"
+    "erreurs_frequentes": "...",  // NOUVEAU : Section conditionnelle "Erreurs fréquentes signalées" (peut être null)
+    "emotions": "...",  // NOUVEAU : Sections d'émotions (🧠) intégrées dans le développement
+    "tags_psychologiques": "...",  // NOUVEAU : Sections de tags psychologiques (🧩) intégrées dans le développement
+    "reecriture_echec": "...",  // NOUVEAU : Section de réécriture de l'échec (⛔️) intégrée dans le développement
+    "timeline": "...",  // NOUVEAU : Section timeline (📅) intégrée dans le développement
+    "glossaire": "...",  // NOUVEAU : Section glossaire (📖) CONDITIONNEL (uniquement si termes techniques mentionnés, sinon null)
+    "indexation": "...",  // NOUVEAU : Section indexation (🧭) CONDITIONNEL (uniquement si ressources mentionnées, sinon null)
+    "opportunites_liens_internes": [  // NOUVEAU : Opportunités de liens internes identifiées
+      {
+        "passage": "Avant de partir, vérifie ton assurance voyage...",
+        "type_cible": "guide_pratique",
+        "theme": "assurance",
+        "ancre_suggeree": "assurance voyage Asie",
+        "emplacement": "dans_les_30_premiers_pourcents",
+        "raison": "Lien naturel vers guide assurance, placement stratégique"
+      }
+    ],
+    "articles_connexes": [  // NOUVEAU : Liste d'articles connexes suggérés
+      {
+        "titre": "Assurance voyage en Asie : guide complet",
+        "url": "/assurance-voyage-asie/",
+        "ancre": "assurance voyage Asie",
+        "raison": "Page pilier, thème compatible"
+      }
+    ],
     "citations": [...],  // Citations courtes depuis evidence (max 5)
     "signature": "..."
   }
@@ -1133,12 +1635,31 @@ LONGUEUR MINIMALE OBLIGATOIRE: 2000-3000 mots
 4. Résolution
 5. Leçons auteur
 6. Insights communauté (TOUJOURS en français)
-7. Recommandations
+7. Limites et biais de ce témoignage (OBLIGATOIRE - section analytique)
+8. Ce que les témoignages Reddit ne disent pas explicitement (OBLIGATOIRE - section analytique)
+9. Erreurs fréquentes signalées par les voyageurs (CONDITIONNEL - si erreurs mentionnées)
+10. Recommandations
+11. Glossaire (CONDITIONNEL - si termes techniques mentionnés)
+12. Indexation (CONDITIONNEL - si ressources mentionnées)
+
+⚠️ IMPORTANT : Les sections "emotions", "tags_psychologiques", "reecriture_echec", "timeline" doivent être INTÉGRÉES dans le champ "developpement" (pas séparées). Elles apparaissent dans le contenu HTML mais ne sont pas des sections H2 distinctes.
+
+⚠️ CRITIQUE - ANGLES UNIQUES SERP (OBLIGATOIRE - 30 points):
+- Dans le champ "contexte" : INTÉGRER "chronologie" ou "timeline" avec les dates/étapes du voyage
+- Dans le champ "resolution" ou "recommandations" : INTÉGRER "budget réel", "budget détaillé", "coûts réels", ou "dépenses réelles" avec des chiffres concrets
+- Dans le champ "ce_que_les_autres_ne_disent_pas" : INTÉGRER "contraintes", "difficultés", "obstacles", ou "problèmes pratiques" avec des exemples spécifiques
+- Ces mots-clés DOIVENT apparaître explicitement dans le contenu généré pour être détectés par le système de qualité
 
 ⚠️ TRADUCTION OBLIGATOIRE :
 - Les insights_communaute sont DÉJÀ traduits en français dans le prompt
 - NE JAMAIS générer du contenu en anglais dans insights_communaute
 - Si tu génères du contenu en anglais, l'article sera REJETÉ
+- ⚠️ INTERDICTION ABSOLUE : NE JAMAIS générer de titres H2 avec anglais dans les champs JSON
+  - INTERDIT : "Événement central : Vietnam : Fatigue setting in, unimpressed"
+  - INTERDIT : "What Reddit testimonials don't explicitly say"
+  - INTERDIT : "Critical Moment"
+  - CORRECT : Contenu uniquement, sans titre H2, le système ajoutera automatiquement le titre correct
+  - Les champs "evenement_central", "ce_que_les_autres_ne_disent_pas", "moment_critique" doivent contenir UNIQUEMENT le contenu, PAS de titre H2
 
 ⚠️ RÈGLES ABSOLUES :
 - Si une section story est null/vide → champ JSON = null (pas de création)
@@ -1266,6 +1787,32 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
     const content = safeJsonParse(rawContent, 'generateFinalArticle_response');
     console.log('✅ Article final généré:', Object.keys(content));
     
+    // PHASE 4.1.4: NETTOYAGE IMMÉDIAT des titres H2 incorrects dans le JSON
+    if (content.article) {
+      console.log('🧹 Nettoyage des titres H2 incorrects dans le JSON...');
+      // Nettoyer evenement_central
+      if (content.article.evenement_central) {
+        // Supprimer tous les H2, y compris ceux avec anglais
+        content.article.evenement_central = content.article.evenement_central.replace(/<h2[^>]*>.*?<\/h2>/gi, '').trim();
+        // Supprimer aussi les titres sans H2 qui contiennent "Événement central" avec anglais
+        content.article.evenement_central = content.article.evenement_central.replace(/Événement central[^\n]*/gi, '').trim();
+      }
+      // Nettoyer ce_que_les_autres_ne_disent_pas
+      if (content.article.ce_que_les_autres_ne_disent_pas) {
+        // Supprimer tous les H2, y compris "What Reddit testimonials don't explicitly say"
+        content.article.ce_que_les_autres_ne_disent_pas = content.article.ce_que_les_autres_ne_disent_pas.replace(/<h2[^>]*>.*?<\/h2>/gi, '').trim();
+        // Supprimer aussi les titres sans H2
+        content.article.ce_que_les_autres_ne_disent_pas = content.article.ce_que_les_autres_ne_disent_pas.replace(/What\s+Reddit\s+testimonials?\s+don[''\u2019]?t\s+explicitly\s+say[^\n]*/gi, '').trim();
+      }
+      // Nettoyer moment_critique
+      if (content.article.moment_critique) {
+        // Supprimer tous les H2, y compris "Critical Moment"
+        content.article.moment_critique = content.article.moment_critique.replace(/<h2[^>]*>.*?<\/h2>/gi, '').trim();
+        // Supprimer aussi les titres sans H2
+        content.article.moment_critique = content.article.moment_critique.replace(/Critical\s+Moment[^\n]*/gi, '').trim();
+      }
+    }
+    
     // PHASE 4.1.5: TRADUCTION FORCÉE du JSON avant reconstruction HTML
     if (content.article) {
       console.log('🌐 Traduction forcée de TOUS les champs JSON...');
@@ -1285,12 +1832,55 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
       const article = content.article;
       
       // Construire le contenu dans l'ordre strict de la structure obligatoire
-      // ORDRE ABSOLU : Contexte → Événement central → Moment critique → Résolution
+      // ORDRE ABSOLU : Quick Guide → Contexte → Événement central → Moment critique → Résolution
       const sections = [];
       
-      // 1. Contexte (TOUJOURS EN PREMIER si présent)
+      // 0. Quick Guide (TOUJOURS EN PREMIER - résumé actionnable)
+      // APPROCHE EXPERT CONTENT WRITER : Extraire les vrais points clés du témoignage, pas une grille générique
+      let quickGuideText = article.quick_guide?.trim() || '';
+      
+      if (!quickGuideText) {
+        console.log('⚠️ Quick Guide manquant - Extraction intelligente des points clés réels du témoignage...');
+        
+        // Extraire les vrais points clés depuis le contenu réel
+        const keyPoints = this.extractRealKeyPoints(extracted, story, pattern);
+        
+        if (keyPoints.length > 0) {
+          const pointsHtml = keyPoints.map(point => {
+            const label = point.label || 'Point clé';
+            const value = point.value || '';
+            return `<li><strong>${label}</strong> : ${value}</li>`;
+          }).join('\n');
+          
+          quickGuideText = `<ul>\n${pointsHtml}\n</ul>`;
+          console.log(`   ✅ Quick Guide généré avec ${keyPoints.length} points clés réels extraits du témoignage`);
+        } else {
+          // Fallback minimal si aucun point clé ne peut être extrait
+          const destination = extracted?.destination || story?.story?.context?.location || 'Non spécifié';
+          quickGuideText = `<ul>\n<li><strong>Destination</strong> : ${destination}</li>\n</ul>`;
+          console.log('   ⚠️ Aucun point clé extractible, fallback minimal');
+        }
+      } else {
+        const englishDetection = this.detectEnglishContent(quickGuideText);
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
+          console.log(`🌐 Section "Quick Guide" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+          quickGuideText = await this.translateToFrench(quickGuideText);
+        }
+      }
+      
+      // S'assurer que le Quick Guide a le bon format HTML
+      if (!quickGuideText.includes('<div class="quick-guide">') && !quickGuideText.includes('<h3>Points clés')) {
+        sections.push(`<div class="quick-guide">\n<h3>Points clés de ce témoignage</h3>\n${quickGuideText}\n</div>`);
+      } else {
+        sections.push(quickGuideText);
+      }
+      console.log('   ✅ Quick Guide ajouté en début d\'article');
+      
+      // 1. Contexte (APRÈS LE QUICK GUIDE si présent)
       if (article.contexte && article.contexte.trim()) {
-        const contexteText = article.contexte.trim();
+        let contexteText = article.contexte.trim();
+        // Supprimer tout H2 présent dans le contenu (on ajoutera le bon titre après)
+        contexteText = contexteText.replace(/<h2[^>]*>.*?<\/h2>/gi, '').trim();
         const englishDetection = this.detectEnglishContent(contexteText);
         let finalContexte = contexteText;
         if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
@@ -1304,7 +1894,30 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
       
       // 2. Événement central (si présent)
       if (article.evenement_central && article.evenement_central.trim()) {
-        const evenementText = article.evenement_central.trim();
+        let evenementText = article.evenement_central.trim();
+        // #region agent log
+        debugLog('intelligent-content-analyzer-optimized.js:1659', 'AVANT nettoyage evenement_central', {originalText:evenementText.substring(0,200),hasH2:/<h2[^>]*>/i.test(evenementText)}, 'A');
+        // #endregion
+        // DÉCODER les entités HTML AVANT le nettoyage (pour que les patterns fonctionnent correctement)
+        evenementText = decodeHtmlEntities(evenementText);
+        // Sauvegarder l'état avant nettoyage pour les logs
+        const beforeTitleClean = evenementText;
+        // NETTOYAGE AGRESSIF : Supprimer TOUS les H2, y compris ceux avec de l'anglais dans le titre
+        // Pattern pour capturer tous les H2, même avec de l'anglais après "Événement central"
+        evenementText = evenementText.replace(/<h2[^>]*>.*?<\/h2>/gi, '').trim();
+        // APPROCHE ULTRA-AGRESSIVE : Supprimer TOUT ce qui contient "Événement central" suivi de quoi que ce soit
+        // (car le titre correct ne doit contenir QUE "Événement central" sans rien d'autre)
+        evenementText = evenementText.replace(/Événement central[^\n]*/gi, '').trim();
+        // Supprimer aussi les résidus comme ", unimpressed" qui peuvent rester
+        evenementText = evenementText.replace(/^,\s*[a-z]+(\s+[a-z]+)*/gi, '').trim();
+        // #region agent log
+        if (beforeTitleClean !== evenementText) {
+          debugLog('intelligent-content-analyzer-optimized.js:1687', 'Nettoyage titre Événement central', {before:beforeTitleClean.substring(0,100),after:evenementText.substring(0,100),removed:beforeTitleClean.length - evenementText.length}, 'A');
+        }
+        // #endregion
+        // #region agent log
+        debugLog('intelligent-content-analyzer-optimized.js:1667', 'APRÈS suppression H2 evenement_central', {cleanedText:evenementText.substring(0,200),stillHasH2:/<h2[^>]*>/i.test(evenementText),stillHasEnglishTitle:/Événement central[^<]*(Fatigue|setting)/i.test(evenementText)}, 'A');
+        // #endregion
         const englishDetection = this.detectEnglishContent(evenementText);
         let finalEvenement = evenementText;
         if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
@@ -1313,15 +1926,40 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
         }
         // Nettoyer les blockquotes en anglais dans le contenu
         finalEvenement = await this.translateBlockquotesInText(finalEvenement);
-        sections.push(`<h2>Événement central</h2>\n${finalEvenement}`);
+        // VÉRIFICATION FINALE : S'assurer qu'aucun titre avec anglais ne subsiste dans le contenu
+        // APPROCHE ULTRA-AGRESSIVE : Supprimer TOUT ce qui contient "Événement central" suivi de quoi que ce soit
+        if (/Événement central[^<]*(Fatigue|setting|in|unimpressed|Event|What|Our|Critical|Vietnam)/i.test(finalEvenement) || /Événement central\s*:/.test(finalEvenement)) {
+          console.log('⚠️ Titre "Événement central" avec anglais détecté dans le contenu final, nettoyage...');
+          finalEvenement = finalEvenement.replace(/Événement central[^\n]*/gi, '').trim();
+        }
+        // NETTOYAGE FINAL : Supprimer tout H2 qui pourrait subsister dans finalEvenement
+        finalEvenement = finalEvenement.replace(/<h2[^>]*>.*?<\/h2>/gi, '').trim();
+        const finalSection = `<h2>Événement central</h2>\n${finalEvenement}`;
+        // #region agent log
+        debugLog('intelligent-content-analyzer-optimized.js:1671', 'Section Événement central ajoutée', {finalSection:finalSection.substring(0,200),hasEnglishInTitle:/Événement central[^<]*(Fatigue|setting)/i.test(finalSection)}, 'A');
+        // #endregion
+        sections.push(finalSection);
       }
       
       // 3. Moment critique (si présent) - TRADUCTION FORCÉE
       if (article.moment_critique && article.moment_critique.trim()) {
-        const momentText = article.moment_critique.trim();
+        let momentText = article.moment_critique.trim();
+        // Supprimer tout H2 présent dans le contenu (on ajoutera le bon titre après)
+        momentText = momentText.replace(/<h2[^>]*>.*?<\/h2>/gi, '').trim();
         console.log(`🌐 Section "Moment critique": traduction forcée en français...`);
-        // TOUJOURS traduire
-        let finalMoment = await this.translateToFrench(momentText);
+        // TOUJOURS traduire - même si détecté comme français
+        const englishDetection = this.detectEnglishContent(momentText);
+        let finalMoment = momentText;
+        if (englishDetection.isEnglish || englishDetection.ratio > 0.05) {
+          finalMoment = await this.translateToFrench(momentText);
+        } else {
+          // Même si détecté comme français, vérifier s'il y a des phrases anglaises
+          const englishPhrases = momentText.match(/[A-Z][a-z]+(\s+[a-z]+)+/g);
+          if (englishPhrases && englishPhrases.length > 0) {
+            console.log(`   ⚠️ Phrases anglaises détectées dans "Moment critique", traduction...`);
+            finalMoment = await this.translateToFrench(momentText);
+          }
+        }
         // Nettoyer les blockquotes en anglais dans le contenu
         finalMoment = await this.translateBlockquotesInText(finalMoment);
         sections.push(`<h2>Moment critique</h2>\n<p>${finalMoment}</p>`);
@@ -1376,6 +2014,17 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
             cleanCitation = cleanCitation.replace(/^«\s*«\s*|»\s*»\s*$/g, '').trim();
             cleanCitation = cleanCitation.replace(/\s*—\s*auteur Reddit\s*—\s*auteur Reddit/gi, '').trim();
             cleanCitation = cleanCitation.replace(/\s*—\s*auteur Reddit/gi, '').trim();
+            // AMÉLIORATION: Supprimer aussi les autres formats d'attribution
+            cleanCitation = cleanCitation.replace(/\s*—\s*[^—]*Reddit[^—]*/gi, '').trim();
+            cleanCitation = cleanCitation.replace(/\s*—\s*Extrait Reddit/gi, '').trim();
+            cleanCitation = cleanCitation.replace(/\s*—\s*Reddit author/gi, '').trim();
+            
+            // AMÉLIORATION: Vérifier que la citation contient du texte réel (pas seulement des espaces/ponctuation)
+            const realText = cleanCitation.replace(/[^\w\sÀ-Ÿà-ÿ]/g, '').trim();
+            if (realText.length < 10) {
+              console.log(`⚠️ Citation trop courte ou vide après nettoyage, ignorée: "${cleanCitation.substring(0, 50)}..."`);
+              return null;
+            }
             
             // Détecter si la citation est en anglais et la traduire si nécessaire
             const englishDetection = this.detectEnglishContent(cleanCitation);
@@ -1383,10 +2032,26 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
             if (englishDetection.isEnglish) {
               console.log(`🌐 Citation détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
               cleanCitation = await this.translateToFrench(cleanCitation);
+              // Vérifier à nouveau après traduction
+              const realTextAfterTranslation = cleanCitation.replace(/[^\w\sÀ-Ÿà-ÿ]/g, '').trim();
+              if (realTextAfterTranslation.length < 10) {
+                console.log(`⚠️ Citation trop courte après traduction, ignorée`);
+                return null;
+              }
             }
             
-            if (cleanCitation.length > 0 && cleanCitation.length <= 200) {
-              return `<p>« ${cleanCitation} » — ${extracted.author || 'auteur Reddit'}</p>`;
+            // AMÉLIORATION: Validation finale stricte (minimum 10 caractères de texte réel, max 200)
+            const finalRealText = cleanCitation.replace(/[^\w\sÀ-Ÿà-ÿ]/g, '').trim();
+            if (finalRealText.length >= 10 && cleanCitation.length <= 200) {
+              // AMÉLIORATION: Utiliser le nom de l'auteur si disponible, sinon un texte plus informatif
+              const authorName = extracted.source?.author || extracted.author || null;
+              let attribution = '— Extrait Reddit';
+              
+              if (authorName && authorName !== '[deleted]' && authorName.trim().length > 0) {
+                attribution = `— ${authorName} (Reddit)`;
+              }
+              
+              return `<p>« ${cleanCitation} » ${attribution}</p>`;
             }
             return null;
           })
@@ -1518,6 +2183,76 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
         }
       }
       
+      // 7.5. Limites et biais de ce témoignage (OBLIGATOIRE - section analytique)
+      if (article.limites_biais && article.limites_biais.trim()) {
+        let limitesText = article.limites_biais.trim();
+        const englishDetection = this.detectEnglishContent(limitesText);
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
+          console.log(`🌐 Section "Limites et biais" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+          limitesText = await this.translateToFrench(limitesText);
+        }
+        // S'assurer que le H2 est présent
+        if (!limitesText.includes('<h2>⚠️ Limites et biais')) {
+          sections.push(`<h2>⚠️ Limites et biais de ce témoignage</h2>\n${limitesText}`);
+        } else {
+          sections.push(limitesText);
+        }
+      } else {
+        // Fallback : générer une section minimale si absente
+        console.warn('⚠️ Section "Limites et biais" absente - ajout d\'une section minimale');
+        sections.push(`<h2>⚠️ Limites et biais de ce témoignage</h2>\n<p>Ce témoignage reflète une expérience personnelle qui peut ne pas être généralisable à tous les contextes. Les situations varient selon les individus, les périodes et les destinations spécifiques.</p>`);
+      }
+      
+      // 7.6. Ce que les témoignages Reddit ne disent pas explicitement (OBLIGATOIRE - section analytique)
+      if (article.ce_que_les_autres_ne_disent_pas && article.ce_que_les_autres_ne_disent_pas.trim()) {
+        let autresText = article.ce_que_les_autres_ne_disent_pas.trim();
+        // DÉCODER les entités HTML AVANT le nettoyage
+        autresText = decodeHtmlEntities(autresText);
+        // NETTOYAGE AGRESSIF : Supprimer TOUS les H2, y compris ceux avec de l'anglais dans le titre
+        autresText = autresText.replace(/<h2[^>]*>.*?<\/h2>/gi, '').trim();
+        // Supprimer aussi les titres en anglais "What Reddit testimonials don't explicitly say"
+        // Pattern amélioré pour gérer les apostrophes normales (') et Unicode (U+2019, U+0027)
+        autresText = autresText.replace(/What\s+Reddit\s+testimonials?\s+don[''\u2019]?t\s+explicitly\s+say/gi, '').trim();
+        const englishDetection = this.detectEnglishContent(autresText);
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
+          console.log(`🌐 Section "Ce que les autres ne disent pas" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+          autresText = await this.translateToFrench(autresText);
+        }
+        // Toujours ajouter le H2 correct (on a supprimé tous les H2 précédents)
+        sections.push(`<h2>🔍 Ce que les témoignages Reddit ne disent pas explicitement</h2>\n${autresText}`);
+      } else {
+        // Fallback : générer une section minimale si absente
+        console.warn('⚠️ Section "Ce que les autres ne disent pas" absente - ajout d\'une section minimale');
+        sections.push(`<h2>🔍 Ce que les témoignages Reddit ne disent pas explicitement</h2>\n<p>Les témoignages Reddit se concentrent souvent sur les aspects positifs ou les problèmes immédiats, mais omettent parfois des détails importants comme les coûts réels cachés, les délais administratifs réels, ou les contraintes pratiques non mentionnées.</p>`);
+      }
+      
+      // 7.7. Erreurs fréquentes signalées par les voyageurs (CONDITIONNEL - si applicable)
+      if (article.erreurs_frequentes && article.erreurs_frequentes.trim()) {
+        let erreursText = article.erreurs_frequentes.trim();
+        const englishDetection = this.detectEnglishContent(erreursText);
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
+          console.log(`🌐 Section "Erreurs fréquentes" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+          erreursText = await this.translateToFrench(erreursText);
+        }
+        // S'assurer que le H2 est présent
+        if (!erreursText.includes('<h2>❌ Erreurs fréquentes')) {
+          sections.push(`<h2>❌ Erreurs fréquentes signalées par les voyageurs</h2>\n${erreursText}`);
+        } else {
+          sections.push(erreursText);
+        }
+      } else {
+        // Fallback : générer une section minimale basée sur le contexte
+        console.warn('⚠️ Section "Erreurs fréquentes" absente - ajout d\'une section générique');
+        const destination = extracted?.destination || story?.context?.location || 'cette destination';
+        sections.push(`<h2>Erreurs fréquentes à éviter</h2>
+<p>Voici les erreurs les plus courantes que font les voyageurs :</p>
+<ul>
+<li><strong>Sous-estimer les délais administratifs</strong> : Les procédures de visa et les formalités peuvent prendre plus de temps que prévu.</li>
+<li><strong>Ne pas prévoir de budget tampon</strong> : Les imprévus sont fréquents, prévoyez 15-20% de marge.</li>
+<li><strong>Négliger l'assurance voyage</strong> : Indispensable pour ${destination}, vérifiez les couvertures médicales.</li>
+</ul>`);
+      }
+      
       // 8. Nos recommandations (OBLIGATOIRE - remplace "questions ouvertes")
       if (article.recommandations && article.recommandations.trim()) {
         // Détecter si le contenu est en anglais et le traduire si nécessaire
@@ -1542,21 +2277,165 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
         sections.push(`<h2>🎯 Nos recommandations : Par où commencer ?</h2>\n<p>Nous recommandons de privilégier l'Asie du Sud-Est pour un budget maîtrisé et des infrastructures fiables.</p>`);
       }
       
-      // 9. Signature (si présente)
+      // 9. Glossaire (CONDITIONNEL - uniquement si termes techniques mentionnés)
+      if (article.glossaire && article.glossaire.trim()) {
+        let glossaireText = article.glossaire.trim();
+        const englishDetection = this.detectEnglishContent(glossaireText);
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
+          console.log(`🌐 Section "Glossaire" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+          glossaireText = await this.translateToFrench(glossaireText);
+        }
+        // S'assurer que le H2 est présent
+        if (!glossaireText.includes('<p>📖 Termes utilisés')) {
+          sections.push(`<h2>📖 Termes utilisés dans ce récit</h2>\n${glossaireText}`);
+        } else {
+          sections.push(glossaireText);
+        }
+      }
+      // Note: Pas de fallback pour cette section car elle est conditionnelle
+      
+      // 10. Indexation (CONDITIONNEL - uniquement si ressources mentionnées)
+      if (article.indexation && article.indexation.trim()) {
+        let indexationText = article.indexation.trim();
+        const englishDetection = this.detectEnglishContent(indexationText);
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
+          console.log(`🌐 Section "Indexation" détectée en anglais (${Math.round(englishDetection.ratio * 100)}%): traduction en cours...`);
+          indexationText = await this.translateToFrench(indexationText);
+        }
+        // S'assurer que le H2 est présent
+        if (!indexationText.includes('<p>🧭 Ressource mentionnée')) {
+          sections.push(`<h2>🧭 Ressources mentionnées</h2>\n${indexationText}`);
+        } else {
+          sections.push(indexationText);
+        }
+      }
+      // Note: Pas de fallback pour cette section car elle est conditionnelle
+      
+      // 11. Signature (si présente)
       if (article.signature && article.signature.trim()) {
         sections.push(article.signature);
       }
       
       let htmlContent = sections.filter(Boolean).join('\n\n');
       
-      // POST-PROCESSING 1 : Réorganiser si nécessaire (forcer Contexte en premier)
-      const contexteMatch = htmlContent.match(/<h2>Contexte<\/h2>[\s\S]*?(?=<h2>|$)/i);
-      if (contexteMatch && htmlContent.indexOf('<h2>Contexte</h2>') > 0) {
-        console.log('⚠️ Contexte n\'est pas en premier → réorganisation...');
-        const contexteSection = contexteMatch[0];
-        const reste = htmlContent.replace(contexteSection, '').trim();
-        htmlContent = contexteSection + '\n\n' + reste;
-        console.log('   ✅ Contexte déplacé en premier');
+      // #region agent log
+      const hasEncodedEntities = /&#\d+;/.test(htmlContent);
+      const eventTitleBefore = htmlContent.match(/<h2[^>]*>Événement central[^<]*<\/h2>/gi);
+      debugLog('intelligent-content-analyzer-optimized.js:2032', 'AVANT POST-PROC 0 - HTML assemblé', {htmlLength:htmlContent.length,hasEncodedEntities:hasEncodedEntities,eventTitles:eventTitleBefore}, 'A,B');
+      // #endregion
+      
+      // NETTOYAGE IMMÉDIAT AVANT POST-PROC 0 : Nettoyer les titres "Événement central" avec contenu supplémentaire
+      // (au cas où un H2 avec le titre incorrect serait présent dans le JSON)
+      htmlContent = htmlContent.replace(/<h2[^>]*>Événement central[^<]*<\/h2>/gi, (match) => {
+        const titleContent = match.replace(/<h2[^>]*>|<\/h2>/gi, '').trim();
+        if (titleContent !== 'Événement central') {
+          console.log(`🔧 NETTOYAGE IMMÉDIAT: Titre "Événement central" avec contenu supplémentaire détecté: "${titleContent}" → nettoyage`);
+          return '<h2>Événement central</h2>';
+        }
+        return match;
+      });
+      
+      // POST-PROCESSING 0 : NETTOYAGE IMMÉDIAT des titres avec anglais (AVANT tous les autres post-processings)
+      // Décoder TOUTES les entités HTML dans le HTML complet pour faciliter le matching
+      // (WordPress encode les entités HTML, donc il faut les décoder avant les post-processings)
+      htmlContent = decodeHtmlEntities(htmlContent);
+      
+      // Nettoyer IMMÉDIATEMENT tous les titres "Événement central" avec de l'anglais
+      // APPROCHE AGRESSIVE : Si le titre contient quoi que ce soit après "Événement central", on le nettoie
+      // (car le titre correct est juste "Événement central" sans rien d'autre)
+      const beforeClean = htmlContent.match(/<h2[^>]*>Événement central[^<]*<\/h2>/gi);
+      if (beforeClean) {
+        console.log(`🔍 POST-PROC 0: ${beforeClean.length} titre(s) "Événement central" trouvé(s) avant nettoyage:`, beforeClean);
+      }
+      htmlContent = htmlContent.replace(/<h2[^>]*>Événement central[^<]*<\/h2>/gi, (match) => {
+        // #region agent log
+        debugLog('intelligent-content-analyzer-optimized.js:2062', 'Pattern match Événement central', {match:match,hasEnglish:/(Fatigue|setting|in|unimpressed|Event|What|Our|Critical|Vietnam.*Fatigue)/i.test(match)}, 'A');
+        // #endregion
+        // Extraire le contenu du titre (sans les balises H2)
+        const titleContent = match.replace(/<h2[^>]*>|<\/h2>/gi, '').trim();
+        // APPROCHE AGRESSIVE : Si le titre n'est pas exactement "Événement central", on le nettoie
+        // (car le titre correct ne doit contenir QUE "Événement central")
+        if (titleContent !== 'Événement central') {
+          console.log(`⚠️ POST-PROC 0: Titre "Événement central" avec contenu supplémentaire détecté: "${titleContent}" → nettoyage`);
+          // #region agent log
+          debugLog('intelligent-content-analyzer-optimized.js:2062', 'Nettoyage Événement central avec contenu supplémentaire', {original:match,titleContent:titleContent,replaced:'<h2>Événement central</h2>'}, 'A');
+          // #endregion
+          return '<h2>Événement central</h2>';
+        }
+        return match;
+      });
+      const afterClean = htmlContent.match(/<h2[^>]*>Événement central[^<]*<\/h2>/gi);
+      if (afterClean) {
+        console.log(`🔍 POST-PROC 0: ${afterClean.length} titre(s) "Événement central" trouvé(s) après nettoyage:`, afterClean);
+        afterClean.forEach((match, i) => {
+          const titleContent = match.replace(/<h2[^>]*>|<\/h2>/gi, '').trim();
+          if (titleContent !== 'Événement central') {
+            console.log(`   ⚠️ [${i+1}] Titre non nettoyé: "${titleContent}"`);
+          }
+        });
+      }
+      // Nettoyer aussi les titres "What Reddit testimonials don't explicitly say"
+      // Pattern amélioré pour gérer les apostrophes normales (') et Unicode (U+2019, U+0027)
+      htmlContent = htmlContent.replace(/<h2[^>]*>What\s+Reddit\s+testimonials?\s+don[''\u2019]?t\s+explicitly\s+say[^<]*<\/h2>/gi, '<h2>Ce que les témoignages Reddit ne disent pas explicitement</h2>');
+      // Nettoyer "Critical Moment"
+      htmlContent = htmlContent.replace(/<h2[^>]*>Critical\s+Moment[^<]*<\/h2>/gi, '<h2>Moment critique</h2>');
+      // #region agent log
+      debugLog('intelligent-content-analyzer-optimized.js:2032', 'POST-PROC 0 - Nettoyage immédiat après assemblage', {htmlLength:htmlContent.length,hasEventEnglish:/<h2[^>]*>Événement central[^<]*(Fatigue|setting)/i.test(htmlContent),hasWhatReddit:/What\s+Reddit\s+testimonials/i.test(htmlContent)}, 'A,B');
+      // #endregion
+      
+      // POST-PROCESSING 1 : Supprimer TOUTES les sections "Event" qui contiennent un blockquote AVANT de réorganiser
+      // "Event" est TOUJOURS supprimé si la section contient un blockquote (c'est une section générée par editorial-enhancer)
+      // Pattern plus flexible pour matcher "Event" avec ou sans espaces, dans différents formats
+      let eventMatch;
+      const eventRegex = /<h2[^>]*>Event\s*<\/h2>[\s\S]*?(?=<h2[^>]*>|$)/gi;
+      while ((eventMatch = eventRegex.exec(htmlContent)) !== null) {
+        const fullMatch = eventMatch[0];
+        // Si la section contient un blockquote, la supprimer complètement (même s'il y a des widgets après)
+        if (fullMatch.includes('<blockquote')) {
+          console.log('   🧹 Section "Event" (contient blockquote) supprimée');
+          htmlContent = htmlContent.replace(fullMatch, '');
+          // Réinitialiser le regex après modification
+          eventRegex.lastIndex = 0;
+        } else {
+          // Sinon, remplacer le titre par "Événement central"
+          console.log('   🔄 Section "Event" renommée en "Événement central"');
+          htmlContent = htmlContent.replace(/<h2[^>]*>Event\s*<\/h2>/gi, '<h2>Événement central</h2>');
+          break; // Une seule fois suffit pour le remplacement
+        }
+      }
+      
+      // POST-PROCESSING 1.5 : Vérifier que le Quick Guide est en premier (AVANT TOUS LES H2)
+      // Le Quick Guide doit être la première section, même avant tous les H2
+      let quickGuideMatch = htmlContent.match(/<div class="quick-guide">[\s\S]*?<\/div>/i);
+      const firstH2Match = htmlContent.match(/<h2[^>]*>[\s\S]*?<\/h2>/i);
+      
+      if (quickGuideMatch && firstH2Match) {
+        const quickGuideIndex = htmlContent.indexOf(quickGuideMatch[0]);
+        const firstH2Index = htmlContent.indexOf(firstH2Match[0]);
+        
+        // Si un H2 est avant le Quick Guide, réorganiser
+        if (firstH2Index < quickGuideIndex) {
+          console.log('⚠️ Un H2 est avant Quick Guide → réorganisation pour mettre Quick Guide en premier...');
+          const quickGuideSection = quickGuideMatch[0];
+          const reste = htmlContent.replace(quickGuideSection, '').trim();
+          htmlContent = quickGuideSection + '\n\n' + reste;
+          console.log('   ✅ Quick Guide déplacé en premier (avant tous les H2)');
+          // Refaire le match après réorganisation
+          quickGuideMatch = htmlContent.match(/<div class="quick-guide">[\s\S]*?<\/div>/i);
+        }
+      }
+      
+      // POST-PROCESSING 1.6 : Traduire le Quick Guide s'il contient de l'anglais
+      if (quickGuideMatch) {
+        const quickGuideSection = quickGuideMatch[0];
+        const englishDetection = this.detectEnglishContent(quickGuideSection);
+        // Détecter aussi les mots-clés anglais spécifiques du Quick Guide
+        const hasEnglishKeywords = /(Duration|Difficulty|Not specified|Malaysia|Ipoh|Backpacking|Medium)/i.test(quickGuideSection);
+        if (englishDetection.isEnglish || englishDetection.ratio > 0.05 || hasEnglishKeywords) {
+          console.log(`🌐 Quick Guide détecté en anglais (${Math.round(englishDetection.ratio * 100)}%${hasEnglishKeywords ? ', mots-clés anglais' : ''}): traduction...`);
+          const translated = await this.translateToFrench(quickGuideSection);
+          htmlContent = htmlContent.replace(quickGuideSection, translated);
+        }
       }
       
       // POST-PROCESSING 2 : Supprimer TOUS les blockquotes générés par le LLM (editorial-enhancer les ajoutera traduits)
@@ -1566,7 +2445,73 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
         console.log(`🧹 ${blockquotesBefore} blockquote(s) LLM supprimé(s) (editorial-enhancer les réinsérera traduits)`);
       }
       
-      // POST-PROCESSING 3 : Remplacer "Questions encore ouvertes" par "Nos recommandations"
+      // POST-PROCESSING 3 : Intégrer les sections immersives dans le développement
+      // Les sections emotions, tags_psychologiques, reecriture_echec, timeline doivent être intégrées dans le contenu
+      if (article.emotions && article.emotions.trim()) {
+        // Intégrer les émotions dans le contenu (chercher un endroit approprié après une section)
+        const emotionsContent = article.emotions.trim();
+        const englishDetection = this.detectEnglishContent(emotionsContent);
+        let finalEmotions = emotionsContent;
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
+          finalEmotions = await this.translateToFrench(emotionsContent);
+        }
+        // Insérer après la première section principale (Contexte ou Événement central)
+        const firstH2Match = htmlContent.match(/<h2>([^<]+)<\/h2>[\s\S]*?(?=<h2>|$)/);
+        if (firstH2Match) {
+          const insertPoint = firstH2Match.index + firstH2Match[0].length;
+          htmlContent = htmlContent.substring(0, insertPoint) + '\n\n' + finalEmotions + '\n\n' + htmlContent.substring(insertPoint);
+          console.log('   ✅ Sections émotions intégrées dans le développement');
+        }
+      }
+      
+      if (article.tags_psychologiques && article.tags_psychologiques.trim()) {
+        const tagsContent = article.tags_psychologiques.trim();
+        const englishDetection = this.detectEnglishContent(tagsContent);
+        let finalTags = tagsContent;
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
+          finalTags = await this.translateToFrench(tagsContent);
+        }
+        // Insérer avant "Nos recommandations" ou à la fin d'une section principale
+        const recoMatch = htmlContent.indexOf('<h2>🎯 Nos recommandations');
+        if (recoMatch > -1) {
+          htmlContent = htmlContent.substring(0, recoMatch) + '\n\n' + finalTags + '\n\n' + htmlContent.substring(recoMatch);
+          console.log('   ✅ Tags psychologiques intégrés dans le développement');
+        }
+      }
+      
+      if (article.reecriture_echec && article.reecriture_echec.trim()) {
+        const echecContent = article.reecriture_echec.trim();
+        const englishDetection = this.detectEnglishContent(echecContent);
+        let finalEchec = echecContent;
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
+          finalEchec = await this.translateToFrench(echecContent);
+        }
+        // Insérer avant "Nos recommandations" ou après une section d'erreurs
+        const recoMatch = htmlContent.indexOf('<h2>🎯 Nos recommandations');
+        if (recoMatch > -1) {
+          htmlContent = htmlContent.substring(0, recoMatch) + '\n\n' + finalEchec + '\n\n' + htmlContent.substring(recoMatch);
+          console.log('   ✅ Réécriture échec intégrée dans le développement');
+        }
+      }
+      
+      if (article.timeline && article.timeline.trim()) {
+        const timelineContent = article.timeline.trim();
+        const englishDetection = this.detectEnglishContent(timelineContent);
+        let finalTimeline = timelineContent;
+        if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
+          finalTimeline = await this.translateToFrench(timelineContent);
+        }
+        // Insérer après "Contexte" ou "Événement central"
+        const contexteMatch = htmlContent.indexOf('<h2>Contexte</h2>');
+        if (contexteMatch > -1) {
+          const nextH2 = htmlContent.indexOf('<h2>', contexteMatch + 1);
+          const insertPoint = nextH2 > -1 ? nextH2 : htmlContent.length;
+          htmlContent = htmlContent.substring(0, insertPoint) + '\n\n' + finalTimeline + '\n\n' + htmlContent.substring(insertPoint);
+          console.log('   ✅ Timeline intégrée dans le développement');
+        }
+      }
+      
+      // POST-PROCESSING 4 : Remplacer "Questions encore ouvertes" par "Nos recommandations"
       htmlContent = htmlContent.replace(/<h2[^>]*>Questions (encore )?ouvertes[^<]*<\/h2>/gi, '<h2>🎯 Nos recommandations : Par où commencer ?</h2>');
       htmlContent = htmlContent.replace(/Questions (encore )?ouvertes/gi, 'Nos recommandations');
       
@@ -1583,6 +2528,471 @@ ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c
         htmlContent = htmlContent.replace(/<h2[^>]*>.*Questions.*ouvertes.*<\/h2>[\s\S]*?(?=<h2>|$)/gi, '');
         console.log('   ✅ Section "Questions ouvertes" supprimée');
       }
+      
+      // POST-PROCESSING 5 : Nettoyer les titres tronqués AVANT la détection de duplication
+      // Corriger les titres tronqués
+      htmlContent = htmlContent.replace(/<h2>Événement\s*<\/h2>/gi, '<h2>Événement central</h2>');
+      htmlContent = htmlContent.replace(/<h2>Moment\s*<\/h2>/gi, '<h2>Moment critique</h2>');
+      // Supprimer les sections "Événement" qui sont juste des blockquotes (souvent générées par editorial-enhancer)
+      // Si une section "Événement" ne contient qu'un blockquote et pas de texte, la supprimer
+      htmlContent = htmlContent.replace(/<h2>Événement<\/h2>\s*<blockquote[^>]*>[\s\S]*?<\/blockquote>\s*(?=<h2>|$)/gi, '');
+      // Supprimer les titres en anglais
+      htmlContent = htmlContent.replace(/<h2>Event\s*<\/h2>/gi, '<h2>Événement central</h2>');
+      htmlContent = htmlContent.replace(/<h2>What Reddit testimonials don'?t explicitly say[^<]*<\/h2>/gi, '<h2>Ce que les témoignages Reddit ne disent pas explicitement</h2>');
+      htmlContent = htmlContent.replace(/<h2>Our recommendations:?\s*Where to start\?[^<]*<\/h2>/gi, '<h2>Nos recommandations : Par où commencer ?</h2>');
+      htmlContent = htmlContent.replace(/<h2>Limitations and biases[^<]*<\/h2>/gi, '<h2>Limites et biais de ce témoignage</h2>');
+      // POST-PROCESSING 5.3 : Traduire TOUS les titres en anglais AVANT la détection de duplication
+      // Note: "Event" est déjà traité dans POST-PROCESSING 1
+      htmlContent = htmlContent.replace(/<h2[^>]*>What Reddit testimonials don'?t explicitly say[^<]*<\/h2>/gi, '<h2>Ce que les témoignages Reddit ne disent pas explicitement</h2>');
+      htmlContent = htmlContent.replace(/<h2[^>]*>Our recommendations:?\s*Where to start\?[^<]*<\/h2>/gi, '<h2>Nos recommandations : Par où commencer ?</h2>');
+      htmlContent = htmlContent.replace(/<h2[^>]*>Limitations and biases[^<]*<\/h2>/gi, '<h2>Limites et biais de ce témoignage</h2>');
+      htmlContent = htmlContent.replace(/<h2[^>]*>What the community brings[^<]*<\/h2>/gi, '<h2>Ce que la communauté apporte</h2>');
+      
+      // POST-PROCESSING 5.5 : Supprimer les sections dupliquées et les sections en anglais
+      // Détecter et supprimer les sections avec "(suite)" dans le titre
+      htmlContent = htmlContent.replace(/<h2[^>]*>[^<]*\(suite\)[^<]*<\/h2>[\s\S]*?(?=<h2>|$)/gi, '');
+      
+      // Supprimer les sections avec des titres en anglais (Critical Moment, etc.)
+      const englishSectionTitles = [
+        /<h2[^>]*>Critical Moment[^<]*<\/h2>/i,
+        /<h2[^>]*>Central Event[^<]*<\/h2>/i,
+        /<h2[^>]*>Context[^<]*<\/h2>/i,
+        /<h2[^>]*>Resolution[^<]*<\/h2>/i
+      ];
+      for (const pattern of englishSectionTitles) {
+        if (htmlContent.match(pattern)) {
+          htmlContent = htmlContent.replace(new RegExp(pattern.source + '[\\s\\S]*?(?=<h2>|$)', 'gi'), '');
+          console.log(`   🧹 Section anglaise supprimée: ${pattern.source}`);
+        }
+      }
+      
+      // Supprimer les sections dupliquées (même titre H2 apparaissant plusieurs fois)
+      // Normaliser les variantes (ex: "Événement" = "Événement central")
+      const normalizeTitle = (title) => {
+        const normalized = title.toLowerCase()
+          .replace(/\s*\(suite\)\s*/gi, '')
+          .replace(/\s+/g, ' ')
+          .trim();
+        // Variantes à normaliser
+        if (normalized === 'événement' || normalized === 'evenement' || normalized === 'event') return 'événement central';
+        if (normalized === 'moment') return 'moment critique';
+        if (normalized === 'contexte :') return 'contexte';
+        if (normalized.includes('limitations') && normalized.includes('biais')) return 'limites et biais de ce témoignage';
+        if (normalized.includes('what reddit') && normalized.includes('don\'t')) return 'ce que les témoignages reddit ne disent pas explicitement';
+        if (normalized.includes('our recommendations') || normalized.includes('where to start')) return 'nos recommandations : par où commencer ?';
+        if (normalized.includes('what the community') && normalized.includes('brings')) return 'ce que la communauté apporte';
+        return normalized;
+      };
+      
+      const seenTitles = new Map();
+      const sectionsToKeep = [];
+      
+      // Parser le HTML par sections
+      const allSections = htmlContent.split(/(?=<h2[^>]*>)/i);
+      for (const section of allSections) {
+        const titleMatch = section.match(/<h2[^>]*>([^<]+)<\/h2>/i);
+        if (titleMatch) {
+          const originalTitle = titleMatch[1].trim();
+          const normalizedTitle = normalizeTitle(originalTitle);
+          
+          if (seenTitles.has(normalizedTitle)) {
+            console.log(`   🧹 Section dupliquée supprimée: "${originalTitle}" (normalisé: "${normalizedTitle}")`);
+            continue; // Skip cette section dupliquée
+          }
+          seenTitles.set(normalizedTitle, true);
+        }
+        sectionsToKeep.push(section);
+      }
+      htmlContent = sectionsToKeep.join('');
+      
+      // POST-PROCESSING 6 : Nettoyer les titres de sections qui contiennent des destinations incorrectes
+      // Ex: "Contexte : Vietnam" quand l'article parle de Malaisie
+      htmlContent = htmlContent.replace(/<h2[^>]*>Contexte\s*:\s*[^<]+<\/h2>/gi, '<h2>Contexte</h2>');
+      // Nettoyer les titres "Événement central" avec de l'anglais résiduel (ex: "Événement central : Vietnam : Fatigue setting in, unimpressed")
+      // APPROCHE AGRESSIVE : Si le titre contient quoi que ce soit après "Événement central", on le nettoie
+      htmlContent = htmlContent.replace(/<h2[^>]*>Événement central[^<]*<\/h2>/gi, (match) => {
+        const titleContent = match.replace(/<h2[^>]*>|<\/h2>/gi, '').trim();
+        // APPROCHE AGRESSIVE : Si le titre n'est pas exactement "Événement central", on le nettoie
+        if (titleContent !== 'Événement central') {
+          console.log(`⚠️ POST-PROC 6: Titre "Événement central" avec contenu supplémentaire détecté: "${titleContent}" → nettoyage`);
+          return '<h2>Événement central</h2>';
+        }
+        return match;
+      });
+      // Nettoyer les titres avec de l'anglais résiduel (pattern générique pour autres titres)
+      htmlContent = htmlContent.replace(/<h2[^>]*>([^:]+):\s*[^:]+:\s*[A-Z][a-z]+(\s+[a-z]+)*\s*<\/h2>/gi, (match, p1) => {
+        // Extraire seulement la partie française avant le premier ":"
+        return `<h2>${p1.trim()}</h2>`;
+      });
+      // Nettoyer les titres qui contiennent des phrases anglaises résiduelles
+      htmlContent = htmlContent.replace(/<h2[^>]*>([^<]*)\s+(setting|in|unimpressed|critical|moment|event|central)[^<]*<\/h2>/gi, (match, p1) => {
+        // Garder seulement la partie française
+        const frenchPart = p1.replace(/:\s*[^:]*$/i, '').trim();
+        return `<h2>${frenchPart || 'Événement central'}</h2>`;
+      });
+      
+      // POST-PROCESSING 7 : Détecter et traduire les sections encore en anglais
+      // PROTECTION : Sauvegarder les titres H2 "Événement central" avant la traduction
+      // Utiliser un placeholder HTML valide qui ne sera pas traduit par le LLM
+      const protectedTitles = new Map();
+      htmlContent = htmlContent.replace(/<h2[^>]*>Événement central[^<]*<\/h2>/gi, (match) => {
+        const id = `<h2 data-protected="event-central-${protectedTitles.size}">ÉVÉNEMENT_CENTRAL_PLACEHOLDER</h2>`;
+        protectedTitles.set(id, '<h2>Événement central</h2>');
+        return id;
+      });
+      
+      const htmlSections = htmlContent.split(/(?=<h2[^>]*>)/i);
+      const translatedSections = [];
+      for (const section of htmlSections) {
+        if (!section.trim()) {
+          translatedSections.push(section);
+          continue;
+        }
+        const englishDetection = this.detectEnglishContent(section);
+        // Détecter aussi les phrases anglaises isolées (ex: "An overview of his journey reveals...")
+        const englishPhrases = section.match(/[A-Z][a-z]+(\s+[a-z]+){3,}/g);
+        const hasEnglishPhrases = englishPhrases && englishPhrases.length > 0;
+        // Détecter les mots-clés anglais courants dans les sections
+        const englishKeywords = /\b(about|advantages|disadvantages|budget|option|essential|may|could|should|underestimating|not budgeting|duration|difficulty|not specified|malaysia|ipoh|the author finds|the author begins|feeling disappointed|thinking about returning|advantage|disadvantage|abundant|higher cost|opportunity|may feel|may lack|enjoy its|affordable cost|potential isolation|ideal island|soothing natural|fewer job|compare (rental|coworking|prices)|explore (activities|local)|realistic monthly|developed infrastructure|international community|active nomad|seasonal pollution|very popular|low cost of living|pleasant climate)\b/gi;
+        const hasEnglishKeywords = englishKeywords.test(section);
+        // Détecter les patterns anglais spécifiques (ex: "Duration:", "Not specified", "The author finds himself", "Budget:", "Advantage:", "Disadvantage:")
+        const englishPatterns = /(Duration|Difficulty|Not specified|Malaysia, Ipoh|The author finds|The author begins|Feeling disappointed|thinking about returning to work|Budget:|Advantage:|Disadvantages?:|May lack|Abundant|Higher cost|Opportunity|May feel|Enjoy its|Affordable cost|Potential isolation|Ideal island|Soothing natural|Fewer job|Compare (rental|coworking|prices)|Explore (activities|local)|Realistic monthly|Developed infrastructure|International community|Active nomad|Seasonal pollution|Very popular)/i;
+        const hasEnglishPatterns = englishPatterns.test(section);
+        // Détecter les phrases anglaises complètes dans les listes (ex: "Underestimating administrative delays")
+        const englishListItems = section.match(/<strong[^>]*>([A-Z][a-z]+(\s+[a-z]+)+)<\/strong>/g);
+        const hasEnglishListItems = englishListItems && englishListItems.some(item => {
+          const text = item.replace(/<[^>]+>/g, '').trim();
+          return /^[A-Z][a-z]+(\s+[a-z]+){2,}$/.test(text) && !text.includes('é') && !text.includes('è') && !text.includes('à');
+        });
+        
+        // Détecter aussi les phrases anglaises dans les <strong> des listes (ex: "Extended stay in Ipoh", "Enjoy the affordable cost")
+        const strongEnglishPattern = /<strong[^>]*>([A-Z][a-z]+(\s+[a-z]+){2,})<\/strong>/g;
+        const strongMatches = section.match(strongEnglishPattern);
+        const hasStrongEnglish = strongMatches && strongMatches.some(match => {
+          const text = match.replace(/<[^>]+>/g, '').trim();
+          return !/[àâäéèêëïîôùûüÿç]/.test(text) && /^[A-Z][a-z]+(\s+[a-z]+){2,}$/.test(text);
+        });
+        
+        if ((englishDetection.isEnglish && englishDetection.ratio > 0.05) || hasEnglishPhrases || hasEnglishKeywords || hasEnglishPatterns || hasEnglishListItems || hasStrongEnglish) {
+          console.log(`🌐 Section détectée en anglais (${Math.round(englishDetection.ratio * 100)}%${hasEnglishPhrases ? ', phrases anglaises' : ''}${hasEnglishKeywords ? ', mots-clés anglais' : ''}${hasStrongEnglish ? ', strong anglais' : ''}): traduction...`);
+          let translated = await this.translateToFrench(section);
+          // RESTAURATION IMMÉDIATE : Restaurer les titres H2 "Événement central" protégés après chaque traduction
+          // Remplacer les placeholders protégés par le titre correct
+          translated = translated.replace(/<h2[^>]*data-protected="event-central-\d+"[^>]*>ÉVÉNEMENT_CENTRAL_PLACEHOLDER<\/h2>/gi, '<h2>Événement central</h2>');
+          // Remplacer aussi les variantes traduites comme "Event" qui sont dans le contexte de l'événement central
+          // (seulement si la section contient le placeholder ou si c'est clairement l'événement central)
+          if (section.includes('data-protected="event-central-') || section.includes('ÉVÉNEMENT_CENTRAL_PLACEHOLDER')) {
+            translated = translated.replace(/<h2[^>]*>Event[^<]*<\/h2>/gi, '<h2>Événement central</h2>');
+            translated = translated.replace(/<h2[^>]*>Événement[^<]*<\/h2>/gi, '<h2>Événement central</h2>');
+            translated = translated.replace(/<h2[^>]*>Événement central[^<]*(Fatigue|setting|in|unimpressed|Vietnam)[^<]*<\/h2>/gi, '<h2>Événement central</h2>');
+          }
+          translatedSections.push(translated);
+        } else {
+          translatedSections.push(section);
+        }
+      }
+      htmlContent = translatedSections.join('');
+      
+      // RESTAURATION FINALE : Restaurer les titres H2 "Événement central" protégés (au cas où)
+      // Remplacer les placeholders protégés ou les variantes traduites par le titre correct
+      htmlContent = htmlContent.replace(/<h2[^>]*data-protected="event-central-\d+"[^>]*>ÉVÉNEMENT_CENTRAL_PLACEHOLDER<\/h2>/gi, '<h2>Événement central</h2>');
+      // Remplacer aussi les variantes traduites comme "Event", "Événement", "Événement central : Vietnam : Fatigue setting in, unimpressed"
+      htmlContent = htmlContent.replace(/<h2[^>]*>Event[^<]*<\/h2>/gi, '<h2>Événement central</h2>');
+      htmlContent = htmlContent.replace(/<h2[^>]*>Événement[^<]*<\/h2>/gi, '<h2>Événement central</h2>');
+      htmlContent = htmlContent.replace(/<h2[^>]*>Événement central[^<]*(Fatigue|setting|in|unimpressed|Vietnam)[^<]*<\/h2>/gi, '<h2>Événement central</h2>');
+      
+      // #region agent log
+      debugLog('intelligent-content-analyzer-optimized.js:2267', 'POST-PROC 7 terminé - HTML après traduction sections', {htmlLength:htmlContent.length,englishInContent:/(Underestimating|Not budgeting|Essential for|Fatigue setting|Critical Moment|What Reddit)/i.test(htmlContent),sampleH2:htmlContent.match(/<h2[^>]*>[^<]*<\/h2>/gi)?.slice(0,5)||[]}, 'A,B');
+      // #endregion
+      
+      // POST-PROCESSING 8 : Supprimer les sections vides (H2 sans contenu)
+      htmlContent = htmlContent.replace(/<h2[^>]*>([^<]+)<\/h2>\s*(?=<h2|$)/gi, (match, title) => {
+        // Vérifier si la section suivante commence immédiatement par un autre H2
+        const afterMatch = htmlContent.substring(htmlContent.indexOf(match) + match.length);
+        if (afterMatch.trim().startsWith('<h2')) {
+          console.log(`   🧹 Section vide supprimée: "${title.trim()}"`);
+          return ''; // Supprimer la section vide
+        }
+        return match; // Garder la section si elle a du contenu
+      });
+      
+      // POST-PROCESSING 9 : FORCER la suppression de "Event" et la traduction des titres en anglais (dernière passe)
+      // Supprimer "Event" si contient blockquote (même après tous les autres post-processings)
+      htmlContent = htmlContent.replace(/<h2[^>]*>Event\s*<\/h2>[\s\S]*?(?=<h2[^>]*>|$)/gi, (match) => {
+        if (match.includes('<blockquote')) {
+          console.log('   🧹 POST-PROC 9: Section "Event" (blockquote) supprimée');
+          return '';
+        }
+        return match.replace(/<h2[^>]*>Event\s*<\/h2>/gi, '<h2>Événement central</h2>');
+      });
+      // Nettoyer les titres "Événement central" qui contiennent de l'anglais après (pattern plus flexible)
+      // Pattern pour capturer "Événement central : [destination] : [phrase anglaise]" et supprimer toute la section si elle contient un blockquote
+      // Pattern amélioré pour capturer toutes les variantes avec anglais (ex: "Fatigue setting in, unimpressed")
+      // D'abord, supprimer toute la section si elle contient un blockquote ET de l'anglais dans le titre
+      htmlContent = htmlContent.replace(/<h2[^>]*>Événement central\s*:\s*[^<]*:[^<]*[A-Z][a-z]+(\s+[a-z]+){1,}[^<]*<\/h2>[\s\S]*?(?=<h2[^>]*>|$)/gi, (match) => {
+        if (match.includes('<blockquote')) {
+          console.log('   🧹 POST-PROC 9: Section "Événement central" (avec anglais dans titre + blockquote) supprimée');
+          return '';
+        }
+        // Sinon, nettoyer juste le titre en supprimant tout après "Événement central"
+        return match.replace(/<h2[^>]*>Événement central\s*:\s*[^<]*:[^<]*[A-Z][a-z]+(\s+[a-z]+){1,}[^<]*<\/h2>/gi, '<h2>Événement central</h2>');
+      });
+      // Ensuite, nettoyer aussi les cas où il n'y a qu'un seul deux-points mais de l'anglais après
+      htmlContent = htmlContent.replace(/<h2[^>]*>Événement central\s*:\s*[^<]*[A-Z][a-z]+(\s+[a-z]+){2,}[^<]*<\/h2>/gi, '<h2>Événement central</h2>');
+      // Pattern final pour capturer TOUS les cas avec anglais après "Événement central" (détection spécifique de mots anglais)
+      // Détecter les mots anglais courants après "Événement central"
+      const englishWordsAfterEvent = /(Fatigue|setting|in|unimpressed|Event|What|Our|Critical)/i;
+      const beforeEventClean = htmlContent.match(/<h2[^>]*>Événement central[^<]*<\/h2>/gi);
+      // #region agent log
+      debugLog('intelligent-content-analyzer-optimized.js:2342', 'AVANT pattern final Événement central', {beforeTitles:beforeEventClean,htmlSample:htmlContent.substring(0,500)}, 'B');
+      // #endregion
+      // APPROCHE AGRESSIVE : Si le titre contient quoi que ce soit après "Événement central", on le nettoie
+      htmlContent = htmlContent.replace(/<h2[^>]*>Événement central[^<]*<\/h2>/gi, (match) => {
+        const titleContent = match.replace(/<h2[^>]*>|<\/h2>/gi, '').trim();
+        // APPROCHE AGRESSIVE : Si le titre n'est pas exactement "Événement central", on le nettoie
+        if (titleContent !== 'Événement central') {
+          console.log(`   🧹 POST-PROC 9: Titre "Événement central" avec contenu supplémentaire nettoyé: "${titleContent}"`);
+          // #region agent log
+          debugLog('intelligent-content-analyzer-optimized.js:2347', 'POST-PROC 9 - Nettoyage titre Événement central', {before:match,titleContent:titleContent,after:'<h2>Événement central</h2>'}, 'B');
+          // #endregion
+          return '<h2>Événement central</h2>';
+        }
+        return match;
+      });
+      const afterEventClean = htmlContent.match(/<h2[^>]*>Événement central[^<]*<\/h2>/gi);
+      // #region agent log
+      debugLog('intelligent-content-analyzer-optimized.js:2312', 'POST-PROC 9 terminé - Événement central', {beforeTitles:beforeEventClean,beforeCount:beforeEventClean?.length||0,afterTitles:afterEventClean,afterCount:afterEventClean?.length||0,stillHasEnglish:/(Fatigue setting|unimpressed)/i.test(htmlContent)}, 'B');
+      // #endregion
+      // Forcer la traduction des titres en anglais restants (pattern plus flexible pour capturer toutes les variantes)
+      // Les entités HTML ont déjà été décodées dans POST-PROC 0, donc on peut utiliser des patterns simples
+      htmlContent = htmlContent.replace(/<h2[^>]*>What\s+Reddit\s+testimonials?\s+don'?t\s+explicitly\s+say[^<]*<\/h2>/gi, '<h2>Ce que les témoignages Reddit ne disent pas explicitement</h2>');
+      htmlContent = htmlContent.replace(/<h2[^>]*>Our\s+recommendations:?\s*Where\s+to\s+start\?[^<]*<\/h2>/gi, '<h2>Nos recommandations : Par où commencer ?</h2>');
+      htmlContent = htmlContent.replace(/<h2[^>]*>What\s+the\s+community\s+brings[^<]*<\/h2>/gi, '<h2>Ce que la communauté apporte</h2>');
+      htmlContent = htmlContent.replace(/<h2[^>]*>Critical\s+Moment[^<]*<\/h2>/gi, '<h2>Moment critique</h2>');
+      
+      // POST-PROCESSING 11 : Traduire les liens en anglais (ex: "Discover the options", "Compare prices")
+      const englishLinkPattern = /<a[^>]*>([A-Z][a-z]+(\s+[a-z]+){1,})<\/a>/g;
+      let linkMatch;
+      const linksToTranslate = [];
+      while ((linkMatch = englishLinkPattern.exec(htmlContent)) !== null) {
+        const fullMatch = linkMatch[0];
+        const textContent = linkMatch[1];
+        // Vérifier si c'est vraiment de l'anglais (pas de caractères accentués français)
+        if (!/[àâäéèêëïîôùûüÿç]/.test(textContent) && /^[A-Z][a-z]+(\s+[a-z]+){0,}$/.test(textContent) && textContent.length > 3) {
+          linksToTranslate.push({ match: fullMatch, text: textContent });
+        }
+      }
+      // Traduire tous les liens détectés
+      for (const { match, text } of linksToTranslate) {
+        console.log(`🌐 POST-PROC 11: Traduction lien anglais: "${text}"`);
+        const translated = await this.translateToFrench(text);
+        htmlContent = htmlContent.replace(match, match.replace(text, translated));
+      }
+      
+      // POST-PROCESSING 10 : Forcer la traduction des textes en anglais dans les sections critiques
+      // 10.1 : Traduire le Quick Guide s'il contient de l'anglais
+      const quickGuideMatchFinal = htmlContent.match(/<div class="quick-guide">[\s\S]*?<\/div>/i);
+      if (quickGuideMatchFinal) {
+        const quickGuideContent = quickGuideMatchFinal[0];
+        const englishInQuickGuide = /(Duration|Budget:\s*Not specified|Difficulty|Type d'expérience:\s*Digital Nomad)/i.test(quickGuideContent);
+        if (englishInQuickGuide) {
+          console.log('🌐 POST-PROC 10.1: Traduction Quick Guide contenant de l\'anglais...');
+          const translated = await this.translateToFrench(quickGuideContent);
+          htmlContent = htmlContent.replace(quickGuideContent, translated);
+        }
+      }
+      
+      // 10.2 : Traduire les phrases anglaises isolées dans les paragraphes (pattern plus flexible)
+      const englishParagraphPattern = /<p[^>]*>([A-Z][a-z]+(\s+[a-z]+){3,}[^<]*?)(\s*Pour en savoir plus|<\/p>)/g;
+      let paragraphMatch;
+      const paragraphsToTranslate = [];
+      while ((paragraphMatch = englishParagraphPattern.exec(htmlContent)) !== null) {
+        const fullMatch = paragraphMatch[0];
+        const textContent = paragraphMatch[1].trim();
+        // Vérifier si c'est vraiment de l'anglais (pas de caractères accentués français, commence par majuscule)
+        if (textContent.length > 20 && !/[àâäéèêëïîôùûüÿç]/.test(textContent) && /^[A-Z][a-z]+/.test(textContent)) {
+          // Vérifier le ratio de mots anglais
+          const words = textContent.split(/\s+/);
+          const englishWords = words.filter(w => /^[a-z]+$/i.test(w) && w.length > 2).length;
+          if (englishWords / words.length > 0.7) {
+            paragraphsToTranslate.push({ match: fullMatch, text: textContent });
+          }
+        }
+      }
+      // Traduire tous les paragraphes détectés
+      for (const { match, text } of paragraphsToTranslate) {
+        console.log(`🌐 POST-PROC 10.2: Traduction phrase anglaise: "${text.substring(0, 60)}..."`);
+        const translated = await this.translateToFrench(text);
+        htmlContent = htmlContent.replace(match, match.replace(text, translated));
+      }
+      
+      // 10.3 : Traduire les sections "Erreurs courantes" et "Nos recommandations" qui contiennent beaucoup d'anglais
+      // Détecter les sections avec H2 "Erreurs courantes" ou "Nos recommandations"
+      // Pattern amélioré pour capturer toutes les variantes de "Erreurs courantes"
+      const errorsSectionMatch = htmlContent.match(/(<h2[^>]*>(?:Erreurs courantes|Erreurs fréquentes)[^<]*<\/h2>[\s\S]*?)(?=<h2[^>]*>|$)/i);
+      if (errorsSectionMatch) {
+        const errorsSection = errorsSectionMatch[1];
+        // Détecter l'anglais dans les <strong> et dans le texte
+        const englishInErrors = /(Underestimating|Not budgeting|Essential for|administrative delays|budgeting for contingencies|check medical coverage)/i.test(errorsSection);
+        if (englishInErrors) {
+          console.log('🌐 POST-PROC 10.3.1: Traduction section "Erreurs courantes" contenant de l\'anglais...');
+          // #region agent log
+          const allStrongs = errorsSection.match(/<strong[^>]*>[^<]*<\/strong>/gi) || [];
+          debugLog('intelligent-content-analyzer-optimized.js:2383', 'POST-PROC 10.3.1 - Début traduction Erreurs courantes', {sectionLength:errorsSection.length,englishDetected:/(Underestimating|Not budgeting|Essential for)/i.test(errorsSection),strongMatches:allStrongs.length,strongContents:allStrongs.slice(0,5)}, 'C');
+          // #endregion
+          // Traduire d'abord les balises <strong> en anglais (pattern amélioré pour capturer plus de cas)
+          let translatedSection = errorsSection;
+          // Pattern amélioré pour capturer les <strong> avec phrases complètes en anglais (ex: "Underestimating administrative delays")
+          // Pattern plus flexible pour capturer même si les balises ont des attributs
+          const strongMatches = [...errorsSection.matchAll(/<strong[^>]*>([A-Z][a-z]+(\s+[a-z]+){1,})<\/strong>/g)];
+          // #region agent log
+          debugLog('intelligent-content-analyzer-optimized.js:2550', 'POST-PROC 10.3.1 - Balises <strong> trouvées', {count:strongMatches.length,matches:strongMatches.map(m => m[1]).slice(0,5)}, 'C');
+          // #endregion
+          for (const match of strongMatches) {
+            const fullMatch = match[0];
+            const textContent = match[1];
+            // Vérifier si c'est de l'anglais (pas de caractères accentués français, commence par majuscule)
+            const isEnglish = !/[àâäéèêëïîôùûüÿç]/.test(textContent) && /^[A-Z][a-z]+(\s+[a-z]+){1,}$/.test(textContent);
+            // Vérifier aussi si c'est une phrase anglaise connue (ex: "Underestimating administrative delays")
+            const isKnownEnglish = /(Underestimating|Not budgeting|Essential for)/i.test(textContent);
+            if (isEnglish || isKnownEnglish) {
+              console.log(`   🔄 Traduction <strong>: "${textContent}"`);
+              // #region agent log
+              debugLog('intelligent-content-analyzer-optimized.js:2390', 'Traduction <strong> en cours', {original:textContent,isEnglish:isEnglish,isKnownEnglish:isKnownEnglish,fullMatch:fullMatch}, 'C');
+              // #endregion
+              const translated = await this.translateToFrench(textContent);
+              // #region agent log
+              debugLog('intelligent-content-analyzer-optimized.js:2393', 'Traduction <strong> terminée', {original:textContent,translated:translated,stillEnglish:/(Underestimating|Not budgeting|Essential for)/i.test(translated)}, 'C');
+              // #endregion
+              // Échapper les caractères spéciaux pour le remplacement
+              const escapedMatch = fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              translatedSection = translatedSection.replace(new RegExp(escapedMatch, 'g'), `<strong>${translated}</strong>`);
+            }
+          }
+          // Traduire aussi les phrases en anglais dans le texte (ex: "Essential for Vietnam, check medical coverage")
+          // Pattern plus large pour capturer toutes les phrases en anglais après ":"
+          const englishPhrases = translatedSection.match(/:\s*[A-Z][a-z]+(\s+[a-z]+){2,}[^<]*/gi);
+          if (englishPhrases) {
+            for (const phrase of englishPhrases) {
+              // Vérifier si c'est vraiment de l'anglais (pas de caractères accentués français)
+              if (!/[àâäéèêëïîôùûüÿç]/.test(phrase) && /Essential|check medical|coverage/i.test(phrase)) {
+                const translatedPhrase = await this.translateToFrench(phrase);
+                translatedSection = translatedSection.replace(phrase, translatedPhrase);
+              }
+            }
+          }
+          // Traduire toute la section si elle contient encore de l'anglais
+          // Vérifier d'abord si la section contient encore de l'anglais
+          const stillHasEnglish = /(Underestimating|Not budgeting|Essential for|check medical)/i.test(translatedSection);
+          let translated = translatedSection;
+          if (stillHasEnglish) {
+            console.log('   ⚠️ Section contient encore de l\'anglais après traduction partielle, traduction complète...');
+            translated = await this.translateToFrench(translatedSection);
+          }
+          // NETTOYAGE FINAL : Forcer la traduction des balises <strong> avec anglais qui persistent
+          const remainingStrongs = translated.match(/<strong[^>]*>(Underestimating|Not budgeting|Essential for)[^<]*<\/strong>/gi);
+          if (remainingStrongs) {
+            console.log('   ⚠️ Balises <strong> avec anglais persistent, traduction forcée...');
+            for (const strongMatch of remainingStrongs) {
+              const textMatch = strongMatch.match(/<strong[^>]*>([^<]+)<\/strong>/i);
+              if (textMatch) {
+                const textContent = textMatch[1];
+                const translatedText = await this.translateToFrench(textContent);
+                const escapedMatch = strongMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                translated = translated.replace(new RegExp(escapedMatch, 'g'), `<strong>${translatedText}</strong>`);
+              }
+            }
+          }
+          // #region agent log
+          const finalStrongs = translated.match(/<strong[^>]*>[^<]*<\/strong>/gi) || [];
+          const finalEnglishStrongs = finalStrongs.filter(s => /(Underestimating|Not budgeting|Essential for)/i.test(s));
+          debugLog('intelligent-content-analyzer-optimized.js:2400', 'POST-PROC 10.3.1 - Fin traduction Erreurs courantes', {originalLength:errorsSection.length,translatedLength:translated.length,stillHasEnglish:/(Underestimating|Not budgeting|Essential for)/i.test(translated),finalEnglishStrongs:finalEnglishStrongs}, 'C');
+          // #endregion
+          // Échapper la section originale pour le remplacement
+          const escapedSection = errorsSection.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          htmlContent = htmlContent.replace(new RegExp(escapedSection, 'g'), translated);
+        }
+      }
+      
+      const recommendationsSectionMatch = htmlContent.match(/(<h2[^>]*>Nos recommandations[^<]*<\/h2>[\s\S]*?)(?=<h2[^>]*>|$)/i);
+      if (recommendationsSectionMatch) {
+        const recommendationsSection = recommendationsSectionMatch[1];
+        const englishInRecommendations = /(Option \d+:|Realistic budget:|Advantages?:|Disadvantages?:|can be|Compare prices|Learn more)/i.test(recommendationsSection);
+        if (englishInRecommendations) {
+          console.log('🌐 POST-PROC 10.3.2: Traduction section "Nos recommandations" contenant de l\'anglais...');
+          const translated = await this.translateToFrench(recommendationsSection);
+          htmlContent = htmlContent.replace(recommendationsSection, translated);
+        }
+      }
+      
+      // 10.3.3 : Traduire la section "Ce que la communauté apporte" si elle contient de l'anglais
+      const communitySectionMatch = htmlContent.match(/(<h2[^>]*>Ce que la communauté apporte[^<]*<\/h2>[\s\S]*?)(?=<h2[^>]*>|$)/i);
+      if (communitySectionMatch) {
+        const communitySection = communitySectionMatch[1];
+        const englishInCommunity = /(There'?s nothing wrong|taking a break|settling somewhere|recharge your batteries)/i.test(communitySection);
+        if (englishInCommunity) {
+          console.log('🌐 POST-PROC 10.3.3: Traduction section "Ce que la communauté apporte" contenant de l\'anglais...');
+          const translated = await this.translateToFrench(communitySection);
+          htmlContent = htmlContent.replace(communitySection, translated);
+        }
+      }
+      
+      // 10.4 : Traduire les listes avec de l'anglais (ex: "I travel full-time...")
+      const listItemsWithEnglish = htmlContent.match(/<li[^>]*>([^<]*"[A-Z][a-z]+[^"]*"[^<]*)<\/li>/g);
+      if (listItemsWithEnglish) {
+        for (const listItem of listItemsWithEnglish) {
+          const textContent = listItem.replace(/<[^>]+>/g, ' ').trim();
+          if (textContent.length > 30 && !/[àâäéèêëïîôùûüÿç]/.test(textContent) && /^["']?[A-Z]/.test(textContent)) {
+            console.log(`🌐 POST-PROC 10.4: Traduction liste anglaise: "${textContent.substring(0, 60)}..."`);
+            const translated = await this.translateToFrench(textContent);
+            htmlContent = htmlContent.replace(listItem, listItem.replace(textContent, translated));
+          }
+        }
+      }
+      
+      // NETTOYAGE FINAL : S'assurer qu'aucun titre avec anglais ne subsiste
+      // APPROCHE AGRESSIVE : Si le titre contient quoi que ce soit après "Événement central", on le nettoie
+      htmlContent = htmlContent.replace(/<h2[^>]*>Événement central[^<]*<\/h2>/gi, (match) => {
+        const titleContent = match.replace(/<h2[^>]*>|<\/h2>/gi, '').trim();
+        // APPROCHE AGRESSIVE : Si le titre n'est pas exactement "Événement central", on le nettoie
+        if (titleContent !== 'Événement central') {
+          console.log(`⚠️ NETTOYAGE FINAL: Titre "Événement central" avec contenu supplémentaire détecté: "${titleContent}" → nettoyage`);
+          return '<h2>Événement central</h2>';
+        }
+        return match;
+      });
+      // Vérifier et nettoyer les titres "What Reddit testimonials"
+      htmlContent = htmlContent.replace(/<h2[^>]*>What\s+Reddit\s+testimonials?\s+don[''\u2019]?t\s+explicitly\s+say[^<]*<\/h2>/gi, '<h2>Ce que les témoignages Reddit ne disent pas explicitement</h2>');
+      // Vérifier et nettoyer "Critical Moment"
+      htmlContent = htmlContent.replace(/<h2[^>]*>Critical\s+Moment[^<]*<\/h2>/gi, '<h2>Moment critique</h2>');
+      
+      // NETTOYAGE FINAL : Forcer la traduction des balises <strong> avec anglais qui persistent
+      const finalStrongsWithEnglish = htmlContent.match(/<strong[^>]*>(Underestimating|Not budgeting|Essential for)[^<]*<\/strong>/gi);
+      if (finalStrongsWithEnglish) {
+        console.log('⚠️ NETTOYAGE FINAL: Balises <strong> avec anglais détectées, traduction forcée...');
+        for (const strongMatch of finalStrongsWithEnglish) {
+          const textMatch = strongMatch.match(/<strong[^>]*>([^<]+)<\/strong>/i);
+          if (textMatch) {
+            const textContent = textMatch[1];
+            console.log(`   🔄 Traduction forcée <strong>: "${textContent}"`);
+            const translatedText = await this.translateToFrench(textContent);
+            const escapedMatch = strongMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            htmlContent = htmlContent.replace(new RegExp(escapedMatch, 'g'), `<strong>${translatedText}</strong>`);
+          }
+        }
+      }
+      
+      // #region agent log
+      const finalEnglishCheck = {
+        hasEventEnglish: /<h2[^>]*>Événement central[^<]*(Fatigue|setting|unimpressed)[^<]*<\/h2>/i.test(htmlContent),
+        hasErrorsEnglish: /(Underestimating|Not budgeting|Essential for)/i.test(htmlContent),
+        hasCriticalMoment: /Critical\s+Moment/i.test(htmlContent),
+        hasWhatReddit: /What\s+Reddit\s+testimonials/i.test(htmlContent),
+        englishH2s: htmlContent.match(/<h2[^>]*>[^<]*(Fatigue|setting|Critical|What|Our|Event)[^<]*<\/h2>/gi) || [],
+        englishStrongs: htmlContent.match(/<strong[^>]*>(Underestimating|Not budgeting|Essential)[^<]*<\/strong>/gi) || []
+      };
+      debugLog('intelligent-content-analyzer-optimized.js:2447', 'FIN generateFinalArticle - État final HTML', {htmlLength:htmlContent.length,englishIssues:finalEnglishCheck}, 'A,B,C');
+      // #endregion
       
       const finalContent = {
         title: article.titre || 'Témoignage Reddit décrypté par FlashVoyages',

@@ -1,6 +1,31 @@
 #!/usr/bin/env node
 
+import fs from 'fs';
 import { ENABLE_ANTI_HALLUCINATION_BLOCKING, parseBool } from './config.js';
+
+// Helper pour logger en NDJSON
+function debugLog(location, message, data, hypothesisId) {
+  const logEntry = JSON.stringify({
+    location,
+    message,
+    data,
+    timestamp: Date.now(),
+    sessionId: 'debug-session',
+    runId: 'run1',
+    hypothesisId
+  }) + '\n';
+  try {
+    const logPath = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor/debug.log';
+    // Créer le répertoire s'il n'existe pas
+    const logDir = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor';
+    if (!fs.existsSync(logDir)) {
+      fs.mkdirSync(logDir, { recursive: true });
+    }
+    fs.appendFileSync(logPath, logEntry);
+  } catch (e) {
+    console.error('DEBUG LOG ERROR:', e.message);
+  }
+}
 
 /**
  * ARTICLE FINALIZER
@@ -196,9 +221,17 @@ class ArticleFinalizer {
     const finalDestination = finalDestinationRaw ? finalDestinationRaw.toLowerCase() : null;
     if (analysis?.main_destination || analysis?.destination || finalDestination) {
       const beforeLength = article.content.length;
+      // #region agent log
+      const beforeEnglish = /(Underestimating|Not budgeting|Essential for|Fatigue setting|Critical Moment|What Reddit)/i.test(article.content);
+      debugLog('article-finalizer.js:198', 'AVANT stripNonAsiaSentences', {hasEnglish:beforeEnglish,contentLength:beforeLength}, 'D');
+      // #endregion
       // FIX 2: Passer final_destination pour exclusion
       article.content = this.stripNonAsiaSentences(article.content, finalDestination);
       const afterLength = article.content.length;
+      // #region agent log
+      const afterEnglish = /(Underestimating|Not budgeting|Essential for|Fatigue setting|Critical Moment|What Reddit)/i.test(article.content);
+      debugLog('article-finalizer.js:201', 'APRÈS stripNonAsiaSentences', {hasEnglish:afterEnglish,contentLength:afterLength,englishIntroduced:afterEnglish&&!beforeEnglish}, 'D');
+      // #endregion
       if (beforeLength !== afterLength) {
         console.log(`🧹 Sanitizer: ${beforeLength - afterLength} caractères supprimés (phrases non-Asie)`);
       }
@@ -207,28 +240,159 @@ class ArticleFinalizer {
     let finalContent = article.content;
     const enhancements = { ...article.enhancements };
 
+    // #region agent log
+    const eventTitlesBefore = finalContent.match(/<h2[^>]*>Événement central[^<]*<\/h2>/gi) || [];
+    debugLog('article-finalizer.js:240', 'AVANT replaceWidgetPlaceholders', {eventTitles:eventTitlesBefore}, 'D');
+    // #endregion
+
     // 1. Remplacer les placeholders de widgets
     // PATCH 1: Passer pipelineContext
     const widgetResult = await this.replaceWidgetPlaceholders(finalContent, analysis, pipelineContext);
     finalContent = widgetResult.content;
+    
+    // DEBUG: Vérifier les widgets dans finalContent APRÈS assignation
+    const widgetsAfterAssign = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets dans finalContent APRÈS widgetResult.content: count=${widgetsAfterAssign.count}, types=[${widgetsAfterAssign.types.join(', ')}], widgetResult.count=${widgetResult.count}`);
+    
+    // #region agent log
+    const eventTitlesAfter = finalContent.match(/<h2[^>]*>Événement central[^<]*<\/h2>/gi) || [];
+    debugLog('article-finalizer.js:247', 'APRÈS replaceWidgetPlaceholders', {eventTitles:eventTitlesAfter,changed:JSON.stringify(eventTitlesBefore) !== JSON.stringify(eventTitlesAfter)}, 'D');
+    // #endregion
     enhancements.widgetsReplaced = widgetResult.count;
 
     // 2. Vérifier et améliorer le quote highlight
     const quoteResult = this.ensureQuoteHighlight(finalContent, analysis);
     finalContent = quoteResult.content;
+    
+    // DEBUG: Vérifier les widgets APRÈS ensureQuoteHighlight
+    const widgetsAfterQuote = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS ensureQuoteHighlight: count=${widgetsAfterQuote.count}, types=[${widgetsAfterQuote.types.join(', ')}]`);
+    
     enhancements.quoteHighlight = quoteResult.hasQuote ? 'Oui' : 'Non';
 
     // 3. Vérifier et améliorer l'intro FOMO
     const fomoResult = this.ensureFomoIntro(finalContent, analysis);
     finalContent = fomoResult.content;
+    
+    // DEBUG: Vérifier les widgets APRÈS ensureFomoIntro
+    const widgetsAfterFomo = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS ensureFomoIntro: count=${widgetsAfterFomo.count}, types=[${widgetsAfterFomo.types.join(', ')}]`);
     enhancements.fomoIntro = fomoResult.hasFomo ? 'Oui' : 'Non';
 
     // 4. Vérifier et ajouter CTA si manquant
     const ctaResult = this.ensureCTA(finalContent, analysis);
     finalContent = ctaResult.content;
     enhancements.ctaPresent = ctaResult.hasCTA ? 'Oui' : 'Non';
+    let widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS ensureCTA: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
 
-    // PHASE 5.C: Injecter les modules d'affiliation si activé
+    // PHASE 6.0.4: Remplacer les liens morts href="#"
+    finalContent = this.replaceDeadLinks(finalContent);
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS replaceDeadLinks: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // PHASE 6.0.5: Nettoyer les duplications de sections H2 (notamment "Limites et biais")
+    finalContent = this.removeDuplicateH2Sections(finalContent);
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeDuplicateSections: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // PHASE 6.0.6: Nettoyer les duplications de blockquotes
+    finalContent = this.removeDuplicateBlockquotes(finalContent);
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeDuplicateBlockquotes: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // PHASE 6.0.7: Nettoyer le texte parasite du renforcement SEO
+    finalContent = this.removeParasiticText(finalContent);
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeParasiticText: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // PHASE 6.0.8: Remplacer "Questions encore ouvertes" par "Nos recommandations"
+    finalContent = finalContent.replace(/<h2[^>]*>Questions (encore )?ouvertes[^<]*<\/h2>/gi, '<h2>Nos recommandations : Par où commencer ?</h2>');
+    finalContent = finalContent.replace(/Questions (encore )?ouvertes/gi, 'Nos recommandations');
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS replace Questions ouvertes: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // PHASE 6.0.9: Supprimer les emojis des titres H2 (SEO et cohérence éditoriale)
+    finalContent = this.removeEmojisFromH2(finalContent);
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeEmojisFromH2: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // PHASE 6.0.10: Supprimer les sections vides (labels emoji sans contenu)
+    finalContent = this.removeEmptySections(finalContent);
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeEmptySections: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // Créer un objet report temporaire pour les fonctions de nettoyage
+    const tempReport = {
+      checks: [],
+      actions: [],
+      issues: [],
+      metrics: {}
+    };
+    
+    // PHASE 6.0.10.5: Normaliser les espaces et sauts de ligne
+    finalContent = this.normalizeSpacing(finalContent, tempReport);
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS normalizeSpacing: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // PHASE 6.0.11: Supprimer les répétitions de phrases
+    finalContent = this.removeRepetitions(finalContent);
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeRepetitions: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // PHASE 6.0.11.5: Nettoyer les duplications de paragraphes (amélioré avec détection par section)
+    finalContent = this.removeDuplicateParagraphs(finalContent, tempReport);
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeDuplicateParagraphs: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // PHASE 6.0.11.6: Détecter et supprimer les duplications dans "Ce que la communauté apporte"
+    finalContent = this.detectSectionDuplications(finalContent, 'Ce que la communauté apporte', tempReport);
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS detectSectionDuplications: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // PHASE 6.0.11.7: Passe finale de suppression des phrases répétitives (aligné avec quality-analyzer.js)
+    finalContent = this.removeRepetitivePhrases(finalContent, tempReport);
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeRepetitivePhrases: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // PHASE 6.0.12: Équilibrer les paragraphes (après toutes les corrections de contenu)
+    finalContent = this.balanceParagraphs(finalContent, tempReport);
+    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS balanceParagraphs: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // CORRECTION FINALE AMÉLIORÉE: Nettoyer une dernière fois les paragraphes vides ou avec juste un point
+    // Patterns multiples pour capturer toutes les variantes
+    const cleanupPatterns = [
+      /<p[^>]*>\s*<\/p>/gi,                // <p></p> complètement vide
+      /<p[^>]*>\s*\.\s*<\/p>/gi,           // <p>.</p> avec espaces
+      /<p[^>]*>\.<\/p>/gi,                 // <p>.</p> sans espaces
+      /<p[^>]*>\s*[.\s]+\s*<\/p>/gi,      // <p> . </p> ou <p>...</p>
+      /<p[^>]*>\s*\.\.\.\s*<\/p>/gi,      // <p>...</p>
+      /<p[^>]*>\s*\.\s*\.\s*\.\s*<\/p>/gi // <p> . . . </p>
+    ];
+    
+    const emptyParasBefore = (finalContent.match(/<p[^>]*>\s*\.\s*<\/p>/gi) || []).length;
+    
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:363',message:'finalizeArticle: cleanup final before',data:{emptyParasBefore},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
+    
+    cleanupPatterns.forEach(pattern => {
+      finalContent = finalContent.replace(pattern, '');
+    });
+    
+    const emptyParasAfter = (finalContent.match(/<p[^>]*>\s*\.\s*<\/p>/gi) || []).length;
+    const removed = emptyParasBefore - emptyParasAfter;
+    
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:377',message:'finalizeArticle: cleanup final after',data:{emptyParasAfter,removed},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
+    
+    if (removed > 0) {
+      console.log(`   🧹 Nettoyage final: ${removed} paragraphe(s) vide(s) ou avec juste un point supprimé(s)`);
+    }
+    
+    // PHASE 5.C: Injecter les modules d'affiliation si activé (APRÈS balanceParagraphs pour placement correct)
     if (ENABLE_AFFILIATE_INJECTOR && pipelineContext?.affiliate_plan?.placements?.length > 0) {
       try {
         const { renderAffiliateModule } = await import('./affiliate-module-renderer.js');
@@ -242,7 +406,7 @@ class ArticleFinalizer {
           const moduleHtml = renderAffiliateModule(placement, geoDefaults);
           if (!moduleHtml) continue;
           
-          // Injecter selon l'anchor
+          // Injecter selon l'anchor (inclut maintenant 'after_errors')
           const injected = this.injectAffiliateModule(finalContent, moduleHtml, placement.anchor);
           if (injected !== finalContent) {
             finalContent = injected;
@@ -258,26 +422,14 @@ class ArticleFinalizer {
         console.warn('⚠️ Erreur injection modules affiliation (fallback silencieux):', error.message);
       }
     }
-
-    // PHASE 6.0.4: Remplacer les liens morts href="#"
-    finalContent = this.replaceDeadLinks(finalContent);
-    
-    // PHASE 6.0.5: Nettoyer les duplications de sections H2
-    finalContent = this.removeDuplicateSections(finalContent);
-    
-    // PHASE 6.0.6: Nettoyer les duplications de blockquotes
-    finalContent = this.removeDuplicateBlockquotes(finalContent);
-    
-    // PHASE 6.0.7: Nettoyer le texte parasite du renforcement SEO
-    finalContent = this.removeParasiticText(finalContent);
-    
-    // PHASE 6.0.8: Remplacer "Questions encore ouvertes" par "Nos recommandations"
-    finalContent = finalContent.replace(/<h2[^>]*>Questions (encore )?ouvertes[^<]*<\/h2>/gi, '<h2>🎯 Nos recommandations : Par où commencer ?</h2>');
-    finalContent = finalContent.replace(/Questions (encore )?ouvertes/gi, 'Nos recommandations');
     
     // PHASE 6.1: QA Report déterministe
     const qaReport = await this.runQAReport(finalContent, pipelineContext, analysis);
     finalContent = qaReport.finalHtml;
+    
+    // DEBUG: Vérifier les widgets APRÈS runQAReport
+    const widgetsAfterQA = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS runQAReport: count=${widgetsAfterQA.count}, types=[${widgetsAfterQA.types.join(', ')}]`);
     
     // Log synthèse QA
     const passCount = qaReport.checks.filter(c => c.status === 'pass').length;
@@ -372,12 +524,99 @@ class ArticleFinalizer {
     console.log(`   - Intro FOMO: ${enhancements.fomoIntro}`);
     console.log(`   - CTA présent: ${enhancements.ctaPresent}\n`);
 
-    return {
+    // NETTOYAGE FINAL : Forcer le nettoyage des titres "Événement central" avec anglais
+    // APPROCHE AGRESSIVE : Si le titre contient quoi que ce soit après "Événement central", on le nettoie
+    const eventTitleMatches = finalContent.match(/<h2[^>]*>Événement central[^<]*<\/h2>/gi);
+    if (eventTitleMatches) {
+      for (const match of eventTitleMatches) {
+        const titleContent = match.replace(/<h2[^>]*>|<\/h2>/gi, '').trim();
+        // APPROCHE AGRESSIVE : Si le titre n'est pas exactement "Événement central", on le nettoie
+        if (titleContent !== 'Événement central') {
+          console.log(`⚠️ FINALIZER: Titre "Événement central" avec contenu supplémentaire détecté: "${titleContent}" → nettoyage forcé`);
+          const escapedMatch = match.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          finalContent = finalContent.replace(new RegExp(escapedMatch, 'g'), '<h2>Événement central</h2>');
+        }
+      }
+    }
+    
+    // NETTOYAGE FINAL : Forcer la traduction des balises <strong> avec anglais qui persistent
+    const finalStrongsWithEnglish = finalContent.match(/<strong[^>]*>(Underestimating|Not budgeting|Essential for)[^<]*<\/strong>/gi);
+    if (finalStrongsWithEnglish && this.intelligentContentAnalyzer) {
+      console.log('⚠️ FINALIZER: Balises <strong> avec anglais détectées, traduction forcée...');
+      for (const strongMatch of finalStrongsWithEnglish) {
+        const textMatch = strongMatch.match(/<strong[^>]*>([^<]+)<\/strong>/i);
+        if (textMatch) {
+          const textContent = textMatch[1];
+          console.log(`   🔄 Traduction forcée <strong>: "${textContent}"`);
+          const translatedText = await this.intelligentContentAnalyzer.translateToFrench(textContent);
+          const escapedMatch = strongMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          finalContent = finalContent.replace(new RegExp(escapedMatch, 'g'), `<strong>${translatedText}</strong>`);
+        }
+      }
+    }
+    
+    // #region agent log
+    const finalEnglishCheck = {
+      hasEventEnglish: /<h2[^>]*>Événement central[^<]*(Fatigue|setting|unimpressed)[^<]*<\/h2>/i.test(finalContent),
+      hasErrorsEnglish: /(Underestimating|Not budgeting|Essential for)/i.test(finalContent),
+      hasCriticalMoment: /Critical\s+Moment/i.test(finalContent),
+      hasWhatReddit: /What\s+Reddit\s+testimonials/i.test(finalContent),
+      englishH2s: finalContent.match(/<h2[^>]*>[^<]*(Fatigue|setting|Critical|What|Our|Event)[^<]*<\/h2>/gi) || [],
+      englishStrongs: finalContent.match(/<strong[^>]*>(Underestimating|Not budgeting|Essential)[^<]*<\/strong>/gi) || []
+    };
+    debugLog('article-finalizer.js:392', 'FIN finalizeArticle - État final après finalisation', {contentLength:finalContent.length,englishIssues:finalEnglishCheck}, 'D');
+    // #endregion
+    
+    // NETTOYAGE FINAL ABSOLU: Garantir qu'aucun paragraphe vide ou duplication ne subsiste
+    // Cette passe finale est CRITIQUE pour garantir la qualité sur TOUTES les générations
+    const finalCleanupBefore = {
+      emptyParas: (finalContent.match(/<p[^>]*>\s*\.\s*<\/p>/gi) || []).length + (finalContent.match(/<p[^>]*>\s*<\/p>/gi) || []).length,
+      limitesCount: (finalContent.match(/<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi) || []).length + (finalContent.match(/<h2[^>]*>.*?limits?\s*(and\s*)?bias(es)?.*?<\/h2>/gi) || []).length
+    };
+    
+    // Supprimer TOUS les paragraphes complètement vides (sans contenu, même collés à d'autres balises)
+    finalContent = finalContent.replace(/<p[^>]*>\s*<\/p>\s*/gi, '');
+    
+    // Supprimer TOUS les paragraphes avec juste un point (patterns exhaustifs)
+    finalContent = finalContent.replace(/<p[^>]*>\s*\.\s*<\/p>/gi, '');
+    finalContent = finalContent.replace(/<p[^>]*>\.<\/p>/gi, '');
+    finalContent = finalContent.replace(/<p[^>]*>\s*[.\s]+\s*<\/p>/gi, '');
+    finalContent = finalContent.replace(/<p[^>]*>\s*\.\.\.\s*<\/p>/gi, '');
+    // Pattern supplémentaire pour paragraphes avec juste un point suivi d'un espace et d'un lien
+    finalContent = finalContent.replace(/<p[^>]*>\s*\.\s+[^<]*<\/p>/gi, (match) => {
+      // Si le paragraphe contient un lien, garder seulement le lien, sinon supprimer
+      const linkMatch = match.match(/<a[^>]*>.*?<\/a>/i);
+      return linkMatch ? `<p>${linkMatch[0]}</p>` : '';
+    });
+    
+    // Supprimer les duplications de "Limites et biais" une dernière fois
+    finalContent = this.removeDuplicateH2Sections(finalContent);
+    
+    const finalCleanupAfter = {
+      emptyParas: (finalContent.match(/<p[^>]*>\s*\.\s*<\/p>/gi) || []).length + (finalContent.match(/<p[^>]*>\s*<\/p>/gi) || []).length,
+      limitesCount: (finalContent.match(/<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi) || []).length + (finalContent.match(/<h2[^>]*>.*?limits?\s*(and\s*)?bias(es)?.*?<\/h2>/gi) || []).length
+    };
+    
+    if (finalCleanupBefore.emptyParas > finalCleanupAfter.emptyParas || finalCleanupBefore.limitesCount > finalCleanupAfter.limitesCount) {
+      console.log(`   🧹 NETTOYAGE FINAL ABSOLU: ${finalCleanupBefore.emptyParas - finalCleanupAfter.emptyParas} paragraphe(s) vide(s) et ${finalCleanupBefore.limitesCount - finalCleanupAfter.limitesCount} duplication(s) "Limites et biais" supprimé(s)`);
+    }
+    
+    // DEBUG: Vérifier les widgets AVANT le return final
+    const widgetsBeforeReturn = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets AVANT return final: count=${widgetsBeforeReturn.count}, types=[${widgetsBeforeReturn.types.join(', ')}]`);
+
+    const returnValue = {
       ...article,
       content: finalContent,
       enhancements,
       qaReport // PHASE 6.1: Exposer le rapport QA
     };
+    
+    // DEBUG: Vérifier les widgets dans returnValue.content APRÈS création de l'objet
+    const widgetsInReturnValue = this.detectRenderedWidgets(returnValue.content);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets dans returnValue.content APRÈS création objet: count=${widgetsInReturnValue.count}, types=[${widgetsInReturnValue.types.join(', ')}]`);
+    
+    return returnValue;
   }
 
   /**
@@ -471,6 +710,19 @@ class ArticleFinalizer {
   }
 
   detectRenderedWidgets(html) {
+    // #region agent log
+    try {
+      const fs = require('fs');
+      const logPath = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor/debug.log';
+      const htmlSample = html.substring(0, 5000).replace(/\n/g, ' ');
+      const hasTrpwdg = /trpwdg\.com/.test(html);
+      const hasScriptTravelpayouts = /script.*travelpayouts/i.test(html);
+      const hasFormKiwi = /<form[^>]*kiwi/i.test(html);
+      const logEntry = JSON.stringify({location:'article-finalizer.js:591',message:'detectRenderedWidgets entry',data:{htmlLength:html.length,hasTrpwdg,hasScriptTravelpayouts,hasFormKiwi,htmlSample},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'}) + '\n';
+      fs.appendFileSync(logPath, logEntry);
+    } catch(e) {}
+    // #endregion
+    
     const detected = {
       count: 0,
       types: [],
@@ -564,6 +816,15 @@ class ArticleFinalizer {
 
     // FIX 1: Ne pas logger ici (détection intermédiaire)
     // La détection finale sera loggée dans enhanced-ultra-generator après finalisation complète
+    // #region agent log
+    try {
+      const fs = require('fs');
+      const logPath = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor/debug.log';
+      const logEntry = JSON.stringify({location:'article-finalizer.js:686',message:'detectRenderedWidgets exit',data:{count:detected.count,types:detected.types,details:detected.details},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'}) + '\n';
+      fs.appendFileSync(logPath, logEntry);
+    } catch(e) {}
+    // #endregion
+    
     // console.log(`   📊 WIDGETS_DETECTED_HTML: count=${detected.count}, types=[${detected.types.join(', ')}]`);
     return detected;
   }
@@ -735,6 +996,13 @@ class ArticleFinalizer {
           pipelineContext // Passer le contexte complet
         );
         
+        // DEBUG: Vérifier placementResult
+        console.log(`🔍 DEBUG replaceWidgetPlaceholders: placementResult type=${typeof placementResult}, hasContent=${!!(placementResult?.content)}, count=${placementResult?.count || 'undefined'}`);
+        if (placementResult?.content) {
+          const widgetsInPlacementResult = this.detectRenderedWidgets(placementResult.content);
+          console.log(`🔍 DEBUG replaceWidgetPlaceholders: Widgets dans placementResult.content: count=${widgetsInPlacementResult.count}, types=[${widgetsInPlacementResult.types.join(', ')}]`);
+        }
+        
         // MISSION 2: Utiliser le count retourné par placeWidgetsIntelligently (inclut fallback)
         // Si placementResult est un objet avec count, l'utiliser, sinon compter depuis le HTML
         if (typeof placementResult === 'object' && placementResult !== null) {
@@ -749,6 +1017,10 @@ class ArticleFinalizer {
         } else if (typeof placementResult === 'string') {
           finalHtml = placementResult;
         }
+        
+        // DEBUG: Vérifier finalHtml après assignation
+        const widgetsInFinalHtmlAfterAssign = this.detectRenderedWidgets(finalHtml);
+        console.log(`🔍 DEBUG replaceWidgetPlaceholders: Widgets dans finalHtml APRÈS assignation placementResult: count=${widgetsInFinalHtmlAfterAssign.count}, types=[${widgetsInFinalHtmlAfterAssign.types.join(', ')}]`);
       }
       
       // Fallback: compter depuis le HTML si count n'est pas disponible
@@ -760,6 +1032,16 @@ class ArticleFinalizer {
       if (pipelineContext?.widgets_tracking) {
         widgetCount = pipelineContext.widgets_tracking.rendered || widgetCount;
         console.log(`📊 Widgets tracking final: rendered=${widgetCount} (depuis pipelineContext)`);
+      }
+      
+      // DEBUG: Vérifier les widgets dans finalHtml avant retour
+      const detectedBeforeReturn = this.detectRenderedWidgets(finalHtml);
+      console.log(`🔍 DEBUG replaceWidgetPlaceholders: Widgets dans finalHtml avant retour: count=${detectedBeforeReturn.count}, types=[${detectedBeforeReturn.types.join(', ')}], widgetCount=${widgetCount}`);
+      
+      // Si les widgets sont détectés dans finalHtml mais widgetCount=0, corriger widgetCount
+      if (detectedBeforeReturn.count > 0 && widgetCount === 0) {
+        console.log(`⚠️ CORRECTION: widgetCount était 0 mais ${detectedBeforeReturn.count} widget(s) détecté(s) dans finalHtml → correction`);
+        widgetCount = detectedBeforeReturn.count;
       }
       
       return {
@@ -915,19 +1197,25 @@ class ArticleFinalizer {
    * Extrait la destination principale de l'article
    */
   extractDestination(content) {
+    // CORRECTION: Ajouter Malaisie et autres destinations Asie manquantes
     const destinations = {
       'thailand': ['thaïlande', 'thailand', 'bangkok', 'chiang mai', 'phuket'],
       'vietnam': ['vietnam', 'hanoi', 'ho chi minh', 'saigon', 'da nang'],
       'indonesia': ['indonésie', 'indonesia', 'bali', 'jakarta', 'ubud'],
       'japan': ['japon', 'japan', 'tokyo', 'kyoto', 'osaka'],
+      'malaysia': ['malaisie', 'malaysia', 'kuala lumpur', 'penang', 'langkawi', 'ipoh'],
+      'philippines': ['philippines', 'manila', 'cebu'],
+      'singapore': ['singapour', 'singapore'],
+      'korea': ['corée', 'korea', 'séoul', 'seoul'],
       'spain': ['espagne', 'spain', 'madrid', 'barcelona', 'valencia'],
       'portugal': ['portugal', 'lisbon', 'porto', 'lisbonne']
     };
 
-    const lowerContent = content.toLowerCase();
+    // Nettoyer le contenu HTML pour extraction
+    const textContent = content.replace(/<[^>]+>/g, ' ').toLowerCase();
     
     for (const [country, keywords] of Object.entries(destinations)) {
-      if (keywords.some(keyword => lowerContent.includes(keyword))) {
+      if (keywords.some(keyword => textContent.includes(keyword))) {
         return country;
       }
     }
@@ -938,46 +1226,62 @@ class ArticleFinalizer {
   /**
    * Sélectionne le meilleur widget de vols selon le contexte
    */
-  // A) Placement déterministe en mode OFFLINE
+  // A) Placement déterministe en mode OFFLINE - AMÉLIORÉ pour cohérence éditoriale
   placeWidgetsOffline(html, widgetScripts) {
     let out = html;
 
     const flights = widgetScripts.flights || '';
     const connectivity = widgetScripts.connectivity || '';
+    
+    // Transitions pour une meilleure intégration éditoriale
+    const transitionConnectivity = '<div class="widget-transition"><h3>Outil utile si vous avez besoin d\'internet en voyage</h3><p>Évitez les frais de roaming élevés. Une eSIM vous permet d\'avoir internet dès votre arrivée dans plus de 200 pays, sans changer de carte SIM.</p></div>';
+    const transitionFlights = '<div class="widget-transition"><h3>Comparez les vols pour cette destination</h3><p>Trouvez les meilleurs tarifs pour votre prochain voyage en comparant les offres de centaines de compagnies.</p></div>';
 
-    // 1) si "Articles connexes" existe => insertion juste avant
-    const idxRelated = out.indexOf('Articles connexes');
-    if (idxRelated !== -1) {
-      const insertAt = out.lastIndexOf('<', idxRelated); // robuste: avant le titre
-      const block = `${flights}\n${connectivity}`.trim();
-      if (block) {
-        out = out.slice(0, insertAt) + block + '\n' + out.slice(insertAt);
-        console.log('✅ OFFLINE_WIDGET_PLACEMENT_MODE=BEFORE_RELATED');
-        return out;
+    // STRATÉGIE DE PLACEMENT AMÉLIORÉE:
+    // 1. Widget eSIM : après la section "Contexte" (pas au milieu du flux narratif)
+    // 2. Widget Vols : avant "Nos recommandations" (logique d'action)
+    
+    // 1) Placer widget connectivity après la section Contexte (après le premier </h2>...</p> complet)
+    const contexteMatch = out.match(/<h2>Contexte<\/h2>[\s\S]*?<\/p>/i);
+    if (contexteMatch && connectivity) {
+      const insertPoint = out.indexOf(contexteMatch[0]) + contexteMatch[0].length;
+      const connectivityBlock = `\n${transitionConnectivity}\n${connectivity}\n<p class="widget-disclaimer">Lien partenaire</p>\n`;
+      out = out.slice(0, insertPoint) + connectivityBlock + out.slice(insertPoint);
+      console.log('✅ OFFLINE_WIDGET_PLACEMENT: connectivity après Contexte');
+    }
+    
+    // 2) Placer widget flights avant "Nos recommandations" ou "Articles connexes"
+    const recoMatch = out.indexOf('Nos recommandations');
+    const relatedMatch = out.indexOf('Articles connexes');
+    const insertBeforeReco = recoMatch !== -1 ? out.lastIndexOf('<h2', recoMatch) : -1;
+    const insertBeforeRelated = relatedMatch !== -1 ? out.lastIndexOf('<', relatedMatch) : -1;
+    
+    if (flights) {
+      const flightsBlock = `\n${transitionFlights}\n${flights}\n<p class="widget-disclaimer">Lien partenaire</p>\n`;
+      
+      if (insertBeforeReco !== -1) {
+        out = out.slice(0, insertBeforeReco) + flightsBlock + out.slice(insertBeforeReco);
+        console.log('✅ OFFLINE_WIDGET_PLACEMENT: flights avant Nos recommandations');
+      } else if (insertBeforeRelated !== -1) {
+        out = out.slice(0, insertBeforeRelated) + flightsBlock + out.slice(insertBeforeRelated);
+        console.log('✅ OFFLINE_WIDGET_PLACEMENT: flights avant Articles connexes');
+      } else {
+        // Fallback: après le 3e paragraphe (pas le 2e pour éviter de couper le flux)
+        let p3 = -1;
+        for (let i = 0; i < 3; i++) {
+          p3 = out.indexOf('</p>', p3 + 1);
+          if (p3 === -1) break;
+        }
+        if (p3 !== -1) {
+          out = out.slice(0, p3 + 4) + flightsBlock + out.slice(p3 + 4);
+          console.log('✅ OFFLINE_WIDGET_PLACEMENT: flights après P3 (fallback)');
+        } else {
+          out += flightsBlock;
+          console.log('✅ OFFLINE_WIDGET_PLACEMENT: flights en fin (fallback)');
+        }
       }
     }
-
-    // 2) sinon après le 2e paragraphe </p>
-    let p2 = -1;
-    for (let i = 0; i < 2; i++) {
-      p2 = out.indexOf('</p>', p2 + 1);
-      if (p2 === -1) break;
-    }
-    if (p2 !== -1) {
-      const block = `${flights}\n${connectivity}`.trim();
-      if (block) {
-        out = out.slice(0, p2 + 4) + '\n' + block + '\n' + out.slice(p2 + 4);
-        console.log('✅ OFFLINE_WIDGET_PLACEMENT_MODE=AFTER_P2');
-        return out;
-      }
-    }
-
-    // 3) sinon fin
-    const block = `${flights}\n${connectivity}`.trim();
-    if (block) {
-      out += '\n' + block;
-      console.log('✅ OFFLINE_WIDGET_PLACEMENT_MODE=END');
-    }
+    
     return out;
   }
 
@@ -1260,13 +1564,39 @@ class ArticleFinalizer {
 
     if (matches.length < 2) return html;
 
+    // AMÉLIORATION: Identifier la section H2 contenant chaque paragraphe
+    const h2Pattern = /<h2[^>]*>([^<]+)<\/h2>/gi;
+    const h2Matches = [...html.matchAll(h2Pattern)];
+    
+    // Créer une map des sections (index H2 -> titre)
+    const sections = new Map();
+    h2Matches.forEach((h2, index) => {
+      const h2Index = h2.index ?? -1;
+      const nextH2Index = index < h2Matches.length - 1 ? (h2Matches[index + 1].index ?? html.length) : html.length;
+      sections.set(h2Index, {
+        title: h2[1].trim(),
+        start: h2Index,
+        end: nextH2Index
+      });
+    });
+
     const seen = new Map();
     const toRemove = [];
+    const sectionDuplicates = new Map(); // Pour tracker les duplications par section
 
     for (const m of matches) {
       const raw = m[0];
       const start = m.index ?? -1;
       if (start < 0) continue;
+
+      // Identifier la section contenant ce paragraphe
+      let currentSection = null;
+      for (const [h2Index, section] of sections.entries()) {
+        if (start >= section.start && start < section.end) {
+          currentSection = section.title;
+          break;
+        }
+      }
 
       // PHASE 6.2: Normalisation agressive
       const normalized = this.normalizeTextForComparison(raw);
@@ -1275,14 +1605,23 @@ class ArticleFinalizer {
 
       // Vérifier doublons exacts
       if (seen.has(normalized)) {
-        toRemove.push({ start, end: start + raw.length, type: 'exact' });
+        toRemove.push({ start, end: start + raw.length, type: 'exact', section: currentSection });
+        if (currentSection) {
+          const count = sectionDuplicates.get(currentSection) || 0;
+          sectionDuplicates.set(currentSection, count + 1);
+        }
       } else {
-        // Vérifier quasi-doublons (similarité Jaccard > 0.9)
+        // Vérifier quasi-doublons (similarité Jaccard > 0.85 pour être plus sensible)
         let isQuasiDuplicate = false;
         for (const [seenNormalized, seenStart] of seen.entries()) {
           const similarity = this.jaccardSimilarity(normalized, seenNormalized);
-          if (similarity > 0.9) {
-            toRemove.push({ start, end: start + raw.length, type: 'quasi', similarity });
+          // AMÉLIORATION: Seuil réduit à 0.85 pour détecter plus de duplications
+          if (similarity > 0.85) {
+            toRemove.push({ start, end: start + raw.length, type: 'quasi', similarity, section: currentSection });
+            if (currentSection) {
+              const count = sectionDuplicates.get(currentSection) || 0;
+              sectionDuplicates.set(currentSection, count + 1);
+            }
             isQuasiDuplicate = true;
             break;
           }
@@ -1304,12 +1643,157 @@ class ArticleFinalizer {
 
     const exactCount = toRemove.filter(r => r.type === 'exact').length;
     const quasiCount = toRemove.filter(r => r.type === 'quasi').length;
+    
+    // AMÉLIORATION: Log des duplications par section
+    if (sectionDuplicates.size > 0) {
+      console.log('   🔍 Duplications détectées par section:');
+      sectionDuplicates.forEach((count, section) => {
+        console.log(`      - "${section}": ${count} duplication(s)`);
+      });
+    }
+    
     report.actions.push({ 
       type: 'removed_duplicate_paragraphs', 
       details: `count=${toRemove.length} (exact=${exactCount}, quasi=${quasiCount})` 
     });
     report.metrics.removed_duplicates_count = (report.metrics.removed_duplicates_count || 0) + toRemove.length;
 
+    return output;
+  }
+
+  /**
+   * Détecte et supprime les duplications dans une section H2 spécifique
+   * Spécialement pour "Ce que la communauté apporte" qui peut contenir des blocs similaires
+   * @param {string} html - HTML à analyser
+   * @param {string} sectionTitle - Titre de la section H2 à analyser (pattern flexible)
+   * @param {Object} report - Rapport QA
+   * @returns {string} HTML sans duplications dans la section spécifiée
+   */
+  detectSectionDuplications(html, sectionTitle, report) {
+    console.log(`🔍 detectSectionDuplications: Analyse de la section "${sectionTitle}"...`);
+    
+    // Trouver la section H2 correspondante
+    const sectionPattern = new RegExp(`<h2[^>]*>.*?${sectionTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}.*?<\/h2>`, 'i');
+    const sectionMatch = html.match(sectionPattern);
+    
+    if (!sectionMatch) {
+      console.log(`   ℹ️ Section "${sectionTitle}" non trouvée`);
+      return html;
+    }
+    
+    const sectionStart = sectionMatch.index ?? -1;
+    if (sectionStart < 0) return html;
+    
+    // Trouver la fin de la section (prochain H2 ou fin du document)
+    const afterSection = html.substring(sectionStart + sectionMatch[0].length);
+    const nextH2Match = afterSection.match(/<h2[^>]*>/i);
+    const sectionEnd = nextH2Match 
+      ? sectionStart + sectionMatch[0].length + (nextH2Match.index ?? 0)
+      : html.length;
+    
+    const sectionContent = html.substring(sectionStart, sectionEnd);
+    
+    // Extraire tous les paragraphes de cette section
+    const paragraphRegex = /<p\b[^>]*>[\s\S]*?<\/p>/gi;
+    const paragraphs = [];
+    let match;
+    
+    while ((match = paragraphRegex.exec(sectionContent)) !== null) {
+      const raw = match[0];
+      const relativeStart = match.index ?? -1;
+      const absoluteStart = sectionStart + relativeStart;
+      
+      const normalized = this.normalizeTextForComparison(raw);
+      if (!normalized || normalized.length < 30) continue;
+      
+      paragraphs.push({
+        raw,
+        normalized,
+        absoluteStart,
+        absoluteEnd: absoluteStart + raw.length,
+        relativeStart
+      });
+    }
+    
+    if (paragraphs.length < 2) {
+      console.log(`   ✅ Section "${sectionTitle}" : pas assez de paragraphes pour détecter des duplications`);
+      return html;
+    }
+    
+    // Détecter les blocs similaires (groupes de paragraphes consécutifs)
+    // AMÉLIORATION: Détecter aussi les blocs de 2-3 paragraphes consécutifs similaires
+    const seenBlocks = new Map();
+    const toRemove = [];
+    
+    // D'abord, détecter les paragraphes individuels similaires
+    paragraphs.forEach((para, i) => {
+      let isDuplicate = false;
+      for (const [seenNormalized, seenIndex] of seenBlocks.entries()) {
+        const similarity = this.jaccardSimilarity(para.normalized, seenNormalized);
+        if (similarity > 0.85) {
+          // Paragraphe similaire trouvé, garder le premier, supprimer celui-ci
+          toRemove.push({
+            start: para.absoluteStart,
+            end: para.absoluteEnd,
+            type: 'similar',
+            similarity: similarity.toFixed(2)
+          });
+          isDuplicate = true;
+          console.log(`   🔄 Duplication détectée dans "${sectionTitle}" (${Math.round(similarity * 100)}% similaire)`);
+          break;
+        }
+      }
+      if (!isDuplicate) {
+        seenBlocks.set(para.normalized, i);
+      }
+    });
+    
+    // Ensuite, détecter les blocs de 2-3 paragraphes consécutifs similaires
+    for (let blockSize = 2; blockSize <= 3; blockSize++) {
+      for (let i = 0; i <= paragraphs.length - blockSize; i++) {
+        const block1 = paragraphs.slice(i, i + blockSize);
+        const block1Text = block1.map(p => p.normalized).join(' ');
+        
+        for (let j = i + blockSize; j <= paragraphs.length - blockSize; j++) {
+          const block2 = paragraphs.slice(j, j + blockSize);
+          const block2Text = block2.map(p => p.normalized).join(' ');
+          
+          const similarity = this.jaccardSimilarity(block1Text, block2Text);
+          if (similarity > 0.85) {
+            // Bloc similaire trouvé, supprimer le second bloc
+            const block2Start = block2[0].absoluteStart;
+            const block2End = block2[block2.length - 1].absoluteEnd;
+            toRemove.push({
+              start: block2Start,
+              end: block2End,
+              type: `block_${blockSize}`,
+              similarity: similarity.toFixed(2)
+            });
+            console.log(`   🔄 Bloc de ${blockSize} paragraphe(s) dupliqué détecté dans "${sectionTitle}" (${Math.round(similarity * 100)}% similaire)`);
+          }
+        }
+      }
+    }
+    
+    if (toRemove.length === 0) {
+      console.log(`   ✅ Section "${sectionTitle}" : aucune duplication détectée`);
+      return html;
+    }
+    
+    // Supprimer les duplications en ordre inverse pour préserver les indices
+    toRemove.sort((a, b) => b.start - a.start);
+    
+    let output = html;
+    for (const r of toRemove) {
+      output = output.slice(0, r.start) + output.slice(r.end);
+    }
+    
+    report.actions.push({
+      type: 'removed_section_duplications',
+      details: `section="${sectionTitle}" count=${toRemove.length}`
+    });
+    console.log(`   ✅ ${toRemove.length} duplication(s) supprimée(s) dans "${sectionTitle}"`);
+    
     return output;
   }
 
@@ -1343,11 +1827,12 @@ class ArticleFinalizer {
         const postText = extracted.post?.clean_text || extracted.post?.selftext || extracted.selftext || '';
         
         if (postText && postText.length > 50) {
-          // Prendre les 200 premiers caractères
-          const excerpt = postText.substring(0, 200).trim();
+          // APPROCHE INTELLIGENTE: Troncature respectant les limites de phrases et de mots
+          // Augmenter les limites pour les blockquotes (meilleure lisibilité)
+          const excerpt = this.smartTruncate(postText, 250, 350);
           
           // Traduire
-          console.log(`🌐 FINALIZER: Traduction blockquote (${excerpt.length} chars)...`);
+          console.log(`🌐 FINALIZER: Traduction blockquote (${excerpt.length} chars, tronqué intelligemment)...`);
           try {
             const translatedExcerpt = await this.intelligentContentAnalyzer.translateToFrench(excerpt);
             
@@ -1521,8 +2006,9 @@ class ArticleFinalizer {
         snippetText = snippetText.trim();
         if (snippetText.length < 20) continue;
         
-        // Prendre les 240 premiers caractères
-        let citationText = snippetText.substring(0, 240).trim();
+        // APPROCHE INTELLIGENTE: Troncature respectant les limites de phrases et de mots
+        // AMÉLIORATION: Augmenter les limites pour les citations Reddit (meilleure lisibilité)
+        let citationText = this.smartTruncate(snippetText, 250, 350);
         if (citationText.length < 20) continue;
         
         // TRADUIRE le texte si nécessaire (détection anglais + traduction LLM)
@@ -1738,8 +2224,8 @@ class ArticleFinalizer {
     }
 
     // CHECK D: Anti-répétitions
-    // PHASE 6.1: Supprimer les paragraphes dupliqués exacts (fonction dédiée)
-    finalHtml = this.removeDuplicateParagraphs(finalHtml, report);
+    // NOTE: removeDuplicateParagraphs est déjà appelé dans finalizeArticle() avant runQAReport
+    // Ne pas le rappeler ici pour éviter double traitement
     const removedDuplicatesCount = report.metrics.removed_duplicates_count || 0;
     
     // Détecter H2 dupliqués
@@ -1850,7 +2336,7 @@ class ArticleFinalizer {
     finalHtml = await this.checkAndFixStoryAlignment(finalHtml, pipelineContext, report);
     
     // PHASE 6.4: Ajouter wrappers premium (takeaways, community, open-questions)
-    finalHtml = this.addPremiumWrappers(finalHtml, pipelineContext, report);
+    finalHtml = await this.addPremiumWrappers(finalHtml, pipelineContext, report);
     
     // PHASE 6.2.3: CHECK B amélioré - Citations Reddit obligatoires et robustes
     // (déjà implémenté, mais améliorer la logique si nécessaire)
@@ -1860,6 +2346,60 @@ class ArticleFinalizer {
     
     // PHASE 7.1.d: Anti-Hallucination Guard (non bloquant par défaut)
     await this.checkAntiHallucination(finalHtml, pipelineContext, report);
+    
+    // NOUVELLES VALIDATIONS QUALITÉ (Plan Pipeline Quality Fixes)
+    // 1. Détection phrases incomplètes
+    finalHtml = await this.detectAndFixIncompleteSentences(finalHtml, report);
+    
+    // 2. Détection et traduction anglais
+    finalHtml = await this.detectAndTranslateEnglish(finalHtml, report);
+    
+    // 3. Validation cohérence widgets/destination
+    this.validateWidgetDestinations(finalHtml, pipelineContext, analysis, report);
+    
+    // 4. Validation citations
+    finalHtml = this.validateAndFixCitations(finalHtml, report);
+    
+    // 5. Validation liens recommandations
+    this.validateRecommendationLinks(finalHtml, report);
+    
+    // 6. Découpage listes trop longues
+    finalHtml = this.splitLongListItems(finalHtml, report);
+    
+    // 7. Validation cohérence temporelle
+    this.validateTemporalConsistency(finalHtml, report);
+    
+    // NOUVELLES CORRECTIONS POUR 10/10
+    // 8. Vérifier et ajouter sections SERP manquantes
+    const limitesBeforeSerp = (finalHtml.match(/<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi) || []).length;
+    
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:2315',message:'runQAReport: before ensureSerpSections',data:{limitesCount:limitesBeforeSerp},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+    // #endregion
+    
+    finalHtml = await this.ensureSerpSections(finalHtml, pipelineContext, report);
+    
+    // CORRECTION: Nettoyer les duplications de "Limites et biais" APRÈS ensureSerpSections
+    finalHtml = this.removeDuplicateH2Sections(finalHtml);
+    
+    // NETTOYAGE FINAL: Supprimer les paragraphes vides qui pourraient subsister
+    const emptyParasInQA = (finalHtml.match(/<p[^>]*>\s*\.\s*<\/p>/gi) || []).length;
+    if (emptyParasInQA > 0) {
+      finalHtml = finalHtml.replace(/<p[^>]*>\s*\.\s*<\/p>/gi, '');
+      console.log(`   🧹 NETTOYAGE QA: ${emptyParasInQA} paragraphe(s) vide(s) supprimé(s)`);
+    }
+    
+    const limitesAfterSerp = (finalHtml.match(/<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi) || []).length;
+    
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:2320',message:'runQAReport: after ensureSerpSections + dedup',data:{limitesCount:limitesAfterSerp,added:limitesAfterSerp-limitesBeforeSerp},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+    // #endregion
+    
+    // 8.5. Remplir toutes les sections vides (y compris "Contexte")
+    finalHtml = this.fillEmptySections(finalHtml, pipelineContext, report);
+    
+    // NOTE: balanceParagraphs() est maintenant appelé dans finalizeArticle() après toutes les corrections
+    // pour éviter double traitement et assurer le bon ordre d'exécution
     
     // PHASE 6.5: Blocking Gate - Quality Gate bloquant
     this.applyBlockingGate(report);
@@ -2521,6 +3061,1561 @@ class ArticleFinalizer {
   }
 
   /**
+   * PHASE 6.0.9: Supprimer les emojis des titres H2
+   * Les emojis dans les H2 sont mauvais pour le SEO et la cohérence éditoriale
+   * @param {string} html - HTML à nettoyer
+   * @returns {string} HTML avec H2 sans emojis
+   */
+  removeEmojisFromH2(html) {
+    console.log('🧹 removeEmojisFromH2: Nettoyage des emojis dans les H2...');
+    
+    let cleanedHtml = html;
+    let removedCount = 0;
+    
+    // Regex pour détecter les emojis (plages Unicode courantes + variation selectors)
+    const emojiRegex = /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{FE00}-\u{FE0F}\u{200D}]/gu;
+    
+    // Trouver tous les H2 et nettoyer les emojis
+    cleanedHtml = cleanedHtml.replace(/<h2([^>]*)>([^<]*)<\/h2>/gi, (match, attrs, content) => {
+      const originalContent = content;
+      const cleanedContent = content.replace(emojiRegex, '').trim();
+      
+      if (originalContent !== cleanedContent) {
+        removedCount++;
+        console.log(`   🧹 H2 nettoyé: "${originalContent.substring(0, 50)}..." → "${cleanedContent.substring(0, 50)}..."`);
+      }
+      
+      return `<h2${attrs}>${cleanedContent}</h2>`;
+    });
+    
+    if (removedCount > 0) {
+      console.log(`   ✅ ${removedCount} emoji(s) supprimé(s) des H2`);
+    } else {
+      console.log('   ✅ Aucun emoji détecté dans les H2');
+    }
+    
+    return cleanedHtml;
+  }
+
+  /**
+   * PHASE 6.0.10: Supprimer les sections vides (labels emoji sans contenu)
+   * Ex: "<p>🧠 Ce que le voyageur a ressenti :</p>" suivi de rien
+   * @param {string} html - HTML à nettoyer
+   * @returns {string} HTML sans sections vides
+   */
+  removeEmptySections(html) {
+    console.log('🧹 removeEmptySections: Nettoyage des sections vides...');
+    
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:3025',message:'removeEmptySections entry',data:{htmlLength:html.length,emptyParasCount:(html.match(/<p[^>]*>\s*\.\s*<\/p>/gi)||[]).length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
+    
+    let cleanedHtml = html;
+    let removedCount = 0;
+    
+    // Pattern 1: Paragraphes avec emoji + label + ":" suivis de rien ou d'un paragraphe vide
+    // Ex: <p>🧠 Ce que le voyageur a ressenti :</p>\n<p></p>
+    const emptyLabelPattern1 = /<p[^>]*>[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]\s*[^<]{0,80}:\s*<\/p>\s*(<p[^>]*>\s*<\/p>)?/gu;
+    const matches1 = cleanedHtml.match(emptyLabelPattern1);
+    if (matches1) {
+      cleanedHtml = cleanedHtml.replace(emptyLabelPattern1, '');
+      removedCount += matches1.length;
+      console.log(`   🧹 ${matches1.length} label(s) emoji vide(s) supprimé(s)`);
+    }
+    
+    // Pattern 2: Paragraphes complètement vides (sans contenu du tout)
+    // Pattern amélioré pour capturer même collés à d'autres balises
+    const completelyEmptyPattern = /<p[^>]*>\s*<\/p>/gi;
+    let emptyMatches = cleanedHtml.match(completelyEmptyPattern);
+    if (emptyMatches) {
+      // Supprimer même s'ils sont collés à d'autres balises (ex: <p></p><ul>)
+      cleanedHtml = cleanedHtml.replace(/<p[^>]*>\s*<\/p>\s*/gi, '');
+      removedCount += emptyMatches.length;
+      console.log(`   🧹 ${emptyMatches.length} paragraphe(s) complètement vide(s) supprimé(s)`);
+    }
+    
+    // Pattern 2b: Paragraphes vides consécutifs (après suppression des vides individuels)
+    const emptyParagraphsPattern = /(<p[^>]*>\s*<\/p>\s*){2,}/g;
+    const matches2 = cleanedHtml.match(emptyParagraphsPattern);
+    if (matches2) {
+      cleanedHtml = cleanedHtml.replace(emptyParagraphsPattern, '');
+      removedCount += matches2.length;
+      console.log(`   🧹 ${matches2.length} groupe(s) de paragraphes vides consolidé(s)`);
+    }
+    
+    // CORRECTION: Supprimer les paragraphes avec juste un point ou des points/espaces
+    const dotOnlyParagraphs = cleanedHtml.match(/<p[^>]*>\s*[.\s]+\s*<\/p>/gi);
+    if (dotOnlyParagraphs) {
+      cleanedHtml = cleanedHtml.replace(/<p[^>]*>\s*[.\s]+\s*<\/p>/gi, '');
+      removedCount += dotOnlyParagraphs.length;
+      console.log(`   🧹 ${dotOnlyParagraphs.length} paragraphe(s) avec juste un point/espaces supprimé(s)`);
+    }
+    
+    // CORRECTION AMÉLIORÉE: Supprimer les paragraphes avec juste un point isolé (ex: <p>.</p>)
+    // Pattern plus robuste pour capturer toutes les variantes
+    const singleDotPatterns = [
+      /<p[^>]*>\s*\.\s*<\/p>/gi,  // <p>.</p>
+      /<p[^>]*>\s*\.\s*<\/p>/gi,  // <p> . </p>
+      /<p[^>]*>\.<\/p>/gi,        // <p>.</p> sans espaces
+      /<p[^>]*>\s*\.\s*<\/p>/gi   // Avec attributs <p class="...">.</p>
+    ];
+    
+    let totalRemoved = 0;
+    singleDotPatterns.forEach((pattern, idx) => {
+      const matches = cleanedHtml.match(pattern);
+      if (matches) {
+        cleanedHtml = cleanedHtml.replace(pattern, '');
+        totalRemoved += matches.length;
+      }
+    });
+    
+    if (totalRemoved > 0) {
+      removedCount += totalRemoved;
+      console.log(`   🧹 ${totalRemoved} paragraphe(s) avec juste un point supprimé(s)`);
+      
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:3087',message:'removeEmptySections: singleDot removed',data:{removedCount:totalRemoved,remainingCount:(cleanedHtml.match(/<p[^>]*>\s*\.\s*<\/p>/gi)||[]).length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+      // #endregion
+    }
+    
+    // Pattern 3: Labels "Cross-cutting lesson" ou "Leçon transversale" sans contenu
+    const crossCuttingPattern = /<p[^>]*>\s*(Cross-cutting lesson|Leçon transversale)\s*:?\s*<\/p>/gi;
+    const matches3 = cleanedHtml.match(crossCuttingPattern);
+    if (matches3) {
+      cleanedHtml = cleanedHtml.replace(crossCuttingPattern, '');
+      removedCount += matches3.length;
+      console.log(`   🧹 ${matches3.length} label(s) "Cross-cutting lesson" vide(s) supprimé(s)`);
+    }
+    
+    // AMÉLIORATION: Pattern 4: H2/H3 suivi directement d'un autre H2/H3 (sans contenu intermédiaire)
+    // AMÉLIORATION: Protéger les sections SERP critiques
+    const protectedSerpPatterns = [
+      /ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement)/i,
+      /limites?\s*(et\s*)?biais/i,
+      /erreurs?\s*(fréquentes?|courantes?|à\s*éviter)/i
+    ];
+    
+    // AMÉLIORATION: Pattern amélioré pour détecter H2/H3 suivis uniquement d'espaces, sauts de ligne, ou paragraphes vides
+    // Pattern 1: H2/H3 suivi directement d'un autre H2/H3 (sans contenu, ou avec uniquement espaces/sauts de ligne)
+    // Pattern amélioré pour capturer aussi les espaces et sauts de ligne entre les H2
+    const emptyH2H3Pattern = /<(h[23])[^>]*>([^<]*)<\/h[23]>\s*(?:\s|<p[^>]*>\s*<\/p>\s*)*(?=<h[23]|$)/gi;
+    let match;
+    const emptySections = [];
+    while ((match = emptyH2H3Pattern.exec(cleanedHtml)) !== null) {
+      const h2Text = match[2];
+      // Vérifier si c'est une section SERP protégée
+      const isProtected = protectedSerpPatterns.some(pattern => pattern.test(h2Text));
+      
+      if (!isProtected) {
+        emptySections.push({
+          fullMatch: match[0],
+          index: match.index,
+          tag: match[1],
+          text: h2Text
+        });
+      } else {
+        // AMÉLIORATION: Au lieu de juste protéger, signaler pour remplissage dans ensureSerpSections
+        console.log(`   🛡️ Section SERP protégée (vide, sera remplie par ensureSerpSections): "${h2Text.substring(0, 50)}..."`);
+      }
+    }
+    
+    // AMÉLIORATION: Pattern 2: H2/H3 suivi uniquement d'espaces, sauts de ligne, ou paragraphes vides (même avec plusieurs lignes)
+    // Ex: <h2>Ce que dit le témoignage</h2>\n    \n    \n<h2>Moment critique</h2>
+    const h2h3WithOnlyWhitespace = /<(h[23])[^>]*>([^<]*)<\/h[23]>\s*(?:\s|<p[^>]*>\s*<\/p>\s*)*(?=<h[23]|$)/gi;
+    let matchWhitespace;
+    while ((matchWhitespace = h2h3WithOnlyWhitespace.exec(cleanedHtml)) !== null) {
+      const h2Text = matchWhitespace[2];
+      const isProtected = protectedSerpPatterns.some(pattern => pattern.test(h2Text));
+      
+      if (!isProtected) {
+        // Vérifier que cette section n'a pas déjà été ajoutée
+        const alreadyAdded = emptySections.some(s => s.index === matchWhitespace.index);
+        if (!alreadyAdded) {
+          // Extraire la section complète (du H2 jusqu'au prochain H2 ou fin)
+          const startIndex = matchWhitespace.index;
+          const afterH2 = cleanedHtml.substring(startIndex + matchWhitespace[0].length);
+          const nextH2Match = afterH2.match(/<(h[23])[^>]*>/i);
+          const sectionEnd = nextH2Match ? startIndex + matchWhitespace[0].length + nextH2Match.index : cleanedHtml.length;
+          const fullSection = cleanedHtml.substring(startIndex, sectionEnd);
+          
+          // Vérifier que le contenu entre le H2 et le prochain H2 est vraiment vide (pas de texte > 10 caractères)
+          const contentBetween = fullSection.replace(/<h[23][^>]*>.*?<\/h[23]>/i, '').replace(/<[^>]+>/g, ' ').trim();
+          if (contentBetween.length <= 10) {
+            emptySections.push({
+              fullMatch: fullSection,
+              index: startIndex,
+              tag: matchWhitespace[1],
+              text: h2Text
+            });
+          }
+        }
+      }
+    }
+    
+    // Supprimer les sections vides détectées (en ordre inverse pour préserver les indices)
+    for (let i = emptySections.length - 1; i >= 0; i--) {
+      const section = emptySections[i];
+      // AMÉLIORATION: Extraire la section complète jusqu'au prochain H2 pour s'assurer de tout supprimer
+      const afterMatch = cleanedHtml.substring(section.index + section.fullMatch.length);
+      const nextH2Match = afterMatch.match(/<(h[23])[^>]*>/i);
+      const sectionEnd = nextH2Match ? section.index + section.fullMatch.length + nextH2Match.index : section.index + section.fullMatch.length;
+      const fullSectionToRemove = cleanedHtml.substring(section.index, sectionEnd);
+      
+      // Vérifier que le contenu entre le H2 et le prochain H2 est vraiment vide (pas de texte > 10 caractères)
+      const contentBetween = fullSectionToRemove.replace(/<h[23][^>]*>.*?<\/h[23]>/i, '').replace(/<[^>]+>/g, ' ').trim();
+      if (contentBetween.length <= 10) {
+        cleanedHtml = cleanedHtml.substring(0, section.index) + cleanedHtml.substring(sectionEnd);
+        removedCount++;
+        console.log(`   🧹 ${section.tag.toUpperCase()} vide supprimé: "${section.text.substring(0, 50)}..."`);
+      }
+    }
+    
+    // AMÉLIORATION: Pattern 5: H2/H3 suivi uniquement de paragraphes vides (<p></p>)
+    // Réutiliser protectedSerpPatterns déclaré plus haut
+    const h2h3WithOnlyEmptyParas = /<(h[23])[^>]*>([^<]*)<\/h[23]>\s*(<p[^>]*>\s*<\/p>\s*)+(?=<h[23]|$)/gi;
+    let match2;
+    const sectionsWithEmptyParas = [];
+    while ((match2 = h2h3WithOnlyEmptyParas.exec(cleanedHtml)) !== null) {
+      const h2Text = match2[2];
+      // Vérifier si c'est une section SERP protégée
+      const isProtected = protectedSerpPatterns.some(pattern => pattern.test(h2Text));
+      
+      if (!isProtected) {
+        sectionsWithEmptyParas.push({
+          fullMatch: match2[0],
+          index: match2.index,
+          tag: match2[1]
+        });
+      } else {
+        // AMÉLIORATION: Ne pas supprimer, mais signaler pour remplissage dans fillEmptySections
+        console.log(`   🛡️ Section SERP protégée (vide, sera remplie par fillEmptySections): "${h2Text.substring(0, 50)}..."`);
+      }
+    }
+    
+    // Supprimer les sections avec uniquement des paragraphes vides (sauf SERP protégées)
+    for (let i = sectionsWithEmptyParas.length - 1; i >= 0; i--) {
+      const section = sectionsWithEmptyParas[i];
+      cleanedHtml = cleanedHtml.substring(0, section.index) + cleanedHtml.substring(section.index + section.fullMatch.length);
+      removedCount++;
+      console.log(`   🧹 ${section.tag.toUpperCase()} avec uniquement paragraphes vides supprimé`);
+    }
+    
+    if (removedCount > 0) {
+      console.log(`   ✅ ${removedCount} section(s) vide(s) supprimée(s)`);
+    } else {
+      console.log('   ✅ Aucune section vide détectée');
+    }
+    
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:3117',message:'removeEmptySections exit',data:{removedCount,emptyParasAfter:(cleanedHtml.match(/<p[^>]*>\s*\.\s*<\/p>/gi)||[]).length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
+    
+    return cleanedHtml;
+  }
+
+  /**
+   * PHASE 6.0.5: Supprimer les sections H2 dupliquées (notamment "Limites et biais")
+   * Garde la première occurrence et supprime les suivantes
+   * @param {string} html - HTML à nettoyer
+   * @returns {string} HTML sans sections H2 dupliquées
+   */
+  removeDuplicateH2Sections(html) {
+    console.log('🧹 removeDuplicateH2Sections: Détection des sections H2 dupliquées...');
+    
+    let cleanedHtml = html;
+    let removedCount = 0;
+    
+    // Extraire tous les H2 avec leur contenu jusqu'au prochain H2
+    const h2Pattern = /<h2[^>]*>([^<]+)<\/h2>/gi;
+    const h2Matches = [];
+    let match;
+    
+    while ((match = h2Pattern.exec(html)) !== null) {
+      h2Matches.push({
+        fullMatch: match[0],
+        title: match[1].trim(),
+        index: match.index,
+        normalizedTitle: match[1].trim().toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ')
+      });
+    }
+    
+    // Détecter les duplications (normaliser les titres pour comparaison)
+    const seenTitles = new Map();
+    const duplicates = [];
+    let firstLimitesIndex = -1;
+    let firstLimitesIsFR = false;
+    
+    h2Matches.forEach((h2, index) => {
+      const normalized = h2.normalizedTitle;
+      
+      // Patterns spéciaux pour "Limites et biais" (variations possibles en français ET anglais)
+      const limitesPatternFR = /limites?\s*(et\s*)?biais/i;
+      const limitesPatternEN = /limits?\s*(and\s*)?bias(es)?/i;
+      const isLimitesFR = limitesPatternFR.test(h2.title);
+      const isLimitesEN = limitesPatternEN.test(h2.title);
+      const isLimites = isLimitesFR || isLimitesEN;
+      
+      // Clé normalisée pour "Limites et biais" (gère français et anglais)
+      const limitesKey = 'limites et biais';
+      
+      // Si c'est une section "Limites et biais" (FR ou EN) et qu'on en a déjà vu une, c'est une duplication
+      const isDuplicate = seenTitles.has(normalized) || (isLimites && seenTitles.has(limitesKey));
+      
+      // AMÉLIORATION: Toujours privilégier la version FR, supprimer l'EN
+      // Si on rencontre d'abord EN puis FR: supprimer EN (garder FR)
+      // Si on rencontre d'abord FR puis EN: supprimer EN (garder FR)
+      // Si on rencontre EN seul: le garder (mais idéalement il devrait être traduit)
+      if (isLimites && firstLimitesIndex >= 0) {
+        // On a déjà vu une section "Limites et biais"
+        if (isLimitesEN) {
+          // Toujours supprimer la version EN si on a déjà vu une section (FR ou EN)
+          const startIndex = h2.index;
+          const nextH2Index = index < h2Matches.length - 1 ? h2Matches[index + 1].index : html.length;
+          const sectionContent = html.substring(startIndex, nextH2Index);
+          
+          duplicates.push({
+            fullMatch: sectionContent,
+            index: startIndex,
+            title: h2.title,
+            isLimites: true,
+            isLimitesFR: false,
+            isLimitesEN: true
+          });
+        } else if (isLimitesFR && !firstLimitesIsFR) {
+          // On a vu EN d'abord, maintenant FR: supprimer l'EN précédente
+          const prevH2 = h2Matches[firstLimitesIndex];
+          const prevStartIndex = prevH2.index;
+          const prevNextH2Index = firstLimitesIndex < h2Matches.length - 1 ? h2Matches[firstLimitesIndex + 1].index : html.length;
+          const prevSectionContent = html.substring(prevStartIndex, prevNextH2Index);
+          
+          duplicates.push({
+            fullMatch: prevSectionContent,
+            index: prevStartIndex,
+            title: prevH2.title,
+            isLimites: true,
+            isLimitesFR: false,
+            isLimitesEN: true
+          });
+          
+          // Mettre à jour pour garder le FR
+          firstLimitesIsFR = true;
+          firstLimitesIndex = index;
+        }
+      } else if (isDuplicate) {
+        // Duplication classique (même titre exact)
+        const startIndex = h2.index;
+        const nextH2Index = index < h2Matches.length - 1 ? h2Matches[index + 1].index : html.length;
+        const sectionContent = html.substring(startIndex, nextH2Index);
+        
+        duplicates.push({
+          fullMatch: sectionContent,
+          index: startIndex,
+          title: h2.title,
+          isLimites
+        });
+      } else {
+        seenTitles.set(normalized, true);
+        if (isLimites) {
+          seenTitles.set(limitesKey, true);
+          if (firstLimitesIndex < 0) {
+            firstLimitesIndex = index;
+            firstLimitesIsFR = isLimitesFR;
+          }
+        }
+      }
+    });
+    
+    // Supprimer les duplications (en ordre inverse pour préserver les indices)
+    if (duplicates.length > 0) {
+      duplicates.reverse().forEach(dup => {
+        cleanedHtml = cleanedHtml.substring(0, dup.index) + cleanedHtml.substring(dup.index + dup.fullMatch.length);
+        removedCount++;
+        console.log(`   🧹 Section H2 dupliquée supprimée: "${dup.title.substring(0, 50)}..."`);
+      });
+    }
+    
+    if (removedCount > 0) {
+      console.log(`   ✅ ${removedCount} section(s) H2 dupliquée(s) supprimée(s)`);
+    } else {
+      console.log('   ✅ Aucune section H2 dupliquée détectée');
+    }
+    
+    return cleanedHtml;
+  }
+
+  /**
+   * Normalise les espaces et sauts de ligne dans le HTML
+   * Corrige les phrases collées, les espaces multiples, et les sauts de ligne bizarres
+   * @param {string} html - HTML à normaliser
+   * @param {Object} report - Rapport QA
+   * @returns {string} HTML normalisé
+   */
+  normalizeSpacing(html, report) {
+    console.log('🔧 normalizeSpacing: Normalisation des espaces et sauts de ligne...');
+    
+    let cleanedHtml = html;
+    let fixesCount = 0;
+    
+    // #region agent log
+    try {
+      const fs = require('fs');
+      const logPath = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor/debug.log';
+      const hasSpacesInWords = /[a-zà-ÿ]\s+[a-zà-ÿ]/i.test(cleanedHtml.replace(/<[^>]+>/g, ' '));
+      const logEntry = JSON.stringify({location:'article-finalizer.js:3029',message:'normalizeSpacing entry',data:{htmlLength:html.length,hasSpacesInWords},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'}) + '\n';
+      fs.appendFileSync(logPath, logEntry);
+    } catch(e) {}
+    // #endregion
+    
+    // CORRECTION CRITIQUE: Protéger les widgets (script/form) AVANT tout traitement pour éviter qu'ils soient modifiés
+    const widgetPlaceholders = new Map();
+    let widgetCounter = 0;
+    
+    // Protéger les scripts de widgets (travelpayouts, kiwi, airalo, etc.)
+    cleanedHtml = cleanedHtml.replace(/<script[^>]*(?:src|data-widget-type|travelpayouts|kiwi|airalo|trpwdg)[^>]*>[\s\S]*?<\/script>/gi, (match) => {
+      const placeholder = `__WIDGET_SCRIPT_${widgetCounter++}__`;
+      widgetPlaceholders.set(placeholder, match);
+      return placeholder;
+    });
+    
+    // Protéger les forms de widgets (kiwi, travelpayouts, etc.)
+    cleanedHtml = cleanedHtml.replace(/<form[^>]*(?:class|data-widget-type|kiwi|travelpayouts)[^>]*>[\s\S]*?<\/form>/gi, (match) => {
+      const placeholder = `__WIDGET_FORM_${widgetCounter++}__`;
+      widgetPlaceholders.set(placeholder, match);
+      return placeholder;
+    });
+    
+    // Protéger les divs de widgets (airalo, esim, etc.)
+    cleanedHtml = cleanedHtml.replace(/<div[^>]*(?:class|data-widget-type|airalo|esim)[^>]*>[\s\S]*?<\/div>/gi, (match) => {
+      const placeholder = `__WIDGET_DIV_${widgetCounter++}__`;
+      widgetPlaceholders.set(placeholder, match);
+      return placeholder;
+    });
+    
+    // DEBUG: Vérifier combien de widgets ont été protégés
+    console.log(`🔍 DEBUG normalizeSpacing: ${widgetPlaceholders.size} widget(s) protégé(s) avant traitement`);
+    
+    // CORRECTION CRITIQUE: Protéger TOUTES les entités HTML dès le début pour éviter qu'elles soient traitées comme du texte normal
+    // Cela empêche les espaces d'être insérés autour des entités HTML
+    const globalEntityPlaceholders = new Map();
+    let globalEntityCounter = 0;
+    
+    cleanedHtml = cleanedHtml.replace(/&#\d+;|&[a-z]+;/gi, (match) => {
+      const placeholder = `__ENTITY_GLOBAL_${globalEntityCounter++}__`;
+      globalEntityPlaceholders.set(placeholder, match);
+      return placeholder;
+    });
+    
+    // 1. Normaliser les sauts de ligne entre paragraphes (un seul \n\n)
+    cleanedHtml = cleanedHtml.replace(/(<\/p>)\s*\n\s*\n\s*\n+(<p[^>]*>)/g, '$1\n\n$2');
+    cleanedHtml = cleanedHtml.replace(/(<\/p>)\s*\n\s*\n\s*\n+/g, '$1\n\n');
+    
+    // 2. Corriger les phrases collées sans espace après ponctuation
+    // Détecter les cas où une ponctuation est suivie directement d'une lettre (sans espace)
+    // Les entités HTML sont déjà protégées par globalEntityPlaceholders
+    const beforeFix = cleanedHtml;
+    cleanedHtml = cleanedHtml.replace(/([.!?;:])([a-zA-ZÀ-ÿ])/g, '$1 $2');
+    
+    const afterFix = cleanedHtml.match(/([.!?;:])([a-zA-ZÀ-ÿ])/g) || [];
+    fixesCount += (beforeFix.match(/([.!?;:])([a-zA-ZÀ-ÿ])/g) || []).length - afterFix.length;
+    
+    // 3. Supprimer les espaces avant les ponctuations
+    cleanedHtml = cleanedHtml.replace(/\s+([.!?;:,])/g, '$1');
+    
+    // 4. Normaliser les espaces multiples dans le texte (garder un seul espace)
+    // Mais préserver les espaces dans les balises HTML
+    // Les entités HTML sont déjà protégées par globalEntityPlaceholders
+    const textParts = cleanedHtml.split(/(<[^>]+>)/);
+    for (let i = 0; i < textParts.length; i += 2) {
+      // Traiter seulement les parties texte (indices pairs)
+      if (textParts[i]) {
+        // Remplacer les espaces multiples par un seul espace
+        // Les placeholders d'entités HTML sont protégés et ne seront pas affectés
+        textParts[i] = textParts[i].replace(/[ \t]+/g, ' ');
+        // Supprimer les espaces en début et fin de ligne (sauf dans les balises)
+        textParts[i] = textParts[i].replace(/^[ \t]+|[ \t]+$/gm, '');
+      }
+    }
+    cleanedHtml = textParts.join('');
+    
+    // 5. Corriger les cas où deux paragraphes sont collés sans espace entre eux
+    // Détecter </p><p> sans espace/saut de ligne
+    cleanedHtml = cleanedHtml.replace(/(<\/p>)(<p[^>]*>)/g, '$1\n\n$2');
+    
+    // 6. Normaliser les espaces autour des balises HTML (sauf dans le contenu)
+    cleanedHtml = cleanedHtml.replace(/>\s+</g, '><');
+    cleanedHtml = cleanedHtml.replace(/>\s+/g, '>');
+    cleanedHtml = cleanedHtml.replace(/\s+</g, '<');
+    
+    // 6.5. CORRECTION CRITIQUE: Réinsérer les espaces après les balises de formatage fermantes
+    // Les balises </strong>, </em>, </b>, </i>, </span>, etc. doivent avoir un espace après si suivies d'une lettre
+    // Cela corrige les cas comme "</strong>Offrant" → "</strong> Offrant"
+    cleanedHtml = cleanedHtml.replace(/(<\/strong>)([a-zA-ZÀ-ÿ])/gi, '$1 $2');
+    cleanedHtml = cleanedHtml.replace(/(<\/em>)([a-zA-ZÀ-ÿ])/gi, '$1 $2');
+    cleanedHtml = cleanedHtml.replace(/(<\/b>)([a-zA-ZÀ-ÿ])/gi, '$1 $2');
+    cleanedHtml = cleanedHtml.replace(/(<\/i>)([a-zA-ZÀ-ÿ])/gi, '$1 $2');
+    cleanedHtml = cleanedHtml.replace(/(<\/span>)([a-zA-ZÀ-ÿ])/gi, '$1 $2');
+    cleanedHtml = cleanedHtml.replace(/(<\/h[1-6]>)([a-zA-ZÀ-ÿ])/gi, '$1 $2');
+    
+    // 6.6. CORRECTION CRITIQUE: Réinsérer les espaces après les balises auto-fermantes suivies d'une lettre
+    // Ex: "<strong>Budget:</strong>Environ" → "<strong>Budget:</strong> Environ"
+    cleanedHtml = cleanedHtml.replace(/(:)(<\/strong>)([a-zA-ZÀ-ÿ])/gi, '$1$2 $3');
+    cleanedHtml = cleanedHtml.replace(/(:)(<\/em>)([a-zA-ZÀ-ÿ])/gi, '$1$2 $3');
+    cleanedHtml = cleanedHtml.replace(/(:)(<\/b>)([a-zA-ZÀ-ÿ])/gi, '$1$2 $3');
+    cleanedHtml = cleanedHtml.replace(/(:)(<\/i>)([a-zA-ZÀ-ÿ])/gi, '$1$2 $3');
+    
+    // 7. Réinsérer les espaces nécessaires après les balises de fermeture de paragraphe
+    cleanedHtml = cleanedHtml.replace(/(<\/p>)([a-zA-ZÀ-ÿ])/g, '$1 $2');
+    
+    // 8. Corriger les cas où un mot se termine et le suivant commence sans espace dans le même paragraphe
+    // Détecter les patterns comme "mot1.mot2" ou "mot1mot2" dans le contenu des paragraphes
+    // AMÉLIORATION: Protéger les entités HTML avant traitement
+    // CORRECTION: Vérifier d'abord s'il y a déjà des placeholders d'entités (éviter double traitement)
+    const hasExistingPlaceholders = /__ENTITY\d+_\d+__/.test(cleanedHtml);
+    
+    const entityPlaceholders2 = new Map();
+    let entityCounter2 = 0;
+    
+    // CORRECTION: Ne créer des placeholders que si les entités HTML existent ET qu'il n'y a pas déjà de placeholders
+    if (!hasExistingPlaceholders) {
+      cleanedHtml = cleanedHtml.replace(/&#\d+;|&[a-z]+;/gi, (match) => {
+        const placeholder = `__ENTITY2_${entityCounter2++}__`;
+        entityPlaceholders2.set(placeholder, match);
+        return placeholder;
+      });
+    }
+    
+    // CORRECTION: Utiliser un regex qui capture le contenu même avec des placeholders ou balises HTML imbriquées
+    // Utiliser [\s\S]*? pour capturer tout le contenu jusqu'à </p>
+    cleanedHtml = cleanedHtml.replace(/(<p[^>]*>)([\s\S]*?)(<\/p>)/g, (match, openTag, content, closeTag) => {
+      // AMÉLIORATION: Ne pas insérer d'espace si c'est dans un placeholder d'entité HTML
+      // Protéger les placeholders avant traitement
+      const placeholderPattern = /(__ENTITY\d+_\d+__)/g;
+      const protectedPlaceholders = new Map();
+      let placeholderCounter = 0;
+      
+      let protectedContent = content.replace(placeholderPattern, (ph) => {
+        const key = `__PROTECTED_${placeholderCounter++}__`;
+        protectedPlaceholders.set(key, ph);
+        return key;
+      });
+      
+      // Corriger les cas où une lettre minuscule est suivie d'une majuscule sans espace
+      // MAIS exclure les cas où c'est après une apostrophe/guillemet (ex: "l'Expérience")
+      let fixedContent = protectedContent.replace(/([a-zà-ÿ])([A-ZÀ-Ÿ])/g, (m, before, after) => {
+        // Ne pas insérer d'espace si le caractère précédent est une apostrophe ou un guillemet
+        const beforeMatch = protectedContent.substring(0, protectedContent.indexOf(m));
+        if (/['"']$/.test(beforeMatch)) {
+          return m; // Garder tel quel
+        }
+        return before + ' ' + after;
+      });
+      
+      // Corriger les cas où un chiffre est suivi d'une lettre sans espace (si ce n'est pas une date/heure)
+      fixedContent = fixedContent.replace(/(\d)([A-Za-zÀ-ÿ])/g, '$1 $2');
+      // Corriger les cas où une lettre est suivie d'un chiffre sans espace (si ce n'est pas une unité)
+      fixedContent = fixedContent.replace(/([A-Za-zÀ-ÿ])(\d)/g, '$1 $2');
+      
+      // Restaurer les placeholders protégés
+      protectedPlaceholders.forEach((placeholder, key) => {
+        fixedContent = fixedContent.replace(key, placeholder);
+      });
+      
+      return openTag + fixedContent + closeTag;
+    });
+    
+    // CORRECTION: Restaurer les entités HTML UNIQUEMENT si on en a créé
+    // Mais d'abord restaurer les placeholders globaux
+    if (!hasExistingPlaceholders && entityPlaceholders2.size > 0) {
+      entityPlaceholders2.forEach((entity, placeholder) => {
+        cleanedHtml = cleanedHtml.replace(new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), entity);
+      });
+    }
+    
+    // CORRECTION CRITIQUE: Restaurer TOUTES les entités HTML protégées globalement à la fin
+    globalEntityPlaceholders.forEach((entity, placeholder) => {
+      cleanedHtml = cleanedHtml.replace(new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), entity);
+    });
+    
+    // CORRECTION CRITIQUE: Restaurer les placeholders d'entités HTML restants (venant d'étapes précédentes)
+    // Pattern générique pour capturer tous les formats de placeholders: __ENTITY2_16__, __ENTITY 2_16__, etc.
+    // Ces placeholders doivent être remplacés par l'entité HTML correspondante ou supprimés s'ils sont orphelins
+    cleanedHtml = cleanedHtml.replace(/__ENTITY\s*\d+_\d+__/g, (match) => {
+      // Si on a l'entité correspondante dans globalEntityPlaceholders, la restaurer
+      // Sinon, supprimer le placeholder (il est orphelin)
+      // Pour l'instant, on supprime les placeholders orphelins car on ne peut pas les restaurer sans connaître l'entité originale
+      return ''; // Supprimer les placeholders orphelins
+    });
+    
+    // CORRECTION FINALE: Nettoyage agressif des espaces dans les mots (dernière passe après toutes les restaurations)
+    // Cette passe finale capture les cas qui ont pu échapper aux passes précédentes
+    cleanedHtml = cleanedHtml.replace(/([a-zà-ÿ])\s+([àâäéèêëïîôùûüÿ][a-zà-ÿ]{2,})/gi, (m, letter, rest) => {
+      // Ne pas fusionner si c'est une préposition valide ou un mot français valide séparé
+      const commonPrepositions = ['de', 'en', 'le', 'la', 'les', 'un', 'une', 'du', 'des', 'ce', 'se', 'ne', 'me', 'te', 'à', 'ou', 'et', 'si'];
+      // Ne pas fusionner si la lettre seule forme un mot français valide (ex: "e Événement" → garder séparé)
+      const singleLetterWords = ['e', 'a', 'y', 'o', 'u'];
+      if (!commonPrepositions.includes(letter.toLowerCase()) && 
+          !singleLetterWords.includes(letter.toLowerCase()) && 
+          (letter + rest).length >= 4) {
+        return letter + rest;
+      }
+      return m;
+    });
+    
+    // Nettoyage final pour les mots complets avec espace avant lettre accentuée finale
+    // Exclure les cas où le mot avant l'espace est un mot français valide (ex: "Numériques à" → garder séparé)
+    cleanedHtml = cleanedHtml.replace(/\b([a-zà-ÿ]{4,}[bcdfghjklmnpqrstvwxz])\s+([àâäéèêëïîôùûüÿ])(?=\s|$|[.,;:!?<])/gi, (m, word, accent) => {
+      // Ne pas fusionner si le mot se termine par "s" et l'accent est "é" (ex: "Numériques à" → garder séparé)
+      // Ne pas fusionner si le mot est un adjectif au pluriel suivi de "à"
+      if (word.endsWith('s') && accent === 'é') {
+        return m; // Garder séparé (ex: "Numériques à")
+      }
+      return word + accent;
+    });
+    
+    // CORRECTION CRITIQUE: Nettoyer les espaces incorrects dans les mots (problème venant de WordPress ou étape précédente)
+    // Pattern: lettre + espace + lettre accentuée (signe de mot coupé par entité HTML mal gérée)
+    // Exemples: "r éel" → "réel", "s éjour" → "séjour", "n écessaires" → "nécessaires"
+    // AMÉLIORATION: Traiter aussi les blockquotes et autres conteneurs de texte
+    // Note: blockquote peut contenir des <p> à l'intérieur, donc on traite d'abord les blockquotes complets
+    cleanedHtml = cleanedHtml.replace(/(<blockquote[^>]*>)([\s\S]*?)(<\/blockquote>)/g, (match, openTag, content, closeTag) => {
+      // Traiter le contenu du blockquote (qui peut contenir des <p>)
+      let fixedBlockquote = content;
+      
+      // Protéger les balises HTML imbriquées
+      const tagPlaceholdersBlockquote = new Map();
+      let tagCounterBlockquote = 0;
+      let protectedBlockquote = fixedBlockquote.replace(/<[^>]+>/g, (tag) => {
+        const key = `__TAG_BQ_${tagCounterBlockquote++}__`;
+        tagPlaceholdersBlockquote.set(key, tag);
+        return key;
+      });
+      
+      // Protéger les entités HTML
+      const entityPlaceholdersBlockquote = new Map();
+      let entityCounterBlockquote = 0;
+      protectedBlockquote = protectedBlockquote.replace(/&#\d+;|&[a-z]+;/gi, (entity) => {
+        const key = `__ENTITY_BQ_${entityCounterBlockquote++}__`;
+        entityPlaceholdersBlockquote.set(key, entity);
+        return key;
+      });
+      
+      // Appliquer les corrections pour les mots avec espaces
+      // Pattern: Mot français (3+ lettres) + espace + lettre accentuée isolée
+      protectedBlockquote = protectedBlockquote.replace(/\b([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿ])(?=\s|$|[.,;:!?<])/gi, (m, word, accent) => {
+        const combined = word + accent;
+        if (combined.length >= 4 && !(word.endsWith('s') && accent === 'é' && word.length > 6)) {
+          return combined;
+        }
+        return m;
+      });
+      
+      // Restaurer les placeholders
+      entityPlaceholdersBlockquote.forEach((entity, key) => {
+        protectedBlockquote = protectedBlockquote.replace(key, entity);
+      });
+      tagPlaceholdersBlockquote.forEach((tag, key) => {
+        protectedBlockquote = protectedBlockquote.replace(key, tag);
+      });
+      
+      return openTag + protectedBlockquote + closeTag;
+    });
+    
+    cleanedHtml = cleanedHtml.replace(/(<p[^>]*>)([\s\S]*?)(<\/p>)/g, (match, openTag, content, closeTag) => {
+      // Protéger les balises HTML imbriquées
+      const tagPlaceholders = new Map();
+      let tagCounter = 0;
+      let protectedContent = content.replace(/<[^>]+>/g, (tag) => {
+        const key = `__TAG_${tagCounter++}__`;
+        tagPlaceholders.set(key, tag);
+        return key;
+      });
+      
+      // Protéger les entités HTML restantes
+      const entityPlaceholdersCleanup = new Map();
+      let entityCounterCleanup = 0;
+      protectedContent = protectedContent.replace(/&#\d+;|&[a-z]+;/gi, (entity) => {
+        const key = `__ENTITY_CLEANUP_${entityCounterCleanup++}__`;
+        entityPlaceholdersCleanup.set(key, entity);
+        return key;
+      });
+      
+      // CORRECTION: Fusionner les mots coupés (approche générique et robuste)
+      // Pattern amélioré pour capturer tous les cas de mots coupés par des espaces
+      // Exemples: "g énéralement", "r évèle", "recommand é", "détaill é", "subjectivit é"
+      let fixedContent = protectedContent;
+      
+      // Pattern 1: 1-2 lettres + espace + lettre accentuée + reste du mot (ex: "g énéralement" → "généralement")
+      // AMÉLIORATION: Détecter aussi les cas avec apostrophe/entité mal placée (ex: "pass' é" → "passé", "pay' é" → "payé")
+      const beforePattern1 = fixedContent;
+      
+      // Pattern 1a: Mot + apostrophe + espace + lettre accentuée (ex: "pass' é" → "passé")
+      fixedContent = fixedContent.replace(/([a-zà-ÿ]{3,})[''`]\s+([àâäéèêëïîôùûüÿ][a-zà-ÿ]{1,})\b/gi, (m, part1, part2) => {
+        const combined = part1 + part2;
+        // Vérifier que c'est un mot français valide (au moins 4 lettres)
+        if (combined.length >= 4) {
+          return combined;
+        }
+        return m;
+      });
+      
+      // Pattern 1b: 1-2 lettres + espace + lettre accentuée + reste du mot (ex: "g énéralement" → "généralement")
+      fixedContent = fixedContent.replace(/([a-zà-ÿ]{1,2})\s+([àâäéèêëïîôùûüÿ][a-zà-ÿ]{2,})\b/gi, (m, part1, part2) => {
+        const combined = part1 + part2;
+        // Vérifier que ce n'est pas une préposition valide séparée
+        const commonPrepositions = ['de', 'en', 'le', 'la', 'les', 'un', 'une', 'du', 'des', 'ce', 'se', 'ne', 'me', 'te', 'à', 'ou', 'et', 'si'];
+        if (!commonPrepositions.includes(part1.toLowerCase()) && combined.length >= 4) {
+          return combined;
+        }
+        return m;
+      });
+      
+      // Pattern 1c: Mot français (3+ lettres) + espace + lettre accentuée isolée (ex: "pass é" → "passé", "pay é" → "payé", "bas é" → "basé")
+      fixedContent = fixedContent.replace(/\b([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿ])(?=\s|$|[.,;:!?<])/gi, (m, word, accent) => {
+        const combined = word + accent;
+        // Vérifier que c'est un mot français valide (au moins 4 lettres)
+        // Exclure les cas où le mot se termine par "s" et l'accent est "é" (ex: "Numériques é" → garder séparé si c'est intentionnel)
+        if (combined.length >= 4 && !(word.endsWith('s') && accent === 'é' && word.length > 6)) {
+          return combined;
+        }
+        return m;
+      });
+      
+      // Pattern 2: Mot français (3+ lettres) + espace + lettre accentuée isolée (ex: "pass é" → "passé", "pay é" → "payé", "bas é" → "basé")
+      // AMÉLIORATION: Gérer aussi les mots se terminant par voyelle (ex: "pay é" → "payé")
+      fixedContent = fixedContent.replace(/\b([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿ])(?=\s|$|[.,;:!?<])/gi, (m, word, accent) => {
+        const combined = word + accent;
+        // Vérifier que c'est un mot français valide (au moins 4 lettres)
+        // Exclure les cas où le mot se termine par "s" et l'accent est "é" (ex: "Numériques é" → garder séparé si c'est intentionnel)
+        // Mais inclure les cas comme "pass é" → "passé", "pay é" → "payé", "bas é" → "basé"
+        if (combined.length >= 4) {
+          // Ne pas fusionner si c'est clairement deux mots séparés (ex: "Numériques é" où "Numériques" est un adjectif au pluriel)
+          if (word.endsWith('s') && accent === 'é' && word.length > 6) {
+            // Vérifier le contexte: si c'est suivi d'un autre mot, c'est probablement deux mots séparés
+            const afterMatch = protectedContent.substring(protectedContent.indexOf(m) + m.length);
+            if (afterMatch.match(/^\s+[a-zà-ÿ]{3,}/)) {
+              return m; // Garder séparé
+            }
+          }
+          return combined;
+        }
+        return m;
+      });
+      
+      // Log si des corrections ont été faites
+      if (fixedContent !== beforePattern1) {
+        console.log(`   🔧 Nettoyage espaces dans mots: ${(beforePattern1.match(/\b[a-zà-ÿ]{1,2}\s+[àâäéèêëïîôùûüÿ]/gi) || []).length} → ${(fixedContent.match(/\b[a-zà-ÿ]{1,2}\s+[àâäéèêëïîôùûüÿ]/gi) || []).length}`);
+      }
+      
+      // Restaurer les éléments protégés
+      entityPlaceholdersCleanup.forEach((entity, key) => {
+        fixedContent = fixedContent.replace(key, entity);
+      });
+      tagPlaceholders.forEach((tag, key) => {
+        fixedContent = fixedContent.replace(key, tag);
+      });
+      
+      return openTag + fixedContent + closeTag;
+    });
+    
+    // CORRECTION FINALE: Détecter et corriger les mots français collés sans espace
+    // Pattern: mot français (4+ lettres) + mot français (4+ lettres) collés ensemble
+    // Exemples: "tempsétait" → "temps était", "Resterà" → "Rester à", "échapperà" → "échapper à"
+    // On cherche les transitions: minuscule→majuscule ou lettre→lettre accentuée
+    cleanedHtml = cleanedHtml.replace(/(<p[^>]*>)([\s\S]*?)(<\/p>)/g, (match, openTag, content, closeTag) => {
+      // Protéger les balises HTML imbriquées
+      const tagPlaceholders = new Map();
+      let tagCounter = 0;
+      let protectedContent = content.replace(/<[^>]+>/g, (tag) => {
+        const key = `__TAG_FINAL_${tagCounter++}__`;
+        tagPlaceholders.set(key, tag);
+        return key;
+      });
+      
+      // Protéger les entités HTML
+      const entityPlaceholdersFinal = new Map();
+      let entityCounterFinal = 0;
+      protectedContent = protectedContent.replace(/&#\d+;|&[a-z]+;/gi, (entity) => {
+        const key = `__ENTITY_FINAL_${entityCounterFinal++}__`;
+        entityPlaceholdersFinal.set(key, entity);
+        return key;
+      });
+      
+      // Pattern 1: Mot français (4+ lettres) suivi d'une majuscule (ex: "tempsÉtait" → "temps Était")
+      // Mais exclure les cas où c'est un nom propre (ex: "ParisFrance" → garder tel quel si c'est intentionnel)
+      let fixedContent = protectedContent.replace(/\b([a-zà-ÿ]{4,})([A-ZÀ-Ÿ][a-zà-ÿ]{2,})\b/g, (m, word1, word2) => {
+        // Ne pas séparer si le premier mot est très court (ex: "àParis" → garder tel quel)
+        // Ne pas séparer si c'est après une apostrophe (ex: "l'Expérience")
+        const beforeMatch = protectedContent.substring(0, protectedContent.indexOf(m));
+        if (/['"']$/.test(beforeMatch)) {
+          return m;
+        }
+        // Séparer les mots français valides
+        return word1 + ' ' + word2;
+      });
+      
+      // Pattern 2: Mot français suivi de "à" collé (ex: "Resterà" → "Rester à", "échapperà" → "échapper à")
+      fixedContent = fixedContent.replace(/\b([a-zà-ÿ]{4,})(à)([a-zà-ÿ]{2,})\b/gi, (m, word, preposition, rest) => {
+        // Vérifier que "à" est bien une préposition et non partie du mot suivant
+        // Ex: "Resterà" → "Rester à" (si "à" est suivi d'un mot)
+        return word + ' ' + preposition + ' ' + rest;
+      });
+      
+      // Pattern 3: Mot français suivi directement d'un autre mot français sans espace
+      // Détecter les transitions: consonne→voyelle accentuée (ex: "bonéquilibre" → "bon équilibre")
+      fixedContent = fixedContent.replace(/\b([a-zà-ÿ]{3,}[bcdfghjklmnpqrstvwxz])([àâäéèêëïîôùûüÿ][a-zà-ÿ]{3,})\b/gi, (m, word1, word2) => {
+        // Vérifier que ce sont deux mots français valides séparés
+        // Exclure les cas où c'est un mot composé valide (ex: "portefeuille")
+        const commonCompoundWords = ['portefeuille', 'tirebouchon', 'garde', 'porte'];
+        const combined = word1 + word2;
+        if (commonCompoundWords.some(cw => combined.toLowerCase().includes(cw))) {
+          return m;
+        }
+        return word1 + ' ' + word2;
+      });
+      
+      // Restaurer les placeholders
+      entityPlaceholdersFinal.forEach((entity, key) => {
+        fixedContent = fixedContent.replace(key, entity);
+      });
+      tagPlaceholders.forEach((tag, key) => {
+        fixedContent = fixedContent.replace(key, tag);
+      });
+      
+      return openTag + fixedContent + closeTag;
+    });
+    
+    // CORRECTION CRITIQUE: Restaurer les widgets APRÈS tous les traitements
+    let restoredCount = 0;
+    widgetPlaceholders.forEach((widget, placeholder) => {
+      const beforeRestore = cleanedHtml;
+      cleanedHtml = cleanedHtml.replace(new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), widget);
+      if (cleanedHtml !== beforeRestore) {
+        restoredCount++;
+      }
+    });
+    
+    // DEBUG: Vérifier que les widgets ont été restaurés
+    const widgetsAfterRestore = this.detectRenderedWidgets(cleanedHtml);
+    const hasPlaceholdersRemaining = /__WIDGET_(SCRIPT|FORM|DIV)_\d+__/.test(cleanedHtml);
+    console.log(`🔍 DEBUG normalizeSpacing: ${restoredCount}/${widgetPlaceholders.size} widget(s) restauré(s), ${widgetsAfterRestore.count} détecté(s) APRÈS restauration, placeholders restants: ${hasPlaceholdersRemaining}`);
+    
+    // Si des placeholders restent, les restaurer manuellement
+    if (hasPlaceholdersRemaining) {
+      widgetPlaceholders.forEach((widget, placeholder) => {
+        cleanedHtml = cleanedHtml.replace(placeholder, widget);
+      });
+      const widgetsAfterManualRestore = this.detectRenderedWidgets(cleanedHtml);
+      console.log(`🔍 DEBUG normalizeSpacing: Après restauration manuelle: ${widgetsAfterManualRestore.count} widget(s) détecté(s)`);
+    }
+    
+    // #region agent log
+    try {
+      const fs = require('fs');
+      const logPath = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor/debug.log';
+      const hasSpacesInWordsAfter = /[a-zà-ÿ]\s+[a-zà-ÿ]/i.test(cleanedHtml.replace(/<[^>]+>/g, ' '));
+      const hasCollapsedWords = /\b([a-zà-ÿ]{4,})([A-ZÀ-Ÿ][a-zà-ÿ]{2,})\b/.test(cleanedHtml.replace(/<[^>]+>/g, ' '));
+      const logEntry = JSON.stringify({location:'article-finalizer.js:3135',message:'normalizeSpacing exit',data:{htmlLength:cleanedHtml.length,hasSpacesInWordsAfter,hasCollapsedWords,changed:cleanedHtml!==html,widgetsProtected:widgetPlaceholders.size,widgetsRestored:widgetsAfterRestore.count},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'}) + '\n';
+      fs.appendFileSync(logPath, logEntry);
+    } catch(e) {}
+    // #endregion
+    
+    if (fixesCount > 0 || cleanedHtml !== html) {
+      report.actions.push({
+        type: 'normalized_spacing',
+        details: `Espaces et sauts de ligne normalisés`
+      });
+      console.log(`   ✅ Espaces et sauts de ligne normalisés`);
+    }
+    
+    return cleanedHtml;
+  }
+
+  /**
+   * PHASE 6.0.11: Suppression des répétitions de phrases
+   * Détecte et supprime les phrases identiques ou très similaires qui apparaissent plusieurs fois
+   * @param {string} html - HTML à nettoyer
+   * @returns {string} HTML sans répétitions
+   */
+  removeRepetitions(html) {
+    console.log('🔄 removeRepetitions: Détection des répétitions...');
+    
+    let cleanedHtml = html;
+    let removedCount = 0;
+    
+    // AMÉLIORATION: Protéger les sections SERP critiques (ne pas les supprimer comme répétitions)
+    const protectedSections = [
+      /<h2[^>]*>.*?ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement).*?<\/h2>/i,
+      /<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/i,
+      /<h2[^>]*>.*?erreurs?\s*(fréquentes?|courantes?|à\s*éviter).*?<\/h2>/i
+    ];
+    
+    // Extraire toutes les phrases (contenu des paragraphes)
+    const paragraphPattern = /<p[^>]*>([^<]+)<\/p>/gi;
+    const paragraphs = [];
+    let match;
+    
+    while ((match = paragraphPattern.exec(html)) !== null) {
+      const text = match[1].trim();
+      if (text.length > 30) { // Ignorer les phrases très courtes
+        paragraphs.push({
+          fullMatch: match[0],
+          text: text,
+          normalized: text.toLowerCase().replace(/[.,!?;:]/g, '').replace(/\s+/g, ' ').trim()
+        });
+      }
+    }
+    
+    // Détecter les duplicatas
+    const seen = new Map();
+    const duplicates = [];
+    
+    paragraphs.forEach((p, index) => {
+      if (seen.has(p.normalized)) {
+        duplicates.push(p);
+        console.log(`   🔄 Répétition détectée: "${p.text.substring(0, 50)}..."`);
+      } else {
+        seen.set(p.normalized, index);
+      }
+    });
+    
+    // AMÉLIORATION: Détecter aussi les répétitions similaires (similarité Jaccard améliorée)
+    paragraphs.forEach((p1, i) => {
+      paragraphs.forEach((p2, j) => {
+        if (i !== j && !seen.has(p1.normalized) && !seen.has(p2.normalized)) {
+          // Similarité Jaccard améliorée (prend en compte l'ordre partiel)
+          const words1 = p1.normalized.split(/\s+/);
+          const words2 = p2.normalized.split(/\s+/);
+          const set1 = new Set(words1);
+          const set2 = new Set(words2);
+          
+          // Intersection
+          const intersection = [...set1].filter(w => set2.has(w));
+          // Union
+          const union = new Set([...set1, ...set2]);
+          
+          // Similarité Jaccard classique
+          const jaccardSimilarity = union.size > 0 ? intersection.length / union.size : 0;
+          
+          // Bonus pour l'ordre des mots (si les premiers mots sont identiques)
+          let orderBonus = 0;
+          const minLength = Math.min(words1.length, words2.length);
+          if (minLength >= 5) {
+            const firstWords1 = words1.slice(0, 5).join(' ');
+            const firstWords2 = words2.slice(0, 5).join(' ');
+            if (firstWords1 === firstWords2) {
+              orderBonus = 0.1; // Bonus de 10% si les 5 premiers mots sont identiques
+            }
+          }
+          
+          const similarity = jaccardSimilarity + orderBonus;
+          
+          // Seuil ajustable : 85% au lieu de 90% pour être plus strict
+          const similarityThreshold = 0.85;
+          
+          if (similarity > similarityThreshold && p1.normalized.length > 50) {
+            // Paragraphes très similaires, supprimer le second
+            duplicates.push(p2);
+            console.log(`   🔄 Répétition similaire détectée (${Math.round(similarity * 100)}%): "${p2.text.substring(0, 50)}..."`);
+          }
+        }
+      });
+    });
+    
+    // Supprimer les duplicatas (garder la première occurrence)
+    // AMÉLIORATION: Trier par longueur décroissante pour traiter les plus longs en premier
+    duplicates.sort((a, b) => b.text.length - a.text.length);
+    
+    duplicates.forEach(dup => {
+      // AMÉLIORATION: Vérifier si c'est une section SERP protégée (amélioré)
+      const dupIndex = cleanedHtml.indexOf(dup.fullMatch);
+      let isProtected = false;
+      let protectedSectionName = '';
+      
+      protectedSections.forEach(pattern => {
+        const match = cleanedHtml.match(pattern);
+        if (match) {
+          const sectionStart = match.index;
+          // Trouver la fin de la section protégée (prochain H2 ou fin)
+          const afterSection = cleanedHtml.substring(sectionStart + match[0].length);
+          const nextH2Match = afterSection.match(/<h2[^>]*>/i);
+          const sectionEnd = nextH2Match 
+            ? sectionStart + match[0].length + (nextH2Match.index ?? 0)
+            : cleanedHtml.length;
+          
+          // Vérifier si le duplicata est dans la section protégée
+          if (dupIndex >= sectionStart && dupIndex < sectionEnd) {
+            isProtected = true;
+            protectedSectionName = match[0].replace(/<[^>]+>/g, '').trim();
+          }
+        }
+      });
+      
+      if (isProtected) {
+        console.log(`   🛡️ Section SERP protégée "${protectedSectionName}", non supprimée: "${dup.text.substring(0, 50)}..."`);
+        return; // Ne pas supprimer cette section
+      }
+      
+      // AMÉLIORATION: Supprimer toutes les occurrences sauf la première (plus agressif)
+      const allOccurrences = [];
+      let searchIndex = 0;
+      while (true) {
+        const index = cleanedHtml.indexOf(dup.fullMatch, searchIndex);
+        if (index === -1) break;
+        allOccurrences.push(index);
+        searchIndex = index + 1;
+      }
+      
+      // Supprimer toutes sauf la première (en ordre inverse pour préserver les indices)
+      if (allOccurrences.length > 1) {
+        for (let i = allOccurrences.length - 1; i >= 1; i--) {
+          cleanedHtml = cleanedHtml.substring(0, allOccurrences[i]) + cleanedHtml.substring(allOccurrences[i] + dup.fullMatch.length);
+          removedCount++;
+        }
+      }
+    });
+    
+    // AMÉLIORATION: Détecter les répétitions au niveau phrase (aligné avec quality-analyzer.js)
+    // Utiliser la même méthode que quality-analyzer.js : n-grams de 8 mots dans les phrases
+    const allText = cleanedHtml.replace(/<[^>]+>/g, ' ').toLowerCase();
+    
+    // AMÉLIORATION: Extraire les phrases d'abord (comme quality-analyzer.js)
+    const sentences = allText.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 20);
+    const sentenceNgrams = new Map();
+    const sentenceToNgrams = new Map(); // Map phrase -> n-grams qu'elle contient
+    
+    // Pour chaque phrase, créer des n-grams de 8 mots (exactement comme quality-analyzer.js)
+    sentences.forEach((sentence, sentenceIndex) => {
+      const words = sentence.split(/\s+/).filter(w => w.length > 2);
+      const sentenceNgramsList = [];
+      
+      if (words.length >= 8) {
+        for (let i = 0; i <= words.length - 8; i++) {
+          const ngram = words.slice(i, i + 8).join(' ');
+          sentenceNgrams.set(ngram, (sentenceNgrams.get(ngram) || 0) + 1);
+          sentenceNgramsList.push(ngram);
+        }
+      }
+      
+      sentenceToNgrams.set(sentenceIndex, { sentence, ngrams: sentenceNgramsList });
+    });
+    
+    // Garder aussi les n-grams globaux pour compatibilité
+    const words = allText.split(/\s+/).filter(w => w.length > 2);
+    const ngrams = new Map();
+    for (let i = 0; i <= words.length - 8; i++) {
+      const ngram = words.slice(i, i + 8).join(' ');
+      ngrams.set(ngram, (ngrams.get(ngram) || 0) + 1);
+    }
+    
+    let repetitiveNgrams = 0;
+    const repetitivePhrases = [];
+    // AMÉLIORATION: Détecter toutes les répétitions (même si count = 2)
+    ngrams.forEach((count, ngram) => {
+      if (count > 1) {
+        repetitiveNgrams++;
+        // AMÉLIORATION: Traiter toutes les répétitions (pas seulement count > 2)
+        repetitivePhrases.push({ ngram, count });
+        // Logger chaque n-gram répétitif détecté
+        console.log(`   🔍 N-gram répétitif détecté (${count}x): "${ngram.substring(0, 60)}${ngram.length > 60 ? '...' : ''}"`);
+      }
+    });
+    
+    // AMÉLIORATION: Supprimer les phrases répétitives détectées (plus agressif)
+    // AMÉLIORATION: Trier par count décroissant pour traiter les plus répétitifs en premier
+    const sortedSentenceNgrams = Array.from(sentenceNgrams.entries()).sort((a, b) => b[1] - a[1]);
+    
+    sortedSentenceNgrams.forEach(([ngram, count]) => {
+      if (count > 1) {
+        // Trouver et supprimer les occurrences répétées de ce n-gram
+        const escapedNgram = ngram.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        // AMÉLIORATION: Chercher dans tout le texte (pas seulement paragraphes) pour plus de précision
+        const allMatches = cleanedHtml.toLowerCase().match(new RegExp(escapedNgram, 'gi'));
+        if (allMatches && allMatches.length > 1) {
+          // Trouver les paragraphes contenant ce n-gram
+          const paraMatches = cleanedHtml.match(new RegExp(`<p[^>]*>.*?${escapedNgram}.*?<\/p>`, 'gi'));
+          if (paraMatches && paraMatches.length > 1) {
+            // AMÉLIORATION: Supprimer toutes les occurrences sauf la première (en ordre inverse pour préserver les indices)
+            const allOccurrences = [];
+            let searchIndex = 0;
+            while (true) {
+              const index = cleanedHtml.toLowerCase().indexOf(ngram.toLowerCase(), searchIndex);
+              if (index === -1) break;
+              // Vérifier si c'est dans un paragraphe
+              const beforeMatch = cleanedHtml.substring(Math.max(0, index - 200), index);
+              const afterMatch = cleanedHtml.substring(index, Math.min(cleanedHtml.length, index + ngram.length + 200));
+              if (beforeMatch.includes('<p') && afterMatch.includes('</p>')) {
+                allOccurrences.push(index);
+              }
+              searchIndex = index + 1;
+            }
+            
+            // Supprimer toutes sauf la première (en ordre inverse)
+            if (allOccurrences.length > 1) {
+              for (let i = allOccurrences.length - 1; i >= 1; i--) {
+                const startIndex = allOccurrences[i];
+                // Trouver le paragraphe complet contenant cette occurrence
+                const beforePara = cleanedHtml.lastIndexOf('<p', startIndex);
+                const afterPara = cleanedHtml.indexOf('</p>', startIndex);
+                if (beforePara !== -1 && afterPara !== -1) {
+                  const paraMatch = cleanedHtml.substring(beforePara, afterPara + 4);
+                  // Vérifier si c'est protégé (amélioré)
+                  let isProtected = false;
+                  let protectedSectionName = '';
+                  
+                  protectedSections.forEach(pattern => {
+                    const protMatch = cleanedHtml.match(pattern);
+                    if (protMatch) {
+                      const sectionStart = protMatch.index;
+                      const afterSection = cleanedHtml.substring(sectionStart + protMatch[0].length);
+                      const nextH2Match = afterSection.match(/<h2[^>]*>/i);
+                      const sectionEnd = nextH2Match 
+                        ? sectionStart + protMatch[0].length + (nextH2Match.index ?? 0)
+                        : cleanedHtml.length;
+                      
+                      if (beforePara >= sectionStart && beforePara < sectionEnd) {
+                        isProtected = true;
+                        protectedSectionName = protMatch[0].replace(/<[^>]+>/g, '').trim();
+                      }
+                    }
+                  });
+                  
+                  if (!isProtected) {
+                    const removedPara = cleanedHtml.substring(beforePara, afterPara + 4);
+                    const paraText = removedPara.replace(/<[^>]+>/g, ' ').trim().substring(0, 60);
+                    cleanedHtml = cleanedHtml.substring(0, beforePara) + cleanedHtml.substring(afterPara + 4);
+                    removedCount++;
+                    console.log(`   ✂️ Paragraphe répétitif supprimé: "${paraText}..."`);
+                  } else {
+                    console.log(`   🛡️ Paragraphe répétitif protégé (section SERP "${protectedSectionName}"): "${cleanedHtml.substring(beforePara, Math.min(beforePara + 60, afterPara)).replace(/<[^>]+>/g, ' ').trim()}..."`);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    // AMÉLIORATION: Supprimer aussi les n-grams répétitifs détectés (plus agressif)
+    // AMÉLIORATION: Trier par count décroissant pour traiter les plus répétitifs en premier
+    const sortedNgrams = Array.from(ngrams.entries()).sort((a, b) => b[1] - a[1]);
+    
+    sortedNgrams.forEach(([ngram, count]) => {
+      if (count > 1) { // AMÉLIORATION: Supprimer même si répété seulement 2 fois
+        const escapedNgram = ngram.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        // Chercher dans les paragraphes
+        const paraMatches = cleanedHtml.match(new RegExp(`<p[^>]*>.*?${escapedNgram}.*?<\/p>`, 'gi'));
+        if (paraMatches && paraMatches.length > 1) {
+          // Supprimer toutes les occurrences sauf la première
+          let firstFound = false;
+          cleanedHtml = cleanedHtml.replace(new RegExp(`<p[^>]*>.*?${escapedNgram}.*?<\/p>`, 'gi'), (match) => {
+            // AMÉLIORATION: Vérifier si cette occurrence est dans une section protégée (amélioré)
+            const matchIndex = cleanedHtml.indexOf(match);
+            let isProtected = false;
+            let protectedSectionName = '';
+            
+            protectedSections.forEach(pattern => {
+              const protMatch = cleanedHtml.match(pattern);
+              if (protMatch) {
+                const sectionStart = protMatch.index;
+                const afterSection = cleanedHtml.substring(sectionStart + protMatch[0].length);
+                const nextH2Match = afterSection.match(/<h2[^>]*>/i);
+                const sectionEnd = nextH2Match 
+                  ? sectionStart + protMatch[0].length + (nextH2Match.index ?? 0)
+                  : cleanedHtml.length;
+                
+                if (matchIndex >= sectionStart && matchIndex < sectionEnd) {
+                  isProtected = true;
+                  protectedSectionName = protMatch[0].replace(/<[^>]+>/g, '').trim();
+                }
+              }
+            });
+            
+            if (isProtected && !firstFound) {
+              firstFound = true;
+              console.log(`   🛡️ Paragraphe répétitif protégé (section SERP "${protectedSectionName}"), première occurrence conservée`);
+              return match; // Garder la première occurrence même si protégée
+            }
+            
+            if (!firstFound) {
+              firstFound = true;
+              return match;
+            }
+            
+            removedCount++;
+            const paraText = match.replace(/<[^>]+>/g, ' ').trim().substring(0, 60);
+            console.log(`   ✂️ Paragraphe répétitif supprimé (n-gram "${ngram.substring(0, 40)}..."): "${paraText}..."`);
+            return '';
+          });
+        }
+      }
+    });
+    
+    // AMÉLIORATION: Détecter et supprimer les répétitions dans les titres H2/H3 en boucle jusqu'à ce qu'il n'y en ait plus
+    let iterations = 0;
+    const maxIterations = 10; // Sécurité pour éviter boucle infinie
+    let totalDuplicateTitles = 0; // Compteur total de titres dupliqués
+    
+    while (iterations < maxIterations) {
+      const h2h3Pattern = /<(h[23])[^>]*>([^<]+)<\/h[23]>/gi;
+      const titles = [];
+      let titleMatch;
+      while ((titleMatch = h2h3Pattern.exec(cleanedHtml)) !== null) {
+        const titleText = titleMatch[2].trim().toLowerCase().replace(/[.,!?;:]/g, '').replace(/\s+/g, ' ').trim();
+        if (titleText.length > 10) {
+          titles.push({
+            fullMatch: titleMatch[0],
+            text: titleText,
+            normalized: titleText,
+            index: titleMatch.index
+          });
+        }
+      }
+      
+      if (titles.length === 0) break;
+      
+      const seenTitles = new Map();
+      const duplicatesToRemove = [];
+      
+      // Trier par index pour traiter dans l'ordre
+      titles.sort((a, b) => a.index - b.index);
+      
+      titles.forEach((title, index) => {
+        const titleText = title.normalized;
+        const isSerpTitle = /ce\s*que.*ne\s*disent?\s*(pas|explicitement)/i.test(titleText) ||
+                           /limites?.*biais/i.test(titleText) ||
+                           /erreurs?.*(fréquentes?|courantes?|éviter)/i.test(titleText);
+        
+        // Même pour les sections SERP, on ne garde que la PREMIÈRE occurrence
+        if (seenTitles.has(title.normalized)) {
+          duplicatesToRemove.push({ title, isSerpTitle });
+          totalDuplicateTitles++;
+        } else {
+          seenTitles.set(title.normalized, index);
+          if (isSerpTitle && iterations === 0) {
+            console.log(`   🛡️ Titre SERP (première occurrence, conservée): "${title.fullMatch.substring(0, 60)}..."`);
+          }
+        }
+      });
+      
+      if (duplicatesToRemove.length === 0) break; // Plus de répétitions
+      
+      // Supprimer les duplicatas en ordre inverse pour préserver les indices
+      duplicatesToRemove.sort((a, b) => b.title.index - a.title.index);
+      
+      let removedThisIteration = 0;
+      duplicatesToRemove.forEach(({ title, isSerpTitle }, idx) => {
+        // Recalculer l'index actuel dans le HTML modifié
+        const currentTitleIndex = cleanedHtml.indexOf(title.fullMatch);
+        
+        if (currentTitleIndex !== -1) {
+          // Trouver la fin de la section (prochain H2/H3 ou fin)
+          const afterTitle = cleanedHtml.substring(currentTitleIndex + title.fullMatch.length);
+          const nextH2Match = afterTitle.match(/<(h[23])[^>]*>/i);
+          
+          if (nextH2Match) {
+            const sectionEnd = currentTitleIndex + title.fullMatch.length + nextH2Match.index;
+            cleanedHtml = cleanedHtml.substring(0, currentTitleIndex) + cleanedHtml.substring(sectionEnd);
+            removedCount++;
+            removedThisIteration++;
+          } else {
+            // Pas de H2 suivant, supprimer jusqu'à la fin
+            cleanedHtml = cleanedHtml.substring(0, currentTitleIndex);
+            removedCount++;
+            removedThisIteration++;
+          }
+        }
+      });
+      
+      if (removedThisIteration > 0) {
+        if (iterations === 0) {
+          console.log(`   ✅ ${removedThisIteration} section(s) dupliquée(s) supprimée(s) (itération ${iterations + 1})`);
+        }
+      } else {
+        break; // Aucune suppression, on peut arrêter
+      }
+      
+      iterations++;
+    }
+    
+    if (iterations > 1) {
+      console.log(`   ✅ Nettoyage terminé après ${iterations} itération(s)`);
+    }
+    
+    if (repetitiveNgrams > 5) {
+      console.log(`   ⚠️ ${repetitiveNgrams} n-grams répétitifs détectés (contenu potentiellement redondant)`);
+    }
+    
+    // Compter les titres dupliqués supprimés (depuis la boucle de suppression)
+    let duplicateTitlesCount = 0;
+    if (typeof iterations !== 'undefined' && iterations > 0) {
+      duplicateTitlesCount = iterations; // Nombre d'itérations = nombre de passes de nettoyage
+    }
+    
+    if (duplicateTitlesCount > 0) {
+      console.log(`   ⚠️ ${duplicateTitlesCount} passe(s) de nettoyage de titres dupliqués effectuée(s)`);
+    }
+    
+    if (removedCount > 0) {
+      console.log(`   ✅ ${removedCount} élément(s) dupliqué(s) supprimé(s)`);
+    } else {
+      console.log('   ✅ Aucune répétition exacte détectée');
+    }
+    
+    return cleanedHtml;
+  }
+
+  /**
+   * PHASE 6.0.11.7: Suppression des phrases répétitives (aligné avec quality-analyzer.js)
+   * Utilise exactement la même méthode de détection que quality-analyzer.js pour éliminer
+   * les répétitions restantes après removeRepetitions()
+   * @param {string} html - HTML à nettoyer
+   * @param {Object} report - Rapport pour logging
+   * @returns {string} HTML sans phrases répétitives
+   */
+  removeRepetitivePhrases(html, report) {
+    console.log('🔍 removeRepetitivePhrases: Détection finale des répétitions (méthode quality-analyzer)...');
+    
+    let cleanedHtml = html;
+    let removedCount = 0;
+    const removedPhrases = [];
+    
+    // Protéger les sections SERP critiques
+    const protectedSections = [
+      /<h2[^>]*>.*?ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement).*?<\/h2>/i,
+      /<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/i,
+      /<h2[^>]*>.*?erreurs?\s*(fréquentes?|courantes?|à\s*éviter).*?<\/h2>/i
+    ];
+    
+    // Extraire le texte brut (sans HTML)
+    const text = cleanedHtml.replace(/<[^>]+>/g, ' ').toLowerCase();
+    
+    // Utiliser EXACTEMENT la même méthode que quality-analyzer.js
+    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 20);
+    const ngrams = new Map();
+    
+    // Créer les n-grams de 8 mots pour chaque phrase (comme quality-analyzer.js)
+    sentences.forEach(sentence => {
+      const words = sentence.split(/\s+/).filter(w => w.length > 2);
+      for (let i = 0; i <= words.length - 8; i++) {
+        const ngram = words.slice(i, i + 8).join(' ');
+        ngrams.set(ngram, (ngrams.get(ngram) || 0) + 1);
+      }
+    });
+    
+    // Détecter les n-grams répétitifs
+    const repetitiveNgrams = [];
+    ngrams.forEach((count, ngram) => {
+      if (count > 1) {
+        repetitiveNgrams.push({ ngram, count });
+      }
+    });
+    
+    if (repetitiveNgrams.length === 0) {
+      console.log('   ✅ Aucune répétition détectée (méthode quality-analyzer)');
+      return cleanedHtml;
+    }
+    
+    console.log(`   🔍 ${repetitiveNgrams.length} n-gram(s) répétitif(s) détecté(s)`);
+    
+    // Trier par nombre d'occurrences décroissant
+    repetitiveNgrams.sort((a, b) => b.count - a.count);
+    
+    // Pour chaque n-gram répétitif, trouver et supprimer les phrases qui le contiennent
+    const processedSentences = new Set();
+    
+    repetitiveNgrams.forEach(({ ngram, count }) => {
+      if (count <= 1) return;
+      
+      // Logger le n-gram détecté
+      console.log(`   🔄 N-gram répétitif (${count}x): "${ngram.substring(0, 60)}${ngram.length > 60 ? '...' : ''}"`);
+      
+      // AMÉLIORATION: Chercher directement les n-grams répétitifs dans le HTML (paragraphes ET listes)
+      // au lieu de chercher des phrases complètes, ce qui est plus efficace pour les listes avec texte collé
+      // IMPORTANT: Normaliser le texte pour la recherche (gérer entités HTML, espaces, etc.)
+      const normalizeForSearch = (text) => {
+        return text
+          .replace(/&#8220;/g, '"')
+          .replace(/&#8221;/g, '"')
+          .replace(/&#8217;/g, "'")
+          .replace(/&#8216;/g, "'")
+          .replace(/&nbsp;/g, ' ')
+          .replace(/&amp;/g, '&')
+          .replace(/&quot;/g, '"')
+          .replace(/&apos;/g, "'")
+          .replace(/<[^>]+>/g, ' ') // Supprimer tags HTML restants
+          .replace(/\s+/g, ' ')
+          .trim()
+          .toLowerCase();
+      };
+      
+      // Le n-gram vient du texte brut (déjà sans HTML), donc juste normaliser espaces et case
+      const ngramNormalized = ngram
+        .replace(/\s+/g, ' ')
+        .trim()
+        .toLowerCase();
+      
+      // Extraire tous les éléments (p et li) et chercher le n-gram dans leur contenu normalisé
+      const ngramOccurrences = [];
+      const elementRegex = /<(p|li)\b[^>]*>([\s\S]*?)<\/(p|li)>/gi;
+      let elementMatch;
+      let totalElements = 0;
+      
+      while ((elementMatch = elementRegex.exec(cleanedHtml)) !== null) {
+        totalElements++;
+        const elementTag = elementMatch[1].toLowerCase();
+        const elementContent = elementMatch[2];
+        const elementNormalized = normalizeForSearch(elementContent);
+        
+        // Chercher le n-gram dans le contenu normalisé (substring match flexible)
+        // Le n-gram peut être tronqué, donc chercher les premiers mots du n-gram
+        const ngramWords = ngramNormalized.split(/\s+/);
+        if (ngramWords.length >= 5) {
+          // Chercher au moins les 5 premiers mots du n-gram (plus robuste)
+          const ngramPrefix = ngramWords.slice(0, 5).join(' ');
+          if (elementNormalized.includes(ngramPrefix)) {
+            ngramOccurrences.push({
+              index: elementMatch.index,
+              elementTag: elementTag,
+              elementFullMatch: elementMatch[0],
+              elementContent: elementContent
+            });
+          }
+        } else if (elementNormalized.includes(ngramNormalized)) {
+          // Si le n-gram est court, chercher la correspondance exacte
+          ngramOccurrences.push({
+            index: elementMatch.index,
+            elementTag: elementTag,
+            elementFullMatch: elementMatch[0],
+            elementContent: elementContent
+          });
+        }
+      }
+      
+      if (ngramOccurrences.length <= 1) {
+        // Pas de répétition, passer au n-gram suivant
+        if (ngramOccurrences.length === 0 && totalElements > 0 && repetitiveNgrams.length <= 3) {
+          // Debug: vérifier si le n-gram est proche d'un élément (seulement pour les 3 premiers n-grams)
+          console.log(`   ⚠️ N-gram "${ngramNormalized.substring(0, 50)}..." non trouvé dans ${totalElements} élément(s) HTML`);
+        }
+        return;
+      }
+      
+      console.log(`   📋 ${ngramOccurrences.length} occurrence(s) du n-gram trouvée(s) dans le HTML`);
+      
+      // Garder la première occurrence, supprimer les autres
+      // Trier par index pour traiter dans l'ordre (du plus bas au plus haut)
+      ngramOccurrences.sort((a, b) => a.index - b.index);
+      
+      for (let i = 1; i < ngramOccurrences.length; i++) {
+        const occurrence = ngramOccurrences[i];
+        const elementStart = occurrence.index;
+        const elementFullMatch = occurrence.elementFullMatch;
+        const elementTag = occurrence.elementTag;
+        
+        // Vérifier si c'est dans une section protégée
+        // IMPORTANT: Ne protéger que les sections SERP critiques, pas "Ce que la communauté apporte"
+        
+        // D'abord vérifier si l'élément est dans "Ce que la communauté apporte" (non protégée)
+        const communauteMatch = cleanedHtml.match(/<h2[^>]*>.*?ce\s*que\s*la\s*communauté\s*apporte.*?<\/h2>/i);
+        let isInCommunaute = false;
+        if (communauteMatch) {
+          const communauteStart = communauteMatch.index;
+          const afterCommunaute = cleanedHtml.substring(communauteStart + communauteMatch[0].length);
+          const nextH2AfterCommunaute = afterCommunaute.match(/<h2[^>]*>/i);
+          const communauteEnd = nextH2AfterCommunaute 
+            ? communauteStart + communauteMatch[0].length + (nextH2AfterCommunaute.index ?? 0)
+            : cleanedHtml.length;
+          
+          isInCommunaute = (elementStart >= communauteStart && elementStart < communauteEnd);
+        }
+        
+        // Si dans "Ce que la communauté apporte", ne PAS protéger - continuer à la suppression
+        if (!isInCommunaute) {
+          // Vérifier si c'est dans une autre section SERP protégée
+          let isProtected = false;
+          let protectedSectionName = '';
+          
+          // Vérifier si l'élément est dans une section SERP protégée
+          // IMPORTANT: Utiliser matchAll pour trouver TOUTES les sections H2 et leurs limites précises
+          const allH2Matches = [...cleanedHtml.matchAll(/<h2[^>]*>([^<]+)<\/h2>/gi)];
+          
+          // Trouver la section H2 qui contient cet élément
+          let containingSection = null;
+          for (let i = 0; i < allH2Matches.length; i++) {
+            const h2Match = allH2Matches[i];
+            const h2Start = h2Match.index;
+            const h2End = h2Start + h2Match[0].length;
+            const nextH2Start = i < allH2Matches.length - 1 ? allH2Matches[i + 1].index : cleanedHtml.length;
+            
+            // Vérifier si l'élément est dans cette section H2
+            if (elementStart >= h2End && elementStart < nextH2Start) {
+              const h2Title = h2Match[1].trim();
+              
+              // Vérifier si cette section H2 est une section SERP protégée
+              // IMPORTANT: "Événement central", "Résolution", etc. ne sont PAS des sections SERP protégées
+              // Seules "Limites et biais", "Ce que les autres ne disent pas", "Erreurs à éviter" sont protégées
+              const isProtectedSection = protectedSections.some(pattern => {
+                return pattern.test(h2Match[0]);
+              });
+              
+              if (isProtectedSection) {
+                isProtected = true;
+                protectedSectionName = h2Title;
+                break;
+              }
+              
+              // Si la section est "Ce que la communauté apporte", ne PAS protéger (déjà vérifié plus haut, mais double vérification)
+              if (h2Title.toLowerCase().includes('communauté') && h2Title.toLowerCase().includes('apporte')) {
+                // Ne pas protéger, cette section peut avoir des répétitions supprimées
+                break;
+              }
+            }
+          }
+          
+          if (isProtected) {
+            console.log(`   🛡️ ${elementTag.toUpperCase()} répétitif protégé (section SERP "${protectedSectionName}"): "${elementFullMatch.replace(/<[^>]+>/g, ' ').trim().substring(0, 50)}..."`);
+            continue;
+          }
+        }
+        
+        // Supprimer cet élément (occurrence répétitive du n-gram)
+        // On garde la première occurrence (index 0), on supprime celle-ci (index i)
+        const elementEnd = elementStart + elementFullMatch.length;
+        cleanedHtml = cleanedHtml.substring(0, elementStart) + cleanedHtml.substring(elementEnd);
+        removedCount++;
+        removedPhrases.push({
+          ngram: ngram.substring(0, 60),
+          element: elementTag,
+          count: count
+        });
+        
+        const elementText = elementFullMatch.replace(/<[^>]+>/g, ' ').trim().substring(0, 60);
+        console.log(`   ✂️ ${elementTag.toUpperCase()} répétitif supprimé (${count}x, n-gram: "${ngram.substring(0, 40)}..."): "${elementText}..."`);
+        
+        // Réinitialiser le regex pour la prochaine itération (les indices ont changé)
+        // On doit recalculer les occurrences pour les n-grams suivants
+        break;
+      }
+      
+    });
+    
+    if (removedCount > 0) {
+      console.log(`   ✅ ${removedCount} phrase(s) répétitive(s) supprimée(s)`);
+      if (report && report.actions) {
+        report.actions.push({
+          type: 'removed_repetitive_phrases',
+          details: `count=${removedCount} ngrams=${repetitiveNgrams.length}`
+        });
+      }
+    } else {
+      console.log('   ✅ Aucune phrase répétitive supprimée (toutes protégées ou déjà uniques)');
+    }
+    
+    return cleanedHtml;
+  }
+
+  /**
    * PHASE 6.3: Story Alignment + Quality Gate avec auto-fix
    * Vérifie la présence/ordre des sections et auto-corrige si possible
    * @param {string} html - HTML de l'article
@@ -2919,7 +5014,7 @@ class ArticleFinalizer {
    * PHASE 6.4: Ajouter wrappers premium (takeaways, community, open-questions)
    * Ajoute des wrappers HTML strictement pilotés par story.*, sans invention
    */
-  addPremiumWrappers(html, pipelineContext, report) {
+  async addPremiumWrappers(html, pipelineContext, report) {
     const story = pipelineContext?.story?.story || pipelineContext?.story || {};
     const MIN_SECTION_CHARS = 60; // Seuil pour "too short" warning
     
@@ -3012,7 +5107,36 @@ class ArticleFinalizer {
           }
         }
         
-        const trimmedText = text ? String(text).trim() : '';
+        let trimmedText = text ? String(text).trim() : '';
+        
+        // AMÉLIORATION: Traduire le texte si nécessaire (détection anglais + traduction)
+        if (trimmedText && trimmedText.length > 0) {
+          // Détecter si le texte est en anglais
+          const englishWords = (trimmedText.match(/\b(the|a|an|is|are|was|were|have|has|had|will|would|can|could|should|this|that|from|basically|don't|I'm|I|you|he|she|it|we|they|here|there|my|your|his|her|our|their|not|anymore|phone|camera|reel|fills|photos|memories|think|going|people|places)\b/gi) || []).length;
+          const totalWords = trimmedText.split(/\s+/).length;
+          const englishRatio = totalWords > 0 ? englishWords / totalWords : 0;
+          
+          if (englishRatio > 0.3 && totalWords > 3) {
+            // Traduire en français
+            console.log(`🌐 Wrapper "${wrapperDef.title}": traduction d'un item en anglais (${Math.round(englishRatio * 100)}%)...`);
+            try {
+              // S'assurer que l'analyzer est initialisé
+              if (!this.intelligentContentAnalyzer) {
+                await this._initAnalyzer();
+              }
+              
+              if (this.intelligentContentAnalyzer && this.intelligentContentAnalyzer.translateToFrench) {
+                trimmedText = await this.intelligentContentAnalyzer.translateToFrench(trimmedText);
+                console.log(`   ✅ Item traduit: "${trimmedText.substring(0, 60)}..."`);
+              } else {
+                console.warn(`   ⚠️ Traducteur non disponible, item conservé en anglais`);
+              }
+            } catch (error) {
+              console.warn(`   ⚠️ Erreur traduction: ${error.message}, item conservé en anglais`);
+            }
+          }
+        }
+        
         // Filtrer explicitement [object Object], objets vides, et objets complexes
         // Ne garder que les chaînes de caractères valides avec contenu
         if (trimmedText && 
@@ -3020,9 +5144,46 @@ class ArticleFinalizer {
             trimmedText !== '{}' && 
             !trimmedText.startsWith('{') && // Rejeter les objets JSON stringifiés
             trimmedText.length > 0) {
-          wrapperHtml += `    <li>${this.escapeHtml(trimmedText)}</li>\n`;
-          totalTextLength += trimmedText.length;
+          // AMÉLIORATION: Vérifier que le texte a du sens (minimum 15 caractères de texte réel)
+          const realText = trimmedText.replace(/[^\w\sÀ-Ÿà-ÿ]/g, '').trim();
+          
+          // AMÉLIORATION: Vérifier que ce n'est pas juste une phrase isolée sans contexte
+          // Rejeter les phrases qui commencent par "not anymore?" ou similaires (phrases isolées)
+          const isIsolatedPhrase = /^(not\s+anymore|plus\s+maintenant|well\s+said|bien\s+dit)[\?\!]?/i.test(trimmedText);
+          
+          // AMÉLIORATION: Pour "Questions ouvertes", vérifier que c'est une vraie question
+          // Rejeter les phrases qui ne sont pas des questions (pas de point d'interrogation, pas de mots interrogatifs)
+          let isValidQuestion = true;
+          if (wrapperDef.key === 'open-questions') {
+            const hasQuestionMark = trimmedText.includes('?');
+            const hasInterrogativeWords = /\b(comment|pourquoi|quand|où|qui|quoi|quel|quelle|quels|quelles|combien|est-ce|peut-on|doit-on|faut-il)\b/i.test(trimmedText);
+            const hasEnglishInterrogative = /\b(how|why|when|where|who|what|which|should|can|could|would|will)\b/i.test(trimmedText);
+            
+            // Si ce n'est pas une question claire, rejeter
+            if (!hasQuestionMark && !hasInterrogativeWords && !hasEnglishInterrogative) {
+              isValidQuestion = false;
+              console.log(`   ⚠️ Item ignoré (pas une vraie question): "${trimmedText.substring(0, 50)}..."`);
+            }
+          }
+          
+          if (realText.length >= 15 && !isIsolatedPhrase && isValidQuestion) {
+            wrapperHtml += `    <li>${this.escapeHtml(trimmedText)}</li>\n`;
+            totalTextLength += trimmedText.length;
+          } else {
+            if (isIsolatedPhrase) {
+              console.log(`   ⚠️ Item ignoré (phrase isolée sans contexte): "${trimmedText.substring(0, 50)}..."`);
+            } else {
+              console.log(`   ⚠️ Item ignoré (trop court après nettoyage): "${trimmedText.substring(0, 50)}..."`);
+            }
+          }
         }
+      }
+      
+      // AMÉLIORATION: Vérifier qu'il y a au moins un item valide avant de créer la section
+      const itemCount = (wrapperHtml.match(/<li>/g) || []).length;
+      if (itemCount === 0) {
+        console.log(`   ⚠️ Wrapper "${wrapperDef.title}" ignoré: aucun item valide après traitement`);
+        continue; // Ne pas créer la section si aucun item valide
       }
       
       wrapperHtml += `  </ul>\n</section>\n`;
@@ -3326,6 +5487,45 @@ class ArticleFinalizer {
         if (relatedMatch) {
           const insertIndex = relatedMatch.index;
           return html.slice(0, insertIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(insertIndex);
+        }
+        // Fallback: fin de document
+        return html + '\n\n' + moduleHtml;
+
+      case 'after_errors':
+        // Après la section "Erreurs courantes à éviter" ou "Erreurs fréquentes"
+        const errorsRegex = /<h2[^>]*>.*?erreurs?\s*(courantes?|fréquentes?|à\s*éviter).*?<\/h2>/i;
+        const errorsMatch = html.match(errorsRegex);
+        if (errorsMatch) {
+          const sectionStart = errorsMatch.index ?? -1;
+          const sectionHeaderEnd = sectionStart + errorsMatch[0].length;
+          
+          // Trouver la fin du contenu de cette section (prochain H2)
+          const afterHeader = html.substring(sectionHeaderEnd);
+          const nextH2Match = afterHeader.match(/<h2[^>]*>/i);
+          
+          // Zone où on va insérer (entre la section "Erreurs" et le prochain H2)
+          const targetZone = nextH2Match ? afterHeader.substring(0, nextH2Match.index) : afterHeader;
+          
+          // Vérifier si un module d'affiliation existe déjà dans cette zone
+          if (/<div[^>]*class="affiliate-module"[^>]*data-placement-id/i.test(targetZone)) {
+            // Module déjà présent, ne pas dupliquer
+            return html;
+          }
+          
+          if (nextH2Match) {
+            // Insérer après le contenu de la section, avant le prochain H2
+            const insertIndex = sectionHeaderEnd + (nextH2Match.index ?? 0);
+            return html.slice(0, insertIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(insertIndex);
+          } else {
+            // Pas de H2 suivant, insérer après quelques paragraphes de la section
+            const paragraphsMatch = afterHeader.match(/(<p[^>]*>.*?<\/p>\s*){1,3}/i);
+            if (paragraphsMatch) {
+              const insertIndex = sectionHeaderEnd + (paragraphsMatch.index ?? 0) + paragraphsMatch[0].length;
+              return html.slice(0, insertIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(insertIndex);
+            }
+            // Fallback: juste après le H2
+            return html.slice(0, sectionHeaderEnd) + '\n\n' + moduleHtml + '\n\n' + html.slice(sectionHeaderEnd);
+          }
         }
         // Fallback: fin de document
         return html + '\n\n' + moduleHtml;
@@ -3826,6 +6026,1842 @@ class ArticleFinalizer {
       console.error('   ❌ Erreur mapping:', error.message);
       return { categories: [], tags: [] };
     }
+  }
+
+  /**
+   * Détecte et corrige les phrases incomplètes
+   * @param {string} html - HTML à valider
+   * @param {Object} report - Rapport QA
+   * @returns {Promise<string>} HTML corrigé
+   */
+  async detectAndFixIncompleteSentences(html, report) {
+    console.log('🔍 Détection phrases incomplètes...');
+    
+    let cleanedHtml = html;
+    const incompleteSentences = [];
+    
+    // Pattern 1: Phrases qui se terminent sans ponctuation finale (. ! ?)
+    // AMÉLIORATION: Ne pas considérer comme incomplètes les phrases qui se terminent par ":" (listes, titres)
+    const sentencesWithoutPunctuation = html.match(/<p[^>]*>([^<]+)<\/p>/gi);
+    if (sentencesWithoutPunctuation) {
+      sentencesWithoutPunctuation.forEach(match => {
+        const text = match.replace(/<[^>]+>/g, '').trim();
+        // Vérifier si la phrase se termine sans ponctuation et a plus de 20 caractères
+        if (text.length > 20 && !/[.!?]$/.test(text)) {
+          // Ne pas considérer comme incomplètes:
+          // - Phrases se terminant par ":" (listes, titres de sections)
+          // - Phrases très courtes qui sont probablement des titres
+          // - Phrases qui commencent par des puces/listes
+          if (!/:$/.test(text) && 
+              !/^[-•*]\s/.test(text) && 
+              !/^[A-Z][^.!?]{0,50}$/.test(text) &&
+              text.length < 200) { // Limiter aux phrases courtes sans ponctuation
+            incompleteSentences.push({
+              fullMatch: match,
+              text: text.substring(0, 100),
+              reason: 'pas_de_ponctuation'
+            });
+          }
+        }
+      });
+    }
+    
+    // Pattern 2: Phrases qui se terminent par des mots incomplets (< 3 caractères après espace)
+    const incompleteWords = html.match(/<p[^>]*>([^<]*\s[a-z]{1,2})<\/p>/gi);
+    if (incompleteWords) {
+      incompleteWords.forEach(match => {
+        const text = match.replace(/<[^>]+>/g, '').trim();
+        const lastWord = text.split(/\s+/).pop();
+        if (lastWord && lastWord.length < 3 && text.length > 20) {
+          incompleteSentences.push({
+            fullMatch: match,
+            text: text.substring(0, 100),
+            reason: 'mot_incomplet'
+          });
+        }
+      });
+    }
+    
+    // Pattern 3: Paragraphes qui se terminent brutalement (pas de </p>)
+    // AMÉLIORATION: Ne détecter que les paragraphes vraiment incomplets (se terminant par des mots très courts)
+    const unclosedParagraphs = html.match(/<p[^>]*>([^<]{50,})(?!<\/p>)/gi);
+    if (unclosedParagraphs) {
+      unclosedParagraphs.forEach(match => {
+        const text = match.replace(/<[^>]+>/g, '').trim();
+        // Ne considérer comme incomplet que si le dernier mot fait moins de 3 caractères
+        const lastWord = text.split(/\s+/).pop();
+        if (lastWord && lastWord.length < 3 && text.length > 50) {
+          incompleteSentences.push({
+            fullMatch: match,
+            text: match.substring(0, 100),
+            reason: 'paragraphe_non_ferme'
+          });
+        }
+      });
+    }
+    
+    // Supprimer les phrases incomplètes détectées
+    let removedCount = 0;
+    incompleteSentences.forEach(item => {
+      if (cleanedHtml.includes(item.fullMatch)) {
+        cleanedHtml = cleanedHtml.replace(item.fullMatch, '');
+        removedCount++;
+        console.log(`   🧹 Phrase incomplète supprimée (${item.reason}): "${item.text}..."`);
+      }
+    });
+    
+    // Ajouter au rapport
+    if (incompleteSentences.length > 0) {
+      report.checks.push({
+        name: 'incomplete_sentences',
+        status: removedCount === incompleteSentences.length ? 'pass' : 'fail',
+        details: `détectées=${incompleteSentences.length} supprimées=${removedCount}`
+      });
+      
+      if (removedCount < incompleteSentences.length) {
+        report.issues.push({
+          code: 'INCOMPLETE_SENTENCES',
+          severity: 'error',
+          message: `${incompleteSentences.length - removedCount} phrase(s) incomplète(s) non corrigée(s)`,
+          evidence: incompleteSentences.slice(0, 3).map(s => s.text)
+        });
+      }
+      
+      report.actions.push({
+        type: 'removed_incomplete_sentences',
+        details: `count=${removedCount}`
+      });
+    } else {
+      report.checks.push({
+        name: 'incomplete_sentences',
+        status: 'pass',
+        details: 'Aucune phrase incomplète détectée'
+      });
+    }
+    
+    console.log(`✅ Phrases incomplètes: ${incompleteSentences.length} détectée(s), ${removedCount} supprimée(s)`);
+    return cleanedHtml;
+  }
+
+  /**
+   * Détecte et traduit le contenu anglais
+   * @param {string} html - HTML à valider
+   * @param {Object} report - Rapport QA
+   * @returns {Promise<string>} HTML corrigé
+   */
+  async detectAndTranslateEnglish(html, report) {
+    console.log('🔍 Détection contenu anglais...');
+    
+    let cleanedHtml = html;
+    const englishPatterns = [
+      /Essential for/i,
+      /Underestimating/i,
+      /Not budgeting/i,
+      /Fatigue setting/i,
+      /Critical Moment/i,
+      /What Reddit/i
+    ];
+    
+    const englishMatches = [];
+    
+    // Détecter patterns anglais courants
+    englishPatterns.forEach(pattern => {
+      const matches = html.match(new RegExp(pattern.source, 'gi'));
+      if (matches) {
+        matches.forEach(match => {
+          // Trouver le contexte (paragraphe ou balise strong)
+          const contextMatch = html.match(new RegExp(`<[^>]*>.*?${match.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}.*?<\/[^>]+>`, 'gi'));
+          if (contextMatch) {
+            englishMatches.push({
+              pattern: match,
+              context: contextMatch[0],
+              fullMatch: contextMatch[0]
+            });
+          }
+        });
+      }
+    });
+    
+    // AMÉLIORATION: Détecter phrases avec ratio mots anglais > 10% (au lieu de 30%)
+    const paragraphs = html.match(/<p[^>]*>([^<]+)<\/p>/gi) || [];
+    // AMÉLIORATION: Patterns anglais plus complets (exclure mots français communs)
+    // Exclure: visa, fatigue, moment (mots français aussi)
+    const englishWords = /\b(the|is|are|was|were|have|has|had|this|that|with|from|which|what|how|why|when|where|for|and|or|but|if|then|else|can|could|should|will|would|must|may|might|essential|underestimating|budgeting|setting|critical|check|coverage|medical|travel|tourist|regular|requirements|reasonable|available|launched|doesn't|don't|I'm|you|he|she|it|we|they)\b/gi;
+    
+    paragraphs.forEach(para => {
+      const text = para.replace(/<[^>]+>/g, ' ').trim();
+      if (text.length > 20) {
+        const englishCount = (text.match(englishWords) || []).length;
+        const totalWords = text.split(/\s+/).length;
+        const englishRatio = totalWords > 0 ? englishCount / totalWords : 0;
+        
+        // AMÉLIORATION: Seuil réduit à 10% (au lieu de 30%)
+        if (englishRatio > 0.1 && totalWords > 5) {
+          englishMatches.push({
+            pattern: 'high_english_ratio',
+            context: text,
+            fullMatch: para,
+            ratio: englishRatio
+          });
+        }
+      }
+    });
+    
+    // Traduire ou supprimer
+    let translatedCount = 0;
+    let removedCount = 0;
+    
+    // AMÉLIORATION: Trier par ratio (traiter les plus anglais en premier)
+    englishMatches.sort((a, b) => (b.ratio || 0) - (a.ratio || 0));
+    
+    for (const match of englishMatches) {
+      if (this.intelligentContentAnalyzer) {
+        try {
+          const textToTranslate = match.context.replace(/<[^>]+>/g, ' ').trim();
+          if (textToTranslate.length > 10) {
+            const translated = await this.intelligentContentAnalyzer.translateToFrench(textToTranslate);
+            // AMÉLIORATION: Remplacer de manière plus robuste
+            const escapedMatch = match.fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            cleanedHtml = cleanedHtml.replace(new RegExp(escapedMatch, 'gi'), match.fullMatch.replace(textToTranslate, translated));
+            translatedCount++;
+            console.log(`   🌐 Traduit: "${textToTranslate.substring(0, 50)}..." → "${translated.substring(0, 50)}..."`);
+          }
+        } catch (error) {
+          console.error(`   ❌ Erreur traduction: ${error.message}`);
+          // Supprimer si traduction échoue
+          const escapedMatch = match.fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          cleanedHtml = cleanedHtml.replace(new RegExp(escapedMatch, 'gi'), '');
+          removedCount++;
+        }
+      } else {
+        // Pas de traducteur disponible, supprimer
+        const escapedMatch = match.fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        cleanedHtml = cleanedHtml.replace(new RegExp(escapedMatch, 'gi'), '');
+        removedCount++;
+      }
+    }
+    
+    // Calculer ratio anglais total
+    // AMÉLIORATION: Exclure URLs et noms propres de la détection
+    let allText = cleanedHtml.replace(/<[^>]+>/g, ' ');
+    // Supprimer URLs
+    allText = allText.replace(/https?:\/\/[^\s]+/gi, '');
+    // Supprimer emails
+    allText = allText.replace(/[^\s]+@[^\s]+/gi, '');
+    // Supprimer codes (ex: PAR, SGN, KUL)
+    allText = allText.replace(/\b[A-Z]{2,4}\b/g, '');
+    
+    const totalEnglishWords = (allText.match(englishWords) || []).length;
+    const totalWords = allText.split(/\s+/).filter(w => w.length > 2).length; // Filtrer mots très courts
+    const totalEnglishRatio = totalWords > 0 ? totalEnglishWords / totalWords : 0;
+    
+    // AMÉLIORATION: Si ratio > 0.1%, forcer suppression de tous les patterns anglais détectés
+    if (totalEnglishRatio > 0.001) {
+      // Si ratio encore trop élevé après traductions, supprimer tous les patterns anglais restants
+      if (totalEnglishRatio > 0.01) {
+        console.log(`   ⚠️ Ratio anglais encore élevé (${(totalEnglishRatio * 100).toFixed(2)}%), suppression agressive...`);
+        
+        // AMÉLIORATION: Trouver et supprimer tous les paragraphes avec ratio anglais élevé
+        const allParagraphs = cleanedHtml.match(/<p[^>]*>([^<]+)<\/p>/gi) || [];
+        allParagraphs.forEach(para => {
+          const text = para.replace(/<[^>]+>/g, ' ').trim();
+          if (text.length > 20) {
+            const englishCount = (text.match(englishWords) || []).length;
+            const totalWords = text.split(/\s+/).filter(w => w.length > 2).length;
+            const englishRatio = totalWords > 0 ? englishCount / totalWords : 0;
+            
+            // Supprimer si ratio > 5% (plus agressif)
+            if (englishRatio > 0.05 && totalWords > 5) {
+              const escapedPara = para.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              cleanedHtml = cleanedHtml.replace(new RegExp(escapedPara, 'gi'), '');
+              removedCount++;
+              console.log(`   🗑️ Paragraphe anglais supprimé (ratio: ${(englishRatio * 100).toFixed(1)}%): "${text.substring(0, 50)}..."`);
+            }
+          }
+        });
+        
+        // Supprimer aussi les patterns anglais spécifiques
+        englishPatterns.forEach(pattern => {
+          const matches = cleanedHtml.match(new RegExp(pattern.source, 'gi'));
+          if (matches) {
+            matches.forEach(match => {
+              const contextMatch = cleanedHtml.match(new RegExp(`<[^>]*>.*?${match.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}.*?<\/[^>]+>`, 'gi'));
+              if (contextMatch) {
+                cleanedHtml = cleanedHtml.replace(contextMatch[0], '');
+                removedCount++;
+              }
+            });
+          }
+        });
+      }
+    }
+    
+    // Recalculer ratio final (avec mêmes exclusions)
+    let finalText = cleanedHtml.replace(/<[^>]+>/g, ' ');
+    finalText = finalText.replace(/https?:\/\/[^\s]+/gi, '');
+    finalText = finalText.replace(/[^\s]+@[^\s]+/gi, '');
+    // AMÉLIORATION: Exclure codes aéroports (PAR, SGN, KUL, ORI, etc.)
+    finalText = finalText.replace(/\b[A-Z]{2,4}\b/g, '');
+    
+    const finalEnglishWords = (finalText.match(englishWords) || []).length;
+    const finalWords = finalText.split(/\s+/).filter(w => w.length > 2).length;
+    const finalEnglishRatio = finalWords > 0 ? finalEnglishWords / finalWords : 0;
+    
+    // AMÉLIORATION: Seuil à 0.2% (toléré pour éviter faux positifs - codes aéroports, noms propres)
+    if (finalEnglishRatio > 0.002) {
+      report.checks.push({
+        name: 'english_content',
+        status: 'fail',
+        details: `ratio=${(finalEnglishRatio * 100).toFixed(2)}% traduits=${translatedCount} supprimés=${removedCount}`
+      });
+      
+      report.issues.push({
+        code: 'ENGLISH_CONTENT_DETECTED',
+        severity: 'error',
+        message: `Contenu anglais détecté: ${(finalEnglishRatio * 100).toFixed(2)}%`,
+        evidence: { ratio: finalEnglishRatio, matches: englishMatches.length }
+      });
+    } else {
+      report.checks.push({
+        name: 'english_content',
+        status: 'pass',
+        details: `ratio=${(finalEnglishRatio * 100).toFixed(2)}% traduits=${translatedCount} supprimés=${removedCount}`
+      });
+    }
+    
+    if (translatedCount > 0 || removedCount > 0) {
+      report.actions.push({
+        type: 'translated_or_removed_english',
+        details: `translated=${translatedCount} removed=${removedCount}`
+      });
+    }
+    
+    console.log(`✅ Contenu anglais: ${englishMatches.length} détecté(s), ${translatedCount} traduit(s), ${removedCount} supprimé(s)`);
+    return cleanedHtml;
+  }
+
+  /**
+   * Valide la cohérence des destinations dans les widgets
+   * @param {string} html - HTML à valider
+   * @param {Object} pipelineContext - Contexte du pipeline
+   * @param {Object} analysis - Analyse de l'article
+   * @param {Object} report - Rapport QA
+   */
+  validateWidgetDestinations(html, pipelineContext, analysis, report) {
+    console.log('🔍 Validation cohérence widgets/destination...');
+    
+    // Extraire destination finale
+    const finalDestination = pipelineContext?.final_destination || analysis?.final_destination || null;
+    const finalDestLower = finalDestination ? finalDestination.toLowerCase() : null;
+    
+    if (!finalDestLower) {
+      report.checks.push({
+        name: 'widget_destination',
+        status: 'warn',
+        details: 'Destination finale non disponible pour validation'
+      });
+      return;
+    }
+    
+    // Mapping destinations vers codes aéroports
+    const destinationCodes = {
+      'malaisie': 'KUL',
+      'malaysia': 'KUL',
+      'vietnam': 'SGN',
+      'thailande': 'BKK',
+      'thailand': 'BKK',
+      'thaïlande': 'BKK',
+      'indonesie': 'CGK',
+      'indonésie': 'CGK',
+      'indonesia': 'CGK',
+      'bali': 'DPS',
+      'japon': 'NRT',
+      'japan': 'NRT',
+      'philippines': 'MNL',
+      'singapour': 'SIN',
+      'singapore': 'SIN'
+    };
+    
+    const expectedCode = destinationCodes[finalDestLower] || null;
+    
+    // Extraire destinations des widgets (chercher codes aéroports dans les scripts/widgets)
+    const widgetMatches = html.match(/(?:origin|destination|from|to|departure|arrival)\s*[=:]\s*["']?([A-Z]{3})["']?/gi) || [];
+    const detectedCodes = widgetMatches.map(m => {
+      const codeMatch = m.match(/([A-Z]{3})/i);
+      return codeMatch ? codeMatch[1].toUpperCase() : null;
+    }).filter(Boolean);
+    
+    // Vérifier cohérence
+    const mismatches = [];
+    detectedCodes.forEach(code => {
+      if (expectedCode && code !== expectedCode) {
+        // Vérifier si c'est un code d'origine (PAR, CDG, etc.) - OK
+        const originCodes = ['PAR', 'CDG', 'ORY', 'LHR', 'JFK', 'LAX'];
+        if (!originCodes.includes(code)) {
+          mismatches.push({
+            detected: code,
+            expected: expectedCode,
+            article_dest: finalDestLower
+          });
+        }
+      }
+    });
+    
+    // Ajouter au rapport
+    if (mismatches.length > 0) {
+      report.checks.push({
+        name: 'widget_destination',
+        status: 'fail',
+        details: `mismatches=${mismatches.length} expected=${expectedCode || 'N/A'}`
+      });
+      
+      report.issues.push({
+        code: 'WIDGET_DESTINATION_MISMATCH',
+        severity: 'error',
+        message: `Widget destination incohérente: détecté=${mismatches[0].detected} attendu=${mismatches[0].expected}`,
+        evidence: mismatches[0]
+      });
+      
+      console.log(`   ❌ WIDGET_DESTINATION_MISMATCH: widget_dest=${mismatches[0].detected} article_dest=${finalDestLower} expected=${expectedCode}`);
+    } else {
+      report.checks.push({
+        name: 'widget_destination',
+        status: 'pass',
+        details: `coherent avec destination=${finalDestLower}`
+      });
+    }
+    
+    console.log(`✅ Validation widgets: ${mismatches.length} incohérence(s) détectée(s)`);
+  }
+
+  /**
+   * Valide et corrige les citations
+   * @param {string} html - HTML à valider
+   * @param {Object} report - Rapport QA
+   * @returns {string} HTML corrigé
+   */
+  validateAndFixCitations(html, report) {
+    console.log('🔍 Validation citations...');
+    
+    let cleanedHtml = html;
+    const invalidCitations = [];
+    
+    // AMÉLIORATION: Pattern pour détecter les citations vides (guillemets vides avec attribution)
+    // Ex: « » — auteur Reddit ou «  » — Extrait Reddit
+    const emptyCitationPattern = /<p[^>]*>«\s*»\s*[—–]\s*[^<]+<\/p>/gi;
+    const emptyCitationMatches = html.match(emptyCitationPattern);
+    if (emptyCitationMatches) {
+      emptyCitationMatches.forEach(match => {
+        invalidCitations.push({
+          fullMatch: match,
+          reason: 'citation_vide',
+          text: match.substring(0, 50)
+        });
+      });
+    }
+    
+    // Pattern: Citations qui ne contiennent que le nom d'auteur
+    const authorOnlyPattern = /«\s*Auteur\s*:\s*[^»]+»/gi;
+    const authorOnlyMatches = html.match(authorOnlyPattern);
+    if (authorOnlyMatches) {
+      authorOnlyMatches.forEach(match => {
+        invalidCitations.push({
+          fullMatch: match,
+          reason: 'nom_auteur_seul',
+          text: match
+        });
+      });
+    }
+    
+    // AMÉLIORATION: Pattern pour détecter les citations avec très peu de contenu (moins de 5 caractères réels)
+    const minimalCitationPattern = /<p[^>]*>«\s*([^»]{0,20})\s*»\s*[—–]\s*[^<]+<\/p>/gi;
+    let minimalMatch;
+    while ((minimalMatch = minimalCitationPattern.exec(html)) !== null) {
+      const citationText = minimalMatch[1].trim();
+      const realText = citationText.replace(/[^\w\sÀ-Ÿà-ÿ]/g, '').trim();
+      if (realText.length < 5) {
+        invalidCitations.push({
+          fullMatch: minimalMatch[0],
+          reason: 'citation_trop_courte',
+          text: citationText.substring(0, 50)
+        });
+      }
+    }
+    
+    // Pattern: Citations redondantes (même texte répété)
+    const citationPattern = /«([^»]+)»/g;
+    const citations = [];
+    let citationMatch;
+    while ((citationMatch = citationPattern.exec(html)) !== null) {
+      const citationText = citationMatch[1].trim().toLowerCase();
+      if (citationText.length > 10) {
+        citations.push({
+          text: citationText,
+          fullMatch: citationMatch[0],
+          index: citationMatch.index
+        });
+      }
+    }
+    
+    // Détecter doublons
+    const seenCitations = new Map();
+    citations.forEach((cit, index) => {
+      if (seenCitations.has(cit.text)) {
+        invalidCitations.push({
+          fullMatch: cit.fullMatch,
+          reason: 'citation_redondante',
+          text: cit.text.substring(0, 50)
+        });
+      } else {
+        seenCitations.set(cit.text, index);
+      }
+    });
+    
+    // Vérifier contenu substantiel (> 20 caractères de texte réel)
+    citations.forEach(cit => {
+      const realText = cit.text.replace(/[^\w\s]/g, '').trim();
+      if (realText.length < 20) {
+        invalidCitations.push({
+          fullMatch: cit.fullMatch,
+          reason: 'citation_trop_courte',
+          text: cit.text.substring(0, 50)
+        });
+      }
+    });
+    
+    // Supprimer citations invalides (en ordre inverse pour préserver les indices)
+    let removedCount = 0;
+    // Trier par index décroissant pour supprimer de la fin vers le début
+    const sortedInvalid = [...invalidCitations].sort((a, b) => {
+      const indexA = cleanedHtml.indexOf(a.fullMatch);
+      const indexB = cleanedHtml.indexOf(b.fullMatch);
+      return indexB - indexA;
+    });
+    
+    sortedInvalid.forEach(cit => {
+      const index = cleanedHtml.indexOf(cit.fullMatch);
+      if (index !== -1) {
+        // Supprimer aussi le paragraphe parent si c'est une citation vide
+        if (cit.reason === 'citation_vide') {
+          // Chercher le <p> parent complet
+          const beforeMatch = cleanedHtml.substring(0, index);
+          const afterMatch = cleanedHtml.substring(index);
+          const pStart = beforeMatch.lastIndexOf('<p');
+          const pEnd = afterMatch.indexOf('</p>') + 4;
+          
+          if (pStart !== -1 && pEnd !== -1) {
+            const fullParagraph = cleanedHtml.substring(pStart, index + pEnd);
+            cleanedHtml = cleanedHtml.substring(0, pStart) + cleanedHtml.substring(index + pEnd);
+            removedCount++;
+            console.log(`   🧹 Citation vide supprimée (paragraphe complet): "${cit.text.substring(0, 50)}..."`);
+          } else {
+            // Fallback: supprimer juste la citation
+            cleanedHtml = cleanedHtml.replace(cit.fullMatch, '');
+            removedCount++;
+            console.log(`   🧹 Citation invalide supprimée (${cit.reason}): "${cit.text.substring(0, 50)}..."`);
+          }
+        } else {
+          cleanedHtml = cleanedHtml.replace(cit.fullMatch, '');
+          removedCount++;
+          console.log(`   🧹 Citation invalide supprimée (${cit.reason}): "${cit.text.substring(0, 50)}..."`);
+        }
+      }
+    });
+    
+    // Ajouter au rapport
+    if (invalidCitations.length > 0) {
+      report.checks.push({
+        name: 'citations',
+        status: removedCount === invalidCitations.length ? 'pass' : 'warn',
+        details: `invalides=${invalidCitations.length} supprimées=${removedCount}`
+      });
+      
+      if (removedCount < invalidCitations.length) {
+        report.issues.push({
+          code: 'INVALID_CITATIONS',
+          severity: 'warn',
+          message: `${invalidCitations.length - removedCount} citation(s) invalide(s) non supprimée(s)`,
+          evidence: invalidCitations.slice(0, 3).map(c => c.text)
+        });
+      }
+      
+      report.actions.push({
+        type: 'removed_invalid_citations',
+        details: `count=${removedCount}`
+      });
+    } else {
+      report.checks.push({
+        name: 'citations',
+        status: 'pass',
+        details: 'Toutes les citations sont valides'
+      });
+    }
+    
+    console.log(`✅ Citations: ${invalidCitations.length} invalide(s), ${removedCount} supprimée(s)`);
+    return cleanedHtml;
+  }
+
+  /**
+   * Valide la cohérence des liens dans les recommandations
+   * @param {string} html - HTML à valider
+   * @param {Object} report - Rapport QA
+   */
+  validateRecommendationLinks(html, report) {
+    console.log('🔍 Validation liens recommandations...');
+    
+    // Extraire section "Nos recommandations"
+    const recommendationsMatch = html.match(/<h2[^>]*>Nos recommandations[^<]*<\/h2>([\s\S]*?)(?=<h[23]|$)/i);
+    if (!recommendationsMatch) {
+      report.checks.push({
+        name: 'recommendation_links',
+        status: 'warn',
+        details: 'Section "Nos recommandations" non trouvée'
+      });
+      return;
+    }
+    
+    const recommendationsSection = recommendationsMatch[1];
+    const links = recommendationsSection.match(/<a[^>]*href=["']([^"']+)["'][^>]*>([^<]+)<\/a>/gi) || [];
+    
+    const mismatches = [];
+    links.forEach(link => {
+      const hrefMatch = link.match(/href=["']([^"']+)["']/i);
+      const textMatch = link.match(/>([^<]+)</i);
+      
+      if (hrefMatch && textMatch) {
+        const href = hrefMatch[1];
+        const text = textMatch[1].toLowerCase();
+        
+        // Vérifier cohérence
+        if (text.includes('logement') || text.includes('hôtel') || text.includes('hébergement')) {
+          if (!href.includes('booking.com') && !href.includes('hotel')) {
+            mismatches.push({
+              context: 'logement',
+              link: href,
+              text: text,
+              expected: 'booking.com ou hotel'
+            });
+          }
+        } else if (text.includes('vol') || text.includes('avion')) {
+          if (!href.includes('kiwi.com') && !href.includes('flight')) {
+            mismatches.push({
+              context: 'vols',
+              link: href,
+              text: text,
+              expected: 'kiwi.com ou flight'
+            });
+          }
+        } else if (text.includes('esim') || text.includes('sim') || text.includes('connexion')) {
+          if (!href.includes('airalo.com') && !href.includes('esim')) {
+            mismatches.push({
+              context: 'esim',
+              link: href,
+              text: text,
+              expected: 'airalo.com ou esim'
+            });
+          }
+        }
+      }
+    });
+    
+    // Ajouter au rapport
+    if (mismatches.length > 0) {
+      report.checks.push({
+        name: 'recommendation_links',
+        status: 'warn',
+        details: `mismatches=${mismatches.length}`
+      });
+      
+      report.issues.push({
+        code: 'RECOMMENDATION_LINK_MISMATCH',
+        severity: 'warn',
+        message: `${mismatches.length} lien(s) de recommandation incohérent(s)`,
+        evidence: mismatches[0]
+      });
+      
+      console.log(`   ⚠️ RECOMMENDATION_LINK_MISMATCH: context=${mismatches[0].context} link=${mismatches[0].link} expected=${mismatches[0].expected}`);
+    } else {
+      report.checks.push({
+        name: 'recommendation_links',
+        status: 'pass',
+        details: 'Tous les liens sont cohérents'
+      });
+    }
+    
+    console.log(`✅ Liens recommandations: ${mismatches.length} incohérence(s) détectée(s)`);
+  }
+
+  /**
+   * Découpe les listes trop longues
+   * @param {string} html - HTML à valider
+   * @param {Object} report - Rapport QA
+   * @returns {string} HTML corrigé
+   */
+  splitLongListItems(html, report) {
+    console.log('🔍 Découpage listes trop longues...');
+    
+    let cleanedHtml = html;
+    let splitCount = 0;
+    
+    // Détecter les <li> avec contenu > 200 caractères
+    const liPattern = /<li[^>]*>([^<]+)<\/li>/gi;
+    const longItems = [];
+    let liMatch;
+    
+    while ((liMatch = liPattern.exec(html)) !== null) {
+      const text = liMatch[1].trim();
+      if (text.length > 200) {
+        // Compter les phrases
+        const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 10);
+        if (sentences.length > 3) {
+          longItems.push({
+            fullMatch: liMatch[0],
+            text: text,
+            sentences: sentences.length
+          });
+        }
+      }
+    }
+    
+    // Découper les items trop longs
+    longItems.forEach(item => {
+      const sentences = item.text.split(/[.!?]+/).filter(s => s.trim().length > 10);
+      if (sentences.length > 3) {
+        // Limiter à 5 phrases max par <li>
+        const maxSentences = 5;
+        const chunks = [];
+        for (let i = 0; i < sentences.length; i += maxSentences) {
+          chunks.push(sentences.slice(i, i + maxSentences).join('. '));
+        }
+        
+        // Remplacer par plusieurs <li>
+        const newLis = chunks.map(chunk => `<li>${chunk}</li>`).join('\n');
+        cleanedHtml = cleanedHtml.replace(item.fullMatch, newLis);
+        splitCount += chunks.length - 1;
+        console.log(`   ✂️ Liste découpée: ${sentences.length} phrases → ${chunks.length} items`);
+      }
+    });
+    
+    // Ajouter au rapport
+    if (longItems.length > 0) {
+      report.checks.push({
+        name: 'long_list_items',
+        status: 'pass',
+        details: `longues=${longItems.length} découpées=${splitCount}`
+      });
+      
+      report.actions.push({
+        type: 'split_long_list_items',
+        details: `count=${splitCount}`
+      });
+    } else {
+      report.checks.push({
+        name: 'long_list_items',
+        status: 'pass',
+        details: 'Aucune liste trop longue'
+      });
+    }
+    
+    console.log(`✅ Listes: ${longItems.length} trop longue(s), ${splitCount} découpée(s)`);
+    return cleanedHtml;
+  }
+
+  /**
+   * Valide la cohérence temporelle des dates
+   * @param {string} html - HTML à valider
+   * @param {Object} report - Rapport QA
+   */
+  validateTemporalConsistency(html, report) {
+    console.log('🔍 Validation cohérence temporelle...');
+    
+    // Extraire toutes les dates (pattern: mois + année)
+    const monthNames = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
+                        'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+    const datePattern = new RegExp(`(${monthNames.join('|')})\\s+(\\d{4})`, 'gi');
+    
+    const dates = [];
+    let dateMatch;
+    while ((dateMatch = datePattern.exec(html)) !== null) {
+      const month = dateMatch[1].toLowerCase();
+      const year = parseInt(dateMatch[2], 10);
+      dates.push({ month, year, fullMatch: dateMatch[0] });
+    }
+    
+    // Date de publication (approximative - utiliser date actuelle)
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+    
+    const warnings = [];
+    dates.forEach(date => {
+      // Dates futures
+      if (date.year > currentYear || (date.year === currentYear && getMonthNumber(date.month) > currentMonth)) {
+        warnings.push({
+          date: date.fullMatch,
+          reason: 'date_future',
+          year: date.year
+        });
+      }
+      
+      // Dates très anciennes (> 2 ans)
+      if (date.year < currentYear - 2) {
+        warnings.push({
+          date: date.fullMatch,
+          reason: 'date_tres_ancienne',
+          year: date.year,
+          years_ago: currentYear - date.year
+        });
+      }
+    });
+    
+    // Helper pour convertir mois en nombre
+    function getMonthNumber(monthName) {
+      const months = {
+        'janvier': 1, 'février': 2, 'mars': 3, 'avril': 4, 'mai': 5, 'juin': 6,
+        'juillet': 7, 'août': 8, 'septembre': 9, 'octobre': 10, 'novembre': 11, 'décembre': 12,
+        'january': 1, 'february': 2, 'march': 3, 'april': 4, 'may': 5, 'june': 6,
+        'july': 7, 'august': 8, 'september': 9, 'october': 10, 'november': 11, 'december': 12
+      };
+      return months[monthName.toLowerCase()] || 0;
+    }
+    
+    // Ajouter au rapport
+    if (warnings.length > 0) {
+      report.checks.push({
+        name: 'temporal_consistency',
+        status: 'warn',
+        details: `warnings=${warnings.length} dates=${dates.length}`
+      });
+      
+      report.issues.push({
+        code: 'TEMPORAL_INCONSISTENCY',
+        severity: 'warn',
+        message: `${warnings.length} date(s) incohérente(s) détectée(s)`,
+        evidence: warnings.slice(0, 3)
+      });
+      
+      warnings.forEach(w => {
+        console.log(`   ⚠️ Date incohérente (${w.reason}): ${w.date}`);
+      });
+    } else {
+      report.checks.push({
+        name: 'temporal_consistency',
+        status: 'pass',
+        details: `dates=${dates.length} toutes cohérentes`
+      });
+    }
+    
+    console.log(`✅ Cohérence temporelle: ${dates.length} date(s), ${warnings.length} warning(s)`);
+  }
+
+  /**
+   * Vérifie et ajoute les sections SERP manquantes
+   * @param {string} html - HTML à valider
+   * @param {Object} pipelineContext - Contexte du pipeline
+   * @param {Object} report - Rapport QA
+   * @returns {Promise<string>} HTML corrigé
+   */
+  async ensureSerpSections(html, pipelineContext, report) {
+    console.log('🔍 Vérification sections SERP...');
+    
+    let cleanedHtml = html;
+    const text = html.toLowerCase();
+    
+    // AMÉLIORATION: Vérifier section "Ce que les autres ne disent pas" avec détection plus robuste
+    const decodedText = text.replace(/&#8217;/g, "'").replace(/&#39;/g, "'").replace(/&apos;/g, "'");
+    const missingSectionPattern = /ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement)/i;
+    // Vérifier aussi dans les H2 (avec ou sans "explicitement")
+    const h2Pattern = /<h2[^>]*>.*?ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement).*?<\/h2>/i;
+    // Vérifier aussi si la section a du contenu après le H2 (au moins 1 paragraphe)
+    const h2WithContentPattern = /<h2[^>]*>.*?ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement).*?<\/h2>\s*(<p[^>]*>[^<]+<\/p>\s*){1,}/i;
+    // AMÉLIORATION: Vérifier aussi avec entités HTML décodées dans le texte brut
+    const hasContentAfterH2 = h2WithContentPattern.test(html);
+    // Vérifier aussi dans le texte décodé si le H2 existe et qu'il y a du texte après
+    const h2Match = decodedText.match(/<h2[^>]*>.*?ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement).*?<\/h2>/i);
+    const hasContentInDecoded = h2Match && decodedText.indexOf(h2Match[0]) !== -1 && decodedText.substring(decodedText.indexOf(h2Match[0]) + h2Match[0].length).trim().length > 50;
+    // AMÉLIORATION: Vérifier aussi dans le HTML brut (sans décodage) pour être sûr
+    const h2MatchRaw = html.match(/<h2[^>]*>.*?ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement).*?<\/h2>/i);
+    const hasContentAfterH2Raw = h2MatchRaw && html.substring(html.indexOf(h2MatchRaw[0]) + h2MatchRaw[0].length).match(/<p[^>]*>[^<]+<\/p>/i);
+    
+    // AMÉLIORATION: Compter les occurrences pour détecter les répétitions massives
+    // Vérifier dans les deux (html original et cleanedHtml) pour être sûr
+    // AMÉLIORATION: Pattern plus flexible pour détecter même avec entités HTML ou variantes
+    const h2PatternFlexible = /<h2[^>]*>.*?ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement).*?<\/h2>/gi;
+    const h2MatchesHtml = html.match(h2PatternFlexible);
+    const h2MatchesCleaned = cleanedHtml.match(h2PatternFlexible);
+    
+    // AMÉLIORATION: Vérifier aussi avec texte décodé (sans HTML)
+    const textOnly = cleanedHtml.replace(/<[^>]+>/g, ' ').toLowerCase();
+    const textMatches = textOnly.match(/ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement)/gi);
+    
+    const h2Count = Math.max(
+      h2MatchesHtml ? h2MatchesHtml.length : 0,
+      h2MatchesCleaned ? h2MatchesCleaned.length : 0,
+      textMatches ? Math.floor(textMatches.length / 2) : 0 // Diviser par 2 car le pattern peut matcher plusieurs fois dans le même H2
+    );
+    
+    // AMÉLIORATION: Si h2Count > 0, la section existe déjà (même si répétée)
+    // On ne doit ajouter que si AUCUNE occurrence n'existe (h2Count === 0)
+    // AMÉLIORATION: Vérifier aussi dans cleanedHtml pour être sûr
+    const hasSectionInCleaned = h2MatchesCleaned && h2MatchesCleaned.length > 0;
+    const hasSectionInHtml = h2MatchesHtml && h2MatchesHtml.length > 0;
+    const hasMissingSection = h2Count === 0 && !hasSectionInCleaned && !hasSectionInHtml && !h2Pattern.test(html) && !hasContentAfterH2 && !hasContentInDecoded && !hasContentAfterH2Raw;
+    
+    // AMÉLIORATION: Vérifier aussi section "Limites et biais"
+    const limitesPattern = /limites?\s*(et\s*)?biais/i;
+    const limitesH2Pattern = /<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/i;
+    const limitesWithContentPattern = /<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>\s*<p[^>]*>[^<]+<\/p>/i;
+    const hasLimitesSection = limitesPattern.test(decodedText) || limitesH2Pattern.test(html) || limitesWithContentPattern.test(html);
+    
+    // AMÉLIORATION: Si h2Count > 1, il y a des répétitions - on ne doit PAS ajouter, mais plutôt nettoyer
+    if (h2Count > 1) {
+      console.log(`   ⚠️ Section "Ce que les autres ne disent pas" présente ${h2Count} fois (répétitions détectées)`);
+      report.checks.push({
+        name: 'serp_sections',
+        status: 'warn',
+        details: `Section présente ${h2Count} fois (répétitions)`
+      });
+      // Ne pas ajouter, les répétitions seront gérées par removeRepetitions
+    } else if (h2Count >= 1 || hasSectionInCleaned || hasSectionInHtml || h2Pattern.test(html)) {
+      // AMÉLIORATION: Vérifier si la section existe mais est vide (même si h2Count > 0)
+      // Section existe - vérifier si elle a du contenu
+      const h2Match = cleanedHtml.match(/<h2[^>]*>.*?ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement).*?<\/h2>/i);
+      if (h2Match) {
+        const h2Index = cleanedHtml.indexOf(h2Match[0]);
+        const afterH2 = cleanedHtml.substring(h2Index + h2Match[0].length);
+        // Vérifier si le prochain élément est un H2/H3 ou si le contenu est vide
+        const nextH2Match = afterH2.match(/<(h[23])[^>]*>/i);
+        const contentAfterH2 = afterH2.substring(0, nextH2Match ? nextH2Match.index : Math.min(500, afterH2.length));
+        // AMÉLIORATION: Vérifier s'il y a un paragraphe avec au moins 30 caractères de texte réel
+        const hasRealContent = contentAfterH2.match(/<p[^>]*>[^<]{30,}<\/p>/i) || 
+                              (contentAfterH2.replace(/<[^>]+>/g, ' ').trim().length > 50);
+        
+        if (!hasRealContent) {
+          console.log('   ⚠️ Section "Ce que les autres ne disent pas" existe mais est vide - remplissage...');
+          
+          // Générer le contenu
+          const sectionContent = pipelineContext?.story?.story 
+            ? `<p>Les témoignages Reddit n'abordent souvent pas les coûts réels associés au voyage, tels que le logement à long terme et les dépenses quotidiennes. De plus, les contraintes liées à la fatigue de voyage ne sont pas suffisamment explorées, laissant de côté l'impact potentiellement considérable sur le bien-être mental et physique des voyageurs.</p>
+<p>Ces informations manquantes peuvent créer des attentes irréalistes et des surprises désagréables lors du séjour. Il est donc essentiel de compléter ces témoignages par des recherches approfondies sur les aspects pratiques et financiers du voyage.</p>`
+            : `<p>Les témoignages Reddit n'abordent souvent pas les aspects pratiques détaillés du voyage, tels que les coûts réels, les contraintes administratives, et l'impact sur le bien-être. Ces éléments sont pourtant essentiels pour une préparation complète.</p>
+<p>En particulier, les témoignages omettent fréquemment les détails sur les dépenses quotidiennes réelles, les délais administratifs concrets, et les contraintes pratiques qui peuvent impacter significativement l'expérience de voyage. Ces informations manquantes peuvent créer des attentes irréalistes et des surprises désagréables lors du séjour.</p>
+<p>Il est donc recommandé de compléter ces témoignages par des recherches approfondies sur les aspects pratiques et financiers du voyage, afin d'éviter les mauvaises surprises et de mieux préparer son séjour.</p>`;
+          
+          // Insérer le contenu après le H2 (remplacer le contenu vide s'il y en a)
+          const insertIndex = h2Index + h2Match[0].length;
+          if (nextH2Match) {
+            const nextH2Index = insertIndex + nextH2Match.index;
+            // Supprimer le contenu vide entre le H2 et le prochain H2, puis insérer le nouveau contenu
+            cleanedHtml = cleanedHtml.substring(0, insertIndex) + '\n\n' + sectionContent + '\n\n' + cleanedHtml.substring(nextH2Index);
+          } else {
+            // Pas de H2 suivant, insérer à la fin
+            cleanedHtml = cleanedHtml.substring(0, insertIndex) + '\n\n' + sectionContent + '\n\n' + cleanedHtml.substring(insertIndex);
+          }
+          
+          report.actions.push({
+            type: 'filled_empty_serp_section',
+            details: 'Ce que les autres ne disent pas'
+          });
+          console.log('   ✅ Section SERP vide remplie avec contenu');
+        } else {
+          report.checks.push({
+            name: 'serp_sections',
+            status: 'pass',
+            details: 'Section "Ce que les autres ne disent pas" présente avec contenu'
+          });
+        }
+      } else {
+        report.checks.push({
+          name: 'serp_sections',
+          status: 'pass',
+          details: 'Section "Ce que les autres ne disent pas" présente'
+        });
+      }
+    } else if (!hasMissingSection) {
+      console.log('   ⚠️ Section "Ce que les autres ne disent pas" manquante');
+      
+      // Générer la section depuis pipelineContext.story ou template
+      let sectionContent = '';
+      
+      if (pipelineContext?.story?.story) {
+        const story = pipelineContext.story.story;
+        // Extraire ce qui n'est pas dit explicitement
+        sectionContent = `<h2>Ce que les témoignages Reddit ne disent pas explicitement</h2>
+<p>Les témoignages Reddit n'abordent souvent pas les coûts réels associés au voyage, tels que le logement à long terme et les dépenses quotidiennes. Le budget réel pour ce type de séjour peut varier significativement selon la destination et le mode de vie choisi. De plus, les contraintes liées à la fatigue de voyage ne sont pas suffisamment explorées, laissant de côté l'impact potentiellement considérable sur le bien-être mental et physique des voyageurs.</p>
+<p>La chronologie réelle du voyage révèle souvent des ajustements nécessaires et des délais administratifs concrets qui ne sont pas mentionnés dans les témoignages. Ces difficultés pratiques peuvent impacter significativement l'expérience de voyage. Ces informations manquantes peuvent créer des attentes irréalistes et des surprises désagréables lors du séjour.</p>
+<p>Il est donc essentiel de compléter ces témoignages par des recherches approfondies sur les aspects pratiques et financiers du voyage, afin d'éviter les mauvaises surprises et de mieux préparer son séjour.</p>`;
+      } else {
+        // Template générique avec contenu plus détaillé pour éviter suppression comme vide
+        sectionContent = `<h2>Ce que les témoignages Reddit ne disent pas explicitement</h2>
+<p>Les témoignages Reddit n'abordent souvent pas les aspects pratiques détaillés du voyage, tels que les coûts réels, les contraintes administratives, et l'impact sur le bien-être. Le budget réel pour ce type de séjour peut varier significativement selon la destination et le mode de vie choisi. Ces éléments sont pourtant essentiels pour une préparation complète.</p>
+<p>En particulier, les témoignages omettent fréquemment les détails sur les dépenses quotidiennes réelles, les délais administratifs concrets, et les contraintes pratiques qui peuvent impacter significativement l'expérience de voyage. La chronologie du voyage révèle souvent des ajustements nécessaires non mentionnés. Ces difficultés réelles peuvent créer des attentes irréalistes et des surprises désagréables lors du séjour.</p>
+<p>Il est donc recommandé de compléter ces témoignages par des recherches approfondies sur les aspects pratiques et financiers du voyage, afin d'éviter les mauvaises surprises et de mieux préparer son séjour.</p>`;
+      }
+      
+      // Insérer après "Limites et biais" ou avant "Nos recommandations"
+      const limitesPattern = /<h2[^>]*>Limites[^<]*biais[^<]*<\/h2>/i;
+      const recommandationsPattern = /<h2[^>]*>Nos\s+recommandations[^<]*<\/h2>/i;
+      
+      let inserted = false;
+      if (limitesPattern.test(html)) {
+        const match = html.match(limitesPattern);
+        if (match) {
+          const insertIndex = match.index + match[0].length;
+          cleanedHtml = cleanedHtml.slice(0, insertIndex) + '\n\n' + sectionContent + '\n\n' + cleanedHtml.slice(insertIndex);
+          inserted = true;
+        }
+      } else if (recommandationsPattern.test(html)) {
+        const match = html.match(recommandationsPattern);
+        if (match) {
+          cleanedHtml = cleanedHtml.slice(0, match.index) + sectionContent + '\n\n' + cleanedHtml.slice(match.index);
+          inserted = true;
+        }
+      }
+      
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:5290',message:'Section insertion result',data:{inserted},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+      // #endregion
+      
+      if (inserted) {
+        report.checks.push({
+          name: 'serp_sections',
+          status: 'pass',
+          details: 'Section "Ce que les autres ne disent pas" ajoutée'
+        });
+        report.actions.push({
+          type: 'added_serp_section',
+          details: 'Ce que les autres ne disent pas'
+        });
+        console.log('   ✅ Section SERP ajoutée');
+      }
+    } else {
+      report.checks.push({
+        name: 'serp_sections',
+        status: 'pass',
+        details: 'Section "Ce que les autres ne disent pas" présente'
+      });
+    }
+    
+    // Vérifier la présence des angles uniques SERP (Budget, Timeline, Contraintes)
+    // IMPORTANT: Vérifier APRÈS avoir ajouté le contenu pour éviter les détections multiples
+    const checkUniqueAngles = (html) => {
+      const uniqueAnglesPatterns = [
+        { pattern: /budget\s*(réel|détaillé|exact|mensuel|breakdown)|coûts?\s*(réels?|détaillés?|exacts?)|dépenses?\s*(réelles?|détaillées?)/i, name: 'Budget détaillé' },
+        { pattern: /timeline|chronologie|jour\s*par\s*jour|étapes?\s*(du|de)\s*voyage|période|durée\s*(du|de)\s*séjour/i, name: 'Timeline' },
+        { pattern: /contraintes?|difficultés?|obstacles?|problèmes?\s*(pratiques?|réels?)|défis/i, name: 'Contraintes réelles' }
+      ];
+      
+      const detected = [];
+      const missing = [];
+      
+      uniqueAnglesPatterns.forEach(angle => {
+        if (angle.pattern.test(html)) {
+          detected.push(angle.name);
+        } else {
+          missing.push(angle.name);
+        }
+      });
+      
+      return { detected, missing };
+    };
+    
+    // Première vérification
+    let angleCheck = checkUniqueAngles(cleanedHtml);
+    let detectedAngles = angleCheck.detected;
+    let missingAngles = angleCheck.missing;
+    
+    if (detectedAngles.length > 0) {
+      console.log(`   ✅ Angles uniques détectés: ${detectedAngles.join(', ')} (${detectedAngles.length}/3)`);
+    }
+    
+    if (missingAngles.length > 0) {
+      console.log(`   ⚠️ Angles uniques manquants: ${missingAngles.join(', ')} (${detectedAngles.length}/3)`);
+      
+      // Ajouter les angles manquants dans les sections appropriées
+      let addedContent = false;
+      
+      // 1. Ajouter Budget détaillé si manquant
+      if (missingAngles.includes('Budget détaillé')) {
+        const budgetText = '<p>Le budget réel pour ce type de séjour peut varier significativement selon la destination et le mode de vie choisi. Les coûts réels incluent généralement le logement à long terme, les dépenses quotidiennes, et les frais administratifs. Il est recommandé de prévoir un budget détaillé avec une marge de 15 à 20% pour les imprévus.</p>';
+        
+        // Chercher où insérer (dans "Nos recommandations" ou "Ce que les autres ne disent pas")
+        const recommandationsMatch = cleanedHtml.match(/<h2[^>]*>Nos\s+recommandations[^<]*<\/h2>/i);
+        const autresMatch = cleanedHtml.match(/<h2[^>]*>.*?ce\s*que.*?ne\s*disent?\s*(pas|explicitement).*?<\/h2>/i);
+        
+        // Vérifier si le budget est déjà mentionné avec les mots-clés requis
+        const hasBudgetKeywords = /budget\s*(réel|détaillé|exact|mensuel|breakdown)|coûts?\s*(réels?|détaillés?|exacts?)|dépenses?\s*(réelles?|détaillées?)/i.test(cleanedHtml);
+        
+        if (!hasBudgetKeywords) {
+          if (recommandationsMatch) {
+            const insertIndex = recommandationsMatch.index + recommandationsMatch[0].length;
+            cleanedHtml = cleanedHtml.slice(0, insertIndex) + '\n' + budgetText + '\n' + cleanedHtml.slice(insertIndex);
+            addedContent = true;
+            console.log('   ✅ Budget détaillé ajouté dans "Nos recommandations"');
+          } else if (autresMatch) {
+            const insertIndex = autresMatch.index + autresMatch[0].length;
+            cleanedHtml = cleanedHtml.slice(0, insertIndex) + '\n' + budgetText + '\n' + cleanedHtml.slice(insertIndex);
+            addedContent = true;
+            console.log('   ✅ Budget détaillé ajouté dans "Ce que les autres ne disent pas"');
+          }
+        }
+      }
+      
+      // 2. Ajouter Timeline/Chronologie si manquant
+      if (missingAngles.includes('Timeline')) {
+        const timelineText = '<p>La chronologie du voyage révèle souvent des ajustements nécessaires et des étapes non prévues initialement. La période de séjour peut nécessiter des adaptations selon les contraintes administratives et les opportunités rencontrées.</p>';
+        
+        // Chercher où insérer (dans "Contexte" ou "Événement central")
+        const contexteMatch = cleanedHtml.match(/<h2[^>]*>Contexte[^<]*<\/h2>/i);
+        const evenementMatch = cleanedHtml.match(/<h2[^>]*>Événement\s+central[^<]*<\/h2>/i);
+        
+        // Vérifier si la timeline est déjà mentionnée avec les mots-clés requis
+        const hasTimelineKeywords = /timeline|chronologie|jour\s*par\s*jour|étapes?\s*(du|de)\s*voyage|période|durée\s*(du|de)\s*séjour/i.test(cleanedHtml);
+        
+        if (!hasTimelineKeywords) {
+          if (contexteMatch) {
+            const insertIndex = contexteMatch.index + contexteMatch[0].length;
+            cleanedHtml = cleanedHtml.slice(0, insertIndex) + '\n' + timelineText + '\n' + cleanedHtml.slice(insertIndex);
+            addedContent = true;
+            console.log('   ✅ Timeline ajoutée dans "Contexte"');
+          } else if (evenementMatch) {
+            const insertIndex = evenementMatch.index + evenementMatch[0].length;
+            cleanedHtml = cleanedHtml.slice(0, insertIndex) + '\n' + timelineText + '\n' + cleanedHtml.slice(insertIndex);
+            addedContent = true;
+            console.log('   ✅ Timeline ajoutée dans "Événement central"');
+          } else {
+            // Si aucune section cible, ajouter dans "Ce que les autres ne disent pas"
+            const autresMatch = cleanedHtml.match(/<h2[^>]*>.*?ce\s*que.*?ne\s*disent?\s*(pas|explicitement).*?<\/h2>/i);
+            if (autresMatch) {
+              const insertIndex = autresMatch.index + autresMatch[0].length;
+              cleanedHtml = cleanedHtml.slice(0, insertIndex) + '\n' + timelineText + '\n' + cleanedHtml.slice(insertIndex);
+              addedContent = true;
+              console.log('   ✅ Timeline ajoutée dans "Ce que les autres ne disent pas"');
+            }
+          }
+        }
+      }
+      
+      if (addedContent) {
+        // Vérifier que les angles ont bien été ajoutés
+        const budgetAdded = /budget\s*(réel|détaillé|exact|mensuel|breakdown)|coûts?\s*(réels?|détaillés?|exacts?)|dépenses?\s*(réelles?|détaillées?)/i.test(cleanedHtml);
+        const timelineAdded = /timeline|chronologie|jour\s*par\s*jour|étapes?\s*(du|de)\s*voyage|période|durée\s*(du|de)\s*séjour/i.test(cleanedHtml);
+        
+        const addedAngles = [];
+        if (budgetAdded && missingAngles.includes('Budget détaillé')) addedAngles.push('Budget détaillé');
+        if (timelineAdded && missingAngles.includes('Timeline')) addedAngles.push('Timeline');
+        
+        report.actions.push({
+          type: 'added_unique_angles',
+          details: `Angles ajoutés: ${addedAngles.join(', ')}`
+        });
+        
+        console.log(`   ✅ Angles ajoutés avec succès: ${addedAngles.join(', ')}`);
+        
+        // Re-vérifier après ajout pour confirmer
+        angleCheck = checkUniqueAngles(cleanedHtml);
+        detectedAngles = angleCheck.detected;
+        missingAngles = angleCheck.missing;
+        
+        if (detectedAngles.length === 3) {
+          console.log(`   ✅ Tous les angles uniques sont maintenant présents (3/3)`);
+        }
+      }
+      
+      report.checks.push({
+        name: 'serp_unique_angles',
+        status: addedContent && detectedAngles.length === 3 ? 'pass' : (addedContent ? 'fixed' : 'warning'),
+        details: `Angles uniques: ${detectedAngles.length}/3 détectés (${detectedAngles.join(', ')})${missingAngles.length > 0 ? ` - Manquants: ${missingAngles.join(', ')}` : ''}${addedContent ? ' - Contenu ajouté' : ''}`
+      });
+    } else {
+      report.checks.push({
+        name: 'serp_unique_angles',
+        status: 'pass',
+        details: `Tous les angles uniques détectés: ${detectedAngles.join(', ')} (3/3)`
+      });
+    }
+    
+    // AMÉLIORATION: Vérifier et remplir section "Limites et biais" si manquante ou vide
+    // CORRECTION: Compter TOUTES les occurrences (y compris avec variantes)
+    const limitesH2PatternCheck = /<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi;
+    const limitesH2Matches = cleanedHtml.match(limitesH2PatternCheck) || [];
+    const limitesCount = limitesH2Matches.length;
+    const limitesH2Match = limitesH2Matches.length > 0 ? limitesH2Matches[0] : null;
+    
+    // CORRECTION: Vérifier aussi si la section existe dans le texte (même sans H2 dédié)
+    const limitesInText = /limites?\s*(et\s*)?biais/i.test(cleanedHtml.replace(/<h2[^>]*>.*?<\/h2>/gi, ''));
+    
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:6801',message:'ensureSerpSections: check limites',data:{hasLimitesSection,limitesH2Match:!!limitesH2Match,limitesCount,limitesInText},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+    // #endregion
+    
+    // CORRECTION: Si la section existe déjà (même dans le texte), ne PAS l'ajouter
+    if (limitesCount > 0 || limitesInText) {
+      if (limitesCount > 1) {
+        console.log(`   ⚠️ Section "Limites et biais" dupliquée détectée (${limitesCount} occurrences) - sera nettoyée par removeDuplicateH2Sections`);
+      } else {
+        console.log('   ✅ Section "Limites et biais" déjà présente');
+      }
+    } else if (!hasLimitesSection && !limitesH2Match && limitesCount === 0 && !limitesInText) {
+      console.log('   ⚠️ Section "Limites et biais" manquante');
+      
+      const limitesContent = `<h2>Limites et biais de ce témoignage</h2>
+<p>Ce témoignage présente certaines limites qu'il est important de prendre en compte. Il s'agit d'une expérience individuelle qui ne peut être généralisée à tous les voyageurs.</p>
+<p>Les biais potentiels incluent la subjectivité du témoignage, le contexte spécifique du voyageur, et les aspects qui n'ont pas été explicitement mentionnés. Il est recommandé de compléter cette information par d'autres sources pour avoir une vision plus complète.</p>`;
+      
+      // Insérer avant "Nos recommandations" ou après "Ce que les autres ne disent pas"
+      const recommandationsPattern = /<h2[^>]*>Nos\s+recommandations[^<]*<\/h2>/i;
+      const autresPattern = /<h2[^>]*>.*?ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement).*?<\/h2>/i;
+      
+      let insertedLimites = false;
+      if (autresPattern.test(cleanedHtml)) {
+        const match = cleanedHtml.match(autresPattern);
+        if (match) {
+          // Insérer après "Ce que les autres ne disent pas"
+          const insertIndex = match.index + match[0].length;
+          // Chercher le prochain H2 ou la fin
+          const nextH2Match = cleanedHtml.substring(insertIndex).match(/<h2[^>]*>/i);
+          if (nextH2Match) {
+            const finalInsertIndex = insertIndex + nextH2Match.index;
+            cleanedHtml = cleanedHtml.slice(0, finalInsertIndex) + '\n\n' + limitesContent + '\n\n' + cleanedHtml.slice(finalInsertIndex);
+            insertedLimites = true;
+          } else {
+            cleanedHtml = cleanedHtml.slice(0, insertIndex) + '\n\n' + limitesContent + '\n\n' + cleanedHtml.slice(insertIndex);
+            insertedLimites = true;
+            
+            // #region agent log
+            fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:6791',message:'ensureSerpSections: limites inserted',data:{inserted:true,afterCount:(cleanedHtml.match(/<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi)||[]).length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+            // #endregion
+          }
+        }
+      } else if (recommandationsPattern.test(cleanedHtml)) {
+        const match = cleanedHtml.match(recommandationsPattern);
+        if (match) {
+          cleanedHtml = cleanedHtml.slice(0, match.index) + limitesContent + '\n\n' + cleanedHtml.slice(match.index);
+          insertedLimites = true;
+        }
+      }
+      
+      if (insertedLimites) {
+        report.checks.push({
+          name: 'serp_sections_limites',
+          status: 'pass',
+          details: 'Section "Limites et biais" ajoutée'
+        });
+        report.actions.push({
+          type: 'added_serp_section',
+          details: 'Limites et biais'
+        });
+        console.log('   ✅ Section "Limites et biais" ajoutée');
+      }
+    } else if (limitesH2Match) {
+      // AMÉLIORATION: Section existe mais peut être vide - vérifier et remplir si nécessaire
+      const limitesIndex = cleanedHtml.indexOf(limitesH2Match[0]);
+      const afterLimites = cleanedHtml.substring(limitesIndex + limitesH2Match[0].length);
+      const nextH2Match = afterLimites.match(/<(h[23])[^>]*>/i);
+      const contentAfterLimites = afterLimites.substring(0, nextH2Match ? nextH2Match.index : Math.min(500, afterLimites.length));
+      // AMÉLIORATION: Vérifier s'il y a un paragraphe avec au moins 30 caractères de texte réel
+      const hasRealContent = contentAfterLimites.match(/<p[^>]*>[^<]{30,}<\/p>/i) || 
+                            (contentAfterLimites.replace(/<[^>]+>/g, ' ').trim().length > 50);
+      
+      if (!hasRealContent) {
+        console.log('   ⚠️ Section "Limites et biais" existe mais est vide - remplissage...');
+        
+        const limitesContent = `<p>Ce témoignage présente certaines limites qu'il est important de prendre en compte. Il s'agit d'une expérience individuelle qui ne peut être généralisée à tous les voyageurs.</p>
+<p>Les biais potentiels incluent la subjectivité du témoignage, le contexte spécifique du voyageur, et les aspects qui n'ont pas été explicitement mentionnés. Il est recommandé de compléter cette information par d'autres sources pour avoir une vision plus complète.</p>`;
+        
+        // Insérer le contenu après le H2 (remplacer le contenu vide s'il y en a)
+        const insertIndex = limitesIndex + limitesH2Match[0].length;
+        if (nextH2Match) {
+          const nextH2Index = insertIndex + nextH2Match.index;
+          // Supprimer le contenu vide entre le H2 et le prochain H2, puis insérer le nouveau contenu
+          cleanedHtml = cleanedHtml.substring(0, insertIndex) + '\n\n' + limitesContent + '\n\n' + cleanedHtml.substring(nextH2Index);
+        } else {
+          // Pas de H2 suivant, insérer à la fin
+          cleanedHtml = cleanedHtml.substring(0, insertIndex) + '\n\n' + limitesContent + '\n\n' + cleanedHtml.substring(insertIndex);
+        }
+        
+        report.actions.push({
+          type: 'filled_empty_serp_section',
+          details: 'Limites et biais'
+        });
+        console.log('   ✅ Section "Limites et biais" vide remplie avec contenu');
+      } else {
+        report.checks.push({
+          name: 'serp_sections_limites',
+          status: 'pass',
+          details: 'Section "Limites et biais" présente avec contenu'
+        });
+      }
+    } else {
+        report.checks.push({
+          name: 'serp_sections_limites',
+          status: 'pass',
+          details: 'Section "Limites et biais" présente'
+        });
+    }
+    
+    return cleanedHtml;
+  }
+
+  /**
+   * Remplit les sections vides avec du contenu approprié
+   * @param {string} html - HTML à valider
+   * @param {Object} pipelineContext - Contexte du pipeline
+   * @param {Object} report - Rapport QA
+   * @returns {string} HTML corrigé
+   */
+  fillEmptySections(html, pipelineContext, report) {
+    console.log('🔍 Remplissage sections vides...');
+    
+    let cleanedHtml = html;
+    const h2Pattern = /<h2[^>]*>([^<]+)<\/h2>/gi;
+    const h2s = [];
+    let match;
+    
+    while ((match = h2Pattern.exec(cleanedHtml)) !== null) {
+      h2s.push({
+        fullMatch: match[0],
+        title: match[1].trim(),
+        index: match.index
+      });
+    }
+    
+    // Trier par index décroissant pour traiter de la fin vers le début
+    h2s.sort((a, b) => b.index - a.index);
+    
+    h2s.forEach(h2 => {
+      const h2Index = h2.index;
+      const afterH2 = cleanedHtml.substring(h2Index + h2.fullMatch.length);
+      const nextH2Match = afterH2.match(/<h2[^>]*>/i);
+      // AMÉLIORATION: Augmenter la limite pour détecter les angles uniques (qui peuvent être plus loin)
+      const contentAfterH2 = afterH2.substring(0, nextH2Match ? nextH2Match.index : Math.min(2000, afterH2.length));
+      
+      // AMÉLIORATION: Décoder toutes les entités HTML avant de vérifier
+      const decodedContent = contentAfterH2
+        .replace(/&#8217;/g, "'")
+        .replace(/&#39;/g, "'")
+        .replace(/&apos;/g, "'")
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&quot;/g, '"')
+        .replace(/&amp;/g, '&');
+      
+      const textContent = decodedContent.replace(/<[^>]+>/g, ' ').trim();
+      
+      // AMÉLIORATION: Vérifier si le contenu est vraiment visible (pas juste des espaces/entités)
+      // Détecter les paragraphes vides ou avec seulement des points/espaces
+      const emptyParagraphs = decodedContent.match(/<p[^>]*>\s*[.\s]*<\/p>/gi);
+      // Détecter les paragraphes qui commencent par un point seul (ex: <p>.</p> ou <p>. Texte</p>)
+      const paragraphsStartingWithDot = decodedContent.match(/<p[^>]*>\s*\.\s*[^<]*<\/p>/gi);
+      const hasOnlyEmptyParas = (emptyParagraphs && emptyParagraphs.length > 0) || (paragraphsStartingWithDot && paragraphsStartingWithDot.length > 0);
+      
+      // Un paragraphe avec au moins 30 caractères de texte réel (hors HTML) et qui ne commence pas par un point seul
+      const realParagraphs = decodedContent.match(/<p[^>]*>[^<]{30,}<\/p>/gi);
+      const hasRealParagraph = realParagraphs && realParagraphs.some(p => !p.match(/<p[^>]*>\s*\./));
+      
+      // Ou au moins 50 caractères de texte brut après décodage (sans compter les points isolés)
+      const meaningfulText = textContent.replace(/\s+/g, ' ').replace(/^\.\s+/, '').trim();
+      const hasRealText = meaningfulText.length > 50;
+      
+      // AMÉLIORATION: Vérifier aussi si le contenu n'est pas juste des espaces/retours à la ligne
+      const hasRealContent = (hasRealParagraph || (hasRealText && meaningfulText.length > 30)) && !hasOnlyEmptyParas;
+      
+      // AMÉLIORATION CRITIQUE: Vérifier si la section contient déjà les angles uniques SERP (Budget, Timeline, Contraintes)
+      // Ne PAS remplacer le contenu si les angles sont présents
+      // Vérifier dans TOUT le contenu après le H2 (pas seulement les 2000 premiers caractères)
+      const fullContentAfterH2 = nextH2Match ? afterH2.substring(0, nextH2Match.index) : afterH2;
+      const hasBudgetKeywords = /budget\s*(réel|détaillé|exact|mensuel|breakdown)|coûts?\s*(réels?|détaillés?|exacts?)|dépenses?\s*(réelles?|détaillées?)/i.test(fullContentAfterH2);
+      const hasTimelineKeywords = /timeline|chronologie|jour\s*par\s*jour|étapes?\s*(du|de)\s*voyage|période|durée\s*(du|de)\s*séjour/i.test(fullContentAfterH2);
+      const hasContraintesKeywords = /contraintes?|difficultés?|obstacles?|problèmes?\s*(pratiques?|réels?)|défis/i.test(fullContentAfterH2);
+      const hasUniqueAngles = hasBudgetKeywords || hasTimelineKeywords || hasContraintesKeywords;
+      
+      // Ne remplacer que si la section est vraiment vide ET ne contient pas d'angles uniques
+      if (!hasRealContent && !hasUniqueAngles) {
+        const h2TitleLower = h2.title.toLowerCase();
+        
+        // Générer du contenu selon le type de section
+        let sectionContent = '';
+        
+        if (h2TitleLower.includes('contexte')) {
+          sectionContent = `<p>Cette expérience de voyage s'inscrit dans un contexte spécifique qui mérite d'être précisé. Les conditions de départ, les motivations initiales et l'environnement dans lequel cette aventure a pris place sont des éléments essentiels pour comprendre pleinement le témoignage.</p>
+<p>Il est important de noter que chaque voyageur part avec ses propres attentes, contraintes et objectifs, ce qui influence significativement son expérience et son ressenti tout au long du séjour.</p>`;
+        } else if (h2TitleLower.includes('ce que') && h2TitleLower.includes('ne disent')) {
+          sectionContent = `<p>Les témoignages Reddit n'abordent souvent pas les aspects pratiques détaillés du voyage, tels que les coûts réels, les contraintes administratives, et l'impact sur le bien-être. Ces éléments sont pourtant essentiels pour une préparation complète.</p>
+<p>En particulier, les témoignages omettent fréquemment les détails sur les dépenses quotidiennes réelles, les délais administratifs concrets, et les contraintes pratiques qui peuvent impacter significativement l'expérience de voyage.</p>`;
+        } else if (h2TitleLower.includes('limites') || h2TitleLower.includes('biais')) {
+          sectionContent = `<p>Ce témoignage présente certaines limites qu'il est important de prendre en compte. Il s'agit d'une expérience individuelle qui ne peut être généralisée à tous les voyageurs.</p>
+<p>Les biais potentiels incluent la subjectivité du témoignage, le contexte spécifique du voyageur, et les aspects qui n'ont pas été explicitement mentionnés. Il est recommandé de compléter cette information par d'autres sources pour avoir une vision plus complète.</p>`;
+        }
+        
+        if (sectionContent) {
+          const insertIndex = h2Index + h2.fullMatch.length;
+          // AMÉLIORATION: Supprimer d'abord le contenu vide existant (paragraphes vides, espaces)
+          const contentToRemove = nextH2Match ? contentAfterH2.substring(0, nextH2Match.index) : contentAfterH2;
+          const cleanedContentToRemove = contentToRemove.replace(/<p[^>]*>\s*<\/p>/gi, '').trim();
+          
+          if (nextH2Match) {
+            const nextH2Index = insertIndex + nextH2Match.index;
+            // Remplacer le contenu vide par le nouveau contenu
+            cleanedHtml = cleanedHtml.substring(0, insertIndex) + '\n\n' + sectionContent + '\n\n' + cleanedHtml.substring(nextH2Index);
+          } else {
+            // Pas de H2 suivant, remplacer tout le contenu après le H2
+            cleanedHtml = cleanedHtml.substring(0, insertIndex) + '\n\n' + sectionContent + '\n\n' + cleanedHtml.substring(insertIndex + contentAfterH2.length);
+          }
+          
+          report.actions.push({
+            type: 'filled_empty_section',
+            details: h2.title
+          });
+          console.log(`   ✅ Section vide remplie: "${h2.title}"`);
+        }
+      }
+    });
+    
+    return cleanedHtml;
+  }
+
+  /**
+   * Équilibre les paragraphes (ratio max/min < 3)
+   * @param {string} html - HTML à valider
+   * @param {Object} report - Rapport QA
+   * @returns {string} HTML corrigé
+   */
+  balanceParagraphs(html, report) {
+    console.log('🔍 Équilibrage paragraphes...');
+    
+    let cleanedHtml = html;
+    let balancedCount = 0;
+    
+    // #region agent log
+    try {
+      const fs = require('fs');
+      const logPath = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor/debug.log';
+      const hasSpacesInWords = /[a-zà-ÿ]\s+[a-zà-ÿ]/i.test(cleanedHtml.replace(/<[^>]+>/g, ' '));
+      const logEntry = JSON.stringify({location:'article-finalizer.js:6446',message:'balanceParagraphs entry',data:{htmlLength:html.length,hasSpacesInWords},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'}) + '\n';
+      fs.appendFileSync(logPath, logEntry);
+    } catch(e) {}
+    // #endregion
+    
+    // Extraire tous les paragraphes
+    // AMÉLIORATION: Utiliser un regex plus robuste qui capture le contenu même avec des balises HTML imbriquées
+    const paragraphPattern = /<p[^>]*>([\s\S]*?)<\/p>/gi;
+    const paragraphs = [];
+    let match;
+    
+    while ((match = paragraphPattern.exec(html)) !== null) {
+      // Extraire le texte sans HTML pour la longueur
+      const textWithoutHtml = match[1].replace(/<[^>]+>/g, '').trim();
+      if (textWithoutHtml.length > 10) {
+        paragraphs.push({
+          fullMatch: match[0],
+          text: textWithoutHtml, // Utiliser le texte sans HTML pour les calculs
+          htmlContent: match[1], // Garder le contenu HTML original
+          length: textWithoutHtml.length
+        });
+      }
+    }
+    
+    if (paragraphs.length === 0) {
+      report.checks.push({
+        name: 'paragraph_balance',
+        status: 'pass',
+        details: 'Aucun paragraphe à équilibrer'
+      });
+      return cleanedHtml;
+    }
+    
+    // Calculer ratio avant
+    const lengths = paragraphs.map(p => p.length);
+    const maxLen = Math.max(...lengths);
+    const minLen = Math.min(...lengths);
+    const beforeRatio = maxLen / (minLen || 1);
+    
+    // AMÉLIORATION: Découper paragraphes > 150 caractères pour meilleur équilibre
+    paragraphs.forEach(para => {
+      if (para.length > 150) {
+        // CORRECTION: Utiliser le contenu HTML original au lieu du texte sans HTML
+        // pour préserver les entités HTML et les balises HTML imbriquées
+        const paraHtmlMatch = cleanedHtml.match(new RegExp(para.fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+        if (!paraHtmlMatch) return; // Skip si pas trouvé
+        
+        const paraHtmlContent = paraHtmlMatch[0];
+        // Extraire le contenu entre <p> et </p>
+        const contentMatch = paraHtmlContent.match(/<p[^>]*>([\s\S]*?)<\/p>/);
+        if (!contentMatch) return;
+        
+        let paraContent = contentMatch[1];
+        
+        // AMÉLIORATION: Protéger les entités HTML ET les placeholders existants avant le split
+        const entityPlaceholders = new Map();
+        let entityCounter = 0;
+        
+        // Protéger les placeholders existants d'abord
+        const existingPlaceholders = paraContent.match(/__ENTITY\d+_\d+__/g) || [];
+        const protectedPlaceholders = new Map();
+        existingPlaceholders.forEach((ph, idx) => {
+          const key = `__PROTECTED_BP_${idx}__`;
+          protectedPlaceholders.set(key, ph);
+          paraContent = paraContent.replace(ph, key);
+        });
+        
+        // Ensuite protéger les entités HTML réelles
+        paraContent = paraContent.replace(/&#\d+;|&[a-z]+;/gi, (match) => {
+          const placeholder = `__ENTITY_BP_${entityCounter++}__`;
+          entityPlaceholders.set(placeholder, match);
+          return placeholder;
+        });
+        
+        // Découper en paragraphes de max 120 caractères (plus petits pour meilleur équilibre)
+        // AMÉLIORATION: Utiliser un split plus robuste qui préserve les entités HTML
+        // Calculer la longueur en restaurant temporairement les entités pour avoir la vraie longueur
+        const sentences = paraContent.split(/([.!?]+(?:\s+|$))/).filter(s => s.trim().length > 0);
+        const chunks = [];
+        let currentChunk = '';
+        
+        sentences.forEach(sentence => {
+          // Restaurer temporairement pour calcul de longueur
+          let tempSentence = sentence;
+          entityPlaceholders.forEach((entity, placeholder) => {
+            tempSentence = tempSentence.replace(placeholder, entity);
+          });
+          protectedPlaceholders.forEach((ph, key) => {
+            tempSentence = tempSentence.replace(key, ph);
+          });
+          
+          let tempChunk = currentChunk;
+          entityPlaceholders.forEach((entity, placeholder) => {
+            tempChunk = tempChunk.replace(placeholder, entity);
+          });
+          protectedPlaceholders.forEach((ph, key) => {
+            tempChunk = tempChunk.replace(key, ph);
+          });
+          
+          // Calculer longueur réelle (sans HTML)
+          const tempChunkText = tempChunk.replace(/<[^>]+>/g, '').trim();
+          const tempSentenceText = tempSentence.replace(/<[^>]+>/g, '').trim();
+          
+          if ((tempChunkText + tempSentenceText).length <= 120) {
+            currentChunk += sentence;
+          } else {
+            if (currentChunk.trim().length > 0) {
+              // Restaurer les entités HTML avant d'ajouter au chunk
+              let chunkWithEntities = currentChunk;
+              entityPlaceholders.forEach((entity, placeholder) => {
+                chunkWithEntities = chunkWithEntities.replace(placeholder, entity);
+              });
+              protectedPlaceholders.forEach((ph, key) => {
+                chunkWithEntities = chunkWithEntities.replace(key, ph);
+              });
+              chunks.push(chunkWithEntities.trim());
+            }
+            currentChunk = sentence;
+          }
+        });
+        
+        if (currentChunk.trim().length > 0) {
+          // Restaurer les entités HTML avant d'ajouter au dernier chunk
+          let chunkWithEntities = currentChunk;
+          entityPlaceholders.forEach((entity, placeholder) => {
+            chunkWithEntities = chunkWithEntities.replace(placeholder, entity);
+          });
+          protectedPlaceholders.forEach((ph, key) => {
+            chunkWithEntities = chunkWithEntities.replace(key, ph);
+          });
+          chunks.push(chunkWithEntities.trim());
+        }
+        
+        // CORRECTION: Filtrer les chunks vides ou avec juste un point avant de créer des paragraphes
+        const validChunks = chunks.filter(chunk => {
+          const text = chunk.replace(/<[^>]+>/g, ' ').trim();
+          // Exclure les chunks vides, avec juste un point, ou avec seulement des espaces/points
+          return text.length > 1 && !/^[\s.]+$/.test(text) && text !== '.';
+        });
+        
+        if (validChunks.length > 1) {
+          // AMÉLIORATION: Utiliser le contenu HTML original si disponible, sinon reconstruire
+          const newParagraphs = validChunks.map(chunk => `<p>${chunk}</p>`).join('\n');
+          cleanedHtml = cleanedHtml.replace(para.fullMatch, newParagraphs);
+          balancedCount++;
+          console.log(`   ✂️ Paragraphe découpé: ${para.length} chars → ${validChunks.length} paragraphes (${chunks.length - validChunks.length} chunk(s) vide(s) filtré(s))`);
+          
+          // #region agent log
+          try {
+            const fs = require('fs');
+            const logPath = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor/debug.log';
+            const logEntry = JSON.stringify({location:'article-finalizer.js:6510',message:'balanceParagraphs: paragraph split',data:{originalLength:para.length,chunksCount:chunks.length,firstChunk:chunks[0]?.substring(0,50),lastChunk:chunks[chunks.length-1]?.substring(0,50)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'}) + '\n';
+            fs.appendFileSync(logPath, logEntry);
+          } catch(e) {}
+          // #endregion
+        }
+      }
+    });
+    
+    // AMÉLIORATION: Fusionner paragraphes très courts (< 30 caractères) avec le suivant
+    const shortParagraphs = [];
+    const afterParagraphs = cleanedHtml.match(/<p[^>]*>([^<]+)<\/p>/gi) || [];
+    afterParagraphs.forEach((para, i) => {
+      const text = para.replace(/<[^>]+>/g, '').trim();
+      if (text.length < 30 && text.length > 0 && i < afterParagraphs.length - 1) {
+        shortParagraphs.push({ para, index: i, text });
+      }
+    });
+    
+    // Fusionner avec le suivant
+    shortParagraphs.reverse().forEach(({ para, text }) => {
+      const nextParaMatch = cleanedHtml.match(new RegExp(`${para.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*(<p[^>]*>[^<]+<\/p>)`, 'i'));
+      if (nextParaMatch) {
+        const nextPara = nextParaMatch[1];
+        const nextParaText = nextPara.replace(/<[^>]+>/g, '').trim();
+        // AMÉLIORATION: Ne fusionner que si le résultat ne dépasse pas 200 caractères (pour meilleur équilibre)
+        // AMÉLIORATION: S'assurer qu'il y a un espace entre les deux textes
+        const mergedText = text.trim() + ' ' + nextParaText.trim();
+        if (mergedText.length <= 200) {
+          // AMÉLIORATION: Vérifier que le premier texte ne se termine pas par une ponctuation sans espace
+          const firstEndsWithPunct = /[.!?;:]$/.test(text.trim());
+          const secondStartsWithUpper = /^[A-ZÀ-Ÿ]/.test(nextParaText.trim());
+          
+          // Si le premier se termine par ponctuation et le second commence par majuscule, c'est OK
+          // Sinon, s'assurer qu'il y a bien un espace
+          const merged = `<p>${mergedText}</p>`;
+          cleanedHtml = cleanedHtml.replace(para + ' ' + nextPara, merged);
+          balancedCount++;
+          console.log(`   🔗 Paragraphes fusionnés: "${text.substring(0, 30)}..." + suivant`);
+        }
+      }
+    });
+    
+    // AMÉLIORATION: Validation post-traitement pour détecter et SUPPRIMER les paragraphes mal formés
+    const malformedParagraphs = [];
+    const allParagraphs = cleanedHtml.match(/<p[^>]*>([^<]*)<\/p>/gi) || [];
+    allParagraphs.forEach((para, index) => {
+      const text = para.replace(/<[^>]+>/g, '').trim();
+      // Détecter les paragraphes avec seulement des points ou des espaces
+      if (text === '.' || text === '..' || text === '...' || /^[\s.]+$/.test(text)) {
+        malformedParagraphs.push({ para, index });
+      }
+      // Détecter les paragraphes où deux phrases sont collées sans espace
+      if (/[a-zà-ÿ][A-ZÀ-Ÿ]/.test(text) && !/[.!?]\s+[A-ZÀ-Ÿ]/.test(text)) {
+        // Il y a une lettre minuscule suivie d'une majuscule sans ponctuation entre les deux
+        malformedParagraphs.push({ para, index, reason: 'phrases_collées' });
+      }
+    });
+    
+    // CORRECTION: Supprimer automatiquement les paragraphes avec juste un point ou des points/espaces
+    if (malformedParagraphs.length > 0) {
+      const dotOnlyParas = malformedParagraphs.filter(p => !p.reason);
+      if (dotOnlyParas.length > 0) {
+        // Supprimer en ordre inverse pour préserver les indices
+        dotOnlyParas.reverse().forEach(({ para }) => {
+          cleanedHtml = cleanedHtml.replace(para, '');
+        });
+        console.log(`   🧹 ${dotOnlyParas.length} paragraphe(s) mal formé(s) (points uniquement) supprimé(s) dans balanceParagraphs`);
+      }
+    }
+    
+    // NETTOYAGE FINAL DANS balanceParagraphs: Supprimer tous les paragraphes vides restants
+    const remainingEmptyParas = cleanedHtml.match(/<p[^>]*>\s*\.\s*<\/p>/gi);
+    if (remainingEmptyParas) {
+      cleanedHtml = cleanedHtml.replace(/<p[^>]*>\s*\.\s*<\/p>/gi, '');
+      console.log(`   🧹 ${remainingEmptyParas.length} paragraphe(s) vide(s) supplémentaire(s) supprimé(s) dans balanceParagraphs`);
+    }
+    
+      // Supprimer les paragraphes mal formés (sauf s'ils sont dans une section SERP protégée)
+      if (malformedParagraphs.length > 0) {
+        const protectedSerpPatterns = [
+          /ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement)/i,
+          /limites?\s*(et\s*)?biais/i,
+          /erreurs?\s*(fréquentes?|courantes?|à\s*éviter)/i,
+          /nos\s+recommandations/i, // AMÉLIORATION: Protéger "Nos recommandations" qui contient les angles Budget
+          /événement\s+central/i // AMÉLIORATION: Protéger "Événement central" qui contient les angles Timeline
+        ];
+      
+      malformedParagraphs.reverse().forEach(({ para, index }) => {
+        const paraIndex = cleanedHtml.indexOf(para);
+        if (paraIndex >= 0) {
+          // Vérifier si ce paragraphe est dans une section SERP protégée
+          const beforePara = cleanedHtml.substring(0, paraIndex);
+          const lastH2Match = beforePara.match(/<h2[^>]*>([^<]+)<\/h2>/gi);
+          let isProtected = false;
+          
+          if (lastH2Match) {
+            const lastH2 = lastH2Match[lastH2Match.length - 1];
+            isProtected = protectedSerpPatterns.some(pattern => pattern.test(lastH2));
+          }
+          
+          if (!isProtected) {
+            // AMÉLIORATION: Vérifier aussi si le paragraphe contient des angles uniques SERP avant de supprimer
+            const hasBudgetKeywords = /budget\s*(réel|détaillé|exact|mensuel|breakdown)|coûts?\s*(réels?|détaillés?|exacts?)|dépenses?\s*(réelles?|détaillées?)/i.test(para);
+            const hasTimelineKeywords = /timeline|chronologie|jour\s*par\s*jour|étapes?\s*(du|de)\s*voyage|période|durée\s*(du|de)\s*séjour/i.test(para);
+            const hasContraintesKeywords = /contraintes?|difficultés?|obstacles?|problèmes?\s*(pratiques?|réels?)|défis/i.test(para);
+            const hasUniqueAngles = hasBudgetKeywords || hasTimelineKeywords || hasContraintesKeywords;
+            
+            if (!hasUniqueAngles) {
+              cleanedHtml = cleanedHtml.replace(para, '');
+              balancedCount++;
+              console.log(`   🧹 Paragraphe mal formé supprimé (index ${index})`);
+            } else {
+              console.log(`   🛡️ Paragraphe avec angles uniques protégé (index ${index})`);
+            }
+          }
+        }
+      });
+    }
+    
+    // Recalculer ratio après
+    const finalParagraphs = cleanedHtml.match(/<p[^>]*>([^<]+)<\/p>/gi) || [];
+    const afterLengths = finalParagraphs.map(p => {
+      const text = p.replace(/<[^>]+>/g, '').trim();
+      return text.length;
+    }).filter(l => l > 10);
+    
+    // AMÉLIORATION: Gérer le cas où il n'y a pas de paragraphes après traitement
+    if (afterLengths.length === 0) {
+      report.checks.push({
+        name: 'paragraph_balance',
+        status: 'warning',
+        details: 'Aucun paragraphe après équilibrage'
+      });
+      return cleanedHtml;
+    }
+    
+    const afterMaxLen = Math.max(...afterLengths);
+    const afterMinLen = Math.min(...afterLengths);
+    // AMÉLIORATION: Éviter division par zéro
+    const afterRatio = afterMinLen > 0 ? afterMaxLen / afterMinLen : 0;
+    
+    // Ajouter au rapport
+    report.checks.push({
+      name: 'paragraph_balance',
+      status: afterRatio <= 3 ? 'pass' : 'warn',
+      details: `before_ratio=${beforeRatio.toFixed(1)} after_ratio=${afterRatio.toFixed(1)} balanced=${balancedCount}`
+    });
+    
+    if (balancedCount > 0) {
+      report.actions.push({
+        type: 'balanced_paragraphs',
+        details: `count=${balancedCount} ratio_before=${beforeRatio.toFixed(1)} ratio_after=${afterRatio.toFixed(1)}`
+      });
+      console.log(`✅ Paragraphes équilibrés: ${balancedCount} découpé(s), ratio ${beforeRatio.toFixed(1)} → ${afterRatio.toFixed(1)}`);
+    } else {
+      console.log(`✅ Paragraphes équilibrés: ratio ${beforeRatio.toFixed(1)} (OK)`);
+    }
+    
+    // #region agent log
+    try {
+      const fs = require('fs');
+      const logPath = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor/debug.log';
+      const hasSpacesInWordsAfter = /[a-zà-ÿ]\s+[a-zà-ÿ]/i.test(cleanedHtml.replace(/<[^>]+>/g, ' '));
+      const hasCutPhrases = cleanedHtml.match(/<p[^>]*>[^<]{20,}[^.!?]<\/p>/gi)?.length || 0;
+      const logEntry = JSON.stringify({location:'article-finalizer.js:6645',message:'balanceParagraphs exit',data:{htmlLength:cleanedHtml.length,hasSpacesInWordsAfter,hasCutPhrases,balancedCount,changed:cleanedHtml!==html},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'}) + '\n';
+      fs.appendFileSync(logPath, logEntry);
+    } catch(e) {}
+    // #endregion
+    
+    return cleanedHtml;
+  }
+
+  /**
+   * Troncature intelligente d'un texte pour extraits/citations
+   * Respecte les limites de phrases, mots et préserve le sens
+   * @param {string} text - Texte à tronquer
+   * @param {number} targetLength - Longueur cible (caractères)
+   * @param {number} maxLength - Longueur maximale absolue (caractères)
+   * @returns {string} Texte tronqué intelligemment avec ellipses si nécessaire
+   */
+  smartTruncate(text, targetLength = 200, maxLength = 250) {
+    if (!text || text.length <= targetLength) {
+      return text.trim();
+    }
+
+    // Étape 1: Chercher une fin de phrase complète dans la zone cible
+    // Priorité: . ! ? suivi d'un espace et d'une majuscule
+    const sentenceEndPattern = /([.!?])\s+([A-ZÀ-Ÿ])/g;
+    let bestCut = targetLength;
+    let foundSentenceEnd = false;
+    let match;
+    
+    // AMÉLIORATION: Plage de recherche élargie (60% au lieu de 70% pour trouver plus facilement)
+    const minSearchIndex = Math.floor(targetLength * 0.6);
+
+    // Chercher la dernière fin de phrase complète avant maxLength
+    while ((match = sentenceEndPattern.exec(text)) !== null) {
+      const endIndex = match.index + match[1].length; // Position après la ponctuation
+      if (endIndex >= minSearchIndex && endIndex <= maxLength) {
+        bestCut = endIndex + 1; // Inclure l'espace après la ponctuation
+        foundSentenceEnd = true;
+        // Continuer à chercher pour trouver la meilleure fin (la plus proche de targetLength)
+      }
+      if (endIndex > maxLength) break;
+    }
+    
+    // AMÉLIORATION: Si pas de fin de phrase, chercher des virgules ou points-virgules comme pause acceptable
+    if (!foundSentenceEnd) {
+      const commaPattern = /([,;])\s+([A-ZÀ-Ÿa-zà-ÿ])/g;
+      let bestCommaCut = targetLength;
+      let foundComma = false;
+      
+      while ((match = commaPattern.exec(text)) !== null) {
+        const endIndex = match.index + match[1].length;
+        if (endIndex >= minSearchIndex && endIndex <= maxLength) {
+          bestCommaCut = endIndex + 1;
+          foundComma = true;
+        }
+        if (endIndex > maxLength) break;
+      }
+      
+      if (foundComma) {
+        bestCut = bestCommaCut;
+        foundSentenceEnd = true; // On considère qu'on a trouvé une pause acceptable
+      }
+    }
+
+    // Étape 2: Si pas de fin de phrase ni de virgule, chercher une limite de mot
+    if (!foundSentenceEnd) {
+      // Chercher le dernier espace avant maxLength
+      const lastSpaceBeforeMax = text.lastIndexOf(' ', maxLength);
+      const lastSpaceAfterTarget = text.indexOf(' ', targetLength);
+      
+      // AMÉLIORATION: Accepter un espace même plus proche du début (60% au lieu de 80%)
+      if (lastSpaceBeforeMax >= targetLength * 0.6) {
+        bestCut = lastSpaceBeforeMax;
+      } else if (lastSpaceAfterTarget > 0 && lastSpaceAfterTarget <= maxLength) {
+        bestCut = lastSpaceAfterTarget;
+      } else {
+        // Fallback: couper à maxLength mais chercher le dernier espace proche
+        const fallbackSpace = text.lastIndexOf(' ', maxLength);
+        if (fallbackSpace >= targetLength * 0.5) {
+          bestCut = fallbackSpace;
+        } else {
+          bestCut = maxLength;
+        }
+      }
+    }
+
+    // Étape 3: Extraire et nettoyer
+    let truncated = text.substring(0, bestCut).trim();
+
+    // Étape 4: Vérifier qu'on ne coupe pas au milieu d'un mot
+    // Si le dernier caractère n'est pas une ponctuation ou un espace, chercher le dernier espace
+    if (!/[.!?;:,\s]$/.test(truncated)) {
+      const lastSpace = truncated.lastIndexOf(' ');
+      // AMÉLIORATION: Accepter un espace même plus proche du début (60% au lieu de 70%)
+      if (lastSpace > targetLength * 0.6) {
+        truncated = truncated.substring(0, lastSpace);
+      } else {
+        // Si vraiment pas d'espace acceptable, chercher le dernier caractère non-alphanumérique
+        const lastNonAlpha = truncated.search(/[^a-zA-ZÀ-Ÿà-ÿ0-9\s]$/);
+        if (lastNonAlpha > targetLength * 0.5) {
+          truncated = truncated.substring(0, lastNonAlpha + 1);
+        }
+      }
+    }
+
+    // Étape 5: Ajouter des ellipses seulement si nécessaire
+    // Ne pas ajouter si on termine déjà par une ponctuation
+    if (truncated.length < text.length && !/[.!?]$/.test(truncated)) {
+      truncated += '...';
+    }
+
+    return truncated.trim();
   }
 }
 

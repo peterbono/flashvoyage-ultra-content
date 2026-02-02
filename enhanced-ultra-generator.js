@@ -114,19 +114,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // GARDE DRY_RUN: Charger DB existante au lieu de crawler
       if (DRY_RUN) {
         console.log('🧪 DRY_RUN: crawler WordPress bloqué');
-        // Charger la DB si elle existe
-        const fs = await import('fs');
-        try {
-          if (fs.default.existsSync('articles-database.json')) {
-            await this.linkingStrategy.internalAnalyzer.loadArticlesDatabase('articles-database.json');
-            console.log('🧪 DRY_RUN: DB chargée depuis articles-database.json');
-          } else {
-            console.log('🧪 DRY_RUN: aucun articles-database.json, skip liens internes');
-          }
-        } catch (error) {
-          console.warn('⚠️ DRY_RUN: Erreur chargement DB:', error.message);
-          console.warn('   → Les liens internes ne seront pas générés\n');
-        }
+        // Les liens internes sont gérés par seo-optimizer.js via data/internal-links.json
+        console.log('🧪 DRY_RUN: liens internes via seo-optimizer.js');
       } else {
       try {
         // D'ABORD : Crawler WordPress pour avoir la DB à jour
@@ -147,9 +136,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           console.log('   ✅ Cache Reddit URLs vidé');
         }
         
-        // ENSUITE : Charger la DB fraîchement mise à jour
-        await this.linkingStrategy.internalAnalyzer.loadArticlesDatabase('articles-database.json');
-        console.log('✅ Base de données chargée pour liens internes\n');
+        // ENSUITE : Synchroniser l'index de liens internes pour seo-optimizer.js
+        await this.syncInternalLinksIndex();
+        console.log('✅ Index de liens internes synchronisé\n');
       } catch (error) {
         console.warn('⚠️ Impossible de mettre à jour/charger la base d\'articles:', error.message);
         console.warn('   → Les liens internes ne seront pas générés\n');
@@ -190,15 +179,30 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         // Singapour
         'singapore', 'singapour'
       ];
-      const nonAsiaDestinations = ['istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'lisbon', 'lisbonne', 'barcelona', 'barcelone', 'greece', 'grèce', 'cyprus', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'america', 'usa', 'brazil', 'brésil', 'rio', 'mexico', 'mexique', 'uk', 'united kingdom', 'royaume-uni', 'royaume uni', 'britain', 'britannique', 'england', 'angleterre', 'scotland', 'écosse', 'wales', 'pays de galles'];
+      const nonAsiaDestinations = [
+        // Europe
+        'istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'lisbon', 'lisbonne', 'barcelona', 'barcelone', 'greece', 'grèce', 'cyprus', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'uk', 'united kingdom', 'royaume-uni', 'royaume uni', 'britain', 'britannique', 'england', 'angleterre', 'scotland', 'écosse', 'wales', 'pays de galles',
+        // Amériques
+        'america', 'usa', 'brazil', 'brésil', 'rio', 'mexico', 'mexique',
+        // Moyen-Orient (NON ASIE)
+        'iraq', 'irak', 'iran', 'israel', 'israël', 'jordanie', 'jordan', 'liban', 'lebanon', 'syrie', 'syria', 'arabie saoudite', 'saudi arabia', 'emirats', 'emirates', 'dubai', 'dubaï', 'abu dhabi', 'qatar', 'koweit', 'kuwait', 'oman', 'yemen', 'yémen', 'bahrein', 'bahrain', 'kurdistan', 'bagdad', 'baghdad', 'erbil', 'najaf', 'karbala', 'bassorah', 'basra', 'sulaymaniyah', 'kirkuk', 'mossoul', 'mosul'
+      ];
       
       const isDryRun = DRY_RUN;
       const forceOffline = FORCE_OFFLINE;
       
       const validSources = sources.filter(article => {
         const articleText = `${article.title || ''} ${article.content || ''} ${article.selftext || ''} ${article.source_text || ''}`.toLowerCase();
+        const titleLower = (article.title || '').toLowerCase();
         const hasNonAsiaDestination = nonAsiaDestinations.some(dest => articleText.includes(dest));
         const hasAsiaDestination = asiaDestinations.some(dest => articleText.includes(dest));
+        
+        // FILTRE -1: REJET IMMÉDIAT si le TITRE contient une destination non-asiatique
+        const titleHasNonAsia = nonAsiaDestinations.some(dest => titleLower.includes(dest));
+        if (titleHasNonAsia) {
+          console.log(`🚫 Article rejeté (TITRE contient destination non-asiatique): ${article.title}`);
+          return false;
+        }
         
         // FILTRE 0: UNIQUEMENT les articles Reddit (type: 'community' ou 'nomade') pour le format témoignage
         // Les sources non-Reddit (Skift, CNN, etc.) seront retravaillées plus tard dans un autre template
@@ -217,10 +221,10 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           }
         }
         
-        // FILTRE 1: Rejeter TOUS les articles qui mentionnent des destinations non-asiatiques
-        // Même s'ils mentionnent aussi des destinations asiatiques, on veut uniquement des articles sur l'Asie
-        if (hasNonAsiaDestination) {
-          console.log(`🚫 Article rejeté (destination non-asiatique détectée): ${article.title}`);
+        // FILTRE 1: Relâché - Accepter les articles mentionnant l'Asie même s'ils mentionnent aussi d'autres destinations
+        // Seulement rejeter si l'article mentionne UNIQUEMENT des destinations non-asiatiques (pas d'Asie du tout)
+        if (hasNonAsiaDestination && !hasAsiaDestination) {
+          console.log(`🚫 Article rejeté (uniquement destinations non-asiatiques, pas d'Asie): ${article.title}`);
           return false;
         }
         
@@ -237,7 +241,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           'meta', 'announcement', 'annonce', 'update:', '[update]', '[meta]',
           'how the subreddit', 'comment le subreddit', 'subreddit is run', 'gestion du subreddit'
         ];
-        const titleLower = (article.title || '').toLowerCase();
+        // titleLower déjà déclaré plus haut
         const isMetaPost = metaKeywords.some(keyword => {
           const keywordLower = keyword.toLowerCase();
           return titleLower.includes(keywordLower) || articleText.toLowerCase().includes(keywordLower);
@@ -584,6 +588,13 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // L'article est déjà finalisé par le pipeline, on utilise directement finalArticle
       const finalizedArticle = finalArticle;
       
+      // DEBUG: Vérifier les widgets AVANT déduplication
+      const articleFinalizerModule = await import('./article-finalizer.js');
+      const ArticleFinalizer = articleFinalizerModule.default;
+      const tempFinalizer = new ArticleFinalizer();
+      const beforeDedup = tempFinalizer.detectRenderedWidgets(finalizedArticle.content);
+      console.log(`🔍 DEBUG WIDGETS AVANT DEDUP: count=${beforeDedup.count}, types=[${beforeDedup.types.join(', ')}]`);
+      
       // S'assurer que final_destination est dans finalizedArticle pour la validation
       if (!finalizedArticle.final_destination && pipelineContext?.final_destination) {
         finalizedArticle.final_destination = pipelineContext.final_destination;
@@ -629,8 +640,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
 
       // 10. Validation finale (autres critères) - FIX 1: UNE SEULE détection widgets APRÈS finalisation complète
       // PATCH: Déduplication widgets UNE SEULE FOIS, juste avant validation finale
-      const articleFinalizerModule = await import('./article-finalizer.js');
-      const ArticleFinalizer = articleFinalizerModule.default;
+      // Note: articleFinalizerModule déjà importé plus haut
       const finalizer = new ArticleFinalizer();
       
       // PATCH: Dédupliquer widgets (max 1 par type) - UNE SEULE FOIS
@@ -639,6 +649,18 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // C'est la source de vérité officielle (même fonction que dans deduplicateWidgets)
       const detected = finalizer.detectRenderedWidgets(finalizedArticle.content);
       const widgetsRendered = detected.count;
+      
+      // DEBUG: Vérifier les widgets APRÈS déduplication
+      console.log(`🔍 DEBUG WIDGETS APRÈS DEDUP: count=${widgetsRendered}, types=[${detected.types.join(', ')}]`);
+      
+      // TEMPORAIRE: Sauvegarder le contenu APRÈS déduplication pour vérification des corrections génériques
+      try {
+        const fs = await import('fs');
+        fs.writeFileSync('/tmp/last-generated-article.html', finalizedArticle.content, 'utf-8');
+        console.log('💾 Contenu sauvegardé dans /tmp/last-generated-article.html pour vérification');
+      } catch (e) {
+        // Ignorer les erreurs de sauvegarde
+      }
       
       // C) Fix métrique: widgetsRendered doit venir du HTML final, point
       // Overwrite AVANT de logger (source de vérité)
@@ -689,6 +711,55 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       
       console.log('✅ Article publié avec succès!');
       console.log('🔗 Lien:', publishedArticle.link);
+      
+      // 10.5. BOUCLE VALIDATION PRODUCTION (Plan Pipeline Quality Fixes)
+      if (!DRY_RUN && publishedArticle.link) {
+        try {
+          const ProductionValidator = (await import('./production-validator.js')).default;
+          const productionValidator = new ProductionValidator();
+          
+          // Créer un client WordPress simplifié pour les mises à jour
+          const wordpressClient = {
+            updateArticle: async (articleId, article) => {
+              const axios = (await import('axios')).default;
+              const { WORDPRESS_URL, WORDPRESS_USERNAME, WORDPRESS_APP_PASSWORD } = await import('./config.js');
+              const auth = Buffer.from(`${WORDPRESS_USERNAME}:${WORDPRESS_APP_PASSWORD}`).toString('base64');
+              
+              await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts/${articleId}`, {
+                content: article.content,
+                title: article.title
+              }, {
+                headers: {
+                  'Authorization': `Basic ${auth}`,
+                  'Content-Type': 'application/json'
+                }
+              });
+            }
+          };
+          
+          console.log('\n🔄 Démarrage boucle validation production...');
+          const validationResult = await productionValidator.validateWithLoop(
+            publishedArticle.link,
+            finalizedArticle,
+            wordpressClient,
+            5 // maxIterations
+          );
+          
+          if (validationResult.success) {
+            console.log(`\n✅ PROD_VALIDATION_COMPLETE: score=${validationResult.finalScore}/10 iterations=${validationResult.iterations} duration=${validationResult.duration}ms`);
+          } else {
+            console.warn(`\n⚠️ PROD_VALIDATION_INCOMPLETE: score=${validationResult.finalScore}/10 iterations=${validationResult.iterations}`);
+            if (validationResult.issues && validationResult.issues.length > 0) {
+              console.warn(`   Problèmes restants: ${validationResult.issues.length}`);
+            }
+          }
+        } catch (validationError) {
+          console.error(`❌ Erreur validation production: ${validationError.message}`);
+          // Ne pas bloquer la publication si la validation échoue
+        }
+      } else if (DRY_RUN) {
+        console.log('🧪 DRY_RUN: Validation production désactivée');
+      }
       
       // NOUVEAU: Ajouter l'URL Reddit au cache pour éviter les doublons au prochain run
       // (redditUrl déjà déclaré ligne 335)
@@ -1056,7 +1127,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     
     // Retourner la destination avec le score le plus élevé
     // VALIDATION: Rejeter les destinations non-asiatiques
-    const nonAsiaDestinations = ['spain', 'portugal', 'france', 'italy', 'greece', 'turkey', 'europe', 'america', 'usa', 'brazil', 'mexico', 'malaysia'];
+    const nonAsiaDestinations = ['spain', 'portugal', 'france', 'italy', 'greece', 'turkey', 'europe', 'america', 'usa', 'brazil', 'mexico', 'iraq', 'irak', 'iran', 'israel', 'jordanie', 'liban', 'syrie', 'dubai', 'qatar', 'koweit', 'oman', 'yemen', 'bahrein', 'kurdistan', 'bagdad', 'erbil'];
     if (Object.keys(destinationScores).length > 0) {
       const bestDestination = Object.entries(destinationScores)
         .filter(([dest]) => !nonAsiaDestinations.includes(dest.toLowerCase()))
@@ -1274,6 +1345,11 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   extractEditorialText(finalizedArticle) {
     let html = `${finalizedArticle.title} ${finalizedArticle.content || ''}`;
     
+    // AMÉLIORATION: Retirer les métadonnées HTML (title, meta description) qui peuvent contenir des destinations non-asiatiques
+    html = html.replace(/<title[^>]*>.*?<\/title>/gi, '');
+    html = html.replace(/<meta[^>]*name=["']description["'][^>]*>/gi, '');
+    html = html.replace(/<meta[^>]*property=["']og:description["'][^>]*>/gi, '');
+    
     // 1. Retirer entièrement la section "Articles connexes"
     html = html.replace(/<h[2-6][^>]*>.*?Articles\s+connexes.*?<\/h[2-6]>.*?(?=<h[2-6]|$)/gis, '');
     
@@ -1290,12 +1366,64 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
 
   /**
    * Valide que le contenu ne contient pas de mentions non-asiatiques
+   * Ignore les mentions dans un contexte de comparaison/alternative/retour
    */
   validateNonAsiaContent(editorialText, title) {
     const finalNonAsiaDestinations = [
       'portugal','spain','espagne','lisbon','lisbonne','barcelona','barcelone','madrid','porto',
       'france','paris','italy','italie','rome','greece','grèce','turkey','turquie','istanbul',
-      'europe','america','usa','brazil','brésil','mexico','mexique'
+      'europe','america','usa','brazil','brésil','mexico','mexique',
+      // Moyen-Orient (NON ASIE)
+      'iraq','irak','iran','israel','israël','jordanie','jordan','liban','lebanon','syrie','syria',
+      'arabie','saudi','emirats','emirates','dubai','dubaï','qatar','koweit','kuwait','oman','yemen','yémen',
+      'bahrein','bahrain','kurdistan','bagdad','baghdad','erbil'
+    ];
+    
+    // VÉRIFICATION CRITIQUE DU TITRE - Rejet immédiat si destination non-asiatique dans le titre
+    const titleLower = (title || '').toLowerCase();
+    for (const dest of finalNonAsiaDestinations) {
+      if (titleLower.includes(dest)) {
+        return { hits: [{ term: dest, excerpt: `TITRE: "${title}" contient "${dest}"` }] };
+      }
+    }
+
+    // Contextes qui rendent la mention acceptable (comparaison, alternative, retour, chronologie passée)
+    const acceptableContextPatterns = [
+      /alternative\s+(en|à|vers|pour)\s+/i,
+      /retour\s+(en|à|vers|de)\s+/i,
+      /avant\s+de\s+partir\s+(en|à|pour)\s+/i,
+      /contrairement\s+à\s+/i,
+      /comparé\s+à\s+/i,
+      /versus\s+/i,
+      /vs\.?\s+/i,
+      /plutôt\s+que\s+/i,
+      /au\s+lieu\s+de\s+/i,
+      /loin\s+de\s+/i,
+      /originaire\s+de\s+/i,
+      /venant\s+de\s+/i,
+      /manque\s+(de\s+)?connaissances?\s+(sur|de)\s+/i,
+      /connaissance\s+limitée\s+(de|sur)\s+/i,
+      /ne\s+(disent|dit|mentionne)\s+pas/i,
+      /pas\s+d['']info(rmation)?s?\s+(sur|de)\s+/i,
+      /absence\s+(d['']info|de\s+données)/i,
+      /certaines\s+régions\s+(d['']|de\s+)/i,
+      // Chronologie du voyage (mentions historiques/passées)
+      /chronologie\s+du\s+voyage/i,
+      /début\s+du\s+voyage\s+(en|à)/i,
+      /\d{4}\s*:\s*(début|voyage|séjour|volontariat)/i,
+      /(avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre|janvier|février|mars)\s+\d{4}\s*:/i,
+      // Contexte historique du voyage (le voyageur a commencé ailleurs)
+      /commenc[ée]\s+(en|à|son\s+voyage)/i,
+      /a\s+commencé\s+(en|à)/i,
+      /débuté\s+(en|à)/i,
+      /parti\s+de/i,
+      /quitté/i,
+      // Retour futur (le voyageur prévoit de revenir)
+      /(reviendrai|reviendra|retournerai|retournera|retour)\s+(en|à|vers)/i,
+      /quand\s+(je|il|elle|on)\s+(reviendra|retournera)/i,
+      // Expressions anglaises équivalentes
+      /(returning|return|considering returning|considers returning)\s+(to|in|to work in)/i,
+      /(begin|begins|began)\s+to\s+consider\s+returning/i
     ];
 
     // match word-boundary (évite des faux positifs bêtes)
@@ -1309,10 +1437,19 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         const idx = editorialText.search(re);
         const start = Math.max(0, idx - 80);
         const end = Math.min(editorialText.length, idx + 80);
-        hits.push({
-          term,
-          excerpt: editorialText.slice(start, end).replace(/\s+/g, ' ')
-        });
+        const context = editorialText.slice(start, end).replace(/\s+/g, ' ');
+        
+        // Vérifier si le contexte est acceptable
+        const isAcceptableContext = acceptableContextPatterns.some(pattern => pattern.test(context));
+        
+        if (!isAcceptableContext) {
+          hits.push({
+            term,
+            excerpt: context
+          });
+        } else {
+          console.log(`   ⚠️ Mention "${term}" ignorée (contexte acceptable)`);
+        }
       }
     }
 
@@ -1642,6 +1779,59 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         console.error('   Détails:', error.response.data);
       }
       throw error;
+    }
+  }
+  /**
+   * Synchronise l'index de liens internes depuis articles-database.json
+   */
+  async syncInternalLinksIndex() {
+    const fs = await import('fs');
+    
+    try {
+      const dbContent = fs.default.readFileSync('articles-database.json', 'utf-8');
+      const db = JSON.parse(dbContent);
+      
+      // Extraire les mots-clés du titre
+      const extractKeywords = (title) => {
+        const stopWords = ['de', 'du', 'la', 'le', 'les', 'et', 'en', 'au', 'aux', 'pour', 'un', 'une', 'des', 'à', 'son', 'sa', 'ses', 'ce', 'cette', 'qui', 'que', 'comment', 'quoi', 'où'];
+        return title.toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .split(/[\s:,\-–]+/)
+          .filter(w => w.length > 2 && !stopWords.includes(w));
+      };
+      
+      // Détecter la catégorie
+      const detectCategory = (article) => {
+        const title = article.title.toLowerCase();
+        if (/visa|formalit/.test(title)) return 'visa';
+        if (/budget|cout|prix|argent/.test(title)) return 'budget';
+        if (/coworking|travail|remote/.test(title)) return 'coworking';
+        if (/logement|hotel|airbnb|quartier/.test(title)) return 'logement';
+        if (/transport|vol|avion|train/.test(title)) return 'transport';
+        if (/sante|assurance|medic/.test(title)) return 'sante';
+        return 'temoignage';
+      };
+      
+      // Construire l'index (top 100 articles les plus récents)
+      const internalLinks = {
+        articles: db.articles.slice(0, 100).map(a => ({
+          id: a.id,
+          slug: a.slug,
+          title: a.title,
+          url: a.url,
+          category: detectCategory(a),
+          keywords: extractKeywords(a.title),
+          excerpt: (a.excerpt || '').substring(0, 100)
+        })),
+        blacklist: ['spam', 'test', 'draft', '_obsolete']
+      };
+      
+      // Sauvegarder
+      fs.default.writeFileSync('data/internal-links.json', JSON.stringify(internalLinks, null, 2));
+      console.log(`   ✅ ${internalLinks.articles.length} articles indexés pour liens internes`);
+      
+    } catch (error) {
+      console.warn(`   ⚠️ Erreur sync index liens: ${error.message}`);
     }
   }
 }

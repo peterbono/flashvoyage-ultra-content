@@ -124,6 +124,54 @@ const ALTERNATIVE_SOURCES = {
     keywords: ['expat', 'expatrié', 'visa', 'asie', 'asia', 'nomade'],
     working: true
   },
+  reddit_solotravel: {
+    name: 'Reddit Solo Travel',
+    url: 'https://www.reddit.com/r/solotravel/new.json',
+    type: 'community',
+    keywords: [
+      // Mots-clés voyage solo génériques
+      'solo travel', 'voyage solo', 'backpacking', 'budget travel',
+      // Indonésie
+      'indonesia', 'indonésie', 'bali', 'jakarta', 'yogyakarta', 'bandung', 'surabaya', 'medan', 'ubud', 'seminyak', 'canggu', 'lombok',
+      // Vietnam
+      'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
+      // Thaïlande
+      'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'chiangmai', 'phuket', 'krabi', 'pattaya', 'koh samui', 'koh phangan', 'koh tao', 'pai', 'ayutthaya', 'sukhothai',
+      // Japon
+      'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'hokkaido', 'hokkaidō', 'hiroshima', 'nara', 'sapporo', 'fukuoka', 'okinawa', 'yokohama', 'nagoya', 'sendai',
+      // Corée du Sud
+      'korea', 'corée', 'south korea', 'corée du sud', 'seoul', 'séoul', 'busan', 'pusan', 'jeju', 'jeju island', 'incheon', 'daegu', 'gwangju', 'ulsan',
+      // Philippines
+      'philippines', 'philippine', 'manila', 'cebu', 'boracay', 'palawan', 'el nido', 'coron', 'siargao', 'bohol', 'davao', 'baguio', 'makati',
+      // Singapour
+      'singapore', 'singapour'
+    ],
+    working: true
+  },
+  reddit_backpacking: {
+    name: 'Reddit Backpacking',
+    url: 'https://www.reddit.com/r/backpacking/new.json',
+    type: 'community',
+    keywords: [
+      // Mots-clés backpacking génériques
+      'backpacking', 'backpack', 'budget travel', 'budget', 'cheap travel',
+      // Indonésie
+      'indonesia', 'indonésie', 'bali', 'jakarta', 'yogyakarta', 'bandung', 'surabaya', 'medan', 'ubud', 'seminyak', 'canggu', 'lombok',
+      // Vietnam
+      'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
+      // Thaïlande
+      'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'chiangmai', 'phuket', 'krabi', 'pattaya', 'koh samui', 'koh phangan', 'koh tao', 'pai', 'ayutthaya', 'sukhothai',
+      // Japon
+      'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'hokkaido', 'hokkaidō', 'hiroshima', 'nara', 'sapporo', 'fukuoka', 'okinawa', 'yokohama', 'nagoya', 'sendai',
+      // Corée du Sud
+      'korea', 'corée', 'south korea', 'corée du sud', 'seoul', 'séoul', 'busan', 'pusan', 'jeju', 'jeju island', 'incheon', 'daegu', 'gwangju', 'ulsan',
+      // Philippines
+      'philippines', 'philippine', 'manila', 'cebu', 'boracay', 'palawan', 'el nido', 'coron', 'siargao', 'bohol', 'davao', 'baguio', 'makati',
+      // Singapour
+      'singapore', 'singapour'
+    ],
+    working: true
+  },
   google_news: {
     name: 'Google News Asia',
     url: 'https://news.google.com/rss/search?q=travel+asia&hl=en&gl=US&ceid=US:en',
@@ -213,7 +261,7 @@ const FALLBACK_RSS_SOURCES = {
 const REDDIT_PROXY_SERVICES = [
   {
     name: 'Reddit API Proxy',
-    url: 'https://api.reddit.com/r/travel/hot.json?limit=10',
+    url: 'https://api.reddit.com/r/travel/hot.json?limit=50',
     headers: {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       'Accept': 'application/json',
@@ -230,7 +278,7 @@ const REDDIT_PROXY_SERVICES = [
   },
   {
     name: 'Reddit JSON Proxy',
-    url: 'https://www.reddit.com/r/travel/hot.json?limit=10&raw_json=1',
+    url: 'https://www.reddit.com/r/travel/hot.json?limit=50&raw_json=1',
     headers: {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       'Accept': 'application/json',
@@ -285,7 +333,7 @@ class UltraFreshComplete {
     // A. Tenter endpoint JSON
     if (!forceFixtures) {
       try {
-        const jsonUrl = `https://www.reddit.com/r/${subreddit}/hot.json?limit=25&raw_json=1`;
+        const jsonUrl = `https://www.reddit.com/r/${subreddit}/hot.json?limit=50&raw_json=1`;
         const response = await axios.get(jsonUrl, {
           headers: getRealisticRedditHeaders(),
           timeout: 20000
@@ -809,6 +857,40 @@ class UltraFreshComplete {
     );
   }
 
+  // Scraper Reddit Solo Travel
+  async scrapeRedditSoloTravel() {
+      console.log('🔍 Scraping Reddit r/solotravel...');
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+    return await this.fetchRedditWithCascade(
+      'solotravel',
+      ALTERNATIVE_SOURCES.reddit_solotravel.keywords,
+      (title) => this.extractGeoMeta(title),
+      (data, stats) => this.computeSmartScore(data, stats),
+      (title, text, keywords) => this.calculateRelevance(title, text, keywords),
+      (slots, geo) => this.generateWidgetPlan(slots, geo),
+      (sub) => this.loadSubredditStats(sub),
+      (audit) => this.writeSmartAudit(audit)
+    );
+  }
+
+  // Scraper Reddit Backpacking
+  async scrapeRedditBackpacking() {
+      console.log('🔍 Scraping Reddit r/backpacking...');
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+    return await this.fetchRedditWithCascade(
+      'backpacking',
+      ALTERNATIVE_SOURCES.reddit_backpacking.keywords,
+      (title) => this.extractGeoMeta(title),
+      (data, stats) => this.computeSmartScore(data, stats),
+      (title, text, keywords) => this.calculateRelevance(title, text, keywords),
+      (slots, geo) => this.generateWidgetPlan(slots, geo),
+      (sub) => this.loadSubredditStats(sub),
+      (audit) => this.writeSmartAudit(audit)
+    );
+  }
+
   // Scraper Google News Nomade
   async scrapeGoogleNewsNomad() {
     try {
@@ -987,6 +1069,24 @@ class UltraFreshComplete {
       } catch (error) {
         console.log(`⚠️ Reddit Nomade échoué: ${error.message}`);
       }
+
+      try {
+        // Scraper Reddit Solo Travel (mode local) - TOUJOURS activé
+        const redditSoloTravelArticles = await this.scrapeRedditSoloTravel();
+        allArticles.push(...redditSoloTravelArticles);
+        console.log(`✅ Reddit Solo Travel: ${redditSoloTravelArticles.length} articles trouvés`);
+      } catch (error) {
+        console.log(`⚠️ Reddit Solo Travel échoué: ${error.message}`);
+      }
+
+      try {
+        // Scraper Reddit Backpacking (mode local) - TOUJOURS activé
+        const redditBackpackingArticles = await this.scrapeRedditBackpacking();
+        allArticles.push(...redditBackpackingArticles);
+        console.log(`✅ Reddit Backpacking: ${redditBackpackingArticles.length} articles trouvés`);
+      } catch (error) {
+        console.log(`⚠️ Reddit Nomade échoué: ${error.message}`);
+      }
     }
 
     // Contenu simulé supprimé - utilisation uniquement de vrais flux RSS
@@ -1153,7 +1253,7 @@ class UltraFreshComplete {
     let retries = 3;
     while (retries > 0) {
       try {
-        travelResponse = await axios.get('https://oauth.reddit.com/r/travel/hot.json?limit=10', {
+        travelResponse = await axios.get('https://oauth.reddit.com/r/travel/hot.json?limit=50', {
           headers: {
             'Authorization': `Bearer ${accessToken}`,
             'User-Agent': REDDIT_API_CONFIG.userAgent
@@ -1180,7 +1280,7 @@ class UltraFreshComplete {
     retries = 3;
     while (retries > 0) {
       try {
-        nomadResponse = await axios.get('https://oauth.reddit.com/r/digitalnomad/hot.json?limit=10', {
+        nomadResponse = await axios.get('https://oauth.reddit.com/r/digitalnomad/hot.json?limit=50', {
           headers: {
             'Authorization': `Bearer ${accessToken}`,
             'User-Agent': REDDIT_API_CONFIG.userAgent
@@ -1192,6 +1292,60 @@ class UltraFreshComplete {
         retries--;
         if (retries > 0) {
           console.log(`⚠️ Retry Reddit r/digitalnomad (${3 - retries}/3)...`);
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        } else {
+          throw error;
+        }
+      }
+    }
+
+    // Délai entre les requêtes
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Scraper r/solotravel avec retry
+    let solotravelResponse;
+    retries = 3;
+    while (retries > 0) {
+      try {
+        solotravelResponse = await axios.get('https://oauth.reddit.com/r/solotravel/hot.json?limit=50', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'User-Agent': REDDIT_API_CONFIG.userAgent
+          },
+          timeout: 15000
+        });
+        break;
+      } catch (error) {
+        retries--;
+        if (retries > 0) {
+          console.log(`⚠️ Retry Reddit r/solotravel (${3 - retries}/3)...`);
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        } else {
+          throw error;
+        }
+      }
+    }
+
+    // Délai entre les requêtes
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Scraper r/backpacking avec retry
+    let backpackingResponse;
+    retries = 3;
+    while (retries > 0) {
+      try {
+        backpackingResponse = await axios.get('https://oauth.reddit.com/r/backpacking/hot.json?limit=50', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'User-Agent': REDDIT_API_CONFIG.userAgent
+          },
+          timeout: 15000
+        });
+        break;
+      } catch (error) {
+        retries--;
+        if (retries > 0) {
+          console.log(`⚠️ Retry Reddit r/backpacking (${3 - retries}/3)...`);
           await new Promise(resolve => setTimeout(resolve, 2000));
         } else {
           throw error;
@@ -1280,6 +1434,98 @@ class UltraFreshComplete {
               date: new Date(data.created_utc * 1000).toISOString(),
               source: 'Reddit Digital Nomad (API)',
               type: 'nomade',
+              relevance: relevance,
+              smartScore: Math.round(smart.total),
+              smartDecision: smart.decision,
+              smartScores: smart.scores,
+              affiliateSlots: smart.affiliate_slots || [],
+              geo: this.extractGeoMeta(data.title),
+              widget_plan: this.generateWidgetPlan(smart.affiliate_slots || [], this.extractGeoMeta(data.title))
+            });
+          }
+        });
+      }
+
+      // Traiter r/solotravel
+      if (solotravelResponse?.data?.data?.children) {
+        solotravelResponse.data.data.children.forEach(post => {
+          const data = post.data;
+          const relevance = this.calculateRelevance(
+            data.title, 
+            data.selftext, 
+            ALTERNATIVE_SOURCES.reddit_solotravel.keywords
+          );
+
+          if (relevance >= 30) {
+            const smart = this.computeSmartScore(data, this.loadSubredditStats('r/solotravel'));
+            const audit = {
+              post_id: data.id,
+              subreddit: 'r/solotravel',
+              title: data.title,
+              url: `https://reddit.com${data.permalink}`,
+              created_utc: data.created_utc,
+              age_hours: Math.round((Date.now() - data.created_utc * 1000) / 3600000),
+              scores: smart.scores,
+              total: Math.round(smart.total),
+              decision: smart.decision,
+              contextual: smart.contextual || false,
+              reasons: smart.reasons || []
+            };
+            this.writeSmartAudit(audit);
+
+            allArticles.push({
+              title: data.title,
+              link: `https://reddit.com${data.permalink}`,
+              content: data.selftext || '',
+              date: new Date(data.created_utc * 1000).toISOString(),
+              source: 'Reddit Solo Travel (API)',
+              type: 'community',
+              relevance: relevance,
+              smartScore: Math.round(smart.total),
+              smartDecision: smart.decision,
+              smartScores: smart.scores,
+              affiliateSlots: smart.affiliate_slots || [],
+              geo: this.extractGeoMeta(data.title),
+              widget_plan: this.generateWidgetPlan(smart.affiliate_slots || [], this.extractGeoMeta(data.title))
+            });
+          }
+        });
+      }
+
+      // Traiter r/backpacking
+      if (backpackingResponse?.data?.data?.children) {
+        backpackingResponse.data.data.children.forEach(post => {
+          const data = post.data;
+          const relevance = this.calculateRelevance(
+            data.title, 
+            data.selftext, 
+            ALTERNATIVE_SOURCES.reddit_backpacking.keywords
+          );
+
+          if (relevance >= 30) {
+            const smart = this.computeSmartScore(data, this.loadSubredditStats('r/backpacking'));
+            const audit = {
+              post_id: data.id,
+              subreddit: 'r/backpacking',
+              title: data.title,
+              url: `https://reddit.com${data.permalink}`,
+              created_utc: data.created_utc,
+              age_hours: Math.round((Date.now() - data.created_utc * 1000) / 3600000),
+              scores: smart.scores,
+              total: Math.round(smart.total),
+              decision: smart.decision,
+              contextual: smart.contextual || false,
+              reasons: smart.reasons || []
+            };
+            this.writeSmartAudit(audit);
+
+            allArticles.push({
+              title: data.title,
+              link: `https://reddit.com${data.permalink}`,
+              content: data.selftext || '',
+              date: new Date(data.created_utc * 1000).toISOString(),
+              source: 'Reddit Backpacking (API)',
+              type: 'community',
               relevance: relevance,
               smartScore: Math.round(smart.total),
               smartDecision: smart.decision,

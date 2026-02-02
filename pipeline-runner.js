@@ -222,7 +222,16 @@ class PipelineRunner {
       if (!finalized) {
         throw new Error('Finalizer a échoué');
       }
+      
+      // DEBUG: Vérifier les widgets APRÈS runFinalizer retourne
+      const widgetsAfterRunFinalizer = this.finalizer.detectRenderedWidgets(finalized.content);
+      console.log(`🔍 DEBUG pipeline-runner: Widgets dans finalized.content APRÈS runFinalizer: count=${widgetsAfterRunFinalizer.count}, types=[${widgetsAfterRunFinalizer.types.join(', ')}]`);
+      
       pipelineReport.endStep('finalizer', finalized, { status: 'pass' });
+      
+      // DEBUG: Vérifier les widgets APRÈS endStep
+      const widgetsAfterEndStep = this.finalizer.detectRenderedWidgets(finalized.content);
+      console.log(`🔍 DEBUG pipeline-runner: Widgets dans finalized.content APRÈS endStep: count=${widgetsAfterEndStep.count}, types=[${widgetsAfterEndStep.types.join(', ')}]`);
 
       // Vérifier si le finalizer a bloqué
       if (finalized.qaReport?.blocking === true) {
@@ -231,9 +240,24 @@ class PipelineRunner {
         console.error('\n❌ PIPELINE_BLOCKED: Finalizer a détecté des violations bloquantes');
         console.error(`   Raisons: ${finalized.qaReport.blocking_reasons?.join(', ') || 'unknown'}`);
         
+        // DEBUG: Vérifier les widgets même si blocking
+        const widgetsInFinalizedBlocked = this.finalizer.detectRenderedWidgets(finalized.content);
+        console.log(`🔍 DEBUG PIPELINE (BLOCKED): Widgets dans finalized.content: count=${widgetsInFinalizedBlocked.count}, types=[${widgetsInFinalizedBlocked.types.join(', ')}]`);
+        
         // TEMPORAIRE: Continuer quand même pour permettre la publication (truth pack à corriger)
         const ENABLE_BLOCKING = parseBool(process.env.ENABLE_PIPELINE_BLOCKING ?? '1');
         if (ENABLE_BLOCKING) {
+          // DEBUG: Créer finalArticle même si blocking pour voir les widgets
+          const finalArticleBlocked = {
+            title: generated.title || finalized.title,
+            content: finalized.content,
+            excerpt: finalized.excerpt,
+            qaReport: finalized.qaReport,
+            antiHallucinationReport: null
+          };
+          const widgetsInFinalArticleBlocked = this.finalizer.detectRenderedWidgets(finalArticleBlocked.content);
+          console.log(`🔍 DEBUG PIPELINE (BLOCKED): Widgets dans finalArticleBlocked.content: count=${widgetsInFinalArticleBlocked.count}, types=[${widgetsInFinalArticleBlocked.types.join(', ')}]`);
+          
           return pipelineReport.finalize(false, null);
         } else {
           console.warn('⚠️ Blocking détecté mais désactivé - continuation du pipeline');
@@ -282,6 +306,10 @@ class PipelineRunner {
       }
 
       // Pipeline réussi
+      // DEBUG: Vérifier les widgets dans finalized.content avant de créer finalArticle
+      const widgetsInFinalized = this.finalizer.detectRenderedWidgets(finalized.content);
+      console.log(`🔍 DEBUG PIPELINE: Widgets dans finalized.content: count=${widgetsInFinalized.count}, types=[${widgetsInFinalized.types.join(', ')}]`);
+      
       const finalArticle = {
         title: generated.title || finalized.title,
         content: finalized.content,
@@ -289,9 +317,20 @@ class PipelineRunner {
         qaReport: finalized.qaReport,
         antiHallucinationReport: antiHallucination
       };
+      
+      // DEBUG: Vérifier les widgets dans finalArticle.content après création
+      const widgetsInFinalArticle = this.finalizer.detectRenderedWidgets(finalArticle.content);
+      console.log(`🔍 DEBUG PIPELINE: Widgets dans finalArticle.content: count=${widgetsInFinalArticle.count}, types=[${widgetsInFinalArticle.types.join(', ')}]`);
 
       console.log('\n✅ PIPELINE_RUNNER: Pipeline terminé avec succès');
       const finalReport = pipelineReport.finalize(true, finalArticle);
+      
+      // DEBUG: Vérifier les widgets dans report.finalArticle.content après finalize
+      if (finalReport.report?.finalArticle?.content) {
+        const widgetsInReport = this.finalizer.detectRenderedWidgets(finalReport.report.finalArticle.content);
+        console.log(`🔍 DEBUG PIPELINE: Widgets dans report.finalArticle.content: count=${widgetsInReport.count}, types=[${widgetsInReport.types.join(', ')}]`);
+      }
+      
       return finalReport;
 
     } catch (error) {
@@ -510,6 +549,11 @@ class PipelineRunner {
 
       const finalized = await this.finalizer.finalizeArticle(article, analysis, pipelineContext);
       console.log(`   ✅ Finalizer: article finalisé (${finalized.qaReport?.checks?.length || 0} checks)`);
+      
+      // DEBUG: Vérifier les widgets IMMÉDIATEMENT après finalizeArticle retourne
+      const widgetsInFinalizedImmediate = this.finalizer.detectRenderedWidgets(finalized.content);
+      console.log(`🔍 DEBUG runFinalizer: Widgets dans finalized.content IMMÉDIATEMENT après finalizeArticle: count=${widgetsInFinalizedImmediate.count}, types=[${widgetsInFinalizedImmediate.types.join(', ')}]`);
+      
       return finalized;
     } catch (error) {
       console.error(`   ❌ Finalizer: ${error.message}`);

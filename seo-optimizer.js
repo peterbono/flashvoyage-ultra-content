@@ -1271,10 +1271,14 @@ class SeoOptimizer {
     }
     
     // Matching basé sur seoData.category + keywords
+    console.log(`   🔗 SEO_INTERNAL_LINKS: ${internalLinksIndex.articles.length} articles dans l'index`);
+    console.log(`   🔗 SEO_INTERNAL_LINKS: keywords=[${(seoData.keywords || []).slice(0, 5).join(', ')}] places=[${(seoData.places || []).slice(0, 3).join(', ')}]`);
+    
     const matchedLinks = this.matchInternalLinks(internalLinksIndex, seoData);
     
     if (matchedLinks.length === 0) {
       // Aucun lien matché, retourner HTML inchangé
+      console.log(`   ⚠️ SEO_INTERNAL_LINKS: aucun lien matché`);
       return html;
     }
     
@@ -1317,6 +1321,11 @@ class SeoOptimizer {
     // Normaliser les keywords de seoData
     const seoKeywords = (seoData.keywords || []).map(k => this.normalizeText(k));
     const seoCategory = seoData.category ? this.normalizeText(seoData.category) : null;
+    
+    // AMÉLIORATION: Extraire destination de l'article depuis seoData.places ou pipelineContext
+    const articleDestination = seoData.places && seoData.places.length > 0 
+      ? this.normalizeText(seoData.places[0])
+      : null;
     
     for (const article of index.articles) {
       // Vérifier blacklist
@@ -1366,6 +1375,39 @@ class SeoOptimizer {
         }
       }
       
+      // AMÉLIORATION: Matching par destination (bonus/pénalité)
+      if (articleDestination) {
+        // Extraire destination de l'article candidat depuis keywords ou titre
+        const candidateTitle = this.normalizeText(article.title || '');
+        const candidateKeywords = article.keywords 
+          ? article.keywords.map(k => this.normalizeText(k))
+          : [];
+        
+        // Chercher destination dans titre ou keywords
+        const destinationKeywords = ['malaisie', 'malaysia', 'vietnam', 'thailande', 'thailand', 'thaïlande',
+                                     'indonesie', 'indonésie', 'indonesia', 'bali', 'japon', 'japan', 
+                                     'philippines', 'singapour', 'singapore'];
+        
+        let candidateDestination = null;
+        for (const destKeyword of destinationKeywords) {
+          if (candidateTitle.includes(destKeyword) || candidateKeywords.some(k => k.includes(destKeyword))) {
+            candidateDestination = destKeyword;
+            break;
+          }
+        }
+        
+        // Score bonus pour match exact destination (+20 points)
+        if (candidateDestination && articleDestination.includes(candidateDestination)) {
+          score += 20;
+          console.log(`   ✅ INTERNAL_LINK_MATCH: article_dest=${articleDestination} link_dest=${candidateDestination} score_bonus=+20`);
+        }
+        // Pénalité pour destination différente (-10 points)
+        else if (candidateDestination && !articleDestination.includes(candidateDestination)) {
+          score -= 10;
+          console.log(`   ⚠️ INTERNAL_LINK_MISMATCH: article_dest=${articleDestination} link_dest=${candidateDestination} score_penalty=-10`);
+        }
+      }
+      
       if (score > 0) {
         matched.push({
           ...article,
@@ -1375,7 +1417,16 @@ class SeoOptimizer {
     }
     
     // Trier par score décroissant
-    return matched.sort((a, b) => b.matchScore - a.matchScore);
+    const sorted = matched.sort((a, b) => b.matchScore - a.matchScore);
+    
+    // AMÉLIORATION: Filtrer les liens avec score < 5 (seuil de pertinence)
+    const filtered = sorted.filter(article => article.matchScore >= 5);
+    
+    if (filtered.length < sorted.length) {
+      console.log(`   🔗 Liens filtrés: ${sorted.length} → ${filtered.length} (seuil pertinence: 5)`);
+    }
+    
+    return filtered;
   }
 
   /**
@@ -1385,48 +1436,120 @@ class SeoOptimizer {
    * @returns {string} HTML modifié
    */
   injectLinksIntoRelatedSection(html, links) {
-    // Détecter la section "Articles connexes"
-    const relatedSectionRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
-    const relatedMatch = html.match(relatedSectionRegex);
+    // STRATÉGIE: Injecter les liens DANS le corps du texte (premiers 30%)
+    // Pas dans une section "Articles connexes" séparée
     
-    // Générer le HTML des liens
-    const linksHtml = links.map(link => 
-      `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(link.title)}</a></li>`
-    ).join('\n');
+    let modifiedHtml = html;
+    let insertedCount = 0;
     
-    const relatedSectionHtml = `<h2>Articles connexes</h2>\n<ul>\n${linksHtml}\n</ul>`;
+    // Trouver tous les paragraphes
+    const paragraphRegex = /<p>([^<]{50,})<\/p>/g;
+    const paragraphs = [];
+    let match;
     
-    if (relatedMatch) {
-      // Section existe : trouver la fin de la section et remplacer/ajouter
-      const sectionStartIndex = relatedMatch.index;
-      
-      // Trouver la fin de la section (prochaine balise h2, h3 ou fin de contenu)
-      const nextH2 = html.indexOf('<h2>', sectionStartIndex + relatedMatch[0].length);
-      const nextH3 = html.indexOf('<h3>', sectionStartIndex + relatedMatch[0].length);
-      const endOfContent = html.length;
-      
-      const sectionEndIndex = Math.min(
-        nextH2 !== -1 ? nextH2 : endOfContent,
-        nextH3 !== -1 ? nextH3 : endOfContent
-      );
-      
-      // Vérifier si la section contient déjà une liste <ul>
-      const sectionContent = html.substring(sectionStartIndex, sectionEndIndex);
-      if (sectionContent.includes('<ul>')) {
-        // Remplacer la liste existante
-        const ulRegex = /<ul>[\s\S]*?<\/ul>/i;
-        const newSectionContent = sectionContent.replace(ulRegex, `<ul>\n${linksHtml}\n</ul>`);
-        return html.substring(0, sectionStartIndex) + newSectionContent + html.substring(sectionEndIndex);
-      } else {
-        // Ajouter la liste après le titre
-        const afterTitle = html.substring(sectionStartIndex + relatedMatch[0].length, sectionEndIndex);
-        const newSectionContent = relatedMatch[0] + '\n<ul>\n' + linksHtml + '\n</ul>' + afterTitle;
-        return html.substring(0, sectionStartIndex) + newSectionContent + html.substring(sectionEndIndex);
-      }
-    } else {
-      // Section absente : créer à la fin du contenu
-      return html + '\n\n' + relatedSectionHtml;
+    while ((match = paragraphRegex.exec(html)) !== null) {
+      paragraphs.push({
+        index: match.index,
+        fullMatch: match[0],
+        content: match[1]
+      });
     }
+    
+    if (paragraphs.length === 0) {
+      // Fallback: ajouter section Articles connexes à la fin
+      const linksHtml = links.map(link => 
+        `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(link.title)}</a></li>`
+      ).join('\n');
+      return html + `\n\n<h2>Articles connexes</h2>\n<ul>\n${linksHtml}\n</ul>`;
+    }
+    
+    // AMÉLIORATION: Forcer insertion dans les 30% premiers (au moins 2 liens)
+    const targetParagraphCount = Math.max(2, Math.floor(paragraphs.length * 0.3));
+    const targetParagraphs = paragraphs.slice(0, targetParagraphCount);
+    
+    // AMÉLIORATION: Utiliser les meilleurs matches (score élevé) pour les premiers liens
+    const sortedLinks = links.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0));
+    
+    // Distribuer les liens dans les paragraphes cibles
+    // AMÉLIORATION: Forcer au moins 2 liens dans les 30% premiers
+    const minLinksInFirstThird = Math.min(2, sortedLinks.length, targetParagraphs.length);
+    
+    for (let i = 0; i < Math.max(minLinksInFirstThird, sortedLinks.length) && i < targetParagraphs.length; i++) {
+      const link = sortedLinks[i];
+      const para = targetParagraphs[i];
+      
+      // AMÉLIORATION: Créer une ancre précise (2-5 mots du titre)
+      const titleWords = link.title.split(/\s+/).filter(w => w.length > 2);
+      const anchorText = titleWords.slice(0, Math.min(5, titleWords.length)).join(' ');
+      
+      // AMÉLIORATION: Éviter ancres génériques
+      const badAnchors = ['cliquez ici', 'ici', 'lien', 'voir', 'plus', 'en savoir plus'];
+      const finalAnchor = badAnchors.some(bad => anchorText.toLowerCase().includes(bad)) 
+        ? link.title.substring(0, 50) 
+        : anchorText;
+      
+      const linkHtml = `<a href="${this.escapeHtml(link.url)}">${this.escapeHtml(finalAnchor)}</a>`;
+      
+      // Trouver un bon endroit pour insérer (après une phrase)
+      const sentences = para.content.split(/(?<=[.!?])\s+/);
+      if (sentences.length >= 2) {
+        // Insérer après la première phrase
+        const insertPoint = sentences[0].length;
+        const newContent = para.content.substring(0, insertPoint) + 
+          ` Pour en savoir plus, consultez notre article sur ${linkHtml}.` +
+          para.content.substring(insertPoint);
+        
+        modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
+        insertedCount++;
+        console.log(`   🔗 Lien inséré dans 30% premiers: "${finalAnchor}"`);
+      }
+    }
+    
+    // AMÉLIORATION: Ajouter lien page pilier si manquant
+    const hasPillarLink = modifiedHtml.match(/href="[^"]*(?:guide|destination|conseils|budget)[^"]*"/i);
+    if (!hasPillarLink && links.length > 0) {
+      // Chercher un lien pilier dans les liens disponibles
+      const pillarLink = links.find(l => {
+        const url = (l.url || '').toLowerCase();
+        const title = (l.title || '').toLowerCase();
+        return /guide|destination|conseils|budget/.test(url) || /guide|destination|conseils|budget/.test(title);
+      });
+      
+      if (pillarLink) {
+        // Insérer dans les 30% premiers si possible
+        if (targetParagraphs.length > insertedCount) {
+          const para = targetParagraphs[insertedCount];
+          const titleWords = pillarLink.title.split(/\s+/).filter(w => w.length > 2);
+          const anchorText = titleWords.slice(0, Math.min(5, titleWords.length)).join(' ');
+          const linkHtml = `<a href="${this.escapeHtml(pillarLink.url)}">${this.escapeHtml(anchorText)}</a>`;
+          
+          const sentences = para.content.split(/(?<=[.!?])\s+/);
+          if (sentences.length >= 2) {
+            const insertPoint = sentences[0].length;
+            const newContent = para.content.substring(0, insertPoint) + 
+              ` Découvrez notre ${linkHtml} pour plus d'informations.` +
+              para.content.substring(insertPoint);
+            
+            modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
+            insertedCount++;
+            console.log(`   🔗 Lien pilier ajouté: "${anchorText}"`);
+          }
+        }
+      }
+    }
+    
+    // Si on n'a pas pu insérer tous les liens, ajouter une section à la fin
+    const remainingLinks = sortedLinks.slice(insertedCount);
+    if (remainingLinks.length > 0) {
+      const linksHtml = remainingLinks.map(link => {
+        const titleWords = link.title.split(/\s+/).filter(w => w.length > 2);
+        const anchorText = titleWords.slice(0, Math.min(5, titleWords.length)).join(' ');
+        return `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(anchorText)}</a></li>`;
+      }).join('\n');
+      modifiedHtml += `\n\n<h3>À lire également</h3>\n<ul>\n${linksHtml}\n</ul>`;
+    }
+    
+    return modifiedHtml;
   }
 
   /**
