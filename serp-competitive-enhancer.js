@@ -356,12 +356,7 @@ class SerpCompetitiveEnhancer {
     // Ajouter section "Limites et biais" si absente
     const limitesPattern = /<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/i;
     const hasLimites = limitesPattern.test(html);
-    const limitesCount = (html.match(/<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi) || []).length;
-    
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'serp-competitive-enhancer.js:357',message:'reinforceEEAT: check limites',data:{hasLimites,limitesCount,includesLimites:html.includes('Limites'),includesBiais:html.includes('biais')},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-    // #endregion
-    
+    const limitesCount = (html.match(/<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi) || []).length;    
     if (!hasLimites && limitesCount === 0 && !html.includes('Limites') && !html.includes('biais')) {
       const limitsSection = this.createLimitsSection(story, evidence);
       const insertionPoint = html.indexOf('<h2>Nos recommandations</h2>');
@@ -369,12 +364,7 @@ class SerpCompetitiveEnhancer {
         enhancedHtml = enhancedHtml.substring(0, insertionPoint) + 
                       limitsSection + 
                       enhancedHtml.substring(insertionPoint);
-        console.log('   ✅ Section "Limites et biais" ajoutée');
-        
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'serp-competitive-enhancer.js:365',message:'reinforceEEAT: limites inserted',data:{inserted:true,afterCount:(enhancedHtml.match(/<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi)||[]).length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-        // #endregion
-      }
+        console.log('   ✅ Section "Limites et biais" ajoutée');      }
     }
 
     // Ajouter section "Source des informations" si absente

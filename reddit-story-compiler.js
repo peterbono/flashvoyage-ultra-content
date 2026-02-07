@@ -76,6 +76,19 @@ export function compileRedditStory(input) {
     story.open_questions = compileOpenQuestions(fullText, pattern, evidence);
   }
   
+  // Garantir au moins un snippet narratif issu du selftext si le post a assez de contenu
+  const hasNarrativeSnippet = evidence.source_snippets.some(s => s.origin === 'selftext');
+  if (!hasNarrativeSnippet && fullText.length >= 100) {
+    const fallbackSnippet = fullText.trim().substring(0, 280).trim();
+    if (fallbackSnippet.length >= 20) {
+      evidence.source_snippets.push({
+        section: 'context.summary',
+        snippet: fallbackSnippet,
+        origin: 'selftext'
+      });
+    }
+  }
+
   // META
   const meta = {
     story_type: pattern.story_type || 'mixed',

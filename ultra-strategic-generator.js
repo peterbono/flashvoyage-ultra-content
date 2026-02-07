@@ -261,6 +261,11 @@ class UltraStrategicGenerator {
 
   // Vérifier si l'article est déjà publié
   isArticleAlreadyPublished(title, redditUrl = null) {
+    // Log pour debug
+    console.log(`🔍 Vérification duplication: titre="${title}", URL="${redditUrl || 'N/A'}"`);
+    console.log(`   Cache URLs: ${this.publishedRedditUrls.size} URLs`);
+    console.log(`   Cache titres: ${this.publishedArticles.size} titres`);
+    
     // PRIORITÉ 1: Vérifier l'URL Reddit source (plus fiable)
     if (redditUrl && this.publishedRedditUrls.has(redditUrl)) {
       console.log(`⚠️ Article Reddit déjà publié (URL): ${redditUrl}`);
@@ -271,6 +276,7 @@ class UltraStrategicGenerator {
     
     // Vérification exacte du titre
     if (this.publishedArticles.has(normalizedTitle)) {
+      console.log(`⚠️ Article déjà publié (titre exact): "${normalizedTitle}"`);
       return true;
     }
     
@@ -288,11 +294,12 @@ class UltraStrategicGenerator {
       
       // Si plus de 3 mots-clés en commun, considérer comme similaire
       if (commonCount >= 3) {
-        console.log(`⚠️ Article similaire détecté: "${publishedTitle}" vs "${normalizedTitle}"`);
+        console.log(`⚠️ Article similaire détecté: "${publishedTitle}" vs "${normalizedTitle}" (${commonCount} mots-clés en commun)`);
         return true;
       }
     }
     
+    console.log(`   ✅ Article non publié - OK pour publication`);
     return false;
   }
 

@@ -306,6 +306,15 @@ export class RealStatsScraper {
         context = `Nos données actuelles montrent que les prix d'hébergement à ${city} oscillent entre ${stats.min_price}€ et ${stats.max_price}€ par nuit. Comparer les sites peut vous faire économiser jusqu'à ${stats.savings_percent}% (${stats.sample_size} hôtels analysés).`;
         break;
 
+      case 'esim':
+      case 'connectivity':
+        // Les widgets eSIM/connectivity n'ont pas de stats de prix dynamiques
+        // Utiliser un contexte informatif basé sur la destination
+        stats = { type: 'informational' };
+        const dest = city || geoData.country || 'votre destination';
+        context = `Restez connecté pendant votre voyage à ${dest}. Une eSIM vous permet d'avoir internet dès votre arrivée, sans chercher une carte SIM locale.`;
+        break;
+
       default:
         throw new Error(`ERREUR CRITIQUE: Type de widget non supporté: ${widgetType}. Refus de publier avec des données inventées.`);
     }

@@ -65,6 +65,7 @@ npm run start:auto-publisher
    - `WORDPRESS_USERNAME` 
    - `WORDPRESS_APP_PASSWORD`
    - `PEXELS_API_KEY`
+   - `OPENAI_API_KEY` (déjà utilisé par la CI pour les tests en mode online)
 3. **L'automatisation se lance automatiquement** tous les jours à 9h UTC
 
 ### Vercel

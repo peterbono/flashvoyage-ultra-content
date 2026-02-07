@@ -96,8 +96,8 @@ function generateWidgetScript(placement, geo_defaults) {
       return `<!-- Widget eSIM non trouvé -->`;
 
     case 'insurance':
-      // VRAI WIDGET Insurance SafetyWing
-      const insuranceWidget = REAL_TRAVELPAYOUTS_WIDGETS.insurance?.safetywing?.nomadInsurance;
+      // VRAI WIDGET Insurance VisitorCoverage (travel medical)
+      const insuranceWidget = REAL_TRAVELPAYOUTS_WIDGETS.insurance?.visitorCoverage?.travelMedical;
       if (insuranceWidget && insuranceWidget.script) {
         return insuranceWidget.script;
       }

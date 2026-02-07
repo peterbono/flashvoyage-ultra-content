@@ -6,29 +6,9 @@
  * sans utiliser de LLM - uniquement heuristiques et regex
  */
 
-// Liste des destinations Asie (réutilisée du code existant)
-const ASIA_DESTINATIONS = [
-  // Indonésie
-  'indonesia', 'indonésie', 'bali', 'jakarta', 'yogyakarta', 'bandung', 'surabaya', 'medan', 'ubud', 'seminyak', 'canggu', 'lombok',
-  // Vietnam
-  'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
-  // Thaïlande
-  'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'chiangmai', 'phuket', 'krabi', 'pattaya', 'koh samui', 'koh phangan', 'koh tao', 'pai', 'ayutthaya', 'sukhothai',
-  // Japon
-  'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'hokkaido', 'hokkaidō', 'hiroshima', 'nara', 'sapporo', 'fukuoka', 'okinawa', 'yokohama', 'nagoya', 'sendai',
-  // Corée du Sud
-  'korea', 'corée', 'south korea', 'corée du sud', 'seoul', 'séoul', 'busan', 'pusan', 'jeju', 'jeju island', 'incheon', 'daegu', 'gwangju', 'ulsan',
-  // Philippines
-  'philippines', 'philippine', 'manila', 'cebu', 'boracay', 'palawan', 'el nido', 'coron', 'siargao', 'bohol', 'davao', 'baguio', 'makati',
-  // Singapour
-  'singapore', 'singapour'
-];
-
-// Villes majeures supplémentaires (pour heuristique capitalisation)
-const MAJOR_CITIES = [
-  'paris', 'london', 'new york', 'sydney', 'melbourne', 'dubai', 'hong kong', 'taipei', 'kuala lumpur',
-  'mumbai', 'delhi', 'bangalore', 'chennai', 'kolkata', 'shanghai', 'beijing', 'guangzhou', 'shenzhen'
-];
+// Destinations et villes: chargées dynamiquement depuis la BDD OpenFlights (5600+ entrées)
+// Plus besoin de listes hardcodées limitées
+import { isKnownLocation, getAllLocationNames } from './airport-lookup.js';
 
 // Whitelist emojis utiles (à garder si utilisés comme signal)
 const EMOJI_WHITELIST = ['⚠️', '✅', '❌', '💰', '✈️', '🏥', '🚨'];
@@ -350,8 +330,8 @@ function extractLocations(text) {
   const results = [];
   const lowerText = text.toLowerCase();
   
-  // Heuristique 1: Dictionnaire interne (destinations Asie + villes majeures)
-  const allLocations = [...ASIA_DESTINATIONS, ...MAJOR_CITIES];
+  // Heuristique 1: BDD OpenFlights complète (5600+ villes/pays)
+  const allLocations = getAllLocationNames();
   
   for (const location of allLocations) {
     const regex = new RegExp(`\\b${location.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');

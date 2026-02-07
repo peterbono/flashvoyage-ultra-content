@@ -28,6 +28,8 @@
  * - { html: string, report: Object }
  */
 
+import { isKnownLocation } from './airport-lookup.js';
+
 class SeoOptimizer {
   constructor() {
     this.tokenAudit = [];
@@ -832,8 +834,7 @@ class SeoOptimizer {
    * @param {Object} report - Rapport QA
    * @returns {string} HTML modifié
    */
-  injectMeta(html, meta, report) {
-    if (!html || typeof html !== 'string') {
+  injectMeta(html, meta, report) {    if (!html || typeof html !== 'string') {
       return html;
     }
     
@@ -862,12 +863,17 @@ class SeoOptimizer {
         modifiedHtml = modifiedHtml.replace(/(<head[^>]*>)/i, `$1\n<title>${this.escapeHtml(meta.title)}</title>`);
         console.log(`   ✅ SEO_META_UPDATED: title ajouté dans <head>`);
       } else {
-        // Ajouter <head> minimal avec <title>
-        modifiedHtml = `<head><title>${this.escapeHtml(meta.title)}</title></head>\n${modifiedHtml}`;
-        console.log(`   ✅ SEO_META_UPDATED: <head> minimal ajouté avec title`);
+        // FIX H2: NE PAS injecter <head><title> dans le contenu WordPress!
+        // WordPress gère les balises <title> et <meta> via le thème et les plugins SEO (Yoast, etc.)
+        // Injecter ces balises dans le body du contenu pollue le DOM et crée des problèmes SEO        console.log(`   ℹ️ SEO_META_SKIPPED: Pas de <head> dans le contenu - WordPress gère les meta tags via API/plugins`);
+        // Ne rien injecter - les métadonnées sont passées à WordPress via l'API (title, excerpt)
       }
     }
     
+    // FIX H2: NE PAS injecter <meta name="description"> dans le contenu WordPress!
+    // La meta description est gérée par WordPress/Yoast via l'API, pas dans le body
+    // On skip complètement cette section pour éviter de polluer le contenu
+    /* DÉSACTIVÉ - WordPress gère les meta descriptions via plugins SEO
     // Ajouter <meta name="description">
     if (meta.metaDescription) {
       const metaDescriptionTag = `<meta name="description" content="${this.escapeHtml(meta.metaDescription)}">`;
@@ -894,6 +900,7 @@ class SeoOptimizer {
         }
       }
     }
+    FIN DÉSACTIVATION - WordPress gère les meta descriptions */
     
     // Enregistrer l'action
     if (report.actions) {
@@ -923,6 +930,24 @@ class SeoOptimizer {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
+  }
+
+  /**
+   * Décode les entités HTML dans un titre (ex: &#8217; → ') pour construire une ancre lisible
+   * sans tronquer au milieu d'une entité ni afficher du code brut.
+   */
+  decodeHtmlEntitiesForAnchor(text) {
+    if (!text || typeof text !== 'string') return '';
+    return text
+      .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
+      .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+      .replace(/&apos;/g, "'")
+      .replace(/&rsquo;/g, "'")
+      .replace(/&lsquo;/g, "'")
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&ldquo;|&rdquo;/g, '"');
   }
 
   /**
@@ -1383,15 +1408,12 @@ class SeoOptimizer {
           ? article.keywords.map(k => this.normalizeText(k))
           : [];
         
-        // Chercher destination dans titre ou keywords
-        const destinationKeywords = ['malaisie', 'malaysia', 'vietnam', 'thailande', 'thailand', 'thaïlande',
-                                     'indonesie', 'indonésie', 'indonesia', 'bali', 'japon', 'japan', 
-                                     'philippines', 'singapour', 'singapore'];
-        
+        // Chercher destination dynamiquement via BDD OpenFlights (5600+ entrées)
         let candidateDestination = null;
-        for (const destKeyword of destinationKeywords) {
-          if (candidateTitle.includes(destKeyword) || candidateKeywords.some(k => k.includes(destKeyword))) {
-            candidateDestination = destKeyword;
+        const allCandidateWords = [...candidateTitle.split(/[\s,;.()!?-]+/), ...candidateKeywords.flatMap(k => k.split(/[\s,;.()!?-]+/))];
+        for (const word of allCandidateWords) {
+          if (word.length > 2 && isKnownLocation(word)) {
+            candidateDestination = word;
             break;
           }
         }
@@ -1474,19 +1496,22 @@ class SeoOptimizer {
     // AMÉLIORATION: Forcer au moins 2 liens dans les 30% premiers
     const minLinksInFirstThird = Math.min(2, sortedLinks.length, targetParagraphs.length);
     
+    const maxAnchorChars = 70;
     for (let i = 0; i < Math.max(minLinksInFirstThird, sortedLinks.length) && i < targetParagraphs.length; i++) {
       const link = sortedLinks[i];
       const para = targetParagraphs[i];
-      
-      // AMÉLIORATION: Créer une ancre précise (2-5 mots du titre)
-      const titleWords = link.title.split(/\s+/).filter(w => w.length > 2);
-      const anchorText = titleWords.slice(0, Math.min(5, titleWords.length)).join(' ');
-      
-      // AMÉLIORATION: Éviter ancres génériques
+      const decodedTitle = this.decodeHtmlEntitiesForAnchor(link.title);
+      // Ancre lisible : titre décodé (sans &#8217; etc.), tous les mots, limite par caractères
+      const titleWords = decodedTitle.split(/\s+/).filter(w => w.length > 0);
+      let anchorText = titleWords.slice(0, Math.min(12, titleWords.length)).join(' ');
+      if (anchorText.length > maxAnchorChars) {
+        anchorText = anchorText.substring(0, maxAnchorChars).replace(/\s+\S*$/, '') || anchorText.substring(0, maxAnchorChars);
+      }
+      // Éviter ancres génériques
       const badAnchors = ['cliquez ici', 'ici', 'lien', 'voir', 'plus', 'en savoir plus'];
       const finalAnchor = badAnchors.some(bad => anchorText.toLowerCase().includes(bad)) 
-        ? link.title.substring(0, 50) 
-        : anchorText;
+        ? decodedTitle.substring(0, maxAnchorChars).trim() 
+        : anchorText.trim();
       
       const linkHtml = `<a href="${this.escapeHtml(link.url)}">${this.escapeHtml(finalAnchor)}</a>`;
       
@@ -1519,8 +1544,11 @@ class SeoOptimizer {
         // Insérer dans les 30% premiers si possible
         if (targetParagraphs.length > insertedCount) {
           const para = targetParagraphs[insertedCount];
-          const titleWords = pillarLink.title.split(/\s+/).filter(w => w.length > 2);
-          const anchorText = titleWords.slice(0, Math.min(5, titleWords.length)).join(' ');
+          const decodedPillar = this.decodeHtmlEntitiesForAnchor(pillarLink.title);
+          const titleWords = decodedPillar.split(/\s+/).filter(w => w.length > 0);
+          let anchorText = titleWords.slice(0, Math.min(12, titleWords.length)).join(' ');
+          if (anchorText.length > maxAnchorChars) anchorText = anchorText.substring(0, maxAnchorChars).replace(/\s+\S*$/, '') || anchorText.substring(0, maxAnchorChars);
+          anchorText = anchorText.trim();
           const linkHtml = `<a href="${this.escapeHtml(pillarLink.url)}">${this.escapeHtml(anchorText)}</a>`;
           
           const sentences = para.content.split(/(?<=[.!?])\s+/);
@@ -1542,8 +1570,11 @@ class SeoOptimizer {
     const remainingLinks = sortedLinks.slice(insertedCount);
     if (remainingLinks.length > 0) {
       const linksHtml = remainingLinks.map(link => {
-        const titleWords = link.title.split(/\s+/).filter(w => w.length > 2);
-        const anchorText = titleWords.slice(0, Math.min(5, titleWords.length)).join(' ');
+        const decodedTitle = this.decodeHtmlEntitiesForAnchor(link.title);
+        const titleWords = decodedTitle.split(/\s+/).filter(w => w.length > 0);
+        let anchorText = titleWords.slice(0, Math.min(12, titleWords.length)).join(' ');
+        if (anchorText.length > maxAnchorChars) anchorText = anchorText.substring(0, maxAnchorChars).replace(/\s+\S*$/, '') || anchorText.substring(0, maxAnchorChars);
+        anchorText = anchorText.trim();
         return `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(anchorText)}</a></li>`;
       }).join('\n');
       modifiedHtml += `\n\n<h3>À lire également</h3>\n<ul>\n${linksHtml}\n</ul>`;

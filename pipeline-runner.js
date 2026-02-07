@@ -95,6 +95,10 @@ class PipelineRunner {
       }
       pipelineReport.endStep('story-compiler', story, { status: 'pass' });
 
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'pipeline-runner.js:runPipeline:AFTER_STORY_COMPILER',message:'Story data quality',data:{hasContext:!!story?.story?.context?.summary,hasCentralEvent:!!story?.story?.central_event?.summary,hasCriticalMoment:!!story?.story?.critical_moment?.summary,hasResolution:!!story?.story?.resolution?.summary,contextPreview:story?.story?.context?.summary?.substring(0,300)||'null',centralEventPreview:story?.story?.central_event?.summary?.substring(0,300)||'null',evidenceCount:story?.evidence?.source_snippets?.length||0},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-STORY'})}).catch(()=>{});
+      // #endregion
+
       // ÉTAPE 4: Generator
       console.log('\n📋 ÉTAPE 4: Generator (intelligent-content-analyzer-optimized)');
       pipelineReport.startStep('generator');
@@ -103,6 +107,29 @@ class PipelineRunner {
         throw new Error('Generator a échoué');
       }
       pipelineReport.endStep('generator', generated, { status: 'pass' });
+
+      // #region agent log
+      const genPreview = generated.content?.substring(0,800) || 'null';
+      const hasContexteH2 = /<h2[^>]*>Contexte<\/h2>/i.test(generated.content || '');
+      const hasMomentCritiqueH2 = /<h2[^>]*>Moment critique<\/h2>/i.test(generated.content || '');
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'pipeline-runner.js:runPipeline:AFTER_GENERATOR',message:'Content after Generator (Passe 1)',data:{contentLength:generated.content?.length||0,hasContexteH2,hasMomentCritiqueH2,preview:genPreview},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-PASSE1'})}).catch(()=>{});
+      // #endregion
+
+      // ÉTAPE 4.5: Amélioration LLM (Passe 2 - auto-critique et correction)
+      console.log('\n📋 ÉTAPE 4.5: Amélioration LLM (passe 2 - auto-critique)');
+      pipelineReport.startStep('llm-improvement');
+      try {
+        const improvementContext = {
+          destination: pattern.destination || extracted.destination || 'Asie',
+          theme: pattern.theme_primary || 'voyage'
+        };
+        const improvedContent = await this.generator.improveContentWithLLM(generated.content, improvementContext);
+        generated.content = improvedContent;
+        pipelineReport.endStep('llm-improvement', { improved: true, lengthBefore: generated.content?.length, lengthAfter: improvedContent?.length }, { status: 'pass' });
+      } catch (error) {
+        console.warn(`⚠️ Amélioration LLM échouée: ${error.message}, continuation avec contenu original`);
+        pipelineReport.endStep('llm-improvement', { improved: false, error: error.message }, { status: 'skip' });
+      }
 
       // ÉTAPE 5: Affiliate Injector
       console.log('\n📋 ÉTAPE 5: Affiliate Injector (contextual-affiliate-injector)');
@@ -117,38 +144,21 @@ class PipelineRunner {
       // Construire geo correctement (ne pas mélanger country et city)
       const geo = input.geo || {};
       
-      // Si finalDestination est un pays, l'utiliser comme country (pas city)
+      // Utiliser lookupIATA (base OpenFlights 5600+ entrées) pour résoudre la destination
+      // buildGeoDefaults gère automatiquement pays vs ville, pas besoin de liste hardcodée
       if (finalDestination) {
         const finalDestLower = finalDestination.toLowerCase();
-        // Liste des pays (pas des villes)
-        const countries = ['thailand', 'thaïlande', 'vietnam', 'indonesia', 'indonésie', 'philippines', 'singapore', 'singapour', 'malaysia', 'malaisie', 'japan', 'japon', 'korea', 'corée'];
-        if (countries.includes(finalDestLower)) {
-          geo.country = finalDestLower;
-          // Ne pas écraser geo.city si elle existe déjà
-          if (!geo.city) {
-            // Utiliser la capitale/hub du pays
-            const countryHubs = {
-              'thailand': 'bangkok',
-              'thaïlande': 'bangkok',
-              'vietnam': 'ho chi minh',
-              'indonesia': 'bali',
-              'indonésie': 'bali',
-              'philippines': 'manila',
-              'singapore': 'singapore',
-              'singapour': 'singapore',
-              'malaysia': 'kuala lumpur',
-              'malaisie': 'kuala lumpur',
-              'japan': 'tokyo',
-              'japon': 'tokyo',
-              'korea': 'seoul',
-              'corée': 'seoul'
-            };
-            geo.city = countryHubs[finalDestLower] || null;
-          }
-        } else {
-          // Sinon, c'est probablement une ville
+        // On met la destination comme city par défaut
+        // buildGeoDefaults résoudra correctement via la BDD OpenFlights
+        if (!geo.city) {
           geo.city = finalDestLower;
         }
+        if (!geo.country) {
+          geo.country = finalDestLower;
+        }
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'pipeline-runner.js:GEO_RESOLVE',message:'OpenFlights geo resolution',data:{finalDestination,geoCity:geo.city,geoCountry:geo.country},timestamp:Date.now(),hypothesisId:'A'})}).catch(()=>{});
+        // #endregion
       }
       
       // Construire geo_defaults correctement avec buildGeoDefaults
@@ -247,7 +257,6 @@ class PipelineRunner {
         // TEMPORAIRE: Continuer quand même pour permettre la publication (truth pack à corriger)
         const ENABLE_BLOCKING = parseBool(process.env.ENABLE_PIPELINE_BLOCKING ?? '1');
         if (ENABLE_BLOCKING) {
-          // DEBUG: Créer finalArticle même si blocking pour voir les widgets
           const finalArticleBlocked = {
             title: generated.title || finalized.title,
             content: finalized.content,
@@ -257,8 +266,8 @@ class PipelineRunner {
           };
           const widgetsInFinalArticleBlocked = this.finalizer.detectRenderedWidgets(finalArticleBlocked.content);
           console.log(`🔍 DEBUG PIPELINE (BLOCKED): Widgets dans finalArticleBlocked.content: count=${widgetsInFinalArticleBlocked.count}, types=[${widgetsInFinalArticleBlocked.types.join(', ')}]`);
-          
-          return pipelineReport.finalize(false, null);
+          // Inclure l'article dans le rapport même en cas de blocage (pour inspection / debug)
+          return pipelineReport.finalize(false, finalArticleBlocked);
         } else {
           console.warn('⚠️ Blocking détecté mais désactivé - continuation du pipeline');
         }
@@ -308,11 +317,19 @@ class PipelineRunner {
       // Pipeline réussi
       // DEBUG: Vérifier les widgets dans finalized.content avant de créer finalArticle
       const widgetsInFinalized = this.finalizer.detectRenderedWidgets(finalized.content);
-      console.log(`🔍 DEBUG PIPELINE: Widgets dans finalized.content: count=${widgetsInFinalized.count}, types=[${widgetsInFinalized.types.join(', ')}]`);
+      console.log(`🔍 DEBUG PIPELINE: Widgets dans finalized.content: count=${widgetsInFinalized.count}, types=[${widgetsInFinalized.types.join(', ')}]`);      
+      // NOTE: removeOldStructureResidues est DÉJÀ appelé dans finalizeArticle
+      // L'appel redondant ici détruisait des widgets (connectivity perdu à chaque run)
+      // Supprimé pour protéger les widgets insérés par le finalizer
+      let finalContent = finalized.content;
+      // #region agent log
+      const widgetsBeforeRemoveResidues = this.finalizer.detectRenderedWidgets(finalContent);
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'pipeline-runner.js:runPipeline:WIDGETS_FINAL_CHECK',message:'Widgets in finalContent (no more redundant removeOldStructureResidues)',data:{widgetsCount:widgetsBeforeRemoveResidues.count,widgetsTypes:widgetsBeforeRemoveResidues.types},timestamp:Date.now(),hypothesisId:'A-WIDGET-FIX'})}).catch(()=>{});
+      // #endregion
       
       const finalArticle = {
         title: generated.title || finalized.title,
-        content: finalized.content,
+        content: finalContent,
         excerpt: finalized.excerpt,
         qaReport: finalized.qaReport,
         antiHallucinationReport: antiHallucination
@@ -321,7 +338,7 @@ class PipelineRunner {
       // DEBUG: Vérifier les widgets dans finalArticle.content après création
       const widgetsInFinalArticle = this.finalizer.detectRenderedWidgets(finalArticle.content);
       console.log(`🔍 DEBUG PIPELINE: Widgets dans finalArticle.content: count=${widgetsInFinalArticle.count}, types=[${widgetsInFinalArticle.types.join(', ')}]`);
-
+      
       console.log('\n✅ PIPELINE_RUNNER: Pipeline terminé avec succès');
       const finalReport = pipelineReport.finalize(true, finalArticle);
       
@@ -420,10 +437,52 @@ class PipelineRunner {
   }
 
   /**
+   * Charge les titres déjà publiés (anti-répétition angle/contenu)
+   * Source : published-articles-cache.json puis articles-database.json en fallback
+   */
+  async loadExistingTitles() {
+    const fs = await import('fs');
+    const path = await import('path');
+    const cwd = process.cwd();
+    const cachePath = path.join(cwd, 'published-articles-cache.json');
+    const dbPath = path.join(cwd, 'articles-database.json');
+
+    if (fs.existsSync(cachePath)) {
+      try {
+        const data = JSON.parse(fs.readFileSync(cachePath, 'utf-8'));
+        const titles = Array.isArray(data.articles) ? data.articles : [];
+        const normalized = titles.map(t => (typeof t === 'string' ? t : t.title || '')).filter(Boolean);
+        if (normalized.length > 0) {
+          console.log(`   📋 Anti-répétition: ${normalized.length} titre(s) chargé(s) depuis published-articles-cache.json`);
+          return normalized;
+        }
+      } catch (e) {
+        console.warn('   ⚠️ Lecture published-articles-cache.json:', e.message);
+      }
+    }
+    if (fs.existsSync(dbPath)) {
+      try {
+        const data = JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
+        const articles = data.articles || [];
+        const titles = articles.map(a => (a && a.title) ? a.title : '').filter(Boolean);
+        if (titles.length > 0) {
+          console.log(`   📋 Anti-répétition: ${titles.length} titre(s) chargé(s) depuis articles-database.json`);
+          return titles;
+        }
+      } catch (e) {
+        console.warn('   ⚠️ Lecture articles-database.json:', e.message);
+      }
+    }
+    return [];
+  }
+
+  /**
    * ÉTAPE 4: Generator
    */
   async runGenerator(input, extracted, pattern, story, pipelineReport) {
     try {
+      const existingTitles = await this.loadExistingTitles();
+
       // Le generator attend { extracted, pattern, story } dans input
       const generatorInput = {
         extracted: extracted,
@@ -434,7 +493,9 @@ class PipelineRunner {
         title: input.post?.title || '',
         author: input.post?.author || null,
         url: input.post?.url || null,
-        subreddit: input.post?.subreddit || null
+        subreddit: input.post?.subreddit || null,
+        existingTitles,
+        existingAngles: [] // optionnel : résumés 1 ligne si stockés plus tard
       };
 
       // Générer le contenu (analysis n'est plus utilisé dans la nouvelle version)

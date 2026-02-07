@@ -355,29 +355,12 @@ ${faqItems}\n`;
       }
     }
 
-    // Transformer community_insights en checklist si approprié
-    if (story.community_insights && Array.isArray(story.community_insights) && story.community_insights.length > 2) {
-      const insightsText = story.community_insights
-        .map(i => typeof i === 'string' ? i : (i.value || i.text || ''))
-        .filter(i => i && i.length > 20 && i.length < 150);
-      
-      if (insightsText.length > 2) {
-        // Vérifier si déjà en liste
-        const hasList = html.includes('<h2>Ce que la communauté apporte</h2>') && html.includes('<ul>');
-        if (!hasList) {
-          const sectionRegex = /<h2>Ce que la communauté apporte<\/h2>[\s\S]*?(?=<h2>|$)/i;
-          const match = enhancedHtml.match(sectionRegex);
-          
-          if (match) {
-            const listItems = insightsText.slice(0, 5).map(insight => 
-              `      <li>${this.escapeHtml(insight)}</li>`
-            ).join('\n');
-            const listHtml = `<h2>Ce que la communauté apporte</h2>\n<ul>\n${listItems}\n    </ul>`;
-            enhancedHtml = enhancedHtml.replace(sectionRegex, listHtml);
-            listsAdded++;
-          }
-        }
-      }
+    // ❌ DÉSACTIVÉ : Ne plus transformer community_insights en section "Ce que la communauté apporte"
+    // Cette section est un résidu de l'ancienne structure et sera supprimée par removeOldStructureResidues
+    // Les insights de la communauté doivent être intégrés dans le développement narratif, pas dans une section séparée
+    if (false && story.community_insights && Array.isArray(story.community_insights) && story.community_insights.length > 2) {
+      // Code désactivé - ne plus générer cette section
+      console.log('   ⚠️ Section "Ce que la communauté apporte" ignorée dans editorial-enhancer (résidu ancienne structure)');
     }
 
     enhancements.actionableLists = listsAdded;

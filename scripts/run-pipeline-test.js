@@ -59,8 +59,7 @@ function loadRedditFixture() {
 async function main() {
   console.log('🚀 Lancement du pipeline FlashVoyage\n');
   
-  // S'assurer que les flags sont activés
-  process.env.FORCE_OFFLINE = '1';
+  // Mode test : pas de publication. Online par défaut (OPENAI_API_KEY dans .env ou CI).
   process.env.FLASHVOYAGE_DRY_RUN = '1';
   
   const runner = new PipelineRunner();
@@ -85,7 +84,7 @@ async function main() {
   console.log(`📝 Étapes exécutées: ${Object.keys(report.steps).length}`);
   
   console.log('\n📋 DÉTAILS DES ÉTAPES:');
-  for (const [stepName, stepData] of Object.entries(reportObj.steps || {})) {
+  for (const [stepName, stepData] of Object.entries(report.steps || {})) {
     const status = stepData.success ? '✅' : '❌';
     const timing = stepData.timing ? `${stepData.timing.duration}ms` : 'N/A';
     console.log(`   ${status} ${stepName}: ${stepData.status} (${timing})`);
@@ -94,32 +93,36 @@ async function main() {
     }
   }
   
-  if (reportObj.errors && reportObj.errors.length > 0) {
+  if (report.errors && report.errors.length > 0) {
     console.log('\n❌ ERREURS:');
-    reportObj.errors.forEach(err => {
+    report.errors.forEach(err => {
       console.log(`   - [${err.step}] ${err.message}`);
     });
   }
   
-  if (reportObj.finalArticle) {
+  const finalArticle = report.finalArticle || report.article;
+  if (finalArticle) {
     console.log('\n📄 ARTICLE FINAL:');
-    console.log(`   Titre: ${reportObj.finalArticle.title}`);
-    console.log(`   Longueur contenu: ${reportObj.finalArticle.contentLength} chars`);
-    if (reportObj.finalArticle.qaReport) {
-      console.log(`   QA Status: ${reportObj.finalArticle.qaReport.status}`);
-      console.log(`   QA Checks: ${reportObj.finalArticle.qaReport.checks}`);
-      console.log(`   QA Issues: ${reportObj.finalArticle.qaReport.issues}`);
+    console.log(`   Titre: ${finalArticle.title}`);
+    const contentLen = finalArticle.content ? finalArticle.content.length : 0;
+    console.log(`   Longueur contenu: ${contentLen} chars`);
+    if (finalArticle.qaReport) {
+      console.log(`   QA Status: ${finalArticle.qaReport.status}`);
+      console.log(`   QA Checks: ${finalArticle.qaReport.checks}`);
+      if (finalArticle.qaReport.issues && finalArticle.qaReport.issues.length > 0) {
+        console.log(`   QA Issues: ${finalArticle.qaReport.issues.length}`);
+      }
     }
   }
   
   // Sauvegarder le rapport JSON
   const fs = await import('fs');
   const reportPath = join(__dirname, '..', 'pipeline-report-output.json');
-  const reportJson = report.toJSON ? report.toJSON() : JSON.stringify(reportObj, null, 2);
+  const reportJson = report.toJSON ? report.toJSON() : JSON.stringify(report, null, 2);
   fs.writeFileSync(reportPath, reportJson);
   console.log(`\n💾 Rapport sauvegardé dans: ${reportPath}`);
   
-  process.exit(reportObj.success && !reportObj.blocking ? 0 : 1);
+  process.exit(report.success && !report.blocking ? 0 : 1);
 }
 
 main().catch(error => {

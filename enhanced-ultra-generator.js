@@ -103,6 +103,120 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     }
   }
 
+  /**
+   * Applique les mêmes filtres que le flux principal sur un batch de sources
+   * (destinations Asie/non-Asie, type Reddit, meta, smartDecision).
+   * @param {Array} sources - Liste d'articles bruts
+   * @param {{ isDryRun: boolean, forceOffline: boolean }} opts
+   * @returns {Array} validSources pour ce batch
+   */
+  applySourceFilters(sources, { isDryRun, forceOffline }) {
+    const asiaDestinations = [
+      'indonesia', 'indonésie', 'bali', 'jakarta', 'yogyakarta', 'bandung', 'surabaya', 'medan', 'ubud', 'seminyak', 'canggu', 'lombok',
+      'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
+      'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'chiangmai', 'phuket', 'krabi', 'pattaya', 'koh samui', 'koh phangan', 'koh tao', 'pai', 'ayutthaya', 'sukhothai',
+      'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'hokkaido', 'hokkaidō', 'hiroshima', 'nara', 'sapporo', 'fukuoka', 'okinawa', 'yokohama', 'nagoya', 'sendai',
+      'korea', 'corée', 'south korea', 'corée du sud', 'seoul', 'séoul', 'busan', 'pusan', 'jeju', 'jeju island', 'incheon', 'daegu', 'gwangju', 'ulsan',
+      'philippines', 'philippine', 'manila', 'cebu', 'boracay', 'palawan', 'el nido', 'coron', 'siargao', 'bohol', 'davao', 'baguio', 'makati',
+      'singapore', 'singapour'
+    ];
+    const nonAsiaDestinations = [
+      // Europe
+      'istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'lisbon', 'lisbonne', 'barcelona', 'barcelone', 'greece', 'grèce', 'cyprus', 'chypre', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'uk', 'united kingdom', 'royaume-uni', 'royaume uni', 'britain', 'britannique', 'england', 'angleterre', 'scotland', 'écosse', 'wales', 'pays de galles', 'germany', 'allemagne', 'berlin', 'netherlands', 'pays-bas', 'amsterdam', 'switzerland', 'suisse', 'austria', 'autriche', 'vienna', 'vienne', 'prague', 'czech', 'tchèque', 'poland', 'pologne', 'hungary', 'hongrie', 'budapest', 'croatia', 'croatie', 'dubrovnik',
+      // Amériques
+      'america', 'usa', 'united states', 'états-unis', 'brazil', 'brésil', 'rio', 'mexico', 'mexique', 'canada', 'colombia', 'colombie', 'peru', 'pérou', 'argentina', 'argentine', 'chile', 'chili', 'costa rica', 'caribbean', 'caraïbes',
+      // Afrique & Afrique du Nord
+      'egypt', 'égypte', 'egypte', 'cairo', 'le caire', 'giza', 'gizeh', 'alexandria', 'alexandrie', 'luxor', 'louxor', 'aswan', 'assouan', 'morocco', 'maroc', 'marrakech', 'casablanca', 'fes', 'fès', 'tunisia', 'tunisie', 'tunis', 'algeria', 'algérie', 'alger', 'libya', 'libye', 'south africa', 'afrique du sud', 'cape town', 'johannesburg', 'kenya', 'nairobi', 'tanzania', 'tanzanie', 'kilimanjaro', 'zanzibar', 'nigeria', 'lagos', 'ethiopia', 'éthiopie', 'ghana', 'senegal', 'sénégal', 'dakar', 'africa', 'afrique',
+      // Moyen-Orient
+      'iraq', 'irak', 'iran', 'israel', 'israël', 'jordanie', 'jordan', 'liban', 'lebanon', 'syrie', 'syria', 'arabie saoudite', 'saudi arabia', 'emirats', 'emirates', 'dubai', 'dubaï', 'abu dhabi', 'qatar', 'koweit', 'kuwait', 'oman', 'yemen', 'yémen', 'bahrein', 'bahrain', 'kurdistan', 'bagdad', 'baghdad', 'erbil', 'najaf', 'karbala', 'bassorah', 'basra', 'sulaymaniyah', 'kirkuk', 'mossoul', 'mosul',
+      // Océanie (hors Asie)
+      'australia', 'australie', 'sydney', 'melbourne', 'new zealand', 'nouvelle-zélande', 'auckland', 'fiji', 'fidji'
+    ];
+    const metaKeywords = [
+      'subreddit changes', 'modifications du subreddit', 'modifications du sub', 'changements du subreddit',
+      'rules', 'règles', 'flair', 'moderation', 'modération', 'survey', 'sondage',
+      'meta', 'announcement', 'annonce', 'update:', '[update]', '[meta]',
+      'how the subreddit', 'comment le subreddit', 'subreddit is run', 'gestion du subreddit'
+    ];
+    return sources.filter(article => {
+      const articleText = `${article.title || ''} ${article.content || ''} ${article.selftext || ''} ${article.source_text || ''}`.toLowerCase();
+      const titleLower = (article.title || '').toLowerCase();
+      const hasNonAsiaDestination = nonAsiaDestinations.some(dest => articleText.includes(dest));
+      const hasAsiaDestination = asiaDestinations.some(dest => articleText.includes(dest));
+      if (nonAsiaDestinations.some(dest => titleLower.includes(dest))) {
+        console.log(`🚫 Article rejeté (TITRE contient destination non-asiatique): ${article.title}`);
+        return false;
+      }
+      if (article.type !== 'community' && article.type !== 'nomade') {
+        console.log(`🚫 Article rejeté (source non-Reddit, format témoignage requis): ${article.title} (type: ${article.type})`);
+        return false;
+      }
+      if ((isDryRun || forceOffline) && article.source_reliability !== undefined) {
+        if (article.source_reliability < 0.7 && (!article.source_text || article.source_text.length < 400)) {
+          console.log(`🚫 Article rejeté (source non fiable, source_text trop court): ${article.title} reliability=${article.source_reliability}`);
+          return false;
+        }
+      }
+      if (hasNonAsiaDestination && !hasAsiaDestination) {
+        console.log(`🚫 Article rejeté (uniquement destinations non-asiatiques, pas d'Asie): ${article.title}`);
+        return false;
+      }
+      if (!hasAsiaDestination) {
+        console.log(`🚫 Article rejeté (aucune destination asiatique): ${article.title}`);
+        return false;
+      }
+      const isMetaPost = metaKeywords.some(keyword => titleLower.includes(keyword.toLowerCase()) || articleText.includes(keyword.toLowerCase()));
+      if (isMetaPost) {
+        console.log(`🚫 Article rejeté (post meta/non-voyage): ${article.title}`);
+        return false;
+      }
+      if (article.smartDecision === 'reject') {
+        console.log(`⚠️ Article rejeté ignoré: ${article.title}`);
+        return false;
+      }
+      return true;
+    });
+  }
+
+  /**
+   * Applique le filtre relâché (r/travel, r/digitalnomad + mots-clés voyage) sur la liste complète.
+   * @param {Array} sources - Tous les articles scrapés (allBatches.flat())
+   * @returns {Array} relaxedSources (déjà non publiés par construction du filtre)
+   */
+  applyRelaxedFilter(sources) {
+    // Même liste non-Asie que applySourceFilters pour garder la cohérence
+    const nonAsiaDestinations = [
+      'egypt', 'égypte', 'egypte', 'cairo', 'le caire', 'giza', 'gizeh', 'alexandria', 'alexandrie', 'luxor', 'louxor', 'aswan', 'assouan',
+      'morocco', 'maroc', 'marrakech', 'tunisia', 'tunisie', 'algeria', 'algérie', 'africa', 'afrique',
+      'istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'greece', 'grèce', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'germany', 'allemagne',
+      'america', 'usa', 'united states', 'états-unis', 'brazil', 'brésil', 'mexico', 'mexique', 'canada',
+      'iraq', 'irak', 'iran', 'israel', 'israël', 'jordanie', 'jordan', 'liban', 'lebanon', 'syrie', 'syria', 'dubai', 'dubaï', 'qatar', 'saudi arabia', 'arabie saoudite',
+      'australia', 'australie', 'new zealand', 'nouvelle-zélande',
+      'south africa', 'afrique du sud', 'kenya', 'tanzania', 'tanzanie', 'nigeria'
+    ];
+    return sources.filter(article => {
+      const redditUrl = article.link || article.url;
+      if (this.isArticleAlreadyPublished(article.title, redditUrl)) return false;
+      const sub = (article.subreddit || '').toLowerCase();
+      if ((article.source && article.source.toLowerCase().includes('reddit')) && (sub === 'r/travel' || sub === 'r/digitalnomad')) {
+        const articleText = `${article.title || ''} ${article.content || ''} ${article.selftext || ''} ${article.source_text || ''}`.toLowerCase();
+        const titleLower = (article.title || '').toLowerCase();
+        // GARDE GÉO: Rejeter les destinations non-asiatiques même en mode relâché
+        if (nonAsiaDestinations.some(dest => titleLower.includes(dest))) {
+          console.log(`   🚫 RELAXED_FILTER: rejeté (TITRE contient destination non-asiatique): ${article.title}`);
+          return false;
+        }
+        const travelKeywords = ['travel', 'voyage', 'trip', 'journey', 'nomad', 'nomade', 'destination', 'visit', 'visiter', 'flight', 'vol', 'hotel', 'hôtel', 'backpack', 'backpacking', 'solo travel', 'voyage solo', 'digital nomad', 'nomade numérique'];
+        const metaKeywords = ['subreddit changes', 'modifications du subreddit', 'rules', 'règles', 'flair', 'moderation', 'modération', 'survey', 'sondage', 'meta'];
+        if (travelKeywords.some(keyword => articleText.includes(keyword)) && !metaKeywords.some(keyword => articleText.includes(keyword))) {
+          console.log(`   ℹ️ RELAXED_FILTER: autorisation Reddit ${article.subreddit} avec mots-clés voyage`);
+          return true;
+        }
+      }
+      return false;
+    });
+  }
+
   // Générer et publier un article stratégique amélioré
   async generateAndPublishEnhancedArticle() {
     try {
@@ -145,196 +259,83 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         }
       }
 
-      // 1. Récupérer les sources
-      // FIX 5: Format témoignage requis = désactiver sources news
-      const requireCommunityTestimonial = true; // Format témoignage requis pour FlashVoyages
-      const sources = await this.scraper.scrapeAllSources(requireCommunityTestimonial);
-      
-      // FIX 3: Ne plus throw si fixtures disponibles
-      if (!sources || sources.length === 0) {
-        // Vérifier si on a des fixtures Reddit disponibles
+      // 1. Scrape source par source, stop au premier candidat valide (crawl prod déjà fait ci-dessus)
+      const isDryRun = DRY_RUN;
+      const forceOffline = FORCE_OFFLINE;
+      const isGitHubActions = typeof this.scraper.isGitHubActions === 'function' && this.scraper.isGitHubActions();
+
+      const REDDIT_SCRAPER_METHODS = [
+        'scrapeReddit', 'scrapeRedditNomad', 'scrapeRedditSoloTravel', 'scrapeRedditBackpacking',
+        'scrapeRedditThailand', 'scrapeRedditVietnam', 'scrapeRedditJapanTravel', 'scrapeRedditSoutheastAsia'
+      ];
+      const GITHUB_ACTIONS_SCRAPER_METHODS = ['scrapeFallbackRSS', 'scrapeRedditOfficial', 'scrapeRedditViaProxy'];
+
+      const scraperMethods = isGitHubActions ? GITHUB_ACTIONS_SCRAPER_METHODS : REDDIT_SCRAPER_METHODS;
+      const allBatches = [];
+      let selectedArticle = null;
+
+      console.log('🔍 Scrape source par source (stop au premier candidat)...\n');
+      for (const methodName of scraperMethods) {
+        try {
+          const batch = await this.scraper[methodName]();
+          if (!batch || !Array.isArray(batch) || batch.length === 0) continue;
+          allBatches.push(batch);
+          console.log(`   📄 ${methodName}: ${batch.length} articles`);
+          const validBatch = this.applySourceFilters(batch, { isDryRun, forceOffline });
+          const unpublishedBatch = validBatch.filter(article => {
+            const redditUrl = article.link || article.url;
+            const isPublished = this.isArticleAlreadyPublished(article.title, redditUrl);
+            if (isPublished) console.log(`🚫 Article rejeté (déjà publié): ${(article.title || '').substring(0, 80)}...`);
+            return !isPublished;
+          });
+          if (unpublishedBatch.length >= 1) {
+            if (isDryRun || forceOffline) {
+              unpublishedBatch.sort((a, b) => {
+                const ra = a.source_reliability || 0, rb = b.source_reliability || 0;
+                if (ra !== rb) return rb - ra;
+                return (b.source_text || '').length - (a.source_text || '').length;
+              });
+            }
+            selectedArticle = unpublishedBatch[0];
+            console.log(`\n✅ Candidat trouvé après ${methodName} — stop scrape (${unpublishedBatch.length} dispo dans ce batch)\n`);
+            break;
+          }
+        } catch (err) {
+          console.log(`   ⚠️ ${methodName} échoué: ${err.message}`);
+        }
+      }
+
+      // Si aucun candidat après toutes les sources : filtre relâché sur l’ensemble scrapé
+      if (!selectedArticle && allBatches.length > 0) {
+        const sources = allBatches.flat();
+        console.log(`\n⚠️ NO_ARTICLE_AFTER_FILTERING: ${sources.length} sources scrapées, aucun candidat valide`);
+        const relaxedSources = this.applyRelaxedFilter(sources);
+        if (relaxedSources.length > 0) {
+          console.log(`   ✅ ${relaxedSources.length} article(s) accepté(s) avec filtre relâché`);
+          if (isDryRun || forceOffline) {
+            relaxedSources.sort((a, b) => {
+              const ra = a.source_reliability || 0, rb = b.source_reliability || 0;
+              if (ra !== rb) return rb - ra;
+              return (b.source_text || '').length - (a.source_text || '').length;
+            });
+          }
+          selectedArticle = relaxedSources[0];
+        } else {
+          console.log('   ❌ Aucun article même avec filtre relâché - skip silencieux');
+          return null;
+        }
+      }
+
+      if (!selectedArticle) {
         const forceFixtures = process.env.FLASHVOYAGE_FORCE_FIXTURES === '1';
         if (forceFixtures || DRY_RUN) {
           console.log('⚠️ Aucune source réseau disponible, mais mode fixtures/DRY_RUN activé - skip silencieux');
-          return null; // Retourner null au lieu de throw
+          return null;
         }
         throw new Error('Aucune source disponible');
       }
 
-      // 2. Filtrer les articles rejetés par le scoring ET les destinations non-asiatiques
-      // UNIQUEMENT les destinations de la liste officielle: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
-      const asiaDestinations = [
-        // Indonésie
-        'indonesia', 'indonésie', 'bali', 'jakarta', 'yogyakarta', 'bandung', 'surabaya', 'medan', 'ubud', 'seminyak', 'canggu', 'lombok',
-        // Vietnam
-        'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
-        // Thaïlande
-        'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'chiangmai', 'phuket', 'krabi', 'pattaya', 'koh samui', 'koh phangan', 'koh tao', 'pai', 'ayutthaya', 'sukhothai',
-        // Japon
-        'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'hokkaido', 'hokkaidō', 'hiroshima', 'nara', 'sapporo', 'fukuoka', 'okinawa', 'yokohama', 'nagoya', 'sendai',
-        // Corée du Sud
-        'korea', 'corée', 'south korea', 'corée du sud', 'seoul', 'séoul', 'busan', 'pusan', 'jeju', 'jeju island', 'incheon', 'daegu', 'gwangju', 'ulsan',
-        // Philippines
-        'philippines', 'philippine', 'manila', 'cebu', 'boracay', 'palawan', 'el nido', 'coron', 'siargao', 'bohol', 'davao', 'baguio', 'makati',
-        // Singapour
-        'singapore', 'singapour'
-      ];
-      const nonAsiaDestinations = [
-        // Europe
-        'istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'lisbon', 'lisbonne', 'barcelona', 'barcelone', 'greece', 'grèce', 'cyprus', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'uk', 'united kingdom', 'royaume-uni', 'royaume uni', 'britain', 'britannique', 'england', 'angleterre', 'scotland', 'écosse', 'wales', 'pays de galles',
-        // Amériques
-        'america', 'usa', 'brazil', 'brésil', 'rio', 'mexico', 'mexique',
-        // Moyen-Orient (NON ASIE)
-        'iraq', 'irak', 'iran', 'israel', 'israël', 'jordanie', 'jordan', 'liban', 'lebanon', 'syrie', 'syria', 'arabie saoudite', 'saudi arabia', 'emirats', 'emirates', 'dubai', 'dubaï', 'abu dhabi', 'qatar', 'koweit', 'kuwait', 'oman', 'yemen', 'yémen', 'bahrein', 'bahrain', 'kurdistan', 'bagdad', 'baghdad', 'erbil', 'najaf', 'karbala', 'bassorah', 'basra', 'sulaymaniyah', 'kirkuk', 'mossoul', 'mosul'
-      ];
-      
-      const isDryRun = DRY_RUN;
-      const forceOffline = FORCE_OFFLINE;
-      
-      const validSources = sources.filter(article => {
-        const articleText = `${article.title || ''} ${article.content || ''} ${article.selftext || ''} ${article.source_text || ''}`.toLowerCase();
-        const titleLower = (article.title || '').toLowerCase();
-        const hasNonAsiaDestination = nonAsiaDestinations.some(dest => articleText.includes(dest));
-        const hasAsiaDestination = asiaDestinations.some(dest => articleText.includes(dest));
-        
-        // FILTRE -1: REJET IMMÉDIAT si le TITRE contient une destination non-asiatique
-        const titleHasNonAsia = nonAsiaDestinations.some(dest => titleLower.includes(dest));
-        if (titleHasNonAsia) {
-          console.log(`🚫 Article rejeté (TITRE contient destination non-asiatique): ${article.title}`);
-          return false;
-        }
-        
-        // FILTRE 0: UNIQUEMENT les articles Reddit (type: 'community' ou 'nomade') pour le format témoignage
-        // Les sources non-Reddit (Skift, CNN, etc.) seront retravaillées plus tard dans un autre template
-        if (article.type !== 'community' && article.type !== 'nomade') {
-          console.log(`🚫 Article rejeté (source non-Reddit, format témoignage requis): ${article.title} (type: ${article.type})`);
-          return false;
-        }
-        
-        // D) Sélection d'article: éviter posts impossibles à extraire
-        // En DRY_RUN/FORCE_OFFLINE, prioriser fixtures avec source_text long
-        if ((isDryRun || forceOffline) && article.source_reliability !== undefined) {
-          // Blacklister RSS sans selftext (source_reliability < 0.7) sauf si source_text > 400
-          if (article.source_reliability < 0.7 && (!article.source_text || article.source_text.length < 400)) {
-            console.log(`🚫 Article rejeté (source non fiable, source_text trop court): ${article.title} reliability=${article.source_reliability}`);
-            return false;
-          }
-        }
-        
-        // FILTRE 1: Relâché - Accepter les articles mentionnant l'Asie même s'ils mentionnent aussi d'autres destinations
-        // Seulement rejeter si l'article mentionne UNIQUEMENT des destinations non-asiatiques (pas d'Asie du tout)
-        if (hasNonAsiaDestination && !hasAsiaDestination) {
-          console.log(`🚫 Article rejeté (uniquement destinations non-asiatiques, pas d'Asie): ${article.title}`);
-          return false;
-        }
-        
-        // FILTRE 2: Exiger qu'au moins une destination asiatique soit mentionnée
-        if (!hasAsiaDestination) {
-          console.log(`🚫 Article rejeté (aucune destination asiatique): ${article.title}`);
-          return false;
-        }
-        
-        // FILTRE 2.5: Rejeter les posts meta (modifications de subreddit, règles, etc.)
-        const metaKeywords = [
-          'subreddit changes', 'modifications du subreddit', 'modifications du sub', 'changements du subreddit',
-          'rules', 'règles', 'flair', 'moderation', 'modération', 'survey', 'sondage', 
-          'meta', 'announcement', 'annonce', 'update:', '[update]', '[meta]',
-          'how the subreddit', 'comment le subreddit', 'subreddit is run', 'gestion du subreddit'
-        ];
-        // titleLower déjà déclaré plus haut
-        const isMetaPost = metaKeywords.some(keyword => {
-          const keywordLower = keyword.toLowerCase();
-          return titleLower.includes(keywordLower) || articleText.toLowerCase().includes(keywordLower);
-        });
-        if (isMetaPost) {
-          console.log(`🚫 Article rejeté (post meta/non-voyage): ${article.title}`);
-          return false;
-        }
-        
-        // FILTRE 3: Ignorer les articles rejetés par le scoring
-        if (article.smartDecision === 'reject') {
-          console.log(`⚠️ Article rejeté ignoré: ${article.title}`);
-          return false;
-        }
-        
-        return true;
-      });
-
-      // FILTRE ANTI-DUPLICATION : Retirer les articles déjà publiés
-      const unpublishedSources = validSources.filter(article => {
-        const redditUrl = article.link || article.url;
-        const isPublished = this.isArticleAlreadyPublished(article.title, redditUrl);
-        if (isPublished) {
-          console.log(`🚫 Article rejeté (déjà publié): ${article.title}`);
-        }
-        return !isPublished;
-      });
-
-      if (unpublishedSources.length === 0) {
-        // FIX 5: Ne jamais throw une exception fatale
-        console.log(`⚠️ NO_ARTICLE_AFTER_FILTERING: ${sources.length} sources, ${validSources.length} valides, ${unpublishedSources.length} non publiées`);
-        
-        // Relâcher UN SEUL cran: autoriser Reddit r/travel sans destination explicite MAIS avec mots-clés voyage
-        const relaxedSources = sources.filter(article => {
-          // Filtrer les déjà publiés (avec URL Reddit si disponible)
-          const redditUrl = article.link || article.url;
-          if (this.isArticleAlreadyPublished(article.title, redditUrl)) {
-            return false;
-          }
-          // Autoriser Reddit r/travel même sans destination explicite MAIS exiger des mots-clés voyage/nomadisme
-          if (article.source === 'reddit' && (article.subreddit === 'travel' || article.subreddit === 'digitalnomad')) {
-            const articleText = `${article.title || ''} ${article.content || ''} ${article.selftext || ''} ${article.source_text || ''}`.toLowerCase();
-            const travelKeywords = ['travel', 'voyage', 'trip', 'journey', 'nomad', 'nomade', 'destination', 'visit', 'visiter', 'flight', 'vol', 'hotel', 'hôtel', 'backpack', 'backpacking', 'solo travel', 'voyage solo', 'digital nomad', 'nomade numérique'];
-            const hasTravelKeyword = travelKeywords.some(keyword => articleText.includes(keyword));
-            
-            // Exclure les articles sur les modifications de subreddit, règles, meta, etc.
-            const metaKeywords = ['subreddit changes', 'modifications du subreddit', 'rules', 'règles', 'flair', 'moderation', 'modération', 'survey', 'sondage', 'meta'];
-            const isMetaPost = metaKeywords.some(keyword => articleText.includes(keyword));
-            
-            if (hasTravelKeyword && !isMetaPost) {
-              console.log(`   ℹ️ RELAXED_FILTER: autorisation Reddit ${article.subreddit} avec mots-clés voyage`);
-              return true;
-            } else {
-              console.log(`🚫 Article rejeté (Reddit ${article.subreddit} mais pas de mots-clés voyage ou post meta): ${article.title}`);
-              return false;
-            }
-          }
-          return false;
-        });
-        
-        if (relaxedSources.length > 0) {
-          console.log(`   ✅ ${relaxedSources.length} article(s) accepté(s) avec filtre relâché`);
-          validSources = relaxedSources;
-        } else {
-          // Si toujours 0, log et skip silencieux (jamais throw)
-          console.log(`   ❌ Aucun article même avec filtre relâché - skip silencieux`);
-          return null; // Retourner null au lieu de throw
-        }
-      }
-
-      // D) Prioriser fixtures avec source_reliability élevé en DRY_RUN/FORCE_OFFLINE
-      if (isDryRun || forceOffline) {
-        validSources.sort((a, b) => {
-          const reliabilityA = a.source_reliability || 0;
-          const reliabilityB = b.source_reliability || 0;
-          const sourceTextA = (a.source_text || '').length;
-          const sourceTextB = (b.source_text || '').length;
-          
-          // Priorité 1: source_reliability (fixtures = 1.0 > RSS = 0.6 > live 403 = 0.0)
-          if (reliabilityA !== reliabilityB) {
-            return reliabilityB - reliabilityA;
-          }
-          
-          // Priorité 2: longueur source_text (plus long = mieux)
-          return sourceTextB - sourceTextA;
-        });
-        
-        console.log(`📊 Articles triés par fiabilité: ${validSources.map(a => `reliability=${a.source_reliability || 0} source_text_len=${(a.source_text || '').length}`).join(', ')}`);
-      }
-
-      const selectedArticle = unpublishedSources[0];
       console.log('📰 Article sélectionné:', selectedArticle.title);
-      console.log(`   (${unpublishedSources.length} articles disponibles après filtrage anti-duplication)`);
       console.log('🔍 DEBUG: Author dans selectedArticle:', selectedArticle.author);
       console.log('📋 DEBUG: Source de l\'article sélectionné:', selectedArticle.source);
       console.log('📋 DEBUG: Type de l\'article:', selectedArticle.type);
@@ -512,8 +513,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         sourceName = 'CNN Travel';
       }
       
-      const sourceLink = `<p><strong>Source :</strong> <a href="${articleLink}" target="_blank" rel="noopener">${articleTitle}</a> - ${sourceName}</p>\n\n`;
-      finalArticle.content = sourceLink + finalArticle.content;
+      // FIX H1: Source Reddit DISCRÈTE en fin d'article au lieu d'en premier
+      // La source ne doit pas casser l'immersion narrative - elle est placée en fin
+      const sourceLink = `\n\n<p class="reddit-source-discrete"><small><em>Source : <a href="${articleLink}" target="_blank" rel="noopener">${articleTitle}</a> - ${sourceName}</em></small></p>`;      finalArticle.content = finalArticle.content + sourceLink; // APPEND at END instead of PREPEND
       
       // Générer le quote highlight si disponible (depuis analysis si présent)
       let quoteHighlight = '';
@@ -707,6 +709,12 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       
       // 10. Publication WordPress
       console.log('📝 Publication sur WordPress...');
+      // #region agent log
+      const _widgetScripts = (finalizedArticle.content.match(/trpwdg\.com\/content/g) || []).length;
+      const _affiliateDivs = (finalizedArticle.content.match(/data-fv-segment="affiliate"/g) || []).length;
+      const _affiliateModules = (finalizedArticle.content.match(/data-placement-id/g) || []).length;
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'enhanced-ultra-generator.js:BEFORE_WP_PUBLISH',message:'Content BEFORE WordPress publish',data:{contentLength:finalizedArticle.content.length,widgetScripts:_widgetScripts,affiliateDivs:_affiliateDivs,affiliateModules:_affiliateModules},timestamp:Date.now(),hypothesisId:'H-WP-PUBLISH'})}).catch(()=>{});
+      // #endregion
       const publishedArticle = await this.publishToWordPress(finalizedArticle);
       
       console.log('✅ Article publié avec succès!');
@@ -1370,13 +1378,24 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
    */
   validateNonAsiaContent(editorialText, title) {
     const finalNonAsiaDestinations = [
+      // Europe
       'portugal','spain','espagne','lisbon','lisbonne','barcelona','barcelone','madrid','porto',
       'france','paris','italy','italie','rome','greece','grèce','turkey','turquie','istanbul',
-      'europe','america','usa','brazil','brésil','mexico','mexique',
+      'europe','germany','allemagne','berlin','netherlands','pays-bas','amsterdam','switzerland','suisse',
+      'austria','autriche','vienna','vienne','prague','poland','pologne','hungary','hongrie','budapest',
+      'croatia','croatie','uk','england','angleterre','london','londres',
+      // Amériques
+      'america','usa','united states','états-unis','brazil','brésil','mexico','mexique','canada','colombia','colombie','peru','pérou','argentina','argentine',
+      // Afrique & Afrique du Nord
+      'egypt','égypte','egypte','cairo','le caire','giza','gizeh','alexandria','alexandrie','luxor','louxor','aswan','assouan',
+      'morocco','maroc','marrakech','casablanca','tunisia','tunisie','algeria','algérie','africa','afrique',
+      'south africa','afrique du sud','kenya','nairobi','tanzania','tanzanie','kilimanjaro','zanzibar','nigeria','ethiopia','éthiopie','ghana','senegal','sénégal',
       // Moyen-Orient (NON ASIE)
       'iraq','irak','iran','israel','israël','jordanie','jordan','liban','lebanon','syrie','syria',
       'arabie','saudi','emirats','emirates','dubai','dubaï','qatar','koweit','kuwait','oman','yemen','yémen',
-      'bahrein','bahrain','kurdistan','bagdad','baghdad','erbil'
+      'bahrein','bahrain','kurdistan','bagdad','baghdad','erbil',
+      // Océanie
+      'australia','australie','sydney','melbourne','new zealand','nouvelle-zélande'
     ];
     
     // VÉRIFICATION CRITIQUE DU TITRE - Rejet immédiat si destination non-asiatique dans le titre
@@ -1480,16 +1499,12 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       errors.push('Aucun tag');
     }
     
-    // Vérifier la meta description dans le HTML (SEO optimizer l'ajoute dans le HTML)
-    const content = article.content || '';
-    const hasMetaInHtml = content.includes('<meta name="description"') || 
-                          content.includes('meta name="description"') ||
-                          content.includes('<meta name=\'description\'') ||
-                          content.match(/<meta[^>]*name=["']description["'][^>]*>/i) !== null;
-    
-    if (!hasMetaInHtml && (!article.meta || !article.meta.description)) {
-      errors.push('Meta description manquante');
-    }
+    // FIX H2: NE PAS vérifier la meta description dans le HTML
+    // WordPress gère les meta descriptions via les plugins SEO (Yoast, RankMath, etc.)
+    // L'injection de <meta> dans le contenu HTML pollue le DOM et crée des problèmes SEO
+    // La validation est désactivée car WordPress génère automatiquement les meta via l'excerpt
+    // Si nécessaire, la meta peut être passée via article.meta.description pour l'API WordPress
+    console.log('   ℹ️ Meta description: gérée par WordPress/plugins SEO (validation skip)');
     
     // FIX D: Utiliser widgets réellement rendus pour le scoring (pas de détection HTML)
     const widgetsScore = widgetsRendered >= 1 ? 100 : 0;
@@ -1559,6 +1574,68 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       }
     }
     
+    // PHASE 1.5: Extraire explicitement le contenu des H2, H3, LI (souvent manqués par le pattern générique)
+    // AMÉLIORATION: Détection spécifique des citations dans les listes (guillemets français « ... » ou anglais "...")
+    const ENGLISH_WORDS_REGEX = /\b(the|a|an|is|are|was|were|have|has|had|will|would|can|could|should|this|that|these|those|in|on|at|to|for|of|with|from|by|as|be|been|being|do|does|did|get|got|go|went|come|came|see|saw|know|knew|think|thought|say|said|make|made|take|took|give|gave|find|found|work|worked|use|used|try|tried|want|wanted|need|needed|like|liked|look|looked|just|launched|available|now|requires|income|investment|regular|tourist|visa|extensions|still|most|common|approach|doesn't|specific|yet|easy|months|renewable|reasonable|proof|health|insurance|requirements|looking|latest|info|current|options|heard|might|introducing|something|interested|programs)\b/gi;
+    const headingAndListTexts = [];
+    
+    // Détection spécifique des citations dans les <li>
+    const liWithCitationsPattern = /<li[^>]*>([\s\S]*?)<\/li>/gi;
+    let liMatch;
+    while ((liMatch = liWithCitationsPattern.exec(html)) !== null) {
+      const liContent = liMatch[1];
+      // Détecter les citations (guillemets français « ... » ou anglais "...")
+      const citationPattern = /(«[^»]*»|"[^"]*"|'[^']*')/g;
+      const citations = liContent.match(citationPattern);
+      if (citations && citations.length > 0) {
+        // Extraire le texte de la citation
+        for (const citation of citations) {
+          const citationText = citation.replace(/[«»""'']/g, '').trim();
+          if (citationText.length >= 10 && /[a-zA-Z]{3,}/.test(citationText)) {
+            const englishWords = (citationText.match(ENGLISH_WORDS_REGEX) || []).length;
+            const totalWords = citationText.split(/\s+/).length;
+            const ratio = totalWords > 0 ? englishWords / totalWords : 0;
+            // Seuil abaissé à 20% pour les citations dans les listes
+            if (ratio > 0.20) {
+              headingAndListTexts.push({ 
+                original: citationText, 
+                fullMatch: liMatch[0], 
+                ratio, 
+                isBlockquote: false,
+                isCitation: true 
+              });
+            }
+          }
+        }
+      }
+      // Aussi traiter le texte complet du <li> si pas de citation détectée
+      const text = liContent.replace(/<[^>]+>/g, '').trim();
+      if (text.length >= 10 && !citations && /[a-zA-Z]{3,}/.test(text)) {
+        const englishWords = (text.match(ENGLISH_WORDS_REGEX) || []).length;
+        const totalWords = text.split(/\s+/).length;
+        const ratio = totalWords > 0 ? englishWords / totalWords : 0;
+        if (ratio > 0.25) {
+          headingAndListTexts.push({ original: text, fullMatch: liMatch[0], ratio, isBlockquote: false });
+        }
+      }
+    }
+    
+    // Détection H2 et H3 (sans modification)
+    for (const tag of ['h2', 'h3']) {
+      const tagRegex = new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`, 'gi');
+      let tagMatch;
+      while ((tagMatch = tagRegex.exec(html)) !== null) {
+        const text = (tagMatch[1] || '').replace(/<[^>]+>/g, '').trim();
+        if (text.length < 10 || !/[a-zA-Z]{3,}/.test(text)) continue;
+        const englishWords = (text.match(ENGLISH_WORDS_REGEX) || []).length;
+        const totalWords = text.split(/\s+/).length;
+        const ratio = totalWords > 0 ? englishWords / totalWords : 0;
+        if (ratio > 0.25) {
+          headingAndListTexts.push({ original: text, fullMatch: tagMatch[0], ratio, isBlockquote: false });
+        }
+      }
+    }
+
     // PHASE 2: Extraire tous les autres textes entre balises (y compris dans les <p>)
     const textPattern = />([^<]+)</g;
     const regularTexts = [];
@@ -1598,6 +1675,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       if (regularTexts.some(t => t.original === text)) continue; // Éviter doublons
       if (blockquoteTexts.some(t => t.original === text)) continue; // Éviter doublons avec blockquotes
       if (pTexts.some(t => t.original === text)) continue; // Éviter doublons avec <p>
+      if (headingAndListTexts.some(t => t.original === text)) continue; // Éviter doublons avec H2/H3/LI
       
       // Détecter anglais (ratio > 25%)
       const englishWords = (text.match(/\b(the|a|an|is|are|was|were|have|has|had|will|would|can|could|should|this|that|these|those|in|on|at|to|for|of|with|from|by|as|be|been|being|do|does|did|get|got|go|went|come|came|see|saw|know|knew|think|thought|say|said|make|made|take|took|give|gave|find|found|work|worked|use|used|try|tried|want|wanted|need|needed|like|liked|look|looked|just|launched|available|now|requires|income|investment|regular|tourist|visa|extensions|still|most|common|approach|doesn't|specific|yet|easy|months|renewable|reasonable|proof|health|insurance|requirements|looking|latest|info|current|options|heard|might|introducing|something|interested|programs)\b/gi) || []).length;
@@ -1630,15 +1708,15 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     // Filtrer les <p> anglais
     const pToTranslate = pTexts.filter(p => p.ratio > 0.25);
     
-    // Combiner tous les textes à traduire (blockquotes et <p> en priorité)
-    const allTextsToTranslate = [...blockquotesToTranslate, ...pToTranslate, ...regularTexts];
+    // Combiner tous les textes à traduire (blockquotes, p, H2/H3/LI, puis réguliers)
+    const allTextsToTranslate = [...blockquotesToTranslate, ...pToTranslate, ...headingAndListTexts, ...regularTexts];
     
     if (allTextsToTranslate.length === 0) {
       console.log('   ✅ Aucun texte anglais détecté');
       return html;
     }
     
-    console.log(`   📝 ${allTextsToTranslate.length} textes anglais à traduire (${blockquotesToTranslate.length} blockquotes + ${pToTranslate.length} paragraphes + ${regularTexts.length} réguliers)...`);
+    console.log(`   📝 ${allTextsToTranslate.length} textes anglais à traduire (${blockquotesToTranslate.length} blockquotes + ${pToTranslate.length} paragraphes + ${headingAndListTexts.length} H2/H3/LI + ${regularTexts.length} réguliers)...`);
     
     // Traduire et remplacer dans le HTML
     let translatedHtml = html;

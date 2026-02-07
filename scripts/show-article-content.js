@@ -41,7 +41,7 @@ function loadRedditFixture() {
 
 // Main
 async function main() {
-  process.env.FORCE_OFFLINE = '1';
+  // Mode test : pas de publication. Online par défaut (OPENAI_API_KEY dans .env ou CI).
   process.env.FLASHVOYAGE_DRY_RUN = '1';
   process.env.ENABLE_ANTI_HALLUCINATION_BLOCKING = '0';
   

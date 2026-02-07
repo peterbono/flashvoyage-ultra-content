@@ -4,10 +4,12 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "publish:article": "node enhanced-ultra-generator.js",
     "start:ultra-generator": "node ultra-specialized-content-generator.js",
     "start:auto-publisher": "node fixed-auto-publisher.js",
     "start:daily-content": "./start-daily-content.sh",
     "test:ultra-content": "node test-ultra-content.js",
+    "test:widgets": "node scripts/test-travelpayouts-widgets-database.js && node scripts/test-widget-placer-integration.js && node scripts/test-affiliate-module-renderer.js && node scripts/test-finalizer-widget-replacement.js",
     "start:all": "concurrently \"npm run start:ultra-generator\" \"npm run start:auto-publisher\"",
     "dev": "vercel dev",
     "build": "vercel build",

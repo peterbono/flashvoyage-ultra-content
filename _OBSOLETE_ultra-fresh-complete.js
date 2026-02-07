@@ -172,6 +172,46 @@ const ALTERNATIVE_SOURCES = {
     ],
     working: true
   },
+  reddit_thailand: {
+    name: 'Reddit Thailand',
+    url: 'https://www.reddit.com/r/Thailand/new.json',
+    type: 'community',
+    keywords: [
+      'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'chiangmai', 'phuket', 'krabi', 'pattaya', 'koh samui', 'koh phangan', 'koh tao', 'pai', 'ayutthaya', 'sukhothai',
+      'travel', 'voyage', 'trip', 'backpacking', 'nomad', 'digital nomad', 'visa', 'budget', 'cost', 'living'
+    ],
+    working: true
+  },
+  reddit_vietnam: {
+    name: 'Reddit Vietnam',
+    url: 'https://www.reddit.com/r/VietNam/new.json',
+    type: 'community',
+    keywords: [
+      'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
+      'travel', 'voyage', 'trip', 'backpacking', 'nomad', 'digital nomad', 'visa', 'budget', 'cost', 'living'
+    ],
+    working: true
+  },
+  reddit_japantravel: {
+    name: 'Reddit JapanTravel',
+    url: 'https://www.reddit.com/r/JapanTravel/new.json',
+    type: 'community',
+    keywords: [
+      'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'hokkaido', 'hokkaidō', 'hiroshima', 'nara', 'sapporo', 'fukuoka', 'okinawa', 'yokohama', 'nagoya', 'sendai',
+      'travel', 'voyage', 'trip', 'backpacking', 'nomad', 'digital nomad', 'visa', 'budget', 'cost', 'living'
+    ],
+    working: true
+  },
+  reddit_southeastasia: {
+    name: 'Reddit Southeast Asia',
+    url: 'https://www.reddit.com/r/southeastasia/new.json',
+    type: 'community',
+    keywords: [
+      'southeast asia', 'southeast asia', 'asia', 'indonesia', 'indonésie', 'bali', 'vietnam', 'thailand', 'thaïlande', 'philippines', 'singapore', 'singapour',
+      'travel', 'voyage', 'trip', 'backpacking', 'nomad', 'digital nomad', 'visa', 'budget', 'cost', 'living'
+    ],
+    working: true
+  },
   google_news: {
     name: 'Google News Asia',
     url: 'https://news.google.com/rss/search?q=travel+asia&hl=en&gl=US&ceid=US:en',
@@ -320,9 +360,16 @@ class UltraFreshComplete {
     // 1) FORCE_OFFLINE doit forcer Reddit en fixtures
     const forceOffline = FORCE_OFFLINE;
     const forceFixtures = process.env.FLASHVOYAGE_FORCE_FIXTURES === '1';
-    const fixtureFile = subreddit === 'travel' 
-      ? './data/fixtures/reddit-travel.json'
-      : './data/fixtures/reddit-digitalnomad.json';
+    // Déterminer le fichier de fixture selon le subreddit
+    let fixtureFile;
+    if (subreddit === 'travel') {
+      fixtureFile = './data/fixtures/reddit-travel.json';
+    } else if (subreddit === 'digitalnomad') {
+      fixtureFile = './data/fixtures/reddit-digitalnomad.json';
+    } else {
+      // Pour les nouveaux subreddits, utiliser le fixture digitalnomad par défaut
+      fixtureFile = './data/fixtures/reddit-digitalnomad.json';
+    }
     
     // Si FORCE_OFFLINE=1, retourner directement les fixtures (aucun fetch réseau)
     if (forceOffline) {
@@ -330,33 +377,72 @@ class UltraFreshComplete {
       return this.loadRedditFixtures(fixtureFile, subreddit, keywords, extractGeoMeta, generateWidgetPlan);
     }
     
-    // A. Tenter endpoint JSON
+    // A. Tenter endpoint JSON avec pagination
     if (!forceFixtures) {
       try {
-        const jsonUrl = `https://www.reddit.com/r/${subreddit}/hot.json?limit=50&raw_json=1`;
-        const response = await axios.get(jsonUrl, {
-          headers: getRealisticRedditHeaders(),
-          timeout: 20000
-        });
+        let allPosts = [];
+        let after = null;
+        let pageCount = 0;
+        const maxPages = 5; // Récupérer jusqu'à 5 pages (500 articles max)
         
-        const posts = response.data.data?.children || [];
+        // Boucle de pagination pour récupérer plusieurs pages
+        while (pageCount < maxPages) {
+          let jsonUrl = `https://www.reddit.com/r/${subreddit}/hot.json?limit=100&raw_json=1`;
+          if (after) {
+            jsonUrl += `&after=${after}`;
+          }
+          
+          const response = await axios.get(jsonUrl, {
+            headers: getRealisticRedditHeaders(),
+            timeout: 20000
+          });
+          
+          const posts = response.data.data?.children || [];
+          
+          if (posts.length === 0) {
+            console.log(`   ℹ️ Fin des pages atteinte pour r/${subreddit} (page ${pageCount + 1})`);
+            break;
+          }
+          
+          allPosts.push(...posts);
+          after = response.data.data?.after;
+          pageCount++;
+          
+          console.log(`   📄 Page ${pageCount}/${maxPages} récupérée: ${posts.length} posts (total: ${allPosts.length})`);
+          
+          // Délai entre les pages pour éviter le rate limiting (1 seconde)
+          if (pageCount < maxPages && after) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+        }
+        
         const relevantPosts = [];
         
-        posts.forEach(post => {
+        // Mots-clés génériques pour accepter plus de posts
+        const genericKeywords = ['asia', 'southeast asia', 'east asia', 'backpacking', 'solo travel', 'travel', 'trip', 'journey'];
+        
+        allPosts.forEach(post => {
           const data = post.data;
           const title = data.title.toLowerCase();
           const selftext = (data.selftext || '').toLowerCase();
           
-          // FILTRE: Ignorer les posts sans contenu substantiel (images, liens, questions courtes)
-          // Minimum 400 mots pour garantir un VRAI témoignage riche et détaillé
-          // Les posts < 400 mots sont souvent de simples questions sans profondeur
+          // FILTRE: Relâché - Accepter posts avec contenu substantiel OU beaucoup de commentaires OU titre descriptif
+          // Minimum 200 mots (réduit de 400) OU beaucoup de commentaires OU titre descriptif + contenu minimal
           const wordCount = selftext.split(/\s+/).filter(w => w.length > 0).length;
-          const hasContent = data.is_self && wordCount >= 400;
+          const hasContent = data.is_self && (
+            wordCount >= 200 || // Réduit de 400 à 200 mots
+            data.num_comments >= 20 || // Beaucoup de commentaires = discussion intéressante
+            (title.length > 100 && wordCount >= 100) // Titre descriptif + contenu minimal
+          );
+          
           if (!hasContent) {
-            return; // Skip ce post (trop court pour un témoignage de qualité - minimum 400 mots)
+            return; // Skip ce post (trop court)
           }
           
+          // Élargir le filtrage par keywords : accepter posts génériques sur l'Asie même sans destination explicite
           const isRelevant = keywords.some(keyword => 
+            title.includes(keyword) || selftext.includes(keyword)
+          ) || genericKeywords.some(keyword =>
             title.includes(keyword) || selftext.includes(keyword)
           );
           
@@ -409,7 +495,7 @@ class UltraFreshComplete {
         });
         
         if (relevantPosts.length > 0) {
-          console.log(`✅ REDDIT_OK: mode=json count=${relevantPosts.length} sub=r/${subreddit}`);
+          console.log(`✅ REDDIT_OK: mode=json count=${relevantPosts.length} sub=r/${subreddit} (${pageCount} pages scrapées, ${allPosts.length} posts totaux)`);
           return relevantPosts;
         }
       } catch (error) {
@@ -891,6 +977,74 @@ class UltraFreshComplete {
     );
   }
 
+  // Scraper Reddit Thailand
+  async scrapeRedditThailand() {
+    console.log('🔍 Scraping Reddit r/Thailand...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    return await this.fetchRedditWithCascade(
+      'Thailand',
+      ALTERNATIVE_SOURCES.reddit_thailand.keywords,
+      (title) => this.extractGeoMeta(title),
+      (data, stats) => this.computeSmartScore(data, stats),
+      (title, text, keywords) => this.calculateRelevance(title, text, keywords),
+      (slots, geo) => this.generateWidgetPlan(slots, geo),
+      (sub) => this.loadSubredditStats(sub),
+      (audit) => this.writeSmartAudit(audit)
+    );
+  }
+
+  // Scraper Reddit Vietnam
+  async scrapeRedditVietnam() {
+    console.log('🔍 Scraping Reddit r/VietNam...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    return await this.fetchRedditWithCascade(
+      'VietNam',
+      ALTERNATIVE_SOURCES.reddit_vietnam.keywords,
+      (title) => this.extractGeoMeta(title),
+      (data, stats) => this.computeSmartScore(data, stats),
+      (title, text, keywords) => this.calculateRelevance(title, text, keywords),
+      (slots, geo) => this.generateWidgetPlan(slots, geo),
+      (sub) => this.loadSubredditStats(sub),
+      (audit) => this.writeSmartAudit(audit)
+    );
+  }
+
+  // Scraper Reddit JapanTravel
+  async scrapeRedditJapanTravel() {
+    console.log('🔍 Scraping Reddit r/JapanTravel...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    return await this.fetchRedditWithCascade(
+      'JapanTravel',
+      ALTERNATIVE_SOURCES.reddit_japantravel.keywords,
+      (title) => this.extractGeoMeta(title),
+      (data, stats) => this.computeSmartScore(data, stats),
+      (title, text, keywords) => this.calculateRelevance(title, text, keywords),
+      (slots, geo) => this.generateWidgetPlan(slots, geo),
+      (sub) => this.loadSubredditStats(sub),
+      (audit) => this.writeSmartAudit(audit)
+    );
+  }
+
+  // Scraper Reddit Southeast Asia
+  async scrapeRedditSoutheastAsia() {
+    console.log('🔍 Scraping Reddit r/southeastasia...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    return await this.fetchRedditWithCascade(
+      'southeastasia',
+      ALTERNATIVE_SOURCES.reddit_southeastasia.keywords,
+      (title) => this.extractGeoMeta(title),
+      (data, stats) => this.computeSmartScore(data, stats),
+      (title, text, keywords) => this.calculateRelevance(title, text, keywords),
+      (slots, geo) => this.generateWidgetPlan(slots, geo),
+      (sub) => this.loadSubredditStats(sub),
+      (audit) => this.writeSmartAudit(audit)
+    );
+  }
+
   // Scraper Google News Nomade
   async scrapeGoogleNewsNomad() {
     try {
@@ -1085,7 +1239,43 @@ class UltraFreshComplete {
         allArticles.push(...redditBackpackingArticles);
         console.log(`✅ Reddit Backpacking: ${redditBackpackingArticles.length} articles trouvés`);
       } catch (error) {
-        console.log(`⚠️ Reddit Nomade échoué: ${error.message}`);
+        console.log(`⚠️ Reddit Backpacking échoué: ${error.message}`);
+      }
+
+      try {
+        // Scraper Reddit Thailand (mode local) - TOUJOURS activé
+        const redditThailandArticles = await this.scrapeRedditThailand();
+        allArticles.push(...redditThailandArticles);
+        console.log(`✅ Reddit Thailand: ${redditThailandArticles.length} articles trouvés`);
+      } catch (error) {
+        console.log(`⚠️ Reddit Thailand échoué: ${error.message}`);
+      }
+
+      try {
+        // Scraper Reddit Vietnam (mode local) - TOUJOURS activé
+        const redditVietnamArticles = await this.scrapeRedditVietnam();
+        allArticles.push(...redditVietnamArticles);
+        console.log(`✅ Reddit Vietnam: ${redditVietnamArticles.length} articles trouvés`);
+      } catch (error) {
+        console.log(`⚠️ Reddit Vietnam échoué: ${error.message}`);
+      }
+
+      try {
+        // Scraper Reddit JapanTravel (mode local) - TOUJOURS activé
+        const redditJapanTravelArticles = await this.scrapeRedditJapanTravel();
+        allArticles.push(...redditJapanTravelArticles);
+        console.log(`✅ Reddit JapanTravel: ${redditJapanTravelArticles.length} articles trouvés`);
+      } catch (error) {
+        console.log(`⚠️ Reddit JapanTravel échoué: ${error.message}`);
+      }
+
+      try {
+        // Scraper Reddit Southeast Asia (mode local) - TOUJOURS activé
+        const redditSoutheastAsiaArticles = await this.scrapeRedditSoutheastAsia();
+        allArticles.push(...redditSoutheastAsiaArticles);
+        console.log(`✅ Reddit Southeast Asia: ${redditSoutheastAsiaArticles.length} articles trouvés`);
+      } catch (error) {
+        console.log(`⚠️ Reddit Southeast Asia échoué: ${error.message}`);
       }
     }
 

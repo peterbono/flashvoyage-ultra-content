@@ -20,15 +20,20 @@
  *   // truthPack.allowed.locations, truthPack.allowed.numbers, etc.
  */
 
+import { lookupIATA, getAllLocationNames, normalizeLocationName } from '../../airport-lookup.js';
+
 /**
- * Normalise un texte (trim, collapse spaces, casefold)
+ * Normalise un texte (trim, collapse spaces, casefold, strip accents)
+ * Strip accents pour cohérence avec la BDD OpenFlights (ex: "thaïlande" = "thailande")
  */
 function normalizeText(s) {
   if (typeof s !== 'string') return '';
   return s
     .trim()
     .replace(/\s+/g, ' ') // Collapse multiple spaces
-    .toLowerCase(); // Casefold
+    .toLowerCase() // Casefold
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, ''); // Strip accents
 }
 
 /**
@@ -43,6 +48,52 @@ function uniq(arr) {
     seen.add(normalized);
     return true;
   });
+}
+
+/**
+ * SMART EXTRACTION: Extrait tous les noms propres d'un texte
+ * Remplace la liste statique knownAsiaLocations par une extraction dynamique
+ * Tout nom propre du texte Reddit original est automatiquement autorisé
+ * 
+ * @param {string} text - Texte brut (non lowercase)
+ * @returns {string[]} - Liste de noms propres normalisés (lowercase)
+ */
+function extractProperNouns(text) {
+  if (!text || typeof text !== 'string') return [];
+  
+  const properNouns = new Set();
+  
+  // Pattern 1: Mots capitalisés simples ou composés (ex: "Shifen", "Ho Chi Minh")
+  const capitalizedPattern = /\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\b/g;
+  const capitalizedMatches = text.match(capitalizedPattern) || [];
+  capitalizedMatches.forEach(match => {
+    // Filtrer les mots trop courts ou les mots communs capitalisés en début de phrase
+    if (match.length > 2) {
+      properNouns.add(match.toLowerCase());
+    }
+  });
+  
+  // Pattern 2: Mots tout en majuscules (ex: "KL", "HCM")
+  const upperPattern = /\b[A-Z]{2,5}\b/g;
+  const upperMatches = text.match(upperPattern) || [];
+  upperMatches.forEach(match => {
+    // Filtrer les acronymes communs non-lieux
+    const commonAcronyms = ['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CNY', 'THB', 'VND', 'IDR', 'PHP', 'SGD', 'MYR', 'AMA', 'FAQ', 'TIL', 'TL', 'DR', 'FYI', 'IMO', 'IMHO', 'BTW', 'AFAIK'];
+    if (!commonAcronyms.includes(match)) {
+      properNouns.add(match.toLowerCase());
+    }
+  });
+  
+  // Pattern 3: Noms après prépositions géographiques (ex: "in Yilan", "to Hualien", "from Taipei")
+  const prepositionPattern = /\b(?:in|at|to|from|near|around|via|through|visiting|visit|went to|going to|arrived in|arrived at|stay in|staying in|based in|living in|moved to|travel to|traveling to|flew to|flight to|à|au|en|vers|de|dans)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)/gi;
+  let match;
+  while ((match = prepositionPattern.exec(text)) !== null) {
+    if (match[1] && match[1].length > 2) {
+      properNouns.add(match[1].toLowerCase());
+    }
+  }
+  
+  return [...properNouns];
 }
 
 /**
@@ -186,45 +237,40 @@ export function buildTruthPack(extracted) {
     }
   }
   
-  const combinedText = rawTexts.join(' ').toLowerCase();
+  // SMART EXTRACTION: Garder le texte original (non-lowercase) pour extraction des noms propres
+  const combinedTextOriginal = rawTexts.join(' ');
+  const combinedText = combinedTextOriginal.toLowerCase();
   
-  // Liste des destinations asiatiques connues pour extraction depuis texte (liste étendue)
-  // Avec équivalents français/anglais
-  const knownAsiaLocations = [
-    'kuala lumpur', 'malaisie', 'malaysia', 'singapore', 'singapour',
-    'thailand', 'thaïlande', 'vietnam', 'indonesia', 'indonésie',
-    'japan', 'japon', 'korea', 'corée', 'philippines',
-    'bangkok', 'chiang mai', 'phuket', 'ho chi minh', 'hanoi',
-    'tokyo', 'kyoto', 'osaka', 'seoul', 'bali', 'jakarta', 'manila',
-    'penang', 'langkawi', 'george town', 'ipoh', 'melaka', 'malacca',
-    'kl', 'selangor', 'sabah', 'sarawak', 'borneo', 'phnom penh',
-    'siem reap', 'yangon', 'rangoon', 'myanmar', 'burma', 'laos',
-    'vientiane', 'luang prabang', 'macau', 'hong kong', 'taipei', 'taiwan'
-  ];
+  // NOUVELLE APPROCHE: Extraction dynamique des noms propres depuis le texte Reddit
+  // Remplace la liste statique knownAsiaLocations - adaptatif à tout contenu
+  const dynamicProperNouns = extractProperNouns(combinedTextOriginal);
+  console.log(`   🔍 Extraction dynamique: ${dynamicProperNouns.length} noms propres trouvés: ${dynamicProperNouns.slice(0, 10).join(', ')}${dynamicProperNouns.length > 10 ? '...' : ''}`);
   
-  // Mapping équivalents français/anglais
-  const locationEquivalents = {
-    'malaisie': 'malaysia',
-    'thaïlande': 'thailand',
-    'indonésie': 'indonesia',
-    'japon': 'japan',
-    'corée': 'korea',
-    'singapour': 'singapore'
-  };
+  // Ajouter tous les noms propres extraits à la whitelist
+  for (const noun of dynamicProperNouns) {
+    const normalizedNoun = normalizeText(noun);
+    if (normalizedNoun.length > 2 && !rawLocations.some(l => normalizeText(l) === normalizedNoun)) {
+      rawLocations.push(noun);
+    }
+  }
   
-  // Extraire les locations depuis le texte brut (pattern plus flexible)
-  for (const loc of knownAsiaLocations) {
-    // Pattern flexible : peut être dans le texte même sans word boundary exacte
-    // Utiliser un pattern qui cherche le mot complet mais tolère les variations
-    const escapedLoc = loc.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    // Chercher le mot complet, avec ou sans accents, avec ou sans majuscules
-    const regex = new RegExp(`\\b${escapedLoc}\\b|${escapedLoc}`, 'gi');
-    if (regex.test(combinedText)) {
-      const normalizedLoc = normalizeText(loc);
-      // Vérifier qu'on ne l'a pas déjà ajouté
-      if (!rawLocations.some(l => normalizeText(l) === normalizedLoc)) {
-        rawLocations.push(loc);
-      }
+  // Ajout dynamique des équivalents FR/EN via BDD OpenFlights (5670+ entrées)
+  // Plus besoin de liste hardcodée : deux noms qui résolvent au même code IATA sont équivalents
+  const allDBNames = getAllLocationNames();
+  const iataToNames = {}; // IATA → [nom1, nom2, ...]
+  for (const name of allDBNames) {
+    const iata = lookupIATA(name);
+    if (iata) {
+      if (!iataToNames[iata]) iataToNames[iata] = [];
+      iataToNames[iata].push(name);
+    }
+  }
+  
+  // Ajout automatique des termes génériques continent/région
+  const continentTerms = ['asia', 'asie', 'southeast asia', 'asie du sud-est'];
+  for (const term of continentTerms) {
+    if (combinedText.includes(term) && !rawLocations.some(l => normalizeText(l) === term)) {
+      rawLocations.push(term);
     }
   }
   
@@ -249,20 +295,25 @@ export function buildTruthPack(extracted) {
   
   let locations = uniq(rawLocations.map(normalizeText)).filter(l => l.length > 0);
   
-  // FIX: Ajouter les équivalents français/anglais
+  // FIX: Ajouter les équivalents FR/EN via BDD OpenFlights (IATA-pivot)
+  // Si "thailand" est en whitelist, on ajoute aussi "thailande", "thaïlande" etc.
   const normalizedLocations = new Set(locations);
-  for (const [fr, en] of Object.entries(locationEquivalents)) {
-    const normalizedFr = normalizeText(fr);
-    const normalizedEn = normalizeText(en);
-    if (normalizedLocations.has(normalizedFr) && !normalizedLocations.has(normalizedEn)) {
-      locations.push(en);
-      normalizedLocations.add(normalizedEn);
-    }
-    if (normalizedLocations.has(normalizedEn) && !normalizedLocations.has(normalizedFr)) {
-      locations.push(fr);
-      normalizedLocations.add(normalizedFr);
+  const locationsToAdd = [];
+  for (const loc of locations) {
+    const iata = lookupIATA(loc);
+    if (iata && iataToNames[iata]) {
+      for (const equivalent of iataToNames[iata]) {
+        if (!normalizedLocations.has(equivalent)) {
+          locationsToAdd.push(equivalent);
+          normalizedLocations.add(equivalent);
+        }
+      }
     }
   }
+  locations.push(...locationsToAdd);
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'truth-pack.js:IATA_PIVOT',message:'IATA-pivot equivalents added',data:{locationsAdded:locationsToAdd.length,sample:locationsToAdd.slice(0,10),totalLocations:locations.length},timestamp:Date.now(),hypothesisId:'B'})}).catch(()=>{});
+  // #endregion
   locations = uniq(locations.map(normalizeText)).filter(l => l.length > 0);
   
   // Extraire dates

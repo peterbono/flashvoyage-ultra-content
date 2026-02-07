@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import { WORDPRESS_URL, WORDPRESS_USERNAME, WORDPRESS_APP_PASSWORD } from './config.js';
+import { isKnownLocation } from './airport-lookup.js';
 
 class InternalLinksManager {
   constructor() {
@@ -150,16 +151,16 @@ class InternalLinksManager {
     const text = content.toLowerCase();
     const destinations = [];
     
-    const asiaCountries = [
-      'vietnam', 'thailand', 'japan', 'korea', 'singapore',
-      'philippines', 'indonesia', 'malaysia', 'taiwan', 'hong kong'
-    ];
-    
-    asiaCountries.forEach(country => {
-      if (text.includes(country)) {
-        destinations.push(country);
+    // Détection dynamique via BDD OpenFlights (5600+ entrées)
+    const words = text.split(/[\s,;.()]+/).filter(w => w.length > 2);
+    const seen = new Set();
+    for (const word of words) {
+      const w = word.toLowerCase();
+      if (!seen.has(w) && isKnownLocation(w)) {
+        destinations.push(w);
+        seen.add(w);
       }
-    });
+    }
     
     return destinations;
   }

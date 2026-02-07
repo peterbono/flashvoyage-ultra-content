@@ -1,152 +1,86 @@
-# 🎯 BASE DE DONNÉES WIDGETS TRAVELPAYOUTS
+# Base de données widgets Travelpayouts
 
-## 📋 **WIDGETS DISPONIBLES PAR CONTEXTE**
+Source de vérité côté code : [travelpayouts-real-widgets-database.js](travelpayouts-real-widgets-database.js) (export `REAL_TRAVELPAYOUTS_WIDGETS`).
 
-### **✈️ WIDGETS VOLS**
+Partner ID : `463418` · Marker : `676421`
 
-#### **Widget Vols Général (Asie)**
-```html
-<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&locale=fr&powered_by=true&color_button=%23f2685f&color_focused=%23f2685f&secondary=%23FFFFFF&dark=%2311100f&light=%23FFFFFF&special=%23C4C4C4&border_radius=5&plain=false&no_labels=true&promo_id=8588&campaign_id=541" charset="utf-8"></script>
-```
-**Usage :** Articles généraux sur le nomadisme en Asie
+---
 
-#### **Widget Vols Thaïlande**
-```html
-<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&locale=fr&powered_by=true&color_button=%23f2685f&color_focused=%23f2685f&secondary=%23FFFFFF&dark=%2311100f&light=%23FFFFFF&special=%23C4C4C4&border_radius=5&plain=false&no_labels=true&promo_id=8588&campaign_id=541&destination=BKK&destination_name=Bangkok" charset="utf-8"></script>
-```
-**Usage :** Articles spécifiques sur la Thaïlande
+## Vols (flights)
 
-#### **Widget Vols Vietnam**
-```html
-<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&locale=fr&powered_by=true&color_button=%23f2685f&color_focused=%23f2685f&secondary=%23FFFFFF&dark=%2311100f&light=%23FFFFFF&special=%23C4C4C4&border_radius=5&plain=false&no_labels=true&promo_id=8588&campaign_id=541&destination=SGN&destination_name=Ho Chi Minh" charset="utf-8"></script>
-```
-**Usage :** Articles spécifiques sur le Vietnam
+Ordre des providers : **Aviasales** (40 % reward) en premier, puis **Kiwi.com** (3 %). Le placer utilise par défaut le premier provider et `searchForm`.
 
-#### **Widget Vols Philippines**
-```html
-<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&locale=fr&powered_by=true&color_button=%23f2685f&color_focused=%23f2685f&secondary=%23FFFFFF&dark=%2311100f&light=%23FFFFFF&special=%23C4C4C4&border_radius=5&plain=false&no_labels=true&promo_id=8588&campaign_id=541&destination=MNL&destination_name=Manille" charset="utf-8"></script>
-```
-**Usage :** Articles spécifiques sur les Philippines
+### Aviasales (campaign_id=100)
 
-### **🏨 WIDGETS HÔTELS**
+| Widget | Type | promo_id | Usage |
+|--------|------|----------|--------|
+| Flight Search Form | searchForm | 7879 | Formulaire de recherche vols, comparatifs |
+| Schedule Widget | scheduleWidget | 2811 | Horaires de vol, planning |
+| Pricing Calendar | pricingCalendar | 4041 | Meilleures périodes, calendrier des prix |
+| Popular Routes | popularRoutes | 4044 | Routes populaires, tendances |
+| Price on Map | pricesOnMap | 4054 | Carte des prix, comparaisons géo |
 
-#### **Widget Hôtels Général (Asie)**
-```html
-<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&locale=fr&powered_by=true&color_button=%23f2685f&color_focused=%23f2685f&secondary=%23FFFFFF&dark=%2311100f&light=%23FFFFFF&special=%23C4C4C4&border_radius=5&plain=false&no_labels=true&promo_id=8588&campaign_id=541&type=hotels" charset="utf-8"></script>
-```
-**Usage :** Articles sur l'hébergement en Asie
+### Kiwi.com (campaign_id=111)
 
-#### **Widget Hôtels Thaïlande**
-```html
-<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&locale=fr&powered_by=true&color_button=%23f2685f&color_focused=%23f2685f&secondary=%23FFFFFF&dark=%2311100f&light=%23FFFFFF&special=%23C4C4C4&border_radius=5&plain=false&no_labels=true&promo_id=8588&campaign_id=541&type=hotels&destination=BKK&destination_name=Bangkok" charset="utf-8"></script>
-```
-**Usage :** Articles sur l'hébergement en Thaïlande
+| Widget | Type | promo_id | Usage |
+|--------|------|----------|--------|
+| Flight Search Form | searchForm | 3414 | Recherche vols (origin/destination dynamiques) |
+| Popular Routes | popularRoutes | 3411 | Routes populaires |
+| Search Results | searchResults | 4478 | Résultats de recherche |
+| Specific Route | specificRoute | 4484 | Route spécifique (ex. Paris–Bangkok) |
+| Popular Destinations | popularDestinations | 4563 | Destinations populaires |
 
-### **🛡️ WIDGETS ASSURANCE**
+---
 
-#### **Widget Assurance Voyage**
-```html
-<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&locale=fr&powered_by=true&color_button=%23f2685f&color_focused=%23f2685f&secondary=%23FFFFFF&dark=%2311100f&light=%23FFFFFF&special=%23C4C4C4&border_radius=5&plain=false&no_labels=true&promo_id=8588&campaign_id=541&type=insurance" charset="utf-8"></script>
-```
-**Usage :** Articles sur l'assurance voyage pour nomades
+## Connectivité / eSIM (connectivity, esim)
 
-### **💼 WIDGETS PRODUCTIVITÉ**
+### Airalo (campaign_id=541)
 
-#### **Widget Outils Nomades**
-```html
-<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&locale=fr&powered_by=true&color_button=%23f2685f&color_focused=%23f2685f&secondary=%23FFFFFF&dark=%2311100f&light=%23FFFFFF&special=%23C4C4C4&border_radius=5&plain=false&no_labels=true&promo_id=8588&campaign_id=541&type=productivity" charset="utf-8"></script>
-```
-**Usage :** Articles sur les outils de productivité pour nomades
+| Widget | Type | promo_id | Usage |
+|--------|------|----------|--------|
+| eSIM Search Form | esimSearch | 8588 | Recherche eSIM, connectivité nomades |
 
-### **🚗 WIDGETS TRANSPORT LOCAL**
+---
 
-#### **Widget Transport Asie**
-```html
-<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&locale=fr&powered_by=true&color_button=%23f2685f&color_focused=%23f2685f&secondary=%23FFFFFF&dark=%2311100f&light=%23FFFFFF&special=%23C4C4C4&border_radius=5&plain=false&no_labels=true&promo_id=8588&campaign_id=541&type=transport" charset="utf-8"></script>
-```
-**Usage :** Articles sur les transports locaux en Asie
+## Assurance (insurance)
 
-## 🎯 **SÉLECTION CONTEXTUELLE**
+Ordre des providers : **VisitorCoverage** en premier (widget le plus générique), puis **Insubuy**.
 
-### **Par Type d'Article :**
+### VisitorCoverage (campaign_id=153)
 
-#### **Témoignages (40% du contenu)**
-- **Success Story** → Widget Vols + Hôtels + Assurance
-- **Échec & Leçons** → Widget Assurance + Productivité
-- **Transition** → Widget Vols + Hôtels + Transport
-- **Comparaison** → Widget Vols + Hôtels (multi-destinations)
+| Widget | Type | promo_id | Usage |
+|--------|------|----------|--------|
+| Travel medical insurance | travelMedical | 4652 | Assurance voyage médicale (type=visitor, theme=small-theme1) |
 
-#### **Guides Pratiques (30% du contenu)**
-- **Guide Visa** → Widget Assurance + Vols
-- **Guide Budget** → Widget Hôtels + Transport
-- **Guide Productivité** → Widget Productivité + Assurance
+### Insubuy (campaign_id=165)
 
-#### **Actualités (20% du contenu)**
-- **Nouvelles réglementations** → Widget Assurance + Vols
-- **Événements** → Widget Hôtels + Transport
+| Widget | Type | promo_id | Format | Usage |
+|--------|------|----------|--------|--------|
+| Insurance for USA (Horizontal) | usaHorizontal | 4792 | iframe 670×119 | Assurance voyage USA |
+| Insurance for USA (Vertical) | usaVertical | 4775 | iframe 320×356 | Assurance voyage USA (vertical) |
 
-#### **Comparaisons (10% du contenu)**
-- **Destinations** → Widget Vols + Hôtels (multi-destinations)
-- **Outils** → Widget Productivité
+**Schengen Visa Insurance Search Form (Insubuy)** : non ajouté tant que l’URL/script correct n’est pas fourni (le script fourni initialement était identique à celui d’Aviasales Flight Search). À ajouter en `insurance.insubuy.schengenVisa` dès que disponible.
 
-### **Par Destination :**
+---
 
-#### **Thaïlande**
-- Widget Vols BKK + Hôtels BKK + Assurance
+## Hôtels (hotels)
 
-#### **Vietnam**
-- Widget Vols SGN + Hôtels SGN + Assurance
+Section vide (Hotellook retiré). Le sélecteur renvoie un widget vol en remplacement.
 
-#### **Philippines**
-- Widget Vols MNL + Hôtels MNL + Assurance
+---
 
-#### **Asie Générale**
-- Widget Vols général + Hôtels général + Assurance
+## Sélection contextuelle
 
-## 🔧 **UTILISATION DANS LE CODE**
+- **contextual-widget-placer-v2.js** : `getWidgetScript(slot, ...)` utilise `REAL_TRAVELPAYOUTS_WIDGETS[slot]`. Pour `flights` : premier provider + `searchForm` (Aviasales par défaut). Pour `insurance`, `connectivity`, etc. : premier provider, premier widget.
+- **contextual-affiliate-injector.js** : décide les placements (`flights`, `insurance`, `connectivity`) selon mots-clés et pattern.
+- **affiliate-module-renderer.js** : pour `insurance` utilise `REAL_TRAVELPAYOUTS_WIDGETS.insurance.visitorCoverage.travelMedical`.
 
-### **Fonction de sélection automatique :**
-```javascript
-function selectWidgetByContext(articleType, destination, content) {
-  const widgets = {
-    'temoignage_success': ['flights', 'hotels', 'insurance'],
-    'temoignage_echec': ['insurance', 'productivity'],
-    'temoignage_transition': ['flights', 'hotels', 'transport'],
-    'temoignage_comparaison': ['flights_multi', 'hotels_multi'],
-    'guide_visa': ['insurance', 'flights'],
-    'guide_budget': ['hotels', 'transport'],
-    'guide_productivite': ['productivity', 'insurance'],
-    'actualite_reglementation': ['insurance', 'flights'],
-    'actualite_evenement': ['hotels', 'transport'],
-    'comparaison_destination': ['flights_multi', 'hotels_multi'],
-    'comparaison_outils': ['productivity']
-  };
-  
-  return widgets[articleType] || ['flights', 'hotels'];
-}
-```
+---
 
-### **Mapping des destinations :**
-```javascript
-const destinationMapping = {
-  'thailande': { code: 'BKK', name: 'Bangkok' },
-  'vietnam': { code: 'SGN', name: 'Ho Chi Minh' },
-  'philippines': { code: 'MNL', name: 'Manille' },
-  'indonesie': { code: 'CGK', name: 'Jakarta' },
-  'malaisie': { code: 'KUL', name: 'Kuala Lumpur' }
-};
-```
+## Notes
 
-## 📝 **NOTES D'UTILISATION**
+1. **Locale** : `fr` ou `en` selon le widget (Aviasales/Kiwi souvent `fr`, Airalo `en`).
+2. **Iframes** : Insubuy USA utilise des iframes `tp.media/content` ; le champ `script` peut contenir du HTML (iframe) et est injecté tel quel.
+3. **Déduplication** (article-finalizer) : cible `script[src*="..."]` et `form` ; les iframes ne sont pas concernées par la même logique.
 
-1. **Partner ID** : `463418` (fixe)
-2. **Shmarker** : `676421` (fixe)
-3. **Locale** : `fr` pour le français
-4. **Couleurs** : Thème cohérent avec le site
-5. **Responsive** : Tous les widgets sont responsives
-
-## 🔄 **MISE À JOUR**
-
-Ce fichier sera mis à jour quand de nouveaux widgets seront disponibles ou quand de nouveaux contextes seront identifiés.
-
-**Dernière mise à jour :** $(date)
+**Dernière mise à jour :** alignée sur la liste Travelpayouts fournie (Aviasales, Kiwi, Airalo, Insubuy USA, VisitorCoverage).

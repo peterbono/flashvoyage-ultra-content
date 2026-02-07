@@ -191,6 +191,10 @@ Réponds UNIQUEMENT en JSON valide.`;
       const widgetsSelected = analysis.selected_widgets.length;
       console.log(`📊 Widgets sélectionnés: ${widgetsSelected}`);
       console.log(`💭 Raisonnement: ${analysis.reasoning}`);
+      
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:placeWidgetsIntelligently:LLM_ANALYSIS',message:'Widget LLM analysis result',data:{widgetsSelected,selectedWidgets:analysis.selected_widgets,reasoning:analysis.reasoning},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET-LLM'})}).catch(()=>{});
+      // #endregion
 
       // Limiter les widgets selon le type de contenu
       // Pour les témoignages: 2-3 widgets max, pour les autres: 2 max
@@ -216,6 +220,10 @@ Réponds UNIQUEMENT en JSON valide.`;
         const rejectedCount = limitedWidgets.length - widgetsValidated;
         console.log(`⚠️ ${rejectedCount} widget(s) rejeté(s) par validation contextuelle`);
       }
+      
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:placeWidgetsIntelligently:VALIDATION',message:'Widget validation result',data:{limitedWidgets:limitedWidgets.map(w=>w.slot),validatedWidgets:validatedWidgets.map(w=>w.slot),widgetsRejected:limitedWidgets.length-validatedWidgets.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET-VALID'})}).catch(()=>{});
+      // #endregion
       
       // Placer les widgets dans le contenu
       let placementResult;
@@ -770,6 +778,9 @@ Réponds UNIQUEMENT en JSON valide.`;
     for (const widget of selectedWidgets) {
       // FIX C: Passer placementContext à getWidgetScript pour geo_defaults
       const widgetScript = this.getWidgetScript(widget.slot, widgetPlan, placementContext);
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:insertWidgetsContextually:WIDGET_SCRIPT',message:'Widget script result',data:{slot:widget.slot,hasScript:!!widgetScript,scriptPreview:widgetScript?.substring(0,100)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET-SCRIPT'})}).catch(()=>{});
+      // #endregion
       if (!widgetScript) continue;
 
       // Vérifier si le contexte existe déjà
@@ -786,9 +797,15 @@ Réponds UNIQUEMENT en JSON valide.`;
         // FIX: Utiliser placementContext.geo_defaults (source unique) au lieu de widgetPlan.geo_defaults
         const geoDefaults = placementContext?.geo_defaults || widgetPlan?.geo_defaults || widgetPlan?.widget_plan?.geo_defaults || null;
         fomoData = await this.statsScraper.generateFOMOContext(widget.slot, geoDefaults);
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:insertWidgetsContextually:FOMO_SUCCESS',message:'FOMO context generated OK',data:{slot:widget.slot,contextPreview:fomoData?.context?.substring(0,100),statsType:fomoData?.stats?.type||'price'},timestamp:Date.now(),hypothesisId:'H-FOMO-FIX'})}).catch(()=>{});
+        // #endregion
       } catch (error) {
         console.log(`⚠️ Erreur scraping stats: ${error.message}`);
         console.log(`❌ Impossible de générer des stats réelles - Widget ignoré`);
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:insertWidgetsContextually:FOMO_ERROR',message:'FOMO stats scraping FAILED',data:{slot:widget.slot,error:error.message},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET-FOMO'})}).catch(()=>{});
+        // #endregion
         continue; // Passer au widget suivant au lieu d'inventer des données
       }
       
@@ -827,6 +844,10 @@ ${widgetScript}
     const widgetsReplaced = usedContexts.size;
     
     console.log('🔍 DEBUG placement: inserted=', widgetsReplaced, 'rendered=', widgetsReplaced);
+    
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:insertWidgetsContextually:FINAL',message:'Widget insertion final result',data:{widgetsReplaced,usedContexts:Array.from(usedContexts),contentHasWidgetDiv:enhancedContent.includes('data-fv-segment="affiliate"')},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET-INSERT'})}).catch(()=>{});
+    // #endregion
     
     return {
       content: enhancedContent,

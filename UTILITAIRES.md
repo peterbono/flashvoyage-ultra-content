@@ -82,6 +82,8 @@ Tous les scripts de test sont dans le dossier `scripts/` :
 - **Tests SEO** : `node scripts/test-seo-quality-gate.js`
 - **Test E2E pipeline** : `node scripts/test-pipeline-quality-gate-offline.js`
 
+**Mode des tests** : Les tests (CI et locaux) s'exécutent en mode **online** par défaut (appels OpenAI). En CI, `OPENAI_API_KEY` est fourni via les secrets GitHub ; en local, le fichier `.env` doit contenir `OPENAI_API_KEY`. Pour forcer le mode offline (fixtures, pas d'API), utiliser `FORCE_OFFLINE=1`.
+
 ---
 
 ## 🎯 **POINT D'ENTRÉE PRINCIPAL**
