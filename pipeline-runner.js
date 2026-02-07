@@ -139,7 +139,52 @@ class PipelineRunner {
 
       // Construire le pipelineContext pour les étapes suivantes
       // Extraire final_destination depuis pattern ou extracted
-      const finalDestination = pattern.destination || extracted.destination || extracted.destinations?.[0] || null;
+      // Parcourir les destinations candidates et prendre la première qui est asiatique
+      const candidateDestinations = [
+        pattern.destination,
+        extracted.destination,
+        ...(extracted.destinations || [])
+      ].filter(Boolean);
+      
+      // Liste de destinations/pays asiatiques connus (filet de sécurité pour éviter "nice", "reading", etc.)
+      const KNOWN_ASIAN_LOCATIONS = new Set([
+        // Pays
+        'japan', 'japon', 'china', 'chine', 'thailand', 'thaïlande', 'thailande', 'vietnam',
+        'indonesia', 'indonésie', 'indonesie', 'malaysia', 'malaisie', 'philippines',
+        'cambodia', 'cambodge', 'laos', 'myanmar', 'birmanie', 'singapore', 'singapour',
+        'south korea', 'corée du sud', 'korea', 'corée', 'taiwan', 'taïwan',
+        'india', 'inde', 'nepal', 'népal', 'sri lanka', 'bangladesh', 'pakistan',
+        'mongolia', 'mongolie', 'brunei',
+        // Villes majeures
+        'tokyo', 'osaka', 'kyoto', 'bangkok', 'chiang mai', 'phuket', 'hanoi',
+        'ho chi minh', 'saigon', 'da nang', 'hoi an', 'bali', 'jakarta', 'kuala lumpur',
+        'penang', 'manila', 'cebu', 'phnom penh', 'siem reap', 'vientiane',
+        'luang prabang', 'yangon', 'seoul', 'busan', 'taipei', 'hong kong',
+        'shanghai', 'beijing', 'pékin', 'shenzhen', 'mumbai', 'delhi', 'new delhi',
+        'kathmandu', 'colombo', 'dhaka', 'ulaanbaatar', 'nara', 'hiroshima',
+        'nagoya', 'fukuoka', 'sapporo', 'okinawa', 'koh samui', 'koh phangan',
+        'koh tao', 'krabi', 'pai', 'chiang rai', 'nha trang', 'dalat',
+        'yogyakarta', 'lombok', 'ubud', 'langkawi', 'borneo', 'palawan',
+        'boracay', 'siargao', 'battambang', 'kampot', 'luang namtha'
+      ]);
+      
+      let finalDestination = null;
+      for (const candidate of candidateDestinations) {
+        const lower = candidate.toLowerCase().trim();
+        if (KNOWN_ASIAN_LOCATIONS.has(lower)) {
+          finalDestination = lower;
+          break;
+        }
+      }
+      // Fallback: si aucune destination asiatique trouvée, utiliser la première candidate
+      if (!finalDestination && candidateDestinations.length > 0) {
+        finalDestination = candidateDestinations[0].toLowerCase().trim();
+        console.log(`⚠️ PIPELINE: Aucune destination asiatique trouvée dans [${candidateDestinations.join(', ')}], fallback: ${finalDestination}`);
+      }
+      
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'pipeline-runner.js:DEST_RESOLUTION',message:'Destination resolution with Asian filter',data:{candidateDestinations,finalDestination,wasFirstCandidate:candidateDestinations[0]},timestamp:Date.now(),hypothesisId:'H-DEST-NICE'})}).catch(()=>{});
+      // #endregion
       
       // Construire geo correctement (ne pas mélanger country et city)
       const geo = input.geo || {};

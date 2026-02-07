@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-import { REAL_TRAVELPAYOUTS_WIDGETS } from './travelpayouts-real-widgets-database.js';
-
 /**
  * AFFILIATE MODULE RENDERER
  * Phase 5.B - Renderer neutre "module éditorial" pour les placements d'affiliation
@@ -84,32 +82,22 @@ function generateWidgetScript(placement, geo_defaults) {
 
   switch (id) {
     case 'flights':
-      // Widget Flights - pas géré ici, géré par le finalizer via Travelpayouts database
-      return `<!-- Widget Flights géré par finalizer -->`;
+      // Shortcode WordPress — rendu côté serveur par le mu-plugin flashvoyage-widgets.php
+      const origin = geo_defaults?.origin || payload?.origin || 'PAR';
+      const dest = geo_defaults?.destination || payload?.destination || 'BKK';
+      return `[fv_widget type="flights" origin="${origin}" destination="${dest}"]`;
 
     case 'esim':
-      // VRAI WIDGET eSIM Airalo
-      const esimWidget = REAL_TRAVELPAYOUTS_WIDGETS.esim?.airalo?.esimSearch;
-      if (esimWidget && esimWidget.script) {
-        return esimWidget.script;
-      }
-      return `<!-- Widget eSIM non trouvé -->`;
+      return `[fv_widget type="esim"]`;
 
     case 'insurance':
-      // VRAI WIDGET Insurance VisitorCoverage (travel medical)
-      const insuranceWidget = REAL_TRAVELPAYOUTS_WIDGETS.insurance?.visitorCoverage?.travelMedical;
-      if (insuranceWidget && insuranceWidget.script) {
-        return insuranceWidget.script;
-      }
-      return `<!-- Widget Insurance non trouvé -->`;
+      return `[fv_widget type="insurance"]`;
 
     case 'accommodation':
-      // VRAI WIDGET Accommodation Booking.com
-      const hotelWidget = REAL_TRAVELPAYOUTS_WIDGETS.hotels?.booking?.hotelMap;
-      if (hotelWidget && hotelWidget.script) {
-        return hotelWidget.script;
-      }
-      return `<!-- Widget Accommodation non trouvé -->`;
+      // Pas de widget hotels disponible, fallback vers flights
+      const accOrigin = geo_defaults?.origin || 'PAR';
+      const accDest = geo_defaults?.destination || 'BKK';
+      return `[fv_widget type="flights" origin="${accOrigin}" destination="${accDest}"]`;
 
     case 'coworking':
       // Pas de widget Travelpayouts pour coworking, on met un lien vers une page partenaire

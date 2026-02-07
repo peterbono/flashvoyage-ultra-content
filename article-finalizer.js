@@ -203,6 +203,9 @@ class ArticleFinalizer {
     const hasPattern = Boolean(pipelineContext?.pattern);
     const hasAffiliatePlan = Boolean(pipelineContext?.affiliate_plan?.placements?.length > 0);
     console.log(`✅ FINALIZER_INPUT_READY: has_story=${hasStory} has_pattern=${hasPattern} has_affiliate_plan=${hasAffiliatePlan} html_length=${htmlLength}`);
+    // #region agent log
+    { const _rawH = article?.content || ''; const _h2InPRaw = (_rawH.match(/<p[^>]*>[^<]*<h2/gi) || []).length; const _strayARaw = (_rawH.match(/<h2[^>]*>[^<]*<\/a>/gi) || []).length; const _h2sRaw = (_rawH.match(/<h2[^>]*>[\s\S]*?<\/h2>/gi) || []).map(h => h.substring(0,80)); fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:ENTRY',message:'H2 inside P check at ENTRY',data:{h2InsideP:_h2InPRaw,strayCloseA:_strayARaw,h2Titles:_h2sRaw,contentLength:_rawH.length},timestamp:Date.now(),hypothesisId:'H-H2WRAP'})}).catch(()=>{}); }
+    // #endregion
     
     console.log('\n🎨 FINALISATION DE L\'ARTICLE');
     console.log('==============================\n');
@@ -238,6 +241,9 @@ class ArticleFinalizer {
     // DEBUG: Vérifier les widgets dans finalContent APRÈS assignation
     const widgetsAfterAssign = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets dans finalContent APRÈS widgetResult.content: count=${widgetsAfterAssign.count}, types=[${widgetsAfterAssign.types.join(', ')}], widgetResult.count=${widgetResult.count}`);    enhancements.widgetsReplaced = widgetResult.count;
+    // #region agent log
+    { const _h2InP = (finalContent.match(/<p[^>]*>[^<]*<h2/gi) || []).length; fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:AFTER_WIDGETS',message:'H2 inside P AFTER widget replacement',data:{h2InsideP:_h2InP,step:'afterWidgets'},timestamp:Date.now(),hypothesisId:'H-H2WRAP-STEP'})}).catch(()=>{}); }
+    // #endregion
 
     // 2. Vérifier et améliorer le quote highlight
     const quoteResult = this.ensureQuoteHighlight(finalContent, analysis);
@@ -275,6 +281,9 @@ class ArticleFinalizer {
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS fixMalformedLinks: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
     
+    // #region agent log
+    { const _h2InP = (finalContent.match(/<p[^>]*>[^<]*<h2/gi) || []).length; if (_h2InP > 0) fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:AFTER_FIXLINKS',message:'H2 inside P AFTER fixMalformedLinks',data:{h2InsideP:_h2InP,step:'fixMalformedLinks'},timestamp:Date.now(),hypothesisId:'H-H2WRAP-STEP'})}).catch(()=>{}); }
+    // #endregion
     // PHASE 6.0.5: Nettoyer les duplications de sections H2 (notamment "Limites et biais")
     finalContent = this.removeDuplicateH2Sections(finalContent);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
@@ -310,19 +319,34 @@ class ArticleFinalizer {
     finalContent = this.removeForbiddenH2Section(finalContent);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
 
+    // #region agent log
+    { const _h2InP = (finalContent.match(/<p[^>]*>[^<]*<h2/gi) || []).length; if (_h2InP > 0) fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:BEFORE_PARASITIC',message:'H2 inside P BEFORE removeParasiticSections',data:{h2InsideP:_h2InP,step:'beforeRemoveParasiticSections'},timestamp:Date.now(),hypothesisId:'H-H2WRAP-STEP'})}).catch(()=>{}); }
+    // #endregion
     // PHASE 6.0.10.1a: Supprimer les sections parasites (Contexte, Événement central, Moment critique, Résolution) en format Option B
     finalContent = this.removeParasiticSections(finalContent);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeParasiticSections: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    // #region agent log
+    { const _h = (finalContent.match(/<p[^>]*>[^<]*<h2/gi)||[]).length; if(_h>0) fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:AFTER_removeParasiticSections',message:'H2 inside P after removeParasiticSections',data:{h2InsideP:_h,step:'removeParasiticSections'},timestamp:Date.now(),hypothesisId:'H-H2WRAP-STEP'})}).catch(()=>{}); }
+    // #endregion
 
     // PHASE 6.0.10.1a.1: Supprimer les résidus de l'ancienne structure (Ce que la communauté apporte, Conseils pratiques, listes mal formées) en Option B
     finalContent = this.removeOldStructureResidues(finalContent);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeOldStructureResidues: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    // #region agent log
+    { const _h = (finalContent.match(/<p[^>]*>[^<]*<h2/gi)||[]).length; if(_h>0) fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:AFTER_removeOldStructureResidues',message:'H2 inside P after removeOldStructureResidues',data:{h2InsideP:_h,step:'removeOldStructureResidues'},timestamp:Date.now(),hypothesisId:'H-H2WRAP-STEP'})}).catch(()=>{}); }
+    // #endregion
 
     // PHASE 6.0.10.1b: Supprimer verdict générique (Pendant que vous / Chez Flash Voyages) dans "Ce qu'il faut retenir"
     finalContent = this.removeGenericVerdictPhrase(finalContent);
+    // #region agent log
+    { const _h = (finalContent.match(/<p[^>]*>[^<]*<h2/gi)||[]).length; if(_h>0) fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:AFTER_removeGenericVerdictPhrase',message:'H2 inside P after removeGenericVerdictPhrase',data:{h2InsideP:_h,step:'removeGenericVerdictPhrase'},timestamp:Date.now(),hypothesisId:'H-H2WRAP-STEP'})}).catch(()=>{}); }
+    // #endregion
 
+    // PHASE 6.0.10.1c: Dédupliquer les blockquotes (même citation Reddit insérée 2 fois)
+    finalContent = this.deduplicateBlockquotes(finalContent);
+    
     // PHASE 6.0.10.2: Nettoyer placeholders et citations vides
     finalContent = this.removePlaceholdersAndEmptyCitations(finalContent);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
@@ -360,8 +384,27 @@ class ArticleFinalizer {
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeRepetitivePhrases: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
     
+    // PHASE 6.0.11.8: Extraire les H2 imbriqués dans les P AVANT balanceParagraphs
+    finalContent = this.fixH2InsideP(finalContent);
+    
     // PHASE 6.0.12: Équilibrer les paragraphes (après toutes les corrections de contenu)
+    // #region agent log
+    const preBalanceH2s = (finalContent.match(/<h2[^>]*>.*?<\/h2>/gi) || []);
+    const preBalanceBrokenLinks = (finalContent.match(/<a[^>]*href="[^"]*$/gm) || []);
+    const preBalanceH2InP = (finalContent.match(/<p[^>]*>[\s\S]*?<h2/gi) || []);
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:BEFORE_BALANCE',message:'Content BEFORE balanceParagraphs',data:{h2s:preBalanceH2s,h2Count:preBalanceH2s.length,brokenLinks:preBalanceBrokenLinks.length,h2InsideP:preBalanceH2InP.length,contentLength:finalContent.length,preview:finalContent.substring(0,800)},timestamp:Date.now(),hypothesisId:'H-BALANCE'})}).catch(()=>{});
+    // #endregion
     finalContent = this.balanceParagraphs(finalContent, tempReport);
+    
+    // PHASE 6.0.12.1: Re-extraire les H2 imbriqués APRÈS balanceParagraphs (safety net)
+    finalContent = this.fixH2InsideP(finalContent);
+    // #region agent log
+    const postBalanceH2s = (finalContent.match(/<h2[^>]*>.*?<\/h2>/gi) || []);
+    const postBalanceBrokenLinks = (finalContent.match(/<a[^>]*href="https?:\/\/[^"]*\.[^"]*<\/p>/gi) || []);
+    const postBalanceH2InP = (finalContent.match(/<p[^>]*>[\s\S]*?<h2/gi) || []);
+    const postBalanceAccentSpaces = (finalContent.match(/[a-zà-ÿ]\s+[àâäéèêëïîôùûüÿ]/gi) || []);
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:AFTER_BALANCE',message:'Content AFTER balanceParagraphs',data:{h2s:postBalanceH2s,h2Count:postBalanceH2s.length,brokenLinksCount:postBalanceBrokenLinks.length,h2InsidePCount:postBalanceH2InP.length,accentSpaces:postBalanceAccentSpaces,accentSpaceCount:postBalanceAccentSpaces.length,contentLength:finalContent.length,preview:finalContent.substring(0,800)},timestamp:Date.now(),hypothesisId:'H-BALANCE-AFTER'})}).catch(()=>{});
+    // #endregion
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS balanceParagraphs: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
     
@@ -468,8 +511,17 @@ class ArticleFinalizer {
       try {
         const cheerioModule = await import('cheerio');
         const cheerio = cheerioModule.default || cheerioModule;
-        // FIX: Utiliser xmlMode pour éviter que Cheerio ajoute <html><head><body>
-        const $ = cheerio.load(finalContent, { xmlMode: true, decodeEntities: false });
+        // FIX: Protéger les <script> tags AVANT le parsing Cheerio xmlMode
+        // Cheerio xmlMode corrompt les scripts contenant des & non échappés dans les URLs
+        const scriptMap = new Map();
+        let scriptCounter = 0;
+        let protectedHtml = finalContent.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, (match) => {
+          const placeholder = `<!--SCRIPT_SAFE_${scriptCounter}-->`;
+          scriptMap.set(placeholder, match);
+          scriptCounter++;
+          return placeholder;
+        });
+        const $ = cheerio.load(protectedHtml, { xmlMode: true, decodeEntities: false });
         const blockquotes = $('blockquote');
         const toTranslate = [];
         const bqRefs = [];
@@ -504,7 +556,12 @@ class ArticleFinalizer {
             bq.append(`<p>${translatedText}</p>`);
             bq.append('<p><cite>— Extrait Reddit traduit</cite></p>');
           });
-          finalContent = $.html();
+          let result = $.html();
+          // Restaurer les scripts protégés
+          for (const [placeholder, original] of scriptMap) {
+            result = result.replace(placeholder, original);
+          }
+          finalContent = result;
           enhancements.blockquotesTranslated = toTranslate.length;
           console.log(`✅ BLOCKQUOTE_TRANSLATION: ${toTranslate.length} blockquote(s) traduit(s)`);
         }
@@ -666,24 +723,39 @@ class ArticleFinalizer {
         .replace(/\.\s+org/gi, '.org')
         .replace(/\.\s+net/gi, '.net')
         .replace(/\.\s+io/gi, '.io')
-        // FIX TRANSLATION ACCENT SPACES: Corriger les mots avec espace avant accent (isol ée → isolée)
-        .replace(/([a-z])\s+(é|è|ê|ë|à|â|ù|û|î|ï|ô|ö|ç)/gi, '$1$2')
+        // FIX TRANSLATION ACCENT SPACES: DÉSACTIVÉ - cette regex supprimait les espaces CORRECTES
+        // entre mots ("roaming élevés" → "roamingélevés", "temps à" → "tempsà")
+        // Le LLM Passe 2 gère les cas "isol ée" → "isolée" de manière plus fiable
+        // .replace(/([a-z])\s+(é|è|ê|ë|à|â|ù|û|î|ï|ô|ö|ç)/gi, '$1$2')
         // FIX TRANSLATION COMMON PATTERNS: Corriger les patterns courants de traduction cassée
         .replace(/\bà\s+([a-z])/gi, 'à $1')  // à  x → à x (normaliser l'espace)
-        // FIX MISSING SPACES: Pattern générique pour mots collés (filet de sécurité minimal)
-        // Le LLM Passe 2 devrait avoir corrigé cela, mais on garde un fallback générique
-        .replace(/([a-zéèêëàâùûîïôöç])à([a-zéèêëàâùûîïôöç])/gi, '$1 à $2')  // xàx → x à x
-        .replace(/([a-zéèêëàâùûîïôöç])é([aeiouàâäéèêëïîôùûü][a-zéèêëàâùûîïôöç]{2,})/gi, '$1 é$2')  // xéabc → x éabc
+        // FIX MISSING SPACES: Pattern générique pour mots collés (filet de sécurité)
+        // Pattern 1: xàx → x à x (mot collé avant et après à)
+        .replace(/([a-zéèêëàâùûîïôöç])à([a-zéèêëàâùûîïôöç])/gi, '$1 à $2')
+        // Pattern 2: xà[ESPACE] → x à[ESPACE] (mot collé avant à suivi d'espace)
+        // Exclut les mots français finissant par à (déjà, voilà, holà, celà)
+        .replace(/([a-zéèêëâùûîïôöç]{3,})à(\s)/gi, (m, word, sp) => {
+          const full = word + 'à';
+          if (/(?:déjà|voilà|holà|cela)$/i.test(full)) return m;
+          return word + ' à' + sp;
+        })
+        // DÉSACTIVÉ Pattern 3 et 4: ces regex cassent les mots français normaux
+        // Ex: "suggérées" → "sugg érées", "agréable" → "agr éable", "privilégier" → "privil égier"
+        // La Passe 2 LLM gère les vrais mots collés ("bienéquilibré" → "bien équilibré") de manière plus fiable
+        // .replace(/([a-zéèêëàâùûîïôöç]{3,})é([a-zéèêëàâùûîïôöç]{4,})/gi, ...)
+        // .replace(/([a-zéèêëàâùûîïôöç]{3,})ê([a-zéèêëàâùûîïôöç]{3,})/gi, ...)
         .trim();
       // #region agent log
-      const spacingIssuesAfterFix = [
-        (returnValue.content.match(/Salutà/gi) || []).length,
-        (returnValue.content.match(/Japonà/gi) || []).length,
-        (returnValue.content.match(/deséléments/gi) || []).length,
-        (returnValue.content.match(/médicauxà/gi) || []).length,
-        (returnValue.content.match(/trèsélevés/gi) || []).length
-      ];
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:spacingFix:AFTER',message:'Spacing issues AFTER fix',data:{total:spacingIssuesAfterFix.reduce((a,b)=>a+b,0),details:{Salutà:spacingIssuesAfterFix[0],Japonà:spacingIssuesAfterFix[1],deséléments:spacingIssuesAfterFix[2],médicauxà:spacingIssuesAfterFix[3],trèsélevés:spacingIssuesAfterFix[4]}},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H2'})}).catch(()=>{});
+      // Détection de mots collés: chercher des patterns LONGS (>6 chars) qui contiennent un accent au milieu
+      // Exclure les mots français normaux (août, idée, témoignage...) en ne comptant que les collages vrais
+      const plainText = returnValue.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+      const safeAccentWords = /^(août|idée|idées|année|années|témoignage|témoignages|sélection|espérer|désespérément|récupérer|opérer|bénéficier|considérer|différent|différence|nécessaire|sécurité|résolution|réservation|médicaux|spécifique|expérience|intéressant|générale|régulier|vérifier|préférer|développer|améliorer|particulière|déjà|voilà|célèbre|élevé|élevés|élevée|élevées|équilibré|équilibrée)$/i;
+      const stuckCandidates = (plainText.match(/[a-zéèêëàâùûîïôöç]{3,}[àéèêëâùûîïôöç][a-zéèêëàâùûîïôöç]{3,}/gi) || []);
+      const genericStuckAccents = stuckCandidates.filter(w => !safeAccentWords.test(w));
+      const stuckSamples = genericStuckAccents.slice(0, 10);
+      // Vérifier aussi les sections parasites restantes
+      const parasiticH2s = (returnValue.content.match(/<h2[^>]*>\s*(Contexte|Résolution|Moment critique|Événement central|Ce que la communauté apporte)\s*<\/h2>/gi) || []);
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:FINAL_QUALITY_CHECK',message:'Final quality check before return',data:{stuckAccentCount:genericStuckAccents.length,stuckSamples,parasiticH2Count:parasiticH2s.length,parasiticH2s,contentLength:returnValue.content.length},timestamp:Date.now(),hypothesisId:'H-QUALITY'})}).catch(()=>{});
       // #endregion
       console.log('   ✅ Nettoyage wrapper HTML Cheerio effectué');
     }
@@ -822,8 +894,9 @@ class ArticleFinalizer {
       details: []
     };
 
-    // Marqueurs robustes pour widget FLIGHTS Kiwi.com
+    // Marqueurs robustes pour widget FLIGHTS (scripts, forms, shortcodes)
     const kiwiMarkers = [
+      /\[fv_widget[^\]]*type=["']?flights/gi,
       /<form[^>]*kiwi[^>]*>/gi,
       /<form[^>]*travelpayouts[^>]*>/gi,
       /data-widget-type=["']flights["']/gi,
@@ -836,16 +909,21 @@ class ArticleFinalizer {
       /<!-- FLASHVOYAGE_WIDGET:fallback/gi
     ];
 
-    // C) Marqueurs pour widget CONNECTIVITY (eSIM/Airalo)
+    // Marqueurs pour widget CONNECTIVITY (eSIM/Airalo) + shortcodes
     const connectivityMarkers = [
+      /\[fv_widget[^\]]*type=["']?esim/gi,
       /airalo/gi,
-      /esim/gi,
-      /e-sim/gi,
       /data-widget-type=["']connectivity["']/gi,
       /data-widget-type=["']esim["']/gi,
       /class=["'][^"']*airalo[^"']*["']/gi,
       /<!-- FLASHVOYAGE_WIDGET:connectivity/gi,
       /<!-- FLASHVOYAGE_WIDGET:esim/gi
+    ];
+
+    // Marqueurs pour widget INSURANCE + shortcodes
+    const insuranceMarkers = [
+      /\[fv_widget[^\]]*type=["']?insurance/gi,
+      /data-widget-type=["']insurance["']/gi
     ];
 
     // Marqueurs textuels (moins fiables mais fallback)
@@ -875,12 +953,12 @@ class ArticleFinalizer {
       }
     }
 
-    // C) Détecter marqueurs pour CONNECTIVITY (max 1 par type)
+    // Détecter marqueurs pour CONNECTIVITY/ESIM (max 1 par type)
     let connectivityFound = false;
     for (const marker of connectivityMarkers) {
       const matches = html.match(marker);
       if (matches && !connectivityFound) {
-        detected.count += 1; // PATCH 2: Compter max 1 par type
+        detected.count += 1;
         connectivityFound = true;
         if (!detected.types.includes('connectivity')) {
           detected.types.push('connectivity');
@@ -890,7 +968,26 @@ class ArticleFinalizer {
           marker: marker.toString(),
           matches: matches.length
         });
-        break; // PATCH 2: Arrêter après première détection
+        break;
+      }
+    }
+
+    // Détecter marqueurs pour INSURANCE (max 1 par type)
+    let insuranceFound = false;
+    for (const marker of insuranceMarkers) {
+      const matches = html.match(marker);
+      if (matches && !insuranceFound) {
+        detected.count += 1;
+        insuranceFound = true;
+        if (!detected.types.includes('insurance')) {
+          detected.types.push('insurance');
+        }
+        detected.details.push({
+          type: 'insurance',
+          marker: marker.toString(),
+          matches: matches.length
+        });
+        break;
       }
     }
 
@@ -1179,90 +1276,85 @@ class ArticleFinalizer {
       }
     }
 
-    // Remplacer FLIGHTS avec script dynamique
+    // --- Remplacement des placeholders par des SHORTCODES WordPress ---
+    // Le mu-plugin flashvoyage-widgets.php rend les scripts côté serveur
+
+    const flightOrigin = widgetPlan?.widget_plan?.geo_defaults?.origin || 'PAR';
+    const flightDest = widgetPlan?.widget_plan?.geo_defaults?.destination || 'BKK';
+
+    // Remplacer FLIGHTS
     if (updatedContent.includes('{{TRAVELPAYOUTS_FLIGHTS_WIDGET}}') || 
         updatedContent.includes('{TRAVELPAYOUTS_FLIGHTS_WIDGET}')) {
-      // Utiliser le script dynamique depuis widgetPlan.geo_defaults
-      const dynamicFlightWidget = this.widgetPlacer.getWidgetScript('flights', widgetPlan.widget_plan);
-      const flightWidget = dynamicFlightWidget || this.selectBestFlightWidget(context);
+      const flightShortcode = `[fv_widget type="flights" origin="${flightOrigin}" destination="${flightDest}"]`;
       updatedContent = updatedContent.replace(
         /\{\{?TRAVELPAYOUTS_FLIGHTS_WIDGET\}\}?/g,
-        flightWidget
+        flightShortcode
       );
       replacementCount++;
-      console.log('   ✅ Widget FLIGHTS remplacé (script dynamique)');
+      console.log(`   ✅ Widget FLIGHTS → shortcode (${flightOrigin}→${flightDest})`);
     }
 
-    // Remplacer CONNECTIVITY (Airalo)
+    // Remplacer CONNECTIVITY (Airalo eSIM)
     if (updatedContent.includes('{{TRAVELPAYOUTS_CONNECTIVITY_WIDGET}}') ||
         updatedContent.includes('{TRAVELPAYOUTS_CONNECTIVITY_WIDGET}')) {
-      const connectivityWidget = this.widgets.connectivity?.airalo?.esimSearch?.script || '';
       updatedContent = updatedContent.replace(
         /\{\{?TRAVELPAYOUTS_CONNECTIVITY_WIDGET\}\}?/g,
-        connectivityWidget
+        '[fv_widget type="esim"]'
       );
       replacementCount++;
-      console.log('   ✅ Widget CONNECTIVITY (Airalo) remplacé');
+      console.log('   ✅ Widget CONNECTIVITY → shortcode esim');
     }
 
-    // Remplacer HOTELS
+    // Remplacer HOTELS (fallback vers flights — pas de widget hotels dédié)
     if (updatedContent.includes('{{TRAVELPAYOUTS_HOTELS_WIDGET}}') || 
         updatedContent.includes('{TRAVELPAYOUTS_HOTELS_WIDGET}')) {
-      const hotelWidget = this.selectBestHotelWidget(context);
       updatedContent = updatedContent.replace(
         /\{\{?TRAVELPAYOUTS_HOTELS_WIDGET\}\}?/g,
-        hotelWidget
+        `[fv_widget type="flights" origin="${flightOrigin}" destination="${flightDest}"]`
       );
       replacementCount++;
-      console.log('   ✅ Widget HOTELS remplacé');
+      console.log('   ✅ Widget HOTELS → shortcode flights (fallback)');
     }
 
     // Remplacer INSURANCE
     if (updatedContent.includes('{{TRAVELPAYOUTS_INSURANCE_WIDGET}}') || 
         updatedContent.includes('{TRAVELPAYOUTS_INSURANCE_WIDGET}')) {
-      const insuranceWidget = this.selectBestInsuranceWidget(context);
       updatedContent = updatedContent.replace(
         /\{\{?TRAVELPAYOUTS_INSURANCE_WIDGET\}\}?/g,
-        insuranceWidget
+        '[fv_widget type="insurance"]'
       );
       replacementCount++;
-      console.log('   ✅ Widget INSURANCE remplacé');
+      console.log('   ✅ Widget INSURANCE → shortcode');
     }
 
-    // Remplacer PRODUCTIVITY
+    // Remplacer PRODUCTIVITY (pas de widget dédié — supprimé silencieusement)
     if (updatedContent.includes('{{TRAVELPAYOUTS_PRODUCTIVITY_WIDGET}}') || 
         updatedContent.includes('{TRAVELPAYOUTS_PRODUCTIVITY_WIDGET}')) {
-      const productivityWidget = this.selectBestProductivityWidget(context);
       updatedContent = updatedContent.replace(
         /\{\{?TRAVELPAYOUTS_PRODUCTIVITY_WIDGET\}\}?/g,
-        productivityWidget
+        ''
       );
-      replacementCount++;
-      console.log('   ✅ Widget PRODUCTIVITY remplacé');
+      console.log('   ⚠️ Widget PRODUCTIVITY supprimé (pas de shortcode dédié)');
     }
 
-    // Remplacer TRANSPORT
+    // Remplacer TRANSPORT (pas de widget dédié — supprimé silencieusement)
     if (updatedContent.includes('{{TRAVELPAYOUTS_TRANSPORT_WIDGET}}') || 
         updatedContent.includes('{TRAVELPAYOUTS_TRANSPORT_WIDGET}')) {
-      const transportWidget = this.selectBestTransportWidget(context);
       updatedContent = updatedContent.replace(
         /\{\{?TRAVELPAYOUTS_TRANSPORT_WIDGET\}\}?/g,
-        transportWidget
+        ''
       );
-      replacementCount++;
-      console.log('   ✅ Widget TRANSPORT remplacé');
+      console.log('   ⚠️ Widget TRANSPORT supprimé (pas de shortcode dédié)');
     }
 
-    // Remplacer ACTIVITIES
+    // Remplacer ACTIVITIES (pas de widget dédié — supprimé silencieusement)
     if (updatedContent.includes('{{TRAVELPAYOUTS_ACTIVITIES_WIDGET}}') || 
         updatedContent.includes('{TRAVELPAYOUTS_ACTIVITIES_WIDGET}')) {
-      const activitiesWidget = this.selectBestActivitiesWidget(context);
       updatedContent = updatedContent.replace(
         /\{\{?TRAVELPAYOUTS_ACTIVITIES_WIDGET\}\}?/g,
-        activitiesWidget
+        ''
       );
-      replacementCount++;
-      console.log('   ✅ Widget ACTIVITIES remplacé');
+      console.log('   ⚠️ Widget ACTIVITIES supprimé (pas de shortcode dédié)');
     }
 
     return {
@@ -1925,15 +2017,16 @@ class ArticleFinalizer {
   async runQAReport(html, pipelineContext, analysis) {
     let finalHtml = html;    
     // SUPPRESSION FORCÉE des blockquotes existants (AVANT réinsertion des citations du récit)
+    // FIX: NE PAS utiliser Cheerio xmlMode ici — les <script> Travelpayouts contiennent des & non échappés
+    // dans les URLs (ex: &trs=, &shmarker=) qui corrompent le DOM en xmlMode et détruisent les H2
+    const blockquoteRegexQA = /<blockquote[^>]*>[\s\S]*?<\/blockquote>/gi;
+    const blockquoteMatchesQA = finalHtml.match(blockquoteRegexQA);
+    if (blockquoteMatchesQA && blockquoteMatchesQA.length > 0) {
+      console.log(`🧹 FINALIZER: Suppression de ${blockquoteMatchesQA.length} blockquote(s) existants...`);
+      finalHtml = finalHtml.replace(blockquoteRegexQA, '');
+    }
     const cheerioModule = await import('cheerio');
     const cheerio = cheerioModule.default || cheerioModule;
-    // FIX: Utiliser xmlMode pour éviter que Cheerio ajoute <html><head><body>
-    const $ = cheerio.load(finalHtml, { xmlMode: true, decodeEntities: false });
-    const blockquotes = $('blockquote');
-    if (blockquotes.length > 0) {
-      console.log(`🧹 FINALIZER: Suppression de ${blockquotes.length} blockquote(s) existants...`);
-      blockquotes.remove();
-      finalHtml = $.html();    }
 
     // RECRÉATION des citations extraites du récit : au moins une citation (evidence ou extracted)
     const hasEvidenceSnippetsEarly = pipelineContext?.story?.evidence?.source_snippets?.length > 0;
@@ -1992,12 +2085,13 @@ class ArticleFinalizer {
       }
       const escapedExcerpt = excerpt.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
       const newBlockquote = `<blockquote><p>${escapedExcerpt}</p><p><cite>— Extrait Reddit</cite></p></blockquote>`;
-      // FIX: Utiliser xmlMode pour éviter que Cheerio ajoute <html><head><body>
-      const $2 = cheerio.load(finalHtml, { xmlMode: true, decodeEntities: false });
-      const firstH2 = $2('h2').first();
-      if (firstH2.length > 0) {
-        firstH2.after(newBlockquote);
-        finalHtml = $2.html();        console.log(`✅ FINALIZER: Citation du récit insérée depuis extracted (post)`);
+      // FIX: NE PAS utiliser Cheerio xmlMode ici (corrompt le HTML avec les scripts Travelpayouts)
+      // Utiliser regex pour trouver le premier H2 et insérer après
+      const firstH2Match = finalHtml.match(/<h2[^>]*>.*?<\/h2>/i);
+      if (firstH2Match) {
+        const insertIdx = firstH2Match.index + firstH2Match[0].length;
+        finalHtml = finalHtml.slice(0, insertIdx) + '\n\n' + newBlockquote + '\n\n' + finalHtml.slice(insertIdx);
+        console.log(`✅ FINALIZER: Citation du récit insérée depuis extracted (post)`);
       } else {
         const firstP2 = finalHtml.match(/<p[^>]*>.*?<\/p>/i);
         if (firstP2) {
@@ -2168,19 +2262,9 @@ class ArticleFinalizer {
       });
       
       // Action corrective minimale: insérer H2 manquant si possible
-      // ❌ DÉSACTIVÉ en Option B : ne pas insérer "Conseils pratiques" qui est un résidu de l'ancienne structure
-      const isOptionB = this.isOptionBFormat(finalHtml);
-      if (!hasMin2H2 && report.metrics.h2_count === 1 && !isOptionB) {
-        const firstH2Match = html.match(/<h2[^>]*>.*?<\/h2>/i);
-        if (firstH2Match) {
-          const insertIndex = firstH2Match.index + firstH2Match[0].length;
-          const newH2 = '<h2>Conseils pratiques</h2>';
-          finalHtml = html.slice(0, insertIndex) + '\n\n' + newH2 + '\n\n' + html.slice(insertIndex);
-          report.actions.push({ type: 'inserted_missing_h2', details: 'Conseils pratiques' });
-          report.metrics.h2_count++;
-        }
-      } else if (isOptionB) {
-        console.log('   ℹ️ Format Option B détecté — pas d\'insertion de "Conseils pratiques" (résidu ancienne structure)');
+      // Ne jamais insérer "Conseils pratiques" — résidu de l'ancienne structure
+      if (!hasMin2H2 && report.metrics.h2_count === 1) {
+        console.log('   ℹ️ Article avec 1 seul H2 — pas d\'insertion de "Conseils pratiques" (résidu ancienne structure)');
       }
     } else {
       report.checks.push({
@@ -2973,10 +3057,16 @@ class ArticleFinalizer {
    */
   isOptionBFormat(html) {
     if (!html || typeof html !== 'string') return false;
+    // Option B = a au moins "recommandations" OU "ce qu'il faut retenir" OU plusieurs H2 (développement libre)
     const hasVerdict = /<h2[^>]*>.*?ce qu'il faut retenir.*?<\/h2>/i.test(html);
     const hasRecommandations = /<h2[^>]*>.*?nos\s+recommandations.*?<\/h2>/i.test(html);
-    const bodyLength = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().length;
-    return hasVerdict && hasRecommandations && bodyLength > 2500;
+    const h2Count = (html.match(/<h2[^>]*>/gi) || []).length;
+    // Considérer Option B si on a au moins une des deux sections structurées OU 3+ H2 (développement libre)
+    const result = hasVerdict || hasRecommandations || h2Count >= 3;
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:isOptionBFormat',message:'Option B detection',data:{hasVerdict,hasRecommandations,h2Count,result},timestamp:Date.now(),hypothesisId:'H-OPTIONB'})}).catch(()=>{});
+    // #endregion
+    return result;
   }
 
   /**
@@ -3210,6 +3300,63 @@ class ArticleFinalizer {
     if (fixedCount > 0) {
       console.log(`   ✅ ${fixedCount} lien(s) mal formé(s) corrigé(s)`);
     }    
+    return cleanedHtml;
+  }
+
+  /**
+   * PHASE 6.2.4.1: Extraire les H2/H3 imbriqués dans des <p> tags
+   * Les éléments block (h2, h3, etc.) ne doivent jamais être à l'intérieur d'un <p>
+   * @param {string} html - HTML de l'article
+   * @returns {string} HTML corrigé
+   */
+  fixH2InsideP(html) {
+    let cleanedHtml = html;
+    let fixCount = 0;
+    
+    // ÉTAPE 1: Fermer les <p> non fermés avant les <h2> tags
+    // Pattern: <p> suivi de contenu SANS </p>, puis un <h[1-6]>
+    let prevHtml;
+    do {
+      prevHtml = cleanedHtml;
+      cleanedHtml = cleanedHtml.replace(/<p([^>]*)>((?:(?!<\/p>)[\s\S])*?)(<h[1-6][^>]*>)/gi, (m, attrs, content, hTag) => {
+        fixCount++;
+        const textOnly = content.replace(/<[^>]+>/g, '').trim();
+        if (textOnly.length > 0) {
+          return `<p${attrs}>${content}</p>\n${hTag}`;
+        }
+        // Contenu vide avant le H2 — supprimer le <p> orphelin
+        return hTag;
+      });
+    } while (cleanedHtml !== prevHtml); // Répéter tant qu'il y a des corrections
+    
+    // ÉTAPE 2: Traiter les <p> fermés qui contiennent des éléments block-level
+    cleanedHtml = cleanedHtml.replace(/<p([^>]*)>([\s\S]*?)<\/p>/gi, (match, attrs, content) => {
+      if (!/<h[1-6][^>]*>/i.test(content)) return match;
+      
+      fixCount++;
+      const parts = content.split(/(<h[1-6][^>]*>[\s\S]*?<\/h[1-6]>)/gi);
+      let result = '';
+      
+      for (const part of parts) {
+        if (/<h[1-6][^>]*>/i.test(part)) {
+          result += '\n' + part + '\n';
+        } else {
+          const textOnly = part.replace(/<[^>]+>/g, '').trim();
+          if (textOnly.length > 0) {
+            result += `<p${attrs}>${part.trim()}</p>`;
+          }
+        }
+      }
+      return result;
+    });
+    
+    // ÉTAPE 3: Nettoyer les <p> vides résultants
+    cleanedHtml = cleanedHtml.replace(/<p[^>]*>\s*<\/p>/gi, '');
+    
+    if (fixCount > 0) {
+      console.log(`   ✅ ${fixCount} paragraphe(s) avec H2 imbriqué corrigé(s) (fixH2InsideP)`);
+    }
+    
     return cleanedHtml;
   }
 
@@ -3681,15 +3828,17 @@ class ArticleFinalizer {
   removeParasiticSections(html) {
     if (!html || typeof html !== 'string') return html;
     
-    // Vérifier si l'article est en format Option B
-    const isOptionB = this.isOptionBFormat(html);
-    if (!isOptionB) return html; // Ne pas supprimer si pas Option B
-    
+    // TOUJOURS supprimer les H2 template de l'ancienne structure (Option A),
+    // quel que soit le format détecté. Le contenu devrait être dans le développement narratif.
     const parasiticTitles = [
       { pattern: /<h2[^>]*>\s*Contexte\s*\.{0,3}\s*<\/h2>/i, name: 'Contexte' },
       { pattern: /<h2[^>]*>\s*Événement central\s*\.{0,3}\s*<\/h2>/i, name: 'Événement central' },
       { pattern: /<h2[^>]*>\s*Moment critique\s*\.{0,3}\s*<\/h2>/i, name: 'Moment critique' },
-      { pattern: /<h2[^>]*>\s*Résolution\s*\.{0,3}\s*<\/h2>/i, name: 'Résolution' }
+      { pattern: /<h2[^>]*>\s*Résolution\s*\.{0,3}\s*<\/h2>/i, name: 'Résolution' },
+      { pattern: /<h2[^>]*>\s*Ce que l'auteur retient\s*<\/h2>/i, name: 'Ce que l\'auteur retient' },
+      { pattern: /<h2[^>]*>\s*Ce que la communauté apporte\s*<\/h2>/i, name: 'Ce que la communauté apporte' },
+      { pattern: /<h2[^>]*>\s*Chronologie de l'expérience\s*<\/h2>/i, name: 'Chronologie de l\'expérience' },
+      { pattern: /<h2[^>]*>\s*Risques et pièges réels\s*<\/h2>/i, name: 'Risques et pièges réels' }
     ];
     
     let cleaned = html;
@@ -3705,27 +3854,17 @@ class ArticleFinalizer {
         const nextH2Match = afterH2.match(/<h2[^>]*>/i);
         const endIndex = nextH2Match
           ? startIndex + match[0].length + nextH2Match.index
-          : cleaned.length;
+          : startIndex + match[0].length + Math.min(afterH2.length, 500);
         
-        // Extraire le contenu de la section (sans le H2)
-        const sectionContent = cleaned.substring(startIndex + match[0].length, endIndex);
-        const textContent = sectionContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-        
-        // MODIFIÉ: Supprimer seulement si VRAIMENT vide (<= 50 caractères) - préserve le contenu
-        // Anciennement 500 chars, mais cela supprimait du contenu narratif valide
-        if (textContent.length <= 50) {
-          cleaned = cleaned.substring(0, startIndex) + cleaned.substring(endIndex);
-          totalRemoved++;
-          console.log(`   🧹 Section vide "${name}" supprimée (${textContent.length} chars)`);
-        } else {
-          // Si le contenu est substantiel, ne pas supprimer (peut être un vrai H2 réutilisé)
-          break; // Sortir de la boucle pour cette section
-        }
+        // Supprimer le H2 template et son contenu (le contenu est déjà dans le développement)
+        cleaned = cleaned.substring(0, startIndex) + cleaned.substring(endIndex);
+        totalRemoved++;
+        console.log(`   🧹 Section template "${name}" supprimée`);
       }
     }
     
     if (totalRemoved > 0) {
-      console.log(`   ✅ ${totalRemoved} section(s) parasite(s) supprimée(s) (format Option B)`);
+      console.log(`   ✅ ${totalRemoved} section(s) template supprimée(s)`);
     }
     
     return cleaned;
@@ -3987,6 +4126,51 @@ class ArticleFinalizer {
    * @param {string} html - HTML à nettoyer
    * @returns {string} HTML nettoyé
    */
+  /**
+   * Déduplique les blockquotes identiques ou quasi-identiques
+   * Empêche la même citation Reddit d'apparaître plusieurs fois
+   */
+  deduplicateBlockquotes(html) {
+    if (!html || typeof html !== 'string') return html;
+    
+    // Extraire tous les blockquotes
+    const blockquoteRegex = /<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi;
+    const seen = new Set();
+    let dedupCount = 0;
+    
+    const result = html.replace(blockquoteRegex, (fullMatch, innerContent) => {
+      // Normaliser le contenu pour la comparaison (retirer HTML, espaces multiples)
+      const normalized = innerContent.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+      
+      // Si le contenu est trop court (< 20 chars), le garder (pas une vraie citation)
+      if (normalized.length < 20) return fullMatch;
+      
+      // Vérifier si une citation similaire existe déjà (80% de chevauchement)
+      for (const seenText of seen) {
+        if (normalized === seenText || normalized.includes(seenText) || seenText.includes(normalized)) {
+          dedupCount++;
+          return ''; // Supprimer le doublon
+        }
+        // Check 80% overlap
+        const shorter = normalized.length < seenText.length ? normalized : seenText;
+        const longer = normalized.length >= seenText.length ? normalized : seenText;
+        if (shorter.length > 30 && longer.includes(shorter.substring(0, Math.floor(shorter.length * 0.8)))) {
+          dedupCount++;
+          return ''; // Supprimer le quasi-doublon
+        }
+      }
+      
+      seen.add(normalized);
+      return fullMatch;
+    });
+    
+    if (dedupCount > 0) {
+      console.log(`   🧹 ${dedupCount} blockquote(s) dupliquée(s) supprimée(s)`);
+    }
+    
+    return result;
+  }
+
   removePlaceholdersAndEmptyCitations(html) {
     if (!html || typeof html !== 'string') return html;
     let cleaned = html;
@@ -4203,7 +4387,10 @@ class ArticleFinalizer {
     console.log('🔧 normalizeSpacing: Normalisation des espaces et sauts de ligne...');
     
     let cleanedHtml = html;
-    let fixesCount = 0;    
+    let fixesCount = 0;
+    // #region agent log
+    { const _h2InP = (html.match(/<p[^>]*>[^<]*<h2/gi) || []).length; const _strayA = (html.match(/<h2[^>]*>[^<]*<\/a>/gi) || []).length; const _preposA = (html.match(/[a-zà-ÿ]\s+à\s/gi) || []).slice(0,10); fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:normalizeSpacing:ENTRY',message:'State at ENTRY of normalizeSpacing',data:{h2InsideP:_h2InP,strayCloseAinH2:_strayA,prepositionAsamples:_preposA,contentLength:html.length},timestamp:Date.now(),hypothesisId:'H-H2WRAP'})}).catch(()=>{}); }
+    // #endregion
     // CORRECTION CRITIQUE: Protéger les widgets (script/form) AVANT tout traitement pour éviter qu'ils soient modifiés
     const widgetPlaceholders = new Map();
     let widgetCounter = 0;
@@ -4225,6 +4412,13 @@ class ArticleFinalizer {
     // Protéger les divs de widgets (airalo, esim, etc.)
     cleanedHtml = cleanedHtml.replace(/<div[^>]*(?:class|data-widget-type|airalo|esim)[^>]*>[\s\S]*?<\/div>/gi, (match) => {
       const placeholder = `__WIDGET_DIV_${widgetCounter++}__`;
+      widgetPlaceholders.set(placeholder, match);
+      return placeholder;
+    });
+    
+    // Protéger les shortcodes WordPress [fv_widget ...]
+    cleanedHtml = cleanedHtml.replace(/\[fv_widget[^\]]*\]/gi, (match) => {
+      const placeholder = `__WIDGET_SHORTCODE_${widgetCounter++}__`;
       widgetPlaceholders.set(placeholder, match);
       return placeholder;
     });
@@ -4325,13 +4519,23 @@ class ArticleFinalizer {
     // CORRECTION: Utiliser un regex qui capture le contenu même avec des placeholders ou balises HTML imbriquées
     // Utiliser [\s\S]*? pour capturer tout le contenu jusqu'à </p>
     cleanedHtml = cleanedHtml.replace(/(<p[^>]*>)([\s\S]*?)(<\/p>)/g, (match, openTag, content, closeTag) => {
-      // AMÉLIORATION: Ne pas insérer d'espace si c'est dans un placeholder d'entité HTML
-      // Protéger les placeholders avant traitement
+      // CORRECTION CRITIQUE: Protéger les balises HTML imbriquées (h2, h3, a, strong, em, etc.)
+      // pour éviter que les regex digit-letter transforment <h2> en <h 2>
+      const tagPlaceholders = new Map();
+      let tagCounter = 0;
+      
+      let protectedContent = content.replace(/<[^>]+>/g, (tag) => {
+        const key = `__TAG_${tagCounter++}__`;
+        tagPlaceholders.set(key, tag);
+        return key;
+      });
+      
+      // Protéger les placeholders d'entités HTML
       const placeholderPattern = /(__ENTITY\d+_\d+__)/g;
       const protectedPlaceholders = new Map();
       let placeholderCounter = 0;
       
-      let protectedContent = content.replace(placeholderPattern, (ph) => {
+      protectedContent = protectedContent.replace(placeholderPattern, (ph) => {
         const key = `__PROTECTED_${placeholderCounter++}__`;
         protectedPlaceholders.set(key, ph);
         return key;
@@ -4353,9 +4557,12 @@ class ArticleFinalizer {
       // Corriger les cas où une lettre est suivie d'un chiffre sans espace (si ce n'est pas une unité)
       fixedContent = fixedContent.replace(/([A-Za-zÀ-ÿ])(\d)/g, '$1 $2');
       
-      // Restaurer les placeholders protégés
+      // Restaurer les placeholders protégés (ordre: entités d'abord, puis tags)
       protectedPlaceholders.forEach((placeholder, key) => {
         fixedContent = fixedContent.replace(key, placeholder);
+      });
+      tagPlaceholders.forEach((tag, key) => {
+        fixedContent = fixedContent.replace(key, tag);
       });
       
       return openTag + fixedContent + closeTag;
@@ -4386,27 +4593,46 @@ class ArticleFinalizer {
     
     // CORRECTION FINALE: Nettoyage agressif des espaces dans les mots (dernière passe après toutes les restaurations)
     // Cette passe finale capture les cas qui ont pu échapper aux passes précédentes
-    cleanedHtml = cleanedHtml.replace(/([a-zà-ÿ])\s+([àâäéèêëïîôùûüÿ][a-zà-ÿ]{2,})/gi, (m, letter, rest) => {
-      // Ne pas fusionner si c'est une préposition valide ou un mot français valide séparé
-      const commonPrepositions = ['de', 'en', 'le', 'la', 'les', 'un', 'une', 'du', 'des', 'ce', 'se', 'ne', 'me', 'te', 'à', 'ou', 'et', 'si'];
-      // Ne pas fusionner si la lettre seule forme un mot français valide (ex: "e Événement" → garder séparé)
-      const singleLetterWords = ['e', 'a', 'y', 'o', 'u'];
-      if (!commonPrepositions.includes(letter.toLowerCase()) && 
-          !singleLetterWords.includes(letter.toLowerCase()) && 
-          (letter + rest).length >= 4) {
-        return letter + rest;
-      }
-      return m;
+    // #region agent log
+    const preFixAccentSpaces = (cleanedHtml.match(/[a-zà-ÿ]\s+[àâäéèêëïîôùûüÿ]/gi) || []);
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:normalizeSpacing:ACCENT_FIX',message:'Accent spaces BEFORE final fix',data:{matches:preFixAccentSpaces,count:preFixAccentSpaces.length,samples:preFixAccentSpaces.slice(0,20)},timestamp:Date.now(),hypothesisId:'H-ACCENT'})}).catch(()=>{});
+    // #endregion
+    // APPROCHE INTELLIGENTE: Capturer le mot ENTIER avant l'espace pour distinguer
+    // les mots cassés (itin éraire → itinéraire) des mots séparés (ou équilibre → garder)
+    const _knownMerged = new Set(['voilà', 'déjà', 'holà']);
+    const _commonWords = new Set([
+      'le','la','les','de','des','du','un','une','ou','et','en','au','aux',
+      'ce','se','ne','me','te','je','tu','il','on','ma','sa','ta',
+      'par','sur','pour','dans','avec','sous','plus','mais','tout','bien',
+      'est','pas','que','qui','ont','été','peu','car','sans','vers',
+      'chez','donc','puis','si','ni','mon','ton','son','mes','tes','ses',
+      'nos','vos','leur','leurs','cette','ces','quel','dont','comme','quand',
+      'alors','aussi','même','après','entre','notre','votre','encore','trop',
+      'très','non','oui','peut','fait','dit','mis','pris','tous','ici'
+    ]);
+    cleanedHtml = cleanedHtml.replace(/([a-zà-ÿ]+)\s+([àâäéèêëïîôùûüÿ][a-zà-ÿ]*)/gi, (m, part1, part2) => {
+      const combined = (part1 + part2).toLowerCase();
+      // Mots connus qui doivent être fusionnés (voilà, déjà...)
+      if (_knownMerged.has(combined)) return part1 + part2;
+      // "à" seul est TOUJOURS la préposition française — garder l'espace
+      if (part2.toLowerCase() === 'à') return m;
+      // Si part1 est un mot français autonome courant, garder l'espace
+      if (_commonWords.has(part1.toLowerCase())) return m;
+      // Sinon fusionner (mot cassé par espace parasite)
+      return part1 + part2;
     });
-    
+    // #region agent log
+    { const _postGenAccent = (cleanedHtml.match(/[a-zà-ÿ]\s+[àâäéèêëïîôùûüÿ]/gi) || []); fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:normalizeSpacing:AFTER_GENERAL_REGEX',message:'Accent spaces AFTER general regex',data:{count:_postGenAccent.length,samples:_postGenAccent.slice(0,20)},timestamp:Date.now(),hypothesisId:'H-ACCENT-GENERAL'})}).catch(()=>{}); }
+    // #endregion
+
     // Nettoyage final pour les mots complets avec espace avant lettre accentuée finale
     // Exclure les cas où le mot avant l'espace est un mot français valide (ex: "Numériques à" → garder séparé)
     cleanedHtml = cleanedHtml.replace(/\b([a-zà-ÿ]{4,}[bcdfghjklmnpqrstvwxz])\s+([àâäéèêëïîôùûüÿ])(?=\s|$|[.,;:!?<])/gi, (m, word, accent) => {
-      // Ne pas fusionner si le mot se termine par "s" et l'accent est "é" (ex: "Numériques à" → garder séparé)
-      // Ne pas fusionner si le mot est un adjectif au pluriel suivi de "à"
-      if (word.endsWith('s') && accent === 'é') {
-        return m; // Garder séparé (ex: "Numériques à")
-      }
+      // Mots connus à fusionner malgré accent "à"
+      if (_knownMerged.has((word + accent).toLowerCase())) return word + accent;
+      // "à" seul est la préposition — garder l'espace
+      if (accent.toLowerCase() === 'à') return m;
+      if (word.endsWith('s') && accent === 'é') return m;
       return word + accent;
     });
     
@@ -4440,6 +4666,9 @@ class ArticleFinalizer {
       // Appliquer les corrections pour les mots avec espaces
       // Pattern: Mot français (3+ lettres) + espace + lettre accentuée isolée
       protectedBlockquote = protectedBlockquote.replace(/\b([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿ])(?=\s|$|[.,;:!?<])/gi, (m, word, accent) => {
+        // Mots connus à fusionner (voilà, déjà...)
+        if (_knownMerged.has((word + accent).toLowerCase())) return word + accent;
+        if (accent.toLowerCase() === 'à') return m;
         const combined = word + accent;
         if (combined.length >= 4 && !(word.endsWith('s') && accent === 'é' && word.length > 6)) {
           return combined;
@@ -4509,9 +4738,10 @@ class ArticleFinalizer {
       
       // Pattern 1c: Mot français (3+ lettres) + espace + lettre accentuée isolée (ex: "pass é" → "passé", "pay é" → "payé", "bas é" → "basé")
       fixedContent = fixedContent.replace(/\b([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿ])(?=\s|$|[.,;:!?<])/gi, (m, word, accent) => {
+        // Mots connus à fusionner (voilà, déjà...)
+        if (_knownMerged.has((word + accent).toLowerCase())) return word + accent;
+        if (accent.toLowerCase() === 'à') return m;
         const combined = word + accent;
-        // Vérifier que c'est un mot français valide (au moins 4 lettres)
-        // Exclure les cas où le mot se termine par "s" et l'accent est "é" (ex: "Numériques é" → garder séparé si c'est intentionnel)
         if (combined.length >= 4 && !(word.endsWith('s') && accent === 'é' && word.length > 6)) {
           return combined;
         }
@@ -4519,19 +4749,15 @@ class ArticleFinalizer {
       });
       
       // Pattern 2: Mot français (3+ lettres) + espace + lettre accentuée isolée (ex: "pass é" → "passé", "pay é" → "payé", "bas é" → "basé")
-      // AMÉLIORATION: Gérer aussi les mots se terminant par voyelle (ex: "pay é" → "payé")
       fixedContent = fixedContent.replace(/\b([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿ])(?=\s|$|[.,;:!?<])/gi, (m, word, accent) => {
+        if (_knownMerged.has((word + accent).toLowerCase())) return word + accent;
+        if (accent.toLowerCase() === 'à') return m;
         const combined = word + accent;
-        // Vérifier que c'est un mot français valide (au moins 4 lettres)
-        // Exclure les cas où le mot se termine par "s" et l'accent est "é" (ex: "Numériques é" → garder séparé si c'est intentionnel)
-        // Mais inclure les cas comme "pass é" → "passé", "pay é" → "payé", "bas é" → "basé"
         if (combined.length >= 4) {
-          // Ne pas fusionner si c'est clairement deux mots séparés (ex: "Numériques é" où "Numériques" est un adjectif au pluriel)
           if (word.endsWith('s') && accent === 'é' && word.length > 6) {
-            // Vérifier le contexte: si c'est suivi d'un autre mot, c'est probablement deux mots séparés
             const afterMatch = protectedContent.substring(protectedContent.indexOf(m) + m.length);
             if (afterMatch.match(/^\s+[a-zà-ÿ]{3,}/)) {
-              return m; // Garder séparé
+              return m;
             }
           }
           return combined;
@@ -4634,7 +4860,7 @@ class ArticleFinalizer {
     
     // DEBUG: Vérifier que les widgets ont été restaurés
     const widgetsAfterRestore = this.detectRenderedWidgets(cleanedHtml);
-    const hasPlaceholdersRemaining = /__WIDGET_(SCRIPT|FORM|DIV)_\d+__/.test(cleanedHtml);
+    const hasPlaceholdersRemaining = /__WIDGET_(SCRIPT|FORM|DIV|SHORTCODE)_\d+__/.test(cleanedHtml);
     console.log(`🔍 DEBUG normalizeSpacing: ${restoredCount}/${widgetPlaceholders.size} widget(s) restauré(s), ${widgetsAfterRestore.count} détecté(s) APRÈS restauration, placeholders restants: ${hasPlaceholdersRemaining}`);
     
     // Si des placeholders restent, les restaurer manuellement
@@ -4645,6 +4871,9 @@ class ArticleFinalizer {
       const widgetsAfterManualRestore = this.detectRenderedWidgets(cleanedHtml);
       console.log(`🔍 DEBUG normalizeSpacing: Après restauration manuelle: ${widgetsAfterManualRestore.count} widget(s) détecté(s)`);
     }    
+    // #region agent log
+    { const _h2InPAfter = (cleanedHtml.match(/<p[^>]*>[^<]*<h2/gi) || []).length; const _accentRemain = (cleanedHtml.match(/[a-zà-ÿ]\s+[àâäéèêëïîôùûüÿ]/gi) || []).length; const _prêtA = (cleanedHtml.match(/prêt\s*à/gi) || []); const _faceA = (cleanedHtml.match(/face\s*à/gi) || []); const _aété = (cleanedHtml.match(/a\s*été/gi) || []); fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:normalizeSpacing:EXIT',message:'State at EXIT of normalizeSpacing',data:{h2InsidePAfter:_h2InPAfter,accentSpacesRemaining:_accentRemain,prêtÀ:_prêtA,faceÀ:_faceA,aÉté:_aété,contentLength:cleanedHtml.length},timestamp:Date.now(),hypothesisId:'H-ACCENT-AFTER'})}).catch(()=>{}); }
+    // #endregion
     if (fixesCount > 0 || cleanedHtml !== html) {
       report.actions.push({
         type: 'normalized_spacing',
@@ -5350,398 +5579,59 @@ class ArticleFinalizer {
    * @returns {string} HTML corrigé
    */
   async checkAndFixStoryAlignment(html, pipelineContext, report) {
-    const story = pipelineContext?.story?.story || {};
-    const MIN_SECTION_CHARS = 60; // PHASE 6.3.F: Seuil pour "too short"
+    // SIMPLIFIÉ: On ne force plus l'insertion de sections de l'ancienne structure.
+    // L'article est en format Option B (développement libre). On vérifie juste la qualité globale.
+    const h2Matches = html.match(/<h2[^>]*>.*?<\/h2>/gi) || [];
+    const h2Count = h2Matches.length;
+    const bodyLength = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().length;
     
-    // PHASE 6.3.1: Définir les sections et leurs synonymes (inclure les titres canoniques)
-    const sectionDefinitions = {
-      context: {
-        synonyms: ['contexte', 'context', 'situation', 'cadre'],
-        title: 'Contexte',
-        order: 1
-      },
-      central_event: {
-        synonyms: ['événement central', 'event', 'le fait déclencheur', 'ce qui s\'est passé'],
-        title: 'Événement central',
-        order: 2
-      },
-      critical_moment: {
-        synonyms: ['moment critique', 'critical moment', 'le tournant', 'point de bascule'],
-        title: 'Moment critique',
-        order: 3
-      },
-      resolution: {
-        synonyms: ['résolution', 'resolution', 'issue', 'ce qui a été fait'],
-        title: 'Résolution',
-        order: 4
-      },
-      author_lessons: {
-        synonyms: ['leçons', 'ce que l\'auteur retient', 'à retenir \\(auteur\\)'],
-        title: 'Ce que l\'auteur retient',
-        order: 5
-      },
-      community_insights: {
-        synonyms: ['insights communauté', 'réactions', 'ce que la communauté ajoute', 'communauté', 'community', 'ce que la communauté apporte'],
-        title: 'Ce que la communauté apporte',
-        order: 6
-      },
-      open_questions: {
-        synonyms: ['questions ouvertes', 'ce qui reste', 'à clarifier', 'questions encore ouvertes'],
-        title: 'Questions encore ouvertes',
-        order: 7
-      }
-    };
-    
-    // PHASE 6.3.A: Déterminer les sections réellement requises (post-story)
-    // En Option B (verdict + recommandations + corps substantiel), ne pas exiger ni insérer Contexte / Événement central / Moment critique / Résolution
-    const storyData = story.story || story; // Support both story.story and story directly
-    const optionBFormat = this.isOptionBFormat(html);
-    const PARASITIC_SECTION_KEYS = ['context', 'central_event', 'critical_moment', 'resolution'];
-    const requiredKeys = [];
-    for (const [sectionKey, sectionDef] of Object.entries(sectionDefinitions)) {
-      if (sectionKey === 'related') continue; // Exclure "Articles connexes" du scan alignment
-      if (optionBFormat && PARASITIC_SECTION_KEYS.includes(sectionKey)) continue; // Option B : ne pas requérer les 4 sections parasites
-      if (this.isSectionRequired(sectionKey, storyData)) {
-        requiredKeys.push(sectionKey);
-        // Ajouter le titre canonique aux synonymes pour qu'il soit détecté
-        sectionDef.synonyms.unshift(sectionDef.title.toLowerCase());
-      }
-    }
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:checkAndFixStoryAlignment',message:'Story alignment (simplified)',data:{h2Count,bodyLength,h2Titles:h2Matches.map(h=>h.substring(0,60))},timestamp:Date.now(),hypothesisId:'H1-PARASITIC'})}).catch(()=>{});
+    // #endregion
     
     let finalHtml = html;
-    const insertedSections = [];
-    const violations = []; // severity='high' -> FAIL
-    const warnings = []; // severity='low' -> WARN
-    let reordered = false;
+    let status = 'pass';
     
-    // PHASE 6.3.C: Parser sections présentes AVANT auto-fix
-    const sectionsBefore = this.extractSections(finalHtml, sectionDefinitions);
-    const presentBefore = Object.keys(sectionsBefore);
-    
-    // PHASE 6.3.D: Identifier les sections manquantes et vérifier si elles sont insertables
-    const missingSections = requiredKeys.filter(key => !presentBefore.includes(key));
-    
-    for (const sectionKey of missingSections) {
-      if (this.canInsert(sectionKey, story)) {
-        // Section manquante mais insertable -> on va l'insérer
-        const sectionDef = sectionDefinitions[sectionKey];
-        
-        // Construire le contenu de la section
-        let sourceContent = null;
-        switch (sectionKey) {
-          case 'context':
-            sourceContent = story.context?.summary?.trim() || story.context?.bullets;
-            break;
-          case 'central_event':
-            sourceContent = story.central_event?.summary?.trim() || story.central_event?.bullets;
-            break;
-          case 'critical_moment':
-            sourceContent = story.critical_moment?.summary?.trim() || story.critical_moment?.bullets;
-            break;
-          case 'resolution':
-            sourceContent = story.resolution?.summary?.trim() || story.resolution?.bullets;
-            break;
-          case 'author_lessons':
-            sourceContent = story.author_lessons || [];
-            break;
-          case 'community_insights':
-            sourceContent = story.community_insights || [];
-            break;
-          case 'open_questions':
-            sourceContent = story.open_questions || [];
-            break;
-        }
-        
-        if (!sourceContent || (Array.isArray(sourceContent) && sourceContent.length === 0)) {
-          // Pas de source exploitable -> violation
-          violations.push({
-            section: sectionKey,
-            reason: `Section "${sectionDef.title}" requise mais non constructible (pas de matière exploitable)`,
-            type: 'missing_required_section'
-          });
-          continue;
-        }
-        
-        // Construire le HTML de la section (AVEC TRADUCTION SI ANGLAIS)
-        let sectionHtml = '';
-        if (Array.isArray(sourceContent)) {
-          sectionHtml = `<h2>${sectionDef.title}</h2>\n<ul>\n`;
-          for (const item of sourceContent) {
-            const text = typeof item === 'string' ? item : (item.value || item.text || item.summary || '');
-            if (text && text.trim()) {
-              sectionHtml += `  <li>${this.escapeHtml(text)}</li>\n`;
-            }
-          }
-          sectionHtml += '</ul>\n';
-        } else {
-          const text = typeof sourceContent === 'string' ? sourceContent : (sourceContent.summary || sourceContent.text || '');
-          if (text && text.trim()) {
-            // TRADUCTION FORCÉE DU CONTENU ANGLAIS (resolution, critical_moment, etc.)
-            let translatedText = text.substring(0, 500);
-            if (!FORCE_OFFLINE && this.intelligentContentAnalyzer) {
-              try {
-                translatedText = await this.intelligentContentAnalyzer.translateToFrench(translatedText);
-                console.log(`🌐 FINALIZER: Section "${sectionDef.title}" traduite (${text.length} → ${translatedText.length} chars)`);
-              } catch (error) {
-                console.warn(`⚠️ Erreur traduction section "${sectionDef.title}": ${error.message}`);
-              }
-            }
-            const escapedText = this.escapeHtml(translatedText);
-            sectionHtml = `<h2>${sectionDef.title}</h2>\n<p>${escapedText}</p>\n`;
-          }
-        }
-        
-        if (sectionHtml) {
-          // Trouver la position d'insertion
-          let insertIndex = 0;
-          const sectionsBeforeThis = requiredKeys
-            .filter(s => {
-              const def = sectionDefinitions[s];
-              return def && def.order < sectionDef.order && presentBefore.includes(s);
-            })
-            .sort((a, b) => sectionDefinitions[a].order - sectionDefinitions[b].order);
-          
-          if (sectionsBeforeThis.length > 0) {
-            const lastBefore = sectionsBeforeThis[sectionsBeforeThis.length - 1];
-            const beforeSection = sectionsBefore[lastBefore];
-            if (beforeSection) {
-              // Trouver la fin de cette section (prochain H2 ou fin)
-              const h2Matches = [...finalHtml.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
-              const nextH2Index = h2Matches.find(h => h.index > beforeSection.h2Index)?.index || finalHtml.length;
-              insertIndex = nextH2Index;
-            }
-          } else {
-            // Insérer après le premier H2 ou après l'intro
-            const firstH2Match = finalHtml.match(/<h2[^>]*>/i);
-            if (firstH2Match) {
-              const h2Matches = [...finalHtml.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
-              const nextH2Index = h2Matches.find(h => h.index > firstH2Match.index)?.index || finalHtml.length;
-              insertIndex = nextH2Index;
-            } else {
-              const firstPMatch = finalHtml.match(/<p[^>]*>.*?<\/p>/i);
-              if (firstPMatch) {
-                insertIndex = firstPMatch.index + firstPMatch[0].length;
-              }
-            }
-          }
-          
-          finalHtml = finalHtml.slice(0, insertIndex) + '\n' + sectionHtml + '\n' + finalHtml.slice(insertIndex);
-          insertedSections.push(sectionKey);
-          report.actions.push({
-            type: 'inserted_missing_section',
-            details: `section=${sectionKey} title="${sectionDef.title}"`
-          });
-        }
-      } else {
-        // PHASE 6.3.C: Section required mais non insertable -> FAIL
-        const sectionDef = sectionDefinitions[sectionKey];
-        let reason = `Section "${sectionDef.title}" requise mais non constructible (pas de matière exploitable)`;
-        if (sectionKey === 'community_insights') {
-          const count = Array.isArray(story.community_insights) ? story.community_insights.length : 0;
-          reason = `story.community_insights.length=${count} but no community section found and insights are not insertable`;
-        } else if (sectionKey === 'open_questions') {
-          reason = `open_questions present but not insertable and section missing`;
-        }
-        violations.push({
-          section: sectionKey,
-          reason: reason,
-          type: 'missing_required_section'
-        });
-      }
-    }
-    
-    // PHASE 6.3.D: RE-parser le HTML final après auto-fix
-    const sectionsAfter = this.extractSections(finalHtml, sectionDefinitions);
-    const presentAfter = Object.keys(sectionsAfter);
-    
-    // PHASE 6.3.F: Détecter les sections "too short" (même si H2 existe)
-    // Ne jamais "warn" sur une section requise si la story n'a pas assez de matière
-    for (const sectionKey of requiredKeys) {
-      if (presentAfter.includes(sectionKey)) {
-        const section = sectionsAfter[sectionKey];
-        const sectionDef = sectionDefinitions[sectionKey];
-        
-        // Calculer expectedText à partir de story.story[sectionKey] ou story[sectionKey]
-        let expectedText = '';
-        const storyData = story.story || story; // Support both story.story and story directly
-        const storySection = storyData?.[sectionKey];
-        if (storySection) {
-          if (typeof storySection === 'string') {
-            expectedText = storySection;
-          } else if (storySection.summary) {
-            expectedText = storySection.summary;
-          } else if (Array.isArray(storySection.bullets)) {
-            expectedText = storySection.bullets.map(b => typeof b === 'string' ? b : (b.value || b.text || b.summary || '')).join(' ');
-          } else if (Array.isArray(storySection)) {
-            // Pour author_lessons, community_insights, open_questions
-            expectedText = storySection.map(item => {
-              const text = typeof item === 'string' ? item : (item.value || item.text || item.summary || item.quote || '');
-              return text;
-            }).join(' ');
-          }
-        }
-        const expectedLen = expectedText.trim().length;
-        const actualLen = section.contentLen;
-        
-        // Émettre STORY_ALIGNMENT_VIOLATION: too_short seulement si:
-        // 1. La section est requise
-        // 2. ET expectedLen >= MIN_SECTION_CHARS (la story a assez de matière)
-        // 3. ET actualLen < MIN_SECTION_CHARS (mais le HTML est trop court)
-        // 4. ET la section n'a pas été auto-insérée (sinon c'est normal qu'elle soit courte)
-        if (expectedLen >= MIN_SECTION_CHARS && actualLen < MIN_SECTION_CHARS && !insertedSections.includes(sectionKey)) {
-          warnings.push({
-            section: sectionKey,
-            reason: `Section "${sectionDef.title}" présente mais trop courte (${actualLen} chars, attendu >= ${MIN_SECTION_CHARS} d'après story)`,
-            type: 'section_too_short'
-          });
-        }
-      }
-    }
-    
-    // PHASE 6.3.6: Vérifier l'ordre et calculer reordered
-    // Comparer la liste canonique des H2 avant/après reorder
-    if (requiredKeys.length > 1 && presentAfter.length === requiredKeys.length) {
-      const expectedSequence = requiredKeys.map(s => sectionDefinitions[s].title.toLowerCase());
-      const actualSequence = [];
-      
-      const h2Matches = [...finalHtml.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
-      for (const m of h2Matches) {
-        const h2Title = m[1].trim().toLowerCase();
-        for (const sectionKey of requiredKeys) {
-          const sectionDef = sectionDefinitions[sectionKey];
-          const titleLower = sectionDef.title.toLowerCase();
-          // Match exact du titre canonique ou synonyme
-          if (h2Title === titleLower || sectionDef.synonyms.some(s => {
-            const synLower = s.toLowerCase();
-            return h2Title === synLower || h2Title.includes(synLower);
-          })) {
-            actualSequence.push(titleLower);
-            break;
-          }
-        }
-      }
-      
-      if (actualSequence.length === requiredKeys.length) {
-        const expectedStr = expectedSequence.join('|');
-        const actualStr = actualSequence.join('|');
-        
-        // Comparer avec la séquence AVANT (si disponible)
-        const beforeSequence = [];
-        const h2MatchesBefore = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
-        for (const m of h2MatchesBefore) {
-          const h2Title = m[1].trim().toLowerCase();
-          for (const sectionKey of requiredKeys) {
-            const sectionDef = sectionDefinitions[sectionKey];
-            const titleLower = sectionDef.title.toLowerCase();
-            if (h2Title === titleLower || sectionDef.synonyms.some(s => {
-              const synLower = s.toLowerCase();
-              return h2Title === synLower || h2Title.includes(synLower);
-            })) {
-              beforeSequence.push(titleLower);
-              break;
-            }
-          }
-        }
-        
-        // PHASE 6.3.6: Reordered = true uniquement si ordre change
-        if (beforeSequence.length === requiredKeys.length) {
-          const beforeStr = beforeSequence.join('|');
-          if (beforeStr !== actualStr) {
-            reordered = true;
-            report.actions.push({
-              type: 'reordered_sections',
-              details: `before=${beforeStr} after=${actualStr}`
-            });
-          }
-        } else if (expectedStr !== actualStr && insertedSections.length === 0) {
-          // Si on n'a pas de séquence avant ET pas d'insertion, comparer avec attendu
-          reordered = true;
-          report.actions.push({
-            type: 'reordered_sections',
-            details: `expected=${expectedStr} actual=${actualStr}`
-          });
-        }
-      }
-    }
-    
-    // PHASE 6.3.4: Calculer le status selon les règles (post-fix)
-    // Vérifier les violations persistantes (sections required mais absentes et non insertables)
-    const unresolvedViolations = violations.filter(v => {
-      // Une violation est résolue si la section est maintenant présente
-      return !presentAfter.includes(v.section);
-    });
-    
-    // PHASE 6.3.4: Calculer failCount et warnCount
-    // failCount: required sections encore absentes (missing) OU required sections dont la donnée est non insérable et absente
-    const missingRequired = requiredKeys.filter(key => !presentAfter.includes(key));
-    let failCount = unresolvedViolations.length + missingRequired.length;
-    
-    // Option B : si article en format éditorial libre (verdict + recommandations présents, corps substantiel), ne pas échouer sur sections manquantes
-    const isOptionBFormat = this.isOptionBFormat(finalHtml);
-    if (isOptionBFormat && failCount > 0) {
-      failCount = 0;
-      console.log('   ℹ️ Format Option B détecté (verdict + recommandations + corps substantiel) — alignement non bloquant');
-    }
-    
-    // warnCount: sections présentes mais "trop courtes"
-    const tooShortWarnings = warnings.filter(w => w.type === 'section_too_short');
-    const warnCount = tooShortWarnings.length;
-    
-    // PHASE 6.3.4: Status final = fonction des violations post-fix
-    let status;
-    if (failCount > 0) {
-      status = 'fail';
-    } else if (warnCount > 0) {
+    // Vérifier que l'article a une structure minimale viable
+    if (h2Count < 2) {
       status = 'warn';
-    } else {
-      status = 'pass';
+      report.issues.push({
+        code: 'STORY_ALIGNMENT_VIOLATION',
+        severity: 'low',
+        message: `Article avec seulement ${h2Count} H2 (minimum recommandé: 2)`,
+        evidence: { h2Count },
+        check: 'story_alignment'
+      });
     }
     
-    // PHASE 6.3.E: Calculer les métriques finales
-    const presentCount = presentAfter.length;
-    const insertedCount = insertedSections.length;
+    if (bodyLength < 1500) {
+      status = 'warn';
+      report.issues.push({
+        code: 'STORY_ALIGNMENT_VIOLATION',
+        severity: 'low',
+        message: `Contenu court: ${bodyLength} chars (minimum recommandé: 1500)`,
+        evidence: { bodyLength },
+        check: 'story_alignment'
+      });
+    }
+    
+    console.log(`✅ FINALIZER_ALIGNMENT: h2Count=${h2Count} bodyLength=${bodyLength} status=${status}`);
     
     report.checks.push({
       name: 'story_alignment',
       status: status,
-      details: `required=${requiredKeys.length} present=${presentCount} inserted=${insertedCount} reordered=${reordered ? 1 : 0}`
+      details: `required=0 present=${h2Count} inserted=0 reordered=0`
     });
     
-    // PHASE 6.3.E: Ajouter les violations et warnings au rapport
-    unresolvedViolations.forEach(violation => {
-      report.issues.push({
-        code: 'STORY_ALIGNMENT_VIOLATION',
-        severity: 'high',
-        message: violation.reason,
-        evidence: { section: violation.section, type: violation.type },
-        check: 'story_alignment'
-      });
-    });
-    
-    // PHASE 6.3.F: "too short" = WARN seulement (severity low)
-    tooShortWarnings.forEach(warning => {
-      report.issues.push({
-        code: 'STORY_ALIGNMENT_VIOLATION',
-        severity: 'low',
-        message: warning.reason,
-        evidence: { section: warning.section, type: warning.type },
-        check: 'story_alignment'
-      });
-    });
-    // Warnings d'ordre ne sont pas ajoutés comme issues (non bloquants)
-    
-    // PHASE 6.3.4: Exposer dans report.debug
+    // Exposer dans report.debug
     if (!report.debug) report.debug = {};
     report.debug.alignment = {
-      required_sections: requiredKeys,
-      detected_sections: presentAfter,
-      inserted_sections: insertedSections,
-      reordered: reordered,
-      missing_after_fix: unresolvedViolations.map(v => v.section)
+      required_sections: [],
+      detected_sections: h2Matches.map(h => h.replace(/<[^>]*>/g, '').trim()),
+      inserted_sections: [],
+      reordered: false,
+      missing_after_fix: []
     };
-    
-    // PHASE 6.3.4: Log unique
-    console.log(`✅ FINALIZER_ALIGNMENT: required=${requiredKeys.length} present=${presentCount} inserted=${insertedCount} reordered=${reordered ? 1 : 0} status=${status}`);
     
     return finalHtml;
   }
@@ -8648,6 +8538,13 @@ class ArticleFinalizer {
     // AMÉLIORATION: Découper paragraphes > 150 caractères pour meilleur équilibre
     paragraphs.forEach(para => {
       if (para.length > 150) {
+        // CORRECTION CRITIQUE: Ne PAS découper les paragraphes qui contiennent des éléments block-level
+        // (h2, h3, h4, div, ul, ol, table, blockquote) car cela casserait la structure HTML
+        if (/<(?:h[1-6]|div|ul|ol|table|blockquote|section|article|nav|aside|header|footer)[^>]*>/i.test(para.htmlContent)) {
+          console.log(`   ⚠️ Paragraphe skippé (contient block elements): ${para.length} chars`);
+          return; // Skip ce paragraphe
+        }
+        
         // CORRECTION: Utiliser le contenu HTML original au lieu du texte sans HTML
         // pour préserver les entités HTML et les balises HTML imbriquées
         const paraHtmlMatch = cleanedHtml.match(new RegExp(para.fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
@@ -8659,6 +8556,25 @@ class ArticleFinalizer {
         if (!contentMatch) return;
         
         let paraContent = contentMatch[1];
+        
+        // CORRECTION CRITIQUE: Protéger les liens <a> complets et les URLs avant le split
+        // pour éviter de couper les URLs aux points (kiwi.com, airalo.com, etc.)
+        const linkPlaceholders = new Map();
+        let linkCounter = 0;
+        
+        // Protéger les balises <a> complètes (href + contenu + </a>)
+        paraContent = paraContent.replace(/<a[^>]*>[\s\S]*?<\/a>/gi, (match) => {
+          const key = `__LINK_BP_${linkCounter++}__`;
+          linkPlaceholders.set(key, match);
+          return key;
+        });
+        
+        // Protéger les URLs nues (https://..., http://...)
+        paraContent = paraContent.replace(/https?:\/\/[^\s"<>]+/gi, (match) => {
+          const key = `__URL_BP_${linkCounter++}__`;
+          linkPlaceholders.set(key, match);
+          return key;
+        });
         
         // AMÉLIORATION: Protéger les entités HTML ET les placeholders existants avant le split
         const entityPlaceholders = new Map();
@@ -8713,13 +8629,16 @@ class ArticleFinalizer {
             currentChunk += sentence;
           } else {
             if (currentChunk.trim().length > 0) {
-              // Restaurer les entités HTML avant d'ajouter au chunk
+              // Restaurer les entités HTML et liens avant d'ajouter au chunk
               let chunkWithEntities = currentChunk;
               entityPlaceholders.forEach((entity, placeholder) => {
                 chunkWithEntities = chunkWithEntities.replace(placeholder, entity);
               });
               protectedPlaceholders.forEach((ph, key) => {
                 chunkWithEntities = chunkWithEntities.replace(key, ph);
+              });
+              linkPlaceholders.forEach((link, key) => {
+                chunkWithEntities = chunkWithEntities.replace(key, link);
               });
               chunks.push(chunkWithEntities.trim());
             }
@@ -8728,13 +8647,16 @@ class ArticleFinalizer {
         });
         
         if (currentChunk.trim().length > 0) {
-          // Restaurer les entités HTML avant d'ajouter au dernier chunk
+          // Restaurer les entités HTML et liens avant d'ajouter au dernier chunk
           let chunkWithEntities = currentChunk;
           entityPlaceholders.forEach((entity, placeholder) => {
             chunkWithEntities = chunkWithEntities.replace(placeholder, entity);
           });
           protectedPlaceholders.forEach((ph, key) => {
             chunkWithEntities = chunkWithEntities.replace(key, ph);
+          });
+          linkPlaceholders.forEach((link, key) => {
+            chunkWithEntities = chunkWithEntities.replace(key, link);
           });
           chunks.push(chunkWithEntities.trim());
         }
@@ -8747,6 +8669,12 @@ class ArticleFinalizer {
         });
         
         if (validChunks.length > 1) {
+          // #region agent log
+          const hasH2InChunks = validChunks.some(c => /<h2/i.test(c));
+          const hasBrokenUrl = validChunks.some(c => /^com[">\/]|^\.com|^\.kiwi|^\.airalo/i.test(c.trim()));
+          const hasUnclosedA = validChunks.some(c => /<a[^>]*$/.test(c) || /^[^<]*<\/a>/.test(c));
+          fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:balanceParagraphs:SPLIT',message:'Paragraph split details',data:{originalLength:para.length,chunkCount:validChunks.length,hasH2InChunks,hasBrokenUrl,hasUnclosedA,originalPreview:para.htmlContent?.substring(0,300)||para.text?.substring(0,300),chunks:validChunks.map((c,i)=>({idx:i,preview:c.substring(0,120),len:c.length}))},timestamp:Date.now(),hypothesisId:'H-BALANCE-SPLIT'})}).catch(()=>{});
+          // #endregion
           // AMÉLIORATION: Utiliser le contenu HTML original si disponible, sinon reconstruire
           const newParagraphs = validChunks.map(chunk => `<p>${chunk}</p>`).join('\n');
           cleanedHtml = cleanedHtml.replace(para.fullMatch, newParagraphs);

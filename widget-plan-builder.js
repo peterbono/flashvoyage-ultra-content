@@ -12,25 +12,15 @@ export class WidgetPlanBuilder {
     // Mapping des providers par slot - UNIQUEMENT CEUX QUI EXISTENT VRAIMENT
     this.providers = {
       flights: "Travelpayouts-Aviasales",
-      esim: "Airalo"
-      // hotels: SUPPRIMÉ - Pas de widgets hotels disponibles
-      // transport: SUPPRIMÉ - Pas de widgets transport disponibles  
-      // activities: SUPPRIMÉ - Pas de widgets activities disponibles
-      // insurance: SUPPRIMÉ - Pas de widgets insurance disponibles
-      // coworking: SUPPRIMÉ - Pas de widgets coworking disponibles
-      // productivity: SUPPRIMÉ - Pas de widgets productivity disponibles
+      esim: "Airalo",
+      insurance: "Travelpayouts-VisitorCoverage" // Ré-activé via shortcode mu-plugin
     };
 
-    // Presets de rendu recommandés - UNIQUEMENT CEUX QUI EXISTENT VRAIMENT
+    // Presets de rendu recommandés
     this.presets = {
       flights: "search_bar",
-      esim: "compact_card"
-      // hotels: SUPPRIMÉ - Pas de widgets hotels disponibles
-      // transport: SUPPRIMÉ - Pas de widgets transport disponibles
-      // activities: SUPPRIMÉ - Pas de widgets activities disponibles
-      // insurance: SUPPRIMÉ - Pas de widgets insurance disponibles
-      // coworking: SUPPRIMÉ - Pas de widgets coworking disponibles
-      // productivity: SUPPRIMÉ - Pas de widgets productivity disponibles
+      esim: "compact_card",
+      insurance: "compact_card" // Ré-activé via shortcode mu-plugin
     };
 
     // Contraintes par défaut

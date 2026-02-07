@@ -20,6 +20,13 @@ export const WORDPRESS_APP_PASSWORD = process.env.WORDPRESS_APP_PASSWORD;
 export const PEXELS_API_KEY = process.env.PEXELS_API_KEY;
 
 /**
+ * Travelpayouts Partner Links API
+ */
+export const TRAVELPAYOUTS_API_TOKEN = process.env.TRAVELPAYOUTS_API_TOKEN;
+export const TRAVELPAYOUTS_TRS = process.env.TRAVELPAYOUTS_TRS || '463418';
+export const TRAVELPAYOUTS_MARKER = process.env.TRAVELPAYOUTS_MARKER || '676421';
+
+/**
  * Variables d'environnement parsées (booléens)
  */
 export const DRY_RUN = parseBool(process.env.FLASHVOYAGE_DRY_RUN);

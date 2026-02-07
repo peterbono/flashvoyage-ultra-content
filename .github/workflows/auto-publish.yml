@@ -101,6 +101,9 @@ jobs:
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
           REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
           REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
+          TRAVELPAYOUTS_API_TOKEN: ${{ secrets.TRAVELPAYOUT_API }}
+          TRAVELPAYOUTS_TRS: '463418'
+          TRAVELPAYOUTS_MARKER: '676421'
           
       - name: Notify Success
         if: success()

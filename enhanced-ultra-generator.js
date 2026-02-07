@@ -111,20 +111,21 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
    * @returns {Array} validSources pour ce batch
    */
   applySourceFilters(sources, { isDryRun, forceOffline }) {
-    const asiaDestinations = [
-      'indonesia', 'indonésie', 'bali', 'jakarta', 'yogyakarta', 'bandung', 'surabaya', 'medan', 'ubud', 'seminyak', 'canggu', 'lombok',
-      'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
-      'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'chiangmai', 'phuket', 'krabi', 'pattaya', 'koh samui', 'koh phangan', 'koh tao', 'pai', 'ayutthaya', 'sukhothai',
-      'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'hokkaido', 'hokkaidō', 'hiroshima', 'nara', 'sapporo', 'fukuoka', 'okinawa', 'yokohama', 'nagoya', 'sendai',
-      'korea', 'corée', 'south korea', 'corée du sud', 'seoul', 'séoul', 'busan', 'pusan', 'jeju', 'jeju island', 'incheon', 'daegu', 'gwangju', 'ulsan',
-      'philippines', 'philippine', 'manila', 'cebu', 'boracay', 'palawan', 'el nido', 'coron', 'siargao', 'bohol', 'davao', 'baguio', 'makati',
-      'singapore', 'singapour'
-    ];
-    const nonAsiaDestinations = [
-      // Europe
+      const asiaDestinations = [
+        'indonesia', 'indonésie', 'bali', 'jakarta', 'yogyakarta', 'bandung', 'surabaya', 'medan', 'ubud', 'seminyak', 'canggu', 'lombok',
+        'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
+        'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'chiangmai', 'phuket', 'krabi', 'pattaya', 'koh samui', 'koh phangan', 'koh tao', 'pai', 'ayutthaya', 'sukhothai',
+        'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'hokkaido', 'hokkaidō', 'hiroshima', 'nara', 'sapporo', 'fukuoka', 'okinawa', 'yokohama', 'nagoya', 'sendai',
+        'korea', 'corée', 'south korea', 'corée du sud', 'seoul', 'séoul', 'busan', 'pusan', 'jeju', 'jeju island', 'incheon', 'daegu', 'gwangju', 'ulsan',
+        'philippines', 'philippine', 'manila', 'cebu', 'boracay', 'palawan', 'el nido', 'coron', 'siargao', 'bohol', 'davao', 'baguio', 'makati',
+        'singapore', 'singapour'
+      ];
+      const nonAsiaDestinations = [
+        // Europe
       'istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'lisbon', 'lisbonne', 'barcelona', 'barcelone', 'greece', 'grèce', 'cyprus', 'chypre', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'uk', 'united kingdom', 'royaume-uni', 'royaume uni', 'britain', 'britannique', 'england', 'angleterre', 'scotland', 'écosse', 'wales', 'pays de galles', 'germany', 'allemagne', 'berlin', 'netherlands', 'pays-bas', 'amsterdam', 'switzerland', 'suisse', 'austria', 'autriche', 'vienna', 'vienne', 'prague', 'czech', 'tchèque', 'poland', 'pologne', 'hungary', 'hongrie', 'budapest', 'croatia', 'croatie', 'dubrovnik',
-      // Amériques
-      'america', 'usa', 'united states', 'états-unis', 'brazil', 'brésil', 'rio', 'mexico', 'mexique', 'canada', 'colombia', 'colombie', 'peru', 'pérou', 'argentina', 'argentine', 'chile', 'chili', 'costa rica', 'caribbean', 'caraïbes',
+        // Amériques
+      'america', 'usa', 'united states', 'états-unis', 'brazil', 'brésil', 'rio', 'mexico', 'mexique', 'canada', 'quebec', 'québec', 'colombia', 'colombie', 'peru', 'pérou', 'argentina', 'argentine', 'chile', 'chili', 'costa rica', 'caribbean', 'caraïbes',
+      'cuba', 'cancun', 'cancún', 'dominican', 'dominicaine', 'jamaica', 'jamaïque', 'haiti', 'haïti', 'puerto rico', 'panama', 'honduras', 'guatemala', 'nicaragua', 'el salvador', 'belize', 'ecuador', 'équateur',
       // Afrique & Afrique du Nord
       'egypt', 'égypte', 'egypte', 'cairo', 'le caire', 'giza', 'gizeh', 'alexandria', 'alexandrie', 'luxor', 'louxor', 'aswan', 'assouan', 'morocco', 'maroc', 'marrakech', 'casablanca', 'fes', 'fès', 'tunisia', 'tunisie', 'tunis', 'algeria', 'algérie', 'alger', 'libya', 'libye', 'south africa', 'afrique du sud', 'cape town', 'johannesburg', 'kenya', 'nairobi', 'tanzania', 'tanzanie', 'kilimanjaro', 'zanzibar', 'nigeria', 'lagos', 'ethiopia', 'éthiopie', 'ghana', 'senegal', 'sénégal', 'dakar', 'africa', 'afrique',
       // Moyen-Orient
@@ -138,44 +139,65 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       'meta', 'announcement', 'annonce', 'update:', '[update]', '[meta]',
       'how the subreddit', 'comment le subreddit', 'subreddit is run', 'gestion du subreddit'
     ];
+    // Helper: word-boundary match pour éviter les faux positifs (ex: "pai" dans "paid", "rio" dans "priority")
+    const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const matchesWord = (text, word) => new RegExp(`\\b${escRe(word)}\\b`, 'i').test(text);
+    
     return sources.filter(article => {
-      const articleText = `${article.title || ''} ${article.content || ''} ${article.selftext || ''} ${article.source_text || ''}`.toLowerCase();
-      const titleLower = (article.title || '').toLowerCase();
-      const hasNonAsiaDestination = nonAsiaDestinations.some(dest => articleText.includes(dest));
-      const hasAsiaDestination = asiaDestinations.some(dest => articleText.includes(dest));
-      if (nonAsiaDestinations.some(dest => titleLower.includes(dest))) {
-        console.log(`🚫 Article rejeté (TITRE contient destination non-asiatique): ${article.title}`);
-        return false;
-      }
-      if (article.type !== 'community' && article.type !== 'nomade') {
-        console.log(`🚫 Article rejeté (source non-Reddit, format témoignage requis): ${article.title} (type: ${article.type})`);
-        return false;
-      }
-      if ((isDryRun || forceOffline) && article.source_reliability !== undefined) {
-        if (article.source_reliability < 0.7 && (!article.source_text || article.source_text.length < 400)) {
-          console.log(`🚫 Article rejeté (source non fiable, source_text trop court): ${article.title} reliability=${article.source_reliability}`);
-          return false;
+        const articleText = `${article.title || ''} ${article.content || ''} ${article.selftext || ''} ${article.source_text || ''}`.toLowerCase();
+        const titleLower = (article.title || '').toLowerCase();
+      const hasNonAsiaDestination = nonAsiaDestinations.some(dest => matchesWord(articleText, dest));
+      const hasAsiaDestination = asiaDestinations.some(dest => matchesWord(articleText, dest));
+      
+      // #region agent log
+      // Log TOUS les articles qui ne sont pas rejetés par le titre (pour tracer les faux positifs)
+      {
+        const matchedAsia = asiaDestinations.filter(dest => matchesWord(articleText, dest));
+        const matchedNonAsia = nonAsiaDestinations.filter(dest => matchesWord(articleText, dest));
+        const textLen = articleText.length;
+        const contentLen = (article.content || '').length;
+        const selftextLen = (article.selftext || '').length;
+        const sourceTextLen = (article.source_text || '').length;
+        // Logger seulement les cas intéressants: articles avec "kids" ou "travel" dans le titre ou sans destination asiatique
+        if (titleLower.includes('kids') || titleLower.includes('first time') || matchedAsia.length === 0) {
+          fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'enhanced-ultra-generator.js:applySourceFilters:TRACE_WB',message:'Article filter trace (word-boundary)',data:{title:article.title?.substring(0,80),hasAsia:hasAsiaDestination,hasNonAsia:hasNonAsiaDestination,matchedAsia:matchedAsia.slice(0,5),matchedNonAsia:matchedNonAsia.slice(0,5),textLen,contentLen,selftextLen,sourceTextLen},timestamp:Date.now(),hypothesisId:'H-FILTER-WB'})}).catch(()=>{});
         }
       }
-      if (hasNonAsiaDestination && !hasAsiaDestination) {
-        console.log(`🚫 Article rejeté (uniquement destinations non-asiatiques, pas d'Asie): ${article.title}`);
-        return false;
-      }
-      if (!hasAsiaDestination) {
-        console.log(`🚫 Article rejeté (aucune destination asiatique): ${article.title}`);
-        return false;
-      }
+      // #endregion
+      
+      if (nonAsiaDestinations.some(dest => titleLower.includes(dest))) {
+          console.log(`🚫 Article rejeté (TITRE contient destination non-asiatique): ${article.title}`);
+          return false;
+        }
+        if (article.type !== 'community' && article.type !== 'nomade') {
+          console.log(`🚫 Article rejeté (source non-Reddit, format témoignage requis): ${article.title} (type: ${article.type})`);
+          return false;
+        }
+        if ((isDryRun || forceOffline) && article.source_reliability !== undefined) {
+          if (article.source_reliability < 0.7 && (!article.source_text || article.source_text.length < 400)) {
+            console.log(`🚫 Article rejeté (source non fiable, source_text trop court): ${article.title} reliability=${article.source_reliability}`);
+            return false;
+          }
+        }
+        if (hasNonAsiaDestination && !hasAsiaDestination) {
+          console.log(`🚫 Article rejeté (uniquement destinations non-asiatiques, pas d'Asie): ${article.title}`);
+          return false;
+        }
+        if (!hasAsiaDestination) {
+          console.log(`🚫 Article rejeté (aucune destination asiatique): ${article.title}`);
+          return false;
+        }
       const isMetaPost = metaKeywords.some(keyword => titleLower.includes(keyword.toLowerCase()) || articleText.includes(keyword.toLowerCase()));
-      if (isMetaPost) {
-        console.log(`🚫 Article rejeté (post meta/non-voyage): ${article.title}`);
-        return false;
-      }
-      if (article.smartDecision === 'reject') {
-        console.log(`⚠️ Article rejeté ignoré: ${article.title}`);
-        return false;
-      }
-      return true;
-    });
+        if (isMetaPost) {
+          console.log(`🚫 Article rejeté (post meta/non-voyage): ${article.title}`);
+          return false;
+        }
+        if (article.smartDecision === 'reject') {
+          console.log(`⚠️ Article rejeté ignoré: ${article.title}`);
+          return false;
+        }
+        return true;
+      });
   }
 
   /**
@@ -189,32 +211,46 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       'egypt', 'égypte', 'egypte', 'cairo', 'le caire', 'giza', 'gizeh', 'alexandria', 'alexandrie', 'luxor', 'louxor', 'aswan', 'assouan',
       'morocco', 'maroc', 'marrakech', 'tunisia', 'tunisie', 'algeria', 'algérie', 'africa', 'afrique',
       'istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'greece', 'grèce', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'germany', 'allemagne',
-      'america', 'usa', 'united states', 'états-unis', 'brazil', 'brésil', 'mexico', 'mexique', 'canada',
+      'america', 'usa', 'united states', 'états-unis', 'brazil', 'brésil', 'mexico', 'mexique', 'canada', 'quebec', 'québec',
+      'cuba', 'cancun', 'cancún', 'dominican', 'dominicaine', 'jamaica', 'jamaïque', 'haiti', 'haïti', 'puerto rico',
+      'costa rica', 'panama', 'honduras', 'guatemala', 'nicaragua', 'el salvador', 'belize',
+      'colombia', 'colombie', 'peru', 'pérou', 'argentina', 'argentine', 'chile', 'chili', 'ecuador', 'équateur',
       'iraq', 'irak', 'iran', 'israel', 'israël', 'jordanie', 'jordan', 'liban', 'lebanon', 'syrie', 'syria', 'dubai', 'dubaï', 'qatar', 'saudi arabia', 'arabie saoudite',
       'australia', 'australie', 'new zealand', 'nouvelle-zélande',
       'south africa', 'afrique du sud', 'kenya', 'tanzania', 'tanzanie', 'nigeria'
     ];
     return sources.filter(article => {
-      const redditUrl = article.link || article.url;
+          const redditUrl = article.link || article.url;
       if (this.isArticleAlreadyPublished(article.title, redditUrl)) return false;
       const sub = (article.subreddit || '').toLowerCase();
       if ((article.source && article.source.toLowerCase().includes('reddit')) && (sub === 'r/travel' || sub === 'r/digitalnomad')) {
         const articleText = `${article.title || ''} ${article.content || ''} ${article.selftext || ''} ${article.source_text || ''}`.toLowerCase();
         const titleLower = (article.title || '').toLowerCase();
-        // GARDE GÉO: Rejeter les destinations non-asiatiques même en mode relâché
-        if (nonAsiaDestinations.some(dest => titleLower.includes(dest))) {
+        // Helper: word-boundary match pour éviter faux positifs
+        const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const matchesWord = (text, word) => new RegExp(`\\b${escRe(word)}\\b`, 'i').test(text);
+        // GARDE GÉO: Rejeter les destinations non-asiatiques dans le TITRE
+        if (nonAsiaDestinations.some(dest => matchesWord(titleLower, dest))) {
           console.log(`   🚫 RELAXED_FILTER: rejeté (TITRE contient destination non-asiatique): ${article.title}`);
+            return false;
+          }
+        // GARDE GÉO BODY: Rejeter si le body mentionne des destinations non-asiatiques SANS mentionner de destinations asiatiques
+        const asiaKeywords = ['japan', 'japon', 'tokyo', 'osaka', 'kyoto', 'thailand', 'thaïlande', 'bangkok', 'vietnam', 'hanoi', 'saigon', 'indonesia', 'indonésie', 'bali', 'malaysia', 'malaisie', 'philippines', 'manila', 'cebu', 'cambodia', 'cambodge', 'laos', 'myanmar', 'singapore', 'singapour', 'korea', 'corée', 'seoul', 'taiwan', 'taïwan', 'india', 'inde', 'nepal', 'népal', 'sri lanka', 'asia', 'asie', 'south east asia', 'southeast asia'];
+        const bodyHasNonAsia = nonAsiaDestinations.some(dest => matchesWord(articleText, dest));
+        const bodyHasAsia = asiaKeywords.some(kw => matchesWord(articleText, kw));
+        if (bodyHasNonAsia && !bodyHasAsia) {
+          console.log(`   🚫 RELAXED_FILTER: rejeté (BODY contient destinations non-asiatiques sans mention d'Asie): ${article.title}`);
           return false;
         }
-        const travelKeywords = ['travel', 'voyage', 'trip', 'journey', 'nomad', 'nomade', 'destination', 'visit', 'visiter', 'flight', 'vol', 'hotel', 'hôtel', 'backpack', 'backpacking', 'solo travel', 'voyage solo', 'digital nomad', 'nomade numérique'];
-        const metaKeywords = ['subreddit changes', 'modifications du subreddit', 'rules', 'règles', 'flair', 'moderation', 'modération', 'survey', 'sondage', 'meta'];
+            const travelKeywords = ['travel', 'voyage', 'trip', 'journey', 'nomad', 'nomade', 'destination', 'visit', 'visiter', 'flight', 'vol', 'hotel', 'hôtel', 'backpack', 'backpacking', 'solo travel', 'voyage solo', 'digital nomad', 'nomade numérique'];
+            const metaKeywords = ['subreddit changes', 'modifications du subreddit', 'rules', 'règles', 'flair', 'moderation', 'modération', 'survey', 'sondage', 'meta'];
         if (travelKeywords.some(keyword => articleText.includes(keyword)) && !metaKeywords.some(keyword => articleText.includes(keyword))) {
-          console.log(`   ℹ️ RELAXED_FILTER: autorisation Reddit ${article.subreddit} avec mots-clés voyage`);
-          return true;
-        }
-      }
-      return false;
-    });
+              console.log(`   ℹ️ RELAXED_FILTER: autorisation Reddit ${article.subreddit} avec mots-clés voyage`);
+              return true;
+            }
+          }
+          return false;
+        });
   }
 
   // Générer et publier un article stratégique amélioré
@@ -230,7 +266,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         console.log('🧪 DRY_RUN: crawler WordPress bloqué');
         // Les liens internes sont gérés par seo-optimizer.js via data/internal-links.json
         console.log('🧪 DRY_RUN: liens internes via seo-optimizer.js');
-      } else {
+        } else {
       try {
         // D'ABORD : Crawler WordPress pour avoir la DB à jour
         const { WordPressArticlesCrawler } = await import('./wordpress-articles-crawler.js');
@@ -309,6 +345,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       if (!selectedArticle && allBatches.length > 0) {
         const sources = allBatches.flat();
         console.log(`\n⚠️ NO_ARTICLE_AFTER_FILTERING: ${sources.length} sources scrapées, aucun candidat valide`);
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'enhanced-ultra-generator.js:RELAXED_FILTER_ENTRY',message:'Entering relaxed filter (strict returned 0)',data:{sourcesCount:sources.length},timestamp:Date.now(),hypothesisId:'H-FILTER-RELAXED'})}).catch(()=>{});
+        // #endregion
         const relaxedSources = this.applyRelaxedFilter(sources);
         if (relaxedSources.length > 0) {
           console.log(`   ✅ ${relaxedSources.length} article(s) accepté(s) avec filtre relâché`);
@@ -1385,7 +1424,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       'austria','autriche','vienna','vienne','prague','poland','pologne','hungary','hongrie','budapest',
       'croatia','croatie','uk','england','angleterre','london','londres',
       // Amériques
-      'america','usa','united states','états-unis','brazil','brésil','mexico','mexique','canada','colombia','colombie','peru','pérou','argentina','argentine',
+      'america','usa','united states','états-unis','brazil','brésil','mexico','mexique','canada','quebec','québec','colombia','colombie','peru','pérou','argentina','argentine',
+      'cuba','cancun','cancún','dominican','dominicaine','jamaica','jamaïque','haiti','haïti','puerto rico','panama','honduras','guatemala','nicaragua','el salvador','belize','ecuador','équateur',
       // Afrique & Afrique du Nord
       'egypt','égypte','egypte','cairo','le caire','giza','gizeh','alexandria','alexandrie','luxor','louxor','aswan','assouan',
       'morocco','maroc','marrakech','casablanca','tunisia','tunisie','algeria','algérie','africa','afrique',
@@ -1398,15 +1438,24 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       'australia','australie','sydney','melbourne','new zealand','nouvelle-zélande'
     ];
     
-    // VÉRIFICATION CRITIQUE DU TITRE - Rejet immédiat si destination non-asiatique dans le titre
+    // VÉRIFICATION CRITIQUE DU TITRE - Rejet si destination non-asiatique dans le titre
+    // EXCEPTION: Si le titre contient AUSSI une destination asiatique, ne pas rejeter
+    // (ex: "Vol Londres-Osaka" → Londres est le départ, Osaka la destination → OK)
     const titleLower = (title || '').toLowerCase();
+    const escapeRegExp2 = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const titleAsiaKeywords = ['japan', 'japon', 'tokyo', 'osaka', 'kyoto', 'thailand', 'thaïlande', 'bangkok', 'vietnam', 'hanoi', 'saigon', 'indonesia', 'indonésie', 'bali', 'malaysia', 'malaisie', 'philippines', 'manila', 'cebu', 'cambodia', 'cambodge', 'laos', 'myanmar', 'singapore', 'singapour', 'korea', 'corée', 'seoul', 'taiwan', 'taïwan', 'india', 'inde', 'nepal', 'népal', 'sri lanka', 'asia', 'asie', 'phuket', 'chiang mai', 'ho chi minh', 'da nang', 'hoi an', 'ubud', 'kuala lumpur', 'penang', 'phnom penh', 'siem reap', 'hong kong', 'shanghai', 'beijing', 'pékin'];
+    const titleHasAsia = titleAsiaKeywords.some(kw => new RegExp(`\\b${escapeRegExp2(kw)}\\b`, 'i').test(titleLower));
     for (const dest of finalNonAsiaDestinations) {
-      if (titleLower.includes(dest)) {
+      if (new RegExp(`\\b${escapeRegExp2(dest)}\\b`, 'i').test(titleLower)) {
+        if (titleHasAsia) {
+          console.log(`   ⚠️ validateNonAsiaContent: Titre contient "${dest}" mais aussi une destination asiatique → non bloquant`);
+          continue; // Ne pas rejeter, le titre mentionne aussi l'Asie
+        }
         return { hits: [{ term: dest, excerpt: `TITRE: "${title}" contient "${dest}"` }] };
       }
     }
 
-    // Contextes qui rendent la mention acceptable (comparaison, alternative, retour, chronologie passée)
+    // Contextes qui rendent la mention acceptable (comparaison, alternative, retour, chronologie passée, résidence/origine)
     const acceptableContextPatterns = [
       /alternative\s+(en|à|vers|pour)\s+/i,
       /retour\s+(en|à|vers|de)\s+/i,
@@ -1442,7 +1491,42 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       /quand\s+(je|il|elle|on)\s+(reviendra|retournera)/i,
       // Expressions anglaises équivalentes
       /(returning|return|considering returning|considers returning)\s+(to|in|to work in)/i,
-      /(begin|begins|began)\s+to\s+consider\s+returning/i
+      /(begin|begins|began)\s+to\s+consider\s+returning/i,
+      // Résidence / Origine (le voyageur VIENT de ce pays, ce n'est PAS sa destination)
+      /viv(ons|ez|ent|ais|ait|aient|re)\s+(en|à|au|aux|dans)\s+/i,
+      /habit(ons|ez|ent|ais|ait|aient|er|e)\s+(en|à|au|aux|dans)\s+/i,
+      /résid(ons|ez|ent|ais|ait|aient|er|e)\s+(en|à|au|aux|dans)\s+/i,
+      /(basé|basée|basés|basées|installé|installée|installés|installées)\s+(en|à|au|aux|dans)\s+/i,
+      /(vien[st]|venons|venez|viennent)\s+(de|du|des|d[''])\s+/i,
+      /(live|lives|living|lived|based)\s+in\s+/i,
+      /(from|come\s+from|coming\s+from)\s+/i,
+      /nous\s+(sommes|étions)\s+(en|à|au|aux|de|du)\s+/i,
+      /je\s+(suis|étais)\s+(en|à|au|aux|de|du)\s+/i,
+      // Voyages passés (le voyageur mentionne où il est allé AVANT, pas sa destination actuelle)
+      /auparavant/i,
+      /all[ée]s?\s+(en|à|au|aux|qu[''])/i,
+      /(déjà|jamais)\s+(visité|été|allé|voyagé|vu)/i,
+      /(avions|avait|avaient|avons)\s+(visité|été|voyagé)\s+(en|à|au|aux)/i,
+      /n['']étions.*all[ée]s?\s+qu/i,
+      /(only|ever)\s+(been|visited|traveled)\s+(to|in)/i,
+      // Routes de vol / itinéraires (ORIGIN-DESTINATION, "depuis", "vol ... vers")
+      /vol\s+\S+-\S+/i,
+      /flight\s+\S+-\S+/i,
+      /(depuis|departing|depart)\s+/i,
+      /\S+-osaka/i,
+      /\S+-tokyo/i,
+      /\S+-bangkok/i,
+      /\S+-hanoi/i,
+      /\S+-bali/i,
+      // Contexte réglementaire / légal (pas une destination, mais une loi/norme)
+      /réglementation\s+/i,
+      /regulation\s+/i,
+      /\beu\s+\d+/i,
+      /\buk\s+\d+/i,
+      /conform[ée]ment\s+/i,
+      /loi\s+/i,
+      /law\s+/i,
+      /directive\s+/i
     ];
 
     // match word-boundary (évite des faux positifs bêtes)
@@ -1454,20 +1538,32 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const m = editorialText.match(re);
       if (m) {
         const idx = editorialText.search(re);
-        const start = Math.max(0, idx - 80);
-        const end = Math.min(editorialText.length, idx + 80);
+        const start = Math.max(0, idx - 120);
+        const end = Math.min(editorialText.length, idx + 120);
         const context = editorialText.slice(start, end).replace(/\s+/g, ' ');
         
         // Vérifier si le contexte est acceptable
-        const isAcceptableContext = acceptableContextPatterns.some(pattern => pattern.test(context));
+        const matchedPattern = acceptableContextPatterns.find(pattern => pattern.test(context));
+        const isAcceptableContext = !!matchedPattern;
         
-        if (!isAcceptableContext) {
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'enhanced-ultra-generator.js:validateNonAsiaContent',message:'Non-Asia term check',data:{term,isAcceptable:isAcceptableContext,matchedPattern:matchedPattern?.toString()||'none',contextExcerpt:context.substring(0,120)},timestamp:Date.now(),hypothesisId:'H-GEO-FP'})}).catch(()=>{});
+        // #endregion
+        
+        // FALLBACK: Si le contexte contient aussi une destination asiatique, c'est acceptable
+        // (itinéraire de vol, comparaison origine/destination, etc.)
+        const contextAsiaKeywords = ['japan', 'japon', 'tokyo', 'osaka', 'kyoto', 'thailand', 'thaïlande', 'bangkok', 'vietnam', 'hanoi', 'saigon', 'indonesia', 'indonésie', 'bali', 'malaysia', 'malaisie', 'philippines', 'cambodia', 'cambodge', 'laos', 'myanmar', 'singapore', 'singapour', 'korea', 'corée', 'seoul', 'taiwan', 'india', 'inde', 'nepal', 'sri lanka', 'asia', 'asie', 'phuket', 'chiang mai', 'ubud', 'kuala lumpur', 'phnom penh', 'hong kong', 'shanghai', 'beijing', 'pékin'];
+        const contextHasAsia = contextAsiaKeywords.some(kw => new RegExp(`\\b${escapeRegExp(kw)}\\b`, 'i').test(context));
+        const finalAcceptable = isAcceptableContext || contextHasAsia;
+
+        if (!finalAcceptable) {
           hits.push({
             term,
             excerpt: context
           });
         } else {
-          console.log(`   ⚠️ Mention "${term}" ignorée (contexte acceptable)`);
+          const reason = isAcceptableContext ? `pattern: ${matchedPattern?.toString()}` : `contexte contient aussi destination asiatique`;
+          console.log(`   ⚠️ Mention "${term}" ignorée (${reason})`);
         }
       }
     }
@@ -1635,7 +1731,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         }
       }
     }
-
+    
     // PHASE 2: Extraire tous les autres textes entre balises (y compris dans les <p>)
     const textPattern = />([^<]+)</g;
     const regularTexts = [];

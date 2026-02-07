@@ -10,6 +10,7 @@ import { getOpenAIClient, isOpenAIAvailable } from './openai-client.js';
 import { RealStatsScraper } from './real-stats-scraper.js';
 import { REAL_TRAVELPAYOUTS_WIDGETS } from './travelpayouts-real-widgets-database.js';
 import { NomadPartnersLinkGenerator } from './nomad-partners-links.js';
+import { generateArticleCTAs, renderCTALink } from './travelpayouts-api-client.js';
 
 // FIX B: Import cheerio avec fallback si échec (chargement dynamique dans la fonction)
 
@@ -436,16 +437,23 @@ Réponds UNIQUEMENT en JSON valide.`;
       }
       
     // VÉRIFICATION 2: Scoring familial avec triggers forts/faibles
+    // EXCEPTION: Les widgets FLIGHTS et ESIM sont TOUJOURS pertinents (les familles voyagent en avion et ont besoin d'internet)
+    // Le blocage familial ne s'applique qu'aux widgets potentiellement inappropriés pour enfants
+    const FAMILY_EXEMPT_WIDGETS = ['flights', 'esim', 'connectivity', 'hotels'];
     const familyValidation = this.validateFamilyContext(lowerContent, widget.slot);
     debug.familyTriggersStrong = familyValidation.triggersStrong;
     debug.familyTriggersWeak = familyValidation.triggersWeak;
     debug.familyScore = familyValidation.score;
     debug.familyDecision = familyValidation.decision;
     debug.familyReason = familyValidation.reason;
+    debug.familyExempt = FAMILY_EXEMPT_WIDGETS.includes(widget.slot);
     
-    if (!familyValidation.allowed) {
+    if (!familyValidation.allowed && !FAMILY_EXEMPT_WIDGETS.includes(widget.slot)) {
       reasons.push(`Contexte familial bloquant: ${familyValidation.reason}`);
       return { ok: false, reasons, debug };
+    }
+    if (!familyValidation.allowed && FAMILY_EXEMPT_WIDGETS.includes(widget.slot)) {
+      reasons.push(`Contexte familial détecté mais widget ${widget.slot} exempté (pertinent pour familles)`);
     }
     
     return { ok: true, reasons, debug };
@@ -840,6 +848,23 @@ ${widgetScript}
       enhancedContent = await this.insertAfterContent(enhancedContent, widgetBlock);
     }
 
+    // Générer des liens affiliés API complémentaires (CTA textuels)
+    try {
+      const geoDefaults = placementContext?.geo_defaults || widgetPlan?.geo_defaults || null;
+      if (geoDefaults) {
+        const articleId = widgetPlan?.tracking?.articleId || 'unknown';
+        const ctas = await generateArticleCTAs(geoDefaults, articleId);
+        
+        // Stocker les CTAs dans pipelineContext pour usage ultérieur
+        if (pipelineContext) {
+          pipelineContext.affiliate_ctas = ctas;
+        }
+        console.log(`✅ Liens affiliés API générés: ${Object.values(ctas).filter(c => c.ok).length} liens`);
+      }
+    } catch (error) {
+      console.log(`⚠️ Génération liens API échouée (non bloquant): ${error.message}`);
+    }
+
     // Compter les widgets réellement insérés
     const widgetsReplaced = usedContexts.size;
     
@@ -894,11 +919,11 @@ ${widgetScript}
    */
   findExistingContext(content, slot) {
     const patterns = {
-      flights: /Selon notre analyse de milliers de vols|D'après notre expérience avec des centaines de nomades|Les prix des vols varient/gi,
-      hotels: /Les nomades digitaux dépensent|D'après notre analyse de 1000\+ réservations/gi,
+      flights: /Selon notre analyse de milliers de vols|D'après notre expérience avec des centaines de nomades|Les prix des vols varient|\[fv_widget[^\]]*type=["']?flights/gi,
+      hotels: /Les nomades digitaux dépensent|D'après notre analyse de 1000\+ réservations|\[fv_widget[^\]]*type=["']?hotels/gi,
       transport: /Les transports locaux représentent/gi,
-      esim: /Les données mobiles coûtent/gi,
-      insurance: /Les assurances voyage/gi
+      esim: /Les données mobiles coûtent|\[fv_widget[^\]]*type=["']?esim/gi,
+      insurance: /Les assurances voyage|\[fv_widget[^\]]*type=["']?insurance/gi
     };
 
     const pattern = patterns[slot];
@@ -912,80 +937,61 @@ ${widgetScript}
    * FIX: Ajout du paramètre pipelineContext pour éviter TDZ
    */
   getWidgetScript(slot, widgetPlan, pipelineContext = null) {
-    console.log(`🔍 Récupération du script pour ${slot}...`);
+    console.log(`🔍 Récupération du shortcode pour ${slot}...`);
     
-    // Utiliser les vrais scripts Travelpayouts
+    // Vérifier que le slot existe dans le registry
     const widgetCategory = REAL_TRAVELPAYOUTS_WIDGETS[slot];
     if (!widgetCategory) {
       console.log(`⚠️ Pas de catégorie widget disponible pour ${slot}`);
       return null;
     }
     
-    // Pour les vols, utiliser searchForm avec les destinations dynamiques depuis widgetPlan
+    // Pour les vols, on a besoin de geo_defaults
     if (slot === 'flights') {
-      // RÈGLE ABSOLUE: Pas de geo = pas de widget flights
       if (!widgetPlan?.geo_defaults) {
         console.log('⚠️ Geo insuffisante → widget FLIGHTS désactivé');
         return null;
       }
       
-      const provider = Object.keys(widgetCategory)[0]; // kiwi, aviasales, etc.
-      const searchFormWidget = widgetCategory[provider]['searchForm'];
-      
-      if (searchFormWidget && searchFormWidget.script) {
-        // Récupérer les destinations depuis widgetPlan.geo_defaults
-        console.log(`🔍 DEBUG getWidgetScript: widgetPlan.geo_defaults:`, widgetPlan?.geo_defaults);
-        
-        // RÈGLE ABSOLUE: Pas de destination OU pas d'origin = pas de widget
-        if (!widgetPlan.geo_defaults.destination || !widgetPlan.geo_defaults.origin) {
-          console.log('⚠️ Origin ou Destination manquante dans geo_defaults → widget FLIGHTS désactivé');
-          console.log(`   origin: ${widgetPlan.geo_defaults.origin || 'MANQUANT'}`);
-          console.log(`   destination: ${widgetPlan.geo_defaults.destination || 'MANQUANT'}`);
-          return null;
-        }
-        
-        const origin = widgetPlan.geo_defaults.origin;
-        const destination = widgetPlan.geo_defaults.destination;
-        
-        console.log(`🔍 DEBUG getWidgetScript: origin=${origin}, destination=${destination}`);
-        
-        // Générer le script avec les bonnes destinations
-        let dynamicScript = searchFormWidget.script;
-        
-        // Remplacer les destinations par défaut par les destinations réelles
-        dynamicScript = dynamicScript.replace(/default_origin=PAR/g, `default_origin=${origin}`);
-        dynamicScript = dynamicScript.replace(/default_destination=BKK/g, `default_destination=${destination}`);
-        dynamicScript = dynamicScript.replace(/from_name=paris_fr/g, `from_name=${origin.toLowerCase()}_fr`);
-        dynamicScript = dynamicScript.replace(/to_name=bangkok_th/g, `to_name=${destination.toLowerCase()}_th`);
-        
-        console.log(`✅ Script trouvé pour ${slot}: ${searchFormWidget.brand} - ${searchFormWidget.type}`);
-        console.log(`   📍 Destinations: ${origin} → ${destination}`);
-        return dynamicScript;
+      if (!widgetPlan.geo_defaults.destination || !widgetPlan.geo_defaults.origin) {
+        console.log('⚠️ Origin ou Destination manquante dans geo_defaults → widget FLIGHTS désactivé');
+        console.log(`   origin: ${widgetPlan.geo_defaults.origin || 'MANQUANT'}`);
+        console.log(`   destination: ${widgetPlan.geo_defaults.destination || 'MANQUANT'}`);
+        return null;
       }
+      
+      const origin = widgetPlan.geo_defaults.origin;
+      const destination = widgetPlan.geo_defaults.destination;
+      
+      console.log(`✅ Shortcode FLIGHTS généré: origin=${origin}, destination=${destination}`);
+      return `[fv_widget type="flights" origin="${origin}" destination="${destination}"]`;
     }
     
-    // Pour les autres slots (hotels, esim, connectivity, etc.), prendre le premier widget disponible
-    const provider = Object.keys(widgetCategory)[0]; // kiwi, aviasales, airalo, etc.
-    if (!provider) {
-      console.log(`⚠️ Pas de provider disponible pour ${slot}`);
+    // Pour les autres slots, mapper vers le bon shortcode type
+    const shortcodeType = this.getShortcodeType(slot);
+    if (!shortcodeType) {
+      console.log(`⚠️ Pas de mapping shortcode pour ${slot}`);
       return null;
     }
     
-    const widgetType = Object.keys(widgetCategory[provider])[0]; // popularRoutes, searchForm, esimSearch, etc.
-    if (!widgetType) {
-      console.log(`⚠️ Pas de widget type disponible pour ${slot}.${provider}`);
-      return null;
-    }
-    
-    const widgetData = widgetCategory[provider][widgetType];
-    
-    if (!widgetData || !widgetData.script) {
-      console.log(`⚠️ Pas de script disponible pour ${slot}.${provider}.${widgetType}`);
-      return null;
-    }
-    
-    console.log(`✅ Script trouvé pour ${slot}: ${widgetData.brand} - ${widgetData.type}`);
-    return widgetData.script;
+    console.log(`✅ Shortcode ${shortcodeType} généré pour ${slot}`);
+    return `[fv_widget type="${shortcodeType}"]`;
+  }
+
+  /**
+   * Mappe un slot vers le type de shortcode WordPress correspondant
+   * @param {string} slot - Nom du slot (esim, insurance, connectivity, etc.)
+   * @returns {string|null} Type de shortcode ou null
+   */
+  getShortcodeType(slot) {
+    const mapping = {
+      esim: 'esim',
+      connectivity: 'esim',
+      insurance: 'insurance',
+      flights: 'flights',
+      hotels: 'flights' // Fallback: pas de widget hotels, on redirige vers flights
+    };
+    return mapping[slot] || null;
   }
 
   /**

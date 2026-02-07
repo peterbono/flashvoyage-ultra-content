@@ -330,10 +330,39 @@ function extractLocations(text) {
   const results = [];
   const lowerText = text.toLowerCase();
   
+  // Mots anglais/français courants qui sont aussi des noms de villes dans OpenFlights
+  // Ces mots causent des faux positifs massifs (ex: "somewhere nice" → Nice, "reading a book" → Reading)
+  const AMBIGUOUS_LOCATION_WORDS = new Set([
+    'nice', 'reading', 'mobile', 'normal', 'bath', 'deal', 'split', 'bury',
+    'orange', 'victoria', 'hope', 'spring', 'temple', 'douglas', 'troy',
+    'jackson', 'athens', 'columbia', 'liberty', 'florence', 'phoenix',
+    'augusta', 'delta', 'alpha', 'lima', 'sterling', 'union', 'summit',
+    'canton', 'oxford', 'cambridge', 'bristol', 'dover', 'marathon',
+    'long', 'best', 'much', 'most', 'great', 'little', 'old', 'new'
+  ]);
+  
   // Heuristique 1: BDD OpenFlights complète (5600+ villes/pays)
   const allLocations = getAllLocationNames();
   
   for (const location of allLocations) {
+    // Filtrer les mots ambigus (sauf s'ils apparaissent avec majuscule ET préposition géo)
+    if (AMBIGUOUS_LOCATION_WORDS.has(location)) {
+      // Pour les mots ambigus, exiger une majuscule + contexte géographique
+      const geoContextRegex = new RegExp(`\\b(in|to|from|at|near|around|à|au|en|vers|de|du)\\s+${location.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
+      let match;
+      while ((match = geoContextRegex.exec(text)) !== null) {
+        // Vérifier que le mot après la préposition est capitalisé (= nom propre)
+        const locStartIdx = match.index + match[0].indexOf(location.charAt(0).toUpperCase() >= 'A' ? location : location);
+        const locInText = text.substring(match.index + match[1].length + 1, match.index + match[0].length);
+        if (locInText.charAt(0) === locInText.charAt(0).toUpperCase() && locInText.charAt(0) !== locInText.charAt(0).toLowerCase()) {
+          const value = locInText;
+          const quote = extractSentenceQuote(text, match.index, 120);
+          results.push({ value, quote, offset: match.index, source: 'post' });
+        }
+      }
+      continue;
+    }
+    
     const regex = new RegExp(`\\b${location.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
     let match;
     while ((match = regex.exec(text)) !== null) {
