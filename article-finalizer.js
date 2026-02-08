@@ -233,11 +233,16 @@ class ArticleFinalizer {
 
     let finalContent = article.content;
     const enhancements = { ...article.enhancements };
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:RAW_CONTENT',message:'Raw content before any widget placement',data:{hasOutilUtile:finalContent.includes('Outil utile'),hasAffiliateModule:finalContent.includes('affiliate-module'),hasCoworking:finalContent.includes('coworking'),contentFirst500:finalContent.substring(0,500)},timestamp:Date.now(),hypothesisId:'H3'})}).catch(()=>{});
+    // #endregion
     // 1. Remplacer les placeholders de widgets
     // PATCH 1: Passer pipelineContext
     const widgetResult = await this.replaceWidgetPlaceholders(finalContent, analysis, pipelineContext);
     finalContent = widgetResult.content;
-    
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:AFTER_SYSTEM1',message:'Content after Travelpayouts widget placement (System 1)',data:{hasOutilUtile:finalContent.includes('Outil utile'),hasCoworking:finalContent.includes('coworking'),hasAffiliate:finalContent.includes('affiliate-module'),contentFirst500:finalContent.substring(0,500)},timestamp:Date.now(),hypothesisId:'H3-H4'})}).catch(()=>{});
+    // #endregion
     // DEBUG: Vérifier les widgets dans finalContent APRÈS assignation
     const widgetsAfterAssign = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets dans finalContent APRÈS widgetResult.content: count=${widgetsAfterAssign.count}, types=[${widgetsAfterAssign.types.join(', ')}], widgetResult.count=${widgetResult.count}`);    enhancements.widgetsReplaced = widgetResult.count;
@@ -431,6 +436,9 @@ class ArticleFinalizer {
     }
     
     // PHASE 5.C: Injecter les modules d'affiliation si activé (APRÈS balanceParagraphs pour placement correct)
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:PHASE5C:ENTRY',message:'PHASE 5.C entry - content state before affiliate injection',data:{enableAffiliateInjector:ENABLE_AFFILIATE_INJECTOR,hasPlacements:!!pipelineContext?.affiliate_plan?.placements?.length,placementCount:pipelineContext?.affiliate_plan?.placements?.length||0,placementIds:(pipelineContext?.affiliate_plan?.placements||[]).map(p=>p.id+':'+p.anchor),h2Count:(finalContent.match(/<h2[^>]*>/gi)||[]).length,pCount:(finalContent.match(/<p[^>]*>/gi)||[]).length,hasArticlesConnexes:finalContent.includes('Articles connexes'),contentFirst300:finalContent.substring(0,300),hasOutil:finalContent.includes('Outil utile')},timestamp:Date.now(),hypothesisId:'H1-H2-H3-H5'})}).catch(()=>{});
+    // #endregion
     if (ENABLE_AFFILIATE_INJECTOR && pipelineContext?.affiliate_plan?.placements?.length > 0) {
       try {
         const { renderAffiliateModule } = await import('./affiliate-module-renderer.js');
@@ -4483,10 +4491,22 @@ class ArticleFinalizer {
       // Traiter seulement les parties texte (indices pairs)
       if (textParts[i]) {
         // Remplacer les espaces multiples par un seul espace
-        // Les placeholders d'entités HTML sont protégés et ne seront pas affectés
         textParts[i] = textParts[i].replace(/[ \t]+/g, ' ');
-        // Supprimer les espaces en début et fin de ligne (sauf dans les balises)
-        textParts[i] = textParts[i].replace(/^[ \t]+|[ \t]+$/gm, '');
+        // Supprimer les espaces en début et fin de ligne UNIQUEMENT si la partie adjacente
+        // est une balise block (pas inline comme <a>, <strong>, <em>, etc.)
+        // Cela préserve l'espace entre "sur " et "<a href=...>"
+        const prevPart = i > 0 ? textParts[i - 1] : '';
+        const nextPart = i + 1 < textParts.length ? textParts[i + 1] : '';
+        const inlineTags = /^<\/?(a|strong|em|b|i|span|abbr|cite|code|mark|small|sub|sup|time)\b/i;
+        
+        // Ne supprimer l'espace de début que si le tag précédent est un tag block (pas inline)
+        if (!inlineTags.test(prevPart)) {
+          textParts[i] = textParts[i].replace(/^[ \t]+/gm, '');
+        }
+        // Ne supprimer l'espace de fin que si le tag suivant est un tag block (pas inline)
+        if (!inlineTags.test(nextPart)) {
+          textParts[i] = textParts[i].replace(/[ \t]+$/gm, '');
+        }
       }
     }
     cleanedHtml = textParts.join('');
@@ -6175,34 +6195,55 @@ class ArticleFinalizer {
 
     const { placementId, placementIndex = 0, totalPlacements = 1 } = options;
 
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectAffiliateModule:ENTRY',message:'Affiliate module injection attempt',data:{placementId,anchor,placementIndex,totalPlacements,htmlLength:html.length,h2Count:(html.match(/<h2[^>]*>/gi)||[]).length,hasArticlesConnexes:html.includes('Articles connexes')},timestamp:Date.now(),hypothesisId:'H1-H2'})}).catch(()=>{});
+    // #endregion
+
     if (placementId) {
       let smartIndex = this.findSmartInsertPosition(html, placementId);
-      // Pour le premier module (placementIndex === 0), ne pas placer trop tôt : seuil narratif minimal amélioré (après 3e H2 ou 500 caractères)
-      if (smartIndex != null && placementIndex === 0) {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectAffiliateModule:SMART_INDEX',message:'Smart index result',data:{placementId,smartIndex,smartIndexIsNull:smartIndex==null},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
+      // #endregion
+      // Garde narrative : ne pas placer trop tôt (après 3e H2 ou 500 caractères, et au moins 3 paragraphes avant)
+      // S'applique à TOUS les modules, pas seulement le premier
+      if (smartIndex != null) {
         const h2List = Array.from(html.matchAll(/<h2[^>]*>.*?<\/h2>/gi));
-        const minNarrativeIndex = h2List.length >= 3
-          ? h2List[2].index + h2List[2][0].length
-          : 500; // Augmenté de 300 à 500 caractères
+        // Pour le 1er module : après le 3e H2 ; pour les suivants : après le (2+placementIndex)e H2
+        const minH2Index = Math.min(2 + placementIndex, h2List.length - 1);
+        const minNarrativeIndex = h2List.length >= (minH2Index + 1)
+          ? h2List[minH2Index].index + h2List[minH2Index][0].length
+          : 500; // Fallback minimal
         
         // Vérification supplémentaire : compter les paragraphes avant la position smart
         const beforeSmart = html.substring(0, smartIndex);
         const paragraphMatches = beforeSmart.matchAll(/<p[^>]*>.*?<\/p>/gi);
         const paragraphCount = Array.from(paragraphMatches).length;
         
-        if (smartIndex < minNarrativeIndex || paragraphCount < 3) {
+        const minParagraphs = 3 + placementIndex; // 3 pour le 1er, 4 pour le 2e, etc.
+        
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectAffiliateModule:GUARD',message:'Narrative guard evaluation',data:{placementId,placementIndex,smartIndex,h2Count:h2List.length,minNarrativeIndex,paragraphCount,minParagraphs,willReject:smartIndex<minNarrativeIndex||paragraphCount<minParagraphs},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
+        // #endregion
+        if (smartIndex < minNarrativeIndex || paragraphCount < minParagraphs) {
           smartIndex = null;
-          console.log(`   📍 Widget ${placementId} (1er module): position smart trop tôt (avant seuil narratif: H2=${h2List.length} >= 3? ${h2List.length >= 3}, chars=${smartIndex} < ${minNarrativeIndex}, paragraphes=${paragraphCount} < 3), fallback after_context`);
+          console.log(`   📍 Widget ${placementId} (module #${placementIndex}): position smart trop tôt (seuil narratif: H2=${h2List.length}, minNarrativeIdx=${minNarrativeIndex}, paragraphes=${paragraphCount} < ${minParagraphs}), fallback anchor`);
         }
       }
       if (smartIndex != null) {
         const out = html.slice(0, smartIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(smartIndex);
         if (out !== html) {
           console.log(`   📍 Widget ${placementId} placé en position contextuelle (mot-clé trouvé)`);
+          // #region agent log
+          fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectAffiliateModule:PLACED_SMART',message:'Widget placed at smart position',data:{placementId,smartIndex,contentAroundInsertion:html.substring(Math.max(0,smartIndex-100),smartIndex+100)},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
+          // #endregion
           return out;
         }
       }
     }
 
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectAffiliateModule:ANCHOR_FALLBACK',message:'Using anchor-based placement (smart rejected)',data:{placementId,anchor,hasArticlesConnexes:html.includes('Articles connexes')},timestamp:Date.now(),hypothesisId:'H2'})}).catch(()=>{});
+    // #endregion
     switch (anchor) {
       case 'before_related':
         // Juste avant "Articles connexes"
@@ -6259,6 +6300,9 @@ class ArticleFinalizer {
         const allH2Context = html.matchAll(/<h2[^>]*>.*?<\/h2>/gi);
         const h2ListContext = Array.from(allH2Context);
         const h2TargetIndex = Math.min(1 + placementIndex, h2ListContext.length - 1);
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectAffiliateModule:AFTER_CONTEXT',message:'after_context anchor placement',data:{placementId,h2Count:h2ListContext.length,h2TargetIndex,placementIndex,h2Titles:h2ListContext.slice(0,5).map(h=>h[0].substring(0,50))},timestamp:Date.now(),hypothesisId:'H5'})}).catch(()=>{});
+        // #endregion
         if (h2ListContext.length >= 2 && h2TargetIndex >= 0) {
           const targetH2 = h2ListContext[h2TargetIndex];
           const insertIndex = targetH2.index + targetH2[0].length;
@@ -7151,10 +7195,12 @@ class ArticleFinalizer {
     const expectedCode = lookupIATA(finalDestLower);
     
     // Extraire destinations des widgets (chercher codes aéroports dans les scripts/widgets)
+    // Regex améliorée : capture uniquement le code IATA APRÈS le séparateur (= ou :)
     const widgetMatches = html.match(/(?:origin|destination|from|to|departure|arrival)\s*[=:]\s*["']?([A-Z]{3})["']?/gi) || [];
     const detectedCodes = widgetMatches.map(m => {
-      const codeMatch = m.match(/([A-Z]{3})/i);
-      return codeMatch ? codeMatch[1].toUpperCase() : null;
+      // Extraire seulement la valeur après = ou :
+      const valueMatch = m.match(/[=:]\s*["']?([A-Z]{3})["']?$/i);
+      return valueMatch ? valueMatch[1].toUpperCase() : null;
     }).filter(Boolean);
     
     // Vérifier cohérence
@@ -7395,7 +7441,8 @@ class ArticleFinalizer {
       const textMatch = link.match(/>([^<]+)</i);
       
       if (hrefMatch && textMatch) {
-        const href = hrefMatch[1];
+        // Normaliser l'URL (supprimer les espaces parasites insérés par normalizeSpacing)
+        const href = hrefMatch[1].replace(/\s+/g, '');
         const text = textMatch[1].toLowerCase();
         
         // Vérifier cohérence
@@ -7698,10 +7745,13 @@ class ArticleFinalizer {
       return html;
     }
 
-    // Vérifier qu'au moins un CTA a une partner_url
-    const hasAnyCta = Object.values(ctas).some(c => c?.partner_url);
+    // Vérifier qu'au moins un CTA a une partner_url OU une direct_url (fallback)
+    const hasAnyCta = Object.values(ctas).some(c => c?.partner_url || c?.direct_url);
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectPartnerBrandLinks:CTA_STATUS',message:'CTA status check',data:{hasAnyCta,ctaKeys:Object.keys(ctas),ctaDetails:Object.fromEntries(Object.entries(ctas).map(([k,v])=>[k,{hasPartnerUrl:!!v?.partner_url,hasDirectUrl:!!v?.direct_url,ok:v?.ok}])),brandCount:html.match(/Kiwi\.com|Booking\.com|Booking|Airalo/gi)?.length||0},timestamp:Date.now(),hypothesisId:'H1-BRAND-LINKS'})}).catch(()=>{});
+    // #endregion
     if (!hasAnyCta) {
-      console.log('🔗 PARTNER_BRAND_LINKS: Aucun partner_url disponible (API token manquant ?) — skip');
+      console.log('🔗 PARTNER_BRAND_LINKS: Aucun partner_url ni direct_url disponible — skip');
       return html;
     }
 
@@ -7715,6 +7765,7 @@ class ArticleFinalizer {
       { domains: ['aviasales.com'],           ctaKey: 'flights' },
       { domains: ['visitorcoverage.com'],     ctaKey: 'insurance' },
       { domains: ['kiwi.com'],               ctaKey: 'flights' },
+      { domains: ['booking.com'],            ctaKey: 'hotels' },
       // assurance-voyage.com → notre partenaire assurance (le LLM invente parfois ce domaine)
       { domains: ['assurance-voyage.com'],    ctaKey: 'insurance' },
     ];
@@ -7724,7 +7775,8 @@ class ArticleFinalizer {
 
     for (const mapping of DOMAIN_TO_CTA) {
       const cta = ctas[mapping.ctaKey];
-      if (!cta?.partner_url) continue;
+      const targetUrl = cta?.partner_url || cta?.direct_url;
+      if (!targetUrl) continue;
 
       for (const domain of mapping.domains) {
         // Chercher tous les href contenant ce domaine
@@ -7737,10 +7789,11 @@ class ArticleFinalizer {
         for (const match of matches) {
           const originalHref = match[0];
           const quote = match[1].slice(-1); // ' or "
-          const newHref = `href=${quote}${cta.partner_url}${quote}`;
+          const newHref = `href=${quote}${targetUrl}${quote}`;
           modifiedHtml = modifiedHtml.replace(originalHref, newHref);
           replacedHrefCount++;
-          console.log(`   🔗 HREF_REPLACED: ${domain} → ${mapping.ctaKey} affiliate link`);
+          const linkType = cta?.partner_url ? 'affiliate' : 'direct (fallback)';
+          console.log(`   🔗 HREF_REPLACED: ${domain} → ${mapping.ctaKey} ${linkType} link`);
         }
       }
     }
@@ -7749,9 +7802,10 @@ class ArticleFinalizer {
     if (replacedHrefCount > 0) {
       for (const mapping of DOMAIN_TO_CTA) {
         const cta = ctas[mapping.ctaKey];
-        if (!cta?.partner_url) continue;
+        const targetUrl = cta?.partner_url || cta?.direct_url;
+        if (!targetUrl) continue;
 
-        const escapedUrl = cta.partner_url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const escapedUrl = targetUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         // Trouver les <a> avec cette URL qui n'ont pas encore rel="nofollow sponsored"
         const linkRegex = new RegExp(`(<a\\s[^>]*href=["']${escapedUrl}["'][^>]*)(>)`, 'gi');
         modifiedHtml = modifiedHtml.replace(linkRegex, (fullMatch, beforeClose, close) => {
@@ -7769,13 +7823,15 @@ class ArticleFinalizer {
       { ctaKey: 'flights',   variants: ['Aviasales.com', 'Aviasales'] },
       { ctaKey: 'insurance', variants: ['VisitorCoverage'] },
       { ctaKey: 'flights',   variants: ['Kiwi.com'] },
+      { ctaKey: 'hotels',    variants: ['Booking.com', 'Booking'] },
     ];
 
     let wrappedCount = 0;
 
     for (const brand of BRAND_MAP) {
       const cta = ctas[brand.ctaKey];
-      if (!cta?.partner_url) continue;
+      const targetUrl = cta?.partner_url || cta?.direct_url;
+      if (!targetUrl) continue;
 
       for (const variant of brand.variants) {
         const escapedVariant = variant.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -7793,10 +7849,11 @@ class ArticleFinalizer {
 
           if (!isInsideLink && !isInHref) {
             const originalText = modifiedHtml.substring(pos, pos + variant.length);
-            const affiliateLink = `<a href="${cta.partner_url}" target="_blank" rel="nofollow sponsored">${originalText}</a>`;
+            const affiliateLink = `<a href="${targetUrl}" target="_blank" rel="nofollow sponsored">${originalText}</a>`;
             modifiedHtml = modifiedHtml.substring(0, pos) + affiliateLink + modifiedHtml.substring(pos + variant.length);
             wrappedCount++;
-            console.log(`   🔗 BRAND_WRAPPED: "${originalText}" → ${brand.ctaKey} affiliate link`);
+            const linkType = cta?.partner_url ? 'affiliate' : 'direct (fallback)';
+            console.log(`   🔗 BRAND_WRAPPED: "${originalText}" → ${brand.ctaKey} ${linkType} link`);
             break; // Une seule occurrence par variant
           }
         }
@@ -7804,6 +7861,9 @@ class ArticleFinalizer {
     }
 
     const totalCount = replacedHrefCount + wrappedCount;
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectPartnerBrandLinks:RESULT',message:'Brand links injection result',data:{replacedHrefCount,wrappedCount,totalCount},timestamp:Date.now(),hypothesisId:'H1-BRAND-LINKS'})}).catch(()=>{});
+    // #endregion
     if (totalCount > 0) {
       console.log(`✅ PARTNER_BRAND_LINKS: ${totalCount} lien(s) affilié(s) (${replacedHrefCount} href remplacés, ${wrappedCount} textes wrappés)`);
     } else {

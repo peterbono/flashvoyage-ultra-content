@@ -40,7 +40,7 @@ export async function convertToAffiliateLinks(links) {
     }, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${TRAVELPAYOUTS_API_TOKEN}`
+        'X-Access-Token': TRAVELPAYOUTS_API_TOKEN
       },
       timeout: 10000
     });
@@ -95,6 +95,17 @@ export function buildInsuranceUrl() {
 }
 
 /**
+ * Build a Booking.com search URL for a given city/country.
+ * @param {string} city - City name (e.g. "Tokyo")
+ * @param {string} country - Country name (e.g. "japan")
+ * @returns {string}
+ */
+export function buildBookingUrl(city = '', country = '') {
+  const query = city || country || 'Asia';
+  return `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(query)}`;
+}
+
+/**
  * Build an Insubuy insurance URL for USA visitors.
  * @returns {string}
  */
@@ -140,10 +151,13 @@ export async function generateArticleCTAs(geoDefaults, articleId = 'unknown') {
   const destination = geoDefaults?.destination || 'BKK';
   const country = geoDefaults?.country || 'thailand';
 
+  const city = geoDefaults?.city || '';
+
   const linksToConvert = [
     { url: buildFlightSearchUrl(origin, destination), sub_id: `${articleId}-flights` },
     { url: buildAiraloUrl(COUNTRY_SLUG_MAP[country.toLowerCase()] || country), sub_id: `${articleId}-esim` },
-    { url: buildInsuranceUrl(), sub_id: `${articleId}-insurance` }
+    { url: buildInsuranceUrl(), sub_id: `${articleId}-insurance` },
+    { url: buildBookingUrl(city, country), sub_id: `${articleId}-hotels` }
   ];
 
   const results = await convertToAffiliateLinks(linksToConvert);
@@ -166,6 +180,12 @@ export async function generateArticleCTAs(geoDefaults, articleId = 'unknown') {
       direct_url: linksToConvert[2].url,
       label: 'Comparer les assurances voyage',
       ok: results[2]?.code === 'success'
+    },
+    hotels: {
+      partner_url: results[3]?.partner_url || '',
+      direct_url: linksToConvert[3].url,
+      label: 'Réserver un hébergement',
+      ok: results[3]?.code === 'success'
     }
   };
 

@@ -666,7 +666,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const editorialText = this.extractEditorialText(finalizedArticle);
       
       // Détecter les mentions non-asiatiques
-      const validationResult = this.validateNonAsiaContent(editorialText, finalizedArticle.title);
+      const validationResult = this.validateNonAsiaContent(editorialText, finalizedArticle.title, finalizedArticle.final_destination);
       
       if (validationResult.hits.length > 0) {
         console.error('❌ ERREUR CRITIQUE: Destination non-asiatique détectée dans le contenu final !');
@@ -1415,7 +1415,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
    * Valide que le contenu ne contient pas de mentions non-asiatiques
    * Ignore les mentions dans un contexte de comparaison/alternative/retour
    */
-  validateNonAsiaContent(editorialText, title) {
+  validateNonAsiaContent(editorialText, title, finalDestination = null) {
     const finalNonAsiaDestinations = [
       // Europe
       'portugal','spain','espagne','lisbon','lisbonne','barcelona','barcelone','madrid','porto',
@@ -1445,11 +1445,14 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     const escapeRegExp2 = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const titleAsiaKeywords = ['japan', 'japon', 'tokyo', 'osaka', 'kyoto', 'thailand', 'thaïlande', 'bangkok', 'vietnam', 'hanoi', 'saigon', 'indonesia', 'indonésie', 'bali', 'malaysia', 'malaisie', 'philippines', 'manila', 'cebu', 'cambodia', 'cambodge', 'laos', 'myanmar', 'singapore', 'singapour', 'korea', 'corée', 'seoul', 'taiwan', 'taïwan', 'india', 'inde', 'nepal', 'népal', 'sri lanka', 'asia', 'asie', 'phuket', 'chiang mai', 'ho chi minh', 'da nang', 'hoi an', 'ubud', 'kuala lumpur', 'penang', 'phnom penh', 'siem reap', 'hong kong', 'shanghai', 'beijing', 'pékin'];
     const titleHasAsia = titleAsiaKeywords.some(kw => new RegExp(`\\b${escapeRegExp2(kw)}\\b`, 'i').test(titleLower));
+    // Vérifier aussi si finalDestination est asiatique (le titre peut ne pas la mentionner)
+    const asiaCountries = ['japan','thailand','vietnam','indonesia','malaysia','philippines','cambodia','laos','myanmar','singapore','korea','south korea','taiwan','india','nepal','sri lanka','china','hong kong','maldives'];
+    const finalDestIsAsia = finalDestination && asiaCountries.some(c => finalDestination.toLowerCase().includes(c));
     for (const dest of finalNonAsiaDestinations) {
       if (new RegExp(`\\b${escapeRegExp2(dest)}\\b`, 'i').test(titleLower)) {
-        if (titleHasAsia) {
-          console.log(`   ⚠️ validateNonAsiaContent: Titre contient "${dest}" mais aussi une destination asiatique → non bloquant`);
-          continue; // Ne pas rejeter, le titre mentionne aussi l'Asie
+        if (titleHasAsia || finalDestIsAsia) {
+          console.log(`   ⚠️ validateNonAsiaContent: Titre contient "${dest}" mais final_destination="${finalDestination}" est asiatique → non bloquant`);
+          continue;
         }
         return { hits: [{ term: dest, excerpt: `TITRE: "${title}" contient "${dest}"` }] };
       }
@@ -1532,6 +1535,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     // match word-boundary (évite des faux positifs bêtes)
     const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
+    console.log(`   📋 validateNonAsiaContent: finalDestination="${finalDestination}", finalDestIsAsia=${finalDestIsAsia}`);
     const hits = [];
     for (const term of finalNonAsiaDestinations) {
       const re = new RegExp(`\\b${escapeRegExp(term)}\\b`, 'i');
@@ -1554,7 +1558,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         // (itinéraire de vol, comparaison origine/destination, etc.)
         const contextAsiaKeywords = ['japan', 'japon', 'tokyo', 'osaka', 'kyoto', 'thailand', 'thaïlande', 'bangkok', 'vietnam', 'hanoi', 'saigon', 'indonesia', 'indonésie', 'bali', 'malaysia', 'malaisie', 'philippines', 'cambodia', 'cambodge', 'laos', 'myanmar', 'singapore', 'singapour', 'korea', 'corée', 'seoul', 'taiwan', 'india', 'inde', 'nepal', 'sri lanka', 'asia', 'asie', 'phuket', 'chiang mai', 'ubud', 'kuala lumpur', 'phnom penh', 'hong kong', 'shanghai', 'beijing', 'pékin'];
         const contextHasAsia = contextAsiaKeywords.some(kw => new RegExp(`\\b${escapeRegExp(kw)}\\b`, 'i').test(context));
-        const finalAcceptable = isAcceptableContext || contextHasAsia;
+        const finalAcceptable = isAcceptableContext || contextHasAsia || finalDestIsAsia;
 
         if (!finalAcceptable) {
           hits.push({
