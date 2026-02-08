@@ -468,6 +468,9 @@ class ArticleFinalizer {
     // PHASE 6.1.1: Remplacement placeholders liens d'affiliation (correction audit)
     finalContent = this.replaceAffiliatePlaceholders(finalContent, pipelineContext, qaReport);
     
+    // PHASE 6.1.2: Injection liens affiliés sur les mentions de partenaires (rule-based)
+    finalContent = this.injectPartnerBrandLinks(finalContent, pipelineContext);
+    
     // DEBUG: Vérifier les widgets APRÈS runQAReport
     const widgetsAfterQA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS runQAReport: count=${widgetsAfterQA.count}, types=[${widgetsAfterQA.types.join(', ')}]`);
@@ -7643,6 +7646,143 @@ class ArticleFinalizer {
       });
     }
     
+    return modifiedHtml;
+  }
+
+  /**
+   * PHASE 6.1.2: Injection de liens affiliés sur les mentions de marques partenaires.
+   * Rule-based : scanne le HTML pour les noms de marques partenaires Travelpayouts
+   * et wrappe la PREMIÈRE occurrence (non déjà linkée) avec le lien affilié API.
+   *
+   * Marques supportées :
+   *   - Airalo / Airalo.com      → esim CTA
+   *   - Aviasales / Aviasales.com → flights CTA
+   *   - VisitorCoverage           → insurance CTA
+   *   - Kiwi.com                  → flights CTA (Kiwi exclu de l'API, redirige vers Aviasales)
+   *
+   * @param {string} html - HTML de l'article
+   * @param {Object} pipelineContext - Contexte du pipeline (contient affiliate_ctas)
+   * @returns {string} HTML avec liens affiliés injectés
+   */
+  injectPartnerBrandLinks(html, pipelineContext) {
+    const ctas = pipelineContext?.affiliate_ctas;
+    if (!ctas) {
+      console.log('🔗 PARTNER_BRAND_LINKS: Aucun affiliate_ctas dans pipelineContext — skip');
+      return html;
+    }
+
+    // Vérifier qu'au moins un CTA a une partner_url
+    const hasAnyCta = Object.values(ctas).some(c => c?.partner_url);
+    if (!hasAnyCta) {
+      console.log('🔗 PARTNER_BRAND_LINKS: Aucun partner_url disponible (API token manquant ?) — skip');
+      return html;
+    }
+
+    // =========================================================================
+    // PHASE A : Remplacer les href DIRECTS existants par les URLs affiliées
+    // Le LLM génère souvent <a href="https://www.airalo.com/">...</a>
+    // On remplace ces URLs directes par les URLs affiliées trackées
+    // =========================================================================
+    const DOMAIN_TO_CTA = [
+      { domains: ['airalo.com'],              ctaKey: 'esim' },
+      { domains: ['aviasales.com'],           ctaKey: 'flights' },
+      { domains: ['visitorcoverage.com'],     ctaKey: 'insurance' },
+      { domains: ['kiwi.com'],               ctaKey: 'flights' },
+      // assurance-voyage.com → notre partenaire assurance (le LLM invente parfois ce domaine)
+      { domains: ['assurance-voyage.com'],    ctaKey: 'insurance' },
+    ];
+
+    let modifiedHtml = html;
+    let replacedHrefCount = 0;
+
+    for (const mapping of DOMAIN_TO_CTA) {
+      const cta = ctas[mapping.ctaKey];
+      if (!cta?.partner_url) continue;
+
+      for (const domain of mapping.domains) {
+        // Chercher tous les href contenant ce domaine
+        const hrefRegex = new RegExp(
+          `(href=["'])https?:\\/\\/(?:www\\.)?${domain.replace(/\./g, '\\.')}[^"']*?(["'])`,
+          'gi'
+        );
+
+        const matches = [...modifiedHtml.matchAll(hrefRegex)];
+        for (const match of matches) {
+          const originalHref = match[0];
+          const quote = match[1].slice(-1); // ' or "
+          const newHref = `href=${quote}${cta.partner_url}${quote}`;
+          modifiedHtml = modifiedHtml.replace(originalHref, newHref);
+          replacedHrefCount++;
+          console.log(`   🔗 HREF_REPLACED: ${domain} → ${mapping.ctaKey} affiliate link`);
+        }
+      }
+    }
+
+    // Ajouter rel="nofollow sponsored" aux liens qu'on vient de modifier (s'ils ne l'ont pas déjà)
+    if (replacedHrefCount > 0) {
+      for (const mapping of DOMAIN_TO_CTA) {
+        const cta = ctas[mapping.ctaKey];
+        if (!cta?.partner_url) continue;
+
+        const escapedUrl = cta.partner_url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        // Trouver les <a> avec cette URL qui n'ont pas encore rel="nofollow sponsored"
+        const linkRegex = new RegExp(`(<a\\s[^>]*href=["']${escapedUrl}["'][^>]*)(>)`, 'gi');
+        modifiedHtml = modifiedHtml.replace(linkRegex, (fullMatch, beforeClose, close) => {
+          if (/rel=/.test(beforeClose)) return fullMatch; // déjà un rel
+          return `${beforeClose} rel="nofollow sponsored" target="_blank"${close}`;
+        });
+      }
+    }
+
+    // =========================================================================
+    // PHASE B : Wrapper les mentions texte brut (non déjà linkées)
+    // =========================================================================
+    const BRAND_MAP = [
+      { ctaKey: 'esim',      variants: ['Airalo.com', 'Airalo'] },
+      { ctaKey: 'flights',   variants: ['Aviasales.com', 'Aviasales'] },
+      { ctaKey: 'insurance', variants: ['VisitorCoverage'] },
+      { ctaKey: 'flights',   variants: ['Kiwi.com'] },
+    ];
+
+    let wrappedCount = 0;
+
+    for (const brand of BRAND_MAP) {
+      const cta = ctas[brand.ctaKey];
+      if (!cta?.partner_url) continue;
+
+      for (const variant of brand.variants) {
+        const escapedVariant = variant.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const simpleRegex = new RegExp(escapedVariant, 'gi');
+        const allMatches = [...modifiedHtml.matchAll(simpleRegex)];
+
+        for (const match of allMatches) {
+          const pos = match.index;
+          const beforeChunk = modifiedHtml.substring(Math.max(0, pos - 200), pos);
+
+          const openTags = (beforeChunk.match(/<a\b/gi) || []).length;
+          const closeTags = (beforeChunk.match(/<\/a>/gi) || []).length;
+          const isInsideLink = openTags > closeTags;
+          const isInHref = /href=["'][^"']*$/.test(beforeChunk);
+
+          if (!isInsideLink && !isInHref) {
+            const originalText = modifiedHtml.substring(pos, pos + variant.length);
+            const affiliateLink = `<a href="${cta.partner_url}" target="_blank" rel="nofollow sponsored">${originalText}</a>`;
+            modifiedHtml = modifiedHtml.substring(0, pos) + affiliateLink + modifiedHtml.substring(pos + variant.length);
+            wrappedCount++;
+            console.log(`   🔗 BRAND_WRAPPED: "${originalText}" → ${brand.ctaKey} affiliate link`);
+            break; // Une seule occurrence par variant
+          }
+        }
+      }
+    }
+
+    const totalCount = replacedHrefCount + wrappedCount;
+    if (totalCount > 0) {
+      console.log(`✅ PARTNER_BRAND_LINKS: ${totalCount} lien(s) affilié(s) (${replacedHrefCount} href remplacés, ${wrappedCount} textes wrappés)`);
+    } else {
+      console.log('🔗 PARTNER_BRAND_LINKS: Aucune mention de marque partenaire trouvée à linker');
+    }
+
     return modifiedHtml;
   }
 

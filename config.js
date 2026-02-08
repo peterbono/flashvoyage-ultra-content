@@ -40,3 +40,4 @@ export const ENABLE_ANTI_HALLUCINATION_BLOCKING = parseBool(process.env.ENABLE_A
 export const ENABLE_PIPELINE_BLOCKING = parseBool(process.env.ENABLE_PIPELINE_BLOCKING ?? '1'); // Activé par défaut
 export const ENABLE_FINALIZER_BLOCKING = parseBool(process.env.ENABLE_FINALIZER_BLOCKING ?? '1'); // Activé par défaut
 export const ENABLE_ARTICLE_VALIDATION = parseBool(process.env.ENABLE_ARTICLE_VALIDATION ?? '1'); // Activé par défaut
+export const ENABLE_MARKETING_PASS = parseBool(process.env.ENABLE_MARKETING_PASS ?? '1'); // Activé par défaut

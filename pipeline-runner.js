@@ -32,7 +32,8 @@ import SerpCompetitiveEnhancer from './serp-competitive-enhancer.js';
 import ArticleFinalizer from './article-finalizer.js';
 import { runAntiHallucinationGuard } from './src/anti-hallucination/anti-hallucination-guard.js';
 import PipelineReport from './pipeline-report.js';
-import { DRY_RUN, FORCE_OFFLINE, parseBool } from './config.js';
+import { applyContentMarketingPass } from './content-marketing-pass.js';
+import { DRY_RUN, FORCE_OFFLINE, ENABLE_MARKETING_PASS, parseBool } from './config.js';
 
 class PipelineRunner {
   constructor() {
@@ -112,7 +113,9 @@ class PipelineRunner {
       const genPreview = generated.content?.substring(0,800) || 'null';
       const hasContexteH2 = /<h2[^>]*>Contexte<\/h2>/i.test(generated.content || '');
       const hasMomentCritiqueH2 = /<h2[^>]*>Moment critique<\/h2>/i.test(generated.content || '');
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'pipeline-runner.js:runPipeline:AFTER_GENERATOR',message:'Content after Generator (Passe 1)',data:{contentLength:generated.content?.length||0,hasContexteH2,hasMomentCritiqueH2,preview:genPreview},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-PASSE1'})}).catch(()=>{});
+      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'pipeline-runner.js:runPipeline:AFTER_GENERATOR',message:'Content after Generator (Passe 1)',data:{contentLength:generated.content?.length||0,hasContexteH2,hasMomentCritiqueH2,preview:genPreview},timestamp:Date.now(),hypothesisId:'H-PASSE1'})}).catch(()=>{});
+      // #endregion
+
       // #endregion
 
       // ÉTAPE 4.5: Amélioration LLM (Passe 2 - auto-critique et correction)
@@ -287,6 +290,45 @@ class PipelineRunner {
       // DEBUG: Vérifier les widgets APRÈS endStep
       const widgetsAfterEndStep = this.finalizer.detectRenderedWidgets(finalized.content);
       console.log(`🔍 DEBUG pipeline-runner: Widgets dans finalized.content APRÈS endStep: count=${widgetsAfterEndStep.count}, types=[${widgetsAfterEndStep.types.join(', ')}]`);
+
+      // ÉTAPE 7.5: Content Marketing Expert Pass
+      // Exécutée AVANT le check de blocage pour que l'article soit toujours amélioré
+      if (ENABLE_MARKETING_PASS) {
+        console.log('\n📋 ÉTAPE 7.5: Content Marketing Expert Pass (content-marketing-pass)');
+        pipelineReport.startStep('content-marketing-pass');
+        try {
+          const marketingResult = await applyContentMarketingPass(finalized.content, pipelineContext);
+          if (marketingResult.improved) {
+            finalized.content = marketingResult.html;
+            console.log(`   ✅ Content Marketing Pass: article amélioré (${marketingResult.stats?.lengthDiffPercent || 0}% taille)`);
+          } else {
+            console.log('   ℹ️ Content Marketing Pass: contenu original conservé');
+          }
+          pipelineReport.endStep('content-marketing-pass', marketingResult, { status: marketingResult.improved ? 'pass' : 'skip' });
+        } catch (error) {
+          console.warn(`   ⚠️ Content Marketing Pass: ${error.message} — continuation sans amélioration`);
+          pipelineReport.endStep('content-marketing-pass', { improved: false, error: error.message }, { status: 'skip' });
+        }
+      } else {
+        console.log('\n📋 ÉTAPE 7.5: Content Marketing Expert Pass — DÉSACTIVÉ (ENABLE_MARKETING_PASS=false)');
+      }
+
+      // NETTOYAGE FINAL: Supprimer les points orphelins que WordPress wpautop() 
+      // transformerait en <p>.</p>. Ces dots existent entre des balises HTML sans être
+      // wrappés dans des <p>, donc nos regex <p>.</p> ne les détectent pas.
+      const beforeOrphanClean = finalized.content.length;
+      // Pattern 1: point seul entre deux balises HTML (ex: </p>\n.\n<h2>)
+      finalized.content = finalized.content.replace(/(<\/[a-z][a-z0-9]*>)\s*\.\s*(<[a-z])/gi, '$1\n$2');
+      // Pattern 2: point seul en début de contenu ou après un saut de ligne
+      finalized.content = finalized.content.replace(/\n\s*\.\s*\n/g, '\n');
+      // Pattern 3: point seul suivi d'un saut de ligne en fin
+      finalized.content = finalized.content.replace(/\n\s*\.\s*$/g, '');
+      // Pattern 4: <p>.</p> classique (filet de sécurité)
+      finalized.content = finalized.content.replace(/<p[^>]*>\s*\.\s*<\/p>/gi, '');
+      const orphanDotsRemoved = beforeOrphanClean - finalized.content.length;
+      if (orphanDotsRemoved > 0) {
+        console.log(`   🧹 Nettoyage final: ${orphanDotsRemoved} caractère(s) de points orphelins supprimés`);
+      }
 
       // Vérifier si le finalizer a bloqué
       if (finalized.qaReport?.blocking === true) {

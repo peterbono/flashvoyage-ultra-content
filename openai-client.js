@@ -87,10 +87,10 @@ export async function createChatCompletion(config, retries = 3) {
   
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
-      const response = await client.chat.completions.create({
-        ...config,
-        timeout: timeout
-      });
+      const response = await client.chat.completions.create(
+        config,
+        { timeout: timeout }
+      );
       
       return response;
     } catch (error) {
