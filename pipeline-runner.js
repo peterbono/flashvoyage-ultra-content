@@ -96,10 +96,6 @@ class PipelineRunner {
       }
       pipelineReport.endStep('story-compiler', story, { status: 'pass' });
 
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'pipeline-runner.js:runPipeline:AFTER_STORY_COMPILER',message:'Story data quality',data:{hasContext:!!story?.story?.context?.summary,hasCentralEvent:!!story?.story?.central_event?.summary,hasCriticalMoment:!!story?.story?.critical_moment?.summary,hasResolution:!!story?.story?.resolution?.summary,contextPreview:story?.story?.context?.summary?.substring(0,300)||'null',centralEventPreview:story?.story?.central_event?.summary?.substring(0,300)||'null',evidenceCount:story?.evidence?.source_snippets?.length||0},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-STORY'})}).catch(()=>{});
-      // #endregion
-
       // ÉTAPE 4: Generator
       console.log('\n📋 ÉTAPE 4: Generator (intelligent-content-analyzer-optimized)');
       pipelineReport.startStep('generator');
@@ -108,15 +104,6 @@ class PipelineRunner {
         throw new Error('Generator a échoué');
       }
       pipelineReport.endStep('generator', generated, { status: 'pass' });
-
-      // #region agent log
-      const genPreview = generated.content?.substring(0,800) || 'null';
-      const hasContexteH2 = /<h2[^>]*>Contexte<\/h2>/i.test(generated.content || '');
-      const hasMomentCritiqueH2 = /<h2[^>]*>Moment critique<\/h2>/i.test(generated.content || '');
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'pipeline-runner.js:runPipeline:AFTER_GENERATOR',message:'Content after Generator (Passe 1)',data:{contentLength:generated.content?.length||0,hasContexteH2,hasMomentCritiqueH2,preview:genPreview},timestamp:Date.now(),hypothesisId:'H-PASSE1'})}).catch(()=>{});
-      // #endregion
-
-      // #endregion
 
       // ÉTAPE 4.5: Amélioration LLM (Passe 2 - auto-critique et correction)
       console.log('\n📋 ÉTAPE 4.5: Amélioration LLM (passe 2 - auto-critique)');
@@ -185,10 +172,6 @@ class PipelineRunner {
         console.log(`⚠️ PIPELINE: Aucune destination asiatique trouvée dans [${candidateDestinations.join(', ')}], fallback: ${finalDestination}`);
       }
       
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'pipeline-runner.js:DEST_RESOLUTION',message:'Destination resolution with Asian filter',data:{candidateDestinations,finalDestination,wasFirstCandidate:candidateDestinations[0]},timestamp:Date.now(),hypothesisId:'H-DEST-NICE'})}).catch(()=>{});
-      // #endregion
-      
       // Construire geo correctement (ne pas mélanger country et city)
       const geo = input.geo || {};
       
@@ -204,9 +187,6 @@ class PipelineRunner {
         if (!geo.country) {
           geo.country = finalDestLower;
         }
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'pipeline-runner.js:GEO_RESOLVE',message:'OpenFlights geo resolution',data:{finalDestination,geoCity:geo.city,geoCountry:geo.country},timestamp:Date.now(),hypothesisId:'A'})}).catch(()=>{});
-        // #endregion
       }
       
       // Construire geo_defaults correctement avec buildGeoDefaults
@@ -330,6 +310,16 @@ class PipelineRunner {
         console.log(`   🧹 Nettoyage final: ${orphanDotsRemoved} caractère(s) de points orphelins supprimés`);
       }
 
+      // NETTOYAGE FINAL 2: Normaliser "e SIM" / "e-SIM" / "E SIM" → "eSIM"
+      const esimBefore = finalized.content;
+      finalized.content = finalized.content.replace(/\be[\s-]SIM\b/g, 'eSIM');
+      finalized.content = finalized.content.replace(/\bE[\s-]SIM\b/g, 'eSIM');
+      finalized.content = finalized.content.replace(/\be[\s-]sim\b/gi, 'eSIM');
+      const esimFixes = esimBefore.length !== finalized.content.length;
+      if (esimFixes) {
+        console.log('   🧹 Nettoyage final: "e SIM" → "eSIM" normalisé');
+      }
+
       // Vérifier si le finalizer a bloqué
       if (finalized.qaReport?.blocking === true) {
         pipelineReport.report.blocking = true;
@@ -409,10 +399,6 @@ class PipelineRunner {
       // L'appel redondant ici détruisait des widgets (connectivity perdu à chaque run)
       // Supprimé pour protéger les widgets insérés par le finalizer
       let finalContent = finalized.content;
-      // #region agent log
-      const widgetsBeforeRemoveResidues = this.finalizer.detectRenderedWidgets(finalContent);
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'pipeline-runner.js:runPipeline:WIDGETS_FINAL_CHECK',message:'Widgets in finalContent (no more redundant removeOldStructureResidues)',data:{widgetsCount:widgetsBeforeRemoveResidues.count,widgetsTypes:widgetsBeforeRemoveResidues.types},timestamp:Date.now(),hypothesisId:'A-WIDGET-FIX'})}).catch(()=>{});
-      // #endregion
       
       const finalArticle = {
         title: generated.title || finalized.title,

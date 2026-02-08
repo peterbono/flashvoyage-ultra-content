@@ -3540,6 +3540,25 @@ class ArticleFinalizer {
       console.log(`   🧹 ${matches3.length} répétition(s) de mots isolés supprimée(s)`);
     }
     
+    // Pattern 4: Meta-commentaires d'affiliation qui fuient du prompt LLM
+    // Ex: "C'est précisément là que des produits d'affiliation bien choisis deviennent utiles"
+    const affiliateMetaPatterns = [
+      /[^.]*produits?\s+d['']affiliation\s+bien\s+choisis\s+deviennent\s+utiles[^.]*\./gi,
+      /[^.]*produits?\s+d['']affiliation[^.]*lecteur\s+se\s+sent\s+vuln[eé]rable[^.]*\./gi,
+      /[^.]*outils?\s+d['']affiliation\s+bien\s+choisis[^.]*\./gi,
+    ];
+    for (const pattern of affiliateMetaPatterns) {
+      const matches4 = cleanedHtml.match(pattern);
+      if (matches4) {
+        cleanedHtml = cleanedHtml.replace(pattern, '');
+        removedCount += matches4.length;
+        console.log(`   🧹 ${matches4.length} meta-commentaire(s) d'affiliation supprimé(s)`);
+      }
+    }
+
+    // Pattern 5: Paragraphes vides résultant des suppressions
+    cleanedHtml = cleanedHtml.replace(/<p[^>]*>\s*<\/p>/gi, '');
+
     if (removedCount > 0) {
       console.log(`   ✅ ${removedCount} texte(s) parasite(s) supprimé(s)`);
     } else {
@@ -4476,27 +4495,22 @@ class ArticleFinalizer {
     // Détecter </p><p> sans espace/saut de ligne
     cleanedHtml = cleanedHtml.replace(/(<\/p>)(<p[^>]*>)/g, '$1\n\n$2');
     
-    // 6. Normaliser les espaces autour des balises HTML (sauf dans le contenu)
-    cleanedHtml = cleanedHtml.replace(/>\s+</g, '><');
-    cleanedHtml = cleanedHtml.replace(/>\s+/g, '>');
-    cleanedHtml = cleanedHtml.replace(/\s+</g, '<');
+    // 6. Normaliser les espaces entre les balises BLOCK uniquement
+    // CORRECTION: Ne PAS supprimer les espaces autour des balises INLINE (a, strong, em, span, etc.)
+    // car cela cause "surVoyager" (pas d'espace) et "prot éger" (accents cassés)
+    const blockTags = 'p|div|h[1-6]|section|article|header|footer|nav|ul|ol|li|blockquote|table|tr|td|th|thead|tbody|figure|figcaption|hr|br';
+    // Supprimer les espaces/sauts de ligne entre deux balises block adjacentes
+    cleanedHtml = cleanedHtml.replace(new RegExp(`(<\\/(?:${blockTags})>)\\s+(<(?:${blockTags})[\\s>])`, 'gi'), '$1\n$2');
+    // Supprimer les espaces après une balise block ouvrante (avant le contenu)
+    cleanedHtml = cleanedHtml.replace(new RegExp(`(<(?:${blockTags})(?:\\s[^>]*)?>)\\s+`, 'gi'), '$1');
+    // Supprimer les espaces avant une balise block fermante (après le contenu)
+    cleanedHtml = cleanedHtml.replace(new RegExp(`\\s+(<\\/(?:${blockTags})>)`, 'gi'), '$1');
     
-    // 6.5. CORRECTION CRITIQUE: Réinsérer les espaces après les balises de formatage fermantes
-    // Les balises </strong>, </em>, </b>, </i>, </span>, etc. doivent avoir un espace après si suivies d'une lettre
-    // Cela corrige les cas comme "</strong>Offrant" → "</strong> Offrant"
-    cleanedHtml = cleanedHtml.replace(/(<\/strong>)([a-zA-ZÀ-ÿ])/gi, '$1 $2');
-    cleanedHtml = cleanedHtml.replace(/(<\/em>)([a-zA-ZÀ-ÿ])/gi, '$1 $2');
-    cleanedHtml = cleanedHtml.replace(/(<\/b>)([a-zA-ZÀ-ÿ])/gi, '$1 $2');
-    cleanedHtml = cleanedHtml.replace(/(<\/i>)([a-zA-ZÀ-ÿ])/gi, '$1 $2');
-    cleanedHtml = cleanedHtml.replace(/(<\/span>)([a-zA-ZÀ-ÿ])/gi, '$1 $2');
-    cleanedHtml = cleanedHtml.replace(/(<\/h[1-6]>)([a-zA-ZÀ-ÿ])/gi, '$1 $2');
-    
-    // 6.6. CORRECTION CRITIQUE: Réinsérer les espaces après les balises auto-fermantes suivies d'une lettre
+    // 6.5bis. Garantir un espace entre une balise inline fermante et le mot suivant
+    // SEULEMENT si ce n'est pas à l'intérieur d'un même mot (vérifier qu'il y avait un espace avant la balise ouvrante)
     // Ex: "<strong>Budget:</strong>Environ" → "<strong>Budget:</strong> Environ"
-    cleanedHtml = cleanedHtml.replace(/(:)(<\/strong>)([a-zA-ZÀ-ÿ])/gi, '$1$2 $3');
-    cleanedHtml = cleanedHtml.replace(/(:)(<\/em>)([a-zA-ZÀ-ÿ])/gi, '$1$2 $3');
-    cleanedHtml = cleanedHtml.replace(/(:)(<\/b>)([a-zA-ZÀ-ÿ])/gi, '$1$2 $3');
-    cleanedHtml = cleanedHtml.replace(/(:)(<\/i>)([a-zA-ZÀ-ÿ])/gi, '$1$2 $3');
+    // Mais PAS: "cons<em>é</em>quences" → ne pas ajouter d'espace
+    cleanedHtml = cleanedHtml.replace(/(:)(<\/(?:strong|em|b|i)>)([a-zA-ZÀ-ÿ])/gi, '$1$2 $3');
     
     // 7. Réinsérer les espaces nécessaires après les balises de fermeture de paragraphe
     cleanedHtml = cleanedHtml.replace(/(<\/p>)([a-zA-ZÀ-ÿ])/g, '$1 $2');
@@ -5707,6 +5721,9 @@ class ArticleFinalizer {
       // Construire le wrapper HTML
       let wrapperHtml = `<section data-fv-block="${wrapperDef.dataAttr}">\n  <h2>${wrapperDef.title}</h2>\n  <ul>\n`;
       
+      // Set pour dédupliquer les items dans cette section
+      const seenItems = new Set();
+      
       // Extraire les items et construire les <li>
       let items = [];
       if (Array.isArray(storyData)) {
@@ -5781,21 +5798,31 @@ class ArticleFinalizer {
           const isIsolatedPhrase = /^(not\s+anymore|plus\s+maintenant|well\s+said|bien\s+dit)[\?\!]?/i.test(trimmedText);
           
           // AMÉLIORATION: Pour "Questions ouvertes", vérifier que c'est une vraie question
-          // Rejeter les phrases qui ne sont pas des questions (pas de point d'interrogation, pas de mots interrogatifs)
           let isValidQuestion = true;
           if (wrapperDef.key === 'open-questions') {
-            const hasQuestionMark = trimmedText.includes('?');
-            const hasInterrogativeWords = /\b(comment|pourquoi|quand|où|qui|quoi|quel|quelle|quels|quelles|combien|est-ce|peut-on|doit-on|faut-il)\b/i.test(trimmedText);
-            const hasEnglishInterrogative = /\b(how|why|when|where|who|what|which|should|can|could|would|will)\b/i.test(trimmedText);
-            
-            // Si ce n'est pas une question claire, rejeter
-            if (!hasQuestionMark && !hasInterrogativeWords && !hasEnglishInterrogative) {
+            // Rejeter les questions qui sont juste "?" ou quasi-vides
+            const textWithoutPunctuation = trimmedText.replace(/[?\s!.]/g, '').trim();
+            if (textWithoutPunctuation.length < 5) {
               isValidQuestion = false;
-              console.log(`   ⚠️ Item ignoré (pas une vraie question): "${trimmedText.substring(0, 50)}..."`);
+              console.log(`   ⚠️ Item ignoré (question trop courte/vide): "${trimmedText}"`);
+            } else {
+              const hasQuestionMark = trimmedText.includes('?');
+              const hasInterrogativeWords = /\b(comment|pourquoi|quand|où|qui|quoi|quel|quelle|quels|quelles|combien|est-ce|peut-on|doit-on|faut-il)\b/i.test(trimmedText);
+              const hasEnglishInterrogative = /\b(how|why|when|where|who|what|which|should|can|could|would|will)\b/i.test(trimmedText);
+              
+              if (!hasQuestionMark && !hasInterrogativeWords && !hasEnglishInterrogative) {
+                isValidQuestion = false;
+                console.log(`   ⚠️ Item ignoré (pas une vraie question): "${trimmedText.substring(0, 50)}..."`);
+              }
             }
           }
           
-          if (realText.length >= 15 && !isIsolatedPhrase && isValidQuestion) {
+          // Dédupliquer par texte normalisé
+          const normalizedForDedup = trimmedText.toLowerCase().replace(/[^a-zà-ÿ0-9]/g, ' ').replace(/\s+/g, ' ').trim();
+          const isDuplicate = seenItems.has(normalizedForDedup);
+          
+          if (realText.length >= 15 && !isIsolatedPhrase && isValidQuestion && !isDuplicate) {
+            seenItems.add(normalizedForDedup);
             wrapperHtml += `    <li>${this.escapeHtml(trimmedText)}</li>\n`;
             totalTextLength += trimmedText.length;
           } else {

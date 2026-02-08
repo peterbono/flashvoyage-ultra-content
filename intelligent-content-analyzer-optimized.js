@@ -1362,7 +1362,7 @@ ${correctionBlock}
 - Peurs invisibles : une section ou sous-partie "Les peurs invisibles qui stoppent les voyages longs" (peur de rentrer fauché, syndrome "je n'en fais pas assez", peur de tomber malade), basée sur le témoignage. À intégrer dans ce_que_les_autres_ne_disent_pas ou limites_biais.
 
 📌 RÉALITÉ VS FANTASME ET AFFILIATION :
-- Section ou sous-partie "Réalité vs fantasme : 3 vérités que personne ne te dira" : 3 points numérotés, vérifiables et non inventés, puis une phrase du type "C'est précisément là que des produits d'affiliation bien choisis deviennent utiles — pas au tout début, mais à l'endroit où le lecteur se sent vulnérable : sécurité, réseau, assurance, logements souples." À placer dans ce_que_les_autres_ne_disent_pas ou avant/après les recommandations.
+- Section ou sous-partie "Réalité vs fantasme : 3 vérités que personne ne te dira" : 3 points numérotés, vérifiables et non inventés, puis une phrase de transition qui amène naturellement vers les outils pratiques (assurance, connectivité, vols) en s'ancrant dans le besoin du lecteur. ❌ INTERDIT : Ne JAMAIS écrire de phrases méta sur l'affiliation, les "produits d'affiliation" ou les "outils bien choisis" — le lecteur ne doit jamais percevoir la logique commerciale. À placer dans ce_que_les_autres_ne_disent_pas ou avant/après les recommandations.
 
 📌 VERDICT / CE QU'IL FAUT RETENIR :
 - Champ ce_qu_il_faut_retenir : ton réaliste, pas vendeur. OBLIGATOIRE : minimum 2 paragraphes substantiels (pas juste "Comparez les prix et réservez").

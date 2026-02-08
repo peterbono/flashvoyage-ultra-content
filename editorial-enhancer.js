@@ -265,20 +265,44 @@ ${citationsHtml}\n`;
       }
     }
 
-    if (questions.length === 0) {
-      console.log('   ⚠️ Aucune question trouvée pour la FAQ');
+    // Filtrer les questions nulles (rejetées par formatAsQuestion)
+    const validQuestions = questions.filter(q => q.question !== null && q.question !== undefined);
+    
+    if (validQuestions.length === 0) {
+      console.log('   ⚠️ Aucune question valide trouvée pour la FAQ');
+      return html;
+    }
+
+    // Dédupliquer les questions (par texte normalisé)
+    const seen = new Set();
+    const uniqueQuestions = validQuestions.filter(q => {
+      const normalized = q.question.toLowerCase().replace(/[^a-zà-ÿ0-9]/g, ' ').replace(/\s+/g, ' ').trim();
+      if (seen.has(normalized) || normalized.length < 10) return false;
+      seen.add(normalized);
+      return true;
+    });
+    
+    if (uniqueQuestions.length === 0) {
+      console.log('   ⚠️ Aucune question unique après déduplication');
       return html;
     }
 
     // Limiter à 5 questions max
-    const selectedQuestions = questions.slice(0, 5);
+    const selectedQuestions = uniqueQuestions.slice(0, 5);
 
-    // Construire la FAQ HTML
+    // Construire la FAQ HTML (avec déduplication des réponses)
+    const usedSources = new Set();
     const faqItems = selectedQuestions.map((q, index) => {
-      const answer = q.answer || this.generateAnswerFromContext(q.question, story, pattern);
+      const answer = q.answer || this.generateAnswerFromContext(q.question, story, pattern, usedSources);
+      if (!answer) return null; // Pas de réponse disponible → exclure
       return `    <h3>${this.escapeHtml(q.question)}</h3>
     <p>${this.escapeHtml(answer)}</p>`;
-    }).join('\n\n');
+    }).filter(Boolean).join('\n\n');
+    
+    if (!faqItems || faqItems.trim().length === 0) {
+      console.log('   ⚠️ FAQ: aucune question avec réponse valide');
+      return html;
+    }
 
     const faqSection = `\n\n<h2>Questions fréquentes</h2>
 ${faqItems}\n`;
@@ -418,18 +442,32 @@ ${faqItems}\n`;
   formatAsQuestion(text) {
     // Reformuler un texte en question
     text = text.trim();
+    
+    // Rejeter les textes vides ou trop courts
+    if (!text || text.length < 5) return null;
+    
+    // Rejeter les textes qui ne sont qu'un point d'interrogation
+    if (text === '?' || text === '? ?' || text.replace(/[?\s]/g, '').length < 3) return null;
+    
+    // Si c'est déjà une question bien formée
     if (text.endsWith('?')) {
       return text;
     }
-    // Ajouter "?" si c'est une question implicite
-    if (text.toLowerCase().startsWith('comment') || 
-        text.toLowerCase().startsWith('pourquoi') ||
-        text.toLowerCase().startsWith('quand') ||
-        text.toLowerCase().startsWith('où')) {
+    
+    // Ajouter "?" si c'est une question implicite (FR ou EN)
+    const lower = text.toLowerCase();
+    if (lower.startsWith('comment') || lower.startsWith('pourquoi') ||
+        lower.startsWith('quand') || lower.startsWith('où') ||
+        lower.startsWith('how') || lower.startsWith('why') ||
+        lower.startsWith('when') || lower.startsWith('where') ||
+        lower.startsWith('what') || lower.startsWith('should') ||
+        lower.startsWith('can') || lower.startsWith('is') ||
+        lower.startsWith('are') || lower.startsWith('do')) {
       return text + ' ?';
     }
-    // Sinon, reformuler en question
-    return `Qu'en est-il de ${text.toLowerCase()} ?`;
+    
+    // Sinon, reformuler en question — mais NE PAS utiliser "Qu'en est-il de" (trop générique)
+    return `${text} : quels sont les enjeux ?`;
   }
 
   extractImplicitQuestion(insightText, pattern) {
@@ -458,7 +496,7 @@ ${faqItems}\n`;
     return null;
   }
 
-  generateAnswerFromContext(question, story, pattern) {
+  generateAnswerFromContext(question, story, pattern, usedSources = new Set()) {
     // Générer une réponse basée sur le contexte existant
     // Chercher dans les sections de story
     const sources = [
@@ -467,15 +505,16 @@ ${faqItems}\n`;
       ...(story.community_insights || []).map(i => typeof i === 'string' ? i : (i.value || i.text || ''))
     ].filter(Boolean);
 
-    // Trouver la source la plus pertinente
+    // Trouver la source la plus pertinente (non encore utilisée)
     for (const source of sources) {
-      if (source && source.length > 50 && source.length < 300) {
+      if (source && source.length > 50 && source.length < 300 && !usedSources.has(source)) {
+        usedSources.add(source);
         return source;
       }
     }
 
-    // Fallback : réponse générique basée sur le thème
-    return `Cette question est abordée dans le témoignage. Pour plus de détails, consultez les sections ci-dessus.`;
+    // Fallback : ne pas retourner de réponse générique, mieux vaut exclure la question
+    return null;
   }
 
   extractKeyConcepts(story, pattern, extraction) {

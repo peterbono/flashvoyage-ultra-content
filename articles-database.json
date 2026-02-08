@@ -1,7 +1,64 @@
 {
-  "crawled_at": "2026-02-08T15:43:40.564Z",
-  "total_articles": 46,
+  "crawled_at": "2026-02-08T16:52:00.943Z",
+  "total_articles": 49,
   "articles": [
+    {
+      "id": 2473,
+      "title": "Pourquoi Bali reste une destination incontournable pour les nomades digitaux",
+      "url": "https://flashvoyage.com/pourquoi-bali-reste-une-destination-incontournable-pour-les-nomades-digitaux/",
+      "slug": "pourquoi-bali-reste-une-destination-incontournable-pour-les-nomades-digitaux",
+      "excerpt": "Plonger dans l&#8217;univers des nomades digitaux à Chiang Mai Te voilà face à un choix crucial: choisir ta première destination en tant que nomade digital. Outil uti&#8230;\n",
+      "content": "Plonger dans l&#8217;univers des nomades digitaux à Chiang Mai\nTe voilà face à un choix crucial: choisir ta première destination en tant que nomade digital.\n\nOutil utile si vous travaillez en voyage\nUn espace de coworking avec une connexion internet fiable peut améliorer votre productivité pendant votre séjour.\n\nTrouver un espace de coworking\n\n\n    Lien partenaire\n  \n\nPour en savoir plus, consultez notre article surTrouver une destination d’hiver en Asie avec un budget de 5000 €.\nChiang Mai semb",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-08T16:51:46",
+      "modified": "2026-02-08T16:51:50",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2473.jpg"
+    },
+    {
+      "id": 2470,
+      "title": "Penang ou Bali : La réalité de voyager en Asie du Sud-Est",
+      "url": "https://flashvoyage.com/penang-ou-bali-la-realite-de-voyager-en-asie-du-sud-est/",
+      "slug": "penang-ou-bali-la-realite-de-voyager-en-asie-du-sud-est",
+      "excerpt": "Penang, un coup de malchance ou une déception partagée? Te voilà à Penang, et dès les premiers instants, la chaleur et l&#8217;humidité te submergent. Tu te demandes &#8230;\n",
+      "content": "Penang, un coup de malchance ou une déception partagée?\nTe voilà à Penang, et dès les premiers instants, la chaleur et l&#8217;humidité te submergent.\nTu te demandes si les attentes que tu avais pour cette destination étaient réalistes.\n« Penang est vraiment un coup de chance ou de malchance selon ce que tu recherches », mentionne un voyageur sur Reddit, et cette phrase résonne en toi.\nPourquoi Bali divise-t-elle autant les opinions?\n\nQu&#8217;est-ce qui était nul pour toi ? Désolé à mes frères ",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-08T16:44:35",
+      "modified": "2026-02-08T16:44:39",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2470.jpg"
+    },
+    {
+      "id": 2467,
+      "title": "Déprime post-nomadisme : Comment retrouver la motivation en quittant Bali",
+      "url": "https://flashvoyage.com/deprime-post-nomadisme-comment-retrouver-la-motivation-en-quittant-bali/",
+      "slug": "deprime-post-nomadisme-comment-retrouver-la-motivation-en-quittant-bali",
+      "excerpt": "Le choc du retour Vivre à Bali, c&#8217;était l&#8217;accès à un mode de vie abordable, entouré d&#8217;autres entrepreneurs, avec un climat tropical et des services comme les re&#8230;\n",
+      "content": "Le choc du retour\nVivre à Bali, c&#8217;était l&#8217;accès à un mode de vie abordable, entouré d&#8217;autres entrepreneurs, avec un climat tropical et des services comme les repas préparés et les massages.\nCe témoignage Reddit souligne bien cette dualité: vivre au-delà de ses moyens tout en étant conscient des défis cachés.\nEntre rêve et réalité: Le retour à Austin\n\nEst-ce que quelqu&#8217;un d&#8217;autre se sent déprimé en rentrant chez soi après avoir été nomade numérique ? Est-ce que ce qu",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-08T16:37:18",
+      "modified": "2026-02-08T16:37:22",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2467.jpg"
+    },
     {
       "id": 2464,
       "title": "Vivre sans assurance santé en Thaïlande : Un pari risqué à éviter",
