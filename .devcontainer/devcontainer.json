@@ -1,0 +1,39 @@
+{
+  "name": "FlashVoyage Pipeline",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "postCreateCommand": "npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  },
+  "forwardPorts": [],
+  "secrets": {
+    "OPENAI_API_KEY": {
+      "description": "Cle API OpenAI pour la generation de contenu"
+    },
+    "ANTHROPIC_API_KEY": {
+      "description": "Cle API Anthropic Claude"
+    },
+    "WORDPRESS_URL": {
+      "description": "URL du site WordPress (ex: https://flashvoyage.com)"
+    },
+    "WORDPRESS_USERNAME": {
+      "description": "Username WordPress"
+    },
+    "WORDPRESS_APP_PASSWORD": {
+      "description": "Application Password WordPress"
+    },
+    "PEXELS_API_KEY": {
+      "description": "Cle API Pexels pour les images"
+    },
+    "TRAVELPAYOUTS_API_TOKEN": {
+      "description": "Token API Travelpayouts"
+    }
+  }
+}
