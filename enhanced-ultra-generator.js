@@ -150,7 +150,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const hasAsiaDestination = asiaDestinations.some(dest => matchesWord(articleText, dest));
       
       // #region agent log
-      // Log TOUS les articles qui ne sont pas rejetés par le titre (pour tracer les faux positifs)
+      // Log TOUS les articles pour tracer les faux positifs (H1-H5)
       {
         const matchedAsia = asiaDestinations.filter(dest => matchesWord(articleText, dest));
         const matchedNonAsia = nonAsiaDestinations.filter(dest => matchesWord(articleText, dest));
@@ -158,9 +158,14 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         const contentLen = (article.content || '').length;
         const selftextLen = (article.selftext || '').length;
         const sourceTextLen = (article.source_text || '').length;
-        // Logger seulement les cas intéressants: articles avec "kids" ou "travel" dans le titre ou sans destination asiatique
-        if (titleLower.includes('kids') || titleLower.includes('first time') || matchedAsia.length === 0) {
-          fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'enhanced-ultra-generator.js:applySourceFilters:TRACE_WB',message:'Article filter trace (word-boundary)',data:{title:article.title?.substring(0,80),hasAsia:hasAsiaDestination,hasNonAsia:hasNonAsiaDestination,matchedAsia:matchedAsia.slice(0,5),matchedNonAsia:matchedNonAsia.slice(0,5),textLen,contentLen,selftextLen,sourceTextLen},timestamp:Date.now(),hypothesisId:'H-FILTER-WB'})}).catch(()=>{});
+        // Logger TOUS les articles qui passent le filtre OU qui ont Asia+NonAsia (cas suspect)
+        if (matchedAsia.length > 0 || matchedNonAsia.length > 0) {
+          // For H1: find context around each matched Asia keyword in the text
+          const asiaContexts = matchedAsia.slice(0,3).map(kw => {
+            const idx = articleText.indexOf(kw);
+            return idx >= 0 ? { keyword: kw, context: articleText.substring(Math.max(0,idx-40), idx+kw.length+40) } : { keyword: kw, context: 'not-found' };
+          });
+          fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'enhanced-ultra-generator.js:applySourceFilters:TRACE_ALL',message:'Article filter trace (ALL)',data:{title:article.title?.substring(0,100),hasAsia:hasAsiaDestination,hasNonAsia:hasNonAsiaDestination,matchedAsia,matchedNonAsia:matchedNonAsia.slice(0,5),asiaContexts,willPass:!(hasNonAsiaDestination&&!hasAsiaDestination)&&hasAsiaDestination,textLen,contentLen,selftextLen,sourceTextLen},timestamp:Date.now(),hypothesisId:'H1-H5'})}).catch(()=>{});
         }
       }
       // #endregion
@@ -186,6 +191,18 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         if (!hasAsiaDestination) {
           console.log(`🚫 Article rejeté (aucune destination asiatique): ${article.title}`);
           return false;
+        }
+        // GARDE PROPORTIONNALITÉ: Rejeter si Asie est une mention anecdotique vs sujet principal non-Asie
+        // Ex: "transiting through Singapore or Dubai" dans un article sur l'ESTA américain
+        {
+          const matchedAsiaCount = asiaDestinations.filter(dest => matchesWord(articleText, dest)).length;
+          const matchedNonAsiaCount = nonAsiaDestinations.filter(dest => matchesWord(articleText, dest)).length;
+          const titleHasAsia = asiaDestinations.some(dest => matchesWord(titleLower, dest));
+          // Si le titre ne mentionne aucune destination Asie ET non-Asie domine (ratio ≥ 3:1)
+          if (!titleHasAsia && matchedNonAsiaCount >= 3 && matchedNonAsiaCount >= matchedAsiaCount * 3) {
+            console.log(`🚫 Article rejeté (PROPORTIONNALITÉ: ${matchedAsiaCount} Asie vs ${matchedNonAsiaCount} non-Asie, titre sans Asie): ${article.title}`);
+            return false;
+          }
         }
       const isMetaPost = metaKeywords.some(keyword => titleLower.includes(keyword.toLowerCase()) || articleText.includes(keyword.toLowerCase()));
         if (isMetaPost) {
@@ -241,6 +258,26 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         if (bodyHasNonAsia && !bodyHasAsia) {
           console.log(`   🚫 RELAXED_FILTER: rejeté (BODY contient destinations non-asiatiques sans mention d'Asie): ${article.title}`);
           return false;
+        }
+        // GARDE PROPORTIONNALITÉ (relâché): même logique que applySourceFilters
+        {
+          const matchedAsiaCount = asiaKeywords.filter(kw => matchesWord(articleText, kw)).length;
+          const matchedNonAsiaCount = nonAsiaDestinations.filter(dest => matchesWord(articleText, dest)).length;
+          const titleHasAsia = asiaKeywords.some(kw => matchesWord(titleLower, kw));
+          if (!titleHasAsia && matchedNonAsiaCount >= 3 && matchedNonAsiaCount >= matchedAsiaCount * 3) {
+            console.log(`   🚫 RELAXED_FILTER: rejeté (PROPORTIONNALITÉ: ${matchedAsiaCount} Asie vs ${matchedNonAsiaCount} non-Asie, titre sans Asie): ${article.title}`);
+            return false;
+          }
+        }
+        // GARDE PROPORTIONNALITÉ (cohérent avec applySourceFilters)
+        if (bodyHasAsia && bodyHasNonAsia) {
+          const asiaCount = asiaKeywords.filter(kw => matchesWord(articleText, kw)).length;
+          const nonAsiaCount = nonAsiaDestinations.filter(dest => matchesWord(articleText, dest)).length;
+          const titleHasAsia = asiaKeywords.some(kw => matchesWord(titleLower, kw));
+          if (!titleHasAsia && nonAsiaCount >= 3 && nonAsiaCount >= asiaCount * 3) {
+            console.log(`   🚫 RELAXED_FILTER: rejeté (PROPORTIONNALITÉ: ${asiaCount} Asie vs ${nonAsiaCount} non-Asie, titre sans Asie): ${article.title}`);
+            return false;
+          }
         }
             const travelKeywords = ['travel', 'voyage', 'trip', 'journey', 'nomad', 'nomade', 'destination', 'visit', 'visiter', 'flight', 'vol', 'hotel', 'hôtel', 'backpack', 'backpacking', 'solo travel', 'voyage solo', 'digital nomad', 'nomade numérique'];
             const metaKeywords = ['subreddit changes', 'modifications du subreddit', 'rules', 'règles', 'flair', 'moderation', 'modération', 'survey', 'sondage', 'meta'];

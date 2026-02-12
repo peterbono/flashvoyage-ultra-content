@@ -1651,70 +1651,10 @@ class ArticleFinalizer {
       return { content, hasFomo: false };
     }
 
-    console.log('   ⚠️ Intro FOMO manquante - Ajout automatique');
-
-    // Créer une intro FOMO selon le type d'article
-    let fomoIntro = '';
-    
-    if (analysis?.type?.includes('SUCCESS')) {
-      fomoIntro = `<p><strong>Pendant que vous rêvez, d'autres agissent.</strong> Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui montre comment transformer sa vie de nomade digital.</p>\n\n`;
-    } else if (analysis?.type?.includes('ECHEC')) {
-      fomoIntro = `<p><strong>Pendant que vous hésitez, d'autres font des erreurs.</strong> Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit pour vous éviter les pièges courants.</p>\n\n`;
-    } else if (analysis?.type?.includes('TRANSITION')) {
-      fomoIntro = `<p><strong>Pendant que vous planifiez, d'autres sont déjà partis.</strong> Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit qui dévoile les étapes clés d'une transition réussie.</p>\n\n`;
-    } else {
-      fomoIntro = `<p><strong>Pendant que vous cherchez des informations, d'autres vivent l'expérience.</strong> Chez FlashVoyages, nous avons sélectionné ce témoignage Reddit pour vous inspirer.</p>\n\n`;
-    }
-
-    // FIX E: Insertion déterministe — FOMO en début de corps (après Source + quick guide)
-    let insertionMethod = '';
-    let newContent = content;
-
-    // Niveau 0 (prioritaire): Juste après le quick-guide (premier bloc éditorial = Source, puis quick guide, puis FOMO)
-    const quickGuideRegex = /<div class="quick-guide">[\s\S]*?<\/div>/i;
-    const quickGuideMatch = content.match(quickGuideRegex);
-    if (quickGuideMatch) {
-      const insertPos = quickGuideMatch.index + quickGuideMatch[0].length;
-      newContent = content.slice(0, insertPos) + '\n\n' + fomoIntro + content.slice(insertPos);
-      insertionMethod = 'AFTER_QUICK_GUIDE';
-    } else {
-      // Niveau 1: Après le premier <p> non vide (hors "Source:")
-      const firstPRegex = /<p[^>]*>(?!.*Source\s*:)[^<]+<\/p>/i;
-      const firstPMatch = content.match(firstPRegex);
-      if (firstPMatch) {
-        const firstPEnd = firstPMatch.index + firstPMatch[0].length;
-        newContent = content.slice(0, firstPEnd) + '\n\n' + fomoIntro + content.slice(firstPEnd);
-        insertionMethod = 'AFTER_FIRST_P';
-      }
-      // Niveau 2: Après le premier <h2>
-      else {
-        const firstH2Regex = /<h2[^>]*>.*?<\/h2>/i;
-        const firstH2Match = content.match(firstH2Regex);
-        if (firstH2Match) {
-          const firstH2End = firstH2Match.index + firstH2Match[0].length;
-          newContent = content.slice(0, firstH2End) + '\n\n' + fomoIntro + content.slice(firstH2End);
-          insertionMethod = 'AFTER_FIRST_H2';
-        }
-        // Niveau 3: Avant la section "Articles connexes"
-        else {
-          const relatedSectionRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
-          const relatedSectionMatch = content.match(relatedSectionRegex);
-          if (relatedSectionMatch) {
-            const relatedSectionIndex = relatedSectionMatch.index;
-            newContent = content.slice(0, relatedSectionIndex) + '\n\n' + fomoIntro + content.slice(relatedSectionIndex);
-            insertionMethod = 'BEFORE_RELATED';
-          }
-          // Niveau 4: Prepend au début
-          else {
-            newContent = fomoIntro + '\n\n' + content;
-            insertionMethod = 'PREPEND';
-          }
-        }
-      }
-    }
-    
-    console.log(`   ✅ FOMO_INSERTED: method=${insertionMethod}`);
-    return { content: newContent, hasFomo: true };
+    // Bloc "Pendant que vous..." désactivé : templaté, isolé, forçage éditorial sans valeur
+    // Le témoignage Reddit (citation/blockquote) suffit à établir la crédibilité.
+    console.log('   ℹ️ Intro FOMO manquante — non ajoutée (bloc générique supprimé)');
+    return { content, hasFomo: false };
   }
 
   /**

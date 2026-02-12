@@ -22,6 +22,7 @@
  */
 
 import { extractRedditSemantics } from './reddit-semantic-extractor.js';
+import { extractMainDestination } from './reddit-extraction-adapter.js';
 import { detectRedditPattern } from './reddit-pattern-detector.js';
 import { compileRedditStory } from './reddit-story-compiler.js';
 import IntelligentContentAnalyzerOptimized from './intelligent-content-analyzer-optimized.js';
@@ -33,6 +34,7 @@ import ArticleFinalizer from './article-finalizer.js';
 import { runAntiHallucinationGuard } from './src/anti-hallucination/anti-hallucination-guard.js';
 import PipelineReport from './pipeline-report.js';
 import { applyContentMarketingPass } from './content-marketing-pass.js';
+import { createChatCompletion } from './openai-client.js';
 import { DRY_RUN, FORCE_OFFLINE, ENABLE_MARKETING_PASS, parseBool } from './config.js';
 
 class PipelineRunner {
@@ -121,6 +123,26 @@ class PipelineRunner {
         pipelineReport.endStep('llm-improvement', { improved: false, error: error.message }, { status: 'skip' });
       }
 
+      // ÉTAPE 4.6: Validation cohérence titre/contenu
+      console.log('\n📋 ÉTAPE 4.6: Validation cohérence titre/contenu');
+      pipelineReport.startStep('title-coherence');
+      try {
+        const mainDest = extracted._smart_destination || null;
+        const coherenceResult = await this.validateTitleContentCoherence(generated.title, generated.content, mainDest);
+        if (!coherenceResult.coherent && coherenceResult.originalTitle) {
+          console.log(`   🔄 TITRE CORRIGÉ: "${coherenceResult.originalTitle}" → "${coherenceResult.title}"`);
+          generated.title = coherenceResult.title;
+        }
+        pipelineReport.endStep('title-coherence', { 
+          coherent: coherenceResult.coherent, 
+          originalTitle: coherenceResult.originalTitle,
+          finalTitle: coherenceResult.title
+        }, { status: coherenceResult.coherent ? 'pass' : 'warn' });
+      } catch (error) {
+        console.warn(`   ⚠️ Validation cohérence échouée: ${error.message}, continuation`);
+        pipelineReport.endStep('title-coherence', { error: error.message }, { status: 'skip' });
+      }
+
       // ÉTAPE 5: Affiliate Injector
       console.log('\n📋 ÉTAPE 5: Affiliate Injector (contextual-affiliate-injector)');
       pipelineReport.startStep('affiliate-injector');
@@ -128,9 +150,14 @@ class PipelineRunner {
       pipelineReport.endStep('affiliate-injector', affiliatePlan, { status: 'pass' });
 
       // Construire le pipelineContext pour les étapes suivantes
-      // Extraire final_destination depuis pattern ou extracted
-      // Parcourir les destinations candidates et prendre la première qui est asiatique
+      // PRIORITÉ: utiliser la smart destination (scoreDestinationRichness) si disponible
+      const smartDestination = extracted._smart_destination || null;
+      const originalDestination = extracted._original_destination || null;
+      const pivotReason = extracted._pivot_reason || null;
+      
+      // Fallback: Extraire final_destination depuis pattern ou extracted
       const candidateDestinations = [
+        smartDestination, // Priorité 1: smart destination
         pattern.destination,
         extracted.destination,
         ...(extracted.destinations || [])
@@ -211,11 +238,17 @@ class PipelineRunner {
         pattern,
         affiliate_plan: affiliatePlan,
         final_destination: finalDestination,
+        main_destination: smartDestination || finalDestination,
+        original_destination: originalDestination,
+        pivot_reason: pivotReason,
         geo_defaults: geoDefaults || geo, // Utiliser geoDefaults si disponible, sinon geo
         geo: geo
       };
       
-      console.log(`✅ PIPELINE_CONTEXT: final_destination=${finalDestination || 'null'} geo_city=${geo.city || 'null'}`);
+      console.log(`✅ PIPELINE_CONTEXT: final_destination=${finalDestination || 'null'} main_destination=${pipelineContext.main_destination || 'null'} geo_city=${geo.city || 'null'}`);
+      if (pivotReason) {
+        console.log(`   🔄 PIVOT: ${originalDestination} → ${smartDestination} — ${pivotReason}`);
+      }
 
       // ÉTAPE 6: SEO Optimizer
       console.log('\n📋 ÉTAPE 6: SEO Optimizer (seo-optimizer)');
@@ -442,6 +475,22 @@ class PipelineRunner {
       
       const extracted = extractRedditSemantics(thread);
       console.log(`   ✅ Extractor: ${Object.keys(extracted).length} champs extraits`);
+      
+      // Smart destination selection via scoreDestinationRichness
+      const destResult = extractMainDestination(extracted);
+      extracted._smart_destination = destResult.destination;
+      extracted._original_destination = destResult.original_destination;
+      extracted._pivot_reason = destResult.pivot_reason;
+      // Backward compat: set main_destination for downstream consumers
+      extracted.main_destination = destResult.destination;
+      
+      if (destResult.pivot_reason) {
+        console.log(`   🔄 SMART DEST: Pivot "${destResult.original_destination}" → "${destResult.destination}"`);
+        console.log(`      Raison: ${destResult.pivot_reason}`);
+      } else if (destResult.destination) {
+        console.log(`   📍 SMART DEST: "${destResult.destination}" (pas de pivot)`);
+      }
+      
       return extracted;
     } catch (error) {
       console.error(`   ❌ Extractor: ${error.message}`);
@@ -568,7 +617,11 @@ class PipelineRunner {
         url: input.post?.url || null,
         subreddit: input.post?.subreddit || null,
         existingTitles,
-        existingAngles: [] // optionnel : résumés 1 ligne si stockés plus tard
+        existingAngles: [], // optionnel : résumés 1 ligne si stockés plus tard
+        // Smart destination (de extractMainDestination avec scoreDestinationRichness)
+        main_destination: extracted._smart_destination || null,
+        original_destination: extracted._original_destination || null,
+        pivot_reason: extracted._pivot_reason || null
       };
 
       // Générer le contenu (analysis n'est plus utilisé dans la nouvelle version)
@@ -714,6 +767,140 @@ class PipelineRunner {
       console.error(`   ❌ Anti-Hallucination Guard: ${error.message}`);
       pipelineReport.addError('anti-hallucination-guard', error.message, error.stack);
       return null;
+    }
+  }
+
+  /**
+   * Valide la cohérence entre la destination du titre et la destination dominante du contenu.
+   * Si mismatch détecté, re-génère le titre via LLM pour correspondre au contenu.
+   * @param {string} title - Le titre généré
+   * @param {string} content - Le contenu HTML généré
+   * @param {string} mainDestination - La destination principale attendue
+   * @returns {Promise<{title: string, coherent: boolean, originalTitle: string|null}>}
+   */
+  async validateTitleContentCoherence(title, content, mainDestination) {
+    // Destinations connues pour la détection (pays + villes majeures en FR et EN)
+    const DESTINATION_ALIASES = {
+      'japan': ['japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'nara', 'hiroshima', 'nagoya', 'fukuoka'],
+      'thailand': ['thailand', 'thaïlande', 'thailande', 'bangkok', 'chiang mai', 'phuket', 'koh samui', 'koh phangan', 'krabi', 'pai'],
+      'vietnam': ['vietnam', 'viêt nam', 'hanoi', 'hanoï', 'ho chi minh', 'saigon', 'saïgon', 'da nang', 'hoi an', 'nha trang', 'dalat'],
+      'indonesia': ['indonesia', 'indonésie', 'indonesie', 'bali', 'jakarta', 'ubud', 'lombok', 'yogyakarta'],
+      'korea': ['korea', 'corée', 'coree', 'seoul', 'séoul', 'busan'],
+      'philippines': ['philippines', 'manila', 'manille', 'cebu', 'palawan', 'boracay', 'siargao'],
+      'malaysia': ['malaysia', 'malaisie', 'kuala lumpur', 'penang', 'langkawi'],
+      'cambodia': ['cambodia', 'cambodge', 'phnom penh', 'siem reap'],
+      'singapore': ['singapore', 'singapour'],
+      'laos': ['laos', 'vientiane', 'luang prabang'],
+      'myanmar': ['myanmar', 'birmanie', 'yangon'],
+      'taiwan': ['taiwan', 'taïwan', 'taipei'],
+      'india': ['india', 'inde', 'mumbai', 'delhi', 'goa'],
+      'nepal': ['nepal', 'népal', 'kathmandu', 'katmandou'],
+      'sri lanka': ['sri lanka', 'colombo']
+    };
+
+    const titleLower = title.toLowerCase();
+    const contentLower = content.toLowerCase();
+
+    // 1. Identifier la destination dans le titre
+    let titleDest = null;
+    for (const [country, aliases] of Object.entries(DESTINATION_ALIASES)) {
+      for (const alias of aliases) {
+        if (titleLower.includes(alias)) {
+          titleDest = country;
+          break;
+        }
+      }
+      if (titleDest) break;
+    }
+
+    // 2. Compter les mentions de chaque destination dans le contenu
+    const contentMentions = new Map();
+    for (const [country, aliases] of Object.entries(DESTINATION_ALIASES)) {
+      let count = 0;
+      for (const alias of aliases) {
+        // Compter les occurrences dans le contenu (hors balises HTML)
+        const plainContent = contentLower.replace(/<[^>]+>/g, ' ');
+        const regex = new RegExp(`\\b${alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
+        const matches = plainContent.match(regex);
+        count += matches ? matches.length : 0;
+      }
+      if (count > 0) {
+        contentMentions.set(country, count);
+      }
+    }
+
+    // 3. Trouver la destination la plus mentionnée dans le contenu
+    let dominantContentDest = null;
+    let dominantContentCount = 0;
+    for (const [dest, count] of contentMentions.entries()) {
+      if (count > dominantContentCount) {
+        dominantContentCount = count;
+        dominantContentDest = dest;
+      }
+    }
+
+    const titleDestCount = titleDest ? (contentMentions.get(titleDest) || 0) : 0;
+
+    console.log(`\n🔍 COHERENCE_CHECK:`);
+    console.log(`   Titre destination: ${titleDest || 'aucune'}`);
+    console.log(`   Contenu dominant: ${dominantContentDest || 'aucun'} (${dominantContentCount} mentions)`);
+    console.log(`   Titre dest dans contenu: ${titleDestCount} mentions`);
+    if (mainDestination) {
+      console.log(`   Main destination attendue: ${mainDestination} (${contentMentions.get(mainDestination) || 0} mentions)`);
+    }
+
+    // 4. Vérifier la cohérence
+    const isCoherent = !titleDest || !dominantContentDest || 
+                       titleDest === dominantContentDest ||
+                       titleDestCount >= dominantContentCount * 0.5; // Tolérance: le titre dest a au moins 50% des mentions
+
+    if (isCoherent) {
+      console.log(`   ✅ COHÉRENT: titre et contenu alignés`);
+      return { title, coherent: true, originalTitle: null };
+    }
+
+    // 5. MISMATCH détecté → re-générer le titre
+    console.log(`   ⚠️ MISMATCH: titre="${titleDest}" mais contenu="${dominantContentDest}" (${dominantContentCount} vs ${titleDestCount})`);
+    console.log(`   🔄 Re-génération du titre pour matcher le contenu...`);
+
+    try {
+      // Utiliser un alias lisible pour le pays
+      const countryDisplayNames = {
+        'japan': 'Japon', 'thailand': 'Thaïlande', 'vietnam': 'Vietnam',
+        'indonesia': 'Indonésie', 'korea': 'Corée du Sud', 'philippines': 'Philippines',
+        'malaysia': 'Malaisie', 'cambodia': 'Cambodge', 'singapore': 'Singapour',
+        'laos': 'Laos', 'myanmar': 'Myanmar', 'taiwan': 'Taïwan',
+        'india': 'Inde', 'nepal': 'Népal', 'sri lanka': 'Sri Lanka'
+      };
+      const destName = countryDisplayNames[dominantContentDest] || dominantContentDest;
+
+      const response = await createChatCompletion({
+        model: 'gpt-4o-mini',
+        messages: [
+          { 
+            role: 'system', 
+            content: `Tu es un expert SEO FlashVoyage. Re-écris le titre d'article pour qu'il mentionne "${destName}" au lieu de la destination actuelle. Garde le même style, la même longueur (~60-70 caractères max), le même ton. Réponds UNIQUEMENT avec le nouveau titre, sans guillemets.`
+          },
+          { 
+            role: 'user', 
+            content: `Titre actuel: "${title}"\nDestination correcte: ${destName}\nRe-écris le titre pour ${destName}:`
+          }
+        ],
+        max_tokens: 100,
+        temperature: 0.3
+      });
+
+      const newTitle = response.choices?.[0]?.message?.content?.trim();
+      if (newTitle && newTitle.length > 10 && newTitle.length < 120) {
+        console.log(`   ✅ Nouveau titre: "${newTitle}"`);
+        return { title: newTitle, coherent: false, originalTitle: title };
+      } else {
+        console.warn(`   ⚠️ Titre re-généré invalide ("${newTitle}"), conservation de l'original`);
+        return { title, coherent: false, originalTitle: null };
+      }
+    } catch (error) {
+      console.warn(`   ⚠️ Re-génération titre échouée: ${error.message}, conservation de l'original`);
+      return { title, coherent: false, originalTitle: null };
     }
   }
 }

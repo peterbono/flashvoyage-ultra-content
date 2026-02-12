@@ -83,6 +83,11 @@ class SeoOptimizer {
     // PHASE 8.2: Extraction SEO déterministe
     const seoData = this.extractSeoData(extracted, storyData);
     
+    // Injecter la main_destination depuis pipelineContext (smart destination)
+    if (pipelineContext.main_destination) {
+      seoData.main_destination = pipelineContext.main_destination;
+    }
+    
     // Exposer seoData dans report.debug
     if (!report.debug) report.debug = {};
     report.debug.seo_data = seoData;
@@ -1347,10 +1352,10 @@ class SeoOptimizer {
     const seoKeywords = (seoData.keywords || []).map(k => this.normalizeText(k));
     const seoCategory = seoData.category ? this.normalizeText(seoData.category) : null;
     
-    // AMÉLIORATION: Extraire destination de l'article depuis seoData.places ou pipelineContext
-    const articleDestination = seoData.places && seoData.places.length > 0 
-      ? this.normalizeText(seoData.places[0])
-      : null;
+    // AMÉLIORATION: Extraire destination de l'article (priorité: main_destination du pipeline > places[0])
+    const articleDestination = seoData.main_destination 
+      ? this.normalizeText(seoData.main_destination)
+      : (seoData.places && seoData.places.length > 0 ? this.normalizeText(seoData.places[0]) : null);
     
     for (const article of index.articles) {
       // Vérifier blacklist
@@ -1402,6 +1407,28 @@ class SeoOptimizer {
       
       // AMÉLIORATION: Matching par destination (bonus/pénalité)
       if (articleDestination) {
+        // Mapping ville → pays pour la comparaison de destinations
+        const CITY_TO_COUNTRY = {
+          'bali': 'indonesia', 'ubud': 'indonesia', 'jakarta': 'indonesia', 'lombok': 'indonesia', 'yogyakarta': 'indonesia',
+          'indonésie': 'indonesia', 'indonesie': 'indonesia',
+          'tokyo': 'japan', 'kyoto': 'japan', 'osaka': 'japan', 'nara': 'japan', 'hiroshima': 'japan',
+          'japon': 'japan',
+          'bangkok': 'thailand', 'chiang mai': 'thailand', 'phuket': 'thailand', 'koh samui': 'thailand',
+          'thaïlande': 'thailand', 'thailande': 'thailand',
+          'hanoi': 'vietnam', 'ho chi minh': 'vietnam', 'saigon': 'vietnam', 'da nang': 'vietnam', 'hoi an': 'vietnam',
+          'seoul': 'korea', 'séoul': 'korea', 'busan': 'korea',
+          'corée': 'korea', 'coree': 'korea',
+          'manila': 'philippines', 'cebu': 'philippines', 'palawan': 'philippines',
+          'kuala lumpur': 'malaysia', 'penang': 'malaysia', 'langkawi': 'malaysia',
+          'malaisie': 'malaysia',
+          'phnom penh': 'cambodia', 'siem reap': 'cambodia', 'cambodge': 'cambodia',
+          'singapour': 'singapore',
+          'taïwan': 'taiwan', 'taipei': 'taiwan'
+        };
+        
+        // Normaliser la destination de l'article vers un pays
+        const normalizedArticleDest = CITY_TO_COUNTRY[articleDestination] || articleDestination;
+        
         // Extraire destination de l'article candidat depuis keywords ou titre
         const candidateTitle = this.normalizeText(article.title || '');
         const candidateKeywords = article.keywords 
@@ -1418,15 +1445,18 @@ class SeoOptimizer {
           }
         }
         
-        // Score bonus pour match exact destination (+20 points)
-        if (candidateDestination && articleDestination.includes(candidateDestination)) {
+        // Normaliser la destination candidate vers un pays
+        const normalizedCandidateDest = candidateDestination ? (CITY_TO_COUNTRY[candidateDestination] || candidateDestination) : null;
+        
+        // Score bonus pour match destination (même pays) (+20 points)
+        if (normalizedCandidateDest && normalizedArticleDest === normalizedCandidateDest) {
           score += 20;
-          console.log(`   ✅ INTERNAL_LINK_MATCH: article_dest=${articleDestination} link_dest=${candidateDestination} score_bonus=+20`);
+          console.log(`   ✅ INTERNAL_LINK_MATCH: article_dest=${articleDestination} link_dest=${candidateDestination} (${normalizedArticleDest}) score_bonus=+20`);
         }
         // Pénalité pour destination différente (-10 points)
-        else if (candidateDestination && !articleDestination.includes(candidateDestination)) {
+        else if (normalizedCandidateDest && normalizedArticleDest !== normalizedCandidateDest) {
           score -= 10;
-          console.log(`   ⚠️ INTERNAL_LINK_MISMATCH: article_dest=${articleDestination} link_dest=${candidateDestination} score_penalty=-10`);
+          console.log(`   ⚠️ INTERNAL_LINK_MISMATCH: article_dest=${articleDestination} link_dest=${candidateDestination} (${normalizedCandidateDest}≠${normalizedArticleDest}) score_penalty=-10`);
         }
       }
       

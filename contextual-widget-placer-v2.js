@@ -7,10 +7,13 @@
  */
 
 import { getOpenAIClient, isOpenAIAvailable } from './openai-client.js';
-import { RealStatsScraper } from './real-stats-scraper.js';
 import { REAL_TRAVELPAYOUTS_WIDGETS } from './travelpayouts-real-widgets-database.js';
 import { NomadPartnersLinkGenerator } from './nomad-partners-links.js';
 import { generateArticleCTAs, renderCTALink } from './travelpayouts-api-client.js';
+// #region agent log
+import { appendFileSync } from 'fs';
+const _DLOG = (obj) => { try { appendFileSync('/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor/debug.log', JSON.stringify({...obj, timestamp: Date.now()}) + '\n'); } catch(e) {} };
+// #endregion
 
 // FIX B: Import cheerio avec fallback si échec (chargement dynamique dans la fonction)
 
@@ -18,7 +21,6 @@ class ContextualWidgetPlacer {
   constructor() {
     // Initialisation lazy - pas d'import OpenAI au top-level
     this.openai = null; // Initialisé lazy via getOpenAIClient() dans les méthodes async
-    this.statsScraper = new RealStatsScraper();
     this.nomadLinkGenerator = new NomadPartnersLinkGenerator();
     
     // Contextes + accroches style TPG (valeur ajoutée + sobre)
@@ -194,7 +196,7 @@ Réponds UNIQUEMENT en JSON valide.`;
       console.log(`💭 Raisonnement: ${analysis.reasoning}`);
       
       // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:placeWidgetsIntelligently:LLM_ANALYSIS',message:'Widget LLM analysis result',data:{widgetsSelected,selectedWidgets:analysis.selected_widgets,reasoning:analysis.reasoning},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET-LLM'})}).catch(()=>{});
+      _DLOG({location:'LLM_ANALYSIS',message:'Widget LLM analysis result',data:{widgetsSelected,selectedWidgets:analysis.selected_widgets,reasoning:analysis.reasoning},hypothesisId:'H-WIDGET-LLM'});
       // #endregion
 
       // Limiter les widgets selon le type de contenu
@@ -223,7 +225,7 @@ Réponds UNIQUEMENT en JSON valide.`;
       }
       
       // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:placeWidgetsIntelligently:VALIDATION',message:'Widget validation result',data:{limitedWidgets:limitedWidgets.map(w=>w.slot),validatedWidgets:validatedWidgets.map(w=>w.slot),widgetsRejected:limitedWidgets.length-validatedWidgets.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET-VALID'})}).catch(()=>{});
+      _DLOG({location:'VALIDATION',message:'Widget validation result',data:{limitedWidgets:limitedWidgets.map(w=>w.slot),validatedWidgets:validatedWidgets.map(w=>w.slot),widgetsRejected:limitedWidgets.length-validatedWidgets.length},hypothesisId:'H-WIDGET-VALID'});
       // #endregion
       
       // Placer les widgets dans le contenu
@@ -783,69 +785,62 @@ Réponds UNIQUEMENT en JSON valide.`;
     let enhancedContent = content;
     const usedContexts = new Set(); // Éviter la duplication
 
+    // #region agent log
+    const _pOpenCount = (enhancedContent.match(/<p[^>]*>/gi) || []).length;
+    const _pCloseCount = (enhancedContent.match(/<\/p>/gi) || []).length;
+    _DLOG({location:'CONTENT_STRUCTURE',message:'Content at entry',data:{contentLength:enhancedContent.length,pOpenCount:_pOpenCount,pCloseCount:_pCloseCount,selectedWidgets:selectedWidgets.map(w=>({slot:w.slot,section_title:w.section_title}))},hypothesisId:'H6'});
+    // #endregion
+
+    let widgetIndex = 0;
     for (const widget of selectedWidgets) {
+      // #region agent log
+      _DLOG({location:'LOOP_ENTRY',message:'Processing widget',data:{slot:widget.slot,section_title:widget.section_title||null,position:widget.position||null,widgetIndex},hypothesisId:'H3'});
+      // #endregion
       // FIX C: Passer placementContext à getWidgetScript pour geo_defaults
       const widgetScript = this.getWidgetScript(widget.slot, widgetPlan, placementContext);
       // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:insertWidgetsContextually:WIDGET_SCRIPT',message:'Widget script result',data:{slot:widget.slot,hasScript:!!widgetScript,scriptPreview:widgetScript?.substring(0,100)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET-SCRIPT'})}).catch(()=>{});
+      _DLOG({location:'WIDGET_SCRIPT',message:'Widget script result',data:{slot:widget.slot,hasScript:!!widgetScript,scriptPreview:widgetScript?.substring(0,100)},hypothesisId:'H5'});
       // #endregion
       if (!widgetScript) continue;
 
       // Vérifier si le contexte existe déjà
       const existingContext = this.findExistingContext(enhancedContent, widget.slot);
+      // #region agent log
+      _DLOG({location:'EXISTING_CTX',message:'Existing context check',data:{slot:widget.slot,existingContext:!!existingContext},hypothesisId:'H4'});
+      // #endregion
       if (existingContext) {
         console.log(`⚠️ Contexte ${widget.slot} déjà présent, widget ignoré`);
         continue;
       }
 
-      // Générer un contexte FOMO avec stats réelles (avec fallback)
-      console.log(`📊 Génération de stats réelles pour ${widget.slot}...`);
-      let fomoData;
-      try {
-        // FIX: Utiliser placementContext.geo_defaults (source unique) au lieu de widgetPlan.geo_defaults
-        const geoDefaults = placementContext?.geo_defaults || widgetPlan?.geo_defaults || widgetPlan?.widget_plan?.geo_defaults || null;
-        fomoData = await this.statsScraper.generateFOMOContext(widget.slot, geoDefaults);
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:insertWidgetsContextually:FOMO_SUCCESS',message:'FOMO context generated OK',data:{slot:widget.slot,contextPreview:fomoData?.context?.substring(0,100),statsType:fomoData?.stats?.type||'price'},timestamp:Date.now(),hypothesisId:'H-FOMO-FIX'})}).catch(()=>{});
-        // #endregion
-      } catch (error) {
-        console.log(`⚠️ Erreur scraping stats: ${error.message}`);
-        console.log(`❌ Impossible de générer des stats réelles - Widget ignoré`);
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:insertWidgetsContextually:FOMO_ERROR',message:'FOMO stats scraping FAILED',data:{slot:widget.slot,error:error.message},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET-FOMO'})}).catch(()=>{});
-        // #endregion
-        continue; // Passer au widget suivant au lieu d'inventer des données
-      }
-      
-      // VÉRIFICATION CONTEXTUELLE DÉJÀ FAITE DANS validateWidgetContext()
-      // Pas besoin de double vérification ici
-      
-      // MISSION 1: Renommer pour éviter shadowing avec placementContext
-      let fomoContext = fomoData.context;
-      
-      const intro = {
-        context: fomoContext,
-        cta: this.getCTAText(widget.slot)
-      };
-
-      // Vérifier si ce contexte est déjà utilisé
-      if (usedContexts.has(intro.context)) {
-        console.log(`⚠️ Contexte déjà utilisé, passage au suivant`);
+      const cta = this.getCTAText(widget.slot);
+      if (usedContexts.has(widget.slot)) {
+        console.log(`⚠️ Widget ${widget.slot} déjà inséré, passage au suivant`);
         continue;
       }
-      usedContexts.add(intro.context);
+      usedContexts.add(widget.slot);
 
       const widgetBlock = `
 <div data-fv-segment="affiliate">
-<p>${intro.context}</p>
-<p><strong>${intro.cta}</strong></p>
+<p><strong>${cta}</strong></p>
 ${widgetScript}
 </div>
 `;
 
-      // 3. Insérer le widget APRÈS le contenu principal (pas au milieu)
-      // Stratégie : insérer avant "Articles connexes" ou à la fin du contenu
-      enhancedContent = await this.insertAfterContent(enhancedContent, widgetBlock);
+      // Placement intelligent : suggestion LLM + mots-clés + garde narrative
+      const smartIndex = this.findSmartPosition(enhancedContent, widget, widgetIndex);
+      // #region agent log
+      _DLOG({location:'PLACEMENT_DECISION',message:'Smart vs fallback',data:{slot:widget.slot,smartIndex,widgetIndex,decision:smartIndex!=null?'SMART':'FALLBACK'},hypothesisId:'H-DECISION'});
+      // #endregion
+      if (smartIndex != null) {
+        enhancedContent = enhancedContent.slice(0, smartIndex) + '\n\n' + widgetBlock + '\n\n' + enhancedContent.slice(smartIndex);
+        console.log(`   📍 SMART placement pour ${widget.slot} à index ${smartIndex}`);
+      } else {
+        // Fallback : avant "Articles connexes" ou fin d'article
+        enhancedContent = await this.insertAfterContent(enhancedContent, widgetBlock);
+        console.log(`   📍 FALLBACK placement pour ${widget.slot} (fin d'article)`);
+      }
+      widgetIndex++;
     }
 
     // Générer des liens affiliés API complémentaires (CTA textuels)
@@ -871,7 +866,7 @@ ${widgetScript}
     console.log('🔍 DEBUG placement: inserted=', widgetsReplaced, 'rendered=', widgetsReplaced);
     
     // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:insertWidgetsContextually:FINAL',message:'Widget insertion final result',data:{widgetsReplaced,usedContexts:Array.from(usedContexts),contentHasWidgetDiv:enhancedContent.includes('data-fv-segment="affiliate"')},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET-INSERT'})}).catch(()=>{});
+    _DLOG({location:'FINAL',message:'Widget insertion final result',data:{widgetsReplaced,usedContexts:Array.from(usedContexts),contentHasWidgetDiv:enhancedContent.includes('data-fv-segment="affiliate"')},hypothesisId:'H-WIDGET-INSERT'});
     // #endregion
     
     return {
@@ -1033,8 +1028,134 @@ ${widgetScript}
   }
 
   /**
+   * Placement intelligent : combine suggestion LLM (section_title) + scan par mots-clés + garde narrative.
+   * @param {string} content - HTML de l'article
+   * @param {Object} widget - Objet widget avec slot, section_title, position
+   * @param {number} widgetIndex - Index du widget dans la boucle (0, 1, 2...)
+   * @returns {number|null} Index d'insertion ou null si fallback nécessaire
+   */
+  findSmartPosition(content, widget, widgetIndex = 0) {
+    // Mots-clés par type de widget (même logique que article-finalizer.js:findSmartInsertPosition)
+    const keywordsBySlot = {
+      flights: ['vol', 'vols', 'avion', 'billet', 'aéroport', 'aeroport', 'réservation', 'reservation', 'départ', 'depart', 'arrivée', 'arrivee', 'compagnie', 'flight', 'booking', 'budget', 'prix', 'tarif'],
+      esim: ['internet', 'connexion', 'roaming', 'wifi', 'données', 'donnees', 'sim', 'esim', 'connecté', 'connecte', 'signal', '4g', '5g', 'airalo', 'téléphone', 'telephone'],
+      insurance: ['assurance', 'santé', 'sante', 'médical', 'medical', 'urgence', 'maladie', 'rapatriement', 'hôpital', 'hopital', 'couverture'],
+      connectivity: ['internet', 'connexion', 'roaming', 'wifi', 'données', 'donnees', 'sim', 'esim', 'connecté', 'connecte'],
+      hotels: ['hébergement', 'hebergement', 'hôtel', 'hotel', 'logement', 'nuit', 'chambre', 'hostel', 'airbnb', 'booking', 'auberge']
+    };
+
+    const keywords = keywordsBySlot[widget.slot];
+    if (!keywords || !keywords.length) return null;
+
+    // --- Étape 1 : Déterminer la zone de recherche ---
+    let searchStart = 0;
+    let searchEnd = content.length;
+    let hadSectionTarget = false;
+
+    // Si le LLM a suggéré une section, cibler cette zone via fuzzy match
+    if (widget.section_title) {
+      const sectionMatch = this.findSectionFuzzy(content, widget.section_title);
+      if (sectionMatch) {
+        hadSectionTarget = true;
+        searchStart = sectionMatch.index;
+        // Fin de la section = prochain H2/H3 ou fin du contenu
+        const afterSection = content.substring(searchStart + 1);
+        const nextHeading = afterSection.match(/<h[2-3][^>]*>/i);
+        searchEnd = nextHeading ? searchStart + 1 + nextHeading.index : content.length;
+        console.log(`   📍 Section LLM "${widget.section_title}" trouvée → zone [${searchStart}-${searchEnd}]`);
+      } else {
+        console.log(`   ⚠️ Section LLM "${widget.section_title}" non trouvée → scan global`);
+      }
+    }
+
+    // --- Étape 2 : Scanner les paragraphes dans la zone pour trouver un match ---
+    const zone = content.substring(searchStart, searchEnd);
+    // #region agent log
+    const _zPOpen = (zone.match(/<p[^>]*>/gi) || []).length;
+    const _zPClose = (zone.match(/<\/p>/gi) || []).length;
+    _DLOG({location:'ZONE_CONTENT',message:'Zone content detail',data:{slot:widget.slot,zoneLen:zone.length,zonePOpen:_zPOpen,zonePClose:_zPClose,zoneFirst300:zone.substring(0,300),zoneHasClosingP:zone.includes('</p>')},hypothesisId:'H6'});
+    // #endregion
+    const pRegex = /<p[^>]*>([\s\S]*?)<\/p>/gi;
+    let pMatch;
+    let candidateIndex = null;
+    let scannedParagraphs = 0;
+    let matchedKeyword = null;
+
+    while ((pMatch = pRegex.exec(zone)) !== null) {
+      scannedParagraphs++;
+      const pText = (pMatch[1] || '').replace(/<[^>]+>/g, ' ').toLowerCase();
+      const foundKw = keywords.find(kw => pText.includes(kw));
+      if (foundKw) {
+        // Position absolue dans le contenu complet (fin du </p>)
+        candidateIndex = searchStart + pMatch.index + pMatch[0].length;
+        matchedKeyword = foundKw;
+        break; // Prendre le premier match contextuel
+      }
+    }
+    // #region agent log
+    _DLOG({location:'ZONE_SCAN',message:'Zone scan result',data:{slot:widget.slot,searchStart,searchEnd,zoneLen:zone.length,scannedParagraphs,candidateIndex,matchedKeyword,hadSectionTarget},hypothesisId:'H1'});
+    // #endregion
+
+    // Si aucun match dans la zone ciblée ET qu'on avait une section LLM, essayer en global
+    if (candidateIndex == null && hadSectionTarget) {
+      console.log(`   ⚠️ Aucun mot-clé ${widget.slot} dans la section → scan global`);
+      const globalPRegex = /<p[^>]*>([\s\S]*?)<\/p>/gi;
+      let gMatch;
+      let globalScanned = 0;
+      while ((gMatch = globalPRegex.exec(content)) !== null) {
+        globalScanned++;
+        const gText = (gMatch[1] || '').replace(/<[^>]+>/g, ' ').toLowerCase();
+        const gFoundKw = keywords.find(kw => gText.includes(kw));
+        if (gFoundKw) {
+          candidateIndex = gMatch.index + gMatch[0].length;
+          // #region agent log
+          _DLOG({location:'GLOBAL_SCAN_HIT',message:'Global scan found keyword',data:{slot:widget.slot,globalScanned,matchedKeyword:gFoundKw,candidateIndex},hypothesisId:'H1'});
+          // #endregion
+          break;
+        }
+      }
+      if (candidateIndex == null) {
+        // #region agent log
+        _DLOG({location:'GLOBAL_SCAN_MISS',message:'Global scan found no keywords',data:{slot:widget.slot,globalScanned},hypothesisId:'H1'});
+        // #endregion
+      }
+    }
+
+    // Si toujours rien, pas de position smart
+    if (candidateIndex == null) {
+      console.log(`   ⚠️ Aucune position contextuelle pour ${widget.slot} (pas de mot-clé trouvé)`);
+      return null;
+    }
+
+    // --- Étape 3 : Garde narrative (même logique que article-finalizer.js) ---
+    const h2List = Array.from(content.matchAll(/<h2[^>]*>.*?<\/h2>/gi));
+    const minH2Index = Math.min(2 + widgetIndex, h2List.length - 1);
+    const minNarrativePos = h2List.length >= (minH2Index + 1)
+      ? h2List[minH2Index].index + h2List[minH2Index][0].length
+      : 500;
+
+    const beforeCandidate = content.substring(0, candidateIndex);
+    // Compter les paragraphes avec une regex plus robuste (tolérant multilignes)
+    const pMatches = beforeCandidate.match(/<p[^>]*>/gi) || [];
+    const paragraphCount = pMatches.length;
+    const minParagraphs = 3 + widgetIndex;
+
+    // #region agent log
+    _DLOG({location:'GUARD',message:'Narrative guard details',data:{slot:widget.slot,candidateIndex,minNarrativePos,paragraphCount,minParagraphs,h2Count:h2List.length,widgetIndex,beforeCandidateLen:beforeCandidate.length,h2sBeforeCandidate:h2List.filter(h=>h.index<candidateIndex).length},hypothesisId:'H-GUARD'});
+    // #endregion
+
+    if (candidateIndex < minNarrativePos || paragraphCount < minParagraphs) {
+      console.log(`   ⚠️ Garde narrative: position ${candidateIndex} trop tôt (H2=${h2List.length}, paragraphes=${paragraphCount}/${minParagraphs}) → fallback`);
+      return null;
+    }
+
+    console.log(`   ✅ Smart position trouvée pour ${widget.slot}: index=${candidateIndex} (après ${paragraphCount} paragraphes)`);
+    return candidateIndex;
+  }
+
+  /**
    * Insère le widget APRÈS le contenu principal (avant "Articles connexes" ou à la fin)
-   * Évite l'insertion au milieu du contenu
+   * Fallback uniquement — utilisé quand findSmartPosition() retourne null
    */
   async insertAfterContent(content, widgetBlock) {
     // Chercher "Articles connexes" ou sections finales

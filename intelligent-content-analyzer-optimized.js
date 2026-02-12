@@ -943,7 +943,11 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
       console.log('🧠 Appel 2 : Génération finale...');
       const options = {
         existingTitles: input.existingTitles || [],
-        existingAngles: input.existingAngles || []
+        existingAngles: input.existingAngles || [],
+        // Smart destination (passé depuis pipeline-runner via extractMainDestination)
+        main_destination: input.main_destination || null,
+        original_destination: input.original_destination || null,
+        pivot_reason: input.pivot_reason || null
       };
       const finalContent = await this.generateFinalArticle(extractionResult, analysis, extracted, pattern, story, options);
       
@@ -1163,6 +1167,9 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
   async generateFinalArticle(extraction, analysis, extracted, pattern, story, options = {}) {
     const existingTitles = options.existingTitles || [];
     const existingAngles = options.existingAngles || [];
+    const mainDestination = options.main_destination || null;
+    const originalDestination = options.original_destination || null;
+    const pivotReason = options.pivot_reason || null;
     // Construire la section marketing d'affiliation pour les témoignages
     const isTemoignage = analysis.type_contenu && analysis.type_contenu.startsWith('TEMOIGNAGE_');
     const marketingSection = isTemoignage ? `
@@ -1303,6 +1310,13 @@ ${anglesBlock}
 - NE JAMAIS répéter le titre du post Reddit dans le corps de l'article
 
 ${correctionBlock}
+🎯 COHÉRENCE TITRE/CONTENU — RÈGLE ANTI-DRIFT:
+- Si une DESTINATION PRINCIPALE est spécifiée dans le user message, le titre ET le contenu DOIVENT parler de cette destination.
+- Le titre doit contenir le nom de la destination principale.
+- Les H2 doivent référencer cette destination quand pertinent.
+- Les autres destinations mentionnées dans les commentaires ne sont que des points de comparaison secondaires.
+- ❌ INTERDIT: Titre sur "Bali" mais contenu qui parle principalement de "Chiang Mai".
+
 ⚠️ CONTRAINTE CRITIQUE ABSOLUE: Ce site est spécialisé ASIE uniquement. 
 - NE MENTIONNE JAMAIS de destinations non-asiatiques (Portugal, Espagne, Lisbonne, Barcelone, Madrid, Porto, France, Paris, Italie, Rome, Grèce, Turquie, Istanbul, Europe, Amérique, USA, Brésil, Mexique, etc.)
 - Utilise UNIQUEMENT des destinations asiatiques: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
@@ -1566,9 +1580,20 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
       .map(c => `"${c.value}" (${c.count}x)`)
       .join(', ') || '';
 
+    // Construire la directive de destination principale
+    let destinationDirective = '';
+    if (mainDestination) {
+      destinationDirective = `\n🎯 DESTINATION PRINCIPALE (OBLIGATOIRE): ${mainDestination.charAt(0).toUpperCase() + mainDestination.slice(1)}
+L'article ENTIER doit parler de cette destination. Le titre, les H2, le contenu, les recommandations et les CTA doivent TOUS référencer cette destination. Les autres destinations ne peuvent être mentionnées que comme comparaisons secondaires ou alternatives brèves.`;
+      if (pivotReason) {
+        destinationDirective += `\n⚠️ PIVOT DE DESTINATION: Le post Reddit original mentionnait "${originalDestination}" mais la communauté a fourni beaucoup plus d'informations exploitables sur "${mainDestination}". ${pivotReason}. Adapte le titre et le contenu en conséquence pour ${mainDestination}.`;
+      }
+      destinationDirective += '\n';
+    }
+
     const userMessage = `TITRE: ${extracted.title || 'Témoignage Reddit'}
 AUTEUR: ${extracted.author || 'auteur Reddit'}
-
+${destinationDirective}
 📊 PATTERN DÉTECTÉ:
 - Type: ${pattern.story_type || 'non spécifié'}
 - Thème: ${pattern.theme_primary || 'non spécifié'}
