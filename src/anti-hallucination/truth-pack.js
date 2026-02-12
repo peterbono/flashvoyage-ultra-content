@@ -311,9 +311,6 @@ export function buildTruthPack(extracted) {
     }
   }
   locations.push(...locationsToAdd);
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'truth-pack.js:IATA_PIVOT',message:'IATA-pivot equivalents added',data:{locationsAdded:locationsToAdd.length,sample:locationsToAdd.slice(0,10),totalLocations:locations.length},timestamp:Date.now(),hypothesisId:'B'})}).catch(()=>{});
-  // #endregion
   locations = uniq(locations.map(normalizeText)).filter(l => l.length > 0);
   
   // Extraire dates

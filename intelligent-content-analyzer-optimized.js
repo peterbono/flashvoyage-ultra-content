@@ -1645,9 +1645,6 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
     console.log(`📏 Taille system: ${systemMessage.length} caractères`);
     console.log(`📏 Taille user: ${userMessage.length} caractères`);
     
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:generateFinalArticle:INPUT',message:'LLM input data',data:{storyContext:storyContext?.substring(0,300)||'null',storyCentralEvent:storyCentralEvent?.substring(0,300)||'null',storyCriticalMoment:storyCriticalMoment?.substring(0,300)||'null',storyResolution:storyResolution?.substring(0,300)||'null',citationsCount:availableCitations?.length||0,commentsCount:extracted.comments_snippets?.length||0},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-INPUT'})}).catch(()=>{});
-    // #endregion
     
     // DEBUG: Afficher les données disponibles
     console.log(`\n🔍 DEBUG DONNÉES DISPONIBLES POUR LE LLM:`);
@@ -1692,10 +1689,6 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
       console.warn('⚠️ Réponse LLM tronquée (finish_reason=length) dans generateFinalArticle - Tentative de réparation JSON');
     }
     
-    // #region agent log
-    const rawKeys = rawContent.match(/"([a-z_]+)"\s*:/gi)?.map(k=>k.replace(/[":]/g,'').toLowerCase()) || [];
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:generateFinalArticle:LLM_RAW',message:'LLM raw response keys',data:{rawLength:rawContent.length,finishReason,rawKeys,hasDeveloppementInRaw:rawContent.includes('"developpement"'),rawPreview:rawContent.substring(0,800)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-LLM'})}).catch(()=>{});
-    // #endregion
     
     const content = safeJsonParse(rawContent, 'generateFinalArticle_response');
     console.log('✅ Article final généré:', Object.keys(content));
@@ -1793,20 +1786,11 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         console.log('   ℹ️ Quick Guide optionnel : non généré, informations intégrées dans le récit narratif');
       }
       
-        // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:generateFinalArticle:FORMAT_CHECK',message:'Checking article format',data:{hasDeveloppement:!!(article.developpement && article.developpement.trim()),developpementLength:article.developpement?.length||0,hasContexte:!!article.contexte,hasMomentCritique:!!article.moment_critique,hasEvenementCentral:!!article.evenement_central,articleKeys:Object.keys(article)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-FORMAT'})}).catch(()=>{});
-        // #endregion
       
       if (article.developpement && article.developpement.trim()) {
         // Option B : un seul bloc développement + recommandations + verdict + signature (sans fallbacks)
         console.log('   ✅ FORMAT: Option B détecté (developpement présent)');
         let devHtml = article.developpement.trim();
-        // #region agent log
-        const accentSpaceMatches = devHtml.match(/[a-zà-ÿ]\s+[àâäéèêëïîôùûüÿ]/gi) || [];
-        const h2InDevMatches = devHtml.match(/<h2[^>]*>.*?<\/h2>/gi) || [];
-        const urlMatches = devHtml.match(/https?:\/\/[^\s"<>]+/gi) || [];
-        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:1778',message:'RAW LLM developpement output check',data:{accentSpaces:accentSpaceMatches,accentSpaceCount:accentSpaceMatches.length,h2Titles:h2InDevMatches,h2Count:h2InDevMatches.length,urlCount:urlMatches.length,urls:urlMatches,preview:devHtml.substring(0,500),devLength:devHtml.length},timestamp:Date.now(),hypothesisId:'H-LLM-RAW'})}).catch(()=>{});
-        // #endregion
         const englishDetection = this.detectEnglishContent(devHtml);
         if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
           console.log('   🌐 Champ "développement" détecté en anglais: traduction...');
@@ -1832,9 +1816,6 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         if (article.signature && article.signature.trim()) sections.push(article.signature);
         } else {
       // FALLBACK: Le LLM n'a pas renvoyé "developpement" — fusionner les anciens champs dans un seul bloc
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:generateFinalArticle:MERGE_FALLBACK',message:'Merging old fields into developpement',data:{articleKeys:Object.keys(article)},timestamp:Date.now(),hypothesisId:'H-FORMAT'})}).catch(()=>{});
-      // #endregion
       console.warn('   ⚠️ FORMAT: developpement ABSENT — fusion des anciens champs en un seul bloc');
       // MERGE FALLBACK: Concaténer tous les anciens champs non-vides dans un seul bloc
       const oldFieldsToMerge = ['contexte', 'evenement_central', 'moment_critique', 'resolution'];
@@ -1892,9 +1873,6 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
       
       let htmlContent = sections.filter(Boolean).join('\n\n');
       
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:generateFinalArticle:ASSEMBLY',message:'Final sections assembly',data:{sectionsCount:sections.filter(Boolean).length,htmlLength:htmlContent.length,sectionsPreview:sections.slice(0,3).map(s=>s?.substring(0,200)||'null'),developmentInSections:sections.some(s=>s&&s.includes('developpement'))},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-ASSEMBLY'})}).catch(()=>{});
-      // #endregion
       
       // GARDE-FOU CRITIQUE : Vérifier que l'article a du contenu réel
       const textOnly = htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -2472,17 +2450,11 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
       
       // 10.3.3 : Traduire la section "Ce que la communauté apporte" si elle contient de l'anglais
       const communitySectionMatch = htmlContent.match(/(<h2[^>]*>Ce que la communauté apporte[^<]*<\/h2>[\s\S]*?)(?=<h2[^>]*>|$)/i);
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:3011',message:'DEBUG community section',data:{found:!!communitySectionMatch,sectionLength:communitySectionMatch?communitySectionMatch[1].length:0,sectionPreview:communitySectionMatch?communitySectionMatch[1].substring(0,300):'N/A'},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H1'})}).catch(()=>{});
-      // #endregion
       if (communitySectionMatch) {
         const communitySection = communitySectionMatch[1];
         // AMÉLIORATION: Détecter TOUT contenu anglais, pas seulement des patterns spécifiques
         const englishDetection = this.detectEnglishContent(communitySection);
         const hasEnglishLiItems = /<li[^>]*>[^<]*\b(great|food|service|amazing|vistas|affordable|loved|consider|interested|culture|architecture|mountain|water|national|park|scenery)\b[^<]*<\/li>/gi.test(communitySection);
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:3020',message:'DEBUG community english check',data:{englishRatio:englishDetection.ratio,isEnglish:englishDetection.isEnglish,hasEnglishLiItems},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H1'})}).catch(()=>{});
-        // #endregion
         if (englishDetection.isEnglish || hasEnglishLiItems) {
           console.log(`🌐 POST-PROC 10.3.3: Traduction section "Ce que la communauté apporte" (${Math.round(englishDetection.ratio * 100)}% anglais)...`);
           const translated = await this.translateToFrench(communitySection);
@@ -2558,11 +2530,6 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
   async improveContentWithLLM(rawContent, context = {}) {
     console.log('\n🔄 PASSE 2: Amélioration du contenu par LLM...');
     console.log(`   📏 Contenu initial: ${rawContent.length} caractères`);
-    // #region agent log
-    const spacingIssuesBefore = (rawContent.match(/[a-zéèêëàâùûîïôöç]à[a-zéèêëàâùûîïôöç]/gi) || []).length;
-    const englishContentBefore = (rawContent.match(/\b(great|food|service|amazing|vistas|affordable|loved|consider|interested|culture|architecture)\b/gi) || []).length;
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:improveContentWithLLM:BEFORE',message:'Passe 2 LLM INPUT',data:{contentLength:rawContent.length,spacingIssues:spacingIssuesBefore,englishWords:englishContentBefore,preview:rawContent.substring(0,500)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H3'})}).catch(()=>{});
-    // #endregion
     
     const destination = context.destination || context.final_destination || 'Asie';
     const theme = context.theme || 'voyage';
@@ -2648,11 +2615,6 @@ ${rawContent}`;
         return rawContent;
       }
 
-      // #region agent log
-      const spacingIssuesAfter = (improvedContent.match(/[a-zéèêëàâùûîïôöç]à[a-zéèêëàâùûîïôöç]/gi) || []).length;
-      const englishContentAfter = (improvedContent.match(/\b(great|food|service|amazing|vistas|affordable|loved|consider|interested|culture|architecture)\b/gi) || []).length;
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:improveContentWithLLM:AFTER',message:'Passe 2 LLM OUTPUT',data:{contentLength:improvedContent.length,spacingIssues:spacingIssuesAfter,englishWords:englishContentAfter,spacingFixed:spacingIssuesBefore-spacingIssuesAfter,englishFixed:englishContentBefore-englishContentAfter},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H3'})}).catch(()=>{});
-      // #endregion
       console.log(`   ✅ Contenu amélioré: ${rawContent.length} → ${improvedContent.length} caractères`);
       return improvedContent;
 
@@ -3274,9 +3236,6 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
     }
     
     const result = destinations.length > 0 ? destinations.join(', ') : 'Asie';
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer:extractDestinations',message:'OpenFlights destinations extracted',data:{count:destinations.length,destinations:destinations.slice(0,10),result},timestamp:Date.now(),hypothesisId:'C'})}).catch(()=>{});
-    // #endregion
     return result;
   }
 

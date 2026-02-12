@@ -203,9 +203,6 @@ class ArticleFinalizer {
     const hasPattern = Boolean(pipelineContext?.pattern);
     const hasAffiliatePlan = Boolean(pipelineContext?.affiliate_plan?.placements?.length > 0);
     console.log(`✅ FINALIZER_INPUT_READY: has_story=${hasStory} has_pattern=${hasPattern} has_affiliate_plan=${hasAffiliatePlan} html_length=${htmlLength}`);
-    // #region agent log
-    { const _rawH = article?.content || ''; const _h2InPRaw = (_rawH.match(/<p[^>]*>[^<]*<h2/gi) || []).length; const _strayARaw = (_rawH.match(/<h2[^>]*>[^<]*<\/a>/gi) || []).length; const _h2sRaw = (_rawH.match(/<h2[^>]*>[\s\S]*?<\/h2>/gi) || []).map(h => h.substring(0,80)); fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:ENTRY',message:'H2 inside P check at ENTRY',data:{h2InsideP:_h2InPRaw,strayCloseA:_strayARaw,h2Titles:_h2sRaw,contentLength:_rawH.length},timestamp:Date.now(),hypothesisId:'H-H2WRAP'})}).catch(()=>{}); }
-    // #endregion
     
     console.log('\n🎨 FINALISATION DE L\'ARTICLE');
     console.log('==============================\n');
@@ -233,22 +230,13 @@ class ArticleFinalizer {
 
     let finalContent = article.content;
     const enhancements = { ...article.enhancements };
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:RAW_CONTENT',message:'Raw content before any widget placement',data:{hasOutilUtile:finalContent.includes('Outil utile'),hasAffiliateModule:finalContent.includes('affiliate-module'),hasCoworking:finalContent.includes('coworking'),contentFirst500:finalContent.substring(0,500)},timestamp:Date.now(),hypothesisId:'H3'})}).catch(()=>{});
-    // #endregion
     // 1. Remplacer les placeholders de widgets
     // PATCH 1: Passer pipelineContext
     const widgetResult = await this.replaceWidgetPlaceholders(finalContent, analysis, pipelineContext);
     finalContent = widgetResult.content;
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:AFTER_SYSTEM1',message:'Content after Travelpayouts widget placement (System 1)',data:{hasOutilUtile:finalContent.includes('Outil utile'),hasCoworking:finalContent.includes('coworking'),hasAffiliate:finalContent.includes('affiliate-module'),contentFirst500:finalContent.substring(0,500)},timestamp:Date.now(),hypothesisId:'H3-H4'})}).catch(()=>{});
-    // #endregion
     // DEBUG: Vérifier les widgets dans finalContent APRÈS assignation
     const widgetsAfterAssign = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets dans finalContent APRÈS widgetResult.content: count=${widgetsAfterAssign.count}, types=[${widgetsAfterAssign.types.join(', ')}], widgetResult.count=${widgetResult.count}`);    enhancements.widgetsReplaced = widgetResult.count;
-    // #region agent log
-    { const _h2InP = (finalContent.match(/<p[^>]*>[^<]*<h2/gi) || []).length; fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:AFTER_WIDGETS',message:'H2 inside P AFTER widget replacement',data:{h2InsideP:_h2InP,step:'afterWidgets'},timestamp:Date.now(),hypothesisId:'H-H2WRAP-STEP'})}).catch(()=>{}); }
-    // #endregion
 
     // 2. Vérifier et améliorer le quote highlight
     const quoteResult = this.ensureQuoteHighlight(finalContent, analysis);
@@ -286,9 +274,6 @@ class ArticleFinalizer {
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS fixMalformedLinks: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
     
-    // #region agent log
-    { const _h2InP = (finalContent.match(/<p[^>]*>[^<]*<h2/gi) || []).length; if (_h2InP > 0) fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:AFTER_FIXLINKS',message:'H2 inside P AFTER fixMalformedLinks',data:{h2InsideP:_h2InP,step:'fixMalformedLinks'},timestamp:Date.now(),hypothesisId:'H-H2WRAP-STEP'})}).catch(()=>{}); }
-    // #endregion
     // PHASE 6.0.5: Nettoyer les duplications de sections H2 (notamment "Limites et biais")
     finalContent = this.removeDuplicateH2Sections(finalContent);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
@@ -324,30 +309,18 @@ class ArticleFinalizer {
     finalContent = this.removeForbiddenH2Section(finalContent);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
 
-    // #region agent log
-    { const _h2InP = (finalContent.match(/<p[^>]*>[^<]*<h2/gi) || []).length; if (_h2InP > 0) fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:BEFORE_PARASITIC',message:'H2 inside P BEFORE removeParasiticSections',data:{h2InsideP:_h2InP,step:'beforeRemoveParasiticSections'},timestamp:Date.now(),hypothesisId:'H-H2WRAP-STEP'})}).catch(()=>{}); }
-    // #endregion
     // PHASE 6.0.10.1a: Supprimer les sections parasites (Contexte, Événement central, Moment critique, Résolution) en format Option B
     finalContent = this.removeParasiticSections(finalContent);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeParasiticSections: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    // #region agent log
-    { const _h = (finalContent.match(/<p[^>]*>[^<]*<h2/gi)||[]).length; if(_h>0) fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:AFTER_removeParasiticSections',message:'H2 inside P after removeParasiticSections',data:{h2InsideP:_h,step:'removeParasiticSections'},timestamp:Date.now(),hypothesisId:'H-H2WRAP-STEP'})}).catch(()=>{}); }
-    // #endregion
 
     // PHASE 6.0.10.1a.1: Supprimer les résidus de l'ancienne structure (Ce que la communauté apporte, Conseils pratiques, listes mal formées) en Option B
     finalContent = this.removeOldStructureResidues(finalContent);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeOldStructureResidues: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    // #region agent log
-    { const _h = (finalContent.match(/<p[^>]*>[^<]*<h2/gi)||[]).length; if(_h>0) fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:AFTER_removeOldStructureResidues',message:'H2 inside P after removeOldStructureResidues',data:{h2InsideP:_h,step:'removeOldStructureResidues'},timestamp:Date.now(),hypothesisId:'H-H2WRAP-STEP'})}).catch(()=>{}); }
-    // #endregion
 
     // PHASE 6.0.10.1b: Supprimer verdict générique (Pendant que vous / Chez Flash Voyages) dans "Ce qu'il faut retenir"
     finalContent = this.removeGenericVerdictPhrase(finalContent);
-    // #region agent log
-    { const _h = (finalContent.match(/<p[^>]*>[^<]*<h2/gi)||[]).length; if(_h>0) fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:AFTER_removeGenericVerdictPhrase',message:'H2 inside P after removeGenericVerdictPhrase',data:{h2InsideP:_h,step:'removeGenericVerdictPhrase'},timestamp:Date.now(),hypothesisId:'H-H2WRAP-STEP'})}).catch(()=>{}); }
-    // #endregion
 
     // PHASE 6.0.10.1c: Dédupliquer les blockquotes (même citation Reddit insérée 2 fois)
     finalContent = this.deduplicateBlockquotes(finalContent);
@@ -393,23 +366,10 @@ class ArticleFinalizer {
     finalContent = this.fixH2InsideP(finalContent);
     
     // PHASE 6.0.12: Équilibrer les paragraphes (après toutes les corrections de contenu)
-    // #region agent log
-    const preBalanceH2s = (finalContent.match(/<h2[^>]*>.*?<\/h2>/gi) || []);
-    const preBalanceBrokenLinks = (finalContent.match(/<a[^>]*href="[^"]*$/gm) || []);
-    const preBalanceH2InP = (finalContent.match(/<p[^>]*>[\s\S]*?<h2/gi) || []);
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:BEFORE_BALANCE',message:'Content BEFORE balanceParagraphs',data:{h2s:preBalanceH2s,h2Count:preBalanceH2s.length,brokenLinks:preBalanceBrokenLinks.length,h2InsideP:preBalanceH2InP.length,contentLength:finalContent.length,preview:finalContent.substring(0,800)},timestamp:Date.now(),hypothesisId:'H-BALANCE'})}).catch(()=>{});
-    // #endregion
     finalContent = this.balanceParagraphs(finalContent, tempReport);
     
     // PHASE 6.0.12.1: Re-extraire les H2 imbriqués APRÈS balanceParagraphs (safety net)
     finalContent = this.fixH2InsideP(finalContent);
-    // #region agent log
-    const postBalanceH2s = (finalContent.match(/<h2[^>]*>.*?<\/h2>/gi) || []);
-    const postBalanceBrokenLinks = (finalContent.match(/<a[^>]*href="https?:\/\/[^"]*\.[^"]*<\/p>/gi) || []);
-    const postBalanceH2InP = (finalContent.match(/<p[^>]*>[\s\S]*?<h2/gi) || []);
-    const postBalanceAccentSpaces = (finalContent.match(/[a-zà-ÿ]\s+[àâäéèêëïîôùûüÿ]/gi) || []);
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:AFTER_BALANCE',message:'Content AFTER balanceParagraphs',data:{h2s:postBalanceH2s,h2Count:postBalanceH2s.length,brokenLinksCount:postBalanceBrokenLinks.length,h2InsidePCount:postBalanceH2InP.length,accentSpaces:postBalanceAccentSpaces,accentSpaceCount:postBalanceAccentSpaces.length,contentLength:finalContent.length,preview:finalContent.substring(0,800)},timestamp:Date.now(),hypothesisId:'H-BALANCE-AFTER'})}).catch(()=>{});
-    // #endregion
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS balanceParagraphs: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
     
@@ -436,9 +396,6 @@ class ArticleFinalizer {
     }
     
     // PHASE 5.C: Injecter les modules d'affiliation si activé (APRÈS balanceParagraphs pour placement correct)
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:PHASE5C:ENTRY',message:'PHASE 5.C entry - content state before affiliate injection',data:{enableAffiliateInjector:ENABLE_AFFILIATE_INJECTOR,hasPlacements:!!pipelineContext?.affiliate_plan?.placements?.length,placementCount:pipelineContext?.affiliate_plan?.placements?.length||0,placementIds:(pipelineContext?.affiliate_plan?.placements||[]).map(p=>p.id+':'+p.anchor),h2Count:(finalContent.match(/<h2[^>]*>/gi)||[]).length,pCount:(finalContent.match(/<p[^>]*>/gi)||[]).length,hasArticlesConnexes:finalContent.includes('Articles connexes'),contentFirst300:finalContent.substring(0,300),hasOutil:finalContent.includes('Outil utile')},timestamp:Date.now(),hypothesisId:'H1-H2-H3-H5'})}).catch(()=>{});
-    // #endregion
     if (ENABLE_AFFILIATE_INJECTOR && pipelineContext?.affiliate_plan?.placements?.length > 0) {
       try {
         const { renderAffiliateModule } = await import('./affiliate-module-renderer.js');
@@ -683,16 +640,6 @@ class ArticleFinalizer {
           .replace(/\n?```\s*$/, '');
       }
       
-      // #region agent log
-      const spacingIssuesBeforeFix = [
-        (returnValue.content.match(/Salutà/gi) || []).length,
-        (returnValue.content.match(/Japonà/gi) || []).length,
-        (returnValue.content.match(/deséléments/gi) || []).length,
-        (returnValue.content.match(/médicauxà/gi) || []).length,
-        (returnValue.content.match(/trèsélevés/gi) || []).length
-      ];
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:spacingFix:BEFORE',message:'Spacing issues BEFORE fix',data:{total:spacingIssuesBeforeFix.reduce((a,b)=>a+b,0),details:{Salutà:spacingIssuesBeforeFix[0],Japonà:spacingIssuesBeforeFix[1],deséléments:spacingIssuesBeforeFix[2],médicauxà:spacingIssuesBeforeFix[3],trèsélevés:spacingIssuesBeforeFix[4]}},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H2'})}).catch(()=>{});
-      // #endregion
       
       // FIX BROKEN LINKS: Réparer les liens cassés par le LLM (href="https://www</p> → suppression)
       // Ces liens incomplets sont inutilisables et cassent le HTML
@@ -756,18 +703,6 @@ class ArticleFinalizer {
         // .replace(/([a-zéèêëàâùûîïôöç]{3,})é([a-zéèêëàâùûîïôöç]{4,})/gi, ...)
         // .replace(/([a-zéèêëàâùûîïôöç]{3,})ê([a-zéèêëàâùûîïôöç]{3,})/gi, ...)
         .trim();
-      // #region agent log
-      // Détection de mots collés: chercher des patterns LONGS (>6 chars) qui contiennent un accent au milieu
-      // Exclure les mots français normaux (août, idée, témoignage...) en ne comptant que les collages vrais
-      const plainText = returnValue.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
-      const safeAccentWords = /^(août|idée|idées|année|années|témoignage|témoignages|sélection|espérer|désespérément|récupérer|opérer|bénéficier|considérer|différent|différence|nécessaire|sécurité|résolution|réservation|médicaux|spécifique|expérience|intéressant|générale|régulier|vérifier|préférer|développer|améliorer|particulière|déjà|voilà|célèbre|élevé|élevés|élevée|élevées|équilibré|équilibrée)$/i;
-      const stuckCandidates = (plainText.match(/[a-zéèêëàâùûîïôöç]{3,}[àéèêëâùûîïôöç][a-zéèêëàâùûîïôöç]{3,}/gi) || []);
-      const genericStuckAccents = stuckCandidates.filter(w => !safeAccentWords.test(w));
-      const stuckSamples = genericStuckAccents.slice(0, 10);
-      // Vérifier aussi les sections parasites restantes
-      const parasiticH2s = (returnValue.content.match(/<h2[^>]*>\s*(Contexte|Résolution|Moment critique|Événement central|Ce que la communauté apporte)\s*<\/h2>/gi) || []);
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:FINAL_QUALITY_CHECK',message:'Final quality check before return',data:{stuckAccentCount:genericStuckAccents.length,stuckSamples,parasiticH2Count:parasiticH2s.length,parasiticH2s,contentLength:returnValue.content.length},timestamp:Date.now(),hypothesisId:'H-QUALITY'})}).catch(()=>{});
-      // #endregion
       console.log('   ✅ Nettoyage wrapper HTML Cheerio effectué');
     }
     
@@ -799,10 +734,6 @@ class ArticleFinalizer {
       console.log(`   ✅ Validation pré-publication OK: ${textLength} caractères`);
     }
     
-    // #region agent log
-    const widgetsFinalCheck = this.detectRenderedWidgets(returnValue.content);
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:finalizeArticle:FINAL_RETURN',message:'Widget check before FINAL return',data:{widgetsCount:widgetsFinalCheck.count,widgetsTypes:widgetsFinalCheck.types,hasAffiliateDiv:returnValue.content?.includes('data-fv-segment="affiliate"'),hasTrpwdg:returnValue.content?.includes('trpwdg.com')},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET-FINAL'})}).catch(()=>{});
-    // #endregion
     
     return returnValue;
   }
@@ -1104,9 +1035,6 @@ class ArticleFinalizer {
         console.log(`✅ geo_defaults calculé: ${JSON.stringify(geoDefaults)}`);
       }
       
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:replaceWidgetPlaceholders:GEO_DEFAULTS',message:'Widget geo_defaults check',data:{hasGeoDefaults:!!geoDefaults,geoDefaults:geoDefaults,finalDestination,geo,widgetScriptsKeys:Object.keys(widgetScripts||{})},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET'})}).catch(()=>{});
-      // #endregion
       
       // FIX B: Créer un contexte unique partagé (utiliser celui passé en paramètre si disponible)
       if (!pipelineContext) {
@@ -1160,9 +1088,6 @@ class ArticleFinalizer {
           widgetScripts.connectivity = this.widgetPlacer.getWidgetScript('connectivity', minimalWidgetPlan, pipelineContext);
         }
         
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:replaceWidgetPlaceholders:OFFLINE_SCRIPTS',message:'Offline widget scripts',data:{hasFlights:!!widgetScripts.flights,hasConnectivity:!!widgetScripts.connectivity,flightsPreview:widgetScripts.flights?.substring(0,200),geoDefaultsDest:geoDefaults?.destination},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET'})}).catch(()=>{});
-        // #endregion
         
         // Fallback déterministe: insérer widgets avant "Articles connexes" sinon après le 2e <p>
         finalHtml = this.placeWidgetsOffline(updatedContent, widgetScripts);
@@ -1188,9 +1113,6 @@ class ArticleFinalizer {
         audience: analysis?.target_audience || 'Nomades digitaux'
       };
       
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:replaceWidgetPlaceholders:INTELLIGENT_PATH',message:'Using intelligent widget placement',data:{articleContext,widgetPlanGeoDefaults:widgetPlan?.widget_plan?.geo_defaults,pipelineContextGeoDefaults:pipelineContext?.geo_defaults},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H-WIDGET'})}).catch(()=>{});
-        // #endregion
         
         // FIX C: Passer pipelineContext au lieu de widgetPlan seul
         placementResult = await this.widgetPlacer.placeWidgetsIntelligently(
@@ -3014,9 +2936,6 @@ class ArticleFinalizer {
     const h2Count = (html.match(/<h2[^>]*>/gi) || []).length;
     // Considérer Option B si on a au moins une des deux sections structurées OU 3+ H2 (développement libre)
     const result = hasVerdict || hasRecommandations || h2Count >= 3;
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:isOptionBFormat',message:'Option B detection',data:{hasVerdict,hasRecommandations,h2Count,result},timestamp:Date.now(),hypothesisId:'H-OPTIONB'})}).catch(()=>{});
-    // #endregion
     return result;
   }
 
@@ -4358,9 +4277,6 @@ class ArticleFinalizer {
     
     let cleanedHtml = html;
     let fixesCount = 0;
-    // #region agent log
-    { const _h2InP = (html.match(/<p[^>]*>[^<]*<h2/gi) || []).length; const _strayA = (html.match(/<h2[^>]*>[^<]*<\/a>/gi) || []).length; const _preposA = (html.match(/[a-zà-ÿ]\s+à\s/gi) || []).slice(0,10); fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:normalizeSpacing:ENTRY',message:'State at ENTRY of normalizeSpacing',data:{h2InsideP:_h2InP,strayCloseAinH2:_strayA,prepositionAsamples:_preposA,contentLength:html.length},timestamp:Date.now(),hypothesisId:'H-H2WRAP'})}).catch(()=>{}); }
-    // #endregion
     // CORRECTION CRITIQUE: Protéger les widgets (script/form) AVANT tout traitement pour éviter qu'ils soient modifiés
     const widgetPlaceholders = new Map();
     let widgetCounter = 0;
@@ -4570,10 +4486,6 @@ class ArticleFinalizer {
     
     // CORRECTION FINALE: Nettoyage agressif des espaces dans les mots (dernière passe après toutes les restaurations)
     // Cette passe finale capture les cas qui ont pu échapper aux passes précédentes
-    // #region agent log
-    const preFixAccentSpaces = (cleanedHtml.match(/[a-zà-ÿ]\s+[àâäéèêëïîôùûüÿ]/gi) || []);
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:normalizeSpacing:ACCENT_FIX',message:'Accent spaces BEFORE final fix',data:{matches:preFixAccentSpaces,count:preFixAccentSpaces.length,samples:preFixAccentSpaces.slice(0,20)},timestamp:Date.now(),hypothesisId:'H-ACCENT'})}).catch(()=>{});
-    // #endregion
     // APPROCHE INTELLIGENTE: Capturer le mot ENTIER avant l'espace pour distinguer
     // les mots cassés (itin éraire → itinéraire) des mots séparés (ou équilibre → garder)
     const _knownMerged = new Set(['voilà', 'déjà', 'holà']);
@@ -4598,9 +4510,6 @@ class ArticleFinalizer {
       // Sinon fusionner (mot cassé par espace parasite)
       return part1 + part2;
     });
-    // #region agent log
-    { const _postGenAccent = (cleanedHtml.match(/[a-zà-ÿ]\s+[àâäéèêëïîôùûüÿ]/gi) || []); fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:normalizeSpacing:AFTER_GENERAL_REGEX',message:'Accent spaces AFTER general regex',data:{count:_postGenAccent.length,samples:_postGenAccent.slice(0,20)},timestamp:Date.now(),hypothesisId:'H-ACCENT-GENERAL'})}).catch(()=>{}); }
-    // #endregion
 
     // Nettoyage final pour les mots complets avec espace avant lettre accentuée finale
     // Exclure les cas où le mot avant l'espace est un mot français valide (ex: "Numériques à" → garder séparé)
@@ -4848,9 +4757,6 @@ class ArticleFinalizer {
       const widgetsAfterManualRestore = this.detectRenderedWidgets(cleanedHtml);
       console.log(`🔍 DEBUG normalizeSpacing: Après restauration manuelle: ${widgetsAfterManualRestore.count} widget(s) détecté(s)`);
     }    
-    // #region agent log
-    { const _h2InPAfter = (cleanedHtml.match(/<p[^>]*>[^<]*<h2/gi) || []).length; const _accentRemain = (cleanedHtml.match(/[a-zà-ÿ]\s+[àâäéèêëïîôùûüÿ]/gi) || []).length; const _prêtA = (cleanedHtml.match(/prêt\s*à/gi) || []); const _faceA = (cleanedHtml.match(/face\s*à/gi) || []); const _aété = (cleanedHtml.match(/a\s*été/gi) || []); fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:normalizeSpacing:EXIT',message:'State at EXIT of normalizeSpacing',data:{h2InsidePAfter:_h2InPAfter,accentSpacesRemaining:_accentRemain,prêtÀ:_prêtA,faceÀ:_faceA,aÉté:_aété,contentLength:cleanedHtml.length},timestamp:Date.now(),hypothesisId:'H-ACCENT-AFTER'})}).catch(()=>{}); }
-    // #endregion
     if (fixesCount > 0 || cleanedHtml !== html) {
       report.actions.push({
         type: 'normalized_spacing',
@@ -5562,9 +5468,6 @@ class ArticleFinalizer {
     const h2Count = h2Matches.length;
     const bodyLength = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().length;
     
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:checkAndFixStoryAlignment',message:'Story alignment (simplified)',data:{h2Count,bodyLength,h2Titles:h2Matches.map(h=>h.substring(0,60))},timestamp:Date.now(),hypothesisId:'H1-PARASITIC'})}).catch(()=>{});
-    // #endregion
     
     let finalHtml = html;
     let status = 'pass';
@@ -6135,15 +6038,9 @@ class ArticleFinalizer {
 
     const { placementId, placementIndex = 0, totalPlacements = 1 } = options;
 
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectAffiliateModule:ENTRY',message:'Affiliate module injection attempt',data:{placementId,anchor,placementIndex,totalPlacements,htmlLength:html.length,h2Count:(html.match(/<h2[^>]*>/gi)||[]).length,hasArticlesConnexes:html.includes('Articles connexes')},timestamp:Date.now(),hypothesisId:'H1-H2'})}).catch(()=>{});
-    // #endregion
 
     if (placementId) {
       let smartIndex = this.findSmartInsertPosition(html, placementId);
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectAffiliateModule:SMART_INDEX',message:'Smart index result',data:{placementId,smartIndex,smartIndexIsNull:smartIndex==null},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
-      // #endregion
       // Garde narrative : ne pas placer trop tôt (après 3e H2 ou 500 caractères, et au moins 3 paragraphes avant)
       // S'applique à TOUS les modules, pas seulement le premier
       if (smartIndex != null) {
@@ -6161,9 +6058,6 @@ class ArticleFinalizer {
         
         const minParagraphs = 3 + placementIndex; // 3 pour le 1er, 4 pour le 2e, etc.
         
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectAffiliateModule:GUARD',message:'Narrative guard evaluation',data:{placementId,placementIndex,smartIndex,h2Count:h2List.length,minNarrativeIndex,paragraphCount,minParagraphs,willReject:smartIndex<minNarrativeIndex||paragraphCount<minParagraphs},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
-        // #endregion
         if (smartIndex < minNarrativeIndex || paragraphCount < minParagraphs) {
           smartIndex = null;
           console.log(`   📍 Widget ${placementId} (module #${placementIndex}): position smart trop tôt (seuil narratif: H2=${h2List.length}, minNarrativeIdx=${minNarrativeIndex}, paragraphes=${paragraphCount} < ${minParagraphs}), fallback anchor`);
@@ -6173,17 +6067,11 @@ class ArticleFinalizer {
         const out = html.slice(0, smartIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(smartIndex);
         if (out !== html) {
           console.log(`   📍 Widget ${placementId} placé en position contextuelle (mot-clé trouvé)`);
-          // #region agent log
-          fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectAffiliateModule:PLACED_SMART',message:'Widget placed at smart position',data:{placementId,smartIndex,contentAroundInsertion:html.substring(Math.max(0,smartIndex-100),smartIndex+100)},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
-          // #endregion
           return out;
         }
       }
     }
 
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectAffiliateModule:ANCHOR_FALLBACK',message:'Using anchor-based placement (smart rejected)',data:{placementId,anchor,hasArticlesConnexes:html.includes('Articles connexes')},timestamp:Date.now(),hypothesisId:'H2'})}).catch(()=>{});
-    // #endregion
     switch (anchor) {
       case 'before_related':
         // Juste avant "Articles connexes"
@@ -6240,9 +6128,6 @@ class ArticleFinalizer {
         const allH2Context = html.matchAll(/<h2[^>]*>.*?<\/h2>/gi);
         const h2ListContext = Array.from(allH2Context);
         const h2TargetIndex = Math.min(1 + placementIndex, h2ListContext.length - 1);
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectAffiliateModule:AFTER_CONTEXT',message:'after_context anchor placement',data:{placementId,h2Count:h2ListContext.length,h2TargetIndex,placementIndex,h2Titles:h2ListContext.slice(0,5).map(h=>h[0].substring(0,50))},timestamp:Date.now(),hypothesisId:'H5'})}).catch(()=>{});
-        // #endregion
         if (h2ListContext.length >= 2 && h2TargetIndex >= 0) {
           const targetH2 = h2ListContext[h2TargetIndex];
           const insertIndex = targetH2.index + targetH2[0].length;
@@ -6930,9 +6815,6 @@ class ArticleFinalizer {
     const listItems = html.match(/<li[^>]*>([^<]+)<\/li>/gi) || [];
     const allTextElements = [...paragraphs, ...listItems];
     
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:detectAndTranslateEnglish',message:'Text elements to check',data:{paragraphs:paragraphs.length,listItems:listItems.length,sampleLi:listItems.slice(0,3).map(li=>li.substring(0,80))},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H1'})}).catch(()=>{});
-    // #endregion
     
     // AMÉLIORATION: Patterns anglais plus complets (exclure mots français communs)
     // Exclure: visa, fatigue, moment (mots français aussi)
@@ -7687,9 +7569,6 @@ class ArticleFinalizer {
 
     // Vérifier qu'au moins un CTA a une partner_url OU une direct_url (fallback)
     const hasAnyCta = Object.values(ctas).some(c => c?.partner_url || c?.direct_url);
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectPartnerBrandLinks:CTA_STATUS',message:'CTA status check',data:{hasAnyCta,ctaKeys:Object.keys(ctas),ctaDetails:Object.fromEntries(Object.entries(ctas).map(([k,v])=>[k,{hasPartnerUrl:!!v?.partner_url,hasDirectUrl:!!v?.direct_url,ok:v?.ok}])),brandCount:html.match(/Kiwi\.com|Booking\.com|Booking|Airalo/gi)?.length||0},timestamp:Date.now(),hypothesisId:'H1-BRAND-LINKS'})}).catch(()=>{});
-    // #endregion
     if (!hasAnyCta) {
       console.log('🔗 PARTNER_BRAND_LINKS: Aucun partner_url ni direct_url disponible — skip');
       return html;
@@ -7801,9 +7680,6 @@ class ArticleFinalizer {
     }
 
     const totalCount = replacedHrefCount + wrappedCount;
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:injectPartnerBrandLinks:RESULT',message:'Brand links injection result',data:{replacedHrefCount,wrappedCount,totalCount},timestamp:Date.now(),hypothesisId:'H1-BRAND-LINKS'})}).catch(()=>{});
-    // #endregion
     if (totalCount > 0) {
       console.log(`✅ PARTNER_BRAND_LINKS: ${totalCount} lien(s) affilié(s) (${replacedHrefCount} href remplacés, ${wrappedCount} textes wrappés)`);
     } else {
@@ -8836,12 +8712,6 @@ class ArticleFinalizer {
         });
         
         if (validChunks.length > 1) {
-          // #region agent log
-          const hasH2InChunks = validChunks.some(c => /<h2/i.test(c));
-          const hasBrokenUrl = validChunks.some(c => /^com[">\/]|^\.com|^\.kiwi|^\.airalo/i.test(c.trim()));
-          const hasUnclosedA = validChunks.some(c => /<a[^>]*$/.test(c) || /^[^<]*<\/a>/.test(c));
-          fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:balanceParagraphs:SPLIT',message:'Paragraph split details',data:{originalLength:para.length,chunkCount:validChunks.length,hasH2InChunks,hasBrokenUrl,hasUnclosedA,originalPreview:para.htmlContent?.substring(0,300)||para.text?.substring(0,300),chunks:validChunks.map((c,i)=>({idx:i,preview:c.substring(0,120),len:c.length}))},timestamp:Date.now(),hypothesisId:'H-BALANCE-SPLIT'})}).catch(()=>{});
-          // #endregion
           // AMÉLIORATION: Utiliser le contenu HTML original si disponible, sinon reconstruire
           const newParagraphs = validChunks.map(chunk => `<p>${chunk}</p>`).join('\n');
           cleanedHtml = cleanedHtml.replace(para.fullMatch, newParagraphs);

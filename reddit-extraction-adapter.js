@@ -6,6 +6,7 @@
  */
 
 import { extractRedditSemantics } from './reddit-semantic-extractor.js';
+import { ASIA_DESTINATIONS, CITY_TO_COUNTRY, normalizeDestination } from './destinations.js';
 
 /**
  * Détecte si un article est une question "où partir / itinéraire / idées"
@@ -25,41 +26,7 @@ export function isDestinationQuestion(article) {
   return questionPatterns.some(pattern => pattern.test(text));
 }
 
-// Mapping lieux secondaires → destinations principales (réutilisé dans plusieurs fonctions)
-const SECONDARY_LOCATION_MAP = {
-  'magome': 'japan', 'nagiso': 'japan', 'nakasendo': 'japan',
-  'tokyo': 'japan', 'kyoto': 'japan', 'osaka': 'japan', 'nara': 'japan', 'hiroshima': 'japan',
-  'bangkok': 'thailand', 'chiang mai': 'thailand', 'phuket': 'thailand', 'koh samui': 'thailand',
-  'hanoi': 'vietnam', 'ho chi minh': 'vietnam', 'saigon': 'vietnam', 'da nang': 'vietnam',
-  'bali': 'indonesia', 'jakarta': 'indonesia', 'ubud': 'indonesia', 'lombok': 'indonesia',
-  'seoul': 'korea', 'séoul': 'korea', 'busan': 'korea',
-  'manila': 'philippines', 'cebu': 'philippines', 'palawan': 'philippines',
-  'kuala lumpur': 'malaysia', 'penang': 'malaysia', 'langkawi': 'malaysia',
-  'phnom penh': 'cambodia', 'siem reap': 'cambodia',
-  'singapore': 'singapore', 'singapour': 'singapore'
-};
-
-// Liste des destinations Asie pour matching strict
-const ASIA_DESTINATIONS = [
-  'indonesia', 'indonésie', 'bali', 'jakarta', 'ubud', 'lombok',
-  'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'nara', 'hiroshima',
-  'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'phuket', 'koh samui',
-  'vietnam', 'hanoi', 'ho chi minh', 'saigon', 'da nang',
-  'korea', 'corée', 'seoul', 'séoul', 'busan',
-  'philippines', 'manila', 'cebu', 'palawan',
-  'malaysia', 'malaisie', 'kuala lumpur', 'penang', 'langkawi',
-  'cambodia', 'cambodge', 'phnom penh', 'siem reap',
-  'singapore', 'singapour',
-  'magome', 'nagiso', 'nakasendo'
-];
-
-/**
- * Normalise un nom de destination vers son pays/région principal
- */
-function normalizeDestination(dest) {
-  const lower = dest.toLowerCase().trim();
-  return SECONDARY_LOCATION_MAP[lower] || lower;
-}
+// ASIA_DESTINATIONS, CITY_TO_COUNTRY et normalizeDestination importés depuis destinations.js
 
 /**
  * Score la richesse en données exploitables de chaque destination

@@ -29,6 +29,7 @@
  */
 
 import { isKnownLocation } from './airport-lookup.js';
+import { CITY_TO_COUNTRY } from './destinations.js';
 
 class SeoOptimizer {
   constructor() {
@@ -1407,24 +1408,7 @@ class SeoOptimizer {
       
       // AMÉLIORATION: Matching par destination (bonus/pénalité)
       if (articleDestination) {
-        // Mapping ville → pays pour la comparaison de destinations
-        const CITY_TO_COUNTRY = {
-          'bali': 'indonesia', 'ubud': 'indonesia', 'jakarta': 'indonesia', 'lombok': 'indonesia', 'yogyakarta': 'indonesia',
-          'indonésie': 'indonesia', 'indonesie': 'indonesia',
-          'tokyo': 'japan', 'kyoto': 'japan', 'osaka': 'japan', 'nara': 'japan', 'hiroshima': 'japan',
-          'japon': 'japan',
-          'bangkok': 'thailand', 'chiang mai': 'thailand', 'phuket': 'thailand', 'koh samui': 'thailand',
-          'thaïlande': 'thailand', 'thailande': 'thailand',
-          'hanoi': 'vietnam', 'ho chi minh': 'vietnam', 'saigon': 'vietnam', 'da nang': 'vietnam', 'hoi an': 'vietnam',
-          'seoul': 'korea', 'séoul': 'korea', 'busan': 'korea',
-          'corée': 'korea', 'coree': 'korea',
-          'manila': 'philippines', 'cebu': 'philippines', 'palawan': 'philippines',
-          'kuala lumpur': 'malaysia', 'penang': 'malaysia', 'langkawi': 'malaysia',
-          'malaisie': 'malaysia',
-          'phnom penh': 'cambodia', 'siem reap': 'cambodia', 'cambodge': 'cambodia',
-          'singapour': 'singapore',
-          'taïwan': 'taiwan', 'taipei': 'taiwan'
-        };
+        // CITY_TO_COUNTRY importé depuis destinations.js (source unique de vérité)
         
         // Normaliser la destination de l'article vers un pays
         const normalizedArticleDest = CITY_TO_COUNTRY[articleDestination] || articleDestination;

@@ -100,7 +100,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
   },
 
   // ===== HÔTELS =====
-  // HOTELLOOK SUPPRIMÉ - Plus de partenaire
+  // HOTELLOOK SUPPRIMÉ - Plus de partenaire hôtels dédié
   hotels: {
     // Section vide - Hotellook retiré
   },
@@ -134,8 +134,15 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
         category: "Insurance",
         script: `<iframe src="https://tp.media/content?campaign_id=165&promo_id=4775&shmarker=676421&trs=463418&widget=320x356" width="320" height="356" frameborder="0"> </iframe>`,
         context: "Articles sur assurance voyage USA (format vertical)"
+      },
+      schengenVisa: {
+        brand: "Insubuy",
+        type: "Schengen Visa Insurance Search Form",
+        reward: "—",
+        category: "Insurance",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=4797&campaign_id=111" charset="utf-8"></script>`,
+        context: "Articles sur visa Schengen, assurance pour l'Europe"
       }
-      // schengenVisa: à ajouter quand l'URL Insubuy Schengen sera fournie (actuellement non fournie)
     }
   },
 
@@ -163,6 +170,327 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
         category: "SIM-cards",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&locale=en&powered_by=true&color_button=%2332a8dd&color_focused=%2332a8dd&secondary=%23FFFFFF&dark=%23262626&light=%23FFFFFF&special=%23C4C4C4&border_radius=0&plain=false&no_labels=true&promo_id=8588&campaign_id=541" charset="utf-8"></script>`,
         context: "Articles sur connectivité, eSIM, guides technologiques pour nomades"
+      }
+    }
+  },
+
+  // ===== TRANSFERTS AÉROPORT / NAVETTES =====
+  // Kiwitaxi en premier (couverture Asie la plus large)
+  transfers: {
+    kiwitaxi: {
+      shuttlesSearch: {
+        brand: "Kiwitaxi",
+        type: "Shuttles Search Form",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=2949&campaign_id=111" charset="utf-8"></script>`,
+        context: "Articles sur transferts aéroport, navettes, arrivée dans un pays"
+      },
+      shortSearch: {
+        brand: "Kiwitaxi",
+        type: "Short and Tidy Shuttles Search Form",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=1486&campaign_id=111" charset="utf-8"></script>`,
+        context: "Encart compact pour transferts aéroport"
+      },
+      reviews: {
+        brand: "Kiwitaxi",
+        type: "Reviews Widget",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=2948&campaign_id=111" charset="utf-8"></script>`,
+        context: "Avis sur les transferts, retours d'expérience"
+      },
+      whiteLabel: {
+        brand: "Kiwitaxi",
+        type: "White Label",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=691&campaign_id=111" charset="utf-8"></script>`,
+        context: "Page dédiée transferts, intégration complète"
+      },
+      whiteLabel2: {
+        brand: "Kiwitaxi",
+        type: "White Label 2.0",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3879&campaign_id=111" charset="utf-8"></script>`,
+        context: "Page dédiée transferts, version modernisée"
+      }
+    },
+    intui: {
+      shuttlesSearch: {
+        brand: "intui.travel",
+        type: "Shuttles Search Form",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=1586&campaign_id=111" charset="utf-8"></script>`,
+        context: "Recherche de navettes et transferts"
+      },
+      oneFieldSearch: {
+        brand: "intui.travel",
+        type: "One Field Shuttles Search Form",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3506&campaign_id=111" charset="utf-8"></script>`,
+        context: "Formulaire compact une ligne pour navettes"
+      },
+      top3Options: {
+        brand: "intui.travel",
+        type: "Shuttles Search Form (Top 3 Options)",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3507&campaign_id=111" charset="utf-8"></script>`,
+        context: "Top 3 options de transfert pour une destination"
+      },
+      shortSearch: {
+        brand: "intui.travel",
+        type: "Short and Tidy Shuttles Search Form",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=4674&campaign_id=111" charset="utf-8"></script>`,
+        context: "Encart compact pour navettes intui.travel"
+      },
+      specificDestination: {
+        brand: "intui.travel",
+        type: "Specific Destination Widget",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3465&campaign_id=111" charset="utf-8"></script>`,
+        context: "Transferts vers une destination spécifique"
+      },
+      specificRoute: {
+        brand: "intui.travel",
+        type: "Specific Route Widget",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3466&campaign_id=111" charset="utf-8"></script>`,
+        context: "Route de transfert spécifique (ex: aéroport → hôtel)"
+      },
+      topDestinations: {
+        brand: "intui.travel",
+        type: "Shuttles Search Form (Top Destinations)",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=8597&campaign_id=111" charset="utf-8"></script>`,
+        context: "Destinations populaires pour transferts"
+      },
+      topCountries: {
+        brand: "intui.travel",
+        type: "Shuttles Search Form (Top Countries)",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=8598&campaign_id=111" charset="utf-8"></script>`,
+        context: "Pays populaires pour transferts"
+      },
+      whiteLabel: {
+        brand: "intui.travel",
+        type: "White Label",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=1504&campaign_id=111" charset="utf-8"></script>`,
+        context: "Page dédiée transferts intui.travel"
+      }
+    },
+    welcomePickups: {
+      shuttlesSearch: {
+        brand: "Welcome Pickups",
+        type: "Shuttles Search Form",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=8951&campaign_id=111" charset="utf-8"></script>`,
+        context: "Accueil personnalisé et transfert aéroport"
+      }
+    },
+    indrive: {
+      rideSearch: {
+        brand: "Indrive",
+        type: "Ride Search Form",
+        reward: "—",
+        category: "Transfers",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=8450&campaign_id=111" charset="utf-8"></script>`,
+        context: "Trajets ville-à-ville, alternative aux bus/trains"
+      }
+    }
+  },
+
+  // ===== TOURS & ACTIVITÉS =====
+  // Tiqets en premier (large catalogue global)
+  tours: {
+    tiqets: {
+      popularTours: {
+        brand: "Tiqets",
+        type: "Popular Tours Widget",
+        reward: "5.5%",
+        category: "Tours",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3947&campaign_id=111" charset="utf-8"></script>`,
+        context: "Articles sur activités, visites, temples, musées, que faire"
+      },
+      specificTour: {
+        brand: "Tiqets",
+        type: "Specific Tour Widget",
+        reward: "5.5%",
+        category: "Tours",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3948&campaign_id=111" charset="utf-8"></script>`,
+        context: "Tour/activité spécifique dans une ville"
+      },
+      availabilityCalendar: {
+        brand: "Tiqets",
+        type: "Availability Calendar Widget",
+        reward: "5.5%",
+        category: "Tours",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3984&campaign_id=111" charset="utf-8"></script>`,
+        context: "Calendrier de disponibilité pour tours et activités"
+      }
+    },
+    wegotrip: {
+      specificTours: {
+        brand: "WeGoTrip",
+        type: "Specific Tours Widget",
+        reward: "—",
+        category: "Tours",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=4489&campaign_id=111" charset="utf-8"></script>`,
+        context: "Tours audio-guidés et excursions spécifiques"
+      }
+    }
+  },
+
+  // ===== LOCATION VOITURES =====
+  // Economybookings en premier (60% commission !)
+  car_rental: {
+    economybookings: {
+      searchForm: {
+        brand: "Economybookings.com",
+        type: "Rental Cars Search Form",
+        reward: "60%",
+        category: "Car Rental",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=4480&campaign_id=111" charset="utf-8"></script>`,
+        context: "Articles sur location de voiture, road trip, explorer par la route"
+      },
+      dynamicBanner: {
+        brand: "Economybookings.com",
+        type: "Rental Cars Dynamic Banner",
+        reward: "60%",
+        category: "Car Rental",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=2082&campaign_id=111" charset="utf-8"></script>`,
+        context: "Bannière dynamique location de voiture"
+      }
+    },
+    qeeq: {
+      searchForm: {
+        brand: "QEEQ",
+        type: "Rental Cars Search Form",
+        reward: "—",
+        category: "Car Rental",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=4850&campaign_id=111" charset="utf-8"></script>`,
+        context: "Recherche location de voiture, alternative Economybookings"
+      }
+    },
+    localrent: {
+      searchForm: {
+        brand: "Localrent.com",
+        type: "Rental Cars Search Form",
+        reward: "—",
+        category: "Car Rental",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=4322&campaign_id=111" charset="utf-8"></script>`,
+        context: "Location voiture locale, agences indépendantes"
+      },
+      whiteLabel: {
+        brand: "Localrent.com",
+        type: "White Label Widget",
+        reward: "—",
+        category: "Car Rental",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=2466&campaign_id=111" charset="utf-8"></script>`,
+        context: "Page dédiée location locale"
+      }
+    },
+    getrentacar: {
+      searchForm: {
+        brand: "GetRentacar.com",
+        type: "Search form",
+        reward: "—",
+        category: "Car Rental",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=8813&campaign_id=111" charset="utf-8"></script>`,
+        context: "Location voiture internationale"
+      }
+    },
+    autoeurope: {
+      searchForm: {
+        brand: "AutoEurope (EU,UK)",
+        type: "Rental Cars Search Form",
+        reward: "6%/2.4%",
+        category: "Car Rental",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=4362&campaign_id=111" charset="utf-8"></script>`,
+        context: "Location voiture Europe et international"
+      }
+    }
+  },
+
+  // ===== VÉLOS & SCOOTERS =====
+  bikes: {
+    bikesbooking: {
+      searchForm: {
+        brand: "BikesBooking.com",
+        type: "Rental Bikes Search Form",
+        reward: "—",
+        category: "Bikes",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=5472&campaign_id=111" charset="utf-8"></script>`,
+        context: "Articles sur vélo, scooter, deux-roues, explorer en moto"
+      }
+    }
+  },
+
+  // ===== COMPENSATION VOLS =====
+  flight_compensation: {
+    airhelp: {
+      searchForm: {
+        brand: "AirHelp",
+        type: "Flight Compensation Search Form",
+        reward: "13.5-18%",
+        category: "Flight Compensation",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=8679&campaign_id=111" charset="utf-8"></script>`,
+        context: "Articles sur retards, annulations, droits des passagers"
+      }
+    },
+    compensair: {
+      submitForm: {
+        brand: "Compensair",
+        type: "Submit Application Widget",
+        reward: "—",
+        category: "Flight Compensation",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=2110&campaign_id=111" charset="utf-8"></script>`,
+        context: "Formulaire de réclamation compensation vol"
+      },
+      shortSubmitForm: {
+        brand: "Compensair",
+        type: "Short Submit Application Widget",
+        reward: "—",
+        category: "Flight Compensation",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3408&campaign_id=111" charset="utf-8"></script>`,
+        context: "Formulaire court de réclamation compensation vol"
+      }
+    }
+  },
+
+  // ===== ÉVÉNEMENTS =====
+  events: {
+    ticketnetwork: {
+      eventsSchedule: {
+        brand: "TicketNetwork",
+        type: "Events Schedule with Search Filters",
+        reward: "12.5%",
+        category: "Events",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=6086&campaign_id=111" charset="utf-8"></script>`,
+        context: "Articles sur événements, concerts, spectacles, sports"
+      },
+      ticketsSearch: {
+        brand: "TicketNetwork",
+        type: "Tickets Search Form",
+        reward: "12.5%",
+        category: "Events",
+        script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=8505&campaign_id=111" charset="utf-8"></script>`,
+        context: "Recherche de billets pour événements"
       }
     }
   }
@@ -196,6 +524,12 @@ export class RealTravelpayoutsWidgetSelector {
       hotels: this.hasHotelKeywords(text),
       connectivity: this.hasConnectivityKeywords(text),
       insurance: this.hasInsuranceKeywords(text),
+      transfers: this.hasTransferKeywords(text),
+      tours: this.hasTourKeywords(text),
+      car_rental: this.hasCarRentalKeywords(text),
+      bikes: this.hasBikeKeywords(text),
+      flight_compensation: this.hasFlightCompensationKeywords(text),
+      events: this.hasEventsKeywords(text),
       destinations: this.extractDestinations(text)
     };
   }
@@ -210,28 +544,46 @@ export class RealTravelpayoutsWidgetSelector {
       destination: destination
     };
 
-    // Logique de priorité basée sur les mots-clés
-    if (keywords.flights && keywords.hotels) {
-      context.type = 'travel_planning';
-      context.priority = 'flights'; // Vols en priorité
-    } else if (keywords.flights) {
-      context.type = 'flights';
-      context.priority = 'flights';
-    } else if (keywords.hotels) {
-      context.type = 'accommodation';
-      context.priority = 'hotels';
+    // Logique de priorité : catégories spécifiques d'abord, flights (large) en dernier
+    // Ceci évite les faux-positifs (ex: 'aéroport' matche flights ET transfers)
+    if (keywords.flight_compensation) {
+      context.type = 'flight_compensation';
+      context.priority = 'flight_compensation';
+    } else if (keywords.transfers) {
+      context.type = 'transfers';
+      context.priority = 'transfers';
+    } else if (keywords.tours) {
+      context.type = 'tours';
+      context.priority = 'tours';
+    } else if (keywords.car_rental || keywords.bikes) {
+      context.type = keywords.bikes ? 'bikes' : 'car_rental';
+      context.priority = keywords.bikes ? 'bikes' : 'car_rental';
+    } else if (keywords.events) {
+      context.type = 'events';
+      context.priority = 'events';
     } else if (keywords.connectivity) {
       context.type = 'connectivity';
       context.priority = 'connectivity';
     } else if (keywords.insurance) {
       context.type = 'insurance';
       context.priority = 'insurance';
+    } else if (keywords.flights && keywords.hotels) {
+      context.type = 'travel_planning';
+      context.priority = 'flights';
+    } else if (keywords.flights) {
+      context.type = 'flights';
+      context.priority = 'flights';
+    } else if (keywords.hotels) {
+      context.type = 'accommodation';
+      context.priority = 'hotels';
     }
 
-    // Ajustement selon le type d'article
-    if (articleType === 'temoignage') {
-      context.priority = 'flights'; // Témoignages = voyages
-    } else if (articleType === 'guide') {
+    // Ajustement selon le type d'article — ne remplace la priorité
+    // QUE si aucun mot-clé spécifique n'a été trouvé (priorité restée à 'flights' par défaut)
+    if (articleType === 'temoignage' && context.priority === 'flights') {
+      context.priority = 'flights';
+    } else if (articleType === 'guide' && context.priority === 'flights') {
+      // En mode guide, si aucun keyword spécifique n'a matché, on préfère hotels > insurance > flights
       context.priority = keywords.hotels ? 'hotels' : keywords.insurance ? 'insurance' : 'flights';
     }
 
@@ -253,6 +605,18 @@ export class RealTravelpayoutsWidgetSelector {
         return this.selectConnectivityWidget();
       case 'insurance':
         return this.selectInsuranceWidget();
+      case 'transfers':
+        return this.selectTransferWidget();
+      case 'tours':
+        return this.selectTourWidget();
+      case 'car_rental':
+        return this.selectCarRentalWidget();
+      case 'bikes':
+        return this.selectBikeWidget();
+      case 'flight_compensation':
+        return this.selectFlightCompensationWidget();
+      case 'events':
+        return this.selectEventsWidget();
       default:
         return this.selectFlightWidget(destination);
     }
@@ -262,7 +626,6 @@ export class RealTravelpayoutsWidgetSelector {
    * Sélectionne un widget de vol
    */
   selectFlightWidget(destination) {
-    // Priorité: Aviasales (40% vs 3% Kiwi) - aviasales est en premier dans l'objet
     if (destination) {
       return {
         widget: this.widgets.flights.aviasales.searchForm,
@@ -280,10 +643,10 @@ export class RealTravelpayoutsWidgetSelector {
    * Sélectionne un widget d'hôtel
    */
   selectHotelWidget(destination) {
-    // HOTELLOOK SUPPRIMÉ - Retourner un widget de vol à la place
+    // Pas de partenaire hôtels dédié — fallback vers vols
     return {
       widget: this.widgets.flights.aviasales.searchForm,
-      reason: "Hotellook supprimé - Widget de vol en remplacement"
+      reason: "Pas de partenaire hôtels — Widget de vol en remplacement"
     };
   }
 
@@ -298,7 +661,7 @@ export class RealTravelpayoutsWidgetSelector {
   }
 
   /**
-   * Sélectionne un widget d'assurance (premier disponible = VisitorCoverage travelMedical)
+   * Sélectionne un widget d'assurance
    */
   selectInsuranceWidget() {
     return {
@@ -308,47 +671,160 @@ export class RealTravelpayoutsWidgetSelector {
   }
 
   /**
-   * Détecte les mots-clés liés aux vols
+   * Sélectionne un widget de transferts
    */
-  hasFlightKeywords(text) {
-    const flightKeywords = [
-      'vol', 'avion', 'vols', 'compagnie', 'aérien', 'aéroport', 'décollage', 'atterrissage',
-      'billet', 'billets', 'réservation', 'booking', 'flight', 'airline', 'airport'
-    ];
-    return flightKeywords.some(keyword => text.includes(keyword));
+  selectTransferWidget() {
+    return {
+      widget: this.widgets.transfers.kiwitaxi.shuttlesSearch,
+      reason: "Recherche de navettes/transferts aéroport (Kiwitaxi)"
+    };
   }
 
   /**
-   * Détecte les mots-clés liés aux hôtels
+   * Sélectionne un widget de tours/activités
    */
+  selectTourWidget() {
+    return {
+      widget: this.widgets.tours.tiqets.popularTours,
+      reason: "Tours et activités populaires (Tiqets)"
+    };
+  }
+
+  /**
+   * Sélectionne un widget de location de voiture
+   */
+  selectCarRentalWidget() {
+    return {
+      widget: this.widgets.car_rental.economybookings.searchForm,
+      reason: "Location de voiture (Economybookings — 60% commission)"
+    };
+  }
+
+  /**
+   * Sélectionne un widget de vélo/scooter
+   */
+  selectBikeWidget() {
+    return {
+      widget: this.widgets.bikes.bikesbooking.searchForm,
+      reason: "Location de vélo/scooter (BikesBooking)"
+    };
+  }
+
+  /**
+   * Sélectionne un widget de compensation vol
+   */
+  selectFlightCompensationWidget() {
+    return {
+      widget: this.widgets.flight_compensation.airhelp.searchForm,
+      reason: "Compensation vol (AirHelp)"
+    };
+  }
+
+  /**
+   * Sélectionne un widget d'événements
+   */
+  selectEventsWidget() {
+    return {
+      widget: this.widgets.events.ticketnetwork.eventsSchedule,
+      reason: "Événements et spectacles (TicketNetwork)"
+    };
+  }
+
+  // ===== KEYWORD DETECTION METHODS =====
+
+  hasFlightKeywords(text) {
+    // Mots-clés exacts (word-boundary) pour éviter les faux positifs:
+    // 'vol' matcherait 'vol annulé' (compensation), 'billet' matcherait 'billetterie' (events)
+    const exactKw = ['vol', 'vols', 'billet', 'billets'];
+    const substringKw = [
+      'avion', 'compagnie aérien', 'aérien', 'décollage', 'atterrissage',
+      'billet d\'avion', 'vol pas cher', 'vol direct', 'réserver un vol',
+      'flight', 'airline', 'airport', 'compagnie low cost'
+    ];
+    const hasExact = exactKw.some(k => {
+      const regex = new RegExp('\\b' + k + '\\b');
+      // Vérifie que le mot est isolé ET pas dans un contexte compensation/events
+      if (!regex.test(text)) return false;
+      // 'vol' dans 'vol annulé/retardé' → pas un keyword flight
+      if (k === 'vol' && /vol\s+(annulé|retardé|supprimé|en retard)/.test(text)) return false;
+      // 'billet' dans 'billetterie' → pas un keyword flight
+      if ((k === 'billet' || k === 'billets') && text.includes('billetterie')) return false;
+      return true;
+    });
+    return hasExact || substringKw.some(k => text.includes(k));
+  }
+
   hasHotelKeywords(text) {
-    const hotelKeywords = [
+    const kw = [
       'hôtel', 'hotel', 'hébergement', 'logement', 'coliving', 'coworking', 'auberge',
       'hostel', 'airbnb', 'booking', 'réservation', 'chambre', 'appartement'
     ];
-    return hotelKeywords.some(keyword => text.includes(keyword));
+    return kw.some(k => text.includes(k));
   }
 
-  /**
-   * Détecte les mots-clés liés à la connectivité
-   */
   hasConnectivityKeywords(text) {
-    const connectivityKeywords = [
+    const kw = [
       'internet', 'wifi', 'connexion', 'esim', 'sim', 'téléphone', 'mobile', 'data',
       'connectivité', 'réseau', '4g', '5g', 'roaming'
     ];
-    return connectivityKeywords.some(keyword => text.includes(keyword));
+    return kw.some(k => text.includes(k));
   }
 
-  /**
-   * Détecte les mots-clés liés à l'assurance
-   */
   hasInsuranceKeywords(text) {
-    const insuranceKeywords = [
+    const kw = [
       'assurance', 'santé', 'sécurité', 'protection', 'couverture', 'visa', 'schengen',
-      'medical', 'urgence', 'hospital', 'accident', 'vol', 'bagage'
+      'medical', 'urgence', 'hospital', 'accident', 'bagage'
     ];
-    return insuranceKeywords.some(keyword => text.includes(keyword));
+    return kw.some(k => text.includes(k));
+  }
+
+  hasTransferKeywords(text) {
+    const kw = [
+      'transfert', 'navette', 'shuttle', 'taxi', 'pickup', 'pick-up', 'trajet',
+      'chauffeur', 'accueil', 'arrivée aéroport', 'depuis l\'aéroport'
+    ];
+    return kw.some(k => text.includes(k));
+  }
+
+  hasTourKeywords(text) {
+    const kw = [
+      'visite guidée', 'excursion', 'activité', 'activités', 'que faire', 'billet d\'entrée',
+      'musée', 'temple', 'guide local', 'food tour', 'street food tour', 'day trip'
+    ];
+    return kw.some(k => text.includes(k));
+  }
+
+  hasCarRentalKeywords(text) {
+    const kw = [
+      'location voiture', 'location de voiture', 'louer une voiture', 'rental car',
+      'voiture de location', 'road trip', 'conduire', 'permis international'
+    ];
+    return kw.some(k => text.includes(k));
+  }
+
+  hasBikeKeywords(text) {
+    const kw = [
+      'vélo', 'scooter', 'moto', 'bike', 'deux-roues', 'louer un scooter',
+      'louer une moto', 'motorbike', 'location scooter', 'location moto'
+    ];
+    return kw.some(k => text.includes(k));
+  }
+
+  hasFlightCompensationKeywords(text) {
+    const kw = [
+      'retard de vol', 'vol annulé', 'compensation', 'indemnisation',
+      'réclamation', 'droits des passagers', 'EU261', 'remboursement vol'
+    ];
+    return kw.some(k => text.includes(k));
+  }
+
+  hasEventsKeywords(text) {
+    const kw = [
+      'concert', 'spectacle', 'événement', 'événements', 'festival', 'match',
+      'billet spectacle', 'billet concert', 'ticket', 'sport', 'théâtre',
+      'opéra', 'show', 'live event', 'billetterie'
+    ];
+    return kw.some(k => text.includes(k));
   }
 
   /**
@@ -384,7 +860,13 @@ export class RealTravelpayoutsWidgetSelector {
       flights: flattenCategory(this.widgets.flights),
       hotels: flattenCategory(this.widgets.hotels),
       connectivity: flattenCategory(this.widgets.connectivity),
-      insurance: flattenCategory(this.widgets.insurance)
+      insurance: flattenCategory(this.widgets.insurance),
+      transfers: flattenCategory(this.widgets.transfers),
+      tours: flattenCategory(this.widgets.tours),
+      car_rental: flattenCategory(this.widgets.car_rental),
+      bikes: flattenCategory(this.widgets.bikes),
+      flight_compensation: flattenCategory(this.widgets.flight_compensation),
+      events: flattenCategory(this.widgets.events)
     };
   }
 

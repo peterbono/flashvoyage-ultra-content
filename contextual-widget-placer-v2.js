@@ -10,10 +10,6 @@ import { getOpenAIClient, isOpenAIAvailable } from './openai-client.js';
 import { REAL_TRAVELPAYOUTS_WIDGETS } from './travelpayouts-real-widgets-database.js';
 import { NomadPartnersLinkGenerator } from './nomad-partners-links.js';
 import { generateArticleCTAs, renderCTALink } from './travelpayouts-api-client.js';
-// #region agent log
-import { appendFileSync } from 'fs';
-const _DLOG = (obj) => { try { appendFileSync('/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor/debug.log', JSON.stringify({...obj, timestamp: Date.now()}) + '\n'); } catch(e) {} };
-// #endregion
 
 // FIX B: Import cheerio avec fallback si échec (chargement dynamique dans la fonction)
 
@@ -127,19 +123,19 @@ ${articleContext.type && articleContext.type.startsWith('TEMOIGNAGE_') ? `- Pour
 
 ` : ''}1. ANALYSE SÉMANTIQUE: Identifie les mots-clés contextuels dans le contenu
 2. MAPPING CONTEXTUEL: Associe chaque section à l'intent le plus pertinent :
-   - Si le contenu parle de "vols", "transport", "déplacement", "voyage", "arrivée", "départ", "aéroport", "compagnie aérienne", "billet", "réservation vol" → widget FLIGHTS
-   - ⚠️ CRITIQUE : Si le contenu mentionne UNE VILLE ou UNE DESTINATION (peu importe son nom), tu DOIS suggérer un widget FLIGHTS. C'est OBLIGATOIRE !
-   - ⚠️ Détecte automatiquement TOUTES les villes/destinations mentionnées dans le contenu (noms de villes, pays, régions, destinations touristiques) et suggère un widget FLIGHTS pour chacune
-   - ⚠️ Ne te limite PAS à une liste de villes - détecte TOUTES les villes/destinations mentionnées, même si elles ne sont pas dans une liste d'exemples
-   - Si le contenu parle de "visa", "e-visa", "formalités", "entrée", "sortie", "frontière" → widget FLIGHTS (car les visas impliquent des voyages)
+   - Si le contenu parle de "vols", "transport aérien", "déplacement", "aéroport", "compagnie aérienne", "billet d'avion", "réservation vol" → widget FLIGHTS
+   - ⚠️ CRITIQUE : Si le contenu mentionne UNE VILLE ou UNE DESTINATION → tu DOIS suggérer un widget FLIGHTS
+   - Si le contenu parle de "visa", "e-visa", "formalités", "entrée", "sortie", "frontière" → widget FLIGHTS
    - Si le contenu parle de "connectivité", "eSIM", "internet", "téléphone", "SIM" → widget ESIM
-   - Si le contenu parle de "coliving", "coworking", "hébergement", "logement", "appartement" → LIEN EXTERNE (Coliving.com, Outsite, Selina)
-   - Si le contenu parle de "budget", "finance", "argent", "coût", "prix" → LIEN EXTERNE (Wise, Revolut, N26)
-   - Si le contenu parle de "assurance", "santé", "protection" → LIEN EXTERNE (SafetyWing, World Nomads)
+   - Si le contenu parle de "assurance", "santé", "protection", "couverture médicale" → widget INSURANCE
+   - Si le contenu parle de "transfert", "navette", "shuttle", "taxi aéroport", "depuis l'aéroport", "chauffeur" → widget TRANSFERS
+   - Si le contenu parle de "visite", "excursion", "activité", "que faire", "temple", "musée", "food tour" → widget TOURS
+   - Si le contenu parle de "location voiture", "road trip", "conduire", "véhicule", "louer une voiture" → widget CAR_RENTAL
+   - Si le contenu parle de "scooter", "moto", "vélo", "deux-roues", "location scooter" → widget BIKES
+   - Si le contenu parle de "retard vol", "vol annulé", "compensation", "indemnisation", "droits passagers" → widget FLIGHT_COMPENSATION
+   - Si le contenu parle de "événement", "concert", "spectacle", "festival" → widget EVENTS
    - IMPORTANT: Si le contenu parle de "coliving" → ÉVITE le widget FLIGHTS (incohérent)
-   - IMPORTANT: Si le contenu parle de "vols" → ÉVITE les liens externes coliving (incohérent)
-
-⚠️ ATTENTION CRITIQUE: Détecte automatiquement TOUTES les villes/destinations mentionnées dans le contenu (peu importe leur nom) et suggère un widget FLIGHTS. C'est OBLIGATOIRE pour toute mention de ville/destination !
+   - IMPORTANT: Si le contenu parle de "vols" → ÉVITE les widgets TOURS ou CAR_RENTAL (incohérent)
 
 3. PLACEMENT INTELLIGENT ET STRATÉGIQUE: 
    - Place les widgets dans le MILIEU de l'article (après le contenu principal, AVANT "Articles connexes")
@@ -195,9 +191,6 @@ Réponds UNIQUEMENT en JSON valide.`;
       console.log(`📊 Widgets sélectionnés: ${widgetsSelected}`);
       console.log(`💭 Raisonnement: ${analysis.reasoning}`);
       
-      // #region agent log
-      _DLOG({location:'LLM_ANALYSIS',message:'Widget LLM analysis result',data:{widgetsSelected,selectedWidgets:analysis.selected_widgets,reasoning:analysis.reasoning},hypothesisId:'H-WIDGET-LLM'});
-      // #endregion
 
       // Limiter les widgets selon le type de contenu
       // Pour les témoignages: 2-3 widgets max, pour les autres: 2 max
@@ -224,9 +217,6 @@ Réponds UNIQUEMENT en JSON valide.`;
         console.log(`⚠️ ${rejectedCount} widget(s) rejeté(s) par validation contextuelle`);
       }
       
-      // #region agent log
-      _DLOG({location:'VALIDATION',message:'Widget validation result',data:{limitedWidgets:limitedWidgets.map(w=>w.slot),validatedWidgets:validatedWidgets.map(w=>w.slot),widgetsRejected:limitedWidgets.length-validatedWidgets.length},hypothesisId:'H-WIDGET-VALID'});
-      // #endregion
       
       // Placer les widgets dans le contenu
       let placementResult;
@@ -785,29 +775,15 @@ Réponds UNIQUEMENT en JSON valide.`;
     let enhancedContent = content;
     const usedContexts = new Set(); // Éviter la duplication
 
-    // #region agent log
-    const _pOpenCount = (enhancedContent.match(/<p[^>]*>/gi) || []).length;
-    const _pCloseCount = (enhancedContent.match(/<\/p>/gi) || []).length;
-    _DLOG({location:'CONTENT_STRUCTURE',message:'Content at entry',data:{contentLength:enhancedContent.length,pOpenCount:_pOpenCount,pCloseCount:_pCloseCount,selectedWidgets:selectedWidgets.map(w=>({slot:w.slot,section_title:w.section_title}))},hypothesisId:'H6'});
-    // #endregion
 
     let widgetIndex = 0;
     for (const widget of selectedWidgets) {
-      // #region agent log
-      _DLOG({location:'LOOP_ENTRY',message:'Processing widget',data:{slot:widget.slot,section_title:widget.section_title||null,position:widget.position||null,widgetIndex},hypothesisId:'H3'});
-      // #endregion
       // FIX C: Passer placementContext à getWidgetScript pour geo_defaults
       const widgetScript = this.getWidgetScript(widget.slot, widgetPlan, placementContext);
-      // #region agent log
-      _DLOG({location:'WIDGET_SCRIPT',message:'Widget script result',data:{slot:widget.slot,hasScript:!!widgetScript,scriptPreview:widgetScript?.substring(0,100)},hypothesisId:'H5'});
-      // #endregion
       if (!widgetScript) continue;
 
       // Vérifier si le contexte existe déjà
       const existingContext = this.findExistingContext(enhancedContent, widget.slot);
-      // #region agent log
-      _DLOG({location:'EXISTING_CTX',message:'Existing context check',data:{slot:widget.slot,existingContext:!!existingContext},hypothesisId:'H4'});
-      // #endregion
       if (existingContext) {
         console.log(`⚠️ Contexte ${widget.slot} déjà présent, widget ignoré`);
         continue;
@@ -829,9 +805,6 @@ ${widgetScript}
 
       // Placement intelligent : suggestion LLM + mots-clés + garde narrative
       const smartIndex = this.findSmartPosition(enhancedContent, widget, widgetIndex);
-      // #region agent log
-      _DLOG({location:'PLACEMENT_DECISION',message:'Smart vs fallback',data:{slot:widget.slot,smartIndex,widgetIndex,decision:smartIndex!=null?'SMART':'FALLBACK'},hypothesisId:'H-DECISION'});
-      // #endregion
       if (smartIndex != null) {
         enhancedContent = enhancedContent.slice(0, smartIndex) + '\n\n' + widgetBlock + '\n\n' + enhancedContent.slice(smartIndex);
         console.log(`   📍 SMART placement pour ${widget.slot} à index ${smartIndex}`);
@@ -865,9 +838,6 @@ ${widgetScript}
     
     console.log('🔍 DEBUG placement: inserted=', widgetsReplaced, 'rendered=', widgetsReplaced);
     
-    // #region agent log
-    _DLOG({location:'FINAL',message:'Widget insertion final result',data:{widgetsReplaced,usedContexts:Array.from(usedContexts),contentHasWidgetDiv:enhancedContent.includes('data-fv-segment="affiliate"')},hypothesisId:'H-WIDGET-INSERT'});
-    // #endregion
     
     return {
       content: enhancedContent,
@@ -984,7 +954,13 @@ ${widgetScript}
       connectivity: 'esim',
       insurance: 'insurance',
       flights: 'flights',
-      hotels: 'flights' // Fallback: pas de widget hotels, on redirige vers flights
+      transfers: 'transfers',
+      tours: 'tours',
+      car_rental: 'car_rental',
+      bikes: 'bikes',
+      flight_compensation: 'flight_compensation',
+      events: 'events'
+      // hotels: pas de widget Travelpayouts dédié, retourne null (pas de fallback trompeur)
     };
     return mapping[slot] || null;
   }
@@ -1004,12 +980,13 @@ ${widgetScript}
     
     if (targetWords.length === 0) return null;
     
-    // Chercher tous les H2 et H3
-    const headingRegex = /<h([2-3])[^>]*>([^<]+)<\/h[2-3]>/gi;
+    // Chercher tous les H2 et H3 ([\s\S]*? pour supporter les tags inline comme <strong>)
+    const headingRegex = /<h([2-3])[^>]*>([\s\S]*?)<\/h[2-3]>/gi;
     const headings = [...content.matchAll(headingRegex)];
     
     for (const heading of headings) {
-      const headingText = heading[2];
+      // Strip HTML inline pour ne garder que le texte brut
+      const headingText = heading[2].replace(/<[^>]+>/g, '');
       const headingWords = normalize(headingText).split(/\s+/).filter(w => w.length > 2);
       
       // Fuzzy match: ≥2 mots communs
@@ -1041,7 +1018,13 @@ ${widgetScript}
       esim: ['internet', 'connexion', 'roaming', 'wifi', 'données', 'donnees', 'sim', 'esim', 'connecté', 'connecte', 'signal', '4g', '5g', 'airalo', 'téléphone', 'telephone'],
       insurance: ['assurance', 'santé', 'sante', 'médical', 'medical', 'urgence', 'maladie', 'rapatriement', 'hôpital', 'hopital', 'couverture'],
       connectivity: ['internet', 'connexion', 'roaming', 'wifi', 'données', 'donnees', 'sim', 'esim', 'connecté', 'connecte'],
-      hotels: ['hébergement', 'hebergement', 'hôtel', 'hotel', 'logement', 'nuit', 'chambre', 'hostel', 'airbnb', 'booking', 'auberge']
+      hotels: ['hébergement', 'hebergement', 'hôtel', 'hotel', 'logement', 'nuit', 'chambre', 'hostel', 'airbnb', 'booking', 'auberge'],
+      transfers: ['transfert', 'navette', 'shuttle', 'taxi', 'pickup', 'pick-up', 'trajet', 'chauffeur', 'accueil', 'aéroport', 'depuis l\'aéroport', 'transport privé'],
+      tours: ['visite', 'excursion', 'activité', 'activités', 'que faire', 'musée', 'temple', 'guide', 'food tour', 'day trip', 'billet d\'entrée'],
+      car_rental: ['location voiture', 'location de voiture', 'louer', 'véhicule', 'conduire', 'rental', 'road trip', 'permis international', 'voiture'],
+      bikes: ['vélo', 'scooter', 'moto', 'bike', 'deux-roues', 'motorbike', 'location scooter', 'location moto'],
+      flight_compensation: ['retard', 'annulé', 'compensation', 'indemnisation', 'réclamation', 'droits des passagers', 'remboursement'],
+      events: ['événement', 'concert', 'spectacle', 'festival', 'match', 'billet', 'ticket']
     };
 
     const keywords = keywordsBySlot[widget.slot];
@@ -1070,11 +1053,6 @@ ${widgetScript}
 
     // --- Étape 2 : Scanner les paragraphes dans la zone pour trouver un match ---
     const zone = content.substring(searchStart, searchEnd);
-    // #region agent log
-    const _zPOpen = (zone.match(/<p[^>]*>/gi) || []).length;
-    const _zPClose = (zone.match(/<\/p>/gi) || []).length;
-    _DLOG({location:'ZONE_CONTENT',message:'Zone content detail',data:{slot:widget.slot,zoneLen:zone.length,zonePOpen:_zPOpen,zonePClose:_zPClose,zoneFirst300:zone.substring(0,300),zoneHasClosingP:zone.includes('</p>')},hypothesisId:'H6'});
-    // #endregion
     const pRegex = /<p[^>]*>([\s\S]*?)<\/p>/gi;
     let pMatch;
     let candidateIndex = null;
@@ -1092,9 +1070,6 @@ ${widgetScript}
         break; // Prendre le premier match contextuel
       }
     }
-    // #region agent log
-    _DLOG({location:'ZONE_SCAN',message:'Zone scan result',data:{slot:widget.slot,searchStart,searchEnd,zoneLen:zone.length,scannedParagraphs,candidateIndex,matchedKeyword,hadSectionTarget},hypothesisId:'H1'});
-    // #endregion
 
     // Si aucun match dans la zone ciblée ET qu'on avait une section LLM, essayer en global
     if (candidateIndex == null && hadSectionTarget) {
@@ -1108,16 +1083,10 @@ ${widgetScript}
         const gFoundKw = keywords.find(kw => gText.includes(kw));
         if (gFoundKw) {
           candidateIndex = gMatch.index + gMatch[0].length;
-          // #region agent log
-          _DLOG({location:'GLOBAL_SCAN_HIT',message:'Global scan found keyword',data:{slot:widget.slot,globalScanned,matchedKeyword:gFoundKw,candidateIndex},hypothesisId:'H1'});
-          // #endregion
           break;
         }
       }
       if (candidateIndex == null) {
-        // #region agent log
-        _DLOG({location:'GLOBAL_SCAN_MISS',message:'Global scan found no keywords',data:{slot:widget.slot,globalScanned},hypothesisId:'H1'});
-        // #endregion
       }
     }
 
@@ -1129,8 +1098,10 @@ ${widgetScript}
 
     // --- Étape 3 : Garde narrative (même logique que article-finalizer.js) ---
     const h2List = Array.from(content.matchAll(/<h2[^>]*>.*?<\/h2>/gi));
-    const minH2Index = Math.min(2 + widgetIndex, h2List.length - 1);
-    const minNarrativePos = h2List.length >= (minH2Index + 1)
+    const minH2Index = h2List.length > 0
+      ? Math.min(2 + widgetIndex, h2List.length - 1)
+      : -1;
+    const minNarrativePos = minH2Index >= 0 && h2List.length > minH2Index
       ? h2List[minH2Index].index + h2List[minH2Index][0].length
       : 500;
 
@@ -1140,9 +1111,6 @@ ${widgetScript}
     const paragraphCount = pMatches.length;
     const minParagraphs = 3 + widgetIndex;
 
-    // #region agent log
-    _DLOG({location:'GUARD',message:'Narrative guard details',data:{slot:widget.slot,candidateIndex,minNarrativePos,paragraphCount,minParagraphs,h2Count:h2List.length,widgetIndex,beforeCandidateLen:beforeCandidate.length,h2sBeforeCandidate:h2List.filter(h=>h.index<candidateIndex).length},hypothesisId:'H-GUARD'});
-    // #endregion
 
     if (candidateIndex < minNarrativePos || paragraphCount < minParagraphs) {
       console.log(`   ⚠️ Garde narrative: position ${candidateIndex} trop tôt (H2=${h2List.length}, paragraphes=${paragraphCount}/${minParagraphs}) → fallback`);

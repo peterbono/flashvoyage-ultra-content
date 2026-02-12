@@ -35,6 +35,7 @@ import { runAntiHallucinationGuard } from './src/anti-hallucination/anti-halluci
 import PipelineReport from './pipeline-report.js';
 import { applyContentMarketingPass } from './content-marketing-pass.js';
 import { createChatCompletion } from './openai-client.js';
+import { DESTINATION_ALIASES, CITY_TO_COUNTRY, COUNTRY_DISPLAY_NAMES } from './destinations.js';
 import { DRY_RUN, FORCE_OFFLINE, ENABLE_MARKETING_PASS, parseBool } from './config.js';
 
 class PipelineRunner {
@@ -779,24 +780,7 @@ class PipelineRunner {
    * @returns {Promise<{title: string, coherent: boolean, originalTitle: string|null}>}
    */
   async validateTitleContentCoherence(title, content, mainDestination) {
-    // Destinations connues pour la détection (pays + villes majeures en FR et EN)
-    const DESTINATION_ALIASES = {
-      'japan': ['japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'nara', 'hiroshima', 'nagoya', 'fukuoka'],
-      'thailand': ['thailand', 'thaïlande', 'thailande', 'bangkok', 'chiang mai', 'phuket', 'koh samui', 'koh phangan', 'krabi', 'pai'],
-      'vietnam': ['vietnam', 'viêt nam', 'hanoi', 'hanoï', 'ho chi minh', 'saigon', 'saïgon', 'da nang', 'hoi an', 'nha trang', 'dalat'],
-      'indonesia': ['indonesia', 'indonésie', 'indonesie', 'bali', 'jakarta', 'ubud', 'lombok', 'yogyakarta'],
-      'korea': ['korea', 'corée', 'coree', 'seoul', 'séoul', 'busan'],
-      'philippines': ['philippines', 'manila', 'manille', 'cebu', 'palawan', 'boracay', 'siargao'],
-      'malaysia': ['malaysia', 'malaisie', 'kuala lumpur', 'penang', 'langkawi'],
-      'cambodia': ['cambodia', 'cambodge', 'phnom penh', 'siem reap'],
-      'singapore': ['singapore', 'singapour'],
-      'laos': ['laos', 'vientiane', 'luang prabang'],
-      'myanmar': ['myanmar', 'birmanie', 'yangon'],
-      'taiwan': ['taiwan', 'taïwan', 'taipei'],
-      'india': ['india', 'inde', 'mumbai', 'delhi', 'goa'],
-      'nepal': ['nepal', 'népal', 'kathmandu', 'katmandou'],
-      'sri lanka': ['sri lanka', 'colombo']
-    };
+    // DESTINATION_ALIASES importé depuis destinations.js (source unique de vérité)
 
     const titleLower = title.toLowerCase();
     const contentLower = content.toLowerCase();
@@ -864,15 +848,8 @@ class PipelineRunner {
     console.log(`   🔄 Re-génération du titre pour matcher le contenu...`);
 
     try {
-      // Utiliser un alias lisible pour le pays
-      const countryDisplayNames = {
-        'japan': 'Japon', 'thailand': 'Thaïlande', 'vietnam': 'Vietnam',
-        'indonesia': 'Indonésie', 'korea': 'Corée du Sud', 'philippines': 'Philippines',
-        'malaysia': 'Malaisie', 'cambodia': 'Cambodge', 'singapore': 'Singapour',
-        'laos': 'Laos', 'myanmar': 'Myanmar', 'taiwan': 'Taïwan',
-        'india': 'Inde', 'nepal': 'Népal', 'sri lanka': 'Sri Lanka'
-      };
-      const destName = countryDisplayNames[dominantContentDest] || dominantContentDest;
+      // COUNTRY_DISPLAY_NAMES importé depuis destinations.js
+      const destName = COUNTRY_DISPLAY_NAMES[dominantContentDest] || dominantContentDest;
 
       const response = await createChatCompletion({
         model: 'gpt-4o-mini',

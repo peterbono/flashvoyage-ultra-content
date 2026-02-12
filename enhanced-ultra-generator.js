@@ -149,26 +149,6 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const hasNonAsiaDestination = nonAsiaDestinations.some(dest => matchesWord(articleText, dest));
       const hasAsiaDestination = asiaDestinations.some(dest => matchesWord(articleText, dest));
       
-      // #region agent log
-      // Log TOUS les articles pour tracer les faux positifs (H1-H5)
-      {
-        const matchedAsia = asiaDestinations.filter(dest => matchesWord(articleText, dest));
-        const matchedNonAsia = nonAsiaDestinations.filter(dest => matchesWord(articleText, dest));
-        const textLen = articleText.length;
-        const contentLen = (article.content || '').length;
-        const selftextLen = (article.selftext || '').length;
-        const sourceTextLen = (article.source_text || '').length;
-        // Logger TOUS les articles qui passent le filtre OU qui ont Asia+NonAsia (cas suspect)
-        if (matchedAsia.length > 0 || matchedNonAsia.length > 0) {
-          // For H1: find context around each matched Asia keyword in the text
-          const asiaContexts = matchedAsia.slice(0,3).map(kw => {
-            const idx = articleText.indexOf(kw);
-            return idx >= 0 ? { keyword: kw, context: articleText.substring(Math.max(0,idx-40), idx+kw.length+40) } : { keyword: kw, context: 'not-found' };
-          });
-          fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'enhanced-ultra-generator.js:applySourceFilters:TRACE_ALL',message:'Article filter trace (ALL)',data:{title:article.title?.substring(0,100),hasAsia:hasAsiaDestination,hasNonAsia:hasNonAsiaDestination,matchedAsia,matchedNonAsia:matchedNonAsia.slice(0,5),asiaContexts,willPass:!(hasNonAsiaDestination&&!hasAsiaDestination)&&hasAsiaDestination,textLen,contentLen,selftextLen,sourceTextLen},timestamp:Date.now(),hypothesisId:'H1-H5'})}).catch(()=>{});
-        }
-      }
-      // #endregion
       
       if (nonAsiaDestinations.some(dest => titleLower.includes(dest))) {
           console.log(`🚫 Article rejeté (TITRE contient destination non-asiatique): ${article.title}`);
@@ -204,7 +184,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
             return false;
           }
         }
-      const isMetaPost = metaKeywords.some(keyword => titleLower.includes(keyword.toLowerCase()) || articleText.includes(keyword.toLowerCase()));
+        const isMetaPost = metaKeywords.some(keyword => titleLower.includes(keyword.toLowerCase()) || articleText.includes(keyword.toLowerCase()));
         if (isMetaPost) {
           console.log(`🚫 Article rejeté (post meta/non-voyage): ${article.title}`);
           return false;
@@ -382,9 +362,6 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       if (!selectedArticle && allBatches.length > 0) {
         const sources = allBatches.flat();
         console.log(`\n⚠️ NO_ARTICLE_AFTER_FILTERING: ${sources.length} sources scrapées, aucun candidat valide`);
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'enhanced-ultra-generator.js:RELAXED_FILTER_ENTRY',message:'Entering relaxed filter (strict returned 0)',data:{sourcesCount:sources.length},timestamp:Date.now(),hypothesisId:'H-FILTER-RELAXED'})}).catch(()=>{});
-        // #endregion
         const relaxedSources = this.applyRelaxedFilter(sources);
         if (relaxedSources.length > 0) {
           console.log(`   ✅ ${relaxedSources.length} article(s) accepté(s) avec filtre relâché`);
@@ -785,12 +762,6 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       
       // 10. Publication WordPress
       console.log('📝 Publication sur WordPress...');
-      // #region agent log
-      const _widgetScripts = (finalizedArticle.content.match(/trpwdg\.com\/content/g) || []).length;
-      const _affiliateDivs = (finalizedArticle.content.match(/data-fv-segment="affiliate"/g) || []).length;
-      const _affiliateModules = (finalizedArticle.content.match(/data-placement-id/g) || []).length;
-      fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'enhanced-ultra-generator.js:BEFORE_WP_PUBLISH',message:'Content BEFORE WordPress publish',data:{contentLength:finalizedArticle.content.length,widgetScripts:_widgetScripts,affiliateDivs:_affiliateDivs,affiliateModules:_affiliateModules},timestamp:Date.now(),hypothesisId:'H-WP-PUBLISH'})}).catch(()=>{});
-      // #endregion
       const publishedArticle = await this.publishToWordPress(finalizedArticle);
       
       console.log('✅ Article publié avec succès!');
@@ -1587,9 +1558,6 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         const matchedPattern = acceptableContextPatterns.find(pattern => pattern.test(context));
         const isAcceptableContext = !!matchedPattern;
         
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/9abb3010-a0f0-475b-865d-f8197825291f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'enhanced-ultra-generator.js:validateNonAsiaContent',message:'Non-Asia term check',data:{term,isAcceptable:isAcceptableContext,matchedPattern:matchedPattern?.toString()||'none',contextExcerpt:context.substring(0,120)},timestamp:Date.now(),hypothesisId:'H-GEO-FP'})}).catch(()=>{});
-        // #endregion
         
         // FALLBACK: Si le contexte contient aussi une destination asiatique, c'est acceptable
         // (itinéraire de vol, comparaison origine/destination, etc.)

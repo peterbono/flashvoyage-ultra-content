@@ -17,7 +17,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * [fv_widget] shortcode handler.
  *
  * Attributes:
- *   type        — flights | esim | insurance | insurance_usa | flights_calendar | flights_popular | flights_map
+ *   type        — flights | esim | insurance | insurance_usa | insurance_schengen
+ *                  flights_calendar | flights_popular | flights_map
+ *                  transfers | tours | car_rental | bikes | flight_compensation | events
  *   origin      — IATA code (flights only), default PAR
  *   destination — IATA code (flights only), default BKK
  *
@@ -77,6 +79,41 @@ function fv_widget_shortcode( $atts ) {
         // --- Aviasales Prices on Map (promo_id=4054, campaign_id=100) ---
         case 'flights_map':
             $script = '<script async src="https://trpwdg.com/content?currency=eur&trs=' . $trs . '&shmarker=' . $shmarker . '&lat=51.51&lng=0.06&powered_by=true&search_host=www.aviasales.com%2Fsearch&locale=en&origin=' . esc_attr( $origin ) . '&value_min=0&value_max=1000000&round_trip=true&only_direct=false&radius=1&draggable=true&disable_zoom=false&show_logo=false&scrollwheel=false&primary=%233FABDB&secondary=%233FABDB&light=%23ffffff&width=1500&height=500&zoom=2&promo_id=4054&campaign_id=100" charset="utf-8"></script>';
+            break;
+
+        // --- Insubuy Schengen Visa Insurance (promo_id=4797, campaign_id=111) ---
+        case 'insurance_schengen':
+            $script = '<script async src="https://trpwdg.com/content?trs=' . $trs . '&shmarker=' . $shmarker . '&powered_by=true&locale=fr&promo_id=4797&campaign_id=111" charset="utf-8"></script>';
+            break;
+
+        // --- Kiwitaxi Shuttles Search Form (promo_id=2949, campaign_id=111) ---
+        case 'transfers':
+            $script = '<script async src="https://trpwdg.com/content?trs=' . $trs . '&shmarker=' . $shmarker . '&powered_by=true&locale=fr&promo_id=2949&campaign_id=111" charset="utf-8"></script>';
+            break;
+
+        // --- Tiqets Popular Tours Widget (promo_id=3947, campaign_id=111) ---
+        case 'tours':
+            $script = '<script async src="https://trpwdg.com/content?trs=' . $trs . '&shmarker=' . $shmarker . '&powered_by=true&locale=fr&promo_id=3947&campaign_id=111" charset="utf-8"></script>';
+            break;
+
+        // --- Economybookings Rental Cars Search Form (promo_id=4480, campaign_id=111) ---
+        case 'car_rental':
+            $script = '<script async src="https://trpwdg.com/content?trs=' . $trs . '&shmarker=' . $shmarker . '&powered_by=true&locale=fr&promo_id=4480&campaign_id=111" charset="utf-8"></script>';
+            break;
+
+        // --- BikesBooking Rental Bikes Search Form (promo_id=5472, campaign_id=111) ---
+        case 'bikes':
+            $script = '<script async src="https://trpwdg.com/content?trs=' . $trs . '&shmarker=' . $shmarker . '&powered_by=true&locale=fr&promo_id=5472&campaign_id=111" charset="utf-8"></script>';
+            break;
+
+        // --- AirHelp Flight Compensation Search Form (promo_id=8679, campaign_id=111) ---
+        case 'flight_compensation':
+            $script = '<script async src="https://trpwdg.com/content?trs=' . $trs . '&shmarker=' . $shmarker . '&powered_by=true&locale=fr&promo_id=8679&campaign_id=111" charset="utf-8"></script>';
+            break;
+
+        // --- TicketNetwork Events Schedule (promo_id=6086, campaign_id=111) ---
+        case 'events':
+            $script = '<script async src="https://trpwdg.com/content?trs=' . $trs . '&shmarker=' . $shmarker . '&powered_by=true&locale=fr&promo_id=6086&campaign_id=111" charset="utf-8"></script>';
             break;
 
         default:
