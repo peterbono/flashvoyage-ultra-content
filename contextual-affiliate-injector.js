@@ -101,20 +101,23 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
   const flightsKeywordMatch = flightsKeywords.some(kw => fullText.includes(kw));
   const longTrip = story?.story?.context?.summary && story.story.context.summary.length > 500; // Long context = probable long trip
   
-  if (flightsKeywordMatch || longTrip) {
+  // Flights matche par keywords OU par destination identifiée (fallback universel pour articles voyage)
+  const hasDestination = !!(geo_defaults?.destination || geo_defaults?.country);
+  if (flightsKeywordMatch || longTrip || hasDestination) {
     const reasons = [];
     if (flightsKeywordMatch) {
       const matchedKw = flightsKeywords.find(kw => fullText.includes(kw));
       reasons.push(`matched_keywords: ${matchedKw}`);
     }
     if (longTrip) reasons.push('long trip detected');
+    if (!flightsKeywordMatch && !longTrip && hasDestination) reasons.push('destination identified (fallback)');
     
     placements.push({
       id: 'flights',
       priority: 3,
       anchor: 'after_central_event',
+      confidence: flightsKeywordMatch ? (longTrip ? 80 : 70) : hasDestination ? 55 : 50,
       reason: reasons,
-      confidence: flightsKeywordMatch && longTrip ? 80 : flightsKeywordMatch ? 70 : 50,
       payload: {
         type: 'flights',
         origin: geo_defaults?.origin || 'PAR',
@@ -124,7 +127,7 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
     });
     debug.matched.flights = { reasons, confidence: placements[placements.length - 1].confidence };
   } else {
-    debug.skipped.flights = 'no keyword match or long trip';
+    debug.skipped.flights = 'no keyword match, long trip, or destination';
   }
 
   // 4. ACCOMMODATION

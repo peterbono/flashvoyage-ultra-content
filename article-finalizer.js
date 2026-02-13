@@ -994,6 +994,9 @@ class ArticleFinalizer {
     };
 
     // Marqueurs robustes pour widget FLIGHTS (scripts, forms, shortcodes)
+    // IMPORTANT: Ne PAS utiliser trpwdg.com/content comme marqueur flights,
+    // car TOUS les widgets Travelpayouts (eSIM Airalo inclus) utilisent ce domaine.
+    // Utiliser les promo_id/campaign_id spécifiques aux vols (2811, 100, aviasales).
     const kiwiMarkers = [
       /\[fv_widget[^\]]*type=["']?flights/gi,
       /<form[^>]*kiwi[^>]*>/gi,
@@ -1001,7 +1004,9 @@ class ArticleFinalizer {
       /data-widget-type=["']flights["']/gi,
       /class=["'][^"']*kiwi[^"']*["']/gi,
       /class=["'][^"']*travelpayouts[^"']*["']/gi,
-      /trpwdg\.com\/content/gi,
+      /promo_id[=&%]\d*2811/gi,
+      /campaign_id[=&%]\d*100[^0-9]/gi,
+      /aviasales/gi,
       /travelpayouts-widget/gi,
       /kiwi\.com.*widget/gi,
       /<!-- FLASHVOYAGE_WIDGET:flights/gi,
@@ -1009,9 +1014,11 @@ class ArticleFinalizer {
     ];
 
     // Marqueurs pour widget CONNECTIVITY (eSIM/Airalo) + shortcodes
+    // Inclure promo_id=8588 (Airalo eSIM) pour détection précise
     const connectivityMarkers = [
       /\[fv_widget[^\]]*type=["']?esim/gi,
       /airalo/gi,
+      /promo_id[=&%]\d*8588/gi,
       /data-widget-type=["']connectivity["']/gi,
       /data-widget-type=["']esim["']/gi,
       /class=["'][^"']*airalo[^"']*["']/gi,
@@ -1131,6 +1138,27 @@ class ArticleFinalizer {
     // PATCH 3: Garde-fou un seul mode de rendu
     if (pipelineContext && pipelineContext.widget_render_mode) {
       console.log(`⚠️ WIDGET_RENDER_MODE déjà défini: ${pipelineContext.widget_render_mode} - Skip pour éviter double injection`);
+      return { content, count: 0 };
+    }
+    
+    // FIX: Si Phase 5.C (affiliate module injection) est activée ET a des placements,
+    // skip Phase 1 pour éviter la double injection de widgets.
+    // Phase 5.C crée des modules formatés avec titre/description/shortcode,
+    // tandis que Phase 1 insère des shortcodes nus sans module wrapper.
+    const hasAffiliatePlan = pipelineContext?.affiliate_plan?.placements?.length > 0;
+    const hasLegacyPlaceholders = content.includes('{{TRAVELPAYOUTS') || content.includes('{TRAVELPAYOUTS');
+    if (hasAffiliatePlan && !hasLegacyPlaceholders) {
+      console.log(`ℹ️ PHASE1_SKIP: affiliate_plan a ${pipelineContext.affiliate_plan.placements.length} placement(s) → Phase 5.C gèrera l'injection (pas de double injection)`);
+      // Construire geo_defaults pour que Phase 5.C puisse les utiliser
+      const finalDestinationRaw = pipelineContext?.final_destination ?? analysis?.final_destination ?? null;
+      const finalDestination = finalDestinationRaw ? finalDestinationRaw.toLowerCase() : null;
+      const geo = pipelineContext?.geo ?? analysis?.geo ?? {};
+      const geoDefaults = this.widgetPlanBuilder.buildGeoDefaults(geo, finalDestination);
+      if (geoDefaults) {
+        pipelineContext.geo_defaults = geoDefaults;
+        console.log(`✅ geo_defaults préparé pour Phase 5.C: ${JSON.stringify(geoDefaults)}`);
+      }
+      pipelineContext.widget_render_mode = 'affiliate_modules';
       return { content, count: 0 };
     }
     
