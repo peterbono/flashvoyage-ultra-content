@@ -647,7 +647,9 @@ class ArticleFinalizer {
         .replace(/<a\s+href="https?:\/\/www\s*<\/p>/gi, '')  // <a href="https://www</p> → supprimer
         .replace(/<a\s+href="\s*https?:?=?"?\s*www<?[^"]*"?>/gi, '')  // liens malformés → supprimer
         .replace(/<a\s+href="https?:\/\/www"[^>]*>[^<]*<\/a>/gi, '')  // <a href="https://www">...</a> → supprimer
-        .replace(/\s*<\/a><\/li>/gi, '</li>')  // </a></li> orphelins → </li>
+        // FIX: NE PAS supprimer </a></li> — c'est la fermeture normale des liens dans les listes
+        // L'ancienne regex .replace(/\s*<\/a><\/li>/gi, '</li>') supprimait les </a> légitimes
+        // ce qui causait des liens non fermés qui englobaient tout le reste de l'article
         .replace(/<p>\s*com\s*<\/p>/gi, '')  // <p>com</p> orphelins → supprimer
         .replace(/<p>\s*com">.*?<\/p><\/a>/gi, '')  // fragments de liens → supprimer
         
@@ -704,6 +706,16 @@ class ArticleFinalizer {
         // .replace(/([a-zéèêëàâùûîïôöç]{3,})ê([a-zéèêëàâùûîïôöç]{3,})/gi, ...)
         .trim();
       console.log('   ✅ Nettoyage wrapper HTML Cheerio effectué');
+
+      // PHASE SÉCURITÉ HTML: Fermer les liens <a> non fermés avant </li>, </p>, <h2>, <h3>
+      // Prévient le bug où un <a> sans </a> englobe tout le reste de l'article
+      returnValue.content = this.closeUnclosedAnchors(returnValue.content);
+
+      // PHASE NETTOYAGE H3 ANGLAIS: Supprimer les H3 en anglais (questions Reddit parasites)
+      returnValue.content = this.removeEnglishH3(returnValue.content);
+      
+      // PHASE NETTOYAGE LIENS IMBRIQUÉS: Dé-imbriquer les <a> dans <a> (double wrapping)
+      returnValue.content = this.deduplicateNestedLinks(returnValue.content);
     }
     
     // VALIDATION PRÉ-PUBLICATION CRITIQUE: Vérifier que l'article a du contenu réel
@@ -2098,13 +2110,13 @@ class ArticleFinalizer {
       });
     }
 
-    // Quality gate optionnelle : ouverture immersive + pas de H2 "Ce que dit le témoignage"
-    const qualityGate = this.runQualityGateContent(finalHtml);
-    if (!qualityGate.noForbiddenH2 || qualityGate.warnings.length > 0) {
+    // Quality gate étendue : ouverture immersive, H2 blacklist, quotes, hook sans Reddit
+    const qualityGate = this.runQualityGateContent(finalHtml, pipelineContext);
+    if (qualityGate.warnings.length > 0) {
       report.checks.push({
         name: 'content_quality_gate',
-        status: qualityGate.warnings.length > 0 ? 'warn' : 'pass',
-        details: qualityGate.warnings.join('; ') || 'OK'
+        status: 'warn',
+        details: qualityGate.warnings.join('; ')
       });
       if (!qualityGate.noForbiddenH2) {
         report.issues.push({
@@ -2114,11 +2126,35 @@ class ArticleFinalizer {
           check: 'content_quality_gate'
         });
       }
+      if (!qualityGate.noGenericH2) {
+        report.issues.push({
+          code: 'GENERIC_H2_DETECTED',
+          severity: 'medium',
+          message: qualityGate.warnings.find(w => w.includes('H2 génériques')) || 'H2 génériques détectés',
+          check: 'content_quality_gate'
+        });
+      }
+      if (!qualityGate.hasMinQuotes) {
+        report.issues.push({
+          code: 'LOW_QUOTE_COUNT',
+          severity: 'low',
+          message: qualityGate.warnings.find(w => w.includes('Citations insuffisantes')) || 'Moins de 2 citations dans l\'article',
+          check: 'content_quality_gate'
+        });
+      }
+      if (!qualityGate.hookWithoutReddit) {
+        report.issues.push({
+          code: 'REDDIT_IN_HOOK',
+          severity: 'medium',
+          message: 'Mention de Reddit dans les 500 premiers caractères — le hook doit être immersif sans source',
+          check: 'content_quality_gate'
+        });
+      }
     } else {
       report.checks.push({
         name: 'content_quality_gate',
         status: 'pass',
-        details: 'Ouverture immersive et pas de section interdite'
+        details: 'Ouverture immersive, pas de H2 générique, quotes suffisantes, hook sans Reddit'
       });
     }
 
@@ -3174,6 +3210,157 @@ class ArticleFinalizer {
   }
 
   /**
+   * PHASE SÉCURITÉ HTML: Fermer les liens <a> non fermés
+   * Scanne le HTML et ferme les <a> avant tout </li>, </p>, <h2>, <h3>, </section>
+   * @param {string} html - HTML de l'article
+   * @returns {string} HTML avec liens correctement fermés
+   */
+  closeUnclosedAnchors(html) {
+    let fixedCount = 0;
+    // Stratégie: trouver chaque <a ...> et vérifier qu'il a un </a> avant le prochain tag structurel
+    let result = html;
+    const openAnchorRegex = /<a\s[^>]*>/gi;
+    let anchorMatch;
+    // Collecter toutes les positions de <a> et </a>
+    const opens = [];
+    const closes = [];
+    const openRe = /<a\s[^>]*>/gi;
+    const closeRe = /<\/a>/gi;
+    while ((anchorMatch = openRe.exec(html)) !== null) {
+      opens.push({ index: anchorMatch.index, end: anchorMatch.index + anchorMatch[0].length });
+    }
+    while ((anchorMatch = closeRe.exec(html)) !== null) {
+      closes.push({ index: anchorMatch.index });
+    }
+    
+    // Pour chaque <a>, vérifier qu'il a un </a> avant le prochain <a> ou tag structurel fermant
+    // Travailler en reverse pour ne pas casser les indices
+    const structuralCloseTags = /<\/li>|<\/p>|<h[23][^>]*>|<\/section>|<\/ul>|<\/ol>/gi;
+    
+    for (let i = opens.length - 1; i >= 0; i--) {
+      const open = opens[i];
+      const nextOpen = opens[i + 1];
+      const endBound = nextOpen ? nextOpen.index : result.length;
+      
+      // Chercher un </a> entre cette ouverture et la borne
+      const segment = result.substring(open.end, endBound);
+      const hasClose = /<\/a>/i.test(segment);
+      
+      if (!hasClose) {
+        // Trouver le premier tag structurel fermant dans le segment
+        const structMatch = segment.match(/<\/li>|<\/p>|<h[23][^>]*>|<\/section>|<\/ul>|<\/ol>/i);
+        if (structMatch) {
+          const insertPos = open.end + structMatch.index;
+          result = result.substring(0, insertPos) + '</a>' + result.substring(insertPos);
+          fixedCount++;
+        } else {
+          // Fermer à la fin du segment
+          result = result.substring(0, open.end + segment.length) + '</a>' + result.substring(open.end + segment.length);
+          fixedCount++;
+        }
+      }
+    }
+    
+    if (fixedCount > 0) {
+      console.log(`   🔧 closeUnclosedAnchors: ${fixedCount} lien(s) non fermé(s) corrigé(s)`);
+    }
+    
+    return result;
+  }
+
+  /**
+   * PHASE NETTOYAGE H3 ANGLAIS: Supprimer les H3 contenant du texte majoritairement anglais
+   * Ces H3 viennent de questions Reddit qui se glissent dans le body
+   * @param {string} html - HTML de l'article
+   * @returns {string} HTML nettoyé
+   */
+  removeEnglishH3(html) {
+    const ENGLISH_WORDS_RE = /\b(the|a|an|is|are|was|were|have|has|had|will|would|can|could|should|this|that|in|on|at|to|for|of|with|from|by|as|if|do|does|did|I|you|he|she|it|we|they|my|your|his|her|our|their|what|how|why|when|where|who|which|there|here|about|not|no|but|or|and|all|any|some|just|only|also|too|very|much|more|most|so|than|then|now|out|up|down|into|over|after|before|between|under|run|running|money|find|cheap|best|worst|getting|going|coming|leaving|moving|living|working|paying|cost|costs|budget|visa|stay|month|year|week|day|travel|trip|city|country)\b/gi;
+    
+    let removedCount = 0;
+    let result = html;
+    
+    // Trouver tous les H3 et vérifier s'ils sont en anglais
+    const h3Pattern = /<h3[^>]*>([\s\S]*?)<\/h3>/gi;
+    const toRemove = [];
+    let h3Match;
+    
+    while ((h3Match = h3Pattern.exec(html)) !== null) {
+      const h3Text = h3Match[1].replace(/<[^>]+>/g, '').trim();
+      const words = h3Text.split(/\s+/).filter(w => w.length > 1);
+      if (words.length < 3) continue; // trop court pour juger
+      
+      const englishWords = (h3Text.match(ENGLISH_WORDS_RE) || []).length;
+      const ratio = words.length > 0 ? englishWords / words.length : 0;
+      
+      if (ratio > 0.40) {
+        toRemove.push({
+          fullMatch: h3Match[0],
+          text: h3Text,
+          ratio: ratio.toFixed(2)
+        });
+      }
+    }
+    
+    // Supprimer en reverse pour préserver les indices
+    for (const item of toRemove.reverse()) {
+      // Supprimer le H3 et le paragraphe qui suit immédiatement (souvent du contexte Reddit)
+      const h3Pos = result.indexOf(item.fullMatch);
+      if (h3Pos === -1) continue;
+      
+      let removeEnd = h3Pos + item.fullMatch.length;
+      // Vérifier si un <p> suit immédiatement
+      const afterH3 = result.substring(removeEnd);
+      const nextPMatch = afterH3.match(/^\s*<p[^>]*>([\s\S]*?)<\/p>/i);
+      if (nextPMatch) {
+        // Vérifier si ce paragraphe est aussi en anglais
+        const pText = nextPMatch[1].replace(/<[^>]+>/g, '').trim();
+        const pEnglishWords = (pText.match(ENGLISH_WORDS_RE) || []).length;
+        const pWords = pText.split(/\s+/).filter(w => w.length > 1).length;
+        if (pWords > 0 && pEnglishWords / pWords > 0.40) {
+          removeEnd += nextPMatch[0].length;
+        }
+      }
+      
+      result = result.substring(0, h3Pos) + result.substring(removeEnd);
+      removedCount++;
+    }
+    
+    if (removedCount > 0) {
+      console.log(`   🔧 removeEnglishH3: ${removedCount} H3 anglais supprimé(s)`);
+    }
+    
+    return result;
+  }
+
+  /**
+   * PHASE NETTOYAGE LIENS IMBRIQUÉS: Dé-imbriquer les <a> dans <a>
+   * Détecte <a href="X"><a href="Y">text</a>suffix</a> et garde le lien intérieur
+   * @param {string} html - HTML
+   * @returns {string} HTML nettoyé
+   */
+  deduplicateNestedLinks(html) {
+    let fixedCount = 0;
+    let result = html;
+    
+    // Pattern: <a ...>...<a ...>text</a>...suffix...</a>
+    // On garde le lien intérieur et le suffixe comme texte
+    const nestedPattern = /<a\s[^>]*>([^<]*)<a\s([^>]*)>([\s\S]*?)<\/a>([^<]*)<\/a>/gi;
+    
+    result = result.replace(nestedPattern, (match, prefixText, innerAttrs, innerText, suffixText) => {
+      fixedCount++;
+      // Garder le lien intérieur, mettre prefix/suffix comme texte nu
+      return `${prefixText}<a ${innerAttrs}>${innerText}</a>${suffixText}`;
+    });
+    
+    if (fixedCount > 0) {
+      console.log(`   🔧 deduplicateNestedLinks: ${fixedCount} lien(s) imbriqué(s) corrigé(s)`);
+    }
+    
+    return result;
+  }
+
+  /**
    * PHASE 6.2.4.1: Extraire les H2/H3 imbriqués dans des <p> tags
    * Les éléments block (h2, h3, etc.) ne doivent jamais être à l'intérieur d'un <p>
    * @param {string} html - HTML de l'article
@@ -4119,19 +4306,100 @@ class ArticleFinalizer {
   }
 
   /**
-   * Quality gate optionnelle : ouverture immersive présente, pas de H2 "Ce que dit le témoignage".
+   * Quality gate étendue : ouverture immersive, H2 blacklist conditionnelle, quotes, hook sans Reddit.
    * @param {string} html - HTML à vérifier
-   * @returns {{ noForbiddenH2: boolean, hasImmersiveOpening: boolean, warnings: string[] }}
+   * @param {Object} [pipelineContext] - Contexte du pipeline (story, evidence) pour les fallbacks
+   * @returns {{ noForbiddenH2: boolean, hasImmersiveOpening: boolean, noGenericH2: boolean, hasMinQuotes: boolean, hookWithoutReddit: boolean, warnings: string[] }}
    */
-  runQualityGateContent(html) {
+  runQualityGateContent(html, pipelineContext = null) {
     const warnings = [];
+    
+    // === CHECK 1: H2 "Ce que dit le témoignage" (legacy) ===
     const noForbiddenH2 = !/<h2[^>]*>\s*Ce que dit le témoignage\s*\.{0,3}\s*<\/h2>/i.test(html || '');
     if (!noForbiddenH2) warnings.push('Section interdite "Ce que dit le témoignage" encore présente');
+    
+    // === CHECK 2: Ouverture immersive ===
     const textStart = (html || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 500);
-    const immersiveMarkers = [/^Tu fixes\s/i, /^Tu envisages\s/i, /\d{1,3}\s*\d{3}\s*\$/, /Dans ce guide[,.]?\s/i, /on t'explique\s+(combien|comment)/i, /combien ça coûte vraiment/i];
+    const immersiveMarkers = [
+      /^Tu fixes\s/i, /^Tu envisages\s/i, /\d{1,3}\s*\d{3}\s*\$/,
+      /Dans ce guide[,.]?\s/i, /on t'explique\s+(combien|comment)/i,
+      /combien ça coûte vraiment/i,
+      // Nouveaux markers pour hooks cinématiques
+      /^Chaque fois que/i, /^Tu atterris/i, /^Il est \d+h/i,
+      /^Le propriétaire/i, /^Tu viens de/i, /^La première chose/i,
+      /apparaître sur l'écran/i, /compte à rebours/i, /budget.*fond/i
+    ];
     const hasImmersiveOpening = immersiveMarkers.some(re => re.test(textStart));
     if (!hasImmersiveOpening) warnings.push('Ouverture immersive non détectée en début d\'article');
-    return { noForbiddenH2, hasImmersiveOpening, warnings };
+    
+    // === CHECK 3: H2 génériques (blacklist conditionnelle) ===
+    const GENERIC_H2_BLACKLIST = [
+      'contexte', 'événement central', 'moment critique', 'résolution',
+      'chronologie de l\'expérience', 'risques et pièges réels',
+      'ce que la communauté apporte', 'conseils pratiques',
+      'en résumé', 'stratégies', 'ce qu\'il faut savoir', 'points clés',
+      'notre avis', 'analyse', 'solutions', 'conclusion',
+      'ce que dit le témoignage', 'ce qu\'il faut retenir',
+      'nos recommandations', 'options alternatives'
+    ];
+    // Patterns "lazy" : mot générique + ":" + complément → toujours rejeté
+    const LAZY_H2_PATTERN = /^(conclusion|stratégies|options|solutions|résumé|analyse)\s*:/i;
+    
+    const h2Matches = [...((html || '').matchAll(/<h2[^>]*>([^<]+)<\/h2>/gi) || [])];
+    const genericH2sFound = h2Matches.filter(m => {
+      const title = m[1].trim().toLowerCase().replace(/[^\wàâäéèêëïîôùûüÿç\s'-]/g, '').trim();
+      // Un H2 est "nu" (= générique) seulement s'il correspond EXACTEMENT à un terme blacklisté
+      // Un H2 qualifié (contenant plus de mots, une destination, etc.) est autorisé
+      const isNakedGeneric = GENERIC_H2_BLACKLIST.some(banned => title === banned);
+      // Un H2 "lazy" = mot générique + ":" (ex: "Conclusion: bla bla") est aussi rejeté
+      const isLazy = LAZY_H2_PATTERN.test(m[1].trim());
+      return isNakedGeneric || isLazy;
+    });
+    const noGenericH2 = genericH2sFound.length === 0;
+    if (!noGenericH2) {
+      warnings.push(`H2 génériques détectés: ${genericH2sFound.map(m => `"${m[1].trim()}"`).join(', ')}`);
+    }
+    
+    // === CHECK 4: Compteur de quotes (minimum 2) avec fallback ===
+    const quoteMatches = (html || '').match(/«[^»]+»/g) || [];
+    const blockquoteMatches = (html || '').match(/<blockquote[^>]*data-source=["']reddit["'][^>]*>/gi) || [];
+    const totalQuotes = quoteMatches.length + blockquoteMatches.length;
+    const hasMinQuotes = totalQuotes >= 2;
+    if (!hasMinQuotes) {
+      warnings.push(`Citations insuffisantes: ${totalQuotes}/2 minimum (${quoteMatches.length} inline « », ${blockquoteMatches.length} blockquotes)`);
+      
+      // FALLBACK: Tenter d'injecter des citations depuis source_snippets si disponibles
+      if (pipelineContext?.story?.evidence?.source_snippets) {
+        const snippets = pipelineContext.story.evidence.source_snippets;
+        const usableSnippets = (Array.isArray(snippets) ? snippets : [])
+          .filter(s => {
+            const text = typeof s === 'string' ? s : (s?.text || s?.quote || '');
+            return text.length >= 20 && text.length <= 300;
+          })
+          .slice(0, 3 - totalQuotes); // Injecter seulement le nombre manquant
+        
+        if (usableSnippets.length > 0) {
+          console.log(`   🔧 QUALITY_GATE_FALLBACK: Injection de ${usableSnippets.length} citation(s) depuis source_snippets`);
+          // Note: l'injection réelle sera faite par l'editorial-enhancer en aval
+          // Ici on ne fait que signaler — l'editorial-enhancer a la priorité
+          warnings.push(`Fallback quotes: ${usableSnippets.length} citation(s) disponibles dans source_snippets pour injection`);
+        }
+      }
+    }
+    
+    // === CHECK 5: Hook sans mention Reddit dans les 500 premiers caractères ===
+    const hookWithoutReddit = !/\breddit\b|\bsubreddit\b|\br\//i.test(textStart);
+    if (!hookWithoutReddit) {
+      warnings.push('Mention de "Reddit" détectée dans les 500 premiers caractères du hook');
+    }
+    
+    // === CHECK 6: Hook sans pattern banni "Te voilà..." ===
+    const hookNoBannedPattern = !/\bte voilà\b|\bte voila\b/i.test(textStart);
+    if (!hookNoBannedPattern) {
+      warnings.push('Hook banni "Te voilà..." détecté — doit être remplacé par un hook cinématique');
+    }
+    
+    return { noForbiddenH2, hasImmersiveOpening, noGenericH2, hasMinQuotes, hookWithoutReddit, hookNoBannedPattern, warnings };
   }
 
   /**
@@ -7564,7 +7832,43 @@ class ArticleFinalizer {
     const ctas = pipelineContext?.affiliate_ctas;
     if (!ctas) {
       console.log('🔗 PARTNER_BRAND_LINKS: Aucun affiliate_ctas dans pipelineContext — skip');
-      return html;
+      // Même sans affiliate_ctas, on peut linker les marques directes
+      let modifiedHtml = html;
+      let directWrappedCount = 0;
+      const DIRECT_BRAND_MAP = [
+        { directUrl: 'https://wise.com/',           variants: ['Wise'], rel: 'nofollow' },
+        { directUrl: 'https://www.revolut.com/',     variants: ['Revolut'], rel: 'nofollow' },
+        { directUrl: 'https://www.bangkokbank.com/', variants: ['Bangkok Bank'], rel: 'nofollow' },
+        { directUrl: 'https://www.schwab.com/',      variants: ['Schwab', 'Charles Schwab'], rel: 'nofollow' },
+      ];
+      for (const brand of DIRECT_BRAND_MAP) {
+        for (const variant of brand.variants) {
+          const escapedVariant = variant.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const simpleRegex = new RegExp(escapedVariant, 'gi');
+          const allMatches = [...modifiedHtml.matchAll(simpleRegex)];
+          for (const match of allMatches) {
+            const pos = match.index;
+            // FIX: lookback augmenté à 500 chars
+            const beforeChunk = modifiedHtml.substring(Math.max(0, pos - 500), pos);
+            const openTags = (beforeChunk.match(/<a\b/gi) || []).length;
+            const closeTags = (beforeChunk.match(/<\/a>/gi) || []).length;
+            const isInsideLink = openTags > closeTags;
+            const isInHref = /href=["'][^"']*$/.test(beforeChunk);
+            if (!isInsideLink && !isInHref) {
+              const originalText = modifiedHtml.substring(pos, pos + variant.length);
+              const directLink = `<a href="${brand.directUrl}" target="_blank" rel="${brand.rel || 'nofollow'}">${originalText}</a>`;
+              modifiedHtml = modifiedHtml.substring(0, pos) + directLink + modifiedHtml.substring(pos + variant.length);
+              directWrappedCount++;
+              console.log(`   🔗 DIRECT_BRAND_WRAPPED: "${originalText}" → ${brand.directUrl}`);
+              break;
+            }
+          }
+        }
+      }
+      if (directWrappedCount > 0) {
+        console.log(`✅ PARTNER_BRAND_LINKS: ${directWrappedCount} lien(s) direct(s) ajouté(s) (sans affiliate_ctas)`);
+      }
+      return modifiedHtml;
     }
 
     // Vérifier qu'au moins un CTA a une partner_url OU une direct_url (fallback)
@@ -7645,6 +7949,15 @@ class ArticleFinalizer {
       { ctaKey: 'hotels',    variants: ['Booking.com', 'Booking'] },
     ];
 
+    // Phase B-bis: Marques courantes NON affiliées (liens directs, utiles au lecteur)
+    // Ces marques sont fréquemment mentionnées dans les articles finance/voyage
+    const DIRECT_BRAND_MAP = [
+      { directUrl: 'https://wise.com/',           variants: ['Wise'], rel: 'nofollow' },
+      { directUrl: 'https://www.revolut.com/',     variants: ['Revolut'], rel: 'nofollow' },
+      { directUrl: 'https://www.bangkokbank.com/', variants: ['Bangkok Bank'], rel: 'nofollow' },
+      { directUrl: 'https://www.schwab.com/',      variants: ['Schwab', 'Charles Schwab'], rel: 'nofollow' },
+    ];
+
     let wrappedCount = 0;
 
     for (const brand of BRAND_MAP) {
@@ -7657,20 +7970,23 @@ class ArticleFinalizer {
         const simpleRegex = new RegExp(escapedVariant, 'gi');
         const allMatches = [...modifiedHtml.matchAll(simpleRegex)];
 
+        let brandWrapped = false;
         for (const match of allMatches) {
+          if (brandWrapped) break;
           const pos = match.index;
-          const beforeChunk = modifiedHtml.substring(Math.max(0, pos - 200), pos);
+          // FIX: lookback augmenté à 500 chars (les URLs affiliées Travelpayouts dépassent 200 chars)
+          const beforeChunk = modifiedHtml.substring(Math.max(0, pos - 500), pos);
 
           const openTags = (beforeChunk.match(/<a\b/gi) || []).length;
           const closeTags = (beforeChunk.match(/<\/a>/gi) || []).length;
           const isInsideLink = openTags > closeTags;
           const isInHref = /href=["'][^"']*$/.test(beforeChunk);
-
           if (!isInsideLink && !isInHref) {
             const originalText = modifiedHtml.substring(pos, pos + variant.length);
             const affiliateLink = `<a href="${targetUrl}" target="_blank" rel="nofollow sponsored">${originalText}</a>`;
             modifiedHtml = modifiedHtml.substring(0, pos) + affiliateLink + modifiedHtml.substring(pos + variant.length);
             wrappedCount++;
+            brandWrapped = true;
             const linkType = cta?.partner_url ? 'affiliate' : 'direct (fallback)';
             console.log(`   🔗 BRAND_WRAPPED: "${originalText}" → ${brand.ctaKey} ${linkType} link`);
             break; // Une seule occurrence par variant
@@ -7679,9 +7995,43 @@ class ArticleFinalizer {
       }
     }
 
-    const totalCount = replacedHrefCount + wrappedCount;
+    // =========================================================================
+    // PHASE C : Liens directs pour marques non affiliées (Wise, Revolut, etc.)
+    // =========================================================================
+    let directWrappedCount = 0;
+    for (const brand of DIRECT_BRAND_MAP) {
+      for (const variant of brand.variants) {
+        const escapedVariant = variant.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const simpleRegex = new RegExp(escapedVariant, 'gi');
+        const allMatches = [...modifiedHtml.matchAll(simpleRegex)];
+
+        for (const match of allMatches) {
+          const pos = match.index;
+          // FIX: lookback augmenté à 500 chars
+          const beforeChunk = modifiedHtml.substring(Math.max(0, pos - 500), pos);
+
+          const openTags = (beforeChunk.match(/<a\b/gi) || []).length;
+          const closeTags = (beforeChunk.match(/<\/a>/gi) || []).length;
+          const isInsideLink = openTags > closeTags;
+          const isInHref = /href=["'][^"']*$/.test(beforeChunk);
+          const isInTag = />[^<]*$/.test(beforeChunk) === false; // inside a tag attribute
+
+          if (!isInsideLink && !isInHref && !isInTag) {
+            const originalText = modifiedHtml.substring(pos, pos + variant.length);
+            const relAttr = brand.rel || 'nofollow';
+            const directLink = `<a href="${brand.directUrl}" target="_blank" rel="${relAttr}">${originalText}</a>`;
+            modifiedHtml = modifiedHtml.substring(0, pos) + directLink + modifiedHtml.substring(pos + variant.length);
+            directWrappedCount++;
+            console.log(`   🔗 DIRECT_BRAND_WRAPPED: "${originalText}" → ${brand.directUrl}`);
+            break; // Une seule occurrence par variant
+          }
+        }
+      }
+    }
+
+    const totalCount = replacedHrefCount + wrappedCount + directWrappedCount;
     if (totalCount > 0) {
-      console.log(`✅ PARTNER_BRAND_LINKS: ${totalCount} lien(s) affilié(s) (${replacedHrefCount} href remplacés, ${wrappedCount} textes wrappés)`);
+      console.log(`✅ PARTNER_BRAND_LINKS: ${totalCount} lien(s) (${replacedHrefCount} href affiliés, ${wrappedCount} textes affiliés, ${directWrappedCount} liens directs)`);
     } else {
       console.log('🔗 PARTNER_BRAND_LINKS: Aucune mention de marque partenaire trouvée à linker');
     }
@@ -7822,6 +8172,10 @@ class ArticleFinalizer {
       if (citations && citations.length > 0) {
         for (const citation of citations) {
           const citationText = citation.replace(/[«»""'']/g, '').trim();
+          // SKIP: ne pas traduire les URLs (elles matchent le pattern anglais mais ne sont pas des citations)
+          if (/^https?:\/\//i.test(citationText) || /\.(com|org|net|io|fr)\b/i.test(citationText)) {
+            continue;
+          }
           if (citationText.length >= 10 && /[a-zA-Z]{3,}/.test(citationText)) {
             const englishWords = (citationText.match(ENGLISH_WORDS_REGEX) || []).length;
             const totalWords = citationText.split(/\s+/).filter(w => w.length > 0).length;

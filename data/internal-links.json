@@ -1,6 +1,57 @@
 {
   "articles": [
     {
+      "id": 2530,
+      "slug": "vivre-a-bali-avec-1500-mois-realite-ou-fantasme",
+      "title": "Vivre à Bali avec 1500 $/mois : Réalité ou Fantasme ?",
+      "url": "https://flashvoyage.com/vivre-a-bali-avec-1500-mois-realite-ou-fantasme/",
+      "category": "temoignage",
+      "keywords": [
+        "vivre",
+        "bali",
+        "avec",
+        "1500",
+        "$/mois",
+        "realite",
+        "fantasme"
+      ],
+      "excerpt": "Vivre à Bali avec 1500 $/mois en tant que digital nomad : budget réel, choix entre Canggu et Ubud, v"
+    },
+    {
+      "id": 2523,
+      "slug": "frais-caches-en-thailande-la-verite-sur-les-retraits-atm",
+      "title": "Frais cachés en Thaïlande : la vérité sur les retraits ATM",
+      "url": "https://flashvoyage.com/frais-caches-en-thailande-la-verite-sur-les-retraits-atm/",
+      "category": "temoignage",
+      "keywords": [
+        "frais",
+        "caches",
+        "thailande",
+        "verite",
+        "sur",
+        "retraits",
+        "atm"
+      ],
+      "excerpt": "Les frais ATM en Thaïlande peuvent atteindre 220 bahts (~8 $) par retrait. Voici comment les éviter "
+    },
+    {
+      "id": 2518,
+      "slug": "choisir-la-coree-pour-un-voyage-inoubliable-itineraire-et-conseils-pratiques",
+      "title": "Choisir la Corée pour un Voyage Inoubliable : Itinéraire et Conseils Pratiques",
+      "url": "https://flashvoyage.com/choisir-la-coree-pour-un-voyage-inoubliable-itineraire-et-conseils-pratiques/",
+      "category": "temoignage",
+      "keywords": [
+        "choisir",
+        "coree",
+        "voyage",
+        "inoubliable",
+        "itineraire",
+        "conseils",
+        "pratiques"
+      ],
+      "excerpt": "Un Voyage de Célébration: Pourquoi Choisir la Corée? Essayant de choisir une destination pour mon vo"
+    },
+    {
       "id": 2515,
       "slug": "choisir-le-japon-pour-une-semaine-de-nature-et-de-randonnee-est-ce-le-bon-choix",
       "title": "Choisir le Japon pour une semaine de nature et de randonnée : Est-ce le bon choix ?",

@@ -385,7 +385,9 @@ class IntelligentContentAnalyzerOptimized {
 2. Si le texte est en anglais → traduis-le vers le français avec le même ton et style
 3. Si le texte est mixte (FR/EN) → traduis UNIQUEMENT les parties en anglais, garde le français intact
 4. Réponds UNIQUEMENT avec le texte final, sans commentaires ni explications
-5. Préserve TOUT le HTML/formatage tel quel (<h2>, <p>, <strong>, etc.)`
+5. Préserve TOUT le HTML/formatage tel quel (<h2>, <p>, <strong>, etc.)
+6. JAMAIS modifier ou commenter les URLs (http/https) — les copier exactement telles quelles
+7. Si le texte entier est une URL → retourne-la EXACTEMENT sans commentaire`
           },
           {
             role: 'user',
@@ -1269,6 +1271,11 @@ Tu DOIS proposer un titre et un angle éditorial UNIQUES : ni même formulation,
 
     const systemMessage = `Tu es un expert FlashVoyages. Rédige un article engageant basé sur le témoignage Reddit.
 
+🚨 TOP 3 RÈGLES CRITIQUES (VÉRIFIER AVANT DE RÉPONDRE) :
+1. HOOK CINÉMATIQUE : le premier paragraphe doit être une micro-scène sensorielle concrète (lieu, action, tension). ❌ JAMAIS "Te voilà...", ❌ JAMAIS mentionner Reddit/source dans le hook. Exemples : "Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil..." / "Tu atterris à Bangkok avec un visa de 30 jours..."
+2. CITATIONS INLINE OBLIGATOIRES : intègre 2-5 citations courtes entre guillemets français « ... » depuis les données du témoignage. Chaque citation est contextualisée : "Un voyageur résume : « ... »". ❌ PAS de <blockquote>. Si tu génères 0 citation inline, l'article sera REJETÉ.
+3. H2 SPÉCIFIQUES : chaque H2 doit être unique à cet article. ❌ JAMAIS de H2 nu générique ("Conseils pratiques", "Conclusion", "En résumé", "Stratégies", "Solutions"). ✅ BON : "Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois".
+
 🇫🇷 RÉPONSE UNIQUEMENT EN FRANÇAIS (PRIORITÉ ABSOLUE) :
 - Produis TOUT le JSON en français dès la première réponse. Aucun champ en anglais.
 - Si la source Reddit est en anglais, interprète et rédige directement en français (pas de copier-coller puis traduction).
@@ -1354,13 +1361,18 @@ ${correctionBlock}
 - Titre : privilégier [Sujet] : la vérité (ni cliché, ni fantasme) ou [Révélation] + [Intent SEO]. Ex. "Voyager en Asie avec 25 000 $ : la vérité (ni cliché, ni fantasme)". ❌ INTERDIT en titre : "budget", "sécurité", "erreurs à éviter", "guide complet" seuls ou en combo générique — ces titres sont réutilisables partout et nuisent à l'angle FlashVoyage.
 - Chaque section doit répondre à une vraie question ou tension du lecteur ; pas de remplissage générique.
 
-📖 OUVERTURE IMMERSIVE (premier paragraphe du développement, OBLIGATOIRE) :
-- Structure OBLIGATOIRE en 3 parties :
-  * (1) Scène ancrée immersive : "Te voilà devant l'écran avec un chiffre en tête : [X] $." ou équivalent selon le témoignage (situation concrète, tension narrative). Utilise les détails du témoignage pour ancrer la scène dans le réel.
-  * (2) Question centrale du lecteur : Formule une question brûlante qui correspond à l'intention SEO (ex. "Peux-tu vraiment changer de vie à 36 ans, seul, sans un gros budget ?" pour un article sur budget nomade digital).
-  * (3) Promesse de l'article : Indique clairement ce que l'article apporte (coûts réels, pièges à éviter, outils pour prolonger le séjour, etc.).
-- Optionnel après l'ouverture : "Avant de regarder un témoignage isolé sur Reddit, il faut poser le cadre global." puis enchaîner sur les benchmarks.
-- ❌ INTERDIT : Commencer par "Source :", "Résumé :", ou analyser Reddit avant d'immerger le lecteur.
+📖 OUVERTURE IMMERSIVE — HOOK CINÉMATIQUE (premier paragraphe du développement, OBLIGATOIRE) :
+- Structure : micro-scène sensorielle + micro-tension + enjeu budget/temps
+- Le hook plonge le lecteur dans une SITUATION CONCRÈTE tirée du témoignage, sans jamais mentionner Reddit, la source ou l'auteur. La preuve arrive ensuite.
+- Utilise les détails réels du témoignage (lieu, montant, situation) pour ancrer la scène.
+- ❌ INTERDIT : "Te voilà devant l'écran...", "Source :", "Résumé :", "Avant de regarder un témoignage...", analyser Reddit avant d'immerger le lecteur.
+- ❌ INTERDIT : Commencer par une question rhétorique sans scène ("Savais-tu que...?").
+- Exemples de hooks calibrés (à adapter au témoignage) :
+  * Budget/frais : "Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil : marcher jusqu'au distributeur, appuyer sur quelques touches… puis voir une commission de 220 bahts apparaître sur l'écran."
+  * Visa/admin : "Tu atterris à Bangkok avec un visa touristique de 30 jours et une liste de choses à faire qui en demanderait 90. Le compte à rebours a déjà commencé."
+  * Sécurité/santé : "Il est 2h du matin à Bali quand ton estomac décide que la soirée est terminée. Tu cherches une pharmacie ouverte, mais ton téléphone n'a plus de connexion."
+  * Logement/coût : "Le propriétaire te demande 3 mois d'avance. Tu fais le calcul mental — et ton budget mensuel vient de fondre de moitié avant même d'avoir posé ta valise."
+- Après le hook : enchaîner sur le contexte (pourquoi ce problème compte, quel est l'enjeu réel pour le lecteur).
 
 📊 CONTEXTE = CADRE GLOBAL + BENCHMARKS :
 - Après l'ouverture immersive, poser le cadre avec des benchmarks concrets : coût/jour (ex. ≈ 35 $), coût/mois (ex. environ 1 000 $), durées 6–9 mois si pertinent. Format listes à puces (<ul><li>...</li></ul>).
@@ -1399,11 +1411,13 @@ ${correctionBlock}
    - ❌ NE JAMAIS générer le H2 "Ce que dit le témoignage". Utilise "Ce que la communauté apporte" si besoin.
 
 1. DÉVELOPPEMENT (OBLIGATOIRE - UN SEUL CHAMP "developpement")
-   - Contenu : tout le corps de l'article en HTML libre (<h2>, <h3>, <p>, <ul><li>). Ordre et titres au choix du récit. Chaque H2 doit refléter l'angle de l'article (destination, durée, type de voyage, etc.) plutôt qu'une formulation générique réutilisable partout.
+   - Contenu : tout le corps de l'article en HTML libre (<h2>, <h3>, <p>, <ul><li>). L'arc narratif (situation → surprise → impact → options → choix → plan d'action) guide l'ordre. Chaque H2 doit être spécifique à cet article (voir blacklist H2).
    - OBLIGATOIRE dans le développement :
-     * Ouverture immersive en premier (scène + question + promesse). Ex. "Te voilà devant l'écran avec un chiffre en tête : ~23 000 € (25 000 USD)..." Pas de "Résumé :" ni répétition du titre. 💰 Si montant en USD, convertir en EUR.
-     * Témoignage Reddit comme preuve (citation courte « ... » + interprétation concrète). Tu peux utiliser un H2 narratif type "Une vraie histoire : quand [X] deviennent une décision de vie". Développer en 2–3 phrases (qui, quoi, enjeu) avant d'enchaîner sur des listes ou conseils.
+     * Hook cinématique en premier : micro-scène sensorielle + tension + enjeu. PAS de mention Reddit. 💰 Si montant en USD, convertir en EUR.
+     * 2-5 citations inline « ... » depuis story.evidence.source_snippets, intégrées dans le flux narratif avec contexte.
+     * Témoignage comme preuve APRÈS le hook : développer en 2–3 phrases (qui, quoi, enjeu) avant d'enchaîner sur l'analyse.
      * Angles SERP à intégrer naturellement avec les mots-clés EXACTS : "chronologie" ou "timeline" ou "étapes du voyage" ; "budget réel" ou "coûts réels" ou "dépenses réelles" ; "contraintes" ou "difficultés" ou "obstacles" ou "problèmes pratiques".
+     * 3 CTA narratifs positionnés dans l'arc (préventif tôt, solution au pic, setup long terme après).
      * Affiliation dans le flux narratif (eSIM, assurance, vols) — ancres naturelles, pas de paragraphes pub.
    - OPTIONNEL (si le story le justifie, sinon omettre) : 
      * ❌ INTERDIT ABSOLU : Ne JAMAIS générer la section "Ce que la communauté apporte" (résidu de l'ancienne structure). Les insights de la communauté doivent être intégrés dans le développement narratif, pas dans une section séparée.
@@ -1420,11 +1434,11 @@ ${correctionBlock}
 
 📝 INTERDICTION STRICTE - NE JAMAIS GÉNÉRER DE <blockquote> :
 - ❌ INTERDIT TOTAL : <blockquote>, <cite>, <q> ou tout élément similaire
-- ❌ MÊME PAS pour des citations Reddit - le système les ajoutera automatiquement
+- ❌ MÊME PAS pour des citations Reddit - le système (editorial-enhancer) les ajoutera automatiquement en post-traitement
 - Si tu génères un <blockquote>, l'article sera REJETÉ
-- Citations courtes (≤ 2 lignes) UNIQUEMENT entre guillemets : « ... »
+- Citations courtes (≤ 2 lignes) UNIQUEMENT entre guillemets français inline : « ... »
 - Attribution : « ... » — ${extracted.author || 'auteur Reddit'}
-- Utilise les citations disponibles depuis story.evidence.source_snippets
+- OBLIGATOIRE : intègre 2-5 citations inline « ... » depuis story.evidence.source_snippets, chacune contextualisée dans le flux narratif
 
 🎯 TON ET STYLE :
 - ${toneGuidance}
@@ -1435,29 +1449,39 @@ ${correctionBlock}
 
 🌟 DIRECTIVES ÉDITORIALES (à intégrer dans le champ unique "developpement", titres H2 LIBRES et narratifs) :
 
-⚠️ RÈGLE ABSOLUE : Chaque H2 doit être UNIQUE et NARRATIF, adapté à l'angle spécifique de l'article.
-❌ INTERDIT : H2 génériques réutilisables partout ("Contexte", "Événement central", "Moment critique", "Résolution", "Chronologie de l'expérience", "Risques et pièges réels", "Ce que la communauté apporte", "Conseils pratiques").
-✅ CORRECT : H2 qui reflètent l'histoire (ex. "Quand un vol annulé transforme ton budget en puzzle", "Le vrai coût d'un mois à Osaka sans plan B").
+⚠️ RÈGLE ABSOLUE — H2 SPÉCIFIQUES (blacklist avec whitelist conditionnelle) :
+- Chaque H2 doit être UNIQUE et NARRATIF, adapté à l'angle spécifique de l'article.
+- PRINCIPE : un H2 "nu" (= réutilisable sur n'importe quel article) est GÉNÉRIQUE et INTERDIT. Un H2 "qualifié" (= ne fonctionne que pour cet article) est SPÉCIFIQUE et AUTORISÉ.
+- ❌ H2 NUS INTERDITS : "Contexte", "Événement central", "Moment critique", "Résolution", "Chronologie de l'expérience", "Risques et pièges réels", "Ce que la communauté apporte", "Conseils pratiques", "En résumé", "Stratégies", "Ce qu'il faut savoir", "Points clés", "Notre avis", "Analyse", "Solutions", "Conclusion".
+- ✅ H2 QUALIFIÉS AUTORISÉS : "Conseils pratiques pour éviter les frais ATM en Thaïlande", "Stratégies pour durer 6 mois à Bali avec 1500 €/mois", "Ce qu'il faut savoir avant d'ouvrir un compte bancaire au Vietnam".
+- ✅ MEILLEUR : H2 qui reflètent l'histoire (ex. "Quand un vol annulé transforme ton budget en puzzle", "Le vrai coût d'un mois à Osaka sans plan B", "Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois").
 
-1. OUVERTURE IMMERSIVE (premier paragraphe)
-   - [Scène concrète] + [Question brûlante du lecteur] + [Promesse de l'article]
-   - Place le lecteur dans l'action dès la première phrase, pas d'analyse ni de source Reddit
-   - ❌ INTERDIT : "Pendant que vous rêvez...", "Chez FlashVoyages nous avons sélectionné..."
-   - Utilise les données du témoignage (lieu, budget, situation) pour ancrer dans le réel
+🔄 ARC NARRATIF OBLIGATOIRE (progression du développement) :
+L'article doit suivre cette progression naturelle — PAS un ordre "analyse froide" (contexte → témoignage → conseils) :
+   1. SITUATION : hook cinématique (micro-scène + tension + enjeu) — SANS mentionner Reddit
+   2. SURPRISE / RÉVÉLATION : le fait inattendu, le chiffre choquant, le détail que personne n'anticipe
+   3. IMPACT RÉEL : "ce que ça change pour toi" — conséquences concrètes sur budget/temps/stress
+   4. OPTIONS CONCRÈTES : les solutions qui existent, avec avantages/inconvénients
+   5. CHOIX RECOMMANDÉ : l'arbitrage clair, la décision la plus logique selon le profil lecteur
+   6. PLAN D'ACTION : les étapes à suivre, checklist si pertinent
 
-2. PREUVES REDDIT (intégrées dans le récit)
-   - Introduire le témoignage Reddit après avoir capté le lecteur
-   - Citations courtes « ... » avec interprétation concrète, jamais décoratives
+📝 CITATIONS INLINE (2-5 OBLIGATOIRES — workflow) :
+   - Intègre 2 à 5 extraits courts depuis story.evidence.source_snippets
+   - Format UNIQUEMENT entre guillemets français inline : « ... »
+   - ❌ NE GÉNÈRE PAS de <blockquote> (le système les ajoute en post-traitement)
+   - Chaque citation doit être CONTEXTUALISÉE dans le flux narratif (pas décorative) :
+     * ✅ BON : "Un voyageur résume le problème en une phrase : « Nearly $8 to use an ATM — that's insane »"
+     * ❌ MAUVAIS : citation posée seule sans explication ni lien avec le propos
    - Mentionner la source UNE SEULE FOIS, puis variantes : "Ce témoignage", "Son parcours", "Cette expérience"
-   - ❌ ÉVITER les pseudos Reddit dans le texte. Utiliser : "Un voyageur de la communauté Reddit"
+   - ❌ ÉVITER les pseudos Reddit dans le texte. Utiliser : "Un voyageur de la communauté"
 
-3. DONNÉES TANGIBLES (budget, chronologie, chiffres)
+📊 DONNÉES TANGIBLES (budget, chronologie, chiffres) :
    - Intégrer naturellement dans le récit (pas de sections séparées avec titres fixes)
    - Mots-clés SEO à placer : "budget réel", "coûts réels", "chronologie", "étapes du voyage", "contraintes"
    - Si données disponibles dans extracted → les utiliser. Sinon → estimer de façon réaliste pour la destination
    - Tableaux et listes si utile (budget par poste, timeline du voyage)
 
-4. RISQUES, ERREURS ET CONSEILS ACTIONNABLES
+⚡ RISQUES, ERREURS ET CONSEILS ACTIONNABLES :
    - Transformer chaque erreur/risque du témoignage en action préventive concrète
    - Indicateurs tangibles : chiffres, durées, exemples précis. Pas de généralités
    - Ancres d'affiliation naturelles dans le flux :
@@ -1465,21 +1489,43 @@ ${correctionBlock}
      * Santé/accident → "assurance voyage longue durée"
      * Vols/mobilité → "vols modifiables et flexibles"
 
-5. ANALYSE CRITIQUE ET PROFONDEUR
+🔍 ANALYSE CRITIQUE ET PROFONDEUR :
    - Ce que le témoignage ne dit pas : coûts cachés, biais, limites, angles sous-traités
    - Distinction faits / ressentis / interprétations (renforce E-E-A-T)
    - Analyse émotionnelle et comportementale intégrées dans le récit (pas de labels isolés)
-   - Biais cognitifs identifiés naturellement dans le flux
+
+📐 DENSITÉ NARRATIVE (OBLIGATOIRE) :
+   - Chaque paragraphe doit soit (a) faire avancer l'histoire, soit (b) faire avancer une décision, soit (c) réduire un risque. Si un paragraphe ne remplit aucun de ces rôles → le supprimer ou le fusionner.
+   - Remplacer les phrases plates par des patterns à haute valeur :
+     * "ce que ça change pour toi" (impact concret)
+     * "le piège classique" (erreur fréquente à éviter)
+     * "la règle simple" (heuristique actionnable)
+     * "l'arbitrage" (choix entre deux options avec critères)
+   - Intégrer des micro-checklists, décisions "si/alors", erreurs fréquentes, garde-fous
+   - Exemple de densité : au lieu de "Il est important de bien choisir sa carte bancaire", écrire "Le piège classique : retirer 5 fois par mois sans carte remboursante = 40 $ perdus. La règle simple : une carte qui rembourse les frais ATM transforme ce coût en zéro."
+
+🎯 3 CTA NARRATIFS (positionnés dans l'arc) :
+   - CTA "préventif" TÔT : placé dans la section où le problème est posé, avant que le lecteur souffre. Justifié par "pour éviter ce problème, voici l'outil".
+   - CTA "solution" AU PIC : placé après le diagnostic, quand la frustration est maximale. Justifié par "voici comment résoudre ce problème maintenant".
+   - CTA "setup long terme" APRÈS LA SOLUTION : placé dans le plan d'action. Justifié par "pour ne plus jamais avoir ce problème".
+   - Chaque CTA est justifié par le contexte narratif — les widgets existants gèrent le rendu.
+
+🚫 INTERDITS EXPLICITES (ÉCRITURE) :
+   - ❌ Titres H2 génériques (nus) — voir blacklist ci-dessus
+   - ❌ Listes longues (>5 items) sans hiérarchie ni commentaire — chaque item doit apporter un éclairage
+   - ❌ Analyse froide type "voici ce que dit Reddit" ou "les utilisateurs rapportent que"
+   - ❌ Ton scolaire : "il est important de", "il faut savoir que", "il convient de noter"
+   - ❌ Morale / prudence inutile : "chaque voyage est unique", "il est toujours préférable de se renseigner"
+   - ❌ Labels isolés sans contenu ("<p>🧠 Ce que le voyageur a ressenti :</p>" suivi de rien)
+   - ❌ Emphase émotionnelle artificielle, formules marketing, généralisation abusive
 
 STYLE D'ÉCRITURE :
 - Transitions fluides entre sections, pas de ruptures artificielles
 - Questions rhétoriques spécifiques au contenu (2-3 par article)
 - Variation du rythme : phrases courtes percutantes + phrases longues explicatives
-- Chaque section se termine par un enseignement pratique
-- Tutoiement, ton expert mais accessible
+- Chaque section se termine par un enseignement pratique ou une décision à prendre
+- Tutoiement, ton expert mais accessible, orienté décision
 - Ce site est spécialisé ASIE : ne mentionner que des destinations asiatiques
-- ❌ Ne JAMAIS générer de labels isolés sans contenu ("<p>🧠 Ce que le voyageur a ressenti :</p>" suivi de rien)
-- Éviter : emphase émotionnelle artificielle, formules marketing, généralisation abusive
 
 🔍 PROFONDEUR ANALYTIQUE (angles sous-traités) :
 
@@ -2520,39 +2566,167 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
   }
 
   /**
-   * PASSE 2: Amélioration du contenu par LLM (auto-critique et correction)
-   * Cette fonction améliore le contenu généré sans supprimer - elle corrige et enrichit.
+   * PASSE 2: Amélioration du contenu en deux phases
+   * Phase 1: Checks heuristiques (regex, sans LLM) — détection d'anomalies
+   * Phase 2: Correction LLM (seulement si anomalies détectées en phase 1)
    * 
    * @param {string} rawContent - HTML du contenu généré par la passe 1
    * @param {Object} context - Contexte de l'article (destination, theme, etc.)
    * @returns {Promise<string>} - HTML amélioré
    */
   async improveContentWithLLM(rawContent, context = {}) {
-    console.log('\n🔄 PASSE 2: Amélioration du contenu par LLM...');
+    console.log('\n🔄 PASSE 2: Amélioration du contenu (deux phases)...');
     console.log(`   📏 Contenu initial: ${rawContent.length} caractères`);
     
     const destination = context.destination || context.final_destination || 'Asie';
     const theme = context.theme || 'voyage';
+
+    // ═══════════════════════════════════════════════════════════════
+    // PHASE 1: Checks heuristiques (regex, sans LLM)
+    // ═══════════════════════════════════════════════════════════════
+    console.log('   📋 Phase 1: Checks heuristiques...');
+    const anomalies = [];
     
-    const systemPrompt = `Tu es un éditeur expert français pour FlashVoyages.com. Tu améliores le contenu HTML existant.
+    // 1a. Détection H2 génériques (blacklist)
+    const GENERIC_H2_BLACKLIST = [
+      'contexte', 'événement central', 'moment critique', 'résolution',
+      'chronologie de l\'expérience', 'risques et pièges réels',
+      'ce que la communauté apporte', 'conseils pratiques',
+      'en résumé', 'stratégies', 'ce qu\'il faut savoir', 'points clés',
+      'notre avis', 'analyse', 'solutions', 'conclusion',
+      'ce qu\'il faut retenir', 'nos recommandations', 'options alternatives'
+    ];
+    // Patterns "lazy" : un mot générique + ":" + complément → toujours mauvais
+    const LAZY_H2_PATTERN = /^(conclusion|stratégies|options|solutions|résumé|analyse)\s*:/i;
+    
+    const h2Matches = [...(rawContent.matchAll(/<h2[^>]*>([^<]+)<\/h2>/gi) || [])];
+    const genericH2s = h2Matches.filter(m => {
+      const title = m[1].trim().toLowerCase().replace(/[^\wàâäéèêëïîôùûüÿç\s'-]/g, '').trim();
+      const isNakedGeneric = GENERIC_H2_BLACKLIST.some(banned => title === banned);
+      const isLazy = LAZY_H2_PATTERN.test(m[1].trim());
+      return isNakedGeneric || isLazy;
+    });
+    if (genericH2s.length > 0) {
+      anomalies.push({ type: 'generic_h2', count: genericH2s.length, details: genericH2s.map(m => m[1].trim()) });
+      console.log(`   ⚠️ H2 génériques détectés: ${genericH2s.map(m => `"${m[1].trim()}"`).join(', ')}`);
+    }
+    
+    // 1b. Comptage de quotes « ... » (minimum 2)
+    const quoteMatches = rawContent.match(/«[^»]+»/g) || [];
+    if (quoteMatches.length < 2) {
+      anomalies.push({ type: 'low_quotes', count: quoteMatches.length, expected: 2 });
+      console.log(`   ⚠️ Citations insuffisantes: ${quoteMatches.length}/2 minimum`);
+    }
+    
+    // 1c. Détection "Reddit" / "subreddit" / "r/" et patterns bannis dans les 500 premiers caractères
+    const textOnly = rawContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    const first500 = textOnly.slice(0, 500);
+    const redditInHook = /\breddit\b|\bsubreddit\b|\br\//i.test(first500);
+    if (redditInHook) {
+      anomalies.push({ type: 'reddit_in_hook' });
+      console.log('   ⚠️ Mention de Reddit dans les 500 premiers caractères du hook');
+    }
+    
+    // 1c-bis. Détection du hook banni "Te voilà" (ancien pattern formulaique)
+    const bannedHookPatterns = /\bte voilà\b|\bte voila\b/i.test(first500);
+    if (bannedHookPatterns) {
+      anomalies.push({ type: 'banned_hook_pattern' });
+      console.log('   ⚠️ Hook banni détecté: "Te voilà..." (ancien pattern formulaique)');
+    }
+    
+    // 1d. Détection phrases plates courantes
+    const FLAT_PHRASES = [
+      /il est important de\b/gi,
+      /il faut savoir que\b/gi,
+      /il convient de noter\b/gi,
+      /en conclusion\b/gi,
+      /en somme\b/gi,
+      /en effet\b/gi,
+      /dans cet article\b/gi,
+      /chaque voyage est unique\b/gi,
+      /il est toujours préférable de se renseigner\b/gi
+    ];
+    const flatPhrasesFound = [];
+    for (const pattern of FLAT_PHRASES) {
+      const matches = rawContent.match(pattern);
+      if (matches) flatPhrasesFound.push(...matches);
+    }
+    if (flatPhrasesFound.length > 0) {
+      anomalies.push({ type: 'flat_phrases', count: flatPhrasesFound.length, details: flatPhrasesFound.slice(0, 5) });
+      console.log(`   ⚠️ Phrases plates détectées: ${flatPhrasesFound.length} (${flatPhrasesFound.slice(0, 3).map(p => `"${p}"`).join(', ')})`);
+    }
+    
+    // 1e. Détection anglais résiduel (heuristique rapide)
+    const englishPatterns = rawContent.match(/\b(the|is|are|was|were|have|has|had|will|would|can|could|should|this|that|from|basically|don't|I'm|you|he|she|we|they|here|there|my|your|not|anymore|phone|camera)\b/gi) || [];
+    const hasSignificantEnglish = englishPatterns.length > 10;
+    if (hasSignificantEnglish) {
+      anomalies.push({ type: 'english_residual', count: englishPatterns.length });
+      console.log(`   ⚠️ Anglais résiduel détecté: ${englishPatterns.length} mots anglais`);
+    }
+    
+    // Phase 1 summary
+    if (anomalies.length === 0) {
+      console.log('   ✅ Phase 1: Aucune anomalie détectée — skip de la passe LLM (économie de coût)');
+      return rawContent;
+    }
+    console.log(`   📊 Phase 1: ${anomalies.length} anomalie(s) détectée(s) → déclenchement Phase 2 (LLM)`);
+    
+    // ═══════════════════════════════════════════════════════════════
+    // PHASE 2: Correction LLM (seulement si anomalies détectées)
+    // ═══════════════════════════════════════════════════════════════
+    console.log('   🤖 Phase 2: Correction LLM ciblée...');
+    
+    // Construire les instructions de correction spécifiques aux anomalies trouvées
+    const correctionInstructions = [];
+    
+    for (const anomaly of anomalies) {
+      switch (anomaly.type) {
+        case 'generic_h2':
+          correctionInstructions.push(
+            `REFORMULE ces H2 génériques en H2 spécifiques contenant la destination "${destination}" ou le sujet concret de l'article : ${anomaly.details.map(d => `"${d}"`).join(', ')}. Exemple : "Conseils pratiques" → "Comment éviter les pièges bancaires en ${destination}".`
+          );
+          break;
+        case 'low_quotes':
+          correctionInstructions.push(
+            `L'article ne contient que ${anomaly.count} citation(s) inline « ... ». Ajoute des citations pertinentes depuis le témoignage, intégrées dans le flux narratif avec un contexte (ex: "Un voyageur résume : « ... »"). Minimum 2 citations.`
+          );
+          break;
+        case 'reddit_in_hook':
+          correctionInstructions.push(
+            'Le hook (500 premiers caractères) mentionne "Reddit" ou "subreddit". Reformule le début pour plonger le lecteur dans une scène concrète SANS mentionner la source. La mention de Reddit doit apparaître plus tard dans l\'article.'
+          );
+          break;
+        case 'banned_hook_pattern':
+          correctionInstructions.push(
+            'Le hook utilise le pattern banni "Te voilà...". Remplace-le par un hook cinématique : une micro-scène sensorielle concrète tirée du témoignage, avec tension et enjeu budget/temps. Exemples : "Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil..." ou "Tu atterris à Bangkok avec un visa de 30 jours et une liste de choses à faire qui en demanderait 90." Le hook doit plonger le lecteur dans l\'ACTION, pas dans une description.'
+          );
+          break;
+        case 'flat_phrases':
+          correctionInstructions.push(
+            `Remplace les phrases plates suivantes par des formulations à haute valeur ("ce que ça change pour toi", "le piège classique", "la règle simple") : ${anomaly.details.map(d => `"${d}"`).join(', ')}.`
+          );
+          break;
+        case 'english_residual':
+          correctionInstructions.push(
+            `Traduis en français les ${anomaly.count} mots/passages anglais restants dans l'article. Tout doit être en français.`
+          );
+          break;
+      }
+    }
+    
+    const systemPrompt = `Tu es un éditeur expert français pour FlashVoyages.com. Tu corriges des anomalies SPÉCIFIQUES dans le contenu HTML existant.
 
 RÈGLES ABSOLUES (par ordre de priorité):
 
-1. TRADUIS EN FRANÇAIS tout contenu anglais (phrases, mots, listes)
-   - Exemple: "Vietnam- great food, great service" → "Vietnam - excellente cuisine, excellent service"
-   - Exemple: "I absolutely loved Hong Kong" → "J'ai absolument adoré Hong Kong"
+1. CORRIGE UNIQUEMENT les anomalies listées ci-dessous — ne touche pas au reste
+2. TRADUIS EN FRANÇAIS tout contenu anglais résiduel
+3. CORRIGE LES ESPACES MANQUANTS entre les mots collés (ex: "Salutà tous" → "Salut à tous")
+4. Corrige les phrases qui ne se terminent pas par . ! ? (ajoute la ponctuation)
+5. NE SUPPRIME JAMAIS de contenu — tu AMÉLIORES et CORRIGES seulement
+6. Conserve TOUS les widgets (<script>, <div class="affiliate-module">), liens, blockquotes, et structure HTML
 
-2. CORRIGE LES ESPACES MANQUANTS entre les mots collés
-   - Exemple: "Salutà tous" → "Salut à tous"
-   - Exemple: "Japonà nouveau" → "Japon à nouveau"
-   - Exemple: "deséléments" → "des éléments"
-   - Exemple: "trèsélevés" → "très élevés"
-
-3. Corrige les phrases qui ne se terminent pas par . ! ? (ajoute la ponctuation)
-
-4. NE SUPPRIME JAMAIS de contenu - tu AMÉLIORES seulement
-
-5. Conserve TOUS les widgets (<script>, <div class="affiliate-module">), liens, blockquotes, et structure HTML
+ANOMALIES À CORRIGER:
+${correctionInstructions.map((instr, i) => `${i + 1}. ${instr}`).join('\n')}
 
 INTERDIT ABSOLUMENT:
 - NE PAS wrapper le HTML dans \`\`\`html ou \`\`\`
@@ -2560,9 +2734,9 @@ INTERDIT ABSOLUMENT:
 - NE PAS modifier les attributs des balises HTML
 - NE PAS supprimer de sections ou paragraphes
 
-FORMAT: Retourne UNIQUEMENT le HTML brut amélioré, commençant directement par <h2> ou <p>.`;
+FORMAT: Retourne UNIQUEMENT le HTML brut corrigé, commençant directement par <h2> ou <p>.`;
 
-    const userPrompt = `Améliore ce contenu HTML pour l'article sur "${destination}" (thème: ${theme}):
+    const userPrompt = `Corrige les anomalies dans ce contenu HTML pour l'article sur "${destination}" (thème: ${theme}):
 
 ${rawContent}`;
 
@@ -2615,7 +2789,7 @@ ${rawContent}`;
         return rawContent;
       }
 
-      console.log(`   ✅ Contenu amélioré: ${rawContent.length} → ${improvedContent.length} caractères`);
+      console.log(`   ✅ Contenu amélioré: ${rawContent.length} → ${improvedContent.length} caractères (${anomalies.length} anomalies traitées)`);
       return improvedContent;
 
     } catch (error) {

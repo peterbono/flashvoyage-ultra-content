@@ -1,7 +1,74 @@
 {
-  "crawled_at": "2026-02-12T11:03:05.452Z",
-  "total_articles": 57,
+  "crawled_at": "2026-02-13T15:05:05.781Z",
+  "total_articles": 60,
   "articles": [
+    {
+      "id": 2532,
+      "title": "Détour vers Angkor Wat : Est-ce vraiment un bon plan lors d&#8217;un voyage au Vietnam ?",
+      "url": "https://flashvoyage.com/detour-vers-angkor-wat-est-ce-vraiment-un-bon-plan-lors-dun-voyage-au-vietnam/",
+      "slug": "detour-vers-angkor-wat-est-ce-vraiment-un-bon-plan-lors-dun-voyage-au-vietnam",
+      "excerpt": "Un détour imprévu vers Angkor Wat: une décision audacieuse Il fait chaud à Ho Chi Minh, et l&#8217;idée de prolonger ton séjour vers le Cambodge germe dans ton esprit&#8230;\n",
+      "content": "Un détour imprévu vers Angkor Wat: une décision audacieuse\nIl fait chaud à Ho Chi Minh, et l&#8217;idée de prolonger ton séjour vers le Cambodge germe dans ton esprit.\nTu as déjà prévu un mois pour découvrir le Vietnam, mais Angkor Wat semble une tentation difficile à ignorer.\nLe dilemme est bien là: ajouter 2-3 jours pour explorer les temples majestueux de Siem Reap vaut-il le détour?\nUn voyageur confie: « Planifier un voyage d&#8217;un mois au Vietnam et se demander s&#8217;il vaut la peine d&",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-13T15:04:55",
+      "modified": "2026-02-13T15:04:58",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2532.jpg"
+    },
+    {
+      "id": 2530,
+      "title": "Vivre à Bali avec 1500 $/mois : Réalité ou Fantasme ?",
+      "url": "https://flashvoyage.com/vivre-a-bali-avec-1500-mois-realite-ou-fantasme/",
+      "slug": "vivre-a-bali-avec-1500-mois-realite-ou-fantasme",
+      "excerpt": "Vivre à Bali avec 1500 $/mois en tant que digital nomad : budget réel, choix entre Canggu et Ubud, visa B211A, et conseils de la communauté.\n",
+      "content": "Quand un budget de 1500 $ devient un défi à Bali\nAu cœur de Bali, le soleil se lève sur une plage de Canggu.\nLes premiers surfeurs affrontent déjà les vagues, tandis que dans un café voisin, les nomades digitaux allument leurs ordinateurs.\nUn voyageur explique: « J&#8217;ai passé 3 mois à Bali l&#8217;année dernière avec un budget de 1400 $/mois.\n» Cela semble possible, mais est-ce viable pour tout le monde?\nPourquoi Bali attire toujours les nomades digitaux en 2025\n\nBali vaut-elle encore le cou",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        },
+        {
+          "id": 182,
+          "name": "Indonésie",
+          "slug": "indonesie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-13T14:46:07",
+      "modified": "2026-02-13T14:50:22",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/bali-digital-nomad-featured.jpg"
+    },
+    {
+      "id": 2523,
+      "title": "Frais cachés en Thaïlande : la vérité sur les retraits ATM",
+      "url": "https://flashvoyage.com/frais-caches-en-thailande-la-verite-sur-les-retraits-atm/",
+      "slug": "frais-caches-en-thailande-la-verite-sur-les-retraits-atm",
+      "excerpt": "Les frais ATM en Thaïlande peuvent atteindre 220 bahts (~8 $) par retrait. Voici comment les éviter et protéger ton budget voyage.\n",
+      "content": "Quand retirer de l&#8217;argent en Thaïlande devient un casse-tête coûteux\nImagine-toi en train de marcher sous le soleil chaud de Bangkok, à la recherche d&#8217;un distributeur automatique.\nTu insères ta carte, attends quelques secondes, et voilà: 220 bahts de frais apparaissent à l&#8217;écran, soit environ 7,70 USD.\nUn voyageur confie : « Près de 8 $ pour utiliser un distributeur automatique en Thaïlande maintenant… les frais sont absolument fous ».\nLe coût réel des retraits en Thaïlande: un",
+      "categories": [
+        {
+          "id": 143,
+          "name": "Finance &amp; Fiscalité",
+          "slug": "finance-fiscalite"
+        },
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-13T14:08:34",
+      "modified": "2026-02-13T14:25:54",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/frais-atm-thailande-featured.jpg"
+    },
     {
       "id": 2518,
       "title": "Choisir la Corée pour un Voyage Inoubliable : Itinéraire et Conseils Pratiques",

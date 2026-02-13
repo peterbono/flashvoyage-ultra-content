@@ -1499,9 +1499,20 @@ class SeoOptimizer {
       return html + `\n\n<h2>Articles connexes</h2>\n<ul>\n${linksHtml}\n</ul>`;
     }
     
+    // FIX: Exclure le premier paragraphe (hook immersif) — ne jamais y injecter de lien interne
+    // Le hook doit rester pur narratif sans insertion "Pour en savoir plus..."
+    const eligibleParagraphs = paragraphs.slice(1); // skip paragraphs[0] = hook
+    if (eligibleParagraphs.length === 0) {
+      // Fallback: ajouter section Articles connexes à la fin
+      const linksHtml = links.map(link => 
+        `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(link.title)}</a></li>`
+      ).join('\n');
+      return html + `\n\n<h3>À lire également</h3>\n<ul>\n${linksHtml}\n</ul>`;
+    }
+    
     // AMÉLIORATION: Forcer insertion dans les 30% premiers (au moins 2 liens)
-    const targetParagraphCount = Math.max(2, Math.floor(paragraphs.length * 0.3));
-    const targetParagraphs = paragraphs.slice(0, targetParagraphCount);
+    const targetParagraphCount = Math.max(2, Math.floor(eligibleParagraphs.length * 0.3));
+    const targetParagraphs = eligibleParagraphs.slice(0, targetParagraphCount);
     
     // AMÉLIORATION: Utiliser les meilleurs matches (score élevé) pour les premiers liens
     const sortedLinks = links.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0));

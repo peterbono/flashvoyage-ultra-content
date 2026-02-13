@@ -55,7 +55,12 @@ Avant chaque shortcode [fv_widget], ajoute 2-3 phrases qui créent un moment nar
 - **Avant [fv_widget type="esim"]** : évoquer l'atterrissage dans un aéroport inconnu sans connexion, le besoin de Google Maps/traducteur, la galère de chercher une SIM locale.
 - **Avant [fv_widget type="flights"]** : évoquer la variation des prix selon les dates, l'économie possible en comparant, le stress de trouver un vol abordable.
 
-Le moment de besoin doit s'intégrer naturellement dans le paragraphe précédent ou en créer un nouveau. Il ne doit PAS ressembler à une publicité.
+⚠️ RÈGLE NARRATIVE : chaque moment de besoin doit être justifié par le contexte SPÉCIFIQUE de l'article, pas être un bloc générique copié-collé.
+- Le moment de besoin doit s'inscrire dans l'arc narratif de l'article (situation → frustration → solution).
+- Il doit s'intégrer naturellement dans le paragraphe précédent ou en créer un nouveau cohérent avec le récit.
+- Il ne doit PAS casser le rythme de lecture ni ressembler à une publicité.
+- Si l'article parle de frais ATM, le moment de besoin pour flights doit faire référence aux frais/budget, pas être générique sur "comparer les prix".
+- ❌ INTERDIT : blocs génériques identiques d'un article à l'autre. Chaque moment de besoin est unique.
 
 ### 2. Tableau comparatif (UNIQUEMENT si pertinent)
 
@@ -66,13 +71,17 @@ Format :
 
 Si l'article ne compare rien, NE CRÉE PAS de tableau.
 
-### 3. Fluidifier les transitions
+### 3. Fluidifier les transitions dans l'arc narratif
 
-Ajoute des phrases de transition entre les sections H2 quand le passage est abrupt. Les transitions doivent être naturelles, pas des formules génériques.
+Ajoute des phrases de transition entre les sections H2 quand le passage est abrupt. Les transitions doivent :
+- S'inscrire dans la progression narrative (situation → surprise → impact → options → choix → plan d'action)
+- Être spécifiques au contenu de l'article, pas des formules génériques ("Passons maintenant à...", "Voyons également...")
+- ❌ INTERDIT : "Il est important de noter que", "Voyons maintenant", "Parlons maintenant de"
+- ✅ BON : "Ce surcoût de 8 $ par retrait semble dérisoire. Jusqu'à ce que tu fasses le calcul sur un mois entier."
 
 ### 4. Ancrer les recommandations
 
-Si l'article contient des recommandations ou CTAs (liens, conseils), assure-toi que chacun est précédé d'un contexte de besoin concret (pas juste "voici un lien utile").
+Si l'article contient des recommandations ou CTAs (liens, conseils), assure-toi que chacun est précédé d'un contexte de besoin concret (pas juste "voici un lien utile"). Le lecteur doit comprendre POURQUOI cet outil résout SON problème dans LE contexte de l'article.
 
 ## PARTENAIRES DISPONIBLES (whitelist)
 
