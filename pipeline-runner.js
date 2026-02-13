@@ -445,7 +445,8 @@ class PipelineRunner {
         content: finalContent,
         excerpt: finalized.excerpt,
         qaReport: finalized.qaReport,
-        antiHallucinationReport: antiHallucination
+        antiHallucinationReport: antiHallucination,
+        inlineImages: finalized.inlineImages || [] // Propager les images inline pour upload WP
       };
       
       // DEBUG: Vérifier les widgets dans finalArticle.content après création

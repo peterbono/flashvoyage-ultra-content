@@ -83,7 +83,8 @@ import axios from 'axios';
 import { REAL_TRAVELPAYOUTS_WIDGETS } from './travelpayouts-real-widgets-database.js';
 import ContextualWidgetPlacer from './contextual-widget-placer-v2.js';
 import WidgetPlanBuilder from './widget-plan-builder.js';
-import { DRY_RUN, FORCE_OFFLINE, ENABLE_AFFILIATE_INJECTOR } from './config.js';
+import { DRY_RUN, FORCE_OFFLINE, ENABLE_AFFILIATE_INJECTOR, ENABLE_INLINE_IMAGES } from './config.js';
+import ImageSourceManager from './image-source-manager.js';
 import { lookupIATA, isKnownLocation, getAllLocationNames } from './airport-lookup.js';
 
 class ArticleFinalizer {
@@ -426,6 +427,19 @@ class ArticleFinalizer {
         console.warn('⚠️ Erreur injection modules affiliation (fallback silencieux):', error.message);
       }
     }
+
+    // PHASE 5.D: Insertion d'images contextuelles inline (Unsplash > Flickr CC-BY > Pexels)
+    if (ENABLE_INLINE_IMAGES && !DRY_RUN) {
+      try {
+        const inlineImages = await this.insertContextualImages(finalContent, analysis, pipelineContext);
+        if (inlineImages.html !== finalContent) {
+          finalContent = inlineImages.html;
+          console.log(`✅ INLINE_IMAGES: ${inlineImages.count} image(s) insérée(s) [${inlineImages.sources.join(', ')}]`);
+        }
+      } catch (error) {
+        console.warn('⚠️ Erreur insertion images inline (fallback silencieux):', error.message);
+      }
+    }
     
     // PHASE 6.1: QA Report déterministe
     const qaReport = await this.runQAReport(finalContent, pipelineContext, analysis);
@@ -523,7 +537,7 @@ class ArticleFinalizer {
             const translatedText = translated[i] || toTranslate[i];
             bq.empty();
             bq.append(`<p>${translatedText}</p>`);
-            bq.append('<p><cite>— Extrait Reddit traduit</cite></p>');
+            bq.append('<p><cite>— Témoignage traduit</cite></p>');
           });
           let result = $.html();
           // Restaurer les scripts protégés
@@ -622,7 +636,8 @@ class ArticleFinalizer {
       ...article,
       content: finalContent,
       enhancements,
-      qaReport // PHASE 6.1: Exposer le rapport QA
+      qaReport, // PHASE 6.1: Exposer le rapport QA
+      inlineImages: pipelineContext?.inlineImages || [] // PHASE 5.D: Images inline pour upload WP
     };
     
     // DEBUG: Vérifier les widgets dans returnValue.content APRÈS création de l'objet
@@ -1485,8 +1500,8 @@ class ArticleFinalizer {
     const connectivity = widgetScripts.connectivity || '';
     
     // Transitions pour une meilleure intégration éditoriale
-    const transitionConnectivity = '<div class="widget-transition"><h3>Outil utile si vous avez besoin d\'internet en voyage</h3><p>Évitez les frais de roaming élevés. Une eSIM vous permet d\'avoir internet dès votre arrivée dans plus de 200 pays, sans changer de carte SIM.</p></div>';
-    const transitionFlights = '<div class="widget-transition"><h3>Comparez les vols pour cette destination</h3><p>Trouvez les meilleurs tarifs pour votre prochain voyage en comparant les offres de centaines de compagnies.</p></div>';
+    const transitionConnectivity = '<div class="widget-transition"><h3>Utile si tu as besoin d\'internet en voyage</h3><p>Évite les frais de roaming élevés. Une eSIM te permet d\'avoir internet dès ton arrivée dans plus de 200 pays, sans changer de carte SIM.</p></div>';
+    const transitionFlights = '<div class="widget-transition"><h3>Compare les vols pour cette destination</h3><p>Trouve les meilleurs tarifs pour ton prochain voyage en comparant les offres de centaines de compagnies.</p></div>';
 
     // STRATÉGIE DE PLACEMENT AMÉLIORÉE:
     // 1. Widget eSIM : après la section "Contexte" (pas au milieu du flux narratif)
@@ -2070,9 +2085,13 @@ class ArticleFinalizer {
           }
         }
         const escaped = citationText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-        const citationBlock = `<blockquote><p>${escaped}</p><p><cite>— Extrait Reddit</cite></p></blockquote>`;
+        // Déterminer la position d'insertion et adapter le label cite
         const h2List = [...finalHtml.matchAll(/<h2[^>]*>.*?<\/h2>/gi)];
+        // Après le 2e H2 si possible (hors hook), sinon après le 1er
         const insertAfterIndex = h2List.length >= 2 ? (h2List[1].index + h2List[1][0].length) : (h2List.length === 1 ? (h2List[0].index + h2List[0][0].length) : 0);
+        // Si insertion dans les 500 premiers chars → label neutre (pas de Reddit dans le hook)
+        const citeLabel = insertAfterIndex < 500 ? 'Témoignage de voyageur' : 'Extrait Reddit';
+        const citationBlock = `<blockquote><p>${escaped}</p><p><cite>— ${citeLabel}</cite></p></blockquote>`;
         if (insertAfterIndex > 0) {
           finalHtml = finalHtml.slice(0, insertAfterIndex) + '\n\n' + citationBlock + '\n\n' + finalHtml.slice(insertAfterIndex);
           console.log(`✅ FINALIZER: Citation du récit insérée depuis evidence.source_snippets (après H2 narratif)`);
@@ -2099,19 +2118,23 @@ class ArticleFinalizer {
         } catch (e) { /* garder original */ }
       }
       const escapedExcerpt = excerpt.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-      const newBlockquote = `<blockquote><p>${escapedExcerpt}</p><p><cite>— Extrait Reddit</cite></p></blockquote>`;
       // FIX: NE PAS utiliser Cheerio xmlMode ici (corrompt le HTML avec les scripts Travelpayouts)
       // Utiliser regex pour trouver le premier H2 et insérer après
       const firstH2Match = finalHtml.match(/<h2[^>]*>.*?<\/h2>/i);
       if (firstH2Match) {
         const insertIdx = firstH2Match.index + firstH2Match[0].length;
+        // Si insertion dans les 500 premiers chars → label neutre (pas de Reddit dans le hook)
+        const citeLabelFallback = insertIdx < 500 ? 'Témoignage de voyageur' : 'Extrait Reddit';
+        const newBlockquote = `<blockquote><p>${escapedExcerpt}</p><p><cite>— ${citeLabelFallback}</cite></p></blockquote>`;
         finalHtml = finalHtml.slice(0, insertIdx) + '\n\n' + newBlockquote + '\n\n' + finalHtml.slice(insertIdx);
         console.log(`✅ FINALIZER: Citation du récit insérée depuis extracted (post)`);
       } else {
         const firstP2 = finalHtml.match(/<p[^>]*>.*?<\/p>/i);
         if (firstP2) {
           const idx = firstP2.index + firstP2[0].length;
-          finalHtml = finalHtml.slice(0, idx) + '\n\n' + newBlockquote + '\n\n' + finalHtml.slice(idx);
+          const citeLabelP = idx < 500 ? 'Témoignage de voyageur' : 'Extrait Reddit';
+          const blockquoteP = `<blockquote><p>${escapedExcerpt}</p><p><cite>— ${citeLabelP}</cite></p></blockquote>`;
+          finalHtml = finalHtml.slice(0, idx) + '\n\n' + blockquoteP + '\n\n' + finalHtml.slice(idx);
           console.log(`✅ FINALIZER: Citation du récit insérée depuis extracted (post)`);
         }
       }
@@ -6457,30 +6480,60 @@ class ArticleFinalizer {
         const minParagraphs = 3 + placementIndex; // 3 pour le 1er, 4 pour le 2e, etc.
         
         if (smartIndex < minNarrativeIndex || paragraphCount < minParagraphs) {
-          smartIndex = null;
-          console.log(`   📍 Widget ${placementId} (module #${placementIndex}): position smart trop tôt (seuil narratif: H2=${h2List.length}, minNarrativeIdx=${minNarrativeIndex}, paragraphes=${paragraphCount} < ${minParagraphs}), fallback anchor`);
+          // Au lieu de rejeter complètement, chercher une position NARRATIVE valide
+          // Placer après le prochain </p> qui suit minNarrativeIndex
+          const afterMin = html.substring(minNarrativeIndex);
+          const nextPClose = afterMin.match(/<\/p>/i);
+          if (nextPClose) {
+            smartIndex = minNarrativeIndex + nextPClose.index + nextPClose[0].length;
+            console.log(`   📍 Widget ${placementId} (module #${placementIndex}): position smart ajustée après seuil narratif (H2=${h2List.length}, paragraphes=${paragraphCount})`);
+          } else {
+            smartIndex = null;
+            console.log(`   📍 Widget ${placementId} (module #${placementIndex}): position smart trop tôt, pas de position narrative valide, fallback anchor`);
+          }
         }
       }
       if (smartIndex != null) {
-        const out = html.slice(0, smartIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(smartIndex);
-        if (out !== html) {
-          console.log(`   📍 Widget ${placementId} placé en position contextuelle (mot-clé trouvé)`);
-          return out;
+        // Vérifier que la position n'est pas dans une section interdite (conclusion, recommandations)
+        const forbiddenSections = /ce qu.il faut retenir|nos recommandations|articles connexes|à lire également/i;
+        const afterSmartSnippet = html.substring(Math.max(0, smartIndex - 200), smartIndex);
+        const lastH2Before = afterSmartSnippet.match(/<h2[^>]*>(.*?)<\/h2>/gi);
+        const isInForbidden = lastH2Before?.some(h => forbiddenSections.test(h));
+        
+        if (!isInForbidden) {
+          const out = html.slice(0, smartIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(smartIndex);
+          if (out !== html) {
+            console.log(`   📍 Widget ${placementId} placé en position contextuelle (mot-clé trouvé)`);
+            return out;
+          }
+        } else {
+          console.log(`   📍 Widget ${placementId}: position contextuelle dans section interdite, fallback anchor`);
         }
       }
     }
 
     switch (anchor) {
-      case 'before_related':
-        // Juste avant "Articles connexes"
-        const relatedRegex = /<h[2-3][^>]*>Articles connexes[^<]*<\/h[2-3]>/i;
+      case 'before_related': {
+        // Juste avant "Articles connexes" ou "À lire également"
+        const relatedRegex = /<h[2-3][^>]*>(?:Articles connexes|À lire également)[^<]*<\/h[2-3]>/i;
         const relatedMatch = html.match(relatedRegex);
         if (relatedMatch) {
           const insertIndex = relatedMatch.index;
           return html.slice(0, insertIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(insertIndex);
         }
-        // Fallback: fin de document
+        // Fallback: avant la dernière section narrative (pas après la conclusion)
+        const h2sFallback = Array.from(html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi));
+        const conclusionPatterns = /ce qu.il faut retenir|nos recommandations|en résumé|conclusion/i;
+        // Trouver la dernière section non-conclusion
+        for (let i = h2sFallback.length - 1; i >= 1; i--) {
+          if (!conclusionPatterns.test(h2sFallback[i][1])) {
+            // Insérer avant cette section
+            return html.slice(0, h2sFallback[i].index) + '\n\n' + moduleHtml + '\n\n' + html.slice(h2sFallback[i].index);
+          }
+        }
+        // Ultime fallback: fin de document
         return html + '\n\n' + moduleHtml;
+      }
 
       case 'after_errors':
         // Après la section "Erreurs courantes à éviter" ou "Erreurs fréquentes"
@@ -6676,17 +6729,17 @@ class ArticleFinalizer {
     
     switch (mainWidget) {
       case 'flights':
-        ctaText = 'Comparer les prix des vols et réserver votre billet';
+        ctaText = 'Compare les prix des vols et réserve ton billet';
         break;
       case 'hotels':
-        ctaText = 'Trouver votre hébergement idéal';
+        ctaText = 'Trouve ton hébergement idéal';
         break;
       case 'esim':
       case 'connectivity':
-        ctaText = 'Équipez-vous d\'une eSIM pour rester connecté';
+        ctaText = 'Équipe-toi d\'une eSIM pour rester connecté';
         break;
       default:
-        ctaText = 'Découvrir les meilleures offres';
+        ctaText = 'Découvre les meilleures offres';
     }
     
     // Insérer le CTA juste avant "Articles connexes"
@@ -6858,6 +6911,250 @@ class ArticleFinalizer {
     } catch (error) {
       console.error('   ❌ Erreur recherche image:', error.message);
       return null;
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // PHASE 5.D: Images contextuelles inline
+  // ─────────────────────────────────────────────────────────
+
+  /**
+   * Génère les queries de recherche d'images basées sur le contenu de l'article
+   * @param {string} html - HTML de l'article
+   * @param {Object} analysis - Analyse de l'article
+   * @param {Object} pipelineContext - Contexte pipeline (geo_defaults, story, etc.)
+   * @returns {Array} [{query, position, sourcePreference}]
+   */
+  generateImageQueries(html, analysis, pipelineContext) {
+    const queries = [];
+    const geo = pipelineContext?.geo_defaults || pipelineContext?.geo || {};
+    // Préférer city > country > extracted destination
+    const city = geo.city || '';
+    const country = geo.country || '';
+    const destination = city || country || analysis?.destinations?.[0] || '';
+    
+    // Construire une query spécifique : "Chiang Mai Thailand" > "Thailand" > "southeast asia"
+    const specificDest = city && country ? `${city} ${country}` : destination;
+
+    // Extraire les H2 de l'article
+    const h2Matches = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
+    const h2Texts = h2Matches.map(m => m[1].replace(/<[^>]*>/g, '').trim());
+
+    // Image 1 ("hook visuel") — après le 1er H2, source Unsplash
+    // Query très spécifique : ville + pays + contexte visuel (pas "travel" générique)
+    if (city) {
+      // Ex: "Chiang Mai street" ou "Chiang Mai temple"
+      const hookContext = this._extractSectionTheme(h2Texts[0] || '', city);
+      queries.push({
+        query: hookContext || `${city} city`,
+        position: 'hook',
+        sourcePreference: 'unsplash'
+      });
+    } else if (destination) {
+      queries.push({
+        query: `${destination} landscape`,
+        position: 'hook',
+        sourcePreference: 'unsplash'
+      });
+    } else {
+      queries.push({
+        query: 'southeast asia travel landscape',
+        position: 'hook',
+        sourcePreference: 'unsplash'
+      });
+    }
+
+    // Image 2 ("mid-article") — après le 3e/4e H2, source Pexels (meilleure pertinence que Flickr)
+    const midH2Index = Math.min(Math.floor(h2Texts.length / 2), h2Texts.length - 1);
+    if (midH2Index >= 0 && h2Texts[midH2Index]) {
+      const sectionTheme = this._extractSectionTheme(h2Texts[midH2Index], specificDest);
+      queries.push({
+        query: sectionTheme,
+        position: 'mid',
+        sourcePreference: 'pexels' // Pexels a de meilleure pertinence que Flickr pour le mid
+      });
+    }
+
+    // Image 3 ("desire trigger", optionnelle) — vers la fin, avant recommandations
+    // Seulement si l'article a assez de sections (5+)
+    if (h2Texts.length >= 5) {
+      // Query contextuelle basée sur l'avant-dernière section (pas "lifestyle" générique)
+      const endH2Index = Math.max(0, h2Texts.length - 3);
+      const endTheme = this._extractSectionTheme(h2Texts[endH2Index] || '', specificDest);
+      queries.push({
+        query: endTheme || `${specificDest} people`,
+        position: 'end',
+        sourcePreference: 'unsplash' // Unsplash meilleure qualité pour le "desire trigger"
+      });
+    }
+
+    return queries;
+  }
+
+  /**
+   * Extrait un thème de recherche d'image à partir d'un titre H2
+   */
+  _extractSectionTheme(h2Text, destination) {
+    const text = h2Text.toLowerCase();
+    
+    // Mapping thèmes courants → queries spécifiques et visuelles
+    const themeMap = [
+      { pattern: /budget|coût|prix|argent|dépens/i, query: 'local market stall' },
+      { pattern: /transport|vol|avion|train|bus/i, query: 'train station' },
+      { pattern: /hébergement|hôtel|hostel|logement/i, query: 'guesthouse boutique' },
+      { pattern: /nourriture|manger|cuisine|restaurant|street food/i, query: 'street food vendor' },
+      { pattern: /visa|immigration|frontière|administratif/i, query: 'airport immigration' },
+      { pattern: /sécurité|santé|assurance/i, query: 'pharmacy clinic' },
+      { pattern: /coworking|travail|remote|digital nomad|communauté|connect/i, query: 'coworking space cafe laptop' },
+      { pattern: /plage|mer|île|island/i, query: 'beach sunset' },
+      { pattern: /temple|culture|monument|histoire/i, query: 'temple golden' },
+      { pattern: /recommand|conseil|astuce|retenir|planif/i, query: 'travel map planning' },
+      { pattern: /rêve|immersion|arri|premier/i, query: 'city street morning' },
+      { pattern: /défis|problème|obstacle/i, query: 'busy street' },
+      { pattern: /long.terme|installation|expatri/i, query: 'apartment balcony view' }
+    ];
+
+    for (const { pattern, query } of themeMap) {
+      if (pattern.test(text)) {
+        return destination ? `${destination} ${query}` : `asia ${query}`;
+      }
+    }
+
+    // Fallback: utiliser la destination + mots-clés significatifs du H2 (filtrer les stop words)
+    const stopWords = new Set(['les', 'des', 'une', 'est', 'pour', 'dans', 'par', 'avec', 'qui', 'que', 'sur', 'son', 'ses', 'aux', 'cette', 'entre', 'elle', 'comment', 'quoi', 'quel', 'vraiment', 'idéale', 'bien']);
+    const words = h2Text.split(/\s+/)
+      .map(w => w.replace(/[^a-zA-ZÀ-ÿ]/g, ''))
+      .filter(w => w.length > 3 && !stopWords.has(w.toLowerCase()))
+      .slice(0, 2)
+      .join(' ');
+    return destination ? `${destination} ${words}` : words || 'asia travel';
+  }
+
+  /**
+   * Insère 2-3 images contextuelles dans l'article
+   * @param {string} html - HTML de l'article
+   * @param {Object} analysis - Analyse
+   * @param {Object} pipelineContext - Contexte pipeline
+   * @returns {Object} {html, count, sources}
+   */
+  async insertContextualImages(html, analysis, pipelineContext) {
+    console.log('🖼️ Insertion images contextuelles inline...');
+    
+    const imageManager = new ImageSourceManager();
+    imageManager.migrateFromPexelsJson(); // Migration one-time si besoin
+
+    // Générer les queries
+    const queries = this.generateImageQueries(html, analysis, pipelineContext);
+    console.log(`   📋 ${queries.length} image(s) à chercher`);
+
+    // Rechercher les images (cascade multi-source)
+    const images = await imageManager.searchMultiple(queries);
+
+    if (images.length === 0) {
+      console.log('   ⚠️ Aucune image trouvée');
+      return { html, count: 0, sources: [] };
+    }
+
+    // Stocker dans pipelineContext pour l'upload WordPress
+    if (pipelineContext) {
+      pipelineContext.inlineImages = images;
+    }
+
+    // Insérer les images dans le HTML
+    let result = html;
+    const h2Matches = [...html.matchAll(/<h2[^>]*>.*?<\/h2>/gi)];
+    const affiliatePositions = [...html.matchAll(/<div[^>]*data-fv-segment="affiliate"|<div[^>]*class="affiliate-module"/gi)]
+      .map(m => m.index);
+
+    let insertedCount = 0;
+    const usedSources = [];
+    // Offset tracker pour gérer les décalages après insertion
+    let offset = 0;
+
+    for (const image of images) {
+      const figureHtml = ImageSourceManager.generateFigureHtml(image);
+      let insertIndex = this._findImageInsertPosition(result, image.position, h2Matches, affiliatePositions, offset);
+
+      if (insertIndex === -1) continue;
+
+      // Vérifier espacement minimum (800 chars) avec les images déjà insérées
+      // et avec les widgets affiliés
+      const nearbyAffiliate = affiliatePositions.some(pos =>
+        Math.abs((pos + offset) - insertIndex) < 200
+      );
+      if (nearbyAffiliate) continue;
+
+      result = result.slice(0, insertIndex) + '\n\n' + figureHtml + '\n\n' + result.slice(insertIndex);
+      offset += figureHtml.length + 4; // +4 pour les \n\n
+      insertedCount++;
+      usedSources.push(image.source);
+    }
+
+    return { html: result, count: insertedCount, sources: usedSources };
+  }
+
+  /**
+   * Trouve la position d'insertion pour une image dans le HTML
+   * @param {string} html - HTML actuel
+   * @param {string} position - 'hook', 'mid', 'end'
+   * @param {Array} h2Matches - Matches des H2
+   * @param {Array} affiliatePositions - Positions des widgets affiliés
+   * @param {number} offset - Décalage actuel
+   * @returns {number} Index d'insertion ou -1
+   */
+  _findImageInsertPosition(html, position, h2Matches, affiliatePositions, offset) {
+    // Recalculer les H2 sur le HTML actuel
+    const currentH2s = [...html.matchAll(/<h2[^>]*>.*?<\/h2>/gi)];
+
+    // Sections interdites
+    const forbiddenSections = /ce qu.il faut retenir|à lire également|articles connexes|nos recommandations/i;
+
+    switch (position) {
+      case 'hook': {
+        // Après le 1er H2 + son premier paragraphe
+        if (currentH2s.length < 1) return -1;
+        const afterFirstH2 = currentH2s[0].index + currentH2s[0][0].length;
+        // Trouver la fin du premier <p> après le H2
+        const firstPAfter = html.substring(afterFirstH2).match(/<\/p>/i);
+        if (firstPAfter) {
+          return afterFirstH2 + firstPAfter.index + firstPAfter[0].length;
+        }
+        return afterFirstH2;
+      }
+
+      case 'mid': {
+        // Après le 3e ou 4e H2 (milieu d'article)
+        const midIndex = Math.min(Math.floor(currentH2s.length / 2), currentH2s.length - 1);
+        if (midIndex < 1) return -1;
+        const targetH2 = currentH2s[midIndex];
+        // Vérifier que ce n'est pas une section interdite
+        if (forbiddenSections.test(targetH2[0])) return -1;
+        const afterH2 = targetH2.index + targetH2[0].length;
+        // Trouver la fin du premier <p> après
+        const pAfter = html.substring(afterH2).match(/<\/p>/i);
+        if (pAfter) {
+          return afterH2 + pAfter.index + pAfter[0].length;
+        }
+        return afterH2;
+      }
+
+      case 'end': {
+        // Avant-dernière section (avant "Ce qu'il faut retenir" ou "Nos recommandations")
+        for (let i = currentH2s.length - 1; i >= 0; i--) {
+          if (forbiddenSections.test(currentH2s[i][0])) {
+            // Insérer juste avant cette section
+            return currentH2s[i].index;
+          }
+        }
+        // Fallback: avant le dernier H2
+        if (currentH2s.length >= 3) {
+          return currentH2s[currentH2s.length - 2].index;
+        }
+        return -1;
+      }
+
+      default:
+        return -1;
     }
   }
 

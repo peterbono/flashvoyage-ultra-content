@@ -18,6 +18,8 @@ export const WORDPRESS_URL = process.env.WORDPRESS_URL;
 export const WORDPRESS_USERNAME = process.env.WORDPRESS_USERNAME;
 export const WORDPRESS_APP_PASSWORD = process.env.WORDPRESS_APP_PASSWORD;
 export const PEXELS_API_KEY = process.env.PEXELS_API_KEY;
+export const UNSPLASH_API_KEY = process.env.UNSPLASH_API_KEY;
+export const FLICKR_API_KEY = process.env.FLICKR_API_KEY;
 
 /**
  * Travelpayouts Partner Links API
@@ -41,3 +43,4 @@ export const ENABLE_PIPELINE_BLOCKING = parseBool(process.env.ENABLE_PIPELINE_BL
 export const ENABLE_FINALIZER_BLOCKING = parseBool(process.env.ENABLE_FINALIZER_BLOCKING ?? '1'); // Activé par défaut
 export const ENABLE_ARTICLE_VALIDATION = parseBool(process.env.ENABLE_ARTICLE_VALIDATION ?? '1'); // Activé par défaut
 export const ENABLE_MARKETING_PASS = parseBool(process.env.ENABLE_MARKETING_PASS ?? '1'); // Activé par défaut
+export const ENABLE_INLINE_IMAGES = parseBool(process.env.ENABLE_INLINE_IMAGES ?? '1'); // Activé par défaut

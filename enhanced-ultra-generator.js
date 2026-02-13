@@ -520,6 +520,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       console.log(`   Titre: ${finalArticle.title}`);
       console.log(`   Contenu: ${finalArticle.content?.length || 0} caractères`);
       console.log(`   QA Report: ${finalArticle.qaReport?.checks?.length || 0} checks`);
+      console.log(`   🖼️ InlineImages: ${finalArticle.inlineImages?.length || 0} image(s)`);
       
       // Construire un objet analysis pour compatibilité avec le reste du code
       const analysis = {
@@ -1946,6 +1947,62 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           console.log('✅ Image featured ajoutée');
         } catch (imageError) {
           console.warn('⚠️ Erreur upload image:', imageError.message);
+        }
+      }
+
+      // Uploader les images inline vers WordPress (sauf Unsplash: hotlink obligatoire par API Terms)
+      if (article.inlineImages && article.inlineImages.length > 0) {
+        const reuploadable = article.inlineImages.filter(img => img.source !== 'unsplash');
+        const hotlinked = article.inlineImages.filter(img => img.source === 'unsplash');
+
+        if (hotlinked.length > 0) {
+          console.log(`🖼️ ${hotlinked.length} image(s) Unsplash conservée(s) en hotlink (conformité API Terms)`);
+        }
+
+        if (reuploadable.length > 0) {
+          console.log(`🖼️ Upload de ${reuploadable.length} image(s) inline (Flickr/Pexels)...`);
+          let updatedContent = publishedArticle.content?.rendered || article.content;
+          let uploadedCount = 0;
+
+          for (let i = 0; i < reuploadable.length; i++) {
+            const img = reuploadable[i];
+            try {
+              const imgResponse = await axios.get(img.url, { responseType: 'arraybuffer' });
+              const ext = img.url.match(/\.(jpe?g|png|webp)/i)?.[1] || 'jpg';
+              const filename = `inline-${publishedArticle.id}-${img.source}-${img.position || i}.${ext}`;
+              
+              const uploadRes = await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/media`, imgResponse.data, {
+                headers: {
+                  'Authorization': `Basic ${auth}`,
+                  'Content-Type': `image/${ext === 'jpg' ? 'jpeg' : ext}`,
+                  'Content-Disposition': `attachment; filename="${filename}"`
+                }
+              });
+
+              if (uploadRes.data?.source_url) {
+                updatedContent = updatedContent.replace(img.url, uploadRes.data.source_url);
+                uploadedCount++;
+              }
+            } catch (imgErr) {
+              console.warn(`   ⚠️ Erreur upload image inline ${i + 1}: ${imgErr.message}`);
+            }
+          }
+
+          if (uploadedCount > 0) {
+            try {
+              await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts/${publishedArticle.id}`, {
+                content: updatedContent
+              }, {
+                headers: {
+                  'Authorization': `Basic ${auth}`,
+                  'Content-Type': 'application/json'
+                }
+              });
+              console.log(`✅ ${uploadedCount} image(s) Flickr/Pexels uploadée(s), URLs mises à jour`);
+            } catch (updateErr) {
+              console.warn('⚠️ Erreur mise à jour contenu avec images inline:', updateErr.message);
+            }
+          }
         }
       }
       
