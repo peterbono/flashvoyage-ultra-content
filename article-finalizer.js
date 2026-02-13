@@ -421,6 +421,7 @@ class ArticleFinalizer {
         if (injectedCount > 0) {
           console.log(`✅ AFFILIATE_INJECTED: count=${injectedCount} types=[${injectedTypes.join(', ')}]`);
         }
+
       } catch (error) {
         console.warn('⚠️ Erreur injection modules affiliation (fallback silencieux):', error.message);
       }
@@ -772,7 +773,7 @@ class ArticleFinalizer {
   resolveWidgetShortcodes(html, pipelineContext = null) {
     const shortcodeRegex = /\[fv_widget\s+type="([^"]+)"(?:\s+origin="([^"]*)")?(?:\s+destination="([^"]*)")?\s*\]/gi;
     let resolvedCount = 0;
-    
+
     const resolved = html.replace(shortcodeRegex, (match, type, origin, destination) => {
       // Map shortcode type to widget database key
       const typeMapping = {
@@ -789,7 +790,7 @@ class ArticleFinalizer {
       
       const dbKey = typeMapping[type] || type;
       const widgetCategory = this.widgets[dbKey];
-      
+
       if (!widgetCategory) {
         console.log(`⚠️ SHORTCODE_RESOLVE: Pas de widget pour type "${type}" → shortcode conservé`);
         return match; // Keep shortcode as-is

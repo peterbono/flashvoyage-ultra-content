@@ -1,7 +1,45 @@
 {
-  "crawled_at": "2026-02-13T19:10:14.064Z",
-  "total_articles": 63,
+  "crawled_at": "2026-02-13T19:58:40.966Z",
+  "total_articles": 65,
   "articles": [
+    {
+      "id": 2566,
+      "title": "Vivre à Chiang Mai : Budget et Réalités d&#8217;un Nomade Digital",
+      "url": "https://flashvoyage.com/vivre-a-chiang-mai-budget-et-realites-dun-nomade-digital/",
+      "slug": "vivre-a-chiang-mai-budget-et-realites-dun-nomade-digital",
+      "excerpt": "&#8220;`html Découvrir Chiang Mai: Un rêve devenu réalité pour les nomades digitaux Après 10 ans de rêve, nous vivons enfin la vie de nomade numérique en Asie. Mon p&#8230;\n",
+      "content": "&#8220;`html\nDécouvrir Chiang Mai: Un rêve devenu réalité pour les nomades digitaux\n\nAprès 10 ans de rêve, nous vivons enfin la vie de nomade numérique en Asie. Mon partenaire et moi avons enfin franchi le pas ! Nous sommes actuellement à Chiang Mai, en Thaïlande, et c&#039;est incroyable. Le coût de la vie est tellement plus bas, la nourriture est incroyable, et la communauté des nomades ici est accueillante. Heureux de répondre à vos questions !\n— Extrait Reddit\n\nAprès dix ans de rêves et de p",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-13T19:58:27",
+      "modified": "2026-02-13T19:58:30",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2566.jpg"
+    },
+    {
+      "id": 2563,
+      "title": "Voyager un mois au Vietnam avec 500 $ : le vrai coût et astuces",
+      "url": "https://flashvoyage.com/voyager-un-mois-au-vietnam-avec-500-le-vrai-cout-et-astuces/",
+      "slug": "voyager-un-mois-au-vietnam-avec-500-le-vrai-cout-et-astuces",
+      "excerpt": "Pourquoi choisir Ho Chi Minh pour un mois d&#8217;aventure? Quand tu penses à un voyage d&#8217;un mois au Vietnam, imagine te perdre dans les ruelles animées de Ho Chi Minh, savourer un pho fumant au",
+      "content": "Pourquoi choisir Ho Chi Minh pour un mois d&#8217;aventure?\nQuand tu penses à un voyage d&#8217;un mois au Vietnam, imagine te perdre dans les ruelles animées de Ho Chi Minh, savourer un pho fumant au coin de la rue, et te demander si un détour par les temples d&#8217;Angkor Wat au Cambodge vaut le coup.\nLe Vietnam offre une expérience riche pour les voyageurs en quête d&#8217;authenticité, mais comme le souligne un membre de la communauté, « J&#8217;ai fait ce voyage exact l&#8217;année dernièr",
+      "categories": [
+        {
+          "id": 1,
+          "name": "Destinations",
+          "slug": "destinations-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-13T19:14:17",
+      "modified": "2026-02-13T19:14:20",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/angkor-wat-1771010057828.jpg"
+    },
     {
       "id": 2560,
       "title": "Découvrir Singapour en 48 heures : Guide Pratique pour un Transit Réussi",
