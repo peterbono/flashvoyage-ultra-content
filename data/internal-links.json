@@ -1,6 +1,76 @@
 {
   "articles": [
     {
+      "id": 2560,
+      "slug": "decouvrir-singapour-en-48-heures-guide-pratique-pour-un-transit-reussi",
+      "title": "Découvrir Singapour en 48 heures : Guide Pratique pour un Transit Réussi",
+      "url": "https://flashvoyage.com/decouvrir-singapour-en-48-heures-guide-pratique-pour-un-transit-reussi/",
+      "category": "temoignage",
+      "keywords": [
+        "decouvrir",
+        "singapour",
+        "heures",
+        "guide",
+        "pratique",
+        "transit",
+        "reussi"
+      ],
+      "excerpt": "Une Escale à Singapour Lors de ton passage à Singapour, les Gardens by the Bay s&#8217;imposent comm"
+    },
+    {
+      "id": 2557,
+      "slug": "vivre-a-bali-ou-lombok-ou-les-nomades-digitaux-trouvent-le-meilleur-rapport-qualite-prix",
+      "title": "Vivre à Bali ou Lombok : Où les Nomades Digitaux Trouvent le Meilleur Rapport Qualité-Prix ?",
+      "url": "https://flashvoyage.com/vivre-a-bali-ou-lombok-ou-les-nomades-digitaux-trouvent-le-meilleur-rapport-qualite-prix/",
+      "category": "budget",
+      "keywords": [
+        "vivre",
+        "bali",
+        "lombok",
+        "nomades",
+        "digitaux",
+        "trouvent",
+        "meilleur",
+        "rapport",
+        "qualite",
+        "prix"
+      ],
+      "excerpt": "Quand le choix entre Bali et Lombok devient une question de survie numérique Imagine-toi, ordinateur"
+    },
+    {
+      "id": 2553,
+      "slug": "visa-run-depuis-bangkok-choisir-la-frontiere-ideale",
+      "title": "Visa Run depuis Bangkok : Choisir la Frontière Idéale",
+      "url": "https://flashvoyage.com/visa-run-depuis-bangkok-choisir-la-frontiere-ideale/",
+      "category": "visa",
+      "keywords": [
+        "visa",
+        "run",
+        "depuis",
+        "bangkok",
+        "choisir",
+        "frontiere",
+        "ideale"
+      ],
+      "excerpt": "Quand le Visa Expire: Un Dilemme à Bangkok Il est 6 heures du matin à Bangkok. Ton visa de 30 jours "
+    },
+    {
+      "id": 2550,
+      "slug": "voyager-au-japon-eviter-les-foules-pour-admirer-les-cerisiers",
+      "title": "Voyager au Japon : Éviter les Foules pour Admirer les Cerisiers",
+      "url": "https://flashvoyage.com/voyager-au-japon-eviter-les-foules-pour-admirer-les-cerisiers/",
+      "category": "temoignage",
+      "keywords": [
+        "voyager",
+        "japon",
+        "eviter",
+        "foules",
+        "admirer",
+        "cerisiers"
+      ],
+      "excerpt": "Quand admirer les cerisiers à Tokyo sans la foule? Chaque printemps, le Japon se transforme en un sp"
+    },
+    {
       "id": 2530,
       "slug": "vivre-a-bali-avec-1500-mois-realite-ou-fantasme",
       "title": "Vivre à Bali avec 1500 $/mois : Réalité ou Fantasme ?",

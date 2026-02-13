@@ -300,7 +300,7 @@ class PipelineRunner {
       console.log(`🔍 DEBUG pipeline-runner: Widgets dans finalized.content APRÈS runFinalizer: count=${widgetsAfterRunFinalizer.count}, types=[${widgetsAfterRunFinalizer.types.join(', ')}]`);
       
       pipelineReport.endStep('finalizer', finalized, { status: 'pass' });
-      
+
       // DEBUG: Vérifier les widgets APRÈS endStep
       const widgetsAfterEndStep = this.finalizer.detectRenderedWidgets(finalized.content);
       console.log(`🔍 DEBUG pipeline-runner: Widgets dans finalized.content APRÈS endStep: count=${widgetsAfterEndStep.count}, types=[${widgetsAfterEndStep.types.join(', ')}]`);
@@ -318,6 +318,7 @@ class PipelineRunner {
           } else {
             console.log('   ℹ️ Content Marketing Pass: contenu original conservé');
           }
+
           pipelineReport.endStep('content-marketing-pass', marketingResult, { status: marketingResult.improved ? 'pass' : 'skip' });
         } catch (error) {
           console.warn(`   ⚠️ Content Marketing Pass: ${error.message} — continuation sans amélioration`);
@@ -326,6 +327,11 @@ class PipelineRunner {
       } else {
         console.log('\n📋 ÉTAPE 7.5: Content Marketing Expert Pass — DÉSACTIVÉ (ENABLE_MARKETING_PASS=false)');
       }
+
+      // NETTOYAGE POST-MARKETING: Supprimer les blocs affiliés orphelins en fin d'article
+      // Le content-marketing-pass peut créer/déplacer des sections "À lire également"
+      // et repositionner des blocs affiliés après cette section. On nettoie ici.
+      finalized.content = this.finalizer.removeTrailingOrphans(finalized.content);
 
       // NETTOYAGE FINAL: Supprimer les points orphelins que WordPress wpautop() 
       // transformerait en <p>.</p>. Ces dots existent entre des balises HTML sans être

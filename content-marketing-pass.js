@@ -40,10 +40,12 @@ Améliorer l'article pour maximiser le taux de conversion des widgets affiliés 
 2. **NE INVENTE JAMAIS** de faits, chiffres, lieux, noms, expériences ou témoignages.
 3. **NE TOUCHE JAMAIS** aux shortcodes [fv_widget ...] eux-mêmes — ne les modifie pas, ne les déplace pas, n'en ajoute pas, n'en supprime pas.
 4. **NE TOUCHE JAMAIS** aux balises <a href="...">, aux liens internes, ni aux blockquotes existants.
+4b. **NE TOUCHE JAMAIS** aux blocs <div data-fv-segment="affiliate">...</div> — ne les déplace pas, ne modifie pas leur contenu, ne les supprime pas. Ces blocs contiennent les widgets d'affiliation rendus et doivent rester EXACTEMENT à leur position d'origine dans l'article.
 5. **NE MENTIONNE JAMAIS** de widget hébergement/hôtel — il n'est pas disponible chez nos partenaires.
 6. **NE FORCE JAMAIS** un pattern (tableau comparatif, arc narratif) quand le contenu ne s'y prête pas naturellement.
 7. **ÉCRIS UNIQUEMENT EN FRANÇAIS.**
 8. **RETOURNE L'ARTICLE HTML COMPLET** — pas un résumé, pas une liste de suggestions.
+9. **UTILISE EXCLUSIVEMENT LE TUTOIEMENT.** Tout le contenu FlashVoyage utilise "tu/ton/ta/tes", jamais "vous/votre/vos". C'est une règle de style non négociable.
 
 ## CE QUE TU DOIS FAIRE
 

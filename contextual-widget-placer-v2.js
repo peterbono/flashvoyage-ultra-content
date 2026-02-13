@@ -142,7 +142,7 @@ ${articleContext.type && articleContext.type.startsWith('TEMOIGNAGE_') ? `- Pour
    - Évite de placer APRÈS "Articles connexes" (visibilité réduite)
    - Privilégie les sections contextuelles (ex: après une mention de destination, après une section sur les transports)
    - Si aucune section contextuelle n'existe, place AVANT "Articles connexes" (pas après)
-4. ACCROCHES CONTEXTUELLES: Génère des accroches qui correspondent au contexte réel du contenu
+4. ACCROCHES CONTEXTUELLES: Génère des accroches qui correspondent au contexte réel du contenu. UTILISE EXCLUSIVEMENT LE TUTOIEMENT (tu/ton/ta/tes) dans context_intro et cta. JAMAIS "vous/votre/vos/découvrez".
 5. VÉRIFICATION CONTEXTUELLE INTELLIGENTE OBLIGATOIRE: 
    - Si le contenu parle de 'coliving' → INTERDIT de suggérer des widgets FLIGHTS/AVIASALES
    - Si le contenu parle de 'vols' → INTERDIT de suggérer des liens coliving
@@ -448,6 +448,30 @@ Réponds UNIQUEMENT en JSON valide.`;
       reasons.push(`Contexte familial détecté mais widget ${widget.slot} exempté (pertinent pour familles)`);
     }
     
+    // VÉRIFICATION 3: Gate de pertinence par mots-clés (widgets non-lénients)
+    const LENIENT_WIDGETS = ['flights', 'insurance'];
+    if (!LENIENT_WIDGETS.includes(widget.slot)) {
+      const relevanceKeywords = {
+        esim: ['carte sim', 'e-sim', 'esim', 'réseau mobile', 'connectivité', 'données mobiles', 'roaming'],
+        connectivity: ['carte sim', 'e-sim', 'esim', 'réseau mobile', 'connectivité', 'données mobiles', 'roaming'],
+        tours: ['excursion', 'visite guidée', 'tour', 'guide local', 'activité', 'attraction'],
+        bikes: ['vélo', 'scooter', 'moto', 'deux-roues', 'location moto', 'location vélo'],
+        events: ['concert', 'festival', 'événement', 'spectacle', 'exposition', 'fête'],
+        transfers: ['transfert', 'navette', 'taxi', 'transport aéroport', 'chauffeur']
+      };
+      const kws = relevanceKeywords[widget.slot] || [];
+      // Exclure le texte des CTAs/widgets existants pour éviter les faux positifs
+      const cleanContent = lowerContent.replace(/<div data-fv-segment="affiliate">[\s\S]*?<\/div>/gi, '');
+      const matchCount = kws.reduce((count, kw) => count + (cleanContent.split(kw).length - 1), 0);
+      const MIN_RELEVANCE_MATCHES = 2;
+      debug.relevanceKeywords = kws;
+      debug.relevanceMatchCount = matchCount;
+      if (matchCount < MIN_RELEVANCE_MATCHES) {
+        reasons.push(`Pertinence insuffisante: ${matchCount}/${MIN_RELEVANCE_MATCHES} mots-clés "${widget.slot}" trouvés`);
+        return { ok: false, reasons, debug };
+      }
+    }
+
     return { ok: true, reasons, debug };
   }
 
@@ -774,7 +798,8 @@ Réponds UNIQUEMENT en JSON valide.`;
     
     let enhancedContent = content;
     const usedContexts = new Set(); // Éviter la duplication
-
+    const placedPositions = []; // Track positions for spacing enforcement
+    const MIN_CHAR_GAP = 800; // Minimum 800 chars between widgets
 
     let widgetIndex = 0;
     for (const widget of selectedWidgets) {
@@ -789,7 +814,14 @@ Réponds UNIQUEMENT en JSON valide.`;
         continue;
       }
 
-      const cta = this.getCTAText(widget.slot);
+      // Priorité au context_intro du LLM, sinon fallback getCTAText()
+      // Validation tu/vous: si le LLM génère en "vous", on utilise le fallback en "tu"
+      let cta = widget.context_intro || this.getCTAText(widget.slot);
+      if (widget.context_intro && /\b(vous|votre|vos|découvrez|consultez)\b/i.test(widget.context_intro)) {
+        console.log(`   ⚠️ CTA tu/vous: "${widget.context_intro.substring(0, 60)}..." contient "vous" → fallback getCTAText()`);
+        cta = this.getCTAText(widget.slot);
+      }
+
       if (usedContexts.has(widget.slot)) {
         console.log(`⚠️ Widget ${widget.slot} déjà inséré, passage au suivant`);
         continue;
@@ -798,20 +830,58 @@ Réponds UNIQUEMENT en JSON valide.`;
 
       const widgetBlock = `
 <div data-fv-segment="affiliate">
-<p><strong>${cta}</strong></p>
+<p>${cta}</p>
 ${widgetScript}
 </div>
 `;
 
       // Placement intelligent : suggestion LLM + mots-clés + garde narrative
-      const smartIndex = this.findSmartPosition(enhancedContent, widget, widgetIndex);
+      let smartIndex = this.findSmartPosition(enhancedContent, widget, widgetIndex);
+      
+      // Spacing enforcement: ensure minimum gap from previously placed widgets
+      if (smartIndex != null && placedPositions.length > 0) {
+        const tooClose = placedPositions.some(pos => Math.abs(smartIndex - pos) < MIN_CHAR_GAP);
+        if (tooClose) {
+          console.log(`   ⚠️ Spacing: ${widget.slot} trop proche d'un widget existant (< ${MIN_CHAR_GAP} chars) → fallback`);
+          smartIndex = null; // Force fallback
+        }
+      }
+      
+      // Same H2 section check: prevent two widgets in the same H2 section
+      if (smartIndex != null && placedPositions.length > 0) {
+        const h2List = Array.from(enhancedContent.matchAll(/<h2[^>]*>/gi));
+        const getH2Section = (idx) => {
+          let section = -1;
+          for (let i = 0; i < h2List.length; i++) {
+            if (h2List[i].index <= idx) section = i;
+            else break;
+          }
+          return section;
+        };
+        const newSection = getH2Section(smartIndex);
+        const sameSection = placedPositions.some(pos => getH2Section(pos) === newSection);
+        if (sameSection) {
+          console.log(`   ⚠️ Spacing: ${widget.slot} dans la même section H2 qu'un widget existant → fallback`);
+          smartIndex = null;
+        }
+      }
+      
       if (smartIndex != null) {
         enhancedContent = enhancedContent.slice(0, smartIndex) + '\n\n' + widgetBlock + '\n\n' + enhancedContent.slice(smartIndex);
+        placedPositions.push(smartIndex);
         console.log(`   📍 SMART placement pour ${widget.slot} à index ${smartIndex}`);
       } else {
-        // Fallback : avant "Articles connexes" ou fin d'article
-        enhancedContent = await this.insertAfterContent(enhancedContent, widgetBlock);
-        console.log(`   📍 FALLBACK placement pour ${widget.slot} (fin d'article)`);
+        // Fallback : find unoccupied H2 section or end of article
+        const fallbackIndex = this.findFallbackPosition(enhancedContent, placedPositions, MIN_CHAR_GAP);
+        if (fallbackIndex != null) {
+          enhancedContent = enhancedContent.slice(0, fallbackIndex) + '\n\n' + widgetBlock + '\n\n' + enhancedContent.slice(fallbackIndex);
+          placedPositions.push(fallbackIndex);
+          console.log(`   📍 FALLBACK SMART placement pour ${widget.slot} à index ${fallbackIndex}`);
+        } else {
+          enhancedContent = await this.insertAfterContent(enhancedContent, widgetBlock);
+          placedPositions.push(enhancedContent.length);
+          console.log(`   📍 FALLBACK placement pour ${widget.slot} (fin d'article)`);
+        }
       }
       widgetIndex++;
     }
@@ -1332,6 +1402,50 @@ ${widgetScript}
   }
 
   /**
+   * Find a fallback position in an unoccupied H2 section, working backwards
+   * @returns {number|null} Index position or null
+   */
+  findFallbackPosition(content, placedPositions, minGap) {
+    const h2Matches = Array.from(content.matchAll(/<h2[^>]*>[\s\S]*?<\/h2>/gi));
+    if (h2Matches.length < 2) return null;
+    
+    const getH2Section = (idx) => {
+      let section = -1;
+      for (let i = 0; i < h2Matches.length; i++) {
+        if (h2Matches[i].index <= idx) section = i;
+        else break;
+      }
+      return section;
+    };
+    
+    const occupiedSections = new Set(placedPositions.map(pos => getH2Section(pos)));
+    
+    // Work backwards from the last H2 section to find an unoccupied one
+    for (let i = h2Matches.length - 1; i >= 1; i--) {
+      if (occupiedSections.has(i)) continue;
+      
+      // Find end of this section (start of next H2 or end of content)
+      const sectionStart = h2Matches[i].index + h2Matches[i][0].length;
+      const nextH2 = i + 1 < h2Matches.length ? h2Matches[i + 1].index : content.length;
+      
+      // Find a </p> tag in this section to place widget after
+      const sectionContent = content.substring(sectionStart, nextH2);
+      const lastP = sectionContent.lastIndexOf('</p>');
+      if (lastP === -1) continue;
+      
+      const candidateIndex = sectionStart + lastP + 4; // After </p>
+      
+      // Check spacing from all placed positions
+      const tooClose = placedPositions.some(pos => Math.abs(candidateIndex - pos) < minGap);
+      if (tooClose) continue;
+      
+      return candidateIndex;
+    }
+    
+    return null;
+  }
+
+  /**
    * Insère le widget avant une section
    */
   insertBeforeSection(content, sectionTitle, widgetBlock) {
@@ -1351,14 +1465,17 @@ ${widgetScript}
    */
   getCTAText(widgetSlot) {
     const ctaTexts = {
-      flights: "Comparez les prix et réservez :",
-      hotels: "Trouvez votre hébergement idéal :",
-      transport: "Planifiez vos déplacements :",
-      esim: "Restez connecté partout :",
-      insurance: "Protégez votre voyage :",
-      activities: "Découvrez les activités :"
+      flights: "Si tu cherches un vol, compare les prix avant de réserver :",
+      hotels: "Trouve l'hébergement qui correspond à ton budget :",
+      transport: "Organise tes déplacements sur place :",
+      esim: "Pour rester connecté dès ton arrivée :",
+      connectivity: "Pour rester connecté dès ton arrivée :",
+      insurance: "Si tu n'as pas encore d'assurance voyage :",
+      activities: "Découvre les activités sur place :",
+      tours: "Explore les excursions disponibles :",
+      transfers: "Réserve ton transfert à l'avance :"
     };
-    return ctaTexts[widgetSlot] || "Consultez les options :";
+    return ctaTexts[widgetSlot] || "Un outil utile pour ton voyage :";
   }
 
   /**

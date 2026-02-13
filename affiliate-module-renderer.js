@@ -25,32 +25,31 @@ export function renderAffiliateModule(placement, geo_defaults) {
   // Phrases diagnostic→solution selon le type de placement
   const diagnosticPhrases = {
     insurance: {
-      title: 'Outil utile si vous voyagez sans assurance',
-      phrase: 'Les frais médicaux à l\'étranger peuvent être très élevés. Une assurance voyage adaptée aux nomades digitaux peut vous protéger en cas d\'urgence médicale, de vol ou d\'annulation de vol.'
+      title: 'Utile si tu voyages sans assurance',
+      phrase: 'Les frais médicaux à l\'étranger peuvent être très élevés. Une assurance voyage adaptée peut te protéger en cas d\'urgence médicale, de vol ou d\'annulation.'
     },
     esim: {
-      title: 'Outil utile si vous avez besoin d\'internet en voyage',
-      phrase: 'Évitez les frais de roaming élevés. Une eSIM vous permet d\'avoir internet dès votre arrivée dans plus de 200 pays, sans changer de carte SIM.'
+      title: 'Utile si tu as besoin d\'internet en voyage',
+      phrase: 'Évite les frais de roaming élevés. Une eSIM te permet d\'avoir internet dès ton arrivée dans plus de 200 pays, sans changer de carte SIM.'
     },
     flights: {
-      title: 'Outil utile si vous planifiez vos vols',
-      phrase: 'Les prix des vols varient selon les compagnies et les dates. Un comparateur de vols vous aide à trouver les meilleures offres pour votre destination.'
+      title: 'Utile si tu planifies tes vols',
+      phrase: 'Les prix des vols varient selon les compagnies et les dates. Un comparateur t\'aide à trouver les meilleures offres pour ta destination.'
     },
     accommodation: {
-      title: 'Outil utile si vous cherchez un hébergement',
-      phrase: 'Trouvez l\'hébergement qui correspond à vos besoins et à votre budget, que ce soit un hôtel, un hostel ou un appartement.'
+      title: 'Utile si tu cherches un hébergement',
+      phrase: 'Trouve l\'hébergement qui correspond à tes besoins et à ton budget, que ce soit un hôtel, un hostel ou un appartement.'
     },
     coworking: {
-      title: 'Outil utile si vous travaillez en voyage',
-      phrase: 'Un espace de coworking avec une connexion internet fiable peut améliorer votre productivité pendant votre séjour.'
+      title: 'Utile si tu travailles en voyage',
+      phrase: 'Un espace de coworking avec une connexion internet fiable peut améliorer ta productivité pendant ton séjour.'
     }
   };
 
   const diagnostic = diagnosticPhrases[placement.id] || {
-    title: 'Outil utile pour votre voyage',
-    phrase: 'Cet outil peut vous aider à organiser votre voyage.'
+    title: 'Utile pour ton voyage',
+    phrase: 'Cet outil peut t\'aider à organiser ton voyage.'
   };
-
   // Générer le widget/script selon placement.id
   const widgetScript = generateWidgetScript(placement, geo_defaults);
 

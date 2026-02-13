@@ -543,6 +543,11 @@ class ArticleFinalizer {
     console.log(`   - Quote highlight: ${enhancements.quoteHighlight}`);
     console.log(`   - Intro FOMO: ${enhancements.fomoIntro}`);
     console.log(`   - CTA présent: ${enhancements.ctaPresent}\n`);
+    // PHASE 6.2: Résolution des shortcodes [fv_widget] en scripts Travelpayouts
+    finalContent = this.resolveWidgetShortcodes(finalContent, pipelineContext);
+
+    // PHASE 6.3: Nettoyage des blocs orphelins en fin d'article
+    finalContent = this.removeTrailingOrphans(finalContent);
 
     // NETTOYAGE FINAL : Forcer le nettoyage des titres "Événement central" avec anglais
     // APPROCHE AGRESSIVE : Si le titre contient quoi que ce soit après "Événement central", on le nettoie
@@ -757,6 +762,130 @@ class ArticleFinalizer {
   /**
    * PATCH 2: Déduplication widgets (max 1 par type)
    */
+  /**
+   * Résout les shortcodes [fv_widget] en scripts HTML Travelpayouts réels.
+   * Cherche dans REAL_TRAVELPAYOUTS_WIDGETS le script correspondant au type.
+   * @param {string} html - Contenu HTML avec shortcodes
+   * @param {Object} pipelineContext - Contexte du pipeline (geo_defaults)
+   * @returns {string} HTML avec shortcodes remplacés par les scripts réels
+   */
+  resolveWidgetShortcodes(html, pipelineContext = null) {
+    const shortcodeRegex = /\[fv_widget\s+type="([^"]+)"(?:\s+origin="([^"]*)")?(?:\s+destination="([^"]*)")?\s*\]/gi;
+    let resolvedCount = 0;
+    
+    const resolved = html.replace(shortcodeRegex, (match, type, origin, destination) => {
+      // Map shortcode type to widget database key
+      const typeMapping = {
+        flights: 'flights',
+        esim: 'esim',
+        connectivity: 'esim',
+        insurance: 'insurance',
+        tours: 'tours',
+        transfers: 'transfers',
+        car_rental: 'car_rental',
+        bikes: 'bikes',
+        events: 'events'
+      };
+      
+      const dbKey = typeMapping[type] || type;
+      const widgetCategory = this.widgets[dbKey];
+      
+      if (!widgetCategory) {
+        console.log(`⚠️ SHORTCODE_RESOLVE: Pas de widget pour type "${type}" → shortcode conservé`);
+        return match; // Keep shortcode as-is
+      }
+      
+      // Get the first provider's first widget type
+      const providers = Object.keys(widgetCategory);
+      if (providers.length === 0) return match;
+      
+      const provider = providers[0];
+      const widgetTypes = Object.keys(widgetCategory[provider]);
+      if (widgetTypes.length === 0) return match;
+      
+      // For flights, prefer searchForm
+      const preferredType = widgetTypes.includes('searchForm') ? 'searchForm' : widgetTypes[0];
+      const widgetData = widgetCategory[provider][preferredType];
+      
+      if (!widgetData?.script) {
+        console.log(`⚠️ SHORTCODE_RESOLVE: Script manquant pour "${type}/${provider}/${preferredType}" → shortcode conservé`);
+        return match;
+      }
+      
+      let script = widgetData.script;
+      
+      // For flights, inject origin/destination if available
+      if (dbKey === 'flights') {
+        const flightOrigin = origin || pipelineContext?.geo_defaults?.origin || 'PAR';
+        const flightDest = destination || pipelineContext?.geo_defaults?.destination || 'BKK';
+        // Replace generic origin/destination in script URL
+        script = script.replace(/origin=[A-Z]{3}/i, `origin=${flightOrigin}`);
+        script = script.replace(/destination=[A-Z]{3}/i, `destination=${flightDest}`);
+      }
+      
+      resolvedCount++;
+      console.log(`   ✅ SHORTCODE_RESOLVE: [fv_widget type="${type}"] → ${provider}/${preferredType}`);
+      return script;
+    });
+    
+    if (resolvedCount > 0) {
+      console.log(`✅ SHORTCODE_RESOLVE: ${resolvedCount} shortcode(s) résolu(s) en scripts Travelpayouts`);
+    } else {
+      console.log('ℹ️ SHORTCODE_RESOLVE: Aucun shortcode à résoudre');
+    }
+    
+    return resolved;
+  }
+
+  /**
+   * Supprime les contenus orphelins après la fin logique de l'article.
+   * Détecte les marqueurs de fin (Articles connexes, À lire également, source citation)
+   * et supprime les <p>/<h2>/<h3> parasites qui apparaissent après.
+   * @param {string} html - Contenu HTML
+   * @returns {string} HTML nettoyé
+   */
+  removeTrailingOrphans(html) {
+    // Detect logical end markers
+    const endMarkers = [
+      /<h[23][^>]*>\s*Articles connexes/i,
+      /<h[23][^>]*>\s*À lire également/i,
+      /<div[^>]*class="[^"]*jeg_post_related/i,
+      /<p[^>]*class="[^"]*reddit-source-discrete/i
+    ];
+    
+    let endIndex = -1;
+    for (const marker of endMarkers) {
+      const match = html.match(marker);
+      if (match && (endIndex === -1 || match.index < endIndex)) {
+        endIndex = match.index;
+      }
+    }
+    
+    if (endIndex === -1) return html; // No end marker found
+    
+    const beforeEnd = html.substring(0, endIndex);
+    const afterEnd = html.substring(endIndex);
+    
+    // Check for orphan affiliate blocks or paragraphs after the end marker
+    // Keep source citations and related articles, remove orphan content
+    const orphanPattern = /<div data-fv-segment="affiliate">[\s\S]*?<\/div>/gi;
+    const cleanedAfter = afterEnd.replace(orphanPattern, (match) => {
+      console.log(`🧹 removeTrailingOrphans: Bloc affilié orphelin supprimé après fin logique`);
+      return '';
+    });
+    
+    // Also remove orphan <p> and <h2>/<h3> that don't belong
+    // But keep the end marker itself and source citations
+    const result = beforeEnd + cleanedAfter;
+    
+    // Count removals
+    if (result.length < html.length) {
+      console.log(`✅ removeTrailingOrphans: ${html.length - result.length} chars orphelins supprimés`);
+    }
+    
+    return result;
+  }
+
   /**
    * PATCH 2: Déduplique les widgets (max 1 par type)
    * Garde le premier, supprime les suivants
