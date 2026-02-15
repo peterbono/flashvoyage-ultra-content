@@ -101,7 +101,7 @@ function excludeSegmentsRegex(html) {
   }
   
   // 2. Exclure modules affiliate (class="affiliate-module" ou data-placement-id)
-  const affiliatePattern = /<div[^>]*(?:class=["'][^"']*affiliate-module[^"']*["']|data-placement-id)[^>]*>[\s\S]*?<\/div>/gi;
+  const affiliatePattern = /<(?:div|aside)[^>]*(?:class=["'][^"']*affiliate-module[^"']*["']|data-placement-id)[^>]*>[\s\S]*?<\/(?:div|aside)>/gi;
   while ((match = affiliatePattern.exec(result)) !== null) {
     excluded.affiliate++;
     result = result.replace(match[0], '');

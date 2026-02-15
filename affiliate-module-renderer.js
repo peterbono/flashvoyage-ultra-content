@@ -54,17 +54,20 @@ export function renderAffiliateModule(placement, geo_defaults) {
   const widgetScript = generateWidgetScript(placement, geo_defaults);
 
   // Construire le HTML
+  // IMPORTANT: Utiliser <aside> au lieu de <div> pour éviter que le thème JNews
+  // traite le module comme un slot publicitaire (jeg_ad jnews_content_inline_ads)
+  // ce qui provoque height=0px et masque tout le contenu suivant.
+  // IMPORTANT: Envelopper le script dans <!-- wp:html --> pour empêcher WordPress
+  // de supprimer le </script> fermant via wp_kses_post(), ce qui casse le rendu.
   const html = `
-<div class="affiliate-module" data-placement-id="${placement.id}">
-  <h3 class="affiliate-module-title">${escapeHtml(diagnostic.title)}</h3>
-  <p class="affiliate-module-description">${escapeHtml(diagnostic.phrase)}</p>
-  <div class="affiliate-module-widget">
-    ${widgetScript}
-  </div>
-  <p class="affiliate-module-disclaimer">
-    <small>Lien partenaire</small>
-  </p>
-</div>
+<aside class="affiliate-module" data-placement-id="${placement.id}" data-fv-segment="affiliate">
+<h3 class="affiliate-module-title">${escapeHtml(diagnostic.title)}</h3>
+<p class="affiliate-module-description">${escapeHtml(diagnostic.phrase)}</p>
+<!-- wp:html -->
+${widgetScript}
+<!-- /wp:html -->
+<p class="affiliate-module-disclaimer"><small>Lien partenaire</small></p>
+</aside>
 `.trim();
 
   return html;

@@ -2723,7 +2723,7 @@ RÈGLES ABSOLUES (par ordre de priorité):
 3. CORRIGE LES ESPACES MANQUANTS entre les mots collés (ex: "Salutà tous" → "Salut à tous")
 4. Corrige les phrases qui ne se terminent pas par . ! ? (ajoute la ponctuation)
 5. NE SUPPRIME JAMAIS de contenu — tu AMÉLIORES et CORRIGES seulement
-6. Conserve TOUS les widgets (<script>, <div class="affiliate-module">), liens, blockquotes, et structure HTML
+6. Conserve TOUS les widgets (<script>, <aside class="affiliate-module">), liens, blockquotes, et structure HTML
 
 ANOMALIES À CORRIGER:
 ${correctionInstructions.map((instr, i) => `${i + 1}. ${instr}`).join('\n')}

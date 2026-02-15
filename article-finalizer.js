@@ -3,30 +3,6 @@
 import fs from 'fs';
 import { ENABLE_ANTI_HALLUCINATION_BLOCKING, parseBool } from './config.js';
 
-// Helper pour logger en NDJSON
-function debugLog(location, message, data, hypothesisId) {
-  const logEntry = JSON.stringify({
-    location,
-    message,
-    data,
-    timestamp: Date.now(),
-    sessionId: 'debug-session',
-    runId: 'run1',
-    hypothesisId
-  }) + '\n';
-  try {
-    const logPath = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor/debug.log';
-    // Créer le répertoire s'il n'existe pas
-    const logDir = '/Users/floriangouloubi/Documents/perso/flashvoyage/.cursor';
-    if (!fs.existsSync(logDir)) {
-      fs.mkdirSync(logDir, { recursive: true });
-    }
-    fs.appendFileSync(logPath, logEntry);
-  } catch (e) {
-    console.error('DEBUG LOG ERROR:', e.message);
-  }
-}
-
 /**
  * ARTICLE FINALIZER
  * Finalise l'article avant publication :
@@ -498,6 +474,7 @@ class ArticleFinalizer {
         // Cheerio xmlMode corrompt les scripts contenant des & non échappés dans les URLs
         const scriptMap = new Map();
         let scriptCounter = 0;
+
         let protectedHtml = finalContent.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, (match) => {
           const placeholder = `<!--SCRIPT_SAFE_${scriptCounter}-->`;
           scriptMap.set(placeholder, match);
@@ -767,7 +744,6 @@ class ArticleFinalizer {
       console.log(`   ✅ Validation pré-publication OK: ${textLength} caractères`);
     }
     
-    
     return returnValue;
   }
 
@@ -925,8 +901,10 @@ class ArticleFinalizer {
     try {
       const cheerioModule = await import('cheerio');
       const cheerio = cheerioModule.default || cheerioModule;
-      // FIX: Utiliser xmlMode pour éviter que Cheerio ajoute <html><head><body>
-      const $ = cheerio.load(html, { xmlMode: true, decodeEntities: false });
+      // FIX: Protéger <script> avant Cheerio xmlMode (sinon </script> → self-closing />)
+      const _sdm = new Map(); let _sdc = 0;
+      const _protected = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, (m) => { const p = `<!--SD_${_sdc}-->`; _sdm.set(p, m); _sdc++; return p; });
+      const $ = cheerio.load(_protected, { xmlMode: true, decodeEntities: false });
       const widgetTypes = new Set();
       let removedCount = 0;
       
@@ -951,6 +929,10 @@ class ArticleFinalizer {
       });
       
       dedupedHtml = $.html();
+      // Restaurer les scripts protégés
+      for (const [placeholder, original] of _sdm) {
+        dedupedHtml = dedupedHtml.replace(placeholder, original);
+      }
     } catch (error) {
       // Fallback regex si cheerio indisponible
       // Dédupliquer flights (garder le premier, supprimer les suivants)
@@ -2540,7 +2522,7 @@ class ArticleFinalizer {
       const expectedCount = affiliatePlan.placements.length;
       
       // Recompter avec une méthode plus précise sur finalHtml
-      const affiliateModuleRegex = /<div class="affiliate-module"|data-placement-id=/g;
+      const affiliateModuleRegex = /<(?:div|aside) class="affiliate-module"|data-placement-id=/g;
       const actualCountPrecise = (finalHtml.match(affiliateModuleRegex) || []).length;
       
       if (actualCountPrecise === 0) {
@@ -2577,7 +2559,7 @@ class ArticleFinalizer {
       });
     } else if (!hasAffiliatePlan) {
       // PHASE 6.2.4: Si affiliate_plan.length === 0, interdire modules "par défaut"
-      const affiliateModuleRegex = /<div class="affiliate-module"|data-placement-id=/g;
+      const affiliateModuleRegex = /<(?:div|aside) class="affiliate-module"|data-placement-id=/g;
       const unexpectedModules = (finalHtml.match(affiliateModuleRegex) || []).length;
       
       if (unexpectedModules > 0) {
@@ -2644,7 +2626,7 @@ class ArticleFinalizer {
     }
     
     // Détecter blocs affiliate dupliqués
-    const affiliateModuleMatches = finalHtml.matchAll(/<div class="affiliate-module"[^>]*>[\s\S]*?<\/div>/g);
+    const affiliateModuleMatches = finalHtml.matchAll(/<(?:div|aside) class="affiliate-module"[^>]*>[\s\S]*?<\/(?:div|aside)>/g);
     const seenModules = new Set();
     let removedAffiliateDuplicates = 0;
     for (const match of affiliateModuleMatches) {
@@ -2813,7 +2795,7 @@ class ArticleFinalizer {
     // Pattern robuste: div avec class affiliate-module et tout son contenu jusqu'à la fermeture (gestion des div imbriquées)
     // Utiliser une approche récursive pour gérer les balises imbriquées
     const removeAffiliateModules = (html) => {
-      const affiliatePattern = /<div[^>]*(?:class=["'][^"']*affiliate-module[^"']*["']|data-placement-id)[^>]*>([\s\S]*?)<\/div>/gi;
+      const affiliatePattern = /<(?:div|aside)[^>]*(?:class=["'][^"']*affiliate-module[^"']*["']|data-placement-id)[^>]*>([\s\S]*?)<\/(?:div|aside)>/gi;
       let result = html;
       let match;
       let changed = true;
@@ -4245,7 +4227,7 @@ class ArticleFinalizer {
     // Utiliser une approche qui gère les div imbriquées en comptant les balises ouvrantes/fermantes
     const findAffiliateModules = (html) => {
       const modules = [];
-      const pattern = /<div[^>]*(?:class=["'][^"']*affiliate-module[^"']*["']|data-placement-id[^>]*)[^>]*>/gi;
+      const pattern = /<(?:div|aside)[^>]*(?:class=["'][^"']*affiliate-module[^"']*["']|data-placement-id[^>]*)[^>]*>/gi;
       let match;
       
       while ((match = pattern.exec(html)) !== null) {
@@ -6457,7 +6439,7 @@ class ArticleFinalizer {
       if (keywords.some(kw => text.includes(kw))) {
         const insertIndex = match.index + match[0].length;
         const beforeZone = html.slice(0, insertIndex);
-        if (/<div[^>]*class="affiliate-module"[^>]*data-placement-id/i.test(beforeZone)) continue;
+        if (/<(?:div|aside)[^>]*class="affiliate-module"[^>]*data-placement-id/i.test(beforeZone)) continue;
         return insertIndex;
       }
     }
@@ -6468,7 +6450,7 @@ class ArticleFinalizer {
       if (keywords.some(kw => text.includes(kw))) {
         const insertIndex = h2Match.index + h2Match[0].length;
         const beforeZone = html.slice(0, insertIndex);
-        if (/<div[^>]*class="affiliate-module"[^>]*data-placement-id/i.test(beforeZone)) continue;
+        if (/<(?:div|aside)[^>]*class="affiliate-module"[^>]*data-placement-id/i.test(beforeZone)) continue;
         return insertIndex;
       }
     }
@@ -6579,7 +6561,7 @@ class ArticleFinalizer {
           const targetZone = nextH2Match ? afterHeader.substring(0, nextH2Match.index) : afterHeader;
           
           // Vérifier si un module d'affiliation existe déjà dans cette zone
-          if (/<div[^>]*class="affiliate-module"[^>]*data-placement-id/i.test(targetZone)) {
+          if (/<(?:div|aside)[^>]*class="affiliate-module"[^>]*data-placement-id/i.test(targetZone)) {
             // Module déjà présent, ne pas dupliquer
             return html;
           }
@@ -7091,7 +7073,7 @@ class ArticleFinalizer {
     // Insérer les images dans le HTML
     let result = html;
     const h2Matches = [...html.matchAll(/<h2[^>]*>.*?<\/h2>/gi)];
-    const affiliatePositions = [...html.matchAll(/<div[^>]*data-fv-segment="affiliate"|<div[^>]*class="affiliate-module"/gi)]
+    const affiliatePositions = [...html.matchAll(/<(?:div|aside)[^>]*data-fv-segment="affiliate"|<(?:div|aside)[^>]*class="affiliate-module"/gi)]
       .map(m => m.index);
 
     let insertedCount = 0;
