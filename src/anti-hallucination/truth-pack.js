@@ -340,6 +340,8 @@ export function buildTruthPack(extracted) {
   
   // AMÉLIORATION: Extraire aussi les nombres depuis le texte brut
   const numbersFromText = [];
+  // ANTI-DECONTEXTUALISATION: Stocker chaque nombre avec sa phrase d'origine
+  const numbersWithContext = [];
   // Patterns pour détecter les nombres (âges, durées, montants) - plus flexibles
   const numberPatterns = [
     /\b(\d+)\s*(ans?|years?|années?|year|an)\b/gi,  // "70 ans", "25 years", "70 ans"
@@ -353,6 +355,9 @@ export function buildTruthPack(extracted) {
     /\b(\d+)\s*(minutes?|minute|min)\b/gi  // "30 minutes", "15 min"
   ];
   
+  // Découper le texte en phrases pour l'extraction de contexte
+  const sentences = combinedText.split(/[.!?\n]+/).map(s => s.trim()).filter(s => s.length > 10);
+  
   for (const pattern of numberPatterns) {
     // Créer une nouvelle regex à chaque fois pour éviter les problèmes avec lastIndex
     const regex = new RegExp(pattern.source, pattern.flags);
@@ -364,6 +369,18 @@ export function buildTruthPack(extracted) {
         if (!numbersFromText.includes(normalized)) {
           numbersFromText.push(normalized);
         }
+        // Trouver la phrase contenant ce nombre pour le contexte
+        const matchPos = match.index;
+        const contextStart = Math.max(0, matchPos - 80);
+        const contextEnd = Math.min(combinedText.length, matchPos + match[0].length + 80);
+        const surroundingText = combinedText.substring(contextStart, contextEnd).trim();
+        // Chercher la phrase complète qui contient ce nombre
+        const containingSentence = sentences.find(s => s.includes(match[0])) || surroundingText;
+        numbersWithContext.push({
+          value: normalized,
+          rawMatch: match[0],
+          context: containingSentence.substring(0, 200)
+        });
       }
     }
   }
@@ -533,6 +550,7 @@ export function buildTruthPack(extracted) {
       orgs: orgs,
       people: people,
       numbers: numbers,
+      numbersWithContext: numbersWithContext,
       dates: dates,
       events: events,
       keywords: keywords

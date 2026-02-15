@@ -1,6 +1,42 @@
 {
   "articles": [
     {
+      "id": 2639,
+      "slug": "visas-nomades-digitaux-en-asie-du-sud-est-ce-que-tu-dois-savoir",
+      "title": "Visas Nomades Digitaux en Asie du Sud-Est : Ce Que Tu Dois Savoir",
+      "url": "https://flashvoyage.com/visas-nomades-digitaux-en-asie-du-sud-est-ce-que-tu-dois-savoir/",
+      "category": "visa",
+      "keywords": [
+        "visas",
+        "nomades",
+        "digitaux",
+        "asie",
+        "sud",
+        "est",
+        "dois",
+        "savoir"
+      ],
+      "excerpt": "Le soleil tape fort lorsque tu descends de l&#8217;avion à Bangkok, prêt à commencer ta vie de nomad"
+    },
+    {
+      "id": 2601,
+      "slug": "vivre-9-mois-a-chiang-mai-budget-et-realites-pour-nomades-digitaux",
+      "title": "Vivre 9 mois à Chiang Mai : Budget et Réalités pour Nomades Digitaux",
+      "url": "https://flashvoyage.com/vivre-9-mois-a-chiang-mai-budget-et-realites-pour-nomades-digitaux/",
+      "category": "budget",
+      "keywords": [
+        "vivre",
+        "mois",
+        "chiang",
+        "mai",
+        "budget",
+        "realites",
+        "nomades",
+        "digitaux"
+      ],
+      "excerpt": "Le plongeon vers une nouvelle vie à Chiang Mai Après 10 ans de rêve, nous vivons enfin la vie de nom"
+    },
+    {
       "id": 2563,
       "slug": "voyager-un-mois-au-vietnam-avec-500-le-vrai-cout-et-astuces",
       "title": "Voyager un mois au Vietnam avec 500 $ : le vrai coût et astuces",

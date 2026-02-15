@@ -272,10 +272,19 @@ class ArticleFinalizer {
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS replace Questions ouvertes: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
     
+    // PHASE 6.0.8b: Garantir un paragraphe intro avant le premier H2
+    finalContent = this.ensureIntroBeforeFirstH2(finalContent);
+    
     // PHASE 6.0.9: Supprimer les emojis des titres H2 (SEO et cohérence éditoriale)
     finalContent = this.removeEmojisFromH2(finalContent);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeEmojisFromH2: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    
+    // PHASE 6.0.9b: Corriger la cohérence géographique des H2 avec le titre
+    finalContent = this.fixH2GeoCoherence(finalContent, article?.title || pipelineContext?.generatedTitle || '');
+    
+    // PHASE 6.0.9c: Traduire les noms de villes/pays anglais → français dans tout le HTML
+    finalContent = this.translateCityNamesToFrench(finalContent);
     
     // PHASE 6.0.10: Supprimer les sections vides (labels emoji sans contenu)
     finalContent = this.removeEmptySections(finalContent);
@@ -420,6 +429,9 @@ class ArticleFinalizer {
     // PHASE 6.1: QA Report déterministe
     const qaReport = await this.runQAReport(finalContent, pipelineContext, analysis);
     finalContent = qaReport.finalHtml;
+    
+    // PHASE 6.1.0b: Re-dédupliquer les blockquotes APRÈS runQAReport (qui peut en insérer de nouveaux)
+    finalContent = this.deduplicateBlockquotes(finalContent);
     
     // PHASE 6.1.1: Remplacement placeholders liens d'affiliation (correction audit)
     finalContent = this.replaceAffiliatePlaceholders(finalContent, pipelineContext, qaReport);
@@ -631,11 +643,18 @@ class ArticleFinalizer {
       // FIX CHEERIO WRAPPER: Supprimer les balises <html><head><body> parasites
       // FILET DE SÉCURITÉ: Supprimer les wrappers markdown ```html...``` si présents
       // (Bug de la Passe 2 LLM qui peut wrapper le HTML dans des code fences)
-      if (returnValue.content.startsWith('```')) {
-        console.log('   ⚠️ FILET DE SÉCURITÉ: Wrapper markdown détecté et supprimé');
-        returnValue.content = returnValue.content
-          .replace(/^```(?:html)?\s*\n?/, '')
-          .replace(/\n?```\s*$/, '');
+      // Supprimer TOUS les wrappers markdown (```, backticks, guillemets parasites)
+      // Stratégie agressive : supprimer tout ce qui n'est pas du HTML avant le premier tag
+      returnValue.content = returnValue.content
+        .replace(/```(?:html)?\s*\n?/g, '')   // Supprimer toutes les occurrences de ```html ou ```
+        .replace(/^[\s"'\u201C\u201D\u2018\u2019`]+(?=<)/m, ''); // Supprimer guillemets/backticks parasites avant le premier tag
+      if (/^[^<]+/.test(returnValue.content.trim())) {
+        // S'il reste du texte non-HTML au début, le nettoyer
+        const firstTag = returnValue.content.indexOf('<');
+        if (firstTag > 0 && firstTag < 50) {
+          console.log(`   ⚠️ FILET DE SÉCURITÉ: ${firstTag} caractères parasites supprimés avant le premier tag HTML`);
+          returnValue.content = returnValue.content.substring(firstTag);
+        }
       }
       
       
@@ -717,18 +736,18 @@ class ArticleFinalizer {
     }
     
     // VALIDATION PRÉ-PUBLICATION CRITIQUE: Vérifier que l'article a du contenu réel
-    // Empêche la publication d'articles vides (JSON LLM tronqué, erreur de parsing, etc.)
+    // Double gate : caractères (anti-vide) + mots (qualité SEO minimale)
     if (returnValue.content) {
       const textOnly = returnValue.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
       const textLength = textOnly.length;
-      console.log(`📏 VALIDATION PRÉ-PUBLICATION: ${textLength} caractères de texte réel`);
+      const wordCount = textOnly.split(/\s+/).filter(w => w.length > 0).length;
+      console.log(`📏 VALIDATION PRÉ-PUBLICATION: ${textLength} caractères, ${wordCount} mots de texte réel`);
       
       if (textLength < 800) {
         console.error(`❌ ARTICLE VIDE BLOQUÉ: seulement ${textLength} caractères (minimum: 800)`);
         console.error(`   💡 Causes possibles: JSON LLM tronqué, max_tokens insuffisant, erreur de parsing`);
         console.error(`   📋 Titre: ${returnValue.title || 'N/A'}`);
         
-        // Ajouter une entrée critique dans le rapport QA
         if (qaReport && qaReport.issues) {
           qaReport.issues.push({
             type: 'CRITICAL_EMPTY_ARTICLE',
@@ -739,6 +758,19 @@ class ArticleFinalizer {
         }
         
         throw new Error(`PRE_PUBLISH_VALIDATION_FAILED: Article trop court (${textLength} chars < 800 minimum). Publication bloquée.`);
+      }
+      
+      // Gate SEO: minimum 1000 mots pour être compétitif en SEO
+      if (wordCount < 1000) {
+        console.warn(`⚠️ ARTICLE COURT: ${wordCount} mots (minimum SEO recommandé: 1000). Publication autorisée mais signalée.`);
+        if (qaReport && qaReport.issues) {
+          qaReport.issues.push({
+            type: 'SHORT_ARTICLE',
+            severity: 'warning',
+            message: `Article court: ${wordCount} mots (minimum SEO: 1000)`,
+            suggestion: 'Augmenter max_tokens LLM ou vérifier les instructions de longueur dans le prompt'
+          });
+        }
       }
       
       console.log(`   ✅ Validation pré-publication OK: ${textLength} caractères`);
@@ -2096,15 +2128,36 @@ class ArticleFinalizer {
         }
         const escaped = citationText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
         // Déterminer la position d'insertion et adapter le label cite
+        // RÈGLE: Toujours insérer APRÈS le hook (= après au moins 1 paragraphe narratif)
         const h2List = [...finalHtml.matchAll(/<h2[^>]*>.*?<\/h2>/gi)];
-        // Après le 2e H2 si possible (hors hook), sinon après le 1er
-        const insertAfterIndex = h2List.length >= 2 ? (h2List[1].index + h2List[1][0].length) : (h2List.length === 1 ? (h2List[0].index + h2List[0][0].length) : 0);
+        // Chercher la position après le 1er paragraphe qui suit le 1er H2 (= après le hook)
+        let insertAfterIndex = 0;
+        if (h2List.length >= 1) {
+          const afterFirstH2 = h2List[0].index + h2List[0][0].length;
+          // Trouver le premier </p> après ce H2 (= fin du hook)
+          const firstPAfterH2 = finalHtml.substring(afterFirstH2).match(/<\/p>/i);
+          if (firstPAfterH2) {
+            insertAfterIndex = afterFirstH2 + firstPAfterH2.index + firstPAfterH2[0].length;
+          } else {
+            insertAfterIndex = afterFirstH2;
+          }
+        }
+        // Préférer après le 2e H2 + 1er paragraphe si disponible (plus loin dans le récit)
+        if (h2List.length >= 2) {
+          const afterSecondH2 = h2List[1].index + h2List[1][0].length;
+          const firstPAfter2ndH2 = finalHtml.substring(afterSecondH2).match(/<\/p>/i);
+          if (firstPAfter2ndH2) {
+            insertAfterIndex = afterSecondH2 + firstPAfter2ndH2.index + firstPAfter2ndH2[0].length;
+          } else {
+            insertAfterIndex = afterSecondH2;
+          }
+        }
         // Si insertion dans les 500 premiers chars → label neutre (pas de Reddit dans le hook)
         const citeLabel = insertAfterIndex < 500 ? 'Témoignage de voyageur' : 'Extrait Reddit';
         const citationBlock = `<blockquote><p>${escaped}</p><p><cite>— ${citeLabel}</cite></p></blockquote>`;
         if (insertAfterIndex > 0) {
           finalHtml = finalHtml.slice(0, insertAfterIndex) + '\n\n' + citationBlock + '\n\n' + finalHtml.slice(insertAfterIndex);
-          console.log(`✅ FINALIZER: Citation du récit insérée depuis evidence.source_snippets (après H2 narratif)`);
+          console.log(`✅ FINALIZER: Citation du récit insérée depuis evidence.source_snippets (après hook narratif)`);
           break;
         }
         const firstP = finalHtml.match(/<p[^>]*>.*?<\/p>/i);
@@ -2118,7 +2171,8 @@ class ArticleFinalizer {
     }
 
     // 2) Fallback : si aucune citation insérée, une depuis le post extracted (traduit si en ligne)
-    const hasBlockquoteNow = /<blockquote[^>]*>.*?<\/blockquote>/i.test(finalHtml);
+    // FIX: Utiliser [\s\S] au lieu de . pour matcher les newlines dans les blockquotes multilignes
+    const hasBlockquoteNow = /<blockquote[^>]*>[\s\S]*?<\/blockquote>/i.test(finalHtml);
     if (!hasBlockquoteNow && hasPostText) {
       let excerpt = this.smartTruncate(postText, 250, 350);
       if (!FORCE_OFFLINE && this.intelligentContentAnalyzer) {
@@ -2128,16 +2182,20 @@ class ArticleFinalizer {
         } catch (e) { /* garder original */ }
       }
       const escapedExcerpt = excerpt.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-      // FIX: NE PAS utiliser Cheerio xmlMode ici (corrompt le HTML avec les scripts Travelpayouts)
-      // Utiliser regex pour trouver le premier H2 et insérer après
+      // FIX: Insérer le blockquote APRÈS le hook (après le 1er paragraphe du 1er H2)
       const firstH2Match = finalHtml.match(/<h2[^>]*>.*?<\/h2>/i);
       if (firstH2Match) {
-        const insertIdx = firstH2Match.index + firstH2Match[0].length;
+        const afterH2 = firstH2Match.index + firstH2Match[0].length;
+        // Trouver le 1er </p> après le H2 (= fin du hook narratif)
+        const firstPAfterH2 = finalHtml.substring(afterH2).match(/<\/p>/i);
+        const insertIdx = firstPAfterH2 
+          ? afterH2 + firstPAfterH2.index + firstPAfterH2[0].length
+          : afterH2;
         // Si insertion dans les 500 premiers chars → label neutre (pas de Reddit dans le hook)
         const citeLabelFallback = insertIdx < 500 ? 'Témoignage de voyageur' : 'Extrait Reddit';
         const newBlockquote = `<blockquote><p>${escapedExcerpt}</p><p><cite>— ${citeLabelFallback}</cite></p></blockquote>`;
         finalHtml = finalHtml.slice(0, insertIdx) + '\n\n' + newBlockquote + '\n\n' + finalHtml.slice(insertIdx);
-        console.log(`✅ FINALIZER: Citation du récit insérée depuis extracted (post)`);
+        console.log(`✅ FINALIZER: Citation du récit insérée depuis extracted (post) (après hook)`);
       } else {
         const firstP2 = finalHtml.match(/<p[^>]*>.*?<\/p>/i);
         if (firstP2) {
@@ -2711,7 +2769,9 @@ class ArticleFinalizer {
     // (déjà implémenté, mais améliorer la logique si nécessaire)
     
     // PHASE 7.1.d: Anti-Hallucination Guard (non bloquant par défaut)
-    await this.checkAntiHallucination(finalHtml, pipelineContext, report);
+    // Passer le titre de l'article pour validation anti-décontextualisation
+    const articleTitle = pipelineContext?.generatedTitle || pipelineContext?.story?.extracted?.post?.title || '';
+    await this.checkAntiHallucination(finalHtml, pipelineContext, report, articleTitle);
     
     // NOUVELLES VALIDATIONS QUALITÉ (Plan Pipeline Quality Fixes)
     // 1. Détection phrases incomplètes
@@ -2840,6 +2900,11 @@ class ArticleFinalizer {
       const relatedIndex = relatedSectionMatch.index;
       htmlForInventionCheck = htmlForInventionCheck.substring(0, relatedIndex);
     }
+    
+    // Exclure le texte des liens internes FlashVoyage de l'analyse d'hallucination
+    // Ces liens sont injectés par le SEO optimizer (pas par le LLM) et réfèrent à des articles existants
+    htmlForInventionCheck = htmlForInventionCheck.replace(/<a[^>]*href="[^"]*flashvoyage\.com[^"]*"[^>]*>.*?<\/a>/gi, ' ');
+    htmlForInventionCheck = htmlForInventionCheck.replace(/<a[^>]*href="[^"]*flashvoyage[^"]*"[^>]*>.*?<\/a>/gi, ' ');
     
     // Construire vocabulary whitelist
     const whitelistTokens = new Set();
@@ -3786,6 +3851,238 @@ class ArticleFinalizer {
   }
 
   /**
+   * PHASE 6.0.9b: Corriger la cohérence géographique des H2 avec le titre
+   * Deux cas gérés :
+   * 1) Titre single-country ("Thaïlande") + H2 avec un autre pays → remplacer
+   * 2) Titre régional ("Asie du Sud-Est") + H2 conclusion avec un seul pays → remplacer par la région
+   */
+  fixH2GeoCoherence(html, title) {
+    if (!title || title.length < 5) return html;
+    
+    // Alias de destinations pour détecter la destination du titre
+    const destinationAliases = {
+      'thailand': ['thaïlande', 'thailande', 'thailand', 'bangkok', 'chiang mai', 'phuket', 'pattaya'],
+      'vietnam': ['vietnam', 'viêt nam', 'hô chi minh', 'ho chi minh', 'hanoi', 'hanoï', 'da nang'],
+      'indonesia': ['indonésie', 'indonesie', 'indonesia', 'bali', 'jakarta', 'lombok'],
+      'singapore': ['singapour', 'singapore'],
+      'philippines': ['philippines', 'manille', 'manila', 'cebu'],
+      'japan': ['japon', 'japan', 'tokyo', 'kyoto', 'osaka'],
+      'cambodia': ['cambodge', 'cambodia', 'phnom penh', 'siem reap'],
+      'malaysia': ['malaisie', 'malaysia', 'kuala lumpur'],
+      'south korea': ['corée du sud', 'coree du sud', 'south korea', 'séoul', 'seoul']
+    };
+    
+    // Régions multi-pays
+    const regionAliases = {
+      'southeast_asia': ['asie du sud-est', 'asie du sud est', 'southeast asia', 'south east asia', 'asie du sud'],
+      'asia': ['asie', 'asia']
+    };
+    
+    const titleLower = title.toLowerCase();
+    let titleCountry = null;
+    let titleLabel = null;
+    let titleIsRegion = false;
+    let titleRegionLabel = null;
+    
+    // D'abord vérifier si le titre mentionne une région
+    for (const [region, aliases] of Object.entries(regionAliases)) {
+      for (const alias of aliases) {
+        if (titleLower.includes(alias)) {
+          titleIsRegion = true;
+          titleRegionLabel = alias;
+          break;
+        }
+      }
+      if (titleIsRegion) break;
+    }
+    
+    // Ensuite vérifier si le titre mentionne un pays spécifique
+    for (const [country, aliases] of Object.entries(destinationAliases)) {
+      for (const alias of aliases) {
+        if (titleLower.includes(alias)) {
+          titleCountry = country;
+          titleLabel = alias;
+          break;
+        }
+      }
+      if (titleCountry) break;
+    }
+    
+    let replacements = 0;
+    let result = html;
+    
+    if (titleIsRegion && !titleCountry) {
+      // CAS 2: Titre régional → corriger le H2 d'intro et de conclusion s'ils mentionnent un seul pays
+      const regionLabelCapitalized = titleRegionLabel.charAt(0).toUpperCase() + titleRegionLabel.slice(1);
+      const conclusionPatterns = ['ce qu\'il faut retenir', 'ce qu&#8217;il faut retenir', 'en résumé', 'conclusion', 'un aperçu'];
+      
+      for (const [country, aliases] of Object.entries(destinationAliases)) {
+        for (const alias of aliases) {
+          const h2Pattern = new RegExp(`(<h2[^>]*>)(.*?)(</h2>)`, 'gi');
+          result = result.replace(h2Pattern, (match, open, content, close) => {
+            const contentLower = content.toLowerCase();
+            // Ne corriger que les H2 intro/conclusion (pas les sections comparatives par pays)
+            const isIntroOrConclusion = conclusionPatterns.some(p => contentLower.includes(p));
+            if (isIntroOrConclusion && contentLower.includes(alias)) {
+              const aliasEscaped = alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              const aliasRegex = new RegExp(`\\s*(à|en|de|du|pour|sur les|sur l')\\s+${aliasEscaped}`, 'gi');
+              // Forcer "en" pour les régions (en Asie du Sud-Est, pas à Asie du Sud-Est)
+              const newContent = content.replace(aliasRegex, ` en ${regionLabelCapitalized}`);
+              if (newContent !== content) {
+                replacements++;
+                console.log(`   🔄 GEO_COHERENCE (region): H2 "${content.substring(0, 60)}" → "${newContent.substring(0, 60)}"`);
+              }
+              return open + newContent + close;
+            }
+            return match;
+          });
+        }
+      }
+    } else if (titleCountry) {
+      // CAS 1: Titre single-country → remplacer les mentions d'autres pays dans les H2
+      // Préposition correcte par pays (en/au/à)
+      const countryPrepositions = {
+        'thaïlande': 'en', 'thailande': 'en', 'thailand': 'en',
+        'vietnam': 'au', 'indonésie': 'en', 'indonesie': 'en',
+        'singapour': 'à', 'singapore': 'à',
+        'japon': 'au', 'japan': 'au',
+        'cambodge': 'au', 'cambodia': 'au',
+        'malaisie': 'en', 'malaysia': 'en',
+        'philippines': 'aux',
+        'corée du sud': 'en'
+      };
+      const correctPrep = countryPrepositions[titleLabel] || 'en';
+      
+      for (const [country, aliases] of Object.entries(destinationAliases)) {
+        if (country === titleCountry) continue;
+        
+        for (const alias of aliases) {
+          const h2Pattern = new RegExp(`(<h2[^>]*>)(.*?)(</h2>)`, 'gi');
+          result = result.replace(h2Pattern, (match, open, content, close) => {
+            const contentLower = content.toLowerCase();
+            // Garder les H2 comparatifs (vs, et, comparaison) ou les sections multi-pays
+            if (contentLower.includes(alias) && !contentLower.includes('compar') && !contentLower.includes('vs') && !contentLower.includes(' et ')) {
+              const titleLabelCapitalized = titleLabel.charAt(0).toUpperCase() + titleLabel.slice(1);
+              // Remplacer aussi la préposition (à/en/au + ancien pays → prep correcte + nouveau pays)
+              const aliasEscaped = alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              const prepAliasRegex = new RegExp(`(à|en|au|aux)\\s+${aliasEscaped}`, 'gi');
+              let newContent = content.replace(prepAliasRegex, `${correctPrep} ${titleLabelCapitalized}`);
+              // Fallback: remplacer juste le nom si pas de préposition
+              if (newContent === content) {
+                const aliasRegex = new RegExp(aliasEscaped, 'gi');
+                newContent = content.replace(aliasRegex, titleLabelCapitalized);
+              }
+              if (newContent !== content) {
+                replacements++;
+                console.log(`   🔄 GEO_COHERENCE: H2 "${content.substring(0, 60)}" → "${newContent.substring(0, 60)}"`);
+              }
+              return open + newContent + close;
+            }
+            return match;
+          });
+        }
+      }
+    }
+    
+    if (replacements > 0) {
+      console.log(`✅ GEO_COHERENCE: ${replacements} H2 corrigé(s) pour cohérence avec le titre`);
+    }
+    
+    return result;
+  }
+
+  /**
+   * PHASE 6.0.9c: Traduire les noms de villes/pays anglais → français dans le HTML
+   * Appliqué sur H2, H3, P, LI, blockquote — partout où un lecteur francophone
+   * verrait un nom anglais incongruent.
+   */
+  translateCityNamesToFrench(html) {
+    // Map des noms anglais → français (word-boundary safe)
+    const cityTranslations = {
+      'Singapore': 'Singapour',
+      'Thailand': 'Thaïlande',
+      'Vietnam': 'Vietnam', // déjà FR
+      'Indonesia': 'Indonésie',
+      'Philippines': 'Philippines', // identique
+      'Japan': 'Japon',
+      'Cambodia': 'Cambodge',
+      'Malaysia': 'Malaisie',
+      'South Korea': 'Corée du Sud',
+      'North Korea': 'Corée du Nord',
+      'Myanmar': 'Myanmar', // identique
+      'Laos': 'Laos', // identique
+      'Taiwan': 'Taïwan',
+      'Hong Kong': 'Hong Kong', // identique
+      'Southeast Asia': 'Asie du Sud-Est',
+      'South East Asia': 'Asie du Sud-Est',
+      'South Asia': 'Asie du Sud',
+      'East Asia': 'Asie de l\'Est',
+      'Digital Nomad': 'Nomade Digital',
+      'Kuala Lumpur': 'Kuala Lumpur', // identique
+      'Ho Chi Minh City': 'Hô-Chi-Minh-Ville',
+      'Phnom Penh': 'Phnom Penh' // identique
+    };
+
+    let result = html;
+    let replacements = 0;
+
+    for (const [eng, fr] of Object.entries(cityTranslations)) {
+      if (eng === fr) continue; // Pas besoin de remplacer si identique
+      // Remplacement word-boundary dans les tags textuels (H2, H3, P, LI, blockquote, figcaption)
+      const engEscaped = eng.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const pattern = new RegExp(`(>[^<]*?)\\b${engEscaped}\\b`, 'g');
+      const before = result;
+      result = result.replace(pattern, (match, prefix) => {
+        return prefix + fr;
+      });
+      if (result !== before) {
+        const count = (before.match(new RegExp(`\\b${engEscaped}\\b`, 'g')) || []).length - 
+                      (result.match(new RegExp(`\\b${engEscaped}\\b`, 'g')) || []).length;
+        if (count > 0) {
+          replacements += count;
+          console.log(`   🌐 CITY_TRANSLATE: "${eng}" → "${fr}" (${count}x)`);
+        }
+      }
+    }
+
+    if (replacements > 0) {
+      console.log(`✅ CITY_TRANSLATE: ${replacements} nom(s) traduit(s) en français`);
+    }
+    return result;
+  }
+
+  /**
+   * PHASE 6.0.8b: Garantir un paragraphe introductif avant le premier H2
+   * Si le HTML commence directement par <h2>, déplacer le premier <p> qui suit le H2 vers avant le H2.
+   */
+  ensureIntroBeforeFirstH2(html) {
+    if (!html || typeof html !== 'string') return html;
+    
+    const trimmed = html.trim();
+    // Si le contenu ne commence PAS par un H2, tout va bien
+    if (!trimmed.match(/^<h2[\s>]/i)) return html;
+    
+    // Le contenu commence par un H2 → chercher le premier <p>...</p> après ce H2
+    const firstH2End = trimmed.match(/<\/h2>/i);
+    if (!firstH2End) return html;
+    
+    const afterH2 = trimmed.substring(firstH2End.index + firstH2End[0].length);
+    const firstParagraph = afterH2.match(/^\s*(<p[^>]*>[\s\S]*?<\/p>)/i);
+    
+    if (firstParagraph) {
+      // Déplacer ce paragraphe avant le H2
+      const pText = firstParagraph[1];
+      const h2Block = trimmed.substring(0, firstH2End.index + firstH2End[0].length);
+      const rest = afterH2.substring(firstParagraph.index + firstParagraph[0].length);
+      
+      console.log(`   📝 INTRO_FIX: Paragraphe introductif déplacé avant le premier H2`);
+      return pText + '\n\n' + h2Block + rest;
+    }
+    
+    return html;
+  }
+
+  /**
    * PHASE 6.0.9: Supprimer les emojis des titres H2
    * Les emojis dans les H2 sont mauvais pour le SEO et la cohérence éditoriale
    * @param {string} html - HTML à nettoyer
@@ -4377,6 +4674,18 @@ class ArticleFinalizer {
     const seen = new Set();
     let dedupCount = 0;
     
+    // NOUVEAU : Extraire le texte de l'intro (paragraphes avant le premier H2)
+    // pour détecter si un blockquote répète le contenu de l'intro
+    const firstH2Idx = html.search(/<h2[\s>]/i);
+    let introText = '';
+    if (firstH2Idx > 0) {
+      introText = html.substring(0, firstH2Idx)
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .toLowerCase();
+    }
+    
     const result = html.replace(blockquoteRegex, (fullMatch, innerContent) => {
       // Normaliser le contenu pour la comparaison (retirer HTML, espaces multiples)
       const normalized = innerContent.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
@@ -4384,18 +4693,45 @@ class ArticleFinalizer {
       // Si le contenu est trop court (< 20 chars), le garder (pas une vraie citation)
       if (normalized.length < 20) return fullMatch;
       
-      // Vérifier si une citation similaire existe déjà (80% de chevauchement)
+      // NOUVEAU : Vérifier si le blockquote répète le contenu de l'intro
+      if (introText.length > 50 && normalized.length > 30) {
+        const bqWords = new Set(normalized.split(/\s+/).filter(w => w.length > 3));
+        const introWords = new Set(introText.split(/\s+/).filter(w => w.length > 3));
+        const intersection = [...bqWords].filter(w => introWords.has(w)).length;
+        const jaccard = bqWords.size > 0 ? intersection / bqWords.size : 0;
+        if (jaccard >= 0.50) {
+          dedupCount++;
+          console.log(`   🔍 BLOCKQUOTE_DEDUP: blockquote répète l'intro (Jaccard=${jaccard.toFixed(2)} ≥ 0.50), supprimé`);
+          return ''; // Supprimer le blockquote qui répète l'intro
+        }
+      }
+      
+      // Vérifier si une citation similaire existe déjà (substring ou Jaccard ≥ 60%)
       for (const seenText of seen) {
         if (normalized === seenText || normalized.includes(seenText) || seenText.includes(normalized)) {
           dedupCount++;
+          console.log(`   🔍 BLOCKQUOTE_DEDUP: exact/substring match`);
           return ''; // Supprimer le doublon
         }
-        // Check 80% overlap
+        // Check substring overlap (80%)
         const shorter = normalized.length < seenText.length ? normalized : seenText;
         const longer = normalized.length >= seenText.length ? normalized : seenText;
         if (shorter.length > 30 && longer.includes(shorter.substring(0, Math.floor(shorter.length * 0.8)))) {
           dedupCount++;
           return ''; // Supprimer le quasi-doublon
+        }
+        // Check Jaccard word similarity (≥ 60% des mots en commun)
+        if (shorter.length > 30) {
+          const wordsA = new Set(normalized.split(/\s+/).filter(w => w.length > 3));
+          const wordsB = new Set(seenText.split(/\s+/).filter(w => w.length > 3));
+          const intersection = [...wordsA].filter(w => wordsB.has(w)).length;
+          const union = new Set([...wordsA, ...wordsB]).size;
+          const jaccard = union > 0 ? intersection / union : 0;
+          if (jaccard >= 0.6) {
+            dedupCount++;
+            console.log(`   🔍 BLOCKQUOTE_DEDUP: Jaccard=${jaccard.toFixed(2)} ≥ 0.60`);
+            return ''; // Supprimer le quasi-doublon
+          }
         }
       }
       
@@ -6287,18 +6623,19 @@ class ArticleFinalizer {
    * PHASE 7.1.d: Anti-Hallucination Guard
    * Détecte les hallucinations dans le texte éditorial en comparant avec le truth pack
    */
-  async checkAntiHallucination(html, pipelineContext, report) {
+  async checkAntiHallucination(html, pipelineContext, report, title = '') {
     try {
       // Importer le guard dynamiquement
       const { runAntiHallucinationGuard } = await import('./src/anti-hallucination/anti-hallucination-guard.js');
       
       const extracted = pipelineContext?.extracted || {};
       
-      // Exécuter le guard
+      // Exécuter le guard (passer le titre pour validation anti-décontextualisation)
       const guardResult = await runAntiHallucinationGuard({
         html,
         extracted,
-        context: pipelineContext
+        context: pipelineContext,
+        title
       });
       
       // Log standard
@@ -6789,137 +7126,70 @@ class ArticleFinalizer {
       return null;
     }
     
-    console.log('🖼️ Recherche d\'image featured...');
+    console.log('🖼️ Recherche d\'image featured (cascade multi-source)...');
 
     try {
-      const { PEXELS_API_KEY } = await import('./config.js');
+      const imageManager = new ImageSourceManager();
+
+      // Construire une query contextuelle basée sur la destination ET le sujet de l'article
+      const geo = article.geo_defaults || analysis?.geo || {};
+      const city = geo.city || '';
+      const country = geo.country || '';
+      const destination = city || country || analysis?.destinations?.[0] || '';
+      const specificDest = city && country ? `${city} ${country}` : destination;
       
-      if (!PEXELS_API_KEY) {
-        console.log('   ⚠️ Clé Pexels non disponible');
-        return null;
+      // Extraire le thème de l'article depuis le titre pour des images plus pertinentes
+      const titleLower = (article.title || '').toLowerCase();
+      let themeKeywords = '';
+      if (titleLower.includes('visa') || titleLower.includes('nomad')) themeKeywords = 'city coworking laptop';
+      else if (titleLower.includes('budget') || titleLower.includes('coût')) themeKeywords = 'street market daily life';
+      else if (titleLower.includes('atm') || titleLower.includes('frais') || titleLower.includes('banque')) themeKeywords = 'city street atm';
+      else if (titleLower.includes('esim') || titleLower.includes('connecti')) themeKeywords = 'digital phone city';
+      else if (titleLower.includes('assurance') || titleLower.includes('santé')) themeKeywords = 'hospital pharmacy travel';
+
+      // Queries contextuelles par priorité (thème + destination → destination seule → générique)
+      const queries = [];
+      if (specificDest && themeKeywords) {
+        queries.push(`${specificDest} ${themeKeywords}`);
       }
-
-      // CORRECTION: Charger les images déjà utilisées pour éviter les doublons
-      const usedImages = await this.loadUsedPexelsImages();
-      console.log(`   📋 ${usedImages.size} images déjà utilisées détectées`);
-
-      // Construire la requête selon le contexte avec plus de variété
-      const baseQueries = [
-        'digital nomad working laptop',
-        'remote work travel asia',
-        'nomade digital coworking',
-        'laptop beach sunset',
-        'digital nomad lifestyle',
-        'remote work coffee shop',
-        'travel laptop backpack',
-        'nomade digital asie'
-      ];
-
-      // Ajouter la destination si disponible
-      let destination = '';
-      if (analysis?.destinations && analysis.destinations.length > 0) {
-        destination = analysis.destinations[0];
+      if (specificDest) {
+        queries.push(`${specificDest} travel scenery`);
+        queries.push(`${specificDest} landscape panorama`);
       }
+      if (country && country !== specificDest) {
+        queries.push(`${country} landscape`);
+      }
+      queries.push('southeast asia travel landscape');
 
-      // Essayer plusieurs queries et pages pour trouver une image non utilisée
-      let selectedImage = null;
-      let attempts = 0;
-      const maxAttempts = 5;
-
-      while (!selectedImage && attempts < maxAttempts) {
-        // Sélectionner une query aléatoire
-        const randomQuery = baseQueries[Math.floor(Math.random() * baseQueries.length)];
-        let query = randomQuery;
-        
-        if (destination) {
-          query += ` ${destination}`;
-        }
-
-        // Ajouter un paramètre de page aléatoire pour plus de diversité
-        // Augmenter la page si on a déjà essayé plusieurs fois
-        const randomPage = Math.floor(Math.random() * (3 + attempts)) + 1; // Pages 1-3, puis 1-4, etc.
-
-        console.log(`   🔍 Query: "${query}" (page ${randomPage}, tentative ${attempts + 1}/${maxAttempts})`);
-
-        const response = await axios.get('https://api.pexels.com/v1/search', {
-          headers: { 'Authorization': PEXELS_API_KEY },
-          params: {
-            query,
-            per_page: 20, // Plus d'images pour avoir plus de choix
-            orientation: 'landscape',
-            page: randomPage
-          }
+      // Essayer chaque query avec la cascade Unsplash → Flickr → Pexels
+      // Unsplash en priorité pour la qualité visuelle (conformité via download endpoint + attribution)
+      for (const query of queries) {
+        console.log(`   🔍 Featured query: "${query}"`);
+        const image = await imageManager.searchCascade(query, {
+          orientation: 'landscape',
+          minWidth: 1200,
+          preferSource: 'unsplash'
         });
 
-        if (response.data.photos && response.data.photos.length > 0) {
-          // Filtrer les images déjà utilisées
-          const availableImages = response.data.photos.filter(photo => {
-            const imageUrl = photo.src.large || photo.src.original;
-            const imageId = photo.id;
-            // Vérifier par URL ou ID Pexels
-            return !usedImages.has(imageUrl) && !usedImages.has(imageId.toString());
-          });
-
-          if (availableImages.length > 0) {
-            // Sélectionner une image aléatoire parmi celles disponibles
-            const randomIndex = Math.floor(Math.random() * Math.min(availableImages.length, 10));
-            selectedImage = availableImages[randomIndex];
-            
-            console.log(`   ✅ Image sélectionnée (${randomIndex + 1}/${availableImages.length} disponible, ${response.data.photos.length - availableImages.length} déjà utilisées): ${selectedImage.alt}`);
-            
-            // Stocker l'image utilisée pour éviter les futurs doublons
-            await this.saveUsedPexelsImage(selectedImage);
-            
-            return {
-              url: selectedImage.src.large,
-              alt: selectedImage.alt,
-              photographer: selectedImage.photographer,
-              pexelsId: selectedImage.id, // Stocker l'ID Pexels pour référence future
-              pexelsUrl: selectedImage.src.large
-            };
-          } else {
-            console.log(`   ⚠️ Toutes les images de cette page sont déjà utilisées (${response.data.photos.length} images)`);
-          }
-        }
-
-        attempts++;
-      }
-
-      if (!selectedImage) {
-        console.log('   ⚠️ Aucune image non utilisée trouvée après plusieurs tentatives');
-        // Fallback: retourner une image même si elle est déjà utilisée (mieux que pas d'image)
-        console.log('   ⚠️ Utilisation d\'une image déjà utilisée (fallback)');
-        const response = await axios.get('https://api.pexels.com/v1/search', {
-          headers: { 'Authorization': PEXELS_API_KEY },
-          params: {
-            query: baseQueries[0],
-            per_page: 10,
-            orientation: 'landscape',
-            page: Math.floor(Math.random() * 10) + 1 // Page plus élevée pour trouver des images différentes
-          }
-        });
-        
-        if (response.data.photos && response.data.photos.length > 0) {
-          const randomIndex = Math.floor(Math.random() * response.data.photos.length);
-          const image = response.data.photos[randomIndex];
-          
-          console.log(`   ✅ Image sélectionnée (fallback): ${image.alt}`);
-          await this.saveUsedPexelsImage(image);
+        if (image) {
+          imageManager.markUsed(image.sourceId, image.source);
+          console.log(`   ✅ Image featured sélectionnée: ${image.source} — ${image.alt?.substring(0, 80)}`);
           
           return {
-            url: image.src.large,
-            alt: image.alt,
+            url: image.url,
+            alt: image.alt || specificDest || 'FlashVoyage',
             photographer: image.photographer,
-            pexelsId: image.id,
-            pexelsUrl: image.src.large
+            source: image.source,
+            sourceId: image.sourceId,
+            license: image.license
           };
         }
       }
 
-      console.log('   ⚠️ Aucune image trouvée');
+      console.log('   ⚠️ Aucune image featured trouvée');
       return null;
     } catch (error) {
-      console.error('   ❌ Erreur recherche image:', error.message);
+      console.error('   ❌ Erreur recherche image featured:', error.message);
       return null;
     }
   }
@@ -6951,28 +7221,29 @@ class ArticleFinalizer {
     const h2Texts = h2Matches.map(m => m[1].replace(/<[^>]*>/g, '').trim());
 
     // Image 1 ("hook visuel") — après le 1er H2, source Unsplash
-    // Query très spécifique : ville + pays + contexte visuel (pas "travel" générique)
-    if (city) {
-      // Ex: "Chiang Mai street" ou "Chiang Mai temple"
+    // Query basée sur le SUJET de l'article (pas juste la destination)
+    const articleTitle = (pipelineContext?.generatedTitle || '').toLowerCase();
+    let hookQuery = '';
+    // Extraire le thème du titre pour une image pertinente
+    if (articleTitle.includes('visa') || articleTitle.includes('nomad')) hookQuery = `${specificDest || 'asia'} digital nomad coworking cafe`;
+    else if (articleTitle.includes('budget') || articleTitle.includes('coût')) hookQuery = `${specificDest || 'asia'} street market food`;
+    else if (articleTitle.includes('atm') || articleTitle.includes('frais') || articleTitle.includes('banque')) hookQuery = `${specificDest || 'asia'} city street`;
+    else if (articleTitle.includes('esim') || articleTitle.includes('connect')) hookQuery = `${specificDest || 'asia'} smartphone travel`;
+    else if (articleTitle.includes('transport') || articleTitle.includes('vol')) hookQuery = `${specificDest || 'asia'} airport travel`;
+    else if (articleTitle.includes('hébergement') || articleTitle.includes('hotel') || articleTitle.includes('logement')) hookQuery = `${specificDest || 'asia'} hotel room`;
+    else if (city) {
       const hookContext = this._extractSectionTheme(h2Texts[0] || '', city);
-      queries.push({
-        query: hookContext || `${city} city`,
-        position: 'hook',
-        sourcePreference: 'unsplash'
-      });
+      hookQuery = hookContext || `${city} city street morning`;
     } else if (destination) {
-      queries.push({
-        query: `${destination} landscape`,
-        position: 'hook',
-        sourcePreference: 'unsplash'
-      });
+      hookQuery = `${destination} landscape`;
     } else {
-      queries.push({
-        query: 'southeast asia travel landscape',
-        position: 'hook',
-        sourcePreference: 'unsplash'
-      });
+      hookQuery = 'southeast asia travel landscape';
     }
+    queries.push({
+      query: hookQuery,
+      position: 'hook',
+      sourcePreference: 'unsplash'
+    });
 
     // Image 2 ("mid-article") — après le 3e/4e H2, source Pexels (meilleure pertinence que Flickr)
     const midH2Index = Math.min(Math.floor(h2Texts.length / 2), h2Texts.length - 1);

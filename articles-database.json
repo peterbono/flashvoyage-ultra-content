@@ -1,14 +1,14 @@
 {
-  "crawled_at": "2026-02-15T08:17:05.450Z",
-  "total_articles": 65,
+  "crawled_at": "2026-02-15T19:00:06.202Z",
+  "total_articles": 66,
   "articles": [
     {
-      "id": 2598,
-      "title": "Vivre à Chiang Mai : Comment 50 USD transforment ton quotidien",
-      "url": "https://flashvoyage.com/vivre-a-chiang-mai-comment-50-usd-transforment-ton-quotidien/",
-      "slug": "vivre-a-chiang-mai-comment-50-usd-transforment-ton-quotidien",
-      "excerpt": "Un rêve de dix ans devenu réalité à Chiang Mai Après 10 ans de rêve, nous vivons enfin la vie de nomade numérique en Asie. Mon partenaire et moi avons enfin fra&#8230;\n",
-      "content": "Un rêve de dix ans devenu réalité à Chiang Mai\n\nAprès 10 ans de rêve, nous vivons enfin la vie de nomade numérique en Asie. Mon partenaire et moi avons enfin franchi le pas ! Nous sommes actuellement à Chiang Mai, en Thaïlande, et c&#8217;est incroyable. Le coût de la vie est tellement plus bas, la nourriture est incroyable, et la communauté des nomades ici est accueillante. Heureux de répondre à toutes vos questions !— Témoignage de voyageur\n\nChaque matin, en ouvrant les yeux à Chiang Mai, c&#8",
+      "id": 2639,
+      "title": "Visas Nomades Digitaux en Asie du Sud-Est : Ce Que Tu Dois Savoir",
+      "url": "https://flashvoyage.com/visas-nomades-digitaux-en-asie-du-sud-est-ce-que-tu-dois-savoir/",
+      "slug": "visas-nomades-digitaux-en-asie-du-sud-est-ce-que-tu-dois-savoir",
+      "excerpt": "Le soleil tape fort lorsque tu descends de l&#8217;avion à Bangkok, prêt à commencer ta vie de nomade digital en Asie du Sud-Est. Mais avant de t&#8217;installer, une quest&#8230;\n",
+      "content": "Le soleil tape fort lorsque tu descends de l&#8217;avion à Bangkok, prêt à commencer ta vie de nomade digital en Asie du Sud-Est.\nMais avant de t&#8217;installer, une question cruciale se pose : quel visa choisir pour prolonger ton séjour sans encombre ? Dans cette région dynamique, les options de visas pour nomades numériques varient largement d&#8217;un pays à l&#8217;autre, et chaque choix peut avoir des implications significatives sur ton budget et ta liberté de mouvement.\nExplorer les Optio",
       "categories": [
         {
           "id": 138,
@@ -17,9 +17,28 @@
         }
       ],
       "tags": [],
-      "date": "2026-02-15T08:16:49",
-      "modified": "2026-02-15T08:16:53",
-      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2598.jpg"
+      "date": "2026-02-15T14:36:10",
+      "modified": "2026-02-15T14:36:13",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2639.jpg"
+    },
+    {
+      "id": 2601,
+      "title": "Vivre 9 mois à Chiang Mai : Budget et Réalités pour Nomades Digitaux",
+      "url": "https://flashvoyage.com/vivre-9-mois-a-chiang-mai-budget-et-realites-pour-nomades-digitaux/",
+      "slug": "vivre-9-mois-a-chiang-mai-budget-et-realites-pour-nomades-digitaux",
+      "excerpt": "Le plongeon vers une nouvelle vie à Chiang Mai Après 10 ans de rêve, nous vivons enfin la vie de nomade numérique en Asie. Mon partenaire et moi avons enfin fra&#8230;\n",
+      "content": "Le plongeon vers une nouvelle vie à Chiang Mai\n\nAprès 10 ans de rêve, nous vivons enfin la vie de nomade numérique en Asie. Mon partenaire et moi avons enfin franchi le pas ! Nous sommes actuellement à Chiang Mai, en Thaïlande, et c&#8217;est incroyable. Le coût de la vie est tellement plus bas, la nourriture est incroyable, et la communauté des nomades ici est accueillante. Heureux de répondre à vos questions !— Témoignage de voyageur\n\nChaque matin à Chiang Mai commence de la même manière: une ",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-15T08:46:29",
+      "modified": "2026-02-15T08:46:32",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2601.jpg"
     },
     {
       "id": 2563,

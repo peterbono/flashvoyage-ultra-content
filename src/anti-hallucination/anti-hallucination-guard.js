@@ -241,7 +241,7 @@ function extractContext(text, match, contextLength = 50) {
  * @param {Object} params - { html, extracted, context }
  * @returns {Object} { status, blocking, reasons, evidence, debug }
  */
-export async function runAntiHallucinationGuard({ html, extracted, context = {} }) {
+export async function runAntiHallucinationGuard({ html, extracted, context = {}, title = '' }) {
   // FIX: Enrichir extracted avec context si disponible
   const enrichedExtracted = {
     ...extracted,
@@ -541,5 +541,64 @@ export async function runAntiHallucinationGuard({ html, extracted, context = {} 
         }
       }
     }
-  }  return result;
+  }
+  
+  // RÈGLE 6: TITLE_NUMBER_DECONTEXTUALIZATION
+  // Vérifie que les chiffres dans le titre correspondent à leur contexte d'origine
+  if (title && title.length > 0 && truthPack.allowed.numbersWithContext && truthPack.allowed.numbersWithContext.length > 0) {
+    // Extraire les nombres du titre
+    const titleNumbers = [];
+    const titleNumPatterns = [
+      /(\d+)\s*(€|\$|usd|eur|dollars?|euros?)/gi,
+      /(\d+)\s*(mois|months?|ans?|years?|jours?|days?)/gi,
+      /(\d[\d\s.,]*\d*)\s*(€|\$|usd|eur)/gi
+    ];
+    for (const pattern of titleNumPatterns) {
+      const regex = new RegExp(pattern.source, pattern.flags);
+      let m;
+      while ((m = regex.exec(title)) !== null) {
+        titleNumbers.push({ raw: m[0], digits: m[1].replace(/[^\d]/g, '') });
+      }
+    }
+    
+    if (titleNumbers.length > 0) {
+      for (const titleNum of titleNumbers) {
+        // Trouver le contexte d'origine de ce nombre dans la source
+        const matchingContexts = truthPack.allowed.numbersWithContext.filter(nc => {
+          const ncDigits = nc.value.replace(/[^\d]/g, '');
+          return ncDigits === titleNum.digits;
+        });
+        
+        if (matchingContexts.length > 0) {
+          // Le nombre existe dans la source — vérifier que le titre ne le décontextualise pas
+          // Heuristique: si le contexte source contient des mots-clés spécifiques (coworking, ATM, fee, etc.)
+          // mais le titre les utilise pour un sens différent (vivre, budget, coût de vie)
+          const contextKeywords = matchingContexts.map(mc => mc.context.toLowerCase()).join(' ');
+          const titleLowerCheck = title.toLowerCase();
+          
+          // Détection de décontextualisation de coût spécifique → budget global
+          const specificCostIndicators = ['coworking', 'atm', 'fee', 'retrait', 'commission', 'frais', 'loyer', 'rent', 'insurance', 'assurance', 'visa'];
+          const globalBudgetIndicators = ['vivre', 'budget', 'coût de vie', 'par mois', 'mensuel', 'quotidien', 'transforme'];
+          
+          const sourceIsSpecificCost = specificCostIndicators.some(kw => contextKeywords.includes(kw));
+          const titleImpliesGlobalBudget = globalBudgetIndicators.some(kw => titleLowerCheck.includes(kw));
+          
+          if (sourceIsSpecificCost && titleImpliesGlobalBudget) {
+            const sourceContext = matchingContexts[0].context.substring(0, 120);
+            console.warn(`   ⚠️ TITLE_DECONTEXTUALIZATION: "${titleNum.raw}" dans le titre implique budget global, mais source dit: "${sourceContext}"`);
+            result.reasons.push('TITLE_NUMBER_DECONTEXTUALIZATION');
+            result.evidence.push({
+              type: 'title_decontextualization',
+              text: titleNum.raw,
+              why: `Nombre "${titleNum.raw}" dans le titre utilisé comme budget global, mais dans la source il se rapporte à: "${sourceContext}"`
+            });
+            result.blocking = true;
+            result.status = 'fail';
+          }
+        }
+      }
+    }
+  }
+  
+  return result;
 }

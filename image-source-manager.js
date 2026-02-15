@@ -363,11 +363,11 @@ export default class ImageSourceManager {
         break;
       case 'flickr':
         // CC-BY: photographer name + link to original + license mention + SmugMug disclaimer (Flickr API ToS §3)
-        attribution = `Photo\u00a0: <a href="${sourceUrl}" target="_blank" rel="noopener">${escapeHtml(photographer)}</a> / <a href="https://www.flickr.com" target="_blank" rel="noopener">Flickr</a> — ${license}`;
+        attribution = `Photo\u00a0: <a href="${sourceUrl}" target="_blank" rel="noopener nofollow">${escapeHtml(photographer)}</a> / <a href="https://www.flickr.com" target="_blank" rel="noopener nofollow">Flickr</a> — ${license}`;
         break;
       case 'pexels':
         // Pexels: credit recommended
-        attribution = `Photo\u00a0: ${escapeHtml(photographer)} / <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a>`;
+        attribution = `Photo\u00a0: ${escapeHtml(photographer)} / <a href="https://www.pexels.com" target="_blank" rel="noopener nofollow">Pexels</a>`;
         break;
       default:
         attribution = `Photo\u00a0: ${escapeHtml(photographer || 'Inconnu')}`;

@@ -71,10 +71,75 @@ class QualityAnalyzer {
 
   /**
    * Analyse SERP - 25%
+   * En mode NEWS : les sections analytiques profondes sont facultatives (bonus, pas pénalisantes)
+   * En mode EVERGREEN : grille complète avec sections obligatoires
    */
-  analyzeSERP(html) {
+  analyzeSERP(html, editorialMode = 'evergreen') {
     const root = this.extractMainContent(html);
     const text = root.text.toLowerCase();
+    const h2h3Text = root.querySelectorAll('h2, h3').map(el => el.text).join(' ');
+
+    if (editorialMode === 'news') {
+      // ─── MODE NEWS : scoring SERP allégé ────────────────────────
+      // Pas de sections analytiques obligatoires (elles sont hors scope pour du contenu actu)
+      // Focus : E-E-A-T (50 pts) + angles factuels (50 pts)
+      const score = { total: 0, max: 100, details: [] };
+
+      // 1. E-E-A-T - Citations sourcées (50 pts)
+      const hasRedditCitation = /reddit|r\/\w+|u\/\w+/i.test(text);
+      const hasQuoteAttribution = root.querySelectorAll('blockquote').length > 0 || /selon\s+\w+|d'après\s+\w+|témoigne|voyageur/i.test(text);
+
+      if (hasRedditCitation) {
+        score.total += 25;
+        score.details.push({ check: 'Citation source', status: 'OK', points: 25 });
+      } else {
+        score.details.push({ check: 'Citation source', status: 'MISSING', points: 0 });
+      }
+
+      if (hasQuoteAttribution) {
+        score.total += 25;
+        score.details.push({ check: 'Attribution sources', status: 'OK', points: 25 });
+      } else {
+        score.details.push({ check: 'Attribution sources', status: 'MISSING', points: 0 });
+      }
+
+      // 2. Impact factuel (50 pts) - le contenu traite un fait concret
+      const hasImpact = /impact|changement|nouveau|mise\s*à\s*jour|augment|baiss|modifi|effectif|en\s*vigueur/i.test(text);
+      const hasSolution = /solution|alternative|recommand|conseil|astuce|pour\s*éviter|que\s*faire/i.test(text);
+      const hasConcreteData = /\d+\s*(€|usd|\$|%|jour|mois|baht|roupie)/i.test(text);
+
+      if (hasImpact) {
+        score.total += 20;
+        score.details.push({ check: 'Impact factuel', status: 'OK', points: 20 });
+      } else {
+        score.details.push({ check: 'Impact factuel', status: 'MISSING', points: 0 });
+      }
+
+      if (hasSolution) {
+        score.total += 15;
+        score.details.push({ check: 'Solution immédiate', status: 'OK', points: 15 });
+      } else {
+        score.details.push({ check: 'Solution immédiate', status: 'MISSING', points: 0 });
+      }
+
+      if (hasConcreteData) {
+        score.total += 15;
+        score.details.push({ check: 'Données concrètes', status: 'OK', points: 15 });
+      } else {
+        score.details.push({ check: 'Données concrètes', status: 'MISSING', points: 0 });
+      }
+
+      return {
+        category: 'SERP (NEWS)',
+        weight: 0.25,
+        score: score.total,
+        maxScore: score.max,
+        percentage: (score.total / score.max) * 100,
+        details: score.details
+      };
+    }
+
+    // ─── MODE EVERGREEN : scoring SERP complet ──────────────────────
     const score = { total: 0, max: 100, details: [] };
 
     // 1. Sections analytiques obligatoires (40 pts)
@@ -84,8 +149,6 @@ class QualityAnalyzer {
       { pattern: /erreurs?\s*(fréquentes?|courantes?|à\s*éviter)/i, name: 'Erreurs fréquentes', points: 10 }
     ];
 
-    const h2h3Text = root.querySelectorAll('h2, h3').map(el => el.text).join(' ');
-    
     requiredSections.forEach(section => {
       const found = section.pattern.test(text) || section.pattern.test(h2h3Text);
       if (found) {
@@ -142,8 +205,10 @@ class QualityAnalyzer {
 
   /**
    * Analyse Liens Internes - 15%
+   * En mode NEWS : attentes réduites (2-4 liens suffisent pour un article court)
+   * En mode EVERGREEN : scoring complet (5-10 liens pour 2000-3000 mots)
    */
-  analyzeInternalLinks(html) {
+  analyzeInternalLinks(html, editorialMode = 'evergreen') {
     const root = this.extractMainContent(html);
     const score = { total: 0, max: 100, details: [] };
     
@@ -158,9 +223,10 @@ class QualityAnalyzer {
     });
     const linkCount = internalLinks.length;
     
-    // 1. Densité (30 pts) - 5-10 liens pour 2000-3000 mots
-    const expectedMin = Math.floor(wordCount / 400);
-    const expectedMax = Math.ceil(wordCount / 200);
+    // 1. Densité (30 pts)
+    // NEWS : 2-4 liens suffisent | EVERGREEN : 5-10 liens pour 2000-3000 mots
+    const expectedMin = editorialMode === 'news' ? 1 : Math.floor(wordCount / 400);
+    const expectedMax = editorialMode === 'news' ? 5 : Math.ceil(wordCount / 200);
     
     if (linkCount >= expectedMin && linkCount <= expectedMax) {
       score.total += 30;
@@ -237,8 +303,10 @@ class QualityAnalyzer {
 
   /**
    * Analyse Content Writing Expert - 40%
+   * En mode NEWS : fil narratif allégé (hook + impact + solution), pas de recommandations obligatoires
+   * En mode EVERGREEN : grille complète
    */
-  analyzeContentWriting(html) {
+  analyzeContentWriting(html, editorialMode = 'evergreen') {
     const root = this.extractMainContent(html);
     const score = { total: 0, max: 100, details: [] };
     const text = root.text;
@@ -246,13 +314,24 @@ class QualityAnalyzer {
 
     // 1. Fil narratif (15 pts)
     const h2s = root.querySelectorAll('h2').map(el => el.text.toLowerCase());
-    const hasContexte = h2s.some(h => h.includes('contexte') || h.includes('témoignage'));
-    const hasAnalyse = h2s.some(h => h.includes('analyse') || h.includes('limites') || h.includes('erreurs'));
-    const hasRecommandations = h2s.some(h => h.includes('recommandation') || h.includes('conseils'));
-    
-    const narrativeScore = (hasContexte ? 5 : 0) + (hasAnalyse ? 5 : 0) + (hasRecommandations ? 5 : 0);
-    score.total += narrativeScore;
-    score.details.push({ check: 'Fil narratif', status: `${narrativeScore}/15`, points: narrativeScore });
+
+    if (editorialMode === 'news') {
+      // NEWS : hook + impact + solution (pas de section "analyse" ou "recommandation" obligatoire)
+      const hasHookOrFait = /changement|nouveau|augment|impact|mise\s*à\s*jour|récent|solution|que\s*faire/i.test(h2s.join(' ') + ' ' + textLower.substring(0, 500));
+      const hasImpactSection = h2s.some(h => h.includes('impact') || h.includes('change') || h.includes('concrèt') || h.includes('conséquence'));
+      const hasSolutionSection = h2s.some(h => h.includes('solution') || h.includes('alternative') || h.includes('que faire') || h.includes('recommand') || h.includes('retenir'));
+      const narrativeScore = (hasHookOrFait ? 5 : 0) + (hasImpactSection ? 5 : 0) + (hasSolutionSection ? 5 : 0);
+      score.total += narrativeScore;
+      score.details.push({ check: 'Fil narratif (NEWS)', status: `${narrativeScore}/15`, points: narrativeScore });
+    } else {
+      // EVERGREEN : contexte + analyse + recommandations
+      const hasContexte = h2s.some(h => h.includes('contexte') || h.includes('témoignage'));
+      const hasAnalyse = h2s.some(h => h.includes('analyse') || h.includes('limites') || h.includes('erreurs'));
+      const hasRecommandations = h2s.some(h => h.includes('recommandation') || h.includes('conseils'));
+      const narrativeScore = (hasContexte ? 5 : 0) + (hasAnalyse ? 5 : 0) + (hasRecommandations ? 5 : 0);
+      score.total += narrativeScore;
+      score.details.push({ check: 'Fil narratif', status: `${narrativeScore}/15`, points: narrativeScore });
+    }
 
     // 2. Transitions fluides (15 pts)
     const h2Elements = root.querySelectorAll('h2');
@@ -283,13 +362,23 @@ class QualityAnalyzer {
     const title = h1 ? h1.text.toLowerCase() : '';
     const destinationInTitle = this.asianDestinations.find(d => title.includes(d));
     
-    const recoSection = h2s.findIndex(h => h.includes('recommandation'));
     let coherencePoints = 0;
-    
-    if (recoSection >= 0 && destinationInTitle) {
-      coherencePoints = 15;
-    } else if (recoSection >= 0) {
-      coherencePoints = 10;
+    if (editorialMode === 'news') {
+      // NEWS : cohérence = destination dans titre + sujet factuel clair
+      const hasFactualFocus = /changement|nouveau|augment|baiss|mise\s*à\s*jour|annonce|effectif/i.test(textLower.substring(0, 1000));
+      if (destinationInTitle && hasFactualFocus) {
+        coherencePoints = 15;
+      } else if (destinationInTitle || hasFactualFocus) {
+        coherencePoints = 10;
+      }
+    } else {
+      // EVERGREEN : cohérence = recommandations + destination
+      const recoSection = h2s.findIndex(h => h.includes('recommandation'));
+      if (recoSection >= 0 && destinationInTitle) {
+        coherencePoints = 15;
+      } else if (recoSection >= 0) {
+        coherencePoints = 10;
+      }
     }
     
     score.total += coherencePoints;
@@ -373,8 +462,9 @@ class QualityAnalyzer {
 
   /**
    * Analyse Bloquants - 20%
+   * En mode NEWS : Quick Guide non obligatoire
    */
-  analyzeBlocking(html) {
+  analyzeBlocking(html, editorialMode = 'evergreen') {
     const root = this.extractMainContent(html);
     const fullPage = parse(html); // Pour le titre qui peut être hors du contenu principal
     const results = { passed: true, checks: [] };
@@ -415,10 +505,15 @@ class QualityAnalyzer {
     results.checks.push({ check: 'Destination asiatique titre', passed: hasAsianDest });
     if (!hasAsianDest) results.passed = false;
 
-    // 2. Quick Guide présent
-    const hasQuickGuide = /points?\s*clés?|quick\s*guide|résumé|en\s*bref/i.test(text);
-    results.checks.push({ check: 'Quick Guide présent', passed: hasQuickGuide });
-    if (!hasQuickGuide) results.passed = false;
+    // 2. Quick Guide présent (EVERGREEN seulement — non bloquant en NEWS)
+    const hasQuickGuide = /points?\s*clés?|quick\s*guide|résumé|en\s*bref|retenir/i.test(text);
+    if (editorialMode === 'news') {
+      // En NEWS, le Quick Guide est optionnel — on le note mais il ne bloque pas
+      results.checks.push({ check: 'Quick Guide (optionnel NEWS)', passed: true });
+    } else {
+      results.checks.push({ check: 'Quick Guide présent', passed: hasQuickGuide });
+      if (!hasQuickGuide) results.passed = false;
+    }
 
     // 3. H2 sans emojis
     let h2WithEmoji = 0;
@@ -489,12 +584,14 @@ class QualityAnalyzer {
 
   /**
    * Score global
+   * @param {string} html - Contenu HTML de l'article
+   * @param {string} editorialMode - 'news' | 'evergreen' (conditionne seuils et grille)
    */
-  getGlobalScore(html) {
-    const serp = this.analyzeSERP(html);
-    const links = this.analyzeInternalLinks(html);
-    const contentWriting = this.analyzeContentWriting(html);
-    const blocking = this.analyzeBlocking(html);
+  getGlobalScore(html, editorialMode = 'evergreen') {
+    const serp = this.analyzeSERP(html, editorialMode);
+    const links = this.analyzeInternalLinks(html, editorialMode);
+    const contentWriting = this.analyzeContentWriting(html, editorialMode);
+    const blocking = this.analyzeBlocking(html, editorialMode);
 
     const weightedScore = 
       (serp.percentage * serp.weight) +
@@ -502,10 +599,11 @@ class QualityAnalyzer {
       (contentWriting.percentage * contentWriting.weight) +
       (blocking.percentage * blocking.weight);
 
-    // AMÉLIORATION: Cibler 10/10 (100%) au lieu de 85%
-    const isExpert = weightedScore >= 100 && blocking.passed;
+    // Seuils par mode : NEWS = 70, EVERGREEN = 85
+    const passThreshold = editorialMode === 'news' ? 70 : 85;
+    const isExpert = weightedScore >= passThreshold && blocking.passed;
     
-    // AMÉLIORATION: Critères stricts supplémentaires pour 10/10
+    // Critères stricts supplémentaires pour score parfait
     const strictChecks = {
       allCategories100: serp.percentage === 100 && links.percentage === 100 && 
                         contentWriting.percentage === 100 && blocking.percentage === 100,
@@ -518,32 +616,36 @@ class QualityAnalyzer {
 
     return {
       globalScore: weightedScore.toFixed(1),
+      editorialMode,
       isExpert,
-      isPerfect, // AMÉLIORATION: Score parfait 10/10
-      threshold: 100, // AMÉLIORATION: Seuil à 100% pour 10/10
+      isPerfect,
+      threshold: passThreshold,
       blockingPassed: blocking.passed,
       categories: { serp, links, contentWriting, blocking },
-      strictChecks, // AMÉLIORATION: Critères stricts
+      strictChecks,
       summary: isPerfect
-        ? '✅ QUALITÉ PARFAITE 10/10 atteinte'
+        ? `✅ QUALITÉ PARFAITE [${editorialMode.toUpperCase()}] atteinte`
         : isExpert
-        ? '✅ QUALITÉ EXPERT atteinte'
-        : `❌ Score ${weightedScore.toFixed(1)}% (seuil: 100%) - Bloquants: ${blocking.passed ? 'OK' : 'FAIL'}`
+        ? `✅ QUALITÉ EXPERT [${editorialMode.toUpperCase()}] atteinte (seuil: ${passThreshold}%)`
+        : `❌ Score ${weightedScore.toFixed(1)}% [${editorialMode.toUpperCase()}] (seuil: ${passThreshold}%) - Bloquants: ${blocking.passed ? 'OK' : 'FAIL'}`
     };
   }
 
   /**
    * Rapport détaillé
+   * @param {string} html - Contenu HTML de l'article
+   * @param {string} editorialMode - 'news' | 'evergreen'
    */
-  generateReport(html) {
-    const result = this.getGlobalScore(html);
+  generateReport(html, editorialMode = 'evergreen') {
+    const result = this.getGlobalScore(html, editorialMode);
     
     let report = `
 ════════════════════════════════════════════════════════════════
-                    RAPPORT QUALITÉ ARTICLE
+          RAPPORT QUALITÉ ARTICLE [${editorialMode.toUpperCase()}]
 ════════════════════════════════════════════════════════════════
 
 📊 SCORE GLOBAL: ${result.globalScore}% ${result.isExpert ? '✅ EXPERT' : '❌ À AMÉLIORER'}
+   Mode éditorial: ${editorialMode.toUpperCase()}
    Seuil requis: ${result.threshold}%
    Bloquants: ${result.blockingPassed ? '✅ PASSÉS' : '❌ ÉCHEC'}
 

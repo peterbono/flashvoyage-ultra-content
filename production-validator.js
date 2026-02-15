@@ -263,14 +263,15 @@ class ProductionValidator {
   }
 
   /**
-   * Valide un article en production avec boucle jusqu'à 10/10
+   * Valide un article en production avec boucle jusqu'à qualité cible
    * @param {string} articleUrl - URL de l'article publié
    * @param {Object} sourceArticle - Article source
    * @param {Object} wordpressClient - Client WordPress pour mise à jour
    * @param {number} maxIterations - Nombre max d'itérations (défaut: 5)
+   * @param {string} editorialMode - 'news' | 'evergreen' (conditionne seuils scorer)
    * @returns {Promise<Object>} Résultat final avec score et itérations
    */
-  async validateWithLoop(articleUrl, sourceArticle, wordpressClient, maxIterations = 5) {
+  async validateWithLoop(articleUrl, sourceArticle, wordpressClient, maxIterations = 5, editorialMode = 'evergreen') {
     console.log('\n🔄 BOUCLE VALIDATION PRODUCTION');
     console.log('================================\n');
     
@@ -291,9 +292,9 @@ class ProductionValidator {
       const validationResult = await this.validate(publishedHtml, sourceArticle);
       lastValidationResult = validationResult;
       
-      // 3. Scorer qualité
+      // 3. Scorer qualité (avec mode éditorial pour seuils adaptés)
       const mainContent = this.extractMainContent(publishedHtml);
-      const qualityScore = this.qualityAnalyzer.getGlobalScore(mainContent);
+      const qualityScore = this.qualityAnalyzer.getGlobalScore(mainContent, editorialMode);
       currentScore = parseFloat(qualityScore.globalScore);
       
       console.log(`   📊 Score qualité: ${currentScore}/10`);

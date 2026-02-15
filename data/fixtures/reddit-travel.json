@@ -208,5 +208,52 @@
     "subreddit": "r/travel",
     "source_reliability": 1.0,
     "is_degraded_source": false
+  },
+  {
+    "id": "2a8kx9z",
+    "subreddit": "r/travel",
+    "title": "First time in Malaysia - Kuala Lumpur vs Penang for 2 weeks?",
+    "url": "https://reddit.com/r/travel/comments/2a8kx9z/first_time_in_malaysia_kuala_lumpur_vs_penang/",
+    "author": "malaysia_first_timer",
+    "created_utc": 1707840000,
+    "selftext": "My partner and I are planning our first trip to Malaysia for 2 weeks in April. We can't decide between spending most of our time in Kuala Lumpur or Penang (or splitting between both). We love street food, cultural sites, and don't want to spend a fortune. Budget is around $1,500 for both of us, excluding flights. We're coming from Europe and this will be our first time in Southeast Asia. Any advice on how to split the time? Is it worth adding the Cameron Highlands or Langkawi?",
+    "content": "My partner and I are planning our first trip to Malaysia for 2 weeks in April. We can't decide between spending most of our time in Kuala Lumpur or Penang.",
+    "source_text": "First time in Malaysia - Kuala Lumpur vs Penang for 2 weeks?\n\nMy partner and I are planning our first trip to Malaysia for 2 weeks in April. We can't decide between spending most of our time in Kuala Lumpur or Penang (or splitting between both). We love street food, cultural sites, and don't want to spend a fortune. Budget is around $1,500 for both of us, excluding flights.\n\n---\n\nComment 1: Definitely split! KL is amazing for 4-5 days - Petronas Towers, Batu Caves, Jalan Alor for street food, and the Islamic Arts Museum. Budget around $40-60/day for two in a decent hotel with meals. Grab (like Uber) is super cheap, $2-5 for most rides.\n\nComment 2: Penang is the food capital of Asia. George Town's street food scene is unreal - char kway teow, laksa, cendol. Stay in George Town for 4-5 days, walk everywhere. Hotels are $25-40/night for a nice spot. Definitely try the hawker centres at Gurney Drive and New Lane.\n\nComment 3: Add 2-3 days for Cameron Highlands between KL and Penang! It's a beautiful hill station, cooler temperatures (sweater weather), tea plantations, and strawberry farms. Budget about $30-40/day. The bus from KL is $10 and takes 4 hours. Skip Langkawi unless you want beach time - it's more of a resort island.\n\nComment 4: Malaysia is incredibly affordable. We spent 3 weeks there and averaged $50/day as a couple including everything. The food is the highlight - easily the best and cheapest in SEA. Don't miss nasi lemak for breakfast, it's the national dish and costs about $1-2. Also roti canai for about $0.50.\n\nComment 5: Pro tip: get a local SIM card at the airport (Hotlink or Digi, about $5 for a week with plenty of data). Download the Grab app before you arrive. Currency is Malaysian Ringgit (MYR), roughly 4.5 MYR = 1 USD. ATMs are everywhere but Maybank has the lowest fees for foreign cards.\n\nComment 6: If you have time, take the train from KL to Penang. It's a scenic 4-hour ride through the countryside, costs about $15-20, and arrives at Butterworth where you take a quick ferry to Georgetown. Much better than flying for the experience.",
+    "comments_snippets": [
+      "Definitely split! KL is amazing for 4-5 days - Petronas Towers, Batu Caves, Jalan Alor for street food. Budget around $40-60/day for two.",
+      "Penang is the food capital of Asia. George Town's street food scene is unreal - char kway teow, laksa, cendol. Stay 4-5 days.",
+      "Add 2-3 days for Cameron Highlands between KL and Penang! Beautiful hill station, tea plantations. Bus from KL is $10.",
+      "Malaysia is incredibly affordable. We averaged $50/day as a couple including everything. Don't miss nasi lemak for breakfast.",
+      "Get a local SIM card at the airport (Hotlink or Digi, about $5). Download Grab app before you arrive.",
+      "Take the train from KL to Penang - scenic 4-hour ride, costs about $15-20. Much better than flying."
+    ],
+    "date": "2024-02-13T12:00:00.000Z",
+    "source": "Reddit r/travel",
+    "type": "community",
+    "relevance": 92,
+    "upvotes": 67,
+    "comments": 42,
+    "smartScore": 93,
+    "smartDecision": "primary_source",
+    "smartScores": {
+      "relevance_asia_nomad": 22,
+      "actionability": 12,
+      "engagement": 1.65,
+      "quality": 6,
+      "comments_value": 5.2,
+      "freshness": 6,
+      "controversy": 0,
+      "specificity_asia": 8,
+      "total": 93,
+      "is_primary": true,
+      "reason": "High actionability, rich community insights with budget data, multiple destinations"
+    },
+    "geo": {
+      "country": "Malaysia",
+      "city": "Kuala Lumpur",
+      "region": "Southeast Asia"
+    },
+    "source_reliability": 1.0,
+    "is_degraded_source": false
   }
 ]

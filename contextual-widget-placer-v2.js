@@ -867,14 +867,31 @@ ${widgetScript}
       }
       
       if (smartIndex != null) {
-        enhancedContent = enhancedContent.slice(0, smartIndex) + '\n\n' + widgetBlock + '\n\n' + enhancedContent.slice(smartIndex);
+        const insertedBlock = '\n\n' + widgetBlock + '\n\n';
+        enhancedContent = enhancedContent.slice(0, smartIndex) + insertedBlock + enhancedContent.slice(smartIndex);
+        // FIX: Mettre à jour les positions précédentes pour refléter l'insertion
+        // Les positions après smartIndex doivent être décalées de insertedBlock.length
+        for (let i = 0; i < placedPositions.length; i++) {
+          if (placedPositions[i] >= smartIndex) {
+            placedPositions[i] += insertedBlock.length;
+          }
+        }
         placedPositions.push(smartIndex);
+        // #region agent log
+        fetch('http://127.0.0.1:7900/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'contextual-widget-placer-v2.js:880',message:'WIDGET_PLACED',data:{slot:widget.slot,index:smartIndex,allPositions:[...placedPositions],gap:placedPositions.length>1?Math.min(...placedPositions.slice(0,-1).map(p=>Math.abs(smartIndex-p))):null},timestamp:Date.now()})}).catch(()=>{});
+        // #endregion
         console.log(`   📍 SMART placement pour ${widget.slot} à index ${smartIndex}`);
       } else {
         // Fallback : find unoccupied H2 section or end of article
         const fallbackIndex = this.findFallbackPosition(enhancedContent, placedPositions, MIN_CHAR_GAP);
         if (fallbackIndex != null) {
-          enhancedContent = enhancedContent.slice(0, fallbackIndex) + '\n\n' + widgetBlock + '\n\n' + enhancedContent.slice(fallbackIndex);
+          const insertedBlock = '\n\n' + widgetBlock + '\n\n';
+          enhancedContent = enhancedContent.slice(0, fallbackIndex) + insertedBlock + enhancedContent.slice(fallbackIndex);
+          for (let i = 0; i < placedPositions.length; i++) {
+            if (placedPositions[i] >= fallbackIndex) {
+              placedPositions[i] += insertedBlock.length;
+            }
+          }
           placedPositions.push(fallbackIndex);
           console.log(`   📍 FALLBACK SMART placement pour ${widget.slot} à index ${fallbackIndex}`);
         } else {

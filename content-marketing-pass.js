@@ -93,6 +93,13 @@ Si l'article contient des recommandations ou CTAs (liens, conseils), assure-toi 
 - Liens CTA textuels vers des partenaires Travelpayouts
 - ⛔ PAS de widget hébergement/hôtel disponible
 
+## INTERDICTIONS CONTENU
+
+- **NE JAMAIS** ajouter de paragraphes génériques boilerplate sur le budget, la planification ou les conseils de voyage.
+- **TOUT contenu ajouté** doit être SPÉCIFIQUE à cet article (contenir le nom de la destination, des chiffres concrets issus de l'article).
+- **NE JAMAIS** ajouter de texte qui pourrait s'appliquer à n'importe quel article de voyage (ex: "Le budget réel pour ce type de séjour peut varier significativement...").
+- Si tu n'as rien de spécifique à ajouter, ne modifie pas la section.
+
 ## FORMAT DE SORTIE
 
 Retourne UNIQUEMENT l'article HTML complet amélioré. Pas de commentaires, pas d'explications, pas de balises markdown. Juste le HTML.`;
@@ -131,12 +138,45 @@ function getApproximateSection(html, position) {
 }
 
 /**
+ * Prompt allégé pour le mode NEWS : pas de tableau comparatif, pas d'arc narratif enrichi,
+ * juste fluidifier les transitions et ancrer le CTA existant.
+ */
+const NEWS_SYSTEM_PROMPT = `Tu es un expert en content marketing d'affiliation voyage. Tu reçois un article NEWS/ACTU court (600-900 mots) destiné au site FlashVoyage.
+
+## TA MISSION (MODE NEWS — article court et factuel)
+
+Améliorer LÉGÈREMENT l'article sans l'allonger. L'article doit rester COURT et FACTUEL.
+
+## RÈGLES ABSOLUES
+
+1. **NE RALLONGE PAS l'article** — tu peux reformuler mais pas ajouter plus de 2-3 phrases au total.
+2. **NE SUPPRIME JAMAIS** les citations Reddit (blockquotes).
+3. **NE INVENTE JAMAIS** de faits, chiffres ou expériences.
+4. **NE TOUCHE JAMAIS** aux shortcodes [fv_widget ...] ni aux blocs <div data-fv-segment="affiliate">.
+5. **NE TOUCHE JAMAIS** aux liens <a href="..."> ni aux blockquotes existants.
+6. **NE CRÉE PAS** de tableau comparatif — c'est un article d'actu, pas un guide.
+7. **NE CRÉE PAS** de sections supplémentaires (pas de FAQ, pas de checklist, pas de "Réalité vs fantasme").
+8. **ÉCRIS UNIQUEMENT EN FRANÇAIS** avec tutoiement.
+9. **RETOURNE L'ARTICLE HTML COMPLET.**
+
+## CE QUE TU PEUX FAIRE (max 2-3 modifications)
+
+1. Si un widget [fv_widget] est présent SANS contexte narratif juste avant, ajoute 1 phrase de transition qui justifie le widget dans le contexte de l'actu.
+2. Fluidifie une transition abrupte entre deux sections (max 1 phrase).
+3. Renforce le "À retenir" si les bullets sont trop vagues.
+
+## FORMAT DE SORTIE
+
+Retourne UNIQUEMENT l'article HTML complet. Pas de commentaires, pas de markdown.`;
+
+/**
  * Applique la passe Content Marketing Expert sur l'article finalisé
  * 
  * @param {string} htmlContent - Article HTML finalisé
  * @param {Object} pipelineContext - Contexte du pipeline
  * @param {Object} pipelineContext.geo_defaults - {origin, destination}
  * @param {string} pipelineContext.final_destination - Destination principale
+ * @param {string} pipelineContext.editorial_mode - 'news' | 'evergreen'
  * @returns {Promise<{html: string, widgetsDetected: Array, improved: boolean}>}
  */
 export async function applyContentMarketingPass(htmlContent, pipelineContext) {
@@ -145,15 +185,20 @@ export async function applyContentMarketingPass(htmlContent, pipelineContext) {
     return { html: htmlContent, widgetsDetected: [], improved: false };
   }
 
+  const editorialMode = pipelineContext?.editorial_mode || 'evergreen';
   const originalLength = htmlContent.length;
   
   // Détecter les widgets présents
   const widgets = detectWidgets(htmlContent);
   console.log(`   📊 Widgets détectés: ${widgets.length} (${widgets.map(w => w.type).join(', ') || 'aucun'})`);
+  console.log(`   📰 Mode éditorial: ${editorialMode.toUpperCase()}`);
   
   // Construire le contexte géographique
   const geoDefaults = pipelineContext?.geo_defaults || {};
   const destination = pipelineContext?.final_destination || geoDefaults?.destination || 'Asie';
+  
+  // Choisir le system prompt selon le mode éditorial
+  const systemPrompt = editorialMode === 'news' ? NEWS_SYSTEM_PROMPT : SYSTEM_PROMPT;
   
   // Construire le message utilisateur
   const widgetContext = widgets.length > 0
@@ -161,6 +206,7 @@ export async function applyContentMarketingPass(htmlContent, pipelineContext) {
     : '\n\nAucun widget détecté dans l\'article.';
   
   const userMessage = `Destination principale : ${destination}
+Mode éditorial : ${editorialMode.toUpperCase()}
 Origine des vols : ${geoDefaults?.origin || 'PAR'}${widgetContext}
 
 Voici l'article HTML à améliorer :
@@ -171,14 +217,19 @@ ${htmlContent}`;
     const response = await createChatCompletion({
       model: 'gpt-4o-mini',
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'system', content: systemPrompt },
         { role: 'user', content: userMessage }
       ],
-      max_tokens: 8000,
-      temperature: 0.4
+      max_tokens: editorialMode === 'news' ? 4000 : 8000,
+      temperature: editorialMode === 'news' ? 0.2 : 0.4
     });
 
-    const improvedHtml = response.choices?.[0]?.message?.content?.trim();
+    let improvedHtml = response.choices?.[0]?.message?.content?.trim();
+    
+    // Nettoyer les wrappers markdown ```html...``` que le LLM peut ajouter
+    if (improvedHtml) {
+      improvedHtml = improvedHtml.replace(/^```(?:html)?\s*\n?/, '').replace(/\n?```\s*$/, '');
+    }
     
     if (!improvedHtml) {
       console.warn('⚠️ CONTENT_MARKETING_PASS: Réponse LLM vide, conservation du contenu original');

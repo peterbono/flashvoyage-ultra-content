@@ -651,18 +651,25 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const beforeDedup = tempFinalizer.detectRenderedWidgets(finalizedArticle.content);
       console.log(`🔍 DEBUG WIDGETS AVANT DEDUP: count=${beforeDedup.count}, types=[${beforeDedup.types.join(', ')}]`);
       
-      // S'assurer que final_destination est dans finalizedArticle pour la validation
+      // S'assurer que final_destination et geo_defaults sont dans finalizedArticle
       if (!finalizedArticle.final_destination && pipelineContext?.final_destination) {
         finalizedArticle.final_destination = pipelineContext.final_destination;
+      }
+      if (!finalizedArticle.geo_defaults && pipelineContext?.geo_defaults) {
+        finalizedArticle.geo_defaults = pipelineContext.geo_defaults;
       }
       
       // Le blocking gate a déjà été vérifié dans le pipeline-runner
       // Si on arrive ici, c'est que le pipeline n'a pas été bloqué
       
-      // 8c. Récupérer l'image featured
-      const featuredImage = await this.articleFinalizer.getFeaturedImage(finalizedArticle, analysis);
-      if (featuredImage) {
-        finalizedArticle.featuredImage = featuredImage;
+      // 8c. Récupérer l'image featured (réutiliser celle du pipeline-runner si disponible)
+      if (finalizedArticle.featuredImage) {
+        console.log(`   ✅ Image featured déjà fournie par le pipeline-runner: ${finalizedArticle.featuredImage.source}`);
+      } else {
+        const featuredImage = await this.articleFinalizer.getFeaturedImage(finalizedArticle, analysis);
+        if (featuredImage) {
+          finalizedArticle.featuredImage = featuredImage;
+        }
       }
       
       // 8d. Mapper les catégories et tags vers IDs
@@ -1918,21 +1925,41 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // Uploader l'image featured si disponible
       if (article.featuredImage) {
         try {
-          console.log('🖼️ Upload de l\'image featured...');
+          const featSrc = article.featuredImage.source || 'pexels';
+          console.log(`🖼️ Upload de l'image featured (source: ${featSrc})...`);
           
           // Télécharger l'image
           const imageResponse = await axios.get(article.featuredImage.url, {
             responseType: 'arraybuffer'
           });
           
+          // Détecter le content-type depuis la réponse ou l'URL
+          const contentType = imageResponse.headers['content-type'] || 'image/jpeg';
+          const ext = contentType.includes('png') ? 'png' : contentType.includes('webp') ? 'webp' : 'jpg';
+          
           // Uploader sur WordPress
           const uploadResponse = await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/media`, imageResponse.data, {
             headers: {
               'Authorization': `Basic ${auth}`,
-              'Content-Type': 'image/jpeg',
-              'Content-Disposition': `attachment; filename="featured-${publishedArticle.id}.jpg"`
+              'Content-Type': contentType,
+              'Content-Disposition': `attachment; filename="featured-${publishedArticle.id}.${ext}"`
             }
           });
+          
+          // Ajouter le texte alternatif pour le SEO
+          if (article.featuredImage.alt) {
+            await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/media/${uploadResponse.data.id}`, {
+              alt_text: article.featuredImage.alt,
+              caption: article.featuredImage.photographer
+                ? `Photo: ${article.featuredImage.photographer}${article.featuredImage.license ? ` (${article.featuredImage.license})` : ''}`
+                : ''
+            }, {
+              headers: {
+                'Authorization': `Basic ${auth}`,
+                'Content-Type': 'application/json'
+              }
+            });
+          }
           
           // Associer l'image à l'article
           await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts/${publishedArticle.id}`, {
@@ -1944,7 +1971,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
             }
           });
           
-          console.log('✅ Image featured ajoutée');
+          console.log(`✅ Image featured ajoutée (${featSrc}, alt: "${article.featuredImage.alt?.substring(0, 50)}")`);
         } catch (imageError) {
           console.warn('⚠️ Erreur upload image:', imageError.message);
         }

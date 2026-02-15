@@ -1432,12 +1432,23 @@ class SeoOptimizer {
         // Normaliser la destination candidate vers un pays
         const normalizedCandidateDest = candidateDestination ? (CITY_TO_COUNTRY[candidateDestination] || candidateDestination) : null;
         
+        // Pays d'Asie du Sud-Est (pour bonus régional)
+        const seaCountries = ['thailand', 'vietnam', 'indonesia', 'philippines', 'singapore', 'cambodia', 'malaysia', 'laos', 'myanmar'];
+        const isRegionalArticle = seaCountries.includes(normalizedArticleDest) || 
+          (seoData.main_destination || '').toLowerCase().includes('asie') || 
+          (seoData.main_destination || '').toLowerCase().includes('asia');
+        
         // Score bonus pour match destination (même pays) (+20 points)
         if (normalizedCandidateDest && normalizedArticleDest === normalizedCandidateDest) {
           score += 20;
           console.log(`   ✅ INTERNAL_LINK_MATCH: article_dest=${articleDestination} link_dest=${candidateDestination} (${normalizedArticleDest}) score_bonus=+20`);
         }
-        // Pénalité pour destination différente (-10 points)
+        // Bonus réduit pour articles de la même région (+10 au lieu de -10)
+        else if (normalizedCandidateDest && isRegionalArticle && seaCountries.includes(normalizedCandidateDest)) {
+          score += 10;
+          console.log(`   ✅ INTERNAL_LINK_REGION: article_dest=${articleDestination} link_dest=${candidateDestination} (même région SEA) score_bonus=+10`);
+        }
+        // Pénalité pour destination hors région (-10 points)
         else if (normalizedCandidateDest && normalizedArticleDest !== normalizedCandidateDest) {
           score -= 10;
           console.log(`   ⚠️ INTERNAL_LINK_MISMATCH: article_dest=${articleDestination} link_dest=${candidateDestination} (${normalizedCandidateDest}≠${normalizedArticleDest}) score_penalty=-10`);

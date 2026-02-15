@@ -949,7 +949,11 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
         // Smart destination (passé depuis pipeline-runner via extractMainDestination)
         main_destination: input.main_destination || null,
         original_destination: input.original_destination || null,
-        pivot_reason: input.pivot_reason || null
+        pivot_reason: input.pivot_reason || null,
+        // Titre Reddit original (pour détection régionale)
+        reddit_title: input.title || '',
+        // Mode éditorial NEWS / EVERGREEN (conditionne le prompt)
+        editorial_mode: input.editorial_mode || 'evergreen'
       };
       const finalContent = await this.generateFinalArticle(extractionResult, analysis, extracted, pattern, story, options);
       
@@ -1172,6 +1176,8 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
     const mainDestination = options.main_destination || null;
     const originalDestination = options.original_destination || null;
     const pivotReason = options.pivot_reason || null;
+    const editorialMode = options.editorial_mode || 'evergreen';
+    console.log(`📰 EDITORIAL MODE pour génération: ${editorialMode.toUpperCase()}`);
     // Construire la section marketing d'affiliation pour les témoignages
     const isTemoignage = analysis.type_contenu && analysis.type_contenu.startsWith('TEMOIGNAGE_');
     const marketingSection = isTemoignage ? `
@@ -1269,6 +1275,190 @@ ${anglesList.map(t => `- ${String(t).trim()}`).join('\n')}
 Tu DOIS proposer un titre et un angle éditorial UNIQUES : ni même formulation, ni même angle (ex. si "budget 12 mois Thaïlande" existe, propose un autre angle pour ce témoignage).
 ` : '';
 
+    // ═══════════════════════════════════════════════════════════════════════
+    // BLOC ÉDITORIAL CONDITIONNEL : NEWS vs EVERGREEN
+    // ═══════════════════════════════════════════════════════════════════════
+    let editorialBlock;
+
+    if (editorialMode === 'news') {
+      // ─── MODE NEWS / ACTU ─────────────────────────────────────────
+      editorialBlock = `🎯 TON ET VOIX (MODE NEWS / ACTU) :
+- ${toneGuidance}
+- ${emotionalGuidance}
+- Thème principal: ${pattern.theme_primary || 'non spécifié'}
+- Ton direct, factuel, orienté impact immédiat. Tutoiement obligatoire.
+- ZÉRO amplification : ne dramatise pas, ne projette pas, ne suppose pas. Restitue les faits tels qu'ils sont.
+- Distingue explicitement ce qui est CERTAIN (fait vérifié, citation directe) de ce qui est INCERTAIN (hypothèse, rumeur, non confirmé).
+
+📰 CADRE ÉDITORIAL NEWS — Structure obligatoire :
+1. HOOK IMMERSIF + IMMÉDIAT : micro-scène factuelle, pas de mise en contexte longue. Plonge le lecteur dans le fait principal.
+2. ANNONCE DE L'INFO RÉCENTE : le changement, la surprise, le nouveau fait. Factuel, sourcé.
+3. IMPACT PRATIQUE MAINTENANT : "ce que ça change pour toi concrètement" — en 2-3 paragraphes max.
+4. PREUVE SOCIALE COURTE : 1-2 citations inline « ... » depuis les données extraites. Pas plus.
+5. SOLUTION IMMÉDIATE + RECOMMANDATION CONCRÈTE : une action claire à faire maintenant.
+6. CTA LOGIQUE (1 SEUL) : lié directement à la solution exposée. Si aucun CTA n'est pertinent, ne pas en forcer.
+7. À RETENIR : 2-3 bullets maximum, les takeaways clés.
+
+⚠️ CONTRAINTES NEWS STRICTES :
+- Format COURT : 600-900 mots maximum. Pas de guide exhaustif, pas de comparatifs longs.
+- 1 CTA AFFILIÉ MAXIMUM : uniquement s'il résout le problème immédiat exposé dans l'actu. Sinon 0.
+- Pas de sections "limites et biais", "erreurs fréquentes", "FAQ", "checklist longue". Ce n'est PAS un guide.
+- Pas d'arc narratif long. Structure linéaire : fait → impact → solution → action.
+- Les H2 doivent être factuels et spécifiques au fait traité (pas de H2 narratifs longs).
+
+${marketingSection}
+
+FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <strong>. LONGUEUR: 600-900 mots. Format court, décision rapide.
+
+🚨 EXPLOITATION DES DONNÉES EXTRAITES: INTÈGRE les détails pertinents (faits, dates, chiffres). UTILISE 90% minimum des données fournies. Pas d'invention.
+
+⚠️ STRUCTURE JSON (MODE NEWS) :
+{
+  "article": {
+    "titre": "...",
+    "developpement": "...",  // Corps de l'article en HTML. Commence par 1-2 paragraphes <p> (hook + annonce fait). Puis H2 factuels : impact, solution, action. COURT. EN FRANÇAIS.
+    "a_retenir": "...",  // 2-3 bullets HTML (<ul><li>) : les takeaways clés. Sans H2 (le système l'ajoute).
+    "signature": "...",  // CTA soft de fin (1 seul, contextuel)
+    "citations": [...],  // max 3
+    "opportunites_liens_internes": [...]
+  }
+}
+
+⚠️ RAPPELS NEWS : Ton factuel. Pas d'invention. Pas de dramatisation. Tout en FRANÇAIS. 1 CTA max. Court.
+
+Réponds UNIQUEMENT en JSON avec cette structure.`;
+    } else {
+      // ─── MODE EVERGREEN / STRATÉGIE ───────────────────────────────
+      editorialBlock = `🎯 TON ET VOIX (MODE EVERGREEN / STRATÉGIE) :
+- Tutoiement obligatoire : s'adresser au lecteur avec "tu" (pas "vous"). Ton direct, éditorial, ni cliché ni fantasme.
+- ${toneGuidance}
+- ${emotionalGuidance}
+- Thème principal: ${pattern.theme_primary || 'non spécifié'}
+- Titre : privilégier [Sujet] : la vérité (ni cliché, ni fantasme) ou [Révélation] + [Intent SEO]. ❌ INTERDIT en titre : "budget", "sécurité", "erreurs à éviter", "guide complet" seuls — ces titres sont réutilisables partout.
+- Chaque section doit répondre à une vraie question ou tension du lecteur ; pas de remplissage générique.
+
+📖 OUVERTURE IMMERSIVE — HOOK CINÉMATIQUE (premier paragraphe, OBLIGATOIRE) :
+- Structure : micro-scène sensorielle + micro-tension + enjeu budget/temps
+- Le hook plonge le lecteur dans une SITUATION CONCRÈTE tirée du témoignage, sans mentionner Reddit.
+- ❌ INTERDIT : "Te voilà devant l'écran...", commencer par une question rhétorique sans scène.
+- Exemples calibrés :
+  * Budget : "Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil..."
+  * Visa : "Tu atterris à Bangkok avec un visa de 30 jours et une liste qui en demanderait 90..."
+  * Santé : "Il est 2h du matin à Bali quand ton estomac décide que la soirée est terminée..."
+
+📊 CONTEXTE = CADRE GLOBAL + BENCHMARKS :
+- Après l'ouverture, poser le cadre avec des benchmarks concrets (coût/jour, coût/mois, durées).
+- Titres H2 narratifs : ex. <h2>Combien coûte vraiment un long voyage en Asie ?</h2>
+
+📌 SECTION "UNE VRAIE HISTOIRE" (témoignage comme preuve) :
+- Citation courte puis interprétation concrète, puis lien avec problématique pratique.
+- OBLIGATOIRE : minimum 3 phrases développées (qui, quoi, enjeu) avant toute analyse.
+
+📌 SECTIONS PRATIQUES ET PEURS :
+- Style de voyage : H2 type "Quel style de voyage permet de durer longtemps avec [budget] ?"
+- Peurs invisibles : "Les peurs invisibles qui stoppent les voyages longs" (si pertinent dans le témoignage).
+
+📌 RÉALITÉ VS FANTASME ET AFFILIATION :
+- "Réalité vs fantasme : 3 vérités que personne ne te dira" : 3 points vérifiables. ❌ Jamais de méta sur l'affiliation.
+
+📌 VERDICT / CE QU'IL FAUT RETENIR :
+- Ton réaliste, pas vendeur. Minimum 2 paragraphes substantiels.
+- ❌ INTERDIT : Verdict générique type "Comparez les prix et réservez" seul.
+
+📐 STRUCTURE ÉDITORIALE (pilotée par le récit) :
+
+⚠️ Un seul bloc "développement" (HTML libre). L'ordre des H2/H3 et le choix des titres sont LIBRES, pilotés par le récit.
+
+0. QUICK GUIDE (OPTIONNEL)
+   - Si présent, intégrer dans le récit narratif plutôt qu'en boîte isolée.
+
+1. DÉVELOPPEMENT (OBLIGATOIRE - UN SEUL CHAMP "developpement")
+   - LONGUEUR MINIMUM OBLIGATOIRE: 2000 mots. Articles < 1500 mots = REJETÉ.
+   - Contenu en HTML libre (<h2>, <h3>, <p>, <ul><li>). Arc narratif (situation → surprise → impact → options → choix → plan d'action).
+   - OBLIGATOIRE : Hook cinématique, 2-5 citations inline « ... », témoignage comme preuve, angles SERP, 3 CTA narratifs, affiliation dans le flux.
+   - OPTIONNEL (si le story le justifie) : peurs invisibles, réalité vs fantasme, limites/biais, erreurs fréquentes, leçons auteur.
+
+2. RECOMMANDATIONS (OBLIGATOIRE - champ séparé)
+   - <h2>Nos recommandations : Par où commencer ?</h2> + 3 options avec CTAs.
+
+3. CE QU'IL FAUT RETENIR + SIGNATURE (champs séparés)
+
+📝 INTERDICTION STRICTE — NE JAMAIS GÉNÉRER DE <blockquote> :
+- ❌ INTERDIT : <blockquote>, <cite>, <q>. Le système les ajoutera en post-traitement.
+- Citations courtes UNIQUEMENT entre guillemets français inline : « ... »
+- Attribution : « ... » — ${extracted.author || 'auteur Reddit'}
+- OBLIGATOIRE : 2-5 citations inline depuis story.evidence.source_snippets
+
+⚠️ RÈGLE ABSOLUE — H2 SPÉCIFIQUES (blacklist) :
+- H2 "nus" INTERDITS : "Contexte", "Événement central", "Conseils pratiques", "En résumé", "Conclusion", etc.
+- H2 qualifiés AUTORISÉS : spécifiques à cet article (ex. "Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois").
+
+🔄 ARC NARRATIF OBLIGATOIRE :
+1. SITUATION (hook + tension) → 2. SURPRISE/RÉVÉLATION → 3. IMPACT RÉEL → 4. OPTIONS CONCRÈTES → 5. CHOIX RECOMMANDÉ → 6. PLAN D'ACTION
+
+📝 CITATIONS INLINE (2-5 OBLIGATOIRES) : intégrées contextualisées dans le flux narratif.
+
+📊 DONNÉES TANGIBLES : budget, chronologie, chiffres intégrés naturellement. Mots-clés SEO : "budget réel", "chronologie", "contraintes".
+
+⚡ RISQUES, ERREURS ET CONSEILS ACTIONNABLES : action préventive concrète, ancres d'affiliation naturelles.
+
+🔍 ANALYSE CRITIQUE : coûts cachés, biais, limites. Distinction faits / ressentis / interprétations.
+
+📐 DENSITÉ NARRATIVE : chaque paragraphe fait avancer l'histoire, une décision, ou réduit un risque.
+
+📊 ÉLÉMENTS STRUCTURELS EVERGREEN (obligatoires si le sujet s'y prête) :
+- TABLEAU COMPARATIF : obligatoire si l'article compare 2+ options, destinations ou produits. Format HTML <table> avec <thead> et <tbody>. Ex: comparatif budget, avantages/inconvénients, destinations côte à côte.
+- FAQ SEO : 3-5 questions/réponses en fin de développement si le sujet a une intention informationnelle. Format : <h3>Question ?</h3><p>Réponse.</p>
+- CHECKLIST : obligatoire si l'article est un guide pratique ou un plan d'action. Format <ul><li> avec items actionnables.
+
+🎯 3 CTA NARRATIFS (positionnés dans l'arc) :
+- CTA "préventif" TÔT, CTA "solution" AU PIC, CTA "setup long terme" APRÈS.
+
+🚫 INTERDITS : H2 génériques, listes >5 items sans hiérarchie, ton scolaire, morale/prudence inutile, emphase artificielle.
+
+STYLE : transitions fluides, questions rhétoriques, variation du rythme, tutoiement, ton expert accessible.
+
+🔍 PROFONDEUR ANALYTIQUE : coûts réels, temporalité, contraintes, questions utilisateur.
+
+✅ VALIDATION ANTI-SPAM SERP : chaque section apporte une info absente chez 50%+ des concurrents.
+
+🔗 OPPORTUNITÉS DE LIENS INTERNES :
+- 5-10 passages avec lien interne naturel. Placement stratégique (30% premiers de l'article, sous H2, avant recommandations).
+- Densité : 5-10 liens pour 2000-3000 mots. Ancres précises (2-5 mots).
+
+${marketingSection}
+
+FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <strong>.
+LONGUEUR OBLIGATOIRE: MINIMUM 2000 mots, IDÉAL 2500-3000 mots. Un article EVERGREEN de moins de 1500 mots sera AUTOMATIQUEMENT REJETÉ. Pas de minimum par section, mais le total DOIT dépasser 2000 mots.
+
+🚨 EXPLOITATION DES DONNÉES EXTRAITES: INTÈGRE dans "developpement" les détails temporels, lieux, chiffres, entités extraites. UTILISE 90% minimum des données fournies. Pas d'invention.
+
+⚠️ STRUCTURE JSON (MODE EVERGREEN) :
+{
+  "article": {
+    "titre": "...",
+    "quick_guide": "...",  // OPTIONNEL - Quick Guide (destination, durée, budget, type, difficulté)
+    "developpement": "...",  // OBLIGATOIRE - MINIMUM 2000 mots. Tout le corps en HTML libre. Commence TOUJOURS par 1-2 paragraphes <p> d'intro (hook) AVANT le premier <h2>. EN FRANÇAIS.
+    "recommandations": "...",  // OBLIGATOIRE - <h2>Nos recommandations</h2> + 3 options + CTAs
+    "ce_qu_il_faut_retenir": "...",  // OBLIGATOIRE - Verdict réaliste (tutoiement), 2 paragraphes.
+    "signature": "...",  // CTA soft de fin
+    "citations": [...],  // max 5
+    "opportunites_liens_internes": [...],
+    "articles_connexes": [...]
+  }
+}
+
+⚠️ ANGLES SERP : Intégrer "chronologie"/"timeline", "budget réel"/"coûts réels", "contraintes"/"difficultés" dans le développement.
+
+⚠️ TRADUCTION : Tout le JSON en FRANÇAIS. Si tu génères de l'anglais, l'article sera REJETÉ.
+
+⚠️ RÈGLES ABSOLUES : Auteur ≠ commentaires. Toujours traçable au story.evidence. Pas d'invention. Sections absentes = null ou omises.
+
+⚠️ NE PAS RENVOYER les champs contexte, evenement_central, moment_critique, resolution. Tout dans "developpement" (HTML libre).
+
+Réponds UNIQUEMENT en JSON avec cette structure.`;
+    }
+
     const systemMessage = `Tu es un expert FlashVoyages. Rédige un article engageant basé sur le témoignage Reddit.
 
 🚨 TOP 3 RÈGLES CRITIQUES (VÉRIFIER AVANT DE RÉPONDRE) :
@@ -1287,6 +1477,7 @@ Tu DOIS proposer un titre et un angle éditorial UNIQUES : ni même formulation,
 - Intent explicite : budget / sécurité / long séjour / erreurs à éviter / guide pratique
 - ❌ INTERDIT : Ajouter des dates dans les titres (pas de "(2024)", "(2026)", etc.)
 - ⚠️ JAMAIS D'EMOJI DANS LE TITRE - Les emojis sont INTERDITS dans les titres H1 et H2
+- ❌ ANTI-DÉCONTEXTUALISATION TITRE : si tu mets un chiffre dans le titre, il DOIT correspondre à son contexte d'origine dans la source. Ex: si la source dit "$50/month for coworking", le titre NE PEUT PAS dire "vivre avec 50 USD" — c'est une déformation du fait.
 - Exemples BONS :
   ✅ "Comment voyager 12 mois en Asie avec 25 000 $ sans rentrer fauché"
   ✅ "Voyager seule en Asie : budget, sécurité et erreurs à éviter (guide complet)"
@@ -1349,6 +1540,7 @@ ${correctionBlock}
 
 🚨 GARDE-FOUS EXPLICITES (SOURCE OF TRUTH) :
 - ❌ Pas d'invention : aucun lieu, chiffre, durée ou risque inventé ; tout doit être sourcé ou issu des données extraites
+- ❌ ANTI-DÉCONTEXTUALISATION (CRITIQUE) : un chiffre de la source ne peut JAMAIS être utilisé dans un contexte différent de l'original. Exemple INTERDIT : si la source dit "$50-100/month for coworking spaces", tu NE PEUX PAS écrire "vivre avec 50 USD par mois" ou utiliser 50 USD dans le titre comme budget de vie. Le chiffre 50 USD se rapporte au COWORKING, pas au coût de la vie. Chaque chiffre garde son contexte d'origine.
 - ❌ Pas d'angles plats : toute section doit répondre à une vraie question utilisateur
 - ✅ SEO before affiliate : résoudre l'intention du lecteur avant de proposer un partenaire
 - Si une section est absente dans le JSON story, ne la crée pas
@@ -1356,249 +1548,7 @@ ${correctionBlock}
 - Priorité absolue à la fidélité de la source
 - Toutes les sections doivent être traçables au story.evidence
 
-🎯 TON ET VOIX (VISION ÉDITORIALE) :
-- Tutoiement obligatoire : s'adresser au lecteur avec "tu" (pas "vous"). Ton direct, éditorial, ni cliché ni fantasme.
-- Titre : privilégier [Sujet] : la vérité (ni cliché, ni fantasme) ou [Révélation] + [Intent SEO]. Ex. "Voyager en Asie avec 25 000 $ : la vérité (ni cliché, ni fantasme)". ❌ INTERDIT en titre : "budget", "sécurité", "erreurs à éviter", "guide complet" seuls ou en combo générique — ces titres sont réutilisables partout et nuisent à l'angle FlashVoyage.
-- Chaque section doit répondre à une vraie question ou tension du lecteur ; pas de remplissage générique.
-
-📖 OUVERTURE IMMERSIVE — HOOK CINÉMATIQUE (premier paragraphe du développement, OBLIGATOIRE) :
-- Structure : micro-scène sensorielle + micro-tension + enjeu budget/temps
-- Le hook plonge le lecteur dans une SITUATION CONCRÈTE tirée du témoignage, sans jamais mentionner Reddit, la source ou l'auteur. La preuve arrive ensuite.
-- Utilise les détails réels du témoignage (lieu, montant, situation) pour ancrer la scène.
-- ❌ INTERDIT : "Te voilà devant l'écran...", "Source :", "Résumé :", "Avant de regarder un témoignage...", analyser Reddit avant d'immerger le lecteur.
-- ❌ INTERDIT : Commencer par une question rhétorique sans scène ("Savais-tu que...?").
-- Exemples de hooks calibrés (à adapter au témoignage) :
-  * Budget/frais : "Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil : marcher jusqu'au distributeur, appuyer sur quelques touches… puis voir une commission de 220 bahts apparaître sur l'écran."
-  * Visa/admin : "Tu atterris à Bangkok avec un visa touristique de 30 jours et une liste de choses à faire qui en demanderait 90. Le compte à rebours a déjà commencé."
-  * Sécurité/santé : "Il est 2h du matin à Bali quand ton estomac décide que la soirée est terminée. Tu cherches une pharmacie ouverte, mais ton téléphone n'a plus de connexion."
-  * Logement/coût : "Le propriétaire te demande 3 mois d'avance. Tu fais le calcul mental — et ton budget mensuel vient de fondre de moitié avant même d'avoir posé ta valise."
-- Après le hook : enchaîner sur le contexte (pourquoi ce problème compte, quel est l'enjeu réel pour le lecteur).
-
-📊 CONTEXTE = CADRE GLOBAL + BENCHMARKS :
-- Après l'ouverture immersive, poser le cadre avec des benchmarks concrets : coût/jour (ex. ≈ 35 $), coût/mois (ex. environ 1 000 $), durées 6–9 mois si pertinent. Format listes à puces (<ul><li>...</li></ul>).
-- Dans le champ contexte, tu peux et dois structurer avec des H2 ou H3 narratifs (questions) : ex. <h2>Combien coûte vraiment un long voyage en Asie ?</h2>, <h2>Pourquoi [destination/thème] reste l'option la plus réaliste pour durer longtemps</h2>. Le système conserve ces sous-titres — ne les supprime pas.
-- Titres H2 : privilégier des titres qui reflètent l'angle de l'article (ex. voyage père/fille, 2 semaines, destination, budget réel) ; éviter les formulations réutilisables partout comme "Les défis pratiques de voyager en Asie", "Conseils pratiques pour un voyage réussi", "Ce qu'il faut retenir" seuls — les inclure dans une formulation plus spécifique si besoin (ex. "Ce qui change pour un voyage père/fille de 2 semaines").
-
-📌 SECTION "UNE VRAIE HISTOIRE" (témoignage comme preuve) :
-- Après le cadre global, présenter le témoignage Reddit comme preuve : citation courte (ou blockquote géré par le système), puis interprétation concrète (ex. "Cette phrase n'est pas un fantasme Instagram. C'est la peur qu'éprouve toute personne sur le point de choisir entre rester dans une vie connue ou ouvrir la porte à l'inconnu."), puis lien avec une problématique pratique (budget, durée, peurs). Tu peux placer cette sous-section en début du champ evenement_central avec un H2 dans le texte du type "Une vraie histoire : quand [X] deviennent une décision de vie".
-- OBLIGATOIRE : la sous-section "Une vraie histoire" doit contenir au minimum 3 phrases complètes construites à partir du témoignage (qui est concerné, quoi s'est passé ou est en jeu, enjeu émotionnel ou pratique), sans enchaîner directement sur des listes ou des conseils génériques. Développer l'histoire avant toute analyse. Minimum 200 caractères de texte narratif après le H2. ❌ INTERDIT : enchaîner directement sur des listes après la première phrase. ❌ INTERDIT : sections de moins de 200 caractères.
-
-📌 SECTIONS PRATIQUES ET PEURS :
-- Style de voyage : encourager un H2 ou sous-partie du type "Quel style de voyage permet de durer longtemps avec [budget] ?" avec sous-parties Logement, Connexion, Assurance et conseils courts (💡) intégrant les ancres d'affiliation (eSIM, assurance, vols flexibles) dans le flux narratif (champ recommandations ou erreurs_frequentes).
-- Peurs invisibles : une section ou sous-partie "Les peurs invisibles qui stoppent les voyages longs" (peur de rentrer fauché, syndrome "je n'en fais pas assez", peur de tomber malade), basée sur le témoignage. À intégrer dans ce_que_les_autres_ne_disent_pas ou limites_biais.
-
-📌 RÉALITÉ VS FANTASME ET AFFILIATION :
-- Section ou sous-partie "Réalité vs fantasme : 3 vérités que personne ne te dira" : 3 points numérotés, vérifiables et non inventés, puis une phrase de transition qui amène naturellement vers les outils pratiques (assurance, connectivité, vols) en s'ancrant dans le besoin du lecteur. ❌ INTERDIT : Ne JAMAIS écrire de phrases méta sur l'affiliation, les "produits d'affiliation" ou les "outils bien choisis" — le lecteur ne doit jamais percevoir la logique commerciale. À placer dans ce_que_les_autres_ne_disent_pas ou avant/après les recommandations.
-
-📌 VERDICT / CE QU'IL FAUT RETENIR :
-- Champ ce_qu_il_faut_retenir : ton réaliste, pas vendeur. OBLIGATOIRE : minimum 2 paragraphes substantiels (pas juste "Comparez les prix et réservez").
-  * Paragraphe 1 : Verdict concret type "[X] € ne te promettent pas une épopée sans fin. Mais ils te donnent la capacité de durer plus longtemps — de vivre, de réfléchir, et peut-être de te transformer." 💰 Si montant en USD, convertir en EUR.
-  * Paragraphe 2 : Opportunité réaliste type "Ce n'est pas un budget magique. C'est une opportunité réaliste si tu l'utilises avec discipline, sens du détail, et préparation."
-  * Paragraphe 3 (optionnel) : Rappel court des outils déjà cités (eSIM, assurance, vols flexibles) et note d'action.
-- Tu peux utiliser le H2 "Verdict réaliste" ou "Ce qu'il faut retenir". Puis signature (CTA soft).
-- ❌ INTERDIT : Verdict vide ou générique type "Comparez les prix et réservez" seul.
-
-📐 STRUCTURE ÉDITORIALE (Option B — pilotée par le récit) :
-
-⚠️ IMPORTANT : Un seul bloc "développement" (HTML libre). L'ordre des H2/H3 et le choix des titres sont LIBRES, pilotés par le récit. Pas d'ordre strict imposé.
-
-0. QUICK GUIDE (OPTIONNEL - seulement si vraiment nécessaire pour le lecteur)
-   - Si présent, intégrer les informations dans le récit narratif plutôt qu'en boîte isolée
-   - Exemple d'intégration narrative : "Un voyage de 6 jours au Vietnam avec un budget de ~1840 € (2000 USD) pour deux personnes..."
-   - Format HTML si vraiment nécessaire : <div class="quick-guide"><h3>Points clés de ce témoignage</h3><ul><li><strong>Destination</strong> : [destination EXACTE]</li><li><strong>Durée</strong> : [durée]</li><li><strong>Budget</strong> : [si mentionné, convertir USD→EUR, sinon "Non spécifié"]</li><li><strong>Type d'expérience</strong> : [nomade digital / backpacking / etc.]</li><li><strong>Difficulté</strong> : [Facile / Moyenne / Difficile]</li></ul></div>
-   - ❌ INTERDIT : Boîte isolée avec blockquote qui casse la fluidité narrative
-   - ❌ INTERDIT : Répéter le titre ou la source en début d'article
-   - ❌ NE JAMAIS générer le H2 "Ce que dit le témoignage". Utilise "Ce que la communauté apporte" si besoin.
-
-1. DÉVELOPPEMENT (OBLIGATOIRE - UN SEUL CHAMP "developpement")
-   - Contenu : tout le corps de l'article en HTML libre (<h2>, <h3>, <p>, <ul><li>). L'arc narratif (situation → surprise → impact → options → choix → plan d'action) guide l'ordre. Chaque H2 doit être spécifique à cet article (voir blacklist H2).
-   - OBLIGATOIRE dans le développement :
-     * Hook cinématique en premier : micro-scène sensorielle + tension + enjeu. PAS de mention Reddit. 💰 Si montant en USD, convertir en EUR.
-     * 2-5 citations inline « ... » depuis story.evidence.source_snippets, intégrées dans le flux narratif avec contexte.
-     * Témoignage comme preuve APRÈS le hook : développer en 2–3 phrases (qui, quoi, enjeu) avant d'enchaîner sur l'analyse.
-     * Angles SERP à intégrer naturellement avec les mots-clés EXACTS : "chronologie" ou "timeline" ou "étapes du voyage" ; "budget réel" ou "coûts réels" ou "dépenses réelles" ; "contraintes" ou "difficultés" ou "obstacles" ou "problèmes pratiques".
-     * 3 CTA narratifs positionnés dans l'arc (préventif tôt, solution au pic, setup long terme après).
-     * Affiliation dans le flux narratif (eSIM, assurance, vols) — ancres naturelles, pas de paragraphes pub.
-   - OPTIONNEL (si le story le justifie, sinon omettre) : 
-     * ❌ INTERDIT ABSOLU : Ne JAMAIS générer la section "Ce que la communauté apporte" (résidu de l'ancienne structure). Les insights de la communauté doivent être intégrés dans le développement narratif, pas dans une section séparée.
-     * Section "Les peurs invisibles qui stoppent les voyages longs" : Basée sur le témoignage (peur de rentrer fauché, syndrome "je n'en fais pas assez", peur de tomber malade). Format narratif avec interprétation psychologique.
-     * Section "Réalité vs fantasme : 3 vérités que personne ne te dira" : 3 points numérotés vérifiables, puis phrase sur l'affiliation contextuelle.
-     * Autres sections optionnelles : "Limites et biais de ce témoignage" ; "Ce que les témoignages Reddit ne disent pas explicitement" ; erreurs à éviter ; leçons auteur. Titres H2 libres (narratifs, questions).
-   - ❌ Pas d'invention : tout sourcé ou issu des données extraites. Auteur ≠ commentaires (visuellement clair).
-
-2. RECOMMANDATIONS (OBLIGATOIRE - champ séparé pour widgets)
-   - Format: <h2>Nos recommandations : Par où commencer ?</h2> (SANS emoji) puis 3 options (#1, #2, #3) avec CTAs. Destinations 100% cohérentes avec le témoignage. Liens : logement → booking.com, vols → kiwi.com, eSIM → airalo.com.
-
-3. CE QU'IL FAUT RETENIR + SIGNATURE (champs séparés)
-   - Verdict réaliste (tutoiement), 2 paragraphes courts. Puis CTA soft.
-
-📝 INTERDICTION STRICTE - NE JAMAIS GÉNÉRER DE <blockquote> :
-- ❌ INTERDIT TOTAL : <blockquote>, <cite>, <q> ou tout élément similaire
-- ❌ MÊME PAS pour des citations Reddit - le système (editorial-enhancer) les ajoutera automatiquement en post-traitement
-- Si tu génères un <blockquote>, l'article sera REJETÉ
-- Citations courtes (≤ 2 lignes) UNIQUEMENT entre guillemets français inline : « ... »
-- Attribution : « ... » — ${extracted.author || 'auteur Reddit'}
-- OBLIGATOIRE : intègre 2-5 citations inline « ... » depuis story.evidence.source_snippets, chacune contextualisée dans le flux narratif
-
-🎯 TON ET STYLE :
-- ${toneGuidance}
-- ${emotionalGuidance}
-- Thème principal: ${pattern.theme_primary || 'non spécifié'}
-- Reformulation neutre, pas de réécriture libre
-- Réorganisation stricte à partir du squelette story
-
-🌟 DIRECTIVES ÉDITORIALES (à intégrer dans le champ unique "developpement", titres H2 LIBRES et narratifs) :
-
-⚠️ RÈGLE ABSOLUE — H2 SPÉCIFIQUES (blacklist avec whitelist conditionnelle) :
-- Chaque H2 doit être UNIQUE et NARRATIF, adapté à l'angle spécifique de l'article.
-- PRINCIPE : un H2 "nu" (= réutilisable sur n'importe quel article) est GÉNÉRIQUE et INTERDIT. Un H2 "qualifié" (= ne fonctionne que pour cet article) est SPÉCIFIQUE et AUTORISÉ.
-- ❌ H2 NUS INTERDITS : "Contexte", "Événement central", "Moment critique", "Résolution", "Chronologie de l'expérience", "Risques et pièges réels", "Ce que la communauté apporte", "Conseils pratiques", "En résumé", "Stratégies", "Ce qu'il faut savoir", "Points clés", "Notre avis", "Analyse", "Solutions", "Conclusion".
-- ✅ H2 QUALIFIÉS AUTORISÉS : "Conseils pratiques pour éviter les frais ATM en Thaïlande", "Stratégies pour durer 6 mois à Bali avec 1500 €/mois", "Ce qu'il faut savoir avant d'ouvrir un compte bancaire au Vietnam".
-- ✅ MEILLEUR : H2 qui reflètent l'histoire (ex. "Quand un vol annulé transforme ton budget en puzzle", "Le vrai coût d'un mois à Osaka sans plan B", "Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois").
-
-🔄 ARC NARRATIF OBLIGATOIRE (progression du développement) :
-L'article doit suivre cette progression naturelle — PAS un ordre "analyse froide" (contexte → témoignage → conseils) :
-   1. SITUATION : hook cinématique (micro-scène + tension + enjeu) — SANS mentionner Reddit
-   2. SURPRISE / RÉVÉLATION : le fait inattendu, le chiffre choquant, le détail que personne n'anticipe
-   3. IMPACT RÉEL : "ce que ça change pour toi" — conséquences concrètes sur budget/temps/stress
-   4. OPTIONS CONCRÈTES : les solutions qui existent, avec avantages/inconvénients
-   5. CHOIX RECOMMANDÉ : l'arbitrage clair, la décision la plus logique selon le profil lecteur
-   6. PLAN D'ACTION : les étapes à suivre, checklist si pertinent
-
-📝 CITATIONS INLINE (2-5 OBLIGATOIRES — workflow) :
-   - Intègre 2 à 5 extraits courts depuis story.evidence.source_snippets
-   - Format UNIQUEMENT entre guillemets français inline : « ... »
-   - ❌ NE GÉNÈRE PAS de <blockquote> (le système les ajoute en post-traitement)
-   - Chaque citation doit être CONTEXTUALISÉE dans le flux narratif (pas décorative) :
-     * ✅ BON : "Un voyageur résume le problème en une phrase : « Nearly $8 to use an ATM — that's insane »"
-     * ❌ MAUVAIS : citation posée seule sans explication ni lien avec le propos
-   - Mentionner la source UNE SEULE FOIS, puis variantes : "Ce témoignage", "Son parcours", "Cette expérience"
-   - ❌ ÉVITER les pseudos Reddit dans le texte. Utiliser : "Un voyageur de la communauté"
-
-📊 DONNÉES TANGIBLES (budget, chronologie, chiffres) :
-   - Intégrer naturellement dans le récit (pas de sections séparées avec titres fixes)
-   - Mots-clés SEO à placer : "budget réel", "coûts réels", "chronologie", "étapes du voyage", "contraintes"
-   - Si données disponibles dans extracted → les utiliser. Sinon → estimer de façon réaliste pour la destination
-   - Tableaux et listes si utile (budget par poste, timeline du voyage)
-
-⚡ RISQUES, ERREURS ET CONSEILS ACTIONNABLES :
-   - Transformer chaque erreur/risque du témoignage en action préventive concrète
-   - Indicateurs tangibles : chiffres, durées, exemples précis. Pas de généralités
-   - Ancres d'affiliation naturelles dans le flux :
-     * Connectivité/réseau → "eSIM multi-pays fiable"
-     * Santé/accident → "assurance voyage longue durée"
-     * Vols/mobilité → "vols modifiables et flexibles"
-
-🔍 ANALYSE CRITIQUE ET PROFONDEUR :
-   - Ce que le témoignage ne dit pas : coûts cachés, biais, limites, angles sous-traités
-   - Distinction faits / ressentis / interprétations (renforce E-E-A-T)
-   - Analyse émotionnelle et comportementale intégrées dans le récit (pas de labels isolés)
-
-📐 DENSITÉ NARRATIVE (OBLIGATOIRE) :
-   - Chaque paragraphe doit soit (a) faire avancer l'histoire, soit (b) faire avancer une décision, soit (c) réduire un risque. Si un paragraphe ne remplit aucun de ces rôles → le supprimer ou le fusionner.
-   - Remplacer les phrases plates par des patterns à haute valeur :
-     * "ce que ça change pour toi" (impact concret)
-     * "le piège classique" (erreur fréquente à éviter)
-     * "la règle simple" (heuristique actionnable)
-     * "l'arbitrage" (choix entre deux options avec critères)
-   - Intégrer des micro-checklists, décisions "si/alors", erreurs fréquentes, garde-fous
-   - Exemple de densité : au lieu de "Il est important de bien choisir sa carte bancaire", écrire "Le piège classique : retirer 5 fois par mois sans carte remboursante = 40 $ perdus. La règle simple : une carte qui rembourse les frais ATM transforme ce coût en zéro."
-
-🎯 3 CTA NARRATIFS (positionnés dans l'arc) :
-   - CTA "préventif" TÔT : placé dans la section où le problème est posé, avant que le lecteur souffre. Justifié par "pour éviter ce problème, voici l'outil".
-   - CTA "solution" AU PIC : placé après le diagnostic, quand la frustration est maximale. Justifié par "voici comment résoudre ce problème maintenant".
-   - CTA "setup long terme" APRÈS LA SOLUTION : placé dans le plan d'action. Justifié par "pour ne plus jamais avoir ce problème".
-   - Chaque CTA est justifié par le contexte narratif — les widgets existants gèrent le rendu.
-
-🚫 INTERDITS EXPLICITES (ÉCRITURE) :
-   - ❌ Titres H2 génériques (nus) — voir blacklist ci-dessus
-   - ❌ Listes longues (>5 items) sans hiérarchie ni commentaire — chaque item doit apporter un éclairage
-   - ❌ Analyse froide type "voici ce que dit Reddit" ou "les utilisateurs rapportent que"
-   - ❌ Ton scolaire : "il est important de", "il faut savoir que", "il convient de noter"
-   - ❌ Morale / prudence inutile : "chaque voyage est unique", "il est toujours préférable de se renseigner"
-   - ❌ Labels isolés sans contenu ("<p>🧠 Ce que le voyageur a ressenti :</p>" suivi de rien)
-   - ❌ Emphase émotionnelle artificielle, formules marketing, généralisation abusive
-
-STYLE D'ÉCRITURE :
-- Transitions fluides entre sections, pas de ruptures artificielles
-- Questions rhétoriques spécifiques au contenu (2-3 par article)
-- Variation du rythme : phrases courtes percutantes + phrases longues explicatives
-- Chaque section se termine par un enseignement pratique ou une décision à prendre
-- Tutoiement, ton expert mais accessible, orienté décision
-- Ce site est spécialisé ASIE : ne mentionner que des destinations asiatiques
-
-🔍 PROFONDEUR ANALYTIQUE (angles sous-traités) :
-
-Traite systématiquement ces angles pour dépasser les concurrents :
-- **Coûts réels** : Breakdown détaillé, coûts cachés, variations saisonnières
-- **Temporalité** : Durées réelles vs annoncées, délais administratifs, timing optimal
-- **Contraintes** : Limitations pratiques, cas non couverts, prérequis non mentionnés
-- **Questions utilisateur** : Questions fréquentes non traitées dans les témoignages
-
-✅ VALIDATION ANTI-SPAM SERP :
-
-- Chaque section doit apporter une information absente chez ≥50% des concurrents
-- Pas de reformulation creuse ou de remplissage
-- Augmenter la profondeur, pas la longueur
-- Si une section n'apporte pas de valeur unique → ne pas la générer
-
-🔗 OPPORTUNITÉS DE LIENS INTERNES (stratégie de maillage) :
-
-- Identifie 5-10 passages dans le contenu où un lien interne serait naturel
-- Pour chaque opportunité, indique :
-  - Le passage (phrase ou paragraphe)
-  - Le type de page cible (guide pratique, comparaison, page pilier)
-  - Le thème/sujet (visa, assurance, eSIM, budget, sécurité, logement)
-  - L'ancre suggérée (2-5 mots avec mots-clés de la cible)
-- Placement stratégique (par priorité) :
-  1. Dans les 30% premiers de l'article (Google et lecteurs voient tôt)
-  2. Sous chaque H2/H3 quand un sous-thème correspond à une page existante
-  3. Juste avant "Nos recommandations" (liaison vers guides/réponses)
-  4. Dans "Articles connexes" (liste courte et utile)
-- Densité recommandée :
-  - Article 2000-3000 mots : 5-10 liens internes
-  - +1 lien interne par ~250-350 mots si le contenu le justifie
-  - Jamais "spam" : pas plus de 1 lien interne par paragraphe
-- Priorisation des cibles :
-  1. Pages clés (money/pilier) : assurance voyage, eSIM, visa, logement, budget, sécurité
-  2. Pages fraîches : contenu récemment publié (accélère discovery)
-  3. Pages contextuelles : même pays, même type de problème, même intention
-- Ancres précises (2-5 mots) :
-  - Décrivent le sujet de la page cible (mots-clés principaux de la cible)
-  - Éviter : "ici", "en savoir plus", "cet article", "lien"
-  - Varier sans changer le sens (pas de répétition exacte)
-- Note : Le LLM génère les opportunités, mais l'insertion réelle des liens se fait en post-traitement par le système qui vérifie l'existence des pages dans articles-database.json
-
-${marketingSection}
-
-FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <strong>. LONGUEUR GLOBALE: 2000-3000 mots (tout le corps). Pas de minimum par section.
-
-🚨 EXPLOITATION DES DONNÉES EXTRAITES: INTÈGRE dans "developpement" les détails temporels, lieux, chiffres, entités extraites. UTILISE 90% minimum des données fournies. Pas d'invention.
-
-⚠️ STRUCTURE JSON (Option B — un seul bloc "developpement") :
-{
-  "article": {
-    "titre": "...",
-    "quick_guide": "...",  // OPTIONNEL - Quick Guide (destination, durée, budget, type, difficulté) - format <div class="quick-guide">... Si absent, intégrer les infos dans le récit narratif
-    "developpement": "...",  // OBLIGATOIRE - Tout le corps de l'article en HTML libre (H2/H3/p/ul). Ordre et titres LIBRES. Contient : ouverture immersive, preuve Reddit, récit, angles SERP (chronologie, budget réel, contraintes), optionnellement limites/ce que les autres ne disent pas, affiliation dans le flux. TOUJOURS EN FRANÇAIS.
-    "recommandations": "...",  // OBLIGATOIRE - <h2>Nos recommandations : Par où commencer ?</h2> + 3 options #1/#2/#3 + CTAs
-    "ce_qu_il_faut_retenir": "...",  // OBLIGATOIRE - Verdict réaliste (tutoiement), 2 paragraphes. Sans H2 (le système l'ajoute).
-    "signature": "...",  // CTA soft de fin
-    "citations": [...],  // optionnel, max 5
-    "opportunites_liens_internes": [...],
-    "articles_connexes": [...]
-  }
-}
-
-⚠️ ANGLES SERP : Intégrer dans "developpement" avec les mots-clés EXACTS : "chronologie" ou "timeline" ou "étapes du voyage" ; "budget réel" ou "coûts réels" ou "dépenses réelles" ; "contraintes" ou "difficultés" ou "obstacles" ou "problèmes pratiques".
-
-⚠️ TRADUCTION : Tout le JSON en FRANÇAIS. Si tu génères de l'anglais, l'article sera REJETÉ. Titres H2 dans "developpement" en français uniquement.
-
-⚠️ RÈGLES ABSOLUES : Auteur ≠ commentaires. Toujours traçable au story.evidence. Pas d'invention. Sections absentes = null ou omises.
-
-⚠️ NE PAS RENVOYER les champs contexte, evenement_central, moment_critique, resolution. Tout le corps de l'article doit être dans "developpement" (HTML libre).
-
-Réponds UNIQUEMENT en JSON avec cette structure.`;
+${editorialBlock}`;
 
     // PHASE 4.2: User message basé sur story, pattern, extracted
     // PHASE 4.2: User message basé sur story, pattern, extracted
@@ -1628,13 +1578,27 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 
     // Construire la directive de destination principale
     let destinationDirective = '';
-    if (mainDestination) {
+    // Détecter si le post Reddit est multi-pays / régional
+    // Chercher le titre du post Reddit dans plusieurs sources possibles
+    const redditTitle = options.reddit_title || extracted.title || extracted.post?.title || story?.story?.title || extraction?.title || '';
+    const titleLowerForRegion = redditTitle.toLowerCase();
+    const isRegionalTopic = /southeast asia|south.?east asia|asie du sud|multiple countr|several countr/i.test(titleLowerForRegion) ||
+      (redditTitle.match(/\b(thailand|vietnam|indonesia|singapore|philippines|cambodia|malaysia|laos)\b/gi) || []).length >= 2;
+    console.log(`   🌏 REGIONAL_DETECTION: title="${redditTitle.substring(0,60)}" isRegional=${isRegionalTopic} mainDest=${mainDestination || 'null'}`);
+    
+    if (mainDestination && !isRegionalTopic) {
       destinationDirective = `\n🎯 DESTINATION PRINCIPALE (OBLIGATOIRE): ${mainDestination.charAt(0).toUpperCase() + mainDestination.slice(1)}
 L'article ENTIER doit parler de cette destination. Le titre, les H2, le contenu, les recommandations et les CTA doivent TOUS référencer cette destination. Les autres destinations ne peuvent être mentionnées que comme comparaisons secondaires ou alternatives brèves.`;
       if (pivotReason) {
         destinationDirective += `\n⚠️ PIVOT DE DESTINATION: Le post Reddit original mentionnait "${originalDestination}" mais la communauté a fourni beaucoup plus d'informations exploitables sur "${mainDestination}". ${pivotReason}. Adapte le titre et le contenu en conséquence pour ${mainDestination}.`;
       }
       destinationDirective += '\n';
+    } else if (isRegionalTopic) {
+      destinationDirective = `\n🌏 ARTICLE RÉGIONAL (MULTI-PAYS): Cet article couvre PLUSIEURS pays d'Asie du Sud-Est.
+- Le titre et la conclusion doivent mentionner "Asie du Sud-Est" (pas un seul pays).
+- Chaque H2 peut couvrir un pays différent (Thaïlande, Vietnam, Indonésie, Philippines, etc.) — c'est souhaité.
+- NE PAS forcer tous les H2 sur un seul pays. La diversité géographique est la valeur ajoutée de cet article.
+- Les recommandations doivent couvrir au moins 2-3 pays différents.\n`;
     }
 
     const userMessage = `TITRE: ${extracted.title || 'Témoignage Reddit'}
@@ -1837,27 +1801,51 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         // Option B : un seul bloc développement + recommandations + verdict + signature (sans fallbacks)
         console.log('   ✅ FORMAT: Option B détecté (developpement présent)');
         let devHtml = article.developpement.trim();
+        // Nettoyer les wrappers markdown ```html...``` que le LLM peut ajouter
+        devHtml = devHtml.replace(/^```(?:html)?\s*\n?/, '').replace(/\n?```\s*$/, '');
         const englishDetection = this.detectEnglishContent(devHtml);
         if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
           console.log('   🌐 Champ "développement" détecté en anglais: traduction...');
           devHtml = await this.translateToFrench(devHtml);
         }
         devHtml = await this.translateBlockquotesInText(devHtml);        sections.push(devHtml);
-        if (article.recommandations && article.recommandations.trim()) {
-          let recoText = article.recommandations.trim();
-          const engReco = this.detectEnglishContent(recoText);
-          if (engReco.isEnglish && engReco.ratio > 0.1) recoText = await this.translateToFrench(recoText);
-          sections.push(recoText);
+        // --- Sections conditionnelles selon le mode éditorial ---
+        if (editorialMode === 'news') {
+          // MODE NEWS : pas de recommandations obligatoires, "a_retenir" au lieu de "ce_qu_il_faut_retenir"
+          if (article.recommandations && article.recommandations.trim()) {
+            // Recommandations optionnelles en NEWS (si le LLM les a generees)
+            let recoText = article.recommandations.trim();
+            const engReco = this.detectEnglishContent(recoText);
+            if (engReco.isEnglish && engReco.ratio > 0.1) recoText = await this.translateToFrench(recoText);
+            sections.push(recoText);
+          }
+          // a_retenir (NEWS) ou ce_qu_il_faut_retenir (fallback)
+          const retenirField = article.a_retenir || article.ce_qu_il_faut_retenir || '';
+          if (retenirField.trim()) {
+            let retenirText = retenirField.trim();
+            if (!retenirText.includes('<h2>')) sections.push(`<h2>À retenir</h2>\n${retenirText}`);
+            else sections.push(retenirText);
+          } else {
+            sections.push(`<h2>À retenir</h2>\n<ul><li>Les points clés de cette actualité</li></ul>`);
+          }
         } else {
-          console.warn('   ⚠️ Recommandations absentes - ajout minimal');
-          sections.push(`<h2>Nos recommandations : Par où commencer ?</h2>\n<p>Nous recommandons de privilégier l'Asie du Sud-Est pour un budget maîtrisé.</p>`);
-        }
-        if (article.ce_qu_il_faut_retenir && article.ce_qu_il_faut_retenir.trim()) {
-          let retenirText = article.ce_qu_il_faut_retenir.trim();
-          if (!retenirText.includes('<h2>')) sections.push(`<h2>Ce qu'il faut retenir</h2>\n${retenirText}`);
-          else sections.push(retenirText);
-        } else {
-          sections.push(`<h2>Ce qu'il faut retenir</h2>\n<p>Résume les points clés et rappelle les outils utiles (eSIM, assurance, vols). Propose une note d'action au lecteur.</p>`);
+          // MODE EVERGREEN : recommandations + ce_qu_il_faut_retenir obligatoires
+          if (article.recommandations && article.recommandations.trim()) {
+            let recoText = article.recommandations.trim();
+            const engReco = this.detectEnglishContent(recoText);
+            if (engReco.isEnglish && engReco.ratio > 0.1) recoText = await this.translateToFrench(recoText);
+            sections.push(recoText);
+          } else {
+            console.warn('   ⚠️ Recommandations absentes - ajout minimal');
+            sections.push(`<h2>Nos recommandations : Par où commencer ?</h2>\n<p>Nous recommandons de privilégier l'Asie du Sud-Est pour un budget maîtrisé.</p>`);
+          }
+          if (article.ce_qu_il_faut_retenir && article.ce_qu_il_faut_retenir.trim()) {
+            let retenirText = article.ce_qu_il_faut_retenir.trim();
+            if (!retenirText.includes('<h2>')) sections.push(`<h2>Ce qu'il faut retenir</h2>\n${retenirText}`);
+            else sections.push(retenirText);
+          } else {
+            sections.push(`<h2>Ce qu'il faut retenir</h2>\n<p>Résume les points clés et rappelle les outils utiles (eSIM, assurance, vols). Propose une note d'action au lecteur.</p>`);
+          }
         }
         if (article.signature && article.signature.trim()) sections.push(article.signature);
         } else {
@@ -1896,22 +1884,36 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         sections.push(mergedParts.join('\n\n'));
         console.log(`   ✅ ${mergedParts.length} ancien(s) champ(s) fusionné(s) dans le développement`);
       }
-      // Recommandations
-      if (article.recommandations && article.recommandations.trim()) {
-        let recoText = article.recommandations.trim();
-        const engReco = this.detectEnglishContent(recoText);
-        if (engReco.isEnglish && engReco.ratio > 0.1) recoText = await this.translateToFrench(recoText);
-        sections.push(recoText);
+      // Recommandations + verdict — conditionné par mode éditorial
+      if (editorialMode === 'news') {
+        if (article.recommandations && article.recommandations.trim()) {
+          let recoText = article.recommandations.trim();
+          const engReco = this.detectEnglishContent(recoText);
+          if (engReco.isEnglish && engReco.ratio > 0.1) recoText = await this.translateToFrench(recoText);
+          sections.push(recoText);
+        }
+        const retenirField = article.a_retenir || article.ce_qu_il_faut_retenir || '';
+        if (retenirField.trim()) {
+          let retenirText = retenirField.trim();
+          if (!retenirText.includes('<h2>')) sections.push(`<h2>À retenir</h2>\n${retenirText}`);
+          else sections.push(retenirText);
+        }
       } else {
-        sections.push(`<h2>Nos recommandations : Par où commencer ?</h2>\n<p>Nous recommandons de privilégier l'Asie du Sud-Est pour un budget maîtrisé.</p>`);
-      }
-      // Ce qu'il faut retenir
-      if (article.ce_qu_il_faut_retenir && article.ce_qu_il_faut_retenir.trim()) {
-        let retenirText = article.ce_qu_il_faut_retenir.trim();
-        if (!retenirText.includes('<h2>')) sections.push(`<h2>Ce qu'il faut retenir</h2>\n${retenirText}`);
-        else sections.push(retenirText);
+        if (article.recommandations && article.recommandations.trim()) {
+          let recoText = article.recommandations.trim();
+          const engReco = this.detectEnglishContent(recoText);
+          if (engReco.isEnglish && engReco.ratio > 0.1) recoText = await this.translateToFrench(recoText);
+          sections.push(recoText);
         } else {
-        sections.push(`<h2>Ce qu'il faut retenir</h2>\n<p>Les points clés de cet article et les outils utiles (eSIM, assurance, vols).</p>`);
+          sections.push(`<h2>Nos recommandations : Par où commencer ?</h2>\n<p>Nous recommandons de privilégier l'Asie du Sud-Est pour un budget maîtrisé.</p>`);
+        }
+        if (article.ce_qu_il_faut_retenir && article.ce_qu_il_faut_retenir.trim()) {
+          let retenirText = article.ce_qu_il_faut_retenir.trim();
+          if (!retenirText.includes('<h2>')) sections.push(`<h2>Ce qu'il faut retenir</h2>\n${retenirText}`);
+          else sections.push(retenirText);
+        } else {
+          sections.push(`<h2>Ce qu'il faut retenir</h2>\n<p>Les points clés de cet article et les outils utiles (eSIM, assurance, vols).</p>`);
+        }
       }
       // Signature
       if (article.signature && article.signature.trim()) sections.push(article.signature);
@@ -1919,6 +1921,8 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
       
       let htmlContent = sections.filter(Boolean).join('\n\n');
       
+      // NETTOYAGE MARKDOWN: Supprimer les wrappers ```html...``` du LLM
+      htmlContent = htmlContent.replace(/```(?:html)?\s*\n?/g, '');
       
       // GARDE-FOU CRITIQUE : Vérifier que l'article a du contenu réel
       const textOnly = htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -2578,7 +2582,11 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
     console.log('\n🔄 PASSE 2: Amélioration du contenu (deux phases)...');
     console.log(`   📏 Contenu initial: ${rawContent.length} caractères`);
     
-    const destination = context.destination || context.final_destination || 'Asie';
+    const rawDestination = context.destination || context.final_destination || 'Asie';
+    // GARDE: éviter les noms de ville partiels ou ambigus comme destination pour les H2
+    const AMBIGUOUS_CITY_NAMES = ['George', 'Town', 'City', 'Beach', 'Island', 'Bay', 'Port', 'Hat', 'Ko', 'Koh'];
+    const destination = (rawDestination.length <= 5 || AMBIGUOUS_CITY_NAMES.includes(rawDestination))
+      ? 'la destination' : rawDestination;
     const theme = context.theme || 'voyage';
 
     // ═══════════════════════════════════════════════════════════════
@@ -2765,14 +2773,13 @@ ${rawContent}`;
       let improvedContent = responseData.choices[0].message.content.trim();
       
       // POST-PROCESSING: Supprimer les wrappers markdown si présents
-      // Pattern: ```html...``` ou ```...```
-      if (improvedContent.startsWith('```')) {
+      // Pattern: ```html...``` ou ```...``` (même avec espaces/newlines avant)
+      if (/^\s*```/.test(improvedContent)) {
         console.log('   ⚠️ Passe 2: Suppression wrapper markdown détecté');
-        // Supprimer la première ligne (```html ou ```)
-        improvedContent = improvedContent.replace(/^```(?:html)?\s*\n?/, '');
-        // Supprimer la dernière ligne (```)
-        improvedContent = improvedContent.replace(/\n?```\s*$/, '');
+        improvedContent = improvedContent.replace(/^\s*```(?:html)?\s*\n?/, '').replace(/\n?```\s*$/, '');
       }
+      // Nettoyage global: toutes les occurrences de ``` dans le texte
+      improvedContent = improvedContent.replace(/```(?:html)?\s*\n?/g, '').replace(/\n?```\s*$/g, '');
       
       // POST-PROCESSING: Corriger les espaces manquants courants
       improvedContent = improvedContent
@@ -2908,7 +2915,7 @@ INSTRUCTIONS SPÉCIFIQUES:
 3. VALEUR AJOUTÉE: Ajoute des conseils pratiques et des astuces
 4. STRUCTURE: Utilise des H2/H3 pour organiser, des listes pour les détails
 5. SPÉCIFICITÉ: Évite les généralités, utilise des données précises
-6. LONGUEUR: MINIMUM 500 mots, IDÉAL 700-1000 mots. Développe chaque section en détail avec des exemples concrets, des chiffres, des conseils actionnables
+6. LONGUEUR: MINIMUM 1200 mots, IDÉAL 1500-2000 mots. Développe chaque section en profondeur avec des exemples concrets, des chiffres, des conseils actionnables. Un article court ne rankera pas en SEO
 
 CONTENU REQUIS:
 1. Titre accrocheur (sans emoji, avec mention "témoignage Reddit" à la fin)
@@ -2970,7 +2977,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   
   TON: Humble, préventif, éducatif. L'émotion doit émerger du contenu.
   FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <em>, <strong>. JAMAIS de Markdown.
-  LONGUEUR: MINIMUM 700 mots, IDÉAL 900-1200 mots."
+  LONGUEUR: MINIMUM 1200 mots, IDÉAL 1500-2000 mots. Développe chaque section en profondeur avec des détails concrets."
 }`;
 
       case 'TEMOIGNAGE_TRANSITION':
@@ -2998,7 +3005,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   
   TON: Réfléchi, adaptatif, encourageant. L'émotion doit émerger du contenu réel.
   FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <em>, <strong>. JAMAIS de Markdown.
-  LONGUEUR: MINIMUM 700 mots, IDÉAL 900-1200 mots."
+  LONGUEUR: MINIMUM 1200 mots, IDÉAL 1500-2000 mots. Développe chaque section en profondeur avec des détails concrets."
 }`;
 
       case 'TEMOIGNAGE_COMPARAISON':
@@ -3024,7 +3031,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   
   TON: Comparatif, objectif, informatif. L'émotion doit émerger du contenu.
   FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <em>, <strong>. JAMAIS de Markdown.
-  LONGUEUR: MINIMUM 700 mots, IDÉAL 900-1200 mots."
+  LONGUEUR: MINIMUM 1200 mots, IDÉAL 1500-2000 mots. Développe chaque section en profondeur avec des détails concrets."
 }`;
 
       case 'GUIDE_PRATIQUE':

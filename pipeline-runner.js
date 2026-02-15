@@ -99,10 +99,24 @@ class PipelineRunner {
       }
       pipelineReport.endStep('story-compiler', story, { status: 'pass' });
 
+      // ÉTAPE 3.5: Routage éditorial NEWS / EVERGREEN
+      const { routeEditorialMode } = await import('./editorial-router.js');
+      const editorialRoute = routeEditorialMode(extracted, pattern, story);
+      const editorialMode = editorialRoute.mode;
+      console.log(`\n📰 ÉTAPE 3.5: Routage éditorial → ${editorialMode.toUpperCase()}`);
+      console.log(`   Raison: ${editorialRoute.reason}`);
+      console.log(`   Signaux: [${editorialRoute.signals.join(', ')}]`);
+      
+      if (editorialMode === 'skip') {
+        console.log(`   ⏭️ Article ignoré: ${editorialRoute.reason}`);
+        pipelineReport.addError('editorial-router', `Article skipped: ${editorialRoute.reason}`);
+        return null;
+      }
+
       // ÉTAPE 4: Generator
       console.log('\n📋 ÉTAPE 4: Generator (intelligent-content-analyzer-optimized)');
       pipelineReport.startStep('generator');
-      const generated = await this.runGenerator(input, extracted, pattern, story, pipelineReport);
+      const generated = await this.runGenerator(input, extracted, pattern, story, pipelineReport, editorialMode);
       if (!generated) {
         throw new Error('Generator a échoué');
       }
@@ -113,7 +127,7 @@ class PipelineRunner {
       pipelineReport.startStep('llm-improvement');
       try {
         const improvementContext = {
-          destination: pattern.destination || extracted.destination || 'Asie',
+          destination: extracted._smart_destination || pattern.destination || extracted.destination || 'Asie',
           theme: pattern.theme_primary || 'voyage'
         };
         const improvedContent = await this.generator.improveContentWithLLM(generated.content, improvementContext);
@@ -243,7 +257,9 @@ class PipelineRunner {
         original_destination: originalDestination,
         pivot_reason: pivotReason,
         geo_defaults: geoDefaults || geo, // Utiliser geoDefaults si disponible, sinon geo
-        geo: geo
+        geo: geo,
+        generatedTitle: generated.title || '', // Pour la validation anti-décontextualisation du titre
+        editorial_mode: editorialMode // NEWS ou EVERGREEN — conditionne scorer + finalizer
       };
       
       console.log(`✅ PIPELINE_CONTEXT: final_destination=${finalDestination || 'null'} main_destination=${pipelineContext.main_destination || 'null'} geo_city=${geo.city || 'null'}`);
@@ -328,6 +344,15 @@ class PipelineRunner {
         console.log('\n📋 ÉTAPE 7.5: Content Marketing Expert Pass — DÉSACTIVÉ (ENABLE_MARKETING_PASS=false)');
       }
 
+      // NETTOYAGE MARKDOWN FINAL: Supprimer les wrappers ```html...``` résiduels
+      // (peuvent être ajoutés par n'importe quel LLM pass)
+      finalized.content = finalized.content.replace(/```(?:html)?\s*\n?/g, '');
+      // Supprimer tout texte non-HTML avant le premier tag
+      const firstTagIdx = finalized.content.indexOf('<');
+      if (firstTagIdx > 0 && firstTagIdx < 50) {
+        finalized.content = finalized.content.substring(firstTagIdx);
+      }
+      
       // NETTOYAGE POST-MARKETING: Supprimer les blocs affiliés orphelins en fin d'article
       // Le content-marketing-pass peut créer/déplacer des sections "À lire également"
       // et repositionner des blocs affiliés après cette section. On nettoie ici.
@@ -360,6 +385,28 @@ class PipelineRunner {
         console.log('   🧹 Nettoyage final: "e SIM" → "eSIM" normalisé');
       }
 
+      // ÉTAPE PRÉ-BLOCKING: Recherche d'image featured (avant le check blocking pour que
+      // même les articles bloqués aient une image si publiés malgré le blocking)
+      let featuredImageEarly = null;
+      try {
+        console.log('\n🖼️ ÉTAPE PRÉ-BLOCKING: Recherche image featured (header)');
+        const analysisForImageEarly = {
+          geo: pipelineContext.geo || {},
+          destinations: [pipelineContext.final_destination].filter(Boolean)
+        };
+        featuredImageEarly = await this.finalizer.getFeaturedImage(
+          { title: generated.title || finalized.title, geo_defaults: pipelineContext.geo_defaults },
+          analysisForImageEarly
+        );
+        if (featuredImageEarly) {
+          console.log(`   ✅ Image featured trouvée: ${featuredImageEarly.source} — ${featuredImageEarly.alt?.substring(0, 60)}`);
+        } else {
+          console.log('   ⚠️ Aucune image featured trouvée');
+        }
+      } catch (imgError) {
+        console.warn(`   ⚠️ Erreur recherche image featured: ${imgError.message}`);
+      }
+
       // Vérifier si le finalizer a bloqué
       if (finalized.qaReport?.blocking === true) {
         pipelineReport.report.blocking = true;
@@ -379,7 +426,9 @@ class PipelineRunner {
             content: finalized.content,
             excerpt: finalized.excerpt,
             qaReport: finalized.qaReport,
-            antiHallucinationReport: null
+            antiHallucinationReport: null,
+            inlineImages: finalized.inlineImages || [],
+            featuredImage: featuredImageEarly // Image featured même pour articles bloqués
           };
           const widgetsInFinalArticleBlocked = this.finalizer.detectRenderedWidgets(finalArticleBlocked.content);
           console.log(`🔍 DEBUG PIPELINE (BLOCKED): Widgets dans finalArticleBlocked.content: count=${widgetsInFinalArticleBlocked.count}, types=[${widgetsInFinalArticleBlocked.types.join(', ')}]`);
@@ -409,7 +458,8 @@ class PipelineRunner {
         finalized.content,
         extractedWithInput,
         pipelineContext,
-        pipelineReport
+        pipelineReport,
+        generated.title || finalized.title || ''
       );
       if (!antiHallucination) {
         throw new Error('Anti-Hallucination Guard a échoué');
@@ -446,7 +496,8 @@ class PipelineRunner {
         excerpt: finalized.excerpt,
         qaReport: finalized.qaReport,
         antiHallucinationReport: antiHallucination,
-        inlineImages: finalized.inlineImages || [] // Propager les images inline pour upload WP
+        inlineImages: finalized.inlineImages || [],
+        featuredImage: featuredImageEarly // Réutilise l'image trouvée avant le check blocking
       };
       
       // DEBUG: Vérifier les widgets dans finalArticle.content après création
@@ -609,7 +660,7 @@ class PipelineRunner {
   /**
    * ÉTAPE 4: Generator
    */
-  async runGenerator(input, extracted, pattern, story, pipelineReport) {
+  async runGenerator(input, extracted, pattern, story, pipelineReport, editorialMode = 'evergreen') {
     try {
       const existingTitles = await this.loadExistingTitles();
 
@@ -629,7 +680,9 @@ class PipelineRunner {
         // Smart destination (de extractMainDestination avec scoreDestinationRichness)
         main_destination: extracted._smart_destination || null,
         original_destination: extracted._original_destination || null,
-        pivot_reason: extracted._pivot_reason || null
+        pivot_reason: extracted._pivot_reason || null,
+        // Mode éditorial (NEWS / EVERGREEN) — conditionne le prompt LLM
+        editorial_mode: editorialMode
       };
 
       // Générer le contenu (analysis n'est plus utilisé dans la nouvelle version)
@@ -760,13 +813,14 @@ class PipelineRunner {
   /**
    * ÉTAPE 8: Anti-Hallucination Guard
    */
-  async runAntiHallucinationGuard(html, extracted, pipelineContext, pipelineReport) {
+  async runAntiHallucinationGuard(html, extracted, pipelineContext, pipelineReport, title = '') {
     try {
       // extracted est déjà enrichi avant l'appel, donc on peut l'utiliser directement
       const guardResult = await runAntiHallucinationGuard({
         html,
         extracted,
-        context: pipelineContext
+        context: pipelineContext,
+        title
       });
       
       console.log(`   ✅ Anti-Hallucination Guard: status=${guardResult.status} blocking=${guardResult.blocking}`);
