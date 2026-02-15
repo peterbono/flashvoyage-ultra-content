@@ -450,6 +450,40 @@ class QualityAnalyzer {
     score.total += conclusionPoints;
     score.details.push({ check: 'Conclusion actionnable', status: hasCTA ? 'OK' : 'MISSING', points: conclusionPoints });
 
+    // PÉNALITÉS EVERGREEN: longueur, tableau, FAQ
+    if (editorialMode === 'evergreen') {
+      const wordCount = text.split(/\s+/).filter(w => w.length > 0).length;
+      
+      // Pénalité longueur: -15 pts si < 1500 mots
+      if (wordCount < 1500) {
+        const lengthPenalty = -15;
+        score.total = Math.max(0, score.total + lengthPenalty);
+        score.details.push({ check: 'EVERGREEN longueur', status: `${wordCount} mots < 1500 minimum`, points: lengthPenalty });
+      } else {
+        score.details.push({ check: 'EVERGREEN longueur', status: `${wordCount} mots OK`, points: 0 });
+      }
+      
+      // Pénalité tableau: -5 pts si 2+ destinations et pas de <table>
+      const destPatterns = [/thaïlande|thailand|bangkok/i, /vietnam|ho chi minh/i, /bali|indonésie/i, /malaisie|malaysia/i, /japon|japan/i, /philippines/i, /cambodge/i, /singapour/i];
+      const destCount = destPatterns.filter(p => p.test(text)).length;
+      const hasTable = /<table/i.test(html);
+      if (destCount >= 2 && !hasTable) {
+        score.total = Math.max(0, score.total - 5);
+        score.details.push({ check: 'EVERGREEN tableau comparatif', status: `${destCount} destinations sans tableau`, points: -5 });
+      } else if (hasTable) {
+        score.details.push({ check: 'EVERGREEN tableau comparatif', status: 'Présent', points: 0 });
+      }
+      
+      // Pénalité FAQ: -5 pts si pas de FAQ
+      const hasFAQ = /<h2[^>]*>(?:FAQ|Questions?\s+fréquentes?|Foire\s+aux\s+questions)/i.test(html);
+      if (!hasFAQ) {
+        score.total = Math.max(0, score.total - 5);
+        score.details.push({ check: 'EVERGREEN FAQ SEO', status: 'Absente', points: -5 });
+      } else {
+        score.details.push({ check: 'EVERGREEN FAQ SEO', status: 'Présente', points: 0 });
+      }
+    }
+
     return {
       category: 'Content Writing',
       weight: 0.40,

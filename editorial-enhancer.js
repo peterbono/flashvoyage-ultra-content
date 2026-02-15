@@ -13,6 +13,7 @@
  */
 
 import { parseBool } from './config.js';
+import { createChatCompletion } from './openai-client.js';
 
 const ENABLE_EDITORIAL_ENHANCER = parseBool(process.env.ENABLE_EDITORIAL_ENHANCER ?? '1');
 
@@ -67,9 +68,12 @@ class EditorialEnhancer {
     };
 
     let enhancedHtml = html;
+    const editorialMode = pipelineContext.editorial_mode || 'evergreen';
     const enhancements = {
       citationsAdded: 0,
       faqAdded: false,
+      comparisonTableAdded: false,
+      checklistAdded: false,
       semanticReinforcement: 0,
       actionableLists: 0,
       hierarchyImproved: 0
@@ -78,8 +82,18 @@ class EditorialEnhancer {
     // 1️⃣ Ajouter des blocs de citations Reddit explicites (avec traduction)
     enhancedHtml = await this.addRedditCitations(enhancedHtml, story, extraction, enhancements);
 
-    // 2️⃣ Ajouter une section FAQ SEO structurée
-    enhancedHtml = this.addFAQSection(enhancedHtml, story, pattern, enhancements);
+    // 2️⃣ Ajouter une section FAQ SEO structurée (avec fallback LLM)
+    enhancedHtml = await this.addFAQSection(enhancedHtml, story, pattern, enhancements);
+
+    // 2b️⃣ EVERGREEN: Tableau comparatif si pertinent
+    if (editorialMode === 'evergreen') {
+      enhancedHtml = await this.addComparisonTable(enhancedHtml, story, extraction, pattern, enhancements);
+    }
+
+    // 2c️⃣ EVERGREEN: Checklist actionnable si pertinent
+    if (editorialMode === 'evergreen') {
+      enhancedHtml = await this.addChecklist(enhancedHtml, story, pattern, enhancements);
+    }
 
     // 3️⃣ Renforcer la sémantique SEO (répétition intelligente)
     enhancedHtml = this.reinforceSemanticSEO(enhancedHtml, story, pattern, extraction, enhancements);
@@ -93,6 +107,8 @@ class EditorialEnhancer {
     console.log(`\n✅ Enhancements appliqués:`);
     console.log(`   📝 Citations Reddit: ${enhancements.citationsAdded}`);
     console.log(`   ❓ FAQ: ${enhancements.faqAdded ? 'Oui' : 'Non'}`);
+    console.log(`   📊 Tableau comparatif: ${enhancements.comparisonTableAdded ? 'Oui' : 'Non'}`);
+    console.log(`   ✅ Checklist: ${enhancements.checklistAdded ? 'Oui' : 'Non'}`);
     console.log(`   🔍 Renforcement SEO: ${enhancements.semanticReinforcement} occurrences`);
     console.log(`   📋 Listes actionnables: ${enhancements.actionableLists}`);
     console.log(`   📊 Hiérarchie améliorée: ${enhancements.hierarchyImproved} sections`);
@@ -226,9 +242,16 @@ ${citationsHtml}\n`;
   /**
    * 2️⃣ Ajouter une section FAQ SEO structurée
    * Basée sur open_questions + community_insights + story contextuelle
+   * Fallback LLM si aucune question trouvée dans les données
    */
-  addFAQSection(html, story, pattern, enhancements) {
+  async addFAQSection(html, story, pattern, enhancements) {
     console.log('\n❓ 2️⃣ Section FAQ SEO...');
+
+    // Vérifier si une FAQ existe déjà
+    if (/<h2[^>]*>(?:FAQ|Questions?\s+fréquentes?|Foire\s+aux\s+questions)/i.test(html)) {
+      console.log('   ℹ️ FAQ déjà présente dans l\'article, skip');
+      return html;
+    }
 
     const questions = [];
 
@@ -269,8 +292,13 @@ ${citationsHtml}\n`;
     const validQuestions = questions.filter(q => q.question !== null && q.question !== undefined);
     
     if (validQuestions.length === 0) {
-      console.log('   ⚠️ Aucune question valide trouvée pour la FAQ');
-      return html;
+      console.log('   ⚠️ Aucune question dans les données — tentative fallback LLM...');
+      try {
+        return await this.addFAQViaLLM(html, enhancements);
+      } catch (faqError) {
+        console.warn(`   ⚠️ Fallback FAQ LLM échoué: ${faqError.message}`);
+        return html;
+      }
     }
 
     // Dédupliquer les questions (par texte normalisé)
@@ -578,6 +606,235 @@ ${faqItems}\n`;
     }
     
     return null;
+  }
+
+  /**
+   * Fallback LLM : génère une FAQ SEO basée sur le contenu de l'article
+   * Appelé quand aucune question n'est trouvée dans les données story/insights
+   */
+  async addFAQViaLLM(html, enhancements) {
+    // Extraire le texte brut de l'article (max 3000 chars pour le prompt)
+    const articleText = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 3000);
+    
+    const response = await createChatCompletion({
+      model: 'gpt-4o-mini',
+      messages: [
+        { role: 'system', content: `Tu es un expert SEO voyage. Génère exactement 4 questions fréquentes (FAQ) basées sur l'article fourni.
+Chaque question doit être une vraie question que les voyageurs se posent.
+Chaque réponse doit être factuelle et basée UNIQUEMENT sur le contenu de l'article (pas d'invention).
+ÉCRIS EN FRANÇAIS. Utilise le tutoiement.
+Retourne un JSON array: [{"question": "...", "answer": "..."}]` },
+        { role: 'user', content: articleText }
+      ],
+      max_tokens: 1500,
+      temperature: 0.3,
+      response_format: { type: "json_object" }
+    });
+
+    const content = response.choices?.[0]?.message?.content;
+    if (!content) throw new Error('Réponse LLM vide');
+    
+    let parsed;
+    try {
+      parsed = JSON.parse(content);
+      // Handle any JSON structure: direct array, { questions: [...] }, { faq: [...] }, or any key containing an array
+      let faqArray = [];
+      if (Array.isArray(parsed)) {
+        faqArray = parsed;
+      } else if (typeof parsed === 'object') {
+        // Try common keys first, then any key that contains an array of objects with 'question'
+        faqArray = parsed.questions || parsed.faq || parsed.items || parsed.data || [];
+        if (!Array.isArray(faqArray) || faqArray.length === 0) {
+          // Fallback: find any array value in the object
+          for (const val of Object.values(parsed)) {
+            if (Array.isArray(val) && val.length > 0 && val[0]?.question) {
+              faqArray = val;
+              break;
+            }
+          }
+        }
+      }
+      if (!Array.isArray(faqArray) || faqArray.length === 0) throw new Error('Pas de questions dans la réponse: ' + JSON.stringify(Object.keys(parsed)));
+      
+      const faqItems = faqArray.slice(0, 5).map(q => 
+        `    <h3>${this.escapeHtml(q.question)}</h3>\n    <p>${this.escapeHtml(q.answer)}</p>`
+      ).join('\n\n');
+      
+      const faqSection = `\n\n<h2>Questions fréquentes</h2>\n${faqItems}\n`;
+      
+      // Insérer avant "Nos recommandations" ou avant le dernier H2
+      const insertedHtml = this.insertBeforeRecommandations(html, faqSection);
+      enhancements.faqAdded = true;
+      console.log(`   ✅ FAQ ajoutée via LLM (${faqArray.length} question(s))`);
+      return insertedHtml;
+    } catch (parseError) {
+      throw new Error(`Parsing FAQ LLM échoué: ${parseError.message}`);
+    }
+  }
+
+  /**
+   * EVERGREEN: Ajouter un tableau comparatif si l'article compare 2+ destinations/options
+   */
+  async addComparisonTable(html, story, extraction, pattern, enhancements) {
+    console.log('\n📊 Tableau comparatif EVERGREEN...');
+    
+    // Vérifier si un tableau existe déjà
+    if (/<table/i.test(html)) {
+      console.log('   ℹ️ Tableau déjà présent, skip');
+      return html;
+    }
+    
+    // Détecter les destinations/options mentionnées
+    const textContent = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+    const destinationPatterns = [
+      /thaïlande|thailand|bangkok|chiang\s*mai/gi,
+      /vietnam|ho\s*chi\s*minh|hcmc|da\s*nang|hanoi/gi,
+      /bali|indonésie|indonesia|canggu|ubud/gi,
+      /malaisie|malaysia|kuala\s*lumpur|penang/gi,
+      /philippines|cebu|manille/gi,
+      /japon|japan|tokyo|osaka|kyoto/gi,
+      /cambodge|cambodia|phnom\s*penh|siem\s*reap/gi,
+      /singapour|singapore/gi
+    ];
+    
+    const foundDestinations = new Set();
+    for (const pattern of destinationPatterns) {
+      if (pattern.test(textContent)) {
+        foundDestinations.add(pattern.source.split('|')[0].replace(/\\s\*/, ' '));
+      }
+      pattern.lastIndex = 0; // Reset regex
+    }
+    
+    if (foundDestinations.size < 2) {
+      console.log(`   ℹ️ ${foundDestinations.size} destination(s) détectée(s), pas assez pour un comparatif`);
+      return html;
+    }
+    
+    console.log(`   📍 ${foundDestinations.size} destinations détectées: ${[...foundDestinations].join(', ')} — génération tableau...`);
+    
+    // Extraire le texte brut (max 3000 chars)
+    const articleText = textContent.substring(0, 3000);
+    
+    try {
+      const response = await createChatCompletion({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: `Tu es un expert en voyage. Génère UN tableau HTML comparatif basé sur l'article fourni.
+Le tableau doit comparer les destinations/options mentionnées dans l'article.
+Critères de comparaison suggérés: budget mensuel, logement, nourriture, coworking, avantages, inconvénients.
+Adapte les critères au contenu réel de l'article.
+Base-toi UNIQUEMENT sur les données présentes dans l'article. Aucune invention.
+ÉCRIS EN FRANÇAIS.
+Retourne UNIQUEMENT le HTML du tableau, rien d'autre. Format: <table><thead><tr><th>...</th></tr></thead><tbody><tr><td>...</td></tr></tbody></table>` },
+          { role: 'user', content: articleText }
+        ],
+        max_tokens: 2000,
+        temperature: 0.2
+      });
+
+      let tableHtml = response.choices?.[0]?.message?.content?.trim();
+      if (!tableHtml) throw new Error('Réponse vide');
+      
+      // Nettoyer markdown wrapper
+      tableHtml = tableHtml.replace(/^```(?:html)?\s*\n?/, '').replace(/\n?```\s*$/, '');
+      
+      // Vérifier que c'est bien un tableau
+      if (!tableHtml.includes('<table') || !tableHtml.includes('</table>')) {
+        throw new Error('Réponse ne contient pas de tableau HTML valide');
+      }
+      
+      const tableSection = `\n\n<h2>Comparatif des destinations</h2>\n${tableHtml}\n`;
+      
+      // Insérer avant "Nos recommandations" ou avant FAQ
+      const insertedHtml = this.insertBeforeRecommandations(html, tableSection);
+      enhancements.comparisonTableAdded = true;
+      console.log(`   ✅ Tableau comparatif ajouté (${foundDestinations.size} destinations)`);
+      return insertedHtml;
+    } catch (error) {
+      console.warn(`   ⚠️ Génération tableau échouée: ${error.message}`);
+      return html;
+    }
+  }
+
+  /**
+   * EVERGREEN: Ajouter une checklist actionnable si l'article est un guide pratique
+   */
+  async addChecklist(html, story, pattern, enhancements) {
+    console.log('\n✅ Checklist EVERGREEN...');
+    
+    // Vérifier si une checklist existe déjà (liste avec >= 5 items contenant des verbes d'action)
+    const checklistPatterns = /<h[23][^>]*>[^<]*(?:checklist|check-list|liste|à faire|avant de partir|préparer)[^<]*<\/h[23]>/i;
+    if (checklistPatterns.test(html)) {
+      console.log('   ℹ️ Checklist déjà présente, skip');
+      return html;
+    }
+    
+    // Extraire le texte brut (max 2000 chars)
+    const articleText = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 2000);
+    
+    try {
+      const response = await createChatCompletion({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: `Tu es un expert en voyage. Génère une checklist de 5-8 actions concrètes basées sur l'article fourni.
+Chaque item doit être une action spécifique et pratique (pas un conseil vague).
+Base-toi UNIQUEMENT sur le contenu de l'article. Aucune invention.
+ÉCRIS EN FRANÇAIS. Utilise le tutoiement.
+Retourne UNIQUEMENT le HTML: <h3>Checklist avant de partir</h3><ul><li>Action 1</li><li>Action 2</li>...</ul>` },
+          { role: 'user', content: articleText }
+        ],
+        max_tokens: 1000,
+        temperature: 0.2
+      });
+
+      let checklistHtml = response.choices?.[0]?.message?.content?.trim();
+      if (!checklistHtml) throw new Error('Réponse vide');
+      
+      // Nettoyer markdown wrapper
+      checklistHtml = checklistHtml.replace(/^```(?:html)?\s*\n?/, '').replace(/\n?```\s*$/, '');
+      
+      // Vérifier que c'est bien une liste
+      if (!checklistHtml.includes('<li>')) {
+        throw new Error('Réponse ne contient pas de liste HTML valide');
+      }
+      
+      const checklistSection = `\n\n${checklistHtml}\n`;
+      
+      // Insérer avant "Ce qu'il faut retenir" ou avant le dernier H2
+      let insertionPoint = html.search(/<h2[^>]*>Ce qu['']il faut retenir/i);
+      if (insertionPoint === -1) {
+        insertionPoint = html.search(/<h2[^>]*>À retenir/i);
+      }
+      if (insertionPoint === -1) {
+        // Avant le dernier H2
+        const lastH2 = html.lastIndexOf('<h2>');
+        insertionPoint = lastH2 > 0 ? lastH2 : html.length;
+      }
+      
+      const result = html.substring(0, insertionPoint) + checklistSection + html.substring(insertionPoint);
+      enhancements.checklistAdded = true;
+      console.log(`   ✅ Checklist ajoutée`);
+      return result;
+    } catch (error) {
+      console.warn(`   ⚠️ Génération checklist échouée: ${error.message}`);
+      return html;
+    }
+  }
+
+  /**
+   * Helper: Insérer du contenu avant "Nos recommandations" ou avant le dernier H2
+   */
+  insertBeforeRecommandations(html, content) {
+    let insertionPoint = html.indexOf('<h2>🎯 Nos recommandations');
+    if (insertionPoint === -1) {
+      insertionPoint = html.indexOf('<h2>Nos recommandations');
+    }
+    if (insertionPoint === -1) {
+      // Insérer avant le dernier H2
+      const lastH2 = html.lastIndexOf('<h2>');
+      insertionPoint = lastH2 > 0 ? lastH2 : html.length;
+    }
+    return html.substring(0, insertionPoint) + content + html.substring(insertionPoint);
   }
 
   escapeHtml(text) {

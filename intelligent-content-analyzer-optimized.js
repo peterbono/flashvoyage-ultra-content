@@ -1934,7 +1934,26 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         console.error(`   📋 Sections assemblées: ${sections.length}`);
         console.error(`   📋 Champs JSON reçus: titre=${!!article.titre}, developpement=${!!article.developpement}, contexte=${!!article.contexte}`);
         throw new Error(`EMPTY_ARTICLE_GUARD: Article trop court (${textLength} chars < 500 minimum). Le JSON LLM était probablement tronqué. Vérifier max_tokens et finish_reason.`);
-      }      
+      }
+
+      // GARDE LONGUEUR EVERGREEN : expansion automatique si trop court
+      if (editorialMode === 'evergreen') {
+        const wordCount = textOnly.split(/\s+/).filter(w => w.length > 0).length;
+        console.log(`📏 EVERGREEN WORD COUNT: ${wordCount} mots`);
+        
+        if (wordCount < 1500) {
+          console.log(`⚠️ EVERGREEN trop court (${wordCount} < 1500 mots). Lancement passe d'expansion LLM...`);
+          try {
+            htmlContent = await this.expandEvergreenContent(htmlContent, extraction, options);
+            const expandedText = htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+            const expandedWords = expandedText.split(/\s+/).filter(w => w.length > 0).length;
+            console.log(`📏 APRÈS EXPANSION: ${expandedWords} mots (delta: +${expandedWords - wordCount})`);
+          } catch (expandError) {
+            console.warn(`⚠️ Expansion EVERGREEN échouée: ${expandError.message}. Continuation avec contenu original.`);
+          }
+        }
+      }
+
       // NETTOYAGE IMMÉDIAT AVANT POST-PROC 0 : Nettoyer les titres "Événement central" avec contenu supplémentaire
       // (au cas où un H2 avec le titre incorrect serait présent dans le JSON)
       htmlContent = htmlContent.replace(/<h2[^>]*>Événement central[^<]*<\/h2>/gi, (match) => {
@@ -2570,6 +2589,87 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
   }
 
   /**
+   * EXPANSION EVERGREEN : enrichit un article trop court via un appel LLM dédié.
+   * Appelé uniquement si l'article EVERGREEN fait < 1500 mots après génération initiale.
+   * 
+   * @param {string} htmlContent - HTML de l'article existant
+   * @param {Object} extraction - Données extraites (citations, données clés)
+   * @param {Object} options - Options du pipeline (titre, contexte)
+   * @returns {Promise<string>} - HTML enrichi
+   */
+  async expandEvergreenContent(htmlContent, extraction, options = {}) {
+    console.log('\n📐 EXPANSION EVERGREEN: Enrichissement du contenu...');
+    
+    const systemPrompt = `Tu es un rédacteur expert en voyage. Tu reçois un article HTML EVERGREEN trop court.
+
+Ta mission : ENRICHIR cet article pour atteindre MINIMUM 2000 mots, IDÉAL 2500-3000 mots.
+
+RÈGLES ABSOLUES :
+1. NE SUPPRIME RIEN de l'article existant. Tu AJOUTES du contenu.
+2. NE INVENTE AUCUN fait, chiffre, lieu ou expérience non présent dans l'article ou le contexte fourni.
+3. ENRICHIS chaque section H2 existante avec :
+   - Plus de détails concrets (chiffres, exemples spécifiques)
+   - Analyses plus profondes (avantages/inconvénients, pièges à éviter)
+   - Contexte supplémentaire (comparaisons, mises en perspective)
+   - Citations et témoignages inline supplémentaires si des données source sont fournies
+4. AJOUTE si pertinent :
+   - Un tableau comparatif HTML (<table>) si l'article compare des destinations/options
+   - Des sous-sections <h3> pour approfondir les points clés
+   - Des listes à puces pour les conseils pratiques
+5. CONSERVE le même ton (tutoiement, expert accessible, pas scolaire).
+6. ÉCRIS EN FRANÇAIS uniquement.
+7. RETOURNE l'article HTML COMPLET enrichi (pas un diff, pas un résumé).`;
+
+    const userPrompt = `ARTICLE À ENRICHIR (trop court, doit atteindre 2000+ mots) :
+
+${htmlContent}
+
+DONNÉES SOURCE DISPONIBLES (utilise-les pour enrichir) :
+- Titre: ${options.reddit_title || options.title || 'N/A'}
+- Citations disponibles: ${JSON.stringify((extraction?.citations || []).slice(0, 5))}
+- Données clés: ${JSON.stringify(extraction?.donnees_cles || extraction?.key_data || {})}
+
+RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2000 mots.`;
+
+    const responseData = await callOpenAIWithRetry({
+      apiKey: this.apiKey,
+      body: {
+        model: 'gpt-4o',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        max_tokens: 10000,
+        temperature: 0.6
+      },
+      sourceText: htmlContent,
+      article: extraction || {},
+      type: 'expansion'
+    });
+
+    if (!responseData.choices?.[0]?.message?.content) {
+      throw new Error('Réponse LLM vide pour expansion EVERGREEN');
+    }
+
+    let expanded = responseData.choices[0].message.content.trim();
+    
+    // Nettoyer les wrappers markdown ```html...```
+    expanded = expanded.replace(/^```(?:html)?\s*\n?/, '').replace(/\n?```\s*$/, '');
+    
+    // Vérifier que l'expansion a bien augmenté le contenu
+    const originalWords = htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().split(/\s+/).length;
+    const expandedWords = expanded.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().split(/\s+/).length;
+    
+    if (expandedWords <= originalWords) {
+      console.warn(`⚠️ Expansion n'a pas augmenté le contenu (${originalWords} → ${expandedWords} mots). Conservation de l'original.`);
+      return htmlContent;
+    }
+    
+    console.log(`✅ EXPANSION EVERGREEN: ${originalWords} → ${expandedWords} mots (+${expandedWords - originalWords})`);
+    return expanded;
+  }
+
+  /**
    * PASSE 2: Amélioration du contenu en deux phases
    * Phase 1: Checks heuristiques (regex, sans LLM) — détection d'anomalies
    * Phase 2: Correction LLM (seulement si anomalies détectées en phase 1)
@@ -2610,7 +2710,9 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
     const h2Matches = [...(rawContent.matchAll(/<h2[^>]*>([^<]+)<\/h2>/gi) || [])];
     const genericH2s = h2Matches.filter(m => {
       const title = m[1].trim().toLowerCase().replace(/[^\wàâäéèêëïîôùûüÿç\s'-]/g, '').trim();
-      const isNakedGeneric = GENERIC_H2_BLACKLIST.some(banned => title === banned);
+      const isNakedGeneric = GENERIC_H2_BLACKLIST.some(banned => 
+        title === banned || title.startsWith(banned + ' ') || title.startsWith(banned + ':') || title.startsWith(banned + ',')
+      );
       const isLazy = LAZY_H2_PATTERN.test(m[1].trim());
       return isNakedGeneric || isLazy;
     });
