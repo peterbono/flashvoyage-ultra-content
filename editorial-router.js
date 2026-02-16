@@ -4,10 +4,20 @@
  * Routeur éditorial NEWS / EVERGREEN.
  * Décision prise après extraction + pattern + story, avant génération LLM.
  * 
- * 3 sorties possibles :
- *   - { mode: 'news',      reason, signals }
- *   - { mode: 'evergreen',  reason, signals }
- *   - { mode: 'skip',       reason, signals }
+ * Sortie :
+ *   {
+ *     mode: 'news' | 'evergreen' | 'skip',
+ *     editorial_mode: 'news' | 'evergreen' | 'skip',   // alias de mode
+ *     confidence: number,       // 0..1
+ *     reasons: string[],        // signaux ayant pesé
+ *     scores: { news: number, evergreen: number },
+ *     // Backward compat
+ *     reason: string,
+ *     signals: string[]
+ *   }
+ * 
+ * Routing deterministe : memes inputs => meme output.
+ * Si confidence < 0.55 => force evergreen + reason "low_confidence_fallback".
  * 
  * Le mode est propagé dans le pipeline puis conditionne :
  *   1. Le prompt LLM (longueur, ton, livrables)
@@ -21,6 +31,23 @@ const FORCE_EDITORIAL_MODE = process.env.FORCE_EDITORIAL_MODE || null; // 'news'
 
 /** Seuil de recency : posts < N jours reçoivent un boost NEWS */
 const RECENCY_DAYS_THRESHOLD = 10;
+
+/** Seuil de confiance : en dessous, fallback evergreen */
+const CONFIDENCE_THRESHOLD = 0.55;
+
+/** Poids des signaux pour le scoring */
+const SIGNAL_WEIGHTS = {
+  // NEWS signals
+  recency:                 0.30,
+  news_title_keywords:     0.20,
+  update_thread_pattern:   0.30,
+  warning_pattern:         0.20,
+  comments_confirm_change: 0.25,
+  high_solution_density:   0.15,
+  // EVERGREEN signals
+  evergreen_process:       0.35,
+  no_dates_in_text:        0.25
+};
 
 /** Mots-clés dans le titre Reddit qui signalent une actualité ponctuelle */
 const NEWS_TITLE_PATTERNS = /\b(new|changed|now|since|effective|update|policy|announce|announced|breaking|just|recently|price\s+change|new\s+rule|fee\s+increas|rule\s+change|visa\s+change|mise\s+[àa]\s+jour|changement|nouveau|augment)/i;
@@ -99,12 +126,36 @@ function highSolutionDensity(extracted, story) {
 // ─── Router principal ───────────────────────────────────────────────
 
 /**
+ * Construit le résultat standardisé du router.
+ * Fournit les nouvelles clés (editorial_mode, confidence, reasons, scores)
+ * et les anciennes (mode, reason, signals) pour backward compat.
+ */
+function buildResult(mode, confidence, reasons, scores, signals) {
+  const reasonText = reasons.length > 0
+    ? `${mode.toUpperCase()} (conf=${confidence.toFixed(2)}): ${reasons.join(', ')}`
+    : `${mode.toUpperCase()} (conf=${confidence.toFixed(2)})`;
+
+  console.log(`📰 EDITORIAL_ROUTER mode=${mode} conf=${confidence.toFixed(2)} news=${scores.news.toFixed(2)} evergreen=${scores.evergreen.toFixed(2)} reasons=[${reasons.join(', ')}]`);
+
+  return {
+    mode,
+    editorial_mode: mode,
+    confidence,
+    reasons,
+    scores,
+    // Backward compat
+    reason: reasonText,
+    signals
+  };
+}
+
+/**
  * Détermine le mode éditorial d'un article.
  * 
  * @param {Object} extracted - Données extraites du post Reddit
  * @param {Object} pattern   - Pattern détecté (story_type, theme_primary, etc.)
  * @param {Object} story     - Story compilée (story, evidence, meta)
- * @returns {{ mode: 'news'|'evergreen'|'skip', reason: string, signals: string[] }}
+ * @returns {{ mode: string, editorial_mode: string, confidence: number, reasons: string[], scores: { news: number, evergreen: number }, reason: string, signals: string[] }}
  */
 export function routeEditorialMode(extracted, pattern, story) {
   const signals = [];
@@ -112,11 +163,13 @@ export function routeEditorialMode(extracted, pattern, story) {
   // ─── Override env (debug / QA / AB test) ──────────────────────
   if (FORCE_EDITORIAL_MODE === 'news' || FORCE_EDITORIAL_MODE === 'evergreen') {
     console.log(`📰 EDITORIAL_ROUTER: Mode forcé par env FORCE_EDITORIAL_MODE=${FORCE_EDITORIAL_MODE}`);
-    return {
-      mode: FORCE_EDITORIAL_MODE,
-      reason: `Override env FORCE_EDITORIAL_MODE=${FORCE_EDITORIAL_MODE}`,
-      signals: ['env_override']
-    };
+    return buildResult(
+      FORCE_EDITORIAL_MODE,
+      1.0,
+      ['env_override'],
+      { news: FORCE_EDITORIAL_MODE === 'news' ? 1 : 0, evergreen: FORCE_EDITORIAL_MODE === 'evergreen' ? 1 : 0 },
+      ['env_override']
+    );
   }
 
   // ─── 1. Veto meta/community ──────────────────────────────────
@@ -130,11 +183,7 @@ export function routeEditorialMode(extracted, pattern, story) {
   // Posts meta + aucun événement exploitable = skip
   if (signals.includes('meta_title_match') &&
       (pattern?.exploitable_events?.count || 0) === 0) {
-    return {
-      mode: 'skip',
-      reason: 'Meta/community post sans contenu voyage exploitable',
-      signals
-    };
+    return buildResult('skip', 1.0, ['meta_veto'], { news: 0, evergreen: 0 }, signals);
   }
 
   // ─── 2. Signal recency ──────────────────────────────────────
@@ -179,36 +228,70 @@ export function routeEditorialMode(extracted, pattern, story) {
     signals.push('no_dates_in_text');
   }
 
-  // ─── Décision finale ────────────────────────────────────────
-  const newsSignals = signals.filter(s =>
-    s.startsWith('recency_') ||
-    s === 'news_title_keywords' ||
-    s === 'update_thread_pattern' ||
-    s === 'warning_pattern' ||
-    s === 'comments_confirm_change' ||
-    s === 'high_solution_density'
-  );
+  // ─── Scoring pondéré ────────────────────────────────────────
+  let newsScore = 0;
+  let evergreenScore = 0;
 
-  const evergreenSignals = signals.filter(s =>
-    s === 'evergreen_process' ||
-    s === 'no_dates_in_text'
-  );
+  const newsSignals = [];
+  const evergreenSignalsList = [];
 
-  // Seuil : >= 2 signaux NEWS pour classifier en NEWS
-  if (newsSignals.length >= 2) {
-    return {
-      mode: 'news',
-      reason: `${newsSignals.length} signaux NEWS détectés: ${newsSignals.join(', ')}`,
-      signals
-    };
+  for (const s of signals) {
+    if (s.startsWith('recency_')) {
+      newsScore += SIGNAL_WEIGHTS.recency;
+      newsSignals.push(s);
+    } else if (s === 'news_title_keywords') {
+      newsScore += SIGNAL_WEIGHTS.news_title_keywords;
+      newsSignals.push(s);
+    } else if (s === 'update_thread_pattern') {
+      newsScore += SIGNAL_WEIGHTS.update_thread_pattern;
+      newsSignals.push(s);
+    } else if (s === 'warning_pattern') {
+      newsScore += SIGNAL_WEIGHTS.warning_pattern;
+      newsSignals.push(s);
+    } else if (s === 'comments_confirm_change') {
+      newsScore += SIGNAL_WEIGHTS.comments_confirm_change;
+      newsSignals.push(s);
+    } else if (s === 'high_solution_density') {
+      newsScore += SIGNAL_WEIGHTS.high_solution_density;
+      newsSignals.push(s);
+    } else if (s === 'evergreen_process') {
+      evergreenScore += SIGNAL_WEIGHTS.evergreen_process;
+      evergreenSignalsList.push(s);
+    } else if (s === 'no_dates_in_text') {
+      evergreenScore += SIGNAL_WEIGHTS.no_dates_in_text;
+      evergreenSignalsList.push(s);
+    }
   }
 
-  // Default : EVERGREEN (c'est le cœur du média)
-  return {
-    mode: 'evergreen',
-    reason: evergreenSignals.length > 0
-      ? `Mode EVERGREEN (${evergreenSignals.join(', ')})`
-      : 'Mode EVERGREEN par défaut (pas assez de signaux NEWS)',
-    signals
+  // ─── Confidence ─────────────────────────────────────────────
+  const totalScore = newsScore + evergreenScore;
+  const confidence = totalScore > 0
+    ? Math.abs(newsScore - evergreenScore) / totalScore
+    : 0;
+  const clampedConfidence = Math.min(1, Math.max(0, confidence));
+
+  const scores = {
+    news: Math.round(newsScore * 100) / 100,
+    evergreen: Math.round(evergreenScore * 100) / 100
   };
+
+  // ─── Décision finale ────────────────────────────────────────
+  let mode;
+  let reasons;
+
+  if (clampedConfidence < CONFIDENCE_THRESHOLD) {
+    // Confiance trop basse : fallback evergreen (c'est le cœur du média)
+    mode = 'evergreen';
+    reasons = [...evergreenSignalsList, 'low_confidence_fallback'];
+  } else if (newsScore > evergreenScore) {
+    mode = 'news';
+    reasons = newsSignals;
+  } else {
+    mode = 'evergreen';
+    reasons = evergreenSignalsList.length > 0
+      ? evergreenSignalsList
+      : ['default_evergreen'];
+  }
+
+  return buildResult(mode, clampedConfidence, reasons, scores, signals);
 }

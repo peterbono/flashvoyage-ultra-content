@@ -27,6 +27,7 @@ import { detectRedditPattern } from './reddit-pattern-detector.js';
 import { compileRedditStory } from './reddit-story-compiler.js';
 import IntelligentContentAnalyzerOptimized from './intelligent-content-analyzer-optimized.js';
 import { decideAffiliatePlacements } from './contextual-affiliate-injector.js';
+import EditorialAuthorityBooster from './editorial-authority-booster.js';
 import SeoOptimizer from './seo-optimizer.js';
 import EditorialEnhancer from './editorial-enhancer.js';
 import SerpCompetitiveEnhancer from './serp-competitive-enhancer.js';
@@ -100,12 +101,21 @@ class PipelineRunner {
       pipelineReport.endStep('story-compiler', story, { status: 'pass' });
 
       // ÉTAPE 3.5: Routage éditorial NEWS / EVERGREEN
+      pipelineReport.startStep('editorial-router');
       const { routeEditorialMode } = await import('./editorial-router.js');
       const editorialRoute = routeEditorialMode(extracted, pattern, story);
       const editorialMode = editorialRoute.mode;
       console.log(`\n📰 ÉTAPE 3.5: Routage éditorial → ${editorialMode.toUpperCase()}`);
-      console.log(`   Raison: ${editorialRoute.reason}`);
+      console.log(`   Confiance: ${editorialRoute.confidence.toFixed(2)}`);
+      console.log(`   Scores: news=${editorialRoute.scores.news} evergreen=${editorialRoute.scores.evergreen}`);
+      console.log(`   Raisons: [${editorialRoute.reasons.join(', ')}]`);
       console.log(`   Signaux: [${editorialRoute.signals.join(', ')}]`);
+      pipelineReport.endStep('editorial-router', {
+        mode: editorialMode,
+        confidence: editorialRoute.confidence,
+        scores: editorialRoute.scores,
+        reasons: editorialRoute.reasons
+      }, { status: editorialMode === 'skip' ? 'skip' : 'pass' });
       
       if (editorialMode === 'skip') {
         console.log(`   ⏭️ Article ignoré: ${editorialRoute.reason}`);
@@ -156,6 +166,26 @@ class PipelineRunner {
       } catch (error) {
         console.warn(`   ⚠️ Validation cohérence échouée: ${error.message}, continuation`);
         pipelineReport.endStep('title-coherence', { error: error.message }, { status: 'skip' });
+      }
+
+      // ÉTAPE 4.7: Editorial Authority Booster
+      console.log('\n📋 ÉTAPE 4.7: Editorial Authority Booster');
+      pipelineReport.startStep('editorial-authority-booster');
+      try {
+        const booster = new EditorialAuthorityBooster();
+        const { boostedHtml, authority_report } = booster.boost(
+          generated.content,
+          extracted,
+          story,
+          pattern,
+          editorialMode.toUpperCase()
+        );
+        generated.content = boostedHtml;
+        console.log(`   AUTHORITY_BOOST: added=${authority_report.moves_added}, proofs=${authority_report.proofs_total}, status=${authority_report.status}`);
+        pipelineReport.endStep('editorial-authority-booster', authority_report, { status: authority_report.status });
+      } catch (error) {
+        console.warn(`   ⚠️ Editorial Authority Booster échoué: ${error.message}, continuation`);
+        pipelineReport.endStep('editorial-authority-booster', { error: error.message }, { status: 'skip' });
       }
 
       // ÉTAPE 5: Affiliate Injector
@@ -259,7 +289,10 @@ class PipelineRunner {
         geo_defaults: geoDefaults || geo, // Utiliser geoDefaults si disponible, sinon geo
         geo: geo,
         generatedTitle: generated.title || '', // Pour la validation anti-décontextualisation du titre
-        editorial_mode: editorialMode // NEWS ou EVERGREEN — conditionne scorer + finalizer
+        editorial_mode: editorialMode, // NEWS ou EVERGREEN — conditionne scorer + finalizer
+        editorial_confidence: editorialRoute.confidence,
+        editorial_reasons: editorialRoute.reasons,
+        editorial_scores: editorialRoute.scores
       };
       
       console.log(`✅ PIPELINE_CONTEXT: final_destination=${finalDestination || 'null'} main_destination=${pipelineContext.main_destination || 'null'} geo_city=${geo.city || 'null'}`);

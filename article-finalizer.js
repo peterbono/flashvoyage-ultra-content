@@ -363,7 +363,7 @@ class ArticleFinalizer {
     finalContent = this.removeDuplicateParagraphs(finalContent, tempReport);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeDuplicateParagraphs: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    
+
     // PHASE 6.0.11.6: Détecter et supprimer les duplications dans "Ce que la communauté apporte"
     finalContent = this.detectSectionDuplications(finalContent, 'Ce que la communauté apporte', tempReport);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
@@ -456,6 +456,9 @@ class ArticleFinalizer {
       }
     }
     
+    // PHASE 5.E: Conversion systématique USD → EUR
+    finalContent = this.convertCurrencyToEUR(finalContent);
+
     // PHASE 6.1: QA Report déterministe
     const qaReport = await this.runQAReport(finalContent, pipelineContext, analysis);
     finalContent = qaReport.finalHtml;
@@ -666,6 +669,42 @@ class ArticleFinalizer {
       console.log(`   🧹 NETTOYAGE FINAL ABSOLU: ${finalCleanupBefore.emptyParas - finalCleanupAfter.emptyParas} paragraphe(s) vide(s) et ${finalCleanupBefore.limitesCount - finalCleanupAfter.limitesCount} duplication(s) "Limites et biais" supprimé(s)`);
     }
     
+    // PHASE 6.4.9: Ajouter le point final manquant aux paragraphes
+    // Le LLM omet souvent le point en fin de phrase. On l'ajoute si le paragraphe
+    // se termine par une lettre (pas par ., !, ?, :, ), », …, ou un placeholder).
+    {
+      let dotFixed = 0;
+      finalContent = finalContent.replace(/(<p[^>]*>)([\s\S]*?)(<\/p>)/gi, (match, open, content, close) => {
+        const trimmed = content.replace(/\s+$/g, '');
+        if (trimmed.length < 10) return match; // trop court = pas une vraie phrase
+        const lastChar = trimmed.slice(-1);
+        // Ne rien ajouter si ça finit déjà par une ponctuation, un guillemet, un placeholder, un tag, etc.
+        if (/[.!?:;)»…\u2026\u00BB>_\]]/.test(lastChar)) return match;
+        // Ne rien ajouter si le contenu finit par un tag HTML (ex: </strong>, </a>)
+        if (/<\/[a-z]+>\s*$/i.test(trimmed)) {
+          // Vérifier le dernier caractère de texte avant le tag fermant
+          const textBeforeTag = trimmed.replace(/<\/[a-z]+>\s*$/i, '').replace(/<[^>]+>/g, '').trim();
+          const lastTextChar = textBeforeTag.slice(-1);
+          if (/[.!?:;)»…\u2026\u00BB\]]/.test(lastTextChar)) return match;
+          // Insérer le point avant le tag fermant
+          const tagMatch = trimmed.match(/(<\/[a-z]+>)\s*$/i);
+          if (tagMatch) {
+            dotFixed++;
+            return open + trimmed.slice(0, -tagMatch[0].length) + '.' + tagMatch[0] + close;
+          }
+        }
+        // Terminé par une lettre ou un chiffre → ajouter un point
+        if (/[a-zA-ZÀ-ÿ0-9]/.test(lastChar)) {
+          dotFixed++;
+          return open + trimmed + '.' + close;
+        }
+        return match;
+      });
+      if (dotFixed > 0) {
+        console.log(`   ✏️ PONCTUATION_FINALE: ${dotFixed} point(s) ajouté(s) en fin de paragraphe`);
+      }
+    }
+
     // PHASE 6.5: Normalisation des noms géographiques composés (sud-est → Sud-Est)
     finalContent = finalContent.replace(/(?<=>)([^<]+)(?=<)/g, (match, textContent) => {
       return textContent
@@ -714,6 +753,36 @@ class ArticleFinalizer {
         const insertPos = relatedIdx > 0 ? relatedIdx : finalContent.length;
         finalContent = finalContent.slice(0, insertPos) + '\n' + original + '\n' + finalContent.slice(insertPos);
         console.warn(`🛡️ FAQ_PROTECT: placeholder disparu — FAQ réinsérée avant dernier H2`);
+      }
+    }
+
+    // PHASE FINALE: Réparation des tags HTML orphelins (div, a)
+    // Les étapes de suppression de sections (removeForbiddenH2Section, removeParasiticSections, etc.)
+    // peuvent supprimer un </div> ou </a> qui se trouvait dans la section supprimée,
+    // créant un tag ouvrant orphelin. On corrige ici.
+    {
+      const _countTag = (h, t) => [(h.match(new RegExp('<' + t + '[\\s>]', 'gi')) || []).length, (h.match(new RegExp('</' + t + '>', 'gi')) || []).length];
+      for (const tag of ['div', 'a']) {
+        const [opens, closes] = _countTag(finalContent, tag);
+        if (opens > closes) {
+          const missing = opens - closes;
+          for (let i = 0; i < missing; i++) {
+            // Ajouter le tag fermant manquant avant la fin du contenu
+            finalContent += `</${tag}>`;
+          }
+          console.log(`🔧 TAG_BALANCE_REPAIR: ajouté ${missing} </${tag}> manquant(s)`);
+        } else if (closes > opens) {
+          // Supprimer les tags fermants orphelins (de la fin vers le début)
+          let remaining = closes - opens;
+          while (remaining > 0) {
+            const idx = finalContent.lastIndexOf(`</${tag}>`);
+            if (idx === -1) break;
+            // Vérifier que ce close tag n'a pas de open correspondant après la dernière suppression
+            finalContent = finalContent.substring(0, idx) + finalContent.substring(idx + tag.length + 3);
+            remaining--;
+          }
+          console.log(`🔧 TAG_BALANCE_REPAIR: supprimé ${closes - opens} </${tag}> orphelin(s)`);
+        }
       }
     }
 
@@ -3513,6 +3582,11 @@ class ArticleFinalizer {
       const href = unclosedMatch[1];
       const linkText = unclosedMatch[2];
       
+      // FIX: Si le linkText contient déjà </a>, le lien est correctement fermé — skip
+      if (linkText.includes('</a>')) {
+        continue;
+      }
+      
       // Vérifier si le lien est vraiment non fermé (pas de </a> dans les 500 caractères suivants)
       const afterMatch = cleanedHtml.substring(cleanedHtml.indexOf(fullMatch) + fullMatch.length, cleanedHtml.indexOf(fullMatch) + fullMatch.length + 500);
       if (!afterMatch.includes('</a>')) {
@@ -5150,11 +5224,6 @@ class ArticleFinalizer {
   normalizeSpacing(html, report) {
     console.log('🔧 normalizeSpacing: Normalisation des espaces et sauts de ligne...');
     
-    // #region agent log
-    const brokenBefore = html.match(/[a-zà-ÿ]{3,}\s+[àâäéèêëïîôùûüÿ][a-zà-ÿ]+/gi) || [];
-    fetch('http://127.0.0.1:7901/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:5042',message:'H2: broken accents BEFORE normalizeSpacing',data:{count:brokenBefore.length,samples:brokenBefore.slice(0,15)},timestamp:Date.now(),hypothesisId:'H2'})}).catch(()=>{});
-    // #endregion
-    
     let cleanedHtml = html;
     let fixesCount = 0;
     // CORRECTION CRITIQUE: Protéger les widgets (script/form) AVANT tout traitement pour éviter qu'ils soient modifiés
@@ -5193,6 +5262,23 @@ class ArticleFinalizer {
     // normalizeSpacing corrompt les ":" dans "wp:details" en ajoutant un espace
     cleanedHtml = cleanedHtml.replace(/<!-- \/?(wp:[a-z]+[^>]*) -->/g, (match) => {
       const placeholder = `__GUTENBERG_COMMENT_${widgetCounter++}__`;
+      widgetPlaceholders.set(placeholder, match);
+      return placeholder;
+    });
+
+    // Protéger les blocs <style>...</style> (CSS FAQ, etc.)
+    // normalizeSpacing ajoute des espaces dans les sélecteurs CSS (.class → . class, ::after → :: after)
+    cleanedHtml = cleanedHtml.replace(/<style[\s\S]*?<\/style>/gi, (match) => {
+      const placeholder = `__WIDGET_STYLE_${widgetCounter++}__`;
+      widgetPlaceholders.set(placeholder, match);
+      return placeholder;
+    });
+
+    // Protéger les éléments avec attributs data-fv-* (authority booster moves)
+    // normalizeSpacing ajoute des espaces dans les valeurs d'attributs (post.evidence → post. evidence)
+    // Backreference \1 pour que le tag fermant corresponde au tag ouvrant (évite que </p> interne stoppe le match avant </div>)
+    cleanedHtml = cleanedHtml.replace(/<(div|p|span)([^>]*data-fv-(?:proof|move)[^>]*)>[\s\S]*?<\/\1>/gi, (match) => {
+      const placeholder = `__WIDGET_FVMOVE_${widgetCounter++}__`;
       widgetPlaceholders.set(placeholder, match);
       return placeholder;
     });
@@ -5573,11 +5659,6 @@ class ArticleFinalizer {
         p1dSkipped.push({m, reason:'not_suffix', part2});
         return m;
       });
-      // #region agent log
-      if (p1dRepairs.length > 0 || p1dSkipped.length > 0) {
-        fetch('http://127.0.0.1:7903/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:P1D',message:'Pattern 1d suffix repair results per <p>',data:{repaired:p1dRepairs,skipped:p1dSkipped.slice(0,10)},timestamp:Date.now(),hypothesisId:'H5'})}).catch(()=>{});
-      }
-      // #endregion
       
       // Pattern 2: Mot français (3+ lettres) + espace + lettre accentuée isolée (ex: "pass é" → "passé", "pay é" → "payé", "bas é" → "basé")
       // FIX H1: replaced \b with French-aware boundary; added ç
@@ -5612,17 +5693,6 @@ class ArticleFinalizer {
       
       return openTag + fixedContent + closeTag;
     });
-    
-    // #region agent log
-    // H1/H2/H3: Before CORRECTION FINALE — scan ALL text for stuck words and broken accents
-    const allTextBefore = cleanedHtml.replace(/<[^>]+>/g, ' ');
-    const stuckWordsAll = allTextBefore.match(/[a-zà-ÿ]{3,}[àâäéèêëïîôùûüÿç][a-zà-ÿ]{3,}/gi) || [];
-    const brokenWordsAll = allTextBefore.match(/[a-zà-ÿ]{3,}\s+[àâäéèêëïîôùûüÿç][a-zà-ÿ]{1,8}/gi) || [];
-    // H2: stuck words in non-<p> elements specifically
-    const nonPText = cleanedHtml.replace(/<p[^>]*>[\s\S]*?<\/p>/g, '').replace(/<[^>]+>/g, ' ');
-    const stuckInNonP = nonPText.match(/[a-zà-ÿ]{3,}[àâäéèêëïîôùûüÿç][a-zà-ÿ]{3,}/gi) || [];
-    fetch('http://127.0.0.1:7903/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:BEFORE_CORRECTION_FINALE',message:'Stuck and broken words BEFORE correction',data:{stuckTotal:stuckWordsAll.length,stuckSamples:stuckWordsAll.slice(0,20),brokenTotal:brokenWordsAll.length,brokenSamples:brokenWordsAll.slice(0,20),stuckInNonPCount:stuckInNonP.length,stuckInNonPSamples:stuckInNonP.slice(0,10)},timestamp:Date.now(),hypothesisId:'H1-H2-H3'})}).catch(()=>{});
-    // #endregion
 
     // CORRECTION FINALE: Détecter et corriger les mots français collés sans espace
     // Pattern: mot français (4+ lettres) + mot français (4+ lettres) collés ensemble
@@ -5674,9 +5744,6 @@ class ArticleFinalizer {
       // FIX H3: Group 1 min reduced from {3,} to {2,} to handle "les" + "échanges"
       //   Whitelist expanded with missing common accented words
       const COMMON_ACCENTED_WORDS = /^(être|état|était|étaient|étant|également|économique|économiques|économiser|économies|élevé|élevés|élevée|élevées|éventuelles?|éventuels?|éventuel|échanges?|échanger|écrire|énergie|énormes?|équilibre|équilibré|équilibrés|équilibrée|équilibrées|équipé|équipés|équipées?|évaluer|éviter|évoluer|évolution|étape|étapes|étranger|étrangers|étrangère|étrangères|étude|études|évidemment|éventail|échapper|époque|épaules|écran|éléments?|émission|émotion|édition|êtes|être)$/i;
-      // #region agent log
-      const stuckBeforeP1b = protectedContent.match(/[a-zà-ÿ]{3,}[àâäéèêëïîôùûüÿç][a-zà-ÿ]{3,}/gi) || [];
-      // #endregion
       
       let p1bMatches = [];
       let p1bSkipped = [];
@@ -5689,13 +5756,6 @@ class ArticleFinalizer {
         p1bSkipped.push({word: m, word2});
         return m;
       });
-      
-      // #region agent log
-      const stuckAfterP1b = fixedContent.match(/[a-zà-ÿ]{3,}[àâäéèêëïîôùûüÿç][a-zà-ÿ]{3,}/gi) || [];
-      if (stuckBeforeP1b.length > 0 || p1bMatches.length > 0) {
-        fetch('http://127.0.0.1:7903/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:AFTER_P1B',message:'Pattern 1b results per <p>',data:{stuckBefore:stuckBeforeP1b.length,stuckAfter:stuckAfterP1b.length,matched:p1bMatches,skipped:p1bSkipped,stuckBeforeSamples:stuckBeforeP1b.slice(0,5),stuckAfterSamples:stuckAfterP1b.slice(0,5)},timestamp:Date.now(),hypothesisId:'H1-H3'})}).catch(()=>{});
-      }
-      // #endregion
 
       // Restaurer les placeholders
       entityPlaceholdersFinal.forEach((entity, key) => {
@@ -5744,10 +5804,8 @@ class ArticleFinalizer {
     const GLOBAL_COMMON_WORDS = new Set(['dans','avec','pour','plus','sous','sans','chez','tout','mais','très','bien','font','sont','nous','vous','leur','elle','cela','cette','entre','après','avant','comme','aussi','autre','faire','avoir','être','même','dont','vers','quel','ceux','ceci','hors','dès','lors','près','les','des','mes','ses','ces','une','par','sur','son','mon','ton','aux','pas','car','que','qui','est','ont']);
     // FIX H4: Added ç suffixes, ç detection, éré missing suffix
     const GLOBAL_SUFFIXES = /^(ée|ées|és|éré|érée|érées|ère|ères|èrement|ément|éments|étaire|étaires|étude|érence|érences|érieur|érieure|érieurs|érable|érables|émie|érité|érite|ètement|ériaux|érial|ériel|étique|étiques|èse|èses|èbre|èbres|ôle|ôles|ôt|ôts|ûre|ûres|ûté|ûtés|ître|îtres|érente|érentes|étitif|étitifs|étitive|étitives|érés|érément|ènement|ènements|ière|ières|çue|çues|çu|çus|çant|çants|çon|çons|çais|çaise|çaises)$/i;
-    // #region agent log
     let globalPassRepairs = [];
     let globalPassSkipped = [];
-    // #endregion
     // FIX H1: replaced \b with French-aware boundaries; FIX H4: added ç to detection
     cleanedHtml = cleanedHtml.replace(/(?<=>)([^<]+)(?=<)/g, (match, textContent) => {
       return textContent.replace(/(?<![a-zà-ÿ])([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿç][a-zà-ÿ]{1,8})(?![a-zà-ÿ])/gi, (m, part1, part2) => {
@@ -5759,16 +5817,6 @@ class ArticleFinalizer {
         return m;
       });
     });
-    // #region agent log
-    fetch('http://127.0.0.1:7903/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:GLOBAL_PASS',message:'GLOBAL pass repair results',data:{repaired:globalPassRepairs.length,repairedSamples:globalPassRepairs.slice(0,15),skipped:globalPassSkipped.length,skippedSamples:globalPassSkipped.slice(0,15)},timestamp:Date.now(),hypothesisId:'H4-H5'})}).catch(()=>{});
-    // #endregion
-
-    // #region agent log
-    const allTextAfter = cleanedHtml.replace(/<[^>]+>/g, ' ');
-    const stuckWordsAfter = allTextAfter.match(/[a-zà-ÿ]{3,}[àâäéèêëïîôùûüÿç][a-zà-ÿ]{3,}/gi) || [];
-    const brokenAfter = allTextAfter.match(/[a-zà-ÿ]{3,}\s+[àâäéèêëïîôùûüÿç][a-zà-ÿ]{1,8}/gi) || [];
-    fetch('http://127.0.0.1:7903/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:AFTER_ALL_FIXES',message:'Final state: stuck + broken words',data:{stuckRemaining:stuckWordsAfter.length,stuckSamples:stuckWordsAfter.slice(0,20),brokenRemaining:brokenAfter.length,brokenSamples:brokenAfter.slice(0,20)},timestamp:Date.now(),hypothesisId:'H1-H2-H3-H4-H5'})}).catch(()=>{});
-    // #endregion
     
     return cleanedHtml;
   }
@@ -10364,6 +10412,100 @@ class ArticleFinalizer {
     }
 
     return truncated.trim();
+  }
+
+  /**
+   * Convertit systématiquement les montants USD en EUR dans le HTML.
+   * Patterns détectés : $N, N USD, N dollars, N$
+   * Résultat : ~X euros
+   * 
+   * Exclusions :
+   *   - Montants déjà suivis de "EUR"/"euros"
+   *   - Montants dans des balises <script> (JSON-LD)
+   *   - Montants déjà dans un marqueur "(N USD)" existant
+   * 
+   * @param {string} html
+   * @returns {string}
+   */
+  convertCurrencyToEUR(html) {
+    if (!html) return html;
+
+    const USD_TO_EUR_RATE = 0.92;
+    let converted = 0;
+
+    // Protéger les blocs <script> (JSON-LD, etc.)
+    const scriptPlaceholders = new Map();
+    let scriptIdx = 0;
+    let safeHtml = html.replace(/<script[\s\S]*?<\/script>/gi, (match) => {
+      const ph = `__CURRENCY_SCRIPT_${scriptIdx++}__`;
+      scriptPlaceholders.set(ph, match);
+      return ph;
+    });
+
+    // Pattern 1: $1,000 or $1000 or $50 (dollar sign prefix)
+    // Exclude if already followed by euros/EUR or inside existing "(N USD)"
+    safeHtml = safeHtml.replace(
+      /\$\s?([\d,]+(?:\.\d{1,2})?)\b(?!\s*(?:euros?|EUR))/g,
+      (match, amountStr, offset) => {
+        // Skip if this is inside an existing "(X USD)" parenthetical
+        const before = safeHtml.substring(Math.max(0, offset - 5), offset);
+        if (/\(~?\s*$/.test(before)) return match;
+
+        const amount = parseFloat(amountStr.replace(/,/g, ''));
+        if (isNaN(amount) || amount <= 0) return match;
+        const eur = Math.round(amount * USD_TO_EUR_RATE);
+        converted++;
+        return `~${eur.toLocaleString('fr-FR')} euros`;
+      }
+    );
+
+    // Pattern 2: N USD or N dollars (suffix patterns)
+    safeHtml = safeHtml.replace(
+      /(\d[\d\s.,]*(?:\.\d{1,2})?)\s*(?:USD|dollars?)\b(?!\s*\))/gi,
+      (match, amountStr, offset) => {
+        // Skip if already converted
+        const before = safeHtml.substring(Math.max(0, offset - 10), offset);
+        if (/euros?\s*\(\s*$/.test(before)) return match;
+        if (/\(\s*$/.test(before)) return match;
+
+        const cleaned = amountStr.replace(/[\s.]/g, '').replace(',', '.');
+        const amount = parseFloat(cleaned);
+        if (isNaN(amount) || amount <= 0) return match;
+        const eur = Math.round(amount * USD_TO_EUR_RATE);
+        converted++;
+        return `~${eur.toLocaleString('fr-FR')} euros`;
+      }
+    );
+
+    // Pattern 3: N$ (number followed by dollar sign, common in informal writing)
+    safeHtml = safeHtml.replace(
+      /([\d,]+(?:\.\d{1,2})?)\$(?!\s*(?:euros?|EUR))/g,
+      (match, amountStr, offset) => {
+        const before = safeHtml.substring(Math.max(0, offset - 5), offset);
+        if (/\(~?\s*$/.test(before)) return match;
+
+        const amount = parseFloat(amountStr.replace(/,/g, ''));
+        if (isNaN(amount) || amount <= 0) return match;
+        const eur = Math.round(amount * USD_TO_EUR_RATE);
+        converted++;
+        return `~${eur.toLocaleString('fr-FR')} euros`;
+      }
+    );
+
+    // Pattern 4: Nettoyer les parenthèses USD résiduelles générées par le LLM
+    // Ex: "~920 euros (1 000 USD)" → "~920 euros", "~184 à 276 euros (~200 à 300 USD)" → "~184 à 276 euros"
+    safeHtml = safeHtml.replace(/\s*\(~?[\d\s,.]+\s*(?:USD|dollars?)\)/gi, '');
+
+    // Restaurer les blocs <script>
+    for (const [ph, original] of scriptPlaceholders) {
+      safeHtml = safeHtml.replace(ph, original);
+    }
+
+    if (converted > 0) {
+      console.log(`💶 CURRENCY_CONVERT: ${converted} montant(s) USD → EUR convertis`);
+    }
+
+    return safeHtml;
   }
 }
 

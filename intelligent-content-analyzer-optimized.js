@@ -1291,25 +1291,42 @@ Tu DOIS proposer un titre et un angle éditorial UNIQUES : ni même formulation,
 - ZÉRO amplification : ne dramatise pas, ne projette pas, ne suppose pas. Restitue les faits tels qu'ils sont.
 - Distingue explicitement ce qui est CERTAIN (fait vérifié, citation directe) de ce qui est INCERTAIN (hypothèse, rumeur, non confirmé).
 
-📰 CADRE ÉDITORIAL NEWS — Structure obligatoire :
-1. HOOK IMMERSIF + IMMÉDIAT : micro-scène factuelle, pas de mise en contexte longue. Plonge le lecteur dans le fait principal.
-2. ANNONCE DE L'INFO RÉCENTE : le changement, la surprise, le nouveau fait. Factuel, sourcé.
-3. IMPACT PRATIQUE MAINTENANT : "ce que ça change pour toi concrètement" — en 2-3 paragraphes max.
-4. PREUVE SOCIALE COURTE : 1-2 citations inline « ... » depuis les données extraites. Pas plus.
-5. SOLUTION IMMÉDIATE + RECOMMANDATION CONCRÈTE : une action claire à faire maintenant.
-6. CTA LOGIQUE (1 SEUL) : lié directement à la solution exposée. Si aucun CTA n'est pertinent, ne pas en forcer.
-7. À RETENIR : 2-3 bullets maximum, les takeaways clés.
+📰 CADRE ÉDITORIAL NEWS — Contraintes de contenu (PAS un template rigide) :
+
+1. HOOK (1-2 phrases) : micro-scène factuelle + contexte immédiat. Plonge le lecteur dans le fait principal sans préambule.
+
+2. BLOC « Ce que ça change concrètement » (OBLIGATOIRE) :
+   - Un H2 contenant le mot "change" ou "impact" ou "concrètement"
+   - Suivi de 3-7 bullets actionnables (<ul><li>)
+   - Chaque bullet = une conséquence pratique pour le voyageur, pas une reformulation du fait
+
+3. BLOC « Combien ça coûte / combien tu perds » (OBLIGATOIRE si le sujet implique de l'argent) :
+   - Montants explicites en EUROS uniquement (pas de dollars, pas de USD entre parenthèses)
+   - Exemple : « ~920 euros » ou « environ 200 euros »
+   - Si pas d'argent impliqué, ce bloc peut être omis
+
+4. MINI-SCÉNARIO « Si tu es dans ce cas → fais ça » (2-4 phrases) :
+   - Situation concrète du lecteur → action immédiate recommandée
+   - Pas de conditionnel vague : être directif
+
+5. PREUVES : 1-3 citations Reddit inline max entre guillemets français « ... »
+   - Ne pas paraphraser : citer textuellement depuis les données extraites
+   - Pas plus de 3 citations
+
+6. 1 CTA MAXIMUM, intégré naturellement dans le flux. Si aucun CTA n'est pertinent, 0 CTA.
 
 ⚠️ CONTRAINTES NEWS STRICTES :
-- Format COURT : 600-900 mots maximum. Pas de guide exhaustif, pas de comparatifs longs.
+- Format : 600-1000 mots. Pas de guide exhaustif, pas de comparatifs longs.
 - 1 CTA AFFILIÉ MAXIMUM : uniquement s'il résout le problème immédiat exposé dans l'actu. Sinon 0.
 - Pas de sections "limites et biais", "erreurs fréquentes", "FAQ", "checklist longue". Ce n'est PAS un guide.
-- Pas d'arc narratif long. Structure linéaire : fait → impact → solution → action.
+- Structure linéaire : fait → impact → coût → scénario → action.
 - Les H2 doivent être factuels et spécifiques au fait traité (pas de H2 narratifs longs).
+- INTERDIT ABSOLU : "Lien partenaire", "[lien]", "cliquez ici", tout placeholder d'affiliation visible dans le texte.
+- Tous les montants doivent être en euros (EUR) uniquement. Si la source donne un montant en USD, convertir avec taux ~0.92. Ne PAS indiquer le montant en dollars. Ex: ~920 euros.
 
 ${marketingSection}
 
-FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <strong>. LONGUEUR: 600-900 mots. Format court, décision rapide.
+FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <strong>. LONGUEUR: 600-1000 mots. Format court, décision rapide.
 
 🚨 EXPLOITATION DES DONNÉES EXTRAITES: INTÈGRE les détails pertinents (faits, dates, chiffres). UTILISE 90% minimum des données fournies. Pas d'invention.
 
@@ -1317,15 +1334,15 @@ FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <strong>. LONGUEUR: 600-900 mots. Format
 {
   "article": {
     "titre": "...",
-    "developpement": "...",  // Corps de l'article en HTML. Commence par 1-2 paragraphes <p> (hook + annonce fait). Puis H2 factuels : impact, solution, action. COURT. EN FRANÇAIS.
+    "developpement": "...",  // Corps de l'article en HTML. Commence par 1-2 paragraphes <p> (hook + annonce fait). Puis H2 factuels. COURT. EN FRANÇAIS.
     "a_retenir": "...",  // 2-3 bullets HTML (<ul><li>) : les takeaways clés. Sans H2 (le système l'ajoute).
-    "signature": "...",  // CTA soft de fin (1 seul, contextuel)
+    "signature": "...",  // CTA soft de fin (1 seul, contextuel). INTERDIT: "Lien partenaire" comme texte.
     "citations": [...],  // max 3
     "opportunites_liens_internes": [...]
   }
 }
 
-⚠️ RAPPELS NEWS : Ton factuel. Pas d'invention. Pas de dramatisation. Tout en FRANÇAIS. 1 CTA max. Court.
+⚠️ RAPPELS NEWS : Ton factuel. Pas d'invention. Pas de dramatisation. Tout en FRANÇAIS. 1 CTA max. Court. Aucun placeholder d'affiliation visible.
 
 Réponds UNIQUEMENT en JSON avec cette structure.`;
     } else {
@@ -1339,21 +1356,28 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 - Chaque section doit répondre à une vraie question ou tension du lecteur ; pas de remplissage générique.
 
 📖 OUVERTURE IMMERSIVE — HOOK CINÉMATIQUE (premier paragraphe, OBLIGATOIRE) :
-- Structure : micro-scène sensorielle + micro-tension + enjeu budget/temps
-- Le hook plonge le lecteur dans une SITUATION CONCRÈTE tirée du témoignage, sans mentionner Reddit.
-- ❌ INTERDIT : "Te voilà devant l'écran...", commencer par une question rhétorique sans scène.
+- Ouvrir sur une micro-scène sensorielle (2-4 phrases) : lieu, odeur, bruit, geste, tension. Puis 1 question qui accroche.
+- La scène doit être tirée du témoignage (lieu réel, situation réelle, enjeu réel).
+- ❌ INTERDIT : ouvrir par une question seule sans scène, mentionner Reddit/source, utiliser "Te voilà", commencer par une généralité.
 - Exemples calibrés :
-  * Budget : "Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil..."
-  * Visa : "Tu atterris à Bangkok avec un visa de 30 jours et une liste qui en demanderait 90..."
-  * Santé : "Il est 2h du matin à Bali quand ton estomac décide que la soirée est terminée..."
+  * Budget : "Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil. L'écran du distributeur affiche les frais, tu calcules mentalement, et tu te demandes si le jeu en vaut la chandelle. Combien te coûte vraiment cette habitude sur un mois ?"
+  * Visa : "Tu atterris à Bangkok avec un visa de 30 jours et une liste qui en demanderait 90. L'air chaud te frappe en sortant de l'aéroport. Et là, première question : par où commencer ?"
+  * Santé : "Il est 2h du matin à Bali quand ton estomac décide que la soirée est terminée. Tu cherches une pharmacie, tout est fermé. Qu'est-ce que tu aurais dû prévoir ?"
 
-📊 CONTEXTE = CADRE GLOBAL + BENCHMARKS :
-- Après l'ouverture, poser le cadre avec des benchmarks concrets (coût/jour, coût/mois, durées).
-- Titres H2 narratifs : ex. <h2>Combien coûte vraiment un long voyage en Asie ?</h2>
+📊 CONTEXTE NARRATIF (paragraphe 2-3, OBLIGATOIRE) :
+- Après le hook, 1 paragraphe cadre : où on en est / ce qui déclenche / ce qui est en jeu.
+- PAS de généralité — ancrer dans le cas concret du témoignage (qui est cette personne, quel est son projet, quel est l'enjeu).
+- Inclure des benchmarks concrets si disponibles (coût/jour, coût/mois, durées, distances).
 
-📌 SECTION "UNE VRAIE HISTOIRE" (témoignage comme preuve) :
-- Citation courte puis interprétation concrète, puis lien avec problématique pratique.
-- OBLIGATOIRE : minimum 3 phrases développées (qui, quoi, enjeu) avant toute analyse.
+📌 PREUVES INTÉGRÉES (OBLIGATOIRE) :
+- Inclure 2 extraits courts (<= 20 mots chacun) du témoignage (post ou commentaires) sous forme de citation intégrée.
+- Chaque citation contextualisée : "Un voyageur résume : « citation »", "L'auteur précise : « citation »".
+- Les citations servent de preuve, pas de décoration — elles ancrent un argument.
+
+🎯 ARBITRAGE ÉDITORIAL (OBLIGATOIRE) :
+- Écrire noir sur blanc une recommandation tranchée basée sur les signaux Reddit.
+- Format : "Si ton budget est [X]... [recommandation]. Si tu veux [Y]... [alternative]."
+- Ne PAS rester neutre — choisir, trancher, recommander. Le lecteur vient pour un avis, pas un résumé.
 
 📌 SECTIONS PRATIQUES ET PEURS :
 - Style de voyage : H2 type "Quel style de voyage permet de durer longtemps avec [budget] ?"
@@ -1365,6 +1389,13 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 📌 VERDICT / CE QU'IL FAUT RETENIR :
 - Ton réaliste, pas vendeur. Minimum 2 paragraphes substantiels.
 - ❌ INTERDIT : Verdict générique type "Comparez les prix et réservez" seul.
+
+🚫 ANTI-PLATITUDE — PHRASES INTERDITES (chaque phrase doit contenir un fait, un chiffre, ou un choix) :
+- ❌ "il est important de", "il faut savoir que", "n'hésite pas à", "il convient de"
+- ❌ "il est essentiel de", "il est recommandé de", "il est conseillé de"
+- ❌ "comme on peut le voir", "il va sans dire que", "force est de constater"
+- ❌ "dans un premier temps", "en ce qui concerne", "il est à noter que"
+- Si une phrase ne contient ni fait concret, ni chiffre, ni choix éditorial → la supprimer ou la reformuler.
 
 📐 STRUCTURE ÉDITORIALE (pilotée par le récit) :
 
@@ -1390,9 +1421,10 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 - Attribution : « ... » — ${extracted.author || 'auteur Reddit'}
 - OBLIGATOIRE : 2-5 citations inline depuis story.evidence.source_snippets
 
-⚠️ RÈGLE ABSOLUE — H2 SPÉCIFIQUES (blacklist) :
-- H2 "nus" INTERDITS : "Contexte", "Événement central", "Conseils pratiques", "En résumé", "Conclusion", etc.
-- H2 qualifiés AUTORISÉS : spécifiques à cet article (ex. "Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois").
+⚠️ RÈGLE ABSOLUE — H2 SPÉCIFIQUES (blacklist étendue) :
+- H2 "nus" INTERDITS : "Contexte", "Événement central", "Conseils pratiques", "En résumé", "Conclusion", "Budget", "Sécurité", "Culture locale", "Transport", "Hébergement", "Gastronomie", "Vie nocturne", "Introduction", "Présentation", "Analyse", "Bilan".
+- Chaque H2 DOIT être ancré dans le cas spécifique : destination + angle unique.
+- H2 qualifiés AUTORISÉS : spécifiques à cet article (ex. "Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois", "Chiang Mai vs Bangkok : où ton budget tient le plus longtemps").
 
 🔄 ARC NARRATIF OBLIGATOIRE :
 1. SITUATION (hook + tension) → 2. SURPRISE/RÉVÉLATION → 3. IMPACT RÉEL → 4. OPTIONS CONCRÈTES → 5. CHOIX RECOMMANDÉ → 6. PLAN D'ACTION
@@ -1412,10 +1444,28 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 - FAQ SEO : 3-5 questions/réponses en fin de développement si le sujet a une intention informationnelle. Format : <h3>Question ?</h3><p>Réponse.</p>
 - CHECKLIST : obligatoire si l'article est un guide pratique ou un plan d'action. Format <ul><li> avec items actionnables.
 
-🎯 3 CTA NARRATIFS (positionnés dans l'arc) :
-- CTA "préventif" TÔT, CTA "solution" AU PIC, CTA "setup long terme" APRÈS.
+🎯 AFFILIATION NATIVE (2-4 insertions max, DANS LE FLUX) :
+- Chaque insertion = problème concret → solution. PAS de bloc "partenaires" isolé.
+- Chaque CTA suit un paragraphe qui décrit un problème concret vécu.
+- CTA "préventif" TÔT (après le hook), CTA "solution" AU PIC (après révélation), CTA "setup long terme" APRÈS (avant conclusion).
+- Marquer chaque emplacement CTA avec : <!-- FV:CTA_SLOT reason="description du problème résolu" -->
 
 🚫 INTERDITS : H2 génériques, listes >5 items sans hiérarchie, ton scolaire, morale/prudence inutile, emphase artificielle.
+
+🚫 INTERDIT ABSOLU — PLACEHOLDERS D'AFFILIATION :
+- ❌ JAMAIS écrire "Lien partenaire", "[lien]", "cliquez ici", "{{lien}}", "[url]" ou tout placeholder d'affiliation visible dans le texte.
+- Les CTAs doivent décrire l'action réelle ("Compare les vols vers Bangkok", "Trouve ton assurance voyage") — jamais un placeholder technique.
+
+💶 CONVERSION MONÉTAIRE OBLIGATOIRE :
+- Tous les montants doivent être en euros (EUR) uniquement. Ne JAMAIS mentionner les dollars ou USD.
+- Si la source donne un montant en USD, convertir avec taux ~0.92 et afficher UNIQUEMENT en euros.
+- Exemple : « ~920 euros » ou « environ 200 euros ».
+- L'audience est francophone européenne : l'euro est la seule devise à utiliser.
+
+📊 MOINS WIKIPEDIA, PLUS DÉCISION :
+- Chaque section DOIT se terminer par une recommandation, un choix, ou un verdict — pas par un résumé neutre.
+- Si tu constates que tu fais du "résumé factuel sans avis", reformule avec un arbitrage : "En pratique, choisis X si [condition], sinon Y."
+- Un article sans prise de position sera REJETÉ.
 
 STYLE : transitions fluides, questions rhétoriques, variation du rythme, tutoiement, ton expert accessible.
 
@@ -1426,6 +1476,7 @@ STYLE : transitions fluides, questions rhétoriques, variation du rythme, tutoie
 🔗 OPPORTUNITÉS DE LIENS INTERNES :
 - 5-10 passages avec lien interne naturel. Placement stratégique (30% premiers de l'article, sous H2, avant recommandations).
 - Densité : 5-10 liens pour 2000-3000 mots. Ancres précises (2-5 mots).
+- COHÉRENCE THÉMATIQUE OBLIGATOIRE : chaque lien interne doit pointer vers un article thématiquement lié au paragraphe qui le contient. Interdit : lien hors-sujet dans l'intro ou dans une section sans rapport.
 
 ${marketingSection}
 
@@ -1434,18 +1485,33 @@ LONGUEUR OBLIGATOIRE: MINIMUM 2000 mots, IDÉAL 2500-3000 mots. Un article EVERG
 
 🚨 EXPLOITATION DES DONNÉES EXTRAITES: INTÈGRE dans "developpement" les détails temporels, lieux, chiffres, entités extraites. UTILISE 90% minimum des données fournies. Pas d'invention.
 
+📍 MARQUEURS ÉDITORIAUX (à insérer dans "developpement") :
+- <!-- FV:CTA_SLOT reason="description du problème résolu" --> : 2-4 max, aux emplacements où un widget d'affiliation serait pertinent.
+- <!-- FV:DIFF_ANGLE --> : avant le paragraphe qui apporte un angle différenciant (ce que les autres guides ne disent pas).
+- <!-- FV:COMMON_MISTAKES --> : avant la section erreurs fréquentes / pièges.
+Ces marqueurs sont invisibles pour le lecteur mais exploités par le pipeline. Ne PAS les omettre.
+
 ⚠️ STRUCTURE JSON (MODE EVERGREEN) :
 {
   "article": {
     "titre": "...",
     "quick_guide": "...",  // OPTIONNEL - Quick Guide (destination, durée, budget, type, difficulté)
-    "developpement": "...",  // OBLIGATOIRE - MINIMUM 2000 mots. Tout le corps en HTML libre. Commence TOUJOURS par 1-2 paragraphes <p> d'intro (hook) AVANT le premier <h2>. EN FRANÇAIS.
+    "developpement": "...",  // OBLIGATOIRE - MINIMUM 2000 mots. HTML libre. Inclure les marqueurs FV:CTA_SLOT, FV:DIFF_ANGLE, FV:COMMON_MISTAKES. Commence TOUJOURS par 1-2 paragraphes <p> d'intro (hook) AVANT le premier <h2>. EN FRANÇAIS.
     "recommandations": "...",  // OBLIGATOIRE - <h2>Nos recommandations</h2> + 3 options + CTAs
     "ce_qu_il_faut_retenir": "...",  // OBLIGATOIRE - Verdict réaliste (tutoiement), 2 paragraphes.
     "signature": "...",  // CTA soft de fin
     "citations": [...],  // max 5
     "opportunites_liens_internes": [...],
     "articles_connexes": [...]
+  },
+  "_editorial_self_check": {
+    "decisions_taken": ["...", "...", "..."],  // 3 décisions éditoriales prises dans cet article
+    "mistakes_to_avoid": ["...", "...", "..."],  // 3 erreurs que le lecteur doit éviter
+    "differentiating_angles": ["...", "..."],  // 2 angles qui différencient cet article des concurrents
+    "cta_slots_proposed": [  // 2-4 emplacements CTA proposés avec justification
+      { "position": "after_hook", "reason": "..." },
+      { "position": "after_costs", "reason": "..." }
+    ]
   }
 }
 
@@ -1456,6 +1522,8 @@ LONGUEUR OBLIGATOIRE: MINIMUM 2000 mots, IDÉAL 2500-3000 mots. Un article EVERG
 ⚠️ RÈGLES ABSOLUES : Auteur ≠ commentaires. Toujours traçable au story.evidence. Pas d'invention. Sections absentes = null ou omises.
 
 ⚠️ NE PAS RENVOYER les champs contexte, evenement_central, moment_critique, resolution. Tout dans "developpement" (HTML libre).
+
+⚠️ _editorial_self_check est OBLIGATOIRE : c'est ton auto-évaluation interne. Il n'est PAS publié — il sert au pipeline pour vérifier la qualité éditoriale. Remplis-le honnêtement.
 
 Réponds UNIQUEMENT en JSON avec cette structure.`;
     }
@@ -1548,6 +1616,15 @@ ${correctionBlock}
 - Sépare strictement l'auteur et la communauté
 - Priorité absolue à la fidélité de la source
 - Toutes les sections doivent être traçables au story.evidence
+
+🚫 ANTI-PLATITUDE (VÉRIFIER AVANT RÉPONSE) :
+- INTERDIT : "il est important de", "il faut savoir que", "n'hésite pas à", "il convient de", "il est essentiel de", "il est recommandé de"
+- Chaque phrase doit contenir un fait, un chiffre, ou un choix éditorial. Pas de remplissage.
+
+📍 MARQUEURS OBLIGATOIRES dans "developpement" (HTML comments) :
+- <!-- FV:CTA_SLOT reason="..." --> (2-4 emplacements pour widgets affiliés)
+- <!-- FV:DIFF_ANGLE --> (avant le paragraphe différenciant)
+- <!-- FV:COMMON_MISTAKES --> (avant la section erreurs/pièges)
 
 ${editorialBlock}`;
 

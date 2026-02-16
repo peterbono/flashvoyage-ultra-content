@@ -1,7 +1,45 @@
 {
-  "crawled_at": "2026-02-16T12:35:54.735Z",
-  "total_articles": 74,
+  "crawled_at": "2026-02-16T18:27:46.076Z",
+  "total_articles": 76,
   "articles": [
+    {
+      "id": 2731,
+      "title": "Vivre à Chiang Mai : le rêve des nomades numériques devenu réalité",
+      "url": "https://flashvoyage.com/vivre-a-chiang-mai-le-reve-des-nomades-numeriques-devenu-realite/",
+      "slug": "vivre-a-chiang-mai-le-reve-des-nomades-numeriques-devenu-realite",
+      "excerpt": "La chaleur douce du matin à Chiang Mai enveloppe la ville d&#8217;une lumière dorée. Les scooters bourdonnent doucement dans les rues tandis que lesétals se préparent pour la journée, dégageant des ef",
+      "content": "La chaleur douce du matin à Chiang Mai enveloppe la ville d&#8217;une lumière dorée.\nLes scooters bourdonnent doucement dans les rues tandis que lesétals se préparent pour la journée, dégageant des effluves de pad thaï et de curry\nC&#8217;est ici que commence une nouvelle vie pour beaucoup de nomades numériques, un rêve que certains chérissent depuis plus d&#8217;une décennie\nPour l&#8217;auteur de notre témoignage, ce rêve a pris forme après dix ans d&#8217;attente.\nPour en savoir plus, consult",
+      "categories": [
+        {
+          "id": 1,
+          "name": "Destinations",
+          "slug": "destinations-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-16T17:30:05",
+      "modified": "2026-02-16T17:40:40",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-new-pipeline.jpeg"
+    },
+    {
+      "id": 2721,
+      "title": "Vivre en Thaïlande : Coût Réel et Vie de Nomade à Chiang Mai",
+      "url": "https://flashvoyage.com/vivre-en-thailande-cout-reel-et-vie-de-nomade-a-chiang-mai/",
+      "slug": "vivre-en-thailande-cout-reel-et-vie-de-nomade-a-chiang-mai",
+      "excerpt": "Dans la moiteur du matin à Chiang Mai, les rues s&#8217;éveillent doucement. Les odeurs de nouilles sautées et de curry flottent dans l&#8217;air tandis que les scooters vrombissent, transportant les ",
+      "content": "Dans la moiteur du matin à Chiang Mai, les rues s&#8217;éveillent doucement.\nLes odeurs de nouilles sautées et de curry flottent dans l&#8217;air tandis que les scooters vrombissent, transportant les habitants vers leurs activités quotidiennes.\nC&#8217;est dans cette ambiance animée que deux rêveurs ont décidé de poser leurs valises, prêts à embrasser une nouvelle vie de nomades numériques.\nAprès dix ans de rêves et de planification, l&#8217;auteur du témoignage partage: « Nous vivons enfin la v",
+      "categories": [
+        {
+          "id": 1,
+          "name": "Destinations",
+          "slug": "destinations-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-16T14:44:14",
+      "modified": "2026-02-16T15:56:05",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/chiang-mai-nomade-featured.jpeg"
+    },
     {
       "id": 2718,
       "title": "eSIM au Japon : Comment rester connecté sans se ruiner",

@@ -80,53 +80,79 @@ class QualityAnalyzer {
     const h2h3Text = root.querySelectorAll('h2, h3').map(el => el.text).join(' ');
 
     if (editorialMode === 'news') {
-      // ─── MODE NEWS : scoring SERP allégé ────────────────────────
-      // Pas de sections analytiques obligatoires (elles sont hors scope pour du contenu actu)
-      // Focus : E-E-A-T (50 pts) + angles factuels (50 pts)
+      // ─── MODE NEWS : scoring SERP renforcé ────────────────────────
+      // Focus : impact concret + action + preuves + données
       const score = { total: 0, max: 100, details: [] };
 
-      // 1. E-E-A-T - Citations sourcées (50 pts)
-      const hasRedditCitation = /reddit|r\/\w+|u\/\w+/i.test(text);
-      const hasQuoteAttribution = root.querySelectorAll('blockquote').length > 0 || /selon\s+\w+|d'après\s+\w+|témoigne|voyageur/i.test(text);
-
-      if (hasRedditCitation) {
+      // 1. has_concrete_impact_block (25 pts)
+      // H2 contenant "change"/"impact"/"concrètement" suivi d'une bullet list
+      const h2Elements = root.querySelectorAll('h2');
+      let hasImpactBlock = false;
+      for (const h2 of h2Elements) {
+        const h2Text = h2.text.toLowerCase();
+        if (/change|impact|concr[eè]tement/.test(h2Text)) {
+          const nextSibling = h2.nextElementSibling;
+          if (nextSibling && (nextSibling.tagName === 'UL' || nextSibling.tagName === 'OL')) {
+            hasImpactBlock = true;
+            break;
+          }
+          // Check a bit further (next next sibling)
+          const nextNext = nextSibling?.nextElementSibling;
+          if (nextNext && (nextNext.tagName === 'UL' || nextNext.tagName === 'OL')) {
+            hasImpactBlock = true;
+            break;
+          }
+        }
+      }
+      if (hasImpactBlock) {
         score.total += 25;
-        score.details.push({ check: 'Citation source', status: 'OK', points: 25 });
+        score.details.push({ check: 'Bloc impact concret (H2+list)', status: 'OK', points: 25 });
       } else {
-        score.details.push({ check: 'Citation source', status: 'MISSING', points: 0 });
+        score.details.push({ check: 'Bloc impact concret (H2+list)', status: 'MISSING', points: 0 });
       }
 
-      if (hasQuoteAttribution) {
-        score.total += 25;
-        score.details.push({ check: 'Attribution sources', status: 'OK', points: 25 });
-      } else {
-        score.details.push({ check: 'Attribution sources', status: 'MISSING', points: 0 });
+      // 2. has_action_block (20 pts)
+      // H2 contenant "faire"/"action"/"maintenant"/"si tu" suivi de contenu actionnable
+      let hasActionBlock = false;
+      for (const h2 of h2Elements) {
+        const h2Text = h2.text.toLowerCase();
+        if (/faire|action|maintenant|si\s*tu/.test(h2Text)) {
+          hasActionBlock = true;
+          break;
+        }
       }
-
-      // 2. Impact factuel (50 pts) - le contenu traite un fait concret
-      const hasImpact = /impact|changement|nouveau|mise\s*à\s*jour|augment|baiss|modifi|effectif|en\s*vigueur/i.test(text);
-      const hasSolution = /solution|alternative|recommand|conseil|astuce|pour\s*éviter|que\s*faire/i.test(text);
-      const hasConcreteData = /\d+\s*(€|usd|\$|%|jour|mois|baht|roupie)/i.test(text);
-
-      if (hasImpact) {
+      if (hasActionBlock) {
         score.total += 20;
-        score.details.push({ check: 'Impact factuel', status: 'OK', points: 20 });
+        score.details.push({ check: 'Bloc action (H2 faire/action)', status: 'OK', points: 20 });
       } else {
-        score.details.push({ check: 'Impact factuel', status: 'MISSING', points: 0 });
+        score.details.push({ check: 'Bloc action (H2 faire/action)', status: 'MISSING', points: 0 });
       }
 
-      if (hasSolution) {
-        score.total += 15;
-        score.details.push({ check: 'Solution immédiate', status: 'OK', points: 15 });
+      // 3. has_source_proof (25 pts) - at least 1 inline citation with guillemets
+      const citations = text.match(/\u00ab[\s\u00a0]*[^\u00bb]{5,200}[\s\u00a0]*\u00bb/g) || [];
+      if (citations.length >= 1) {
+        score.total += 25;
+        score.details.push({ check: 'Preuve source (citation inline)', status: `OK (${citations.length})`, points: 25 });
       } else {
-        score.details.push({ check: 'Solution immédiate', status: 'MISSING', points: 0 });
+        score.details.push({ check: 'Preuve source (citation inline)', status: 'MISSING', points: 0 });
       }
 
+      // 4. Données concrètes (15 pts) - montants, pourcentages, durées
+      const hasConcreteData = /\d+\s*(€|euro|usd|\$|%|jour|mois|baht|roupie)/i.test(text);
       if (hasConcreteData) {
         score.total += 15;
         score.details.push({ check: 'Données concrètes', status: 'OK', points: 15 });
       } else {
         score.details.push({ check: 'Données concrètes', status: 'MISSING', points: 0 });
+      }
+
+      // 5. Attribution / E-E-A-T (15 pts)
+      const hasQuoteAttribution = root.querySelectorAll('blockquote').length > 0 || /selon\s+\w+|d'après\s+\w+|témoigne|voyageur/i.test(text);
+      if (hasQuoteAttribution) {
+        score.total += 15;
+        score.details.push({ check: 'Attribution sources', status: 'OK', points: 15 });
+      } else {
+        score.details.push({ check: 'Attribution sources', status: 'MISSING', points: 0 });
       }
 
       return {
@@ -482,6 +508,40 @@ class QualityAnalyzer {
       } else {
         score.details.push({ check: 'EVERGREEN FAQ SEO', status: 'Présente', points: 0 });
       }
+
+      // ─── Nouveaux checks EVERGREEN ─────────────────────────────────
+
+      // title_specificity: titre pas générique + longueur >= 30 chars
+      const fullPageEg = parse(html);
+      const h1Eg = fullPageEg.querySelector('h1') || fullPageEg.querySelector('.entry-title');
+      const titleTextEg = h1Eg ? h1Eg.text.trim() : '';
+      const genericTitleBlacklist = /^(guide complet|budget|sécurité|erreurs à éviter|conseils voyage|voyage en asie|astuces|tout savoir|les meilleurs|top \d+)$/i;
+      const titleIsSpecific = titleTextEg.length >= 30 && !genericTitleBlacklist.test(titleTextEg);
+      if (titleIsSpecific) {
+        score.details.push({ check: 'EVERGREEN titre spécifique', status: `OK (${titleTextEg.length} chars)`, points: 0 });
+      } else {
+        score.total = Math.max(0, score.total - 5);
+        score.details.push({ check: 'EVERGREEN titre spécifique', status: titleTextEg.length < 30 ? `Trop court (${titleTextEg.length} chars)` : 'Générique', points: -5 });
+      }
+
+      // evidence_density: >= 2 inline citations avec guillemets français
+      const evCitations = text.match(/\u00ab[\s\u00a0]*[^\u00bb]{5,200}[\s\u00a0]*\u00bb/g) || [];
+      if (evCitations.length >= 2) {
+        score.details.push({ check: 'EVERGREEN densité preuves', status: `OK (${evCitations.length} citations)`, points: 0 });
+      } else {
+        score.total = Math.max(0, score.total - 5);
+        score.details.push({ check: 'EVERGREEN densité preuves', status: `${evCitations.length} citation(s) < 2 minimum`, points: -5 });
+      }
+
+      // costs_in_eur: si l'article mentionne des coûts, au moins un en EUR (bonus, pas bloquant)
+      const hasCostMention = /\d+\s*(€|euro|usd|\$|baht|roupie)/i.test(text);
+      const hasEurCost = /\d+\s*(€|euros?)\b/i.test(text);
+      if (hasCostMention && !hasEurCost) {
+        score.details.push({ check: 'EVERGREEN coûts en EUR', status: 'Coûts sans EUR', points: -3 });
+        score.total = Math.max(0, score.total - 3);
+      } else if (hasCostMention && hasEurCost) {
+        score.details.push({ check: 'EVERGREEN coûts en EUR', status: 'OK', points: 0 });
+      }
     }
 
     return {
@@ -587,7 +647,13 @@ class QualityAnalyzer {
     results.checks.push({ check: 'Pas de sections vides', passed: noEmptySections });
     if (!noEmptySections) results.passed = false;
 
-    // 5. 100% français - AMÉLIORATION: Détection plus stricte (0.1% toléré pour éviter faux positifs)
+    // 5. no_affiliate_placeholder (BLOQUANT) : aucun placeholder d'affiliation visible
+    const affiliatePlaceholderPattern = /Lien\s+partenaire|\[lien\]|\{\{[^}]*\}\}|\[url\]/i;
+    const hasAffiliatePlaceholder = affiliatePlaceholderPattern.test(text);
+    results.checks.push({ check: 'Pas de placeholder affiliation', passed: !hasAffiliatePlaceholder });
+    if (hasAffiliatePlaceholder) results.passed = false;
+
+    // 6. 100% français - AMÉLIORATION: Détection plus stricte (0.1% toléré pour éviter faux positifs)
     // AMÉLIORATION: Patterns anglais plus complets (exclure mots français communs)
     // Exclure: visa, fatigue, moment (mots français aussi)
     let textForEnglishCheck = text;
