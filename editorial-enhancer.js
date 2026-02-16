@@ -888,7 +888,22 @@ Retourne UNIQUEMENT le HTML: <h3>Checklist avant de partir</h3><ul><li>Action 1<
     };
     const schemaBlock = `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
 
-    return `\n\n<!-- wp:heading {"level":2} -->
+    const faqStyles = `<!-- wp:html -->
+<style>
+.entry-content .wp-block-details{border:1px solid #e2e8f0;border-radius:8px;margin-bottom:12px;overflow:hidden;transition:box-shadow .2s ease}
+.entry-content .wp-block-details:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.entry-content .wp-block-details summary{padding:16px 20px;font-weight:600;font-size:1.05em;background:#f7fafc;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.entry-content .wp-block-details summary::-webkit-details-marker{display:none}
+.entry-content .wp-block-details summary::after{content:"\\203A";font-size:1.4em;font-weight:700;color:var(--global-palette1,#3182CE);transition:transform .25s ease;flex-shrink:0}
+.entry-content .wp-block-details[open] summary::after{transform:rotate(90deg)}
+.entry-content .wp-block-details[open] summary{border-bottom:1px solid #e2e8f0}
+.entry-content .wp-block-details>p{padding:16px 20px;margin:0;color:#4a5568;line-height:1.7}
+</style>
+<!-- /wp:html -->`;
+
+    return `\n\n${faqStyles}
+
+<!-- wp:heading {"level":2} -->
 <h2 class="wp-block-heading">Questions fréquentes</h2>
 <!-- /wp:heading -->
 

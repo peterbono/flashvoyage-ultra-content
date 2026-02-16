@@ -7295,11 +7295,13 @@ class ArticleFinalizer {
    * FIX 4: CTA automatique injecté avant "Articles connexes"
    */
   ensureCTA(content, analysis) {
-    // Détecter si un CTA existe déjà
+    // Détecter si un CTA existe déjà (inclut les widgets d'affiliation comme CTA implicites)
     const ctaPatterns = [
       /comparer.*vols|réserver.*vol|voir.*vols|découvrir.*offres|guide complet|réserver maintenant|comparer les prix|trouver.*vol|meilleur.*prix/i,
       /<a[^>]*>(comparer|réserver|voir|découvrir|guide|trouver|meilleur)/i,
-      /<button[^>]*>(comparer|réserver|voir|découvrir|guide|trouver|meilleur)/i
+      /<button[^>]*>(comparer|réserver|voir|découvrir|guide|trouver|meilleur)/i,
+      /\[fv_widget\s+type="(flights|hotels|esim|connectivity)"[^\]]*\]/i,
+      /class="affiliate-module"/i
     ];
     
     const hasCTA = ctaPatterns.some(pattern => pattern.test(content));
