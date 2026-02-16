@@ -1,7 +1,64 @@
 {
-  "crawled_at": "2026-02-16T10:27:35.652Z",
-  "total_articles": 71,
+  "crawled_at": "2026-02-16T12:35:54.735Z",
+  "total_articles": 74,
   "articles": [
+    {
+      "id": 2718,
+      "title": "eSIM au Japon : Comment rester connecté sans se ruiner",
+      "url": "https://flashvoyage.com/esim-au-japon-comment-rester-connecte-sans-se-ruiner/",
+      "slug": "esim-au-japon-comment-rester-connecte-sans-se-ruiner",
+      "excerpt": "Au cœur de Tokyo, les gratte-ciels s&#8217;élèvent autour de toi, mais ton esprit est concentré sur un autre type de connexion Trouver le meilleur eSIM pour ton voyag&#8230;\n",
+      "content": "Au cœur de Tokyo, les gratte-ciels s&#8217;élèvent autour de toi, mais ton esprit est concentré sur un autre type de connexion\nTrouver le meilleur eSIM pour ton voyage en Asie est devenu une priorité, car tu as besoin d&#8217;une solution fiable pour tes appels vidéo tout en respectant ton budget\nComparer Airalo et Holafly: Que disent les voyageurs sur la destination?\nLes choix semblent se réduire à deux principaux fournisseurs: Airalo et Holafly.\n\n  Photo : Max Harlynking / Unsplash\nPour en sav",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-16T12:35:42",
+      "modified": "2026-02-16T12:35:46",
+      "featured_image": null
+    },
+    {
+      "id": 2713,
+      "title": "Voyager 2 semaines en Malaisie avec 1500 USD : Kuala Lumpur ou Penang ?",
+      "url": "https://flashvoyage.com/voyager-2-semaines-en-malaisie-avec-1500-usd-kuala-lumpur-ou-penang/",
+      "slug": "voyager-2-semaines-en-malaisie-avec-1500-usd-kuala-lumpur-ou-penang",
+      "excerpt": "Conseils pratiques pour économiser de l&#8217;argent en Malaisie Le bruit des klaxons résonne dans l&#8217;air chaud de Kuala Lumpur. Photo : Kelvin Zyteng / Unsplash Tu te&#8230;\n",
+      "content": "Conseils pratiques pour économiser de l&#8217;argent en Malaisie\nLe bruit des klaxons résonne dans l&#8217;air chaud de Kuala Lumpur.\n\n  \n  Photo : Kelvin Zyteng / Unsplash\n\n\n\nTu te tiens au centre de Jalan Alor, une rue célèbre pour ses stands de nourriture de rue, et l&#8217;odeur alléchante du nasi lemak titille tes narines\nAvec un budget de 1500 USD pour deux semaines, chaque dollar compte, et les choix que tu fais ici détermineront si tu passes une nuit dans un hôtel de charme ou si tu te r",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-16T12:19:56",
+      "modified": "2026-02-16T12:20:02",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2713.jpg"
+    },
+    {
+      "id": 2708,
+      "title": "Voyager en Malaisie : Kuala Lumpur ou Penang pour 1500 USD ?",
+      "url": "https://flashvoyage.com/voyager-en-malaisie-kuala-lumpur-ou-penang-pour-1500-usd/",
+      "slug": "voyager-en-malaisie-kuala-lumpur-ou-penang-pour-1500-usd",
+      "excerpt": "Le soleil se lève sur Kuala Lumpur, projetant une lueur dorée sur les emblématiques tours Petronas. Dans l&#8217;air du matin, une question persiste: comment optimise&#8230;\n",
+      "content": "Le soleil se lève sur Kuala Lumpur, projetant une lueur dorée sur les emblématiques tours Petronas.\nDans l&#8217;air du matin, une question persiste: comment optimiser un budget de 1500 USD pour un voyage de deux semaines en Malaisie, entre Kuala Lumpur et Penang?\n« Nous ne voulons pas dépenser une fortune », dit un voyageur.\nCe dilemme résonne chez beaucoup de ceux qui prévoient leur première aventure en Asie du Sud-Est.\nKuala Lumpur: une ville dynamique à découvrir\nPenang, souvent surnommée la",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-16T12:11:51",
+      "modified": "2026-02-16T12:11:59",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2708.jpg"
+    },
     {
       "id": 2684,
       "title": "Les Meilleurs Espaces de Coworking à Ho Chi Minh : Choisir Selon Ton Budget",

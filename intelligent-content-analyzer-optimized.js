@@ -787,7 +787,7 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
       const responseData = await callOpenAIWithRetry({
         apiKey: this.apiKey,
         body: {
-        model: 'gpt-4',
+        model: 'gpt-4o',
         messages: [{ role: 'user', content: prompt }],
         max_tokens: 1500, // Augmenté pour éviter les troncatures
         temperature: 0.3
@@ -1953,15 +1953,26 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         const wordCount = textOnly.split(/\s+/).filter(w => w.length > 0).length;
         console.log(`📏 EVERGREEN WORD COUNT: ${wordCount} mots`);
         
-        if (wordCount < 1500) {
-          console.log(`⚠️ EVERGREEN trop court (${wordCount} < 1500 mots). Lancement passe d'expansion LLM...`);
-          try {
-            htmlContent = await this.expandEvergreenContent(htmlContent, extraction, options);
-            const expandedText = htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-            const expandedWords = expandedText.split(/\s+/).filter(w => w.length > 0).length;
-            console.log(`📏 APRÈS EXPANSION: ${expandedWords} mots (delta: +${expandedWords - wordCount})`);
-          } catch (expandError) {
-            console.warn(`⚠️ Expansion EVERGREEN échouée: ${expandError.message}. Continuation avec contenu original.`);
+        if (wordCount < 2000) {
+          console.log(`⚠️ EVERGREEN trop court (${wordCount} < 2000 mots). Lancement passe d'expansion LLM...`);
+          let currentWords = wordCount;
+          const MAX_EXPANSION_PASSES = 2;
+          for (let pass = 1; pass <= MAX_EXPANSION_PASSES && currentWords < 2000; pass++) {
+            try {
+              console.log(`📐 Passe d'expansion ${pass}/${MAX_EXPANSION_PASSES} (${currentWords} mots actuels)...`);
+              htmlContent = await this.expandEvergreenContent(htmlContent, extraction, options);
+              const expandedText = htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+              const expandedWords = expandedText.split(/\s+/).filter(w => w.length > 0).length;
+              console.log(`📏 APRÈS EXPANSION ${pass}: ${expandedWords} mots (delta: +${expandedWords - currentWords})`);
+              if (expandedWords <= currentWords) {
+                console.log(`   ℹ️ Pas d'amélioration, arrêt des passes d'expansion`);
+                break;
+              }
+              currentWords = expandedWords;
+            } catch (expandError) {
+              console.warn(`⚠️ Expansion EVERGREEN passe ${pass} échouée: ${expandError.message}. Continuation.`);
+              break;
+            }
           }
         }
       }
@@ -2984,7 +2995,7 @@ Réponse JSON:`;
       const responseData = await callOpenAIWithRetry({
         apiKey: this.apiKey,
         body: {
-        model: 'gpt-4',
+        model: 'gpt-4o',
         messages: [{ role: 'user', content: simplePrompt }],
         max_tokens: 2000,
         temperature: 0.7,

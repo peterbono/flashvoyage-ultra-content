@@ -569,7 +569,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       
       // FIX H1: Source Reddit DISCRÈTE en fin d'article au lieu d'en premier
       // La source ne doit pas casser l'immersion narrative - elle est placée en fin
-      const sourceLink = `\n\n<p class="reddit-source-discrete"><small><em>Source : <a href="${articleLink}" target="_blank" rel="noopener">${articleTitle}</a> - ${sourceName}</em></small></p>`;      finalArticle.content = finalArticle.content + sourceLink; // APPEND at END instead of PREPEND
+      // Source masquée visuellement mais conservée dans le HTML pour transparence
+      const sourceLink = `\n\n<!-- wp:html -->\n<p class="reddit-source-discrete" style="display:none" aria-hidden="true"><small><em>Source : <a href="${articleLink}" target="_blank" rel="noopener">${articleTitle}</a> - ${sourceName}</em></small></p>\n<!-- /wp:html -->`;
+      finalArticle.content = finalArticle.content + sourceLink;
       
       // Générer le quote highlight si disponible (depuis analysis si présent)
       let quoteHighlight = '';

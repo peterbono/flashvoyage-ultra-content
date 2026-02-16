@@ -247,8 +247,9 @@ ${citationsHtml}\n`;
   async addFAQSection(html, story, pattern, enhancements) {
     console.log('\n❓ 2️⃣ Section FAQ SEO...');
 
-    // Vérifier si une FAQ existe déjà
-    if (/<h2[^>]*>(?:FAQ|Questions?\s+fréquentes?|Foire\s+aux\s+questions)/i.test(html)) {
+    // Vérifier si une FAQ existe déjà (HTML classique ou bloc Gutenberg)
+    if (/<h2[^>]*>(?:FAQ|Questions?\s+fréquentes?|Foire\s+aux\s+questions)/i.test(html) ||
+        /wp-block-heading[^>]*>Questions?\s+fréquentes/i.test(html)) {
       console.log('   ℹ️ FAQ déjà présente dans l\'article, skip');
       return html;
     }
@@ -301,6 +302,29 @@ ${citationsHtml}\n`;
       }
     }
 
+    // FAQ-1a: Détecter si les questions sont en anglais → basculer vers LLM français
+    // Stratégie double: (1) stop words anglais ET (2) absence de marqueurs français
+    const _enStopWords = /\b(the|a|an|is|are|was|were|have|has|had|in|for|to|with|best|how|what|where|which|do|does|can|will|my|your|I|you|we|they|it|this|that|from|about|would|should|could|been|being|need|want|looking|moving|working|going|getting|trying|planning|through|travel|traveling|tips|guide|recommendations|help|just|really|more|any|some|most)\b/gi;
+    const _frMarkers = /\b(le|la|les|un|une|du|des|au|aux|ce|cette|ces|en|est|sont|pour|avec|dans|sur|par|qui|que|dont|où|comment|pourquoi|quand|quel|quelle|quels|quelles|faut|peut|dois|nous|vous|ils|elles|mon|ton|son|notre|votre|leur)\b/gi;
+    const englishQuestions = validQuestions.filter(q => {
+      const words = q.question.split(/\s+/);
+      if (words.length <= 2) return false;
+      const enWords = (q.question.match(_enStopWords) || []).length;
+      const frWords = (q.question.match(_frMarkers) || []).length;
+      const hasFrAccents = /[àâäéèêëïîôùûüÿçœæ]/i.test(q.question);
+      // Si aucun marqueur français et question > 3 mots → probablement anglais
+      if (frWords === 0 && !hasFrAccents && words.length > 3) return true;
+      return enWords / words.length > 0.15;
+    });
+    if (englishQuestions.length > 0 && englishQuestions.length >= validQuestions.length * 0.3) {
+      console.log(`   ⚠️ FAQ en anglais détectée (${englishQuestions.length}/${validQuestions.length}) — bascule vers LLM français`);
+      try {
+        return await this.addFAQViaLLM(html, enhancements);
+      } catch (faqError) {
+        console.warn(`   ⚠️ Bascule FAQ LLM échouée: ${faqError.message} — poursuite avec données brutes`);
+      }
+    }
+
     // Dédupliquer les questions (par texte normalisé)
     const seen = new Set();
     const uniqueQuestions = validQuestions.filter(q => {
@@ -318,46 +342,20 @@ ${citationsHtml}\n`;
     // Limiter à 5 questions max
     const selectedQuestions = uniqueQuestions.slice(0, 5);
 
-    // Construire la FAQ HTML (avec déduplication des réponses)
+    // Construire la FAQ avec blocs Gutenberg wp:details (accordion natif WordPress)
     const usedSources = new Set();
-    const faqItems = selectedQuestions.map((q, index) => {
+    const faqPairs = selectedQuestions.map((q, index) => {
       const answer = q.answer || this.generateAnswerFromContext(q.question, story, pattern, usedSources);
-      if (!answer) return null; // Pas de réponse disponible → exclure
-      return `    <h3>${this.escapeHtml(q.question)}</h3>
-    <p>${this.escapeHtml(answer)}</p>`;
-    }).filter(Boolean).join('\n\n');
+      if (!answer) return null;
+      return { question: q.question, answer };
+    }).filter(Boolean);
     
-    if (!faqItems || faqItems.trim().length === 0) {
+    if (faqPairs.length === 0) {
       console.log('   ⚠️ FAQ: aucune question avec réponse valide');
       return html;
     }
 
-    // Construire le JSON-LD FAQPage schema pour les rich snippets Google
-    const faqSchemaEntries = selectedQuestions.map((q, index) => {
-      const answer = q.answer || this.generateAnswerFromContext(q.question, story, pattern, new Set());
-      if (!answer) return null;
-      return {
-        '@type': 'Question',
-        'name': q.question,
-        'acceptedAnswer': {
-          '@type': 'Answer',
-          'text': answer
-        }
-      };
-    }).filter(Boolean);
-
-    let faqSchemaBlock = '';
-    if (faqSchemaEntries.length > 0) {
-      const faqSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        'mainEntity': faqSchemaEntries
-      };
-      faqSchemaBlock = `\n<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
-    }
-
-    const faqSection = `\n\n<h2>Questions fréquentes</h2>
-${faqItems}${faqSchemaBlock}\n`;
+    const faqSection = this._buildGutenbergFAQ(faqPairs);
 
     // Insérer avant "Nos recommandations" ou à la fin
     let insertionPoint = html.indexOf('<h2>🎯 Nos recommandations');
@@ -681,23 +679,8 @@ Retourne un JSON array: [{"question": "...", "answer": "..."}]` },
       if (!Array.isArray(faqArray) || faqArray.length === 0) throw new Error('Pas de questions dans la réponse: ' + JSON.stringify(Object.keys(parsed)));
       
       const selectedFaq = faqArray.slice(0, 5);
-      const faqItems = selectedFaq.map(q => 
-        `    <h3>${this.escapeHtml(q.question)}</h3>\n    <p>${this.escapeHtml(q.answer)}</p>`
-      ).join('\n\n');
-      
-      // JSON-LD FAQPage schema pour rich snippets Google
-      const faqSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        'mainEntity': selectedFaq.map(q => ({
-          '@type': 'Question',
-          'name': q.question,
-          'acceptedAnswer': { '@type': 'Answer', 'text': q.answer }
-        }))
-      };
-      const schemaBlock = `\n<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
-      
-      const faqSection = `\n\n<h2>Questions fréquentes</h2>\n${faqItems}${schemaBlock}\n`;
+      const faqPairs = selectedFaq.map(q => ({ question: q.question, answer: q.answer }));
+      const faqSection = this._buildGutenbergFAQ(faqPairs);
       
       // Insérer avant "Nos recommandations" ou avant le dernier H2
       const insertedHtml = this.insertBeforeRecommandations(html, faqSection);
@@ -872,6 +855,46 @@ Retourne UNIQUEMENT le HTML: <h3>Checklist avant de partir</h3><ul><li>Action 1<
       insertionPoint = lastH2 > 0 ? lastH2 : html.length;
     }
     return html.substring(0, insertionPoint) + content + html.substring(insertionPoint);
+  }
+
+  /**
+   * Construit la section FAQ en blocs Gutenberg natifs wp:details (accordion Q/R)
+   * + JSON-LD FAQPage schema pour le SEO
+   * @param {Array<{question: string, answer: string}>} faqPairs
+   * @returns {string} HTML Gutenberg FAQ section
+   */
+  _buildGutenbergFAQ(faqPairs) {
+    const detailsBlocks = faqPairs.map(({ question, answer }) => {
+      const q = this.escapeHtml(question);
+      const a = this.escapeHtml(answer);
+      return `<!-- wp:details -->
+<details class="wp-block-details">
+<summary>${q}</summary>
+<!-- wp:paragraph -->
+<p>${a}</p>
+<!-- /wp:paragraph -->
+</details>
+<!-- /wp:details -->`;
+    }).join('\n\n');
+
+    const faqSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      'mainEntity': faqPairs.map(({ question, answer }) => ({
+        '@type': 'Question',
+        'name': question,
+        'acceptedAnswer': { '@type': 'Answer', 'text': answer }
+      }))
+    };
+    const schemaBlock = `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
+
+    return `\n\n<!-- wp:heading {"level":2} -->
+<h2 class="wp-block-heading">Questions fréquentes</h2>
+<!-- /wp:heading -->
+
+${detailsBlocks}
+
+${schemaBlock}\n`;
   }
 
   escapeHtml(text) {

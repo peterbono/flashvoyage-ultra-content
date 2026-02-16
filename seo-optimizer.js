@@ -1313,8 +1313,8 @@ class SeoOptimizer {
       return html;
     }
     
-    // Limiter à 3 liens max
-    const linksToInject = matchedLinks.slice(0, 3);
+    // Limiter à 5 liens max
+    const linksToInject = matchedLinks.slice(0, 5);
     
     // Injecter dans la section "Articles connexes" ou créer si absente
     const modifiedHtml = this.injectLinksIntoRelatedSection(html, linksToInject);
@@ -1489,8 +1489,8 @@ class SeoOptimizer {
     let modifiedHtml = html;
     let insertedCount = 0;
     
-    // Trouver tous les paragraphes
-    const paragraphRegex = /<p>([^<]{50,})<\/p>/g;
+    // Trouver tous les paragraphes (supporte le contenu inline HTML comme <strong>, <em>, <a>)
+    const paragraphRegex = /<p>(.{50,}?)<\/p>/g;
     const paragraphs = [];
     let match;
     
@@ -1521,8 +1521,8 @@ class SeoOptimizer {
       return html + `\n\n<h3>À lire également</h3>\n<ul>\n${linksHtml}\n</ul>`;
     }
     
-    // AMÉLIORATION: Forcer insertion dans les 30% premiers (au moins 2 liens)
-    const targetParagraphCount = Math.max(2, Math.floor(eligibleParagraphs.length * 0.3));
+    // AMÉLIORATION: Forcer insertion dans les 60% premiers (au moins 3 liens)
+    const targetParagraphCount = Math.max(3, Math.floor(eligibleParagraphs.length * 0.6));
     const targetParagraphs = eligibleParagraphs.slice(0, targetParagraphCount);
     
     // AMÉLIORATION: Utiliser les meilleurs matches (score élevé) pour les premiers liens
@@ -1562,7 +1562,15 @@ class SeoOptimizer {
         
         modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
         insertedCount++;
-        console.log(`   🔗 Lien inséré dans 30% premiers: "${finalAnchor}"`);
+        console.log(`   🔗 Lien inséré dans paragraphe: "${finalAnchor}"`);
+      } else if (sentences.length === 1 && para.content.length > 80) {
+        // Paragraphe avec une seule phrase longue → ajouter le lien à la fin
+        const newContent = para.content + 
+          ` Pour en savoir plus, consultez notre article sur ${linkHtml}.`;
+        
+        modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
+        insertedCount++;
+        console.log(`   🔗 Lien ajouté en fin de paragraphe: "${finalAnchor}"`);
       }
     }
     
@@ -1597,6 +1605,13 @@ class SeoOptimizer {
             modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
             insertedCount++;
             console.log(`   🔗 Lien pilier ajouté: "${anchorText}"`);
+          } else if (sentences.length === 1 && para.content.length > 80) {
+            const newContent = para.content + 
+              ` Découvrez notre ${linkHtml} pour plus d'informations.`;
+            
+            modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
+            insertedCount++;
+            console.log(`   🔗 Lien pilier ajouté en fin de paragraphe: "${anchorText}"`);
           }
         }
       }

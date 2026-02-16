@@ -209,7 +209,17 @@ export async function applyContentMarketingPass(htmlContent, pipelineContext) {
     affiliateModulePlaceholders.set(placeholder, match);
     return placeholder;
   });
-  console.log(`   🛡️ ${affiliateModulePlaceholders.size} module(s) d'affiliation protégé(s) avant envoi au LLM`);
+
+  // Protéger la section FAQ Gutenberg (blocs wp:details + schema JSON-LD)
+  const faqPlaceholders = new Map();
+  let faqCounter = 0;
+  // Capturer toute la section FAQ : du heading H2 "Questions fréquentes" jusqu'au script schema
+  protectedHtml = protectedHtml.replace(/(<!-- wp:heading[^>]*-->\s*<h2[^>]*>Questions?\s+fréquentes<\/h2>\s*<!-- \/wp:heading -->\s*(?:<!-- wp:details -->[\s\S]*?<!-- \/wp:details -->\s*)+(?:<script type="application\/ld\+json">[\s\S]*?<\/script>\s*)?)/gi, (match) => {
+    const placeholder = `__FAQ_SECTION_${faqCounter++}__`;
+    faqPlaceholders.set(placeholder, match);
+    return placeholder;
+  });
+  console.log(`   🛡️ ${affiliateModulePlaceholders.size} module(s) d'affiliation + ${faqPlaceholders.size} section(s) FAQ protégé(s) avant envoi au LLM`);
 
   // Construire le message utilisateur
   const widgetContext = widgets.length > 0
@@ -257,6 +267,17 @@ ${protectedHtml}`;
         const lastClosingTag = improvedHtml.lastIndexOf('</aside>');
         const insertPos = lastClosingTag !== -1 ? lastClosingTag + 8 : improvedHtml.length;
         improvedHtml = improvedHtml.slice(0, insertPos) + '\n' + original + '\n' + improvedHtml.slice(insertPos);
+      }
+    });
+
+    // RESTAURATION: Réinsérer les sections FAQ protégées
+    faqPlaceholders.forEach((original, placeholder) => {
+      if (improvedHtml.includes(placeholder)) {
+        improvedHtml = improvedHtml.replace(placeholder, original);
+      } else {
+        // Le LLM a supprimé le placeholder FAQ — le réinsérer avant la fin
+        console.warn(`   ⚠️ Section FAQ disparue (${placeholder}), réinsertion avant fin`);
+        improvedHtml = improvedHtml + '\n' + original;
       }
     });
 

@@ -104,42 +104,45 @@ class ArticleFinalizer {
     // Normaliser la destination finale pour exclusion
     const finalDestLower = finalDestination ? finalDestination.toLowerCase() : null;
     
-    // Split par paragraphes HTML (plus sûr que par phrases)
-    const paragraphs = html.split(/<\/p>|<\/div>/);
+    // Split par paragraphes HTML — utiliser un split capturant pour préserver les délimiteurs
+    // Chaque élément pair est le contenu, chaque élément impair est le délimiteur (</p> ou </div>)
+    const parts = html.split(/(<\/p>|<\/div>)/i);
     
-    const filtered = paragraphs.filter(paragraph => {
-      // Extraire le texte du paragraphe
-      const paraText = paragraph.replace(/<[^>]*>/g, ' ').toLowerCase();
+    // Reconstruire des segments [contenu + délimiteur] pour le filtrage
+    const segments = [];
+    for (let i = 0; i < parts.length; i += 2) {
+      const content = parts[i] || '';
+      const delimiter = parts[i + 1] || '';
+      segments.push({ content, delimiter, full: content + delimiter });
+    }
+    
+    const filtered = segments.filter(segment => {
+      const paraText = segment.content.replace(/<[^>]*>/g, ' ').toLowerCase();
       
-      // FIX 2: Ne jamais supprimer les titres
-      if (/<h[1-6][^>]*>/.test(paragraph)) {
+      // Ne jamais supprimer les titres
+      if (/<h[1-6][^>]*>/.test(segment.content)) {
         return true;
       }
       
-      // FIX 2: Ne jamais supprimer si le paragraphe contient la destination finale validée
+      // Ne jamais supprimer si le segment contient la destination finale validée
       if (finalDestLower && paraText.includes(finalDestLower)) {
         return true;
       }
       
-      // FIX 2: Match uniquement sur mots entiers avec word boundaries
+      // Match uniquement sur mots entiers avec word boundaries
       const foundTerms = NON_ASIA.filter(term => {
-        // Vérifier si le terme est dans la whitelist (substring)
         if (WHITELIST.some(w => paraText.includes(w))) {
-          return false; // Ignorer si whitelist match
+          return false;
         }
-        
-        // Match sur mot entier uniquement
         const wordBoundaryRegex = new RegExp(`\\b${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
         return wordBoundaryRegex.test(paraText);
       });
       
       if (foundTerms.length > 0) {
-        // Enregistrer pour les logs
         foundTerms.forEach(term => triggerTerms.add(term));
         
         if (isDryRun) {
-          // Extraire la phrase exacte supprimée (max 200 chars)
-          const fullText = paragraph.replace(/<[^>]*>/g, ' ').trim();
+          const fullText = segment.content.replace(/<[^>]*>/g, ' ').trim();
           const excerpt = fullText.substring(0, 200);
           removedParagraphs.push({
             term: foundTerms[0],
@@ -147,10 +150,10 @@ class ArticleFinalizer {
           });
         }
         
-        return false; // Supprimer ce paragraphe
+        return false;
       }
       
-      return true; // Garder ce paragraphe
+      return true;
     });
     
     // Logs détaillés en DRY_RUN uniquement
@@ -161,12 +164,11 @@ class ArticleFinalizer {
         console.log(`   [${i+1}] term="${item.term}" phrase="...${item.excerpt}..."`);
       });
     } else if (!isDryRun && removedParagraphs.length > 0) {
-      // Log minimal en production
       console.log(`🧹 Sanitizer: ${removedParagraphs.length} paragraphe(s) supprimé(s)`);
     }
     
-    // Reconstruire le HTML
-    return filtered.join('');
+    // Reconstruire le HTML en préservant les délimiteurs
+    return filtered.map(s => s.full).join('');
   }
 
   /**
@@ -207,6 +209,28 @@ class ArticleFinalizer {
 
     let finalContent = article.content;
     const enhancements = { ...article.enhancements };
+
+    // PROTECTION FAQ GUTENBERG: Extraire la section FAQ complète avant tout traitement
+    // Pattern identique à content-marketing-pass.js — protège heading + details + schema
+    const faqPlaceholderMap = new Map();
+    let faqPlaceholderCount = 0;
+    finalContent = finalContent.replace(
+      /(<!-- wp:heading[^>]*-->\s*<h2[^>]*>Questions?\s+fr[eé]quentes<\/h2>\s*<!-- \/wp:heading -->\s*(?:<!-- wp:details -->[\s\S]*?<!-- \/wp:details -->\s*)+(?:<script type="application\/ld\+json">[\s\S]*?<\/script>\s*)?)/gi,
+      (match) => {
+        const placeholder = `__FAQ_PROTECTED_${faqPlaceholderCount++}__`;
+        faqPlaceholderMap.set(placeholder, match);
+        return placeholder;
+      }
+    );
+    if (faqPlaceholderMap.size > 0) {
+      console.log(`🛡️ FAQ_PROTECT: ${faqPlaceholderMap.size} section(s) FAQ protégée(s) dans finalizeArticle`);
+    }
+
+    // Compteur diagnostic FAQ (utilisé tout au long de la chaîne)
+    const _faqCount = (s) => (s.match(/<!-- wp:details/g) || []).length;
+
+    console.log(`📊 FAQ_TRACE [ENTRY]: ${_faqCount(finalContent)} wp:details (placeholder: ${faqPlaceholderMap.size})`);
+
     // 1. Remplacer les placeholders de widgets
     // PATCH 1: Passer pipelineContext
     const widgetResult = await this.replaceWidgetPlaceholders(finalContent, analysis, pipelineContext);
@@ -323,10 +347,12 @@ class ArticleFinalizer {
       metrics: {}
     };
     
+    console.log(`📊 FAQ_TRACE [PRE-normalizeSpacing]: ${_faqCount(finalContent)}`);
     // PHASE 6.0.10.5: Normaliser les espaces et sauts de ligne
     finalContent = this.normalizeSpacing(finalContent, tempReport);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS normalizeSpacing: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    console.log(`📊 FAQ_TRACE [POST-normalizeSpacing]: ${_faqCount(finalContent)}`);
     
     // PHASE 6.0.11: Supprimer les répétitions de phrases
     finalContent = this.removeRepetitions(finalContent);
@@ -358,6 +384,7 @@ class ArticleFinalizer {
     finalContent = this.fixH2InsideP(finalContent);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS balanceParagraphs: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    console.log(`📊 FAQ_TRACE [POST-balanceParagraphs]: ${_faqCount(finalContent)}`);
     
     // PHASE 6.0.12.2: Rendre les tableaux responsive pour mobile
     finalContent = this.makeTablesResponsive(finalContent, tempReport);
@@ -445,6 +472,7 @@ class ArticleFinalizer {
     // DEBUG: Vérifier les widgets APRÈS runQAReport
     const widgetsAfterQA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS runQAReport: count=${widgetsAfterQA.count}, types=[${widgetsAfterQA.types.join(', ')}]`);
+    console.log(`📊 FAQ_TRACE [POST-runQAReport]: ${_faqCount(finalContent)}`);
     
     // Log synthèse QA
     const passCount = qaReport.checks.filter(c => c.status === 'pass').length;
@@ -496,6 +524,18 @@ class ArticleFinalizer {
           scriptCounter++;
           return placeholder;
         });
+
+        // FIX: Protéger les commentaires Gutenberg (wp:details, wp:heading, wp:paragraph)
+        // Cheerio xmlMode corrompt ou supprime les commentaires HTML WordPress
+        const gutenbergMap = new Map();
+        let gutenbergCounter = 0;
+        protectedHtml = protectedHtml.replace(/<!-- \/?(wp:[a-z]+[^>]*) -->/g, (match) => {
+          const placeholder = `__GUTENBERG_${gutenbergCounter}__`;
+          gutenbergMap.set(placeholder, match);
+          gutenbergCounter++;
+          return placeholder;
+        });
+
         const $ = cheerio.load(protectedHtml, { xmlMode: true, decodeEntities: false });
         const blockquotes = $('blockquote');
         const toTranslate = [];
@@ -532,6 +572,10 @@ class ArticleFinalizer {
             bq.append('<p><cite>— Témoignage traduit</cite></p>');
           });
           let result = $.html();
+          // Restaurer les commentaires Gutenberg protégés
+          for (const [placeholder, original] of gutenbergMap) {
+            result = result.replace(placeholder, original);
+          }
           // Restaurer les scripts protégés
           for (const [placeholder, original] of scriptMap) {
             result = result.replace(placeholder, original);
@@ -545,6 +589,7 @@ class ArticleFinalizer {
       }
     }
     
+    console.log(`📊 FAQ_TRACE [POST-blockquoteTranslation]: ${_faqCount(finalContent)}`);
     console.log('✅ Finalisation terminée:');
     console.log(`   - Widgets remplacés: ${enhancements.widgetsReplaced}`);
     console.log(`   - Quote highlight: ${enhancements.quoteHighlight}`);
@@ -656,6 +701,21 @@ class ArticleFinalizer {
       }
       return fixed;
     });
+
+    // RESTAURATION FAQ GUTENBERG: Réinsérer la section FAQ protégée
+    console.log(`📊 FAQ_TRACE [PRE-RESTORE]: ${_faqCount(finalContent)}, placeholder present: ${[...faqPlaceholderMap.keys()].some(p => finalContent.includes(p))}`);
+    for (const [placeholder, original] of faqPlaceholderMap) {
+      if (finalContent.includes(placeholder)) {
+        finalContent = finalContent.replace(placeholder, original);
+        console.log(`🛡️ FAQ_PROTECT: section FAQ restaurée depuis placeholder`);
+      } else {
+        // Le placeholder a disparu — réinsérer avant "Articles connexes" ou en fin
+        const relatedIdx = finalContent.lastIndexOf('<h2');
+        const insertPos = relatedIdx > 0 ? relatedIdx : finalContent.length;
+        finalContent = finalContent.slice(0, insertPos) + '\n' + original + '\n' + finalContent.slice(insertPos);
+        console.warn(`🛡️ FAQ_PROTECT: placeholder disparu — FAQ réinsérée avant dernier H2`);
+      }
+    }
 
     // DEBUG: Vérifier les widgets AVANT le return final
     const widgetsBeforeReturn = this.detectRenderedWidgets(finalContent);
@@ -973,9 +1033,11 @@ class ArticleFinalizer {
     try {
       const cheerioModule = await import('cheerio');
       const cheerio = cheerioModule.default || cheerioModule;
-      // FIX: Protéger <script> avant Cheerio xmlMode (sinon </script> → self-closing />)
+      // FIX: Protéger <script> et commentaires Gutenberg avant Cheerio xmlMode
       const _sdm = new Map(); let _sdc = 0;
-      const _protected = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, (m) => { const p = `<!--SD_${_sdc}-->`; _sdm.set(p, m); _sdc++; return p; });
+      let _protected = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, (m) => { const p = `<!--SD_${_sdc}-->`; _sdm.set(p, m); _sdc++; return p; });
+      const _gbm = new Map(); let _gbc = 0;
+      _protected = _protected.replace(/<!-- \/?(wp:[a-z]+[^>]*) -->/g, (m) => { const p = `__GB_${_gbc}__`; _gbm.set(p, m); _gbc++; return p; });
       const $ = cheerio.load(_protected, { xmlMode: true, decodeEntities: false });
       const widgetTypes = new Set();
       let removedCount = 0;
@@ -1001,6 +1063,10 @@ class ArticleFinalizer {
       });
       
       dedupedHtml = $.html();
+      // Restaurer les commentaires Gutenberg protégés
+      for (const [placeholder, original] of _gbm) {
+        dedupedHtml = dedupedHtml.replace(placeholder, original);
+      }
       // Restaurer les scripts protégés
       for (const [placeholder, original] of _sdm) {
         dedupedHtml = dedupedHtml.replace(placeholder, original);
@@ -5122,6 +5188,14 @@ class ArticleFinalizer {
       widgetPlaceholders.set(placeholder, match);
       return placeholder;
     });
+
+    // Protéger les commentaires Gutenberg (wp:details, wp:heading, wp:paragraph, etc.)
+    // normalizeSpacing corrompt les ":" dans "wp:details" en ajoutant un espace
+    cleanedHtml = cleanedHtml.replace(/<!-- \/?(wp:[a-z]+[^>]*) -->/g, (match) => {
+      const placeholder = `__GUTENBERG_COMMENT_${widgetCounter++}__`;
+      widgetPlaceholders.set(placeholder, match);
+      return placeholder;
+    });
     
     // DEBUG: Vérifier combien de widgets ont été protégés
     console.log(`🔍 DEBUG normalizeSpacing: ${widgetPlaceholders.size} widget(s) protégé(s) avant traitement`);
@@ -6551,12 +6625,12 @@ class ArticleFinalizer {
         
         // AMÉLIORATION: Traduire le texte si nécessaire (détection anglais + traduction)
         if (trimmedText && trimmedText.length > 0) {
-          // Détecter si le texte est en anglais
-          const englishWords = (trimmedText.match(/\b(the|a|an|is|are|was|were|have|has|had|will|would|can|could|should|this|that|from|basically|don't|I'm|I|you|he|she|it|we|they|here|there|my|your|his|her|our|their|not|anymore|phone|camera|reel|fills|photos|memories|think|going|people|places)\b/gi) || []).length;
+          // Détecter si le texte est en anglais (seuil abaissé pour capter les phrases courtes)
+          const englishWords = (trimmedText.match(/\b(the|a|an|is|are|was|were|have|has|had|will|would|can|could|should|this|that|from|basically|don't|I'm|I|you|he|she|it|we|they|here|there|my|your|his|her|our|their|not|anymore|phone|camera|reel|fills|photos|memories|think|going|people|places|best|how|what|where|which|do|does|need|want|looking|moving|working|getting|trying|planning|about|been|being|know|really|just|very|much|also|into|over|most|some|any|than|when|why|who|more|other|only|with)\b/gi) || []).length;
           const totalWords = trimmedText.split(/\s+/).length;
           const englishRatio = totalWords > 0 ? englishWords / totalWords : 0;
           
-          if (englishRatio > 0.3 && totalWords > 3) {
+          if (englishRatio > 0.15 && totalWords > 2) {
             // Traduire en français
             console.log(`🌐 Wrapper "${wrapperDef.title}": traduction d'un item en anglais (${Math.round(englishRatio * 100)}%)...`);
             try {
