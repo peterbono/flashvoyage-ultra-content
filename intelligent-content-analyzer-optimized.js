@@ -7,6 +7,7 @@ import { extractRedditForAnalysis, isDestinationQuestion, extractMainDestination
 import { detectRedditPattern } from './reddit-pattern-detector.js';
 import { compileRedditStory } from './reddit-story-compiler.js';
 import { isKnownLocation } from './airport-lookup.js';
+import { COUNTRY_DISPLAY_NAMES } from './destinations.js';
 
 // Helper pour logger en NDJSON
 function debugLog(location, message, data, hypothesisId) {
@@ -1587,10 +1588,13 @@ ${editorialBlock}`;
     console.log(`   🌏 REGIONAL_DETECTION: title="${redditTitle.substring(0,60)}" isRegional=${isRegionalTopic} mainDest=${mainDestination || 'null'}`);
     
     if (mainDestination && !isRegionalTopic) {
-      destinationDirective = `\n🎯 DESTINATION PRINCIPALE (OBLIGATOIRE): ${mainDestination.charAt(0).toUpperCase() + mainDestination.slice(1)}
+      // Convertir en nom français (thailand → Thaïlande, japan → Japon, etc.)
+      const mainDestFR = COUNTRY_DISPLAY_NAMES[mainDestination.toLowerCase()] || mainDestination.charAt(0).toUpperCase() + mainDestination.slice(1);
+      destinationDirective = `\n🎯 DESTINATION PRINCIPALE (OBLIGATOIRE): ${mainDestFR}
 L'article ENTIER doit parler de cette destination. Le titre, les H2, le contenu, les recommandations et les CTA doivent TOUS référencer cette destination. Les autres destinations ne peuvent être mentionnées que comme comparaisons secondaires ou alternatives brèves.`;
       if (pivotReason) {
-        destinationDirective += `\n⚠️ PIVOT DE DESTINATION: Le post Reddit original mentionnait "${originalDestination}" mais la communauté a fourni beaucoup plus d'informations exploitables sur "${mainDestination}". ${pivotReason}. Adapte le titre et le contenu en conséquence pour ${mainDestination}.`;
+        const origDestFR = COUNTRY_DISPLAY_NAMES[originalDestination?.toLowerCase()] || originalDestination;
+        destinationDirective += `\n⚠️ PIVOT DE DESTINATION: Le post Reddit original mentionnait "${origDestFR}" mais la communauté a fourni beaucoup plus d'informations exploitables sur "${mainDestFR}". ${pivotReason}. Adapte le titre et le contenu en conséquence pour ${mainDestFR}.`;
       }
       destinationDirective += '\n';
     } else if (isRegionalTopic) {
@@ -1800,6 +1804,10 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
       if (article.developpement && article.developpement.trim()) {
         // Option B : un seul bloc développement + recommandations + verdict + signature (sans fallbacks)
         console.log('   ✅ FORMAT: Option B détecté (developpement présent)');
+        // #region agent log
+        const brokenInLLM = (article.developpement.match(/[a-zà-ÿ]{3,}\s+[àâäéèêëïîôùûüÿ][a-zà-ÿ]+/gi) || []);
+        fetch('http://127.0.0.1:7901/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:1800',message:'H1: broken accents in raw LLM developpement output',data:{count:brokenInLLM.length,samples:brokenInLLM.slice(0,15)},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
+        // #endregion
         let devHtml = article.developpement.trim();
         // Nettoyer les wrappers markdown ```html...``` que le LLM peut ajouter
         devHtml = devHtml.replace(/^```(?:html)?\s*\n?/, '').replace(/\n?```\s*$/, '');
@@ -1807,6 +1815,10 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
           console.log('   🌐 Champ "développement" détecté en anglais: traduction...');
           devHtml = await this.translateToFrench(devHtml);
+          // #region agent log
+          const brokenAfterTranslate = (devHtml.match(/[a-zà-ÿ]{3,}\s+[àâäéèêëïîôùûüÿ][a-zà-ÿ]+/gi) || []);
+          fetch('http://127.0.0.1:7901/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:1810',message:'H3: broken accents AFTER translateToFrench',data:{count:brokenAfterTranslate.length,samples:brokenAfterTranslate.slice(0,15)},timestamp:Date.now(),hypothesisId:'H3-translate'})}).catch(()=>{});
+          // #endregion
         }
         devHtml = await this.translateBlockquotesInText(devHtml);        sections.push(devHtml);
         // --- Sections conditionnelles selon le mode éditorial ---
@@ -2655,6 +2667,11 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2000 mots.`;
     
     // Nettoyer les wrappers markdown ```html...```
     expanded = expanded.replace(/^```(?:html)?\s*\n?/, '').replace(/\n?```\s*$/, '');
+
+    // #region agent log
+    const brokenAccentsExpansion = expanded.match(/[a-zà-ÿ]{3,}\s+[àâäéèêëïîôùûüÿ]/gi) || [];
+    fetch('http://127.0.0.1:7901/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'intelligent-content-analyzer-optimized.js:2657',message:'H1: broken accents in expansion LLM output',data:{count:brokenAccentsExpansion.length,samples:brokenAccentsExpansion.slice(0,10)},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
+    // #endregion
     
     // Vérifier que l'expansion a bien augmenté le contenu
     const originalWords = htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().split(/\s+/).length;
@@ -2720,7 +2737,18 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2000 mots.`;
       anomalies.push({ type: 'generic_h2', count: genericH2s.length, details: genericH2s.map(m => m[1].trim()) });
       console.log(`   ⚠️ H2 génériques détectés: ${genericH2s.map(m => `"${m[1].trim()}"`).join(', ')}`);
     }
-    
+
+    // 1a-bis. Détection H2 trop courts (1-2 mots, ex: "Bali", "Chiang Mai") — non descriptifs
+    const shortH2s = h2Matches.filter(m => {
+      const title = m[1].trim();
+      const words = title.split(/\s+/).filter(w => w.length > 0);
+      return words.length <= 2 && title.length < 20;
+    });
+    if (shortH2s.length > 0) {
+      anomalies.push({ type: 'short_h2', count: shortH2s.length, details: shortH2s.map(m => m[1].trim()) });
+      console.log(`   ⚠️ H2 trop courts (non descriptifs): ${shortH2s.map(m => `"${m[1].trim()}"`).join(', ')}`);
+    }
+
     // 1b. Comptage de quotes « ... » (minimum 2)
     const quoteMatches = rawContent.match(/«[^»]+»/g) || [];
     if (quoteMatches.length < 2) {
@@ -2819,6 +2847,11 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2000 mots.`;
         case 'english_residual':
           correctionInstructions.push(
             `Traduis en français les ${anomaly.count} mots/passages anglais restants dans l'article. Tout doit être en français.`
+          );
+          break;
+        case 'short_h2':
+          correctionInstructions.push(
+            `REFORMULE ces H2 trop courts (1-2 mots) en H2 descriptifs et engageants : ${anomaly.details.map(d => `"${d}"`).join(', ')}. Un H2 doit contenir une promesse ou un angle : "Bali" → "Bali : entre paradis instagrammable et réalité budgétaire", "Bangkok" → "Pourquoi Bangkok reste imbattable pour les premiers mois".`
           );
           break;
       }

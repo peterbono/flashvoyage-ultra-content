@@ -40,7 +40,7 @@ Améliorer l'article pour maximiser le taux de conversion des widgets affiliés 
 2. **NE INVENTE JAMAIS** de faits, chiffres, lieux, noms, expériences ou témoignages.
 3. **NE TOUCHE JAMAIS** aux shortcodes [fv_widget ...] eux-mêmes — ne les modifie pas, ne les déplace pas, n'en ajoute pas, n'en supprime pas.
 4. **NE TOUCHE JAMAIS** aux balises <a href="...">, aux liens internes, ni aux blockquotes existants.
-4b. **NE TOUCHE JAMAIS** aux blocs <div data-fv-segment="affiliate">...</div> — ne les déplace pas, ne modifie pas leur contenu, ne les supprime pas. Ces blocs contiennent les widgets d'affiliation rendus et doivent rester EXACTEMENT à leur position d'origine dans l'article.
+4b. **NE TOUCHE JAMAIS** aux blocs __AFFILIATE_MODULE_*__ — ce sont des placeholders pour les modules d'affiliation. NE LES DÉPLACE PAS, NE LES SUPPRIME PAS, et NE CRÉE JAMAIS de nouveaux blocs <aside class="affiliate-module">. Les modules sont gérés automatiquement.
 5. **NE MENTIONNE JAMAIS** de widget hébergement/hôtel — il n'est pas disponible chez nos partenaires.
 6. **NE FORCE JAMAIS** un pattern (tableau comparatif, arc narratif) quand le contenu ne s'y prête pas naturellement.
 7. **ÉCRIS UNIQUEMENT EN FRANÇAIS.**
@@ -152,7 +152,7 @@ Améliorer LÉGÈREMENT l'article sans l'allonger. L'article doit rester COURT e
 1. **NE RALLONGE PAS l'article** — tu peux reformuler mais pas ajouter plus de 2-3 phrases au total.
 2. **NE SUPPRIME JAMAIS** les citations Reddit (blockquotes).
 3. **NE INVENTE JAMAIS** de faits, chiffres ou expériences.
-4. **NE TOUCHE JAMAIS** aux shortcodes [fv_widget ...] ni aux blocs <div data-fv-segment="affiliate">.
+4. **NE TOUCHE JAMAIS** aux shortcodes [fv_widget ...] ni aux placeholders __AFFILIATE_MODULE_*__. NE CRÉE JAMAIS de <aside class="affiliate-module">.
 5. **NE TOUCHE JAMAIS** aux liens <a href="..."> ni aux blockquotes existants.
 6. **NE CRÉE PAS** de tableau comparatif — c'est un article d'actu, pas un guide.
 7. **NE CRÉE PAS** de sections supplémentaires (pas de FAQ, pas de checklist, pas de "Réalité vs fantasme").
@@ -200,6 +200,17 @@ export async function applyContentMarketingPass(htmlContent, pipelineContext) {
   // Choisir le system prompt selon le mode éditorial
   const systemPrompt = editorialMode === 'news' ? NEWS_SYSTEM_PROMPT : SYSTEM_PROMPT;
   
+  // PROTECTION: Extraire les modules d'affiliation avant le LLM pour éviter
+  // que le LLM les réécrive, les duplique ou en crée de faux
+  const affiliateModulePlaceholders = new Map();
+  let affiliateModuleCounter = 0;
+  let protectedHtml = htmlContent.replace(/<aside\s+class="affiliate-module"[\s\S]*?<\/aside>/gi, (match) => {
+    const placeholder = `__AFFILIATE_MODULE_${affiliateModuleCounter++}__`;
+    affiliateModulePlaceholders.set(placeholder, match);
+    return placeholder;
+  });
+  console.log(`   🛡️ ${affiliateModulePlaceholders.size} module(s) d'affiliation protégé(s) avant envoi au LLM`);
+
   // Construire le message utilisateur
   const widgetContext = widgets.length > 0
     ? `\n\nWidgets présents dans l'article :\n${widgets.map(w => `- [fv_widget type="${w.type}"] dans la section "${w.approximateSection}"`).join('\n')}`
@@ -211,7 +222,7 @@ Origine des vols : ${geoDefaults?.origin || 'PAR'}${widgetContext}
 
 Voici l'article HTML à améliorer :
 
-${htmlContent}`;
+${protectedHtml}`;
 
   try {
     const response = await createChatCompletion({
@@ -235,6 +246,28 @@ ${htmlContent}`;
       console.warn('⚠️ CONTENT_MARKETING_PASS: Réponse LLM vide, conservation du contenu original');
       return { html: htmlContent, widgetsDetected: widgets, improved: false };
     }
+
+    // RESTAURATION: Réinsérer les modules d'affiliation protégés
+    affiliateModulePlaceholders.forEach((original, placeholder) => {
+      if (improvedHtml.includes(placeholder)) {
+        improvedHtml = improvedHtml.replace(placeholder, original);
+      } else {
+        // Le LLM a supprimé le placeholder — le réinsérer avant la fin
+        console.warn(`   ⚠️ Module affilié disparu (${placeholder}), réinsertion avant fin`);
+        const lastClosingTag = improvedHtml.lastIndexOf('</aside>');
+        const insertPos = lastClosingTag !== -1 ? lastClosingTag + 8 : improvedHtml.length;
+        improvedHtml = improvedHtml.slice(0, insertPos) + '\n' + original + '\n' + improvedHtml.slice(insertPos);
+      }
+    });
+
+    // Supprimer les faux modules d'affiliation créés par le LLM (ceux qui n'ont PAS de shortcode [fv_widget])
+    improvedHtml = improvedHtml.replace(/<aside\s+class="affiliate-module"[\s\S]*?<\/aside>/gi, (match) => {
+      if (/\[fv_widget\s/.test(match) || /trpwdg\.com/.test(match) || /__AFFILIATE_MODULE_/.test(match)) {
+        return match; // Garder les vrais modules (ont un shortcode ou un script)
+      }
+      console.warn(`   🧹 Faux module d'affiliation créé par le LLM supprimé`);
+      return ''; // Supprimer les faux modules sans shortcode
+    });
 
     // Garde-fou : rejeter si le contenu est trop court (< 80% de l'original)
     if (improvedHtml.length < originalLength * 0.80) {

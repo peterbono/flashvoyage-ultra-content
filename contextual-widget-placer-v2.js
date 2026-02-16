@@ -20,47 +20,48 @@ class ContextualWidgetPlacer {
     this.nomadLinkGenerator = new NomadPartnersLinkGenerator();
     
     // Contextes + accroches style TPG (valeur ajoutée + sobre)
+    // TUTOIEMENT obligatoire — cohérent avec le ton FlashVoyage
     this.widgetIntros = {
       flights: [
         {
           context: "Réserver en avance permet souvent d'économiser sur les billets d'avion. Notre outil compare les prix de nombreuses compagnies en temps réel.",
-          cta: "Comparez les prix et réservez :"
+          cta: "Compare les prix et réserve ton billet :"
         },
         {
           context: "Les vols en milieu de semaine sont souvent moins chers. Notre partenaire Kiwi.com agrège les tarifs de toutes les compagnies.",
-          cta: "Trouvez les meilleures offres :"
+          cta: "Trouve les meilleures offres :"
         },
         {
-          context: "Les prix des vols varient selon le site de réservation. Notre outil compare automatiquement les tarifs pour vous garantir le meilleur prix.",
-          cta: "Consultez les tarifs actuels :"
+          context: "Les prix des vols varient selon le site de réservation. Notre outil compare automatiquement les tarifs pour te garantir le meilleur prix.",
+          cta: "Consulte les tarifs actuels :"
         }
       ],
       hotels: [
         {
-          context: "Les vols représentent une part importante du budget voyage. Notre partenaire Aviasales compare les prix de nombreuses compagnies pour vous aider à économiser.",
-          cta: "Comparez les prix de vols :"
+          context: "Les vols représentent une part importante du budget voyage. Notre partenaire Aviasales compare les prix de nombreuses compagnies pour t'aider à économiser.",
+          cta: "Compare les prix de vols :"
         },
         {
-          context: "Les prix des vols peuvent varier selon la compagnie. Notre outil agrège toutes les offres pour vous garantir le meilleur tarif.",
-          cta: "Trouvez les meilleures offres :"
+          context: "Les prix des vols peuvent varier selon la compagnie. Notre outil agrège toutes les offres pour te garantir le meilleur tarif.",
+          cta: "Trouve les meilleures offres :"
         }
       ],
       transport: [
         {
-          context: "Les transports locaux représentent une part du budget voyage. Notre partenaire 12Go compare bus, trains et ferries pour optimiser vos trajets.",
-          cta: "Planifiez vos déplacements :"
+          context: "Les transports locaux représentent une part du budget voyage. Notre partenaire 12Go compare bus, trains et ferries pour optimiser tes trajets.",
+          cta: "Planifie tes déplacements :"
         }
       ],
       esim: [
         {
           context: "Une connexion internet fiable est cruciale pour les nomades. Notre partenaire Airalo propose des eSIM dans 200+ pays avec des tarifs transparents.",
-          cta: "Configurez votre eSIM :"
+          cta: "Configure ton eSIM :"
         }
       ],
       insurance: [
         {
           context: "L'assurance voyage est obligatoire dans de nombreux pays. Notre partenaire SafetyWing propose des couvertures adaptées aux nomades digitaux.",
-          cta: "Protégez votre voyage :"
+          cta: "Protège ton voyage :"
         }
       ]
     };
@@ -405,6 +406,12 @@ Réponds UNIQUEMENT en JSON valide.`;
         'aéroport', 'compagnie aérienne', 'billet', 'réservation vol'
       ];
       
+      // Keywords qui indiquent un article budget/guide général (flights toujours pertinent)
+      const budgetTravelKeywords = [
+        'budget', 'coût', 'coûts', 'dépenses', 'prix', 'tarif', 'tarifs',
+        'nomade', 'nomades', 'expatrié', 'vivre à', 'vivre en', 's\'installer'
+      ];
+      
       const accommodationMentions = accommodationKeywords.reduce((count, keyword) => {
         return count + (lowerContent.split(keyword).length - 1);
       }, 0);
@@ -413,20 +420,26 @@ Réponds UNIQUEMENT en JSON valide.`;
         return count + (lowerContent.split(keyword).length - 1);
       }, 0);
       
+      const isBudgetArticle = budgetTravelKeywords.some(kw => lowerContent.includes(kw));
+      
       debug.accommodationMentions = accommodationMentions;
       debug.flightMentions = flightMentions;
+      debug.isBudgetArticle = isBudgetArticle;
       
-      // LOGIQUE INTELLIGENTE : Rejeter seulement si hébergement DOMINE
-        if (accommodationMentions > flightMentions && accommodationMentions > 0) {
+      // Un article budget/guide parle forcément d'hébergement ET de transport
+      // → ne pas rejeter le widget flights dans ce cas
+      if (isBudgetArticle) {
+        reasons.push(`Article budget/guide → flights toujours pertinent`);
+      } else if (accommodationMentions > flightMentions && accommodationMentions > 0) {
         reasons.push(`Hébergement domine (${accommodationMentions} vs ${flightMentions})`);
         return { ok: false, reasons, debug };
-        } else if (accommodationMentions > 0 && flightMentions === 0) {
+      } else if (accommodationMentions > 0 && flightMentions === 0) {
         reasons.push(`Hébergement sans contexte vol`);
         return { ok: false, reasons, debug };
-        } else {
+      } else {
         reasons.push(`Contexte vol approprié (${flightMentions} mentions)`);
-        }
       }
+    }
       
     // VÉRIFICATION 2: Scoring familial avec triggers forts/faibles
     // EXCEPTION: Les widgets FLIGHTS et ESIM sont TOUJOURS pertinents (les familles voyagent en avion et ont besoin d'internet)
@@ -940,7 +953,7 @@ ${widgetScript}
     const fallbackWidget = `
 <!-- FLASHVOYAGE_WIDGET:fallback -->
 <p><strong>💡 Guide pratique</strong></p>
-<p>Pour planifier votre voyage en Asie, consultez nos guides pratiques et nos ressources pour nomades digitaux.</p>
+<p>Pour planifier ton voyage en Asie, consulte nos guides pratiques et nos ressources pour nomades digitaux.</p>
 <p><a href="/guides" style="color: #dc2626; text-decoration: underline;">Découvrir nos guides</a></p>
 <!-- /FLASHVOYAGE_WIDGET:fallback -->
 `;

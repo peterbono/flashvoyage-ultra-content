@@ -359,6 +359,9 @@ class ArticleFinalizer {
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS balanceParagraphs: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
     
+    // PHASE 6.0.12.2: Rendre les tableaux responsive pour mobile
+    finalContent = this.makeTablesResponsive(finalContent, tempReport);
+
     // CORRECTION FINALE AMÉLIORÉE: Nettoyer une dernière fois les paragraphes vides ou avec juste un point
     // Patterns multiples pour capturer toutes les variantes
     const cleanupPatterns = [
@@ -547,8 +550,9 @@ class ArticleFinalizer {
     console.log(`   - Quote highlight: ${enhancements.quoteHighlight}`);
     console.log(`   - Intro FOMO: ${enhancements.fomoIntro}`);
     console.log(`   - CTA présent: ${enhancements.ctaPresent}\n`);
-    // PHASE 6.2: Résolution des shortcodes [fv_widget] en scripts Travelpayouts
-    finalContent = this.resolveWidgetShortcodes(finalContent, pipelineContext);
+    // PHASE 6.2: Les shortcodes [fv_widget] sont désormais rendus par WordPress via le mu-plugin PHP.
+    // Ne plus les résoudre côté Node — laisser WordPress les traiter.
+    // (anciennement: finalContent = this.resolveWidgetShortcodes(finalContent, pipelineContext);)
 
     // PHASE 6.3: Nettoyage des blocs orphelins en fin d'article
     finalContent = this.removeTrailingOrphans(finalContent);
@@ -617,6 +621,42 @@ class ArticleFinalizer {
       console.log(`   🧹 NETTOYAGE FINAL ABSOLU: ${finalCleanupBefore.emptyParas - finalCleanupAfter.emptyParas} paragraphe(s) vide(s) et ${finalCleanupBefore.limitesCount - finalCleanupAfter.limitesCount} duplication(s) "Limites et biais" supprimé(s)`);
     }
     
+    // PHASE 6.5: Normalisation des noms géographiques composés (sud-est → Sud-Est)
+    finalContent = finalContent.replace(/(?<=>)([^<]+)(?=<)/g, (match, textContent) => {
+      return textContent
+        .replace(/\bsud-est\b/g, 'Sud-Est')
+        .replace(/\bsud-ouest\b/g, 'Sud-Ouest')
+        .replace(/\bnord-est\b/g, 'Nord-Est')
+        .replace(/\bnord-ouest\b/g, 'Nord-Ouest')
+        .replace(/\bmoyen-orient\b/g, 'Moyen-Orient');
+    });
+
+    // PHASE 6.6: Corrections d'accent et fautes courantes du LLM
+    const _accentFixes = [
+      [/\bAchete\b/g, 'Achète'],
+      [/\bachete\b/g, 'achète'],
+      [/\bPrevois\b/g, 'Prévois'],
+      [/\bprevois\b/g, 'prévois'],
+      [/\bPrevoit\b/g, 'Prévoit'],
+      [/\bprevoit\b/g, 'prévoit'],
+      [/\bPrevoyez\b/g, 'Prévois'],   // vous → tu
+      [/\bDecouvre\b/g, 'Découvre'],
+      [/\bdecouvre\b/g, 'découvre'],
+      [/\bDecouvrez\b/g, 'Découvre'],  // vous → tu
+      [/\bdecouvrez\b/g, 'découvre'],
+      [/\bConsultez\b/g, 'Consulte'],  // vous → tu
+      [/\bconsultez\b/g, 'consulte'],
+      [/\bN'hesitez pas\b/gi, "N'hésite pas"],
+      [/\bVeuillez\b/g, 'Merci de'],   // registre formel → neutre
+    ];
+    finalContent = finalContent.replace(/(?<=>)([^<]+)(?=<)/g, (match, textContent) => {
+      let fixed = textContent;
+      for (const [pattern, replacement] of _accentFixes) {
+        fixed = fixed.replace(pattern, replacement);
+      }
+      return fixed;
+    });
+
     // DEBUG: Vérifier les widgets AVANT le return final
     const widgetsBeforeReturn = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets AVANT return final: count=${widgetsBeforeReturn.count}, types=[${widgetsBeforeReturn.types.join(', ')}]`);
@@ -3962,7 +4002,9 @@ class ArticleFinalizer {
             const contentLower = content.toLowerCase();
             // Garder les H2 comparatifs (vs, et, comparaison) ou les sections multi-pays
             if (contentLower.includes(alias) && !contentLower.includes('compar') && !contentLower.includes('vs') && !contentLower.includes(' et ')) {
-              const titleLabelCapitalized = titleLabel.charAt(0).toUpperCase() + titleLabel.slice(1);
+              // Traduire le label en français (thailand → Thaïlande, etc.)
+              const _geoFrNames = {'thailand':'Thaïlande','thaïlande':'Thaïlande','thailande':'Thaïlande','japan':'Japon','japon':'Japon','indonesia':'Indonésie','indonésie':'Indonésie','cambodia':'Cambodge','cambodge':'Cambodge','malaysia':'Malaisie','malaisie':'Malaisie','singapore':'Singapour','singapour':'Singapour','philippines':'Philippines','korea':'Corée du Sud','laos':'Laos','myanmar':'Myanmar','taiwan':'Taïwan','vietnam':'Vietnam','india':'Inde','nepal':'Népal'};
+              const titleLabelCapitalized = _geoFrNames[titleLabel.toLowerCase()] || titleLabel.charAt(0).toUpperCase() + titleLabel.slice(1);
               // Remplacer aussi la préposition (à/en/au + ancien pays → prep correcte + nouveau pays)
               const aliasEscaped = alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
               const prepAliasRegex = new RegExp(`(à|en|au|aux)\\s+${aliasEscaped}`, 'gi');
@@ -4030,7 +4072,7 @@ class ArticleFinalizer {
       if (eng === fr) continue; // Pas besoin de remplacer si identique
       // Remplacement word-boundary dans les tags textuels (H2, H3, P, LI, blockquote, figcaption)
       const engEscaped = eng.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const pattern = new RegExp(`(>[^<]*?)\\b${engEscaped}\\b`, 'g');
+      const pattern = new RegExp(`(>[^<]*?)\\b${engEscaped}\\b`, 'gi');
       const before = result;
       result = result.replace(pattern, (match, prefix) => {
         return prefix + fr;
@@ -5042,6 +5084,11 @@ class ArticleFinalizer {
   normalizeSpacing(html, report) {
     console.log('🔧 normalizeSpacing: Normalisation des espaces et sauts de ligne...');
     
+    // #region agent log
+    const brokenBefore = html.match(/[a-zà-ÿ]{3,}\s+[àâäéèêëïîôùûüÿ][a-zà-ÿ]+/gi) || [];
+    fetch('http://127.0.0.1:7901/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:5042',message:'H2: broken accents BEFORE normalizeSpacing',data:{count:brokenBefore.length,samples:brokenBefore.slice(0,15)},timestamp:Date.now(),hypothesisId:'H2'})}).catch(()=>{});
+    // #endregion
+    
     let cleanedHtml = html;
     let fixesCount = 0;
     // CORRECTION CRITIQUE: Protéger les widgets (script/form) AVANT tout traitement pour éviter qu'ils soient modifiés
@@ -5256,6 +5303,28 @@ class ArticleFinalizer {
     // APPROCHE INTELLIGENTE: Capturer le mot ENTIER avant l'espace pour distinguer
     // les mots cassés (itin éraire → itinéraire) des mots séparés (ou équilibre → garder)
     const _knownMerged = new Set(['voilà', 'déjà', 'holà']);
+    // Mots français autonomes commençant par accent/cédille — JAMAIS fusionnés avec le mot précédent
+    const _ACCENTED_STANDALONE = new Set([
+      'économique','économiques','économie','économies','économiser',
+      'également','égal','égale','égaux','égalité',
+      'élevé','élevée','élevés','élevées','élever',
+      'échanger','échange','échanges','échappé','échapper',
+      'événement','événements','éventuel','éventuellement',
+      'étranger','étrangère','étrangers','étrangères',
+      'étude','études','étudiant','étudiants',
+      'énergie','énergies','énergique','énorme','énormes','énormément',
+      'équilibre','équipe','équipé','équipement',
+      'éviter','évité','évitez','évite',
+      'écrire','écrit','écriture',
+      'élection','élections','élu','élus',
+      'émission','émissions','émotion','émotions',
+      'époque','époques',
+      'être','état','états',
+      'île','îles','îlot',
+      'ôter','ôté',
+      'ûrement',
+      'à','où',
+    ]);
     const _commonWords = new Set([
       'le','la','les','de','des','du','un','une','ou','et','en','au','aux',
       'ce','se','ne','me','te','je','tu','il','on','ma','sa','ta',
@@ -5264,7 +5333,11 @@ class ArticleFinalizer {
       'chez','donc','puis','si','ni','mon','ton','son','mes','tes','ses',
       'nos','vos','leur','leurs','cette','ces','quel','dont','comme','quand',
       'alors','aussi','même','après','entre','notre','votre','encore','trop',
-      'très','non','oui','peut','fait','dit','mis','pris','tous','ici'
+      'très','non','oui','peut','fait','dit','mis','pris','tous','ici',
+      'option','lire','coûts','coût','prix','peuvent','doit','être',
+      'avoir','faire','voir','dire','aller','venir','mettre','prendre',
+      'part','haut','bout','pays','type','mode','base','zone','site',
+      'plan','idée','avis','nord','effet','offre','accès','guide'
     ]);
     cleanedHtml = cleanedHtml.replace(/([a-zà-ÿ]+)\s+([àâäéèêëïîôùûüÿ][a-zà-ÿ]*)/gi, (m, part1, part2) => {
       const combined = (part1 + part2).toLowerCase();
@@ -5272,6 +5345,8 @@ class ArticleFinalizer {
       if (_knownMerged.has(combined)) return part1 + part2;
       // "à" seul est TOUJOURS la préposition française — garder l'espace
       if (part2.toLowerCase() === 'à') return m;
+      // Mot accentué autonome (économique, également, élevé...) — JAMAIS fusionner
+      if (_ACCENTED_STANDALONE.has(part2.toLowerCase())) return m;
       // Si part1 est un mot français autonome courant, garder l'espace
       if (_commonWords.has(part1.toLowerCase())) return m;
       // Sinon fusionner (mot cassé par espace parasite)
@@ -5369,7 +5444,8 @@ class ArticleFinalizer {
       const beforePattern1 = fixedContent;
       
       // Pattern 1a: Mot + apostrophe + espace + lettre accentuée (ex: "pass' é" → "passé")
-      fixedContent = fixedContent.replace(/([a-zà-ÿ]{3,})[''`]\s+([àâäéèêëïîôùûüÿ][a-zà-ÿ]{1,})\b/gi, (m, part1, part2) => {
+      // FIX H1: replaced \b with French-aware boundary
+      fixedContent = fixedContent.replace(/([a-zà-ÿ]{3,})[''`]\s+([àâäéèêëïîôùûüÿç][a-zà-ÿ]{1,})(?![a-zà-ÿ])/gi, (m, part1, part2) => {
         const combined = part1 + part2;
         // Vérifier que c'est un mot français valide (au moins 4 lettres)
         if (combined.length >= 4) {
@@ -5379,7 +5455,8 @@ class ArticleFinalizer {
       });
       
       // Pattern 1b: 1-2 lettres + espace + lettre accentuée + reste du mot (ex: "g énéralement" → "généralement")
-      fixedContent = fixedContent.replace(/([a-zà-ÿ]{1,2})\s+([àâäéèêëïîôùûüÿ][a-zà-ÿ]{2,})\b/gi, (m, part1, part2) => {
+      // FIX H1: replaced \b with French-aware boundary; added ç
+      fixedContent = fixedContent.replace(/([a-zà-ÿ]{1,2})\s+([àâäéèêëïîôùûüÿç][a-zà-ÿ]{2,})(?![a-zà-ÿ])/gi, (m, part1, part2) => {
         const combined = part1 + part2;
         // Vérifier que ce n'est pas une préposition valide séparée
         const commonPrepositions = ['de', 'en', 'le', 'la', 'les', 'un', 'une', 'du', 'des', 'ce', 'se', 'ne', 'me', 'te', 'à', 'ou', 'et', 'si'];
@@ -5389,9 +5466,9 @@ class ArticleFinalizer {
         return m;
       });
       
-      // Pattern 1c: Mot français (3+ lettres) + espace + lettre accentuée isolée (ex: "pass é" → "passé", "pay é" → "payé", "bas é" → "basé")
-      fixedContent = fixedContent.replace(/\b([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿ])(?=\s|$|[.,;:!?<])/gi, (m, word, accent) => {
-        // Mots connus à fusionner (voilà, déjà...)
+      // Pattern 1c: Mot français (3+ lettres) + espace + lettre accentuée/ç isolée (ex: "pass é" → "passé", "per ç" → "perç")
+      // FIX H1: replaced \b with French-aware boundary
+      fixedContent = fixedContent.replace(/(?<![a-zà-ÿ])([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿç])(?=\s|$|[.,;:!?<])/gi, (m, word, accent) => {
         if (_knownMerged.has((word + accent).toLowerCase())) return word + accent;
         if (accent.toLowerCase() === 'à') return m;
         const combined = word + accent;
@@ -5401,8 +5478,36 @@ class ArticleFinalizer {
         return m;
       });
       
+      // Pattern 1d: Mot français (4+ lettres, PAS un mot courant) + espace + suffixe accentué (1-8 lettres)
+      // Ex: "anim ées" → "animées", "financi ère" → "financière", "comp étitifs" → "compétitifs"
+      // Cible les suffixes typiques cassés, pas les vrais mots indépendants
+      const COMMON_WORDS = new Set(['dans','avec','pour','plus','sous','sans','chez','tout','mais','très','bien','font','sont','nous','vous','leur','elle','cela','cette','entre','après','avant','comme','aussi','autre','faire','avoir','être','même','dont','vers','quel','ceux','ceci','hors','dès','lors','près']);
+      // FIX H4: Added ç-related suffixes + éré/éri/éris missing suffixes
+      const KNOWN_ACCENTED_SUFFIXES = /^(ée|ées|és|éré|érée|érées|ère|ères|ière|ières|èrement|ément|éments|étaire|étaires|étude|érence|érences|érieur|érieure|érieurs|érable|érables|émie|érité|érite|ètement|ériaux|érial|ériel|étique|étiques|èse|èses|èbre|èbres|ôle|ôles|ôt|ôts|ûre|ûres|ûté|ûtés|ître|îtres|érente|érentes|étitif|étitifs|étitive|étitives|érés|érément|ènement|ènements|çue|çues|çu|çus|çant|çants|çon|çons|çais|çaise|çaises)$/i;
+      let p1dRepairs = [];
+      let p1dSkipped = [];
+      // FIX H4: Added ç to detection pattern for "per çue" cases
+      // FIX H1: replaced \b with French-aware boundaries (?<![a-zà-ÿ]) / (?![a-zà-ÿ])
+      fixedContent = fixedContent.replace(/(?<![a-zà-ÿ])([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿç][a-zà-ÿ]{1,8})(?![a-zà-ÿ])/gi, (m, part1, part2) => {
+        if (COMMON_WORDS.has(part1.toLowerCase())) { p1dSkipped.push({m, reason:'common'}); return m; }
+        // Mot accentué autonome — ne JAMAIS fusionner
+        if (_ACCENTED_STANDALONE.has(part2.toLowerCase())) { p1dSkipped.push({m, reason:'standalone_word', part2}); return m; }
+        if (KNOWN_ACCENTED_SUFFIXES.test(part2)) {
+          p1dRepairs.push({from:m, to:part1+part2});
+          return part1 + part2;
+        }
+        p1dSkipped.push({m, reason:'not_suffix', part2});
+        return m;
+      });
+      // #region agent log
+      if (p1dRepairs.length > 0 || p1dSkipped.length > 0) {
+        fetch('http://127.0.0.1:7903/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:P1D',message:'Pattern 1d suffix repair results per <p>',data:{repaired:p1dRepairs,skipped:p1dSkipped.slice(0,10)},timestamp:Date.now(),hypothesisId:'H5'})}).catch(()=>{});
+      }
+      // #endregion
+      
       // Pattern 2: Mot français (3+ lettres) + espace + lettre accentuée isolée (ex: "pass é" → "passé", "pay é" → "payé", "bas é" → "basé")
-      fixedContent = fixedContent.replace(/\b([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿ])(?=\s|$|[.,;:!?<])/gi, (m, word, accent) => {
+      // FIX H1: replaced \b with French-aware boundary; added ç
+      fixedContent = fixedContent.replace(/(?<![a-zà-ÿ])([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿç])(?=\s|$|[.,;:!?<])/gi, (m, word, accent) => {
         if (_knownMerged.has((word + accent).toLowerCase())) return word + accent;
         if (accent.toLowerCase() === 'à') return m;
         const combined = word + accent;
@@ -5434,6 +5539,17 @@ class ArticleFinalizer {
       return openTag + fixedContent + closeTag;
     });
     
+    // #region agent log
+    // H1/H2/H3: Before CORRECTION FINALE — scan ALL text for stuck words and broken accents
+    const allTextBefore = cleanedHtml.replace(/<[^>]+>/g, ' ');
+    const stuckWordsAll = allTextBefore.match(/[a-zà-ÿ]{3,}[àâäéèêëïîôùûüÿç][a-zà-ÿ]{3,}/gi) || [];
+    const brokenWordsAll = allTextBefore.match(/[a-zà-ÿ]{3,}\s+[àâäéèêëïîôùûüÿç][a-zà-ÿ]{1,8}/gi) || [];
+    // H2: stuck words in non-<p> elements specifically
+    const nonPText = cleanedHtml.replace(/<p[^>]*>[\s\S]*?<\/p>/g, '').replace(/<[^>]+>/g, ' ');
+    const stuckInNonP = nonPText.match(/[a-zà-ÿ]{3,}[àâäéèêëïîôùûüÿç][a-zà-ÿ]{3,}/gi) || [];
+    fetch('http://127.0.0.1:7903/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:BEFORE_CORRECTION_FINALE',message:'Stuck and broken words BEFORE correction',data:{stuckTotal:stuckWordsAll.length,stuckSamples:stuckWordsAll.slice(0,20),brokenTotal:brokenWordsAll.length,brokenSamples:brokenWordsAll.slice(0,20),stuckInNonPCount:stuckInNonP.length,stuckInNonPSamples:stuckInNonP.slice(0,10)},timestamp:Date.now(),hypothesisId:'H1-H2-H3'})}).catch(()=>{});
+    // #endregion
+
     // CORRECTION FINALE: Détecter et corriger les mots français collés sans espace
     // Pattern: mot français (4+ lettres) + mot français (4+ lettres) collés ensemble
     // Exemples: "tempsétait" → "temps était", "Resterà" → "Rester à", "échapperà" → "échapper à"
@@ -5457,39 +5573,56 @@ class ArticleFinalizer {
         return key;
       });
       
-      // Pattern 1: Mot français (4+ lettres) suivi d'une majuscule (ex: "tempsÉtait" → "temps Était")
-      // Mais exclure les cas où c'est un nom propre (ex: "ParisFrance" → garder tel quel si c'est intentionnel)
-      let fixedContent = protectedContent.replace(/\b([a-zà-ÿ]{4,})([A-ZÀ-Ÿ][a-zà-ÿ]{2,})\b/g, (m, word1, word2) => {
-        // Ne pas séparer si le premier mot est très court (ex: "àParis" → garder tel quel)
-        // Ne pas séparer si c'est après une apostrophe (ex: "l'Expérience")
+      // Pattern 1: Mot français (4+ lettres) suivi d'une VRAIE majuscule (ex: "tempsÉtait" → "temps Était")
+      // FIX: [A-ZÀ-Ÿ] incluait les accents minuscules (é=U+00E9 est dans U+00C0-U+0178)
+      // On utilise maintenant [A-ZÀÂÄÇÈÉÊËÎÏÔÙÛÜ] pour ne matcher QUE les majuscules
+      // FIX H1: replaced \b with French-aware boundaries
+      let fixedContent = protectedContent.replace(/(?<![a-zà-ÿ])([a-zà-ÿ]{4,})([A-ZÀÂÄÇÈÉÊËÎÏÔÙÛÜ][a-zà-ÿ]{2,})(?![a-zà-ÿ])/g, (m, word1, word2) => {
         const beforeMatch = protectedContent.substring(0, protectedContent.indexOf(m));
         if (/['"']$/.test(beforeMatch)) {
           return m;
         }
-        // Séparer les mots français valides
         return word1 + ' ' + word2;
       });
       
       // Pattern 2: Mot français suivi de "à" collé (ex: "Resterà" → "Rester à", "échapperà" → "échapper à")
-      fixedContent = fixedContent.replace(/\b([a-zà-ÿ]{4,})(à)([a-zà-ÿ]{2,})\b/gi, (m, word, preposition, rest) => {
+      // FIX H1: replaced \b with French-aware boundaries
+      fixedContent = fixedContent.replace(/(?<![a-zà-ÿ])([a-zà-ÿ]{4,})(à)([a-zà-ÿ]{2,})(?![a-zà-ÿ])/gi, (m, word, preposition, rest) => {
         // Vérifier que "à" est bien une préposition et non partie du mot suivant
         // Ex: "Resterà" → "Rester à" (si "à" est suivi d'un mot)
         return word + ' ' + preposition + ' ' + rest;
       });
       
-      // Pattern 3: Mot français suivi directement d'un autre mot français sans espace
-      // Détecter les transitions: consonne→voyelle accentuée (ex: "bonéquilibre" → "bon équilibre")
-      fixedContent = fixedContent.replace(/\b([a-zà-ÿ]{3,}[bcdfghjklmnpqrstvwxz])([àâäéèêëïîôùûüÿ][a-zà-ÿ]{3,})\b/gi, (m, word1, word2) => {
-        // Vérifier que ce sont deux mots français valides séparés
-        // Exclure les cas où c'est un mot composé valide (ex: "portefeuille")
-        const commonCompoundWords = ['portefeuille', 'tirebouchon', 'garde', 'porte'];
-        const combined = word1 + word2;
-        if (commonCompoundWords.some(cw => combined.toLowerCase().includes(cw))) {
-          return m;
+      // Pattern 1b: Mots collés à une frontière d'accent minuscule (ex: "prixélevé" → "prix élevé")
+      // Condition: la partie APRÈS l'accent doit être un mot français courant (whitelist)
+      // FIX H1: \b fails near placeholders (__TAG_FINAL_X__) because _ is a word char
+      //   → Use (?<![a-zà-ÿ]) / (?![a-zà-ÿ]) instead of \b for French-aware boundaries
+      // FIX H3: Group 1 min reduced from {3,} to {2,} to handle "les" + "échanges"
+      //   Whitelist expanded with missing common accented words
+      const COMMON_ACCENTED_WORDS = /^(être|état|était|étaient|étant|également|économique|économiques|économiser|économies|élevé|élevés|élevée|élevées|éventuelles?|éventuels?|éventuel|échanges?|échanger|écrire|énergie|énormes?|équilibre|équilibré|équilibrés|équilibrée|équilibrées|équipé|équipés|équipées?|évaluer|éviter|évoluer|évolution|étape|étapes|étranger|étrangers|étrangère|étrangères|étude|études|évidemment|éventail|échapper|époque|épaules|écran|éléments?|émission|émotion|édition|êtes|être)$/i;
+      // #region agent log
+      const stuckBeforeP1b = protectedContent.match(/[a-zà-ÿ]{3,}[àâäéèêëïîôùûüÿç][a-zà-ÿ]{3,}/gi) || [];
+      // #endregion
+      
+      let p1bMatches = [];
+      let p1bSkipped = [];
+      fixedContent = fixedContent.replace(/(?<![a-zà-ÿ])([a-zà-ÿ]{2,}[bcdfghjklmnpqrstvwxz])([àâäéèêëïîôùûüÿç][a-zà-ÿ]{3,})(?![a-zà-ÿ])/gi, (m, word1, word2) => {
+        if (m.length < 7) return m;
+        if (COMMON_ACCENTED_WORDS.test(word2)) {
+          p1bMatches.push({from: m, to: word1 + ' ' + word2});
+          return word1 + ' ' + word2;
         }
-        return word1 + ' ' + word2;
+        p1bSkipped.push({word: m, word2});
+        return m;
       });
       
+      // #region agent log
+      const stuckAfterP1b = fixedContent.match(/[a-zà-ÿ]{3,}[àâäéèêëïîôùûüÿç][a-zà-ÿ]{3,}/gi) || [];
+      if (stuckBeforeP1b.length > 0 || p1bMatches.length > 0) {
+        fetch('http://127.0.0.1:7903/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:AFTER_P1B',message:'Pattern 1b results per <p>',data:{stuckBefore:stuckBeforeP1b.length,stuckAfter:stuckAfterP1b.length,matched:p1bMatches,skipped:p1bSkipped,stuckBeforeSamples:stuckBeforeP1b.slice(0,5),stuckAfterSamples:stuckAfterP1b.slice(0,5)},timestamp:Date.now(),hypothesisId:'H1-H3'})}).catch(()=>{});
+      }
+      // #endregion
+
       // Restaurer les placeholders
       entityPlaceholdersFinal.forEach((entity, key) => {
         fixedContent = fixedContent.replace(key, entity);
@@ -5531,6 +5664,37 @@ class ArticleFinalizer {
       });
       console.log(`   ✅ Espaces et sauts de ligne normalisés`);
     }
+    
+    // PASSE GLOBALE: Réparer les accents cassés dans TOUT le HTML (h2, h3, li, td, etc.)
+    // Les passes précédentes ne traitent que les <p>, ceci couvre le reste
+    const GLOBAL_COMMON_WORDS = new Set(['dans','avec','pour','plus','sous','sans','chez','tout','mais','très','bien','font','sont','nous','vous','leur','elle','cela','cette','entre','après','avant','comme','aussi','autre','faire','avoir','être','même','dont','vers','quel','ceux','ceci','hors','dès','lors','près','les','des','mes','ses','ces','une','par','sur','son','mon','ton','aux','pas','car','que','qui','est','ont']);
+    // FIX H4: Added ç suffixes, ç detection, éré missing suffix
+    const GLOBAL_SUFFIXES = /^(ée|ées|és|éré|érée|érées|ère|ères|èrement|ément|éments|étaire|étaires|étude|érence|érences|érieur|érieure|érieurs|érable|érables|émie|érité|érite|ètement|ériaux|érial|ériel|étique|étiques|èse|èses|èbre|èbres|ôle|ôles|ôt|ôts|ûre|ûres|ûté|ûtés|ître|îtres|érente|érentes|étitif|étitifs|étitive|étitives|érés|érément|ènement|ènements|ière|ières|çue|çues|çu|çus|çant|çants|çon|çons|çais|çaise|çaises)$/i;
+    // #region agent log
+    let globalPassRepairs = [];
+    let globalPassSkipped = [];
+    // #endregion
+    // FIX H1: replaced \b with French-aware boundaries; FIX H4: added ç to detection
+    cleanedHtml = cleanedHtml.replace(/(?<=>)([^<]+)(?=<)/g, (match, textContent) => {
+      return textContent.replace(/(?<![a-zà-ÿ])([a-zà-ÿ]{3,})\s+([àâäéèêëïîôùûüÿç][a-zà-ÿ]{1,8})(?![a-zà-ÿ])/gi, (m, part1, part2) => {
+        if (GLOBAL_COMMON_WORDS.has(part1.toLowerCase())) { globalPassSkipped.push({m, reason:'common_word', part1}); return m; }
+        // Mot accentué autonome — ne JAMAIS fusionner
+        if (_ACCENTED_STANDALONE.has(part2.toLowerCase())) { globalPassSkipped.push({m, reason:'standalone_word', part2}); return m; }
+        if (GLOBAL_SUFFIXES.test(part2)) { globalPassRepairs.push({from:m, to:part1+part2}); return part1 + part2; }
+        globalPassSkipped.push({m, reason:'not_suffix', part2});
+        return m;
+      });
+    });
+    // #region agent log
+    fetch('http://127.0.0.1:7903/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:GLOBAL_PASS',message:'GLOBAL pass repair results',data:{repaired:globalPassRepairs.length,repairedSamples:globalPassRepairs.slice(0,15),skipped:globalPassSkipped.length,skippedSamples:globalPassSkipped.slice(0,15)},timestamp:Date.now(),hypothesisId:'H4-H5'})}).catch(()=>{});
+    // #endregion
+
+    // #region agent log
+    const allTextAfter = cleanedHtml.replace(/<[^>]+>/g, ' ');
+    const stuckWordsAfter = allTextAfter.match(/[a-zà-ÿ]{3,}[àâäéèêëïîôùûüÿç][a-zà-ÿ]{3,}/gi) || [];
+    const brokenAfter = allTextAfter.match(/[a-zà-ÿ]{3,}\s+[àâäéèêëïîôùûüÿç][a-zà-ÿ]{1,8}/gi) || [];
+    fetch('http://127.0.0.1:7903/ingest/6e314725-9b46-4c28-8b38-06554a24d929',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-finalizer.js:AFTER_ALL_FIXES',message:'Final state: stuck + broken words',data:{stuckRemaining:stuckWordsAfter.length,stuckSamples:stuckWordsAfter.slice(0,20),brokenRemaining:brokenAfter.length,brokenSamples:brokenAfter.slice(0,20)},timestamp:Date.now(),hypothesisId:'H1-H2-H3-H4-H5'})}).catch(()=>{});
+    // #endregion
     
     return cleanedHtml;
   }
@@ -9593,6 +9757,89 @@ class ArticleFinalizer {
     });
     
     return cleanedHtml;
+  }
+
+  /**
+   * PHASE 6.0.12.2: Rendre les tableaux responsive pour mobile
+   * Wrape chaque <table> dans un conteneur scrollable et ajoute du styling inline
+   * @param {string} html - HTML à traiter
+   * @param {Object} report - Rapport QA
+   * @returns {string} HTML avec tableaux responsive
+   */
+  makeTablesResponsive(html, report) {
+    const tableCount = (html.match(/<table/gi) || []).length;
+    if (tableCount === 0) return html;
+
+    console.log(`📱 makeTablesResponsive: ${tableCount} tableau(x) détecté(s)`);
+
+    let processedHtml = html;
+    let styledCount = 0;
+
+    // Style commun pour le conteneur scrollable
+    const wrapperStyle = 'overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.5em 0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1)';
+
+    // Style pour la table elle-même
+    const tableStyle = 'width:100%;border-collapse:collapse;font-size:14px;min-width:600px';
+
+    // Style pour les cellules d'en-tête
+    const thStyle = 'background:#1a365d;color:#fff;padding:12px 10px;text-align:left;font-weight:600;font-size:13px;white-space:nowrap';
+
+    // Style pour les cellules de données
+    const tdStyle = 'padding:10px;border-bottom:1px solid #e2e8f0;vertical-align:top';
+
+    // Style pour les lignes alternées (via attribut sur les <tr> impairs)
+    const trEvenStyle = 'background:#f7fafc';
+
+    processedHtml = processedHtml.replace(/<table([^>]*)>([\s\S]*?)<\/table>/gi, (fullMatch, tableAttrs, tableContent) => {
+      // Ne pas re-wrapper si déjà dans un conteneur responsive
+      if (tableAttrs.includes('data-responsive')) return fullMatch;
+
+      // Ajouter les styles à la table
+      let styledTable = `<table data-responsive="true" style="${tableStyle}"${tableAttrs}>`;
+
+      // Styler les <th> (sans matcher <thead>)
+      let styledContent = tableContent.replace(/<th(?![a-z])([^>]*)>/gi, (thMatch, thAttrs) => {
+        if (thAttrs.includes('style=')) return thMatch;
+        return `<th style="${thStyle}"${thAttrs}>`;
+      });
+
+      // Styler les <td> (sans matcher <tdata> etc.)
+      styledContent = styledContent.replace(/<td(?![a-z])([^>]*)>/gi, (tdMatch, tdAttrs) => {
+        if (tdAttrs.includes('style=')) return tdMatch;
+        return `<td style="${tdStyle}"${tdAttrs}>`;
+      });
+
+      // Ajouter des couleurs alternées aux lignes de tbody
+      let rowIndex = 0;
+      styledContent = styledContent.replace(/<tbody>([\s\S]*?)<\/tbody>/gi, (tbodyMatch, tbodyContent) => {
+        const styledRows = tbodyContent.replace(/<tr([^>]*)>/gi, (trMatch, trAttrs) => {
+          rowIndex++;
+          if (rowIndex % 2 === 0 && !trAttrs.includes('style=')) {
+            return `<tr style="${trEvenStyle}"${trAttrs}>`;
+          }
+          return trMatch;
+        });
+        return `<tbody>${styledRows}</tbody>`;
+      });
+
+      styledTable += styledContent + '</table>';
+
+      // Wrapper dans un conteneur scrollable
+      const responsiveWrapper = `<div style="${wrapperStyle}">${styledTable}</div>`;
+
+      styledCount++;
+      return responsiveWrapper;
+    });
+
+    if (styledCount > 0) {
+      report.actions.push({
+        type: 'responsive_tables',
+        details: `${styledCount} tableau(x) rendu(s) responsive pour mobile`
+      });
+      console.log(`   ✅ ${styledCount} tableau(x) stylé(s) et wrappé(s) pour mobile`);
+    }
+
+    return processedHtml;
   }
 
   /**

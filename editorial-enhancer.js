@@ -332,8 +332,32 @@ ${citationsHtml}\n`;
       return html;
     }
 
+    // Construire le JSON-LD FAQPage schema pour les rich snippets Google
+    const faqSchemaEntries = selectedQuestions.map((q, index) => {
+      const answer = q.answer || this.generateAnswerFromContext(q.question, story, pattern, new Set());
+      if (!answer) return null;
+      return {
+        '@type': 'Question',
+        'name': q.question,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': answer
+        }
+      };
+    }).filter(Boolean);
+
+    let faqSchemaBlock = '';
+    if (faqSchemaEntries.length > 0) {
+      const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': faqSchemaEntries
+      };
+      faqSchemaBlock = `\n<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
+    }
+
     const faqSection = `\n\n<h2>Questions fréquentes</h2>
-${faqItems}\n`;
+${faqItems}${faqSchemaBlock}\n`;
 
     // Insérer avant "Nos recommandations" ou à la fin
     let insertionPoint = html.indexOf('<h2>🎯 Nos recommandations');
@@ -656,11 +680,24 @@ Retourne un JSON array: [{"question": "...", "answer": "..."}]` },
       }
       if (!Array.isArray(faqArray) || faqArray.length === 0) throw new Error('Pas de questions dans la réponse: ' + JSON.stringify(Object.keys(parsed)));
       
-      const faqItems = faqArray.slice(0, 5).map(q => 
+      const selectedFaq = faqArray.slice(0, 5);
+      const faqItems = selectedFaq.map(q => 
         `    <h3>${this.escapeHtml(q.question)}</h3>\n    <p>${this.escapeHtml(q.answer)}</p>`
       ).join('\n\n');
       
-      const faqSection = `\n\n<h2>Questions fréquentes</h2>\n${faqItems}\n`;
+      // JSON-LD FAQPage schema pour rich snippets Google
+      const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': selectedFaq.map(q => ({
+          '@type': 'Question',
+          'name': q.question,
+          'acceptedAnswer': { '@type': 'Answer', 'text': q.answer }
+        }))
+      };
+      const schemaBlock = `\n<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
+      
+      const faqSection = `\n\n<h2>Questions fréquentes</h2>\n${faqItems}${schemaBlock}\n`;
       
       // Insérer avant "Nos recommandations" ou avant le dernier H2
       const insertedHtml = this.insertBeforeRecommandations(html, faqSection);
