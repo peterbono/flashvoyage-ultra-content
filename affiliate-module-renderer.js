@@ -84,9 +84,9 @@ function generateWidgetScript(placement, geo_defaults) {
 
   switch (id) {
     case 'flights':
-      // Shortcode WordPress — rendu côté serveur par le mu-plugin flashvoyage-widgets.php
-      const origin = geo_defaults?.origin || payload?.origin || 'PAR';
-      const dest = geo_defaults?.destination || payload?.destination || 'BKK';
+      // PHASE 2.3a: Utiliser iata_destination/iata_origin explicites du payload en priorité
+      const origin = payload?.iata_origin || geo_defaults?.origin || 'PAR';
+      const dest = payload?.iata_destination || geo_defaults?.nearest_hub || 'BKK';
       return `[fv_widget type="flights" origin="${origin}" destination="${dest}"]`;
 
     case 'esim':

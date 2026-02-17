@@ -18,14 +18,85 @@
  * @param {Object} input.pattern - Pattern détecté (theme_primary, themes_secondary, story_type, etc.)
  * @param {Object} input.story - Story compilée (story.*, evidence.source_snippets)
  * @param {Object} input.geo_defaults - Géolocalisation par défaut (country, city, nearest_hub)
+ * @param {Object} [input.angle] - Angle Hunter result (optionnel)
  * @returns {Object} { placements: [...], debug: {...} }
  */
-export function decideAffiliatePlacements({ extracted, pattern, story, geo_defaults }) {
+export function decideAffiliatePlacements({ extracted, pattern, story, geo_defaults, angle }) {
   const placements = [];
   const debug = {
     matched: {},
     skipped: {}
   };
+
+  // PHASE 2.3a: Résoudre IATA destination depuis city/country
+  const COUNTRY_HUB_MAP = {
+    vietnam: 'SGN', thailande: 'BKK', thailand: 'BKK', indonesie: 'DPS', indonesia: 'DPS',
+    philippines: 'MNL', japon: 'NRT', japan: 'NRT', coree: 'ICN', korea: 'ICN',
+    malaisie: 'KUL', malaysia: 'KUL', singapour: 'SIN', singapore: 'SIN',
+    cambodge: 'PNH', cambodia: 'PNH', myanmar: 'RGN', birmanie: 'RGN',
+    laos: 'VTE', inde: 'DEL', india: 'DEL', chine: 'PEK', china: 'PEK',
+    taiwan: 'TPE', hong_kong: 'HKG', sri_lanka: 'CMB', nepal: 'KTM'
+  };
+  const CITY_IATA_MAP = {
+    hanoi: 'HAN', 'ha noi': 'HAN', 'hà nội': 'HAN',
+    'ho chi minh': 'SGN', saigon: 'SGN', 'hô chi minh': 'SGN', 'hô-chi-minh': 'SGN',
+    bangkok: 'BKK', 'chiang mai': 'CNX', phuket: 'HKT',
+    bali: 'DPS', denpasar: 'DPS', jakarta: 'CGK',
+    manila: 'MNL', cebu: 'CEB',
+    tokyo: 'NRT', osaka: 'KIX', kyoto: 'KIX',
+    seoul: 'ICN', busan: 'PUS',
+    'kuala lumpur': 'KUL', penang: 'PEN',
+    'phnom penh': 'PNH', 'siem reap': 'REP',
+    vientiane: 'VTE', 'luang prabang': 'LPQ',
+    singapour: 'SIN', singapore: 'SIN'
+  };
+  function resolveIATA(geo_defaults) {
+    const city = (geo_defaults?.city || '').toLowerCase().trim();
+    if (city && CITY_IATA_MAP[city]) return CITY_IATA_MAP[city];
+    if (geo_defaults?.nearest_hub && /^[A-Z]{3}$/.test(geo_defaults.nearest_hub)) return geo_defaults.nearest_hub;
+    const country = (geo_defaults?.country || geo_defaults?.destination || '').toLowerCase().trim();
+    if (country && COUNTRY_HUB_MAP[country]) return COUNTRY_HUB_MAP[country];
+    return null;
+  }
+  const resolvedIATA = resolveIATA(geo_defaults);
+
+  // Injecter le placement prioritaire depuis l'Angle Hunter si resolver présent
+  const resolver = angle?.business_vector?.affiliate_friction?.resolver;
+  if (resolver) {
+    const resolverToId = {
+      insurance: 'insurance',
+      bank_card: 'flights',
+      esim: 'esim',
+      flight: 'flights',
+      accommodation: 'accommodation',
+      vpn: 'esim',
+      tours: 'accommodation',
+      gear: 'accommodation'
+    };
+    const placementId = resolverToId[resolver] || resolver;
+    const friction = angle.business_vector.affiliate_friction;
+    placements.push({
+      id: placementId,
+      priority: 0,
+      anchor: 'after_critical_moment',
+      reason: [
+        `angle_hunter_resolver: ${resolver}`,
+        `friction_moment: ${friction.moment?.substring(0, 60) || 'n/a'}`,
+        `cost_of_inaction: ${friction.cost_of_inaction?.substring(0, 60) || 'n/a'}`
+      ],
+      confidence: 95,
+      payload: {
+        type: placementId,
+        country: geo_defaults?.country || 'asia',
+        city: geo_defaults?.city || null,
+        iata_destination: resolvedIATA || 'BKK',
+        iata_origin: geo_defaults?.origin || 'PAR',
+        source: 'angle_hunter'
+      }
+    });
+    debug.matched.angle_hunter = { resolver, placementId, iata: resolvedIATA, confidence: 95 };
+    console.log(`   ✅ AFFILIATE_ANGLE_HUNTER: resolver=${resolver} → placement=${placementId} iata=${resolvedIATA || 'BKK'} (confidence=95)`);
+  }
 
   // Construire le texte complet pour recherche de keywords
   const fullText = [

@@ -304,6 +304,86 @@ function generateTemplateFallback(sourceText, article, type = 'analysis') {
   throw new Error('Type de fallback non supporté');
 }
 
+/**
+ * PHASE 2 HELPER: Construit un truth pack minimal pour contraindre le LLM.
+ * Sources strictement structurées — pas de regex sur le texte brut du post.
+ * @param {Object} extracted - Données extraites par reddit-semantic-extractor
+ * @returns {{ allowedNumbers: string[], allowedNumberTokens: string[], allowedLocations: string[], isPoor: boolean }}
+ */
+function buildPromptTruthPack(extracted) {
+  const allowedNumbers = [];
+  const allowedNumberTokens = new Set();
+
+  // Nombres depuis signals.costs (ex: "1500 USD", "220 bahts")
+  const costs = extracted?.post?.signals?.costs || extracted?.costs || [];
+  for (const cost of costs) {
+    const str = typeof cost === 'string' ? cost : (cost?.value || cost?.amount ? `${cost.amount} ${cost.currency || ''}`.trim() : '');
+    if (str && /\d/.test(str)) {
+      allowedNumbers.push(str);
+      const digits = str.match(/[\d]+/g) || [];
+      digits.forEach(d => allowedNumberTokens.add(d));
+      const concatenated = digits.join('');
+      if (concatenated.length > 0 && digits.length > 1) allowedNumberTokens.add(concatenated);
+    }
+  }
+
+  // Nombres depuis signals.dates (ex: "30 days", "March 2025") — seulement ceux contenant un chiffre
+  const dates = extracted?.post?.signals?.dates || [];
+  for (const date of dates) {
+    const str = typeof date === 'string' ? date : (date?.value || '');
+    if (str && /\d/.test(str)) {
+      allowedNumbers.push(str);
+      const digits = str.match(/[\d]+/g) || [];
+      digits.forEach(d => allowedNumberTokens.add(d));
+    }
+  }
+
+  // Lieux depuis signals.locations + destination + destinations (dédupliqué, normalisé, cap 25)
+  const locSet = new Set();
+  const rawLocations = extracted?.post?.signals?.locations || [];
+  for (const loc of rawLocations) {
+    const str = (typeof loc === 'string' ? loc : (loc?.value || '')).trim();
+    if (str) locSet.add(str);
+  }
+  if (extracted?.destination) locSet.add(extracted.destination.trim());
+  if (Array.isArray(extracted?.destinations)) {
+    for (const d of extracted.destinations) {
+      if (typeof d === 'string' && d.trim()) locSet.add(d.trim());
+    }
+  }
+  const allowedLocations = [...locSet].slice(0, 25);
+
+  const isPoor = allowedNumbers.length === 0;
+
+  return {
+    allowedNumbers,
+    allowedNumberTokens: [...allowedNumberTokens],
+    allowedLocations,
+    isPoor
+  };
+}
+
+/**
+ * PHASE 2 HELPER: Extrait les claims chiffrés déjà présents dans un HTML.
+ * Couvre €, eur, $, usd, baht/thb/฿, vnd/₫, %, jours/semaines/mois, formats "1 380" et "1,380".
+ * @param {string} html - Contenu HTML
+ * @returns {string[]} - Tokens numériques uniques trouvés
+ */
+function extractExistingClaims(html) {
+  const text = html.replace(/<[^>]+>/g, ' ');
+  const claimPatterns = /(\d[\d\s,.']*\d|\d+)\s*(€|euros?|dollars?|\$|bahts?|thb|฿|vnd|₫|%|jours?|semaines?|mois|ans?|années?|nuits?|heures?)/gi;
+  const tokens = new Set();
+  let match;
+  while ((match = claimPatterns.exec(text)) !== null) {
+    const num = match[1].replace(/[\s,.']/g, '');
+    if (num && /^\d+$/.test(num)) tokens.add(num);
+  }
+  // Also catch standalone large numbers (>= 10) that might be prices/durations
+  const standaloneNums = text.match(/\b\d{2,}\b/g) || [];
+  for (const n of standaloneNums) tokens.add(n);
+  return [...tokens];
+}
+
 class IntelligentContentAnalyzerOptimized {
   constructor() {
     this.apiKey = OPENAI_API_KEY;
@@ -954,7 +1034,9 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
         // Titre Reddit original (pour détection régionale)
         reddit_title: input.title || '',
         // Mode éditorial NEWS / EVERGREEN (conditionne le prompt)
-        editorial_mode: input.editorial_mode || 'evergreen'
+        editorial_mode: input.editorial_mode || 'evergreen',
+        // Angle Hunter — stratégie éditoriale déterministe (Phase 1)
+        angle: input.angle || null
       };
       const finalContent = await this.generateFinalArticle(extractionResult, analysis, extracted, pattern, story, options);
       
@@ -1355,6 +1437,17 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 - Titre : privilégier [Sujet] : la vérité (ni cliché, ni fantasme) ou [Révélation] + [Intent SEO]. ❌ INTERDIT en titre : "budget", "sécurité", "erreurs à éviter", "guide complet" seuls — ces titres sont réutilisables partout.
 - Chaque section doit répondre à une vraie question ou tension du lecteur ; pas de remplissage générique.
 
+RÈGLE CARDINALE — TENSION ORBITALE :
+Ton article entier doit orbiter autour d'une tension éditoriale unique fournie dans les données (bloc ANGLE EDITORIAL STRATEGIQUE).
+Chaque section, chaque paragraphe doit faire avancer cette tension vers une résolution.
+On ne décrit pas. On arbitre. On évalue. On tranche.
+Le lecteur doit sentir qu'une décision se joue à chaque paragraphe.
+
+RÈGLE ANTI-ARTICLE INTERCHANGEABLE :
+Chaque H2 doit poser un arbitrage ou une tension, pas simplement informer.
+Privilégie les H2 contenant un verbe décisionnel (choisir, éviter, payer, optimiser, risquer, arbitrer, renoncer, privilégier) ou un connecteur de tension (mais, vs, au prix de, à condition de).
+Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit l'article.
+
 📖 OUVERTURE IMMERSIVE — HOOK CINÉMATIQUE (premier paragraphe, OBLIGATOIRE) :
 - Ouvrir sur une micro-scène sensorielle (2-4 phrases) : lieu, odeur, bruit, geste, tension. Puis 1 question qui accroche.
 - La scène doit être tirée du témoignage (lieu réel, situation réelle, enjeu réel).
@@ -1616,6 +1709,7 @@ ${correctionBlock}
 - Sépare strictement l'auteur et la communauté
 - Priorité absolue à la fidélité de la source
 - Toutes les sections doivent être traçables au story.evidence
+- Toute donnée factuelle (chiffre, lieu, durée, coût) doit provenir soit de la source Reddit, soit du truth pack fourni dans les données ci-dessous. Aucune donnée inventée.
 
 🚫 ANTI-PLATITUDE (VÉRIFIER AVANT RÉPONSE) :
 - INTERDIT : "il est important de", "il faut savoir que", "n'hésite pas à", "il convient de", "il est essentiel de", "il est recommandé de"
@@ -1722,6 +1816,35 @@ ${storyOpenQuestions.length > 0 ? `QUESTIONS OUVERTES (${storyOpenQuestions.leng
 📝 CITATIONS DISPONIBLES (depuis evidence):
 ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c}"`).join('\n') : 'Aucune citation disponible'}
 
+${options.angle ? `
+🎯 ANGLE EDITORIAL STRATEGIQUE (Angle Hunter v${options.angle.angle_version}):
+- Tension centrale: ${options.angle.primary_angle.tension}
+- Type d'angle: ${options.angle.primary_angle.type}
+- Hook stratégique: ${options.angle.primary_angle.hook}
+- Enjeu lecteur: ${options.angle.primary_angle.stake}
+- Vecteur émotionnel: ${options.angle.emotional_vector}
+- Friction affiliation (moment): ${options.angle.business_vector.affiliate_friction?.moment || 'aucune'}
+- Friction affiliation (coût d'erreur): ${options.angle.business_vector.affiliate_friction?.cost_of_inaction || 'aucun'}
+- Module affilié suggéré: ${options.angle.business_vector.affiliate_friction?.resolver || 'aucun'}
+- Positionnement concurrent: ${options.angle.competitive_positioning}
+- Signaux source: ${options.angle.source_facts.join(', ')}
+
+TON ARTICLE ENTIER DOIT ORBITER AUTOUR DE CETTE TENSION. Chaque H2 doit y contribuer.
+` : ''}
+${(() => {
+  const tp = buildPromptTruthPack(extracted);
+  if (tp.isPoor) {
+    return `📋 CONTRAINTES FACTUELLES : Aucun chiffre source precis disponible. Utilise des formulations qualitatives (des frais, des dizaines d'euros, plusieurs jours) sans inventer de montants. Lieux autorises : ${tp.allowedLocations.join(', ') || 'ceux mentionnes dans les donnees ci-dessus'}.
+Ne mentionne aucun lieu absent de cette liste.`;
+  }
+  return `📋 CONTRAINTES FACTUELLES :
+- Nombres autorises : ${tp.allowedNumbers.join(', ')}
+- Lieux autorises : ${tp.allowedLocations.join(', ')}
+- Ne mentionne aucun lieu ni chiffre absent de ces listes. Si tu as besoin de plus de contenu, approfondis les analyses et arbitrages.`;
+})()}
+
+📐 RAPPEL LONGUEUR : Ton champ "developpement" doit contenir au minimum 6 sections H2 avec chacune 2-3 paragraphes denses. Chaque section doit introduire un arbitrage, un cout, un risque ou un trade-off — pas de paragraphe purement descriptif.
+
 ⚠️ RAPPEL CRITIQUE: Intègre TOUT dans "developpement" avec des titres H2 NARRATIFS uniques. Utilise les données non-null du squelette narratif comme matière première, PAS comme structure de sections.
 
 🚨 NE JAMAIS créer de H2 avec ces titres (ils seront supprimés automatiquement) :
@@ -1760,7 +1883,7 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         { role: 'system', content: systemMessage },
         { role: 'user', content: userMessage }
       ],
-      max_tokens: 8000, // 8K tokens pour article complet (2500 mots + JSON structure) - évite troncature du champ developpement
+      max_tokens: 12000, // PHASE 2.2: 12K tokens pour réduire le besoin d'expansion (2500+ mots + JSON structure)
       temperature: 0.7,
       response_format: { type: "json_object" }
       },
@@ -2030,10 +2153,20 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         const wordCount = textOnly.split(/\s+/).filter(w => w.length > 0).length;
         console.log(`📏 EVERGREEN WORD COUNT: ${wordCount} mots`);
         
-        if (wordCount < 2000) {
-          console.log(`⚠️ EVERGREEN trop court (${wordCount} < 2000 mots). Lancement passe d'expansion LLM...`);
+        // PHASE 2.1b: Injecter truth pack + extracted dans options pour l'expansion
+        if (!options._truthPack) options._truthPack = buildPromptTruthPack(extracted);
+        if (!options._extracted) options._extracted = extracted;
+
+        // PHASE 2.2: Skip expansion si déjà suffisant (>1700 mots), sinon max 1 pass
+        const expansionThreshold = 1700;
+        const MAX_EXPANSION_PASSES = wordCount >= expansionThreshold ? 0 : 1;
+        
+        if (wordCount >= expansionThreshold && wordCount < 2000) {
+          console.log(`📏 EVERGREEN ${wordCount} mots (>= ${expansionThreshold}): expansion skip, contenu suffisamment dense.`);
+        }
+        if (wordCount < 2000 && MAX_EXPANSION_PASSES > 0) {
+          console.log(`⚠️ EVERGREEN trop court (${wordCount} < 2000 mots). Lancement passe d'expansion LLM (max ${MAX_EXPANSION_PASSES})...`);
           let currentWords = wordCount;
-          const MAX_EXPANSION_PASSES = 2;
           for (let pass = 1; pass <= MAX_EXPANSION_PASSES && currentWords < 2000; pass++) {
             try {
               console.log(`📐 Passe d'expansion ${pass}/${MAX_EXPANSION_PASSES} (${currentWords} mots actuels)...`);
@@ -2699,36 +2832,69 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
    */
   async expandEvergreenContent(htmlContent, extraction, options = {}) {
     console.log('\n📐 EXPANSION EVERGREEN: Enrichissement du contenu...');
-    
-    const systemPrompt = `Tu es un rédacteur expert en voyage. Tu reçois un article HTML EVERGREEN trop court.
 
-Ta mission : ENRICHIR cet article pour atteindre MINIMUM 2000 mots, IDÉAL 2500-3000 mots.
+    // PHASE 2.1b: Construire truth pack + claims existants pour contraindre l'expansion
+    const truthPack = options._truthPack || buildPromptTruthPack(options._extracted || {});
+    const existingClaims = extractExistingClaims(htmlContent);
+    const angle = options.angle || null;
 
-RÈGLES ABSOLUES :
+    const truthPackBlock = truthPack.isPoor
+      ? `\nCONTRAINTES FACTUELLES : Aucun chiffre source disponible. Utilise des formulations qualitatives (des frais, des dizaines d'euros, plusieurs jours) sans inventer de montants precis. Lieux autorises : ${truthPack.allowedLocations.join(', ') || 'aucun specifie'}.`
+      : `\nCONTRAINTES FACTUELLES (ABSOLU) :
+- Nombres autorises : ${truthPack.allowedNumbers.join(', ')}
+- Tokens numeriques autorises : ${truthPack.allowedNumberTokens.join(', ')}
+- Lieux autorises : ${truthPack.allowedLocations.join(', ')}
+- Tu NE PEUX PAS introduire de nouveau lieu, nouveau prix, nouveau chiffre, ou nouvel exemple concret non source.
+- Si tu as besoin de plus de contenu, approfondis les analyses, trade-offs et arbitrages — ne fabrique pas de nouvelles donnees.`;
+
+    const tensionBlock = angle
+      ? `\nTENSION ORBITALE : Chaque paragraphe ajoute doit faire avancer cette tension : "${angle.primary_angle?.tension || ''}"`
+      : '';
+
+    const existingClaimsBlock = existingClaims.length > 0
+      ? `\nCLAIMS DEJA PRESENTS (ne pas repeter) : ${existingClaims.join(', ')}`
+      : '';
+
+    const systemPrompt = `Tu es un redacteur expert en voyage. Tu recois un article HTML EVERGREEN trop court.
+
+Ta mission : ENRICHIR cet article pour atteindre MINIMUM 2000 mots, IDEAL 2500-3000 mots.
+
+REGLES ABSOLUES :
 1. NE SUPPRIME RIEN de l'article existant. Tu AJOUTES du contenu.
-2. NE INVENTE AUCUN fait, chiffre, lieu ou expérience non présent dans l'article ou le contexte fourni.
-3. ENRICHIS chaque section H2 existante avec :
-   - Plus de détails concrets (chiffres, exemples spécifiques)
-   - Analyses plus profondes (avantages/inconvénients, pièges à éviter)
-   - Contexte supplémentaire (comparaisons, mises en perspective)
-   - Citations et témoignages inline supplémentaires si des données source sont fournies
-4. AJOUTE si pertinent :
-   - Un tableau comparatif HTML (<table>) si l'article compare des destinations/options
-   - Des sous-sections <h3> pour approfondir les points clés
-   - Des listes à puces pour les conseils pratiques
-5. CONSERVE le même ton (tutoiement, expert accessible, pas scolaire).
-6. ÉCRIS EN FRANÇAIS uniquement.
-7. RETOURNE l'article HTML COMPLET enrichi (pas un diff, pas un résumé).`;
+2. NE INVENTE AUCUN fait, chiffre, lieu ou experience non present dans l'article ou le contexte fourni.
+3. NE REPETE PAS les claims chiffres deja presents — approfondis plutot leur analyse.
+4. ENRICHIS chaque section H2 existante avec :
+   - Analyses plus profondes (avantages/inconvenients, pieges a eviter)
+   - Contexte supplementaire (comparaisons, mises en perspective)
+   - Trade-offs et arbitrages concrets
+5. CONSERVE le meme ton (tutoiement, expert accessible, pas scolaire).
+6. ECRIS EN FRANCAIS uniquement.
+7. RETOURNE l'article HTML COMPLET enrichi (pas un diff, pas un resume).
+${truthPackBlock}${tensionBlock}${existingClaimsBlock}
 
-    const userPrompt = `ARTICLE À ENRICHIR (trop court, doit atteindre 2000+ mots) :
+INTERDIT ABSOLUMENT :
+- Introduire un NOUVEAU lieu non liste dans "Lieux autorises"
+- Introduire un NOUVEAU prix ou chiffre non present dans "Nombres autorises"
+- Inventer un nouvel exemple concret, une anecdote ou un scenario non source`;
+
+    const angleBlock = angle ? `
+ANGLE EDITORIAL STRATEGIQUE :
+- Tension centrale: ${angle.primary_angle?.tension || 'N/A'}
+- Type d'angle: ${angle.primary_angle?.type || 'N/A'}
+- Hook strategique: ${angle.primary_angle?.hook || 'N/A'}
+- Enjeu lecteur: ${angle.primary_angle?.stake || 'N/A'}
+Chaque ajout doit faire avancer cette tension.
+` : '';
+
+    const userPrompt = `ARTICLE A ENRICHIR (trop court, doit atteindre 2000+ mots) :
 
 ${htmlContent}
 
-DONNÉES SOURCE DISPONIBLES (utilise-les pour enrichir) :
+DONNEES SOURCE DISPONIBLES (utilise-les pour enrichir) :
 - Titre: ${options.reddit_title || options.title || 'N/A'}
 - Citations disponibles: ${JSON.stringify((extraction?.citations || []).slice(0, 5))}
-- Données clés: ${JSON.stringify(extraction?.donnees_cles || extraction?.key_data || {})}
-
+- Donnees cles: ${JSON.stringify(extraction?.donnees_cles || extraction?.key_data || {})}
+${angleBlock}
 RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2000 mots.`;
 
     const responseData = await callOpenAIWithRetry({
@@ -2945,6 +3111,17 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2000 mots.`;
       }
     }
     
+    // PHASE 2.1d: Construire les contraintes truth pack pour l'improve
+    const improveTruthPack = context.extracted ? buildPromptTruthPack(context.extracted) : null;
+    const improveTruthPackBlock = improveTruthPack
+      ? (improveTruthPack.isPoor
+        ? `\n7. AUCUN nouveau chiffre, prix ou montant ne doit etre introduit (aucune source disponible). Lieux autorises : ${improveTruthPack.allowedLocations.join(', ')}.`
+        : `\n7. NE PAS introduire de nouveau lieu, prix, chiffre ou claim factuel non present dans l'article original.\n   Nombres autorises : ${improveTruthPack.allowedNumbers.join(', ')}\n   Lieux autorises : ${improveTruthPack.allowedLocations.join(', ')}`)
+      : '';
+    const improveAngleBlock = context.angle
+      ? `\n8. TENSION EDITORIALE a respecter : "${context.angle.primary_angle?.tension || ''}". Ne pas diluer cette tension.`
+      : '';
+
     const systemPrompt = `Tu es un éditeur expert français pour FlashVoyages.com. Tu corriges des anomalies SPÉCIFIQUES dans le contenu HTML existant.
 
 RÈGLES ABSOLUES (par ordre de priorité):
@@ -2954,7 +3131,8 @@ RÈGLES ABSOLUES (par ordre de priorité):
 3. CORRIGE LES ESPACES MANQUANTS entre les mots collés (ex: "Salutà tous" → "Salut à tous")
 4. Corrige les phrases qui ne se terminent pas par . ! ? (ajoute la ponctuation)
 5. NE SUPPRIME JAMAIS de contenu — tu AMÉLIORES et CORRIGES seulement
-6. Conserve TOUS les widgets (<script>, <aside class="affiliate-module">), liens, blockquotes, et structure HTML
+6. Conserve TOUS les widgets (<script>, <aside class="affiliate-module">), liens, blockquotes, et structure HTML${improveTruthPackBlock}${improveAngleBlock}
+9. NE PAS ajouter de nouveaux exemples, scenarios concrets ou anecdotes si non deja presents dans l'article.
 
 ANOMALIES À CORRIGER:
 ${correctionInstructions.map((instr, i) => `${i + 1}. ${instr}`).join('\n')}
@@ -2964,6 +3142,7 @@ INTERDIT ABSOLUMENT:
 - NE PAS ajouter d'explications
 - NE PAS modifier les attributs des balises HTML
 - NE PAS supprimer de sections ou paragraphes
+- NE PAS introduire de nouveau lieu, nouveau prix, nouveau scenario non present dans l'article
 
 FORMAT: Retourne UNIQUEMENT le HTML brut corrigé, commençant directement par <h2> ou <p>.`;
 

@@ -38,6 +38,7 @@ import { applyContentMarketingPass } from './content-marketing-pass.js';
 import { createChatCompletion } from './openai-client.js';
 import { DESTINATION_ALIASES, CITY_TO_COUNTRY, COUNTRY_DISPLAY_NAMES } from './destinations.js';
 import { DRY_RUN, FORCE_OFFLINE, ENABLE_MARKETING_PASS, parseBool } from './config.js';
+import AngleHunter from './angle-hunter.js';
 
 class PipelineRunner {
   constructor() {
@@ -123,10 +124,23 @@ class PipelineRunner {
         return null;
       }
 
+      // ÉTAPE 3.7: Angle Hunter (stratégie éditoriale déterministe)
+      console.log('\n🎯 ÉTAPE 3.7: Angle Hunter');
+      pipelineReport.startStep('angle-hunter');
+      const angleResult = AngleHunter.hunt(extracted, pattern, story, editorialMode);
+      console.log(`   ANGLE_HUNTER: type=${angleResult.primary_angle.type} hook_mode=${angleResult.primary_angle.hook_mode} tension="${angleResult.primary_angle.tension.substring(0, 80)}..."`);
+      console.log(`   emotional=${angleResult.emotional_vector} business=${angleResult.business_vector.primary} seo=${angleResult.seo_intent}`);
+      console.log(`   source_facts: [${angleResult.source_facts.join(', ')}]`);
+      if (angleResult.business_vector.affiliate_friction) {
+        console.log(`   friction: moment="${angleResult.business_vector.affiliate_friction.moment.substring(0, 60)}" resolver=${angleResult.business_vector.affiliate_friction.resolver}`);
+      }
+      console.log(`   max_placements: ${angleResult.business_vector.max_placements} (${editorialMode} cap) | confidence: ${angleResult._debug.confidence} | fallback: ${angleResult._debug.fallback}`);
+      pipelineReport.endStep('angle-hunter', angleResult, { status: 'pass' });
+
       // ÉTAPE 4: Generator
       console.log('\n📋 ÉTAPE 4: Generator (intelligent-content-analyzer-optimized)');
       pipelineReport.startStep('generator');
-      const generated = await this.runGenerator(input, extracted, pattern, story, pipelineReport, editorialMode);
+      const generated = await this.runGenerator(input, extracted, pattern, story, pipelineReport, editorialMode, angleResult);
       if (!generated) {
         throw new Error('Generator a échoué');
       }
@@ -138,7 +152,9 @@ class PipelineRunner {
       try {
         const improvementContext = {
           destination: extracted._smart_destination || pattern.destination || extracted.destination || 'Asie',
-          theme: pattern.theme_primary || 'voyage'
+          theme: pattern.theme_primary || 'voyage',
+          angle: angleResult || null,
+          extracted: extracted
         };
         const improvedContent = await this.generator.improveContentWithLLM(generated.content, improvementContext);
         generated.content = improvedContent;
@@ -191,7 +207,7 @@ class PipelineRunner {
       // ÉTAPE 5: Affiliate Injector
       console.log('\n📋 ÉTAPE 5: Affiliate Injector (contextual-affiliate-injector)');
       pipelineReport.startStep('affiliate-injector');
-      const affiliatePlan = await this.runAffiliateInjector(extracted, pattern, story, input.geo, pipelineReport);
+      const affiliatePlan = await this.runAffiliateInjector(extracted, pattern, story, input.geo, pipelineReport, angleResult);
       pipelineReport.endStep('affiliate-injector', affiliatePlan, { status: 'pass' });
 
       // Construire le pipelineContext pour les étapes suivantes
@@ -693,7 +709,7 @@ class PipelineRunner {
   /**
    * ÉTAPE 4: Generator
    */
-  async runGenerator(input, extracted, pattern, story, pipelineReport, editorialMode = 'evergreen') {
+  async runGenerator(input, extracted, pattern, story, pipelineReport, editorialMode = 'evergreen', angle = null) {
     try {
       const existingTitles = await this.loadExistingTitles();
 
@@ -715,7 +731,9 @@ class PipelineRunner {
         original_destination: extracted._original_destination || null,
         pivot_reason: extracted._pivot_reason || null,
         // Mode éditorial (NEWS / EVERGREEN) — conditionne le prompt LLM
-        editorial_mode: editorialMode
+        editorial_mode: editorialMode,
+        // Angle Hunter — stratégie éditoriale déterministe (Phase 1)
+        angle: angle
       };
 
       // Générer le contenu (analysis n'est plus utilisé dans la nouvelle version)
@@ -732,13 +750,14 @@ class PipelineRunner {
   /**
    * ÉTAPE 5: Affiliate Injector
    */
-  async runAffiliateInjector(extracted, pattern, story, geo, pipelineReport) {
+  async runAffiliateInjector(extracted, pattern, story, geo, pipelineReport, angle = null) {
     try {
       const affiliatePlan = decideAffiliatePlacements({
         extracted,
         pattern,
         story: story.story,
-        geo_defaults: geo || {}
+        geo_defaults: geo || {},
+        angle
       });
       
       const placementsCount = affiliatePlan?.placements?.length || 0;

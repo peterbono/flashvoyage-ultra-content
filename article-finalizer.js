@@ -786,6 +786,10 @@ class ArticleFinalizer {
       }
     }
 
+    // PHASE 3 FIX: Second passage fixWordGlue après toutes les traductions LLM
+    // Les traductions (detectAndTranslateEnglish, blockquote translation, etc.) re-introduisent du glue
+    finalContent = this.fixWordGlue(finalContent, null);
+
     // DEBUG: Vérifier les widgets AVANT le return final
     const widgetsBeforeReturn = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets AVANT return final: count=${widgetsBeforeReturn.count}, types=[${widgetsBeforeReturn.types.join(', ')}]`);
@@ -2952,6 +2956,15 @@ class ArticleFinalizer {
     // 1. Détection phrases incomplètes
     finalHtml = await this.detectAndFixIncompleteSentences(finalHtml, report);
     
+    // 1.5. PHASE 2.3b: Nettoyage typographique — mots collés
+    finalHtml = this.fixWordGlue(finalHtml, report);
+
+    // 1.6. PHASE 2 FIX: Nettoyage deterministe des phrases plates
+    finalHtml = this.removeGenericPhrases(finalHtml, report);
+
+    // 1.7. PHASE 3 FIX: Capitalisation des noms propres geographiques
+    finalHtml = this.capitalizeProperNouns(finalHtml);
+
     // 2. Détection et traduction anglais
     finalHtml = await this.detectAndTranslateEnglish(finalHtml, report);
     
@@ -3123,7 +3136,36 @@ class ArticleFinalizer {
           if (normalizedDest.length > 0) whitelistTokens.add(normalizedDest);
         }
       });
-    }    
+    }
+    // PHASE 1 FIX: Ajouter des aliases géographiques connus (lieu mentionné → lieux associés)
+    const geoAliases = {
+      'angkor wat': ['siem reap', 'cambodge', 'cambodia'],
+      'angkor': ['siem reap', 'cambodge', 'cambodia'],
+      'borobudur': ['yogyakarta', 'java'],
+      'bagan': ['mandalay', 'myanmar', 'birmanie'],
+      'machu picchu': ['cusco', 'perou'],
+      'taj mahal': ['agra', 'inde'],
+      'halong': ['ha long', 'baie d\'halong'],
+      'ha long': ['halong', 'baie d\'halong'],
+      'phu quoc': ['kien giang', 'vietnam'],
+      'sapa': ['lao cai', 'vietnam'],
+      'ninh binh': ['tam coc', 'vietnam'],
+      'hoi an': ['da nang', 'quang nam'],
+      'da nang': ['hoi an', 'quang nam'],
+      'ubud': ['bali', 'indonesie'],
+      'kuta': ['bali', 'indonesie'],
+      'chiang rai': ['chiang mai', 'thailande'],
+      'krabi': ['ao nang', 'thailande'],
+      'el nido': ['palawan', 'philippines'],
+      'coron': ['palawan', 'philippines']
+    };
+    for (const token of [...whitelistTokens]) {
+      const aliases = geoAliases[token];
+      if (aliases) {
+        aliases.forEach(a => whitelistTokens.add(a));
+      }
+    }
+
     // Ajouter tokens depuis story.evidence.source_snippets
     const snippets = story?.evidence?.source_snippets || [];
     
@@ -3153,6 +3195,34 @@ class ArticleFinalizer {
       const commentTokens = this.extractTokens(commentText);
       commentTokens.forEach(t => whitelistTokens.add(t));
     });
+
+    // PHASE 2 FIX: Ajouter les equivalents EUR des montants USD sources
+    // convertCurrencyToEUR() tourne avant checkInventionGuard, donc "500 USD" devient "~460 euros"
+    // sans ceci, "460" est flaggé comme invention
+    const USD_TO_EUR_RATE = 0.92;
+    const sourceCosts = extracted?.post?.signals?.costs || [];
+    for (const cost of sourceCosts) {
+      const str = typeof cost === 'string' ? cost : (cost?.amount ? `${cost.amount}` : '');
+      const nums = str.match(/[\d]+/g) || [];
+      for (const n of nums) {
+        const val = parseInt(n);
+        if (val > 0) {
+          const eur = Math.round(val * USD_TO_EUR_RATE);
+          whitelistTokens.add(String(eur));
+        }
+      }
+    }
+    // PHASE 2 FIX: Aussi ajouter EUR equivalents des nombres trouves dans le texte source brut
+    // Couvre les ranges comme "$500-700" ou "500 to 700 USD" dont seul un bout est dans costs
+    const sourceNums = extractedText.match(/\d+/g) || [];
+    for (const n of sourceNums) {
+      const val = parseInt(n);
+      if (val >= 5 && val <= 50000) {
+        const eur = Math.round(val * USD_TO_EUR_RATE);
+        whitelistTokens.add(String(eur));
+      }
+    }
+
     // PHASE 6.2.1: Extraire le texte de l'article HTML nettoyé (sans balises)
     const articleText = htmlForInventionCheck.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
     
@@ -3191,9 +3261,12 @@ class ArticleFinalizer {
             const sTextLower = sText.toLowerCase();
             return sTextLower.includes(numericValue) || sTextLower.includes(matchLower);
           });
+
+          // PHASE 2 FIX: Vérifier aussi dans whitelistTokens (inclut les equivalents EUR)
+          const claimInWhitelist = whitelistTokens.has(numericValue);
           
-          const claimInSource = claimInExtracted || claimInSnippets;
-          
+          const claimInSource = claimInExtracted || claimInSnippets || claimInWhitelist;
+
           if (!claimInSource) {
             // Ignorer les très petits nombres isolés (probablement faux positifs)
             const numValue = parseInt(numericValue);
@@ -3227,7 +3300,14 @@ class ArticleFinalizer {
     // Détecter lieux (villes/pays) non sourcés via BDD OpenFlights (5600+ entrées)
     // Extraire les mots capitalisés du texte comme candidats lieux
     const locationCandidates = articleText.match(/\b[A-ZÀ-Ü][a-zà-ü]{2,}(?:\s+[A-ZÀ-Ü][a-zà-ü]+)?\b/g) || [];
-    const uniqueCandidates = [...new Set(locationCandidates)].filter(c => isKnownLocation(c));
+    // PHASE 1 FIX: Filtrer les faux positifs multi-mots où le 2e mot est un mot français courant
+    const frenchCommonWords = new Set(['Si', 'Ne', 'Un', 'Une', 'En', 'Au', 'Le', 'La', 'Les', 'Et', 'Ou', 'De', 'Du', 'Des', 'Ce', 'Sa', 'Se', 'Son', 'Est', 'Par', 'Sur', 'Pour', 'Mais', 'Que', 'Qui', 'Pas', 'Ton', 'Avec', 'Dans', 'Sans', 'Sous', 'Vers', 'Chez', 'Ses', 'Nos', 'Vos', 'Mon', 'Ton', 'Mes', 'Tes', 'Cet', 'Cette', 'Ils', 'Elle', 'Elles', 'Nous', 'Vous', 'Ont', 'Sont', 'Peut', 'Donc', 'Bien', 'Tout', 'Rien', 'Cela', 'Comme', 'Notre']);
+    const filteredCandidates = locationCandidates.filter(candidate => {
+      const parts = candidate.split(/\s+/);
+      if (parts.length === 2 && frenchCommonWords.has(parts[1])) return false;
+      return true;
+    });
+    const uniqueCandidates = [...new Set(filteredCandidates)].filter(c => isKnownLocation(c));
     
     {
       const matches = uniqueCandidates;
@@ -6565,6 +6645,55 @@ class ArticleFinalizer {
       reordered: false,
       missing_after_fix: []
     };
+
+    // PHASE 1 FIX: Validation qualité des H2 — détecter les H2 génériques/descriptifs
+    const decisionVerbs = /\b(choisir|éviter|payer|optimiser|risquer|arbitrer|renoncer|privilégier|sacrifier|comparer|négocier|anticiper|contourner|limiter|maximiser|minimiser|trancher)\b/i;
+    const tensionConnectors = /\b(mais|vs|au prix de|à condition de|malgré|plutôt que|au lieu de|sans|avant de|quitte à)\b/i;
+    const genericPatterns = [
+      /^les?\s+\w+\s+(de|du|des|au|en)\s+/i,
+      /^conseils?\s+(pour|pratiques?|de)/i,
+      /^guide\s+(de|du|pour|des|pratique)/i,
+      /^comment\s+(bien\s+)?/i,
+      /^questions?\s+fréquentes?/i,
+      /^FAQ\b/i,
+      /^avantages?\s+et\s+inconvénients?/i,
+      /^comparaison\s+(de|des|du)/i,
+      /^options?\s+d['']/i,
+      /^checklist\b/i
+    ];
+    const genericH2s = [];
+    for (const h2Tag of h2Matches) {
+      const h2Text = h2Tag.replace(/<[^>]*>/g, '').trim();
+      if (h2Text.length < 5) continue;
+      const hasDecisionVerb = decisionVerbs.test(h2Text);
+      const hasTensionConnector = tensionConnectors.test(h2Text);
+      const isGenericPattern = genericPatterns.some(p => p.test(h2Text));
+      if (!hasDecisionVerb && !hasTensionConnector && isGenericPattern) {
+        genericH2s.push(h2Text);
+      }
+    }
+    if (genericH2s.length > 0) {
+      console.log(`   ⚠️ H2_QUALITY: ${genericH2s.length} H2 générique(s) détecté(s):`);
+      genericH2s.forEach(h => console.log(`      → "${h}"`));
+      report.issues.push({
+        code: 'H2_GENERIC_DETECTED',
+        severity: 'low',
+        message: `${genericH2s.length} H2 générique(s) sans verbe décisionnel ni connecteur de tension: ${genericH2s.map(h => `"${h}"`).join(', ')}`,
+        evidence: { genericH2s },
+        check: 'h2_quality'
+      });
+      report.checks.push({
+        name: 'h2_quality',
+        status: 'warn',
+        details: `${genericH2s.length}/${h2Count} H2 génériques détectés`
+      });
+    } else {
+      report.checks.push({
+        name: 'h2_quality',
+        status: 'pass',
+        details: `${h2Count} H2 tous qualifiés (verbe décisionnel ou connecteur de tension)`
+      });
+    }
     
     return finalHtml;
   }
@@ -7982,6 +8111,288 @@ class ArticleFinalizer {
   }
 
   /**
+   * PHASE 2 FIX: Nettoyage deterministe des tournures plates recurrentes du LLM.
+   * Remplace "il est important de [verbe]" par le verbe directement a l'imperatif (tutoiement).
+   */
+  removeGenericPhrases(html, report) {
+    let fixCount = 0;
+
+    const patterns = [
+      // "il est important de + infinitif" -> imperatif 2e pers
+      { regex: /[Ii]l est important de\s+/g, replacement: '' },
+      { regex: /[Ii]l est essentiel de\s+/g, replacement: '' },
+      { regex: /[Ii]l est recommandé de\s+/g, replacement: '' },
+      { regex: /[Ii]l est crucial de\s+/g, replacement: '' },
+      { regex: /[Ii]l est conseillé de\s+/g, replacement: '' },
+      { regex: /[Ii]l convient de\s+/g, replacement: '' },
+      { regex: /[Nn]'hésite pas à\s+/g, replacement: '' },
+      { regex: /[Nn]'hésitez pas à\s+/g, replacement: '' }
+    ];
+
+    let cleaned = html;
+    for (const { regex, replacement } of patterns) {
+      cleaned = cleaned.replace(regex, (match) => {
+        fixCount++;
+        return replacement;
+      });
+    }
+
+    // Capitaliser la premiere lettre apres suppression si elle suit un tag d'ouverture ou un debut de phrase
+    cleaned = cleaned.replace(/>(\s*)([a-zàâäéèêëïîôùûüÿç])/g, (m, space, letter) => {
+      return '>' + space + letter.toUpperCase();
+    });
+
+    if (fixCount > 0) {
+      console.log(`   🧹 GENERIC_PHRASES_FIX: ${fixCount} tournure(s) plate(s) supprimée(s)`);
+      if (report) {
+        report.checks.push({
+          name: 'generic_phrases_fix',
+          status: 'pass',
+          details: `${fixCount} tournure(s) plate(s) nettoyée(s)`
+        });
+      }
+    }
+    return cleaned;
+  }
+
+  /**
+   * PHASE 2 FIX: Nettoyage deterministe des phrases plates LLM.
+   * Remplace les tournures generiques par des formulations directes.
+   */
+  removeGenericPhrases(html, report) {
+    const replacements = [
+      // "il est important de + verbe" -> "verbe" (imperatif tu)
+      [/[Ii]l est important de\s+/g, ''],
+      [/[Ii]l est essentiel de\s+/g, ''],
+      [/[Ii]l est recommandé de\s+/g, ''],
+      [/[Ii]l est crucial de\s+/g, ''],
+      [/[Ii]l est conseillé de\s+/g, ''],
+      [/[Ii]l convient de\s+/g, ''],
+      [/[Nn]'hésite pas à\s+/g, ''],
+      [/[Nn]'hésitez pas à\s+/g, ''],
+      // Variantes avec "que"
+      [/[Ii]l est important que\s+/g, ''],
+      [/[Ii]l est essentiel que\s+/g, ''],
+    ];
+
+    let fixCount = 0;
+    let cleaned = html;
+    for (const [pattern, replacement] of replacements) {
+      const before = cleaned;
+      cleaned = cleaned.replace(pattern, replacement);
+      if (cleaned !== before) {
+        const matches = before.match(pattern);
+        fixCount += matches ? matches.length : 0;
+      }
+    }
+
+    if (fixCount > 0) {
+      console.log(`   🧹 GENERIC_PHRASE_FIX: ${fixCount} tournure(s) plate(s) supprimée(s)`);
+      if (report) {
+        report.checks.push({
+          name: 'generic_phrase_fix',
+          status: 'pass',
+          details: `${fixCount} tournure(s) plate(s) nettoyée(s)`
+        });
+      }
+    }
+    return cleaned;
+  }
+
+  /**
+   * PHASE 3 FIX: Capitalise les noms propres geographiques dans tout le HTML
+   * Corrige "vietnam" → "Vietnam", "japon" → "Japon", etc.
+   */
+  capitalizeProperNouns(html) {
+    const PROPER_NOUNS = {
+      'vietnam': 'Vietnam', 'thaïlande': 'Thaïlande', 'thailande': 'Thaïlande',
+      'indonésie': 'Indonésie', 'indonesie': 'Indonésie', 'singapour': 'Singapour',
+      'japon': 'Japon', 'cambodge': 'Cambodge', 'malaisie': 'Malaisie',
+      'philippines': 'Philippines', 'myanmar': 'Myanmar', 'laos': 'Laos',
+      'taïwan': 'Taïwan', 'taiwan': 'Taïwan',
+      'bangkok': 'Bangkok', 'hanoi': 'Hanoi', 'hanoï': 'Hanoï',
+      'tokyo': 'Tokyo', 'kyoto': 'Kyoto', 'osaka': 'Osaka',
+      'bali': 'Bali', 'lombok': 'Lombok', 'phuket': 'Phuket',
+      'chiang mai': 'Chiang Mai', 'ho chi minh': 'Ho Chi Minh',
+      'kuala lumpur': 'Kuala Lumpur', 'phnom penh': 'Phnom Penh',
+      'siem reap': 'Siem Reap', 'da nang': 'Da Nang',
+      'angkor wat': 'Angkor Wat', 'angkor': 'Angkor',
+      'hong kong': 'Hong Kong', 'séoul': 'Séoul', 'seoul': 'Séoul',
+      'manille': 'Manille', 'jakarta': 'Jakarta', 'cebu': 'Cebu',
+      'ubud': 'Ubud', 'canggu': 'Canggu', 'seminyak': 'Seminyak',
+    };
+
+    let result = html;
+    let fixes = 0;
+
+    // Traiter d'abord les noms multi-mots (pour eviter des remplacements partiels)
+    const sorted = Object.entries(PROPER_NOUNS).sort((a, b) => b[0].length - a[0].length);
+
+    for (const [lower, proper] of sorted) {
+      if (lower === proper.toLowerCase() && lower === proper) continue;
+      const escaped = lower.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      // Ne remplacer que dans le contenu texte (pas dans les attributs/URLs)
+      const pattern = new RegExp(`(>[^<]*?)\\b${escaped}\\b`, 'gi');
+      const before = result;
+      result = result.replace(pattern, (match, prefix) => {
+        // Verifier que le mot n'est pas deja bien capitalise
+        const wordInMatch = match.substring(prefix.length);
+        if (wordInMatch === proper) return match;
+        return prefix + proper;
+      });
+      if (result !== before) {
+        fixes++;
+      }
+    }
+
+    if (fixes > 0) {
+      console.log(`   ✏️ PROPER_NOUNS: ${fixes} nom(s) propre(s) capitalisé(s)`);
+    }
+    return result;
+  }
+
+  /**
+   * PHASE 2.3b: Corrige les mots colles (ex: "alternativeeconomique" -> "alternative economique")
+   * Module dedie, separe du detecteur d'anglais.
+   * Regles: >14 chars, segments >=4 chars, pas de split si tiret/apostrophe, whitelist mots valides.
+   */
+  fixWordGlue(html, report) {
+    const VALID_LONG_WORDS = new Set([
+      'déséquilibrer', 'rééquilibrer', 'réorganiser', 'préexistant', 'interethnique',
+      'réélection', 'réévaluer', 'préétabli', 'réexaminer', 'réorienter',
+      'préinscription', 'réintroduire', 'réinventer', 'réinitialiser',
+      'réaménager', 'réapprendre', 'réapprovisionnement', 'préavis',
+      'coéquipier', 'autoévaluation', 'néanmoins', 'dorénavant',
+      'conséquemment', 'subséquemment', 'simultanément', 'antérieurement',
+      'postérieurement', 'extérieurement', 'intérieurement', 'ultérieurement',
+      'inévitablement', 'considérablement', 'préalablement', 'éventuellement',
+      'particulièrement', 'régulièrement', 'dernièrement', 'premièrement',
+      'deuxièmement', 'troisièmement', 'entièrement', 'sincèrement',
+      'conséquence', 'différemment', 'référence', 'préférence',
+      'expérience', 'compétence', 'fréquence', 'séquence',
+      'précédent', 'indépendant', 'présentation', 'préparation',
+      'génération', 'opération', 'réservation', 'célébration'
+    ]);
+
+    let fixCount = 0;
+
+    // Pre-pass: split 2-char common French words glued to accented words (not caught by main regex {3,})
+    const SHORT_GLUE_WORDS = new Set(['tu', 'où', 'il', 'on', 'ou', 'au', 'du', 'un', 'je', 'ce', 'se', 'ne', 'te', 'me', 'le', 'la', 'de', 'en', 'ni', 'si']);
+    const preClean = html.replace(/\b([a-zàâäéèêëïîôùûüÿçœ]{2})(é|è|ê|à|â|ù|û|ô|î|œ)([a-zàâäéèêëïîôùûüÿçœ]{3,})\b/gi, (match, left, accent, right) => {
+      if (SHORT_GLUE_WORDS.has(left.toLowerCase())) {
+        fixCount++;
+        return left + ' ' + accent + right;
+      }
+      return match;
+    });
+
+    // PHASE 3 FIX: Seuil abaisse de 15 a 7 chars pour attraper "fautêtre" (8), "doitêtre" (8), etc.
+    const cleaned = preClean.replace(/\b([a-zàâäéèêëïîôùûüÿç]{3,})(é|è|ê|à|â|ù|û|ô|î)([a-zàâäéèêëïîôùûüÿç]{3,})\b/gi, (match, left, accent, right) => {
+      if (match.length < 7) return match;
+      if (match.includes('-') || match.includes("'") || match.includes('\u2019')) return match;
+      const lower = match.toLowerCase();
+      if (VALID_LONG_WORDS.has(lower)) return match;
+      if (left.length < 3 || right.length < 3) return match;
+      fixCount++;
+      return left + ' ' + accent + right;
+    });
+
+    // PHASE 3 FIX: Reparer les espaces parasites a l'interieur des mots (artefact tokenisation LLM)
+    // Ex: "suppl émentaires" → "supplémentaires", "varieénorm ément" → needs glue fix first then space fix
+    let spaceFixes = 0;
+    const COMMON_SPLIT_WORDS = {
+      'suppl émentaires': 'supplémentaires',
+      'suppl émentaire': 'supplémentaire',
+      'compl ètement': 'complètement',
+      'compl émentaire': 'complémentaire',
+      'compl émentaires': 'complémentaires',
+      'particuli èrement': 'particulièrement',
+      'consid érablement': 'considérablement',
+      'r éellement': 'réellement',
+      'g énéralement': 'généralement',
+      'imm édiatement': 'immédiatement',
+      'r égulièrement': 'régulièrement',
+      'pr écédemment': 'précédemment',
+      'enti èrement': 'entièrement',
+      'derni èrement': 'dernièrement',
+      'é normément': 'énormément',
+      'v éritablement': 'véritablement',
+      'n écessairement': 'nécessairement',
+      'pr éalablement': 'préalablement',
+      'c œur': 'cœur',
+      'intér êt': 'intérêt',
+      'intér êts': 'intérêts',
+      'entr être': 'entretenir',
+      'man œuvre': 'manœuvre',
+      'man œuvres': 'manœuvres',
+      'œ uvre': 'œuvre',
+      'œ uvres': 'œuvres',
+    };
+
+    let cleanedWithSpaces = cleaned;
+    for (const [broken, fixed] of Object.entries(COMMON_SPLIT_WORDS)) {
+      const regex = new RegExp(broken.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+      const before = cleanedWithSpaces;
+      cleanedWithSpaces = cleanedWithSpaces.replace(regex, fixed);
+      if (cleanedWithSpaces !== before) {
+        spaceFixes++;
+      }
+    }
+
+    // Pattern generique: lettre(s) + espace + accent + lettres (artefact tokenisation)
+    // Ex: "suppl émentaires" → "supplémentaires" (espace parasite dans un mot)
+    // IMPORTANT: Ne PAS rejoindre si left est un mot français autonome (sinon on recolle "peuvent être" → "peuventêtre")
+    // Deux garde-fous : (1) liste de mots courants, (2) heuristique suffixe verbes/adverbes/noms
+    const DO_NOT_JOIN_LEFT = new Set([
+      'des', 'les', 'une', 'un', 'du', 'au', 'aux', 'ces', 'mes', 'tes', 'ses', 'nos', 'vos', 'leurs',
+      'de', 'le', 'la', 'ce', 'ma', 'ta', 'sa', 'mon', 'ton', 'son',
+      'peut', 'sont', 'font', 'fait', 'doit', 'faut', 'vont', 'veut', 'ont', 'est', 'fut', 'soit',
+      'pense', 'doivent', 'peuvent', 'seront', 'auraient', 'avaient', 'feront', 'aurais',
+      'pour', 'dans', 'par', 'sur', 'sous', 'sans', 'vers', 'chez', 'entre', 'avec',
+      'que', 'qui', 'elle', 'elles', 'lui', 'leur', 'nous', 'vous', 'ils',
+      'comment', 'tout', 'toute', 'cette', 'chaque', 'notre', 'votre',
+      'choix', 'transport', 'mode', 'prix', 'prise', 'prend', 'cet',
+      'comme', 'quand', 'mais', 'donc', 'aussi', 'bien', 'tant', 'trop', 'fort', 'quel', 'quelle',
+      'très', 'après', 'avant', 'depuis', 'même', 'encore', 'assez', 'moins', 'peu',
+      'ou', 'et', 'ni', 'si', 'car', 'plus', 'pas', 'bon', 'bel', 'mal', 'vif', 'bas', 'gros', 'long', 'fin',
+      'voyage', 'peux', 'faire', 'seulement', 'sembler', 'pourrait', 'pourraient',
+      'devrait', 'devraient', 'serait', 'seraient', 'aurait', 'semble', 'reste',
+      'confort', 'alors', 'jamais', 'souvent', 'parfois', 'toujours', 'vraiment',
+      'certains', 'certaines', 'certain', 'certaine', 'quelques', 'plusieurs', 'chacun', 'chacune',
+      'aucun', 'aucune', 'autres', 'autre', 'nombreux', 'nombreuses',
+      'tu', 'il', 'je', 'on', 'où', 'se', 'ne', 'te', 'me', 'en',
+    ]);
+    const WORD_SUFFIX_RE = /(?:er|ir|re|oir|ais|ait|aient|ons|ent|ant|ment|eux|oux|age|tion|eur|ard|ois|ais|ence|ance|ure|ble|que|ise|ose|ude)$/i;
+    cleanedWithSpaces = cleanedWithSpaces.replace(/\b([a-zàâäéèêëïîôùûüÿçœ]{1,})\s(é|è|ê|à|â|ù|û|ô|î|œ)([a-zàâäéèêëïîôùûüÿçœ]{1,})\b/gi, (match, left, accent, right) => {
+      if (match.includes('-') || match.includes("'")) return match;
+      const joined = left + accent + right;
+      if (joined.length > 20) return match;
+      if (joined.length < 3) return match;
+      const leftLower = left.toLowerCase();
+      const isKnownWord = DO_NOT_JOIN_LEFT.has(leftLower);
+      const hasSuffix = left.length >= 4 && WORD_SUFFIX_RE.test(leftLower);
+      if (isKnownWord || hasSuffix) {
+        return match;
+      }
+      spaceFixes++;
+      return joined;
+    });
+
+    const totalFixes = fixCount + spaceFixes;
+    if (totalFixes > 0) {
+      console.log(`   🔧 WORD_GLUE_FIX: ${fixCount} collage(s) + ${spaceFixes} espace(s) parasite(s) corrigé(s)`);
+      if (report) {
+        report.checks.push({
+          name: 'word_glue_fix',
+          status: 'pass',
+          details: `${fixCount} collage(s) + ${spaceFixes} espace(s) parasite(s) corrigé(s)`
+        });
+      }
+    }
+    return cleanedWithSpaces;
+  }
+
+  /**
    * Détecte et traduit le contenu anglais
    * @param {string} html - HTML à valider
    * @param {Object} report - Rapport QA
@@ -7991,6 +8402,9 @@ class ArticleFinalizer {
     console.log('🔍 Détection contenu anglais...');
     
     let cleanedHtml = html;
+
+    // (Nettoyage typographique déplacé dans fixWordGlue() - PHASE 2.3b)
+
     // Traduire les titres H2 en anglais (ex. "How much does a long stay in Thailand really cost?" -> français)
     const h2Regex = /<h2([^>]*)>([^<]+)<\/h2>/gi;
     let h2Match;
@@ -8050,7 +8464,17 @@ class ArticleFinalizer {
       /Not budgeting/i,
       /Fatigue setting/i,
       /Critical Moment/i,
-      /What Reddit/i
+      /What Reddit/i,
+      /Budget is/i,
+      /trip to/i,
+      /heading south/i,
+      /starting in/i,
+      /worth taking/i,
+      /not including/i,
+      /day trip/i,
+      /planning a/i,
+      /I'd honestly/i,
+      /I did a similar/i
     ];
     
     const englishMatches = [];
@@ -8060,7 +8484,6 @@ class ArticleFinalizer {
       const matches = html.match(new RegExp(pattern.source, 'gi'));
       if (matches) {
         matches.forEach(match => {
-          // Trouver le contexte (paragraphe ou balise strong)
           const contextMatch = html.match(new RegExp(`<[^>]*>.*?${match.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}.*?<\/[^>]+>`, 'gi'));
           if (contextMatch) {
             englishMatches.push({
@@ -8073,16 +8496,16 @@ class ArticleFinalizer {
       }
     });
     
-    // AMÉLIORATION: Détecter phrases avec ratio mots anglais > 10% (au lieu de 30%)
-    // CORRECTION: Inclure aussi les <li> items, pas seulement les <p>
-    const paragraphs = html.match(/<p[^>]*>([^<]+)<\/p>/gi) || [];
-    const listItems = html.match(/<li[^>]*>([^<]+)<\/li>/gi) || [];
-    const allTextElements = [...paragraphs, ...listItems];
+    // PHASE 1 FIX: Extraire TOUS les éléments textuels, y compris blockquotes et paragraphes avec HTML imbriqué
+    const paragraphs = html.match(/<p[^>]*>[\s\S]*?<\/p>/gi) || [];
+    const listItems = html.match(/<li[^>]*>[\s\S]*?<\/li>/gi) || [];
+    const blockquotes = html.match(/<blockquote[^>]*>[\s\S]*?<\/blockquote>/gi) || [];
+    const allTextElements = [...paragraphs, ...listItems, ...blockquotes];
     
-    
-    // AMÉLIORATION: Patterns anglais plus complets (exclure mots français communs)
-    // Exclure: visa, fatigue, moment (mots français aussi)
-    const englishWords = /\b(the|is|are|was|were|have|has|had|this|that|with|from|which|what|how|why|when|where|for|and|or|but|if|then|else|can|could|should|will|would|must|may|might|essential|underestimating|budgeting|setting|critical|check|coverage|medical|travel|tourist|regular|requirements|reasonable|available|launched|doesn't|don't|I'm|you|he|she|it|we|they|great|food|service|amazing|vistas|affordable|loved|consider|interested|culture|architecture|mountain|water|national|park|scenery|been|most|IMO|Asia|best|Hong|Kong|Taiwan|week|weeks)\b/gi;
+    // PHASE 2 FIX: Retrait des faux amis francais (culture, service, budget, national, architecture, etc.)
+    // et des noms propres geographiques (Asia, Hong, Kong, Taiwan) qui polluent le ratio
+    // PHASE 3 FIX: Ajout mots manquants (around, whole, accommodation, whether, enough, spend, stay, etc.)
+    const englishWords = /\b(the|is|are|was|were|have|has|had|this|that|with|from|which|what|how|why|when|where|for|and|or|but|if|then|else|can|could|should|will|would|must|may|might|underestimating|budgeting|setting|check|coverage|requirements|available|launched|doesn't|don't|I'm|you|he|she|it|we|they|great|food|amazing|vistas|affordable|loved|interested|scenery|been|most|IMO|best|week|weeks|trip|planning|starting|heading|south|north|worth|taking|including|flights|honestly|added|days|around|whole|accommodation|entire|about|really|actually|per|night|whether|enough|spend|stay|overall|cheap|expensive|however|also|into|some|any|than|other|only|more|just|very|much|need|want|looking|moving|working|getting|trying|know|think|going|people|places|each|every|many|here|there|not|still|even|well)\b/gi;
     
     allTextElements.forEach(para => {
       const text = para.replace(/<[^>]+>/g, ' ').trim();
@@ -8091,7 +8514,6 @@ class ArticleFinalizer {
         const totalWords = text.split(/\s+/).length;
         const englishRatio = totalWords > 0 ? englishCount / totalWords : 0;
         
-        // AMÉLIORATION: Seuil réduit à 10% (au lieu de 30%)
         if (englishRatio > 0.1 && totalWords > 5) {
           englishMatches.push({
             pattern: 'high_english_ratio',
@@ -8099,6 +8521,27 @@ class ArticleFinalizer {
             fullMatch: para,
             ratio: englishRatio
           });
+        }
+        
+        // PHASE 1 FIX: Détection par phrase individuelle pour les paragraphes mixtes FR/EN
+        if (englishRatio <= 0.1) {
+          const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 15);
+          for (const sentence of sentences) {
+            const sentTrimmed = sentence.trim();
+            const sentEnglishCount = (sentTrimmed.match(englishWords) || []).length;
+            const sentTotalWords = sentTrimmed.split(/\s+/).length;
+            const sentRatio = sentTotalWords > 0 ? sentEnglishCount / sentTotalWords : 0;
+            if (sentRatio > 0.3 && sentTotalWords > 4) {
+              englishMatches.push({
+                pattern: 'sentence_level_english',
+                context: text,
+                fullMatch: para,
+                ratio: sentRatio,
+                sentence: sentTrimmed
+              });
+              break;
+            }
+          }
         }
       }
     });
@@ -8134,7 +8577,19 @@ class ArticleFinalizer {
         const trad = translated[i];
         const escapedMatch = item.match.fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         if (trad) {
-          cleanedHtml = cleanedHtml.replace(new RegExp(escapedMatch, 'gi'), item.match.fullMatch.replace(item.textToTranslate, trad));
+          // PHASE 3 FIX: Si le fullMatch contient des tags HTML imbriques (<strong>, <em>, etc.),
+          // fullMatch.replace(textToTranslate, trad) echoue silencieusement car le plain text
+          // ne se trouve pas littéralement dans le HTML. On reconstruit le tag avec le contenu traduit.
+          let replaced = item.match.fullMatch.replace(item.textToTranslate, trad);
+          if (replaced === item.match.fullMatch && trad !== item.textToTranslate) {
+            // Replacement failed — reconstruct the tag with translated content
+            const tagMatch = item.match.fullMatch.match(/^<(\w+)([^>]*)>/);
+            if (tagMatch) {
+              const [, tagName, attrs] = tagMatch;
+              replaced = `<${tagName}${attrs}>${trad}</${tagName}>`;
+            }
+          }
+          cleanedHtml = cleanedHtml.replace(new RegExp(escapedMatch, 'gi'), replaced);
           translatedCount++;
         } else {
           cleanedHtml = cleanedHtml.replace(new RegExp(escapedMatch, 'gi'), '');
@@ -8160,11 +8615,16 @@ class ArticleFinalizer {
     // AMÉLIORATION: Si ratio > 0.1%, forcer suppression de tous les patterns anglais détectés
     if (totalEnglishRatio > 0.001) {
       // Si ratio encore trop élevé après traductions, supprimer tous les patterns anglais restants
-      if (totalEnglishRatio > 0.01) {
+      // PHASE 2 FIX: seuil releve de 1% a 3% pour eviter suppression de paragraphes francais
+      if (totalEnglishRatio > 0.03) {
         console.log(`   ⚠️ Ratio anglais encore élevé (${(totalEnglishRatio * 100).toFixed(2)}%), suppression agressive...`);
         
-        // AMÉLIORATION: Trouver et supprimer tous les paragraphes avec ratio anglais élevé
-        const allParagraphs = cleanedHtml.match(/<p[^>]*>([^<]+)<\/p>/gi) || [];
+        // PHASE 1 FIX: Trouver et supprimer tous les éléments texte avec ratio anglais élevé (p, li, blockquote)
+        const allParagraphs = [
+          ...(cleanedHtml.match(/<p[^>]*>[\s\S]*?<\/p>/gi) || []),
+          ...(cleanedHtml.match(/<li[^>]*>[\s\S]*?<\/li>/gi) || []),
+          ...(cleanedHtml.match(/<blockquote[^>]*>[\s\S]*?<\/blockquote>/gi) || [])
+        ];
         allParagraphs.forEach(para => {
           const text = para.replace(/<[^>]+>/g, ' ').trim();
           if (text.length > 20) {
@@ -8172,8 +8632,8 @@ class ArticleFinalizer {
             const totalWords = text.split(/\s+/).filter(w => w.length > 2).length;
             const englishRatio = totalWords > 0 ? englishCount / totalWords : 0;
             
-            // Supprimer si ratio > 5% (plus agressif)
-            if (englishRatio > 0.05 && totalWords > 5) {
+            // PHASE 2 FIX: seuil releve de 5% a 12% — a 5% un seul mot anglais sur 20 declenchait la suppression
+            if (englishRatio > 0.12 && totalWords > 5) {
               const escapedPara = para.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
               cleanedHtml = cleanedHtml.replace(new RegExp(escapedPara, 'gi'), '');
               removedCount++;
@@ -10495,6 +10955,35 @@ class ArticleFinalizer {
     // Pattern 4: Nettoyer les parenthèses USD résiduelles générées par le LLM
     // Ex: "~920 euros (1 000 USD)" → "~920 euros", "~184 à 276 euros (~200 à 300 USD)" → "~184 à 276 euros"
     safeHtml = safeHtml.replace(/\s*\(~?[\d\s,.]+\s*(?:USD|dollars?)\)/gi, '');
+
+    // Pattern 5: N $ ou N à/- N $ (nombre + espace + dollar sign, ou range)
+    // Ex: "500 $" → "~460 euros", "500 à 700 $" → "~460 à ~644 euros"
+    safeHtml = safeHtml.replace(
+      /([\d\s,.]+?)\s*(?:à|-)\s*([\d\s,.]+?)\s*\$(?!\s*(?:euros?|EUR))/g,
+      (match, startStr, endStr) => {
+        const startAmount = parseFloat(startStr.replace(/[\s.]/g, '').replace(',', '.'));
+        const endAmount = parseFloat(endStr.replace(/[\s.]/g, '').replace(',', '.'));
+        if (isNaN(startAmount) || isNaN(endAmount) || startAmount <= 0 || endAmount <= 0) return match;
+        const startEur = Math.round(startAmount * USD_TO_EUR_RATE);
+        const endEur = Math.round(endAmount * USD_TO_EUR_RATE);
+        converted++;
+        return `~${startEur} à ~${endEur} euros`;
+      }
+    );
+    // Pattern 5b: Single number + space + $ (not part of a range)
+    safeHtml = safeHtml.replace(
+      /(\d[\d\s,.]*)\s+\$(?!\s*(?:euros?|EUR))/g,
+      (match, amountStr, offset) => {
+        const before = safeHtml.substring(Math.max(0, offset - 5), offset);
+        if (/\(~?\s*$/.test(before)) return match;
+        if (/~\d/.test(before)) return match;
+        const amount = parseFloat(amountStr.replace(/[\s.]/g, '').replace(',', '.'));
+        if (isNaN(amount) || amount <= 0) return match;
+        const eur = Math.round(amount * USD_TO_EUR_RATE);
+        converted++;
+        return `~${eur} euros`;
+      }
+    );
 
     // Restaurer les blocs <script>
     for (const [ph, original] of scriptPlaceholders) {

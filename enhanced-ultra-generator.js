@@ -770,6 +770,12 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const translatedLength = finalizedArticle.content.length;
       console.log(`   📊 HTML avant: ${originalLength} chars → après: ${translatedLength} chars (delta: ${translatedLength - originalLength})`);
       
+      // 9.6. PHASE 3 FIX: Dernier passage fixWordGlue après toutes traductions LLM
+      // Les traductions re-introduisent du glue typographique (ex: "fautêtre", "estéconomique")
+      if (this.articleFinalizer) {
+        finalizedArticle.content = this.articleFinalizer.fixWordGlue(finalizedArticle.content, null);
+      }
+      
       // 10. Publication WordPress
       console.log('📝 Publication sur WordPress...');
       const publishedArticle = await this.publishToWordPress(finalizedArticle);
@@ -826,12 +832,15 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         console.log('🧪 DRY_RUN: Validation production désactivée');
       }
       
-      // NOUVEAU: Ajouter l'URL Reddit au cache pour éviter les doublons au prochain run
+      // Ajouter l'URL Reddit au cache pour éviter les doublons au prochain run
       // (redditUrl déjà déclaré ligne 335)
-      if (redditUrl) {
+      // PHASE 2 FIX: Ne pas polluer le cache en DRY_RUN (sinon les fixtures s'epuisent)
+      if (redditUrl && !DRY_RUN) {
         this.publishedRedditUrls.add(redditUrl);
-        await this.saveRedditUrlsCache(); // Sauvegarder immédiatement
+        await this.saveRedditUrlsCache();
         console.log(`   📋 URL Reddit ajoutée et sauvegardée: ${redditUrl.substring(0, 60)}...`);
+      } else if (redditUrl && DRY_RUN) {
+        console.log(`💾 DRY_RUN: URL Reddit NON sauvegardée au cache (${redditUrl.substring(0, 60)}...)`);
       }
       // Pipeline-runner gère maintenant les stats dans le report
       console.log('📊 Article final:', {
@@ -2018,6 +2027,10 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           }
 
           if (uploadedCount > 0) {
+            // Defensive: re-run fixWordGlue on updatedContent (WordPress content.rendered may differ slightly)
+            if (this.articleFinalizer) {
+              updatedContent = this.articleFinalizer.fixWordGlue(updatedContent, null);
+            }
             try {
               await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts/${publishedArticle.id}`, {
                 content: updatedContent

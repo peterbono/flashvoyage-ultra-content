@@ -82,8 +82,8 @@ export async function createChatCompletion(config, retries = 3) {
     throw new Error('OpenAI non disponible (FORCE_OFFLINE=1 ou clé API manquante)');
   }
   
-  const timeout = parseInt(process.env.OPENAI_TIMEOUT_MS || '60000', 10);
-  const backoffDelays = [1000, 3000, 7000];
+  const timeout = parseInt(process.env.OPENAI_TIMEOUT_MS || '120000', 10);
+  const backoffDelays = [2000, 5000, 10000];
   
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
@@ -96,7 +96,9 @@ export async function createChatCompletion(config, retries = 3) {
     } catch (error) {
       const isRetryable = error.code === 'ETIMEDOUT' || 
                          error.code === 'ECONNRESET' || 
-                         error.status === 429;
+                         error.status === 429 ||
+                         error.message?.includes('timeout') ||
+                         error.message?.includes('Timed out');
       
       if (isRetryable && attempt < retries) {
         const delay = backoffDelays[attempt - 1];
