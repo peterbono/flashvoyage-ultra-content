@@ -46,10 +46,24 @@ export function renderAffiliateModule(placement, geo_defaults) {
     }
   };
 
-  const diagnostic = diagnosticPhrases[placement.id] || {
-    title: 'Utile pour ton voyage',
-    phrase: 'Cet outil peut t\'aider à organiser ton voyage.'
-  };
+  // P3: Contextualiser avec la friction de l'Angle Hunter si disponible
+  const frictionContext = placement.payload?.friction_moment || null;
+  const frictionCost = placement.payload?.friction_cost || null;
+
+  let diagnostic;
+  if (frictionContext && frictionCost) {
+    // Utiliser le contexte de friction pour un CTA ancré dans la tension réelle de l'article
+    const baseDiag = diagnosticPhrases[placement.id] || { title: 'Utile pour ton voyage', phrase: '' };
+    diagnostic = {
+      title: baseDiag.title,
+      phrase: `${frictionContext} ${frictionCost} ${baseDiag.phrase}`
+    };
+  } else {
+    diagnostic = diagnosticPhrases[placement.id] || {
+      title: 'Utile pour ton voyage',
+      phrase: 'Cet outil peut t\'aider à organiser ton voyage.'
+    };
+  }
   // Générer le widget/script selon placement.id
   const widgetScript = generateWidgetScript(placement, geo_defaults);
 

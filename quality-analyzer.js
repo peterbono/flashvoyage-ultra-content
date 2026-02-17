@@ -542,6 +542,73 @@ class QualityAnalyzer {
       } else if (hasCostMention && hasEurCost) {
         score.details.push({ check: 'EVERGREEN coûts en EUR', status: 'OK', points: 0 });
       }
+
+      // ─── P6: Checks angle, décisions, pénalités descriptives ────────
+
+      // h2_decisional: >= 80% des H2 doivent contenir un arbitrage/décision/tension
+      const decisionPatterns = /arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|vérité|réalité|secret|coût|budget|prix|danger|risque|éviter|stratég|pourquoi|comment|quand|quel|meilleur|pire|vs\b|contre\b|plutôt|différen|trade.?off|dilemme|alternative/i;
+      const allH2Elems = root.querySelectorAll('h2');
+      let decisionalH2Count = 0;
+      const nonDecisionalH2s = [];
+      allH2Elems.forEach(h2El => {
+        const h2Text = h2El.text.trim();
+        if (decisionPatterns.test(h2Text)) {
+          decisionalH2Count++;
+        } else {
+          nonDecisionalH2s.push(h2Text);
+        }
+      });
+      const totalH2s = allH2Elems.length;
+      const h2DecRatio = totalH2s > 0 ? decisionalH2Count / totalH2s : 0;
+      if (h2DecRatio >= 0.8) {
+        score.details.push({ check: 'EVERGREEN H2 décisionnels', status: `OK (${decisionalH2Count}/${totalH2s} = ${(h2DecRatio * 100).toFixed(0)}%)`, points: 0 });
+      } else {
+        const h2DecPenalty = h2DecRatio >= 0.6 ? -3 : h2DecRatio >= 0.4 ? -5 : -8;
+        score.total = Math.max(0, score.total + h2DecPenalty);
+        score.details.push({ check: 'EVERGREEN H2 décisionnels', status: `${decisionalH2Count}/${totalH2s} (${(h2DecRatio * 100).toFixed(0)}% < 80%). Non-déc: ${nonDecisionalH2s.slice(0, 3).map(h => `"${h}"`).join(', ')}`, points: h2DecPenalty });
+      }
+
+      // paragraph_decisional: >= 75% des paragraphes doivent contenir un fait, chiffre, ou décision
+      const paraDecisionPatterns = /\d+\s*(€|euro|%|jour|mois|baht|semaine|heure)|arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|éviter|stratég|recommand|conseil|attention|plutôt|préfér|mieux|pire|risque|avantage|inconvénient|si\s+tu|en\s+revanche|par\s+contre|cependant/i;
+      const allParas = root.querySelectorAll('p');
+      let decisionalParaCount = 0;
+      let substantiveParaCount = 0;
+      allParas.forEach(pEl => {
+        const pText = pEl.text.trim();
+        if (pText.length < 30) return; // Skip very short paras
+        substantiveParaCount++;
+        if (paraDecisionPatterns.test(pText)) {
+          decisionalParaCount++;
+        }
+      });
+      const paraDecRatio = substantiveParaCount > 0 ? decisionalParaCount / substantiveParaCount : 0;
+      if (paraDecRatio >= 0.75) {
+        score.details.push({ check: 'EVERGREEN paragraphes décisionnels', status: `OK (${decisionalParaCount}/${substantiveParaCount} = ${(paraDecRatio * 100).toFixed(0)}%)`, points: 0 });
+      } else {
+        const paraDecPenalty = paraDecRatio >= 0.6 ? -3 : paraDecRatio >= 0.4 ? -5 : -8;
+        score.total = Math.max(0, score.total + paraDecPenalty);
+        score.details.push({ check: 'EVERGREEN paragraphes décisionnels', status: `${decisionalParaCount}/${substantiveParaCount} (${(paraDecRatio * 100).toFixed(0)}% < 75%)`, points: paraDecPenalty });
+      }
+
+      // descriptive_penalty: penalty if more than 20% of paragraphs are purely descriptive (no opinion/decision)
+      const purelyDescriptivePatterns = /^(le|la|les|un|une|des|ce|cette|il|elle|on|en|au|du|dans|sur|avec|pour|par|l')\s/i;
+      const opinionMarkers = /recommand|conseil|attention|choisi|préfér|mieux|pire|évit|piège|erreur|risque|plutôt|mais|cependant|en revanche|par contre|si tu|question|arbitrage|\?|!|\d+\s*(€|euro|%|jour)/i;
+      let purelyDescriptiveCount = 0;
+      allParas.forEach(pEl => {
+        const pText = pEl.text.trim();
+        if (pText.length < 50) return;
+        if (!opinionMarkers.test(pText)) {
+          purelyDescriptiveCount++;
+        }
+      });
+      const descRatio = substantiveParaCount > 0 ? purelyDescriptiveCount / substantiveParaCount : 0;
+      if (descRatio <= 0.2) {
+        score.details.push({ check: 'EVERGREEN pas de remplissage descriptif', status: `OK (${(descRatio * 100).toFixed(0)}% descriptifs)`, points: 0 });
+      } else {
+        const descPenalty = descRatio <= 0.35 ? -3 : descRatio <= 0.5 ? -5 : -8;
+        score.total = Math.max(0, score.total + descPenalty);
+        score.details.push({ check: 'EVERGREEN pas de remplissage descriptif', status: `${purelyDescriptiveCount}/${substantiveParaCount} (${(descRatio * 100).toFixed(0)}% > 20% seuil)`, points: descPenalty });
+      }
     }
 
     return {

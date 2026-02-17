@@ -278,7 +278,7 @@ class ProductionValidator {
     let iteration = 0;
     let currentScore = 0;
     let lastValidationResult = { issues: [] };
-    const targetScore = 10.0;
+    const targetScore = 85.0;
     const startTime = Date.now();
     
     while (iteration < maxIterations) {
@@ -297,12 +297,12 @@ class ProductionValidator {
       const qualityScore = this.qualityAnalyzer.getGlobalScore(mainContent, editorialMode);
       currentScore = parseFloat(qualityScore.globalScore);
       
-      console.log(`   📊 Score qualité: ${currentScore}/10`);
+      console.log(`   📊 Score qualité: ${currentScore}%`);
       console.log(`   📋 Problèmes: ${validationResult.issues.length}`);
       
       // 4. Vérifier critères de sortie
       if (currentScore >= targetScore && validationResult.issues.length === 0) {
-        console.log(`\n✅ PROD_VALIDATION_SUCCESS: score=${currentScore}/10 iterations=${iteration}`);
+        console.log(`\n✅ PROD_VALIDATION_SUCCESS: score=${currentScore}% (target: ${targetScore}%) iterations=${iteration}`);
         return {
           success: true,
           finalScore: currentScore,
@@ -334,10 +334,10 @@ class ProductionValidator {
     
     // Si on arrive ici, on n'a pas atteint 10/10
     const duration = Date.now() - startTime;
-    console.warn(`\n⚠️ PROD_VALIDATION_INCOMPLETE: final_score=${currentScore}/10 after ${iteration} iterations (duration=${duration}ms)`);
+    console.warn(`\n⚠️ PROD_VALIDATION_INCOMPLETE: final_score=${currentScore}% (target: ${targetScore}%) after ${iteration} iterations (duration=${duration}ms)`);
     
     return {
-      success: currentScore >= 9.0, // Accepter 9/10 comme succès partiel
+      success: currentScore >= 80.0, // Accepter 80% comme succès partiel (target: 85%)
       finalScore: currentScore,
       iterations: iteration,
       duration,

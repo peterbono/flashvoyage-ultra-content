@@ -776,6 +776,53 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         finalizedArticle.content = this.articleFinalizer.fixWordGlue(finalizedArticle.content, null);
       }
       
+      // 9.7. P5: QUALITY GATE PRE-PUBLICATION (seuil 85%)
+      if (!DRY_RUN) {
+        try {
+          const { default: QualityAnalyzer } = await import('./quality-analyzer.js');
+          const qualityAnalyzer = new QualityAnalyzer();
+          const editorialMode = finalizedArticle.editorialMode || 'evergreen';
+          const prePublishScore = qualityAnalyzer.getGlobalScore(finalizedArticle.content, editorialMode);
+          const prePublishPct = parseFloat(prePublishScore.globalScore);
+          console.log(`\n📊 PRE-PUBLISH QUALITY GATE: ${prePublishPct}% (seuil: 85%) — blocking: ${prePublishScore.blockingPassed ? 'OK' : 'FAIL'}`);
+          
+          if (prePublishPct < 85 || !prePublishScore.blockingPassed) {
+            console.warn(`⚠️ QUALITY_GATE_BLOCKED: score ${prePublishPct}% < 85% ou bloquants FAIL. Publication différée.`);
+            console.warn(`   Catégories: SERP=${prePublishScore.categories.serp.percentage.toFixed(0)}% Links=${prePublishScore.categories.links.percentage.toFixed(0)}% Content=${prePublishScore.categories.contentWriting.percentage.toFixed(0)}% Blocking=${prePublishScore.categories.blocking.percentage.toFixed(0)}%`);
+            
+            // Tenter une passe improve LLM automatique pour corriger
+            if (this.intelligentAnalyzer && typeof this.intelligentAnalyzer.improveContentWithLLM === 'function') {
+              console.log('🔄 QUALITY_GATE: tentative d\'amélioration automatique LLM...');
+              try {
+                const improvedContent = await this.intelligentAnalyzer.improveContentWithLLM(
+                  finalizedArticle.content,
+                  { destination: finalizedArticle.destination || '', theme: finalizedArticle.theme || '' },
+                  { extracted: finalizedArticle.extracted || {}, angle: finalizedArticle.angle || null }
+                );
+                if (improvedContent && improvedContent.length > finalizedArticle.content.length * 0.8) {
+                  finalizedArticle.content = improvedContent;
+                  // Re-check
+                  const recheck = qualityAnalyzer.getGlobalScore(finalizedArticle.content, editorialMode);
+                  const recheckPct = parseFloat(recheck.globalScore);
+                  console.log(`📊 POST-IMPROVE QUALITY: ${recheckPct}% (was ${prePublishPct}%)`);
+                  if (recheckPct < 85 || !recheck.blockingPassed) {
+                    console.warn(`⚠️ QUALITY_GATE: score toujours insuffisant (${recheckPct}%). Publication forcée avec avertissement.`);
+                  } else {
+                    console.log(`✅ QUALITY_GATE: score amélioré à ${recheckPct}%, publication autorisée.`);
+                  }
+                }
+              } catch (improveErr) {
+                console.warn(`⚠️ QUALITY_GATE improve échoué: ${improveErr.message}. Publication forcée.`);
+              }
+            }
+          } else {
+            console.log(`✅ QUALITY_GATE_PASSED: ${prePublishPct}% >= 85%. Publication autorisée.`);
+          }
+        } catch (gateErr) {
+          console.warn(`⚠️ Erreur quality gate: ${gateErr.message}. Publication continue.`);
+        }
+      }
+
       // 10. Publication WordPress
       console.log('📝 Publication sur WordPress...');
       const publishedArticle = await this.publishToWordPress(finalizedArticle);
@@ -817,9 +864,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           );
           
           if (validationResult.success) {
-            console.log(`\n✅ PROD_VALIDATION_COMPLETE: score=${validationResult.finalScore}/10 iterations=${validationResult.iterations} duration=${validationResult.duration}ms`);
+            console.log(`\n✅ PROD_VALIDATION_COMPLETE: score=${validationResult.finalScore}% iterations=${validationResult.iterations} duration=${validationResult.duration}ms`);
           } else {
-            console.warn(`\n⚠️ PROD_VALIDATION_INCOMPLETE: score=${validationResult.finalScore}/10 iterations=${validationResult.iterations}`);
+            console.warn(`\n⚠️ PROD_VALIDATION_INCOMPLETE: score=${validationResult.finalScore}% iterations=${validationResult.iterations}`);
             if (validationResult.issues && validationResult.issues.length > 0) {
               console.warn(`   Problèmes restants: ${validationResult.issues.length}`);
             }

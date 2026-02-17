@@ -91,7 +91,9 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
         city: geo_defaults?.city || null,
         iata_destination: resolvedIATA || 'BKK',
         iata_origin: geo_defaults?.origin || 'PAR',
-        source: 'angle_hunter'
+        source: 'angle_hunter',
+        friction_moment: friction.moment || null,
+        friction_cost: friction.cost_of_inaction || null
       }
     });
     debug.matched.angle_hunter = { resolver, placementId, iata: resolvedIATA, confidence: 95 };

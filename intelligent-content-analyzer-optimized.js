@@ -1494,14 +1494,19 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 
 ⚠️ Un seul bloc "développement" (HTML libre). L'ordre des H2/H3 et le choix des titres sont LIBRES, pilotés par le récit.
 
-0. QUICK GUIDE (OPTIONNEL)
-   - Si présent, intégrer dans le récit narratif plutôt qu'en boîte isolée.
+0. QUICK GUIDE (OBLIGATOIRE pour EVERGREEN)
+   - Résumé ultra-concis en début d'article : destination, durée, budget, type de voyage, difficulté.
+   - Intégrer dans le récit narratif ou en encart structuré.
 
 1. DÉVELOPPEMENT (OBLIGATOIRE - UN SEUL CHAMP "developpement")
-   - LONGUEUR MINIMUM OBLIGATOIRE: 2000 mots. Articles < 1500 mots = REJETÉ.
+   - LONGUEUR MINIMUM OBLIGATOIRE: 2500 mots. Articles < 1500 mots = REJETÉ.
    - Contenu en HTML libre (<h2>, <h3>, <p>, <ul><li>). Arc narratif (situation → surprise → impact → options → choix → plan d'action).
    - OBLIGATOIRE : Hook cinématique, 2-5 citations inline « ... », témoignage comme preuve, angles SERP, 3 CTA narratifs, affiliation dans le flux.
-   - OPTIONNEL (si le story le justifie) : peurs invisibles, réalité vs fantasme, limites/biais, erreurs fréquentes, leçons auteur.
+   - SECTIONS SERP OBLIGATOIRES (H2 dédiés) :
+     * H2 "Ce que les autres guides ne disent pas" (ou variante : "Ce que les témoignages ne disent pas explicitement") — angle différenciant, analyse critique absente chez les concurrents.
+     * H2 "Limites et biais de cet article" — transparence E-E-A-T, biais de la source Reddit, limites temporelles/géographiques.
+     * H2 sur les erreurs fréquentes (ex: "Les 3 erreurs qui coûtent cher aux voyageurs en [destination]") — pièges concrets, montants, solutions.
+   - OPTIONNEL (si le story le justifie) : peurs invisibles, réalité vs fantasme, leçons auteur.
 
 2. RECOMMANDATIONS (OBLIGATOIRE - champ séparé)
    - <h2>Nos recommandations : Par où commencer ?</h2> + 3 options avec CTAs.
@@ -1574,7 +1579,7 @@ STYLE : transitions fluides, questions rhétoriques, variation du rythme, tutoie
 ${marketingSection}
 
 FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <strong>.
-LONGUEUR OBLIGATOIRE: MINIMUM 2000 mots, IDÉAL 2500-3000 mots. Un article EVERGREEN de moins de 1500 mots sera AUTOMATIQUEMENT REJETÉ. Pas de minimum par section, mais le total DOIT dépasser 2000 mots.
+LONGUEUR OBLIGATOIRE: MINIMUM 2500 mots, IDÉAL 3000 mots. Un article EVERGREEN de moins de 1500 mots sera AUTOMATIQUEMENT REJETÉ. Pas de minimum par section, mais le total DOIT dépasser 2500 mots.
 
 🚨 EXPLOITATION DES DONNÉES EXTRAITES: INTÈGRE dans "developpement" les détails temporels, lieux, chiffres, entités extraites. UTILISE 90% minimum des données fournies. Pas d'invention.
 
@@ -1589,7 +1594,7 @@ Ces marqueurs sont invisibles pour le lecteur mais exploités par le pipeline. N
   "article": {
     "titre": "...",
     "quick_guide": "...",  // OPTIONNEL - Quick Guide (destination, durée, budget, type, difficulté)
-    "developpement": "...",  // OBLIGATOIRE - MINIMUM 2000 mots. HTML libre. Inclure les marqueurs FV:CTA_SLOT, FV:DIFF_ANGLE, FV:COMMON_MISTAKES. Commence TOUJOURS par 1-2 paragraphes <p> d'intro (hook) AVANT le premier <h2>. EN FRANÇAIS.
+    "developpement": "...",  // OBLIGATOIRE - MINIMUM 2500 mots. HTML libre. Inclure les marqueurs FV:CTA_SLOT, FV:DIFF_ANGLE, FV:COMMON_MISTAKES. Commence TOUJOURS par 1-2 paragraphes <p> d'intro (hook) AVANT le premier <h2>. EN FRANÇAIS.
     "recommandations": "...",  // OBLIGATOIRE - <h2>Nos recommandations</h2> + 3 options + CTAs
     "ce_qu_il_faut_retenir": "...",  // OBLIGATOIRE - Verdict réaliste (tutoiement), 2 paragraphes.
     "signature": "...",  // CTA soft de fin
@@ -2157,17 +2162,17 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         if (!options._truthPack) options._truthPack = buildPromptTruthPack(extracted);
         if (!options._extracted) options._extracted = extracted;
 
-        // PHASE 2.2: Skip expansion si déjà suffisant (>1700 mots), sinon max 1 pass
-        const expansionThreshold = 1700;
+        // PHASE 2.2 / P8: Skip expansion si déjà suffisant (>2200 mots), sinon max 1 pass
+        const expansionThreshold = 2200;
         const MAX_EXPANSION_PASSES = wordCount >= expansionThreshold ? 0 : 1;
         
-        if (wordCount >= expansionThreshold && wordCount < 2000) {
+        if (wordCount >= expansionThreshold && wordCount < 2500) {
           console.log(`📏 EVERGREEN ${wordCount} mots (>= ${expansionThreshold}): expansion skip, contenu suffisamment dense.`);
         }
-        if (wordCount < 2000 && MAX_EXPANSION_PASSES > 0) {
-          console.log(`⚠️ EVERGREEN trop court (${wordCount} < 2000 mots). Lancement passe d'expansion LLM (max ${MAX_EXPANSION_PASSES})...`);
+        if (wordCount < 2500 && MAX_EXPANSION_PASSES > 0) {
+          console.log(`⚠️ EVERGREEN trop court (${wordCount} < 2500 mots). Lancement passe d'expansion LLM (max ${MAX_EXPANSION_PASSES})...`);
           let currentWords = wordCount;
-          for (let pass = 1; pass <= MAX_EXPANSION_PASSES && currentWords < 2000; pass++) {
+          for (let pass = 1; pass <= MAX_EXPANSION_PASSES && currentWords < 2500; pass++) {
             try {
               console.log(`📐 Passe d'expansion ${pass}/${MAX_EXPANSION_PASSES} (${currentWords} mots actuels)...`);
               htmlContent = await this.expandEvergreenContent(htmlContent, extraction, options);
@@ -2857,7 +2862,7 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
 
     const systemPrompt = `Tu es un redacteur expert en voyage. Tu recois un article HTML EVERGREEN trop court.
 
-Ta mission : ENRICHIR cet article pour atteindre MINIMUM 2000 mots, IDEAL 2500-3000 mots.
+Ta mission : ENRICHIR cet article pour atteindre MINIMUM 2500 mots, IDEAL 3000 mots.
 
 REGLES ABSOLUES :
 1. NE SUPPRIME RIEN de l'article existant. Tu AJOUTES du contenu.
@@ -2872,10 +2877,16 @@ REGLES ABSOLUES :
 7. RETOURNE l'article HTML COMPLET enrichi (pas un diff, pas un resume).
 ${truthPackBlock}${tensionBlock}${existingClaimsBlock}
 
+COHERENCE ANGLE (ABSOLU) :
+- Chaque paragraphe ajoute doit servir la tension editoriale centrale. Si le paragraphe ne fait PAS avancer la tension, ne l'ajoute pas.
+- Chaque H2 ajoute doit contenir un arbitrage, une decision, ou un trade-off — pas une description neutre.
+- Reutilise l'angle editorial dans les transitions entre sections pour maintenir le fil rouge.
+
 INTERDIT ABSOLUMENT :
 - Introduire un NOUVEAU lieu non liste dans "Lieux autorises"
 - Introduire un NOUVEAU prix ou chiffre non present dans "Nombres autorises"
-- Inventer un nouvel exemple concret, une anecdote ou un scenario non source`;
+- Inventer un nouvel exemple concret, une anecdote ou un scenario non source
+- Ajouter un paragraphe purement descriptif sans prise de position`;
 
     const angleBlock = angle ? `
 ANGLE EDITORIAL STRATEGIQUE :
@@ -2886,7 +2897,7 @@ ANGLE EDITORIAL STRATEGIQUE :
 Chaque ajout doit faire avancer cette tension.
 ` : '';
 
-    const userPrompt = `ARTICLE A ENRICHIR (trop court, doit atteindre 2000+ mots) :
+    const userPrompt = `ARTICLE A ENRICHIR (trop court, doit atteindre 2500+ mots) :
 
 ${htmlContent}
 
@@ -2895,7 +2906,7 @@ DONNEES SOURCE DISPONIBLES (utilise-les pour enrichir) :
 - Citations disponibles: ${JSON.stringify((extraction?.citations || []).slice(0, 5))}
 - Donnees cles: ${JSON.stringify(extraction?.donnees_cles || extraction?.key_data || {})}
 ${angleBlock}
-RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2000 mots.`;
+RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2500 mots.`;
 
     const responseData = await callOpenAIWithRetry({
       apiKey: this.apiKey,
@@ -3119,7 +3130,7 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2000 mots.`;
         : `\n7. NE PAS introduire de nouveau lieu, prix, chiffre ou claim factuel non present dans l'article original.\n   Nombres autorises : ${improveTruthPack.allowedNumbers.join(', ')}\n   Lieux autorises : ${improveTruthPack.allowedLocations.join(', ')}`)
       : '';
     const improveAngleBlock = context.angle
-      ? `\n8. TENSION EDITORIALE a respecter : "${context.angle.primary_angle?.tension || ''}". Ne pas diluer cette tension.`
+      ? `\n8. TENSION EDITORIALE a respecter : "${context.angle.primary_angle?.tension || ''}". Ne pas diluer cette tension. Chaque correction doit maintenir ou renforcer cette tension — jamais l'aplatir.`
       : '';
 
     const systemPrompt = `Tu es un éditeur expert français pour FlashVoyages.com. Tu corriges des anomalies SPÉCIFIQUES dans le contenu HTML existant.
