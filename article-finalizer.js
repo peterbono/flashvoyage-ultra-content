@@ -394,6 +394,9 @@ class ArticleFinalizer {
     // PHASE 6.0.11.8: Extraire les H2 imbriqués dans les P AVANT balanceParagraphs
     finalContent = this.fixH2InsideP(finalContent);
     
+    // PHASE 6.0.11.9: Fusionner les micro-paragraphes consécutifs (< 80 chars) pour densifier le contenu
+    finalContent = this.mergeShortParagraphs(finalContent);
+
     // PHASE 6.0.12: Équilibrer les paragraphes (après toutes les corrections de contenu)
     finalContent = this.balanceParagraphs(finalContent, tempReport);
     
@@ -10441,6 +10444,31 @@ class ArticleFinalizer {
     }
 
     return processedHtml;
+  }
+
+  /**
+   * Fusionne les micro-paragraphes consécutifs (< 80 chars de texte) en un seul paragraphe.
+   * Préserve les paragraphes dans les containers structurels (quick-guide, affiliate, FAQ, details).
+   */
+  mergeShortParagraphs(html) {
+    const SHORT_THRESHOLD = 80;
+    let merged = 0;
+    const result = html.replace(
+      /(<p[^>]*>)([\s\S]*?)(<\/p>)\s*(<p[^>]*>)([\s\S]*?)(<\/p>)/gi,
+      (match, open1, content1, close1, open2, content2, close2) => {
+        const text1 = content1.replace(/<[^>]*>/g, '').trim();
+        const text2 = content2.replace(/<[^>]*>/g, '').trim();
+        if (text1.length < SHORT_THRESHOLD && text2.length < SHORT_THRESHOLD && text1.length > 0 && text2.length > 0) {
+          merged++;
+          return `${open1}${content1.trim()} ${content2.trim()}${close2}`;
+        }
+        return match;
+      }
+    );
+    if (merged > 0) {
+      console.log(`   📐 MERGE_SHORT_PARAS: ${merged} micro-paragraphe(s) fusionné(s)`);
+    }
+    return result;
   }
 
   /**

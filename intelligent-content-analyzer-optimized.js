@@ -174,7 +174,7 @@ function safeJsonParse(str, label = 'json') {
 
 // C) Wrapper LLM avec retry + fallback template DRY_RUN
 async function callOpenAIWithRetry(config, retries = 3) {
-  const timeout = parseInt(process.env.OPENAI_TIMEOUT_MS || '120000', 10);
+  const timeout = parseInt(process.env.OPENAI_TIMEOUT_MS || '180000', 10);
   const isDryRun = DRY_RUN;
   const forceOffline = FORCE_OFFLINE;
   
@@ -2906,11 +2906,18 @@ COHERENCE ANGLE (ABSOLU) :
 - Chaque H2 ajoute doit contenir un arbitrage, une decision, ou un trade-off — pas une description neutre.
 - Reutilise l'angle editorial dans les transitions entre sections pour maintenir le fil rouge.
 
+REGLES DE FORME :
+- Chaque paragraphe DOIT faire au moins 3 phrases (PAS de paragraphe d'une seule phrase).
+- Chaque paragraphe DOIT contenir un avis, un arbitrage, un chiffre, ou une recommandation concrete.
+- PAS de phrases de transition isolees comme "Parlons maintenant de..." ou "Voyons comment...".
+- Fusionne les informations liees dans des paragraphes denses, pas des micro-paragraphes.
+
 INTERDIT ABSOLUMENT :
 - Introduire un NOUVEAU lieu non liste dans "Lieux autorises"
 - Introduire un NOUVEAU prix ou chiffre non present dans "Nombres autorises"
 - Inventer un nouvel exemple concret, une anecdote ou un scenario non source
-- Ajouter un paragraphe purement descriptif sans prise de position`;
+- Ajouter un paragraphe purement descriptif sans prise de position
+- Creer des paragraphes courts (< 3 phrases) — fusionne-les avec le paragraphe precedent ou suivant`;
 
     const angleBlock = angle ? `
 ANGLE EDITORIAL STRATEGIQUE :
@@ -2927,7 +2934,7 @@ ${htmlContent}
 
 DONNEES SOURCE DISPONIBLES (utilise-les pour enrichir) :
 - Titre: ${options.reddit_title || options.title || 'N/A'}
-- Citations disponibles: ${JSON.stringify((extraction?.citations || []).slice(0, 5))}
+- Citations disponibles: ${JSON.stringify(Array.isArray(extraction?.citations) ? extraction.citations.slice(0, 5) : [])}
 - Donnees cles: ${JSON.stringify(extraction?.donnees_cles || extraction?.key_data || {})}
 ${angleBlock}
 RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2500 mots.`;

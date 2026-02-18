@@ -466,7 +466,7 @@ class QualityAnalyzer {
     // 7. Introduction engageante (10 pts)
     const firstP = root.querySelector('p');
     const firstPText = firstP ? firstP.text : '';
-    const hasHook = /\?|découvr|imagin|révél|secret|incroy|expérien|aventur/i.test(firstPText);
+    const hasHook = /\?|découvr|imagin|révél|secret|incroy|expérien|aventur|rêv|fascinat|erreur|piège|problème|dilemme|la première fois|quand j|soleil|atterri|arrivé|personne ne|peu de gens|ce que|vérité|réalité|dans les rues|au cœur|au milieu|à peine|étouffant|résonne|immerg|plonge/i.test(firstPText);
     const introPoints = hasHook ? 10 : 5;
     score.total += introPoints;
     score.details.push({ check: 'Intro engageante', status: hasHook ? 'OK' : 'partiel', points: introPoints });
@@ -556,7 +556,7 @@ class QualityAnalyzer {
       // ─── P6: Checks angle, décisions, pénalités descriptives ────────
 
       // h2_decisional: >= 80% des H2 doivent contenir un arbitrage/décision/tension
-      const decisionPatterns = /arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|vérité|réalité|secret|coût|budget|prix|danger|risque|éviter|stratég|pourquoi|comment|quand|quel|meilleur|pire|vs\b|contre\b|plutôt|différen|trade.?off|dilemme|alternative|investissement|essentiel|économiser|petit\s*prix|transformer|exploser|valoir|révél|verdict|astuce|manger\s*local|hébergement|transport/i;
+      const decisionPatterns = /arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|vérité|réalité|secret|coût|budget|prix|danger|risque|éviter|stratég|pourquoi|comment|quand|quel|meilleur|pire|vs\b|contre\b|plutôt|différen|trade.?off|dilemme|alternative|investissement|essentiel|économiser|petit\s*prix|transformer|exploser|valoir|révél|verdict|astuce|manger\s*local|hébergement|transport|dépens|prendre\s+en\s+compte|à\s+savoir|ne\s+pas\s+oublier|attention|important|indispensable|incontournable/i;
       // Exclure les H2 structurels (SERP, FAQ, Comparatif, Checklist, Retenir) du check décisionnel
       const serpExclusionPatterns = /ce que les autres|limites?\s*(et\s*)?biais|erreurs?\s*fréquentes|questions?\s*fréquentes|FAQ|comparatif|check.?list|ce qu.il faut retenir/i;
       const allH2Elems = root.querySelectorAll('h2');
@@ -583,13 +583,13 @@ class QualityAnalyzer {
       }
 
       // paragraph_decisional: >= 75% des paragraphes doivent contenir un fait, chiffre, ou décision
-      const paraDecisionPatterns = /\d+\s*(€|euro|%|jour|mois|baht|semaine|heure)|arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|éviter|stratég|recommand|conseil|attention|plutôt|préfér|mieux|pire|risque|avantage|inconvénient|si\s+tu|en\s+revanche|par\s+contre|cependant/i;
+      const paraDecisionPatterns = /\d+\s*(€|euro|%|jour|mois|baht|semaine|heure|min|nuit|km|\$)|arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|éviter|stratég|recommand|conseil|attention|plutôt|préfér|mieux|pire|risque|avantage|inconvénient|si\s+tu|en\s+revanche|par\s+contre|cependant|il\s+faut|tu\s+dois|tu\s+devr|vaut|idéal|important|essentiel|indispensable|nécessaire|à\s+noter|à\s+savoir|astuce|bon\s+plan|mérite|prévoir|compter|ne\s+(manque|rate|néglige)|en\s+réalité|en\s+fait|selon|d.après|secret|alternative|verdict|l.erreur|contrairement|privilégi|dommage|à\s+proscrire|incontournable|compromis|impéra|sous.estim|sur.estim|justifi|calculer|ne\s+.*\s+pas|stress|doit\s+(être|se)|peser|minutie|panacée|néanmoins|toutefois|en\s+outre|surpris|dépens|coûte|économ/i;
       const allParas = root.querySelectorAll('p');
       let decisionalParaCount = 0;
       let substantiveParaCount = 0;
       allParas.forEach(pEl => {
         const pText = pEl.text.trim();
-        if (pText.length < 30) return; // Skip very short paras
+        if (pText.length < 50) return;
         substantiveParaCount++;
         if (paraDecisionPatterns.test(pText)) {
           decisionalParaCount++;
@@ -606,7 +606,7 @@ class QualityAnalyzer {
 
       // descriptive_penalty: penalty if more than 20% of paragraphs are purely descriptive (no opinion/decision)
       const purelyDescriptivePatterns = /^(le|la|les|un|une|des|ce|cette|il|elle|on|en|au|du|dans|sur|avec|pour|par|l')\s/i;
-      const opinionMarkers = /recommand|conseil|attention|choisi|préfér|mieux|pire|évit|piège|erreur|risque|plutôt|mais|cependant|en revanche|par contre|si tu|question|arbitrage|\?|!|\d+\s*(€|euro|%|jour)/i;
+      const opinionMarkers = /recommand|conseil|attention|choisi|préfér|mieux|pire|évit|piège|erreur|risque|plutôt|mais|cependant|en revanche|par contre|si tu|question|arbitrage|\?|!|\d+\s*(€|euro|%|jour|min|nuit|km|baht|\$)|il\s+faut|tu\s+dois|tu\s+devr|vaut|idéal|important|essentiel|indispensable|nécessaire|à\s+noter|astuce|bon\s+plan|mérite|compter|ne\s+(manque|rate)|en\s+(réalité|fait)|selon|d.après|privilégi|incontournable|contrairement|alternative|verdict|compromis|impéra|sous.estim|sur.estim|justifi|doit\s+(être|se)|ne\s+.*\s+pas|toutefois|néanmoins|en\s+outre|peser|dépens|coûte|économ|surpris|stress|calculer|meilleur|impact|complexe|influenc|prépar|négliger|clé\b|biais|transformer|affecter|ajust|adapt|en\s+résumé/i;
       let purelyDescriptiveCount = 0;
       allParas.forEach(pEl => {
         const pText = pEl.text.trim();
