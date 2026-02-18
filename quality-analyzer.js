@@ -556,9 +556,9 @@ class QualityAnalyzer {
       // ─── P6: Checks angle, décisions, pénalités descriptives ────────
 
       // h2_decisional: >= 80% des H2 doivent contenir un arbitrage/décision/tension
-      const decisionPatterns = /arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|vérité|réalité|secret|coût|budget|prix|danger|risque|éviter|stratég|pourquoi|comment|quand|quel|meilleur|pire|vs\b|contre\b|plutôt|différen|trade.?off|dilemme|alternative|investissement|essentiel|économiser|petit\s*prix|transformer|exploser|valoir|révél|verdict|astuce|manger\s*local|hébergement|transport|dépens|prendre\s+en\s+compte|à\s+savoir|ne\s+pas\s+oublier|attention|important|indispensable|incontournable/i;
+      const decisionPatterns = /arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|vérité|réalité|secret|coût|budget|prix|danger|risque|éviter|stratég|pourquoi|comment|quand|quel|meilleur|pire|vs\b|contre\b|plutôt|différen|trade.?off|dilemme|alternative|investissement|essentiel|économiser|petit\s*prix|transformer|exploser|valoir|révél|verdict|astuce|manger\s*local|hébergement|transport|dépens|prendre\s+en\s+compte|à\s+savoir|ne\s+pas\s+oublier|attention|important|indispensable|incontournable|recommand|commencer|par\s+où/i;
       // Exclure les H2 structurels (SERP, FAQ, Comparatif, Checklist, Retenir) du check décisionnel
-      const serpExclusionPatterns = /ce que les autres|limites?\s*(et\s*)?biais|erreurs?\s*fréquentes|questions?\s*fréquentes|FAQ|comparatif|check.?list|ce qu.il faut retenir/i;
+      const serpExclusionPatterns = /ce que les autres|limites?\s*(et\s*)?biais|erreurs?\s*fréquentes|questions?\s*(fréquentes|ouvertes)|FAQ|comparatif|check.?list|ce qu.il faut retenir/i;
       const allH2Elems = root.querySelectorAll('h2');
       let decisionalH2Count = 0;
       let totalContentH2Count = 0;
