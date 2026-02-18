@@ -1,6 +1,44 @@
 {
   "articles": [
     {
+      "id": 2904,
+      "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
+      "title": "Voyager en Asie du Sud-Est : les frais cachés qui gonflent ton budget",
+      "url": "https://flashvoyage.com/voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget/",
+      "category": "budget",
+      "keywords": [
+        "voyager",
+        "asie",
+        "sud",
+        "est",
+        "frais",
+        "caches",
+        "gonflent",
+        "ton",
+        "budget"
+      ],
+      "excerpt": "Points clés de ce témoignage Explore l&#8217;Asie du Sud-Est avec un budget mensuel réaliste. Découv"
+    },
+    {
+      "id": 2898,
+      "slug": "vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital",
+      "title": "Vivre à Chiang Mai : le vrai coût d&#8217;un rêve de nomade digital",
+      "url": "https://flashvoyage.com/vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital/",
+      "category": "temoignage",
+      "keywords": [
+        "vivre",
+        "chiang",
+        "mai",
+        "vrai",
+        "cout",
+        "d&#8217;un",
+        "reve",
+        "nomade",
+        "digital"
+      ],
+      "excerpt": "Points clés de ce témoignage Destination : Chiang Mai, Thaïlande. Durée : 9 mois. Budget : ~46 euros"
+    },
+    {
       "id": 2888,
       "slug": "48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget",
       "title": "48 Heures à Singapour : Optimisez Chaque Centime de Votre Budget",

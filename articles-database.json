@@ -1,7 +1,45 @@
 {
-  "crawled_at": "2026-02-18T22:11:12.529Z",
-  "total_articles": 7,
+  "crawled_at": "2026-02-18T23:09:41.236Z",
+  "total_articles": 9,
   "articles": [
+    {
+      "id": 2910,
+      "title": "Les 3 coûts cachés des espaces de coworking à Ho Chi Minh City",
+      "url": "https://flashvoyage.com/les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city/",
+      "slug": "les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city",
+      "excerpt": "Points clés de ce témoignage Destination : Hô-Chi-Minh-Ville, Durée : indéterminée, Budget : 50-~110 euros/mois pour le coworking, Type : Nomade numérique, Diff&#8230;\n",
+      "content": "\nPoints clés de ce témoignage\nDestination : Hô-Chi-Minh-Ville, Durée : indéterminée, Budget : 50-~110 euros/mois pour le coworking, Type : Nomade numérique, Difficulté : Équilibrer coût et flexibilité.\n\nTu traverses les rues animées de Hô-Chi-Minh-Ville, les klaxons résonnent et l&#8217;odeur des stands de nourriture de rue t&#8217;enveloppe.\n\nComment maximiser ton budget tout en maintenant ta productivité?\nL&#8217;enjeu est de taille: « Meilleurs espaces de coworking à Hô-Chi-Minh-Ville? Tu ret",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-18T23:09:07",
+      "modified": "2026-02-18T23:09:36",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2910.jpg"
+    },
+    {
+      "id": 2904,
+      "title": "Voyager en Asie du Sud-Est : les frais cachés qui gonflent ton budget",
+      "url": "https://flashvoyage.com/voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget/",
+      "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
+      "excerpt": "Points clés de ce témoignage Explore l&#8217;Asie du Sud-Est avec un budget mensuel réaliste. Découvre les visas nomades, les coûts cachés et les vérités que les guid&#8230;\n",
+      "content": "\nPoints clés de ce témoignage\nExplore l&#8217;Asie du Sud-Est avec un budget mensuel réaliste. Découvre les visas nomades, les coûts cachés et les vérités que les guides traditionnels ne te disent pas.\n\nChaque fois que tu penses maîtriser ton budget en Asie du Sud-Est, un détail imprévu surgit pour te rappeler la réalité.\nL&#8217;écran de l&#8217;ATM affiche des frais de retrait, ou un agent te parle d&#8217;un visa que tu n&#8217;avais pas prévu. On en parle dans Visa Run en Thaïlande : Secrets",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-18T22:58:44",
+      "modified": "2026-02-18T22:59:14",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2904.jpg"
+    },
     {
       "id": 2898,
       "title": "Vivre à Chiang Mai : le vrai coût d&#8217;un rêve de nomade digital",

@@ -511,10 +511,10 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // Récupérer les résultats du pipeline
       const finalArticle = report.finalArticle;
       
-      // Récupérer les données des étapes depuis le report
-      const extracted = report.steps?.extractor?.debug || report.steps?.extractor || {};
-      const pattern = report.steps?.['pattern-detector']?.debug || report.steps?.['pattern-detector'] || {};
-      const story = report.steps?.['story-compiler']?.debug || report.steps?.['story-compiler'] || {};
+      // Récupérer les données des étapes depuis le report (.data contient les vraies données, .debug est vide)
+      const extracted = report.steps?.extractor?.data || report.steps?.extractor?.debug || {};
+      const pattern = report.steps?.['pattern-detector']?.data || report.steps?.['pattern-detector']?.debug || {};
+      const story = report.steps?.['story-compiler']?.data || report.steps?.['story-compiler']?.debug || {};
       
       console.log('\n✅ PIPELINE_RUNNER: Pipeline terminé avec succès');
       console.log(`   Titre: ${finalArticle.title}`);
