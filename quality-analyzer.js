@@ -47,7 +47,11 @@ class QualityAnalyzer {
       'laos', 'myanmar', 'birmanie', 'burma', 'japon', 'japan', 'corée', 'coree', 'korea',
       'taiwan', 'hong kong', 'hongkong', 'chine', 'china', 'inde', 'india', 'sri lanka', 'srilanka',
       'népal', 'nepal', 'bangladesh', 'pakistan', 'mongolie', 'mongolia', 'ouzbékistan', 'ouzbekistan',
-      'uzbekistan', 'kazakhstan', 'kirghizistan', 'kyrgyzstan'
+      'uzbekistan', 'kazakhstan', 'kirghizistan', 'kyrgyzstan',
+      'tokyo', 'kyoto', 'osaka', 'bangkok', 'chiang mai', 'phuket', 'hanoi', 'ho chi minh',
+      'saigon', 'kuala lumpur', 'penang', 'phnom penh', 'siem reap', 'manila', 'cebu',
+      'seoul', 'busan', 'denpasar', 'jakarta', 'katmandou', 'kathmandu', 'colombo',
+      'mumbai', 'delhi', 'goa', 'pékin', 'shanghai', 'luang prabang', 'vientiane'
     ];
   }
 
@@ -667,7 +671,9 @@ class QualityAnalyzer {
     if (!hasAsianDest) results.passed = false;
 
     // 2. Quick Guide présent (EVERGREEN seulement — non bloquant en NEWS)
-    const hasQuickGuide = /points?\s*clés?|quick\s*guide|résumé|en\s*bref|retenir/i.test(text);
+    const hasQuickGuideText = /points?\s*cl[eé]s?|quick[\s-]*guide|r[eé]sum[eé]|en\s*bref|retenir|ce\s*qu.?il\s*faut\s*savoir/i.test(text);
+    const hasQuickGuideHtml = /class="[^"]*quick[-_]?guide[^"]*"/i.test(html);
+    const hasQuickGuide = hasQuickGuideText || hasQuickGuideHtml;
     if (editorialMode === 'news') {
       // En NEWS, le Quick Guide est optionnel — on le note mais il ne bloque pas
       results.checks.push({ check: 'Quick Guide (optionnel NEWS)', passed: true });

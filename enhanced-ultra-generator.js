@@ -782,7 +782,10 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           const { default: QualityAnalyzer } = await import('./quality-analyzer.js');
           const qualityAnalyzer = new QualityAnalyzer();
           const editorialMode = finalizedArticle.editorialMode || 'evergreen';
-          const prePublishScore = qualityAnalyzer.getGlobalScore(finalizedArticle.content, editorialMode);
+          // Wrapping: le quality analyzer cherche un h1 pour le check "destination dans titre"
+          // mais finalizedArticle.content n'a pas de h1 (le titre est un champ separe)
+          const contentForScoring = `<h1>${finalizedArticle.title || ''}</h1>\n${finalizedArticle.content}`;
+          const prePublishScore = qualityAnalyzer.getGlobalScore(contentForScoring, editorialMode);
           const prePublishPct = parseFloat(prePublishScore.globalScore);
           console.log(`\n📊 PRE-PUBLISH QUALITY GATE: ${prePublishPct}% (seuil: 85%) — blocking: ${prePublishScore.blockingPassed ? 'OK' : 'FAIL'}`);
           
@@ -801,8 +804,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
                 );
                 if (improvedContent && improvedContent.length > finalizedArticle.content.length * 0.8) {
                   finalizedArticle.content = improvedContent;
-                  // Re-check
-                  const recheck = qualityAnalyzer.getGlobalScore(finalizedArticle.content, editorialMode);
+                  // Re-check (wrap avec h1 pour le meme scoring)
+                  const recheckHtml = `<h1>${finalizedArticle.title || ''}</h1>\n${finalizedArticle.content}`;
+                  const recheck = qualityAnalyzer.getGlobalScore(recheckHtml, editorialMode);
                   const recheckPct = parseFloat(recheck.globalScore);
                   console.log(`📊 POST-IMPROVE QUALITY: ${recheckPct}% (was ${prePublishPct}%)`);
                   if (recheckPct < 85 || !recheck.blockingPassed) {
@@ -856,9 +860,11 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           };
           
           console.log('\n🔄 Démarrage boucle validation production...');
+          // Passer l'ID WordPress a l'article source pour que autoFix puisse mettre a jour
+          const sourceForValidator = { ...finalizedArticle, id: publishedArticle.id };
           const validationResult = await productionValidator.validateWithLoop(
             publishedArticle.link,
-            finalizedArticle,
+            sourceForValidator,
             wordpressClient,
             5 // maxIterations
           );

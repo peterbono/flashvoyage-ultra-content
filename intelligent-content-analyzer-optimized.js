@@ -2162,9 +2162,10 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         if (!options._truthPack) options._truthPack = buildPromptTruthPack(extracted);
         if (!options._extracted) options._extracted = extracted;
 
-        // PHASE 2.2 / P8: Skip expansion si déjà suffisant (>2200 mots), sinon max 1 pass
+        // PHASE 2.2 / P8: Skip expansion si déjà suffisant (>2200 mots)
+        // Autoriser plus de passes si l'article est tres court pour atteindre 2500
         const expansionThreshold = 2200;
-        const MAX_EXPANSION_PASSES = wordCount >= expansionThreshold ? 0 : 1;
+        const MAX_EXPANSION_PASSES = wordCount >= expansionThreshold ? 0 : wordCount < 1200 ? 3 : wordCount < 1800 ? 2 : 1;
         
         if (wordCount >= expansionThreshold && wordCount < 2500) {
           console.log(`📏 EVERGREEN ${wordCount} mots (>= ${expansionThreshold}): expansion skip, contenu suffisamment dense.`);
