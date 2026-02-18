@@ -1,7 +1,64 @@
 {
-  "crawled_at": "2026-02-18T20:46:58.312Z",
-  "total_articles": 4,
+  "crawled_at": "2026-02-18T22:11:12.529Z",
+  "total_articles": 7,
   "articles": [
+    {
+      "id": 2898,
+      "title": "Vivre à Chiang Mai : le vrai coût d&#8217;un rêve de nomade digital",
+      "url": "https://flashvoyage.com/vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital/",
+      "slug": "vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital",
+      "excerpt": "Points clés de ce témoignage Destination : Chiang Mai, Thaïlande. Durée : 9 mois. Budget : ~46 euros par mois pour le coworking. Type : Nomade digital. Difficul&#8230;\n",
+      "content": "\nPoints clés de ce témoignage\nDestination : Chiang Mai, Thaïlande. Durée : 9 mois. Budget : ~46 euros par mois pour le coworking. Type : Nomade digital. Difficulté : Modérée.\n\nL&#8217;air est humide et chaud en arrivant à Chiang Mai. Les rues sont animées, remplies de scooters et de vendeurs ambulants. Tu sens déjà que la vie ici sera différente. Mais derrière l&#8217;excitation, une question persiste: comment gérer ton budget pour durer?\nPourquoi chaque choix logistique à Chiang Mai est un arbi",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-18T22:11:00",
+      "modified": "2026-02-18T22:11:09",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2898.jpg"
+    },
+    {
+      "id": 2888,
+      "title": "48 Heures à Singapour : Optimisez Chaque Centime de Votre Budget",
+      "url": "https://flashvoyage.com/48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget/",
+      "slug": "48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget",
+      "excerpt": "Points clés de ce témoignage Singapour en 48 heures : Découvrez comment maximiser votre séjour avec un budget serré. Explorez les jardins, la culture locale et &#8230;\n",
+      "content": "\nPoints clés de ce témoignage\nSingapour en 48 heures : Découvrez comment maximiser votre séjour avec un budget serré. Explorez les jardins, la culture locale et profitez de la nature sans dépasser votre budget.\n\nL&#8217;air chaud et humide de Singapour vous enveloppe dès que vous posez le pied hors de l&#8217;aéroport.\nAvec 48 heures seulement devant toi, chaque minute compte et chaque décision pèse sur ton portefeuille.\nEst-il possible de vivre une expérience riche et mémorable sans exploser to",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-18T21:52:32",
+      "modified": "2026-02-18T21:53:26",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2888.jpg"
+    },
+    {
+      "id": 2878,
+      "title": "Vivre en Indonésie avec 1000 € : les frais cachés à connaître",
+      "url": "https://flashvoyage.com/vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre/",
+      "slug": "vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre",
+      "excerpt": "Points clés de ce témoignage Indonésie, 3 mois, 1000 €/mois, nomade digital, complexité moyenne Le soleil se lève sur les rizières verdoyantes de Bali. Le chant&#8230;\n",
+      "content": "\nPoints clés de ce témoignage\nIndonésie, 3 mois, 1000 €/mois, nomade digital, complexité moyenne\n\nLe soleil se lève sur les rizières verdoyantes de Bali. Le chant des oiseaux se mêle aux murmures du vent, mais ton esprit est préoccupé. Avec un budget de 1000 € par mois, comment optimiser chaque euro pour vivre pleinement ton expérience en Indonésie ?\nAlors que tu te prépares pour vivre en Indonésie, un choix se pose : Bali ou Lombok ?\nPour en savoir plus, consulte notre article sur Visa Run en T",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-18T21:22:00",
+      "modified": "2026-02-18T21:22:48",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2878.jpg"
+    },
     {
       "id": 2867,
       "title": "Visa Run en Thaïlande : Secrets Cachés et Arbitrages Financiers",

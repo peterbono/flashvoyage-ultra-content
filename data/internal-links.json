@@ -1,6 +1,63 @@
 {
   "articles": [
     {
+      "id": 2888,
+      "slug": "48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget",
+      "title": "48 Heures à Singapour : Optimisez Chaque Centime de Votre Budget",
+      "url": "https://flashvoyage.com/48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget/",
+      "category": "budget",
+      "keywords": [
+        "heures",
+        "singapour",
+        "optimisez",
+        "chaque",
+        "centime",
+        "votre",
+        "budget"
+      ],
+      "excerpt": "Points clés de ce témoignage Singapour en 48 heures : Découvrez comment maximiser votre séjour avec "
+    },
+    {
+      "id": 2878,
+      "slug": "vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre",
+      "title": "Vivre en Indonésie avec 1000 € : les frais cachés à connaître",
+      "url": "https://flashvoyage.com/vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre/",
+      "category": "temoignage",
+      "keywords": [
+        "vivre",
+        "indonesie",
+        "avec",
+        "1000",
+        "frais",
+        "caches",
+        "connaitre",
+        "voyage",
+        "budget",
+        "asie"
+      ],
+      "excerpt": "Points clés de ce témoignage Indonésie, 3 mois, 1000 €/mois, nomade digital, complexité moyenne Le s"
+    },
+    {
+      "id": 2867,
+      "slug": "visa-run-en-thailande-secrets-caches-et-arbitrages-financiers",
+      "title": "Visa Run en Thaïlande : Secrets Cachés et Arbitrages Financiers",
+      "url": "https://flashvoyage.com/visa-run-en-thailande-secrets-caches-et-arbitrages-financiers/",
+      "category": "visa",
+      "keywords": [
+        "visa",
+        "run",
+        "thailande",
+        "secrets",
+        "caches",
+        "arbitrages",
+        "financiers",
+        "voyage",
+        "budget",
+        "asie"
+      ],
+      "excerpt": "Points clés de ce témoignage Destination : Thaïlande. Durée : variable selon le visa. Budget : atten"
+    },
+    {
       "id": 2857,
       "slug": "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2",
       "title": "Voyager au Japon : Quand voir les cerisiers sans la foule",
@@ -13,7 +70,10 @@
         "voir",
         "cerisiers",
         "sans",
-        "foule"
+        "foule",
+        "voyage",
+        "budget",
+        "asie"
       ],
       "excerpt": "Points clés de ce témoignage Japon, fin avril, budget flexible, éviter les foules, focus sur les cer"
     },
@@ -29,7 +89,10 @@
         "eviter",
         "foule",
         "voir",
-        "cerisiers"
+        "cerisiers",
+        "voyage",
+        "budget",
+        "asie"
       ],
       "excerpt": "Points clés de ce témoignage Destination : Japon. Durée : Flexible. Budget : Flexible mais authentiq"
     },
@@ -46,7 +109,10 @@
         "500",
         "optimiser",
         "chaque",
-        "depense"
+        "depense",
+        "voyage",
+        "budget",
+        "asie"
       ],
       "excerpt": "Points clés de ce témoignage Destination : Vietnam. Durée : 30 jours. Budget : 500 €. Type : Budget "
     }

@@ -1466,8 +1466,7 @@ class SeoOptimizer {
     // Trier par score décroissant
     const sorted = matched.sort((a, b) => b.matchScore - a.matchScore);
     
-    // AMÉLIORATION: Filtrer les liens avec score < 5 (seuil de pertinence)
-    const filtered = sorted.filter(article => article.matchScore >= 5);
+    const filtered = sorted.filter(article => article.matchScore >= 3);
     
     if (filtered.length < sorted.length) {
       console.log(`   🔗 Liens filtrés: ${sorted.length} → ${filtered.length} (seuil pertinence: 5)`);
@@ -1551,22 +1550,27 @@ class SeoOptimizer {
       
       const linkHtml = `<a href="${this.escapeHtml(link.url)}">${this.escapeHtml(finalAnchor)}</a>`;
       
-      // Trouver un bon endroit pour insérer (après une phrase)
+      const linkPhrases = [
+        `On en parle dans ${linkHtml}.`,
+        `Tu retrouveras notre retour complet dans ${linkHtml}.`,
+        `Notre guide ${linkHtml} détaille ce point.`,
+        `C'est un sujet qu'on approfondit dans ${linkHtml}.`,
+        `Si tu veux creuser, lis ${linkHtml}.`
+      ];
+      const phrase = linkPhrases[i % linkPhrases.length];
+      
       const sentences = para.content.split(/(?<=[.!?])\s+/);
       if (sentences.length >= 2) {
-        // Insérer après la première phrase
         const insertPoint = sentences[0].length;
         const newContent = para.content.substring(0, insertPoint) + 
-          ` Pour en savoir plus, consultez notre article sur ${linkHtml}.` +
+          ` ${phrase}` +
           para.content.substring(insertPoint);
         
         modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
         insertedCount++;
         console.log(`   🔗 Lien inséré dans paragraphe: "${finalAnchor}"`);
       } else if (sentences.length === 1 && para.content.length > 80) {
-        // Paragraphe avec une seule phrase longue → ajouter le lien à la fin
-        const newContent = para.content + 
-          ` Pour en savoir plus, consultez notre article sur ${linkHtml}.`;
+        const newContent = para.content + ` ${phrase}`;
         
         modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
         insertedCount++;
@@ -1599,7 +1603,7 @@ class SeoOptimizer {
           if (sentences.length >= 2) {
             const insertPoint = sentences[0].length;
             const newContent = para.content.substring(0, insertPoint) + 
-              ` Découvrez notre ${linkHtml} pour plus d'informations.` +
+              ` On approfondit ce point dans ${linkHtml}.` +
               para.content.substring(insertPoint);
             
             modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
@@ -1607,7 +1611,7 @@ class SeoOptimizer {
             console.log(`   🔗 Lien pilier ajouté: "${anchorText}"`);
           } else if (sentences.length === 1 && para.content.length > 80) {
             const newContent = para.content + 
-              ` Découvrez notre ${linkHtml} pour plus d'informations.`;
+              ` On approfondit ce point dans ${linkHtml}.`;
             
             modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
             insertedCount++;

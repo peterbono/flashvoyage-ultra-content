@@ -856,6 +856,26 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           } else {
             console.log(`✅ QUALITY_GATE_PASSED: ${prePublishPct}% >= 85%. Publication autorisée.`);
           }
+
+          // Re-inject internal links after improve pass (LLM may strip them)
+          try {
+            const seoOptimizer = this.pipelineRunner?.seoOptimizer;
+            if (seoOptimizer && typeof seoOptimizer.injectInternalLinks === 'function') {
+              const extracted = pipelineContext?.story?.extracted || {};
+              const storyData = pipelineContext?.story?.story || {};
+              const seoData = seoOptimizer.extractSeoData(extracted, storyData);
+              seoData.main_destination = pipelineContext?.final_destination || finalizedArticle.final_destination || '';
+              const linkReport = { actions: [] };
+              finalizedArticle.content = await seoOptimizer.injectInternalLinks(
+                finalizedArticle.content, seoData, linkReport
+              );
+              if (linkReport.actions.length > 0) {
+                console.log(`🔗 POST-GATE LINK RE-INJECTION: ${linkReport.actions[0]?.details || 'done'}`);
+              }
+            }
+          } catch (linkErr) {
+            console.warn(`⚠️ Post-gate link re-injection failed: ${linkErr.message}`);
+          }
         } catch (gateErr) {
           console.warn(`⚠️ Erreur quality gate: ${gateErr.message}. Publication continue.`);
         }
@@ -867,6 +887,14 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       
       console.log('✅ Article publié avec succès!');
       console.log('🔗 Lien:', publishedArticle.link);
+      
+      // Re-sync internal links index after publish so new article is available for future articles
+      try {
+        await this.syncInternalLinksIndex();
+        console.log('🔗 Index liens internes re-synchronisé post-publication');
+      } catch (syncErr) {
+        console.warn(`⚠️ Post-publish sync liens: ${syncErr.message}`);
+      }
       
       // 10.5. BOUCLE VALIDATION PRODUCTION (Plan Pipeline Quality Fixes)
       if (!DRY_RUN && publishedArticle.link) {
@@ -2160,13 +2188,20 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const dbContent = fs.default.readFileSync('articles-database.json', 'utf-8');
       const db = JSON.parse(dbContent);
       
-      // Extraire les mots-clés du titre
       const extractKeywords = (title) => {
         const stopWords = ['de', 'du', 'la', 'le', 'les', 'et', 'en', 'au', 'aux', 'pour', 'un', 'une', 'des', 'à', 'son', 'sa', 'ses', 'ce', 'cette', 'qui', 'que', 'comment', 'quoi', 'où'];
-        return title.toLowerCase()
+        const titleKeywords = title.toLowerCase()
           .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
           .split(/[\s:,\-–]+/)
           .filter(w => w.length > 2 && !stopWords.includes(w));
+        
+        const broadKeywords = ['voyage', 'budget', 'asie'];
+        const seaDests = ['thailande', 'vietnam', 'indonesie', 'bali', 'japon', 'philippines', 'cambodge', 'malaisie', 'laos'];
+        const hasSeaDest = titleKeywords.some(k => seaDests.some(d => k.includes(d)));
+        if (hasSeaDest) {
+          broadKeywords.forEach(bk => { if (!titleKeywords.includes(bk)) titleKeywords.push(bk); });
+        }
+        return titleKeywords;
       };
       
       // Détecter la catégorie

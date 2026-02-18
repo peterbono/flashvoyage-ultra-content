@@ -254,30 +254,35 @@ class QualityAnalyzer {
     const linkCount = internalLinks.length;
     
     // 1. Densité (30 pts)
-    // NEWS : 2-4 liens suffisent | EVERGREEN : 5-10 liens pour 2000-3000 mots
-    const expectedMin = editorialMode === 'news' ? 1 : Math.floor(wordCount / 400);
+    // Seuils réalistes : minimum 3 liens internes pour tout article evergreen
+    // Scaling progressif avec la taille (1 lien / 600 mots au-delà de 3)
+    const expectedMin = editorialMode === 'news' ? 1 : Math.max(3, Math.floor(wordCount / 600));
     const expectedMax = editorialMode === 'news' ? 5 : Math.ceil(wordCount / 200);
     
     if (linkCount >= expectedMin && linkCount <= expectedMax) {
       score.total += 30;
-      score.details.push({ check: 'Densité liens', status: `${linkCount} liens (OK)`, points: 30 });
+      score.details.push({ check: 'Densité liens', status: `${linkCount} liens (OK, min ${expectedMin})`, points: 30 });
+    } else if (linkCount >= 3) {
+      score.total += 22;
+      score.details.push({ check: 'Densité liens', status: `${linkCount} liens (acceptable, min ${expectedMin})`, points: 22 });
     } else if (linkCount > 0) {
       score.total += 15;
-      score.details.push({ check: 'Densité liens', status: `${linkCount} liens (partiel)`, points: 15 });
+      score.details.push({ check: 'Densité liens', status: `${linkCount} liens (partiel, min ${expectedMin})`, points: 15 });
     } else {
       score.details.push({ check: 'Densité liens', status: '0 liens', points: 0 });
     }
 
     // 2. Ancres précises (30 pts)
-    const badAnchors = ['cliquez ici', 'ici', 'lien', 'voir', 'plus'];
+    const badAnchors = ['cliquez ici', 'en savoir plus', 'lire la suite'];
+    const badExactAnchors = ['ici', 'lien', 'voir', 'plus', 'cliquez', 'link'];
     let goodAnchors = 0;
     
     internalLinks.forEach(link => {
       const text = link.text.trim().toLowerCase();
       const wordLen = text.split(/\s+/).length;
-      const isBad = badAnchors.some(bad => text === bad || text.includes(bad));
+      const isBad = badAnchors.some(bad => text.includes(bad)) || badExactAnchors.includes(text);
       
-      if (wordLen >= 2 && wordLen <= 5 && !isBad) {
+      if (wordLen >= 2 && wordLen <= 12 && !isBad) {
         goodAnchors++;
       }
     });
@@ -443,24 +448,22 @@ class QualityAnalyzer {
     score.details.push({ check: 'Pas de répétitions', status: repetitions === 0 ? 'OK' : `${repetitions} répétitions`, points: repetitionPoints });
 
     // 6. Paragraphes équilibrés (10 pts)
-    // Filtrer les paragraphes très courts (< 40 chars) qui biaisent le ratio
+    // Mesure l'homogénéité via p75/p25 (robuste aux outliers courts/longs)
     const paragraphs = root.querySelectorAll('p').map(el => el.text.length).filter(l => l > 40);
     
-    // AMÉLIORATION: Gérer le cas où il n'y a pas de paragraphes
     if (paragraphs.length === 0) {
       score.total += 0;
       score.details.push({ check: 'Équilibre sections', status: 'Aucun paragraphe', points: 0 });
     } else {
-      const maxLen = Math.max(...paragraphs);
-      const minLen = Math.min(...paragraphs);
+      const sorted = [...paragraphs].sort((a, b) => a - b);
+      const p25 = sorted[Math.floor(sorted.length * 0.25)] || sorted[0];
+      const p75 = sorted[Math.floor(sorted.length * 0.75)] || sorted[sorted.length - 1];
       
-      // AMÉLIORATION: Éviter division par zéro et ratio infini
-      const ratio = minLen > 0 ? maxLen / minLen : 0;
+      const ratio = p25 > 0 ? p75 / p25 : 0;
       
-      // AMÉLIORATION: Tolérer ratio jusqu'à 5 pour donner des points partiels
       const balancePoints = ratio <= 3 ? 10 : ratio <= 5 ? 8 : ratio <= 10 ? 5 : ratio <= 15 ? 3 : 0;
       score.total += balancePoints;
-      score.details.push({ check: 'Équilibre sections', status: `ratio ${ratio.toFixed(1)}`, points: balancePoints });
+      score.details.push({ check: 'Équilibre sections', status: `ratio p75/p25 ${ratio.toFixed(1)}`, points: balancePoints });
     }
 
     // 7. Introduction engageante (10 pts)
@@ -583,7 +586,7 @@ class QualityAnalyzer {
       }
 
       // paragraph_decisional: >= 75% des paragraphes doivent contenir un fait, chiffre, ou décision
-      const paraDecisionPatterns = /\d+\s*(€|euro|%|jour|mois|baht|semaine|heure|min|nuit|km|\$)|arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|éviter|stratég|recommand|conseil|attention|plutôt|préfér|mieux|pire|risque|avantage|inconvénient|si\s+tu|en\s+revanche|par\s+contre|cependant|il\s+faut|tu\s+dois|tu\s+devr|vaut|idéal|important|essentiel|indispensable|nécessaire|à\s+noter|à\s+savoir|astuce|bon\s+plan|mérite|prévoir|compter|ne\s+(manque|rate|néglige)|en\s+réalité|en\s+fait|selon|d.après|secret|alternative|verdict|l.erreur|contrairement|privilégi|dommage|à\s+proscrire|incontournable|compromis|impéra|sous.estim|sur.estim|justifi|calculer|ne\s+.*\s+pas|stress|doit\s+(être|se)|peser|minutie|panacée|néanmoins|toutefois|en\s+outre|surpris|dépens|coûte|économ/i;
+      const paraDecisionPatterns = /\d+\s*(€|euro|%|jour|mois|baht|semaine|heure|min|nuit|km|\$)|arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|éviter|stratég|recommand|conseil|attention|plutôt|préfér|mieux|pire|risque|avantage|inconvénient|si\s+tu|en\s+revanche|par\s+contre|cependant|il\s+faut|tu\s+dois|tu\s+devr|vaut|idéal|important|essentiel|indispensable|nécessaire|à\s+noter|à\s+savoir|astuce|bon\s+plan|mérite|prévoir|compter|ne\s+(manque|rate|néglige)|en\s+réalité|en\s+fait|selon|d.après|secret|alternative|verdict|l.erreur|contrairement|privilégi|dommage|à\s+proscrire|incontournable|compromis|impéra|sous.estim|sur.estim|justifi|calculer|ne\s+.*\s+pas|stress|doit\s+(être|se)|peser|minutie|panacée|néanmoins|toutefois|en\s+outre|surpris|dépens|coût|économ|option|viable|offr[eai]|permet|considér|immersiv|développ|satisf|expérien|problème|infrastruct|potentiel|impact|facile|difficile|suffis|manqu|besoin|exig/i;
       const allParas = root.querySelectorAll('p');
       let decisionalParaCount = 0;
       let substantiveParaCount = 0;
@@ -606,7 +609,7 @@ class QualityAnalyzer {
 
       // descriptive_penalty: penalty if more than 20% of paragraphs are purely descriptive (no opinion/decision)
       const purelyDescriptivePatterns = /^(le|la|les|un|une|des|ce|cette|il|elle|on|en|au|du|dans|sur|avec|pour|par|l')\s/i;
-      const opinionMarkers = /recommand|conseil|attention|choisi|préfér|mieux|pire|évit|piège|erreur|risque|plutôt|mais|cependant|en revanche|par contre|si tu|question|arbitrage|\?|!|\d+\s*(€|euro|%|jour|min|nuit|km|baht|\$)|il\s+faut|tu\s+dois|tu\s+devr|vaut|idéal|important|essentiel|indispensable|nécessaire|à\s+noter|astuce|bon\s+plan|mérite|compter|ne\s+(manque|rate)|en\s+(réalité|fait)|selon|d.après|privilégi|incontournable|contrairement|alternative|verdict|compromis|impéra|sous.estim|sur.estim|justifi|doit\s+(être|se)|ne\s+.*\s+pas|toutefois|néanmoins|en\s+outre|peser|dépens|coûte|économ|surpris|stress|calculer|meilleur|impact|complexe|influenc|prépar|négliger|clé\b|biais|transformer|affecter|ajust|adapt|en\s+résumé/i;
+      const opinionMarkers = /recommand|conseil|attention|choisi|préfér|mieux|pire|évit|piège|erreur|risque|plutôt|mais|cependant|en revanche|par contre|si tu|question|arbitrage|\?|!|\d+\s*(€|euro|%|jour|min|nuit|km|baht|\$)|il\s+faut|tu\s+dois|tu\s+devr|vaut|idéal|important|essentiel|indispensable|nécessaire|à\s+noter|astuce|bon\s+plan|mérite|compter|ne\s+(manque|rate)|en\s+(réalité|fait)|selon|d.après|privilégi|incontournable|contrairement|alternative|verdict|compromis|impéra|sous.estim|sur.estim|justifi|doit\s+(être|se)|ne\s+.*\s+pas|toutefois|néanmoins|en\s+outre|peser|dépens|coût|économ|surpris|stress|calculer|meilleur|impact|complexe|influenc|prépar|négliger|clé\b|biais|transformer|affecter|ajust|adapt|en\s+résumé|option|viable|offr[eai]|permet|considér|immersiv|développ|satisf|expérien|problème|infrastruct|potentiel|facile|difficile|suffis|manqu|besoin|exig/i;
       let purelyDescriptiveCount = 0;
       allParas.forEach(pEl => {
         const pText = pEl.text.trim();

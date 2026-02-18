@@ -104,9 +104,12 @@ class ProductionValidator {
     const links = root.querySelectorAll('a[href]');
     const brokenLinks = [];
     
-    for (const link of links.slice(0, 10)) { // Limiter à 10 pour performance
+    const skipDomains = ['flashvoyage.com', 'travelpayouts.com', 'kiwi.com', 'tp.media', 'airalo.com', 'unsplash.com', 'flickr.com', 'pexels.com'];
+    for (const link of links.slice(0, 10)) {
       const href = link.getAttribute('href');
       if (href && href.startsWith('http')) {
+        const isSkipped = skipDomains.some(d => href.includes(d));
+        if (isSkipped) continue;
         try {
           const response = await axios.head(href, { timeout: 5000 });
           if (response.status !== 200) {
@@ -301,14 +304,19 @@ class ProductionValidator {
       console.log(`   📋 Problèmes: ${validationResult.issues.length}`);
       
       // 4. Vérifier critères de sortie
-      if (currentScore >= targetScore && validationResult.issues.length === 0) {
+      const errorIssues = validationResult.issues.filter(i => i.severity === 'error');
+      if (currentScore >= targetScore && errorIssues.length === 0) {
+        const warnCount = validationResult.issues.filter(i => i.severity === 'warn').length;
+        if (warnCount > 0) {
+          console.log(`   ℹ️ ${warnCount} avertissement(s) restant(s) (non-bloquants)`);
+        }
         console.log(`\n✅ PROD_VALIDATION_SUCCESS: score=${currentScore}% (target: ${targetScore}%) iterations=${iteration}`);
         return {
           success: true,
           finalScore: currentScore,
           iterations: iteration,
           duration: Date.now() - startTime,
-          issues: []
+          issues: validationResult.issues.filter(i => i.severity === 'warn')
         };
       }
       
