@@ -1,0 +1,108 @@
+{
+  "extracted": {
+    "source": {
+      "platform": "reddit",
+      "subreddit": "travel",
+      "url": "https://reddit.com/r/travel/test-warning-heavy",
+      "title": "Got scammed twice in Bali - here's what I wish I knew",
+      "author": "burned_traveler"
+    },
+    "destination": "bali",
+    "destinations": ["bali", "ubud", "seminyak"],
+    "_smart_destination": "bali",
+    "_original_destination": "bali",
+    "geo": { "country": "indonesia", "city": "bali" },
+    "post": {
+      "clean_text": "Got scammed twice in my first week in Bali. First, a money changer in Kuta shortchanged me $50 using sleight of hand. Then a taxi driver 'forgot' to use the meter and charged me 3x the normal rate. I also almost fell for a fake police checkpoint scam but other tourists warned me. The ATM I used charged hidden fees. My travel insurance didn't cover the money changer scam. Be very careful.",
+      "signals": {
+        "locations": ["bali", "ubud", "seminyak", "kuta"],
+        "dates": [],
+        "costs": ["$50"],
+        "events": [],
+        "problems": ["money changer scam", "taxi meter fraud", "fake police checkpoint", "ATM hidden fees", "insurance gap"]
+      },
+      "evidence": {
+        "costs": [
+          { "value": "$50", "amount": 50, "currency": "USD", "quote": "shortchanged me $50", "source": "post" }
+        ],
+        "dates": [],
+        "locations": [
+          { "value": "bali", "quote": "my first week in Bali", "source": "post" },
+          { "value": "kuta", "quote": "money changer in Kuta", "source": "post" }
+        ],
+        "problems": [
+          { "value": "money changer scam", "quote": "money changer in Kuta shortchanged me $50", "source": "post" },
+          { "value": "taxi meter fraud", "quote": "taxi driver 'forgot' to use the meter", "source": "post" },
+          { "value": "fake police checkpoint", "quote": "almost fell for a fake police checkpoint scam", "source": "post" },
+          { "value": "ATM hidden fees", "quote": "The ATM I used charged hidden fees", "source": "post" },
+          { "value": "insurance gap", "quote": "My travel insurance didn't cover the money changer scam", "source": "post" }
+        ]
+      }
+    },
+    "comments": {
+      "count_total": 6,
+      "count_used": 5,
+      "insights": [
+        { "value": "Always use Grab or Gojek, never street taxis", "score": 52 },
+        { "value": "Use official money changers with glass counters like BMC or Central Kuta", "score": 48 }
+      ],
+      "warnings": [
+        { "value": "The fake police checkpoint scam is getting more common in Canggu area", "quote": "fake police checkpoint scam is getting more common", "score": 40 },
+        { "value": "Never use ATMs in convenience stores - they have the highest fees", "quote": "Never use ATMs in convenience stores", "score": 35 },
+        { "value": "Some money changers have rigged calculators", "quote": "rigged calculators", "score": 30 },
+        { "value": "Motorbike rental scams are the worst - they'll charge you for pre-existing damage", "quote": "charge you for pre-existing damage", "score": 28 }
+      ],
+      "contradictions": [],
+      "consensus": [],
+      "additional_facts": []
+    },
+    "quality": { "has_minimum_signals": true, "missing": [] }
+  },
+  "pattern": {
+    "story_type": "warning",
+    "theme_primary": "scam",
+    "themes_secondary": ["money", "safety"],
+    "emotional_load": { "score": 72, "label": "high", "signals": ["multiple_exclamations", "intensifiers", "negative_emotions"] },
+    "exploitable_events": { "count": 3, "events": [
+      { "type": "scam_event", "snippet": "money changer shortchanged me $50" },
+      { "type": "scam_event", "snippet": "taxi driver charged 3x normal rate" },
+      { "type": "scam_event", "snippet": "fake police checkpoint scam" }
+    ]},
+    "complexity": { "score": 55, "label": "medium", "signals": ["multiple_events"] },
+    "comments_utility": { "score": 75, "label": "high", "signals": ["advice_dense", "corrections"], "sample_count": 6 },
+    "confidence": { "score": 90, "notes": [] }
+  },
+  "story": {
+    "story": {
+      "context": { "summary": "Traveler scammed twice in first week in Bali", "who": "burned_traveler", "where": "bali, indonesia", "when": null },
+      "central_event": { "summary": "Two scams in one week plus multiple near-misses reveal systematic tourist targeting", "type": "scam" },
+      "critical_moment": { "summary": "Realizing travel insurance doesn't cover petty scams and the financial loss is unrecoverable", "trigger": "but" },
+      "resolution": { "summary": "Author shares lessons learned but money is lost", "status": "resolved" },
+      "author_lessons": [
+        { "lesson": "Never use street money changers in Bali", "evidence_snippet": "money changer in Kuta shortchanged me $50" },
+        { "lesson": "Always insist on meter or use ride-hailing apps", "evidence_snippet": "taxi driver 'forgot' to use the meter" },
+        { "lesson": "Travel insurance has gaps for petty theft and scams", "evidence_snippet": "insurance didn't cover the money changer scam" }
+      ],
+      "community_insights": [
+        { "type": "warning", "value": "Fake police checkpoint scam is increasingly common", "score": 40 },
+        { "type": "warning", "value": "Motorbike rental scams are the worst in Bali", "score": 28 },
+        { "type": "insight", "value": "Use Grab or Gojek exclusively", "score": 52 }
+      ],
+      "open_questions": ["Is travel insurance worth it if it doesn't cover scams?"]
+    },
+    "evidence": {
+      "source_snippets": [
+        { "section": "context.summary", "snippet": "Got scammed twice in my first week in Bali", "origin": "selftext" },
+        { "section": "central_event", "snippet": "money changer in Kuta shortchanged me $50 using sleight of hand", "origin": "selftext" },
+        { "section": "community_insights", "snippet": "fake police checkpoint scam is getting more common in Canggu", "origin": "comment" }
+      ]
+    },
+    "meta": {
+      "story_type": "warning",
+      "themes": { "primary": "scam", "secondary": ["money", "safety"] },
+      "confidence": { "pattern_confidence": 90, "story_compiler_confidence": 88 },
+      "constraints": { "no_invention": true, "neutral_rewrite": true },
+      "missing_sections": []
+    }
+  }
+}

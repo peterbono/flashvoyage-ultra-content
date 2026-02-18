@@ -546,7 +546,9 @@ class PipelineRunner {
         qaReport: finalized.qaReport,
         antiHallucinationReport: antiHallucination,
         inlineImages: finalized.inlineImages || [],
-        featuredImage: featuredImageEarly // Réutilise l'image trouvée avant le check blocking
+        featuredImage: featuredImageEarly,
+        angle: angleResult || null,
+        _truthPack: generated._truthPack || null
       };
       
       // DEBUG: Vérifier les widgets dans finalArticle.content après création

@@ -310,6 +310,23 @@ class ArticleFinalizer {
     // PHASE 6.0.9c: Traduire les noms de villes/pays anglais → français dans tout le HTML
     finalContent = this.translateCityNamesToFrench(finalContent);
     
+    // PHASE 6.0.9d: Remplacer les placeholders "la destination" dans les H2 par le vrai nom
+    const destName = pipelineContext?.final_destination || pipelineContext?.geo_defaults?.country || '';
+    if (destName) {
+      const destCapitalized = destName.charAt(0).toUpperCase() + destName.slice(1);
+      const destArticle = /^[aeiouàâéèêëïîôùûü]/i.test(destCapitalized) ? `l'${destCapitalized}` : `le ${destCapitalized}`;
+      finalContent = finalContent.replace(/(<h2[^>]*>)([\s\S]*?)(<\/h2>)/gi, (match, open, inner, close) => {
+        let fixed = inner;
+        fixed = fixed.replace(/\ben la destination\b/gi, `au ${destCapitalized}`);
+        fixed = fixed.replace(/\bla destination\b/gi, destArticle);
+        fixed = fixed.replace(/\[destination\]/gi, destCapitalized);
+        if (fixed !== inner) {
+          console.log(`   🌐 H2_DEST_FIX: "${inner.trim()}" → "${fixed.trim()}"`);
+        }
+        return open + fixed + close;
+      });
+    }
+    
     // PHASE 6.0.10: Supprimer les sections vides (labels emoji sans contenu)
     finalContent = this.removeEmptySections(finalContent);
     widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
@@ -10471,9 +10488,8 @@ class ArticleFinalizer {
     const minLen = Math.min(...lengths);
     const beforeRatio = maxLen / (minLen || 1);
     
-    // AMÉLIORATION: Découper paragraphes > 150 caractères pour meilleur équilibre
     paragraphs.forEach(para => {
-      if (para.length > 150) {
+      if (para.length > 280) {
         // CORRECTION CRITIQUE: Ne PAS découper les paragraphes qui contiennent des éléments block-level
         // (h2, h3, h4, div, ul, ol, table, blockquote) car cela casserait la structure HTML
         if (/<(?:h[1-6]|div|ul|ol|table|blockquote|section|article|nav|aside|header|footer)[^>]*>/i.test(para.htmlContent)) {

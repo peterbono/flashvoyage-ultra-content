@@ -1,0 +1,83 @@
+{
+  "extracted": {
+    "source": {
+      "platform": "reddit",
+      "subreddit": "solotravel",
+      "url": "https://reddit.com/r/solotravel/test-sparse",
+      "title": "First time in Asia, any tips?",
+      "author": "newbie_traveler"
+    },
+    "destination": null,
+    "destinations": [],
+    "_smart_destination": null,
+    "_original_destination": null,
+    "geo": {},
+    "post": {
+      "clean_text": "Planning my first trip to Asia. Any general tips?",
+      "signals": {
+        "locations": [],
+        "dates": [],
+        "costs": [],
+        "events": [],
+        "problems": []
+      },
+      "evidence": {
+        "costs": [],
+        "dates": [],
+        "locations": [],
+        "problems": []
+      }
+    },
+    "comments": {
+      "count_total": 1,
+      "count_used": 1,
+      "insights": [
+        { "value": "Start with Thailand, it's the easiest for first-timers", "score": 10 }
+      ],
+      "warnings": [],
+      "contradictions": [],
+      "consensus": [],
+      "additional_facts": []
+    },
+    "quality": { "has_minimum_signals": false, "missing": ["costs", "locations", "dates"] }
+  },
+  "pattern": {
+    "story_type": "question",
+    "theme_primary": "other",
+    "themes_secondary": [],
+    "emotional_load": { "score": 10, "label": "low", "signals": [] },
+    "exploitable_events": { "count": 0, "events": [] },
+    "complexity": { "score": 15, "label": "low", "signals": [] },
+    "comments_utility": { "score": 20, "label": "low", "signals": [], "sample_count": 1 },
+    "confidence": { "score": 30, "notes": ["very_short_post"] }
+  },
+  "story": {
+    "story": {
+      "context": { "summary": "First-time traveler asking for general Asia tips", "who": "newbie_traveler", "where": null, "when": null },
+      "central_event": null,
+      "critical_moment": null,
+      "resolution": null,
+      "author_lessons": [],
+      "community_insights": [
+        { "type": "insight", "value": "Start with Thailand for first-timers", "score": 10 }
+      ],
+      "open_questions": []
+    },
+    "evidence": {
+      "source_snippets": [
+        { "section": "context.summary", "snippet": "Planning my first trip to Asia", "origin": "selftext" }
+      ]
+    },
+    "meta": {
+      "story_type": "question",
+      "themes": { "primary": "other", "secondary": [] },
+      "confidence": { "pattern_confidence": 30, "story_compiler_confidence": 25 },
+      "constraints": { "no_invention": true, "neutral_rewrite": true },
+      "missing_sections": [
+        { "section": "central_event", "reason": "no_clear_event" },
+        { "section": "critical_moment", "reason": "no_turning_point" },
+        { "section": "resolution", "reason": "no_outcome" }
+      ]
+    }
+  }
+}

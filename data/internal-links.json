@@ -1,22 +1,37 @@
 {
   "articles": [
     {
-      "id": 2807,
-      "slug": "voyage-au-vietnam-optimiser-un-budget-de-500-usd-sans-surprises",
-      "title": "Voyage au Vietnam : Optimiser un budget de 500 USD sans surprises",
-      "url": "https://flashvoyage.com/voyage-au-vietnam-optimiser-un-budget-de-500-usd-sans-surprises/",
-      "category": "budget",
+      "id": 2847,
+      "slug": "voyager-au-japon-comment-eviter-les-foule-et-voir-les-cerisiers",
+      "title": "Voyager au Japon : Comment Éviter les Foule et Voir les Cerisiers",
+      "url": "https://flashvoyage.com/voyager-au-japon-comment-eviter-les-foule-et-voir-les-cerisiers/",
+      "category": "temoignage",
       "keywords": [
-        "voyage",
-        "vietnam",
-        "optimiser",
-        "budget",
-        "500",
-        "usd",
-        "sans",
-        "surprises"
+        "voyager",
+        "japon",
+        "eviter",
+        "foule",
+        "voir",
+        "cerisiers"
       ],
-      "excerpt": "Dans les rues animées de Ho Chi Minh, le bruit incessant des scooters se mêle à l&#8217;odeur du pho"
+      "excerpt": "Points clés de ce témoignage Destination : Japon. Durée : Flexible. Budget : Flexible mais authentiq"
+    },
+    {
+      "id": 2837,
+      "slug": "voyager-au-vietnam-avec-500-e-comment-optimiser-chaque-depense-2",
+      "title": "Voyager au Vietnam avec 500 € : Comment optimiser chaque dépense",
+      "url": "https://flashvoyage.com/voyager-au-vietnam-avec-500-e-comment-optimiser-chaque-depense-2/",
+      "category": "temoignage",
+      "keywords": [
+        "voyager",
+        "vietnam",
+        "avec",
+        "500",
+        "optimiser",
+        "chaque",
+        "depense"
+      ],
+      "excerpt": "Points clés de ce témoignage Destination : Vietnam. Durée : 30 jours. Budget : 500 €. Type : Budget "
     }
   ],
   "blacklist": [

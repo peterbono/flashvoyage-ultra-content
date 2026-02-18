@@ -1,0 +1,591 @@
+{
+  "extracted": {
+    "source": {
+      "platform": "reddit",
+      "subreddit": "travel",
+      "url": "https://reddit.com/r/travel/comments/1o79miz/30_day_trip_to_vietnam_worth_taking_a_detour_to/",
+      "post_id": "",
+      "title": "30 day trip to Vietnam, worth taking a detour to Angkor Wat for 2-3 days?",
+      "author": "backpacker_adventures",
+      "created_utc": 1768685112.747
+    },
+    "destination": "Hanoi",
+    "destinations": [
+      "Hanoi",
+      "Hue",
+      "Ho Chi Minh City",
+      "Dalat",
+      "Hoi An",
+      "Ninh Binh",
+      "Ha Long",
+      "Ho Chi Minh",
+      "Vietnam",
+      "Cambodia"
+    ],
+    "geo": {
+      "city": "Hanoi",
+      "country": null
+    },
+    "post": {
+      "clean_text": "Planning a 30 day trip to Vietnam in March. Starting in Hanoi, heading south to Ho Chi Minh City. Budget is about $1500 for the whole trip not including flights. I've heard Angkor Wat is only a short flight from HCMC and wondering if it's worth the detour for 2-3 days. Has anyone done this? How much extra would it add to the budget? I'm thinking maybe $200-300 for flights and entry fees? The temple complex looks incredible but I don't want to rush my Vietnam itinerary. Currently my rough plan: - Hanoi: 5 days (Ha Long Bay trip included) - Ninh Binh: 2 days - Hue: 2 days - Hoi An: 4 days - Da Nang: 2 days - Dalat: 3 days - HCMC: 5 days - Mekong Delta: 2 days - Phu Quoc: 3 days That's already 28 days packed. Would love to hear thoughts on whether to squeeze in Angkor Wat or save it for a dedicated Cambodia trip later.",
+      "signals": {
+        "locations": "[Circular reference]",
+        "dates": [],
+        "costs": [
+          "1500 USD",
+          "200 USD"
+        ],
+        "events": [],
+        "problems": [],
+        "emotions_explicit": [],
+        "advice_explicit": [
+          "want to rush my Vietnam itinerary"
+        ]
+      },
+      "evidence": {
+        "locations": [
+          {
+            "value": "Hanoi",
+            "quote": "Starting in Hanoi, heading south to Ho Chi Minh City.",
+            "offset": 130,
+            "source": "post"
+          },
+          {
+            "value": "Hue",
+            "quote": "Currently my rough plan: - Hanoi: 5 days (Ha Long Bay trip included) - Ninh Binh: 2 days - Hue: 2 days - Hoi An: 4 days - Da Nang: 2 days - Dalat: 3 days - HCMC: 5 days - Mekong Delta: 2 days - Phu Quoc: 3 days",
+            "offset": 639,
+            "source": "post"
+          },
+          {
+            "value": "Ho Chi Minh City",
+            "quote": "Starting in Hanoi, heading south to Ho Chi Minh City.",
+            "offset": 154,
+            "source": "post"
+          },
+          {
+            "value": "Dalat",
+            "quote": "lan: - Hanoi: 5 days (Ha Long Bay trip included) - Ninh Binh: 2 days - Hue: 2 days - Hoi An: 4 days - Da Nang: 2 days - Dalat: 3 days - HCMC: 5 days - Mekong Delta: 2 days - Phu Quoc: 3 days That's already 28 days packed.",
+            "offset": 688,
+            "source": "post"
+          },
+          {
+            "value": "Hoi An",
+            "quote": "Currently my rough plan: - Hanoi: 5 days (Ha Long Bay trip included) - Ninh Binh: 2 days - Hue: 2 days - Hoi An: 4 days - Da Nang: 2 days - Dalat: 3 days - HCMC: 5 days - Mekong Delta: 2 days - Phu Quoc: 3 days That's already",
+            "offset": 653,
+            "source": "post"
+          },
+          {
+            "value": "Ninh Binh",
+            "quote": "Currently my rough plan: - Hanoi: 5 days (Ha Long Bay trip included) - Ninh Binh: 2 days - Hue: 2 days - Hoi An: 4 days - Da Nang: 2 days - Dalat: 3 days - HCMC: 5 days - Mekong Delta: 2 days",
+            "offset": 619,
+            "source": "post"
+          },
+          {
+            "value": "Ha Long",
+            "quote": "Currently my rough plan: - Hanoi: 5 days (Ha Long Bay trip included) - Ninh Binh: 2 days - Hue: 2 days - Hoi An: 4 days - Da Nang: 2 days - Dalat: 3 days - HCMC:",
+            "offset": 590,
+            "source": "post"
+          },
+          {
+            "value": "Ho Chi Minh",
+            "quote": "Starting in Hanoi, heading south to Ho Chi Minh City.",
+            "offset": 154,
+            "source": "post"
+          },
+          {
+            "value": "Vietnam",
+            "quote": "30 day trip to Vietnam, worth taking a detour to Angkor Wat for 2-3 days?",
+            "offset": 15,
+            "source": "post"
+          },
+          {
+            "value": "Cambodia",
+            "quote": "Would love to hear thoughts on whether to squeeze in Angkor Wat or save it for a dedicated Cambodia trip later.",
+            "offset": 881,
+            "source": "post"
+          }
+        ],
+        "dates": [],
+        "costs": [
+          {
+            "value": "$1500",
+            "amount": 1500,
+            "currency": "USD",
+            "quote": "Budget is about $1500 for the whole trip not including flights.",
+            "offset": 188,
+            "source": "post"
+          },
+          {
+            "value": "$200",
+            "amount": 200,
+            "currency": "USD",
+            "quote": "I'm thinking maybe $200-300 for flights and entry fees?",
+            "offset": 428,
+            "source": "post"
+          }
+        ],
+        "events": [],
+        "problems": [],
+        "emotions_explicit": [],
+        "advice_explicit": [
+          {
+            "value": "want to rush my Vietnam itinerary",
+            "quote": "The temple complex looks incredible but I don't want to rush my Vietnam itinerary.",
+            "offset": 507,
+            "source": "post"
+          }
+        ]
+      }
+    },
+    "comments": {
+      "count_total": 5,
+      "count_used": 5,
+      "insights": [
+        {
+          "value": "I'd honestly save Cambodia for its own trip.",
+          "quote": "I'd honestly save Cambodia for its own trip.",
+          "source": "comment:comment_1771277112753_0.10576317013252146",
+          "author": "budget_nomad",
+          "score": 0
+        },
+        {
+          "value": "Absolutely do Angkor Wat.",
+          "quote": "Absolutely do Angkor Wat.",
+          "source": "comment:comment_1771277112753_0.4853470547752672",
+          "author": "seasoned_traveler",
+          "score": 0
+        },
+        {
+          "value": "Your Vietnam itinerary is solid but too rushed.",
+          "quote": "Your Vietnam itinerary is solid but too rushed.",
+          "source": "comment:comment_1771277112753_0.8151118808322408",
+          "author": "vietnam_expert",
+          "score": 0
+        },
+        {
+          "value": "Did exactly this last year.",
+          "quote": "Did exactly this last year.",
+          "source": "comment:comment_1771277112753_0.7533073015300931",
+          "author": "temple_fan",
+          "score": 0
+        }
+      ],
+      "warnings": [],
+      "contradictions": [],
+      "consensus": [],
+      "additional_facts": [
+        {
+          "type": "cost",
+          "value": "$45",
+          "quote": "I spent $45/day in Vietnam and $55/day in Cambodia, so budget-wise it adds up fast.",
+          "source": "comment:comment_1771277112753_0.10576317013252146",
+          "author": "budget_nomad"
+        },
+        {
+          "type": "cost",
+          "value": "$55",
+          "quote": "I spent $45/day in Vietnam and $55/day in Cambodia, so budget-wise it adds up fast.",
+          "source": "comment:comment_1771277112753_0.10576317013252146",
+          "author": "budget_nomad"
+        },
+        {
+          "type": "cost",
+          "value": "$80",
+          "quote": "Flights from HCMC are about $80-120 round trip with AirAsia.",
+          "source": "comment:comment_1771277112753_0.4853470547752672",
+          "author": "seasoned_traveler"
+        },
+        {
+          "type": "cost",
+          "value": "$37",
+          "quote": "The $37 temple pass for 3 days is worth every penny.",
+          "source": "comment:comment_1771277112753_0.4853470547752672",
+          "author": "seasoned_traveler"
+        },
+        {
+          "type": "location",
+          "value": "Siem Reap",
+          "quote": "I did a similar Vietnam trip and added 3 days in Siem Reap.",
+          "source": "comment:comment_1771277112753_0.4853470547752672",
+          "author": "seasoned_traveler"
+        },
+        {
+          "type": "cost",
+          "value": "$50",
+          "quote": "Pro tip: book the HCMC to Siem Reap flight on VietJet, usually around $50 one way.",
+          "source": "comment:comment_1771277112753_0.8938893026906294",
+          "author": "frequent_flyer"
+        },
+        {
+          "type": "location",
+          "value": "Siem Reap",
+          "quote": "Pro tip: book the HCMC to Siem Reap flight on VietJet, usually around $50 one way.",
+          "source": "comment:comment_1771277112753_0.8938893026906294",
+          "author": "frequent_flyer"
+        },
+        {
+          "type": "cost",
+          "value": "$30",
+          "quote": "Also, your HCMC budget should be about $30-40/day, Hanoi is slightly cheaper at $25-35/day.",
+          "source": "comment:comment_1771277112753_0.8151118808322408",
+          "author": "vietnam_expert"
+        },
+        {
+          "type": "cost",
+          "value": "$25",
+          "quote": "Also, your HCMC budget should be about $30-40/day, Hanoi is slightly cheaper at $25-35/day.",
+          "source": "comment:comment_1771277112753_0.8151118808322408",
+          "author": "vietnam_expert"
+        },
+        {
+          "type": "cost",
+          "value": "$250",
+          "quote": "Cost me about $250 extra total (flights $95, temple pass $37, 2 nights hotel $60, food and tuk-tuks $58).",
+          "source": "comment:comment_1771277112753_0.7533073015300931",
+          "author": "temple_fan"
+        },
+        {
+          "type": "cost",
+          "value": "$95,",
+          "quote": "Cost me about $250 extra total (flights $95, temple pass $37, 2 nights hotel $60, food and tuk-tuks $58).",
+          "source": "comment:comment_1771277112753_0.7533073015300931",
+          "author": "temple_fan"
+        },
+        {
+          "type": "cost",
+          "value": "$37,",
+          "quote": "Cost me about $250 extra total (flights $95, temple pass $37, 2 nights hotel $60, food and tuk-tuks $58).",
+          "source": "comment:comment_1771277112753_0.7533073015300931",
+          "author": "temple_fan"
+        },
+        {
+          "type": "cost",
+          "value": "$60,",
+          "quote": "Cost me about $250 extra total (flights $95, temple pass $37, 2 nights hotel $60, food and tuk-tuks $58).",
+          "source": "comment:comment_1771277112753_0.7533073015300931",
+          "author": "temple_fan"
+        },
+        {
+          "type": "cost",
+          "value": "$58",
+          "quote": "Cost me about $250 extra total (flights $95, temple pass $37, 2 nights hotel $60, food and tuk-tuks $58).",
+          "source": "comment:comment_1771277112753_0.7533073015300931",
+          "author": "temple_fan"
+        }
+      ],
+      "evidence": {
+        "insights": [
+          {
+            "value": "I'd honestly save Cambodia for its own trip.",
+            "quote": "I'd honestly save Cambodia for its own trip.",
+            "source": "comment:comment_1771277112753_0.10576317013252146"
+          },
+          {
+            "value": "Absolutely do Angkor Wat.",
+            "quote": "Absolutely do Angkor Wat.",
+            "source": "comment:comment_1771277112753_0.4853470547752672"
+          },
+          {
+            "value": "Your Vietnam itinerary is solid but too rushed.",
+            "quote": "Your Vietnam itinerary is solid but too rushed.",
+            "source": "comment:comment_1771277112753_0.8151118808322408"
+          },
+          {
+            "value": "Did exactly this last year.",
+            "quote": "Did exactly this last year.",
+            "source": "comment:comment_1771277112753_0.7533073015300931"
+          }
+        ],
+        "warnings": [],
+        "contradictions": [],
+        "consensus": [],
+        "additional_facts": [
+          {
+            "type": "cost",
+            "value": "$45",
+            "quote": "I spent $45/day in Vietnam and $55/day in Cambodia, so budget-wise it adds up fast.",
+            "source": "comment:comment_1771277112753_0.10576317013252146"
+          },
+          {
+            "type": "cost",
+            "value": "$55",
+            "quote": "I spent $45/day in Vietnam and $55/day in Cambodia, so budget-wise it adds up fast.",
+            "source": "comment:comment_1771277112753_0.10576317013252146"
+          },
+          {
+            "type": "cost",
+            "value": "$80",
+            "quote": "Flights from HCMC are about $80-120 round trip with AirAsia.",
+            "source": "comment:comment_1771277112753_0.4853470547752672"
+          },
+          {
+            "type": "cost",
+            "value": "$37",
+            "quote": "The $37 temple pass for 3 days is worth every penny.",
+            "source": "comment:comment_1771277112753_0.4853470547752672"
+          },
+          {
+            "type": "location",
+            "value": "Siem Reap",
+            "quote": "I did a similar Vietnam trip and added 3 days in Siem Reap.",
+            "source": "comment:comment_1771277112753_0.4853470547752672"
+          },
+          {
+            "type": "cost",
+            "value": "$50",
+            "quote": "Pro tip: book the HCMC to Siem Reap flight on VietJet, usually around $50 one way.",
+            "source": "comment:comment_1771277112753_0.8938893026906294"
+          },
+          {
+            "type": "location",
+            "value": "Siem Reap",
+            "quote": "Pro tip: book the HCMC to Siem Reap flight on VietJet, usually around $50 one way.",
+            "source": "comment:comment_1771277112753_0.8938893026906294"
+          },
+          {
+            "type": "cost",
+            "value": "$30",
+            "quote": "Also, your HCMC budget should be about $30-40/day, Hanoi is slightly cheaper at $25-35/day.",
+            "source": "comment:comment_1771277112753_0.8151118808322408"
+          },
+          {
+            "type": "cost",
+            "value": "$25",
+            "quote": "Also, your HCMC budget should be about $30-40/day, Hanoi is slightly cheaper at $25-35/day.",
+            "source": "comment:comment_1771277112753_0.8151118808322408"
+          },
+          {
+            "type": "cost",
+            "value": "$250",
+            "quote": "Cost me about $250 extra total (flights $95, temple pass $37, 2 nights hotel $60, food and tuk-tuks $58).",
+            "source": "comment:comment_1771277112753_0.7533073015300931"
+          },
+          {
+            "type": "cost",
+            "value": "$95,",
+            "quote": "Cost me about $250 extra total (flights $95, temple pass $37, 2 nights hotel $60, food and tuk-tuks $58).",
+            "source": "comment:comment_1771277112753_0.7533073015300931"
+          },
+          {
+            "type": "cost",
+            "value": "$37,",
+            "quote": "Cost me about $250 extra total (flights $95, temple pass $37, 2 nights hotel $60, food and tuk-tuks $58).",
+            "source": "comment:comment_1771277112753_0.7533073015300931"
+          },
+          {
+            "type": "cost",
+            "value": "$60,",
+            "quote": "Cost me about $250 extra total (flights $95, temple pass $37, 2 nights hotel $60, food and tuk-tuks $58).",
+            "source": "comment:comment_1771277112753_0.7533073015300931"
+          },
+          {
+            "type": "cost",
+            "value": "$58",
+            "quote": "Cost me about $250 extra total (flights $95, temple pass $37, 2 nights hotel $60, food and tuk-tuks $58).",
+            "source": "comment:comment_1771277112753_0.7533073015300931"
+          }
+        ]
+      }
+    },
+    "quality": {
+      "has_minimum_signals": true,
+      "missing": []
+    },
+    "_smart_destination": "vietnam",
+    "_original_destination": "vietnam",
+    "_pivot_reason": null,
+    "main_destination": "vietnam"
+  },
+  "pattern": {
+    "story_type": "list",
+    "theme_primary": "money",
+    "themes_secondary": [
+      "itinerary",
+      "visa",
+      "flights",
+      "esim_connectivity",
+      "accommodation"
+    ],
+    "emotional_load": {
+      "score": 5,
+      "label": "low",
+      "signals": [
+        "caps_lock"
+      ]
+    },
+    "exploitable_events": {
+      "count": 0,
+      "events": []
+    },
+    "complexity": {
+      "score": 35,
+      "label": "medium",
+      "signals": [
+        "multiple_themes",
+        "constraints"
+      ]
+    },
+    "comments_utility": {
+      "score": 15,
+      "label": "low",
+      "signals": [],
+      "sample_count": 5
+    },
+    "confidence": {
+      "score": 80,
+      "notes": [
+        "Aucun événement exploitable détecté",
+        "Commentaires disponibles"
+      ]
+    }
+  },
+  "story": {
+    "story": {
+      "context": {
+        "summary": "30 day trip to Vietnam, worth taking a detour to Angkor Wat for 2-3 days Planning a 30 day trip to Vietnam in March Starting in Hanoi, heading south to Ho Chi Minh City",
+        "who": "backpacker_adventures",
+        "where": "hanoi, vietnam",
+        "when": null
+      },
+      "central_event": null,
+      "critical_moment": {
+        "summary": "The temple complex looks incredible but I don't want to rush my Vietnam itinerary",
+        "trigger": "but"
+      },
+      "resolution": null,
+      "author_lessons": [
+        {
+          "lesson": "would it add to the budget",
+          "evidence_snippet": "would it add to the budget"
+        },
+        {
+          "lesson": "Would love to hear thoughts on whether to squeeze in Angkor Wat or save it for a dedicated Cambodia trip l",
+          "evidence_snippet": "Would love to hear thoughts on whether to squeeze in Angkor Wat or save it for a dedicated Cambodia trip l"
+        },
+        {
+          "lesson": "don't want to rush my Vietnam itinerary",
+          "evidence_snippet": "don't want to rush my Vietnam itinerary"
+        }
+      ],
+      "community_insights": [
+        {
+          "type": "insight",
+          "value": "I'd honestly save Cambodia for its own trip.",
+          "score": 0
+        },
+        {
+          "type": "insight",
+          "value": "Absolutely do Angkor Wat.",
+          "score": 0
+        },
+        {
+          "type": "insight",
+          "value": "Your Vietnam itinerary is solid but too rushed.",
+          "score": 0
+        },
+        {
+          "type": "insight",
+          "value": "Did exactly this last year.",
+          "score": 0
+        }
+      ],
+      "open_questions": []
+    },
+    "evidence": {
+      "source_snippets": [
+        {
+          "section": "context.summary",
+          "snippet": "30 day trip to Vietnam, worth taking a detour to Angkor Wat for 2-3 days Planning a 30 day trip to Vietnam in March Starting in Hanoi, heading south to Ho Chi Minh City",
+          "origin": "selftext",
+          "comment_id": null
+        },
+        {
+          "section": "context.who",
+          "snippet": "Author: backpacker_adventures",
+          "origin": "meta"
+        },
+        {
+          "section": "context.where",
+          "snippet": "hanoi, vietnam",
+          "origin": "geo"
+        },
+        {
+          "section": "critical_moment",
+          "snippet": "The temple complex looks incredible but I don't want to rush my Vietnam itinerary",
+          "origin": "selftext",
+          "comment_id": null
+        },
+        {
+          "section": "author_lessons",
+          "snippet": "would it add to the budget",
+          "origin": "selftext"
+        },
+        {
+          "section": "author_lessons",
+          "snippet": "Would love to hear thoughts on whether to squeeze in Angkor Wat or save it for a dedicated Cambodia trip l",
+          "origin": "selftext"
+        },
+        {
+          "section": "author_lessons",
+          "snippet": "don't want to rush my Vietnam itinerary",
+          "origin": "selftext"
+        },
+        {
+          "section": "community_insights",
+          "snippet": "I'd honestly save Cambodia for its own trip.",
+          "origin": "comment",
+          "comment_id": "comment:comment_1771277112753_0.10576317013252146"
+        },
+        {
+          "section": "community_insights",
+          "snippet": "Absolutely do Angkor Wat.",
+          "origin": "comment",
+          "comment_id": "comment:comment_1771277112753_0.4853470547752672"
+        },
+        {
+          "section": "community_insights",
+          "snippet": "Your Vietnam itinerary is solid but too rushed.",
+          "origin": "comment",
+          "comment_id": "comment:comment_1771277112753_0.8151118808322408"
+        },
+        {
+          "section": "community_insights",
+          "snippet": "Did exactly this last year.",
+          "origin": "comment",
+          "comment_id": "comment:comment_1771277112753_0.7533073015300931"
+        }
+      ]
+    },
+    "meta": {
+      "story_type": "list",
+      "themes": {
+        "primary": "money",
+        "secondary": [
+          "itinerary",
+          "visa",
+          "flights",
+          "esim_connectivity",
+          "accommodation"
+        ]
+      },
+      "confidence": {
+        "pattern_confidence": 80,
+        "story_compiler_confidence": 65
+      },
+      "constraints": {
+        "no_invention": true,
+        "neutral_rewrite": true
+      },
+      "missing_sections": [
+        {
+          "section": "central_event",
+          "reason": "No exploitable events and theme not extractable"
+        },
+        {
+          "section": "resolution",
+          "reason": "No resolution signals found"
+        }
+      ]
+    }
+  }
+}

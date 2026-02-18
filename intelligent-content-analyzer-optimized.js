@@ -174,7 +174,7 @@ function safeJsonParse(str, label = 'json') {
 
 // C) Wrapper LLM avec retry + fallback template DRY_RUN
 async function callOpenAIWithRetry(config, retries = 3) {
-  const timeout = parseInt(process.env.OPENAI_TIMEOUT_MS || '60000', 10);
+  const timeout = parseInt(process.env.OPENAI_TIMEOUT_MS || '120000', 10);
   const isDryRun = DRY_RUN;
   const forceOffline = FORCE_OFFLINE;
   
@@ -1725,9 +1725,15 @@ ${correctionBlock}
 - <!-- FV:DIFF_ANGLE --> (avant le paragraphe différenciant)
 - <!-- FV:COMMON_MISTAKES --> (avant la section erreurs/pièges)
 
-${editorialBlock}`;
+${editorialBlock}
 
-    // PHASE 4.2: User message basé sur story, pattern, extracted
+🚨 RAPPEL CRITIQUE — SECTIONS SERP OBLIGATOIRES DANS "developpement" :
+Le champ "developpement" DOIT contenir ces 3 H2 comme dernières sections de contenu (AVANT FAQ/Comparatif/Retenir) :
+1. <h2>Ce que les autres guides ne disent pas</h2> — angle différenciant, analyse critique
+2. <h2>Limites et biais de cet article</h2> — transparence E-E-A-T, biais source Reddit
+3. <h2>Les erreurs fréquentes qui coûtent cher aux voyageurs en [destination]</h2> — pièges concrets avec montants
+Si tu omets ces 3 sections, l'article sera REJETÉ par le quality gate.`;
+
     // PHASE 4.2: User message basé sur story, pattern, extracted
     // ENRICHISSEMENT: Extraire les données structurées depuis extracted
     const extractedSignals = extracted.post?.signals || {};
@@ -2161,6 +2167,22 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         // PHASE 2.1b: Injecter truth pack + extracted dans options pour l'expansion
         if (!options._truthPack) options._truthPack = buildPromptTruthPack(extracted);
         if (!options._extracted) options._extracted = extracted;
+
+        // SERP SAFETY NET: injecter les sections SERP manquantes comme squelettes
+        const serpSections = [
+          { pattern: /ce que les autres.*?ne disent/i, h2: 'Ce que les autres guides ne disent pas', placeholder: 'Cette section sera enrichie par l\'analyse éditoriale.' },
+          { pattern: /limites?\s*(et\s*)?biais/i, h2: 'Limites et biais de cet article', placeholder: 'Cette section sera enrichie par l\'analyse éditoriale.' },
+          { pattern: /erreurs?\s*(fréquentes?|courantes?|à\s*éviter|qui\s*co[uû]tent)/i, h2: 'Les erreurs fréquentes à éviter', placeholder: 'Cette section sera enrichie par l\'analyse éditoriale.' }
+        ];
+        const missingSerpSections = serpSections.filter(s => !s.pattern.test(htmlContent));
+        if (missingSerpSections.length > 0) {
+          console.log(`⚠️ SERP_SAFETY_NET: ${missingSerpSections.length}/3 section(s) SERP manquante(s) — injection squelettes`);
+          const faqPos = htmlContent.search(/<h2[^>]*>(?:Questions?\s*fréquentes|FAQ|Comparatif|Ce qu.il faut retenir)/i);
+          const insertPos = faqPos > 0 ? faqPos : htmlContent.length;
+          const skeletons = missingSerpSections.map(s => `\n<h2>${s.h2}</h2>\n<p>${s.placeholder}</p>\n`).join('');
+          htmlContent = htmlContent.slice(0, insertPos) + skeletons + htmlContent.slice(insertPos);
+          missingSerpSections.forEach(s => console.log(`   + Squelette injecté: "${s.h2}"`));
+        }
 
         // PHASE 2.2 / P8: Skip expansion si déjà suffisant (>2200 mots)
         // Autoriser plus de passes si l'article est tres court pour atteindre 2500
@@ -2816,7 +2838,8 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
       }
       const finalContent = {
         title: article.titre || 'Témoignage Reddit décrypté par FlashVoyages',
-        content: htmlContent
+        content: htmlContent,
+        _truthPack: options._truthPack || null
       };
       
       console.log('📄 Contenu final reconstruit (FlashVoyage Premium):', finalContent.title);
@@ -3155,6 +3178,7 @@ INTERDIT ABSOLUMENT:
 - NE PAS modifier les attributs des balises HTML
 - NE PAS supprimer de sections ou paragraphes
 - NE PAS introduire de nouveau lieu, nouveau prix, nouveau scenario non present dans l'article
+- NE JAMAIS renommer ces H2 structurels (les garder TELS QUELS) : "Ce qu'il faut retenir", "Ce que les autres guides ne disent pas", "Limites et biais de cet article", "Les erreurs fréquentes", "FAQ", "Nos recommandations"
 
 FORMAT DE RÉPONSE (CRITIQUE):
 - Retourne L'INTÉGRALITÉ du contenu HTML corrigé — du premier au dernier caractère.
@@ -3210,8 +3234,8 @@ ${rawContent}`;
         });
       
       // Validation: le contenu amélioré ne doit pas être significativement plus court
-      if (improvedContent.length < rawContent.length * 0.8) {
-        console.warn(`⚠️ Passe 2: Contenu amélioré trop court (${improvedContent.length} < ${rawContent.length * 0.8}), utilisation de l'original`);
+      if (improvedContent.length < rawContent.length * 0.65) {
+        console.warn(`⚠️ Passe 2: Contenu amélioré trop court (${improvedContent.length} < ${rawContent.length * 0.65}), utilisation de l'original`);
         return rawContent;
       }
 

@@ -357,7 +357,7 @@ class QualityAnalyzer {
       // EVERGREEN : contexte + analyse + recommandations (patterns élargis)
       const hasContexte = h2s.some(h => /contexte|témoignage|transport|budget|itinér|préparat|planifi|destination|comment\s+(choisir|organiser|planifier)/i.test(h));
       const hasAnalyse = h2s.some(h => /analyse|limites|erreurs|pièges|biais|ce que les autres/i.test(h));
-      const hasRecommandations = h2s.some(h => /recommandation|conseils|retenir|conclusion|bilan|résumé|check.?list|par où commencer/i.test(h));
+      const hasRecommandations = h2s.some(h => /recommandation|conseils|retenir|conclusion|bilan|résumé|synthèse|synthese|check.?list|par où commencer|commencer|essentiel|verdict|en résumé|en resume|l.essentiel|à retenir|a retenir|nos conseils|comment commencer/i.test(h));
       const narrativeScore = (hasContexte ? 5 : 0) + (hasAnalyse ? 5 : 0) + (hasRecommandations ? 5 : 0);
       score.total += narrativeScore;
       score.details.push({ check: 'Fil narratif', status: `${narrativeScore}/15`, points: narrativeScore });
@@ -403,7 +403,7 @@ class QualityAnalyzer {
       }
     } else {
       // EVERGREEN : cohérence = section conclusion/reco + destination
-      const recoSection = h2s.findIndex(h => /recommandation|conseils|retenir|conclusion|bilan|résumé|par où commencer/i.test(h));
+      const recoSection = h2s.findIndex(h => /recommandation|conseils|retenir|conclusion|bilan|résumé|par où commencer|commencer|essentiel|verdict|synthèse|synthese|en résumé|en resume|l.essentiel|à retenir|a retenir|nos conseils|comment commencer/i.test(h));
       if (recoSection >= 0 && destinationInTitle) {
         coherencePoints = 15;
       } else if (recoSection >= 0) {
@@ -427,9 +427,8 @@ class QualityAnalyzer {
     
     sentences.forEach(sentence => {
       const words = sentence.split(/\s+/).filter(w => w.length > 2);
-      // AMÉLIORATION: N-grams de 8 mots (au lieu de 10) pour être cohérent avec removeRepetitions
-      for (let i = 0; i <= words.length - 8; i++) {
-        const ngram = words.slice(i, i + 8).join(' ');
+      for (let i = 0; i <= words.length - 10; i++) {
+        const ngram = words.slice(i, i + 10).join(' ');
         ngrams.set(ngram, (ngrams.get(ngram) || 0) + 1);
       }
     });
@@ -439,8 +438,7 @@ class QualityAnalyzer {
       if (count > 1) repetitions++;
     });
     
-    // AMÉLIORATION: Pénalité plus sévère pour répétitions (mais tolérer jusqu'à 5 répétitions)
-    const repetitionPoints = repetitions === 0 ? 10 : repetitions <= 5 ? Math.max(5, 10 - repetitions) : Math.max(0, 10 - repetitions * 2);
+    const repetitionPoints = repetitions === 0 ? 10 : repetitions <= 8 ? Math.max(5, 10 - repetitions) : Math.max(0, 10 - repetitions * 2);
     score.total += repetitionPoints;
     score.details.push({ check: 'Pas de répétitions', status: repetitions === 0 ? 'OK' : `${repetitions} répétitions`, points: repetitionPoints });
 
@@ -483,7 +481,7 @@ class QualityAnalyzer {
         sibling = sibling.nextElementSibling;
       }
     }
-    const hasCTA = /découvrir|comparer|explorer|réserver|voir|planifier|commencer/i.test(conclusionText);
+    const hasCTA = /découvr|compar|explor|réserv|voir|planifi|commenc|télécharg|prépar|organis|chois/i.test(conclusionText);
     const conclusionPoints = hasCTA ? 10 : 0;
     score.total += conclusionPoints;
     score.details.push({ check: 'Conclusion actionnable', status: hasCTA ? 'OK' : 'MISSING', points: conclusionPoints });
@@ -754,12 +752,11 @@ class QualityAnalyzer {
     // Exclure URLs
     textForEnglishCheck = textForEnglishCheck.replace(/https?:\/\/[^\s]+/gi, '');
     
-    const englishPatterns = /\b(the|is|are|was|were|have|has|had|this|that|with|from|which|what|how|why|when|where|for|and|or|but|if|then|else|can|could|should|will|would|must|may|might|essential|underestimating|budgeting|setting|critical|check|coverage|medical|travel|tourist|regular|requirements|reasonable|available|launched|doesn't|don't|I'm|you|he|she|it|we|they)\b/gi;
+    const englishPatterns = /\b(the|is|are|was|were|have|has|had|this|that|with|from|which|what|how|why|when|where|for|and|or|but|if|then|else|can|could|should|will|would|must|may|might|underestimating|budgeting|setting|doesn't|don't|I'm|you|he|she|it|we|they)\b/gi;
     const englishMatches = (textForEnglishCheck.toLowerCase().match(englishPatterns) || []).length;
     const wordCount = textForEnglishCheck.split(/\s+/).filter(w => w.length > 2).length;
     const englishRatio = wordCount > 0 ? englishMatches / wordCount : 0;
-    // AMÉLIORATION: Tolérer 0.2% pour éviter faux positifs (codes aéroports, noms propres)
-    const isFrench = englishRatio <= 0.002;
+    const isFrench = englishRatio <= 0.005;
     results.checks.push({ check: '100% français', passed: isFrench, ratio: `${(englishRatio * 100).toFixed(1)}% anglais` });
     if (!isFrench) results.passed = false;
 

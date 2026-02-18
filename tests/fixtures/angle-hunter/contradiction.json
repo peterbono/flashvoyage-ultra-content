@@ -1,0 +1,103 @@
+{
+  "extracted": {
+    "source": {
+      "platform": "reddit",
+      "subreddit": "japantravel",
+      "url": "https://reddit.com/r/japantravel/test-contradiction",
+      "title": "Is the Japan Rail Pass worth it for 14 days in 2024?",
+      "author": "tokyo_planner"
+    },
+    "destination": "japan",
+    "destinations": ["tokyo", "kyoto", "osaka", "hiroshima"],
+    "_smart_destination": "japon",
+    "_original_destination": "japan",
+    "geo": { "country": "japan", "city": "tokyo" },
+    "post": {
+      "clean_text": "Planning 14 days in Japan. The 14-day JR Pass costs $380. I'll be doing Tokyo-Kyoto-Osaka-Hiroshima-Tokyo. Some people say it's absolutely worth it, others say with the recent price increase it's now cheaper to buy individual tickets. I'm so confused. Should I get the pass or just buy as I go?",
+      "signals": {
+        "locations": ["tokyo", "kyoto", "osaka", "hiroshima"],
+        "dates": [],
+        "costs": ["$380"],
+        "events": [],
+        "problems": ["JR Pass price increase", "confusion about value"]
+      },
+      "evidence": {
+        "costs": [
+          { "value": "$380", "amount": 380, "currency": "USD", "quote": "14-day JR Pass costs $380", "source": "post" }
+        ],
+        "dates": [],
+        "locations": [
+          { "value": "tokyo", "quote": "Tokyo-Kyoto-Osaka-Hiroshima-Tokyo", "source": "post" }
+        ],
+        "problems": [
+          { "value": "JR Pass price increase", "quote": "with the recent price increase", "source": "post" },
+          { "value": "confusion about value", "quote": "I'm so confused", "source": "post" }
+        ]
+      }
+    },
+    "comments": {
+      "count_total": 8,
+      "count_used": 6,
+      "insights": [
+        { "value": "Absolutely worth it for your itinerary - the Tokyo-Kyoto shinkansen alone is $130 one way", "score": 65 },
+        { "value": "Not worth it anymore since the 2023 price hike. Buy individual tickets on smartEX app", "score": 58 },
+        { "value": "The pass saves you about $50-80 on that exact route, but only if you do all the trips", "score": 45 },
+        { "value": "Skip the pass and get a Suica card instead - way more flexible", "score": 42 }
+      ],
+      "warnings": [
+        { "value": "The JR Pass doesn't cover Nozomi trains, only Hikari which are slower", "quote": "doesn't cover Nozomi trains", "score": 38 }
+      ],
+      "contradictions": [
+        { "claim": "JR Pass is absolutely worth it for Tokyo-Kyoto route", "counterclaim": "JR Pass is not worth it since 2023 price hike", "quote": "Absolutely worth it vs Not worth it anymore", "source": "comments", "author": "various" },
+        { "claim": "Pass saves $50-80", "counterclaim": "Individual tickets on smartEX are cheaper overall", "quote": "saves about $50-80 vs buy individual tickets", "source": "comments", "author": "various" }
+      ],
+      "consensus": [],
+      "additional_facts": [
+        { "type": "cost", "value": "$130 Tokyo-Kyoto one way", "quote": "Tokyo-Kyoto shinkansen alone is $130 one way" }
+      ]
+    },
+    "quality": { "has_minimum_signals": true, "missing": [] }
+  },
+  "pattern": {
+    "story_type": "question",
+    "theme_primary": "money",
+    "themes_secondary": ["itinerary"],
+    "emotional_load": { "score": 40, "label": "medium", "signals": ["confusion_markers"] },
+    "exploitable_events": { "count": 0, "events": [] },
+    "complexity": { "score": 50, "label": "medium", "signals": ["contradictions", "multiple_options"] },
+    "comments_utility": { "score": 85, "label": "high", "signals": ["advice_dense", "corrections", "contradictions"], "sample_count": 8 },
+    "confidence": { "score": 80, "notes": [] }
+  },
+  "story": {
+    "story": {
+      "context": { "summary": "Traveler planning 14-day Japan trip debates whether JR Pass is still worth the $380 cost", "who": "tokyo_planner", "where": "japan", "when": null },
+      "central_event": { "summary": "JR Pass value questioned after 2023 price increase, with contradicting advice from travelers", "type": "money" },
+      "critical_moment": { "summary": "Community split between 'absolutely worth it' and 'not worth it anymore' with no clear winner", "trigger": "but" },
+      "resolution": { "summary": "No consensus - depends on exact itinerary and flexibility needs", "status": "unresolved" },
+      "author_lessons": [
+        { "lesson": "The JR Pass value depends entirely on your specific route", "evidence_snippet": "only if you do all the trips" }
+      ],
+      "community_insights": [
+        { "type": "insight", "value": "JR Pass still worth it for multi-city routes", "score": 65 },
+        { "type": "insight", "value": "Individual tickets cheaper for simple routes since price hike", "score": 58 },
+        { "type": "warning", "value": "JR Pass doesn't cover fastest Nozomi trains", "score": 38 }
+      ],
+      "open_questions": ["Is the JR Pass worth it after the 2023 price increase?", "Should I use smartEX app instead?"]
+    },
+    "evidence": {
+      "source_snippets": [
+        { "section": "context.summary", "snippet": "14-day JR Pass costs $380", "origin": "selftext" },
+        { "section": "central_event", "snippet": "Some people say it's absolutely worth it, others say it's cheaper to buy individual", "origin": "selftext" },
+        { "section": "community_insights", "snippet": "Absolutely worth it for your itinerary", "origin": "comment" },
+        { "section": "community_insights", "snippet": "Not worth it anymore since the 2023 price hike", "origin": "comment" }
+      ]
+    },
+    "meta": {
+      "story_type": "question",
+      "themes": { "primary": "money", "secondary": ["itinerary"] },
+      "confidence": { "pattern_confidence": 80, "story_compiler_confidence": 85 },
+      "constraints": { "no_invention": true, "neutral_rewrite": true },
+      "missing_sections": []
+    }
+  }
+}

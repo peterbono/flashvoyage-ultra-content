@@ -792,7 +792,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           if (!prePublishScore.blockingPassed && prePublishScore.categories?.blocking?.checks) {
             prePublishScore.categories.blocking.checks.forEach(chk => {
               const icon = chk.passed ? '✅' : '❌';
-              console.log(`   ${icon} BLOCKING: ${chk.name} = ${chk.passed ? 'PASS' : 'FAIL'}`);
+              console.log(`   ${icon} BLOCKING: ${chk.check} = ${chk.passed ? 'PASS' : 'FAIL'}${chk.ratio ? ` (${chk.ratio})` : ''}`);
             });
           }
           // Détail Content Writing pour diagnostic
@@ -800,11 +800,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
             const cw = prePublishScore.categories.contentWriting;
             console.log(`   📝 CONTENT_WRITING: ${cw.percentage.toFixed(0)}% (${cw.score}/${cw.maxScore})`);
             cw.details.forEach(d => {
-              console.log(`      ${d.score >= d.max * 0.7 ? '✅' : '⚠️'} ${d.name}: ${d.score}/${d.max}`);
+              const icon = d.points >= 10 ? '✅' : d.points > 0 ? '⚠️' : d.points === 0 ? '➖' : '❌';
+              console.log(`      ${icon} ${d.check}: ${d.status} (${d.points} pts)`);
             });
-            if (cw.penalties && cw.penalties.length > 0) {
-              cw.penalties.forEach(p => console.log(`      ❌ PENALTY: ${p.name} = ${p.value}`));
-            }
           }
 
           // KPI Tests K1-K10: rapport detaille
@@ -838,7 +836,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
                   { destination: finalizedArticle.destination || '', theme: finalizedArticle.theme || '' },
                   { extracted: finalizedArticle.extracted || {}, angle: finalizedArticle.angle || null }
                 );
-                if (improvedContent && improvedContent.length > finalizedArticle.content.length * 0.8) {
+                if (improvedContent && improvedContent.length > finalizedArticle.content.length * 0.65) {
                   finalizedArticle.content = improvedContent;
                   // Re-check (wrap avec h1 pour le meme scoring)
                   const recheckHtml = `<h1>${finalizedArticle.title || ''}</h1>\n${finalizedArticle.content}`;

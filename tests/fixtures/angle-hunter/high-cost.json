@@ -1,0 +1,108 @@
+{
+  "extracted": {
+    "source": {
+      "platform": "reddit",
+      "subreddit": "digitalnomad",
+      "url": "https://reddit.com/r/digitalnomad/test-high-cost",
+      "title": "Real cost of living in Chiang Mai as a digital nomad - my 6 month breakdown",
+      "author": "nomad_accountant"
+    },
+    "destination": "chiang mai",
+    "destinations": ["chiang mai", "bangkok", "phuket"],
+    "_smart_destination": "thaïlande",
+    "_original_destination": "chiang mai",
+    "geo": { "country": "thailand", "city": "chiang mai" },
+    "post": {
+      "clean_text": "After 6 months in Chiang Mai, here's my real cost breakdown. Everyone says it's cheap but the hidden fees add up fast. Coworking: $150/month. Apartment: $450/month with utilities. Health insurance: $180/month. Visa runs every 60 days: $200 each. Food: $300/month eating local. Total: about $1280/month minimum. But add in social life, weekend trips, and it's easily $1800+. The $800/month myth is dead.",
+      "signals": {
+        "locations": ["chiang mai", "bangkok", "phuket"],
+        "dates": [],
+        "costs": ["$150/month", "$450/month", "$180/month", "$200", "$300/month", "$1280/month", "$1800", "$800/month"],
+        "events": [],
+        "problems": ["hidden fees", "visa runs expensive"]
+      },
+      "evidence": {
+        "costs": [
+          { "value": "$150/month", "amount": 150, "currency": "USD", "quote": "Coworking: $150/month", "source": "post" },
+          { "value": "$450/month", "amount": 450, "currency": "USD", "quote": "Apartment: $450/month with utilities", "source": "post" },
+          { "value": "$180/month", "amount": 180, "currency": "USD", "quote": "Health insurance: $180/month", "source": "post" },
+          { "value": "$200", "amount": 200, "currency": "USD", "quote": "Visa runs every 60 days: $200 each", "source": "post" },
+          { "value": "$1280/month", "amount": 1280, "currency": "USD", "quote": "Total: about $1280/month minimum", "source": "post" },
+          { "value": "$1800", "amount": 1800, "currency": "USD", "quote": "it's easily $1800+", "source": "post" }
+        ],
+        "dates": [],
+        "locations": [
+          { "value": "chiang mai", "quote": "After 6 months in Chiang Mai", "source": "post" }
+        ],
+        "problems": [
+          { "value": "hidden fees", "quote": "the hidden fees add up fast", "source": "post" },
+          { "value": "visa runs expensive", "quote": "Visa runs every 60 days: $200 each", "source": "post" }
+        ]
+      }
+    },
+    "comments": {
+      "count_total": 5,
+      "count_used": 4,
+      "insights": [
+        { "value": "You can save $200/month by cooking at home instead of eating out every meal", "score": 45 },
+        { "value": "Get a Thai bank account to avoid ATM fees of 220 baht per withdrawal", "score": 38 },
+        { "value": "The visa run cost drops to $50 if you do the border run instead of flying", "score": 32 },
+        { "value": "Insurance through SafetyWing is only $45/month", "score": 28 }
+      ],
+      "warnings": [
+        { "value": "ATM fees in Thailand are brutal - 220 baht ($6) per withdrawal", "quote": "ATM fees are brutal", "score": 25 }
+      ],
+      "contradictions": [],
+      "consensus": [
+        { "value": "Chiang Mai is not as cheap as influencers claim", "count": 3 }
+      ],
+      "additional_facts": [
+        { "type": "cost", "value": "$45/month insurance", "quote": "SafetyWing is only $45/month" }
+      ]
+    },
+    "quality": { "has_minimum_signals": true, "missing": [] }
+  },
+  "pattern": {
+    "story_type": "guide",
+    "theme_primary": "money",
+    "themes_secondary": ["accommodation", "visa"],
+    "emotional_load": { "score": 35, "label": "medium", "signals": ["multiple_exclamations"] },
+    "exploitable_events": { "count": 0, "events": [] },
+    "complexity": { "score": 65, "label": "high", "signals": ["multiple_themes", "long_text"] },
+    "comments_utility": { "score": 80, "label": "high", "signals": ["advice_dense"], "sample_count": 5 },
+    "confidence": { "score": 85, "notes": [] }
+  },
+  "story": {
+    "story": {
+      "context": { "summary": "Digital nomad shares 6-month cost breakdown in Chiang Mai", "who": "nomad_accountant", "where": "chiang mai, thailand", "when": null },
+      "central_event": { "summary": "Detailed cost breakdown reveals Chiang Mai costs $1280-1800/month, not $800 as commonly claimed", "type": "money" },
+      "critical_moment": { "summary": "Hidden fees and visa runs push costs 60% above the marketed '$800/month' figure", "trigger": "but" },
+      "resolution": { "summary": "Author provides realistic budget range and tips to reduce costs", "status": "resolved" },
+      "author_lessons": [
+        { "lesson": "Budget at least $1280/month minimum for comfortable living", "evidence_snippet": "Total: about $1280/month minimum" },
+        { "lesson": "The $800/month Chiang Mai myth doesn't account for visa runs and insurance", "evidence_snippet": "The $800/month myth is dead" },
+        { "lesson": "Hidden fees like ATM charges and visa runs add $300-400/month", "evidence_snippet": "hidden fees add up fast" }
+      ],
+      "community_insights": [
+        { "type": "insight", "value": "Cook at home to save $200/month", "score": 45 },
+        { "type": "insight", "value": "Thai bank account eliminates ATM fees", "score": 38 },
+        { "type": "warning", "value": "ATM fees are 220 baht per withdrawal", "score": 25 }
+      ],
+      "open_questions": []
+    },
+    "evidence": {
+      "source_snippets": [
+        { "section": "context.summary", "snippet": "After 6 months in Chiang Mai, here's my real cost breakdown", "origin": "selftext" },
+        { "section": "central_event", "snippet": "Total: about $1280/month minimum", "origin": "selftext" },
+        { "section": "community_insights", "snippet": "Get a Thai bank account to avoid ATM fees", "origin": "comment" }
+      ]
+    },
+    "meta": {
+      "story_type": "guide",
+      "themes": { "primary": "money", "secondary": ["accommodation", "visa"] },
+      "confidence": { "pattern_confidence": 85, "story_compiler_confidence": 90 },
+      "constraints": { "no_invention": true, "neutral_rewrite": true },
+      "missing_sections": []
+    }
+  }
+}
