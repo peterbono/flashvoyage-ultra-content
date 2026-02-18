@@ -2912,6 +2912,19 @@ REGLES DE FORME :
 - PAS de phrases de transition isolees comme "Parlons maintenant de..." ou "Voyons comment...".
 - Fusionne les informations liees dans des paragraphes denses, pas des micro-paragraphes.
 
+CITATIONS SOURCEES (OBLIGATOIRE) :
+- L'article DOIT contenir au minimum 2 citations entre guillemets francais « ... » issues du temoignage.
+- Format : "Un voyageur explique : « citation courte »" ou "L'auteur precise : « citation courte »".
+- Si l'article en contient moins de 2, AJOUTE des citations pertinentes extraites des donnees source.
+
+EQUILIBRE SECTIONS :
+- Repartis le contenu ajoute de maniere EQUILIBREE entre les sections H2. Pas de section 5x plus longue qu'une autre.
+- Si une section est trop courte, enrichis-la en priorite. Si une section est deja dense, ne l'allonge pas davantage.
+
+TON ET STYLE :
+- Tutoiement OBLIGATOIRE : utilise "tu", "ton", "ta", "tes" (jamais "vous" ni "il faut" ni "on doit").
+- PHRASES INTERDITES : "il est important de", "il convient de", "il est a noter", "force est de constater", "dans un premier temps", "en ce qui concerne", "nous allons voir", "il va sans dire".
+
 INTERDIT ABSOLUMENT :
 - Introduire un NOUVEAU lieu non liste dans "Lieux autorises"
 - Introduire un NOUVEAU prix ou chiffre non present dans "Nombres autorises"
@@ -3090,6 +3103,18 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2500 mots.`;
       console.log(`   ⚠️ Phrases plates détectées: ${flatPhrasesFound.length} (${flatPhrasesFound.slice(0, 3).map(p => `"${p}"`).join(', ')})`);
     }
     
+    // 1e-bis. Détection phrases robotiques (patterns tonalité quality-analyzer)
+    const ROBOTIC_PHRASES = [
+      'il est important de noter que', 'dans le cadre de', 'il convient de souligner',
+      'force est de constater', 'il va sans dire', 'en ce qui concerne',
+      'dans un premier temps', 'dans un second temps', 'il est à noter que', 'nous allons voir'
+    ];
+    const roboticFound = ROBOTIC_PHRASES.filter(p => textOnly.toLowerCase().includes(p));
+    if (roboticFound.length > 0) {
+      anomalies.push({ type: 'robotic_tone', count: roboticFound.length, details: roboticFound });
+      console.log(`   ⚠️ Phrases robotiques détectées: ${roboticFound.length} (${roboticFound.slice(0, 3).map(p => `"${p}"`).join(', ')})`);
+    }
+
     // 1e. Détection anglais résiduel (heuristique rapide)
     const englishPatterns = rawContent.match(/\b(the|is|are|was|were|have|has|had|will|would|can|could|should|this|that|from|basically|don't|I'm|you|he|she|we|they|here|there|my|your|not|anymore|phone|camera)\b/gi) || [];
     const hasSignificantEnglish = englishPatterns.length > 10;
@@ -3150,6 +3175,11 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2500 mots.`;
             `REFORMULE ces H2 trop courts (1-2 mots) en H2 descriptifs et engageants : ${anomaly.details.map(d => `"${d}"`).join(', ')}. Un H2 doit contenir une promesse ou un angle : "Bali" → "Bali : entre paradis instagrammable et réalité budgétaire", "Bangkok" → "Pourquoi Bangkok reste imbattable pour les premiers mois".`
           );
           break;
+        case 'robotic_tone':
+          correctionInstructions.push(
+            `Reformule ces phrases robotiques en langage naturel avec tutoiement : ${anomaly.details.map(d => `"${d}"`).join(', ')}. Exemples : "il est important de noter que" → "ce que tu dois savoir", "dans le cadre de" → "pour ton", "il convient de souligner" → "un point clé".`
+          );
+          break;
       }
     }
     
@@ -3178,6 +3208,11 @@ RÈGLES ABSOLUES (par ordre de priorité):
 
 ANOMALIES À CORRIGER:
 ${correctionInstructions.map((instr, i) => `${i + 1}. ${instr}`).join('\n')}
+
+CORRECTIONS SUPPLEMENTAIRES (si detectees) :
+- Si l'article contient moins de 2 citations « ... » (guillemets francais), ajoute des citations pertinentes issues du temoignage en format : "Un voyageur explique : « citation »".
+- Si tu detectes des phrases robotiques ("il est important de", "il convient de", "force est de constater", "il va sans dire", "en ce qui concerne"), reformule-les en langage naturel avec tutoiement.
+- Utilise TOUJOURS le tutoiement ("tu", "ton", "ta") — jamais "vous", "il faut" ou "on doit" de maniere impersonnelle.
 
 INTERDIT ABSOLUMENT:
 - NE PAS wrapper le HTML dans \`\`\`html ou \`\`\`
