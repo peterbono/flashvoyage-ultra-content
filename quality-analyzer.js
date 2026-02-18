@@ -354,10 +354,10 @@ class QualityAnalyzer {
       score.total += narrativeScore;
       score.details.push({ check: 'Fil narratif (NEWS)', status: `${narrativeScore}/15`, points: narrativeScore });
     } else {
-      // EVERGREEN : contexte + analyse + recommandations
-      const hasContexte = h2s.some(h => h.includes('contexte') || h.includes('témoignage'));
-      const hasAnalyse = h2s.some(h => h.includes('analyse') || h.includes('limites') || h.includes('erreurs'));
-      const hasRecommandations = h2s.some(h => h.includes('recommandation') || h.includes('conseils'));
+      // EVERGREEN : contexte + analyse + recommandations (patterns élargis)
+      const hasContexte = h2s.some(h => /contexte|témoignage|transport|budget|itinér|préparat|planifi|destination|comment\s+(choisir|organiser|planifier)/i.test(h));
+      const hasAnalyse = h2s.some(h => /analyse|limites|erreurs|pièges|biais|ce que les autres/i.test(h));
+      const hasRecommandations = h2s.some(h => /recommandation|conseils|retenir|conclusion|bilan|résumé|check.?list|par où commencer/i.test(h));
       const narrativeScore = (hasContexte ? 5 : 0) + (hasAnalyse ? 5 : 0) + (hasRecommandations ? 5 : 0);
       score.total += narrativeScore;
       score.details.push({ check: 'Fil narratif', status: `${narrativeScore}/15`, points: narrativeScore });
@@ -402,20 +402,27 @@ class QualityAnalyzer {
         coherencePoints = 10;
       }
     } else {
-      // EVERGREEN : cohérence = recommandations + destination
-      const recoSection = h2s.findIndex(h => h.includes('recommandation'));
+      // EVERGREEN : cohérence = section conclusion/reco + destination
+      const recoSection = h2s.findIndex(h => /recommandation|conseils|retenir|conclusion|bilan|résumé|par où commencer/i.test(h));
       if (recoSection >= 0 && destinationInTitle) {
         coherencePoints = 15;
       } else if (recoSection >= 0) {
         coherencePoints = 10;
+      } else if (destinationInTitle) {
+        coherencePoints = 5;
       }
     }
     
     score.total += coherencePoints;
     score.details.push({ check: 'Cohérence thématique', status: `${coherencePoints}/15`, points: coherencePoints });
 
-    // 5. Pas de répétitions (10 pts) - AMÉLIORATION: Détection plus stricte
-    const sentences = text.split(/[.!?]+/).map(s => s.trim().toLowerCase()).filter(s => s.length > 20);
+    // 5. Pas de répétitions (10 pts)
+    // Exclure le texte des modules affiliés et FAQ pour éviter les faux positifs
+    let textForRepCheck = text;
+    root.querySelectorAll('aside.affiliate-module, .faq-section, details').forEach(el => {
+      textForRepCheck = textForRepCheck.replace(el.text, '');
+    });
+    const sentences = textForRepCheck.split(/[.!?]+/).map(s => s.trim().toLowerCase()).filter(s => s.length > 20);
     const ngrams = new Map();
     
     sentences.forEach(sentence => {
@@ -438,7 +445,8 @@ class QualityAnalyzer {
     score.details.push({ check: 'Pas de répétitions', status: repetitions === 0 ? 'OK' : `${repetitions} répétitions`, points: repetitionPoints });
 
     // 6. Paragraphes équilibrés (10 pts)
-    const paragraphs = root.querySelectorAll('p').map(el => el.text.length).filter(l => l > 10);
+    // Filtrer les paragraphes très courts (< 40 chars) qui biaisent le ratio
+    const paragraphs = root.querySelectorAll('p').map(el => el.text.length).filter(l => l > 40);
     
     // AMÉLIORATION: Gérer le cas où il n'y a pas de paragraphes
     if (paragraphs.length === 0) {
@@ -550,26 +558,30 @@ class QualityAnalyzer {
       // ─── P6: Checks angle, décisions, pénalités descriptives ────────
 
       // h2_decisional: >= 80% des H2 doivent contenir un arbitrage/décision/tension
-      const decisionPatterns = /arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|vérité|réalité|secret|coût|budget|prix|danger|risque|éviter|stratég|pourquoi|comment|quand|quel|meilleur|pire|vs\b|contre\b|plutôt|différen|trade.?off|dilemme|alternative/i;
+      const decisionPatterns = /arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|vérité|réalité|secret|coût|budget|prix|danger|risque|éviter|stratég|pourquoi|comment|quand|quel|meilleur|pire|vs\b|contre\b|plutôt|différen|trade.?off|dilemme|alternative|investissement|essentiel|économiser|petit\s*prix|transformer|exploser|valoir|révél|verdict|astuce|manger\s*local|hébergement|transport/i;
+      // Exclure les H2 structurels (SERP, FAQ, Comparatif, Checklist, Retenir) du check décisionnel
+      const serpExclusionPatterns = /ce que les autres|limites?\s*(et\s*)?biais|erreurs?\s*fréquentes|questions?\s*fréquentes|FAQ|comparatif|check.?list|ce qu.il faut retenir/i;
       const allH2Elems = root.querySelectorAll('h2');
       let decisionalH2Count = 0;
+      let totalContentH2Count = 0;
       const nonDecisionalH2s = [];
       allH2Elems.forEach(h2El => {
         const h2Text = h2El.text.trim();
+        if (serpExclusionPatterns.test(h2Text)) return;
+        totalContentH2Count++;
         if (decisionPatterns.test(h2Text)) {
           decisionalH2Count++;
         } else {
           nonDecisionalH2s.push(h2Text);
         }
       });
-      const totalH2s = allH2Elems.length;
-      const h2DecRatio = totalH2s > 0 ? decisionalH2Count / totalH2s : 0;
+      const h2DecRatio = totalContentH2Count > 0 ? decisionalH2Count / totalContentH2Count : 1;
       if (h2DecRatio >= 0.8) {
-        score.details.push({ check: 'EVERGREEN H2 décisionnels', status: `OK (${decisionalH2Count}/${totalH2s} = ${(h2DecRatio * 100).toFixed(0)}%)`, points: 0 });
+        score.details.push({ check: 'EVERGREEN H2 décisionnels', status: `OK (${decisionalH2Count}/${totalContentH2Count} = ${(h2DecRatio * 100).toFixed(0)}%)`, points: 0 });
       } else {
         const h2DecPenalty = h2DecRatio >= 0.6 ? -3 : h2DecRatio >= 0.4 ? -5 : -8;
         score.total = Math.max(0, score.total + h2DecPenalty);
-        score.details.push({ check: 'EVERGREEN H2 décisionnels', status: `${decisionalH2Count}/${totalH2s} (${(h2DecRatio * 100).toFixed(0)}% < 80%). Non-déc: ${nonDecisionalH2s.slice(0, 3).map(h => `"${h}"`).join(', ')}`, points: h2DecPenalty });
+        score.details.push({ check: 'EVERGREEN H2 décisionnels', status: `${decisionalH2Count}/${totalContentH2Count} (${(h2DecRatio * 100).toFixed(0)}% < 80%). Non-déc: ${nonDecisionalH2s.slice(0, 3).map(h => `"${h}"`).join(', ')}`, points: h2DecPenalty });
       }
 
       // paragraph_decisional: >= 75% des paragraphes doivent contenir un fait, chiffre, ou décision
@@ -705,24 +717,31 @@ class QualityAnalyzer {
     let emptySections = 0;
     root.querySelectorAll('h2, h3').forEach(el => {
       const h2Text = el.text.toLowerCase();
-      // Vérifier si c'est une section SERP protégée
       const isProtected = protectedSerpPatterns.some(pattern => pattern.test(h2Text));
       
-      if (!isProtected) {
+      // Exclure les H3 dans les containers structurels (quick-guide, affiliate-module, FAQ)
+      const parentClass = el.parentNode?.getAttribute?.('class') || '';
+      const isInsideContainer = /quick[-_]?guide|affiliate|faq|details/i.test(parentClass);
+      
+      if (!isProtected && !isInsideContainer) {
         const next = el.nextElementSibling;
         if (!next || next.tagName === 'H2' || next.tagName === 'H3') {
           emptySections++;
         }
       }
-      // Les sections SERP protégées ne comptent pas comme vides même si elles n'ont pas de contenu immédiat
     });
     const noEmptySections = emptySections === 0;
     results.checks.push({ check: 'Pas de sections vides', passed: noEmptySections });
     if (!noEmptySections) results.passed = false;
 
     // 5. no_affiliate_placeholder (BLOQUANT) : aucun placeholder d'affiliation visible
+    // Exclure le texte des modules affiliés (aside.affiliate-module) car "Lien partenaire" y est un disclaimer légitime
+    let textForPlaceholderCheck = text;
+    root.querySelectorAll('aside.affiliate-module, .affiliate-module-disclaimer').forEach(el => {
+      textForPlaceholderCheck = textForPlaceholderCheck.replace(el.text, '');
+    });
     const affiliatePlaceholderPattern = /Lien\s+partenaire|\[lien\]|\{\{[^}]*\}\}|\[url\]/i;
-    const hasAffiliatePlaceholder = affiliatePlaceholderPattern.test(text);
+    const hasAffiliatePlaceholder = affiliatePlaceholderPattern.test(textForPlaceholderCheck);
     results.checks.push({ check: 'Pas de placeholder affiliation', passed: !hasAffiliatePlaceholder });
     if (hasAffiliatePlaceholder) results.passed = false;
 

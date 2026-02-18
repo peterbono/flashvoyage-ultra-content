@@ -8740,14 +8740,14 @@ class ArticleFinalizer {
     // Lookup dynamique destination → code IATA via BDD OpenFlights (5600+ entrées)
     const expectedCode = lookupIATA(finalDestLower);
     
-    // Extraire destinations des widgets (chercher codes aéroports dans les scripts/widgets)
-    // Regex améliorée : capture uniquement le code IATA APRÈS le séparateur (= ou :)
-    const widgetMatches = html.match(/(?:origin|destination|from|to|departure|arrival)\s*[=:]\s*["']?([A-Z]{3})["']?/gi) || [];
-    const detectedCodes = widgetMatches.map(m => {
-      // Extraire seulement la valeur après = ou :
-      const valueMatch = m.match(/[=:]\s*["']?([A-Z]{3})["']?$/i);
-      return valueMatch ? valueMatch[1].toUpperCase() : null;
-    }).filter(Boolean);
+    // Extraire destinations uniquement depuis les shortcodes [fv_widget ...] pour éviter les faux positifs
+    // sur data-destination="com" ou autres attributs HTML
+    const fvWidgetShortcodes = html.match(/\[fv_widget[^\]]*\]/gi) || [];
+    const detectedCodes = [];
+    fvWidgetShortcodes.forEach(shortcode => {
+      const destMatch = shortcode.match(/destination\s*=\s*["']?([A-Z]{3})["']?/i);
+      if (destMatch) detectedCodes.push(destMatch[1].toUpperCase());
+    });
     
     // Vérifier cohérence
     const mismatches = [];

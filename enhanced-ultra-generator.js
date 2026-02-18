@@ -788,6 +788,42 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           const prePublishScore = qualityAnalyzer.getGlobalScore(contentForScoring, editorialMode);
           const prePublishPct = parseFloat(prePublishScore.globalScore);
           console.log(`\n📊 PRE-PUBLISH QUALITY GATE: ${prePublishPct}% (seuil: 85%) — blocking: ${prePublishScore.blockingPassed ? 'OK' : 'FAIL'}`);
+          // Détail des checks bloquants pour diagnostic
+          if (!prePublishScore.blockingPassed && prePublishScore.categories?.blocking?.checks) {
+            prePublishScore.categories.blocking.checks.forEach(chk => {
+              const icon = chk.passed ? '✅' : '❌';
+              console.log(`   ${icon} BLOCKING: ${chk.name} = ${chk.passed ? 'PASS' : 'FAIL'}`);
+            });
+          }
+          // Détail Content Writing pour diagnostic
+          if (prePublishScore.categories?.contentWriting?.details) {
+            const cw = prePublishScore.categories.contentWriting;
+            console.log(`   📝 CONTENT_WRITING: ${cw.percentage.toFixed(0)}% (${cw.score}/${cw.maxScore})`);
+            cw.details.forEach(d => {
+              console.log(`      ${d.score >= d.max * 0.7 ? '✅' : '⚠️'} ${d.name}: ${d.score}/${d.max}`);
+            });
+            if (cw.penalties && cw.penalties.length > 0) {
+              cw.penalties.forEach(p => console.log(`      ❌ PENALTY: ${p.name} = ${p.value}`));
+            }
+          }
+
+          // KPI Tests K1-K10: rapport detaille
+          try {
+            const { runAllKPITests } = await import('./tests/kpi-quality.test.js');
+            const kpiResults = await runAllKPITests(finalizedArticle.content, {
+              angleHook: finalizedArticle.angle?.primary_angle?.hook || null,
+              allowedNumberTokens: finalizedArticle._truthPack?.allowedNumberTokens || null,
+              editorialMode,
+              title: finalizedArticle.title
+            });
+            console.log(`📋 KPI TESTS: ${kpiResults.summary.passed} PASS, ${kpiResults.summary.failed} FAIL, ${kpiResults.summary.skipped} SKIP`);
+            Object.entries(kpiResults.results).forEach(([k, v]) => {
+              const icon = v.status === 'PASS' ? '✅' : v.status === 'FAIL' ? '❌' : '⏭️';
+              console.log(`   ${icon} ${k}: ${v.message}`);
+            });
+          } catch (kpiErr) {
+            console.warn(`⚠️ KPI tests non disponibles: ${kpiErr.message}`);
+          }
           
           if (prePublishPct < 85 || !prePublishScore.blockingPassed) {
             console.warn(`⚠️ QUALITY_GATE_BLOCKED: score ${prePublishPct}% < 85% ou bloquants FAIL. Publication différée.`);

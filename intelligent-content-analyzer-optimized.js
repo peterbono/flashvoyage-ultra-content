@@ -3156,9 +3156,14 @@ INTERDIT ABSOLUMENT:
 - NE PAS supprimer de sections ou paragraphes
 - NE PAS introduire de nouveau lieu, nouveau prix, nouveau scenario non present dans l'article
 
-FORMAT: Retourne UNIQUEMENT le HTML brut corrigé, commençant directement par <h2> ou <p>.`;
+FORMAT DE RÉPONSE (CRITIQUE):
+- Retourne L'INTÉGRALITÉ du contenu HTML corrigé — du premier au dernier caractère.
+- Le contenu retourné DOIT avoir une longueur similaire à l'entrée (±10%).
+- Commence directement par la première balise HTML (<h2>, <div>, <p>).
+- NE PAS résumer, NE PAS tronquer, NE PAS retourner seulement les parties modifiées.`;
 
-    const userPrompt = `Corrige les anomalies dans ce contenu HTML pour l'article sur "${destination}" (thème: ${theme}):
+    const userPrompt = `Corrige les anomalies dans ce contenu HTML pour l'article sur "${destination}" (thème: ${theme}).
+IMPORTANT: Le contenu fait ${rawContent.length} caractères. Ta réponse doit faire une longueur SIMILAIRE (retourne TOUT le contenu, pas juste les parties modifiées).
 
 ${rawContent}`;
 
@@ -3171,8 +3176,8 @@ ${rawContent}`;
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt }
           ],
-          max_tokens: 8000,
-          temperature: 0.3 // Plus déterministe pour l'édition
+          max_tokens: 16000,
+          temperature: 0.3
         },
         sourceText: rawContent,
         article: { content: rawContent },
