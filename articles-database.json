@@ -1,7 +1,26 @@
 {
-  "crawled_at": "2026-02-18T23:09:41.236Z",
-  "total_articles": 9,
+  "crawled_at": "2026-02-20T23:40:29.613Z",
+  "total_articles": 10,
   "articles": [
+    {
+      "id": 2916,
+      "title": "Voyager au Japon : eSIM et frais cachés à connaître",
+      "url": "https://flashvoyage.com/voyager-au-japon-esim-et-frais-caches-a-connaitre/",
+      "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
+      "excerpt": "Points clés de ce témoignage Japon, 3 mois, eSIM, connectivité fiable, budget modéré Entre les néons vibrants de Shibuya et la qui étude des temples de Kyoto, t&#8230;\n",
+      "content": "\nPoints clés de ce témoignage\nJapon, 3 mois, e SIM, connectivité fiable, budget modéré\n\nEntre les néons vibrants de Shibuya et la quiétude des temples de Kyoto, trouver une connexion internet fiable au Japon peut être un défi insoupçonné.\nAvec un budget limité de ~18 euros pour ton e SIM, chaque choix devient un arbitrage crucial entre confort et durée de connexion. On en parle dans Voyager au Japon : Quand voir les cerisiers sans la foule.\n\nVoyager à travers l&#8217;Asie avec une e SIM, c&#8217",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-20T23:39:39",
+      "modified": "2026-02-20T23:40:24",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2916.jpg"
+    },
     {
       "id": 2910,
       "title": "Les 3 coûts cachés des espaces de coworking à Ho Chi Minh City",

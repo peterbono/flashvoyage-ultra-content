@@ -2,7 +2,7 @@
 
 /**
  * IMAGE SOURCE MANAGER
- * Cascade multi-source: Unsplash > Flickr CC-BY > Pexels
+ * Cascade multi-source: Pexels > Flickr CC-BY (Unsplash desactive — app retiree)
  * 
  * Chaque source retourne un format unifié:
  * { url, width, height, alt, photographer, photographerUrl, source, sourceUrl, license, sourceId }
@@ -46,7 +46,7 @@ export default class ImageSourceManager {
   // ─────────────────────────────────────────────────────────
 
   /**
-   * Recherche cascade: Unsplash → Flickr CC-BY → Pexels
+   * Recherche cascade: Pexels → Flickr CC-BY (Unsplash desactive)
    * @param {string} query - Termes de recherche
    * @param {Object} options - { preferSource, minWidth, orientation }
    * @returns {Object|null} Image au format unifié ou null
@@ -54,10 +54,10 @@ export default class ImageSourceManager {
   async searchCascade(query, options = {}) {
     const { preferSource, minWidth = 800, orientation = 'landscape' } = options;
 
-    // Ordre de la cascade (peut être overridé)
+    const defaultOrder = ['pexels', 'flickr'];
     const sources = preferSource
-      ? [preferSource, ...['unsplash', 'flickr', 'pexels'].filter(s => s !== preferSource)]
-      : ['unsplash', 'flickr', 'pexels'];
+      ? [preferSource, ...defaultOrder.filter(s => s !== preferSource)]
+      : defaultOrder;
 
     for (const source of sources) {
       try {

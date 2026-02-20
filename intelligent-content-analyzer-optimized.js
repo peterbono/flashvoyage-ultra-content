@@ -1581,7 +1581,7 @@ ${marketingSection}
 FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <strong>.
 LONGUEUR OBLIGATOIRE: MINIMUM 2500 mots, IDÉAL 3000 mots. Un article EVERGREEN de moins de 1500 mots sera AUTOMATIQUEMENT REJETÉ. Pas de minimum par section, mais le total DOIT dépasser 2500 mots.
 
-🚨 EXPLOITATION DES DONNÉES EXTRAITES: INTÈGRE dans "developpement" les détails temporels, lieux, chiffres, entités extraites. UTILISE 90% minimum des données fournies. Pas d'invention.
+🚨 EXPLOITATION DES DONNÉES EXTRAITES: INTÈGRE dans "developpement" les détails temporels, lieux, chiffres, entités extraites. UTILISE 90% minimum des données fournies. Pas d'invention. NE JAMAIS inventer de prix, montants en euros, distances ou durées non présents dans la source. Si un coût n'est pas sourcé, utilise des formulations vagues ("quelques euros", "un budget modeste").
 
 📍 MARQUEURS ÉDITORIAUX (à insérer dans "developpement") :
 - <!-- FV:CTA_SLOT reason="description du problème résolu" --> : 2-4 max, aux emplacements où un widget d'affiliation serait pertinent.
@@ -1707,6 +1707,8 @@ ${correctionBlock}
 
 🚨 GARDE-FOUS EXPLICITES (SOURCE OF TRUTH) :
 - ❌ Pas d'invention : aucun lieu, chiffre, durée ou risque inventé ; tout doit être sourcé ou issu des données extraites
+- ❌ NE JAMAIS INVENTER DE PRIX OU MONTANTS EN EUROS : si un coût n'est PAS dans la source Reddit ou le truth pack, utilise des formulations vagues ("quelques euros", "un budget modeste", "une somme raisonnable"). Les prix inventés comme "37 euros", "62 euros", "10 euros par jour" seront DÉTECTÉS et l'article sera REJETÉ.
+- ❌ NE JAMAIS MENTIONNER DE LIEU NON SOURCÉ : si une ville ou destination n'apparaît PAS dans le post Reddit source ni dans les lieux autorisés, NE LA MENTIONNE PAS. Un lieu inventé bloque la publication.
 - ❌ ANTI-DÉCONTEXTUALISATION (CRITIQUE) : un chiffre de la source ne peut JAMAIS être utilisé dans un contexte différent de l'original. Exemple INTERDIT : si la source dit "$50-100/month for coworking spaces", tu NE PEUX PAS écrire "vivre avec 50 USD par mois" ou utiliser 50 USD dans le titre comme budget de vie. Le chiffre 50 USD se rapporte au COWORKING, pas au coût de la vie. Chaque chiffre garde son contexte d'origine.
 - ❌ Pas d'angles plats : toute section doit répondre à une vraie question utilisateur
 - ✅ SEO before affiliate : résoudre l'intention du lecteur avant de proposer un partenaire
@@ -2927,7 +2929,7 @@ TON ET STYLE :
 
 INTERDIT ABSOLUMENT :
 - Introduire un NOUVEAU lieu non liste dans "Lieux autorises"
-- Introduire un NOUVEAU prix ou chiffre non present dans "Nombres autorises"
+- Introduire un NOUVEAU prix ou chiffre non present dans "Nombres autorises". Si tu veux parler d'un cout non source, utilise "quelques euros", "un budget modeste", "une somme raisonnable" — JAMAIS un montant precis invente.
 - Inventer un nouvel exemple concret, une anecdote ou un scenario non source
 - Ajouter un paragraphe purement descriptif sans prise de position
 - Creer des paragraphes courts (< 3 phrases) — fusionne-les avec le paragraphe precedent ou suivant`;
@@ -3217,6 +3219,7 @@ CORRECTIONS SUPPLEMENTAIRES (si detectees) :
 INTERDIT ABSOLUMENT:
 - NE PAS wrapper le HTML dans \`\`\`html ou \`\`\`
 - NE PAS ajouter d'explications
+- NE PAS inventer de prix, montants en euros, distances ou durees non presents dans l'article original. Si un cout n'est pas source, utilise "quelques euros", "un budget modeste".
 - NE PAS modifier les attributs des balises HTML
 - NE PAS supprimer de sections ou paragraphes
 - NE PAS introduire de nouveau lieu, nouveau prix, nouveau scenario non present dans l'article

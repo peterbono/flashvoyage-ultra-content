@@ -2103,22 +2103,15 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         }
       }
 
-      // Uploader les images inline vers WordPress (sauf Unsplash: hotlink obligatoire par API Terms)
+      // Uploader toutes les images inline vers WordPress (Pexels/Flickr permettent le re-upload)
       if (article.inlineImages && article.inlineImages.length > 0) {
-        const reuploadable = article.inlineImages.filter(img => img.source !== 'unsplash');
-        const hotlinked = article.inlineImages.filter(img => img.source === 'unsplash');
-
-        if (hotlinked.length > 0) {
-          console.log(`🖼️ ${hotlinked.length} image(s) Unsplash conservée(s) en hotlink (conformité API Terms)`);
-        }
-
-        if (reuploadable.length > 0) {
-          console.log(`🖼️ Upload de ${reuploadable.length} image(s) inline (Flickr/Pexels)...`);
+        {
+          console.log(`🖼️ Upload de ${article.inlineImages.length} image(s) inline vers WordPress...`);
           let updatedContent = publishedArticle.content?.rendered || article.content;
           let uploadedCount = 0;
 
-          for (let i = 0; i < reuploadable.length; i++) {
-            const img = reuploadable[i];
+          for (let i = 0; i < article.inlineImages.length; i++) {
+            const img = article.inlineImages[i];
             try {
               const imgResponse = await axios.get(img.url, { responseType: 'arraybuffer' });
               const ext = img.url.match(/\.(jpe?g|png|webp)/i)?.[1] || 'jpg';
@@ -2155,7 +2148,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
                   'Content-Type': 'application/json'
                 }
               });
-              console.log(`✅ ${uploadedCount} image(s) Flickr/Pexels uploadée(s), URLs mises à jour`);
+              console.log(`✅ ${uploadedCount} image(s) inline uploadée(s), URLs mises à jour`);
             } catch (updateErr) {
               console.warn('⚠️ Erreur mise à jour contenu avec images inline:', updateErr.message);
             }

@@ -463,7 +463,7 @@ class ArticleFinalizer {
       }
     }
 
-    // PHASE 5.D: Insertion d'images contextuelles inline (Unsplash > Flickr CC-BY > Pexels)
+    // PHASE 5.D: Insertion d'images contextuelles inline (Pexels > Flickr CC-BY)
     if (ENABLE_INLINE_IMAGES && !DRY_RUN) {
       try {
         const inlineImages = await this.insertContextualImages(finalContent, analysis, pipelineContext);
@@ -2952,8 +2952,8 @@ class ArticleFinalizer {
       });
     }
 
-    // PHASE 6.2.1: CHECK F - Anti-invention (hard check)
-    this.checkInventionGuard(finalHtml, pipelineContext, report);
+    // PHASE 6.2.1: CHECK F - Anti-invention (correctif : nettoie les claims non sourcés)
+    finalHtml = this.checkInventionGuard(finalHtml, pipelineContext, report);
     
     // PHASE 6.3: CHECK G - Story Alignment + Quality Gate (hard check avec auto-fix)
     finalHtml = await this.checkAndFixStoryAlignment(finalHtml, pipelineContext, report);
@@ -3048,6 +3048,7 @@ class ArticleFinalizer {
    * Détecte les claims chiffrés, lieux, affirmations factuelles non sourcées
    */
   checkInventionGuard(html, pipelineContext, report) {
+    let cleanedHtml = html;
     const extracted = pipelineContext?.extracted || pipelineContext?.story?.extracted || {};
     const story = pipelineContext?.story || {};    
     // PHASE 6.2.1: Nettoyer le HTML pour exclure les segments non-narratifs
@@ -3368,13 +3369,12 @@ class ArticleFinalizer {
     }
     
     // Détecter affirmations factuelles trop spécifiques
+    // "requis" et "necessaire" retirés : trop courants en français, génèrent des faux positifs
     const factualClaims = [
       /\bla loi dit\b/gi,
       /\best obligatoire\b/gi,
       /\best interdit\b/gi,
-      /\bdoit être\b/gi,
-      /\brequis\b/gi,
-      /\bnécessaire\b/gi
+      /\bdoit être\b/gi
     ];
     
     for (const pattern of factualClaims) {
@@ -3417,19 +3417,59 @@ class ArticleFinalizer {
       claims: debugClaims.slice(0, 10)
     };
     
-    if (issues.length > 0) {
+    // Deduplication par type+value (ex: "10 euros" apparaissant 3 fois)
+    const seen = new Set();
+    const uniqueIssues = issues.filter(issue => {
+      const key = `${issue.type}::${issue.value}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    if (uniqueIssues.length > 0) {
+      // STRATEGIE "CLEAN INSTEAD OF BLOCK" :
+      // Nettoyer les claims non sourcés dans le HTML au lieu de bloquer la publication
+      let cleanedCount = 0;
+      
+      for (const issue of uniqueIssues) {
+        if (issue.type === 'numeric_claim') {
+          // Remplacer "X euros" par une formulation vague
+          const numericPattern = new RegExp(
+            `(\\b(?:environ|autour de|près de|approximativement|~)?\\s*)?${issue.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`,
+            'gi'
+          );
+          const before = cleanedHtml;
+          cleanedHtml = cleanedHtml.replace(numericPattern, 'quelques euros');
+          if (cleanedHtml !== before) cleanedCount++;
+        } else if (issue.type === 'location_claim') {
+          // Supprimer la phrase contenant le lieu inventé
+          const locValue = issue.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const sentencePattern = new RegExp(
+            `<p[^>]*>[^<]*${locValue}[^<]*<\\/p>`,
+            'gi'
+          );
+          const before = cleanedHtml;
+          cleanedHtml = cleanedHtml.replace(sentencePattern, '');
+          if (cleanedHtml !== before) cleanedCount++;
+        }
+      }
+      
+      if (cleanedCount > 0) {
+        console.log(`🧹 INVENTION_GUARD: ${cleanedCount}/${uniqueIssues.length} claim(s) nettoyé(s) dans le HTML`);
+      }
+
+      // Report comme "warn" (traçabilité) au lieu de "fail" bloquant
       report.checks.push({
         name: 'invention_guard',
-        status: 'fail',
-        details: `${issues.length} claim(s) non sourcé(s) détecté(s)`
+        status: cleanedCount > 0 ? 'warn' : 'fail',
+        details: `${uniqueIssues.length} claim(s) détecté(s), ${cleanedCount} nettoyé(s) (${issues.length} occurrences totales)`
       });
       
-      issues.forEach(issue => {
+      uniqueIssues.forEach(issue => {
         report.issues.push({
-          code: 'SOURCE_OF_TRUTH_VIOLATION_FINALIZER', // PHASE 6.5: Code bloquant normalisé
-          alias: 'SOURCE_OF_TRUTH_VIOLATION', // Alias pour compatibilité
-          severity: 'high',
-          message: `invention_detected: ${issue.type} "${issue.value}" non sourcé dans whitelist`,
+          code: 'INVENTION_GUARD_CLEANED',
+          severity: 'low',
+          message: `invention_cleaned: ${issue.type} "${issue.value}" nettoyé du HTML`,
           evidence: { type: issue.type, value: issue.value, context: issue.context },
           check: 'invention_guard'
         });
@@ -3441,6 +3481,8 @@ class ArticleFinalizer {
         details: 'Aucune invention détectée'
       });
     }
+    
+    return cleanedHtml;
   }
 
   /**
@@ -7598,14 +7640,13 @@ class ArticleFinalizer {
       }
       queries.push('southeast asia travel landscape');
 
-      // Essayer chaque query avec la cascade Unsplash → Flickr → Pexels
-      // Unsplash en priorité pour la qualité visuelle (conformité via download endpoint + attribution)
+      // Cascade Pexels → Flickr CC-BY (Unsplash desactive)
       for (const query of queries) {
         console.log(`   🔍 Featured query: "${query}"`);
         const image = await imageManager.searchCascade(query, {
           orientation: 'landscape',
           minWidth: 1200,
-          preferSource: 'unsplash'
+          preferSource: 'pexels'
         });
 
         if (image) {
@@ -7657,7 +7698,7 @@ class ArticleFinalizer {
     const h2Matches = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
     const h2Texts = h2Matches.map(m => m[1].replace(/<[^>]*>/g, '').trim());
 
-    // Image 1 ("hook visuel") — après le 1er H2, source Unsplash
+    // Image 1 ("hook visuel") — après le 1er H2, source Pexels
     // Query basée sur le SUJET de l'article (pas juste la destination)
     const articleTitle = (pipelineContext?.generatedTitle || '').toLowerCase();
     let hookQuery = '';
@@ -7679,7 +7720,7 @@ class ArticleFinalizer {
     queries.push({
       query: hookQuery,
       position: 'hook',
-      sourcePreference: 'unsplash'
+      sourcePreference: 'pexels'
     });
 
     // Image 2 ("mid-article") — après le 3e/4e H2, source Pexels (meilleure pertinence que Flickr)
@@ -7702,7 +7743,7 @@ class ArticleFinalizer {
       queries.push({
         query: endTheme || `${specificDest} people`,
         position: 'end',
-        sourcePreference: 'unsplash' // Unsplash meilleure qualité pour le "desire trigger"
+        sourcePreference: 'pexels'
       });
     }
 

@@ -49,14 +49,28 @@ export function renderAffiliateModule(placement, geo_defaults) {
   // P3: Contextualiser avec la friction de l'Angle Hunter si disponible
   const frictionContext = placement.payload?.friction_moment || null;
   const frictionCost = placement.payload?.friction_cost || null;
+  const isAngleHunter = placement.payload?.source === 'angle_hunter';
 
   let diagnostic;
-  if (frictionContext && frictionCost) {
-    // Utiliser le contexte de friction pour un CTA ancré dans la tension réelle de l'article
+  if (isAngleHunter && frictionCost && frictionCost.length >= 10) {
+    // Titre contextuel construit depuis cost_of_inaction
+    let contextualTitle = frictionCost;
+    if (!/[.!?]$/.test(contextualTitle)) {
+      contextualTitle = contextualTitle.replace(/^(.)/,  (_, c) => c.toUpperCase());
+    }
+    if (contextualTitle.length > 120) {
+      contextualTitle = contextualTitle.substring(0, 117) + '...';
+    }
+
+    // Description contextuelle depuis friction_moment + phrase diagnostic
     const baseDiag = diagnosticPhrases[placement.id] || { title: 'Utile pour ton voyage', phrase: '' };
+    const contextualPhrase = frictionContext
+      ? `${frictionContext} ${baseDiag.phrase}`
+      : baseDiag.phrase;
+
     diagnostic = {
-      title: baseDiag.title,
-      phrase: `${frictionContext} ${frictionCost} ${baseDiag.phrase}`
+      title: contextualTitle,
+      phrase: contextualPhrase
     };
   } else {
     diagnostic = diagnosticPhrases[placement.id] || {
