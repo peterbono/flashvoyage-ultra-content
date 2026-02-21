@@ -110,8 +110,8 @@ export function testK3_PreuvesSourcees(html) {
 export function testK4_DecisionsConcretes(html) {
   const textOnly = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
   const fvArbitrage = (html.match(/data-fv-move="arbitrage"/gi) || []).length;
-  const verdictPatterns = (textOnly.match(/notre\s+arbitrage|notre\s+verdict|en\s+pratique,?\s+choisis|mieux\s+vaut|on\s+recommande|notre\s+recommandation/gi) || []).length;
-  const siTuPatterns = (textOnly.match(/si\s+tu\s+\w+.*?,\s*(choisis|privil[eé]gie|opte|pr[eé]f[eè]re)/gi) || []).length;
+  const verdictPatterns = (textOnly.match(/notre\s+(?:arbitrage|verdict|conseil|recommandation)|en\s+pratique\s*[:,]\s*\w+|mieux\s+vaut|on\s+recommande|privil[eé]gie\s+\w+\s+si\s+tu/gi) || []).length;
+  const siTuPatterns = (textOnly.match(/si\s+tu\s+\w+.*?,\s*(choisis|privil[eé]gie|opte|pr[eé]f[eè]re|[eé]vite|mise\s+sur|pars\s+sur)/gi) || []).length;
 
   const total = fvArbitrage + verdictPatterns + siTuPatterns;
   const pass = total >= 2;

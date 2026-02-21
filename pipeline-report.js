@@ -316,8 +316,10 @@ class PipelineReport {
           blocking: finalArticle.antiHallucinationReport.blocking || false,
           reasons: finalArticle.antiHallucinationReport.reasons || []
         } : null,
-        inlineImages: finalArticle.inlineImages || [], // Propager images inline pour upload WP
-        featuredImage: finalArticle.featuredImage || null // Image featured pour header WordPress
+        inlineImages: finalArticle.inlineImages || [],
+        featuredImage: finalArticle.featuredImage || null,
+        angle: finalArticle.angle || null,
+        _truthPack: finalArticle._truthPack || null
       };
     }
 

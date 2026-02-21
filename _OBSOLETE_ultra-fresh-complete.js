@@ -355,42 +355,154 @@ class UltraFreshComplete {
     this.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36';
   }
   
-  // FIX 2: Cascade JSON -> RSS -> fixtures pour Reddit
+  // Cascade OAuth -> JSON anonyme -> RSS -> fixtures pour Reddit
   async fetchRedditWithCascade(subreddit, keywords, extractGeoMeta, computeSmartScore, calculateRelevance, generateWidgetPlan, loadSubredditStats, writeSmartAudit) {
-    // 1) FORCE_OFFLINE doit forcer Reddit en fixtures
     const forceOffline = FORCE_OFFLINE;
     const forceFixtures = process.env.FLASHVOYAGE_FORCE_FIXTURES === '1';
-    // Déterminer le fichier de fixture selon le subreddit
     let fixtureFile;
     if (subreddit === 'travel') {
       fixtureFile = './data/fixtures/reddit-travel.json';
     } else if (subreddit === 'digitalnomad') {
       fixtureFile = './data/fixtures/reddit-digitalnomad.json';
     } else {
-      // Pour les nouveaux subreddits, utiliser le fixture digitalnomad par défaut
       fixtureFile = './data/fixtures/reddit-digitalnomad.json';
     }
     
-    // Si FORCE_OFFLINE=1, retourner directement les fixtures (aucun fetch réseau)
     if (forceOffline) {
       console.log(`🔒 FORCE_OFFLINE=1: utilisation fixtures Reddit pour r/${subreddit}`);
       return this.loadRedditFixtures(fixtureFile, subreddit, keywords, extractGeoMeta, generateWidgetPlan);
     }
+
+    // Helper: filtrer et enrichir les posts bruts Reddit en articles exploitables
+    const processRedditPosts = (allPosts) => {
+      const relevantPosts = [];
+      const genericKeywords = ['asia', 'southeast asia', 'east asia', 'backpacking', 'solo travel', 'travel', 'trip', 'journey'];
+      
+      allPosts.forEach(post => {
+        const data = post.data;
+        const title = data.title.toLowerCase();
+        const selftext = (data.selftext || '').toLowerCase();
+        
+        const wordCount = selftext.split(/\s+/).filter(w => w.length > 0).length;
+        const hasContent = data.is_self && (
+          wordCount >= 200 ||
+          data.num_comments >= 20 ||
+          (title.length > 100 && wordCount >= 100)
+        );
+        
+        if (!hasContent) return;
+        
+        const isRelevant = keywords.some(keyword => 
+          title.includes(keyword) || selftext.includes(keyword)
+        ) || genericKeywords.some(keyword =>
+          title.includes(keyword) || selftext.includes(keyword)
+        );
+        
+        if (isRelevant) {
+          const smart = computeSmartScore(data, loadSubredditStats(`r/${subreddit}`));
+          const audit = {
+            post_id: data.id,
+            subreddit: `r/${subreddit}`,
+            title: data.title,
+            url: 'https://reddit.com' + data.permalink,
+            created_utc: data.created_utc,
+            age_hours: Math.round((Date.now() - data.created_utc * 1000) / 3600000),
+            scores: smart.scores,
+            total: Math.round(smart.total),
+            decision: smart.decision,
+            contextual: smart.contextual || false,
+            reasons: smart.reasons || []
+          };
+          writeSmartAudit(audit);
+          
+          const rawSelftext = data.selftext || '';
+          const source_text = `${data.title}\n\n${rawSelftext}`;
+          
+          relevantPosts.push({
+            id: data.id,
+            subreddit: `r/${subreddit}`,
+            title: data.title,
+            link: 'https://reddit.com' + data.permalink,
+            content: rawSelftext,
+            source_text: source_text,
+            date: new Date(data.created_utc * 1000).toISOString(),
+            source: `Reddit r/${subreddit}`,
+            type: subreddit === 'travel' ? 'community' : 'nomade',
+            relevance: Math.min(90, (calculateRelevance(data.title, rawSelftext, keywords) + 30)),
+            upvotes: data.ups,
+            comments: data.num_comments,
+            author: data.author,
+            created_utc: data.created_utc,
+            smartScore: Math.round(smart.total),
+            smartDecision: smart.decision,
+            smartScores: smart.scores,
+            affiliateSlots: smart.affiliate_slots || [],
+            geo: extractGeoMeta(data.title),
+            widget_plan: generateWidgetPlan(smart.affiliate_slots || [], extractGeoMeta(data.title)),
+            source_reliability: 1.0,
+            is_degraded_source: false
+          });
+        }
+      });
+      return relevantPosts;
+    };
+
+    // A. OAuth API (oauth.reddit.com) — fonctionne depuis les IPs datacenter
+    if (!forceFixtures && REDDIT_API_CONFIG.clientId && REDDIT_API_CONFIG.clientSecret && REDDIT_API_CONFIG.username && REDDIT_API_CONFIG.password) {
+      try {
+        const accessToken = await this.getValidRedditToken();
+        let allPosts = [];
+        let after = null;
+        let pageCount = 0;
+        const maxPages = 3;
+        
+        while (pageCount < maxPages) {
+          let oauthUrl = `https://oauth.reddit.com/r/${subreddit}/hot.json?limit=100&raw_json=1`;
+          if (after) oauthUrl += `&after=${after}`;
+          
+          const response = await axios.get(oauthUrl, {
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'User-Agent': REDDIT_API_CONFIG.userAgent
+            },
+            timeout: 15000
+          });
+          
+          const posts = response.data.data?.children || [];
+          if (posts.length === 0) break;
+          
+          allPosts.push(...posts);
+          after = response.data.data?.after;
+          pageCount++;
+          
+          if (pageCount < maxPages && after) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+          }
+        }
+        
+        const relevantPosts = processRedditPosts(allPosts);
+        if (relevantPosts.length > 0) {
+          console.log(`✅ REDDIT_OK: mode=oauth count=${relevantPosts.length} sub=r/${subreddit} (${pageCount} pages, ${allPosts.length} posts)`);
+          return relevantPosts;
+        }
+        console.log(`   ℹ️ OAuth OK mais 0 posts pertinents pour r/${subreddit} (${allPosts.length} posts scannés)`);
+      } catch (error) {
+        const status = error.response?.status || 'unknown';
+        console.log(`⚠️ REDDIT_OAUTH_FAIL: status=${status} sub=r/${subreddit} reason=${error.message}`);
+      }
+    }
     
-    // A. Tenter endpoint JSON avec pagination
+    // B. JSON anonyme (www.reddit.com) — fallback si OAuth indisponible
     if (!forceFixtures) {
       try {
         let allPosts = [];
         let after = null;
         let pageCount = 0;
-        const maxPages = 5; // Récupérer jusqu'à 5 pages (500 articles max)
+        const maxPages = 5;
         
-        // Boucle de pagination pour récupérer plusieurs pages
         while (pageCount < maxPages) {
           let jsonUrl = `https://www.reddit.com/r/${subreddit}/hot.json?limit=100&raw_json=1`;
-          if (after) {
-            jsonUrl += `&after=${after}`;
-          }
+          if (after) jsonUrl += `&after=${after}`;
           
           const response = await axios.get(jsonUrl, {
             headers: getRealisticRedditHeaders(),
@@ -398,122 +510,33 @@ class UltraFreshComplete {
           });
           
           const posts = response.data.data?.children || [];
-          
-          if (posts.length === 0) {
-            console.log(`   ℹ️ Fin des pages atteinte pour r/${subreddit} (page ${pageCount + 1})`);
-            break;
-          }
+          if (posts.length === 0) break;
           
           allPosts.push(...posts);
           after = response.data.data?.after;
           pageCount++;
           
-          console.log(`   📄 Page ${pageCount}/${maxPages} récupérée: ${posts.length} posts (total: ${allPosts.length})`);
-          
-          // Délai entre les pages pour éviter le rate limiting (1 seconde)
           if (pageCount < maxPages && after) {
             await new Promise(resolve => setTimeout(resolve, 1000));
           }
         }
         
-        const relevantPosts = [];
-        
-        // Mots-clés génériques pour accepter plus de posts
-        const genericKeywords = ['asia', 'southeast asia', 'east asia', 'backpacking', 'solo travel', 'travel', 'trip', 'journey'];
-        
-        allPosts.forEach(post => {
-          const data = post.data;
-          const title = data.title.toLowerCase();
-          const selftext = (data.selftext || '').toLowerCase();
-          
-          // FILTRE: Relâché - Accepter posts avec contenu substantiel OU beaucoup de commentaires OU titre descriptif
-          // Minimum 200 mots (réduit de 400) OU beaucoup de commentaires OU titre descriptif + contenu minimal
-          const wordCount = selftext.split(/\s+/).filter(w => w.length > 0).length;
-          const hasContent = data.is_self && (
-            wordCount >= 200 || // Réduit de 400 à 200 mots
-            data.num_comments >= 20 || // Beaucoup de commentaires = discussion intéressante
-            (title.length > 100 && wordCount >= 100) // Titre descriptif + contenu minimal
-          );
-          
-          if (!hasContent) {
-            return; // Skip ce post (trop court)
-          }
-          
-          // Élargir le filtrage par keywords : accepter posts génériques sur l'Asie même sans destination explicite
-          const isRelevant = keywords.some(keyword => 
-            title.includes(keyword) || selftext.includes(keyword)
-          ) || genericKeywords.some(keyword =>
-            title.includes(keyword) || selftext.includes(keyword)
-          );
-          
-          if (isRelevant) {
-            const smart = computeSmartScore(data, loadSubredditStats(`r/${subreddit}`));
-            const audit = {
-              post_id: data.id,
-              subreddit: `r/${subreddit}`,
-              title: data.title,
-              url: 'https://reddit.com' + data.permalink,
-              created_utc: data.created_utc,
-              age_hours: Math.round((Date.now() - data.created_utc * 1000) / 3600000),
-              scores: smart.scores,
-              total: Math.round(smart.total),
-              decision: smart.decision,
-              contextual: smart.contextual || false,
-              reasons: smart.reasons || []
-            };
-            writeSmartAudit(audit);
-            
-            // Construire source_text
-            const selftext = data.selftext || '';
-            const source_text = `${data.title}\n\n${selftext}`;
-            
-            relevantPosts.push({
-              id: data.id,
-              subreddit: `r/${subreddit}`,
-              title: data.title,
-              link: 'https://reddit.com' + data.permalink,
-              content: selftext,
-              source_text: source_text,
-              date: new Date(data.created_utc * 1000).toISOString(),
-              source: `Reddit r/${subreddit}`,
-              type: subreddit === 'travel' ? 'community' : 'nomade',
-              relevance: Math.min(90, (calculateRelevance(data.title, selftext, keywords) + 30)),
-              upvotes: data.ups,
-              comments: data.num_comments,
-              author: data.author,
-              created_utc: data.created_utc,
-              smartScore: Math.round(smart.total),
-              smartDecision: smart.decision,
-              smartScores: smart.scores,
-              affiliateSlots: smart.affiliate_slots || [],
-              geo: extractGeoMeta(data.title),
-              widget_plan: generateWidgetPlan(smart.affiliate_slots || [], extractGeoMeta(data.title)),
-              source_reliability: 1.0, // JSON live = fiable
-              is_degraded_source: false
-            });
-          }
-        });
-        
+        const relevantPosts = processRedditPosts(allPosts);
         if (relevantPosts.length > 0) {
-          console.log(`✅ REDDIT_OK: mode=json count=${relevantPosts.length} sub=r/${subreddit} (${pageCount} pages scrapées, ${allPosts.length} posts totaux)`);
+          console.log(`✅ REDDIT_OK: mode=json count=${relevantPosts.length} sub=r/${subreddit} (${pageCount} pages, ${allPosts.length} posts)`);
           return relevantPosts;
         }
       } catch (error) {
         const status = error.response?.status || 'unknown';
         console.log(`⚠️ REDDIT_FETCH_FAIL: status=${status} sub=r/${subreddit} reason=${error.message}`);
         
-        // Si 403/429/5xx, passer à RSS
-        if (status === 403 || status === 429 || (status >= 500 && status < 600)) {
-          console.log(`   → REDDIT_FALLBACK: mode=rss sub=r/${subreddit}`);
-        } else {
-          // Autre erreur, passer directement aux fixtures
-          console.log(`   → REDDIT_FALLBACK: mode=fixtures sub=r/${subreddit} reason=network_error`);
+        if (status !== 403 && status !== 429 && !(status >= 500 && status < 600)) {
           return this.loadRedditFixtures(fixtureFile, subreddit, keywords, extractGeoMeta, generateWidgetPlan);
         }
       }
     }
     
-    // B. Fallback RSS
+    // C. Fallback RSS
     if (!forceFixtures) {
       try {
         const rssUrl = `https://www.reddit.com/r/${subreddit}/.rss`;
@@ -525,12 +548,11 @@ class UltraFreshComplete {
         const xmlText = response.data;
         const relevantPosts = [];
         
-        // Parser RSS simple
         const titleMatches = xmlText.match(/<title>(.*?)<\/title>/g) || [];
         const linkMatches = xmlText.match(/<link>(.*?)<\/link>/g) || [];
         const authorMatches = xmlText.match(/<dc:creator>(.*?)<\/dc:creator>/g) || [];
         
-        for (let i = 1; i < Math.min(titleMatches.length, 25); i++) { // Skip first (feed title)
+        for (let i = 1; i < Math.min(titleMatches.length, 25); i++) {
           const title = titleMatches[i]?.replace(/<title>(.*?)<\/title>/, '$1') || '';
           const link = linkMatches[i]?.replace(/<link>(.*?)<\/link>/, '$1') || '';
           const author = authorMatches[i]?.replace(/<dc:creator>(.*?)<\/dc:creator>/, '$1') || 'unknown';
@@ -540,8 +562,7 @@ class UltraFreshComplete {
             const isRelevant = keywords.some(keyword => titleLower.includes(keyword));
             
             if (isRelevant) {
-              // RSS n'a souvent pas de selftext, donc source_text minimal
-              const source_text = `${title}\n\n${title}`; // Fallback minimal
+              const source_text = `${title}\n\n${title}`;
               
               relevantPosts.push({
                 title: title,
@@ -561,8 +582,8 @@ class UltraFreshComplete {
                 affiliateSlots: [],
                 geo: extractGeoMeta(title),
                 widget_plan: generateWidgetPlan([], extractGeoMeta(title)),
-                source_reliability: 0.6, // RSS = moins fiable (pas de selftext)
-                is_degraded_source: true // RSS sans contenu = dégradé
+                source_reliability: 0.6,
+                is_degraded_source: true
               });
             }
           }
@@ -577,7 +598,7 @@ class UltraFreshComplete {
       }
     }
     
-    // C. Fallback fixtures
+    // D. Fallback fixtures
     console.log(`⚠️ REDDIT_FALLBACK_FIXTURES: reason=${forceFixtures ? 'forced' : 'network_failed'} sub=r/${subreddit}`);
     return this.loadRedditFixtures(fixtureFile, subreddit, keywords, extractGeoMeta, generateWidgetPlan);
   }

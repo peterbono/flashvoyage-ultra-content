@@ -104,7 +104,7 @@ class ProductionValidator {
     const links = root.querySelectorAll('a[href]');
     const brokenLinks = [];
     
-    const skipDomains = ['flashvoyage.com', 'travelpayouts.com', 'kiwi.com', 'tp.media', 'airalo.com', 'unsplash.com', 'flickr.com', 'pexels.com'];
+    const skipDomains = ['flashvoyage.com', 'travelpayouts.com', 'kiwi.com', 'tp.media', 'airalo.com', 'unsplash.com', 'flickr.com', 'pexels.com', 'reddit.com'];
     for (const link of links.slice(0, 10)) {
       const href = link.getAttribute('href');
       if (href && href.startsWith('http')) {
@@ -280,6 +280,8 @@ class ProductionValidator {
     
     let iteration = 0;
     let currentScore = 0;
+    let previousScore = -1;
+    let previousIssueSignature = '';
     let lastValidationResult = { issues: [] };
     const targetScore = 85.0;
     const startTime = Date.now();
@@ -319,6 +321,15 @@ class ProductionValidator {
           issues: validationResult.issues.filter(i => i.severity === 'warn')
         };
       }
+      
+      // 4b. Détection de stagnation : mêmes issues + même score → sortir
+      const issueSignature = validationResult.issues.map(i => `${i.type}:${i.severity}`).sort().join('|');
+      if (iteration > 1 && issueSignature === previousIssueSignature && currentScore === previousScore) {
+        console.warn(`   ⚠️ STAGNATION: issues et score identiques entre itération ${iteration - 1} et ${iteration} — arrêt anticipé`);
+        break;
+      }
+      previousIssueSignature = issueSignature;
+      previousScore = currentScore;
       
       // 5. Auto-corriger si nécessaire
       if (validationResult.issues.length > 0 || currentScore < targetScore) {

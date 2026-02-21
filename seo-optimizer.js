@@ -1308,13 +1308,29 @@ class SeoOptimizer {
     const matchedLinks = this.matchInternalLinks(internalLinksIndex, seoData);
     
     if (matchedLinks.length === 0) {
-      // Aucun lien matché, retourner HTML inchangé
       console.log(`   ⚠️ SEO_INTERNAL_LINKS: aucun lien matché`);
       return html;
     }
     
+    // Déduplication : exclure les URLs déjà présentes dans le HTML
+    const existingUrls = new Set();
+    const existingLinkRegex = /<a[^>]*href="([^"]*flashvoyage[^"]*)"[^>]*>/gi;
+    let urlMatch;
+    while ((urlMatch = existingLinkRegex.exec(html)) !== null) {
+      existingUrls.add(urlMatch[1].replace(/\/$/, '').toLowerCase());
+    }
+    const freshLinks = matchedLinks.filter(l => {
+      const norm = (l.url || '').replace(/\/$/, '').toLowerCase();
+      return !existingUrls.has(norm);
+    });
+    
+    if (freshLinks.length === 0) {
+      console.log(`   ⚠️ SEO_INTERNAL_LINKS: ${matchedLinks.length} matché(s) mais tous déjà présents dans le HTML`);
+      return html;
+    }
+    
     // Limiter à 5 liens max
-    const linksToInject = matchedLinks.slice(0, 5);
+    const linksToInject = freshLinks.slice(0, 5);
     
     // Injecter dans la section "Articles connexes" ou créer si absente
     const modifiedHtml = this.injectLinksIntoRelatedSection(html, linksToInject);

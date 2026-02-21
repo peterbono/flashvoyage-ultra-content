@@ -1560,9 +1560,10 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 - Exemple : « ~920 euros » ou « environ 200 euros ».
 - L'audience est francophone européenne : l'euro est la seule devise à utiliser.
 
-📊 MOINS WIKIPEDIA, PLUS DÉCISION :
+📊 MOINS WIKIPEDIA, PLUS DÉCISION (OBLIGATOIRE — vérifié automatiquement) :
 - Chaque section DOIT se terminer par une recommandation, un choix, ou un verdict — pas par un résumé neutre.
-- Si tu constates que tu fais du "résumé factuel sans avis", reformule avec un arbitrage : "En pratique, choisis X si [condition], sinon Y."
+- MINIMUM 3 phrases de décision dans l'article, utilisant EXACTEMENT ce format : "Si tu [verbe situation], privilégie/évite/opte pour/choisis/pars sur [option concrète]."
+- Exemples : "Si tu voyages en basse saison, privilégie les hébergements sans réservation.", "Si tu hésites entre deux options, opte pour celle qui protège ton budget."
 - Un article sans prise de position sera REJETÉ.
 
 STYLE : transitions fluides, questions rhétoriques, variation du rythme, tutoiement, ton expert accessible.
@@ -3105,6 +3106,16 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2500 mots.`;
       console.log(`   ⚠️ Phrases plates détectées: ${flatPhrasesFound.length} (${flatPhrasesFound.slice(0, 3).map(p => `"${p}"`).join(', ')})`);
     }
     
+    // 1e. Détection manque de decisions concretes (K4)
+    const k4Arbitrage = (rawContent.match(/data-fv-move="arbitrage"/gi) || []).length;
+    const k4Verdicts = (textOnly.match(/notre\s+(?:arbitrage|verdict|conseil|recommandation)|en\s+pratique\s*[:,]\s*\w+|mieux\s+vaut|on\s+recommande/gi) || []).length;
+    const k4SiTu = (textOnly.match(/si\s+tu\s+\w+.*?,\s*(choisis|privil[eé]gie|opte|pr[eé]f[eè]re|[eé]vite|mise\s+sur|pars\s+sur)/gi) || []).length;
+    const k4Total = k4Arbitrage + k4Verdicts + k4SiTu;
+    if (k4Total < 2) {
+      anomalies.push({ type: 'low_decisions', count: k4Total, expected: 2 });
+      console.log(`   ⚠️ Decisions concretes insuffisantes: ${k4Total}/2 minimum (arbitrage:${k4Arbitrage} verdicts:${k4Verdicts} si-tu:${k4SiTu})`);
+    }
+
     // 1e-bis. Détection phrases robotiques (patterns tonalité quality-analyzer)
     const ROBOTIC_PHRASES = [
       'il est important de noter que', 'dans le cadre de', 'il convient de souligner',
@@ -3180,6 +3191,29 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2500 mots.`;
         case 'robotic_tone':
           correctionInstructions.push(
             `Reformule ces phrases robotiques en langage naturel avec tutoiement : ${anomaly.details.map(d => `"${d}"`).join(', ')}. Exemples : "il est important de noter que" → "ce que tu dois savoir", "dans le cadre de" → "pour ton", "il convient de souligner" → "un point clé".`
+          );
+          break;
+        case 'low_decisions':
+          correctionInstructions.push(
+            `CRITIQUE — L'article ne contient que ${anomaly.count} prise(s) de position sur 2 minimum. C'est BLOQUANT.
+
+INSÈRE EXACTEMENT ${Math.max(2, 3 - anomaly.count)} phrases de décision dans le dernier <p> de ${Math.max(2, 3 - anomaly.count)} sections H2 différentes. Chaque phrase DOIT suivre UN de ces formats EXACTS (copie-colle la structure, remplace les crochets) :
+
+- "Si tu [verbe ta situation], privilégie [option concrète]."
+- "Si tu [verbe ta situation], évite [piège concret]."
+- "Si tu [verbe ta situation], opte pour [solution concrète]."
+- "Si tu [verbe ta situation], pars sur [choix recommandé]."
+
+EXEMPLES CONCRETS à adapter au sujet de l'article :
+- "Si tu voyages avec un budget serré, privilégie les bus locaux plutôt que les vols intérieurs."
+- "Si tu veux éviter la foule, opte pour la basse saison entre mai et septembre."
+- "Si tu hésites entre deux îles, pars sur celle qui correspond à ton rythme."
+
+RÈGLES :
+- La phrase DOIT commencer par "Si tu" suivi d'un verbe
+- Après la virgule, utilise OBLIGATOIREMENT un de ces verbes : privilégie, évite, opte pour, choisis, pars sur, mise sur
+- Place chaque phrase à la FIN du dernier paragraphe d'une section H2 existante
+- NE PAS créer de nouveau paragraphe — ajoute la phrase à la suite du texte existant`
           );
           break;
       }

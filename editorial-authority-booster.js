@@ -30,6 +30,26 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
+const ENGLISH_WORDS = /\b(the|a|an|is|are|was|were|have|has|had|will|would|can|could|should|this|that|these|those|you|he|she|they|with|from|for|not|but|what|about|which|when|there|been|their|also|just|more|some|very|after|before|because|into|between|during|without|however|already|actually|really|usually|especially)\b/gi;
+
+/**
+ * Nettoie le contenu brut issu de l'extraction Reddit avant injection dans le HTML publié.
+ * - Supprime les préfixes "Comment N:" (artefacts de parsing fixtures)
+ * - Exclut le texte majoritairement anglais (ratio > 30%)
+ * - Trim et normalise les espaces
+ * @returns {string} texte nettoyé, ou '' si le contenu est exclu
+ */
+function sanitizeMoveContent(text) {
+  if (!text || typeof text !== 'string') return '';
+  let cleaned = text.replace(/^Comment\s+\d+\s*:\s*/gi, '').trim();
+  cleaned = cleaned.replace(/\s{2,}/g, ' ');
+  if (cleaned.length < 5) return '';
+  const words = cleaned.split(/\s+/);
+  const englishHits = (cleaned.match(ENGLISH_WORDS) || []).length;
+  if (words.length > 4 && englishHits / words.length > 0.30) return '';
+  return cleaned;
+}
+
 /**
  * Find the best injection point in the HTML.
  * Returns the index in draftHtml where we should insert content.
@@ -115,11 +135,12 @@ function moveArbitrage(extracted, story) {
   // Build from costs if available
   if (costs.length > 0) {
     const cost = costs[0];
-    if (cost.amount && cost.currency) {
-      phrases.push(`Si ton budget est serré, garde en tête que ${truncate(cost.quote, 100)}`);
+    const costText = sanitizeMoveContent(cost.quote || cost.value || '');
+    if (costText && cost.amount && cost.currency) {
+      phrases.push(`Si ton budget est serré, garde en tête que ${truncate(costText, 100)}`);
       proofs.push(`post.evidence.costs[0]`);
-    } else if (cost.value) {
-      phrases.push(`Un point souvent sous-estimé : ${truncate(cost.quote || cost.value, 100)}`);
+    } else if (costText) {
+      phrases.push(`Un point souvent sous-estimé : ${truncate(costText, 100)}`);
       proofs.push(`post.evidence.costs[0]`);
     }
   }
@@ -127,7 +148,8 @@ function moveArbitrage(extracted, story) {
   // Build from lessons
   if (lessons.length > 0) {
     const lesson = lessons[0];
-    const text = lesson.lesson || lesson.evidence_snippet || '';
+    const rawText = lesson.lesson || lesson.evidence_snippet || '';
+    const text = sanitizeMoveContent(rawText);
     if (text.length > 10) {
       phrases.push(`L'auteur du témoignage résume : ${truncate(text, 100)}`);
       proofs.push(`story.author_lessons[0]`);
@@ -137,7 +159,8 @@ function moveArbitrage(extracted, story) {
   // Build from consensus
   if (consensus.length > 0 && phrases.length < 3) {
     const c = consensus[0];
-    const text = c.value || c.quote || '';
+    const rawText = c.value || c.quote || '';
+    const text = sanitizeMoveContent(rawText);
     if (text.length > 10) {
       phrases.push(`La communauté confirme : ${truncate(text, 100)}`);
       proofs.push(`comments.consensus[0]`);
@@ -149,7 +172,7 @@ function moveArbitrage(extracted, story) {
   }
 
   const proofAttr = escapeHtml(proofs[0]);
-  move.html = `\n<div data-fv-proof="${proofAttr}" data-fv-move="arbitrage" class="fv-authority-move">\n<p><strong>Notre arbitrage :</strong> ${phrases.join('. ')}.</p>\n</div>\n`;
+  move.html = `\n<div data-fv-proof="${proofAttr}" data-fv-move="arbitrage" class="fv-authority-move">\n<p><strong>En pratique :</strong> ${phrases.join('. ')}.</p>\n</div>\n`;
   move.added = true;
   move.proof_ids = proofs;
   move.reason = 'material_found';
@@ -183,14 +206,17 @@ function moveHiddenTruth(extracted) {
   // Prefer contradictions (most differentiating)
   if (contradictions.length > 0) {
     const c = contradictions[0];
-    parts.push(`${truncate(c.counterclaim || c.quote, 120)}`);
-    proofs.push(`comment.contradictions[0]`);
+    const text = sanitizeMoveContent(c.counterclaim || c.quote || '');
+    if (text) {
+      parts.push(`${truncate(text, 120)}`);
+      proofs.push(`comment.contradictions[0]`);
+    }
   }
 
   // Then warnings
   if (warnings.length > 0 && parts.length < 2) {
     const w = warnings[0];
-    const quote = w.quote || w.value || '';
+    const quote = sanitizeMoveContent(w.quote || w.value || '');
     if (quote.length > 10) {
       const authorTag = w.author ? `Un voyageur prévient : ` : '';
       parts.push(`${authorTag}${truncate(quote, 120)}`);
@@ -229,9 +255,9 @@ function moveCommonMistakes(extracted, story) {
 
   // Need at least 2 problem signals to justify a list
   const allSources = [
-    ...problems.map(p => ({ text: typeof p === 'string' ? p : (p.value || p.quote || ''), proof: 'post.signals.problems' })),
-    ...warnings.map(w => ({ text: w.quote || w.value || '', proof: 'comment.warnings' })),
-    ...insights.map(i => ({ text: i.value || '', proof: 'story.community_insights' })),
+    ...problems.map(p => ({ text: sanitizeMoveContent(typeof p === 'string' ? p : (p.value || p.quote || '')), proof: 'post.signals.problems' })),
+    ...warnings.map(w => ({ text: sanitizeMoveContent(w.quote || w.value || ''), proof: 'comment.warnings' })),
+    ...insights.map(i => ({ text: sanitizeMoveContent(i.value || ''), proof: 'story.community_insights' })),
   ].filter(s => s.text.length > 5);
 
   if (allSources.length < 2) {
@@ -285,25 +311,31 @@ function moveEconomicFriction(extracted) {
   // Priority 1: exact figures from costs
   if (costs.length > 0 && costs[0].amount) {
     const c = costs[0];
-    const phrase = `Les frais de ${truncate(c.quote || c.value, 100)} s'accumulent vite sur un long séjour`;
-    const proofId = 'post.evidence.costs[0].quote';
-    move.html = `\n<p data-fv-proof="${escapeHtml(proofId)}" data-fv-move="economic_friction" class="fv-authority-move"><strong>Friction économique :</strong> ${phrase}.</p>\n`;
-    move.added = true;
-    move.proof_ids = [proofId];
-    move.reason = 'material_found';
-    return move;
+    const costText = sanitizeMoveContent(c.quote || c.value || '');
+    if (costText) {
+      const phrase = `Les frais de ${truncate(costText, 100)} s'accumulent vite sur un long séjour`;
+      const proofId = 'post.evidence.costs[0].quote';
+      move.html = `\n<p data-fv-proof="${escapeHtml(proofId)}" data-fv-move="economic_friction" class="fv-authority-move"><strong>Coûts cachés :</strong> ${phrase}.</p>\n`;
+      move.added = true;
+      move.proof_ids = [proofId];
+      move.reason = 'material_found';
+      return move;
+    }
   }
 
   // Priority 2: additional cost facts from comments
   if (additionalCosts.length > 0) {
     const ac = additionalCosts[0];
-    const phrase = `Un voyageur signale : ${truncate(ac.quote || ac.value, 120)}`;
-    const proofId = `comments.additional_facts[0]`;
-    move.html = `\n<p data-fv-proof="${escapeHtml(proofId)}" data-fv-move="economic_friction" class="fv-authority-move"><strong>Friction économique :</strong> ${phrase}.</p>\n`;
-    move.added = true;
-    move.proof_ids = [proofId];
-    move.reason = 'material_found';
-    return move;
+    const acText = sanitizeMoveContent(ac.quote || ac.value || '');
+    if (acText) {
+      const phrase = `Un voyageur signale : ${truncate(acText, 120)}`;
+      const proofId = `comments.additional_facts[0]`;
+      move.html = `\n<p data-fv-proof="${escapeHtml(proofId)}" data-fv-move="economic_friction" class="fv-authority-move"><strong>Coûts cachés :</strong> ${phrase}.</p>\n`;
+      move.added = true;
+      move.proof_ids = [proofId];
+      move.reason = 'material_found';
+      return move;
+    }
   }
 
   // Priority 3: qualitative from problems mentioning money
@@ -315,7 +347,7 @@ function moveEconomicFriction(extracted) {
   if (moneyProblems.length > 0) {
     const phrase = 'Plusieurs voyageurs signalent un budget sous-estimé et des frais cachés qui alourdissent la facture';
     const proofId = 'post.signals.problems[cost_related]';
-    move.html = `\n<p data-fv-proof="${escapeHtml(proofId)}" data-fv-move="economic_friction" class="fv-authority-move"><strong>Friction économique :</strong> ${phrase}.</p>\n`;
+    move.html = `\n<p data-fv-proof="${escapeHtml(proofId)}" data-fv-move="economic_friction" class="fv-authority-move"><strong>Coûts cachés :</strong> ${phrase}.</p>\n`;
     move.added = true;
     move.proof_ids = [proofId];
     move.reason = 'material_found';

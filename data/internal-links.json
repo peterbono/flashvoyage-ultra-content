@@ -1,6 +1,83 @@
 {
   "articles": [
     {
+      "id": 2938,
+      "slug": "indonesie-en-14-jours-decisions-cruciales-pour-un-itineraire-parfait",
+      "title": "Indonésie en 14 jours : Décisions cruciales pour un itinéraire parfait",
+      "url": "https://flashvoyage.com/indonesie-en-14-jours-decisions-cruciales-pour-un-itineraire-parfait/",
+      "category": "temoignage",
+      "keywords": [
+        "indonesie",
+        "jours",
+        "decisions",
+        "cruciales",
+        "itineraire",
+        "parfait",
+        "voyage",
+        "budget",
+        "asie"
+      ],
+      "excerpt": "Points clés de ce témoignage Destinations principales : Flores, Labuan Bajo, Jakarta, Yogyakarta, Ba"
+    },
+    {
+      "id": 2931,
+      "slug": "voyager-au-japon-comment-bien-choisir-son-itineraire-sans-regret",
+      "title": "Voyager au Japon : Comment bien choisir son itinéraire sans regret",
+      "url": "https://flashvoyage.com/voyager-au-japon-comment-bien-choisir-son-itineraire-sans-regret/",
+      "category": "temoignage",
+      "keywords": [
+        "voyager",
+        "japon",
+        "bien",
+        "choisir",
+        "itineraire",
+        "sans",
+        "regret",
+        "voyage",
+        "budget",
+        "asie"
+      ],
+      "excerpt": "Points clés de ce témoignage Destinations : Tokyo, Japon. Durée : 2 semaines. Type : Itinéraire mixt"
+    },
+    {
+      "id": 2924,
+      "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+      "title": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "url": "https://flashvoyage.com/malaisie-les-11-frais-caches-qui-font-exploser-ton-budget/",
+      "category": "budget",
+      "keywords": [
+        "malaisie",
+        "frais",
+        "caches",
+        "font",
+        "exploser",
+        "ton",
+        "budget",
+        "voyage",
+        "asie"
+      ],
+      "excerpt": "Points clés de ce témoignage Destination : Malaisie. Durée : 2 semaines. Budget : ~quelques euros. T"
+    },
+    {
+      "id": 2916,
+      "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
+      "title": "Voyager au Japon : eSIM et frais cachés à connaître",
+      "url": "https://flashvoyage.com/voyager-au-japon-esim-et-frais-caches-a-connaitre/",
+      "category": "temoignage",
+      "keywords": [
+        "voyager",
+        "japon",
+        "esim",
+        "frais",
+        "caches",
+        "connaitre",
+        "voyage",
+        "budget",
+        "asie"
+      ],
+      "excerpt": "Points clés de ce témoignage Japon, 3 mois, eSIM, connectivité fiable, budget modéré Entre les néons"
+    },
+    {
       "id": 2910,
       "slug": "les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city",
       "title": "Les 3 coûts cachés des espaces de coworking à Ho Chi Minh City",
