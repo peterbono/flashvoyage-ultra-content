@@ -1251,6 +1251,17 @@ class ArticleFinalizer {
       /data-widget-type=["']insurance["']/gi
     ];
 
+    // Marqueurs pour les autres types de widgets (tours, transfers, car_rental, bikes, flight_compensation, events)
+    const otherWidgetTypes = ['tours', 'transfers', 'car_rental', 'bikes', 'flight_compensation', 'events'];
+    const otherWidgetMarkers = {};
+    for (const wtype of otherWidgetTypes) {
+      otherWidgetMarkers[wtype] = [
+        new RegExp(`\\[fv_widget[^\\]]*type=["']?${wtype}`, 'gi'),
+        new RegExp(`data-widget-type=["']${wtype}["']`, 'gi'),
+        new RegExp(`data-placement-id=["']${wtype}["']`, 'gi')
+      ];
+    }
+
     // Marqueurs textuels (moins fiables mais fallback)
     const textMarkers = [
       /Selon notre analyse de milliers de vols/gi,
@@ -1259,61 +1270,32 @@ class ArticleFinalizer {
       /Notre outil compare les prix/gi
     ];
 
-    // Détecter marqueurs HTML robustes pour FLIGHTS (max 1 par type)
-    let flightsFound = false;
-    for (const marker of kiwiMarkers) {
-      const matches = html.match(marker);
-      if (matches && !flightsFound) {
-        detected.count += 1; // PATCH 2: Compter max 1 par type
-        flightsFound = true;
-        if (!detected.types.includes('flights')) {
-          detected.types.push('flights');
+    // Helper: détecte un type de widget (max 1 par type)
+    const detectType = (typeName, markers) => {
+      for (const marker of markers) {
+        const matches = html.match(marker);
+        if (matches) {
+          detected.count += 1;
+          detected.types.push(typeName);
+          detected.details.push({ type: typeName, marker: marker.toString(), matches: matches.length });
+          return true;
         }
-        detected.details.push({
-          type: 'flights',
-          marker: marker.toString(),
-          matches: matches.length
-        });
-        break; // PATCH 2: Arrêter après première détection
       }
-    }
+      return false;
+    };
+
+    // Détecter marqueurs HTML robustes pour FLIGHTS (max 1 par type)
+    detectType('flights', kiwiMarkers);
 
     // Détecter marqueurs pour CONNECTIVITY/ESIM (max 1 par type)
-    let connectivityFound = false;
-    for (const marker of connectivityMarkers) {
-      const matches = html.match(marker);
-      if (matches && !connectivityFound) {
-        detected.count += 1;
-        connectivityFound = true;
-        if (!detected.types.includes('connectivity')) {
-          detected.types.push('connectivity');
-        }
-        detected.details.push({
-          type: 'connectivity',
-          marker: marker.toString(),
-          matches: matches.length
-        });
-        break;
-      }
-    }
+    detectType('connectivity', connectivityMarkers);
 
     // Détecter marqueurs pour INSURANCE (max 1 par type)
-    let insuranceFound = false;
-    for (const marker of insuranceMarkers) {
-      const matches = html.match(marker);
-      if (matches && !insuranceFound) {
-        detected.count += 1;
-        insuranceFound = true;
-        if (!detected.types.includes('insurance')) {
-          detected.types.push('insurance');
-        }
-        detected.details.push({
-          type: 'insurance',
-          marker: marker.toString(),
-          matches: matches.length
-        });
-        break;
-      }
+    detectType('insurance', insuranceMarkers);
+
+    // Détecter les autres types de widgets
+    for (const wtype of otherWidgetTypes) {
+      detectType(wtype, otherWidgetMarkers[wtype]);
     }
 
     // Si aucun marqueur HTML trouvé, fallback sur textuels (moins fiable)
