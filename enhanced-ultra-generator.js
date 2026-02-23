@@ -13,10 +13,12 @@ import PipelineRunner from './pipeline-runner.js';
 import costTracker from './llm-cost-tracker.js';
 import RssSignalFetcher from './rss-signal-fetcher.js';
 import EditorialCalendar from './editorial-calendar.js';
+import AuthorManager from './author-manager.js';
 
 class EnhancedUltraGenerator extends UltraStrategicGenerator {
   constructor() {
     super();
+    this.authorManager = new AuthorManager();
     // OBSOLETE: this.contentEnhancer = new ContentEnhancer(); // Remplacé par seo-optimizer.js
     this.intelligentAnalyzer = new IntelligentContentAnalyzerOptimized();
     // OBSOLETE: this.linkingStrategy = new CompleteLinkingStrategy(); // Remplacé par seo-optimizer.js
@@ -2151,6 +2153,18 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       console.log('✅ Article publié sur WordPress !');
       console.log(`   ID: ${publishedArticle.id}`);
       console.log(`   URL: ${publishedArticle.link}`);
+
+      // Assigner un auteur E-E-A-T
+      try {
+        const destination = article.meta?.destination || article.destination || '';
+        const { author, wpId } = await this.authorManager.getAuthorForArticle(destination);
+        if (wpId) {
+          await this.authorManager.assignAuthor(publishedArticle.id, wpId);
+          console.log(`   👤 Auteur assigne: ${author.name}`);
+        }
+      } catch (err) {
+        console.warn(`   ⚠️ Assignation auteur echouee: ${err.message}`);
+      }
       
       // Uploader l'image featured si disponible
       if (article.featuredImage) {

@@ -1558,6 +1558,12 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 📐 DENSITÉ NARRATIVE : chaque paragraphe fait avancer l'histoire, une décision, ou réduit un risque.
 🚫 ZÉRO RÉPÉTITION : NE JAMAIS reformuler la même idée dans deux paragraphes différents. Si un conseil, un constat ou une recommandation a déjà été donné, ne PAS le re-énoncer même avec d'autres mots. Chaque paragraphe apporte une information NOUVELLE.
 
+🇫🇷 NICHE FRANCOPHONE ASIE — L'article s'adresse a des voyageurs FRANCOPHONES qui partent en Asie :
+- References francaises : vols depuis Paris (CDG/ORY), Lyon, Marseille, Bruxelles. Devise en euros.
+- Contexte FR : vacances scolaires, conges payes, jours feries francais, ponts. Passeport francais pour les visas.
+- Ton naturel : tutoiement, expressions courantes ("galere", "bon plan", "se faire arnaquer", "valoir le coup"). PAS de francais litteraire.
+- Specificites FR en Asie : decalage horaire depuis Paris, assurance carte bancaire francaise (Visa Premier), forfait mobile Free international, Revolut/Wise pour les paiements.
+
 📊 ÉLÉMENTS STRUCTURELS EVERGREEN (obligatoires si le sujet s'y prête) :
 - TABLEAU COMPARATIF : obligatoire si l'article compare 2+ options, destinations ou produits. Format HTML <table> avec <thead> et <tbody>. Ex: comparatif budget, avantages/inconvénients, destinations côte à côte.
 - FAQ SEO : 3-5 questions/réponses en fin de développement si le sujet a une intention informationnelle. Format : <h3>Question ?</h3><p>Réponse.</p>

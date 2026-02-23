@@ -167,3 +167,47 @@ add_action( 'wp_head', function () {
     }
 }, 1 );
 
+/**
+ * Inject hreflang tag for French-speaking audience targeting France.
+ */
+add_action( 'wp_head', function () {
+    if ( ! is_singular( array( 'post', 'page' ) ) ) {
+        return;
+    }
+    $url = get_permalink();
+    echo '<link rel="alternate" hreflang="fr-FR" href="' . esc_url( $url ) . '" />' . "\n";
+    echo '<link rel="alternate" hreflang="fr" href="' . esc_url( $url ) . '" />' . "\n";
+    echo '<link rel="alternate" hreflang="x-default" href="' . esc_url( $url ) . '" />' . "\n";
+}, 2 );
+
+/**
+ * Register JSON-LD schema meta for pages (SEO programmatique).
+ */
+add_action( 'init', function () {
+    register_post_meta( 'page', 'fv_schema_json', array(
+        'show_in_rest'  => true,
+        'single'        => true,
+        'type'          => 'string',
+    ) );
+} );
+
+/**
+ * Inject JSON-LD schemas for pages (same as posts).
+ */
+add_action( 'wp_head', function () {
+    if ( ! is_singular( 'page' ) ) {
+        return;
+    }
+    $raw = get_post_meta( get_the_ID(), 'fv_schema_json', true );
+    if ( empty( $raw ) ) {
+        return;
+    }
+    $schemas = json_decode( $raw, true );
+    if ( ! is_array( $schemas ) ) {
+        return;
+    }
+    foreach ( $schemas as $schema ) {
+        echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+    }
+}, 1 );
+
