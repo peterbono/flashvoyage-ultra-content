@@ -68,7 +68,7 @@ Réponds UNIQUEMENT par "oui" ou "non".`;
       ],
       max_tokens: 10,
       temperature: 0.1
-    });
+    }, 3, 'anti-hallucination');
     
     const answer = response.choices[0]?.message?.content?.toLowerCase().trim();
     const isValid = answer === 'oui' || answer.startsWith('oui');

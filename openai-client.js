@@ -8,6 +8,7 @@
  */
 
 import { OPENAI_API_KEY, FORCE_OFFLINE, DRY_RUN } from './config.js';
+import tracker from './llm-cost-tracker.js';
 
 const forceOffline = FORCE_OFFLINE;
 const isDryRun = DRY_RUN;
@@ -72,9 +73,12 @@ export function isOpenAIAvailable() {
 }
 
 /**
- * Wrapper pour chat.completions.create avec retry et fallback DRY_RUN
+ * Wrapper pour chat.completions.create avec retry, fallback DRY_RUN et cost tracking.
+ * @param {Object} config - Configuration OpenAI (model, messages, etc.)
+ * @param {number} retries - Nombre de retries
+ * @param {string} trackingStep - Étape du pipeline pour le cost tracker
  */
-export async function createChatCompletion(config, retries = 3) {
+export async function createChatCompletion(config, retries = 3, trackingStep = 'unknown') {
   const client = await getOpenAIClient();
   
   // En FORCE_OFFLINE, ne jamais appeler OpenAI
@@ -87,10 +91,17 @@ export async function createChatCompletion(config, retries = 3) {
   
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
+      const t0 = Date.now();
       const response = await client.chat.completions.create(
         config,
         { timeout: timeout }
       );
+      const durationMs = Date.now() - t0;
+
+      // Cost tracking
+      if (response?.usage) {
+        tracker.recordFromUsage(trackingStep, config.model || 'unknown', response.usage, durationMs);
+      }
       
       return response;
     } catch (error) {
@@ -110,10 +121,8 @@ export async function createChatCompletion(config, retries = 3) {
       // Si après retries ça échoue
       if (attempt === retries) {
         if (isDryRun || forceOffline) {
-          // En DRY_RUN, on peut utiliser un fallback (géré par l'appelant)
           throw new Error(`LLM timeout après ${retries} tentatives: ${error.message}`);
         } else {
-          // En PROD, throw
           throw error;
         }
       }

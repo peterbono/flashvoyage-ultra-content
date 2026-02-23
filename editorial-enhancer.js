@@ -651,7 +651,7 @@ Retourne un JSON array: [{"question": "...", "answer": "..."}]` },
       max_tokens: 1500,
       temperature: 0.3,
       response_format: { type: "json_object" }
-    });
+    }, 3, 'editorial-faq');
 
     const content = response.choices?.[0]?.message?.content;
     if (!content) throw new Error('Réponse LLM vide');
@@ -750,7 +750,7 @@ Retourne UNIQUEMENT le HTML du tableau, rien d'autre. Format: <table><thead><tr>
         ],
         max_tokens: 2000,
         temperature: 0.2
-      });
+      }, 3, 'editorial-table');
 
       let tableHtml = response.choices?.[0]?.message?.content?.trim();
       if (!tableHtml) throw new Error('Réponse vide');
@@ -805,7 +805,7 @@ Retourne UNIQUEMENT le HTML: <h3>Checklist avant de partir</h3><ul><li>Action 1<
         ],
         max_tokens: 1000,
         temperature: 0.2
-      });
+      }, 3, 'editorial-checklist');
 
       let checklistHtml = response.choices?.[0]?.message?.content?.trim();
       if (!checklistHtml) throw new Error('Réponse vide');

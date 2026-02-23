@@ -8,6 +8,7 @@ import { detectRedditPattern } from './reddit-pattern-detector.js';
 import { compileRedditStory } from './reddit-story-compiler.js';
 import { isKnownLocation } from './airport-lookup.js';
 import { COUNTRY_DISPLAY_NAMES } from './destinations.js';
+import tracker from './llm-cost-tracker.js';
 
 // Helper pour logger en NDJSON
 function debugLog(location, message, data, hypothesisId) {
@@ -188,6 +189,7 @@ async function callOpenAIWithRetry(config, retries = 3) {
   
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
+      const t0 = Date.now();
       const response = await axios.post('https://api.openai.com/v1/chat/completions', config.body, {
         headers: {
           'Authorization': `Bearer ${config.apiKey}`,
@@ -195,6 +197,14 @@ async function callOpenAIWithRetry(config, retries = 3) {
         },
         timeout: timeout
       });
+      const durationMs = Date.now() - t0;
+
+      // Cost tracking
+      if (response.data?.usage) {
+        const step = config._trackingStep || 'unknown';
+        const model = config.body?.model || 'unknown';
+        tracker.recordFromUsage(step, model, response.data.usage, durationMs);
+      }
       
       return response.data;
     } catch (error) {
@@ -456,8 +466,9 @@ class IntelligentContentAnalyzerOptimized {
       // FIX BUG TRADUCTION INVERSÉE: Le prompt doit être bidirectionnel
       // Problème: quand on envoie du français, le LLM le traduisait EN ANGLAIS !
       // Solution: Si le texte est déjà en français, le retourner tel quel
+      const t0Translate = Date.now();
       const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        model: 'gpt-4o-mini', // Modèle moins cher pour la traduction
+        model: 'gpt-4o-mini',
         messages: [
           {
             role: 'system',
@@ -475,15 +486,18 @@ class IntelligentContentAnalyzerOptimized {
             content: text
           }
         ],
-        temperature: 0.1, // Plus bas = plus déterministe, évite les modifications inutiles
-        max_tokens: Math.min(2000, text.length * 2) // Augmenté pour éviter troncature
+        temperature: 0.1,
+        max_tokens: Math.min(2000, text.length * 2)
       }, {
         headers: {
           'Authorization': `Bearer ${this.apiKey}`,
           'Content-Type': 'application/json'
         },
-        timeout: 10000 // Timeout court pour la traduction
+        timeout: 10000
       });
+      if (response.data?.usage) {
+        tracker.recordFromUsage('translate-section', 'gpt-4o-mini', response.data.usage, Date.now() - t0Translate);
+      }
       
       const translated = response.data.choices[0].message.content.trim();
       
@@ -536,6 +550,7 @@ class IntelligentContentAnalyzerOptimized {
       const batch = batches[b];
       const userContent = batch.map((text, i) => `${i + 1}. ${text}`).join('\n\n');
       try {
+        const t0Batch = Date.now();
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
           model: 'gpt-4o-mini',
           messages: [
@@ -548,6 +563,9 @@ class IntelligentContentAnalyzerOptimized {
           headers: { 'Authorization': `Bearer ${this.apiKey}`, 'Content-Type': 'application/json' },
           timeout: 25000
         });
+        if (response.data?.usage) {
+          tracker.recordFromUsage('translate-batch', 'gpt-4o-mini', response.data.usage, Date.now() - t0Batch);
+        }
         const raw = response.data.choices[0].message.content.trim();
         const json = (() => {
           const m = raw.match(/\{[\s\S]*\}/);
@@ -866,10 +884,11 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
 
       const responseData = await callOpenAIWithRetry({
         apiKey: this.apiKey,
+        _trackingStep: 'analyzer-extract',
         body: {
         model: 'gpt-4o',
         messages: [{ role: 'user', content: prompt }],
-        max_tokens: 1500, // Augmenté pour éviter les troncatures
+        max_tokens: 1500,
         temperature: 0.3
         },
         sourceText: article.content || article.source_text || '',
@@ -1088,6 +1107,7 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
 
     const responseData = await callOpenAIWithRetry({
       apiKey: this.apiKey,
+      _trackingStep: 'generator-main',
       body: {
       model: 'gpt-4o',
       messages: [
@@ -1893,6 +1913,7 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
 
     const responseData = await callOpenAIWithRetry({
       apiKey: this.apiKey,
+      _trackingStep: 'generator-evergreen',
       body: {
       model: 'gpt-4o',
       messages: [
@@ -2960,6 +2981,7 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2500 mots.`;
 
     const responseData = await callOpenAIWithRetry({
       apiKey: this.apiKey,
+      _trackingStep: 'generator-expand',
       body: {
         model: 'gpt-4o',
         messages: [
@@ -3276,8 +3298,9 @@ ${rawContent}`;
     try {
       const responseData = await callOpenAIWithRetry({
         apiKey: this.apiKey,
+        _trackingStep: 'autocritique-pass2',
         body: {
-          model: 'gpt-4o-mini', // Modèle économique pour l'édition
+          model: 'gpt-4o-mini',
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt }
@@ -3373,6 +3396,7 @@ Réponse JSON:`;
 
       const responseData = await callOpenAIWithRetry({
         apiKey: this.apiKey,
+        _trackingStep: 'title-coherence',
         body: {
         model: 'gpt-4o',
         messages: [{ role: 'user', content: simplePrompt }],

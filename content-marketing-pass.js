@@ -243,7 +243,7 @@ ${protectedHtml}`;
       ],
       max_tokens: editorialMode === 'news' ? 4000 : 8000,
       temperature: editorialMode === 'news' ? 0.2 : 0.4
-    });
+    }, 3, 'content-marketing-pass');
 
     let improvedHtml = response.choices?.[0]?.message?.content?.trim();
     

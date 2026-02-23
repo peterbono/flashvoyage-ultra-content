@@ -982,7 +982,7 @@ class PipelineRunner {
         ],
         max_tokens: 100,
         temperature: 0.3
-      });
+      }, 3, 'title-rewrite');
 
       const newTitle = response.choices?.[0]?.message?.content?.trim();
       if (newTitle && newTitle.length > 10 && newTitle.length < 120) {

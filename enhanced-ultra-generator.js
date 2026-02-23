@@ -10,6 +10,7 @@ import ContextualWidgetPlacer from './contextual-widget-placer-v2.js';
 import { OPENAI_API_KEY, DRY_RUN, FORCE_OFFLINE } from './config.js';
 import { compileRedditStory } from './reddit-story-compiler.js';
 import PipelineRunner from './pipeline-runner.js';
+import costTracker from './llm-cost-tracker.js';
 
 class EnhancedUltraGenerator extends UltraStrategicGenerator {
   constructor() {
@@ -274,6 +275,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   async generateAndPublishEnhancedArticle() {
     try {
       console.log('🚀 Génération d\'article stratégique amélioré...\n');
+      costTracker.reset();
 
       // 0. Mettre à jour la base de données d'articles AVANT génération des liens
       console.log('📚 Mise à jour de la base de données d\'articles...');
@@ -887,6 +889,17 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       
       console.log('✅ Article publié avec succès!');
       console.log('🔗 Lien:', publishedArticle.link);
+
+      // LLM Cost Report
+      const costSummary = costTracker.printSummary();
+      const wordCount = (finalizedArticle.content || '').replace(/<[^>]*>/g, ' ').split(/\s+/).filter(Boolean).length;
+      costTracker.saveToDisk({
+        id: publishedArticle.id,
+        title: finalizedArticle.title,
+        slug: publishedArticle.slug,
+        url: publishedArticle.link,
+        wordCount
+      });
       
       // Re-sync internal links index after publish so new article is available for future articles
       try {
@@ -2246,6 +2259,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     .catch(error => {
       console.error('\n❌ Erreur fatale:', error.message);
       console.error(error.stack);
+      costTracker.printSummary();
       process.exit(1);
     });
 }

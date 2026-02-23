@@ -2447,6 +2447,7 @@ class ArticleFinalizer {
               if (pText.length > 10 && !pText.includes('Extrait Reddit') && !pText.includes('—')) {
                 const response = await callOpenAIWithRetry({
                   apiKey,
+                  _trackingStep: 'finalizer-translate-blockquote',
                   body: {
                     model: 'gpt-4o',
                     messages: [
@@ -2636,6 +2637,7 @@ class ArticleFinalizer {
             if (apiKey && !process.env.FORCE_OFFLINE) {
               const response = await callOpenAIWithRetry({
                 apiKey,
+                _trackingStep: 'finalizer-translate-citation',
                 body: {
                   model: 'gpt-4o',
                   messages: [
