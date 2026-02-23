@@ -134,7 +134,102 @@ class SeoOptimizer {
     
     console.log(`✅ SEO_OPTIMIZER: tokens_added=${this.tokenAudit.length} violations=${hasViolations ? 1 : 0}`);
     
+    // PHASE 8.7: Injection schema markup JSON-LD
+    html = this.injectSchemaMarkup(html, seoData, pipelineContext);
+    
     return { html, report };
+  }
+
+  /**
+   * Injecte des schemas JSON-LD dans le HTML :
+   * - Article (auteur, datePublished, publisher, image)
+   * - FAQPage (si section FAQ presente dans le HTML)
+   * - BreadcrumbList (accueil > categorie > article)
+   * - TravelAction (destination)
+   */
+  injectSchemaMarkup(html, seoData, pipelineContext) {
+    const schemas = [];
+    const title = seoData?.title || pipelineContext?.generatedTitle || '';
+    const destination = pipelineContext?.final_destination || seoData?.main_destination || '';
+    const slug = pipelineContext?.slug || '';
+    const wpUrl = (process.env.WORDPRESS_URL || 'https://flashvoyage.com').replace(/\/+$/, '');
+    const articleUrl = slug ? `${wpUrl}/${slug}/` : wpUrl;
+    const now = new Date().toISOString();
+
+    // 1. Article schema
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description: seoData?.meta_description || '',
+      author: { '@type': 'Person', name: 'FlashVoyage' },
+      publisher: {
+        '@type': 'Organization',
+        name: 'FlashVoyage',
+        url: wpUrl,
+        logo: { '@type': 'ImageObject', url: `${wpUrl}/wp-content/uploads/flashvoyage-logo.png` },
+      },
+      datePublished: now,
+      dateModified: now,
+      mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
+      inLanguage: 'fr',
+    });
+
+    // 2. FAQPage schema (si section FAQ presente)
+    const faqPattern = /<h[23][^>]*>(?:FAQ|Questions?\s+fr[ée]quentes?|Foire\s+aux\s+questions?)[^<]*<\/h[23]>/i;
+    if (faqPattern.test(html)) {
+      const faqItems = [];
+      const qaPairs = html.matchAll(/<(?:h[34]|strong|b)[^>]*>([^<]{10,200})\?<\/(?:h[34]|strong|b)>\s*(?:<[^>]+>\s*)*<p>([^<]{20,1000})<\/p>/gi);
+      for (const m of qaPairs) {
+        faqItems.push({
+          '@type': 'Question',
+          name: m[1].trim() + '?',
+          acceptedAnswer: { '@type': 'Answer', text: m[2].trim() },
+        });
+      }
+      if (faqItems.length > 0) {
+        schemas.push({
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqItems,
+        });
+        console.log(`📋 SCHEMA: FAQPage injecte (${faqItems.length} questions)`);
+      }
+    }
+
+    // 3. BreadcrumbList schema
+    const breadcrumbs = [
+      { '@type': 'ListItem', position: 1, name: 'Accueil', item: wpUrl },
+    ];
+    if (destination) {
+      breadcrumbs.push({ '@type': 'ListItem', position: 2, name: destination, item: `${wpUrl}/destination/${destination.toLowerCase().replace(/\s+/g, '-')}/` });
+    }
+    breadcrumbs.push({ '@type': 'ListItem', position: breadcrumbs.length + 1, name: title });
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbs,
+    });
+
+    // 4. TravelAction schema (si destination identifiee)
+    if (destination) {
+      schemas.push({
+        '@context': 'https://schema.org',
+        '@type': 'TravelAction',
+        name: `Voyager vers ${destination}`,
+        toLocation: { '@type': 'Place', name: destination },
+        fromLocation: { '@type': 'Place', name: 'France' },
+      });
+    }
+
+    // Injecter les schemas dans le HTML
+    const schemaHtml = schemas.map(s =>
+      `<script type="application/ld+json">${JSON.stringify(s)}</script>`
+    ).join('\n');
+
+    console.log(`📋 SCHEMA: ${schemas.length} schema(s) JSON-LD injecte(s) (Article, ${destination ? 'BreadcrumbList, TravelAction' : 'BreadcrumbList'}${faqPattern.test(html) ? ', FAQPage' : ''})`);
+
+    return schemaHtml + '\n' + html;
   }
 
   /**

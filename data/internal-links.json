@@ -1,6 +1,43 @@
 {
   "articles": [
     {
+      "id": 2989,
+      "slug": "comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes",
+      "title": "Comment découvrir l&#8217;Indonésie authentique : itinéraire, choix et découvertes",
+      "url": "https://flashvoyage.com/comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes/",
+      "category": "temoignage",
+      "keywords": [
+        "decouvrir",
+        "l&#8217;indonesie",
+        "authentique",
+        "itineraire",
+        "choix",
+        "decouvertes",
+        "voyage",
+        "budget",
+        "asie"
+      ],
+      "excerpt": "Points clés de ce témoignage Destination : Indonésie. Durée : un mois. Type : aventure culturelle. D"
+    },
+    {
+      "id": 2980,
+      "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+      "title": "Choisir Entre Taipei et Kuala Lumpur : Un Itinéraire de 4 Jours Qui Compte",
+      "url": "https://flashvoyage.com/choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte/",
+      "category": "temoignage",
+      "keywords": [
+        "choisir",
+        "entre",
+        "taipei",
+        "kuala",
+        "lumpur",
+        "itineraire",
+        "jours",
+        "compte"
+      ],
+      "excerpt": "Points clés de ce témoignage Destinations : Taipei, Kuala Lumpur | Durée : 4-5 jours | Budget : Mode"
+    },
+    {
       "id": 2967,
       "slug": "les-6-couts-caches-dun-voyage-au-japon-optimiser-chaque-yen",
       "title": "Les 6 Coûts Cachés d&#8217;un Voyage au Japon : Optimiser chaque Yen",

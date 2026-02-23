@@ -1,7 +1,45 @@
 {
-  "crawled_at": "2026-02-23T10:54:47.237Z",
-  "total_articles": 18,
+  "crawled_at": "2026-02-23T15:16:35.973Z",
+  "total_articles": 20,
   "articles": [
+    {
+      "id": 2997,
+      "title": "Choisir son itinéraire au Vietnam : l&#8217;art de l&#8217;arbitrage logistique",
+      "url": "https://flashvoyage.com/choisir-son-itineraire-au-vietnam-lart-de-larbitrage-logistique/",
+      "slug": "choisir-son-itineraire-au-vietnam-lart-de-larbitrage-logistique",
+      "excerpt": "{&#8220;@context&#8221;:&#8221;https://schema.org&#8221;,&#8221;@type&#8221;:&#8221;Article&#8221;,&#8221;headline&#8221;:&#8221;Choisir son itinéraire au Vietnam: l&#8217;art de l&#8217;arbitrage log",
+      "content": "{\"@context\":\"https://schema.org\",\"@type\":\"Article\",\"headline\":\"Choisir son itinéraire au Vietnam: l'art de l'arbitrage logistique\",\"description\":\"\",\"author\":{\"@type\":\"Person\",\"name\":\"FlashVoyage\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"FlashVoyage\",\"url\":\"https://flashvoyage.com\",\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https://flashvoyage.com/wp-content/uploads/flashvoyage-logo. png\"}},\"datePublished\":\"2026-02-23T15:11:38.094Z\",\"dateModified\":\"2026-02-23T15:11:38.094Z\",\"mainEntityOfPage\":{\"@ty",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-23T15:16:12",
+      "modified": "2026-02-23T15:16:30",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2997.jpg"
+    },
+    {
+      "id": 2989,
+      "title": "Comment découvrir l&#8217;Indonésie authentique : itinéraire, choix et découvertes",
+      "url": "https://flashvoyage.com/comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes/",
+      "slug": "comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes",
+      "excerpt": "Points clés de ce témoignage Destination : Indonésie. Durée : un mois. Type : aventure culturelle. Difficulté : modérée. Dans les ruelles tortueuses de Bali, le&#8230;\n",
+      "content": "\nPoints clés de ce témoignage\nDestination : Indonésie. Durée : un mois. Type : aventure culturelle. Difficulté : modérée.\n\nDans les ruelles tortueuses de Bali, le parfum des épices se mêle à l&#8217;odeur de l&#8217;encens brûlé.\nTu traverses les rizières d&#8217;un vertéclatant, le bruit du moteur de ton scooter résonne dans l&#8217;air. On en parle dans Vivre en Indonésie avec 1000 € : les frais cachés à connaître.\nEntre chaque virage, une nouvelle décision t&#8217;attend : quel sentier emprun",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-23T11:50:39",
+      "modified": "2026-02-23T11:50:54",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2989.jpg"
+    },
     {
       "id": 2980,
       "title": "Choisir Entre Taipei et Kuala Lumpur : Un Itinéraire de 4 Jours Qui Compte",

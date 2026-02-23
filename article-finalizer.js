@@ -62,12 +62,14 @@ import WidgetPlanBuilder from './widget-plan-builder.js';
 import { DRY_RUN, FORCE_OFFLINE, ENABLE_AFFILIATE_INJECTOR, ENABLE_INLINE_IMAGES } from './config.js';
 import ImageSourceManager from './image-source-manager.js';
 import { lookupIATA, isKnownLocation, getAllLocationNames } from './airport-lookup.js';
+import LiveDataEnricher from './live-data-enricher.js';
 
 class ArticleFinalizer {
   constructor() {
     this.widgets = REAL_TRAVELPAYOUTS_WIDGETS;
     this.widgetPlacer = new ContextualWidgetPlacer();
     this.widgetPlanBuilder = new WidgetPlanBuilder();
+    this.liveDataEnricher = new LiveDataEnricher();
     // Import IntelligentContentAnalyzerOptimized pour traduction
     this.intelligentContentAnalyzer = null;
     this._initAnalyzer();
@@ -815,6 +817,18 @@ class ArticleFinalizer {
     // PHASE 3 FIX: Second passage fixWordGlue après toutes les traductions LLM
     // Les traductions (detectAndTranslateEnglish, blockquote translation, etc.) re-introduisent du glue
     finalContent = this.fixWordGlue(finalContent, null);
+
+    // PHASE 6.2: Injection donnees live (prix, securite, devise, etc.)
+    try {
+      const liveResult = await this.liveDataEnricher.enrichArticle(finalContent, pipelineContext);
+      if (liveResult.enriched) {
+        finalContent = liveResult.html;
+        enhancements.liveData = true;
+        enhancements.liveDataSources = [liveResult.liveData.safety && 'safety', liveResult.liveData.countryInfo && 'country', liveResult.liveData.flightPrice && 'flights', liveResult.liveData.costOfLiving && 'cost'].filter(Boolean);
+      }
+    } catch (e) {
+      console.warn(`⚠️ LIVE_DATA: Enrichissement echoue (non-bloquant): ${e.message}`);
+    }
 
     // DEBUG: Vérifier les widgets AVANT le return final
     const widgetsBeforeReturn = this.detectRenderedWidgets(finalContent);

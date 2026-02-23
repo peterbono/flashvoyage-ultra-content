@@ -11,6 +11,7 @@ import { OPENAI_API_KEY, DRY_RUN, FORCE_OFFLINE } from './config.js';
 import { compileRedditStory } from './reddit-story-compiler.js';
 import PipelineRunner from './pipeline-runner.js';
 import costTracker from './llm-cost-tracker.js';
+import RssSignalFetcher from './rss-signal-fetcher.js';
 
 class EnhancedUltraGenerator extends UltraStrategicGenerator {
   constructor() {
@@ -329,8 +330,37 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const allBatches = [];
       let selectedArticle = null;
 
+      // PHASE 2: Tenter RSS Signal + Reddit cross-ref AVANT le scrape Reddit classique
+      if (!forceOffline && !isDryRun) {
+        try {
+          console.log('📡 Tentative source RSS + cross-ref Reddit...\n');
+          const rssFetcher = new RssSignalFetcher();
+          const redditToken = this.scraper._redditAccessToken || null;
+          const rssResult = await rssFetcher.findBestSignal(redditToken);
+          if (rssResult && rssResult.article) {
+            const rssArticle = rssResult.article;
+            const redditUrl = rssArticle.link || '';
+            if (!this.isArticleAlreadyPublished(rssArticle.title, redditUrl)) {
+              selectedArticle = rssArticle;
+              console.log(`\n✅ Article RSS+Reddit selectionne: "${rssArticle.title?.substring(0, 80)}..."`);
+              console.log(`   Signal RSS: ${rssResult.rssItem.title?.substring(0, 60)}`);
+              console.log(`   Source: ${rssResult.rssItem.source} | Mode: news\n`);
+            } else {
+              console.log('📡 RSS: Match trouve mais deja publie, fallback Reddit classique\n');
+            }
+          }
+        } catch (e) {
+          console.warn(`⚠️ RSS signal fetch echoue (non-bloquant): ${e.message}\n`);
+        }
+      }
+
+      if (selectedArticle) {
+        console.log('⏭️ Skip scrape Reddit classique (candidat RSS+Reddit deja selectionne)\n');
+      }
+
       console.log('🔍 Scrape source par source (stop au premier candidat)...\n');
       for (const methodName of scraperMethods) {
+        if (selectedArticle) break;
         try {
           const batch = await this.scraper[methodName]();
           if (!batch || !Array.isArray(batch) || batch.length === 0) continue;

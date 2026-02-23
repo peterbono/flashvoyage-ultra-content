@@ -44,6 +44,7 @@ const SIGNAL_WEIGHTS = {
   warning_pattern:         0.20,
   comments_confirm_change: 0.25,
   high_solution_density:   0.15,
+  rss_news_source:         0.35,
   // EVERGREEN signals
   evergreen_process:       0.35,
   no_dates_in_text:        0.25
@@ -217,6 +218,14 @@ export function routeEditorialMode(extracted, pattern, story) {
     signals.push('high_solution_density');
   }
 
+  // ─── 5b. Signal RSS source (boost news quand vient d'un feed RSS) ─
+  const isRssSource = extracted?.source?.source?.includes?.('rss') ||
+                      extracted?._rss_signal ||
+                      extracted?.source?._editorial_hint === 'news';
+  if (isRssSource) {
+    signals.push('rss_news_source');
+  }
+
   // ─── 6. Signaux evergreen ───────────────────────────────────
   if (isEvergreenProcess(pattern, extracted)) {
     signals.push('evergreen_process');
@@ -253,6 +262,9 @@ export function routeEditorialMode(extracted, pattern, story) {
       newsSignals.push(s);
     } else if (s === 'high_solution_density') {
       newsScore += SIGNAL_WEIGHTS.high_solution_density;
+      newsSignals.push(s);
+    } else if (s === 'rss_news_source') {
+      newsScore += SIGNAL_WEIGHTS.rss_news_source;
       newsSignals.push(s);
     } else if (s === 'evergreen_process') {
       evergreenScore += SIGNAL_WEIGHTS.evergreen_process;
