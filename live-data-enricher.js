@@ -361,14 +361,21 @@ class LiveDataEnricher {
 
     if (lines.length === 0) return '';
 
-    return `
-<aside class="fv-live-data" style="background:#f0f7ff;border-left:4px solid #2563eb;padding:1.2em 1.5em;margin:2em 0;border-radius:8px;font-size:0.95em;">
-<h4 style="margin:0 0 0.8em 0;color:#1e40af;font-size:1.05em;">Infos pratiques &mdash; ${destination.displayName} (maj : ${date})</h4>
-<ul style="list-style:none;padding:0;margin:0;">
+    return `<!-- wp:group {"className":"fv-live-data"} -->
+<div class="wp-block-group fv-live-data">
+<!-- wp:heading {"level":4} -->
+<h4 class="wp-block-heading">Infos pratiques \u2014 ${destination.displayName} <small>(maj\u00a0: ${date})</small></h4>
+<!-- /wp:heading -->
+<!-- wp:list -->
+<ul class="wp-block-list">
 ${lines.join('\n')}
 </ul>
-<p style="margin:0.8em 0 0 0;font-size:0.8em;color:#6b7280;font-style:italic;">Donnees mises a jour automatiquement. Les prix sont indicatifs et peuvent varier.</p>
-</aside>`;
+<!-- /wp:list -->
+<!-- wp:paragraph {"className":"has-small-font-size"} -->
+<p class="has-small-font-size"><em>Donnees mises a jour automatiquement. Les prix sont indicatifs et peuvent varier.</em></p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->`;
   }
 
   // --- Main entry: enrich article HTML ---

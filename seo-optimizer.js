@@ -134,8 +134,11 @@ class SeoOptimizer {
     
     console.log(`✅ SEO_OPTIMIZER: tokens_added=${this.tokenAudit.length} violations=${hasViolations ? 1 : 0}`);
     
-    // PHASE 8.7: Injection schema markup JSON-LD
-    html = this.injectSchemaMarkup(html, seoData, pipelineContext);
+    // PHASE 8.7: Build schema markup JSON-LD (stored separately, not in HTML body)
+    const schemaMarkup = this.buildSchemaMarkup(html, seoData, meta, pipelineContext);
+    if (schemaMarkup.length > 0) {
+      report.schemaMarkup = schemaMarkup;
+    }
     
     return { html, report };
   }
@@ -147,7 +150,7 @@ class SeoOptimizer {
    * - BreadcrumbList (accueil > categorie > article)
    * - TravelAction (destination)
    */
-  injectSchemaMarkup(html, seoData, pipelineContext) {
+  buildSchemaMarkup(html, seoData, meta, pipelineContext) {
     const schemas = [];
     const title = seoData?.title || pipelineContext?.generatedTitle || '';
     const destination = pipelineContext?.final_destination || seoData?.main_destination || '';
@@ -156,12 +159,17 @@ class SeoOptimizer {
     const articleUrl = slug ? `${wpUrl}/${slug}/` : wpUrl;
     const now = new Date().toISOString();
 
+    // Build description from meta or fallback
+    const description = meta?.metaDescription
+      || (destination ? `Guide pratique ${destination} — conseils, budget et itineraire par FlashVoyage.` : '')
+      || title;
+
     // 1. Article schema
     schemas.push({
       '@context': 'https://schema.org',
       '@type': 'Article',
       headline: title,
-      description: seoData?.meta_description || '',
+      description,
       author: { '@type': 'Person', name: 'FlashVoyage' },
       publisher: {
         '@type': 'Organization',
@@ -222,14 +230,9 @@ class SeoOptimizer {
       });
     }
 
-    // Injecter les schemas dans le HTML
-    const schemaHtml = schemas.map(s =>
-      `<script type="application/ld+json">${JSON.stringify(s)}</script>`
-    ).join('\n');
+    console.log(`📋 SCHEMA: ${schemas.length} schema(s) JSON-LD genere(s) (Article, ${destination ? 'BreadcrumbList, TravelAction' : 'BreadcrumbList'}${faqPattern.test(html) ? ', FAQPage' : ''})`);
 
-    console.log(`📋 SCHEMA: ${schemas.length} schema(s) JSON-LD injecte(s) (Article, ${destination ? 'BreadcrumbList, TravelAction' : 'BreadcrumbList'}${faqPattern.test(html) ? ', FAQPage' : ''})`);
-
-    return schemaHtml + '\n' + html;
+    return schemas;
   }
 
   /**

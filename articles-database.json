@@ -1,7 +1,26 @@
 {
-  "crawled_at": "2026-02-23T15:16:35.973Z",
-  "total_articles": 20,
+  "crawled_at": "2026-02-23T16:02:43.569Z",
+  "total_articles": 21,
   "articles": [
+    {
+      "id": 3005,
+      "title": "Arbitrer son Itinéraire au Vietnam : Décisions Cruciales en Saison des Pluies",
+      "url": "https://flashvoyage.com/arbitrer-son-itineraire-au-vietnam-decisions-cruciales-en-saison-des-pluies/",
+      "slug": "arbitrer-son-itineraire-au-vietnam-decisions-cruciales-en-saison-des-pluies",
+      "excerpt": "Points clés de ce témoignage Vietnam, de mai à novembre, voyage solo, budget modeste, défis climatiques en saison des pluies. L&#8217;air lourd et humide du Vietnam e&#8230;\n",
+      "content": "\nPoints clés de ce témoignage\nVietnam, de mai à novembre, voyage solo, budget modeste, défis climatiques en saison des pluies.\n\nL&#8217;air lourd et humide du Vietnam en mai te frappe dès que tu sors de l&#8217;aéroport.\nLe bruit des gouttes de pluie tambourinant sur le toit en tôle d&#8217;un café de rue te rappelle que la saison des pluies ne fait que commencer. On en parle dans Voyager au Vietnam avec 500 € : Comment optimiser chaque dépense.\nDans ce contexte, chaque décision concernant ton i",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-23T16:02:19",
+      "modified": "2026-02-23T16:02:38",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-3005.jpg"
+    },
     {
       "id": 2997,
       "title": "Choisir son itinéraire au Vietnam : l&#8217;art de l&#8217;arbitrage logistique",

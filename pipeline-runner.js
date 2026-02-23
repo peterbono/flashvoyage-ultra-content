@@ -327,6 +327,11 @@ class PipelineRunner {
       
       // Mettre à jour le contenu avec le résultat SEO
       generated.content = seoResult.html;
+      
+      // Stocker les schemas JSON-LD pour injection via WP post meta (pas dans le HTML)
+      if (seoResult.report?.schemaMarkup?.length > 0) {
+        pipelineContext.schemaMarkup = seoResult.report.schemaMarkup;
+      }
 
       // ÉTAPE 6.5: Editorial Enhancer (amélioration qualitative)
       console.log('\n📋 ÉTAPE 6.5: Editorial Enhancer (editorial-enhancer)');

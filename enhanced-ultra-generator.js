@@ -12,6 +12,7 @@ import { compileRedditStory } from './reddit-story-compiler.js';
 import PipelineRunner from './pipeline-runner.js';
 import costTracker from './llm-cost-tracker.js';
 import RssSignalFetcher from './rss-signal-fetcher.js';
+import EditorialCalendar from './editorial-calendar.js';
 
 class EnhancedUltraGenerator extends UltraStrategicGenerator {
   constructor() {
@@ -330,10 +331,19 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const allBatches = [];
       let selectedArticle = null;
 
-      // PHASE 2: Tenter RSS Signal + Reddit cross-ref AVANT le scrape Reddit classique
-      if (!forceOffline && !isDryRun) {
+      // PHASE 1.5: Calendrier editorial — decide le type d'article et le cluster
+      const calendar = new EditorialCalendar();
+      const directive = calendar.getNextDirective();
+      console.log(`📅 CALENDRIER EDITORIAL:`);
+      console.log(`   Type: ${directive.articleType} | Cluster: ${directive.cluster.label}`);
+      console.log(`   Position cycle: ${directive.cyclePosition + 1}/5 | Total publie: ${directive.totalPublished}`);
+      console.log(`   Hints: ${directive.searchHints.slice(0, 3).join(', ')}`);
+      console.log(`   RSS actif: ${directive.useRss ? 'oui' : 'non'}\n`);
+
+      // PHASE 2: RSS uniquement si le calendrier le demande (type = news)
+      if (directive.useRss && !forceOffline && !isDryRun) {
         try {
-          console.log('📡 Tentative source RSS + cross-ref Reddit...\n');
+          console.log('📡 Tentative source RSS + cross-ref Reddit (mode news)...\n');
           const rssFetcher = new RssSignalFetcher();
           const redditToken = this.scraper._redditAccessToken || null;
           const rssResult = await rssFetcher.findBestSignal(redditToken);
@@ -358,6 +368,13 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         console.log('⏭️ Skip scrape Reddit classique (candidat RSS+Reddit deja selectionne)\n');
       }
 
+      // Fonction de scoring par affinite cluster (boost les articles lies au cluster actif)
+      const clusterDestinations = directive.cluster.destinations.map(d => d.toLowerCase());
+      const scoreClusterAffinity = (article) => {
+        const text = ((article.title || '') + ' ' + (article.source_text || '')).toLowerCase();
+        return clusterDestinations.some(d => text.includes(d)) ? 1 : 0;
+      };
+
       console.log('🔍 Scrape source par source (stop au premier candidat)...\n');
       for (const methodName of scraperMethods) {
         if (selectedArticle) break;
@@ -374,13 +391,14 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
             return !isPublished;
           });
           if (unpublishedBatch.length >= 1) {
-            if (isDryRun || forceOffline) {
-              unpublishedBatch.sort((a, b) => {
-                const ra = a.source_reliability || 0, rb = b.source_reliability || 0;
-                if (ra !== rb) return rb - ra;
-                return (b.source_text || '').length - (a.source_text || '').length;
-              });
-            }
+            // Trier : affinite cluster > fiabilite > longueur
+            unpublishedBatch.sort((a, b) => {
+              const ca = scoreClusterAffinity(a), cb = scoreClusterAffinity(b);
+              if (ca !== cb) return cb - ca;
+              const ra = a.source_reliability || 0, rb = b.source_reliability || 0;
+              if (ra !== rb) return rb - ra;
+              return (b.source_text || '').length - (a.source_text || '').length;
+            });
             selectedArticle = unpublishedBatch[0];
             console.log(`\n✅ Candidat trouvé après ${methodName} — stop scrape (${unpublishedBatch.length} dispo dans ce batch)\n`);
             break;
@@ -491,13 +509,14 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           url: selectedArticle.link || selectedArticle.url || '',
           subreddit: selectedArticle.subreddit || ''
         },
-        comments: redditComments, // NOUVEAU: Commentaires Reddit récupérés
+        comments: redditComments,
         geo: selectedArticle.geo || {},
         source: {
           subreddit: selectedArticle.subreddit || '',
           url: selectedArticle.link || selectedArticle.url || '',
           source: selectedArticle.source || 'Communauté'
-        }
+        },
+        calendarDirective: directive
       };
       
       // Exécuter le pipeline complet
@@ -675,6 +694,11 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         final_destination: finalDestination
       });
       
+      // Propager schemas JSON-LD du pipeline vers l'article pour publication via meta WP
+      if (pipelineContext?.schemaMarkup?.length > 0) {
+        finalArticle.schemaMarkup = pipelineContext.schemaMarkup;
+      }
+
       // L'article est déjà finalisé par le pipeline, on utilise directement finalArticle
       const finalizedArticle = finalArticle;
       
@@ -919,6 +943,19 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       
       console.log('✅ Article publié avec succès!');
       console.log('🔗 Lien:', publishedArticle.link);
+
+      // Enregistrer dans le calendrier editorial
+      try {
+        calendar.recordPublication(
+          directive.articleType,
+          directive.cluster.id,
+          directive.searchHints[0] || '',
+          finalizedArticle.title || ''
+        );
+        console.log(`📅 Calendrier mis a jour: ${directive.articleType} #${directive.totalPublished + 1}`);
+      } catch (calErr) {
+        console.warn(`⚠️ Erreur calendrier (non-bloquant): ${calErr.message}`);
+      }
 
       // LLM Cost Report
       const costSummary = costTracker.printSummary();
@@ -2071,6 +2108,18 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       console.log('📝 Publication sur WordPress...');
       
       // Préparer les données WordPress
+      const wpMeta = {
+        description: article.meta?.description || article.excerpt || '',
+        keywords: article.meta?.keywords || '',
+        'og:title': article.meta?.['og:title'] || article.title,
+        'og:description': article.meta?.['og:description'] || article.excerpt || ''
+      };
+
+      // Stocker les schemas JSON-LD en meta pour injection dans <head> par le plugin WP
+      if (article.schemaMarkup?.length > 0) {
+        wpMeta.fv_schema_json = JSON.stringify(article.schemaMarkup);
+      }
+
       const wordpressData = {
         title: article.title,
         content: article.content,
@@ -2078,12 +2127,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         excerpt: article.excerpt || '',
         categories: article.categoryIds || [],
         tags: article.tagIds || [],
-        meta: {
-          description: article.meta?.description || article.excerpt || '',
-          keywords: article.meta?.keywords || '',
-          'og:title': article.meta?.['og:title'] || article.title,
-          'og:description': article.meta?.['og:description'] || article.excerpt || ''
-        }
+        meta: wpMeta
       };
       
       // Authentification

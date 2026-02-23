@@ -134,3 +134,36 @@ add_filter( 'no_texturize_shortcodes', function ( $shortcodes ) {
     $shortcodes[] = 'fv_widget';
     return $shortcodes;
 } );
+
+/**
+ * Register fv_schema_json custom field so it can be set via the REST API.
+ */
+add_action( 'init', function () {
+    register_post_meta( 'post', 'fv_schema_json', array(
+        'show_in_rest'  => true,
+        'single'        => true,
+        'type'          => 'string',
+        'auth_callback' => function () { return current_user_can( 'edit_posts' ); },
+    ) );
+} );
+
+/**
+ * Inject JSON-LD schemas stored in fv_schema_json post meta into <head>.
+ */
+add_action( 'wp_head', function () {
+    if ( ! is_singular( 'post' ) ) {
+        return;
+    }
+    $raw = get_post_meta( get_the_ID(), 'fv_schema_json', true );
+    if ( empty( $raw ) ) {
+        return;
+    }
+    $schemas = json_decode( $raw, true );
+    if ( ! is_array( $schemas ) ) {
+        return;
+    }
+    foreach ( $schemas as $schema ) {
+        echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+    }
+}, 1 );
+

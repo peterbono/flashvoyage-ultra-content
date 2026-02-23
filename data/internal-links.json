@@ -1,6 +1,25 @@
 {
   "articles": [
     {
+      "id": 2997,
+      "slug": "choisir-son-itineraire-au-vietnam-lart-de-larbitrage-logistique",
+      "title": "Choisir son itinéraire au Vietnam : l&#8217;art de l&#8217;arbitrage logistique",
+      "url": "https://flashvoyage.com/choisir-son-itineraire-au-vietnam-lart-de-larbitrage-logistique/",
+      "category": "temoignage",
+      "keywords": [
+        "choisir",
+        "itineraire",
+        "vietnam",
+        "l&#8217;art",
+        "l&#8217;arbitrage",
+        "logistique",
+        "voyage",
+        "budget",
+        "asie"
+      ],
+      "excerpt": "{&#8220;@context&#8221;:&#8221;https://schema.org&#8221;,&#8221;@type&#8221;:&#8221;Article&#8221;,&"
+    },
+    {
       "id": 2989,
       "slug": "comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes",
       "title": "Comment découvrir l&#8217;Indonésie authentique : itinéraire, choix et découvertes",
