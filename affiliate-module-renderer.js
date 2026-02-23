@@ -43,6 +43,30 @@ export function renderAffiliateModule(placement, geo_defaults) {
     coworking: {
       title: 'Utile si tu travailles en voyage',
       phrase: 'Un espace de coworking avec une connexion internet fiable peut améliorer ta productivité pendant ton séjour.'
+    },
+    transfers: {
+      title: 'Utile si tu arrives dans un nouvel aéroport',
+      phrase: 'Réserver ton transfert à l\'avance te garantit un trajet fiable et un prix fixe, sans mauvaise surprise à l\'arrivée.'
+    },
+    tours: {
+      title: 'Utile si tu cherches des activités sur place',
+      phrase: 'Billets coupe-file et excursions locales t\'évitent les files d\'attente et te font gagner du temps.'
+    },
+    car_rental: {
+      title: 'Utile si tu veux explorer par la route',
+      phrase: 'Comparer les agences de location te permet de trouver le meilleur prix et la meilleure couverture.'
+    },
+    bikes: {
+      title: 'Utile si tu veux louer un scooter ou un vélo',
+      phrase: 'La location de deux-roues est souvent le moyen le plus pratique et économique pour explorer une destination.'
+    },
+    flight_compensation: {
+      title: 'Utile si ton vol a été retardé ou annulé',
+      phrase: 'Tu peux réclamer jusqu\'à 600 € de compensation automatiquement, sans frais si ta demande n\'aboutit pas.'
+    },
+    events: {
+      title: 'Utile si tu cherches des événements sur place',
+      phrase: 'Billets concerts, spectacles et événements sportifs au meilleur prix, livrés directement sur ton téléphone.'
     }
   };
 
@@ -130,8 +154,25 @@ function generateWidgetScript(placement, geo_defaults) {
       return `[fv_widget type="flights" origin="${accOrigin}" destination="${accDest}"]`;
 
     case 'coworking':
-      // Pas de widget Travelpayouts pour coworking, on met un lien vers une page partenaire
       return `<p><a href="https://www.coworker.com/?ref=flashvoyage" target="_blank" rel="nofollow">Trouver un espace de coworking</a></p>`;
+
+    case 'transfers':
+      return `[fv_widget type="transfers"]`;
+
+    case 'tours':
+      return `[fv_widget type="tours"]`;
+
+    case 'car_rental':
+      return `[fv_widget type="car_rental"]`;
+
+    case 'bikes':
+      return `[fv_widget type="bikes"]`;
+
+    case 'flight_compensation':
+      return `[fv_widget type="flight_compensation"]`;
+
+    case 'events':
+      return `[fv_widget type="events"]`;
 
     default:
       return `<!-- Widget ${id} -->`;

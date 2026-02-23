@@ -122,7 +122,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       usaHorizontal: {
         brand: "Insubuy",
         type: "Insurance for USA Search Form (Horizontal)",
-        reward: "—",
+        reward: "$1.50-$150/policy",
         category: "Insurance",
         script: `<iframe src="https://tp.media/content?campaign_id=165&promo_id=4792&shmarker=676421&trs=463418&widget=670x119" width="670" height="119" frameborder="0"> </iframe>`,
         context: "Articles sur assurance voyage USA, séjour aux États-Unis"
@@ -130,7 +130,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       usaVertical: {
         brand: "Insubuy",
         type: "Insurance for USA Search Form (Vertical)",
-        reward: "—",
+        reward: "$1.50-$150/policy",
         category: "Insurance",
         script: `<iframe src="https://tp.media/content?campaign_id=165&promo_id=4775&shmarker=676421&trs=463418&widget=320x356" width="320" height="356" frameborder="0"> </iframe>`,
         context: "Articles sur assurance voyage USA (format vertical)"
@@ -138,7 +138,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       schengenVisa: {
         brand: "Insubuy",
         type: "Schengen Visa Insurance Search Form",
-        reward: "—",
+        reward: "$1.50-$150/policy",
         category: "Insurance",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=4797&campaign_id=111" charset="utf-8"></script>`,
         context: "Articles sur visa Schengen, assurance pour l'Europe"
@@ -181,7 +181,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       shuttlesSearch: {
         brand: "Kiwitaxi",
         type: "Shuttles Search Form",
-        reward: "—",
+        reward: "9-11%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=2949&campaign_id=111" charset="utf-8"></script>`,
         context: "Articles sur transferts aéroport, navettes, arrivée dans un pays"
@@ -189,7 +189,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       shortSearch: {
         brand: "Kiwitaxi",
         type: "Short and Tidy Shuttles Search Form",
-        reward: "—",
+        reward: "9-11%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=1486&campaign_id=111" charset="utf-8"></script>`,
         context: "Encart compact pour transferts aéroport"
@@ -197,7 +197,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       reviews: {
         brand: "Kiwitaxi",
         type: "Reviews Widget",
-        reward: "—",
+        reward: "9-11%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=2948&campaign_id=111" charset="utf-8"></script>`,
         context: "Avis sur les transferts, retours d'expérience"
@@ -205,7 +205,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       whiteLabel: {
         brand: "Kiwitaxi",
         type: "White Label",
-        reward: "—",
+        reward: "9-11%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=691&campaign_id=111" charset="utf-8"></script>`,
         context: "Page dédiée transferts, intégration complète"
@@ -213,7 +213,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       whiteLabel2: {
         brand: "Kiwitaxi",
         type: "White Label 2.0",
-        reward: "—",
+        reward: "9-11%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3879&campaign_id=111" charset="utf-8"></script>`,
         context: "Page dédiée transferts, version modernisée"
@@ -223,7 +223,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       shuttlesSearch: {
         brand: "intui.travel",
         type: "Shuttles Search Form",
-        reward: "—",
+        reward: "10%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=1586&campaign_id=111" charset="utf-8"></script>`,
         context: "Recherche de navettes et transferts"
@@ -231,7 +231,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       oneFieldSearch: {
         brand: "intui.travel",
         type: "One Field Shuttles Search Form",
-        reward: "—",
+        reward: "10%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3506&campaign_id=111" charset="utf-8"></script>`,
         context: "Formulaire compact une ligne pour navettes"
@@ -239,7 +239,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       top3Options: {
         brand: "intui.travel",
         type: "Shuttles Search Form (Top 3 Options)",
-        reward: "—",
+        reward: "10%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3507&campaign_id=111" charset="utf-8"></script>`,
         context: "Top 3 options de transfert pour une destination"
@@ -247,7 +247,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       shortSearch: {
         brand: "intui.travel",
         type: "Short and Tidy Shuttles Search Form",
-        reward: "—",
+        reward: "10%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=4674&campaign_id=111" charset="utf-8"></script>`,
         context: "Encart compact pour navettes intui.travel"
@@ -255,7 +255,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       specificDestination: {
         brand: "intui.travel",
         type: "Specific Destination Widget",
-        reward: "—",
+        reward: "10%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3465&campaign_id=111" charset="utf-8"></script>`,
         context: "Transferts vers une destination spécifique"
@@ -263,7 +263,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       specificRoute: {
         brand: "intui.travel",
         type: "Specific Route Widget",
-        reward: "—",
+        reward: "10%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3466&campaign_id=111" charset="utf-8"></script>`,
         context: "Route de transfert spécifique (ex: aéroport → hôtel)"
@@ -271,7 +271,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       topDestinations: {
         brand: "intui.travel",
         type: "Shuttles Search Form (Top Destinations)",
-        reward: "—",
+        reward: "10%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=8597&campaign_id=111" charset="utf-8"></script>`,
         context: "Destinations populaires pour transferts"
@@ -279,7 +279,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       topCountries: {
         brand: "intui.travel",
         type: "Shuttles Search Form (Top Countries)",
-        reward: "—",
+        reward: "10%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=8598&campaign_id=111" charset="utf-8"></script>`,
         context: "Pays populaires pour transferts"
@@ -287,7 +287,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       whiteLabel: {
         brand: "intui.travel",
         type: "White Label",
-        reward: "—",
+        reward: "10%",
         category: "Transfers",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=1504&campaign_id=111" charset="utf-8"></script>`,
         context: "Page dédiée transferts intui.travel"
@@ -322,7 +322,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       popularTours: {
         brand: "Tiqets",
         type: "Popular Tours Widget",
-        reward: "5.5%",
+        reward: "3.5-8%",
         category: "Tours",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3947&campaign_id=111" charset="utf-8"></script>`,
         context: "Articles sur activités, visites, temples, musées, que faire"
@@ -330,7 +330,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       specificTour: {
         brand: "Tiqets",
         type: "Specific Tour Widget",
-        reward: "5.5%",
+        reward: "3.5-8%",
         category: "Tours",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3948&campaign_id=111" charset="utf-8"></script>`,
         context: "Tour/activité spécifique dans une ville"
@@ -338,7 +338,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       availabilityCalendar: {
         brand: "Tiqets",
         type: "Availability Calendar Widget",
-        reward: "5.5%",
+        reward: "3.5-8%",
         category: "Tours",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3984&campaign_id=111" charset="utf-8"></script>`,
         context: "Calendrier de disponibilité pour tours et activités"
@@ -348,7 +348,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       specificTours: {
         brand: "WeGoTrip",
         type: "Specific Tours Widget",
-        reward: "—",
+        reward: "20-41.5%",
         category: "Tours",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=4489&campaign_id=111" charset="utf-8"></script>`,
         context: "Tours audio-guidés et excursions spécifiques"
@@ -391,7 +391,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       searchForm: {
         brand: "Localrent.com",
         type: "Rental Cars Search Form",
-        reward: "—",
+        reward: "50%",
         category: "Car Rental",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=4322&campaign_id=111" charset="utf-8"></script>`,
         context: "Location voiture locale, agences indépendantes"
@@ -399,7 +399,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       whiteLabel: {
         brand: "Localrent.com",
         type: "White Label Widget",
-        reward: "—",
+        reward: "50%",
         category: "Car Rental",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=2466&campaign_id=111" charset="utf-8"></script>`,
         context: "Page dédiée location locale"
@@ -433,7 +433,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       searchForm: {
         brand: "BikesBooking.com",
         type: "Rental Bikes Search Form",
-        reward: "—",
+        reward: "4%",
         category: "Bikes",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=5472&campaign_id=111" charset="utf-8"></script>`,
         context: "Articles sur vélo, scooter, deux-roues, explorer en moto"
@@ -447,7 +447,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       searchForm: {
         brand: "AirHelp",
         type: "Flight Compensation Search Form",
-        reward: "13.5-18%",
+        reward: "15-16.6%",
         category: "Flight Compensation",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=8679&campaign_id=111" charset="utf-8"></script>`,
         context: "Articles sur retards, annulations, droits des passagers"
@@ -457,7 +457,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       submitForm: {
         brand: "Compensair",
         type: "Submit Application Widget",
-        reward: "—",
+        reward: "€5-12/claim",
         category: "Flight Compensation",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=2110&campaign_id=111" charset="utf-8"></script>`,
         context: "Formulaire de réclamation compensation vol"
@@ -465,7 +465,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       shortSubmitForm: {
         brand: "Compensair",
         type: "Short Submit Application Widget",
-        reward: "—",
+        reward: "€5-12/claim",
         category: "Flight Compensation",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=3408&campaign_id=111" charset="utf-8"></script>`,
         context: "Formulaire court de réclamation compensation vol"
@@ -479,7 +479,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       eventsSchedule: {
         brand: "TicketNetwork",
         type: "Events Schedule with Search Filters",
-        reward: "12.5%",
+        reward: "6-12.5%",
         category: "Events",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=6086&campaign_id=111" charset="utf-8"></script>`,
         context: "Articles sur événements, concerts, spectacles, sports"
@@ -487,7 +487,7 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
       ticketsSearch: {
         brand: "TicketNetwork",
         type: "Tickets Search Form",
-        reward: "12.5%",
+        reward: "6-12.5%",
         category: "Events",
         script: `<script async src="https://trpwdg.com/content?trs=463418&shmarker=676421&powered_by=true&locale=fr&promo_id=8505&campaign_id=111" charset="utf-8"></script>`,
         context: "Recherche de billets pour événements"

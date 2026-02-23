@@ -70,8 +70,13 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
       flight: 'flights',
       accommodation: 'accommodation',
       vpn: 'esim',
-      tours: 'accommodation',
-      gear: 'accommodation'
+      tours: 'tours',
+      gear: 'car_rental',
+      transfers: 'transfers',
+      car_rental: 'car_rental',
+      bikes: 'bikes',
+      flight_compensation: 'flight_compensation',
+      events: 'events'
     };
     const placementId = resolverToId[resolver] || resolver;
     const friction = angle.business_vector.affiliate_friction;
@@ -256,7 +261,141 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
     debug.skipped.coworking = 'no theme or keyword match';
   }
 
-  // 6. OPPORTUNITÉS DANS SECTION "ERREURS À ÉVITER"
+  // 6. TRANSFERS
+  const transfersKeywords = ['transfer', 'shuttle', 'taxi', 'pickup', 'chauffeur', 'navette', 'depuis l\'aéroport', 'arrivée aéroport', 'airport pickup', 'private driver'];
+  const transfersKeywordMatch = transfersKeywords.some(kw => fullText.includes(kw));
+  
+  if (transfersKeywordMatch) {
+    const matchedKw = transfersKeywords.find(kw => fullText.includes(kw));
+    placements.push({
+      id: 'transfers',
+      priority: 7,
+      anchor: 'after_context',
+      reason: [`matched_keywords: ${matchedKw}`],
+      confidence: 65,
+      payload: {
+        type: 'transfers',
+        destination: geo_defaults?.country || 'asia',
+        city: geo_defaults?.city || null
+      }
+    });
+    debug.matched.transfers = { reasons: [`matched_keywords: ${matchedKw}`], confidence: 65 };
+  } else {
+    debug.skipped.transfers = 'no keyword match';
+  }
+
+  // 7. TOURS & ACTIVITIES
+  const toursKeywords = ['tour', 'excursion', 'museum', 'temple', 'activity', 'activities', 'guide', 'visite', 'things to do', 'food tour', 'attraction', 'sightseeing', 'day trip'];
+  const toursKeywordMatch = toursKeywords.some(kw => fullText.includes(kw));
+  
+  if (toursKeywordMatch) {
+    const matchedKw = toursKeywords.find(kw => fullText.includes(kw));
+    placements.push({
+      id: 'tours',
+      priority: 8,
+      anchor: 'after_context',
+      reason: [`matched_keywords: ${matchedKw}`],
+      confidence: 65,
+      payload: {
+        type: 'tours',
+        destination: geo_defaults?.country || 'asia',
+        city: geo_defaults?.city || null
+      }
+    });
+    debug.matched.tours = { reasons: [`matched_keywords: ${matchedKw}`], confidence: 65 };
+  } else {
+    debug.skipped.tours = 'no keyword match';
+  }
+
+  // 8. CAR RENTAL
+  const carRentalKeywords = ['rental car', 'rent a car', 'location voiture', 'location de voiture', 'road trip', 'driving', 'driver\'s license', 'voiture', 'conduire', 'louer une voiture', 'car hire'];
+  const carRentalKeywordMatch = carRentalKeywords.some(kw => fullText.includes(kw));
+  
+  if (carRentalKeywordMatch) {
+    const matchedKw = carRentalKeywords.find(kw => fullText.includes(kw));
+    placements.push({
+      id: 'car_rental',
+      priority: 9,
+      anchor: 'after_context',
+      reason: [`matched_keywords: ${matchedKw}`],
+      confidence: 65,
+      payload: {
+        type: 'car_rental',
+        destination: geo_defaults?.country || 'asia',
+        city: geo_defaults?.city || null
+      }
+    });
+    debug.matched.car_rental = { reasons: [`matched_keywords: ${matchedKw}`], confidence: 65 };
+  } else {
+    debug.skipped.car_rental = 'no keyword match';
+  }
+
+  // 9. BIKES & SCOOTERS
+  const bikesKeywords = ['scooter', 'bike', 'motorcycle', 'motorbike', 'moto', 'velo', 'vélo', 'deux-roues', 'louer un scooter', 'louer une moto'];
+  const bikesKeywordMatch = bikesKeywords.some(kw => fullText.includes(kw));
+  
+  if (bikesKeywordMatch) {
+    const matchedKw = bikesKeywords.find(kw => fullText.includes(kw));
+    placements.push({
+      id: 'bikes',
+      priority: 10,
+      anchor: 'after_context',
+      reason: [`matched_keywords: ${matchedKw}`],
+      confidence: 65,
+      payload: {
+        type: 'bikes',
+        destination: geo_defaults?.country || 'asia'
+      }
+    });
+    debug.matched.bikes = { reasons: [`matched_keywords: ${matchedKw}`], confidence: 65 };
+  } else {
+    debug.skipped.bikes = 'no keyword match';
+  }
+
+  // 10. FLIGHT COMPENSATION
+  const flightCompKeywords = ['delayed flight', 'cancelled flight', 'compensation', 'indemnisation', 'eu261', 'claim', 'vol annulé', 'retard de vol', 'flight delay', 'overbooking'];
+  const flightCompKeywordMatch = flightCompKeywords.some(kw => fullText.includes(kw));
+  
+  if (flightCompKeywordMatch) {
+    const matchedKw = flightCompKeywords.find(kw => fullText.includes(kw));
+    placements.push({
+      id: 'flight_compensation',
+      priority: 11,
+      anchor: 'after_critical_moment',
+      reason: [`matched_keywords: ${matchedKw}`],
+      confidence: 75,
+      payload: {
+        type: 'flight_compensation'
+      }
+    });
+    debug.matched.flight_compensation = { reasons: [`matched_keywords: ${matchedKw}`], confidence: 75 };
+  } else {
+    debug.skipped.flight_compensation = 'no keyword match';
+  }
+
+  // 11. EVENTS
+  const eventsKeywords = ['concert', 'festival', 'show', 'event', 'match', 'sport', 'theatre', 'theater', 'spectacle', 'live music', 'billetterie'];
+  const eventsKeywordMatch = eventsKeywords.some(kw => fullText.includes(kw));
+  
+  if (eventsKeywordMatch) {
+    const matchedKw = eventsKeywords.find(kw => fullText.includes(kw));
+    placements.push({
+      id: 'events',
+      priority: 12,
+      anchor: 'before_related',
+      reason: [`matched_keywords: ${matchedKw}`],
+      confidence: 60,
+      payload: {
+        type: 'events',
+        destination: geo_defaults?.country || 'asia'
+      }
+    });
+    debug.matched.events = { reasons: [`matched_keywords: ${matchedKw}`], confidence: 60 };
+  } else {
+    debug.skipped.events = 'no keyword match';
+  }
+
+  // 12. OPPORTUNITÉS DANS SECTION "ERREURS À ÉVITER"
   // Détecter si l'article mentionne des erreurs, problèmes, ou conseils d'évitement
   const errorsKeywords = ['mistake', 'error', 'wrong', 'avoid', 'don\'t', 'shouldn\'t', 'problem', 'issue', 'difficulty', 'challenge', 'erreur', 'éviter', 'problème', 'difficulté'];
   const errorsKeywordMatch = errorsKeywords.some(kw => fullText.includes(kw));
