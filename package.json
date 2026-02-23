@@ -15,7 +15,8 @@
     "build": "vercel build",
     "deploy": "vercel --prod",
     "seo:generate": "node scripts/generate-seo-pages.js",
-    "seo:status": "node scripts/generate-seo-pages.js --status"
+    "seo:status": "node scripts/generate-seo-pages.js --status",
+    "refresh:articles": "node scripts/refresh-articles.js"
   },
   "keywords": [
     "flashvoyage",

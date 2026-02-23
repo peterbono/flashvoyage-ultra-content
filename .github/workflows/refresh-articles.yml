@@ -1,0 +1,46 @@
+name: Rafraichir les articles
+
+on:
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Age minimum en jours'
+        required: false
+        default: '30'
+      limit:
+        description: 'Nombre max d articles a rafraichir'
+        required: false
+        default: '10'
+
+  # CRON DESACTIVE — decommenter quand pret
+  # schedule:
+  #   - cron: '0 6 * * 1'  # Tous les lundis a 6h UTC
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: refactor-v2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Rafraichir les articles anciens
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          TRAVELPAYOUTS_API_TOKEN: ${{ secrets.TRAVELPAYOUTS_API_TOKEN }}
+          FLASHVOYAGE_DRY_RUN: '0'
+        run: |
+          node scripts/refresh-articles.js \
+            --days ${{ github.event.inputs.days || '30' }} \
+            --limit ${{ github.event.inputs.limit || '10' }}
