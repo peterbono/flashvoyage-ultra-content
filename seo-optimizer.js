@@ -1623,30 +1623,26 @@ class SeoOptimizer {
       return html + `\n\n<h2>Articles connexes</h2>\n<ul>\n${linksHtml}\n</ul>`;
     }
     
-    // FIX: Exclure le premier paragraphe (hook immersif) — ne jamais y injecter de lien interne
-    // Le hook doit rester pur narratif sans insertion "Pour en savoir plus..."
-    const eligibleParagraphs = paragraphs.slice(1); // skip paragraphs[0] = hook
+    // Zone d'exclusion : jamais de lien interne avant le premier H2
+    const firstH2Pos = html.search(/<h2[\s>]/i);
+    const eligibleParagraphs = paragraphs.filter(p => firstH2Pos > 0 ? p.index > firstH2Pos : false);
     if (eligibleParagraphs.length === 0) {
-      // Fallback: ajouter section Articles connexes à la fin
       const linksHtml = links.map(link => 
         `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(link.title)}</a></li>`
       ).join('\n');
       return html + `\n\n<h3>À lire également</h3>\n<ul>\n${linksHtml}\n</ul>`;
     }
     
-    // AMÉLIORATION: Forcer insertion dans les 60% premiers (au moins 3 liens)
-    const targetParagraphCount = Math.max(3, Math.floor(eligibleParagraphs.length * 0.6));
-    const targetParagraphs = eligibleParagraphs.slice(0, targetParagraphCount);
+    // Max 3 liens internes, espaces dans le corps de l'article
+    const MAX_INTERNAL_LINKS = 3;
+    const sortedLinks = links.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0)).slice(0, MAX_INTERNAL_LINKS);
     
-    // AMÉLIORATION: Utiliser les meilleurs matches (score élevé) pour les premiers liens
-    const sortedLinks = links.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0));
-    
-    // Distribuer les liens dans les paragraphes cibles
-    // AMÉLIORATION: Forcer au moins 2 liens dans les 30% premiers
-    const minLinksInFirstThird = Math.min(2, sortedLinks.length, targetParagraphs.length);
+    // Distribuer de maniere espacee (1 lien tous les N paragraphes)
+    const spacing = Math.max(2, Math.floor(eligibleParagraphs.length / (sortedLinks.length + 1)));
+    const targetParagraphs = sortedLinks.map((_, i) => eligibleParagraphs[Math.min((i + 1) * spacing, eligibleParagraphs.length - 1)]);
     
     const maxAnchorChars = 70;
-    for (let i = 0; i < Math.max(minLinksInFirstThird, sortedLinks.length) && i < targetParagraphs.length; i++) {
+    for (let i = 0; i < sortedLinks.length && i < targetParagraphs.length; i++) {
       const link = sortedLinks[i];
       const para = targetParagraphs[i];
       const decodedTitle = this.decodeHtmlEntitiesForAnchor(link.title);
@@ -1664,89 +1660,13 @@ class SeoOptimizer {
       
       const linkHtml = `<a href="${this.escapeHtml(link.url)}">${this.escapeHtml(finalAnchor)}</a>`;
       
-      const linkPhrases = [
-        `On en parle dans ${linkHtml}.`,
-        `Tu retrouveras notre retour complet dans ${linkHtml}.`,
-        `Notre guide ${linkHtml} détaille ce point.`,
-        `C'est un sujet qu'on approfondit dans ${linkHtml}.`,
-        `Si tu veux creuser, lis ${linkHtml}.`
-      ];
-      const phrase = linkPhrases[i % linkPhrases.length];
+      const phrase = linkHtml;
       
-      const sentences = para.content.split(/(?<=[.!?])\s+/);
-      if (sentences.length >= 2) {
-        const insertPoint = sentences[0].length;
-        const newContent = para.content.substring(0, insertPoint) + 
-          ` ${phrase}` +
-          para.content.substring(insertPoint);
-        
-        modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
-        insertedCount++;
-        console.log(`   🔗 Lien inséré dans paragraphe: "${finalAnchor}"`);
-      } else if (sentences.length === 1 && para.content.length > 80) {
-        const newContent = para.content + ` ${phrase}`;
-        
-        modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
-        insertedCount++;
-        console.log(`   🔗 Lien ajouté en fin de paragraphe: "${finalAnchor}"`);
-      }
-    }
-    
-    // AMÉLIORATION: Ajouter lien page pilier si manquant
-    const hasPillarLink = modifiedHtml.match(/href="[^"]*(?:guide|destination|conseils|budget)[^"]*"/i);
-    if (!hasPillarLink && links.length > 0) {
-      // Chercher un lien pilier dans les liens disponibles
-      const pillarLink = links.find(l => {
-        const url = (l.url || '').toLowerCase();
-        const title = (l.title || '').toLowerCase();
-        return /guide|destination|conseils|budget/.test(url) || /guide|destination|conseils|budget/.test(title);
-      });
-      
-      if (pillarLink) {
-        // Insérer dans les 30% premiers si possible
-        if (targetParagraphs.length > insertedCount) {
-          const para = targetParagraphs[insertedCount];
-          const decodedPillar = this.decodeHtmlEntitiesForAnchor(pillarLink.title);
-          const titleWords = decodedPillar.split(/\s+/).filter(w => w.length > 0);
-          let anchorText = titleWords.slice(0, Math.min(12, titleWords.length)).join(' ');
-          if (anchorText.length > maxAnchorChars) anchorText = anchorText.substring(0, maxAnchorChars).replace(/\s+\S*$/, '') || anchorText.substring(0, maxAnchorChars);
-          anchorText = anchorText.trim();
-          const linkHtml = `<a href="${this.escapeHtml(pillarLink.url)}">${this.escapeHtml(anchorText)}</a>`;
-          
-          const sentences = para.content.split(/(?<=[.!?])\s+/);
-          if (sentences.length >= 2) {
-            const insertPoint = sentences[0].length;
-            const newContent = para.content.substring(0, insertPoint) + 
-              ` On approfondit ce point dans ${linkHtml}.` +
-              para.content.substring(insertPoint);
-            
-            modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
-            insertedCount++;
-            console.log(`   🔗 Lien pilier ajouté: "${anchorText}"`);
-          } else if (sentences.length === 1 && para.content.length > 80) {
-            const newContent = para.content + 
-              ` On approfondit ce point dans ${linkHtml}.`;
-            
-            modifiedHtml = modifiedHtml.replace(para.fullMatch, `<p>${newContent}</p>`);
-            insertedCount++;
-            console.log(`   🔗 Lien pilier ajouté en fin de paragraphe: "${anchorText}"`);
-          }
-        }
-      }
-    }
-    
-    // Si on n'a pas pu insérer tous les liens, ajouter une section à la fin
-    const remainingLinks = sortedLinks.slice(insertedCount);
-    if (remainingLinks.length > 0) {
-      const linksHtml = remainingLinks.map(link => {
-        const decodedTitle = this.decodeHtmlEntitiesForAnchor(link.title);
-        const titleWords = decodedTitle.split(/\s+/).filter(w => w.length > 0);
-        let anchorText = titleWords.slice(0, Math.min(12, titleWords.length)).join(' ');
-        if (anchorText.length > maxAnchorChars) anchorText = anchorText.substring(0, maxAnchorChars).replace(/\s+\S*$/, '') || anchorText.substring(0, maxAnchorChars);
-        anchorText = anchorText.trim();
-        return `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(anchorText)}</a></li>`;
-      }).join('\n');
-      modifiedHtml += `\n\n<h3>À lire également</h3>\n<ul>\n${linksHtml}\n</ul>`;
+      // Inserer le lien en fin de paragraphe, sans phrase de liaison artificielle
+      const newPara = `<p>${para.content} ${phrase}</p>`;
+      modifiedHtml = modifiedHtml.replace(para.fullMatch, newPara);
+      insertedCount++;
+      console.log(`   🔗 Lien interne: "${finalAnchor}"`);
     }
     
     return modifiedHtml;

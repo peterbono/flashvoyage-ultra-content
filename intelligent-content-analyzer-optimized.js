@@ -1524,8 +1524,8 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
    - OBLIGATOIRE : Hook cinématique, 2-5 citations inline « ... », témoignage comme preuve, angles SERP, 3 CTA narratifs, affiliation dans le flux.
    - SECTIONS SERP OBLIGATOIRES (H2 dédiés) :
      * H2 "Ce que les autres guides ne disent pas" (ou variante : "Ce que les témoignages ne disent pas explicitement") — angle différenciant, analyse critique absente chez les concurrents.
-     * H2 "Limites et biais de cet article" — transparence E-E-A-T, biais de la source Reddit, limites temporelles/géographiques.
      * H2 sur les erreurs fréquentes (ex: "Les 3 erreurs qui coûtent cher aux voyageurs en [destination]") — pièges concrets, montants, solutions.
+   - INTERDIT : NE JAMAIS generer de section "Limites et biais" ou "Disclaimer" — cela tue l'autorite E-E-A-T.
    - OPTIONNEL (si le story le justifie) : peurs invisibles, réalité vs fantasme, leçons auteur.
 
 2. RECOMMANDATIONS (OBLIGATOIRE - champ séparé)
@@ -1553,9 +1553,10 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 
 ⚡ RISQUES, ERREURS ET CONSEILS ACTIONNABLES : action préventive concrète, ancres d'affiliation naturelles.
 
-🔍 ANALYSE CRITIQUE : coûts cachés, biais, limites. Distinction faits / ressentis / interprétations.
+🔍 ANALYSE CRITIQUE : coûts cachés, pieges, erreurs frequentes. Distinction faits / ressentis / interpretations.
 
 📐 DENSITÉ NARRATIVE : chaque paragraphe fait avancer l'histoire, une décision, ou réduit un risque.
+🚫 ZÉRO RÉPÉTITION : NE JAMAIS reformuler la même idée dans deux paragraphes différents. Si un conseil, un constat ou une recommandation a déjà été donné, ne PAS le re-énoncer même avec d'autres mots. Chaque paragraphe apporte une information NOUVELLE.
 
 📊 ÉLÉMENTS STRUCTURELS EVERGREEN (obligatoires si le sujet s'y prête) :
 - TABLEAU COMPARATIF : obligatoire si l'article compare 2+ options, destinations ou produits. Format HTML <table> avec <thead> et <tbody>. Ex: comparatif budget, avantages/inconvénients, destinations côte à côte.
@@ -1688,8 +1689,8 @@ ${anglesBlock}
 ⚠️ RÈGLE ABSOLUE - EMOJIS INTERDITS DANS LES TITRES H2:
 - JAMAIS d'emoji au début ou dans un titre H2
 - Les emojis sont autorisés UNIQUEMENT dans le corps du texte (paragraphes, listes)
-- Exemples CORRECTS: <h2>Limites et biais de ce témoignage</h2>, <h2>Nos recommandations</h2>
-- Exemples INTERDITS: <h2>⚠️ Limites et biais</h2>, <h2>🎯 Nos recommandations</h2>, <h2>💬 Ce que dit le témoignage</h2>
+- Exemples CORRECTS: <h2>Nos recommandations</h2>, <h2>Les erreurs frequentes</h2>
+- Exemples INTERDITS: <h2>🎯 Nos recommandations</h2>, <h2>💬 Ce que dit le témoignage</h2>, <h2>Limites et biais</h2>
 
 ⚠️ INTERDICTION DE RÉPÉTER LE BLOCKQUOTE:
 - Le blockquote principal apparaît UNE SEULE FOIS dans l'article
@@ -1751,11 +1752,11 @@ ${correctionBlock}
 ${editorialBlock}
 
 🚨 RAPPEL CRITIQUE — SECTIONS SERP OBLIGATOIRES DANS "developpement" :
-Le champ "developpement" DOIT contenir ces 3 H2 comme dernières sections de contenu (AVANT FAQ/Comparatif/Retenir) :
+Le champ "developpement" DOIT contenir ces 2 H2 comme dernières sections de contenu (AVANT FAQ/Comparatif/Retenir) :
 1. <h2>Ce que les autres guides ne disent pas</h2> — angle différenciant, analyse critique
-2. <h2>Limites et biais de cet article</h2> — transparence E-E-A-T, biais source Reddit
-3. <h2>Les erreurs fréquentes qui coûtent cher aux voyageurs en [destination]</h2> — pièges concrets avec montants
-Si tu omets ces 3 sections, l'article sera REJETÉ par le quality gate.`;
+2. <h2>Les erreurs fréquentes qui coûtent cher aux voyageurs en [destination]</h2> — pièges concrets avec montants
+INTERDIT : NE JAMAIS generer de section "Limites et biais" ou "Disclaimer".
+Si tu omets ces 2 sections, l'article sera REJETÉ par le quality gate.`;
 
     // PHASE 4.2: User message basé sur story, pattern, extracted
     // ENRICHISSEMENT: Extraire les données structurées depuis extracted
@@ -1887,7 +1888,7 @@ Ne mentionne aucun lieu absent de cette liste.`;
 - "Contexte", "Événement central", "Moment critique", "Résolution"
 - "Chronologie de l'expérience", "Risques et pièges réels", "Conseils pratiques"
 - "Ce que la communauté apporte", "Ce que l'auteur retient"
-- "Limites et biais de ce témoignage", "Ce que les témoignages Reddit ne disent pas explicitement"
+- "Ce que les témoignages Reddit ne disent pas explicitement"
 - "Erreurs fréquentes à éviter", "Leçons clés pour les nomades numériques"
 
 Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
@@ -2120,7 +2121,7 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         }
       }
       // Fusionner aussi les champs analytiques s'ils existent
-      for (const field of ['limites_biais', 'ce_que_les_autres_ne_disent_pas', 'erreurs_frequentes']) {
+      for (const field of ['ce_que_les_autres_ne_disent_pas', 'erreurs_frequentes']) {
         if (article[field] && article[field].trim()) {
           let text = article[field].trim();
           text = text.replace(/<h2[^>]*>.*?<\/h2>/gi, '').trim();
@@ -2197,12 +2198,11 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         // SERP SAFETY NET: injecter les sections SERP manquantes comme squelettes
         const serpSections = [
           { pattern: /ce que les autres.*?ne disent/i, h2: 'Ce que les autres guides ne disent pas', placeholder: 'Cette section sera enrichie par l\'analyse éditoriale.' },
-          { pattern: /limites?\s*(et\s*)?biais/i, h2: 'Limites et biais de cet article', placeholder: 'Cette section sera enrichie par l\'analyse éditoriale.' },
           { pattern: /erreurs?\s*(fréquentes?|courantes?|à\s*éviter|qui\s*co[uû]tent)/i, h2: 'Les erreurs fréquentes à éviter', placeholder: 'Cette section sera enrichie par l\'analyse éditoriale.' }
         ];
         const missingSerpSections = serpSections.filter(s => !s.pattern.test(htmlContent));
         if (missingSerpSections.length > 0) {
-          console.log(`⚠️ SERP_SAFETY_NET: ${missingSerpSections.length}/3 section(s) SERP manquante(s) — injection squelettes`);
+          console.log(`⚠️ SERP_SAFETY_NET: ${missingSerpSections.length}/2 section(s) SERP manquante(s) — injection squelettes`);
           const faqPos = htmlContent.search(/<h2[^>]*>(?:Questions?\s*fréquentes|FAQ|Comparatif|Ce qu.il faut retenir)/i);
           const insertPos = faqPos > 0 ? faqPos : htmlContent.length;
           const skeletons = missingSerpSections.map(s => `\n<h2>${s.h2}</h2>\n<p>${s.placeholder}</p>\n`).join('');
@@ -2309,8 +2309,8 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         }
       }
       
-      // POST-PROCESSING 1.5 : Vérifier que le Quick Guide est en premier (AVANT TOUS LES H2)
-      // Le Quick Guide doit être la première section, même avant tous les H2
+      // POST-PROCESSING 1.5 : Quick Guide apres le premier H2 (pas en ouverture)
+      // L'intro doit commencer par l'accroche narrative, pas par un bloc technique
       let quickGuideMatch = htmlContent.match(/<div class="quick-guide">[\s\S]*?<\/div>/i);
       const firstH2Match = htmlContent.match(/<h2[^>]*>[\s\S]*?<\/h2>/i);
       
@@ -2318,14 +2318,14 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         const quickGuideIndex = htmlContent.indexOf(quickGuideMatch[0]);
         const firstH2Index = htmlContent.indexOf(firstH2Match[0]);
         
-        // Si un H2 est avant le Quick Guide, réorganiser
-        if (firstH2Index < quickGuideIndex) {
-          console.log('⚠️ Un H2 est avant Quick Guide → réorganisation pour mettre Quick Guide en premier...');
+        // Si le Quick Guide est avant le premier H2, le deplacer juste apres
+        if (quickGuideIndex < firstH2Index) {
+          console.log('⚠️ Quick Guide avant le H2 → deplacement apres le premier H2...');
           const quickGuideSection = quickGuideMatch[0];
-          const reste = htmlContent.replace(quickGuideSection, '').trim();
-          htmlContent = quickGuideSection + '\n\n' + reste;
-          console.log('   ✅ Quick Guide déplacé en premier (avant tous les H2)');
-          // Refaire le match après réorganisation
+          htmlContent = htmlContent.replace(quickGuideSection, '').trim();
+          const h2End = htmlContent.indexOf(firstH2Match[0]) + firstH2Match[0].length;
+          htmlContent = htmlContent.substring(0, h2End) + '\n' + quickGuideSection + '\n' + htmlContent.substring(h2End);
+          console.log('   ✅ Quick Guide deplace apres le premier H2');
           quickGuideMatch = htmlContent.match(/<div class="quick-guide">[\s\S]*?<\/div>/i);
         }
       }
@@ -2450,8 +2450,14 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
       // Note: "Event" est déjà traité dans POST-PROCESSING 1
       htmlContent = htmlContent.replace(/<h2[^>]*>What Reddit testimonials don'?t explicitly say[^<]*<\/h2>/gi, '<h2>Ce que les témoignages Reddit ne disent pas explicitement</h2>');
       htmlContent = htmlContent.replace(/<h2[^>]*>Our recommendations:?\s*Where to start\?[^<]*<\/h2>/gi, '<h2>Nos recommandations : Par où commencer ?</h2>');
-      htmlContent = htmlContent.replace(/<h2[^>]*>Limitations and biases[^<]*<\/h2>/gi, '<h2>Limites et biais de ce témoignage</h2>');
       htmlContent = htmlContent.replace(/<h2[^>]*>What the community brings[^<]*<\/h2>/gi, '<h2>Ce que la communauté apporte</h2>');
+
+      // Supprimer toute section "Limites et biais" / "Disclaimer" (tue E-E-A-T)
+      const limitesBiaisRemoved = htmlContent.replace(/<h2[^>]*>[^<]*(?:limites?\s*(?:et\s*)?biais|limitations?\s*(?:and\s*)?biases?|disclaimer)[^<]*<\/h2>[\s\S]*?(?=<h2|$)/gi, '');
+      if (limitesBiaisRemoved.length < htmlContent.length) {
+        console.log('   🧹 Section "Limites et biais" supprimee (interdit E-E-A-T)');
+        htmlContent = limitesBiaisRemoved;
+      }
       
       // POST-PROCESSING 5.5 : Supprimer les sections dupliquées et les sections en anglais
       // Détecter et supprimer les sections avec "(suite)" dans le titre
@@ -3274,6 +3280,7 @@ CORRECTIONS SUPPLEMENTAIRES (si detectees) :
 - Si l'article contient moins de 2 citations « ... » (guillemets francais), ajoute des citations pertinentes issues du temoignage en format : "Un voyageur explique : « citation »".
 - Si tu detectes des phrases robotiques ("il est important de", "il convient de", "force est de constater", "il va sans dire", "en ce qui concerne"), reformule-les en langage naturel avec tutoiement.
 - Utilise TOUJOURS le tutoiement ("tu", "ton", "ta") — jamais "vous", "il faut" ou "on doit" de maniere impersonnelle.
+- REPETITIONS : Si deux paragraphes expriment la meme idee ou le meme conseil (meme reformule), SUPPRIME le second et ne garde que le meilleur des deux.
 
 INTERDIT ABSOLUMENT:
 - NE PAS wrapper le HTML dans \`\`\`html ou \`\`\`
@@ -3282,7 +3289,7 @@ INTERDIT ABSOLUMENT:
 - NE PAS modifier les attributs des balises HTML
 - NE PAS supprimer de sections ou paragraphes
 - NE PAS introduire de nouveau lieu, nouveau prix, nouveau scenario non present dans l'article
-- NE JAMAIS renommer ces H2 structurels (les garder TELS QUELS) : "Ce qu'il faut retenir", "Ce que les autres guides ne disent pas", "Limites et biais de cet article", "Les erreurs fréquentes", "FAQ", "Nos recommandations"
+- NE JAMAIS renommer ces H2 structurels (les garder TELS QUELS) : "Ce qu'il faut retenir", "Ce que les autres guides ne disent pas", "Les erreurs fréquentes", "FAQ", "Nos recommandations"
 
 FORMAT DE RÉPONSE (CRITIQUE):
 - Retourne L'INTÉGRALITÉ du contenu HTML corrigé — du premier au dernier caractère.

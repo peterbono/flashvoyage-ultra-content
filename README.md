@@ -1,39 +1,44 @@
 # FlashVoyage Ultra Content — Pipeline éditorial automatisé
 
-Système de génération et publication automatique d'articles de voyage sur WordPress, alimenté par des discussions Reddit et optimisé par un pipeline LLM multi-étapes avec contrôle qualité intégré.
+Système de génération et publication automatique d'articles de voyage sur WordPress, alimenté par des discussions Reddit et des flux RSS, piloté par un calendrier éditorial stratégique et optimisé par un pipeline LLM multi-étapes avec contrôle qualité intégré.
 
-**Site** : [flashvoyage.com](https://flashvoyage.com)
+**Site** : [flashvoyage.com](https://flashvoyage.com) | **Jira** : [flashvoyage.atlassian.net](https://flashvoyage.atlassian.net)
 
 ## Ce que fait le projet
 
-1. **Scrape Reddit** (r/travel, r/digitalnomad) pour trouver des discussions authentiques sur le voyage en Asie
-2. **Analyse sémantique** du post : extraction des destinations, budgets, contraintes, insights communautaires
-3. **Génère un article éditorial complet** (2500+ mots) via GPT-4o avec angle unique, preuves sourcées et ton conversationnel
-4. **Injecte des widgets d'affiliation TravelPayouts** contextuellement (vols, eSIM, assurance, tours, transferts, location auto, etc.)
-5. **Passe l'article à travers 10+ étapes de qualité** : anti-hallucination, SEO, traduction, auto-critique, liens internes, FAQ
-6. **Publie sur WordPress** avec image featured, catégories, tags et liens internes
-7. **Valide en production** (score qualité ≥ 85%) et corrige automatiquement si nécessaire
+1. **Scrape Reddit** (r/travel, r/digitalnomad) et **flux RSS** (Skift, CNN Travel, The Points Guy) pour trouver du contenu source
+2. **Calendrier éditorial** : cycle de 5 articles (1 pilier + 3 support + 1 news) par cluster géographique, avec timing saisonnier automatique
+3. **Analyse sémantique** du post : extraction des destinations, budgets, contraintes, insights communautaires
+4. **Génère un article éditorial complet** (2500+ mots) via GPT-4o avec angle unique, preuves sourcées et ton conversationnel
+5. **Enrichit avec des données live** : prix vols (Kiwi), coût de la vie (Numbeo), alertes voyage (Travel Advisory), infos pays (REST Countries)
+6. **Injecte des widgets d'affiliation TravelPayouts** contextuellement (vols, eSIM, assurance, tours, transferts, location auto, etc.)
+7. **Passe l'article à travers 10+ étapes de qualité** : anti-hallucination, SEO, traduction, auto-critique, liens internes, FAQ
+8. **Publie sur WordPress** avec image featured, catégories, tags, JSON-LD schema et liens internes
+9. **Valide en production** (score qualité ≥ 85%) et corrige automatiquement si nécessaire
+10. **Tracking complet** : coûts LLM par article, dashboard WordPress, backlog Jira synchronisé
 
 ## Architecture du pipeline
 
 ```
-Reddit Scraper
+Editorial Calendar             (cluster géo + timing saisonnier → directive)
+  → Reddit Scraper / RSS Fetcher  (source selon type article)
   → Semantic Extractor         (extraction structurée du post)
   → Pattern Detector           (type de contenu : témoignage, itinéraire, comparaison...)
   → Story Compiler             (narrative, citations, leçons)
   → Angle Hunter               (angle éditorial différenciant)
   → Generator (GPT-4o)         (article HTML complet)
   → Auto-critique (GPT-4o-mini)(correction anomalies)
+  → Live Data Enricher         (vols, coût de vie, alertes, infos pays)
   → Affiliate Injector         (placement contextuel des widgets)
-  → SEO Optimizer              (liens internes, densité sémantique)
+  → SEO Optimizer              (liens internes, densité sémantique, JSON-LD)
   → Editorial Enhancer         (FAQ, tableaux comparatifs, checklists)
   → SERP Competitive Enhancer  (E-E-A-T, angles manquants)
   → Article Finalizer          (20+ passes de nettoyage, traduction, QA)
   → Anti-Hallucination Guard   (truth pack + validation LLM par lieu)
   → Content Marketing Pass     (optimisation conversion)
   → Quality Gate               (score ≥ 85% requis pour publication)
-  → WordPress Publisher        (REST API + images + validation prod)
-  → LLM Cost Tracker           (tokens, coûts, dashboard)
+  → WordPress Publisher        (REST API + images + JSON-LD meta + validation prod)
+  → LLM Cost Tracker           (tokens, coûts, dashboard WordPress)
 ```
 
 ## Widgets TravelPayouts
@@ -57,12 +62,50 @@ Le plugin WordPress `wordpress/flashvoyage-widgets.php` gère le shortcode `[fv_
 | `flight_compensation` | AirHelp | 15-16.6% |
 | `events` | TicketNetwork | 6-12.5% |
 
+## Calendrier éditorial
+
+Le module `editorial-calendar.js` pilote la stratégie de contenu :
+
+- **Cycle de 5 articles** : 1 pilier (2500+ mots) → 3 support → 1 news (actualité RSS)
+- **Clusters géographiques** : Asie du Sud-Est, Japon, Europe du Sud, Amérique latine, etc.
+- **Timing saisonnier** : chaque cluster a des mois de pic — le calendrier priorise automatiquement
+- **État persistant** : `data/editorial-calendar.json` stocke la progression du cycle et l'historique
+
+## Données live
+
+Le module `live-data-enricher.js` injecte un bloc "Infos pratiques" avec des données temps réel :
+
+| Source | Données |
+|--------|---------|
+| Kiwi Tequila | Prix vols aller-retour depuis Paris |
+| Numbeo | Coût de la vie (repas, transport, logement) |
+| Travel Advisory | Niveau d'alerte sécuritaire du pays |
+| REST Countries | Devise, fuseau horaire, langues officielles |
+
+## Gestion de projet — Jira
+
+Le backlog est géré sur [flashvoyage.atlassian.net](https://flashvoyage.atlassian.net) (projet **FV**, Kanban).
+
+| Epic | Statut |
+|------|--------|
+| Phase 1 — Données Live + Schema Markup | Terminé |
+| Phase 2 — RSS Signal + Cross-Reference Reddit | Terminé |
+| Phase 3 — Programmatic SEO Long-Tail | Backlog |
+| Phase 4 — Content Freshness Loop | Backlog |
+| Phase 5 — E-E-A-T + Niche Francophone | Backlog |
+| Calendrier Éditorial (clusters + timing) | Terminé |
+| Qualité contenu — Audit post-publication | Terminé |
+
+43 tickets au total, synchronisés via l'API Jira.
+
 ## LLM Cost Tracking
 
 Chaque appel OpenAI est tracké (modèle, tokens in/out, coût USD, étape pipeline, durée). Les données sont :
 - Affichées en console après chaque run
 - Persistées dans `data/cost-history.jsonl`
 - Visualisées sur un dashboard WordPress privé (auto-refresh après publication)
+- Projection mensuelle basée sur le calendrier éditorial (30 articles/mois)
+- Suivi séparé des coûts LLM de développement (`data/dev-llm-cost.jsonl`)
 
 Coût moyen par article : **~$0.15** (24 appels LLM, ~60k tokens).
 
@@ -86,18 +129,21 @@ node scripts/publish-test-widgets-page.js
 ├── pipeline-runner.js                 # Orchestrateur des étapes
 ├── pipeline-report.js                 # Rapport structuré par étape
 ├── config.js                          # Variables d'env et feature flags
+├── editorial-calendar.js              # Calendrier éditorial (clusters + saisonnalité)
 │
 ├── intelligent-content-analyzer-optimized.js  # Générateur LLM (GPT-4o)
 ├── reddit-semantic-extractor.js       # Extraction sémantique Reddit
 ├── reddit-pattern-detector.js         # Détection du type de contenu
 ├── reddit-story-compiler.js           # Compilation narrative
 ├── angle-hunter.js                    # Recherche d'angle éditorial
+├── rss-signal-fetcher.js              # Fetcher multi-source RSS
 │
 ├── article-finalizer.js               # 20+ passes QA/nettoyage/traduction
 ├── editorial-enhancer.js              # FAQ, tableaux, checklists (GPT-4o-mini)
 ├── editorial-authority-booster.js     # Renforcement E-E-A-T
 ├── content-marketing-pass.js          # Optimisation conversion (GPT-4o-mini)
-├── seo-optimizer.js                   # Liens internes, densité sémantique
+├── seo-optimizer.js                   # Liens internes, JSON-LD, densité sémantique
+├── live-data-enricher.js              # Données temps réel (vols, coûts, alertes)
 ├── quality-analyzer.js                # Scoring qualité (seuil 85%)
 │
 ├── contextual-affiliate-injector.js   # Décision des placements affiliés
@@ -114,7 +160,7 @@ node scripts/publish-test-widgets-page.js
 ├── openai-client.js                   # Client OpenAI centralisé
 │
 ├── wordpress/
-│   └── flashvoyage-widgets.php        # Plugin WP shortcodes [fv_widget]
+│   └── flashvoyage-widgets.php        # Plugin WP (shortcodes, JSON-LD, post meta)
 │
 ├── scripts/
 │   ├── publish-cost-dashboard.js      # Dashboard coûts sur WordPress
@@ -122,7 +168,10 @@ node scripts/publish-test-widgets-page.js
 │
 └── data/
     ├── cost-history.jsonl             # Historique coûts par article
-    └── internal-links.json            # Index liens internes
+    ├── dev-llm-cost.jsonl             # Coûts LLM développement
+    ├── editorial-calendar.json        # État du calendrier éditorial
+    ├── internal-links.json            # Index liens internes
+    └── live-cache/                    # Cache données live (vols, pays)
 ```
 
 ## Variables d'environnement
@@ -137,6 +186,8 @@ node scripts/publish-test-widgets-page.js
 | `REDDIT_CLIENT_ID` | OAuth Reddit |
 | `REDDIT_CLIENT_SECRET` | OAuth Reddit |
 | `TRAVELPAYOUTS_API_TOKEN` | API TravelPayouts |
+| `JIRA_API_KEY` | Token API Atlassian (Jira Cloud) |
+| `JIRA_DOMAIN` | URL instance Jira (`https://flashvoyage.atlassian.net`) |
 
 ### Feature flags
 
@@ -163,6 +214,17 @@ Chaque article est évalué sur 10 KPIs avant publication :
 - **K8** — Score qualité global ≥ 85%
 - **K9** — Sections SERP (budget, timeline, contraintes)
 - **K10** — Quick Guide présent
+
+## Schema JSON-LD
+
+Chaque article publie automatiquement 4 schemas structures via post meta WordPress (`fv_schema_json`) :
+
+- **Article** — titre, auteur, date, description, image
+- **FAQPage** — questions/reponses generees par le pipeline
+- **BreadcrumbList** — fil d'Ariane semantique
+- **TravelAction** — destination, dates, intention de voyage
+
+Les schemas sont injectes dans le `<head>` via un hook `wp_head` (pas dans le body).
 
 ---
 

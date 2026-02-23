@@ -174,9 +174,8 @@ class QualityAnalyzer {
 
     // 1. Sections analytiques obligatoires (40 pts)
     const requiredSections = [
-      { pattern: /limites?\s*(et\s*)?biais/i, name: 'Limites et biais', points: 15 },
-      { pattern: /ce\s*que.*?ne\s*disent?\s*(pas(\s+explicitement)?|explicitement)/i, name: 'Ce que les autres ne disent pas', points: 15 },
-      { pattern: /erreurs?\s*(fréquentes?|courantes?|à\s*éviter)/i, name: 'Erreurs fréquentes', points: 10 }
+      { pattern: /ce\s*que.*?ne\s*disent?\s*(pas(\s+explicitement)?|explicitement)/i, name: 'Ce que les autres ne disent pas', points: 20 },
+      { pattern: /erreurs?\s*(fréquentes?|courantes?|à\s*éviter)/i, name: 'Erreurs fréquentes', points: 20 }
     ];
 
     requiredSections.forEach(section => {
@@ -361,7 +360,7 @@ class QualityAnalyzer {
     } else {
       // EVERGREEN : contexte + analyse + recommandations (patterns élargis)
       const hasContexte = h2s.some(h => /contexte|témoignage|transport|budget|itinér|préparat|planifi|destination|comment\s+(choisir|organiser|planifier)/i.test(h));
-      const hasAnalyse = h2s.some(h => /analyse|limites|erreurs|pièges|biais|ce que les autres/i.test(h));
+      const hasAnalyse = h2s.some(h => /analyse|erreurs|pièges|ce que les autres/i.test(h));
       const hasRecommandations = h2s.some(h => /recommandation|conseils|retenir|conclusion|bilan|résumé|synthèse|synthese|check.?list|par où commencer|commencer|essentiel|verdict|en résumé|en resume|l.essentiel|à retenir|a retenir|nos conseils|comment commencer/i.test(h));
       const narrativeScore = (hasContexte ? 5 : 0) + (hasAnalyse ? 5 : 0) + (hasRecommandations ? 5 : 0);
       score.total += narrativeScore;
@@ -561,7 +560,7 @@ class QualityAnalyzer {
       // h2_decisional: >= 80% des H2 doivent contenir un arbitrage/décision/tension
       const decisionPatterns = /arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|vérité|réalité|secret|coût|budget|prix|danger|risque|éviter|stratég|pourquoi|comment|quand|quel|meilleur|pire|vs\b|contre\b|plutôt|différen|trade.?off|dilemme|alternative|investissement|essentiel|économiser|petit\s*prix|transformer|exploser|valoir|révél|verdict|astuce|manger\s*local|hébergement|transport|dépens|prendre\s+en\s+compte|à\s+savoir|ne\s+pas\s+oublier|attention|important|indispensable|incontournable|recommand|commencer|par\s+où/i;
       // Exclure les H2 structurels (SERP, FAQ, Comparatif, Checklist, Retenir) du check décisionnel
-      const serpExclusionPatterns = /ce que les autres|limites?\s*(et\s*)?biais|erreurs?\s*fréquentes|questions?\s*(fréquentes|ouvertes)|FAQ|comparatif|check.?list|ce qu.il faut retenir/i;
+      const serpExclusionPatterns = /ce que les autres|erreurs?\s*fréquentes|questions?\s*(fréquentes|ouvertes)|FAQ|comparatif|check.?list|ce qu.il faut retenir/i;
       const allH2Elems = root.querySelectorAll('h2');
       let decisionalH2Count = 0;
       let totalContentH2Count = 0;
@@ -711,7 +710,6 @@ class QualityAnalyzer {
     // AMÉLIORATION: Protéger les sections SERP critiques
     const protectedSerpPatterns = [
       /ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement)/i,
-      /limites?\s*(et\s*)?biais/i,
       /erreurs?\s*(fréquentes?|courantes?|à\s*éviter)/i
     ];
     

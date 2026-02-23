@@ -411,6 +411,9 @@ class ArticleFinalizer {
     // PHASE 6.0.12.2: Rendre les tableaux responsive pour mobile
     finalContent = this.makeTablesResponsive(finalContent, tempReport);
 
+    // PHASE 6.0.12.3: Validation des titres H2 (pas de placeholder, grammaire, longueur)
+    finalContent = this.validateH2Titles(finalContent, tempReport);
+
     // CORRECTION FINALE AMÉLIORÉE: Nettoyer une dernière fois les paragraphes vides ou avec juste un point
     // Patterns multiples pour capturer toutes les variantes
     const cleanupPatterns = [
@@ -2098,8 +2101,8 @@ class ArticleFinalizer {
         let isQuasiDuplicate = false;
         for (const [seenNormalized, seenStart] of seen.entries()) {
           const similarity = this.jaccardSimilarity(normalized, seenNormalized);
-          // AMÉLIORATION: Seuil réduit à 0.85 pour détecter plus de duplications
-          if (similarity > 0.85) {
+          // Seuil a 0.75 pour capturer aussi les reformulations
+          if (similarity > 0.75) {
             toRemove.push({ start, end: start + raw.length, type: 'quasi', similarity, section: currentSection });
             if (currentSection) {
               const count = sectionDuplicates.get(currentSection) || 0;
@@ -8356,8 +8359,21 @@ class ArticleFinalizer {
       return left + ' ' + accent + right;
     });
 
+    // PHASE 3 FIX ADDENDUM: Collages connus sans accent (LLM artefacts frequents)
+    const KNOWN_GLUE_FIXES = [
+      [/repas(e|é)conomiques?/gi, 'Repas $1conomique'],
+      [/nuit(s?)hotel/gi, 'nuit$1 hotel'],
+      [/ticket(s?)bus/gi, 'ticket$1 bus'],
+      [/visa(s?)touristiques?/gi, 'visa$1 touristique'],
+    ];
+    let camelCleaned = cleaned;
+    for (const [regex, replacement] of KNOWN_GLUE_FIXES) {
+      const before = camelCleaned;
+      camelCleaned = camelCleaned.replace(regex, replacement);
+      if (camelCleaned !== before) fixCount++;
+    }
+
     // PHASE 3 FIX: Reparer les espaces parasites a l'interieur des mots (artefact tokenisation LLM)
-    // Ex: "suppl émentaires" → "supplémentaires", "varieénorm ément" → needs glue fix first then space fix
     let spaceFixes = 0;
     const COMMON_SPLIT_WORDS = {
       'suppl émentaires': 'supplémentaires',
@@ -8388,7 +8404,7 @@ class ArticleFinalizer {
       'œ uvres': 'œuvres',
     };
 
-    let cleanedWithSpaces = cleaned;
+    let cleanedWithSpaces = camelCleaned;
     for (const [broken, fixed] of Object.entries(COMMON_SPLIT_WORDS)) {
       const regex = new RegExp(broken.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
       const before = cleanedWithSpaces;
@@ -8421,7 +8437,7 @@ class ArticleFinalizer {
       'aucun', 'aucune', 'autres', 'autre', 'nombreux', 'nombreuses',
       'tu', 'il', 'je', 'on', 'où', 'se', 'ne', 'te', 'me', 'en',
     ]);
-    const WORD_SUFFIX_RE = /(?:er|ir|re|oir|ais|ait|aient|ons|ent|ant|ment|eux|oux|age|tion|eur|ard|ois|ais|ence|ance|ure|ble|que|ise|ose|ude)$/i;
+    const WORD_SUFFIX_RE = /(?:er|ir|re|oir|ais|ait|aient|ons|ent|ant|ment|eux|oux|age|tion|eur|ard|ois|ais|ence|ance|ure|ble|que|ise|ose|ude|es|ez|ing|ns|ts)$/i;
     cleanedWithSpaces = cleanedWithSpaces.replace(/\b([a-zàâäéèêëïîôùûüÿçœ]{1,})\s(é|è|ê|à|â|ù|û|ô|î|œ)([a-zàâäéèêëïîôùûüÿçœ]{1,})\b/gi, (match, left, accent, right) => {
       if (match.includes('-') || match.includes("'")) return match;
       const joined = left + accent + right;
@@ -10403,6 +10419,58 @@ class ArticleFinalizer {
   }
 
   /**
+   * PHASE 6.0.12.3: Valide et corrige les titres H2.
+   * - Supprime les H2 trop courts (< 4 mots)
+   * - Corrige les patterns grammaticaux faux ("en la destination", "en le pays")
+   * - Supprime les H2 placeholder ("Section X", "Titre ici")
+   */
+  validateH2Titles(html, report) {
+    let fixCount = 0;
+    let result = html;
+
+    // Corriger "en la/le/les" → "a la/au/aux" ou supprimer
+    result = result.replace(/<h2([^>]*)>([^<]+)<\/h2>/gi, (match, attrs, title) => {
+      let fixed = title;
+
+      // "en la destination" → "a destination" / "en le pays" → "au pays"
+      fixed = fixed.replace(/\ben la\b/gi, 'à la');
+      fixed = fixed.replace(/\ben le\b/gi, 'au');
+      fixed = fixed.replace(/\ben les\b/gi, 'aux');
+
+      // Supprimer placeholder patterns
+      if (/^(section|titre|heading|chapitre|partie)\s*\d*\s*$/i.test(fixed.trim())) {
+        fixCount++;
+        console.log(`   🧹 H2 placeholder supprime: "${title}"`);
+        return '';
+      }
+
+      // H2 trop court (< 4 mots de texte)
+      const words = fixed.trim().split(/\s+/).filter(w => w.length > 1);
+      if (words.length < 3) {
+        fixCount++;
+        console.log(`   🧹 H2 trop court supprime: "${title}" (${words.length} mots)`);
+        return '';
+      }
+
+      if (fixed !== title) {
+        fixCount++;
+        console.log(`   ✏️ H2 corrige: "${title}" → "${fixed}"`);
+      }
+
+      return `<h2${attrs}>${fixed}</h2>`;
+    });
+
+    if (fixCount > 0) {
+      console.log(`📋 validateH2Titles: ${fixCount} correction(s)`);
+      if (report?.actions) {
+        report.actions.push({ type: 'h2_validation', details: `${fixCount} titre(s) H2 corrige(s)/supprime(s)` });
+      }
+    }
+
+    return result;
+  }
+
+  /**
    * PHASE 6.0.12.2: Rendre les tableaux responsive pour mobile
    * Wrape chaque <table> dans un conteneur scrollable et ajoute du styling inline
    * @param {string} html - HTML à traiter
@@ -10415,7 +10483,17 @@ class ArticleFinalizer {
 
     console.log(`📱 makeTablesResponsive: ${tableCount} tableau(x) détecté(s)`);
 
-    let processedHtml = html;
+    // Supprimer les tableaux "comparatifs" a 1 seule colonne de donnees (+ colonne criteres)
+    let processedHtml = html.replace(/<h2[^>]*>[^<]*[Cc]omparatif[^<]*<\/h2>\s*(<div[^>]*>)?\s*<table[^>]*>([\s\S]*?)<\/table>\s*(<\/div>)?/gi, (match, wrapOpen, tableContent) => {
+      const thCount = (tableContent.match(/<th/gi) || []).length;
+      if (thCount <= 2) {
+        console.log(`   🧹 Tableau comparatif a ${thCount} colonne(s) supprime (min 3 requis)`);
+        return '';
+      }
+      return match;
+    });
+
+    processedHtml = processedHtml;
     let styledCount = 0;
 
     // Style commun pour le conteneur scrollable

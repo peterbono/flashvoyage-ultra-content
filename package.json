@@ -13,7 +13,9 @@
     "start:all": "concurrently \"npm run start:ultra-generator\" \"npm run start:auto-publisher\"",
     "dev": "vercel dev",
     "build": "vercel build",
-    "deploy": "vercel --prod"
+    "deploy": "vercel --prod",
+    "seo:generate": "node scripts/generate-seo-pages.js",
+    "seo:status": "node scripts/generate-seo-pages.js --status"
   },
   "keywords": [
     "flashvoyage",

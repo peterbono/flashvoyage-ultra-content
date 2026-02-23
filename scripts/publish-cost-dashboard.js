@@ -9,6 +9,8 @@
 
 import dotenv from 'dotenv';
 import axios from 'axios';
+import fs from 'fs';
+import path from 'path';
 import { LLMCostTracker, COST_HISTORY_PATH } from '../llm-cost-tracker.js';
 
 dotenv.config();
@@ -97,10 +99,29 @@ function buildDashboardHTML(history) {
     return `<tr class="${rowClass}"><td>${dateStr}</td><td>${link}</td><td>${cost}${alert}</td><td>${tokens}</td><td>${calls}</td><td>${words}</td><td>${cpw}</td><td>${dur}</td><td>${llmRatio}</td></tr>`;
   }).join('\n');
 
-  // Monthly projection
-  const daysSinceFirst = history.length >= 2 ? (new Date(history[history.length - 1].date) - new Date(history[0].date)) / 86400000 : 1;
-  const articlesPerDay = daysSinceFirst > 0 ? totalArticles / daysSinceFirst : 1;
-  const monthlyProjection = avgCost * articlesPerDay * 30;
+  // Monthly projection based on editorial calendar (1 article/day = 30/month)
+  const PLANNED_ARTICLES_PER_MONTH = 30;
+  const monthlyProjection = avgCost * PLANNED_ARTICLES_PER_MONTH;
+
+  // Current month spend
+  const now = new Date();
+  const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const thisMonthArticles = history.filter(h => h.date && new Date(h.date) >= currentMonthStart);
+  const thisMonthCost = thisMonthArticles.reduce((s, h) => s + (h.totalCostUSD || 0), 0);
+  const thisMonthCount = thisMonthArticles.length;
+
+  // Dev LLM cost this month (calls made outside article generation — tracked via env)
+  const devLlmCostPath = path.join(path.dirname(COST_HISTORY_PATH), 'dev-llm-cost.jsonl');
+  let devCostThisMonth = 0;
+  try {
+    const devLines = fs.readFileSync(devLlmCostPath, 'utf-8').trim().split('\n').filter(Boolean);
+    for (const line of devLines) {
+      const entry = JSON.parse(line);
+      if (entry.date && new Date(entry.date) >= currentMonthStart) {
+        devCostThisMonth += entry.costUSD || 0;
+      }
+    }
+  } catch (e) { /* no dev cost file yet */ }
 
   return `<!-- wp:html -->
 <style>
@@ -144,7 +165,9 @@ function buildDashboardHTML(history) {
   <div class="fv-kpi"><div class="value">${avgTokens.toLocaleString('fr-FR')}</div><div class="label">Tokens moyens / article</div></div>
   <div class="fv-kpi"><div class="value">${avgDuration}s</div><div class="label">Durée moyenne</div></div>
   <div class="fv-kpi"><div class="value">$${(costPerWord * 1000).toFixed(3)}</div><div class="label">Coût / 1000 mots</div></div>
-  <div class="fv-kpi"><div class="value">$${monthlyProjection.toFixed(2)}</div><div class="label">Projection / mois ${trendIcon}</div></div>
+  <div class="fv-kpi"><div class="value">$${monthlyProjection.toFixed(2)}</div><div class="label">Projection / mois (${PLANNED_ARTICLES_PER_MONTH} art.) ${trendIcon}</div></div>
+  <div class="fv-kpi"><div class="value">$${thisMonthCost.toFixed(2)}</div><div class="label">Ce mois (${thisMonthCount} art.)</div></div>
+  <div class="fv-kpi${devCostThisMonth > 0 ? '' : ''}"><div class="value">$${devCostThisMonth.toFixed(2)}</div><div class="label">Dev/LLM ce mois</div></div>
 </div>
 
 <div class="fv-charts">

@@ -937,6 +937,11 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         }
       }
 
+      // 9.9. Dernier fixWordGlue avant publication (attrape les glues reintroduits par improve/translate)
+      if (this.articleFinalizer) {
+        finalizedArticle.content = this.articleFinalizer.fixWordGlue(finalizedArticle.content, null);
+      }
+
       // 10. Publication WordPress
       console.log('📝 Publication sur WordPress...');
       const publishedArticle = await this.publishToWordPress(finalizedArticle);
