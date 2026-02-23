@@ -82,8 +82,9 @@ function fv_widget_shortcode( $atts ) {
             break;
 
         // --- Insubuy Schengen Visa Insurance (promo_id=4797, campaign_id=111) ---
+        // TravelPayouts returns text/html (not JS) for this promo — must use iframe
         case 'insurance_schengen':
-            $script = '<script async src="https://trpwdg.com/content?trs=' . $trs . '&shmarker=' . $shmarker . '&powered_by=true&locale=fr&promo_id=4797&campaign_id=111" charset="utf-8"></script>';
+            $script = '<iframe src="https://trpwdg.com/content?trs=' . $trs . '&shmarker=' . $shmarker . '&powered_by=true&locale=fr&promo_id=4797&campaign_id=111" width="100%" height="320" frameborder="0" style="max-width:100%;"></iframe>';
             break;
 
         // --- Kiwitaxi Shuttles Search Form (promo_id=2949, campaign_id=111) ---
@@ -92,8 +93,9 @@ function fv_widget_shortcode( $atts ) {
             break;
 
         // --- Tiqets Popular Tours Widget (promo_id=3947, campaign_id=111) ---
+        // Tiqets widget uses 'locale' as city_id — use 'language' for i18n instead
         case 'tours':
-            $script = '<script async src="https://trpwdg.com/content?trs=' . $trs . '&shmarker=' . $shmarker . '&powered_by=true&locale=fr&promo_id=3947&campaign_id=111" charset="utf-8"></script>';
+            $script = '<script async src="https://trpwdg.com/content?trs=' . $trs . '&shmarker=' . $shmarker . '&powered_by=true&language=fr&promo_id=3947&campaign_id=111" charset="utf-8"></script>';
             break;
 
         // --- Economybookings Rental Cars Search Form (promo_id=4480, campaign_id=111) ---
