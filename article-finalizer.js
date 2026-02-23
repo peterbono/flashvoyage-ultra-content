@@ -443,6 +443,12 @@ class ArticleFinalizer {
         
         const totalPlacements = affiliatePlan.placements.length;
         affiliatePlan.placements.forEach((placement, placementIndex) => {
+          const widgetType = placement.id || placement.type || '';
+          const widgetAlreadyPresent = widgetType && new RegExp(`data-widget-type=["']${widgetType}["']`, 'i').test(finalContent);
+          if (widgetAlreadyPresent) {
+            console.log(`   ⏭️ Widget ${widgetType} déjà présent dans le HTML — skip injection module affilié`);
+            return;
+          }
           const moduleHtml = renderAffiliateModule(placement, geoDefaults);
           if (!moduleHtml) return;
           const options = { placementId: placement.id, placementIndex, totalPlacements };
@@ -7338,25 +7344,19 @@ class ArticleFinalizer {
 
     switch (anchor) {
       case 'before_related': {
-        // Juste avant "Articles connexes" ou "À lire également"
-        const relatedRegex = /<h[2-3][^>]*>(?:Articles connexes|À lire également)[^<]*<\/h[2-3]>/i;
-        const relatedMatch = html.match(relatedRegex);
-        if (relatedMatch) {
-          const insertIndex = relatedMatch.index;
-          return html.slice(0, insertIndex) + '\n\n' + moduleHtml + '\n\n' + html.slice(insertIndex);
-        }
-        // Fallback: avant la dernière section narrative (pas après la conclusion)
         const h2sFallback = Array.from(html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi));
-        const conclusionPatterns = /ce qu.il faut retenir|nos recommandations|en résumé|conclusion/i;
-        // Trouver la dernière section non-conclusion
+        const endZonePatterns = /ce qu.il faut retenir|nos recommandations|en résumé|conclusion|questions?\s*fr[eé]quentes?|à retenir|articles?\s*connexes?|à lire également|FAQ/i;
         for (let i = h2sFallback.length - 1; i >= 1; i--) {
-          if (!conclusionPatterns.test(h2sFallback[i][1])) {
-            // Insérer avant cette section
-            return html.slice(0, h2sFallback[i].index) + '\n\n' + moduleHtml + '\n\n' + html.slice(h2sFallback[i].index);
+          if (!endZonePatterns.test(h2sFallback[i][1])) {
+            const insertIndex = h2sFallback[i].index + h2sFallback[i][0].length;
+            const afterH2 = html.substring(insertIndex);
+            const nextPClose = afterH2.match(/<\/p>/i);
+            const pos = nextPClose ? insertIndex + nextPClose.index + nextPClose[0].length : insertIndex;
+            console.log(`   📍 Widget ${placementId || 'unknown'} placé avant zone conclusion (après "${h2sFallback[i][1].substring(0, 40)}")`);
+            return html.slice(0, pos) + '\n\n' + moduleHtml + '\n\n' + html.slice(pos);
           }
         }
-        // Ultime fallback: fin de document
-        return html + '\n\n' + moduleHtml;
+        return html;
       }
 
       case 'after_errors':

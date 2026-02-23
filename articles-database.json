@@ -1,7 +1,64 @@
 {
-  "crawled_at": "2026-02-21T10:25:59.861Z",
-  "total_articles": 14,
+  "crawled_at": "2026-02-23T08:29:21.717Z",
+  "total_articles": 17,
   "articles": [
+    {
+      "id": 2967,
+      "title": "Les 6 Coûts Cachés d&#8217;un Voyage au Japon : Optimiser chaque Yen",
+      "url": "https://flashvoyage.com/les-6-couts-caches-dun-voyage-au-japon-optimiser-chaque-yen/",
+      "slug": "les-6-couts-caches-dun-voyage-au-japon-optimiser-chaque-yen",
+      "excerpt": "Points clés de ce témoignage Destination : Japon. Durée : 1 mois. Budget : ~3300 GBP. Type : Voyage sabbatique. Difficulté : Moyenne. Chaque fois que tu te retr&#8230;\n",
+      "content": "\nPoints clés de ce témoignage\nDestination : Japon. Durée : 1 mois. Budget : ~3300 GBP. Type : Voyage sabbatique. Difficulté : Moyenne.\n\nChaque fois que tu te retrouves face à un distributeur automatique au Japon, l&#8217;écran affiche des chiffres qui te semblent abstraits.\nAvec un budget de 3300 GBP pour un mois, chaque transaction devient un arbitrage délicat entre confort et durée de voyage. On en parle dans Voyager au Japon : Quand voir les cerisiers sans la foule.\nPour un voyage qui s&#8217",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-23T08:29:05",
+      "modified": "2026-02-23T08:29:18",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2967.jpg"
+    },
+    {
+      "id": 2959,
+      "title": "Vietnam : Choisir les Expériences Inoubliables Sans Rater l&#8217;Essentiel",
+      "url": "https://flashvoyage.com/vietnam-choisir-les-experiences-inoubliables-sans-rater-lessentiel/",
+      "slug": "vietnam-choisir-les-experiences-inoubliables-sans-rater-lessentiel",
+      "excerpt": "Entre les lumières scintillantes de Séoul et les rizières verdoyantes du Vietnam, chaque choix d&#8217;itinéraire devient un arbitrage crucial. Les voyageurs, souvent&#8230;\n",
+      "content": "Entre les lumières scintillantes de Séoul et les rizières verdoyantes du Vietnam, chaque choix d&#8217;itinéraire devient un arbitrage crucial.\nLes voyageurs, souvent piégés par l&#8217;abondance d&#8217;options, se demandent : « Que dois-je absolument garder et qu&#8217;est-ce qui peut être sacrifié ? On en parle dans Vivre en Indonésie avec 1000 € : les frais cachés à connaître. » Dans ce contexte, chaque décision peut coûter une expérience irremplaçable.\nPlanifier un voyage de Séoul à travers",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-23T07:59:20",
+      "modified": "2026-02-23T07:59:37",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2959.jpg"
+    },
+    {
+      "id": 2952,
+      "title": "Indonésie : Quand chaque choix d&#8217;itinéraire devient un dilemme",
+      "url": "https://flashvoyage.com/indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme/",
+      "slug": "indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme",
+      "excerpt": "Points clés de ce témoignage Voyage d&#8217;un mois en Indonésie avec un itinéraire incluant Jakarta, Lombok, Gilli, et Labuan Bajo. Concilier détente et visites sans&#8230;\n",
+      "content": "\nPoints clés de ce témoignage\nVoyage d&#8217;un mois en Indonésie avec un itinéraire incluant Jakarta, Lombok, Gilli, et Labuan Bajo. Concilier détente et visites sans trekking.\n\nLe soleil se lève à Jakarta, et avec lui, les promesses d&#8217;une aventure en Indonésie.\nTu te tiens sur le balcon de ton hôtel, café à la main, contemplant les toits de la ville. On en parle dans Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget.\nChaque choix d&#8217;itinéraire semble un arbitrage entre une",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-02-23T07:52:55",
+      "modified": "2026-02-23T07:53:14",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2952.jpg"
+    },
     {
       "id": 2945,
       "title": "Voyager en Asie du Sud-Est : Itinéraire et Coûts Réels à Prévoir",

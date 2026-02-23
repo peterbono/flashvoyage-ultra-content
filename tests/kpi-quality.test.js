@@ -35,17 +35,29 @@ export function testK1_TensionIntro(html, angleHook) {
   const textOnly = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
   const intro = textOnly.substring(0, 500).toLowerCase();
   const hookWords = angleHook.toLowerCase()
+    .replace(/[.,;:!?—–\-""«»()]/g, ' ')
     .split(/\s+/)
     .filter(w => w.length > 4 && !FR_STOP_WORDS.has(w));
 
-  const found = hookWords.filter(w => intro.includes(w));
-  const pass = found.length >= 2;
+  const rootFr = (w) => w.length <= 5 ? w : w.substring(0, 5);
+
+  const introWords = intro.replace(/[.,;:!?—–\-""«»']/g, ' ').split(/\s+/).filter(w => w.length > 3);
+  const introRoots = new Set(introWords.map(rootFr));
+
+  const found = hookWords.filter(w => {
+    if (intro.includes(w)) return true;
+    const root = rootFr(w);
+    return root.length >= 4 && introRoots.has(root);
+  });
+
+  const unique = [...new Set(found)];
+  const pass = unique.length >= 2;
 
   return {
     status: pass ? 'PASS' : 'FAIL',
     message: pass
-      ? `Intro contient ${found.length} mots-cles du hook: [${found.join(', ')}]`
-      : `Intro ne contient pas assez de mots-cles de l'angle. Attendus: [${hookWords.join(', ')}]. Trouves: [${found.join(', ')}]`
+      ? `Intro contient ${unique.length} mots-cles du hook: [${unique.join(', ')}]`
+      : `Intro ne contient pas assez de mots-cles de l'angle. Attendus: [${hookWords.join(', ')}]. Trouves: [${unique.join(', ')}]`
   };
 }
 

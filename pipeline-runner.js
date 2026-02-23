@@ -477,7 +477,9 @@ class PipelineRunner {
             qaReport: finalized.qaReport,
             antiHallucinationReport: null,
             inlineImages: finalized.inlineImages || [],
-            featuredImage: featuredImageEarly // Image featured même pour articles bloqués
+            featuredImage: featuredImageEarly,
+            angle: angleResult || null,
+            _truthPack: generated._truthPack || null
           };
           const widgetsInFinalArticleBlocked = this.finalizer.detectRenderedWidgets(finalArticleBlocked.content);
           console.log(`🔍 DEBUG PIPELINE (BLOCKED): Widgets dans finalArticleBlocked.content: count=${widgetsInFinalArticleBlocked.count}, types=[${widgetsInFinalArticleBlocked.types.join(', ')}]`);

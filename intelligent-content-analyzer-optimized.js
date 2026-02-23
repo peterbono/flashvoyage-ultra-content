@@ -1844,6 +1844,8 @@ ${options.angle ? `
 - Signaux source: ${options.angle.source_facts.join(', ')}
 
 TON ARTICLE ENTIER DOIT ORBITER AUTOUR DE CETTE TENSION. Chaque H2 doit y contribuer.
+
+🔑 MOTS-CLÉS DU HOOK DANS L'INTRO (OBLIGATOIRE) : Les 2 premiers paragraphes (<p>) de l'article DOIVENT reprendre au moins 3 mots significatifs du hook stratégique ci-dessus (ex: si le hook parle d'"arbitrage", "confort", "optimiser" → ces mots ou leurs dérivés doivent apparaître dans l'intro). Le lecteur doit reconnaître immédiatement la tension annoncée.
 ` : ''}
 ${(() => {
   const tp = buildPromptTruthPack(extracted);
@@ -2942,6 +2944,7 @@ ANGLE EDITORIAL STRATEGIQUE :
 - Hook strategique: ${angle.primary_angle?.hook || 'N/A'}
 - Enjeu lecteur: ${angle.primary_angle?.stake || 'N/A'}
 Chaque ajout doit faire avancer cette tension.
+IMPORTANT : ne modifie PAS les 2 premiers paragraphes de l'intro s'ils contiennent deja les mots-cles du hook. Si tu les modifies, conserve les mots significatifs du hook strategique.
 ` : '';
 
     const userPrompt = `ARTICLE A ENRICHIR (trop court, doit atteindre 2500+ mots) :
