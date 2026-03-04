@@ -67,6 +67,15 @@ class ContextualWidgetPlacer {
     };
   }
 
+  safeParseLLMJson(raw) {
+    try {
+      const clean = String(raw || '').replace(/```json|```/gi, '').trim();
+      return { data: JSON.parse(clean), error: null };
+    } catch (error) {
+      return { data: null, error: error.message };
+    }
+  }
+
   /**
    * Analyse le contenu avec widget_plan et place les widgets contextuellement
    * @param {string} content - Contenu HTML de l'article
@@ -186,7 +195,10 @@ Réponds UNIQUEMENT en JSON valide.`;
         response_format: { type: "json_object" }
       });
 
-      const analysis = JSON.parse(response.choices[0].message.content);
+      const { data: analysis, error: parseError } = this.safeParseLLMJson(response.choices?.[0]?.message?.content);
+      if (parseError || !analysis) {
+        throw new Error(`Réponse JSON LLM invalide: ${parseError || 'payload vide'}`);
+      }
       console.log('✅ Analyse LLM terminée');
       const widgetsSelected = analysis.selected_widgets.length;
       console.log(`📊 Widgets sélectionnés: ${widgetsSelected}`);

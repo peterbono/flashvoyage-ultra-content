@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-03-04",
+  "scope": "Security Hardening FlashVoyage",
+  "before": {
+    "docxRiskScore": "4.5/10",
+    "npmAudit": {
+      "high": 1,
+      "moderate": 3,
+      "low": 2,
+      "total": 6
+    }
+  },
+  "after": {
+    "npmAudit": {
+      "high": 0,
+      "moderate": 0,
+      "low": 0,
+      "total": 0
+    },
+    "tests": {
+      "newsModeRegression": "pass",
+      "kpiQuality": "pass"
+    },
+    "runtimeDryRuns": {
+      "news": "pass",
+      "evergreen": "pass"
+    }
+  },
+  "residualRisks": [
+    {
+      "id": "RISK-RUNTIME-ANTI-HALLUCINATION",
+      "status": "accepted",
+      "note": "Le pipeline peut encore bloquer des articles sur règles anti-hallucination (comportement sécurité-fonctionnel existant, hors périmètre remédiation vulnérabilités)."
+    }
+  ]
+}

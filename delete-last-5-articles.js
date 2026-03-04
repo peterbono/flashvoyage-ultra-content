@@ -16,6 +16,10 @@ const WORDPRESS_APP_PASSWORD = process.env.WORDPRESS_APP_PASSWORD || '';
 
 async function deleteLast5Articles() {
   console.log('🗑️  Suppression des 5 derniers articles WordPress publiés...\n');
+  if (!process.argv.includes('--confirm')) {
+    console.log('⚠️  Dry-run de sécurité: relance avec --confirm pour autoriser la suppression réelle.');
+    return;
+  }
   
   if (!WORDPRESS_USERNAME || !WORDPRESS_APP_PASSWORD) {
     console.error('❌ Erreur: WORDPRESS_USERNAME et WORDPRESS_APP_PASSWORD doivent être définis dans .env');

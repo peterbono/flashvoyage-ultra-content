@@ -23,9 +23,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  *   origin      — IATA code (flights only), default PAR
  *   destination — IATA code (flights only), default BKK
  *
- * Partner params (hardcoded, never exposed in post content):
- *   trs      = 463418
- *   shmarker = 676421
+ * Partner params are read from environment/constants:
+ *   TRAVELPAYOUTS_TRS
+ *   TRAVELPAYOUTS_MARKER
  */
 function fv_widget_shortcode( $atts ) {
     $a = shortcode_atts( array(
@@ -38,9 +38,18 @@ function fv_widget_shortcode( $atts ) {
     $origin      = strtoupper( sanitize_text_field( $a['origin'] ) );
     $destination = strtoupper( sanitize_text_field( $a['destination'] ) );
 
-    // Partner constants
-    $trs      = '463418';
-    $shmarker = '676421';
+    // Partner ids must be provided by environment or wp-config.php constants.
+    $trs      = getenv( 'TRAVELPAYOUTS_TRS' );
+    $shmarker = getenv( 'TRAVELPAYOUTS_MARKER' );
+    if ( empty( $trs ) && defined( 'TRAVELPAYOUTS_TRS' ) ) {
+        $trs = TRAVELPAYOUTS_TRS;
+    }
+    if ( empty( $shmarker ) && defined( 'TRAVELPAYOUTS_MARKER' ) ) {
+        $shmarker = TRAVELPAYOUTS_MARKER;
+    }
+    if ( empty( $trs ) || empty( $shmarker ) ) {
+        return '<!-- fv_widget: missing TRAVELPAYOUTS_TRS/TRAVELPAYOUTS_MARKER -->';
+    }
 
     $script = '';
 
@@ -140,10 +149,17 @@ add_filter( 'no_texturize_shortcodes', function ( $shortcodes ) {
  */
 add_action( 'init', function () {
     register_post_meta( 'post', 'fv_schema_json', array(
-        'show_in_rest'  => true,
-        'single'        => true,
-        'type'          => 'string',
-        'auth_callback' => function () { return current_user_can( 'edit_posts' ); },
+        'show_in_rest'      => true,
+        'single'            => true,
+        'type'              => 'string',
+        'auth_callback'     => function () { return current_user_can( 'edit_posts' ); },
+        'sanitize_callback' => function ( $value ) {
+            $decoded = json_decode( (string) $value, true );
+            if ( json_last_error() !== JSON_ERROR_NONE || ! is_array( $decoded ) ) {
+                return '';
+            }
+            return wp_json_encode( $decoded, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+        },
     ) );
 } );
 
@@ -185,9 +201,17 @@ add_action( 'wp_head', function () {
  */
 add_action( 'init', function () {
     register_post_meta( 'page', 'fv_schema_json', array(
-        'show_in_rest'  => true,
-        'single'        => true,
-        'type'          => 'string',
+        'show_in_rest'      => true,
+        'single'            => true,
+        'type'              => 'string',
+        'auth_callback'     => function () { return current_user_can( 'edit_pages' ); },
+        'sanitize_callback' => function ( $value ) {
+            $decoded = json_decode( (string) $value, true );
+            if ( json_last_error() !== JSON_ERROR_NONE || ! is_array( $decoded ) ) {
+                return '';
+            }
+            return wp_json_encode( $decoded, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+        },
     ) );
 } );
 

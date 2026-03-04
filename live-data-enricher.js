@@ -13,13 +13,9 @@
 
 import fs from 'fs';
 import path from 'path';
-import https from 'https';
 import { fileURLToPath } from 'url';
 import axios from 'axios';
 import { DESTINATION_ALIASES, COUNTRY_DISPLAY_NAMES } from './destinations.js';
-
-// Travel Advisory has a misconfigured SSL cert — allow it for this source only
-const insecureAgent = new https.Agent({ rejectUnauthorized: false });
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CACHE_DIR = path.join(__dirname, 'data', 'live-cache');

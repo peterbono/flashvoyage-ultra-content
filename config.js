@@ -25,8 +25,8 @@ export const FLICKR_API_KEY = process.env.FLICKR_API_KEY;
  * Travelpayouts Partner Links API
  */
 export const TRAVELPAYOUTS_API_TOKEN = process.env.TRAVELPAYOUTS_API_TOKEN || process.env.TRAVELPAYOUT_API;
-export const TRAVELPAYOUTS_TRS = process.env.TRAVELPAYOUTS_TRS || '463418';
-export const TRAVELPAYOUTS_MARKER = process.env.TRAVELPAYOUTS_MARKER || '676421';
+export const TRAVELPAYOUTS_TRS = process.env.TRAVELPAYOUTS_TRS;
+export const TRAVELPAYOUTS_MARKER = process.env.TRAVELPAYOUTS_MARKER;
 
 /**
  * Variables d'environnement parsées (booléens)

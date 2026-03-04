@@ -10,8 +10,8 @@ import axios from 'axios';
 
 dotenv.config();
 
-const TRS = '463418';
-const SHMARKER = '676421';
+const TRS = process.env.TRAVELPAYOUTS_TRS || '';
+const SHMARKER = process.env.TRAVELPAYOUTS_MARKER || '';
 
 const WIDGETS = [
   {
@@ -98,8 +98,8 @@ async function main() {
   const wpUser = process.env.WORDPRESS_USERNAME;
   const wpPass = process.env.WORDPRESS_APP_PASSWORD;
 
-  if (!wpUrl || !wpUser || !wpPass) {
-    console.error('❌ WordPress credentials manquantes');
+  if (!wpUrl || !wpUser || !wpPass || !TRS || !SHMARKER) {
+    console.error('❌ Variables manquantes: WORDPRESS_* + TRAVELPAYOUTS_TRS/TRAVELPAYOUTS_MARKER');
     process.exit(1);
   }
 

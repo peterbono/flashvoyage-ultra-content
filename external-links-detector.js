@@ -83,6 +83,15 @@ export class ExternalLinksDetector {
     ];
   }
 
+  safeParseLLMJson(raw) {
+    try {
+      const clean = String(raw || '').replace(/```json|```/gi, '').trim();
+      return { data: JSON.parse(clean), error: null };
+    } catch (error) {
+      return { data: null, error: error.message };
+    }
+  }
+
   /**
    * Détecte les opportunités de liens externes dans un texte
    * Approche hybride : LLM intelligent + base figée en fallback
@@ -239,7 +248,10 @@ ${textSnippet}`;
         response_format: { type: 'json_object' }
       });
 
-      const result = JSON.parse(response.choices[0].message.content);
+      const { data: result, error: parseError } = this.safeParseLLMJson(response.choices?.[0]?.message?.content);
+      if (parseError || !result) {
+        throw new Error(`Réponse JSON LLM invalide: ${parseError || 'payload vide'}`);
+      }
       const opportunities = result.opportunities || [];
 
       // Valider et formater les opportunités

@@ -25,6 +25,12 @@ export async function convertToAffiliateLinks(links) {
     console.log('⚠️ TRAVELPAYOUTS_API_TOKEN manquant — liens affiliés désactivés');
     return links.map(l => ({ url: l.url, partner_url: '', code: 'no_token' }));
   }
+  const trs = Number.parseInt(TRAVELPAYOUTS_TRS, 10);
+  const marker = Number.parseInt(TRAVELPAYOUTS_MARKER, 10);
+  if (!Number.isInteger(trs) || !Number.isInteger(marker)) {
+    console.log('⚠️ TRAVELPAYOUTS_TRS/TRAVELPAYOUTS_MARKER manquants — liens affiliés désactivés');
+    return links.map(l => ({ url: l.url, partner_url: '', code: 'no_partner_ids' }));
+  }
 
   if (!links || links.length === 0) return [];
 
@@ -33,8 +39,8 @@ export async function convertToAffiliateLinks(links) {
 
   try {
     const response = await axios.post(API_URL, {
-      trs: parseInt(TRAVELPAYOUTS_TRS, 10),
-      marker: parseInt(TRAVELPAYOUTS_MARKER, 10),
+      trs,
+      marker,
       shorten: true,
       links: batch
     }, {

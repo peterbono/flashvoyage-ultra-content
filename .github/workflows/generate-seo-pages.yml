@@ -32,6 +32,8 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -53,19 +55,45 @@ jobs:
           TRAVELPAYOUTS_API_TOKEN: ${{ secrets.TRAVELPAYOUTS_API_TOKEN }}
           JIRA_API_KEY: ${{ secrets.JIRA_API_KEY }}
           JIRA_DOMAIN: ${{ secrets.JIRA_DOMAIN }}
+          TEMPLATE_INPUT: ${{ github.event.inputs.template }}
+          DESTINATION_INPUT: ${{ github.event.inputs.destination }}
+          LIMIT_INPUT: ${{ github.event.inputs.limit }}
+          FORCE_INPUT: ${{ github.event.inputs.force }}
         run: |
-          ARGS=""
-          if [ -n "${{ github.event.inputs.template }}" ]; then
-            ARGS="$ARGS --template ${{ github.event.inputs.template }}"
+          set -euo pipefail
+          TEMPLATE="${TEMPLATE_INPUT:-}"
+          DEST="${DESTINATION_INPUT:-}"
+          LIMIT="${LIMIT_INPUT:-5}"
+          FORCE="${FORCE_INPUT:-0}"
+
+          if [[ -n "$TEMPLATE" && ! "$TEMPLATE" =~ ^(vols|budget|visa|esim)$ ]]; then
+            echo "Invalid template input"
+            exit 1
           fi
-          if [ -n "${{ github.event.inputs.destination }}" ]; then
-            ARGS="$ARGS --dest ${{ github.event.inputs.destination }}"
+          if [[ -n "$DEST" && ! "$DEST" =~ ^[A-Za-z0-9][A-Za-z0-9 _-]{1,79}$ ]]; then
+            echo "Invalid destination input"
+            exit 1
           fi
-          ARGS="$ARGS --limit ${{ github.event.inputs.limit || '5' }}"
-          if [ "${{ github.event.inputs.force }}" = "1" ]; then
-            ARGS="$ARGS --force"
+          if [[ ! "$LIMIT" =~ ^[0-9]+$ ]] || (( LIMIT < 1 || LIMIT > 50 )); then
+            echo "Invalid limit input"
+            exit 1
           fi
-          node scripts/generate-seo-pages.js $ARGS
+          if [[ ! "$FORCE" =~ ^(0|1)$ ]]; then
+            echo "Invalid force input"
+            exit 1
+          fi
+
+          ARGS=(--limit "$LIMIT")
+          if [[ -n "$TEMPLATE" ]]; then
+            ARGS+=(--template "$TEMPLATE")
+          fi
+          if [[ -n "$DEST" ]]; then
+            ARGS+=(--dest "$DEST")
+          fi
+          if [[ "$FORCE" == "1" ]]; then
+            ARGS+=(--force)
+          fi
+          node scripts/generate-seo-pages.js "${ARGS[@]}"
 
       - name: Commit state files
         if: success()

@@ -3,7 +3,7 @@
     "wordpress": {
       "command": "node",
       "args": ["wordpress-mcp-server.js"],
-      "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage",
+      "cwd": ".",
       "env": {
         "WORDPRESS_URL": "${WORDPRESS_URL}",
         "WORDPRESS_USERNAME": "${WORDPRESS_USERNAME}",
@@ -13,7 +13,7 @@
     "flashvoyages-content-generator": {
       "command": "node",
       "args": ["flashvoyages-content-generator.js"],
-      "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage",
+      "cwd": ".",
       "env": {
         "WORDPRESS_URL": "${WORDPRESS_URL}",
         "WORDPRESS_USERNAME": "${WORDPRESS_USERNAME}",
@@ -23,12 +23,12 @@
     "flashvoyages-rss-monitor": {
       "command": "node",
       "args": ["flashvoyages-rss-monitor.js"],
-      "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage"
+      "cwd": "."
     },
     "flashvoyages-affiliate-manager": {
       "command": "node",
       "args": ["flashvoyages-affiliate-manager.js"],
-      "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage",
+      "cwd": ".",
       "env": {
         "SKYSCANNER_AFFILIATE_ID": "",
         "BOOKING_AFFILIATE_ID": "",
@@ -40,7 +40,7 @@
     "flashvoyages-orchestrator": {
       "command": "node",
       "args": ["flashvoyages-orchestrator.js"],
-      "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage",
+      "cwd": ".",
       "env": {
         "WORDPRESS_URL": "${WORDPRESS_URL}",
         "WORDPRESS_USERNAME": "${WORDPRESS_USERNAME}",
@@ -59,7 +59,7 @@
     "reddit": {
       "command": "node",
       "args": ["reddit-mcp-server.js"],
-      "cwd": "/Users/floriangouloubi/Documents/perso/flashvoyage"
+      "cwd": "."
     }
   }
 }

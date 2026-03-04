@@ -1,0 +1,82 @@
+{
+  "generatedAt": "2026-03-04",
+  "sources": [
+    "audit-securite-flashvoyage.docx",
+    "npm-audit-json",
+    "repo-static-scan"
+  ],
+  "findings": [
+    {
+      "id": "FV-001",
+      "title": "TLS validation disabled",
+      "source": "audit-docx",
+      "severity": "high",
+      "priority": "P0",
+      "file": "live-data-enricher.js",
+      "status": "fixed"
+    },
+    {
+      "id": "FV-002",
+      "title": "Command injection risk in workflow inputs",
+      "source": "audit-docx",
+      "severity": "high",
+      "priority": "P0",
+      "file": ".github/workflows/generate-seo-pages.yml",
+      "status": "fixed"
+    },
+    {
+      "id": "FV-003",
+      "title": "Missing auth_callback on page meta",
+      "source": "audit-docx",
+      "severity": "high",
+      "priority": "P0",
+      "file": "wordpress/flashvoyage-widgets.php",
+      "status": "fixed"
+    },
+    {
+      "id": "FV-004",
+      "title": "Absolute local paths committed",
+      "source": "audit-docx",
+      "severity": "medium",
+      "priority": "P1",
+      "file": "cursor-mcp-config.json",
+      "status": "fixed"
+    },
+    {
+      "id": "FV-005",
+      "title": "Hardcoded Travelpayouts partner IDs",
+      "source": "audit-docx",
+      "severity": "medium",
+      "priority": "P1",
+      "file": "config.js, wordpress/flashvoyage-widgets.php",
+      "status": "fixed"
+    },
+    {
+      "id": "FV-008",
+      "title": "Unsafe JSON.parse on LLM responses",
+      "source": "audit-docx",
+      "severity": "low",
+      "priority": "P1",
+      "file": "external-links-detector.js, contextual-widget-placer-v2.js",
+      "status": "fixed"
+    },
+    {
+      "id": "NPM-AXIOS-1113275",
+      "title": "Axios DoS vulnerability",
+      "source": "npm-audit",
+      "severity": "high",
+      "priority": "P0",
+      "file": "package.json/package-lock.json",
+      "status": "fixed"
+    },
+    {
+      "id": "NPM-EXPRESS-QS",
+      "title": "Express/QS transitive vulnerabilities",
+      "source": "npm-audit",
+      "severity": "moderate",
+      "priority": "P1",
+      "file": "package.json/package-lock.json",
+      "status": "fixed"
+    }
+  ]
+}
