@@ -1,0 +1,118 @@
+{
+  "generatedAt": "2026-03-04",
+  "scope": "safe-cleanup-v1",
+  "criteria": {
+    "signals": [
+      "imports_require_scan",
+      "package_scripts_scan",
+      "github_workflows_scan",
+      "docs_and_mcp_refs_scan",
+      "recent_run_logs_scan"
+    ],
+    "riskLevels": {
+      "R0": "Candidat évident, archive immédiate possible",
+      "R1": "Probablement inutilisé mais usage manuel possible",
+      "R2": "Ambigu ou référencé, ne pas déplacer"
+    }
+  },
+  "candidates": [
+    {
+      "path": "_OBSOLETE_content-enhancer.js",
+      "risk": "R0",
+      "decision": "archive_now",
+      "whySafe": "Aucune référence runtime détectée (imports/scripts/workflows).",
+      "rollbackPath": "git mv archive/top-level/_OBSOLETE_content-enhancer.js ./_OBSOLETE_content-enhancer.js"
+    },
+    {
+      "path": "_OBSOLETE_flashvoyages-orchestrator.js",
+      "risk": "R0",
+      "decision": "archive_now",
+      "whySafe": "Aucune référence runtime détectée (imports/scripts/workflows).",
+      "rollbackPath": "git mv archive/top-level/_OBSOLETE_flashvoyages-orchestrator.js ./_OBSOLETE_flashvoyages-orchestrator.js"
+    },
+    {
+      "path": "_OBSOLETE_semantic-link-analyzer.js",
+      "risk": "R0",
+      "decision": "archive_now",
+      "whySafe": "Aucune référence runtime détectée (imports/scripts/workflows).",
+      "rollbackPath": "git mv archive/top-level/_OBSOLETE_semantic-link-analyzer.js ./_OBSOLETE_semantic-link-analyzer.js"
+    },
+    {
+      "path": "_OBSOLETE_ultra-fresh-complete.js",
+      "risk": "R2",
+      "decision": "keep",
+      "whySafe": "Import direct trouvé dans ultra-strategic-generator.js.",
+      "rollbackPath": "n/a"
+    },
+    {
+      "path": "published-articles-cache.json.bak",
+      "risk": "R0",
+      "decision": "archive_now",
+      "whySafe": "Fichier backup, non référencé par le code ou workflows.",
+      "rollbackPath": "git mv archive/backups/published-articles-cache.json.bak ./published-articles-cache.json.bak"
+    },
+    {
+      "path": "published-reddit-urls.json.bak",
+      "risk": "R0",
+      "decision": "archive_now",
+      "whySafe": "Fichier backup, non référencé par le code ou workflows.",
+      "rollbackPath": "git mv archive/backups/published-reddit-urls.json.bak ./published-reddit-urls.json.bak"
+    },
+    {
+      "path": "intelligent-content-analyzer-optimized.js.bak",
+      "risk": "R0",
+      "decision": "archive_now",
+      "whySafe": "Fichier backup, non référencé par le code ou workflows.",
+      "rollbackPath": "git mv archive/backups/intelligent-content-analyzer-optimized.js.bak ./intelligent-content-analyzer-optimized.js.bak"
+    },
+    {
+      "path": "delete-last-5-articles.js",
+      "risk": "R1",
+      "decision": "keep_for_now",
+      "whySafe": "Aucune référence détectée, mais script potentiellement manuel/admin.",
+      "rollbackPath": "n/a"
+    },
+    {
+      "path": "delete-low-quality-article.js",
+      "risk": "R1",
+      "decision": "keep_for_now",
+      "whySafe": "Aucune référence détectée, mais script potentiellement manuel/admin.",
+      "rollbackPath": "n/a"
+    },
+    {
+      "path": "regen-target.js",
+      "risk": "R1",
+      "decision": "keep_for_now",
+      "whySafe": "Pas de référence runtime, mais usage CLI explicite dans le fichier.",
+      "rollbackPath": "n/a"
+    },
+    {
+      "path": "flashvoyages-rss-monitor.js",
+      "risk": "R2",
+      "decision": "keep",
+      "whySafe": "Référence trouvée dans cursor-mcp-config.json (usage out-of-band possible).",
+      "rollbackPath": "n/a"
+    },
+    {
+      "path": "github-mcp-server.js",
+      "risk": "R2",
+      "decision": "keep",
+      "whySafe": "Référence trouvée dans cursor-mcp-config.json (usage out-of-band possible).",
+      "rollbackPath": "n/a"
+    },
+    {
+      "path": "wordpress-mcp-server.js",
+      "risk": "R2",
+      "decision": "keep",
+      "whySafe": "Référence trouvée dans cursor-mcp-config.json (usage out-of-band possible).",
+      "rollbackPath": "n/a"
+    },
+    {
+      "path": "real-stats-scraper.js",
+      "risk": "R2",
+      "decision": "keep",
+      "whySafe": "Mentionné dans docs techniques; usage manuel possible.",
+      "rollbackPath": "n/a"
+    }
+  ]
+}

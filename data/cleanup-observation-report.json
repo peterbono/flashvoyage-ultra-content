@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-03-04",
+  "policy": {
+    "mode": "safe-first",
+    "finalDeleteCondition": "7 jours ou N runs verts",
+    "selectedWindow": "N runs verts",
+    "requiredGreenRuns": 2
+  },
+  "evidence": {
+    "run1": {
+      "type": "tests",
+      "command": "node --test tests/news-mode-regression.test.js",
+      "result": "PASS",
+      "details": "40/40"
+    },
+    "run2": {
+      "type": "live-news-run",
+      "command": "FORCE_EDITORIAL_MODE=news npm run publish:article",
+      "result": "PASS",
+      "prePublishQualityGate": "82.8%",
+      "kpi": "8 PASS, 0 FAIL, 2 SKIP",
+      "prodValidation": "78.8%",
+      "url": "https://flashvoyage.com/choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades/"
+    },
+    "archiveWatchlistRuntime": {
+      "runtimeUnresolvedRefs": 0,
+      "reportFile": "data/archive-watchlist-report.json"
+    }
+  },
+  "decision": {
+    "eligibleDelete": [],
+    "finalDeleteExecuted": false,
+    "reason": "Conservation en quarantaine archive/ pour restauration rapide (politique ultra sécurisée)."
+  }
+}
