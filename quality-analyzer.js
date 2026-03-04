@@ -51,6 +51,9 @@ class QualityAnalyzer {
       'tokyo', 'kyoto', 'osaka', 'bangkok', 'chiang mai', 'phuket', 'hanoi', 'ho chi minh',
       'saigon', 'kuala lumpur', 'penang', 'phnom penh', 'siem reap', 'manila', 'cebu',
       'seoul', 'busan', 'denpasar', 'jakarta', 'katmandou', 'kathmandu', 'colombo',
+      // Formulations régionales (évite les faux négatifs "Asie du Sud-Est")
+      'asie', 'asie du sud-est', 'asie du sud est', 'sud-est asiatique', 'sud est asiatique',
+      'southeast asia', 'south east asia',
       'mumbai', 'delhi', 'goa', 'pékin', 'shanghai', 'luang prabang', 'vientiane'
     ];
   }

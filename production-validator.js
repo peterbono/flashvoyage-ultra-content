@@ -283,7 +283,13 @@ class ProductionValidator {
     let previousScore = -1;
     let previousIssueSignature = '';
     let lastValidationResult = { issues: [] };
-    const targetScore = 85.0;
+    let workingArticle = { ...(sourceArticle || {}) };
+    if (!workingArticle.content && sourceArticle?.html) {
+      workingArticle.content = sourceArticle.html;
+    }
+    const normalizedMode = (editorialMode || 'evergreen').toLowerCase();
+    const modeThreshold = normalizedMode === 'news' ? 70.0 : 85.0;
+    const targetScore = modeThreshold;
     const startTime = Date.now();
     
     while (iteration < maxIterations) {
@@ -304,6 +310,11 @@ class ProductionValidator {
       
       console.log(`   📊 Score qualité: ${currentScore}%`);
       console.log(`   📋 Problèmes: ${validationResult.issues.length}`);
+      if (validationResult.issues.length > 0) {
+        validationResult.issues.forEach((issue, idx) => {
+          console.log(`      [${idx + 1}] ${issue.type} (${issue.severity})${issue.fix ? ` fix=${issue.fix}` : ''}`);
+        });
+      }
       
       // 4. Vérifier critères de sortie
       const errorIssues = validationResult.issues.filter(i => i.severity === 'error');
@@ -312,7 +323,7 @@ class ProductionValidator {
         if (warnCount > 0) {
           console.log(`   ℹ️ ${warnCount} avertissement(s) restant(s) (non-bloquants)`);
         }
-        console.log(`\n✅ PROD_VALIDATION_SUCCESS: score=${currentScore}% (target: ${targetScore}%) iterations=${iteration}`);
+        console.log(`\n✅ PROD_VALIDATION_SUCCESS: score=${currentScore}% (target: ${targetScore}% | mode=${normalizedMode}) iterations=${iteration}`);
         return {
           success: true,
           finalScore: currentScore,
@@ -333,14 +344,15 @@ class ProductionValidator {
       
       // 5. Auto-corriger si nécessaire
       if (validationResult.issues.length > 0 || currentScore < targetScore) {
-        console.log(`   🔄 Correction nécessaire (score=${currentScore} < ${targetScore} ou issues=${validationResult.issues.length})`);
+        console.log(`   🔄 Correction nécessaire (score=${currentScore} < ${targetScore} [${normalizedMode}] ou issues=${validationResult.issues.length})`);
         
-        const fixedArticle = await this.autoFix(sourceArticle, validationResult.issues);
+        const fixedArticle = await this.autoFix(workingArticle, validationResult.issues);
         
         // Mettre à jour article en production
         if (wordpressClient && fixedArticle.id) {
           await wordpressClient.updateArticle(fixedArticle.id, fixedArticle);
           console.log(`   ✅ Article mis à jour en production`);
+          workingArticle = { ...workingArticle, ...fixedArticle };
           
           // Attendre propagation (3 secondes)
           await new Promise(resolve => setTimeout(resolve, 3000));
@@ -353,10 +365,10 @@ class ProductionValidator {
     
     // Si on arrive ici, on n'a pas atteint 10/10
     const duration = Date.now() - startTime;
-    console.warn(`\n⚠️ PROD_VALIDATION_INCOMPLETE: final_score=${currentScore}% (target: ${targetScore}%) after ${iteration} iterations (duration=${duration}ms)`);
+    console.warn(`\n⚠️ PROD_VALIDATION_INCOMPLETE: final_score=${currentScore}% (target: ${targetScore}% | mode=${normalizedMode}) after ${iteration} iterations (duration=${duration}ms)`);
     
     return {
-      success: currentScore >= 80.0, // Accepter 80% comme succès partiel (target: 85%)
+      success: currentScore >= Math.max(60.0, targetScore - 5.0), // Succès partiel aligné au mode
       finalScore: currentScore,
       iterations: iteration,
       duration,

@@ -109,13 +109,59 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   }
 
   /**
+   * Hard gate géographique pour NEWS:
+   * - Le titre doit mentionner une destination Asie
+   * - Le titre ne doit contenir aucune destination non-Asie
+   * - Le texte doit contenir au moins une destination Asie
+   */
+  isNewsAsiaAligned(article) {
+    const asiaKeywords = [
+      'japan', 'japon', 'tokyo', 'kyoto', 'osaka', 'yokohama', 'hokkaido',
+      'thailand', 'thaïlande', 'bangkok', 'chiang mai', 'phuket',
+      'vietnam', 'hanoi', 'saigon', 'ho chi minh',
+      'indonesia', 'indonésie', 'bali', 'jakarta', 'ubud',
+      'philippines', 'manila', 'cebu', 'palawan',
+      'korea', 'corée', 'south korea', 'corée du sud', 'seoul',
+      'singapore', 'singapour',
+      'taiwan', 'taïwan', 'taipei',
+      'hong kong', 'chine', 'china',
+      'asia', 'asie'
+    ];
+
+    const nonAsiaKeywords = [
+      'ireland', 'irlande', 'galway', 'dublin',
+      'uk', 'united kingdom', 'royaume-uni', 'london', 'londres',
+      'france', 'paris', 'spain', 'espagne', 'portugal', 'italy', 'italie', 'greece', 'grèce',
+      'usa', 'united states', 'états-unis', 'canada', 'mexico', 'mexique', 'brazil', 'brésil',
+      'peru', 'pérou', 'argentina', 'argentine', 'chile', 'chili',
+      'egypt', 'egypte', 'égypte', 'morocco', 'maroc', 'dubai', 'qatar',
+      'australia', 'australie', 'new zealand', 'nouvelle-zélande'
+    ];
+
+    const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const matchesWord = (text, word) => new RegExp(`\\b${escRe(word)}\\b`, 'i').test(text || '');
+
+    const titleLower = (article?.title || '').toLowerCase();
+    const articleText = `${article?.title || ''} ${article?.content || ''} ${article?.selftext || ''} ${article?.source_text || ''}`.toLowerCase();
+
+    const titleHasAsia = asiaKeywords.some(kw => matchesWord(titleLower, kw));
+    const titleHasNonAsia = nonAsiaKeywords.some(kw => matchesWord(titleLower, kw));
+    const textHasAsia = asiaKeywords.some(kw => matchesWord(articleText, kw));
+
+    if (titleHasNonAsia) return { ok: false, reason: 'titre_non_asie' };
+    if (!titleHasAsia) return { ok: false, reason: 'titre_sans_asie' };
+    if (!textHasAsia) return { ok: false, reason: 'texte_sans_asie' };
+    return { ok: true, reason: 'ok' };
+  }
+
+  /**
    * Applique les mêmes filtres que le flux principal sur un batch de sources
    * (destinations Asie/non-Asie, type Reddit, meta, smartDecision).
    * @param {Array} sources - Liste d'articles bruts
-   * @param {{ isDryRun: boolean, forceOffline: boolean }} opts
+   * @param {{ isDryRun: boolean, forceOffline: boolean, enforceNewsHardGate?: boolean }} opts
    * @returns {Array} validSources pour ce batch
    */
-  applySourceFilters(sources, { isDryRun, forceOffline }) {
+  applySourceFilters(sources, { isDryRun, forceOffline, enforceNewsHardGate = false }) {
       const asiaDestinations = [
         'indonesia', 'indonésie', 'bali', 'jakarta', 'yogyakarta', 'bandung', 'surabaya', 'medan', 'ubud', 'seminyak', 'canggu', 'lombok',
         'vietnam', 'viet nam', 'ho chi minh', 'hanoi', 'hồ chí minh', 'hà nội', 'da nang', 'đà nẵng', 'hue', 'huế', 'hoi an', 'hội an', 'nha trang', 'sapa', 'sa pa',
@@ -127,7 +173,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       ];
       const nonAsiaDestinations = [
         // Europe
-      'istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'lisbon', 'lisbonne', 'barcelona', 'barcelone', 'greece', 'grèce', 'cyprus', 'chypre', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'uk', 'united kingdom', 'royaume-uni', 'royaume uni', 'britain', 'britannique', 'england', 'angleterre', 'scotland', 'écosse', 'wales', 'pays de galles', 'germany', 'allemagne', 'berlin', 'netherlands', 'pays-bas', 'amsterdam', 'switzerland', 'suisse', 'austria', 'autriche', 'vienna', 'vienne', 'prague', 'czech', 'tchèque', 'poland', 'pologne', 'hungary', 'hongrie', 'budapest', 'croatia', 'croatie', 'dubrovnik',
+      'ireland', 'irlande', 'galway', 'dublin', 'istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'lisbon', 'lisbonne', 'barcelona', 'barcelone', 'greece', 'grèce', 'cyprus', 'chypre', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'uk', 'united kingdom', 'royaume-uni', 'royaume uni', 'britain', 'britannique', 'england', 'angleterre', 'scotland', 'écosse', 'wales', 'pays de galles', 'germany', 'allemagne', 'berlin', 'netherlands', 'pays-bas', 'amsterdam', 'switzerland', 'suisse', 'austria', 'autriche', 'vienna', 'vienne', 'prague', 'czech', 'tchèque', 'poland', 'pologne', 'hungary', 'hongrie', 'budapest', 'croatia', 'croatie', 'dubrovnik',
         // Amériques
       'america', 'usa', 'united states', 'états-unis', 'brazil', 'brésil', 'rio', 'mexico', 'mexique', 'canada', 'quebec', 'québec', 'colombia', 'colombie', 'peru', 'pérou', 'argentina', 'argentine', 'chile', 'chili', 'costa rica', 'caribbean', 'caraïbes',
       'cuba', 'cancun', 'cancún', 'dominican', 'dominicaine', 'jamaica', 'jamaïque', 'haiti', 'haïti', 'puerto rico', 'panama', 'honduras', 'guatemala', 'nicaragua', 'el salvador', 'belize', 'ecuador', 'équateur',
@@ -158,6 +204,13 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       if (nonAsiaDestinations.some(dest => titleLower.includes(dest))) {
           console.log(`🚫 Article rejeté (TITRE contient destination non-asiatique): ${article.title}`);
           return false;
+        }
+        if (enforceNewsHardGate) {
+          const hardGate = this.isNewsAsiaAligned(article);
+          if (!hardGate.ok) {
+            console.log(`🚫 Article rejeté (NEWS_HARD_GATE=${hardGate.reason}): ${article.title}`);
+            return false;
+          }
         }
         if (article.type !== 'community' && article.type !== 'nomade') {
           console.log(`🚫 Article rejeté (source non-Reddit, format témoignage requis): ${article.title} (type: ${article.type})`);
@@ -205,11 +258,13 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   /**
    * Applique le filtre relâché (r/travel, r/digitalnomad + mots-clés voyage) sur la liste complète.
    * @param {Array} sources - Tous les articles scrapés (allBatches.flat())
+   * @param {{ enforceNewsHardGate?: boolean }} opts
    * @returns {Array} relaxedSources (déjà non publiés par construction du filtre)
    */
-  applyRelaxedFilter(sources) {
+  applyRelaxedFilter(sources, { enforceNewsHardGate = false } = {}) {
     // Même liste non-Asie que applySourceFilters pour garder la cohérence
     const nonAsiaDestinations = [
+      'ireland', 'irlande', 'galway', 'dublin',
       'egypt', 'égypte', 'egypte', 'cairo', 'le caire', 'giza', 'gizeh', 'alexandria', 'alexandrie', 'luxor', 'louxor', 'aswan', 'assouan',
       'morocco', 'maroc', 'marrakech', 'tunisia', 'tunisie', 'algeria', 'algérie', 'africa', 'afrique',
       'istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'greece', 'grèce', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'germany', 'allemagne',
@@ -236,6 +291,13 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           console.log(`   🚫 RELAXED_FILTER: rejeté (TITRE contient destination non-asiatique): ${article.title}`);
             return false;
           }
+        if (enforceNewsHardGate) {
+          const hardGate = this.isNewsAsiaAligned(article);
+          if (!hardGate.ok) {
+            console.log(`   🚫 RELAXED_FILTER: rejeté (NEWS_HARD_GATE=${hardGate.reason}): ${article.title}`);
+            return false;
+          }
+        }
         // GARDE GÉO BODY: Rejeter si le body mentionne des destinations non-asiatiques SANS mentionner de destinations asiatiques
         const asiaKeywords = ['japan', 'japon', 'tokyo', 'osaka', 'kyoto', 'thailand', 'thaïlande', 'bangkok', 'vietnam', 'hanoi', 'saigon', 'indonesia', 'indonésie', 'bali', 'malaysia', 'malaisie', 'philippines', 'manila', 'cebu', 'cambodia', 'cambodge', 'laos', 'myanmar', 'singapore', 'singapour', 'korea', 'corée', 'seoul', 'taiwan', 'taïwan', 'india', 'inde', 'nepal', 'népal', 'sri lanka', 'asia', 'asie', 'south east asia', 'southeast asia'];
         const bodyHasNonAsia = nonAsiaDestinations.some(dest => matchesWord(articleText, dest));
@@ -341,6 +403,11 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       console.log(`   Position cycle: ${directive.cyclePosition + 1}/5 | Total publie: ${directive.totalPublished}`);
       console.log(`   Hints: ${directive.searchHints.slice(0, 3).join(', ')}`);
       console.log(`   RSS actif: ${directive.useRss ? 'oui' : 'non'}\n`);
+      const forcedEditorialMode = String(process.env.FORCE_EDITORIAL_MODE || '').toLowerCase();
+      const enforceNewsHardGate = directive.articleType === 'news' || forcedEditorialMode === 'news';
+      if (enforceNewsHardGate) {
+        console.log('🛡️ SOURCE_FILTER: NEWS hard gate géographique activé');
+      }
 
       // PHASE 2: RSS uniquement si le calendrier le demande (type = news)
       if (directive.useRss && !forceOffline && !isDryRun) {
@@ -352,7 +419,20 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           if (rssResult && rssResult.article) {
             const rssArticle = rssResult.article;
             const redditUrl = rssArticle.link || '';
-            if (!this.isArticleAlreadyPublished(rssArticle.title, redditUrl)) {
+            const isNewsMode = String(directive.articleType || '').toLowerCase() === 'news';
+            if (isNewsMode) {
+              const hardGate = this.isNewsAsiaAligned(rssArticle);
+              if (!hardGate.ok) {
+                console.log(`📡 RSS: candidat rejeté par NEWS_HARD_GATE=${hardGate.reason} (${rssArticle.title || 'sans titre'})`);
+              } else if (!this.isArticleAlreadyPublished(rssArticle.title, redditUrl)) {
+                selectedArticle = rssArticle;
+                console.log(`\n✅ Article RSS+Reddit selectionne: "${rssArticle.title?.substring(0, 80)}..."`);
+                console.log(`   Signal RSS: ${rssResult.rssItem.title?.substring(0, 60)}`);
+                console.log(`   Source: ${rssResult.rssItem.source} | Mode: news\n`);
+              } else {
+                console.log('📡 RSS: Match trouve mais deja publie, fallback Reddit classique\n');
+              }
+            } else if (!this.isArticleAlreadyPublished(rssArticle.title, redditUrl)) {
               selectedArticle = rssArticle;
               console.log(`\n✅ Article RSS+Reddit selectionne: "${rssArticle.title?.substring(0, 80)}..."`);
               console.log(`   Signal RSS: ${rssResult.rssItem.title?.substring(0, 60)}`);
@@ -385,7 +465,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           if (!batch || !Array.isArray(batch) || batch.length === 0) continue;
           allBatches.push(batch);
           console.log(`   📄 ${methodName}: ${batch.length} articles`);
-          const validBatch = this.applySourceFilters(batch, { isDryRun, forceOffline });
+          const validBatch = this.applySourceFilters(batch, { isDryRun, forceOffline, enforceNewsHardGate });
           const unpublishedBatch = validBatch.filter(article => {
             const redditUrl = article.link || article.url;
             const isPublished = this.isArticleAlreadyPublished(article.title, redditUrl);
@@ -414,7 +494,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       if (!selectedArticle && allBatches.length > 0) {
         const sources = allBatches.flat();
         console.log(`\n⚠️ NO_ARTICLE_AFTER_FILTERING: ${sources.length} sources scrapées, aucun candidat valide`);
-        const relaxedSources = this.applyRelaxedFilter(sources);
+        const relaxedSources = this.applyRelaxedFilter(sources, { enforceNewsHardGate });
         if (relaxedSources.length > 0) {
           console.log(`   ✅ ${relaxedSources.length} article(s) accepté(s) avec filtre relâché`);
           if (isDryRun || forceOffline) {
@@ -563,6 +643,13 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       
       // Récupérer les résultats du pipeline
       const finalArticle = report.finalArticle;
+      const routedMode = report.steps?.['editorial-router']?.data?.mode || null;
+      const resolvedEditorialMode = (
+        finalArticle?.editorialMode ||
+        finalArticle?.editorial_mode ||
+        routedMode ||
+        'evergreen'
+      ).toLowerCase();
       
       // Récupérer les données des étapes depuis le report (.data contient les vraies données, .debug est vide)
       const extracted = report.steps?.extractor?.data || report.steps?.extractor?.debug || {};
@@ -573,6 +660,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       console.log(`   Titre: ${finalArticle.title}`);
       console.log(`   Contenu: ${finalArticle.content?.length || 0} caractères`);
       console.log(`   QA Report: ${finalArticle.qaReport?.checks?.length || 0} checks`);
+      console.log(`   Mode éditorial: ${resolvedEditorialMode.toUpperCase()}`);
       console.log(`   🖼️ InlineImages: ${finalArticle.inlineImages?.length || 0} image(s)`);
       
       // Construire un objet analysis pour compatibilité avec le reste du code
@@ -703,6 +791,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
 
       // L'article est déjà finalisé par le pipeline, on utilise directement finalArticle
       const finalizedArticle = finalArticle;
+      finalizedArticle.editorialMode = resolvedEditorialMode;
+      finalizedArticle.editorial_mode = resolvedEditorialMode;
       
       // DEBUG: Vérifier les widgets AVANT déduplication
       const articleFinalizerModule = await import('./article-finalizer.js');
@@ -832,20 +922,48 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // Les traductions re-introduisent du glue typographique (ex: "fautêtre", "estéconomique")
       if (this.articleFinalizer) {
         finalizedArticle.content = this.articleFinalizer.fixWordGlue(finalizedArticle.content, null);
+        finalizedArticle.content = this.articleFinalizer.applyDeterministicFinalTextCleanup(finalizedArticle.content);
+        if ((resolvedEditorialMode || '').toLowerCase() === 'news') {
+          finalizedArticle.content = this.articleFinalizer.ensureMinimumNewsSerpSections(
+            finalizedArticle.content,
+            pipelineContext?.final_destination || finalizedArticle?.final_destination || ''
+          );
+          finalizedArticle.content = this.articleFinalizer.enforceNewsDecisionAndCtaFriction(finalizedArticle.content);
+        }
       }
       
-      // 9.7. P5: QUALITY GATE PRE-PUBLICATION (seuil 85%)
+      // 9.7. P5: QUALITY GATE PRE-PUBLICATION (seuil dynamique selon mode éditorial)
       if (!DRY_RUN) {
         try {
           const { default: QualityAnalyzer } = await import('./quality-analyzer.js');
           const qualityAnalyzer = new QualityAnalyzer();
-          const editorialMode = finalizedArticle.editorialMode || 'evergreen';
+          const editorialMode = (finalizedArticle.editorialMode || resolvedEditorialMode || 'evergreen').toLowerCase();
+          const reinjectInternalLinks = async (phaseLabel = 'PRE-SCORE') => {
+            const seoOptimizer = this.pipelineRunner?.seoOptimizer;
+            if (!seoOptimizer || typeof seoOptimizer.injectInternalLinks !== 'function') return;
+            const extracted = pipelineContext?.story?.extracted || {};
+            const storyData = pipelineContext?.story?.story || {};
+            const seoData = seoOptimizer.extractSeoData(extracted, storyData);
+            seoData.main_destination = pipelineContext?.final_destination || finalizedArticle.final_destination || '';
+            const linkReport = { actions: [] };
+            finalizedArticle.content = await seoOptimizer.injectInternalLinks(
+              finalizedArticle.content, seoData, linkReport
+            );
+            if (linkReport.actions.length > 0) {
+              console.log(`🔗 ${phaseLabel} LINK INJECTION: ${linkReport.actions[0]?.details || 'done'}`);
+            }
+          };
+
+          // K7/K8 parity: scorer toujours sur le HTML final (après réinjection liens)
+          await reinjectInternalLinks('PRE-SCORE');
+
           // Wrapping: le quality analyzer cherche un h1 pour le check "destination dans titre"
           // mais finalizedArticle.content n'a pas de h1 (le titre est un champ separe)
           const contentForScoring = `<h1>${finalizedArticle.title || ''}</h1>\n${finalizedArticle.content}`;
           const prePublishScore = qualityAnalyzer.getGlobalScore(contentForScoring, editorialMode);
           const prePublishPct = parseFloat(prePublishScore.globalScore);
-          console.log(`\n📊 PRE-PUBLISH QUALITY GATE: ${prePublishPct}% (seuil: 85%) — blocking: ${prePublishScore.blockingPassed ? 'OK' : 'FAIL'}`);
+          const prePublishThreshold = Number(prePublishScore.threshold || (editorialMode === 'news' ? 70 : 85));
+          console.log(`\n📊 PRE-PUBLISH QUALITY GATE: ${prePublishPct}% (seuil: ${prePublishThreshold}%) [${editorialMode.toUpperCase()}] — blocking: ${prePublishScore.blockingPassed ? 'OK' : 'FAIL'}`);
           // Détail des checks bloquants pour diagnostic
           if (!prePublishScore.blockingPassed && prePublishScore.categories?.blocking?.checks) {
             prePublishScore.categories.blocking.checks.forEach(chk => {
@@ -881,8 +999,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
             console.warn(`⚠️ KPI tests non disponibles: ${kpiErr.message}`);
           }
           
-          if (prePublishPct < 85 || !prePublishScore.blockingPassed) {
-            console.warn(`⚠️ QUALITY_GATE_BLOCKED: score ${prePublishPct}% < 85% ou bloquants FAIL. Publication différée.`);
+          if (prePublishPct < prePublishThreshold || !prePublishScore.blockingPassed) {
+            console.warn(`⚠️ QUALITY_GATE_BLOCKED: score ${prePublishPct}% < ${prePublishThreshold}% ou bloquants FAIL. Publication différée.`);
             console.warn(`   Catégories: SERP=${prePublishScore.categories.serp.percentage.toFixed(0)}% Links=${prePublishScore.categories.links.percentage.toFixed(0)}% Content=${prePublishScore.categories.contentWriting.percentage.toFixed(0)}% Blocking=${prePublishScore.categories.blocking.percentage.toFixed(0)}%`);
             
             // Tenter une passe improve LLM automatique pour corriger
@@ -896,12 +1014,14 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
                 );
                 if (improvedContent && improvedContent.length > finalizedArticle.content.length * 0.65) {
                   finalizedArticle.content = improvedContent;
+                  await reinjectInternalLinks('POST-IMPROVE');
                   // Re-check (wrap avec h1 pour le meme scoring)
                   const recheckHtml = `<h1>${finalizedArticle.title || ''}</h1>\n${finalizedArticle.content}`;
                   const recheck = qualityAnalyzer.getGlobalScore(recheckHtml, editorialMode);
                   const recheckPct = parseFloat(recheck.globalScore);
+                  const recheckThreshold = Number(recheck.threshold || prePublishThreshold);
                   console.log(`📊 POST-IMPROVE QUALITY: ${recheckPct}% (was ${prePublishPct}%)`);
-                  if (recheckPct < 85 || !recheck.blockingPassed) {
+                  if (recheckPct < recheckThreshold || !recheck.blockingPassed) {
                     console.warn(`⚠️ QUALITY_GATE: score toujours insuffisant (${recheckPct}%). Publication forcée avec avertissement.`);
                   } else {
                     console.log(`✅ QUALITY_GATE: score amélioré à ${recheckPct}%, publication autorisée.`);
@@ -912,25 +1032,12 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
               }
             }
           } else {
-            console.log(`✅ QUALITY_GATE_PASSED: ${prePublishPct}% >= 85%. Publication autorisée.`);
+            console.log(`✅ QUALITY_GATE_PASSED: ${prePublishPct}% >= ${prePublishThreshold}%. Publication autorisée.`);
           }
 
-          // Re-inject internal links after improve pass (LLM may strip them)
+          // Filet de sécurité final: réinjection liens une dernière fois avant publication
           try {
-            const seoOptimizer = this.pipelineRunner?.seoOptimizer;
-            if (seoOptimizer && typeof seoOptimizer.injectInternalLinks === 'function') {
-              const extracted = pipelineContext?.story?.extracted || {};
-              const storyData = pipelineContext?.story?.story || {};
-              const seoData = seoOptimizer.extractSeoData(extracted, storyData);
-              seoData.main_destination = pipelineContext?.final_destination || finalizedArticle.final_destination || '';
-              const linkReport = { actions: [] };
-              finalizedArticle.content = await seoOptimizer.injectInternalLinks(
-                finalizedArticle.content, seoData, linkReport
-              );
-              if (linkReport.actions.length > 0) {
-                console.log(`🔗 POST-GATE LINK RE-INJECTION: ${linkReport.actions[0]?.details || 'done'}`);
-              }
-            }
+            await reinjectInternalLinks('POST-GATE');
           } catch (linkErr) {
             console.warn(`⚠️ Post-gate link re-injection failed: ${linkErr.message}`);
           }
@@ -942,6 +1049,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // 9.9. Dernier fixWordGlue avant publication (attrape les glues reintroduits par improve/translate)
       if (this.articleFinalizer) {
         finalizedArticle.content = this.articleFinalizer.fixWordGlue(finalizedArticle.content, null);
+        finalizedArticle.content = this.articleFinalizer.applyDeterministicFinalTextCleanup(finalizedArticle.content);
       }
 
       // 10. Publication WordPress
@@ -1027,7 +1135,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
             publishedArticle.link,
             sourceForValidator,
             wordpressClient,
-            5 // maxIterations
+            5, // maxIterations
+            resolvedEditorialMode
           );
           
           if (validationResult.success) {
@@ -1687,7 +1796,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     const titleAsiaKeywords = ['japan', 'japon', 'tokyo', 'osaka', 'kyoto', 'thailand', 'thaïlande', 'bangkok', 'vietnam', 'hanoi', 'saigon', 'indonesia', 'indonésie', 'bali', 'malaysia', 'malaisie', 'philippines', 'manila', 'cebu', 'cambodia', 'cambodge', 'laos', 'myanmar', 'singapore', 'singapour', 'korea', 'corée', 'seoul', 'taiwan', 'taïwan', 'india', 'inde', 'nepal', 'népal', 'sri lanka', 'asia', 'asie', 'phuket', 'chiang mai', 'ho chi minh', 'da nang', 'hoi an', 'ubud', 'kuala lumpur', 'penang', 'phnom penh', 'siem reap', 'hong kong', 'shanghai', 'beijing', 'pékin'];
     const titleHasAsia = titleAsiaKeywords.some(kw => new RegExp(`\\b${escapeRegExp2(kw)}\\b`, 'i').test(titleLower));
     // Vérifier aussi si finalDestination est asiatique (le titre peut ne pas la mentionner)
-    const asiaCountries = ['japan','thailand','vietnam','indonesia','malaysia','philippines','cambodia','laos','myanmar','singapore','korea','south korea','taiwan','india','nepal','sri lanka','china','hong kong','maldives'];
+    const asiaCountries = ['japan','thailand','vietnam','indonesia','malaysia','philippines','cambodia','laos','myanmar','singapore','korea','south korea','taiwan','taïwan','taipei','india','nepal','sri lanka','china','hong kong','maldives'];
     const finalDestIsAsia = finalDestination && asiaCountries.some(c => finalDestination.toLowerCase().includes(c));
     for (const dest of finalNonAsiaDestinations) {
       if (new RegExp(`\\b${escapeRegExp2(dest)}\\b`, 'i').test(titleLower)) {
@@ -1756,6 +1865,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // Routes de vol / itinéraires (ORIGIN-DESTINATION, "depuis", "vol ... vers")
       /vol\s+\S+-\S+/i,
       /flight\s+\S+-\S+/i,
+      /vol\s+[a-zà-öø-ÿ]+\s*(?:→|->|&rarr;|vers|to)\s+/i,
+      /flight\s+[a-zà-öø-ÿ]+\s*(?:→|->|&rarr;|to)\s+/i,
       /(depuis|departing|depart)\s+/i,
       /\S+-osaka/i,
       /\S+-tokyo/i,
@@ -1794,7 +1905,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         
         // FALLBACK: Si le contexte contient aussi une destination asiatique, c'est acceptable
         // (itinéraire de vol, comparaison origine/destination, etc.)
-        const contextAsiaKeywords = ['japan', 'japon', 'tokyo', 'osaka', 'kyoto', 'thailand', 'thaïlande', 'bangkok', 'vietnam', 'hanoi', 'saigon', 'indonesia', 'indonésie', 'bali', 'malaysia', 'malaisie', 'philippines', 'cambodia', 'cambodge', 'laos', 'myanmar', 'singapore', 'singapour', 'korea', 'corée', 'seoul', 'taiwan', 'india', 'inde', 'nepal', 'sri lanka', 'asia', 'asie', 'phuket', 'chiang mai', 'ubud', 'kuala lumpur', 'phnom penh', 'hong kong', 'shanghai', 'beijing', 'pékin'];
+        const contextAsiaKeywords = ['japan', 'japon', 'tokyo', 'osaka', 'kyoto', 'thailand', 'thaïlande', 'bangkok', 'vietnam', 'hanoi', 'saigon', 'indonesia', 'indonésie', 'bali', 'malaysia', 'malaisie', 'philippines', 'cambodia', 'cambodge', 'laos', 'myanmar', 'singapore', 'singapour', 'korea', 'corée', 'seoul', 'taiwan', 'taïwan', 'taipei', 'india', 'inde', 'nepal', 'sri lanka', 'asia', 'asie', 'phuket', 'chiang mai', 'ubud', 'kuala lumpur', 'phnom penh', 'hong kong', 'shanghai', 'beijing', 'pékin'];
         const contextHasAsia = contextAsiaKeywords.some(kw => new RegExp(`\\b${escapeRegExp(kw)}\\b`, 'i').test(context));
         const finalAcceptable = isAcceptableContext || contextHasAsia || finalDestIsAsia;
 
@@ -2256,6 +2367,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
             // Defensive: re-run fixWordGlue on updatedContent (WordPress content.rendered may differ slightly)
             if (this.articleFinalizer) {
               updatedContent = this.articleFinalizer.fixWordGlue(updatedContent, null);
+              updatedContent = this.articleFinalizer.applyDeterministicFinalTextCleanup(updatedContent);
             }
             try {
               await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts/${publishedArticle.id}`, {
