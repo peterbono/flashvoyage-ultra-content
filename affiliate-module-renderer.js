@@ -118,7 +118,7 @@ export function renderAffiliateModule(placement, geo_defaults) {
 <!-- wp:html -->
 ${widgetScript}
 <!-- /wp:html -->
-<p class="affiliate-module-disclaimer"><small>Lien partenaire</small></p>
+<p class="affiliate-module-disclaimer"><small>Liens partenaires: une commission peut être perçue, sans surcoût pour toi.</small></p>
 </aside>
 `.trim();
 

@@ -80,12 +80,40 @@ test('Deterministic cleanup removes orphan CSS fragment and meal glue', () => {
   assert.match(cleaned, /repas économique/i);
 });
 
+test('Deterministic cleanup does not inject spaces into affiliate script URLs', () => {
+  const finalizer = new ArticleFinalizer();
+  const dirty = '<aside class="affiliate-module"><script async src="https://trpwdg.com/content?trs=425154&shmarker=664014&locale=fr&powered_by=true"></script></aside>';
+  const cleaned = finalizer.applyDeterministicFinalTextCleanup(dirty);
+  assert.match(cleaned, /content\?trs=425154&shmarker=664014&locale=fr&powered_by=true/i);
+  assert.doesNotMatch(cleaned, /content\?\s+trs=/i);
+});
+
+test('Affiliate widget integrity sanitizer repairs malformed URLs', () => {
+  const finalizer = new ArticleFinalizer();
+  const dirty = '<script async src="https://trpwdg.com/content? trs =425154& amp;shmarker=664014 &locale=fr"></script>';
+  const cleaned = finalizer.sanitizeAffiliateWidgetIntegrity(dirty);
+  assert.match(cleaned, /content\?trs=425154(?:&|&amp;)shmarker=664014&locale=fr/i);
+  assert.doesNotMatch(cleaned, /\?\s+trs/i);
+});
+
 test('Blocking gate accepts regional Asia title tokens', () => {
   const qa = new QualityAnalyzer();
   const html = [
     '<h1>Asie du Sud-Est : choix d’itinéraires pour éviter les pièges</h1>',
     '<h2>Ce que ça change concrètement</h2>',
     '<p>Un arbitrage clair pour ton voyage.</p>'
+  ].join('');
+  const score = qa.getGlobalScore(html, 'news');
+  const destinationCheck = score.categories.blocking.checks.find(c => c.check === 'Destination asiatique titre');
+  assert.ok(destinationCheck, 'Destination asiatique titre check should exist');
+  assert.equal(destinationCheck.passed, true);
+});
+
+test('Blocking gate accepts Koh Lanta in title', () => {
+  const qa = new QualityAnalyzer();
+  const html = [
+    '<h1>Budget réel pour vivre à Koh Lanta : dépenses et optimisations</h1>',
+    '<p>Retour terrain en Thaïlande pour nomades.</p>'
   ].join('');
   const score = qa.getGlobalScore(html, 'news');
   const destinationCheck = score.categories.blocking.checks.find(c => c.check === 'Destination asiatique titre');
@@ -108,6 +136,80 @@ test('NEWS decision and CTA friction are enforced', () => {
   const out = finalizer.enforceNewsDecisionAndCtaFriction(html);
   assert.match(out, /Notre arbitrage/i);
   assert.match(out, /Avant de réserver/i);
+  assert.match(out, /Pourquoi:/i);
+});
+
+test('NEWS profile keeps a visible but concise affiliate disclosure', () => {
+  const finalizer = new ArticleFinalizer();
+  const html = '<aside class="affiliate-module"><h3>Module</h3><p class="affiliate-module-disclaimer"><small>Lien partenaire</small></p></aside>';
+  const out = finalizer.applyNewsRenderingProfile(html);
+  assert.match(out, /Liens partenaires: une commission peut être perçue, sans surcoût pour toi/i);
+});
+
+test('NEWS profile injects disclosure when affiliate script is standalone', () => {
+  const finalizer = new ArticleFinalizer();
+  const html = '<p>Texte</p><script async src="https://trpwdg.com/content?trs=1&shmarker=2"></script>';
+  const out = finalizer.applyNewsRenderingProfile(html);
+  assert.match(out, /affiliate-module-disclaimer/i);
+  assert.match(out, /Liens partenaires: une commission peut être perçue, sans surcoût pour toi/i);
+});
+
+test('NEWS actionable conclusion is injected when missing', () => {
+  const finalizer = new ArticleFinalizer();
+  const html = '<h2>Limites et biais</h2><p>Contenu analytique sans CTA.</p>';
+  const out = finalizer.ensureNewsActionableConclusion(html);
+  assert.match(out, /Prochaines étapes/i);
+  assert.match(out, /compare 2 options maximum/i);
+});
+
+test('NEWS quality convergence injects impact and action blocks when missing', () => {
+  const finalizer = new ArticleFinalizer();
+  const html = '<p>Contenu faible, sans structure SERP explicite.</p>';
+  const out = finalizer.ensureNewsQualityConvergence(html, {
+    title: 'Thaïlande: arbitrages à faire pour éviter les erreurs',
+    finalDestination: 'Thaïlande'
+  });
+  assert.match(out, /Ce qui change concrètement/i);
+  assert.match(out, /<ul>/i);
+  assert.match(out, /Que faire maintenant/i);
+});
+
+test('NEWS quality convergence injects a pillar link when missing', () => {
+  const finalizer = new ArticleFinalizer();
+  const html = '<h2>Limites et biais</h2><p>Analyse.</p>';
+  const out = finalizer.ensureNewsQualityConvergence(html, {
+    title: 'Thaïlande: nouvelle mise à jour logistique',
+    finalDestination: 'Thaïlande',
+    pillarLink: 'https://flashvoyage.com/conseils-voyage/'
+  });
+  assert.match(out, /https:\/\/flashvoyage\.com\/conseils-voyage\//i);
+});
+
+test('NEWS quality convergence improves score on weak input', () => {
+  const finalizer = new ArticleFinalizer();
+  const qa = new QualityAnalyzer();
+  const baseContent = '<p>Texte générique sans bloc impact/action.</p>';
+  const baseScore = qa.getGlobalScore('<h1>Thaïlande: mise à jour</h1>\n' + baseContent, 'news');
+  const improved = finalizer.ensureNewsQualityConvergence(baseContent, {
+    title: 'Thaïlande: mise à jour',
+    finalDestination: 'Thaïlande'
+  });
+  const improvedScore = qa.getGlobalScore('<h1>Thaïlande: mise à jour</h1>\n' + improved, 'news');
+  assert.ok(Number(improvedScore.globalScore) >= Number(baseScore.globalScore));
+});
+
+test('NEWS quality convergence is idempotent', () => {
+  const finalizer = new ArticleFinalizer();
+  const html = '<p>Contenu court sans structure.</p>';
+  const once = finalizer.ensureNewsQualityConvergence(html, {
+    title: 'Thaïlande: mise à jour',
+    finalDestination: 'Thaïlande'
+  });
+  const twice = finalizer.ensureNewsQualityConvergence(once, {
+    title: 'Thaïlande: mise à jour',
+    finalDestination: 'Thaïlande'
+  });
+  assert.equal(twice, once);
 });
 
 test('Late glue pass does not reintroduce repas-economique collage', () => {

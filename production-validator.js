@@ -105,18 +105,27 @@ class ProductionValidator {
     const brokenLinks = [];
     
     const skipDomains = ['flashvoyage.com', 'travelpayouts.com', 'kiwi.com', 'tp.media', 'airalo.com', 'unsplash.com', 'flickr.com', 'pexels.com', 'reddit.com'];
-    for (const link of links.slice(0, 10)) {
+    for (const link of links.slice(0, 15)) {
       const href = link.getAttribute('href');
       if (href && href.startsWith('http')) {
         const isSkipped = skipDomains.some(d => href.includes(d));
         if (isSkipped) continue;
         try {
-          const response = await axios.head(href, { timeout: 5000 });
-          if (response.status !== 200) {
+          const response = await axios.head(href, {
+            timeout: 5000,
+            maxRedirects: 5,
+            validateStatus: () => true
+          });
+          // 2xx/3xx = OK ; 403/405 sont fréquents en anti-bot HEAD (non cassé)
+          if (response.status >= 400 && ![403, 405].includes(response.status)) {
             brokenLinks.push({ href, status: response.status });
           }
         } catch (error) {
-          brokenLinks.push({ href, status: 'error', error: error.message });
+          const msg = String(error?.message || '');
+          // Timeout/réseau intermittent => non bloquant en prod
+          if (!/timeout|ETIMEDOUT|ECONNRESET|ENOTFOUND|EAI_AGAIN/i.test(msg)) {
+            brokenLinks.push({ href, status: 'error', error: msg });
+          }
         }
       }
     }

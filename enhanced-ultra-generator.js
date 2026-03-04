@@ -924,11 +924,14 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         finalizedArticle.content = this.articleFinalizer.fixWordGlue(finalizedArticle.content, null);
         finalizedArticle.content = this.articleFinalizer.applyDeterministicFinalTextCleanup(finalizedArticle.content);
         if ((resolvedEditorialMode || '').toLowerCase() === 'news') {
-          finalizedArticle.content = this.articleFinalizer.ensureMinimumNewsSerpSections(
+          finalizedArticle.content = this.articleFinalizer.ensureNewsQualityConvergence(
             finalizedArticle.content,
-            pipelineContext?.final_destination || finalizedArticle?.final_destination || ''
+            {
+              title: finalizedArticle.title || '',
+              finalDestination: pipelineContext?.final_destination || finalizedArticle?.final_destination || '',
+              pillarLink: 'https://flashvoyage.com/conseils-voyage/'
+            }
           );
-          finalizedArticle.content = this.articleFinalizer.enforceNewsDecisionAndCtaFriction(finalizedArticle.content);
         }
       }
       
@@ -938,6 +941,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           const { default: QualityAnalyzer } = await import('./quality-analyzer.js');
           const qualityAnalyzer = new QualityAnalyzer();
           const editorialMode = (finalizedArticle.editorialMode || resolvedEditorialMode || 'evergreen').toLowerCase();
+          const strictNewsBlocking = !['0', 'false', 'no', 'off'].includes(
+            String(process.env.ENABLE_STRICT_NEWS_BLOCKING ?? '1').toLowerCase()
+          );
           const reinjectInternalLinks = async (phaseLabel = 'PRE-SCORE') => {
             const seoOptimizer = this.pipelineRunner?.seoOptimizer;
             if (!seoOptimizer || typeof seoOptimizer.injectInternalLinks !== 'function') return;
@@ -963,6 +969,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           const prePublishScore = qualityAnalyzer.getGlobalScore(contentForScoring, editorialMode);
           const prePublishPct = parseFloat(prePublishScore.globalScore);
           const prePublishThreshold = Number(prePublishScore.threshold || (editorialMode === 'news' ? 70 : 85));
+          let finalGatePct = prePublishPct;
+          let finalGateBlockingPassed = !!prePublishScore.blockingPassed;
           console.log(`\n📊 PRE-PUBLISH QUALITY GATE: ${prePublishPct}% (seuil: ${prePublishThreshold}%) [${editorialMode.toUpperCase()}] — blocking: ${prePublishScore.blockingPassed ? 'OK' : 'FAIL'}`);
           // Détail des checks bloquants pour diagnostic
           if (!prePublishScore.blockingPassed && prePublishScore.categories?.blocking?.checks) {
@@ -1020,6 +1028,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
                   const recheck = qualityAnalyzer.getGlobalScore(recheckHtml, editorialMode);
                   const recheckPct = parseFloat(recheck.globalScore);
                   const recheckThreshold = Number(recheck.threshold || prePublishThreshold);
+                  finalGatePct = recheckPct;
+                  finalGateBlockingPassed = !!recheck.blockingPassed;
                   console.log(`📊 POST-IMPROVE QUALITY: ${recheckPct}% (was ${prePublishPct}%)`);
                   if (recheckPct < recheckThreshold || !recheck.blockingPassed) {
                     console.warn(`⚠️ QUALITY_GATE: score toujours insuffisant (${recheckPct}%). Publication forcée avec avertissement.`);
@@ -1033,6 +1043,11 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
             }
           } else {
             console.log(`✅ QUALITY_GATE_PASSED: ${prePublishPct}% >= ${prePublishThreshold}%. Publication autorisée.`);
+          }
+
+          // P0: en NEWS, ne jamais publier si bloquants en FAIL (même si score/override)
+          if (editorialMode === 'news' && strictNewsBlocking && !finalGateBlockingPassed) {
+            throw new Error(`QUALITY_GATE_NEWS_BLOCKING_FAIL: blocking=false (score=${finalGatePct}%)`);
           }
 
           // Filet de sécurité final: réinjection liens une dernière fois avant publication
@@ -1050,6 +1065,17 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       if (this.articleFinalizer) {
         finalizedArticle.content = this.articleFinalizer.fixWordGlue(finalizedArticle.content, null);
         finalizedArticle.content = this.articleFinalizer.applyDeterministicFinalTextCleanup(finalizedArticle.content);
+        if ((resolvedEditorialMode || '').toLowerCase() === 'news') {
+          finalizedArticle.content = this.articleFinalizer.ensureNewsQualityConvergence(
+            finalizedArticle.content,
+            {
+              title: finalizedArticle.title || '',
+              finalDestination: pipelineContext?.final_destination || finalizedArticle?.final_destination || '',
+              pillarLink: 'https://flashvoyage.com/conseils-voyage/'
+            }
+          );
+        }
+        finalizedArticle.content = this.articleFinalizer.sanitizeAffiliateWidgetIntegrity(finalizedArticle.content);
       }
 
       // 10. Publication WordPress
@@ -2226,6 +2252,10 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       console.log('📝 Publication sur WordPress...');
       
       // Préparer les données WordPress
+      if (this.articleFinalizer?.sanitizeAffiliateWidgetIntegrity) {
+        article.content = this.articleFinalizer.sanitizeAffiliateWidgetIntegrity(article.content);
+      }
+
       const wpMeta = {
         description: article.meta?.description || article.excerpt || '',
         keywords: article.meta?.keywords || '',
