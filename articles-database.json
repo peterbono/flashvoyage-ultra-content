@@ -1,7 +1,32 @@
 {
-  "crawled_at": "2026-03-11T18:08:06.671Z",
-  "total_articles": 45,
+  "crawled_at": "2026-03-11T18:47:53.838Z",
+  "total_articles": 46,
   "articles": [
+    {
+      "id": 3239,
+      "title": "Itinéraire en Indonésie : arbitrer entre Ubud, Nusa Penida et les îles Gili sans sacrifier ton expérience",
+      "url": "https://flashvoyage.com/itineraire-en-indonesie-arbitrer-entre-ubud-nusa-penida-et-les-iles-gili-sans-sacrifier-ton-experience/",
+      "slug": "itineraire-en-indonesie-arbitrer-entre-ubud-nusa-penida-et-les-iles-gili-sans-sacrifier-ton-experience",
+      "excerpt": "Tu arrives à Bali avec un itinéraire qui te fait traverser cinq zones en 19 jours. Deux nuits à Canggu, quatre à Ubud, trois à Nusa Penida, trois jours en liveaboard à Komodo, deux aux Gili Trawangan,",
+      "content": "Tu arrives à Bali avec un itinéraire qui te fait traverser cinq zones en 19 jours.\nDeux nuits à Canggu, quatre à Ubud, trois à Nusa Penida, trois jours en liveaboard à Komodo, deux aux Gili Trawangan, une aux Gili Air, quatre à Uluwatu. Et c&#8217;est l à que ça devient compliqué.\nLe vrai dilemme n&#8217;est pas . C&#8217;est « qu&#8217;est-ce que je sacrifie vraiment en voulant tout faire? » Deux nuits à Canggu, c&#8217;est à peine le temps de respirer avant de repartir. Quatre jours à Ubud, c&",
+      "categories": [
+        {
+          "id": 182,
+          "name": "Indonésie",
+          "slug": "indonesie"
+        }
+      ],
+      "tags": [
+        {
+          "id": 177,
+          "name": "Indonésie",
+          "slug": "indonesie"
+        }
+      ],
+      "date": "2026-03-11T18:08:11",
+      "modified": "2026-03-11T18:08:11",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773252486823.jpg"
+    },
     {
       "id": 3234,
       "title": "Arbitrer son itinéraire Japon-Chine-Mongolie en 15-20 jours : les vrais dilemmes logistiques",

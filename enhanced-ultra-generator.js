@@ -582,6 +582,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       console.log('===================================================\n');
       
       // Adapter selectedArticle au format attendu par pipeline-runner
+      const commentCount = redditComments?.length || selectedArticle.num_comments || 0;
+      const postScore = selectedArticle.score || selectedArticle.ups || 0;
       const pipelineInput = {
         post: {
           title: selectedArticle.title || '',
@@ -589,14 +591,19 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           author: selectedArticle.author || null,
           created_utc: selectedArticle.created_utc || null,
           url: selectedArticle.link || selectedArticle.url || '',
-          subreddit: selectedArticle.subreddit || ''
+          subreddit: selectedArticle.subreddit || '',
+          num_comments: commentCount,
+          score: postScore
         },
         comments: redditComments,
         geo: selectedArticle.geo || {},
         source: {
           subreddit: selectedArticle.subreddit || '',
           url: selectedArticle.link || selectedArticle.url || '',
-          source: selectedArticle.source || 'Communauté'
+          source: selectedArticle.source || 'Communauté',
+          num_comments: commentCount,
+          score: postScore,
+          author: selectedArticle.author || null
         },
         calendarDirective: directive
       };
@@ -689,30 +696,39 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // - Extractor → Pattern → Story → Generator → Affiliate → SEO → Finalizer → Anti-Hallucination
       // Le contenu final est dans finalArticle.content (déjà optimisé SEO, avec liens internes, etc.)
       
-      // Ajouter uniquement le lien source au début du contenu (rôle neutre)
+      // === E-E-A-T: Byline + Source visible + Bloc auteur ===
       const articleLink = selectedArticle.url || selectedArticle.link || '#';
       const articleTitle = selectedArticle.title || 'Article sans titre';
-      let sourceName = selectedArticle.source || 'Source inconnue';
-      
+      const srcComments = pipelineInput.source.num_comments || 0;
+      const srcScore = pipelineInput.source.score || 0;
+      const srcAuthor = pipelineInput.source.author || null;
+
+      let subredditDisplay = 'Reddit';
       if (articleLink.includes('reddit.com')) {
-        if (articleLink.includes('digitalnomad')) {
-          sourceName = 'Reddit Digital Nomad';
-        } else if (articleLink.includes('travel')) {
-          sourceName = 'Reddit r/travel';
-        } else {
-          sourceName = 'Reddit';
-        }
-      } else if (articleLink.includes('skift.com')) {
-        sourceName = 'Skift';
-      } else if (articleLink.includes('cnn.com')) {
-        sourceName = 'CNN Travel';
+        const subMatch = articleLink.match(/reddit\.com\/r\/([^/]+)/);
+        subredditDisplay = subMatch ? `r/${subMatch[1]}` : 'Reddit';
       }
-      
-      // FIX H1: Source Reddit DISCRÈTE en fin d'article au lieu d'en premier
-      // La source ne doit pas casser l'immersion narrative - elle est placée en fin
-      // Source masquée visuellement mais conservée dans le HTML pour transparence
-      const sourceLink = `\n\n<!-- wp:html -->\n<p class="reddit-source-discrete" style="display:none" aria-hidden="true"><small><em>Source : <a href="${articleLink}" target="_blank" rel="noopener">${articleTitle}</a> - ${sourceName}</em></small></p>\n<!-- /wp:html -->`;
-      finalArticle.content = finalArticle.content + sourceLink;
+
+      // Byline en haut d'article : transparent sur la source
+      const contributionText = srcComments > 0 ? `${srcComments} contributions` : 'discussion communautaire';
+      const scoreText = srcScore > 10 ? ` · ${srcScore} upvotes` : '';
+
+      const bylineHtml = `<!-- wp:html -->\n<div class="fv-byline" style="margin-bottom:1.5rem;padding:1rem 1.2rem;background:#f8f9fa;border-left:4px solid #2563eb;border-radius:4px;font-size:0.92rem;line-height:1.5;color:#374151;">
+<strong>Flash Voyage | Rédaction</strong><br>
+Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage réel</a> et les retours de <strong>${contributionText}</strong> sur <strong>${subredditDisplay}</strong>${scoreText}. Sources vérifiées, enrichies par nos données temps réel.
+</div>\n<!-- /wp:html -->\n\n`;
+
+      finalArticle.content = bylineHtml + finalArticle.content;
+
+      // Bloc auteur en fin d'article : crédibilité E-E-A-T
+      const authorBoxHtml = `\n\n<!-- wp:html -->\n<div class="fv-author-box" style="margin-top:2.5rem;padding:1.5rem;background:#f0f4ff;border:1px solid #dbeafe;border-radius:8px;font-size:0.93rem;line-height:1.6;color:#1e293b;">
+<p style="margin:0 0 0.7rem;font-weight:700;font-size:1rem;">À propos de cet article</p>
+<p style="margin:0 0 0.5rem;">Cet article est produit par la <strong>rédaction Flash Voyage</strong>. Notre méthode : nous identifions les discussions de voyageurs francophones et internationaux sur Reddit, vérifions les informations, puis les enrichissons avec des données temps réel (prix des vols, coût de la vie, conditions de sécurité).</p>
+<p style="margin:0 0 0.5rem;">Pourquoi cette approche ? Un article de blog classique reflète <em>une</em> expérience. Nos articles croisent les retours de <strong>dizaines de voyageurs</strong> qui ont vécu la même situation — c'est plus fiable qu'un avis isolé.</p>
+<p style="margin:0;"><a href="${articleLink}" target="_blank" rel="noopener">Voir la discussion originale sur ${subredditDisplay}</a> · <a href="/notre-methode/">Notre méthode</a></p>
+</div>\n<!-- /wp:html -->`;
+
+      finalArticle.content = finalArticle.content + authorBoxHtml;
       
       // Générer le quote highlight si disponible (depuis analysis si présent)
       let quoteHighlight = '';
