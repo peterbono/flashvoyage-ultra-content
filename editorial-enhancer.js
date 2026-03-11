@@ -725,9 +725,17 @@ Retourne un JSON array: [{"question": "...", "answer": "..."}]` },
       pattern.lastIndex = 0; // Reset regex
     }
     
-    if (foundDestinations.size < 2) {
+    // Détection par titre "vs" / "comparaison" / "arbitrer entre" : force le tableau
+    const titleText = (story?.title || extraction?.title || '').toLowerCase();
+    const isComparisonArticle = /\bvs\b|compar|arbitrer\s+entre|face\s+[àa]|plutôt\s+que/i.test(titleText);
+    
+    if (foundDestinations.size < 2 && !isComparisonArticle) {
       console.log(`   ℹ️ ${foundDestinations.size} destination(s) détectée(s), pas assez pour un comparatif`);
       return html;
+    }
+    
+    if (isComparisonArticle && foundDestinations.size < 2) {
+      console.log(`   📍 Article de comparaison détecté par titre ("${titleText.substring(0, 50)}...") — génération tableau forcée`);
     }
     
     console.log(`   📍 ${foundDestinations.size} destinations détectées: ${[...foundDestinations].join(', ')} — génération tableau...`);
@@ -761,6 +769,17 @@ Retourne UNIQUEMENT le HTML du tableau, rien d'autre. Format: <table><thead><tr>
       // Vérifier que c'est bien un tableau
       if (!tableHtml.includes('<table') || !tableHtml.includes('</table>')) {
         throw new Error('Réponse ne contient pas de tableau HTML valide');
+      }
+
+      // Rejeter les tableaux creux (>40% de cellules vides/non précisé)
+      const cells = tableHtml.match(/<td[^>]*>([\s\S]*?)<\/td>/gi) || [];
+      const emptyCells = cells.filter(c => {
+        const text = c.replace(/<[^>]+>/g, '').trim().toLowerCase();
+        return !text || text === '-' || text === 'n/a' || text.startsWith('non précisé') || text.startsWith('non spécifié');
+      });
+      if (cells.length > 0 && emptyCells.length / cells.length > 0.4) {
+        console.log(`   ⚠️ Tableau trop creux (${emptyCells.length}/${cells.length} cellules vides) — rejeté`);
+        return html;
       }
       
       const tableSection = `\n\n<h2>Comparatif des destinations</h2>\n${tableHtml}\n`;

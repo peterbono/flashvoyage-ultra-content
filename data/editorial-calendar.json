@@ -1,6 +1,6 @@
 {
-  "totalPublished": 26,
-  "currentClusterId": "afrique-moyen-orient",
+  "totalPublished": 32,
+  "currentClusterId": "asie-sud-est",
   "history": [
     {
       "date": "2026-02-23T16:02:38.396Z",
@@ -211,6 +211,41 @@
       "articleType": "pillar",
       "hint": "safari guide complet",
       "title": "Maratua vs Maldives pour une lune de miel : arbitrer entre authenticité et logistique"
+    },
+    {
+      "date": "2026-03-11T16:55:00.953Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "petra jordanie",
+      "title": "3 jours à Singapour : l'itinéraire que tu dois affiner (pas copier)"
+    },
+    {
+      "date": "2026-03-11T17:00:40.227Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "zanzibar",
+      "title": "Témoignage voyage: retours et leçons"
+    },
+    {
+      "date": "2026-03-11T17:16:10.650Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "news",
+      "hint": "Thailande",
+      "title": "Itinéraire Vietnam 17 jours : arbitrer entre Hanoï, Ninh Binh et Hoi An sans se perdre en chemin"
+    },
+    {
+      "date": "2026-03-11T17:23:59.263Z",
+      "clusterId": "japon",
+      "articleType": "pillar",
+      "hint": "guide japon complet",
+      "title": "Arbitrer son itinéraire Japon-Chine-Mongolie en 15-20 jours : les vrais dilemmes logistiques"
+    },
+    {
+      "date": "2026-03-11T18:07:59.567Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "transport local asie",
+      "title": "Itinéraire en Indonésie : arbitrer entre Ubud, Nusa Penida et les îles Gili sans sacrifier ton expérience"
     }
   ]
 }

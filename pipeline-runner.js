@@ -377,7 +377,9 @@ class PipelineRunner {
 
       // ÉTAPE 7.5: Content Marketing Expert Pass
       // Exécutée AVANT le check de blocage pour que l'article soit toujours amélioré
-      if (ENABLE_MARKETING_PASS) {
+      // Lecture dynamique: permet au quality-loop-publisher de désactiver à runtime
+      const marketingPassEnabled = parseBool(process.env.ENABLE_MARKETING_PASS ?? '1');
+      if (marketingPassEnabled) {
         console.log('\n📋 ÉTAPE 7.5: Content Marketing Expert Pass (content-marketing-pass)');
         pipelineReport.startStep('content-marketing-pass');
         try {

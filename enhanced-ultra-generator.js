@@ -1297,7 +1297,19 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         }
       }
 
-      return publishedArticle;
+      // Enrichir le retour avec les données du pipeline pour le quality-loop
+      return {
+        ...publishedArticle,
+        content: finalizedArticle.content,
+        title: finalizedArticle.title || publishedArticle.title?.rendered || publishedArticle.title,
+        editorialMode: finalizedArticle.editorialMode || finalizedArticle.editorial_mode,
+        slug: finalizedArticle.slug || publishedArticle.slug,
+        categories: finalizedArticle.categories,
+        tags: finalizedArticle.tags,
+        featuredImage: finalizedArticle.featuredImage,
+        wpPostId: publishedArticle.id,
+        pipelineContext
+      };
 
     } catch (error) {
       console.error('❌ Erreur génération article amélioré:', error.message);
@@ -2336,8 +2348,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   
   // Publier sur WordPress
   async publishToWordPress(article) {
-    // GARDE DRY_RUN/FORCE_OFFLINE: Bloquer toute publication WordPress en mode test
-    if (DRY_RUN || FORCE_OFFLINE) {
+    // GARDE: Bloquer publication si quality-loop gère la publication
+    const skipWpPublish = process.env.SKIP_WP_PUBLISH === '1';
+    if (DRY_RUN || FORCE_OFFLINE || skipWpPublish) {
       console.log(`🧪 ${DRY_RUN ? 'DRY_RUN' : 'FORCE_OFFLINE'}: publication WordPress bloquée`);
       // Générer une URL fictive pour les tests
       const fakeUrl = `https://flashvoyage.com/temoignage-voyage-retours-et-lecons-test-${Date.now()}/`;

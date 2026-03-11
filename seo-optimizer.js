@@ -1440,7 +1440,17 @@ class SeoOptimizer {
     }
     
     // Limiter à 5 liens max
-    const linksToInject = freshLinks.slice(0, 5);
+    let linksToInject = freshLinks.slice(0, 5);
+    
+    // Garantir au moins 1 lien pilier (guide/destination/budget/visa/itineraire)
+    const hasPillar = linksToInject.some(l => l.isPillar);
+    if (!hasPillar) {
+      const bestPillar = freshLinks.find(l => l.isPillar);
+      if (bestPillar) {
+        linksToInject[linksToInject.length - 1] = bestPillar;
+        console.log(`   🏛️ PILLAR_GUARANTEE: injecté "${bestPillar.slug}" en remplacement du dernier lien`);
+      }
+    }
     
     // Injecter dans la section "Articles connexes" ou créer si absente
     const modifiedHtml = this.injectLinksIntoRelatedSection(html, linksToInject);
@@ -1581,10 +1591,19 @@ class SeoOptimizer {
         }
       }
       
+      // Bonus pilier : les URLs contenant guide/destination/conseils/budget/itineraire/visa
+      // sont des pages structurantes qui renforcent le maillage interne
+      const pillarKeywords = /guide|destination|conseils|budget|itineraire|visa/i;
+      const isPillar = pillarKeywords.test(article.slug || '');
+      if (isPillar) {
+        score += 15;
+      }
+      
       if (score > 0) {
         matched.push({
           ...article,
-          matchScore: score
+          matchScore: score,
+          isPillar
         });
       }
     }

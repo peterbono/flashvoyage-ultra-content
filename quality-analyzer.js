@@ -55,7 +55,12 @@ class QualityAnalyzer {
       // Formulations régionales (évite les faux négatifs "Asie du Sud-Est")
       'asie', 'asie du sud-est', 'asie du sud est', 'sud-est asiatique', 'sud est asiatique',
       'southeast asia', 'south east asia',
-      'mumbai', 'delhi', 'goa', 'pékin', 'shanghai', 'luang prabang', 'vientiane'
+      'mumbai', 'delhi', 'goa', 'pékin', 'shanghai', 'luang prabang', 'vientiane',
+      'maldives', 'malé', 'male', 'maratua', 'flores', 'komodo', 'lombok', 'nusa penida',
+      'langkawi', 'koh lipe', 'sapa', 'hoi an', 'da nang', 'nha trang', 'halong',
+      'boracay', 'palawan', 'el nido', 'siargao', 'yogyakarta', 'jogja',
+      'borneo', 'kalimantan', 'sulawesi', 'sumatra', 'java', 'raja ampat',
+      'kakaban', 'derawan', 'labuan bajo'
     ];
   }
 
@@ -316,7 +321,7 @@ class QualityAnalyzer {
     }
 
     // 4. Zero orphelins (15 pts)
-    const pillarPages = ['guide', 'destination', 'conseils', 'budget'];
+    const pillarPages = ['guide', 'destination', 'conseils', 'budget', 'itineraire', 'visa'];
     const hasPillarLink = internalLinks.some(link => {
       const href = link.getAttribute('href') || '';
       return pillarPages.some(p => href.includes(p));
@@ -364,7 +369,7 @@ class QualityAnalyzer {
       score.details.push({ check: 'Fil narratif (NEWS)', status: `${narrativeScore}/15`, points: narrativeScore });
     } else {
       // EVERGREEN : contexte + analyse + recommandations (patterns élargis)
-      const hasContexte = h2s.some(h => /contexte|témoignage|transport|budget|itinér|préparat|planifi|destination|comment\s+(choisir|organiser|planifier)/i.test(h));
+      const hasContexte = h2s.some(h => /contexte|témoignage|transport|budget|itinér|préparat|planifi|destination|comment\s+(choisir|organiser|planifier)|logistique|obstacle|aventure|arbitrage|choisir\s+entre|vs\b|compar/i.test(h));
       const hasAnalyse = h2s.some(h => /analyse|erreurs|pièges|ce que les autres/i.test(h));
       const hasRecommandations = h2s.some(h => /recommandation|conseils|retenir|conclusion|bilan|résumé|synthèse|synthese|check.?list|par où commencer|commencer|essentiel|verdict|en résumé|en resume|l.essentiel|à retenir|a retenir|nos conseils|comment commencer/i.test(h));
       const narrativeScore = (hasContexte ? 5 : 0) + (hasAnalyse ? 5 : 0) + (hasRecommandations ? 5 : 0);
@@ -473,7 +478,7 @@ class QualityAnalyzer {
     // 7. Introduction engageante (10 pts)
     const firstP = root.querySelector('p');
     const firstPText = firstP ? firstP.text : '';
-    const hasHook = /\?|découvr|imagin|révél|secret|incroy|expérien|aventur|rêv|fascinat|erreur|piège|problème|dilemme|la première fois|quand j|soleil|atterri|arrivé|personne ne|peu de gens|ce que|vérité|réalité|dans les rues|au cœur|au milieu|à peine|étouffant|résonne|immerg|plonge/i.test(firstPText);
+    const hasHook = /\?|découvr|imagin|révél|secret|incroy|expérien|aventur|rêv|fascinat|erreur|piège|problème|dilemme|la première fois|quand j|soleil|atterri|arrivé|personne ne|peu de gens|ce que|vérité|réalité|dans les rues|au cœur|au milieu|à peine|étouffant|résonne|immerg|plonge|tu\s+(es|te\s|t')|face\s+[àa]\s+(ton|votre)|entre\s+deux|onglet|fiancé/i.test(firstPText);
     const introPoints = hasHook ? 10 : 5;
     score.total += introPoints;
     score.details.push({ check: 'Intro engageante', status: hasHook ? 'OK' : 'partiel', points: introPoints });
@@ -590,7 +595,7 @@ class QualityAnalyzer {
       }
 
       // paragraph_decisional: >= 75% des paragraphes doivent contenir un fait, chiffre, ou décision
-      const paraDecisionPatterns = /\d+\s*(€|euro|%|jour|mois|baht|semaine|heure|min|nuit|km|\$)|arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|éviter|stratég|recommand|conseil|attention|plutôt|préfér|mieux|pire|risque|avantage|inconvénient|si\s+tu|en\s+revanche|par\s+contre|cependant|il\s+faut|tu\s+dois|tu\s+devr|vaut|idéal|important|essentiel|indispensable|nécessaire|à\s+noter|à\s+savoir|astuce|bon\s+plan|mérite|prévoir|compter|ne\s+(manque|rate|néglige)|en\s+réalité|en\s+fait|selon|d.après|secret|alternative|verdict|l.erreur|contrairement|privilégi|dommage|à\s+proscrire|incontournable|compromis|impéra|sous.estim|sur.estim|justifi|calculer|ne\s+.*\s+pas|stress|doit\s+(être|se)|peser|minutie|panacée|néanmoins|toutefois|en\s+outre|surpris|dépens|coût|économ|option|viable|offr[eai]|permet|considér|immersiv|développ|satisf|expérien|problème|infrastruct|potentiel|impact|facile|difficile|suffis|manqu|besoin|exig/i;
+      const paraDecisionPatterns = /\d+\s*(€|euro|%|jour|mois|baht|semaine|heure|min|nuit|km|\$)|arbitrage|choix|choisir|optimis|compar|erreur|piège|limit|biais|éviter|stratég|recommand|conseil|attention|plutôt|préfér|mieux|pire|risque|avantage|inconvénient|si\s+tu|en\s+revanche|par\s+contre|cependant|il\s+faut|tu\s+dois|tu\s+devr|vaut|idéal|important|essentiel|indispensable|nécessaire|à\s+noter|à\s+savoir|astuce|bon\s+plan|mérite|prévoir|compter|ne\s+(manque|rate|néglige)|en\s+réalité|en\s+fait|selon|d.après|secret|alternative|verdict|l.erreur|contrairement|privilégi|dommage|à\s+proscrire|incontournable|compromis|impéra|sous.estim|sur.estim|justifi|calculer|ne\s+.*\s+pas|stress|doit\s+(être|se)|peser|minutie|panacée|néanmoins|toutefois|en\s+outre|surpris|dépens|coût|économ|option|viable|offr[eai]|permet|considér|immersiv|développ|satisf|expérien|problème|infrastruct|potentiel|impact|facile|difficile|suffis|manqu|besoin|exig|snorkeling|plong[éeè]e|requin|corail|récif|ferry|bateau|transfert|resort|lune\s+de\s+miel|authenticit|authentique|logistique|itinéraire|réserv|héberg/i;
       const allParas = root.querySelectorAll('p');
       let decisionalParaCount = 0;
       let substantiveParaCount = 0;
@@ -613,7 +618,7 @@ class QualityAnalyzer {
 
       // descriptive_penalty: penalty if more than 20% of paragraphs are purely descriptive (no opinion/decision)
       const purelyDescriptivePatterns = /^(le|la|les|un|une|des|ce|cette|il|elle|on|en|au|du|dans|sur|avec|pour|par|l')\s/i;
-      const opinionMarkers = /recommand|conseil|attention|choisi|préfér|mieux|pire|évit|piège|erreur|risque|plutôt|mais|cependant|en revanche|par contre|si tu|question|arbitrage|\?|!|\d+\s*(€|euro|%|jour|min|nuit|km|baht|\$)|il\s+faut|tu\s+dois|tu\s+devr|vaut|idéal|important|essentiel|indispensable|nécessaire|à\s+noter|astuce|bon\s+plan|mérite|compter|ne\s+(manque|rate)|en\s+(réalité|fait)|selon|d.après|privilégi|incontournable|contrairement|alternative|verdict|compromis|impéra|sous.estim|sur.estim|justifi|doit\s+(être|se)|ne\s+.*\s+pas|toutefois|néanmoins|en\s+outre|peser|dépens|coût|économ|surpris|stress|calculer|meilleur|impact|complexe|influenc|prépar|négliger|clé\b|biais|transformer|affecter|ajust|adapt|en\s+résumé|option|viable|offr[eai]|permet|considér|immersiv|développ|satisf|expérien|problème|infrastruct|potentiel|facile|difficile|suffis|manqu|besoin|exig/i;
+      const opinionMarkers = /recommand|conseil|attention|choisi|préfér|mieux|pire|évit|piège|erreur|risque|plutôt|mais|cependant|en revanche|par contre|si tu|question|arbitrage|\?|!|\d+\s*(€|euro|%|jour|min|nuit|km|baht|\$)|il\s+faut|tu\s+dois|tu\s+devr|vaut|idéal|important|essentiel|indispensable|nécessaire|à\s+noter|astuce|bon\s+plan|mérite|compter|ne\s+(manque|rate)|en\s+(réalité|fait)|selon|d.après|privilégi|incontournable|contrairement|alternative|verdict|compromis|impéra|sous.estim|sur.estim|justifi|doit\s+(être|se)|ne\s+.*\s+pas|toutefois|néanmoins|en\s+outre|peser|dépens|coût|économ|surpris|stress|calculer|meilleur|impact|complexe|influenc|prépar|négliger|clé\b|biais|transformer|affecter|ajust|adapt|en\s+résumé|option|viable|offr[eai]|permet|considér|immersiv|développ|satisf|expérien|problème|infrastruct|potentiel|facile|difficile|suffis|manqu|besoin|exig|snorkeling|plong[éeè]e|requin|corail|récif|ferry|bateau|transfert|resort|lune\s+de\s+miel|authenticit|authentique|logistique|itinéraire|réserv|héberg/i;
       let purelyDescriptiveCount = 0;
       allParas.forEach(pEl => {
         const pText = pEl.text.trim();

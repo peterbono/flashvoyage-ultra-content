@@ -1,7 +1,64 @@
 {
-  "crawled_at": "2026-03-11T15:16:05.495Z",
-  "total_articles": 42,
+  "crawled_at": "2026-03-11T18:08:06.671Z",
+  "total_articles": 45,
   "articles": [
+    {
+      "id": 3234,
+      "title": "Arbitrer son itinéraire Japon-Chine-Mongolie en 15-20 jours : les vrais dilemmes logistiques",
+      "url": "https://flashvoyage.com/arbitrer-son-itineraire-japon-chine-mongolie-en-15-20-jours-les-vrais-dilemmes-logistiques/",
+      "slug": "arbitrer-son-itineraire-japon-chine-mongolie-en-15-20-jours-les-vrais-dilemmes-logistiques",
+      "excerpt": "Tu atterris à Séoul avec un calendrier qui crie « visite trois capitales en trois semaines ». L&#8217;écran de ton téléphone affiche les vols: Ulaanbaatar, Beijing, Tokyo. Chacun semble indispensable.",
+      "content": "Tu atterris à Séoul avec un calendrier qui crie « visite trois capitales en trois semaines ».\nL&#8217;écran de ton téléphone affiche les vols: Ulaanbaatar, Beijing, Tokyo. Chacun semble indispensable.\nMais chaque jour supplémentaire quelque part signifie un jour perdu ailleurs.comment trancher quand tout te tente?\nUn voyageur résume le dilemme ainsi: « Je voudrais créer un itinéraire qui me permet de voir trois capitales en 15-20 jours: Ulaanbaatar, Beijing, et Tokyo. Juste des choix successifs ",
+      "categories": [
+        {
+          "id": 1,
+          "name": "Destinations",
+          "slug": "destinations-asie"
+        }
+      ],
+      "tags": [],
+      "date": "2026-03-11T17:25:34",
+      "modified": "2026-03-11T17:25:34",
+      "featured_image": null
+    },
+    {
+      "id": 3222,
+      "title": "3 jours à Singapour : optimiser son itinéraire sans sacrifier les expériences essentielles",
+      "url": "https://flashvoyage.com/3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles/",
+      "slug": "3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles",
+      "excerpt": "Tu arrives à Singapour avec 72 heures devant toi et une liste d&#8217;attractions qui en demanderait le double. L&#8217;air humide te frappe en sortant de l&#8217;aéroport. Tu so&#8230;\n",
+      "content": "Tu arrives à Singapour avec 72 heures devant toi et une liste d&#8217; attractions qui en demanderait le double.\nL&#8217; air humide te frappe en sortant de l&#8217; aéroport.\nTu sors ton téléphone, tu regardes ta liste: Chinatown, Marina Bay, Gardens by the Bay, Kampong Glam, Little India, Sentosa Island.\nChaque choix d&#8217; ordre, chaque détour, c&#8217; est du temps volé à une autre expérience.comment arbitrer?\nC&#8217; est exactement le dilemme que pose un voyageur en planifiant son séjour",
+      "categories": [
+        {
+          "id": 62,
+          "name": "Singapour",
+          "slug": "singapour"
+        }
+      ],
+      "tags": [],
+      "date": "2026-03-11T17:06:35",
+      "modified": "2026-03-11T17:06:45",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3222.jpg"
+    },
+    {
+      "id": 3207,
+      "title": "3 jours à Singapour : l&#8217;itinéraire que tu dois affiner (pas copier)",
+      "url": "https://flashvoyage.com/3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier/",
+      "slug": "3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier",
+      "excerpt": "Tu poses ton téléphone après avoir lu trois guides différents sur Singapour. Chacun propose un itinéraire « complet ». Mais voilà le problème: tu as 2,5 jours, &#8230;\n",
+      "content": "Tu poses ton téléphone après avoir lu trois guides différents sur Singapour. Chacun propose un itinéraire « complet ».\nMais voilà le problème: tu as 2,5 jours, pas une semaine.\nChinatown le matin, Marina Bay l&#8217; après-midi, Night Safari le soir, puis Gardens by the Bay, Kampong Glam, Little India, Sentosa… Sur le papier, c&#8217; est parfait.\nCette tension — arbitrer entre des expériences qui semblent toutes indispensables — c&#8217; est le vrai sujet.\nUn voyageur résume bien le dilemme: « ",
+      "categories": [
+        {
+          "id": 62,
+          "name": "Singapour",
+          "slug": "singapour"
+        }
+      ],
+      "tags": [],
+      "date": "2026-03-11T16:54:50",
+      "modified": "2026-03-11T16:55:01",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3207.jpg"
+    },
     {
       "id": 3198,
       "title": "Maratua vs Maldives pour une lune de miel : arbitrer entre authenticité et logistique",

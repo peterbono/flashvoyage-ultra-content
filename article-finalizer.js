@@ -4559,7 +4559,10 @@ class ArticleFinalizer {
     const protectedSerpPatterns = [
       /ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement)/i,
       /limites?\s*(et\s*)?biais/i,
-      /erreurs?\s*(fréquentes?|courantes?|à\s*éviter)/i
+      /erreurs?\s*(fréquentes?|courantes?|à\s*éviter)/i,
+      /faq\b|questions?\s*(fréquentes?|courantes?|que\s+(tu|vous|se\s+posent))/i,
+      /nos\s+recommandations/i,
+      /ce\s+qu.il\s+faut\s+retenir/i
     ];
     
     // AMÉLIORATION: Pattern amélioré pour détecter H2/H3 suivis uniquement d'espaces, sauts de ligne, ou paragraphes vides
@@ -5296,12 +5299,26 @@ class ArticleFinalizer {
       const limitesKey = 'limites et biais';
       
       // Si c'est une section "Limites et biais" (FR ou EN) et qu'on en a déjà vu une, c'est une duplication
-      const isDuplicate = seenTitles.has(normalized) || (isLimites && seenTitles.has(limitesKey));
+      let isDuplicate = seenTitles.has(normalized) || (isLimites && seenTitles.has(limitesKey));
+      
+      // Détection par préfixe commun : "Ce que les autres ne disent pas" vs
+      // "Ce que les autres ne disent pas: l'inertie du choix" sont des doublons
+      let prefixDupOf = null;
+      if (!isDuplicate && !isLimites) {
+        for (const [seenNorm, seenIdx] of seenTitles.entries()) {
+          if (seenNorm === limitesKey) continue;
+          const shorter = normalized.length <= seenNorm.length ? normalized : seenNorm;
+          const longer  = normalized.length >  seenNorm.length ? normalized : seenNorm;
+          if (shorter.length >= 15 && longer.startsWith(shorter)) {
+            isDuplicate = true;
+            prefixDupOf = { seenNorm, seenIdx, shorter, longer, currentIsLonger: normalized.length > seenNorm.length };
+            console.log(`   🔍 H2_PREFIX_DUP: "${normalized.substring(0, 50)}" ≈ "${seenNorm.substring(0, 50)}"`);
+            break;
+          }
+        }
+      }
       
       // AMÉLIORATION: Toujours privilégier la version FR, supprimer l'EN
-      // Si on rencontre d'abord EN puis FR: supprimer EN (garder FR)
-      // Si on rencontre d'abord FR puis EN: supprimer EN (garder FR)
-      // Si on rencontre EN seul: le garder (mais idéalement il devrait être traduit)
       if (isLimites && firstLimitesIndex >= 0) {
         // On a déjà vu une section "Limites et biais"
         if (isLimitesEN) {
@@ -5338,6 +5355,34 @@ class ArticleFinalizer {
           firstLimitesIsFR = true;
           firstLimitesIndex = index;
         }
+      } else if (isDuplicate && prefixDupOf) {
+        // Duplication par préfixe : garder la section la plus longue (plus de contenu)
+        const currentStart = h2.index;
+        const currentEnd = index < h2Matches.length - 1 ? h2Matches[index + 1].index : html.length;
+        const currentSection = html.substring(currentStart, currentEnd);
+        
+        const prevH2Idx = typeof prefixDupOf.seenIdx === 'number' ? prefixDupOf.seenIdx : -1;
+        const prevH2 = prevH2Idx >= 0 ? h2Matches[prevH2Idx] : null;
+        
+        if (prevH2) {
+          const prevStart = prevH2.index;
+          const prevEnd = prevH2Idx < h2Matches.length - 1 ? h2Matches[prevH2Idx + 1].index : html.length;
+          const prevSection = html.substring(prevStart, prevEnd);
+          
+          if (currentSection.length >= prevSection.length) {
+            // Section actuelle plus longue : supprimer la précédente
+            duplicates.push({ fullMatch: prevSection, index: prevStart, title: prevH2.title, isLimites: false });
+            // Remplacer l'entrée seenTitles par la section actuelle
+            seenTitles.delete(prefixDupOf.seenNorm);
+            seenTitles.set(normalized, index);
+          } else {
+            // Section précédente plus longue : supprimer la section actuelle
+            duplicates.push({ fullMatch: currentSection, index: currentStart, title: h2.title, isLimites: false });
+          }
+        } else {
+          // Fallback : supprimer la section actuelle
+          duplicates.push({ fullMatch: currentSection, index: currentStart, title: h2.title, isLimites: false });
+        }
       } else if (isDuplicate) {
         // Duplication classique (même titre exact)
         const startIndex = h2.index;
@@ -5351,9 +5396,9 @@ class ArticleFinalizer {
           isLimites
         });
       } else {
-        seenTitles.set(normalized, true);
+        seenTitles.set(normalized, index);
         if (isLimites) {
-          seenTitles.set(limitesKey, true);
+          seenTitles.set(limitesKey, index);
           if (firstLimitesIndex < 0) {
             firstLimitesIndex = index;
             firstLimitesIsFR = isLimitesFR;
@@ -6066,13 +6111,26 @@ class ArticleFinalizer {
           
           const similarity = jaccardSimilarity + orderBonus;
           
-          // Seuil ajustable : 85% au lieu de 90% pour être plus strict
-          const similarityThreshold = 0.85;
+          const similarityThreshold = 0.75;
           
           if (similarity > similarityThreshold && p1.normalized.length > 50) {
-            // Paragraphes très similaires, supprimer le second
             duplicates.push(p2);
             console.log(`   🔄 Répétition similaire détectée (${Math.round(similarity * 100)}%): "${p2.text.substring(0, 50)}..."`);
+          }
+
+          // Détection paraphrase : mêmes mots significatifs (sans stop words)
+          const STOP_WORDS = new Set(['le','la','les','un','une','des','du','de','et','ou','en','à','tu','ton','ta','tes','te','est','es','ce','se','ne','pas','qui','que','il','elle','son','sa','ses','nous','vous','ils','sur','dans','par','pour','avec','plus','sans','mais','aussi','très','bien','cette','cet','ces','tout','même','peut','être','avoir','faire','dire','comme','dont','où','si','car']);
+          if (i < j && p1.normalized.length > 80 && p2.normalized.length > 80) {
+            const sig1 = new Set(words1.filter(w => w.length > 3 && !STOP_WORDS.has(w)));
+            const sig2 = new Set(words2.filter(w => w.length > 3 && !STOP_WORDS.has(w)));
+            const sigInter = [...sig1].filter(w => sig2.has(w));
+            const sigOverlap = Math.min(sig1.size, sig2.size) > 0
+              ? sigInter.length / Math.min(sig1.size, sig2.size)
+              : 0;
+            if (sigOverlap > 0.65 && sigInter.length >= 4 && !duplicates.includes(p2)) {
+              duplicates.push(p2);
+              console.log(`   🔄 Paraphrase détectée (${Math.round(sigOverlap * 100)}% mots-clés communs): "${p2.text.substring(0, 50)}..."`);
+            }
           }
         }
       });
@@ -8437,7 +8495,15 @@ class ArticleFinalizer {
       [/ticket(s?)bus/gi, 'ticket$1 bus'],
       [/visa(s?)touristiques?/gi, 'visa$1 touristique'],
     ];
-    let camelCleaned = cleaned;
+
+    // Nom propre (majuscule) collé à un mot accentué (Tokyoépuisé → Tokyo épuisé)
+    const PROPER_NOUN_GLUE = /([A-ZÀÂÉÈÊËÏÎÔÙÛÜŸÇ][a-zàâäéèêëïîôùûüÿçœ]{2,})(é|è|ê|à|â|ù|û|ô|î)([a-zàâäéèêëïîôùûüÿçœ]{2,})/g;
+    let camelCleaned = cleaned.replace(PROPER_NOUN_GLUE, (match, left, accent, right) => {
+      const lower = match.toLowerCase();
+      if (VALID_LONG_WORDS.has(lower)) return match;
+      fixCount++;
+      return left + ' ' + accent + right;
+    });
     for (const [regex, replacement] of KNOWN_GLUE_FIXES) {
       const before = camelCleaned;
       camelCleaned = camelCleaned.replace(regex, replacement);
@@ -8473,6 +8539,18 @@ class ArticleFinalizer {
       'man œuvres': 'manœuvres',
       'œ uvre': 'œuvre',
       'œ uvres': 'œuvres',
+      'au-del à': 'au-delà',
+      'peut- être': 'peut-être',
+      'peut -être': 'peut-être',
+      'c\' est': "c'est",
+      'l\' on': "l'on",
+      'd\' un': "d'un",
+      'd\' une': "d'une",
+      'qu\' il': "qu'il",
+      'qu\' elle': "qu'elle",
+      'n\' est': "n'est",
+      'j\' ai': "j'ai",
+      's\' est': "s'est",
     };
 
     let cleanedWithSpaces = camelCleaned;
@@ -8585,6 +8663,17 @@ class ArticleFinalizer {
     for (const [pattern, replacement] of TYPO_FIXES) {
       out = out.replace(pattern, replacement);
     }
+
+    // Fermer les guillemets français ouverts sans fermeture
+    out = out.replace(/«([^»]{10,300})(?=<\/p>|<\/li>|<\/blockquote>)/g, (match, content) => {
+      if (content.includes('»')) return match;
+      return '«' + content.trim() + ' »';
+    });
+
+    // Supprimer les formulations vagues typiques de l'IA
+    out = out.replace(/\bquelques\s+euros\b/gi, 'un coût non négligeable');
+    out = out.replace(/\bplusieurs\s+dizaines\s+d['']euros\b/gi, 'un surcoût significatif');
+    out = out.replace(/\bun\s+budget\s+modeste\b/gi, 'un budget raisonnable');
 
     // Ajouter espaces après ponctuation manquants uniquement dans les noeuds texte
     // (évite de casser les URLs dans les attributs HTML, ex: trpwdg.com/content?trs=...)
@@ -10818,8 +10907,8 @@ class ArticleFinalizer {
       if (!hasRealContent) {
         console.log('   ⚠️ Section "Limites et biais" existe mais est vide - remplissage...');
         
-        const limitesContent = `<p>Ce témoignage présente certaines limites qu'il est important de prendre en compte. Il s'agit d'une expérience individuelle qui ne peut être généralisée à tous les voyageurs.</p>
-<p>Les biais potentiels incluent la subjectivité du témoignage, le contexte spécifique du voyageur, et les aspects qui n'ont pas été explicitement mentionnés. Il est recommandé de compléter cette information par d'autres sources pour avoir une vision plus complète.</p>`;
+        const limitesContent = `<p>Cet article s'appuie sur un témoignage unique — un seul voyage, un seul budget, une seule saison. Ton expérience sera différente, et c'est normal.</p>
+<p>Les prix cités datent du moment du voyage et ont probablement bougé depuis. Les conseils logistiques reflètent les conditions rencontrées par ce voyageur, pas une vérité universelle. Croise toujours avec d'autres sources récentes avant de réserver.</p>`;
         
         // Insérer le contenu après le H2 (remplacer le contenu vide s'il y en a)
         const insertIndex = limitesIndex + limitesH2Match[0].length;
@@ -10940,8 +11029,8 @@ class ArticleFinalizer {
           sectionContent = `<p>Les témoignages Reddit n'abordent souvent pas les aspects pratiques détaillés du voyage, tels que les coûts réels, les contraintes administratives, et l'impact sur le bien-être. Ces éléments sont pourtant essentiels pour une préparation complète.</p>
 <p>En particulier, les témoignages omettent fréquemment les détails sur les dépenses quotidiennes réelles, les délais administratifs concrets, et les contraintes pratiques qui peuvent impacter significativement l'expérience de voyage.</p>`;
         } else if (h2TitleLower.includes('limites') || h2TitleLower.includes('biais')) {
-          sectionContent = `<p>Ce témoignage présente certaines limites qu'il est important de prendre en compte. Il s'agit d'une expérience individuelle qui ne peut être généralisée à tous les voyageurs.</p>
-<p>Les biais potentiels incluent la subjectivité du témoignage, le contexte spécifique du voyageur, et les aspects qui n'ont pas été explicitement mentionnés. Il est recommandé de compléter cette information par d'autres sources pour avoir une vision plus complète.</p>`;
+          sectionContent = `<p>Cet article s'appuie sur un témoignage unique — un seul voyage, un seul budget, une seule saison. Ton expérience sera différente, et c'est normal.</p>
+<p>Les prix cités datent du moment du voyage et ont probablement bougé depuis. Les conseils logistiques reflètent les conditions rencontrées par ce voyageur, pas une vérité universelle. Croise toujours avec d'autres sources récentes avant de réserver.</p>`;
         }
         
         if (sectionContent) {

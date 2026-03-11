@@ -540,14 +540,9 @@ class SerpCompetitiveEnhancer {
 
   createLimitsSection(story, evidence) {
     return `
-<h2>Limites et biais de ce témoignage</h2>
-<p>Ce témoignage reflète une expérience individuelle et ne peut être généralisé à tous les contextes. Les informations partagées sont basées sur :</p>
-<ul>
-  <li>Une expérience personnelle unique</li>
-  <li>Un contexte temporel et géographique spécifique</li>
-  <li>Des conditions qui peuvent avoir évolué depuis</li>
-</ul>
-<p>Nous recommandons de croiser ces informations avec d'autres sources et de vérifier les réglementations actuelles.</p>
+<h2>Limites et biais de cet article</h2>
+<p>Cet article s'appuie sur un témoignage unique — un seul voyage, un seul budget, une seule saison. Ton expérience sera différente, et c'est normal.</p>
+<p>Les prix cités datent du moment du voyage et ont probablement bougé depuis. Les conseils logistiques reflètent les conditions rencontrées par ce voyageur, pas une vérité universelle. Croise toujours avec d'autres sources récentes avant de réserver.</p>
 `;
   }
 

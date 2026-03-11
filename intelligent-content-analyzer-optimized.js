@@ -98,8 +98,47 @@ function safeJsonParse(str, label = 'json') {
   try {
     return JSON.parse(cleaned);
   } catch (e) {
+    // Stratégie 0: Guillemets HTML non-échappés dans les valeurs JSON
+    // Ex: "quick_guide": "<p class="bold">..." → les " dans les attributs HTML cassent le JSON
+    if (e.message.includes("Expected ','") || e.message.includes("Expected '}'") || e.message.includes('after property value')) {
+      console.warn(`⚠️ JSON avec guillemets HTML non-échappés pour ${label} - Extraction par regex...`);
+      
+      // Extraire le titre par regex
+      const titreMatch = cleaned.match(/"titre"\s*:\s*"([^"]{5,200})"/);
+      const titre = titreMatch ? titreMatch[1] : 'Article généré';
+      
+      // Extraire le developpement par regex (le plus gros champ)
+      const devMatch = cleaned.match(/"developpement"\s*:\s*"([\s\S]+?)(?:"\s*,\s*"(?:recommandations|ce_qu_il_faut_retenir|signature|_editorial)"|"\s*\}\s*\}|$)/);
+      if (devMatch && devMatch[1] && devMatch[1].length > 200) {
+        let extractedDev = devMatch[1]
+          .replace(/\\n/g, '\n')
+          .replace(/\\"/g, '"')
+          .replace(/\\\\/g, '\\')
+          .replace(/\\t/g, '\t');
+        
+        // Extraire aussi les autres champs si possible
+        const quickMatch = cleaned.match(/"quick_guide"\s*:\s*"([\s\S]*?)(?:"\s*,\s*"(?:developpement|introduction|ce_que_les_autres))/);
+        const recoMatch = cleaned.match(/"recommandations"\s*:\s*"([\s\S]*?)(?:"\s*,\s*"(?:ce_qu_il_faut_retenir|signature)"|"\s*\}\s*\})/);
+        const retainMatch = cleaned.match(/"ce_qu_il_faut_retenir"\s*:\s*"([\s\S]*?)(?:"\s*,\s*"(?:signature|_editorial)"|"\s*\}\s*\})/);
+        
+        const unescape = (s) => s?.replace(/\\n/g, '\n').replace(/\\"/g, '"').replace(/\\\\/g, '\\') || '';
+        
+        console.log(`✅ JSON réparé par extraction regex: titre="${titre.substring(0, 50)}..." dev=${extractedDev.length} chars`);
+        return {
+          article: {
+            titre,
+            quick_guide: quickMatch ? unescape(quickMatch[1]) : null,
+            developpement: extractedDev,
+            recommandations: recoMatch ? unescape(recoMatch[1]) : null,
+            ce_qu_il_faut_retenir: retainMatch ? unescape(retainMatch[1]) : null,
+            signature: null
+          }
+        };
+      }
+    }
+    
     // Tentative de réparation si JSON incomplet (tronqué)
-    if (e.message.includes('Unexpected end of JSON input') || e.message.includes('end of data')) {
+    if (e.message.includes('Unexpected end of JSON input') || e.message.includes('end of data') || e.message.includes("Expected ','") || e.message.includes("Expected '}'")) {
       console.warn(`⚠️ JSON tronqué détecté pour ${label} - Tentative de réparation...`);
       
       // Stratégie 1: Chercher le dernier objet/array valide
@@ -1615,6 +1654,14 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 📐 DENSITÉ NARRATIVE : chaque paragraphe fait avancer l'histoire, une décision, ou réduit un risque.
 🚫 ZÉRO RÉPÉTITION : NE JAMAIS reformuler la même idée dans deux paragraphes différents. Si un conseil, un constat ou une recommandation a déjà été donné, ne PAS le re-énoncer même avec d'autres mots. Chaque paragraphe apporte une information NOUVELLE.
 
+🎭 ÉCRITURE HUMAINE — CRUCIAL :
+- Varie la longueur des phrases : alterne courtes (5-8 mots) et longues (20-30 mots). Pas de rythme mécanique.
+- Commence certaines phrases par "Et", "Mais", "Sauf que", "Le problème,". Pas toujours sujet-verbe-complément.
+- Intègre 2-3 digressions courtes qui montrent une vraie connaissance du terrain (bruit du trafic, odeur d'encens, chaleur du tarmac).
+- INTERDIT : "il est important de", "il convient de", "force est de constater", "il va sans dire", "en ce qui concerne", "il est essentiel de". Ce sont des tics d'IA.
+- INTERDIT : paragraphes qui commencent tous par le même schéma (sujet + verbe). Varie les attaques.
+- Les citations Reddit entre « » doivent TOUJOURS être fermées avec ».
+
 🇫🇷 NICHE FRANCOPHONE ASIE — L'article s'adresse a des voyageurs FRANCOPHONES qui partent en Asie :
 - References francaises : vols depuis Paris (CDG/ORY), Lyon, Marseille, Bruxelles. Devise en euros.
 - Contexte FR : vacances scolaires, conges payes, jours feries francais, ponts. Passeport francais pour les visas.
@@ -1666,7 +1713,7 @@ ${marketingSection}
 FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <strong>.
 LONGUEUR OBLIGATOIRE: MINIMUM 2500 mots, IDÉAL 3000 mots. Un article EVERGREEN de moins de 1500 mots sera AUTOMATIQUEMENT REJETÉ. Pas de minimum par section, mais le total DOIT dépasser 2500 mots.
 
-🚨 EXPLOITATION DES DONNÉES EXTRAITES: INTÈGRE dans "developpement" les détails temporels, lieux, chiffres, entités extraites. UTILISE 90% minimum des données fournies. Pas d'invention. NE JAMAIS inventer de prix, montants en euros, distances ou durées non présents dans la source. Si un coût n'est pas sourcé, utilise des formulations vagues ("quelques euros", "un budget modeste").
+🚨 EXPLOITATION DES DONNÉES EXTRAITES: INTÈGRE dans "developpement" les détails temporels, lieux, chiffres, entités extraites. UTILISE 90% minimum des données fournies. Pas d'invention. NE JAMAIS inventer de prix, montants en euros, distances ou durées non présents dans la source. Si un coût n'est pas sourcé, NE MENTIONNE PAS de prix — reformule sans chiffre. Exemples: au lieu de "coûte quelques euros", écris "reste abordable" ou "ne ruinera pas ton budget". ÉVITE les formulations vagues type "quelques euros", "plusieurs dizaines d'euros", "un budget modeste" — elles sonnent IA.
 
 📍 MARQUEURS ÉDITORIAUX (à insérer dans "developpement") :
 - <!-- FV:CTA_SLOT reason="description du problème résolu" --> : 2-4 max, aux emplacements où un widget d'affiliation serait pertinent.
@@ -1791,7 +1838,7 @@ ${correctionBlock}
 
 🚨 GARDE-FOUS EXPLICITES (SOURCE OF TRUTH) :
 - ❌ Pas d'invention : aucun lieu, chiffre, durée ou risque inventé ; tout doit être sourcé ou issu des données extraites
-- ❌ NE JAMAIS INVENTER DE PRIX OU MONTANTS EN EUROS : si un coût n'est PAS dans la source Reddit ou le truth pack, utilise des formulations vagues ("quelques euros", "un budget modeste", "une somme raisonnable"). Les prix inventés comme "37 euros", "62 euros", "10 euros par jour" seront DÉTECTÉS et l'article sera REJETÉ.
+- ❌ NE JAMAIS INVENTER DE PRIX OU MONTANTS EN EUROS : si un coût n'est PAS dans la source Reddit ou le truth pack, NE MENTIONNE AUCUN PRIX — reformule la phrase sans montant. INTERDIT : "quelques euros", "plusieurs dizaines d'euros", "un budget modeste" — ces formulations sonnent IA. Préfère : "reste abordable", "le surcoût est réel", "pèse sur ton budget".
 - ❌ NE JAMAIS MENTIONNER DE LIEU NON SOURCÉ : si une ville ou destination n'apparaît PAS dans le post Reddit source ni dans les lieux autorisés, NE LA MENTIONNE PAS. Un lieu inventé bloque la publication.
 - ❌ ANTI-DÉCONTEXTUALISATION (CRITIQUE) : un chiffre de la source ne peut JAMAIS être utilisé dans un contexte différent de l'original. Exemple INTERDIT : si la source dit "$50-100/month for coworking spaces", tu NE PEUX PAS écrire "vivre avec 50 USD par mois" ou utiliser 50 USD dans le titre comme budget de vie. Le chiffre 50 USD se rapporte au COWORKING, pas au coût de la vie. Chaque chiffre garde son contexte d'origine.
 - ❌ Pas d'angles plats : toute section doit répondre à une vraie question utilisateur
@@ -3031,7 +3078,7 @@ TON ET STYLE :
 
 INTERDIT ABSOLUMENT :
 - Introduire un NOUVEAU lieu non liste dans "Lieux autorises"
-- Introduire un NOUVEAU prix ou chiffre non present dans "Nombres autorises". Si tu veux parler d'un cout non source, utilise "quelques euros", "un budget modeste", "une somme raisonnable" — JAMAIS un montant precis invente.
+- Introduire un NOUVEAU prix ou chiffre non present dans "Nombres autorises". Si tu veux parler d'un cout non source, NE MENTIONNE PAS de montant — reformule sans chiffre. INTERDIT : "quelques euros", "plusieurs dizaines d'euros", "un budget modeste".
 - Inventer un nouvel exemple concret, une anecdote ou un scenario non source
 - Ajouter un paragraphe purement descriptif sans prise de position
 - Creer des paragraphes courts (< 3 phrases) — fusionne-les avec le paragraphe precedent ou suivant`;
@@ -3369,7 +3416,7 @@ CORRECTIONS SUPPLEMENTAIRES (si detectees) :
 INTERDIT ABSOLUMENT:
 - NE PAS wrapper le HTML dans \`\`\`html ou \`\`\`
 - NE PAS ajouter d'explications
-- NE PAS inventer de prix, montants en euros, distances ou durees non presents dans l'article original. Si un cout n'est pas source, utilise "quelques euros", "un budget modeste".
+- NE PAS inventer de prix, montants en euros, distances ou durees non presents dans l'article original. Si un cout n'est pas source, NE MENTIONNE PAS de prix — reformule sans chiffre.
 - NE PAS modifier les attributs des balises HTML
 - NE PAS supprimer de sections ou paragraphes
 - NE PAS introduire de nouveau lieu, nouveau prix, nouveau scenario non present dans l'article
@@ -3381,10 +3428,24 @@ FORMAT DE RÉPONSE (CRITIQUE):
 - Commence directement par la première balise HTML (<h2>, <div>, <p>).
 - NE PAS résumer, NE PAS tronquer, NE PAS retourner seulement les parties modifiées.`;
 
-    const userPrompt = `Corrige les anomalies dans ce contenu HTML pour l'article sur "${destination}" (thème: ${theme}).
-IMPORTANT: Le contenu fait ${rawContent.length} caractères. Ta réponse doit faire une longueur SIMILAIRE (retourne TOUT le contenu, pas juste les parties modifiées).
+    // PROTECTION: Remplacer les liens internes par des placeholders avant envoi au LLM
+    // Le LLM strip systématiquement les <a> tags et laisse le texte nu
+    const linkPlaceholders = new Map();
+    let linkCounter = 0;
+    let protectedContent = rawContent.replace(/<a\s+href="[^"]*flashvoyage[^"]*"[^>]*>[\s\S]*?<\/a>/gi, (match) => {
+      const key = `__ILINK_${linkCounter++}__`;
+      linkPlaceholders.set(key, match);
+      return key;
+    });
+    if (linkCounter > 0) {
+      console.log(`   🔗 ${linkCounter} lien(s) interne(s) protégé(s) avant LLM`);
+    }
 
-${rawContent}`;
+    const userPrompt = `Corrige les anomalies dans ce contenu HTML pour l'article sur "${destination}" (thème: ${theme}).
+IMPORTANT: Le contenu fait ${protectedContent.length} caractères. Ta réponse doit faire une longueur SIMILAIRE (retourne TOUT le contenu, pas juste les parties modifiées).
+IMPORTANT: Les tokens __ILINK_N__ sont des liens internes protégés. NE LES MODIFIE PAS, NE LES SUPPRIME PAS, garde-les exactement tels quels.
+
+${protectedContent}`;
 
     try {
       const responseData = await callOpenAIWithRetry({
@@ -3429,6 +3490,26 @@ ${rawContent}`;
           return match;
         });
       
+      // RESTAURATION: Réinsérer les liens internes protégés
+      let restoredLinks = 0;
+      for (const [placeholder, original] of linkPlaceholders) {
+        if (improvedContent.includes(placeholder)) {
+          improvedContent = improvedContent.replace(placeholder, original);
+          restoredLinks++;
+        } else {
+          // Le LLM a supprimé le placeholder — le texte de l'ancre est peut-être en clair
+          const anchorText = original.replace(/<[^>]+>/g, '').trim();
+          if (anchorText && improvedContent.includes(anchorText)) {
+            improvedContent = improvedContent.replace(anchorText, original);
+            restoredLinks++;
+            console.log(`   🔗 Lien restauré depuis texte nu: "${anchorText.substring(0, 40)}..."`);
+          }
+        }
+      }
+      if (linkPlaceholders.size > 0) {
+        console.log(`   🔗 ${restoredLinks}/${linkPlaceholders.size} lien(s) interne(s) restauré(s)`);
+      }
+
       // Validation: le contenu amélioré ne doit pas être significativement plus court
       if (improvedContent.length < rawContent.length * 0.65) {
         console.warn(`⚠️ Passe 2: Contenu amélioré trop court (${improvedContent.length} < ${rawContent.length * 0.65}), utilisation de l'original`);
