@@ -1620,102 +1620,322 @@ class SeoOptimizer {
     return filtered;
   }
 
-  /**
-   * Injecte les liens dans la section "Articles connexes" ou crée la section si absente
-   * @param {string} html - HTML
-   * @param {Array} links - Liens à injecter
-   * @returns {string} HTML modifié
-   */
-  injectLinksIntoRelatedSection(html, links) {
-    // STRATÉGIE: Injecter les liens DANS le corps du texte (premiers 30%)
-    // Pas dans une section "Articles connexes" séparée
-    
-    let modifiedHtml = html;
-    let insertedCount = 0;
-    
-    // Trouver tous les paragraphes (supporte le contenu inline HTML comme <strong>, <em>, <a>)
-    const paragraphRegex = /<p>(.{50,}?)<\/p>/g;
-    const paragraphs = [];
-    let match;
-    
-    while ((match = paragraphRegex.exec(html)) !== null) {
-      paragraphs.push({
-        index: match.index,
-        fullMatch: match[0],
-        content: match[1]
+  // ─── Helpers for contextual internal link injection ───
+
+  _extractLinkKeywords(link) {
+    const STOPWORDS = new Set([
+      'le', 'la', 'les', 'un', 'une', 'des', 'de', 'du', 'et', 'ou', 'mais', 'donc', 'car',
+      'ne', 'pas', 'plus', 'très', 'tout', 'tous', 'toute', 'toutes', 'ce', 'cette', 'ces',
+      'son', 'sa', 'ses', 'ton', 'ta', 'tes', 'mon', 'ma', 'mes', 'en', 'au', 'aux', 'avec',
+      'pour', 'par', 'sur', 'dans', 'qui', 'que', 'quoi', 'dont', 'où',
+      'est', 'sont', 'être', 'avoir', 'fait', 'faire', 'comme', 'sans', 'entre',
+      'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with',
+      'is', 'are', 'was', 'were', 'be', 'been', 'has', 'have', 'had', 'do', 'does',
+      'not', 'no', 'how', 'what', 'when', 'where', 'which', 'who', 'why',
+      'you', 'your', 'it', 'its', 'they', 'their', 'this', 'that', 'these', 'those',
+      'from', 'than', 'more', 'each', 'every', 'some', 'any', 'other',
+    ]);
+
+    const GEO_VARIANTS = {
+      'thailande': ['thaïlande', 'thailand', 'thai'],
+      'vietnam': ['viêt nam', 'viet nam'],
+      'indonesie': ['indonésie', 'indonesia'],
+      'japon': ['japan'],
+      'coree': ['corée', 'korea'],
+      'malaisie': ['malaysia'],
+      'singapour': ['singapore'],
+      'cambodge': ['cambodia'],
+      'bali': ['denpasar'],
+      'phuket': [],
+      'bangkok': [],
+      'chiang': ['chiangmai', 'chiang mai'],
+      'lombok': [],
+      'tokyo': [],
+      'osaka': [],
+      'ubud': [],
+    };
+
+    const raw = new Set();
+    const slug = (link.slug || '').toLowerCase();
+    slug.split('-').forEach(w => { if (w.length > 2) raw.add(w); });
+
+    const title = this.decodeHtmlEntitiesForAnchor(link.title || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\w\sàâéèêëïîôùûüç]/g, ' ');
+    title.split(/\s+/).forEach(w => { if (w.length > 2) raw.add(w); });
+
+    if (link.keywords) {
+      link.keywords.forEach(kw => {
+        const decoded = this.decodeHtmlEntitiesForAnchor(kw).toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        if (decoded.length > 2) raw.add(decoded);
       });
     }
-    
-    if (paragraphs.length === 0) {
-      // Fallback: ajouter section Articles connexes à la fin
-      const linksHtml = links.map(link => 
-        `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(link.title)}</a></li>`
-      ).join('\n');
-      return html + `\n\n<h2>Articles connexes</h2>\n<ul>\n${linksHtml}\n</ul>`;
+
+    const keywords = new Set();
+    for (const w of raw) {
+      if (STOPWORDS.has(w)) continue;
+      if (/^\d+$/.test(w)) continue;
+      keywords.add(w);
+      const variants = GEO_VARIANTS[w];
+      if (variants) variants.forEach(v => keywords.add(v.normalize('NFD').replace(/[\u0300-\u036f]/g, '')));
     }
-    
-    // Zone d'exclusion : jamais de lien interne avant le premier H2
+    return keywords;
+  }
+
+  _scoreParagraphForLink(paraText, linkKeywords) {
+    const normalized = paraText
+      .replace(/<[^>]+>/g, ' ')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\w\sàâéèêëïîôùûüç]/g, ' ');
+
+    let hits = 0;
+    for (const kw of linkKeywords) {
+      if (normalized.includes(kw)) hits++;
+    }
+    return linkKeywords.size > 0 ? hits / linkKeywords.size : 0;
+  }
+
+  _findInlineAnchor(paraHtml, linkKeywords) {
+    const plainText = paraHtml.replace(/<[^>]+>/g, '');
+    const words = plainText.split(/\s+/).filter(w => w.length > 0);
+    if (words.length < 3) return null;
+
+    const isAlreadyLinked = (startIdx) => {
+      const target = words[startIdx];
+      const pos = paraHtml.indexOf(target);
+      if (pos < 0) return false;
+      const before = paraHtml.substring(0, pos);
+      const openA = (before.match(/<a[\s>]/gi) || []).length;
+      const closeA = (before.match(/<\/a>/gi) || []).length;
+      return openA > closeA;
+    };
+
+    const normalizeWord = (w) => w.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w]/g, '');
+
+    const wordMatchesKw = (w, kw) => {
+      if (w.length < 3 || kw.length < 3) return false;
+      if (w === kw) return true;
+      if (w.length >= 4 && kw.length >= 4) {
+        if (w.startsWith(kw) || kw.startsWith(w)) return true;
+      }
+      return false;
+    };
+
+    let bestSequence = null;
+    let bestScore = 0;
+    let bestLen = Infinity;
+
+    for (let windowSize = 2; windowSize <= 5; windowSize++) {
+      for (let i = 0; i <= words.length - windowSize; i++) {
+        const seq = words.slice(i, i + windowSize);
+        const seqNormalized = seq.map(normalizeWord);
+        let matchCount = 0;
+        for (const kw of linkKeywords) {
+          if (seqNormalized.some(w => wordMatchesKw(w, kw))) matchCount++;
+        }
+        if (matchCount < 2) continue;
+        if (matchCount < bestScore) continue;
+        if (matchCount === bestScore && seq.length >= bestLen) continue;
+        if (isAlreadyLinked(i)) continue;
+        const seqText = seq.join(' ');
+        if (seqText.length < 8 || seqText.length > 60) continue;
+        bestSequence = seqText;
+        bestScore = matchCount;
+        bestLen = seq.length;
+      }
+    }
+
+    return bestSequence;
+  }
+
+  _getLinkTheme(linkKeywords) {
+    const THEME_KEYWORDS = {
+      visa:         ['visa', 'passeport', 'formalite', 'entree', 'sortie', 'frontiere', 'douane', 'immigration'],
+      budget:       ['budget', 'cout', 'couts', 'prix', 'frais', 'depense', 'economiser', 'argent', 'euro', 'cher'],
+      transport:    ['vol', 'vols', 'avion', 'aeroport', 'transport', 'train', 'bus', 'ferry', 'deplacement', 'billet'],
+      hebergement:  ['hotel', 'hebergement', 'logement', 'airbnb', 'hostel', 'auberge', 'nuit', 'chambre', 'coliving'],
+      itineraire:   ['itineraire', 'parcours', 'trajet', 'etape', 'jours', 'semaines', 'planifier', 'route'],
+      sante:        ['vaccin', 'sante', 'medical', 'assurance', 'hopital', 'maladie', 'rage'],
+      connectivite: ['esim', 'sim', 'internet', 'wifi', 'connexion', 'roaming', 'telephone'],
+      travail:      ['coworking', 'nomade', 'digital', 'remote', 'travail', 'travailler', 'freelance', 'fiscal'],
+    };
+
+    let bestTheme = 'general';
+    let bestCount = 0;
+    for (const [theme, themeKws] of Object.entries(THEME_KEYWORDS)) {
+      let count = 0;
+      for (const kw of linkKeywords) {
+        if (themeKws.some(tk => kw.includes(tk) || tk.includes(kw))) count++;
+      }
+      if (count > bestCount) { bestCount = count; bestTheme = theme; }
+    }
+    return bestTheme;
+  }
+
+  _buildTransitionPhrase(link, theme) {
+    const TEMPLATES = {
+      visa:         ['Si tu prépares aussi ton visa, on a détaillé ', 'Côté formalités, ', 'Pour anticiper les démarches de visa, '],
+      budget:       ['Pour aller plus loin sur les coûts réels, ', 'Côté budget, ', 'Sur la question des dépenses, ', 'Pour anticiper les frais, ', 'Si le budget te préoccupe, '],
+      transport:    ['Pour comparer les options de transport, ', 'Côté vols et déplacements, ', 'Sur la logistique des transports, '],
+      hebergement:  ['Pour l\'hébergement, ', 'Si tu cherches où dormir, ', 'Côté logement, '],
+      itineraire:   ['Si tu hésites sur ton itinéraire, ', 'Pour affiner ton parcours, ', 'Côté planification, '],
+      sante:        ['Côté santé et prévention, ', 'Pour les précautions médicales, '],
+      connectivite: ['Pour rester connecté sur place, ', 'Côté connectivité, '],
+      travail:      ['Si tu comptes travailler sur place, ', 'Côté coworking et nomadisme, ', 'Pour le travail à distance, '],
+      general:      ['On a aussi détaillé ', 'Dans le même esprit, ', 'Pour compléter, '],
+    };
+
+    const decodedTitle = this.decodeHtmlEntitiesForAnchor(link.title);
+    const words = decodedTitle.split(/\s+/).filter(w => w.length > 0);
+    let shortAnchor = words.slice(0, Math.min(8, words.length)).join(' ');
+    if (shortAnchor.length > 55) {
+      shortAnchor = shortAnchor.substring(0, 55).replace(/\s+\S*$/, '') || shortAnchor.substring(0, 55);
+    }
+
+    const templates = TEMPLATES[theme] || TEMPLATES.general;
+    if (!this._transitionCounters) this._transitionCounters = {};
+    const idx = (this._transitionCounters[theme] || 0) % templates.length;
+    this._transitionCounters[theme] = idx + 1;
+    const template = templates[idx];
+    const linkHtml = `<a href="${this.escapeHtml(link.url)}">${this.escapeHtml(shortAnchor)}</a>`;
+    return `${template}${linkHtml}.`;
+  }
+
+  // ─── Main contextual link injection ───
+
+  /**
+   * Injecte les liens internes de manière contextuelle dans le corps de l'article.
+   * Stratégie : ancrage inline sur texte existant > phrase de transition > section fallback.
+   */
+  injectLinksIntoRelatedSection(html, links) {
+    let modifiedHtml = html;
+    const MAX_INTERNAL_LINKS = 5;
+    const MIN_SCORE = 0.15;
+
+    const alreadyInjected = new Set();
+    const existingLinks = html.match(/href="https?:\/\/flashvoyage\.com\/[^"]*"/g) || [];
+    existingLinks.forEach(h => alreadyInjected.add(h));
+    links = links.filter(l => !alreadyInjected.has(`href="${l.url}"`));
+    if (links.length === 0) return html;
+
+    const paragraphRegex = /<p[^>]*>(.*?)<\/p>/gs;
+    const paragraphs = [];
+    let match;
+    while ((match = paragraphRegex.exec(html)) !== null) {
+      if (match[1].length < 50) continue;
+      if (/<p[^>]*class="[^"]*internal-link-transition/.test(match[0])) continue;
+      paragraphs.push({ index: match.index, fullMatch: match[0], content: match[1] });
+    }
+
+    if (paragraphs.length === 0) {
+      const linksHtml = links.map(link =>
+        `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(this.decodeHtmlEntitiesForAnchor(link.title))}</a></li>`
+      ).join('\n');
+      return html + `\n\n<h2>À lire aussi</h2>\n<ul>\n${linksHtml}\n</ul>`;
+    }
+
     const firstH2Pos = html.search(/<h2[\s>]/i);
-    const eligibleParagraphs = paragraphs.filter(p => firstH2Pos > 0 ? p.index > firstH2Pos : false);
+    const forbiddenSections = /ce qu.il faut retenir|nos recommandations|articles connexes|à lire|foire aux questions|FAQ/i;
+    const eligibleParagraphs = paragraphs.filter(p => {
+      if (firstH2Pos > 0 && p.index <= firstH2Pos) return false;
+      const before200 = html.substring(Math.max(0, p.index - 300), p.index);
+      const lastH2 = before200.match(/<h2[^>]*>(.*?)<\/h2>/gi);
+      if (lastH2 && lastH2.some(h => forbiddenSections.test(h))) return false;
+      return true;
+    });
+
     if (eligibleParagraphs.length === 0) {
-      const linksHtml = links.map(link => 
-        `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(link.title)}</a></li>`
+      const linksHtml = links.map(link =>
+        `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(this.decodeHtmlEntitiesForAnchor(link.title))}</a></li>`
       ).join('\n');
       return html + `\n\n<h3>À lire également</h3>\n<ul>\n${linksHtml}\n</ul>`;
     }
-    
-    // Max 5 liens internes, espaces dans le corps de l'article
-    const MAX_INTERNAL_LINKS = 5;
-    const sortedLinks = links.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0)).slice(0, MAX_INTERNAL_LINKS);
-    
-    // Garantir au moins 2 liens dans les premiers 30% de l'article
-    const first30Percent = Math.floor(eligibleParagraphs.length * 0.3);
-    const earlyParagraphs = eligibleParagraphs.slice(0, Math.max(first30Percent, 2));
-    const lateParagraphs = eligibleParagraphs.slice(Math.max(first30Percent, 2));
-    
-    // Distribuer: 2 premiers liens dans earlyParagraphs, reste dans lateParagraphs
-    const targetParagraphs = [];
-    if (earlyParagraphs.length >= 2 && sortedLinks.length >= 2) {
-      targetParagraphs.push(earlyParagraphs[Math.floor(earlyParagraphs.length * 0.3)]);
-      targetParagraphs.push(earlyParagraphs[Math.floor(earlyParagraphs.length * 0.7)]);
+
+    const sortedLinks = [...links].sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0)).slice(0, MAX_INTERNAL_LINKS);
+    const usedParagraphs = new Set();
+    const unplacedLinks = [];
+
+    for (const link of sortedLinks) {
+      const linkKeywords = this._extractLinkKeywords(link);
+
+      let bestPara = null;
+      let bestScore = 0;
+      for (const para of eligibleParagraphs) {
+        if (usedParagraphs.has(para.index)) continue;
+        const score = this._scoreParagraphForLink(para.content, linkKeywords);
+        if (score > bestScore) { bestScore = score; bestPara = para; }
+      }
+
+      if (!bestPara || bestScore < MIN_SCORE) {
+        unplacedLinks.push(link);
+        continue;
+      }
+
+      usedParagraphs.add(bestPara.index);
+
+      const inlineAnchor = this._findInlineAnchor(bestPara.content, linkKeywords);
+      if (inlineAnchor) {
+        const linkTag = `<a href="${this.escapeHtml(link.url)}">${inlineAnchor}</a>`;
+        const newContent = bestPara.content.replace(inlineAnchor, linkTag);
+        if (newContent !== bestPara.content) {
+          const newPara = `<p${bestPara.fullMatch.match(/^<p([^>]*)>/)?.[1] || ''}>${newContent}</p>`;
+          modifiedHtml = modifiedHtml.replace(bestPara.fullMatch, newPara);
+          bestPara.fullMatch = newPara;
+          bestPara.content = newContent;
+          console.log(`   🔗 Lien interne (inline): "${inlineAnchor}" → ${link.slug}`);
+          continue;
+        }
+      }
+
+      const theme = this._getLinkTheme(linkKeywords);
+      const transitionPhrase = this._buildTransitionPhrase(link, theme);
+      const insertionPoint = bestPara.fullMatch;
+      const transitionP = `<p class="internal-link-transition">${transitionPhrase}</p>`;
+      modifiedHtml = modifiedHtml.replace(insertionPoint, insertionPoint + '\n' + transitionP);
+      console.log(`   🔗 Lien interne (transition ${theme}): ${link.slug}`);
     }
-    // Ajouter les liens restants dans lateParagraphs
-    const remainingLinks = sortedLinks.length - targetParagraphs.length;
-    if (remainingLinks > 0 && lateParagraphs.length > 0) {
-      const lateSpacing = Math.max(1, Math.floor(lateParagraphs.length / remainingLinks));
-      for (let i = 0; i < remainingLinks && i * lateSpacing < lateParagraphs.length; i++) {
-        targetParagraphs.push(lateParagraphs[i * lateSpacing]);
+
+    if (unplacedLinks.length > 0) {
+      const hasExistingFallback = /À lire aussi|À lire également|Articles connexes/i.test(modifiedHtml);
+      if (hasExistingFallback) {
+        const existingList = modifiedHtml.match(/<h3>[^<]*(?:À lire aussi|À lire également)[^<]*<\/h3>\s*<ul>([\s\S]*?)<\/ul>/i);
+        if (existingList) {
+          const newItems = unplacedLinks.map(link => {
+            const decoded = this.decodeHtmlEntitiesForAnchor(link.title);
+            const words = decoded.split(/\s+/).filter(w => w.length > 0);
+            let anchor = words.slice(0, 8).join(' ');
+            if (anchor.length > 55) anchor = anchor.substring(0, 55).replace(/\s+\S*$/, '');
+            return `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(anchor)}</a></li>`;
+          }).join('\n');
+          modifiedHtml = modifiedHtml.replace(existingList[0], existingList[0].replace('</ul>', newItems + '\n</ul>'));
+          console.log(`   🔗 Lien(s) interne(s) ajoutés au fallback existant: ${unplacedLinks.length}`);
+        }
+      } else {
+        const retainSection = modifiedHtml.search(/<h2[^>]*>[^<]*ce qu.il faut retenir/i);
+        const recoSection = modifiedHtml.search(/<h2[^>]*>[^<]*nos recommandations/i);
+        const insertBefore = retainSection > 0 ? retainSection : (recoSection > 0 ? recoSection : -1);
+
+        const listItems = unplacedLinks.map(link => {
+          const decoded = this.decodeHtmlEntitiesForAnchor(link.title);
+          const words = decoded.split(/\s+/).filter(w => w.length > 0);
+          let anchor = words.slice(0, 8).join(' ');
+          if (anchor.length > 55) anchor = anchor.substring(0, 55).replace(/\s+\S*$/, '');
+          return `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(anchor)}</a></li>`;
+        }).join('\n');
+        const fallbackSection = `\n<h3>À lire aussi</h3>\n<ul>\n${listItems}\n</ul>\n\n`;
+
+        if (insertBefore > 0) {
+          modifiedHtml = modifiedHtml.slice(0, insertBefore) + fallbackSection + modifiedHtml.slice(insertBefore);
+        } else {
+          modifiedHtml += fallbackSection;
+        }
+        console.log(`   🔗 Lien(s) interne(s) fallback (section): ${unplacedLinks.length} lien(s)`);
       }
     }
-    
-    const maxAnchorChars = 70;
-    for (let i = 0; i < sortedLinks.length && i < targetParagraphs.length; i++) {
-      const link = sortedLinks[i];
-      const para = targetParagraphs[i];
-      const decodedTitle = this.decodeHtmlEntitiesForAnchor(link.title);
-      // Ancre lisible : titre décodé (sans &#8217; etc.), tous les mots, limite par caractères
-      const titleWords = decodedTitle.split(/\s+/).filter(w => w.length > 0);
-      let anchorText = titleWords.slice(0, Math.min(12, titleWords.length)).join(' ');
-      if (anchorText.length > maxAnchorChars) {
-        anchorText = anchorText.substring(0, maxAnchorChars).replace(/\s+\S*$/, '') || anchorText.substring(0, maxAnchorChars);
-      }
-      // Éviter ancres génériques
-      const badAnchors = ['cliquez ici', 'ici', 'lien', 'voir', 'plus', 'en savoir plus'];
-      const finalAnchor = badAnchors.some(bad => anchorText.toLowerCase().includes(bad)) 
-        ? decodedTitle.substring(0, maxAnchorChars).trim() 
-        : anchorText.trim();
-      
-      const linkHtml = `<a href="${this.escapeHtml(link.url)}">${this.escapeHtml(finalAnchor)}</a>`;
-      
-      const phrase = linkHtml;
-      
-      // Inserer le lien en fin de paragraphe, sans phrase de liaison artificielle
-      const newPara = `<p>${para.content} ${phrase}</p>`;
-      modifiedHtml = modifiedHtml.replace(para.fullMatch, newPara);
-      insertedCount++;
-      console.log(`   🔗 Lien interne: "${finalAnchor}"`);
-    }
-    
+
     return modifiedHtml;
   }
 

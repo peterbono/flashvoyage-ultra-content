@@ -1,6 +1,6 @@
 {
-  "totalPublished": 40,
-  "currentClusterId": "japon",
+  "totalPublished": 43,
+  "currentClusterId": "amerique-latine",
   "history": [
     {
       "date": "2026-02-23T16:02:38.396Z",
@@ -302,6 +302,27 @@
       "articleType": "news",
       "hint": "Japon",
       "title": "Budget 2 200 € en Thaïlande : 5 arbitrages cachés qui peuvent te ruiner"
+    },
+    {
+      "date": "2026-03-11T21:30:46.701Z",
+      "clusterId": "amerique-latine",
+      "articleType": "pillar",
+      "hint": "tour amerique latine",
+      "title": "Escale en Corée du Sud : faut-il vraiment y rester 1-2 semaines en route vers l'Amérique latine ?"
+    },
+    {
+      "date": "2026-03-11T21:39:53.747Z",
+      "clusterId": "amerique-latine",
+      "articleType": "support",
+      "hint": "budget mexique",
+      "title": "Dalat Vietnam : pourquoi 460 € par mois d'hébergement ne suffit pas pour optimiser ton budget nomade"
+    },
+    {
+      "date": "2026-03-11T21:47:19.884Z",
+      "clusterId": "amerique-latine",
+      "articleType": "support",
+      "hint": "patagonie trek",
+      "title": "Voyager 2 semaines en Thaïlande : arbitrer entre Bangkok, Chiang Mai et Krabi sans sacrifier l'authenticité"
     }
   ]
 }

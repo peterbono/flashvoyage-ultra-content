@@ -1,7 +1,32 @@
 {
-  "crawled_at": "2026-03-11T20:54:56.900Z",
-  "total_articles": 50,
+  "crawled_at": "2026-03-11T21:47:26.623Z",
+  "total_articles": 51,
   "articles": [
+    {
+      "id": 3259,
+      "title": "Budget 2 200 € en Thaïlande : 5 arbitrages cachés qui peuvent te ruiner",
+      "url": "https://flashvoyage.com/budget-2-200-e-en-thailande-5-arbitrages-caches-qui-peuvent-te-ruiner/",
+      "slug": "budget-2-200-e-en-thailande-5-arbitrages-caches-qui-peuvent-te-ruiner",
+      "excerpt": "Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de discussion communautaire sur r/digitalnomad. Sources vérifiées, enrichies par nos données temps réel. Tu atterris à Bangkok avec ",
+      "content": "\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de discussion communautaire sur r/digitalnomad. Sources vérifiées, enrichies par nos données temps réel.\n\n Tu atterris à Bangkok avec un billet aller-simple et 3 000 € de budget mensuel.\nSur le papier, c&#8217;est confortable pour la Thaïlande.\nMais dès la première semaine, tu découvres que chaque décision — où dormir, comment rester connecté, quand te déplacer entre Bangkok, Pattaya et Phuket — n&#8217;est pas qu&#8217;un cho",
+      "categories": [
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "tags": [
+        {
+          "id": 75,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "date": "2026-03-11T20:55:02",
+      "modified": "2026-03-11T20:55:02",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773262497372.jpg"
+    },
     {
       "id": 3254,
       "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
