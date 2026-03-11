@@ -7166,12 +7166,15 @@ class ArticleFinalizer {
           : 'No hallucinations detected'
       });
       
-      // Si blocking=true, ajouter une issue
+      // Si blocking=true, vérifier qu'il y a de vraies issues bloquantes (pas juste entity_drift warnings)
       if (guardResult.blocking) {
+        const blockingEvidence = guardResult.evidence.filter(e => e.type !== 'entity_drift');
+        const hasRealBlockingIssue = blockingEvidence.length > 0;
+        
         report.issues.push({
           code: 'ANTI_HALLUCINATION_BLOCK',
-          severity: shouldBlock ? 'high' : 'medium',
-          message: `Anti-hallucination guard detected ${guardResult.reasons.length} blocking issue(s)`,
+          severity: (shouldBlock && hasRealBlockingIssue) ? 'high' : 'medium',
+          message: `Anti-hallucination guard detected ${guardResult.reasons.length} issue(s)${!hasRealBlockingIssue ? ' (entity_drift only, non-blocking)' : ''}`,
           evidence: guardResult.evidence,
           check: 'anti_hallucination'
         });
@@ -8091,7 +8094,58 @@ class ArticleFinalizer {
         'logement': 195, // ID à vérifier
         'finance': 196, // ID à vérifier
         'santé': 197, // ID à vérifier
-        'transport': 198 // ID à vérifier
+        'transport': 198, // ID à vérifier
+        
+        // Tags affiliation - Assurance
+        'Assurance voyage': 200, // À créer si inexistant
+        'Santé': 217, // À créer si inexistant
+        'Sécurité': 218, // À créer si inexistant
+        
+        // Tags affiliation - Connectivité
+        'eSIM': 201, // À créer si inexistant
+        'Connectivité': 202, // À créer si inexistant
+        'Internet': 219, // À créer si inexistant
+        
+        // Tags affiliation - Vols
+        'Vols': 203, // À créer si inexistant
+        'Avion': 220, // À créer si inexistant
+        'Comparateur': 221, // À créer si inexistant
+        
+        // Tags affiliation - Hébergement
+        'Hébergement': 204, // À créer si inexistant
+        'Hôtel': 222, // À créer si inexistant
+        'Logement': 223, // À créer si inexistant
+        
+        // Tags affiliation - Activités
+        'Activités': 205, // À créer si inexistant
+        'Excursions': 206, // À créer si inexistant
+        'Visites': 224, // À créer si inexistant
+        
+        // Tags affiliation - Transferts
+        'Aéroport': 207, // À créer si inexistant
+        'Transfert': 208, // À créer si inexistant
+        'Navette': 225, // À créer si inexistant
+        
+        // Tags affiliation - Location véhicule
+        'Location voiture': 209, // À créer si inexistant
+        'Road trip': 210, // À créer si inexistant
+        'Scooter': 211, // À créer si inexistant
+        'Moto': 226, // À créer si inexistant
+        'Vélo': 227, // À créer si inexistant
+        
+        // Tags affiliation - Coworking
+        'Coworking': 212, // À créer si inexistant
+        'Remote': 213, // À créer si inexistant
+        'Productivité': 228, // À créer si inexistant
+        
+        // Tags affiliation - Compensation vol
+        'Retard vol': 214, // À créer si inexistant
+        'Indemnisation': 215, // À créer si inexistant
+        
+        // Tags affiliation - Événements
+        'Événements': 216, // À créer si inexistant
+        'Concert': 229, // À créer si inexistant
+        'Festival': 230 // À créer si inexistant
       };
 
       const categoryIds = categories

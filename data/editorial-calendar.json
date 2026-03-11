@@ -1,6 +1,6 @@
 {
-  "totalPublished": 1,
-  "currentClusterId": "asie-sud-est",
+  "totalPublished": 26,
+  "currentClusterId": "afrique-moyen-orient",
   "history": [
     {
       "date": "2026-02-23T16:02:38.396Z",
@@ -8,6 +8,209 @@
       "articleType": "pillar",
       "hint": "itineraire asie du sud-est",
       "title": "Arbitrer son Itinéraire au Vietnam : Décisions Cruciales en Saison des Pluies"
+    },
+    {
+      "date": "2026-02-23T18:41:18.139Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "temples angkor",
+      "title": "Itinéraire vers l'Indonésie : Comment Bien Choisir Entre Valise et Sac à Dos"
+    },
+    {
+      "date": "2026-03-04T17:05:57.405Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "news",
+      "hint": "Thailande",
+      "title": "Visa Vietnam : L'Erreur qui M'a Coûté Cher et Comment L'Éviter"
+    },
+    {
+      "date": "2026-03-04T17:44:40.975Z",
+      "clusterId": "japon",
+      "articleType": "pillar",
+      "hint": "guide japon complet",
+      "title": "Japon : Comment Arbitrer Entre Expériences Incontournables et Logistique"
+    },
+    {
+      "date": "2026-03-04T17:50:03.318Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "japan rail pass",
+      "title": "Planifier un voyage au Japon : Comment optimiser chaque journée"
+    },
+    {
+      "date": "2026-03-04T18:10:14.253Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "cerisiers japon",
+      "title": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait"
+    },
+    {
+      "date": "2026-03-04T18:22:16.194Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "ryokan onsen",
+      "title": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés"
+    },
+    {
+      "date": "2026-03-04T18:51:00.174Z",
+      "clusterId": "japon",
+      "articleType": "news",
+      "hint": "Japon",
+      "title": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud"
+    },
+    {
+      "date": "2026-03-04T18:58:55.027Z",
+      "clusterId": "amerique-latine",
+      "articleType": "pillar",
+      "hint": "tour amerique latine",
+      "title": "Organiser son voyage en Indonésie : dilemmes logistiques et coûts cachés"
+    },
+    {
+      "date": "2026-03-04T19:03:04.995Z",
+      "clusterId": "amerique-latine",
+      "articleType": "support",
+      "hint": "machu picchu guide",
+      "title": "Choisir où séjourner à Bali : dilemmes et décisions cruciales"
+    },
+    {
+      "date": "2026-03-04T19:08:31.579Z",
+      "clusterId": "amerique-latine",
+      "articleType": "support",
+      "hint": "playa del carmen",
+      "title": "Asie du Sud-Est : Choix d'Itinéraires pour un Voyage Hors des Sentiers Battus"
+    },
+    {
+      "date": "2026-03-04T19:28:20.224Z",
+      "clusterId": "amerique-latine",
+      "articleType": "support",
+      "hint": "transport colombie",
+      "title": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques"
+    },
+    {
+      "date": "2026-03-04T19:51:35.986Z",
+      "clusterId": "amerique-latine",
+      "articleType": "news",
+      "hint": "Mexique",
+      "title": "Optimiser son Visa de Nomade Digital en Asie du Sud-Est : Stratégies et Écueils"
+    },
+    {
+      "date": "2026-03-04T20:07:32.391Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "pillar",
+      "hint": "safari guide complet",
+      "title": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable"
+    },
+    {
+      "date": "2026-03-04T20:13:48.011Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "desert maroc",
+      "title": "Budget Réel pour Vivre à Koh Lanta : Dépenses et Optimisations"
+    },
+    {
+      "date": "2026-03-04T20:24:59.830Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "plongee mer rouge",
+      "title": "Décider de son itinéraire au Japon : entre confort et choix logistiques"
+    },
+    {
+      "date": "2026-03-04T20:46:43.926Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "safari budget",
+      "title": "Travailler en Thaïlande : Les Dilemmes Fiscaux des Travailleurs à Distance"
+    },
+    {
+      "date": "2026-03-04T21:19:19.529Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "news",
+      "hint": "Maroc",
+      "title": "Vivre en Asie du Sud-Est avec 10 000 $ : Frais cachés et choix stratégiques"
+    },
+    {
+      "date": "2026-03-04T21:38:44.388Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "pillar",
+      "hint": "itineraire asie du sud-est",
+      "title": "Vivre en Thaïlande avec 500 USD : Réalité ou Illusion ?"
+    },
+    {
+      "date": "2026-03-04T22:05:17.654Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "iles thailande",
+      "title": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades"
+    },
+    {
+      "date": "2026-03-04T22:15:44.131Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "street food vietnam",
+      "title": "Vaccin contre la rage pour un périple en Asie du Sud-Est : Faut-il vraiment dépenser ?"
+    },
+    {
+      "date": "2026-03-04T22:50:22.715Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "visa asie",
+      "title": "Visa Vietnam : Comment un Détail Administratif Peut Transformer Votre Séjour"
+    },
+    {
+      "date": "2026-03-04T22:56:51.198Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "news",
+      "hint": "Thailande",
+      "title": "Visa Vietnam : Stratégies Cruciales pour Éviter les Pièges"
+    },
+    {
+      "date": "2026-03-11T14:14:37.651Z",
+      "clusterId": "japon",
+      "articleType": "pillar",
+      "hint": "guide japon complet",
+      "title": "Itinéraire au Japon : Décisions Cruciales pour Ne Rien Manquer"
+    },
+    {
+      "date": "2026-03-11T14:28:48.843Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "cuisine japonaise",
+      "title": "Témoignage voyage: retours et leçons"
+    },
+    {
+      "date": "2026-03-11T14:36:49.303Z",
+      "clusterId": "amerique-latine",
+      "articleType": "pillar",
+      "hint": "tour amerique latine",
+      "title": "Témoignage voyage: retours et leçons"
+    },
+    {
+      "date": "2026-03-11T14:39:44.876Z",
+      "clusterId": "oceanie",
+      "articleType": "pillar",
+      "hint": "whv australie guide",
+      "title": "Témoignage voyage: retours et leçons"
+    },
+    {
+      "date": "2026-03-11T14:43:28.493Z",
+      "clusterId": "amerique-latine",
+      "articleType": "pillar",
+      "hint": "tour amerique latine",
+      "title": "Témoignage voyage: retours et leçons"
+    },
+    {
+      "date": "2026-03-11T14:50:34.347Z",
+      "clusterId": "oceanie",
+      "articleType": "pillar",
+      "hint": "whv australie guide",
+      "title": "Maratua ou Labuan Bajo : l'itinéraire indonésien qui coûte une décision irremplaçable"
+    },
+    {
+      "date": "2026-03-11T15:15:54.728Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "pillar",
+      "hint": "safari guide complet",
+      "title": "Maratua vs Maldives pour une lune de miel : arbitrer entre authenticité et logistique"
     }
   ]
 }

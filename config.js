@@ -13,7 +13,7 @@ dotenv.config();
 export const parseBool = (v) => ['1','true','yes','on'].includes(String(v).toLowerCase());
 
 export const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-export const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+export const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_CLIENT_SECRET;
 export const WORDPRESS_URL = process.env.WORDPRESS_URL;
 export const WORDPRESS_USERNAME = process.env.WORDPRESS_USERNAME;
 export const WORDPRESS_APP_PASSWORD = process.env.WORDPRESS_APP_PASSWORD;
@@ -37,6 +37,14 @@ export const FORCE_OFFLINE = parseBool(process.env.FORCE_OFFLINE);
 /**
  * FLAGS D'ACTIVATION (cohérence: parseBool + ?? '1' pour actif par défaut)
  */
+/**
+ * LLM PROVIDER — Choix du modèle pour les étapes coûteuses du pipeline
+ * 'anthropic' = Claude Haiku 4.5 (meilleure qualité, ~60% moins cher que GPT-4o)
+ * 'openai' = GPT-4o (fallback)
+ */
+export const LLM_PROVIDER = process.env.LLM_PROVIDER || 'anthropic';
+export const LLM_MODEL = process.env.LLM_MODEL || (LLM_PROVIDER === 'anthropic' ? 'claude-haiku-4-5-20251001' : 'gpt-4o');
+
 export const ENABLE_AFFILIATE_INJECTOR = parseBool(process.env.ENABLE_AFFILIATE_INJECTOR ?? '1'); // Activé par défaut
 export const ENABLE_ANTI_HALLUCINATION_BLOCKING = parseBool(process.env.ENABLE_ANTI_HALLUCINATION_BLOCKING ?? '1'); // Activé par défaut
 export const ENABLE_PIPELINE_BLOCKING = parseBool(process.env.ENABLE_PIPELINE_BLOCKING ?? '1'); // Activé par défaut

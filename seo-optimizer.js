@@ -418,7 +418,7 @@ class SeoOptimizer {
     const auditedTokens = new Set(
       this.tokenAudit
         .filter(entry => entry.source_path) // Seulement ceux avec source valide
-        .map(entry => this.normalizeText(entry.token))
+        .map(entry => this.normalizeToken(entry.token))
     );
     
     // Extraire les tokens du post_title original (valides car viennent de extracted)
@@ -428,7 +428,7 @@ class SeoOptimizer {
       const originalTitle = report.debug.seo_data.post_title;
       const tokens = this.extractTokens(originalTitle);
       tokens.forEach(token => {
-        const normalized = this.normalizeText(token);
+        const normalized = this.normalizeToken(token);
         // Inclure tous les tokens du post_title original (même courts, sauf stopwords)
         if (normalized.length > 0 && !stopwords.has(normalized)) {
           originalTitleTokens.add(normalized);
@@ -440,7 +440,7 @@ class SeoOptimizer {
     if (meta && meta.title) {
       const titleTokens = this.extractTokens(meta.title);
       const untrackedTitleTokens = titleTokens.filter(token => {
-        const normalized = this.normalizeText(token);
+        const normalized = this.normalizeToken(token);
         // Ignorer si c'est un stopword ou la marque
         if (stopwords.has(normalized) || normalized === 'flashvoyage') {
           return false;
@@ -472,7 +472,7 @@ class SeoOptimizer {
       const originalTopic = report.debug.seo_data.primaryTopic;
       const tokens = this.extractTokens(originalTopic);
       tokens.forEach(token => {
-        const normalized = this.normalizeText(token);
+        const normalized = this.normalizeToken(token);
         // Inclure tous les tokens du primaryTopic original (même courts, sauf stopwords)
         if (normalized.length > 0 && !stopwords.has(normalized)) {
           originalDescTokens.add(normalized);
@@ -483,7 +483,7 @@ class SeoOptimizer {
     // Ajouter aussi les tokens des places (valides car viennent de seoData)
     if (report.debug && report.debug.seo_data && report.debug.seo_data.places) {
       report.debug.seo_data.places.forEach(place => {
-        const normalized = this.normalizeText(place);
+        const normalized = this.normalizeToken(place);
         if (normalized.length > 0 && !stopwords.has(normalized)) {
           originalDescTokens.add(normalized);
         }
@@ -493,7 +493,7 @@ class SeoOptimizer {
     if (meta && meta.metaDescription) {
       const descTokens = this.extractTokens(meta.metaDescription);
       const untrackedDescTokens = descTokens.filter(token => {
-        const normalized = this.normalizeText(token);
+        const normalized = this.normalizeToken(token);
         // Ignorer si c'est un stopword ou la marque
         if (stopwords.has(normalized) || normalized === 'flashvoyage') {
           return false;
@@ -566,12 +566,11 @@ class SeoOptimizer {
    */
   extractTokens(text) {
     if (!text || typeof text !== 'string') return [];
-    
-    // Normaliser et extraire les mots
     const normalized = this.normalizeText(text);
-    const tokens = normalized.split(/\s+/).filter(token => token.length > 0);
-    
-    return tokens;
+    const rawMatches = normalized.match(/[a-z0-9à-öø-ÿ]+(?:['-][a-z0-9à-öø-ÿ]+)*/gi) || [];
+    return rawMatches
+      .map(token => this.normalizeToken(token))
+      .filter(token => token.length > 0);
   }
 
   /**
@@ -684,6 +683,19 @@ class SeoOptimizer {
       .trim()
       .replace(/\s+/g, ' ')
       .toLowerCase();
+  }
+
+  /**
+   * Helper: normalise un token (retire ponctuation/fragments)
+   */
+  normalizeToken(token) {
+    if (typeof token !== 'string') return '';
+    return token
+      .toLowerCase()
+      .replace(/^[^a-z0-9à-öø-ÿ]+/gi, '')
+      .replace(/[^a-z0-9à-öø-ÿ]+$/gi, '')
+      .replace(/['’]/g, "'")
+      .trim();
   }
 
   /**
@@ -881,7 +893,7 @@ class SeoOptimizer {
       descriptionParts.push(seoData.primaryTopic);
       
       // Auditer les tokens de primaryTopic
-      const topicWords = this.normalizeText(seoData.primaryTopic).split(/\s+/).filter(w => w.length > 2);
+      const topicWords = this.extractTokens(seoData.primaryTopic).filter(w => w.length > 2);
       topicWords.forEach(word => {
         const source = this.findTokenSourceInSeoData(word, seoData);
         if (source) {
@@ -1633,13 +1645,29 @@ class SeoOptimizer {
       return html + `\n\n<h3>À lire également</h3>\n<ul>\n${linksHtml}\n</ul>`;
     }
     
-    // Max 3 liens internes, espaces dans le corps de l'article
-    const MAX_INTERNAL_LINKS = 3;
+    // Max 5 liens internes, espaces dans le corps de l'article
+    const MAX_INTERNAL_LINKS = 5;
     const sortedLinks = links.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0)).slice(0, MAX_INTERNAL_LINKS);
     
-    // Distribuer de maniere espacee (1 lien tous les N paragraphes)
-    const spacing = Math.max(2, Math.floor(eligibleParagraphs.length / (sortedLinks.length + 1)));
-    const targetParagraphs = sortedLinks.map((_, i) => eligibleParagraphs[Math.min((i + 1) * spacing, eligibleParagraphs.length - 1)]);
+    // Garantir au moins 2 liens dans les premiers 30% de l'article
+    const first30Percent = Math.floor(eligibleParagraphs.length * 0.3);
+    const earlyParagraphs = eligibleParagraphs.slice(0, Math.max(first30Percent, 2));
+    const lateParagraphs = eligibleParagraphs.slice(Math.max(first30Percent, 2));
+    
+    // Distribuer: 2 premiers liens dans earlyParagraphs, reste dans lateParagraphs
+    const targetParagraphs = [];
+    if (earlyParagraphs.length >= 2 && sortedLinks.length >= 2) {
+      targetParagraphs.push(earlyParagraphs[Math.floor(earlyParagraphs.length * 0.3)]);
+      targetParagraphs.push(earlyParagraphs[Math.floor(earlyParagraphs.length * 0.7)]);
+    }
+    // Ajouter les liens restants dans lateParagraphs
+    const remainingLinks = sortedLinks.length - targetParagraphs.length;
+    if (remainingLinks > 0 && lateParagraphs.length > 0) {
+      const lateSpacing = Math.max(1, Math.floor(lateParagraphs.length / remainingLinks));
+      for (let i = 0; i < remainingLinks && i * lateSpacing < lateParagraphs.length; i++) {
+        targetParagraphs.push(lateParagraphs[i * lateSpacing]);
+      }
+    }
     
     const maxAnchorChars = 70;
     for (let i = 0; i < sortedLinks.length && i < targetParagraphs.length; i++) {

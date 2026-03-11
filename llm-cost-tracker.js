@@ -17,12 +17,19 @@ const __dirname = dirname(__filename);
 
 const COST_HISTORY_PATH = join(__dirname, 'data', 'cost-history.jsonl');
 
-// Grille tarifaire OpenAI (USD par 1M tokens) — mise à jour fév 2026
+// Grille tarifaire LLM (USD par 1M tokens) — mise à jour mars 2026
 const PRICING = {
+  // OpenAI
   'gpt-4o':       { input: 2.50,  output: 10.00 },
   'gpt-4o-mini':  { input: 0.15,  output: 0.60  },
   'gpt-4-turbo':  { input: 10.00, output: 30.00 },
   'gpt-3.5-turbo':{ input: 0.50,  output: 1.50  },
+  // Anthropic Claude
+  'claude-haiku-4-5-20251001': { input: 1.00, output: 5.00 },
+  'claude-haiku-4-5': { input: 1.00, output: 5.00 },
+  'claude-3-5-haiku-20241022': { input: 0.80, output: 4.00 },
+  'claude-3-5-sonnet-20241022': { input: 3.00, output: 15.00 },
+  'claude-3-opus-20240229': { input: 15.00, output: 75.00 },
 };
 
 function computeCostUSD(model, promptTokens, completionTokens) {

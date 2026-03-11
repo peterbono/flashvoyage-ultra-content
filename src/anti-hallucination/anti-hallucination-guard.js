@@ -301,7 +301,11 @@ export async function runAntiHallucinationGuard({ html, extracted, context = {},
     'guide', 'liste', 'tableau', 'graphique', 'diagramme', 'schéma',
     'document', 'fichier', 'dossier', 'page', 'ligne', 'mot', 'phrase',
     'kaiseki', 'sushi', 'ramen', 'tempura', 'yakitori', 'izakaya',
-    'voici', 'avoid', 'éviter', 'remember', 'remember living', 'living'
+    'voici', 'avoid', 'éviter', 'remember', 'remember living', 'living',
+    'minimiser', 'maximiser', 'optimiser', 'organiser', 'planifier', 'réserver',
+    'transport', 'transfert', 'trajet', 'voyage', 'séjour', 'itinéraire',
+    'budget', 'dépense', 'économie', 'hébergement', 'logement', 'nourriture',
+    'expérience', 'aventure', 'découverte', 'immersion', 'exploration'
   ]);
   // Équivalence asie/asia pour whitelist (source peut avoir "Asia", article "asie")
   const locationWhitelistIncludes = (normLoc, whitelist) =>

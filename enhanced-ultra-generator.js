@@ -727,10 +727,12 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         finalArticle.content = finalArticle.content.replace('{quote_highlight}', quoteHighlight);
       }
       
+      // Récupérer les placements affiliés depuis le rapport du pipeline
+      const affiliatePlacements = report.steps?.['affiliate-injector']?.debug?.placements || 
+                                  report.steps?.['affiliate-injector']?.placements || [];
+      
       // Mettre à jour les métadonnées depuis le pipeline
       finalArticle.excerpt = finalArticle.excerpt || this.generateExcerpt(finalArticle.content);
-      finalArticle.categories = await this.getCategoriesForContent(analysis, finalArticle.content);
-      finalArticle.tags = await this.getTagsForContent(analysis);
 
       // Le pipeline a déjà fait:
       // - Affiliate Injector (étape 5)
@@ -775,6 +777,10 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       pipelineContext.final_destination = finalDestination;
       analysis.final_destination = finalDestination;
       console.log(`\n✅ final_destination définie: ${finalDestination}\n`);
+
+      // Catégories et tags (APRÈS final_destination pour que le mapping destination fonctionne)
+      finalArticle.categories = await this.getCategoriesForContent(analysis, finalArticle.content, affiliatePlacements);
+      finalArticle.tags = await this.getTagsForContent(analysis, affiliatePlacements);
       
       console.log('📊 Article final construit:', {
         title: finalArticle.title,
@@ -966,7 +972,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           // Wrapping: le quality analyzer cherche un h1 pour le check "destination dans titre"
           // mais finalizedArticle.content n'a pas de h1 (le titre est un champ separe)
           const contentForScoring = `<h1>${finalizedArticle.title || ''}</h1>\n${finalizedArticle.content}`;
-          const prePublishScore = qualityAnalyzer.getGlobalScore(contentForScoring, editorialMode);
+          const prePublishScore = qualityAnalyzer.getGlobalScore(contentForScoring, editorialMode, finalizedArticle.angle);
           const prePublishPct = parseFloat(prePublishScore.globalScore);
           const prePublishThreshold = Number(prePublishScore.threshold || (editorialMode === 'news' ? 70 : 85));
           let finalGatePct = prePublishPct;
@@ -1007,42 +1013,117 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
             console.warn(`⚠️ KPI tests non disponibles: ${kpiErr.message}`);
           }
           
+          // P5: Fonction pour construire des instructions ciblées depuis les checks échoués
+          const buildTargetedInstructions = (scoreResult) => {
+            const instructions = [];
+            const cats = scoreResult.categories || {};
+            
+            // Analyser SERP
+            if (cats.serp?.percentage < 70) {
+              const serpDetails = cats.serp?.details || [];
+              const missing = serpDetails.filter(d => d.points === 0).map(d => d.check);
+              if (missing.length > 0) {
+                instructions.push(`SERP insuffisant: ajoute les sections manquantes (${missing.slice(0, 3).join(', ')})`);
+              }
+            }
+            
+            // Analyser Content Writing
+            if (cats.contentWriting?.percentage < 75) {
+              const cwDetails = cats.contentWriting?.details || [];
+              const issues = cwDetails.filter(d => d.points < 0 || d.status?.includes('MISSING'));
+              issues.forEach(d => {
+                if (d.check?.includes('H2') && d.points < 0) {
+                  instructions.push(`H2 non décisionnels: reformule les titres avec des arbitrages/choix`);
+                }
+                if (d.check?.includes('descriptif') && d.points < 0) {
+                  instructions.push(`Trop de paragraphes descriptifs: ajoute des opinions et recommandations`);
+                }
+                if (d.check?.includes('Conclusion') && d.status === 'MISSING') {
+                  instructions.push(`Conclusion manquante: ajoute une section actionnable`);
+                }
+              });
+            }
+            
+            // Analyser Blocking
+            if (!scoreResult.blockingPassed && cats.blocking?.checks) {
+              const failedChecks = cats.blocking.checks.filter(c => !c.passed);
+              failedChecks.forEach(c => {
+                if (c.check?.includes('Quick Guide')) {
+                  instructions.push(`Quick Guide absent: ajoute un encadré Points clés en début d'article`);
+                }
+                if (c.check?.includes('longueur')) {
+                  instructions.push(`Article trop court: développe les sections existantes`);
+                }
+              });
+            }
+            
+            return instructions.length > 0 ? instructions : ['Améliore la qualité générale du contenu'];
+          };
+
           if (prePublishPct < prePublishThreshold || !prePublishScore.blockingPassed) {
-            console.warn(`⚠️ QUALITY_GATE_BLOCKED: score ${prePublishPct}% < ${prePublishThreshold}% ou bloquants FAIL. Publication différée.`);
+            console.warn(`⚠️ QUALITY_GATE_BLOCKED: Pre-pub score: ${prePublishPct}% < ${prePublishThreshold}% ou bloquants FAIL`);
             console.warn(`   Catégories: SERP=${prePublishScore.categories.serp.percentage.toFixed(0)}% Links=${prePublishScore.categories.links.percentage.toFixed(0)}% Content=${prePublishScore.categories.contentWriting.percentage.toFixed(0)}% Blocking=${prePublishScore.categories.blocking.percentage.toFixed(0)}%`);
             
-            // Tenter une passe improve LLM automatique pour corriger
+            // P5: Boucle jusqu'à 2 itérations avec instructions ciblées
+            const MAX_IMPROVE_ITERATIONS = 2;
+            let currentScore = prePublishPct;
+            let currentBlockingPassed = prePublishScore.blockingPassed;
+            let lastScoreResult = prePublishScore;
+            
             if (this.intelligentAnalyzer && typeof this.intelligentAnalyzer.improveContentWithLLM === 'function') {
-              console.log('🔄 QUALITY_GATE: tentative d\'amélioration automatique LLM...');
-              try {
-                const improvedContent = await this.intelligentAnalyzer.improveContentWithLLM(
-                  finalizedArticle.content,
-                  { destination: finalizedArticle.destination || '', theme: finalizedArticle.theme || '' },
-                  { extracted: finalizedArticle.extracted || {}, angle: finalizedArticle.angle || null }
-                );
-                if (improvedContent && improvedContent.length > finalizedArticle.content.length * 0.65) {
-                  finalizedArticle.content = improvedContent;
-                  await reinjectInternalLinks('POST-IMPROVE');
-                  // Re-check (wrap avec h1 pour le meme scoring)
-                  const recheckHtml = `<h1>${finalizedArticle.title || ''}</h1>\n${finalizedArticle.content}`;
-                  const recheck = qualityAnalyzer.getGlobalScore(recheckHtml, editorialMode);
-                  const recheckPct = parseFloat(recheck.globalScore);
-                  const recheckThreshold = Number(recheck.threshold || prePublishThreshold);
-                  finalGatePct = recheckPct;
-                  finalGateBlockingPassed = !!recheck.blockingPassed;
-                  console.log(`📊 POST-IMPROVE QUALITY: ${recheckPct}% (was ${prePublishPct}%)`);
-                  if (recheckPct < recheckThreshold || !recheck.blockingPassed) {
-                    console.warn(`⚠️ QUALITY_GATE: score toujours insuffisant (${recheckPct}%). Publication forcée avec avertissement.`);
-                  } else {
-                    console.log(`✅ QUALITY_GATE: score amélioré à ${recheckPct}%, publication autorisée.`);
+              for (let iteration = 1; iteration <= MAX_IMPROVE_ITERATIONS; iteration++) {
+                if (currentScore >= prePublishThreshold && currentBlockingPassed) break;
+                
+                const targetedInstructions = buildTargetedInstructions(lastScoreResult);
+                console.log(`🔄 QUALITY_GATE iteration ${iteration}/${MAX_IMPROVE_ITERATIONS}: ${targetedInstructions.join('; ')}`);
+                
+                try {
+                  const improvedContent = await this.intelligentAnalyzer.improveContentWithLLM(
+                    finalizedArticle.content,
+                    { 
+                      destination: finalizedArticle.destination || '', 
+                      theme: finalizedArticle.theme || '',
+                      targetedInstructions // Passer les instructions ciblées
+                    },
+                    { extracted: finalizedArticle.extracted || {}, angle: finalizedArticle.angle || null }
+                  );
+                  
+                  if (improvedContent && improvedContent.length > finalizedArticle.content.length * 0.65) {
+                    finalizedArticle.content = improvedContent;
+                    await reinjectInternalLinks(`POST-IMPROVE-${iteration}`);
+                    
+                    const recheckHtml = `<h1>${finalizedArticle.title || ''}</h1>\n${finalizedArticle.content}`;
+                    const recheck = qualityAnalyzer.getGlobalScore(recheckHtml, editorialMode, finalizedArticle.angle);
+                    const recheckPct = parseFloat(recheck.globalScore);
+                    
+                    console.log(`📊 Post-improve score (iter ${iteration}): ${recheckPct}% (was ${currentScore}%)`);
+                    
+                    lastScoreResult = recheck;
+                    currentScore = recheckPct;
+                    currentBlockingPassed = !!recheck.blockingPassed;
+                    finalGatePct = recheckPct;
+                    finalGateBlockingPassed = currentBlockingPassed;
+                    
+                    if (currentScore >= prePublishThreshold && currentBlockingPassed) {
+                      console.log(`✅ QUALITY_GATE: score amélioré à ${recheckPct}% après ${iteration} itération(s)`);
+                      break;
+                    }
                   }
+                } catch (improveErr) {
+                  console.warn(`⚠️ QUALITY_GATE improve iteration ${iteration} échoué: ${improveErr.message}`);
+                  break;
                 }
-              } catch (improveErr) {
-                console.warn(`⚠️ QUALITY_GATE improve échoué: ${improveErr.message}. Publication forcée.`);
+              }
+              
+              // Verdict final après boucle
+              if (currentScore < 80) {
+                console.warn(`⚠️ QUALITY_BELOW_THRESHOLD: score ${currentScore}% < 80% après ${MAX_IMPROVE_ITERATIONS} itérations. Publication avec avertissement.`);
+              } else if (currentScore < prePublishThreshold) {
+                console.warn(`⚠️ QUALITY_GATE: score ${currentScore}% acceptable mais < ${prePublishThreshold}%. Publication autorisée.`);
               }
             }
           } else {
-            console.log(`✅ QUALITY_GATE_PASSED: ${prePublishPct}% >= ${prePublishThreshold}%. Publication autorisée.`);
+            console.log(`✅ QUALITY_GATE_PASSED: Pre-pub score: ${prePublishPct}% >= ${prePublishThreshold}%. Publication autorisée.`);
           }
 
           // P0: en NEWS, ne jamais publier si bloquants en FAIL (même si score/override)
@@ -1224,32 +1305,56 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     }
   }
 
-  // Obtenir UNE SEULE catégorie principale selon l'analyse
-  // UTILISE final_destination comme source of truth
-  async getCategoriesForContent(analysis, generatedContent = null) {
-    // Utiliser final_destination si disponible (source of truth)
+  // Obtenir catégories selon l'analyse et les placements affiliés
+  // UTILISE final_destination comme source of truth + thème affiliation
+  async getCategoriesForContent(analysis, content, affiliatePlacements = []) {
+    const categories = [];
+    
+    // Mapping produit affilié → catégorie
+    const AFFILIATE_TO_CATEGORY = {
+      insurance: 'Santé & Assurance',
+      esim: 'Transport & Mobilité',
+      flights: 'Transport & Mobilité',
+      accommodation: 'Logement & Coliving',
+      tours: 'Guides Pratiques',
+      transfers: 'Transport & Mobilité',
+      car_rental: 'Transport & Mobilité',
+      bikes: 'Transport & Mobilité',
+      coworking: 'Travail & Productivité',
+      flight_compensation: 'Transport & Mobilité',
+      events: 'Guides Pratiques'
+    };
+    
+    // 1. Catégorie destination (priorité haute)
     if (analysis.final_destination && analysis.final_destination !== 'Asie') {
-      const destinationCategory = this.getDestinationCategory(analysis.final_destination);
-      console.log(`🏷️ Catégorie depuis final_destination: ${destinationCategory}`);
-      return [destinationCategory]; // UNE SEULE catégorie
+      const destCategory = this.getDestinationCategory(analysis.final_destination.toLowerCase());
+      if (destCategory && destCategory !== 'Destinations') {
+        categories.push(destCategory);
+      }
     }
     
-    // Fallback vers les catégories par type de contenu
-    const categoryMapping = {
-      'TEMOIGNAGE_SUCCESS_STORY': 'Digital Nomades Asie',
-      'TEMOIGNAGE_ECHEC_LEÇONS': 'Digital Nomades Asie',
-      'TEMOIGNAGE_TRANSITION': 'Digital Nomades Asie',
-      'TEMOIGNAGE_COMPARAISON': 'Digital Nomades Asie',
-      'GUIDE_PRATIQUE': 'Digital Nomades Asie',
-      'COMPARAISON_DESTINATIONS': 'Digital Nomades Asie',
-      'ACTUALITE_NOMADE': 'Digital Nomades Asie',
-      'CONSEIL_PRATIQUE': 'Digital Nomades Asie'
-    };
-
-    const mainCategory = categoryMapping[analysis.type_contenu] || 'Digital Nomades Asie';
-    console.log(`🏷️ Catégorie par type: ${mainCategory}`);
+    // 2. Catégorie thème affiliation (si placements détectés)
+    if (affiliatePlacements && affiliatePlacements.length > 0) {
+      const primaryPlacement = affiliatePlacements[0];
+      const themeCategory = AFFILIATE_TO_CATEGORY[primaryPlacement.id];
+      if (themeCategory && !categories.includes(themeCategory)) {
+        categories.push(themeCategory);
+      }
+    }
     
-    return [mainCategory]; // UNE SEULE catégorie
+    // 3. Fallback par type de contenu
+    if (categories.length === 0) {
+      const typeMapping = {
+        'TEMOIGNAGE_SUCCESS_STORY': 'Digital Nomades Asie',
+        'TEMOIGNAGE_ECHEC_LEÇONS': 'Digital Nomades Asie',
+        'GUIDE_PRATIQUE': 'Guides Pratiques',
+        'COMPARAISON_DESTINATIONS': 'Comparaisons'
+      };
+      categories.push(typeMapping[analysis.type_contenu] || 'Digital Nomades Asie');
+    }
+    
+    console.log(`📂 Catégories assignées: ${categories.join(', ')}`);
+    return categories.slice(0, 2); // Max 2 catégories
   }
 
   /**
@@ -1667,61 +1772,61 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     return subCategoryMapping[sousCategorie] || null;
   }
 
-  // Obtenir les tags selon l'analyse
-  // UTILISE final_destination comme source of truth, purge les tags contradictoires
-  async getTagsForContent(analysis) {
-    const tags = [];
+  // Obtenir les tags selon l'analyse et les placements affiliés
+  // UTILISE final_destination comme source of truth + tags affiliation
+  async getTagsForContent(analysis, affiliatePlacements = []) {
+    const tags = new Set();
     
-    // Tags par type de contenu
-    const typeTags = {
-      'TEMOIGNAGE_SUCCESS_STORY': ['Témoignage', 'Succès', 'Inspiration', 'Nomadisme Digital'],
-      'TEMOIGNAGE_ECHEC_LEÇONS': ['Témoignage', 'Échec', 'Leçons', 'Nomadisme Digital'],
-      'TEMOIGNAGE_TRANSITION': ['Témoignage', 'Transition', 'Changement', 'Nomadisme Digital'],
-      'TEMOIGNAGE_COMPARAISON': ['Témoignage', 'Comparaison', 'Expérience', 'Nomadisme Digital'],
-      'GUIDE_PRATIQUE': ['Guide', 'Pratique', 'Tutoriel'],
-      'COMPARAISON_DESTINATIONS': ['Comparaison', 'Destination', 'Choix'],
-      'ACTUALITE_NOMADE': ['Actualité', 'Nouvelle', 'Tendance'],
-      'CONSEIL_PRATIQUE': ['Conseil', 'Astuce', 'Optimisation']
+    // Mapping produit affilié → tags
+    const AFFILIATE_TAGS = {
+      insurance: ['Assurance voyage', 'Santé', 'Sécurité'],
+      esim: ['eSIM', 'Connectivité', 'Internet'],
+      flights: ['Vols', 'Avion', 'Comparateur'],
+      accommodation: ['Hébergement', 'Hôtel', 'Logement'],
+      tours: ['Activités', 'Excursions', 'Visites'],
+      transfers: ['Aéroport', 'Transfert', 'Navette'],
+      car_rental: ['Location voiture', 'Road trip'],
+      bikes: ['Scooter', 'Moto', 'Vélo'],
+      coworking: ['Coworking', 'Remote', 'Productivité'],
+      flight_compensation: ['Retard vol', 'Indemnisation'],
+      events: ['Événements', 'Concert', 'Festival']
     };
-
-    tags.push(...(typeTags[analysis.type_contenu] || ['Conseil']));
     
-    // Tags par sous-catégorie
-    if (analysis.sous_categorie) {
-      tags.push(analysis.sous_categorie);
-    }
-    
-    // Tags par destination - UTILISER final_destination UNIQUEMENT
-    // Liste des destinations Asie pour purger les tags contradictoires
-    const asiaDestinations = [
-      'thailand', 'thaïlande', 'Thaïlande', 'Thailand',
-      'vietnam', 'Vietnam',
-      'indonesia', 'indonésie', 'Indonesia', 'Indonésie',
-      'japan', 'japon', 'Japan', 'Japon',
-      'korea', 'corée', 'Korea', 'Corée',
-      'philippines', 'Philippines',
-      'singapore', 'singapour', 'Singapore', 'Singapour',
-      'bangkok', 'Bangkok',
-      'bali', 'Bali',
-      'tokyo', 'Tokyo'
-    ];
-    
-    // Purger tous les tags destination existants
-    const tagsWithoutDestinations = tags.filter(tag => 
-      !asiaDestinations.some(dest => tag.toLowerCase().includes(dest.toLowerCase()))
-    );
-    
-    // Ajouter UN SEUL tag destination depuis final_destination
+    // 1. Tag destination
     if (analysis.final_destination && analysis.final_destination !== 'Asie') {
-      // Normaliser le nom de destination pour le tag
-      const destinationTag = this.normalizeDestinationTag(analysis.final_destination);
-      if (destinationTag) {
-        tagsWithoutDestinations.push(destinationTag);
-        console.log(`   ✓ Tag destination ajouté depuis final_destination: ${destinationTag}`);
-      }
+      const destTag = this.normalizeDestinationTag(analysis.final_destination);
+      if (destTag) tags.add(destTag);
     }
     
-    return tagsWithoutDestinations.slice(0, 8); // Limiter à 8 tags
+    // 2. Tags affiliation
+    if (affiliatePlacements && affiliatePlacements.length > 0) {
+      affiliatePlacements.slice(0, 2).forEach(p => {
+        const themeTags = AFFILIATE_TAGS[p.id] || [];
+        themeTags.slice(0, 2).forEach(t => tags.add(t));
+      });
+    }
+    
+    // 3. Tags type de contenu
+    if (analysis.type_contenu?.includes('TEMOIGNAGE')) {
+      tags.add('Témoignage');
+    }
+    if (analysis.type_contenu?.includes('GUIDE')) {
+      tags.add('Guide');
+    }
+    
+    // 4. Tag budget si mentionné dans le titre
+    if (/budget|€|euro|prix|coût|argent|dépens/i.test(analysis.title || '')) {
+      tags.add('Budget');
+    }
+    
+    // 5. Tag nomadisme si pertinent
+    if (/nomad|remote|digital|travail/i.test(analysis.title || '') || 
+        analysis.type_contenu?.includes('TEMOIGNAGE')) {
+      tags.add('Nomadisme Digital');
+    }
+    
+    console.log(`🏷️ Tags assignés: ${[...tags].join(', ')}`);
+    return [...tags].slice(0, 8); // Max 8 tags
   }
   
   /**

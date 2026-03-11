@@ -51,6 +51,7 @@ class QualityAnalyzer {
       'tokyo', 'kyoto', 'osaka', 'bangkok', 'chiang mai', 'phuket', 'hanoi', 'ho chi minh',
       'saigon', 'kuala lumpur', 'penang', 'phnom penh', 'siem reap', 'manila', 'cebu',
       'seoul', 'busan', 'denpasar', 'jakarta', 'katmandou', 'kathmandu', 'colombo',
+      'koh lanta', 'koh samui', 'koh phangan', 'koh tao', 'krabi', 'pai',
       // Formulations régionales (évite les faux négatifs "Asie du Sud-Est")
       'asie', 'asie du sud-est', 'asie du sud est', 'sud-est asiatique', 'sud est asiatique',
       'southeast asia', 'south east asia',
@@ -342,8 +343,9 @@ class QualityAnalyzer {
    * Analyse Content Writing Expert - 40%
    * En mode NEWS : fil narratif allégé (hook + impact + solution), pas de recommandations obligatoires
    * En mode EVERGREEN : grille complète
+   * @param {Object} options - Options optionnelles { angle: { primary_angle: { tension: string } } }
    */
-  analyzeContentWriting(html, editorialMode = 'evergreen') {
+  analyzeContentWriting(html, editorialMode = 'evergreen', options = {}) {
     const root = this.extractMainContent(html);
     const score = { total: 0, max: 100, details: [] };
     const text = root.text;
@@ -628,6 +630,49 @@ class QualityAnalyzer {
         score.total = Math.max(0, score.total + descPenalty);
         score.details.push({ check: 'EVERGREEN pas de remplissage descriptif', status: `${purelyDescriptiveCount}/${substantiveParaCount} (${(descRatio * 100).toFixed(0)}% > 20% seuil)`, points: descPenalty });
       }
+
+      // angle_coherence: bonus si l'angle est présent dans les sections
+      if (options?.angle?.primary_angle?.tension) {
+        const frStopWords = ['le', 'la', 'les', 'un', 'une', 'des', 'du', 'de', 'au', 'aux', 'en', 'et', 'ou', 'mais', 'donc', 'car', 'pour', 'par', 'avec', 'dans', 'sur', 'sans', 'plus', 'pas', 'tout', 'tous', 'cette', 'ces', 'son', 'ses', 'qui', 'que', 'quoi', 'dont', 'être', 'avoir', 'faire', 'comme', 'aussi', 'bien', 'peut', 'même', 'très'];
+        const tensionText = options.angle.primary_angle.tension.toLowerCase();
+        const angleKeywords = tensionText
+          .split(/\s+/)
+          .map(w => w.replace(/[^a-zàâäéèêëïîôùûüç]/gi, ''))
+          .filter(w => w.length > 4 && !frStopWords.includes(w))
+          .slice(0, 5);
+
+        if (angleKeywords.length > 0) {
+          const h2Sections = root.querySelectorAll('h2');
+          let sectionsWithKeyword = 0;
+          let totalSections = 0;
+
+          h2Sections.forEach((h2El, idx) => {
+            let sectionText = '';
+            let sibling = h2El.nextElementSibling;
+            while (sibling && sibling.tagName !== 'H2') {
+              sectionText += ' ' + sibling.text;
+              sibling = sibling.nextElementSibling;
+            }
+            sectionText = sectionText.toLowerCase();
+            
+            if (sectionText.trim().length > 50) {
+              totalSections++;
+              const hasKeyword = angleKeywords.some(kw => sectionText.includes(kw));
+              if (hasKeyword) sectionsWithKeyword++;
+            }
+          });
+
+          const matchRatio = totalSections > 0 ? (sectionsWithKeyword / totalSections) * 100 : 0;
+          let bonus = 0;
+          if (matchRatio >= 60) {
+            bonus = 10;
+          } else if (matchRatio >= 40) {
+            bonus = 5;
+          }
+          score.total += bonus;
+          score.details.push({ check: 'EVERGREEN cohérence angle', status: `${bonus > 0 ? 'OK' : 'Partiel'} (${matchRatio.toFixed(0)}%)`, points: bonus });
+        }
+      }
     }
 
     return {
@@ -779,11 +824,12 @@ class QualityAnalyzer {
    * Score global
    * @param {string} html - Contenu HTML de l'article
    * @param {string} editorialMode - 'news' | 'evergreen' (conditionne seuils et grille)
+   * @param {Object} angle - Angle optionnel { primary_angle: { tension: string } }
    */
-  getGlobalScore(html, editorialMode = 'evergreen') {
+  getGlobalScore(html, editorialMode = 'evergreen', angle = null) {
     const serp = this.analyzeSERP(html, editorialMode);
     const links = this.analyzeInternalLinks(html, editorialMode);
-    const contentWriting = this.analyzeContentWriting(html, editorialMode);
+    const contentWriting = this.analyzeContentWriting(html, editorialMode, { angle });
     const blocking = this.analyzeBlocking(html, editorialMode);
 
     const weightedScore = 

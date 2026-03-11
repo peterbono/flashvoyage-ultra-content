@@ -1,0 +1,129 @@
+{
+  "timestamp": "2026-03-11T14:03:16.067Z",
+  "source": "Living in Chiang Mai on $1000/month - My 6-month experience",
+  "results": [
+    {
+      "name": "GPT-4o",
+      "model": "gpt-4o",
+      "success": true,
+      "wordCount": 669,
+      "duration": 25271,
+      "usage": {
+        "prompt_tokens": 710,
+        "completion_tokens": 1083,
+        "total_tokens": 1793,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "quality": {
+        "globalScore": 43.6,
+        "categories": {
+          "serp": 80,
+          "links": 0,
+          "contentWriting": 59,
+          "blocking": 0
+        },
+        "blockingPassed": false,
+        "kpi": {
+          "passed": 3,
+          "failed": 6,
+          "skipped": 1,
+          "total": 10
+        }
+      }
+    },
+    {
+      "name": "GPT-4o-mini",
+      "model": "gpt-4o-mini",
+      "success": true,
+      "wordCount": 895,
+      "duration": 40934,
+      "usage": {
+        "prompt_tokens": 710,
+        "completion_tokens": 1261,
+        "total_tokens": 1971,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "quality": {
+        "globalScore": 42.4,
+        "categories": {
+          "serp": 75,
+          "links": 0,
+          "contentWriting": 59,
+          "blocking": 0
+        },
+        "blockingPassed": false,
+        "kpi": {
+          "passed": 2,
+          "failed": 7,
+          "skipped": 1,
+          "total": 10
+        }
+      }
+    },
+    {
+      "name": "Claude-Haiku-4.5",
+      "model": "claude-haiku-4-5-20251001",
+      "success": true,
+      "wordCount": 3321,
+      "duration": 74737,
+      "usage": {
+        "prompt_tokens": 844,
+        "completion_tokens": 7365,
+        "total_tokens": 8209
+      },
+      "quality": {
+        "globalScore": 50.4,
+        "categories": {
+          "serp": 75,
+          "links": 0,
+          "contentWriting": 79,
+          "blocking": 0
+        },
+        "blockingPassed": false,
+        "kpi": {
+          "passed": 3,
+          "failed": 6,
+          "skipped": 1,
+          "total": 10
+        }
+      }
+    }
+  ],
+  "review": {
+    "ranking": [
+      {
+        "name": "Claude-Haiku-4.5",
+        "score": 50.4
+      },
+      {
+        "name": "GPT-4o",
+        "score": 43.6
+      },
+      {
+        "name": "GPT-4o-mini",
+        "score": 42.4
+      }
+    ],
+    "bestQuality": "Claude-Haiku-4.5",
+    "bestValue": "GPT-4o",
+    "recommendation": "hybrid"
+  }
+}

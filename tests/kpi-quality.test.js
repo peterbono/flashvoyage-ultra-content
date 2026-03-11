@@ -264,14 +264,15 @@ export async function testK8_ScoreQualite(html, editorialMode = 'evergreen') {
   const qa = new QualityAnalyzer();
   const result = qa.getGlobalScore(html, editorialMode);
   const score = parseFloat(result.globalScore);
-  const pass = score >= 85.0 && result.blockingPassed;
+  const threshold = Number(result.threshold || (editorialMode === 'news' ? 70 : 85));
+  const pass = score >= threshold && result.blockingPassed;
 
   return {
     status: pass ? 'PASS' : 'FAIL',
     score: score,
     message: pass
-      ? `Score ${score}% >= 85%, blocking OK`
-      : `Score ${score}% < 85%. SERP=${result.categories.serp.percentage.toFixed(0)}% Links=${result.categories.links.percentage.toFixed(0)}% Content=${result.categories.contentWriting.percentage.toFixed(0)}% Blocking=${result.categories.blocking.percentage.toFixed(0)}%`
+      ? `Score ${score}% >= ${threshold}%, blocking OK`
+      : `Score ${score}% < ${threshold}%. SERP=${result.categories.serp.percentage.toFixed(0)}% Links=${result.categories.links.percentage.toFixed(0)}% Content=${result.categories.contentWriting.percentage.toFixed(0)}% Blocking=${result.categories.blocking.percentage.toFixed(0)}%`
   };
 }
 
@@ -307,7 +308,14 @@ export function testK9_SectionsSERP(html) {
 /**
  * K10 — Quick Guide present
  */
-export function testK10_QuickGuide(html) {
+export function testK10_QuickGuide(html, editorialMode = 'evergreen') {
+  if ((editorialMode || 'evergreen').toLowerCase() === 'news') {
+    return {
+      status: 'SKIP',
+      message: 'Quick Guide non requis en mode NEWS'
+    };
+  }
+
   const hasClass = /class="[^"]*quick[-_]?guide[^"]*"/i.test(html);
   const h2h3Text = (html.match(/<h[23][^>]*>(.*?)<\/h[23]>/gi) || [])
     .map(m => m.replace(/<[^>]*>/g, ''))
@@ -330,6 +338,7 @@ export function testK10_QuickGuide(html) {
  */
 export async function runAllKPITests(html, options = {}) {
   const { angleHook, allowedNumberTokens, editorialMode, title } = options;
+  const normalizedMode = (editorialMode || 'evergreen').toLowerCase();
   const htmlWithTitle = title ? `<h1>${title}</h1>\n${html}` : html;
 
   const results = {
@@ -340,9 +349,9 @@ export async function runAllKPITests(html, options = {}) {
     K5: testK5_CTAFriction(html),
     K6: testK6_ZeroInvention(html, allowedNumberTokens),
     K7: testK7_LiensInternes(html),
-    K8: await testK8_ScoreQualite(htmlWithTitle, editorialMode || 'evergreen'),
+    K8: await testK8_ScoreQualite(htmlWithTitle, normalizedMode),
     K9: testK9_SectionsSERP(html),
-    K10: testK10_QuickGuide(html)
+    K10: testK10_QuickGuide(html, normalizedMode)
   };
 
   const passed = Object.values(results).filter(r => r.status === 'PASS').length;

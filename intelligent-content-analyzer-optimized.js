@@ -2,7 +2,8 @@
 
 import axios from 'axios';
 import fs from 'fs';
-import { OPENAI_API_KEY, DRY_RUN, FORCE_OFFLINE } from './config.js';
+import { OPENAI_API_KEY, DRY_RUN, FORCE_OFFLINE, LLM_PROVIDER, LLM_MODEL } from './config.js';
+import { createClaudeCompletion, isAnthropicAvailable } from './anthropic-client.js';
 import { extractRedditForAnalysis, isDestinationQuestion, extractMainDestination } from './reddit-extraction-adapter.js';
 import { detectRedditPattern } from './reddit-pattern-detector.js';
 import { compileRedditStory } from './reddit-story-compiler.js';
@@ -56,15 +57,53 @@ function safeJsonParse(str, label = 'json') {
     throw new Error(`SAFE_JSON_PARSE_EMPTY: ${label}`);
   }
   
+  // Strip markdown code fences (Claude wraps JSON in ```json ... ```)
+  let cleaned = str.trim();
+  if (cleaned.startsWith('```')) {
+    cleaned = cleaned.replace(/^```(?:json|JSON)?\s*\n?/, '').replace(/\n?```\s*$/, '').trim();
+  }
+  
   try {
-    return JSON.parse(str);
+    return JSON.parse(cleaned);
+  } catch (firstError) {
+    // Réparation JSON Claude : trailing commas, control chars, newlines dans strings
+    let repairAttempt = cleaned
+      .replace(/,\s*([\]}])/g, '$1')           // trailing commas
+      .replace(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g, ' '); // control chars (except \n \r \t)
+    try {
+      return JSON.parse(repairAttempt);
+    } catch (_) {}
+    
+    // Fix Claude: literal newlines inside JSON string values -> \\n
+    const withEscapedNewlines = repairAttempt.replace(
+      /"(?:[^"\\]|\\.)*"/g,
+      match => match.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t')
+    );
+    try {
+      return JSON.parse(withEscapedNewlines);
+    } catch (_) {}
+    
+    // Extraire le premier objet/array JSON valide par regex
+    const jsonExtract = cleaned.match(/(\{[\s\S]*\}|\[[\s\S]*\])/);
+    if (jsonExtract) {
+      const extracted = jsonExtract[1]
+        .replace(/,\s*([\]}])/g, '$1')
+        .replace(/"(?:[^"\\]|\\.)*"/g, m => m.replace(/\n/g, '\\n').replace(/\r/g, '\\r'));
+      try {
+        return JSON.parse(extracted);
+      } catch (_) {}
+    }
+  }
+  
+  try {
+    return JSON.parse(cleaned);
   } catch (e) {
     // Tentative de réparation si JSON incomplet (tronqué)
     if (e.message.includes('Unexpected end of JSON input') || e.message.includes('end of data')) {
       console.warn(`⚠️ JSON tronqué détecté pour ${label} - Tentative de réparation...`);
       
       // Stratégie 1: Chercher le dernier objet/array valide
-      let repaired = str.trim();
+      let repaired = cleaned;
       
       // Si le JSON commence par { mais ne se termine pas par }, essayer de fermer
       if (repaired.startsWith('{') && !repaired.endsWith('}')) {
@@ -119,7 +158,7 @@ function safeJsonParse(str, label = 'json') {
           console.warn(`⚠️ Stratégie 4: Tentative d'extraction du champ developpement par regex...`);
           
           // Pattern pour extraire developpement (peut être tronqué à la fin)
-          const devMatch = str.match(/"developpement"\s*:\s*"([\s\S]*?)(?:"\s*,\s*"|"\s*,\s*"[a-z_]+"\s*:|"\s*\}|$)/i);
+          const devMatch = cleaned.match(/"developpement"\s*:\s*"([\s\S]*?)(?:"\s*,\s*"|"\s*,\s*"[a-z_]+"\s*:|"\s*\}|$)/i);
           if (devMatch && devMatch[1] && devMatch[1].length > 200) {
             let extractedDev = devMatch[1];
             // Nettoyer les échappements JSON
@@ -132,7 +171,7 @@ function safeJsonParse(str, label = 'json') {
             console.log(`✅ Champ "developpement" extrait par regex: ${extractedDev.length} caractères`);
             
             // Extraire aussi le titre si possible
-            const titreMatch = str.match(/"titre"\s*:\s*"([^"]+)"/i);
+            const titreMatch = cleaned.match(/"titre"\s*:\s*"([^"]+)"/i);
             const titre = titreMatch ? titreMatch[1] : 'Article généré';
             
             // Retourner un objet minimal mais fonctionnel avec le developpement récupéré
@@ -168,7 +207,7 @@ function safeJsonParse(str, label = 'json') {
     }
     
     // Si aucune réparation n'a fonctionné, throw avec preview
-    const preview = str.slice(0, 200).replace(/\s+/g, ' ');
+    const preview = cleaned.slice(0, 200).replace(/\s+/g, ' ');
     throw new Error(`SAFE_JSON_PARSE_FAIL: ${label} msg=${e.message} preview="${preview}"`);
   }
 }
@@ -185,6 +224,25 @@ async function callOpenAIWithRetry(config, retries = 3) {
   if (forceOffline && !config.apiKey) {
     console.log(`⚠️ DRYRUN_LLM_FALLBACK_TEMPLATE_USED: reason=FORCE_OFFLINE`);
     return generateTemplateFallback(config.sourceText, config.article, config.type);
+  }
+
+  // Route vers Anthropic si provider configuré et disponible
+  if (config.provider === 'anthropic' && isAnthropicAvailable()) {
+    try {
+      const anthropicResponse = await createClaudeCompletion({
+        model: config.body?.model || LLM_MODEL,
+        messages: config.body?.messages || [],
+        max_tokens: config.body?.max_tokens || 4096,
+        temperature: config.body?.temperature
+      }, retries, config._trackingStep || 'unknown');
+      return anthropicResponse;
+    } catch (error) {
+      if (isDryRun || forceOffline) {
+        console.log(`⚠️ DRYRUN_LLM_FALLBACK_TEMPLATE_USED: reason=anthropic_error_${error.status || 'unknown'}`);
+        return generateTemplateFallback(config.sourceText, config.article, config.type);
+      }
+      console.warn(`⚠️ ANTHROPIC_FALLBACK: ${error.message} — tentative OpenAI...`);
+    }
   }
   
   for (let attempt = 1; attempt <= retries; attempt++) {
@@ -211,7 +269,7 @@ async function callOpenAIWithRetry(config, retries = 3) {
       const isRetryable = error.code === 'ETIMEDOUT' || 
                          error.code === 'ECONNRESET' || 
                          error.response?.status === 429 ||
-                         error.response?.status === 401; // Invalid API key
+                         error.response?.status === 401;
       
       if (isRetryable && attempt < retries) {
         const delay = backoffDelays[attempt - 1];
@@ -220,14 +278,11 @@ async function callOpenAIWithRetry(config, retries = 3) {
         continue;
       }
       
-      // Si après retries ça échoue
       if (attempt === retries) {
         if (isDryRun || forceOffline) {
-          // Fallback template en DRY_RUN
           console.log(`⚠️ DRYRUN_LLM_FALLBACK_TEMPLATE_USED: reason=${error.code || error.response?.status || 'unknown'}`);
           return generateTemplateFallback(config.sourceText, config.article, config.type);
         } else {
-          // En PROD, throw
           throw error;
         }
       }
@@ -884,9 +939,10 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
 
       const responseData = await callOpenAIWithRetry({
         apiKey: this.apiKey,
+        provider: LLM_PROVIDER,
         _trackingStep: 'analyzer-extract',
         body: {
-        model: 'gpt-4o',
+        model: LLM_MODEL,
         messages: [{ role: 'user', content: prompt }],
         max_tokens: 1500,
         temperature: 0.3
@@ -1107,16 +1163,17 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
 
     const responseData = await callOpenAIWithRetry({
       apiKey: this.apiKey,
+      provider: LLM_PROVIDER,
       _trackingStep: 'generator-main',
       body: {
-      model: 'gpt-4o',
+      model: LLM_MODEL,
       messages: [
         { role: 'system', content: systemMessage },
         { role: 'user', content: userMessage }
       ],
-      max_tokens: 2000, // Augmenté pour éviter les troncatures
+      max_tokens: 2000,
       temperature: 0.7,
-      response_format: { type: "json_object" }
+      ...(LLM_PROVIDER === 'openai' && { response_format: { type: "json_object" } })
       },
       sourceText: fullContent,
       article: extracted, // Utiliser extracted comme article pour compatibilité
@@ -1523,9 +1580,9 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
    - Contenu en HTML libre (<h2>, <h3>, <p>, <ul><li>). Arc narratif (situation → surprise → impact → options → choix → plan d'action).
    - OBLIGATOIRE : Hook cinématique, 2-5 citations inline « ... », témoignage comme preuve, angles SERP, 3 CTA narratifs, affiliation dans le flux.
    - SECTIONS SERP OBLIGATOIRES (H2 dédiés) :
-     * H2 "Ce que les autres guides ne disent pas" (ou variante : "Ce que les témoignages ne disent pas explicitement") — angle différenciant, analyse critique absente chez les concurrents.
-     * H2 sur les erreurs fréquentes (ex: "Les 3 erreurs qui coûtent cher aux voyageurs en [destination]") — pièges concrets, montants, solutions.
-   - INTERDIT : NE JAMAIS generer de section "Limites et biais" ou "Disclaimer" — cela tue l'autorite E-E-A-T.
+     * H2 "Ce que les autres guides ne disent pas" — OBLIGATOIRE, angle différenciant.
+     * H2 "Erreurs fréquentes à éviter" — OBLIGATOIRE, pièges concrets avec montants.
+     * H2 "Limites et biais de cet article" — OBLIGATOIRE, transparence E-E-A-T, 1-2 paragraphes honnêtes sur les limites des sources.
    - OPTIONNEL (si le story le justifie) : peurs invisibles, réalité vs fantasme, leçons auteur.
 
 2. RECOMMANDATIONS (OBLIGATOIRE - champ séparé)
@@ -1684,7 +1741,6 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
   ❌ "Témoignage voyage: retours et leçons"
   ❌ "Mon expérience en Asie"
   ❌ "🎯 Nos recommandations" (emoji interdit)
-  ❌ "⚠️ Limites et biais" (emoji interdit)
   ❌ "Vivre à Bali : Choix de Logement (2026)" (date interdite)
 - Le titre DOIT contenir une destination asiatique précise (ville ou pays)
 - Le titre DOIT être actionnable et spécifique
@@ -1695,8 +1751,8 @@ ${anglesBlock}
 ⚠️ RÈGLE ABSOLUE - EMOJIS INTERDITS DANS LES TITRES H2:
 - JAMAIS d'emoji au début ou dans un titre H2
 - Les emojis sont autorisés UNIQUEMENT dans le corps du texte (paragraphes, listes)
-- Exemples CORRECTS: <h2>Nos recommandations</h2>, <h2>Les erreurs frequentes</h2>
-- Exemples INTERDITS: <h2>🎯 Nos recommandations</h2>, <h2>💬 Ce que dit le témoignage</h2>, <h2>Limites et biais</h2>
+- Exemples CORRECTS: <h2>Nos recommandations</h2>, <h2>Les erreurs frequentes</h2>, <h2>Limites et biais de cet article</h2>
+- Exemples INTERDITS: <h2>🎯 Nos recommandations</h2>, <h2>💬 Ce que dit le témoignage</h2>
 
 ⚠️ INTERDICTION DE RÉPÉTER LE BLOCKQUOTE:
 - Le blockquote principal apparaît UNE SEULE FOIS dans l'article
@@ -1758,11 +1814,11 @@ ${correctionBlock}
 ${editorialBlock}
 
 🚨 RAPPEL CRITIQUE — SECTIONS SERP OBLIGATOIRES DANS "developpement" :
-Le champ "developpement" DOIT contenir ces 2 H2 comme dernières sections de contenu (AVANT FAQ/Comparatif/Retenir) :
+Le champ "developpement" DOIT contenir ces 3 H2 comme dernières sections de contenu (AVANT FAQ/Comparatif/Retenir) :
 1. <h2>Ce que les autres guides ne disent pas</h2> — angle différenciant, analyse critique
 2. <h2>Les erreurs fréquentes qui coûtent cher aux voyageurs en [destination]</h2> — pièges concrets avec montants
-INTERDIT : NE JAMAIS generer de section "Limites et biais" ou "Disclaimer".
-Si tu omets ces 2 sections, l'article sera REJETÉ par le quality gate.`;
+3. <h2>Limites et biais de cet article</h2> — transparence E-E-A-T, 1-2 paragraphes honnêtes sur les sources utilisées
+Si tu omets ces 3 sections, l'article sera REJETÉ par le quality gate.`;
 
     // PHASE 4.2: User message basé sur story, pattern, extracted
     // ENRICHISSEMENT: Extraire les données structurées depuis extracted
@@ -1920,16 +1976,17 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
 
     const responseData = await callOpenAIWithRetry({
       apiKey: this.apiKey,
+      provider: LLM_PROVIDER,
       _trackingStep: 'generator-evergreen',
       body: {
-      model: 'gpt-4o',
+      model: LLM_MODEL,
       messages: [
         { role: 'system', content: systemMessage },
         { role: 'user', content: userMessage }
       ],
-      max_tokens: 12000, // PHASE 2.2: 12K tokens pour réduire le besoin d'expansion (2500+ mots + JSON structure)
+      max_tokens: 12000,
       temperature: 0.7,
-      response_format: { type: "json_object" }
+      ...(LLM_PROVIDER === 'openai' && { response_format: { type: "json_object" } })
       },
       sourceText: (Array.isArray(extraction.citations) ? extraction.citations.join(' ') : (extraction.citations || '')) || userMessage,
       article: extracted, // Utiliser extracted comme article pour compatibilité
@@ -2458,13 +2515,6 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
       htmlContent = htmlContent.replace(/<h2[^>]*>Our recommendations:?\s*Where to start\?[^<]*<\/h2>/gi, '<h2>Nos recommandations : Par où commencer ?</h2>');
       htmlContent = htmlContent.replace(/<h2[^>]*>What the community brings[^<]*<\/h2>/gi, '<h2>Ce que la communauté apporte</h2>');
 
-      // Supprimer toute section "Limites et biais" / "Disclaimer" (tue E-E-A-T)
-      const limitesBiaisRemoved = htmlContent.replace(/<h2[^>]*>[^<]*(?:limites?\s*(?:et\s*)?biais|limitations?\s*(?:and\s*)?biases?|disclaimer)[^<]*<\/h2>[\s\S]*?(?=<h2|$)/gi, '');
-      if (limitesBiaisRemoved.length < htmlContent.length) {
-        console.log('   🧹 Section "Limites et biais" supprimee (interdit E-E-A-T)');
-        htmlContent = limitesBiaisRemoved;
-      }
-      
       // POST-PROCESSING 5.5 : Supprimer les sections dupliquées et les sections en anglais
       // Détecter et supprimer les sections avec "(suite)" dans le titre
       htmlContent = htmlContent.replace(/<h2[^>]*>[^<]*\(suite\)[^<]*<\/h2>[\s\S]*?(?=<h2>|$)/gi, '');
@@ -2905,6 +2955,21 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
     const existingClaims = extractExistingClaims(htmlContent);
     const angle = options.angle || null;
 
+    // P4: Extraction des mots-clés de l'angle pour contrôle de dilution
+    const extractAngleKeywords = (tension) => {
+      if (!tension) return [];
+      const stopWords = new Set(['le', 'la', 'les', 'un', 'une', 'des', 'du', 'de', 'au', 'aux', 'en', 'et', 'ou', 'mais', 'donc', 'car', 'pour', 'par', 'avec', 'dans', 'sur', 'sans', 'plus', 'pas', 'tout', 'tous', 'cette', 'ces', 'son', 'ses', 'qui', 'que']);
+      return tension.toLowerCase().split(/\s+/)
+        .filter(w => w.length > 4 && !stopWords.has(w))
+        .slice(0, 5);
+    };
+    const angleKeywords = extractAngleKeywords(angle?.primary_angle?.tension);
+    const countKeywords = (text, keywords) => {
+      const textLower = text.replace(/<[^>]*>/g, ' ').toLowerCase();
+      return keywords.reduce((sum, kw) => sum + (textLower.match(new RegExp(kw, 'gi')) || []).length, 0);
+    };
+    const preExpansionCount = countKeywords(htmlContent, angleKeywords);
+
     const truthPackBlock = truthPack.isPoor
       ? `\nCONTRAINTES FACTUELLES : Aucun chiffre source disponible. Utilise des formulations qualitatives (des frais, des dizaines d'euros, plusieurs jours) sans inventer de montants precis. Lieux autorises : ${truthPack.allowedLocations.join(', ') || 'aucun specifie'}.`
       : `\nCONTRAINTES FACTUELLES (ABSOLU) :
@@ -2943,6 +3008,7 @@ COHERENCE ANGLE (ABSOLU) :
 - Chaque paragraphe ajoute doit servir la tension editoriale centrale. Si le paragraphe ne fait PAS avancer la tension, ne l'ajoute pas.
 - Chaque H2 ajoute doit contenir un arbitrage, une decision, ou un trade-off — pas une description neutre.
 - Reutilise l'angle editorial dans les transitions entre sections pour maintenir le fil rouge.
+- Si les sections 'Ce que les autres ne disent pas' ou 'Erreurs frequentes' sont absentes, AJOUTE-LES obligatoirement.
 
 REGLES DE FORME :
 - Chaque paragraphe DOIT faire au moins 3 phrases (PAS de paragraphe d'une seule phrase).
@@ -2993,9 +3059,10 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2500 mots.`;
 
     const responseData = await callOpenAIWithRetry({
       apiKey: this.apiKey,
+      provider: LLM_PROVIDER,
       _trackingStep: 'generator-expand',
       body: {
-        model: 'gpt-4o',
+        model: LLM_MODEL,
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
@@ -3029,6 +3096,17 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2500 mots.`;
     if (expandedWords <= originalWords) {
       console.warn(`⚠️ Expansion n'a pas augmenté le contenu (${originalWords} → ${expandedWords} mots). Conservation de l'original.`);
       return htmlContent;
+    }
+
+    // P4: Contrôle de dilution de l'angle après expansion
+    if (angleKeywords.length > 0 && preExpansionCount > 0) {
+      const postExpansionCount = countKeywords(expanded, angleKeywords);
+      const ratio = postExpansionCount / preExpansionCount;
+      if (ratio < 0.7) {
+        console.warn(`⚠️ EXPANSION_REJECTED: angle_dilution (ratio=${(ratio * 100).toFixed(0)}% < 70%)`);
+        return htmlContent;
+      }
+      console.log(`✅ Angle coherence: ${(ratio * 100).toFixed(0)}% (pre=${preExpansionCount}, post=${postExpansionCount})`);
     }
     
     console.log(`✅ EXPANSION EVERGREEN: ${originalWords} → ${expandedWords} mots (+${expandedWords - originalWords})`);

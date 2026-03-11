@@ -484,7 +484,9 @@ class PipelineRunner {
             inlineImages: finalized.inlineImages || [],
             featuredImage: featuredImageEarly,
             angle: angleResult || null,
-            _truthPack: generated._truthPack || null
+            _truthPack: generated._truthPack || null,
+            editorialMode,
+            editorial_mode: editorialMode
           };
           const widgetsInFinalArticleBlocked = this.finalizer.detectRenderedWidgets(finalArticleBlocked.content);
           console.log(`🔍 DEBUG PIPELINE (BLOCKED): Widgets dans finalArticleBlocked.content: count=${widgetsInFinalArticleBlocked.count}, types=[${widgetsInFinalArticleBlocked.types.join(', ')}]`);
@@ -555,7 +557,9 @@ class PipelineRunner {
         inlineImages: finalized.inlineImages || [],
         featuredImage: featuredImageEarly,
         angle: angleResult || null,
-        _truthPack: generated._truthPack || null
+        _truthPack: generated._truthPack || null,
+        editorialMode,
+        editorial_mode: editorialMode
       };
       
       // DEBUG: Vérifier les widgets dans finalArticle.content après création
