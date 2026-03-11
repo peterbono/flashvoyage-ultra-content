@@ -861,7 +861,7 @@ ${widgetScript}
 `;
 
       // Placement intelligent : suggestion LLM + mots-clés + garde narrative
-      let smartIndex = this.findSmartPosition(enhancedContent, widget, widgetIndex);
+      let smartIndex = this.findSmartPosition(enhancedContent, widget, widgetIndex, selectedWidgets.length);
       
       // Spacing enforcement: ensure minimum gap from previously placed widgets
       if (smartIndex != null && placedPositions.length > 0) {
@@ -908,7 +908,8 @@ ${widgetScript}
         console.log(`   📍 SMART placement pour ${widget.slot} à index ${smartIndex}`);
       } else {
         // Fallback : find unoccupied H2 section or end of article
-        const fallbackIndex = this.findFallbackPosition(enhancedContent, placedPositions, MIN_CHAR_GAP);
+        const minFallbackStart = (selectedWidgets.length >= 2 && widgetIndex >= 1) ? Math.floor(enhancedContent.length * 0.5) : 0;
+        const fallbackIndex = this.findFallbackPosition(enhancedContent, placedPositions, MIN_CHAR_GAP, minFallbackStart);
         if (fallbackIndex != null) {
           const insertedBlock = '\n\n' + widgetBlock + '\n\n';
           enhancedContent = enhancedContent.slice(0, fallbackIndex) + insertedBlock + enhancedContent.slice(fallbackIndex);
@@ -1123,7 +1124,7 @@ ${widgetScript}
    * @param {number} widgetIndex - Index du widget dans la boucle (0, 1, 2...)
    * @returns {number|null} Index d'insertion ou null si fallback nécessaire
    */
-  findSmartPosition(content, widget, widgetIndex = 0) {
+  findSmartPosition(content, widget, widgetIndex = 0, totalWidgets = 1) {
     // Mots-clés par type de widget (même logique que article-finalizer.js:findSmartInsertPosition)
     const keywordsBySlot = {
       flights: ['vol', 'vols', 'avion', 'billet', 'aéroport', 'aeroport', 'réservation', 'reservation', 'départ', 'depart', 'arrivée', 'arrivee', 'compagnie', 'flight', 'booking', 'budget', 'prix', 'tarif'],
@@ -1147,13 +1148,22 @@ ${widgetScript}
     let searchEnd = content.length;
     let hadSectionTarget = false;
 
+    // Distribution constraint: 2nd+ widget must be placed in the second half
+    const halfPoint = Math.floor(content.length * 0.5);
+    if (totalWidgets >= 2 && widgetIndex >= 1) {
+      searchStart = halfPoint;
+      console.log(`   📍 Distribution: widget #${widgetIndex + 1}/${totalWidgets} forcé en 2nde moitié (>= ${halfPoint})`);
+    }
+
     // Si le LLM a suggéré une section, cibler cette zone via fuzzy match
     if (widget.section_title) {
       const sectionMatch = this.findSectionFuzzy(content, widget.section_title);
       if (sectionMatch) {
         hadSectionTarget = true;
-        searchStart = sectionMatch.index;
-        // Fin de la section = prochain H2/H3 ou fin du contenu
+        // Respect distribution constraint: only use section if it's past the minimum start
+        if (sectionMatch.index >= searchStart) {
+          searchStart = sectionMatch.index;
+        }
         const afterSection = content.substring(searchStart + 1);
         const nextHeading = afterSection.match(/<h[2-3][^>]*>/i);
         searchEnd = nextHeading ? searchStart + 1 + nextHeading.index : content.length;
@@ -1183,22 +1193,19 @@ ${widgetScript}
       }
     }
 
-    // Si aucun match dans la zone ciblée ET qu'on avait une section LLM, essayer en global
+    // Si aucun match dans la zone ciblée ET qu'on avait une section LLM, essayer en global (en respectant la contrainte de distribution)
     if (candidateIndex == null && hadSectionTarget) {
-      console.log(`   ⚠️ Aucun mot-clé ${widget.slot} dans la section → scan global`);
+      console.log(`   ⚠️ Aucun mot-clé ${widget.slot} dans la section → scan global (start >= ${searchStart})`);
       const globalPRegex = /<p[^>]*>([\s\S]*?)<\/p>/gi;
       let gMatch;
-      let globalScanned = 0;
       while ((gMatch = globalPRegex.exec(content)) !== null) {
-        globalScanned++;
+        if (gMatch.index < searchStart) continue;
         const gText = (gMatch[1] || '').replace(/<[^>]+>/g, ' ').toLowerCase();
         const gFoundKw = keywords.find(kw => gText.includes(kw));
         if (gFoundKw) {
           candidateIndex = gMatch.index + gMatch[0].length;
           break;
         }
-      }
-      if (candidateIndex == null) {
       }
     }
 
@@ -1447,7 +1454,7 @@ ${widgetScript}
    * Find a fallback position in an unoccupied H2 section, working backwards
    * @returns {number|null} Index position or null
    */
-  findFallbackPosition(content, placedPositions, minGap) {
+  findFallbackPosition(content, placedPositions, minGap, minStart = 0) {
     const h2Matches = Array.from(content.matchAll(/<h2[^>]*>[\s\S]*?<\/h2>/gi));
     if (h2Matches.length < 2) return null;
     
@@ -1476,6 +1483,8 @@ ${widgetScript}
       if (lastP === -1) continue;
       
       const candidateIndex = sectionStart + lastP + 4; // After </p>
+      
+      if (candidateIndex < minStart) continue;
       
       // Check spacing from all placed positions
       const tooClose = placedPositions.some(pos => Math.abs(candidateIndex - pos) < minGap);

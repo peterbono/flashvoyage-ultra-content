@@ -1,6 +1,6 @@
 {
-  "totalPublished": 32,
-  "currentClusterId": "asie-sud-est",
+  "totalPublished": 40,
+  "currentClusterId": "japon",
   "history": [
     {
       "date": "2026-02-23T16:02:38.396Z",
@@ -246,6 +246,62 @@
       "articleType": "support",
       "hint": "transport local asie",
       "title": "Voyage en Corée du Sud en avril : la pollution de l'air compromet-elle vraiment ton itinéraire ?"
+    },
+    {
+      "date": "2026-03-11T18:57:44.355Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "temples angkor",
+      "title": "Voyage au Japon et en Asie du Sud-Est avec 2500 USD : les arbitrages cachés qui vont décider de ton itinéraire"
+    },
+    {
+      "date": "2026-03-11T19:30:45.825Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "temples angkor",
+      "title": "Témoignage voyage: retours et leçons"
+    },
+    {
+      "date": "2026-03-11T19:38:06.260Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "news",
+      "hint": "Thailande",
+      "title": "Villes du Vietnam : trouver l'équilibre entre confort moderne et authenticité loin des circuits nomades"
+    },
+    {
+      "date": "2026-03-11T19:46:49.466Z",
+      "clusterId": "japon",
+      "articleType": "pillar",
+      "hint": "guide japon complet",
+      "title": "Vivre à Lombok en tant que nomade numérique : les 10 coûts cachés qui dévorent ton budget"
+    },
+    {
+      "date": "2026-03-11T20:13:09.642Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "feuilles automne japon",
+      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget"
+    },
+    {
+      "date": "2026-03-11T20:35:07.378Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "japan rail pass",
+      "title": "Choisir sa prochaine destination en Asie du Sud-Est : le dilemme logistique que les nomades cachent"
+    },
+    {
+      "date": "2026-03-11T20:47:20.625Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "japan rail pass",
+      "title": "Voyager à 1 000 euros depuis le Japon vers l'Allemagne : l'arbitrage caché entre confort et réalité"
+    },
+    {
+      "date": "2026-03-11T20:54:49.909Z",
+      "clusterId": "japon",
+      "articleType": "news",
+      "hint": "Japon",
+      "title": "Budget 2 200 € en Thaïlande : 5 arbitrages cachés qui peuvent te ruiner"
     }
   ]
 }

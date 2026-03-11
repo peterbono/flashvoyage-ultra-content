@@ -85,8 +85,10 @@ class ContentMarketingExpert {
     let criticalPassed = true;
 
     // CM1: Modules affiliation présents et pertinents
-    const modules = root.querySelectorAll('aside.affiliate-module');
-    const moduleTypes = modules.map(m => m.getAttribute('data-placement-id'));
+    const modulesAside = root.querySelectorAll('aside.affiliate-module');
+    const modulesDiv = root.querySelectorAll('div[data-fv-segment="affiliate"]');
+    const modules = [...modulesAside, ...modulesDiv];
+    const moduleTypes = modules.map(m => m.getAttribute('data-placement-id') || m.getAttribute('data-fv-segment') || 'affiliate');
     
     if (modules.length === 0) {
       score -= 25;

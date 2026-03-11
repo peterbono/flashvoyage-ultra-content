@@ -1,7 +1,107 @@
 {
-  "crawled_at": "2026-03-11T18:47:53.838Z",
-  "total_articles": 46,
+  "crawled_at": "2026-03-11T20:54:56.900Z",
+  "total_articles": 50,
   "articles": [
+    {
+      "id": 3254,
+      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
+      "url": "https://flashvoyage.com/chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget/",
+      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+      "excerpt": "Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de discussion communautaire sur r/digitalnomad. Sources vérifiées, enrichies par nos données temps réel. Tu arrives à l&#8217;aéropo",
+      "content": "\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de discussion communautaire sur r/digitalnomad. Sources vérifiées, enrichies par nos données temps réel.\n\n Tu arrives à l&#8217;aéroport de Bangkok avec un plan: travailler à distance, t&#8217;entraîner sérieusement au Muay Thai, et rester dans les clous budgétaires. Et l à, première vraie question: où poser tes affaires pour les trois mois qui viennent?\nPhuket, avec ses camps de combat légendaires et ses plages?\nOu Chiang Mai",
+      "categories": [
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "tags": [
+        {
+          "id": 75,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "date": "2026-03-11T20:13:21",
+      "modified": "2026-03-11T20:13:21",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773259996574.jpg"
+    },
+    {
+      "id": 3251,
+      "title": "Vivre à Lombok en tant que nomade numérique : les 10 coûts cachés qui dévorent ton budget",
+      "url": "https://flashvoyage.com/vivre-a-lombok-en-tant-que-nomade-numerique-les-10-couts-caches-qui-devorent-ton-budget/",
+      "slug": "vivre-a-lombok-en-tant-que-nomade-numerique-les-10-couts-caches-qui-devorent-ton-budget",
+      "excerpt": "Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de discussion communautaire sur r/digitalnomad. Sources vérifiées, enrichies par nos données temps réel. Tu arrives à Lombok avec un",
+      "content": "\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de discussion communautaire sur r/digitalnomad. Sources vérifiées, enrichies par nos données temps réel.\n\n Tu arrives à Lombok avec un budget serré.\nL&#8217;île te promet des villas luxueuses à bas prix, des restaurants à 2-5 €, et une vie de rêve.\nMais dès la première semaine, tu réalises que chaque choix — où dormir, comment travailler, quoi manger — est un arbitrage financier. Le wifi local « suffisant » devient un cauchema",
+      "categories": [
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "tags": [
+        {
+          "id": 75,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "date": "2026-03-11T19:47:01",
+      "modified": "2026-03-11T19:47:01",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773258416739.jpg"
+    },
+    {
+      "id": 3246,
+      "title": "Voyage au Japon et en Asie du Sud-Est avec 2500 USD : les arbitrages cachés qui vont décider de ton itinéraire",
+      "url": "https://flashvoyage.com/voyage-au-japon-et-en-asie-du-sud-est-avec-2500-usd-les-arbitrages-caches-qui-vont-decider-de-ton-itineraire/",
+      "slug": "voyage-au-japon-et-en-asie-du-sud-est-avec-2500-usd-les-arbitrages-caches-qui-vont-decider-de-ton-itineraire",
+      "excerpt": "Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de discussion communautaire sur r/travel. Sources vérifiées, enrichies par nos données temps réel. Tu descends de l&#8217;avion à To",
+      "content": "\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de discussion communautaire sur r/travel. Sources vérifiées, enrichies par nos données temps réel.\n\n Tu descends de l&#8217;avion à Tokyo en mai, l&#8217;air chaud te frappe, et ton téléphone affiche déjà les premières notifications: réservations d&#8217;hôtels, prix des entrées, frais de transport. Puis tu réalises que tu dois aussi payer deux vols internationaux, des excursions animalières, et des hôtels dans deux régions.\nS",
+      "categories": [
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
+        }
+      ],
+      "tags": [
+        {
+          "id": 76,
+          "name": "Japon",
+          "slug": "japon"
+        }
+      ],
+      "date": "2026-03-11T18:57:57",
+      "modified": "2026-03-11T18:57:57",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773255472204.jpg"
+    },
+    {
+      "id": 3243,
+      "title": "Voyage en Corée du Sud en avril : la pollution de l&#8217;air compromet-elle vraiment ton itinéraire ?",
+      "url": "https://flashvoyage.com/voyage-en-coree-du-sud-en-avril-la-pollution-de-lair-compromet-elle-vraiment-ton-itineraire/",
+      "slug": "voyage-en-coree-du-sud-en-avril-la-pollution-de-lair-compromet-elle-vraiment-ton-itineraire",
+      "excerpt": "Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de discussion communautaire sur r/travel. Sources vérifiées, enrichies par nos données temps réel. Tu atterris à Séoul au début du p",
+      "content": "\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de discussion communautaire sur r/travel. Sources vérifiées, enrichies par nos données temps réel.\n\n Tu atterris à Séoul au début du printemps, ton agenda déborde d&#8217;excursions à pied, de parcs à explorer, de petits matins courant le long du fleuve Han.\nPuis tu lis quelque chose sur la poussière jaune en avril, et soudain tu te demandes si tu dois tout repenser.\nLes masques, les jours d&#8217;alerte pollution, les enfants",
+      "categories": [
+        {
+          "id": 63,
+          "name": "Corée du Sud",
+          "slug": "coree-du-sud"
+        }
+      ],
+      "tags": [
+        {
+          "id": 183,
+          "name": "Corée du Sud",
+          "slug": "coree-du-sud"
+        }
+      ],
+      "date": "2026-03-11T18:48:01",
+      "modified": "2026-03-11T18:48:01",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773254874809.jpg"
+    },
     {
       "id": 3239,
       "title": "Itinéraire en Indonésie : arbitrer entre Ubud, Nusa Penida et les îles Gili sans sacrifier ton expérience",

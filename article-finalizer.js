@@ -858,6 +858,10 @@ class ArticleFinalizer {
       editorialMode,
       editorial_mode: editorialMode
     };
+
+    if (returnValue.title) {
+      returnValue.title = this.convertTitleUSDToEUR(returnValue.title);
+    }
     
     // DEBUG: Vérifier les widgets dans returnValue.content APRÈS création de l'objet
     const widgetsInReturnValue = this.detectRenderedWidgets(returnValue.content);
@@ -1283,7 +1287,7 @@ class ArticleFinalizer {
     ];
 
     // Marqueurs pour les autres types de widgets (tours, transfers, car_rental, bikes, flight_compensation, events)
-    const otherWidgetTypes = ['tours', 'transfers', 'car_rental', 'bikes', 'flight_compensation', 'events'];
+    const otherWidgetTypes = ['tours', 'transfers', 'car_rental', 'bikes', 'flight_compensation', 'events', 'coworking', 'accommodation'];
     const otherWidgetMarkers = {};
     for (const wtype of otherWidgetTypes) {
       otherWidgetMarkers[wtype] = [
@@ -7321,7 +7325,7 @@ class ArticleFinalizer {
   /**
    * Trouve une position d'insertion contextuelle pour un widget (après le premier bloc qui mentionne des mots-clés liés au type).
    */
-  findSmartInsertPosition(html, placementId) {
+  findSmartInsertPosition(html, placementId, { minStart = 0 } = {}) {
     const keywordsByType = {
       esim: ['internet', 'connexion', 'roaming', 'wifi', 'données', 'sim', 'esim', 'rester connecté', 'signal', '4g', '5g', 'airalo'],
       flights: ['vol', 'vols', 'billet', 'avion', 'aéroport', 'réservation', 'compagnie', 'départ', 'arrivée', 'flight', 'booking'],
@@ -7334,6 +7338,7 @@ class ArticleFinalizer {
     const re = new RegExp('<p[^>]*>([\\s\\S]*?)</p>', 'gi');
     let match;
     while ((match = re.exec(html)) !== null) {
+      if (match.index < minStart) continue;
       const text = (match[1] || '').replace(/<[^>]+>/g, ' ').toLowerCase();
       if (keywords.some(kw => text.includes(kw))) {
         const insertIndex = match.index + match[0].length;
@@ -7345,6 +7350,7 @@ class ArticleFinalizer {
     const h2Re = /<h2[^>]*>([\s\S]*?)<\/h2>/gi;
     let h2Match;
     while ((h2Match = h2Re.exec(html)) !== null) {
+      if (h2Match.index < minStart) continue;
       const text = (h2Match[1] || '').replace(/<[^>]+>/g, ' ').toLowerCase();
       if (keywords.some(kw => text.includes(kw))) {
         const insertIndex = h2Match.index + h2Match[0].length;
@@ -7370,7 +7376,11 @@ class ArticleFinalizer {
 
 
     if (placementId) {
-      let smartIndex = this.findSmartInsertPosition(html, placementId);
+      const minStart = (totalPlacements >= 2 && placementIndex >= 1) ? Math.floor(html.length * 0.5) : 0;
+      if (minStart > 0) {
+        console.log(`   📍 Distribution: module #${placementIndex + 1}/${totalPlacements} forcé en 2nde moitié (>= ${minStart})`);
+      }
+      let smartIndex = this.findSmartInsertPosition(html, placementId, { minStart });
       // Garde narrative : ne pas placer trop tôt (après 3e H2 ou 500 caractères, et au moins 3 paragraphes avant)
       // S'applique à TOUS les modules, pas seulement le premier
       if (smartIndex != null) {
@@ -7813,15 +7823,26 @@ class ArticleFinalizer {
       });
     }
 
-    // Image 3 ("desire trigger", optionnelle) — vers la fin, avant recommandations
-    // Seulement si l'article a assez de sections (5+)
-    if (h2Texts.length >= 5) {
-      // Query contextuelle basée sur l'avant-dernière section (pas "lifestyle" générique)
-      const endH2Index = Math.max(0, h2Texts.length - 3);
+    // Image 3 ("desire trigger") — vers la fin, avant recommandations
+    {
+      const endH2Index = h2Texts.length >= 5
+        ? Math.max(0, h2Texts.length - 3)
+        : Math.max(0, h2Texts.length - 2);
       const endTheme = this._extractSectionTheme(h2Texts[endH2Index] || '', specificDest);
       queries.push({
-        query: endTheme || `${specificDest} people`,
+        query: endTheme || `${specificDest || 'asia'} people travel`,
         position: 'end',
+        sourcePreference: 'pexels'
+      });
+    }
+
+    // Image 4 ("depth") — articles longs (8+ H2), entre mid et end
+    if (h2Texts.length >= 8) {
+      const depthH2Index = Math.floor(h2Texts.length * 0.7);
+      const depthTheme = this._extractSectionTheme(h2Texts[depthH2Index] || '', specificDest);
+      queries.push({
+        query: depthTheme || `${specificDest || 'asia'} local life`,
+        position: 'mid2',
         sourcePreference: 'pexels'
       });
     }
@@ -7886,7 +7907,24 @@ class ArticleFinalizer {
     console.log(`   📋 ${queries.length} image(s) à chercher`);
 
     // Rechercher les images (cascade multi-source)
-    const images = await imageManager.searchMultiple(queries);
+    let images = await imageManager.searchMultiple(queries);
+
+    // Fallback : si on a moins de 3 images, relancer avec queries génériques
+    const minRequired = (pipelineContext?.editorialMode || 'evergreen') === 'news' ? 2 : 3;
+    if (images.length < minRequired) {
+      const geo = pipelineContext?.geo_defaults || pipelineContext?.geo || {};
+      const dest = geo.city || geo.country || analysis?.destinations?.[0] || 'southeast asia';
+      const fallbackQueries = [
+        { query: `${dest} travel`, position: 'hook', sourcePreference: 'pexels' },
+        { query: `${dest} street market`, position: 'mid', sourcePreference: 'pexels' },
+        { query: `${dest} landscape nature`, position: 'end', sourcePreference: 'pexels' },
+      ].filter((_, i) => i >= images.length);
+      if (fallbackQueries.length > 0) {
+        console.log(`   🔄 Fallback: ${images.length}/${minRequired} images, relance avec ${fallbackQueries.length} queries génériques`);
+        const fallbackImages = await imageManager.searchMultiple(fallbackQueries);
+        images = [...images, ...fallbackImages];
+      }
+    }
 
     if (images.length === 0) {
       console.log('   ⚠️ Aucune image trouvée');
@@ -7976,15 +8014,27 @@ class ArticleFinalizer {
         return afterH2;
       }
 
+      case 'mid2': {
+        // Entre 60-75% de l'article (pour les articles longs)
+        const mid2Index = Math.floor(currentH2s.length * 0.7);
+        if (mid2Index < 2 || mid2Index >= currentH2s.length) return -1;
+        const targetH2m2 = currentH2s[mid2Index];
+        if (forbiddenSections.test(targetH2m2[0])) return -1;
+        const afterH2m2 = targetH2m2.index + targetH2m2[0].length;
+        const pAfterM2 = html.substring(afterH2m2).match(/<\/p>/i);
+        if (pAfterM2) {
+          return afterH2m2 + pAfterM2.index + pAfterM2[0].length;
+        }
+        return afterH2m2;
+      }
+
       case 'end': {
         // Avant-dernière section (avant "Ce qu'il faut retenir" ou "Nos recommandations")
         for (let i = currentH2s.length - 1; i >= 0; i--) {
           if (forbiddenSections.test(currentH2s[i][0])) {
-            // Insérer juste avant cette section
             return currentH2s[i].index;
           }
         }
-        // Fallback: avant le dernier H2
         if (currentH2s.length >= 3) {
           return currentH2s[currentH2s.length - 2].index;
         }
@@ -11690,6 +11740,31 @@ class ArticleFinalizer {
    * @param {string} html
    * @returns {string}
    */
+  convertTitleUSDToEUR(title) {
+    if (!title) return title;
+    const rate = 0.92;
+    let result = title;
+    result = result.replace(/\$\s?(\d[\d,]*)/g, (_, amt) => {
+      const n = parseFloat(amt.replace(/,/g, ''));
+      if (isNaN(n) || n <= 0) return _;
+      return `${Math.round(n * rate).toLocaleString('fr-FR')} €`;
+    });
+    result = result.replace(/(\d[\d\s,.]*\d|\d)\s*(?:USD|dollars?)\b/gi, (_, amt) => {
+      const n = parseFloat(amt.replace(/[\s.]/g, '').replace(',', '.'));
+      if (isNaN(n) || n <= 0) return _;
+      return `${Math.round(n * rate).toLocaleString('fr-FR')} €`;
+    });
+    result = result.replace(/(\d[\d,]*)\$/g, (_, amt) => {
+      const n = parseFloat(amt.replace(/,/g, ''));
+      if (isNaN(n) || n <= 0) return _;
+      return `${Math.round(n * rate).toLocaleString('fr-FR')} €`;
+    });
+    if (result !== title) {
+      console.log(`💶 TITLE_USD_TO_EUR: "${title}" → "${result}"`);
+    }
+    return result;
+  }
+
   convertCurrencyToEUR(html) {
     if (!html) return html;
 

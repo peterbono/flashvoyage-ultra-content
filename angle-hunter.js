@@ -751,7 +751,8 @@ function hunt(extracted, pattern, story, editorialMode = 'evergreen') {
 
     const modeCap = MODE_CAPS[editorialMode] || 1;
     const rawPlacements = friction ? Math.min(Math.ceil(candidate.score * 3), 3) : 0;
-    const maxPlacements = Math.min(rawPlacements, modeCap);
+    const minPlacements = editorialMode === 'evergreen' ? 1 : 0;
+    const maxPlacements = Math.max(Math.min(rawPlacements, modeCap), minPlacements);
 
     const angle = {
       angle_version: ANGLE_VERSION,
@@ -798,6 +799,7 @@ function hunt(extracted, pattern, story, editorialMode = 'evergreen') {
  */
 function buildFallback(signals, sourceFacts, detectors, businessPrimary, seoIntent, editorialMode) {
   const { name: dest } = getDestinationLabel(signals);
+  const fallbackMinPlacements = editorialMode === 'evergreen' ? 1 : 0;
 
   return {
     angle_version: ANGLE_VERSION,
@@ -813,7 +815,7 @@ function buildFallback(signals, sourceFacts, detectors, businessPrimary, seoInte
     business_vector: {
       primary: businessPrimary,
       affiliate_friction: null,
-      max_placements: 0
+      max_placements: fallbackMinPlacements
     },
     seo_intent: seoIntent,
     competitive_positioning: buildCompetitivePositioning(ANGLE_TYPES.LOGISTIC_DILEMMA),

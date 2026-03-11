@@ -1252,13 +1252,41 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
    * @returns {string} Montant en EUR formaté (ex: "~1840 €")
    */
   convertUSDToEUR(amountUSD) {
-    const rate = 0.92; // Taux approximatif février 2026
+    const rate = 0.92;
     const numericAmount = typeof amountUSD === 'string' 
       ? parseFloat(amountUSD.replace(/[^\d.]/g, '')) 
       : amountUSD;
     if (isNaN(numericAmount) || numericAmount <= 0) return amountUSD;
     const amountEUR = Math.round(numericAmount * rate);
     return `~${amountEUR} €`;
+  }
+
+  convertTitleUSDToEUR(title) {
+    if (!title) return title;
+    const rate = 0.92;
+    let result = title;
+    // $2,500 / $2500 / $ 2500
+    result = result.replace(/\$\s?(\d[\d,]*)/g, (_, amt) => {
+      const n = parseFloat(amt.replace(/,/g, ''));
+      if (isNaN(n) || n <= 0) return _;
+      return `${Math.round(n * rate).toLocaleString('fr-FR')} €`;
+    });
+    // 2500 USD / 2 500 USD / 2500 dollars
+    result = result.replace(/(\d[\d\s,.]*\d|\d)\s*(?:USD|dollars?)\b/gi, (_, amt) => {
+      const n = parseFloat(amt.replace(/[\s.]/g, '').replace(',', '.'));
+      if (isNaN(n) || n <= 0) return _;
+      return `${Math.round(n * rate).toLocaleString('fr-FR')} €`;
+    });
+    // 2500$ (no space)
+    result = result.replace(/(\d[\d,]*)\$/g, (_, amt) => {
+      const n = parseFloat(amt.replace(/,/g, ''));
+      if (isNaN(n) || n <= 0) return _;
+      return `${Math.round(n * rate).toLocaleString('fr-FR')} €`;
+    });
+    if (result !== title) {
+      console.log(`💶 TITLE_USD_TO_EUR: "${title}" → "${result}"`);
+    }
+    return result;
   }
 
   extractRealKeyPoints(extracted, story, pattern) {
@@ -1559,10 +1587,11 @@ Chaque section, chaque paragraphe doit faire avancer cette tension vers une rés
 On ne décrit pas. On arbitre. On évalue. On tranche.
 Le lecteur doit sentir qu'une décision se joue à chaque paragraphe.
 
-RÈGLE ANTI-ARTICLE INTERCHANGEABLE :
+RÈGLE ANTI-ARTICLE INTERCHANGEABLE (80%+ des H2 doivent être décisionnels) :
 Chaque H2 doit poser un arbitrage ou une tension, pas simplement informer.
-Privilégie les H2 contenant un verbe décisionnel (choisir, éviter, payer, optimiser, risquer, arbitrer, renoncer, privilégier) ou un connecteur de tension (mais, vs, au prix de, à condition de).
-Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit l'article.
+Privilégie les H2 contenant un verbe décisionnel (choisir, éviter, payer, optimiser, risquer, arbitrer, renoncer, privilégier, sacrifier, négliger) ou un connecteur de tension (mais, vs, au prix de, à condition de, en revanche, pas encore, vrai/véritables).
+Les H2 sur les coûts doivent inclure "frais", "surcoût", "facture", "caché", "piège" ou un arbitrage — jamais un titre neutre.
+Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit l'article et sera pénalisé à l'audit (-3 à -8 pts).
 
 📖 OUVERTURE IMMERSIVE — HOOK CINÉMATIQUE (premier paragraphe, OBLIGATOIRE) :
 - Ouvrir sur une micro-scène sensorielle (2-4 phrases) : lieu, odeur, bruit, geste, tension. Puis 1 question qui accroche.
@@ -1663,7 +1692,8 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 - Les citations Reddit entre « » doivent TOUJOURS être fermées avec ».
 
 🇫🇷 NICHE FRANCOPHONE ASIE — L'article s'adresse a des voyageurs FRANCOPHONES qui partent en Asie :
-- References francaises : vols depuis Paris (CDG/ORY), Lyon, Marseille, Bruxelles. Devise en euros.
+- References francaises : vols depuis Paris (CDG/ORY), Lyon, Marseille, Bruxelles.
+- 💶 DEVISE : TOUT montant DOIT être en EUROS (€). Si la source Reddit donne un prix en USD/$, CONVERTIS-LE en euros (taux ~0.92). Ex: "$2500" → "~2 300 €", "$50/night" → "~46 €/nuit". JAMAIS de USD, $, ou "dollars" dans l'article final ni dans le titre.
 - Contexte FR : vacances scolaires, conges payes, jours feries francais, ponts. Passeport francais pour les visas.
 - Ton naturel : tutoiement, expressions courantes ("galere", "bon plan", "se faire arnaquer", "valoir le coup"). PAS de francais litteraire.
 - Specificites FR en Asie : decalage horaire depuis Paris, assurance carte bancaire francaise (Visa Premier), forfait mobile Free international, Revolut/Wise pour les paiements.
@@ -1763,7 +1793,7 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 🚨 TOP 3 RÈGLES CRITIQUES (VÉRIFIER AVANT DE RÉPONDRE) :
 1. HOOK CINÉMATIQUE : le premier paragraphe doit être une micro-scène sensorielle concrète (lieu, action, tension). ❌ JAMAIS "Te voilà...", ❌ JAMAIS mentionner Reddit/source dans le hook. Exemples : "Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil..." / "Tu atterris à Bangkok avec un visa de 30 jours..."
 2. CITATIONS INLINE OBLIGATOIRES : intègre 2-5 citations courtes entre guillemets français « ... » depuis les données du témoignage. Chaque citation est contextualisée : "Un voyageur résume : « ... »". ❌ PAS de <blockquote>. Si tu génères 0 citation inline, l'article sera REJETÉ.
-3. H2 SPÉCIFIQUES : chaque H2 doit être unique à cet article. ❌ JAMAIS de H2 nu générique ("Conseils pratiques", "Conclusion", "En résumé", "Stratégies", "Solutions"). ✅ BON : "Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois".
+3. H2 DÉCISIONNELS (80%+ obligatoire) : chaque H2 doit poser un arbitrage, une tension ou un choix. Inclus un verbe décisionnel (choisir, éviter, optimiser, sacrifier, risquer) ou un connecteur de tension (mais, vs, en revanche, caché, vrai). ❌ JAMAIS de H2 nu générique ("Conseils pratiques", "Conclusion", "Budget", "Transports"). ✅ BON : "Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois".
 
 🇫🇷 RÉPONSE UNIQUEMENT EN FRANÇAIS (PRIORITÉ ABSOLUE) :
 - Produis TOUT le JSON en français dès la première réponse. Aucun champ en anglais.
@@ -1777,8 +1807,9 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 - ❌ INTERDIT : Ajouter des dates dans les titres (pas de "(2024)", "(2026)", etc.)
 - ⚠️ JAMAIS D'EMOJI DANS LE TITRE - Les emojis sont INTERDITS dans les titres H1 et H2
 - ❌ ANTI-DÉCONTEXTUALISATION TITRE : si tu mets un chiffre dans le titre, il DOIT correspondre à son contexte d'origine dans la source. Ex: si la source dit "$50/month for coworking", le titre NE PEUT PAS dire "vivre avec 50 USD" — c'est une déformation du fait.
+- 💶 TITRE EN EUROS UNIQUEMENT : JAMAIS de USD, $, ou "dollars" dans le titre. Convertis en euros (taux ~0.92). Ex: source "$2500" → titre "2 300 €". Le symbole € se place APRÈS le nombre.
 - Exemples BONS :
-  ✅ "Comment voyager 12 mois en Asie avec 25 000 $ sans rentrer fauché"
+  ✅ "Comment voyager 12 mois en Asie avec 23 000 € sans rentrer fauché"
   ✅ "Voyager seule en Asie : budget, sécurité et erreurs à éviter (guide complet)"
   ✅ "Budget réel pour voyager 6–18 mois en Asie (+ conseils de voyageurs)"
   ✅ "Visa Nomade Digital en Thaïlande : Mon Retour d'Expérience"
@@ -2971,8 +3002,11 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
           }
         }
       }
+      let finalTitle = article.titre || 'Témoignage Reddit décrypté par FlashVoyages';
+      finalTitle = this.convertTitleUSDToEUR(finalTitle);
+
       const finalContent = {
-        title: article.titre || 'Témoignage Reddit décrypté par FlashVoyages',
+        title: finalTitle,
         content: htmlContent,
         _truthPack: options._truthPack || null
       };
@@ -3417,6 +3451,7 @@ INTERDIT ABSOLUMENT:
 - NE PAS wrapper le HTML dans \`\`\`html ou \`\`\`
 - NE PAS ajouter d'explications
 - NE PAS inventer de prix, montants en euros, distances ou durees non presents dans l'article original. Si un cout n'est pas source, NE MENTIONNE PAS de prix — reformule sans chiffre.
+- CONVERTIR tous les montants USD/$  en euros (taux ~0.92). Ex: "$500" → "~460 €". JAMAIS de USD/$/dollars dans le texte final.
 - NE PAS modifier les attributs des balises HTML
 - NE PAS supprimer de sections ou paragraphes
 - NE PAS introduire de nouveau lieu, nouveau prix, nouveau scenario non present dans l'article
