@@ -552,6 +552,7 @@ class PipelineRunner {
       
       const finalArticle = {
         title: generated.title || finalized.title,
+        title_tag: generated.title_tag || null,
         content: finalContent,
         excerpt: finalized.excerpt,
         qaReport: finalized.qaReport,
@@ -738,6 +739,7 @@ class PipelineRunner {
         title: input.post?.title || '',
         author: input.post?.author || null,
         url: input.post?.url || null,
+        reddit_source_url: input.post?.url || input.source?.url || '',
         subreddit: input.post?.subreddit || null,
         existingTitles,
         existingAngles: [], // optionnel : résumés 1 ligne si stockés plus tard

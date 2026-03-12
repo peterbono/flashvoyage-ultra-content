@@ -1150,7 +1150,9 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
         // Mode éditorial NEWS / EVERGREEN (conditionne le prompt)
         editorial_mode: input.editorial_mode || 'evergreen',
         // Angle Hunter — stratégie éditoriale déterministe (Phase 1)
-        angle: input.angle || null
+        angle: input.angle || null,
+        // URL Reddit source pour les citations
+        reddit_source_url: input.reddit_source_url || input.url || ''
       };
       const finalContent = await this.generateFinalArticle(extractionResult, analysis, extracted, pattern, story, options);
       
@@ -1755,8 +1757,10 @@ Ces marqueurs sont invisibles pour le lecteur mais exploités par le pipeline. N
 {
   "article": {
     "titre": "...",
+    "title_tag": "...",  // OBLIGATOIRE - Titre SEO court (50-60 chars MAX), mot-clé principal en tête. Distinct du titre H1. Ex: "Thaïlande 2 semaines : itinéraire et budget réel"
     "quick_guide": "...",  // OPTIONNEL - Quick Guide (destination, durée, budget, type, difficulté)
     "developpement": "...",  // OBLIGATOIRE - MINIMUM 2500 mots. HTML libre. Inclure les marqueurs FV:CTA_SLOT, FV:DIFF_ANGLE, FV:COMMON_MISTAKES. Commence TOUJOURS par 1-2 paragraphes <p> d'intro (hook) AVANT le premier <h2>. EN FRANÇAIS.
+    "faq": "...",  // OBLIGATOIRE - 4-6 questions/réponses en HTML <details><summary>Question ?</summary><p>Réponse.</p></details>. Questions basées sur les vraies interrogations du post Reddit et de la communauté.
     "recommandations": "...",  // OBLIGATOIRE - <h2>Nos recommandations</h2> + 3 options + CTAs
     "ce_qu_il_faut_retenir": "...",  // OBLIGATOIRE - Verdict réaliste (tutoiement), 2 paragraphes.
     "signature": "...",  // CTA soft de fin
@@ -1884,6 +1888,31 @@ ${correctionBlock}
 - INTERDIT : "il est important de", "il faut savoir que", "n'hésite pas à", "il convient de", "il est essentiel de", "il est recommandé de"
 - Chaque phrase doit contenir un fait, un chiffre, ou un choix éditorial. Pas de remplissage.
 
+🤖 ANTI-PATTERNS IA (VÉRIFIER AVANT RÉPONSE — REJET AUTOMATIQUE) :
+Les formulations suivantes sont INTERDITES car elles signalent immédiatement un contenu généré par IA :
+- ❌ "arbitrer entre X et Y sans sacrifier Z" → reformule avec un verbe concret
+- ❌ "Ce que les autres guides ne disent pas" → remplace par un H2 factuel et spécifique
+- ❌ "La vraie question n'est pas X mais Y" → pose la question directement
+- ❌ "Option 1 / Option 2 / Option 3" avec format Avantages/Compromis/CTA identique → chaque alternative doit avoir un format narratif DIFFÉRENT (un paragraphe fluide, un mini-récit, une liste, un dialogue intérieur...)
+- ❌ "Erreur 1 / Erreur 2 / Erreur 3" numérotées → raconte chaque piège comme un mini-scénario
+- ❌ "Stratégie A / Stratégie B" → nomme chaque approche par son résultat concret
+- ❌ Phrases d'ouverture fragmentées dramatiques ("Deux semaines. Quatre destinations. Un dilemme.")
+- ❌ "Tu dois trancher entre trois tensions majeures" → montre les tensions, ne les annonce pas
+- ❌ "hors des sentiers battus" / "la vraie [destination]" / "expériences authentiques" → décris concrètement ce que tu veux dire
+Si tu utilises une de ces formulations, l'article sera REJETÉ par le quality gate.
+
+✍️ VOIX D'AUTEUR (OBLIGATOIRE) :
+- Écris comme un rédacteur voyage expérimenté qui a un POINT DE VUE, pas comme un assistant qui résume
+- Affirme des opinions : "Koh Phi Phi ne vaut pas le détour en 2 semaines" plutôt que "certains voyageurs trouvent que..."
+- Varie les structures : un paragraphe analytique, puis un court percutant, puis une liste, puis un dialogue intérieur
+- Chaque citation de la source Reddit doit être intégrée avec le LIEN vers le post original fourni dans les données
+
+📋 FAQ OBLIGATOIRE (champ "faq") :
+- Génère 4-6 questions/réponses au format HTML <details><summary>...</summary><p>...</p></details>
+- Les questions doivent venir des VRAIES interrogations du post Reddit ou de la communauté
+- Les réponses doivent être concises (2-3 phrases max), factuelles, et actionables
+- Inclure au moins 1 question sur le budget et 1 sur la logistique
+
 📍 MARQUEURS OBLIGATOIRES dans "developpement" (HTML comments) :
 - <!-- FV:CTA_SLOT reason="..." --> (2-4 emplacements pour widgets affiliés)
 - <!-- FV:DIFF_ANGLE --> (avant le paragraphe différenciant)
@@ -1893,9 +1922,9 @@ ${editorialBlock}
 
 🚨 RAPPEL CRITIQUE — SECTIONS SERP OBLIGATOIRES DANS "developpement" :
 Le champ "developpement" DOIT contenir ces 3 H2 comme dernières sections de contenu (AVANT FAQ/Comparatif/Retenir) :
-1. <h2>Ce que les autres guides ne disent pas</h2> — angle différenciant, analyse critique
-2. <h2>Les erreurs fréquentes qui coûtent cher aux voyageurs en [destination]</h2> — pièges concrets avec montants
-3. <h2>Limites et biais de cet article</h2> — transparence E-E-A-T, 1-2 paragraphes honnêtes sur les sources utilisées
+1. Un H2 avec un angle différenciant SPÉCIFIQUE à cet article (❌ PAS "Ce que les autres guides ne disent pas" — c'est un titre IA typique. ✅ Exemple : "Pourquoi 3 jours à Chiang Mai changent tout" ou "Le piège du ferry Krabi-Koh Lanta que personne ne mentionne")
+2. Un H2 sur les pièges concrets avec un titre NARRATIF (❌ PAS "Les erreurs fréquentes..." — trop générique. ✅ Exemple : "Quatre décisions qui plombent un séjour en [destination]" ou "Ce que j'aurais aimé savoir avant de réserver")
+3. <h2>Limites et biais de cet article</h2> — transparence E-E-A-T, 1-2 paragraphes honnêtes sur les sources utilisées. Cite explicitement le lien Reddit source.
 Si tu omets ces 3 sections, l'article sera REJETÉ par le quality gate.`;
 
     // PHASE 4.2: User message basé sur story, pattern, extracted
@@ -1951,8 +1980,10 @@ L'article ENTIER doit parler de cette destination. Le titre, les H2, le contenu,
 - Les recommandations doivent couvrir au moins 2-3 pays différents.\n`;
     }
 
+    const redditSourceUrl = options.reddit_source_url || extracted?.meta?.url || options.article?.link || '';
     const userMessage = `TITRE: ${extracted.title || 'Témoignage Reddit'}
 AUTEUR: ${extracted.author || 'auteur Reddit'}
+🔗 URL SOURCE REDDIT: ${redditSourceUrl || 'Non disponible'}
 ${destinationDirective}
 📊 PATTERN DÉTECTÉ:
 - Type: ${pattern.story_type || 'non spécifié'}
@@ -1990,6 +2021,7 @@ ${storyOpenQuestions.length > 0 ? `QUESTIONS OUVERTES (${storyOpenQuestions.leng
 
 📝 CITATIONS DISPONIBLES (depuis evidence):
 ${availableCitations.length > 0 ? availableCitations.map((c, i) => `${i+1}. "${c}"`).join('\n') : 'Aucune citation disponible'}
+${redditSourceUrl ? `\n🔗 IMPORTANT: Chaque citation Reddit dans l'article DOIT être suivie d'un lien vers le post source : <a href="${redditSourceUrl}" target="_blank" rel="noopener">voir la discussion originale</a>. Au minimum, place ce lien UNE FOIS dans l'introduction et UNE FOIS en conclusion.` : ''}
 
 ${options.angle ? `
 🎯 ANGLE EDITORIAL STRATEGIQUE (Angle Hunter v${options.angle.angle_version}):
@@ -2298,6 +2330,14 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         } else {
           sections.push(`<h2>Nos recommandations : Par où commencer ?</h2>\n<p>Nous recommandons de privilégier l'Asie du Sud-Est pour un budget maîtrisé.</p>`);
         }
+        // FAQ section (nouveau champ obligatoire)
+        if (article.faq && article.faq.trim()) {
+          let faqText = article.faq.trim();
+          if (!faqText.includes('<h2>')) faqText = `<h2 class="wp-block-heading">Questions fréquentes</h2>\n${faqText}`;
+          sections.push(faqText);
+          console.log(`   ✅ FAQ intégrée (${(faqText.match(/<details/g) || []).length} questions)`);
+        }
+
         if (article.ce_qu_il_faut_retenir && article.ce_qu_il_faut_retenir.trim()) {
           let retenirText = article.ce_qu_il_faut_retenir.trim();
           if (!retenirText.includes('<h2>')) sections.push(`<h2>Ce qu'il faut retenir</h2>\n${retenirText}`);
@@ -2338,17 +2378,13 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
 
         // SERP SAFETY NET: injecter les sections SERP manquantes comme squelettes
         const serpSections = [
-          { pattern: /ce que les autres.*?ne disent/i, h2: 'Ce que les autres guides ne disent pas', placeholder: 'Cette section sera enrichie par l\'analyse éditoriale.' },
-          { pattern: /erreurs?\s*(fréquentes?|courantes?|à\s*éviter|qui\s*co[uû]tent)/i, h2: 'Les erreurs fréquentes à éviter', placeholder: 'Cette section sera enrichie par l\'analyse éditoriale.' }
+          { pattern: /ce que les autres.*?ne disent|angle.*?différenci|piège.*?personne|guide.*?oubli/i, label: 'Angle différenciant' },
+          { pattern: /erreurs?\s*(fréquentes?|courantes?|à\s*éviter|qui\s*co[uû]tent)|décisions?\s*qui\s*plomb|aimé\s*savoir/i, label: 'Pièges/Erreurs' }
         ];
         const missingSerpSections = serpSections.filter(s => !s.pattern.test(htmlContent));
         if (missingSerpSections.length > 0) {
-          console.log(`⚠️ SERP_SAFETY_NET: ${missingSerpSections.length}/2 section(s) SERP manquante(s) — injection squelettes`);
-          const faqPos = htmlContent.search(/<h2[^>]*>(?:Questions?\s*fréquentes|FAQ|Comparatif|Ce qu.il faut retenir)/i);
-          const insertPos = faqPos > 0 ? faqPos : htmlContent.length;
-          const skeletons = missingSerpSections.map(s => `\n<h2>${s.h2}</h2>\n<p>${s.placeholder}</p>\n`).join('');
-          htmlContent = htmlContent.slice(0, insertPos) + skeletons + htmlContent.slice(insertPos);
-          missingSerpSections.forEach(s => console.log(`   + Squelette injecté: "${s.h2}"`));
+          console.log(`⚠️ SERP_SAFETY_NET: ${missingSerpSections.length}/2 section(s) SERP manquante(s) — le générateur devra les produire`);
+          missingSerpSections.forEach(s => console.log(`   ⚠️ Manquant: "${s.label}"`));
         }
 
         // PHASE 2.2 / P8: Skip expansion si déjà suffisant (>2200 mots)
@@ -3005,8 +3041,11 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
       let finalTitle = article.titre || 'Témoignage Reddit décrypté par FlashVoyages';
       finalTitle = this.convertTitleUSDToEUR(finalTitle);
 
+      const titleTag = article.title_tag || finalTitle.substring(0, 60);
+
       const finalContent = {
         title: finalTitle,
+        title_tag: titleTag,
         content: htmlContent,
         _truthPack: options._truthPack || null
       };
