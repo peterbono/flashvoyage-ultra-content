@@ -680,7 +680,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         geo: selectedArticle.geo || {},
         source_truth: {
           destination: extracted.main_destination || null,
-          entities: extracted.entities || []
+          entities: extracted.entities || [],
+          source_url: selectedArticle.link || selectedArticle.url || '',
+          source_title: selectedArticle.title || ''
         },
         final_destination: null // Sera calculé plus tard
       };
@@ -793,6 +795,17 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
       pipelineContext.final_destination = finalDestination;
       analysis.final_destination = finalDestination;
       console.log(`\n✅ final_destination définie: ${finalDestination}\n`);
+
+      // Contrat de sortie: nettoyer les artefacts avant les enrichissements finaux.
+      const sourceUrl = analysis.source_truth?.source_url || selectedArticle.link || selectedArticle.url || '';
+      const contractedArticle = this.applyGeneratorOutputContract(finalArticle, {
+        destination: finalDestination,
+        sourceUrl,
+        hasSourceEvidence: Array.isArray(story?.evidence?.source_snippets) && story.evidence.source_snippets.length > 0
+      });
+      finalArticle.title = contractedArticle.title;
+      finalArticle.title_tag = contractedArticle.title_tag;
+      finalArticle.content = contractedArticle.content;
 
       // Catégories et tags (APRÈS final_destination pour que le mapping destination fonctionne)
       finalArticle.categories = await this.getCategoriesForContent(analysis, finalArticle.content, affiliatePlacements);
@@ -951,7 +964,7 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
             {
               title: finalizedArticle.title || '',
               finalDestination: pipelineContext?.final_destination || finalizedArticle?.final_destination || '',
-              pillarLink: 'https://flashvoyage.com/conseils-voyage/'
+              pillarLink: 'https://flashvoyage.com/notre-methode/'
             }
           );
         }
@@ -991,9 +1004,13 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
           const prePublishScore = qualityAnalyzer.getGlobalScore(contentForScoring, editorialMode, finalizedArticle.angle);
           const prePublishPct = parseFloat(prePublishScore.globalScore);
           const prePublishThreshold = Number(prePublishScore.threshold || (editorialMode === 'news' ? 70 : 85));
+          const envTargetScore = Number(process.env.QUALITY_TARGET_SCORE || '');
+          const qualityTargetScore = Number.isFinite(envTargetScore) && envTargetScore > 0
+            ? Math.max(prePublishThreshold, Math.min(100, envTargetScore))
+            : prePublishThreshold;
           let finalGatePct = prePublishPct;
           let finalGateBlockingPassed = !!prePublishScore.blockingPassed;
-          console.log(`\n📊 PRE-PUBLISH QUALITY GATE: ${prePublishPct}% (seuil: ${prePublishThreshold}%) [${editorialMode.toUpperCase()}] — blocking: ${prePublishScore.blockingPassed ? 'OK' : 'FAIL'}`);
+          console.log(`\n📊 PRE-PUBLISH QUALITY GATE: ${prePublishPct}% (seuil: ${prePublishThreshold}% | cible: ${qualityTargetScore}%) [${editorialMode.toUpperCase()}] — blocking: ${prePublishScore.blockingPassed ? 'OK' : 'FAIL'}`);
           // Détail des checks bloquants pour diagnostic
           if (!prePublishScore.blockingPassed && prePublishScore.categories?.blocking?.checks) {
             prePublishScore.categories.blocking.checks.forEach(chk => {
@@ -1076,19 +1093,19 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
             return instructions.length > 0 ? instructions : ['Améliore la qualité générale du contenu'];
           };
 
-          if (prePublishPct < prePublishThreshold || !prePublishScore.blockingPassed) {
-            console.warn(`⚠️ QUALITY_GATE_BLOCKED: Pre-pub score: ${prePublishPct}% < ${prePublishThreshold}% ou bloquants FAIL`);
+          if (prePublishPct < qualityTargetScore || !prePublishScore.blockingPassed) {
+            console.warn(`⚠️ QUALITY_GATE_BLOCKED: Pre-pub score: ${prePublishPct}% < cible ${qualityTargetScore}% ou bloquants FAIL`);
             console.warn(`   Catégories: SERP=${prePublishScore.categories.serp.percentage.toFixed(0)}% Links=${prePublishScore.categories.links.percentage.toFixed(0)}% Content=${prePublishScore.categories.contentWriting.percentage.toFixed(0)}% Blocking=${prePublishScore.categories.blocking.percentage.toFixed(0)}%`);
             
-            // P5: Boucle jusqu'à 2 itérations avec instructions ciblées
-            const MAX_IMPROVE_ITERATIONS = 2;
+            // P5: Boucle d'amélioration étendue pour les cibles hautes (92+)
+            const MAX_IMPROVE_ITERATIONS = qualityTargetScore >= 92 ? 4 : 2;
             let currentScore = prePublishPct;
             let currentBlockingPassed = prePublishScore.blockingPassed;
             let lastScoreResult = prePublishScore;
             
             if (this.intelligentAnalyzer && typeof this.intelligentAnalyzer.improveContentWithLLM === 'function') {
               for (let iteration = 1; iteration <= MAX_IMPROVE_ITERATIONS; iteration++) {
-                if (currentScore >= prePublishThreshold && currentBlockingPassed) break;
+                if (currentScore >= qualityTargetScore && currentBlockingPassed) break;
                 
                 const targetedInstructions = buildTargetedInstructions(lastScoreResult);
                 console.log(`🔄 QUALITY_GATE iteration ${iteration}/${MAX_IMPROVE_ITERATIONS}: ${targetedInstructions.join('; ')}`);
@@ -1120,7 +1137,7 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
                     finalGatePct = recheckPct;
                     finalGateBlockingPassed = currentBlockingPassed;
                     
-                    if (currentScore >= prePublishThreshold && currentBlockingPassed) {
+                    if (currentScore >= qualityTargetScore && currentBlockingPassed) {
                       console.log(`✅ QUALITY_GATE: score amélioré à ${recheckPct}% après ${iteration} itération(s)`);
                       break;
                     }
@@ -1134,12 +1151,12 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
               // Verdict final après boucle
               if (currentScore < 80) {
                 console.warn(`⚠️ QUALITY_BELOW_THRESHOLD: score ${currentScore}% < 80% après ${MAX_IMPROVE_ITERATIONS} itérations. Publication avec avertissement.`);
-              } else if (currentScore < prePublishThreshold) {
-                console.warn(`⚠️ QUALITY_GATE: score ${currentScore}% acceptable mais < ${prePublishThreshold}%. Publication autorisée.`);
+              } else if (currentScore < qualityTargetScore) {
+                console.warn(`⚠️ QUALITY_GATE: score ${currentScore}% acceptable mais < cible ${qualityTargetScore}%. Publication autorisée.`);
               }
             }
           } else {
-            console.log(`✅ QUALITY_GATE_PASSED: Pre-pub score: ${prePublishPct}% >= ${prePublishThreshold}%. Publication autorisée.`);
+            console.log(`✅ QUALITY_GATE_PASSED: Pre-pub score: ${prePublishPct}% >= cible ${qualityTargetScore}%. Publication autorisée.`);
           }
 
           // P0: en NEWS, ne jamais publier si bloquants en FAIL (même si score/override)
@@ -1168,7 +1185,7 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
             {
               title: finalizedArticle.title || '',
               finalDestination: pipelineContext?.final_destination || finalizedArticle?.final_destination || '',
-              pillarLink: 'https://flashvoyage.com/conseils-voyage/'
+              pillarLink: 'https://flashvoyage.com/notre-methode/'
             }
           );
         }
@@ -1892,6 +1909,79 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
   generateMetaDescription(title, analysis) {
     const baseDescription = `Découvrez ${title.toLowerCase()} - Guide complet pour nomades en ${analysis.destination || 'Asie'}. Conseils pratiques, témoignages et bons plans.`;
     return baseDescription.substring(0, 160);
+  }
+
+  buildSeoTitleTag(title = '', destination = '') {
+    const cleanTitle = String(title || '').replace(/^"+|"+$/g, '').replace(/\s+/g, ' ').trim();
+    if (!cleanTitle) return '';
+    const hasDestination = destination && new RegExp(destination, 'i').test(cleanTitle);
+    let out = hasDestination ? cleanTitle : `${destination || 'Asie'} : ${cleanTitle}`;
+    if (out.length > 60) {
+      out = out.slice(0, 60).replace(/\s+\S*$/, '').trim();
+    }
+    return out;
+  }
+
+  sanitizePlaceholdersAndUnsafeClaims(html = '') {
+    return String(html || '')
+      .replace(/\b2quelques\b/gi, 'quelques')
+      .replace(/\bco[ûu]tent\s*quelques\b/gi, 'coûtent')
+      .replace(/\bun\s+co[ûu]t\s+non\s+n[ée]gligeable\b/gi, 'un coût significatif')
+      .replace(/\bquelques\s+euros\b/gi, 'un coût maîtrisable')
+      .replace(/\bgaranti\s+à\s+100%\b/gi, 'dans la plupart des cas')
+      .replace(/\bsans\s+aucun\s+risque\b/gi, 'avec un risque limité si bien préparé');
+  }
+
+  downgradeUnsourcedNumericalClaims(html = '', hasSourceEvidence = true) {
+    if (hasSourceEvidence) return html;
+    return String(html || '')
+      .replace(/\b\d{1,3}(?:[\s.,]\d{3})?\s*€(?:\/(?:jour|nuit|semaine|mois))?\b/gi, 'un budget à vérifier')
+      .replace(/\bvisa(?:\s+\w+){0,4}\s+(?:gratuit|free)\b/gi, 'conditions de visa à vérifier selon ta nationalité')
+      .replace(/\b(?:\d+\s*(?:h|heures?|jours?|nuits?))\b/gi, 'une durée à confirmer');
+  }
+
+  enforceInternalLinkVolume(html = '', maxLinks = 8) {
+    let seen = 0;
+    return String(html || '').replace(/<a\b([^>]*?)href=["']([^"']+)["']([^>]*)>([\s\S]*?)<\/a>/gi, (full, pre, href, post, text) => {
+      if (!/flashvoyage\.com/i.test(href)) return full;
+      seen++;
+      if (seen <= maxLinks) return full;
+      return String(text || '').trim() || full;
+    });
+  }
+
+  ensureFaqMinimum(html = '') {
+    const hasFaqHeading = /<h[23][^>]*>\s*(?:faq|questions?\s+fr[ée]quentes?)\s*<\/h[23]>/i.test(html)
+      || /<!-- wp:heading[^>]*-->\s*<h2[^>]*>\s*questions?\s+fr[eé]quentes\s*<\/h2>/i.test(html);
+    const detailsCount = (String(html).match(/<details[\s>]/gi) || []).length;
+    if (!hasFaqHeading || detailsCount >= 2) return html;
+    const extra = [
+      '<details><summary>Quel budget prévoir sans mauvaise surprise ?</summary><p>Prévois une marge pour les frais annexes et vérifie toujours le coût total avant réservation.</p></details>',
+      '<details><summary>Quelle erreur éviter en priorité ?</summary><p>Ne base pas ta décision sur un seul prix affiché : compare bagages, transferts et conditions d’annulation.</p></details>'
+    ].slice(0, 2 - detailsCount).join('\n');
+    return `${html}\n${extra}`;
+  }
+
+  enforceSourceTraceability(html = '', sourceUrl = '') {
+    if (!sourceUrl || !/reddit\.com/i.test(sourceUrl)) return html;
+    const hasSourceMention = new RegExp(sourceUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(html);
+    if (hasSourceMention) return html;
+    if (!/t[ée]moignage|reddit|discussion|retour\s+terrain/i.test(html)) return html;
+    return `${html}\n<p><a href="${sourceUrl}" target="_blank" rel="noopener nofollow">Source Reddit vérifiable</a> utilisée pour les éléments de témoignage.</p>`;
+  }
+
+  applyGeneratorOutputContract(article, ctx = {}) {
+    const out = { ...article };
+    out.title = String(out.title || '').replace(/^"+|"+$/g, '').trim();
+    out.title_tag = this.buildSeoTitleTag(out.title, ctx.destination || '');
+    let content = String(out.content || '');
+    content = this.sanitizePlaceholdersAndUnsafeClaims(content);
+    content = this.downgradeUnsourcedNumericalClaims(content, !!ctx.hasSourceEvidence);
+    content = this.enforceInternalLinkVolume(content, 8);
+    content = this.ensureFaqMinimum(content);
+    content = this.enforceSourceTraceability(content, ctx.sourceUrl || '');
+    out.content = content;
+    return out;
   }
 
   // Valider l'article final

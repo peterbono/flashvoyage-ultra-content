@@ -1874,6 +1874,7 @@ ${correctionBlock}
 🚨 GARDE-FOUS EXPLICITES (SOURCE OF TRUTH) :
 - ❌ Pas d'invention : aucun lieu, chiffre, durée ou risque inventé ; tout doit être sourcé ou issu des données extraites
 - ❌ NE JAMAIS INVENTER DE PRIX OU MONTANTS EN EUROS : si un coût n'est PAS dans la source Reddit ou le truth pack, NE MENTIONNE AUCUN PRIX — reformule la phrase sans montant. INTERDIT : "quelques euros", "plusieurs dizaines d'euros", "un budget modeste" — ces formulations sonnent IA. Préfère : "reste abordable", "le surcoût est réel", "pèse sur ton budget".
+- ❌ INTERDIT ABSOLU des placeholders/collages: "2quelques", "coûtentquelques", "coûtentquelques", "prixquelques", "tempsquelques". Si un token paraît cassé, corrige-le en français naturel.
 - ❌ NE JAMAIS MENTIONNER DE LIEU NON SOURCÉ : si une ville ou destination n'apparaît PAS dans le post Reddit source ni dans les lieux autorisés, NE LA MENTIONNE PAS. Un lieu inventé bloque la publication.
 - ❌ ANTI-DÉCONTEXTUALISATION (CRITIQUE) : un chiffre de la source ne peut JAMAIS être utilisé dans un contexte différent de l'original. Exemple INTERDIT : si la source dit "$50-100/month for coworking spaces", tu NE PEUX PAS écrire "vivre avec 50 USD par mois" ou utiliser 50 USD dans le titre comme budget de vie. Le chiffre 50 USD se rapporte au COWORKING, pas au coût de la vie. Chaque chiffre garde son contexte d'origine.
 - ❌ Pas d'angles plats : toute section doit répondre à une vraie question utilisateur
@@ -1912,6 +1913,12 @@ Si tu utilises une de ces formulations, l'article sera REJETÉ par le quality ga
 - Les questions doivent venir des VRAIES interrogations du post Reddit ou de la communauté
 - Les réponses doivent être concises (2-3 phrases max), factuelles, et actionables
 - Inclure au moins 1 question sur le budget et 1 sur la logistique
+
+📌 CONTRAT DE SORTIE (OBLIGATOIRE AVANT RÉPONSE) :
+- Le titre doit rester <= 70 caractères et contenir la destination principale.
+- Le maillage interne doit être cohérent et limité (3 à 8 liens maximum), sans ancres tronquées.
+- Si une URL Reddit source est fournie, ajoute au moins 1 mention explicite du lien source dans le corps (hors hook).
+- Aucun placeholder textuel cassé ne doit apparaître dans la sortie finale.
 
 📍 MARQUEURS OBLIGATOIRES dans "developpement" (HTML comments) :
 - <!-- FV:CTA_SLOT reason="..." --> (2-4 emplacements pour widgets affiliés)

@@ -91,6 +91,49 @@ const buildQualityBoostFixes = (reviewResult, targetScore) => {
   }));
 };
 
+const issueFamily = (issue = {}) => {
+  const gate = String(issue.gate || issue.category || '').toLowerCase();
+  const text = String(issue.message || issue.description || '').toLowerCase();
+  if (gate.includes('internal-links') || text.includes('lien')) return 'links';
+  if (text.includes('faq') || text.includes('details') || text.includes('summary')) return 'faq';
+  if (text.includes('h1') || text.includes('h2') || text.includes('h3') || text.includes('h4') || text.includes('hiérarchie')) return 'structure';
+  if (gate.includes('fact') || text.includes('durée') || text.includes('distance') || text.includes('source') || text.includes('hallucination')) return 'integrity';
+  if (text.includes('intention') || text.includes('title tag') || text.includes('densité') || text.includes('mot-clé')) return 'seo';
+  return 'editorial';
+};
+
+const buildFamilyFixBundle = ({ reviewResult, stageTarget, recurringIssueHistory, maxItems = 6 }) => {
+  const families = new Map();
+  for (const issue of (reviewResult?.allIssues || [])) {
+    const family = issueFamily(issue);
+    const k = issueKey(issue);
+    const recurring = recurringIssueHistory?.get(k) || 1;
+    const severityBoost = severityWeight(issue.severity) * 10;
+    const base = severityBoost + Math.min(6, recurring * 2);
+    const current = families.get(family) || { score: 0, sample: issue };
+    if (base > current.score) {
+      families.set(family, { score: base, sample: issue });
+    }
+  }
+  const templates = {
+    links: `Renforcer le maillage interne: >=3 liens flashvoyage valides, ancres non tronquées et cohérentes avec le sujet`,
+    faq: `Ajouter/fiabiliser une FAQ: section FAQ + balises details/summary fermées + JSON-LD FAQPage si possible`,
+    structure: `Corriger la hiérarchie Hn: pas de saut H2->H4, ordre logique des sections, conclusion en fin`,
+    integrity: `Renforcer la cohérence factuelle: chiffres plausibles, pas d'affirmation absolue, cohérence des durées et sources`,
+    seo: `Optimiser les signaux SEO: title tag exploitable, intention unique, densité naturelle, pas de bourrage`,
+    editorial: `Réécrire pour clarté éditoriale: formulations non mécaniques, fil narratif net, style humain`
+  };
+  return Array.from(families.entries())
+    .sort((a, b) => b[1].score - a[1].score)
+    .slice(0, maxItems)
+    .map(([family, payload], idx) => ({
+      priority: idx + 1,
+      agent: payload.sample?._label || 'Panel',
+      issue: payload.sample?.description || payload.sample?.message || `Famille ${family} à renforcer`,
+      action: `${templates[family] || templates.editorial}. Objectif palier: >= ${stageTarget}/100`
+    }));
+};
+
 const buildWpAuth = () => {
   const url = process.env.WORDPRESS_URL;
   const user = process.env.WORDPRESS_USERNAME;
@@ -102,7 +145,45 @@ const buildWpAuth = () => {
   };
 };
 
+const normalizeTitleTag = (title = '', destination = '') => {
+  const raw = String(title || '').replace(/\s+/g, ' ').trim();
+  if (!raw) return '';
+  const clean = raw.replace(/^"+|"+$/g, '');
+  const hasDest = destination && new RegExp(destination, 'i').test(clean);
+  let out = clean;
+  if (!hasDest && destination) {
+    out = `${destination} : ${clean}`;
+  }
+  if (out.length <= 60) return out;
+  return out.slice(0, 60).replace(/\s+\S*$/, '').trim();
+};
+
 const issueKey = (issue = {}) => `${issue.gate || issue.category || 'na'}|${String(issue.message || issue.description || '').toLowerCase().slice(0, 140)}`;
+const countInternalFlashvoyageLinks = (html = '') => {
+  const matches = String(html).match(/<a\b[^>]*href=["']https?:\/\/(?:www\.)?flashvoyage\.com[^"']*["'][^>]*>/gi);
+  return matches ? matches.length : 0;
+};
+const hasBrokenPlaceholderTokens = (html = '') => /\b(?:2quelques|co[ûu]tentquelques|prixquelques|tempsquelques)\b/i.test(String(html));
+const hasSourceUrl = (html = '', sourceUrl = '') => {
+  if (!sourceUrl) return true;
+  const esc = sourceUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(esc, 'i').test(String(html));
+};
+const buildRewriteDiffViolations = (beforeHtml, afterHtml, { sourceUrl } = {}) => {
+  const violations = [];
+  const beforeLinks = countInternalFlashvoyageLinks(beforeHtml);
+  const afterLinks = countInternalFlashvoyageLinks(afterHtml);
+  if (afterLinks > 8 || afterLinks > beforeLinks + 3) {
+    violations.push(`maillage_interne_excessif:${beforeLinks}->${afterLinks}`);
+  }
+  if (hasBrokenPlaceholderTokens(afterHtml)) {
+    violations.push('placeholders_reintroduits');
+  }
+  if (sourceUrl && hasSourceUrl(beforeHtml, sourceUrl) && !hasSourceUrl(afterHtml, sourceUrl)) {
+    violations.push('source_url_supprimee');
+  }
+  return violations;
+};
 
 const criticalIssueMap = (issues = []) => {
   const map = new Map();
@@ -156,7 +237,8 @@ async function generateArticle(generator) {
   const title = typeof result.title === 'string' ? result.title : (result.title?.rendered || 'Article sans titre');
   console.log(`✅ AGENT[Generator] — Article généré: "${title}" (${content.length} chars)`);
   
-  const titleTag = result.title_tag || title;
+  const destinationHint = result?.pipelineContext?.final_destination || result?.final_destination || '';
+  const titleTag = normalizeTitleTag(result.title_tag || title, destinationHint);
 
   return {
     title,
@@ -174,11 +256,15 @@ async function generateArticle(generator) {
 }
 
 // ─── Agent: LLM Rewriter ciblé ──────────────────────────
-async function rewriteWithFeedback(html, criticalFixes, title) {
+async function rewriteWithFeedback(html, criticalFixes, title, ctx = {}) {
   const fixesList = criticalFixes
     .map((f, i) => `${i + 1}. [${f.agent}] ${f.issue}${f.action ? ' → ' + f.action : ''}`)
     .join('\n');
 
+  const sourceLine = ctx.sourceUrl
+    ? `SOURCE ORIGINE À PRÉSERVER (si absente de l'article, ajoute une référence discrète): ${ctx.sourceUrl}`
+    : 'SOURCE ORIGINE: non fournie';
+  const destinationLine = ctx.destination ? `DESTINATION CIBLE: ${ctx.destination}` : 'DESTINATION CIBLE: non fournie';
   const systemPrompt = `Tu es un éditeur expert pour flashvoyage.com. Tu reçois un article HTML et une liste de problèmes identifiés par un panel d'experts. 
 
 RÈGLES ABSOLUES :
@@ -190,9 +276,14 @@ RÈGLES ABSOLUES :
 6. TOUT en français, tutoiement obligatoire
 7. NE JAMAIS utiliser de formules IA : "arbitrer entre X et Y sans sacrifier Z", "Ce que les autres guides ne disent pas", "Option 1/2/3"
 8. Interdiction absolue d'ajouter <html>, <head>, <body>. Retourne uniquement le fragment article HTML
-9. Ne crée jamais de balises <details>/<summary> mal fermées. Si tu modifies une FAQ, vérifie que chaque balise ouvrante est fermée`;
+9. Ne crée jamais de balises <details>/<summary> mal fermées. Si tu modifies une FAQ, vérifie que chaque balise ouvrante est fermée
+10. Ne crée pas de texte d'ancre tronqué. Chaque lien <a> doit avoir une ancre complète et naturelle
+11. Limite le maillage interne à 3-8 liens flashvoyage cohérents, pas de section d'ancres massives
+12. Si une source Reddit est fournie, conserve un lien explicite vers cette source et n'invente pas de citation sans source`;
 
   const userPrompt = `TITRE : ${title}
+${destinationLine}
+${sourceLine}
 
 PROBLÈMES À CORRIGER :
 ${fixesList}
@@ -382,6 +473,9 @@ async function main() {
     const stageTarget = CONFIG.targetScore !== null
       ? CONFIG.scoreStages[Math.min(iteration - 1, CONFIG.scoreStages.length - 1)]
       : null;
+    const prev1 = iterationTelemetry[iterationTelemetry.length - 1]?.panel?.weightedScore ?? null;
+    const prev2 = iterationTelemetry[iterationTelemetry.length - 2]?.panel?.weightedScore ?? null;
+    const scoreStagnating = prev1 !== null && prev2 !== null && Math.abs(prev1 - prev2) < 1;
     const iterationTrace = {
       iteration,
       stageTarget,
@@ -424,7 +518,12 @@ async function main() {
     // Phase 2b: Auto-fixers programmatiques
     console.log('\n━━━ PHASE 2b : Auto-fixers ━━━');
     try {
-      const { html: autoFixed, totalFixed } = await applyAllFixes(article.content, article.title, [], wpAuth);
+      const { html: autoFixed, totalFixed } = await applyAllFixes(article.content, article.title, [], wpAuth, {
+        destination,
+        sourceUrl: article.report?.pipelineContext?.source_truth?.source_url
+          || article.report?.pipelineContext?.source_url
+          || null
+      });
       if (autoFixed !== article.content) {
         article = { ...article, content: autoFixed };
         writeFileSync('/tmp/last-generated-article.html', article.content);
@@ -442,9 +541,13 @@ async function main() {
     const ctx = {
       html: article.content,
       title: article.title,
+      titleTag: article.title_tag || article.title,
       url: article.slug ? `https://flashvoyage.com/${article.slug}/` : 'https://flashvoyage.com/',
       editorialMode: article.editorialMode,
       destination,
+      sourceUrl: article.report?.pipelineContext?.source_truth?.source_url
+        || article.report?.pipelineContext?.source_url
+        || null,
       date: new Date().toISOString().split('T')[0]
     };
 
@@ -493,6 +596,17 @@ async function main() {
     if (fixes.length === 0 && stageTarget !== null && reviewResult.weightedScore < stageTarget) {
       fixes = buildQualityBoostFixes(reviewResult, stageTarget);
     }
+    if (stageTarget !== null && reviewResult.weightedScore < stageTarget && scoreStagnating) {
+      const bundle = buildFamilyFixBundle({
+        reviewResult,
+        stageTarget,
+        recurringIssueHistory
+      });
+      if (bundle.length > 0) {
+        console.log(`   📦 STAGNATION_FIX_BUNDLE: ${bundle.length} famille(s) priorisée(s)`);
+        fixes = [...fixes, ...bundle];
+      }
+    }
     const dedupedFixes = fixes.filter((fix) => {
       const key = `${(fix.agent || 'agent').toLowerCase()}|${String(fix.issue || '').toLowerCase().slice(0, 180)}`;
       const nextCount = (recurringFixHistory.get(key) || 0) + 1;
@@ -509,11 +623,42 @@ async function main() {
       console.log(`\n   🔧 LLM Rewriter — ${fixes.length} correction(s) ciblée(s)`);
       fixes.forEach((f, i) => console.log(`      ${f.priority || i + 1}. [${f.agent}] ${f.issue?.substring(0, 100)}`));
 
-      const rewritten = await rewriteWithFeedback(article.content, fixes, article.title);
+      const rewritten = await rewriteWithFeedback(article.content, fixes, article.title, ctx);
       if (rewritten !== article.content) {
         article = { ...article, content: rewritten };
         writeFileSync('/tmp/last-generated-article.html', article.content);
         console.log(`   ✅ Article réécrit (${rewritten.length} chars)`);
+      }
+
+      // Passe déterministe post-réécriture pour réduire les régressions affiliation/intégrité.
+      try {
+        const { html: stabilizedHtml, totalFixed } = await applyAllFixes(
+          article.content,
+          article.title,
+          [],
+          wpAuth,
+          {
+            destination,
+            sourceUrl: ctx.sourceUrl
+          }
+        );
+        if (stabilizedHtml !== article.content) {
+          article = { ...article, content: stabilizedHtml };
+          writeFileSync('/tmp/last-generated-article.html', article.content);
+          console.log(`   ✅ Stabilisation post-rewrite (${totalFixed} fix)`);
+        }
+      } catch (e) {
+        console.warn(`   ⚠️ Stabilisation post-rewrite échouée: ${e.message}`);
+      }
+
+      const rewriteViolations = buildRewriteDiffViolations(preRewriteHtml, article.content, {
+        sourceUrl: ctx.sourceUrl || ''
+      });
+      if (rewriteViolations.length > 0) {
+        console.log(`   ↩️ REWRITE_DIFF_GUARD: rollback (${rewriteViolations.join(', ')})`);
+        article = { ...article, content: preRewriteHtml };
+        iterationTrace.rewrite.rollback = true;
+        iterationTrace.rewrite.rollbackReason = `rewrite_diff_guard:${rewriteViolations.join('|')}`;
       }
     }
 
@@ -521,7 +666,10 @@ async function main() {
       .filter(i => i.fix_type === 'auto' && i.severity === 'critical');
     if (autoFixIssues.length > 0) {
       try {
-        const { html: fixedHtml } = await applyAllFixes(article.content, article.title, autoFixIssues, wpAuth);
+        const { html: fixedHtml } = await applyAllFixes(article.content, article.title, autoFixIssues, wpAuth, {
+          destination,
+          sourceUrl: ctx.sourceUrl || null
+        });
         if (fixedHtml !== article.content) {
           article = { ...article, content: fixedHtml };
           console.log(`   ✅ Auto-fixes appliqués`);

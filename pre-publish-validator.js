@@ -129,6 +129,25 @@ function checkHtmlCompleteness(html) {
     });
   }
 
+  const headingMatches = [...html.matchAll(/<(h[1-6])[^>]*>([\s\S]*?)<\/\1>/gi)];
+  let prevLevel = null;
+  for (const heading of headingMatches) {
+    const tag = String(heading[1] || '').toLowerCase();
+    const level = Number(tag.replace('h', ''));
+    const text = String(heading[2] || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+    if (!Number.isFinite(level) || level < 1 || level > 6) continue;
+    if (prevLevel !== null && level > prevLevel + 1) {
+      issues.push({
+        gate: 'html-completeness',
+        severity: 'major',
+        message: `Hiérarchie Hn incohérente : ${`h${prevLevel}`} suivi de ${tag} ("${text.substring(0, 80)}")`,
+        location: `<${tag}>${text.substring(0, 80)}`,
+        auto_fixable: true
+      });
+    }
+    prevLevel = level;
+  }
+
   const root = parse(html);
   const paragraphs = root.querySelectorAll('p');
   for (const p of paragraphs) {
@@ -214,7 +233,9 @@ function checkDestinationScope(text, destination, title = '') {
   const issues = [];
   const normalizedDestination = normalizeDestination(destination);
   const titleLower = String(title || '').toLowerCase();
-  const isSeaTitle = /asie\s+du\s+sud-?est|sud-?est\s+asiat/i.test(titleLower) || /asie\s+du\s+sud-?est|sud-?est\s+asiat/i.test(text);
+  // Important: ne pas activer ce garde-fou à partir du body seul.
+  // Des liens internes peuvent mentionner "Asie du Sud-Est" même si l'article cible le Japon.
+  const isSeaTitle = /asie\s+du\s+sud-?est|sud-?est\s+asiat/i.test(titleLower);
   const isSeaDestination = normalizedDestination ? SEA_COUNTRIES.has(normalizedDestination) : false;
 
   if (!isSeaTitle && !isSeaDestination) return issues;
@@ -267,7 +288,7 @@ async function checkInternalLinks(html, destination) {
       gate: 'internal-links',
       severity: 'major',
       message: `Seulement ${links.length} liens internes (minimum 3 requis)`,
-      auto_fixable: false
+      auto_fixable: true
     });
   }
 
@@ -482,6 +503,26 @@ function autoFixHtml(html, issues, ctx = {}) {
     fixCount++;
   }
 
+  // Corriger la hiérarchie des headings quand un saut > +1 est détecté.
+  const headingIssue = issues.find(i => i.gate === 'html-completeness' && /Hiérarchie Hn incohérente/i.test(i.message || ''));
+  if (headingIssue) {
+    const headingTagRe = /<(h[1-6])([^>]*)>([\s\S]*?)<\/\1>/gi;
+    let prevLevel = null;
+    fixed = fixed.replace(headingTagRe, (full, tag, attrs, inner) => {
+      const currentLevel = Number(String(tag).replace('h', ''));
+      if (!Number.isFinite(currentLevel)) return full;
+      let nextLevel = currentLevel;
+      if (prevLevel !== null && currentLevel > prevLevel + 1) {
+        nextLevel = prevLevel + 1;
+      }
+      const safeLevel = Math.max(1, Math.min(6, nextLevel));
+      const out = `<h${safeLevel}${attrs}>${inner}</h${safeLevel}>`;
+      if (safeLevel !== currentLevel) fixCount++;
+      prevLevel = safeLevel;
+      return out;
+    });
+  }
+
   // Neutraliser les liens internes morts (404) en conservant le texte visible
   const deadLinkUrls = issues
     .filter(i => i.gate === 'internal-links' && /Lien mort \(404\)\s*:/.test(i.message))
@@ -507,6 +548,88 @@ function autoFixHtml(html, issues, ctx = {}) {
       fixCount += localFixes;
     }
   }
+
+  // Si le maillage interne est insuffisant, injecter des liens "À lire aussi".
+  const hasLowInternalLinksIssue = issues.some(i => i.gate === 'internal-links' && /Seulement\s+\d+\s+liens internes/i.test(i.message || ''));
+  if (hasLowInternalLinksIssue && articlesIndex.length > 0) {
+    const existingHrefs = new Set(
+      [...fixed.matchAll(/href=["']([^"']+)["']/gi)]
+        .map(m => String(m[1] || '').trim())
+        .filter(Boolean)
+    );
+    const destinationTokens = tokenize(ctx.destination || '').filter(t => t.length > 2);
+    const titleTokens = tokenize(ctx.title || '').filter(t => t.length > 2);
+    const scored = [];
+    const scoredAll = [];
+    for (const item of articlesIndex) {
+      if (!item.link || existingHrefs.has(item.link)) continue;
+      const hay = `${item.title} ${item.slug}`.toLowerCase();
+      let score = 0;
+      for (const t of destinationTokens) if (hay.includes(t)) score += 3;
+      for (const t of titleTokens.slice(0, 8)) if (hay.includes(t)) score += 1;
+      const rec = { item, score };
+      scoredAll.push(rec);
+      if (destinationTokens.length > 0 && score < 2) continue;
+      scored.push(rec);
+    }
+    const ordered = scored.sort((a, b) => b.score - a.score).map(s => s.item);
+    const needed = Math.max(0, 3 - existingHrefs.size);
+    let selected = ordered.slice(0, needed);
+    if (selected.length < needed) {
+      const fallback = scoredAll
+        .sort((a, b) => b.score - a.score)
+        .map(s => s.item)
+        .filter(i => !selected.some(s => s.link === i.link))
+        .slice(0, needed - selected.length);
+      selected = [...selected, ...fallback];
+    }
+
+    if (selected.length > 0) {
+      const linkList = selected
+        .map(s => `<li><a href="${s.link}">${s.title || s.slug || 'Guide associé'}</a></li>`)
+        .join('');
+      const block = `<h3>À lire aussi</h3><ul>${linkList}</ul>`;
+      if (!/À lire aussi/i.test(fixed)) {
+        fixed = `${fixed}\n\n${block}`;
+        fixCount++;
+      }
+    }
+  }
+
+  // Si FAQ détectée sans JSON-LD FAQPage, ajouter un schema minimal.
+  const hasFaqHeading = /<h[23][^>]*>\s*(?:FAQ|Questions?\s+fr[ée]quentes?|Foire\s+aux\s+questions?)\s*<\/h[23]>/i.test(fixed);
+  const hasDetails = /<details[\s>]/i.test(fixed) || /<!-- wp:details -->/i.test(fixed);
+  const hasFaqJsonLd = /"@type"\s*:\s*"FAQPage"/i.test(fixed);
+  if (hasFaqHeading && hasDetails && !hasFaqJsonLd) {
+    const qaPairs = [];
+    const detailRe = /<details[^>]*>\s*<summary[^>]*>([\s\S]*?)<\/summary>\s*<p[^>]*>([\s\S]*?)<\/p>[\s\S]*?<\/details>/gi;
+    let dm;
+    while ((dm = detailRe.exec(fixed)) !== null && qaPairs.length < 4) {
+      const q = String(dm[1] || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+      const a = String(dm[2] || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+      if (q.length >= 5 && a.length >= 8) {
+        qaPairs.push({
+          '@type': 'Question',
+          name: q,
+          acceptedAnswer: { '@type': 'Answer', text: a }
+        });
+      }
+    }
+    if (qaPairs.length >= 2) {
+      const schema = `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: qaPairs })}</script>`;
+      fixed = `${fixed}\n${schema}`;
+      fixCount++;
+    }
+  }
+
+  // Nettoyage des placeholders récurrents qui cassent la qualité.
+  const beforeCleanup = fixed;
+  fixed = fixed
+    .replace(/\b\d+\s*quelques\s+euros\b/gi, 'un budget à préciser')
+    .replace(/\bco[ûu]tent\s*quelques\b/gi, 'coûtent')
+    .replace(/\bun\s+co[ûu]t\s+non\s+n[ée]gligeable\b/gi, 'un coût significatif')
+    .replace(/\b2quelques\b/gi, 'quelques');
+  if (fixed !== beforeCleanup) fixCount++;
 
   return { html: fixed, fixCount };
 }

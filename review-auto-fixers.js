@@ -11,6 +11,7 @@ import { parse } from 'node-html-parser';
 import ImageSourceManager from './image-source-manager.js';
 import { generateWithClaude } from './anthropic-client.js';
 import axios from 'axios';
+import { existsSync, readFileSync } from 'fs';
 
 const imageManager = new ImageSourceManager();
 
@@ -46,6 +47,48 @@ function normalizeAnchorFromTitle(title) {
     anchor = anchor.replace(/\s+\S+\s*$/, '').trim();
   }
   return anchor;
+}
+
+function loadInternalLinksCandidates() {
+  const candidates = [];
+  const paths = [
+    `${process.cwd()}/data/internal-links.json`,
+    `${process.cwd()}/articles-database.json`
+  ];
+  for (const p of paths) {
+    if (!existsSync(p)) continue;
+    try {
+      const raw = JSON.parse(readFileSync(p, 'utf8'));
+      const rows = Array.isArray(raw?.articles) ? raw.articles : (Array.isArray(raw) ? raw : []);
+      for (const row of rows) {
+        const link = String(row.link || row.url || '').trim();
+        const title = String(row.title || row.post_title || row.name || '').trim();
+        if (!link.includes('flashvoyage.com')) continue;
+        candidates.push({ link, title });
+      }
+    } catch {
+      // ignore malformed index file
+    }
+  }
+  const uniq = new Map();
+  for (const c of candidates) {
+    if (!uniq.has(c.link)) uniq.set(c.link, c);
+  }
+  return Array.from(uniq.values());
+}
+
+function tokenizeSimple(text) {
+  return String(text || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+function destinationTokens(destination = '') {
+  return tokenizeSimple(destination).filter(t => t.length >= 3);
 }
 
 // ─── Fixer 1 : Image incohérente ──────────────────────────
@@ -174,9 +217,13 @@ export async function fixTruncatedLinks(html, wpAuth) {
       } catch { /* silently skip */ }
     }
 
-    if (!fullTitle) continue;
-
-    const shortTitle = normalizeAnchorFromTitle(fullTitle);
+    const fallbackTitle = href
+      .replace(/^https?:\/\/[^/]+\//i, '')
+      .replace(/\/+$/, '')
+      .split('/')
+      .pop()
+      ?.replace(/-/g, ' ');
+    const shortTitle = normalizeAnchorFromTitle(fullTitle || fallbackTitle || '');
     if (!shortTitle) continue;
 
     const oldAnchor = `>${text}</a>`;
@@ -193,6 +240,91 @@ export async function fixTruncatedLinks(html, wpAuth) {
     html: fixedHtml,
     fixed: fixCount > 0,
     description: fixCount > 0 ? `${fixCount} lien(s) tronqué(s) corrigé(s): ${fixes.join('; ')}` : null
+  };
+}
+
+export async function fixAffiliateCoverage(html, destination = '') {
+  if (!html || typeof html !== 'string') return { html, fixed: false, description: null };
+  let out = html;
+  const modules = out.match(/<aside class="affiliate-module"[\s\S]*?<\/aside>/gi) || [];
+  const textLength = out.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().length;
+  const hasCommercialIntent = /(budget|prix|r[ée]servation|vol|h[ée]bergement|assurance|eSIM|transport)/i.test(out);
+  if (textLength < 1800 || !hasCommercialIntent) {
+    return { html, fixed: false, description: null };
+  }
+  if (modules.length >= 2) return { html, fixed: false, description: null };
+
+  const disclosure = '<p class="affiliate-module-disclaimer"><small>Liens partenaires: une commission peut être perçue, sans surcoût pour toi.</small></p>';
+  const safeDest = destination || 'ta destination';
+  const buildModule = (id, title, txt) => [
+    `<aside class="affiliate-module" data-placement-id="${id}">`,
+    `<h3>${title}</h3>`,
+    `<p>${txt}</p>`,
+    disclosure,
+    '</aside>'
+  ].join('');
+
+  const needed = 2 - modules.length;
+  const firstBlock = buildModule(
+    'flights',
+    'Comparer les vols',
+    `Pour ${safeDest}, compare le coût total (bagages + horaires) avant de réserver.`
+  );
+  const secondBlock = buildModule(
+    'hotels',
+    'Vérifier les hébergements',
+    'Valide l’emplacement et les conditions d’annulation avant de confirmer.'
+  );
+
+  if (needed >= 1) {
+    const firstH2Idx = out.search(/<h2[\s>]/i);
+    if (firstH2Idx > 0) out = `${out.slice(0, firstH2Idx)}${firstBlock}\n${out.slice(firstH2Idx)}`;
+    else out = `${firstBlock}\n${out}`;
+  }
+  if (needed >= 2) {
+    out = `${out}\n${secondBlock}`;
+  }
+  return {
+    html: out,
+    fixed: true,
+    description: `${needed} module(s) affilié(s) ajouté(s) pour couverture minimale`
+  };
+}
+
+export async function fixMissingSourceAttribution(html, sourceUrl = '') {
+  if (!html || typeof html !== 'string') return { html, fixed: false, description: null };
+  if (!sourceUrl || !/reddit\.com/i.test(sourceUrl)) return { html, fixed: false, description: null };
+  const hasSourceLink = new RegExp(sourceUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(html);
+  if (hasSourceLink) return { html, fixed: false, description: null };
+  const mentionsTestimony = /t[ée]moignage|retour\s+terrain|source\s+reddit|discussion\s+originale/i.test(html);
+  if (!mentionsTestimony) return { html, fixed: false, description: null };
+
+  const sourcePara = `<p><a href="${sourceUrl}" target="_blank" rel="noopener nofollow">Source Reddit vérifiable</a> utilisée pour le contexte de ce retour terrain.</p>`;
+  const insertBeforeFaq = /<h2[^>]*>\s*(?:questions?\s+fr[ée]quentes?|faq)\s*<\/h2>/i;
+  const m = html.match(insertBeforeFaq);
+  const out = m ? html.slice(0, html.indexOf(m[0])) + sourcePara + '\n' + html.slice(html.indexOf(m[0])) : `${html}\n${sourcePara}`;
+  return {
+    html: out,
+    fixed: true,
+    description: 'Lien de source Reddit ajouté pour traçabilité'
+  };
+}
+
+export async function fixInternalLinkVolume(html, maxLinks = 8) {
+  if (!html || typeof html !== 'string') return { html, fixed: false, description: null };
+  let seen = 0;
+  let removed = 0;
+  const out = html.replace(/<a\b([^>]*?)href=["']([^"']+)["']([^>]*)>([\s\S]*?)<\/a>/gi, (full, pre, href, post, text) => {
+    if (!/flashvoyage\.com/i.test(href)) return full;
+    seen++;
+    if (seen <= maxLinks) return full;
+    removed++;
+    return String(text || '').trim() || full;
+  });
+  return {
+    html: out,
+    fixed: removed > 0,
+    description: removed > 0 ? `${removed} lien(s) interne(s) retiré(s) (cap=${maxLinks})` : null
   };
 }
 
@@ -242,6 +374,60 @@ export async function fixDeadInternalLinks(html, wpAuth) {
     html: fixedHtml,
     fixed: fixCount > 0,
     description: fixCount > 0 ? `${fixCount} lien(s) 404 remplacé(s): ${fixes.join('; ')}` : null
+  };
+}
+
+// ─── Fixer 2c : Maillage interne minimal ──────────────────
+export async function fixMinimumInternalLinks(html, title = '', destination = '') {
+  const root = parse(html);
+  const currentLinks = root.querySelectorAll('a').filter(a => {
+    const href = a.getAttribute('href') || '';
+    return href.includes('flashvoyage.com');
+  });
+  if (currentLinks.length >= 3) {
+    return { html, fixed: false, description: null };
+  }
+
+  const existing = new Set(currentLinks.map(a => a.getAttribute('href') || '').filter(Boolean));
+  const destTokens = destinationTokens(destination);
+  const tokens = new Set([
+    ...tokenizeSimple(title).slice(0, 8),
+    ...destTokens
+  ]);
+
+  const candidates = loadInternalLinksCandidates()
+    .filter(c => c.link && !existing.has(c.link))
+    .map(c => {
+      const hay = `${c.title} ${c.link}`.toLowerCase();
+      let score = 0;
+      for (const t of tokens) if (hay.includes(t)) score += 1;
+      if (destTokens.length > 0) {
+        const hasDest = destTokens.some(t => hay.includes(t));
+        if (!hasDest) score -= 2;
+      }
+      return { ...c, score };
+    })
+    .filter(c => c.score >= 1)
+    .sort((a, b) => b.score - a.score);
+
+  const needed = Math.max(0, 3 - currentLinks.length);
+  const selected = candidates.slice(0, needed);
+  if (selected.length === 0) {
+    return { html, fixed: false, description: null };
+  }
+
+  const block = [
+    '<h3>À lire aussi</h3>',
+    '<ul>',
+    ...selected.map(s => `<li><a href="${s.link}">${s.title || 'Guide flashvoyage'}</a></li>`),
+    '</ul>'
+  ].join('');
+
+  const fixedHtml = `${html}\n${block}`;
+  return {
+    html: fixedHtml,
+    fixed: true,
+    description: `${selected.length} lien(s) interne(s) ajouté(s) pour atteindre le minimum`
   };
 }
 
@@ -389,6 +575,80 @@ Retourne UNIQUEMENT le texte de la citation corrigée ou "SUPPRIMER".`;
   };
 }
 
+// ─── Fixer 4b : Anti-patterns éditoriaux récurrents ───────
+export async function fixEditorialAntiPatterns(html) {
+  if (!html || typeof html !== 'string') return { html, fixed: false, description: null };
+  let out = html;
+  let fixCount = 0;
+
+  const rules = [
+    {
+      re: /arbitrer\s+entre\s+([^.,;:\n]{2,80})\s+sans\s+sacrifier\s+([^.,;:\n]{2,80})/gi,
+      to: 'choisir entre $1 en gardant $2'
+    },
+    {
+      re: /la\s+vraie\s+question\s+n['’]est\s+pas\s+([^.,;:\n]{2,80})\s+mais\s+([^.,;:\n]{2,80})/gi,
+      to: 'la question centrale est de prioriser $2 plutôt que $1'
+    },
+    {
+      re: /\boption\s+1\s*[:\-]/gi,
+      to: 'Première option :'
+    },
+    {
+      re: /\boption\s+2\s*[:\-]/gi,
+      to: 'Deuxième option :'
+    },
+    {
+      re: /\boption\s+3\s*[:\-]/gi,
+      to: 'Troisième option :'
+    }
+  ];
+
+  for (const rule of rules) {
+    out = out.replace(rule.re, (...args) => {
+      fixCount++;
+      // Supporte les backrefs ($1, $2) pour garder le contexte local.
+      const g1 = args[1] || '';
+      const g2 = args[2] || '';
+      return String(rule.to).replace(/\$1/g, g1).replace(/\$2/g, g2);
+    });
+  }
+
+  return {
+    html: out,
+    fixed: fixCount > 0,
+    description: fixCount > 0 ? `${fixCount} anti-pattern(s) éditoriaux corrigé(s)` : null
+  };
+}
+
+// ─── Fixer 4c : Cohérence factuelle prudente ──────────────
+export async function fixFactualOverclaims(html) {
+  if (!html || typeof html !== 'string') return { html, fixed: false, description: null };
+  let out = html;
+  let fixCount = 0;
+  const replacements = [
+    [/\b(?:toujours|jamais)\s+le\s+meilleur\s+choix\b/gi, 'souvent un bon choix selon ton contexte'],
+    [/garanti\s+à\s+100%/gi, 'dans la plupart des cas'],
+    [/\bsans\s+aucun\s+risque\b/gi, 'avec un risque limité si bien préparé'],
+    [/\bprix\s+fixe\s+garanti\b/gi, 'prix généralement stable']
+  ];
+  for (const [re, value] of replacements) {
+    out = out.replace(re, () => {
+      fixCount++;
+      return value;
+    });
+  }
+  out = out
+    .replace(/\b\d+\s*quelques\s+euros\b/gi, 'un budget à préciser')
+    .replace(/\bco[ûu]tent\s*quelques\b/gi, 'coûtent')
+    .replace(/\b2quelques\b/gi, 'quelques');
+  return {
+    html: out,
+    fixed: fixCount > 0,
+    description: fixCount > 0 ? `${fixCount} affirmation(s) factuelle(s) risquée(s) atténuée(s)` : null
+  };
+}
+
 // ─── Fixer 5 : Correction LLM ciblée ─────────────────────
 
 /**
@@ -450,7 +710,7 @@ Retourne UNIQUEMENT le fragment HTML corrigé. Garde la structure HTML identique
  * @param {Object} wpAuth - { url, auth } pour WordPress API
  * @returns {Promise<Object>} { html, fixes[], totalFixed }
  */
-export async function applyAllFixes(html, title, issues = [], wpAuth = null) {
+export async function applyAllFixes(html, title, issues = [], wpAuth = null, context = {}) {
   console.log('\n  🔧 Application des auto-fixes...');
   let currentHtml = html;
   const appliedFixes = [];
@@ -479,6 +739,22 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null) {
     console.log(`    ✅ ${deadLinkResult.description}`);
   }
 
+  // 2d. Couverture affiliation minimale (>=2 modules)
+  const affiliateCoverage = await fixAffiliateCoverage(currentHtml, context.destination || extractDestinationFromTitle(title) || '');
+  if (affiliateCoverage.fixed) {
+    currentHtml = affiliateCoverage.html;
+    appliedFixes.push({ type: 'affiliate-coverage', description: affiliateCoverage.description });
+    console.log(`    ✅ ${affiliateCoverage.description}`);
+  }
+
+  // 2c. Maillage interne minimum (>=3)
+  const minLinksResult = await fixMinimumInternalLinks(currentHtml, title, extractDestinationFromTitle(title) || '');
+  if (minLinksResult.fixed) {
+    currentHtml = minLinksResult.html;
+    appliedFixes.push({ type: 'links-minimum', description: minLinksResult.description });
+    console.log(`    ✅ ${minLinksResult.description}`);
+  }
+
   // 3. Phrases cassées
   const phraseResult = await fixBrokenPhrases(currentHtml);
   if (phraseResult.fixed) {
@@ -493,6 +769,38 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null) {
     currentHtml = citResult.html;
     appliedFixes.push({ type: 'citations', description: citResult.description });
     console.log(`    ✅ ${citResult.description}`);
+  }
+
+  // 4b. Anti-patterns éditoriaux récurrents
+  const antiPatternResult = await fixEditorialAntiPatterns(currentHtml);
+  if (antiPatternResult.fixed) {
+    currentHtml = antiPatternResult.html;
+    appliedFixes.push({ type: 'editorial-anti-patterns', description: antiPatternResult.description });
+    console.log(`    ✅ ${antiPatternResult.description}`);
+  }
+
+  // 4c. Cohérence factuelle prudente
+  const factualResult = await fixFactualOverclaims(currentHtml);
+  if (factualResult.fixed) {
+    currentHtml = factualResult.html;
+    appliedFixes.push({ type: 'factual-overclaims', description: factualResult.description });
+    console.log(`    ✅ ${factualResult.description}`);
+  }
+
+  // 4d. Attribution source (intégrité)
+  const sourceFix = await fixMissingSourceAttribution(currentHtml, context.sourceUrl || '');
+  if (sourceFix.fixed) {
+    currentHtml = sourceFix.html;
+    appliedFixes.push({ type: 'source-attribution', description: sourceFix.description });
+    console.log(`    ✅ ${sourceFix.description}`);
+  }
+
+  // 4e. Limiter le volume de liens internes (éviter la sur-correction SEO)
+  const linkVolumeFix = await fixInternalLinkVolume(currentHtml, 8);
+  if (linkVolumeFix.fixed) {
+    currentHtml = linkVolumeFix.html;
+    appliedFixes.push({ type: 'link-volume', description: linkVolumeFix.description });
+    console.log(`    ✅ ${linkVolumeFix.description}`);
   }
 
   // 5. Corrections LLM ciblées (issues avec fix_type = 'llm', max 3)
@@ -528,6 +836,12 @@ export default {
   fixDeadInternalLinks,
   fixBrokenPhrases,
   fixBrokenCitations,
+  fixMinimumInternalLinks,
+  fixAffiliateCoverage,
+  fixMissingSourceAttribution,
+  fixInternalLinkVolume,
+  fixEditorialAntiPatterns,
+  fixFactualOverclaims,
   fixWithLlm,
   applyAllFixes
 };
