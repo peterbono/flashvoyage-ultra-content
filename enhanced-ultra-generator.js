@@ -15,6 +15,48 @@ import RssSignalFetcher from './rss-signal-fetcher.js';
 import EditorialCalendar from './editorial-calendar.js';
 import AuthorManager from './author-manager.js';
 
+// Reddit OAuth token cache (module-scoped)
+let _redditTokenCache = { token: null, expires: 0 };
+
+async function getRedditOAuthToken() {
+  const now = Date.now();
+  if (_redditTokenCache.token && _redditTokenCache.expires > now + 300000) {
+    return _redditTokenCache.token;
+  }
+  const clientId = process.env.REDDIT_CLIENT_ID;
+  const clientSecret = process.env.REDDIT_CLIENT_SECRET;
+  const username = process.env.REDDIT_USERNAME || '';
+  const password = process.env.REDDIT_PASSWORD || '';
+  if (!clientId || !clientSecret) {
+    console.warn('⚠️ Reddit credentials manquantes, fallback anonymous');
+    return null;
+  }
+  const axios = (await import('axios')).default;
+  const auth = Buffer.from(clientId + ':' + clientSecret).toString('base64');
+  try {
+    const resp = await axios.post('https://www.reddit.com/api/v1/access_token', 
+      'grant_type=password&username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password),
+      {
+        headers: {
+          'Authorization': 'Basic ' + auth,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'User-Agent': 'FlashVoyagesBot/1.0 (by /u/' + username + ')'
+        },
+        timeout: 10000
+      }
+    );
+    if (resp.data && resp.data.access_token) {
+      _redditTokenCache.token = resp.data.access_token;
+      _redditTokenCache.expires = now + (resp.data.expires_in || 3600) * 1000;
+      console.log('✅ Reddit OAuth token obtenu, expire dans ' + (resp.data.expires_in || 3600) + 's');
+      return _redditTokenCache.token;
+    }
+  } catch (err) {
+    console.warn('⚠️ Reddit OAuth failed: ' + err.message + ', fallback anonymous');
+  }
+  return null;
+}
+
 class EnhancedUltraGenerator extends UltraStrategicGenerator {
   constructor() {
     super();
@@ -39,22 +81,37 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     // pour s'assurer que tous les composants sont disponibles
   }
 
-  // Récupérer les commentaires d'un post Reddit via API JSON
+  // Récupérer les commentaires d'un post Reddit via OAuth API
   async fetchRedditComments(redditUrl) {
     const axios = (await import('axios')).default;
     
     try {
-      // Convertir l'URL Reddit en format JSON
-      // https://reddit.com/r/digitalnomad/comments/abc123/title/ → https://reddit.com/r/digitalnomad/comments/abc123.json
-      let jsonUrl = redditUrl.replace(/\/$/, '') + '.json?raw_json=1&limit=50';
+      // Get OAuth token for authenticated access
+      const token = await getRedditOAuthToken();
       
-      const response = await axios.get(jsonUrl, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        },
-        timeout: 15000
-      });
+      // Extract the post path from the URL
+      // https://reddit.com/r/digitalnomad/comments/abc123/title/ → /r/digitalnomad/comments/abc123
+      let postPath = new URL(redditUrl).pathname.replace(/\/$/, "");
       
+      let apiUrl, headers;
+      if (token) {
+        // Use OAuth endpoint (reliable, no 403)
+        apiUrl = 'https://oauth.reddit.com' + postPath + '.json?raw_json=1&limit=50';
+        headers = {
+          'Authorization': 'Bearer ' + token,
+          'User-Agent': 'FlashVoyagesBot/1.0 (by /u/' + (process.env.REDDIT_USERNAME || 'FlashVoyage') + ')'
+        };
+        console.log('🔑 Fetching Reddit comments via OAuth API...');
+      } else {
+        // Fallback: anonymous (may 403)
+        apiUrl = redditUrl.replace(/\/$/, "") + '.json?raw_json=1&limit=50';
+        headers = {
+          'User-Agent': 'FlashVoyagesBot/1.0'
+        };
+        console.log('⚠️ Fetching Reddit comments anonymously (no token)...');
+      }
+      
+      const response = await axios.get(apiUrl, { headers, timeout: 15000 });
       const data = response.data;
       
       // Reddit retourne un array: [0] = post, [1] = comments
@@ -70,10 +127,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         if (!children || !Array.isArray(children)) return;
         
         for (const child of children) {
-          if (child.kind === 't1' && child.data) { // t1 = comment
+          if (child.kind === 't1' && child.data) {
             const comment = child.data;
-            
-            // Filtrer les commentaires supprimés/modérés
             if (comment.body && comment.body !== '[deleted]' && comment.body !== '[removed]') {
               comments.push({
                 id: comment.id,
@@ -82,8 +137,6 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
                 score: comment.score || 0,
                 created_utc: comment.created_utc || 0
               });
-              
-              // Extraire les replies récursivement
               if (comment.replies && comment.replies.data && comment.replies.data.children) {
                 extractComments(comment.replies.data.children);
               }
@@ -96,14 +149,17 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         extractComments(commentsListing.data.children);
       }
       
-      // Trier par score décroissant (les meilleurs commentaires d'abord)
+      // Trier par score décroissant
       comments.sort((a, b) => b.score - a.score);
       
-      // Limiter à 30 commentaires max pour éviter de surcharger le LLM
+      console.log('✅ ' + comments.length + ' commentaires Reddit récupérés');
       return comments.slice(0, 30);
       
     } catch (error) {
-      console.error(`❌ Erreur fetch commentaires Reddit: ${error.message}`);
+      console.error('❌ Erreur fetch commentaires Reddit: ' + error.message);
+      if (error.response) {
+        console.error('   Status: ' + error.response.status + ', URL: ' + (error.config?.url || 'unknown'));
+      }
       return [];
     }
   }
@@ -414,7 +470,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         try {
           console.log('📡 Tentative source RSS + cross-ref Reddit (mode news)...\n');
           const rssFetcher = new RssSignalFetcher();
-          const redditToken = this.scraper._redditAccessToken || null;
+          const redditToken = await getRedditOAuthToken();
           const rssResult = await rssFetcher.findBestSignal(redditToken);
           if (rssResult && rssResult.article) {
             const rssArticle = rssResult.article;
