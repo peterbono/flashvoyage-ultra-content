@@ -4,7 +4,7 @@
  * Each function is bound to the ArticleFinalizer instance at runtime.
  */
 
-import { ENABLE_ANTI_HALLUCINATION_BLOCKING, FORCE_OFFLINE, parseBool } from '../config.js';
+import { ENABLE_ANTI_HALLUCINATION_BLOCKING, FORCE_OFFLINE, ENABLE_AFFILIATE_INJECTOR, parseBool } from '../config.js';
 
 export async function runQAReport(html, pipelineContext, analysis) {
   let finalHtml = html;    
