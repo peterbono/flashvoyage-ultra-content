@@ -95,7 +95,7 @@ Réponds UNIQUEMENT en JSON valide (pas de markdown autour) avec cette structure
   "score": <number 0-100>,
   "satisfied": true|false,
   "issues": [
-    { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "fix_suggestion": "string" }
+    { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "fix_suggestion": "string", "location": "string (titre H2 de la section concernée, ou intro / conclusion)" }
   ],
   "strengths": ["string"],
   "verdict": "PASS"|"FAIL"
@@ -103,17 +103,36 @@ Réponds UNIQUEMENT en JSON valide (pas de markdown autour) avec cette structure
 
 satisfied = true signifie que tu considères l'article publiable en l'état sur ce critère. Ne mets satisfied=true QUE si tu n'as aucune issue critical ou major.
 
+IMPORTANT — LOCALISATION DES ISSUES : Pour chaque issue, tu DOIS indiquer le champ "location" correspondant au titre H2 de la section où se trouve le problème. Utilise "intro" pour le contenu avant le premier H2, "conclusion" pour le dernier paragraphe/section, ou le texte exact du H2 (ex: "Pourquoi visiter Bali en 2026 ?"). Cela permet de ne réécrire QUE les sections problématiques.
+
+RUBRIQUE DE SCORING :
+- 90-100: Tous les critères respectés, maillage interne optimal, FAQ structurée
+- 80-89: 1-2 points mineurs manquants (ex: FAQ absente mais maillage OK)
+- 70-79: Problèmes modérés (maillage insuffisant OU title tag faible)
+- 60-69: Plusieurs problèmes majeurs
+- <60: Structurellement déficient
+
+CALIBRATION: Un article avec 4+ liens internes, FAQ, bon title tag, et bonne structure H1/H2/H3 doit scorer >= 88.
+
 Critères d'évaluation :
 1. Structure H1/H2/H3 : hiérarchie logique, pas de sauts de niveau
-2. Title tag : longueur (50-60 chars idéal), mot-clé principal en tête, attractif
+2. Title tag : évalue le champ TITLE_TAG (SEO) fourni séparément du H1 (longueur 50-60 chars idéal, mot-clé principal en tête, attractif)
 3. Intention de recherche : l'article répond-il à une vraie requête utilisateur ?
 4. Densité mots-clés : naturelle vs bourrage
-5. Schema FAQ : section FAQ avec balises details/summary
+5. Schema FAQ : section FAQ avec details/summary et/ou JSON-LD FAQPage
 6. Maillage interne : liens vers d'autres articles du site (minimum 3)
 
 Score >= 90 = PASS, sinon FAIL.`,
     buildUserPrompt(ctx) {
-      return `TITRE : ${ctx.title}\nURL : ${ctx.url}\nMODE : ${ctx.editorialMode}\n\nHTML DE L'ARTICLE :\n${truncate(ctx.html)}`;
+      const root = parse(ctx.html || '');
+      const h1Node = root.querySelector('h1');
+      const h1Text = (h1Node?.text || ctx.title || '').trim();
+      const titleTag = (ctx.titleTag || ctx.title || '').trim();
+      const detailsCount = root.querySelectorAll('details').length;
+      const summaryCount = root.querySelectorAll('summary').length;
+      const hasFaqHeading = /<h[23][^>]*>\s*(?:FAQ|Questions?\s+fr[ée]quentes?|Foire\s+aux\s+questions?)\s*<\/h[23]>/i.test(ctx.html || '');
+      const hasFaqJsonLd = /<script[^>]+type=["']application\/ld\+json["'][^>]*>[\s\S]*?"@type"\s*:\s*"FAQPage"[\s\S]*?<\/script>/i.test(ctx.html || '');
+      return `TITLE_TAG (SEO): ${titleTag}\nH1 (éditorial): ${h1Text}\nURL : ${ctx.url}\nMODE : ${ctx.editorialMode}\nFAQ STRUCTURE: details=${detailsCount}, summary=${summaryCount}, heading=${hasFaqHeading ? 'yes' : 'no'}, jsonld=${hasFaqJsonLd ? 'yes' : 'no'}\n\nHTML DE L'ARTICLE :\n${truncate(ctx.html)}`;
     }
   },
 
@@ -130,13 +149,15 @@ Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
   "score": <number 0-100>,
   "satisfied": true|false,
   "issues": [
-    { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "fix_suggestion": "string" }
+    { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "fix_suggestion": "string", "location": "string (titre H2 de la section concernée, ou intro / conclusion)" }
   ],
   "strengths": ["string"],
   "verdict": "PASS"|"FAIL"
 }
 
 satisfied = true signifie que tu considères l'article publiable en l'état sur ce critère. Ne mets satisfied=true QUE si tu n'as aucune issue critical ou major.
+
+IMPORTANT — LOCALISATION DES ISSUES : Pour chaque issue, tu DOIS indiquer le champ "location" correspondant au titre H2 de la section où se trouve le problème. Utilise "intro" pour le contenu avant le premier H2, "conclusion" pour le dernier paragraphe/section, ou le texte exact du H2. Cela permet de ne réécrire QUE les sections problématiques.
 
 Critères :
 1. Modules affiliés présents (aside.affiliate-module) — minimum 2
@@ -171,13 +192,24 @@ Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
   "score": <number 0-100>,
   "satisfied": true|false,
   "issues": [
-    { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "location": "string (extrait du texte)", "fix_suggestion": "string" }
+    { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "location": "string (titre H2 de la section concernée, ou intro / conclusion)", "fix_suggestion": "string" }
   ],
   "strengths": ["string"],
   "verdict": "PASS"|"FAIL"
 }
 
 satisfied = true signifie que tu considères l'article publiable en l'état sur ce critère. Ne mets satisfied=true QUE si tu n'as aucune issue critical ou major.
+
+IMPORTANT — LOCALISATION DES ISSUES : Pour chaque issue, tu DOIS indiquer le champ "location" correspondant au titre H2 de la section où se trouve le problème. Utilise "intro" pour le contenu avant le premier H2, "conclusion" pour le dernier paragraphe/section, ou le texte exact du H2 (ex: "Que voir à Tokyo en 3 jours ?"). Cela permet de ne réécrire QUE les sections problématiques.
+
+RUBRIQUE DE SCORING :
+- 90-100: Voix humaine distinctive, zéro pattern IA, arc narratif fort
+- 80-89: Bon style général, 1-2 formulations mécaniques tolérées
+- 70-79: Style acceptable mais plusieurs patterns IA ou sections creuses
+- 60-69: Style clairement IA avec plusieurs clichés
+- <60: Article IA non retravaillé
+
+CALIBRATION: Un article avec tutoiement, citations inline, H2 décisionnels, et un hook immersif doit scorer >= 82, même s'il a 1-2 formulations mécaniques mineures.
 
 Critères impitoyables :
 1. Détection IA : formulations mécaniques, titres typés IA ("Ce que les autres ne disent pas"), structures "Option 1/2/3", "La vraie question n'est pas X mais Y"
@@ -208,13 +240,23 @@ Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
   "score": <number 0-100>,
   "satisfied": true|false,
   "issues": [
-    { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "location": "string (extrait HTML ou texte)", "fix_type": "auto"|"llm"|"manual" }
+    { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "location": "string (titre H2 de la section concernée, ou intro / conclusion)", "fix_type": "auto"|"llm"|"manual" }
   ],
   "strengths": ["string"],
   "verdict": "PASS"|"FAIL"
 }
 
 satisfied = true signifie que tu considères l'article publiable en l'état sur ce critère. Ne mets satisfied=true QUE si tu n'as aucune issue critical ou major.
+
+IMPORTANT — LOCALISATION DES ISSUES : Pour chaque issue, tu DOIS indiquer le champ "location" correspondant au titre H2 de la section où se trouve le problème. Utilise "intro" pour le contenu avant le premier H2, "conclusion" pour le dernier paragraphe/section, ou le texte exact du H2. Cela permet de ne réécrire QUE les sections problématiques.
+
+RUBRIQUE DE SCORING :
+- 90-100: Zéro bug, HTML propre, images cohérentes
+- 80-89: Bugs mineurs uniquement (typos, espaces)
+- 70-79: 1-2 bugs majeurs (lien tronqué, image incohérente mais mineure)
+- <70: Bug critical (phrase cassée, image totalement fausse)
+
+CALIBRATION: Un article avec HTML valide, images cohérentes, et seulement des typos mineures doit scorer >= 88.
 
 Tu détectes IMPITOYABLEMENT :
 1. IMAGES INCOHÉRENTES : l'alt text ou le nom de fichier référence un lieu différent de la destination de l'article = CRITICAL
@@ -260,13 +302,23 @@ Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
   "score": <number 0-100>,
   "satisfied": true|false,
   "issues": [
-    { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "location": "string", "fix_suggestion": "string" }
+    { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "location": "string (titre H2 de la section concernée, ou intro / conclusion)", "fix_suggestion": "string" }
   ],
   "strengths": ["string"],
   "verdict": "PASS"|"FAIL"
 }
 
 satisfied = true signifie que tu considères l'article publiable en l'état sur ce critère. Ne mets satisfied=true QUE si tu n'as aucune issue critical ou major.
+
+IMPORTANT — LOCALISATION DES ISSUES : Pour chaque issue, tu DOIS indiquer le champ "location" correspondant au titre H2 de la section où se trouve le problème. Utilise "intro" pour le contenu avant le premier H2, "conclusion" pour le dernier paragraphe/section, ou le texte exact du H2. Cela permet de ne réécrire QUE les sections problématiques.
+
+RUBRIQUE DE SCORING :
+- 90-100: Tous les faits vérifiables et cohérents, durées plausibles
+- 80-89: 1-2 imprécisions mineures (arrondi de prix, durée approximative)
+- 70-79: Incohérence notable mais pas d'hallucination flagrante
+- <70: Hallucination ou fait inventé
+
+CALIBRATION: Un article avec des prix sourcés, des durées plausibles, et des lieux corrects doit scorer >= 85, même si certains arrondis sont approximatifs.
 
 Critères :
 1. Données factuelles : prix, durées de vol/trajet, distances — sont-elles plausibles ?
@@ -295,7 +347,7 @@ Tu dois décider si l'article est publiable en l'état ou nécessite des correct
 
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
-  "decision": "APPROVE"|"REJECT",
+  "decision": "APPROVE"|"SOFT_APPROVE"|"REJECT",
   "weighted_score": <number 0-100>,
   "reasoning": "string (2-3 phrases)",
   "critical_fixes": [
@@ -306,9 +358,10 @@ Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 
 Règles de décision :
 - Un seul bug CRITICAL (image fausse, phrase cassée, lien mort) = REJECT obligatoire
-- Score moyen pondéré < 85 = REJECT
-- TOUS les agents doivent avoir "satisfied": true pour APPROVE — si un seul agent n'est pas satisfied, c'est un REJECT
-- Score moyen pondéré >= 85 ET 0 critical ET tous satisfied = APPROVE
+- Score moyen pondéré < 82 = REJECT
+- Score moyen pondéré >= 82 ET 0 critical ET tous satisfied = APPROVE
+- SOFT APPROVE : Score moyen pondéré >= 80 ET 0 critical ET au maximum 1 agent non-satisfied → "SOFT_APPROVE" (publier avec note d'amélioration)
+- TOUS les agents non-satisfied (>= 2 agents) ET score < 82 = REJECT
 - Pondérations : UX/Bugs x2, Éditorial x1.5, SEO x1, Affiliation x1, Intégrité x1
 
 Ordonne les critical_fixes par priorité (1 = plus urgent).

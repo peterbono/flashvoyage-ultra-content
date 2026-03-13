@@ -10,6 +10,7 @@ import { compileRedditStory } from './reddit-story-compiler.js';
 import { isKnownLocation } from './airport-lookup.js';
 import { COUNTRY_DISPLAY_NAMES } from './destinations.js';
 import tracker from './llm-cost-tracker.js';
+import { FEW_SHOT_EXAMPLES } from './few-shot-examples.js';
 
 // Helper pour logger en NDJSON
 function debugLog(location, message, data, hypothesisId) {
@@ -414,14 +415,12 @@ function generateTemplateFallback(sourceText, article, type = 'analysis') {
  * @param {Object} extracted - Données extraites par reddit-semantic-extractor
  * @returns {{ allowedNumbers: string[], allowedNumberTokens: string[], allowedLocations: string[], isPoor: boolean }}
  */
-function buildPromptTruthPack(extracted) {
+function buildPromptTruthPack(extracted, story = null) {
   const allowedNumbers = [];
   const allowedNumberTokens = new Set();
 
-  // Nombres depuis signals.costs (ex: "1500 USD", "220 bahts")
-  const costs = extracted?.post?.signals?.costs || extracted?.costs || [];
-  for (const cost of costs) {
-    const str = typeof cost === 'string' ? cost : (cost?.value || cost?.amount ? `${cost.amount} ${cost.currency || ''}`.trim() : '');
+  // Helper: add a numeric string to the allowed lists
+  function addNumber(str) {
     if (str && /\d/.test(str)) {
       allowedNumbers.push(str);
       const digits = str.match(/[\d]+/g) || [];
@@ -431,19 +430,80 @@ function buildPromptTruthPack(extracted) {
     }
   }
 
+  // --- NUMBERS FROM POST SIGNALS ---
+
+  // Nombres depuis signals.costs (ex: "1500 USD", "220 bahts")
+  const costs = extracted?.post?.signals?.costs || extracted?.costs || [];
+  for (const cost of costs) {
+    const str = typeof cost === 'string' ? cost : (cost?.value || cost?.amount ? `${cost.amount} ${cost.currency || ''}`.trim() : '');
+    addNumber(str);
+  }
+
   // Nombres depuis signals.dates (ex: "30 days", "March 2025") — seulement ceux contenant un chiffre
   const dates = extracted?.post?.signals?.dates || [];
   for (const date of dates) {
     const str = typeof date === 'string' ? date : (date?.value || '');
-    if (str && /\d/.test(str)) {
-      allowedNumbers.push(str);
-      const digits = str.match(/[\d]+/g) || [];
-      digits.forEach(d => allowedNumberTokens.add(d));
+    addNumber(str);
+  }
+
+  // --- NUMBERS FROM COMMENTS (additional_facts) ---
+
+  const commentAdditionalFacts = extracted?.comments?.additional_facts || [];
+  for (const fact of commentAdditionalFacts) {
+    const val = typeof fact === 'string' ? fact : (fact?.value || '');
+    addNumber(val);
+    // Also extract from the quote if present
+    if (fact?.quote && /\d/.test(fact.quote)) {
+      const quoteNums = fact.quote.match(/(\d[\d\s,.']*\d|\d+)\s*(€|euros?|dollars?|\$|bahts?|thb|฿|vnd|₫|%|jours?|semaines?|mois|ans?|années?|nuits?|heures?|km|miles?|minutes?|USD|GBP|SGD|AUD|MYR|IDR|PHP|JPY|KRW|CNY|INR|TWD|HKD|NZD)/gi) || [];
+      for (const qn of quoteNums) addNumber(qn);
     }
   }
 
-  // Lieux depuis signals.locations + destination + destinations (dédupliqué, normalisé, cap 25)
+  // Numbers from comment insights/warnings values
+  const commentInsights = extracted?.comments?.insights || [];
+  for (const insight of commentInsights) {
+    const val = typeof insight === 'string' ? insight : (insight?.value || '');
+    if (/\d/.test(val)) addNumber(val);
+  }
+
+  // --- NUMBERS FROM STORY (stage 3 compilation) ---
+
+  if (story) {
+    // story.story.context.summary may contain numbers
+    const storySummary = story?.story?.context?.summary || '';
+    if (storySummary && /\d/.test(storySummary)) {
+      const storyNums = storySummary.match(/(\d[\d\s,.']*\d|\d+)\s*(€|euros?|dollars?|\$|bahts?|thb|฿|vnd|₫|%|jours?|semaines?|mois|ans?|années?|nuits?|heures?|km|miles?|minutes?|USD|GBP|SGD|AUD|MYR|IDR|PHP|JPY|KRW|CNY|INR|TWD|HKD|NZD)/gi) || [];
+      for (const sn of storyNums) addNumber(sn);
+    }
+
+    // Numbers from evidence source_snippets
+    const snippets = story?.evidence?.source_snippets || [];
+    for (const snippet of snippets) {
+      const text = snippet?.snippet || '';
+      if (text && /\d/.test(text)) {
+        const snippetNums = text.match(/(\d[\d\s,.']*\d|\d+)\s*(€|euros?|dollars?|\$|bahts?|thb|฿|vnd|₫|%|jours?|semaines?|mois|ans?|années?|nuits?|heures?|km|miles?|minutes?|USD|GBP|SGD|AUD|MYR|IDR|PHP|JPY|KRW|CNY|INR|TWD|HKD|NZD)/gi) || [];
+        for (const en of snippetNums) addNumber(en);
+      }
+    }
+
+    // Numbers from author_lessons and community_insights
+    const lessons = story?.story?.author_lessons || [];
+    for (const lesson of lessons) {
+      const val = typeof lesson === 'string' ? lesson : (lesson?.lesson || '');
+      if (/\d/.test(val)) addNumber(val);
+    }
+    const communityInsights = story?.story?.community_insights || [];
+    for (const ci of communityInsights) {
+      const val = typeof ci === 'string' ? ci : (ci?.value || ci?.insight || '');
+      if (/\d/.test(val)) addNumber(val);
+    }
+  }
+
+  // --- LOCATIONS ---
+
   const locSet = new Set();
+
+  // Locations from post signals
   const rawLocations = extracted?.post?.signals?.locations || [];
   for (const loc of rawLocations) {
     const str = (typeof loc === 'string' ? loc : (loc?.value || '')).trim();
@@ -455,7 +515,83 @@ function buildPromptTruthPack(extracted) {
       if (typeof d === 'string' && d.trim()) locSet.add(d.trim());
     }
   }
-  const allowedLocations = [...locSet].slice(0, 25);
+
+  // Locations from comments additional_facts
+  for (const fact of commentAdditionalFacts) {
+    if (fact?.type === 'location' || fact?.type === 'lieu') {
+      const val = typeof fact === 'string' ? fact : (fact?.value || '');
+      if (val.trim()) locSet.add(val.trim());
+    }
+  }
+
+  // Locations from story context
+  if (story?.story?.context?.where) {
+    const where = story.story.context.where;
+    if (typeof where === 'string' && where.trim()) locSet.add(where.trim());
+  }
+
+  const allowedLocations = [...locSet].slice(0, 40);
+
+  // --- DURATIONS / DISTANCES ---
+
+  const durationSet = new Set();
+  function extractDurationsFromText(text) {
+    if (!text || typeof text !== 'string') return;
+    const durationPatterns = [
+      // "2 hours", "30 minutes", "3 days", "2 weeks", "6 months", "1 year"
+      /\b(\d+)\s*(hours?|heures?|minutes?|mins?|days?|jours?|weeks?|semaines?|months?|mois|years?|ans?|années?|nuits?|nights?)\b/gi,
+      // "150 km", "200 miles", "50 meters"
+      /\b(\d[\d\s,.']*\d|\d+)\s*(km|kilometres?|kilometers?|miles?|meters?|m[eè]tres?)\b/gi,
+      // "2h30", "1h", "45min"
+      /\b(\d+)h(\d+)?\b/gi,
+      /\b(\d+)min\b/gi
+    ];
+    for (const pattern of durationPatterns) {
+      let m;
+      while ((m = pattern.exec(text)) !== null) {
+        durationSet.add(m[0].trim());
+      }
+    }
+  }
+
+  // Extract durations from post text
+  const postText = extracted?.post?.clean_text || '';
+  extractDurationsFromText(postText);
+
+  // Extract durations from story evidence
+  if (story?.evidence?.source_snippets) {
+    for (const snippet of story.evidence.source_snippets) {
+      extractDurationsFromText(snippet?.snippet || '');
+    }
+  }
+
+  // Extract durations from comment additional_facts
+  for (const fact of commentAdditionalFacts) {
+    const val = typeof fact === 'string' ? fact : (fact?.value || '');
+    extractDurationsFromText(val);
+    if (fact?.quote) extractDurationsFromText(fact.quote);
+  }
+
+  const allowedDurations = [...durationSet].slice(0, 30);
+
+  // --- PEOPLE / NAMES ---
+
+  const peopleSet = new Set();
+  // Author from extracted
+  const author = extracted?.source?.author || extracted?.author || null;
+  if (author && author !== '[deleted]' && author !== 'AutoModerator') {
+    peopleSet.add(author);
+  }
+  // Who from story context
+  if (story?.story?.context?.who) {
+    const who = story.story.context.who;
+    if (typeof who === 'string' && who.trim() && who !== '[deleted]') {
+      peopleSet.add(who.trim());
+    }
+  }
+  const allowedPeople = [...peopleSet].slice(0, 10);
+
+  // --- RESULT ---
 
   const isPoor = allowedNumbers.length === 0;
 
@@ -463,7 +599,16 @@ function buildPromptTruthPack(extracted) {
     allowedNumbers,
     allowedNumberTokens: [...allowedNumberTokens],
     allowedLocations,
-    isPoor
+    allowedDurations,
+    allowedPeople,
+    isPoor,
+    coverage: {
+      numberCount: allowedNumbers.length,
+      locationCount: allowedLocations.length,
+      durationCount: allowedDurations.length,
+      peopleCount: allowedPeople.length,
+      sources: ['post', story ? 'story' : null, commentAdditionalFacts.length > 0 ? 'comments' : null].filter(Boolean)
+    }
   };
 }
 
@@ -572,7 +717,7 @@ class IntelligentContentAnalyzerOptimized {
 3. Si le texte est mixte (FR/EN) → traduis UNIQUEMENT les parties en anglais, garde le français intact
 4. Réponds UNIQUEMENT avec le texte final, sans commentaires ni explications
 5. Préserve TOUT le HTML/formatage tel quel (<h2>, <p>, <strong>, etc.)
-6. JAMAIS modifier ou commenter les URLs (http/https) — les copier exactement telles quelles
+6. ✅ Copie les URLs (http/https) exactement telles quelles — aucune modification ni commentaire
 7. Si le texte entier est une URL → retourne-la EXACTEMENT sans commentaire`
           },
           {
@@ -1152,7 +1297,9 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
         // Angle Hunter — stratégie éditoriale déterministe (Phase 1)
         angle: input.angle || null,
         // URL Reddit source pour les citations
-        reddit_source_url: input.reddit_source_url || input.url || ''
+        reddit_source_url: input.reddit_source_url || input.url || '',
+        // Article Outline (FV-111)
+        outline: input.outline || null
       };
       const finalContent = await this.generateFinalArticle(extractionResult, analysis, extracted, pattern, story, options);
       
@@ -1399,7 +1546,7 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
   }
 
   // PHASE 4.1: Utilise extracted, pattern, story au lieu de article brut
-  async generateFinalArticle(extraction, analysis, extracted, pattern, story, options = {}) {
+  async generateFinalArticle_legacy(extraction, analysis, extracted, pattern, story, options = {}) {
     const existingTitles = options.existingTitles || [];
     const existingAngles = options.existingAngles || [];
     const mainDestination = options.main_destination || null;
@@ -1499,7 +1646,7 @@ AFFILIATION POUR TÉMOIGNAGES (à intégrer dans le développement avec des H2 N
 
     const anglesList = [...existingTitles, ...existingAngles].slice(0, 30);
     const anglesBlock = anglesList.length > 0 ? `
-⚠️ ANGLES ET TITRES À NE PAS RÉPÉTER (OBLIGATOIRE) :
+⚠️ ANGLES ET TITRES DÉJÀ UTILISÉS — CHOISIR UN ANGLE FRAIS (OBLIGATOIRE) :
 ${anglesList.map(t => `- ${String(t).trim()}`).join('\n')}
 Tu DOIS proposer un titre et un angle éditorial UNIQUES : ni même formulation, ni même angle (ex. si "budget 12 mois Thaïlande" existe, propose un autre angle pour ce témoignage).
 ` : '';
@@ -1549,7 +1696,7 @@ Tu DOIS proposer un titre et un angle éditorial UNIQUES : ni même formulation,
 - Pas de sections "limites et biais", "erreurs fréquentes", "FAQ", "checklist longue". Ce n'est PAS un guide.
 - Structure linéaire : fait → impact → coût → scénario → action.
 - Les H2 doivent être factuels et spécifiques au fait traité (pas de H2 narratifs longs).
-- INTERDIT ABSOLU : "Lien partenaire", "[lien]", "cliquez ici", tout placeholder d'affiliation visible dans le texte.
+- ✅ Les CTAs décrivent l'action réelle du lecteur : «Compare les vols depuis Paris», «Vérifie les conditions du visa». Les placeholders techniques restent invisibles.
 - Tous les montants doivent être en euros (EUR) uniquement. Si la source donne un montant en USD, convertir avec taux ~0.92. Ne PAS indiquer le montant en dollars. Ex: ~920 euros.
 
 ${marketingSection}
@@ -1564,7 +1711,7 @@ FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <strong>. LONGUEUR: 600-1000 mots. Forma
     "titre": "...",
     "developpement": "...",  // Corps de l'article en HTML. Commence par 1-2 paragraphes <p> (hook + annonce fait). Puis H2 factuels. COURT. EN FRANÇAIS.
     "a_retenir": "...",  // 2-3 bullets HTML (<ul><li>) : les takeaways clés. Sans H2 (le système l'ajoute).
-    "signature": "...",  // CTA soft de fin (1 seul, contextuel). INTERDIT: "Lien partenaire" comme texte.
+    "signature": "...",  // CTA soft de fin (1 seul, contextuel). ✅ Décris l'action : «Compare les assurances voyage» plutôt qu'un placeholder technique.
     "citations": [...],  // max 3
     "opportunites_liens_internes": [...]
   }
@@ -1580,7 +1727,7 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 - ${toneGuidance}
 - ${emotionalGuidance}
 - Thème principal: ${pattern.theme_primary || 'non spécifié'}
-- Titre : privilégier [Sujet] : la vérité (ni cliché, ni fantasme) ou [Révélation] + [Intent SEO]. ❌ INTERDIT en titre : "budget", "sécurité", "erreurs à éviter", "guide complet" seuls — ces titres sont réutilisables partout.
+- ✅ Titre : structure [Sujet] : la vérité (ni cliché, ni fantasme) ou [Révélation] + [Intent SEO]. Chaque titre est unique à CET article — il contient la destination + un angle précis. Exemple : «Vivre à Bali avec 1 000 €/mois : budget réaliste pour nomades» au lieu de «Guide complet budget».
 - Chaque section doit répondre à une vraie question ou tension du lecteur ; pas de remplissage générique.
 
 RÈGLE CARDINALE — TENSION ORBITALE :
@@ -1598,7 +1745,7 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 📖 OUVERTURE IMMERSIVE — HOOK CINÉMATIQUE (premier paragraphe, OBLIGATOIRE) :
 - Ouvrir sur une micro-scène sensorielle (2-4 phrases) : lieu, odeur, bruit, geste, tension. Puis 1 question qui accroche.
 - La scène doit être tirée du témoignage (lieu réel, situation réelle, enjeu réel).
-- ❌ INTERDIT : ouvrir par une question seule sans scène, mentionner Reddit/source, utiliser "Te voilà", commencer par une généralité.
+- ✅ Ouvre TOUJOURS par une micro-scène sensorielle (lieu + action + tension), puis enchaîne sur une question. Exemple : «L'écran du distributeur affiche 220 bahts de frais — tu calcules mentalement si ça vaut le coup.» La source Reddit reste invisible dans le hook ; elle apparaît plus tard dans l'article.
 - Exemples calibrés :
   * Budget : "Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil. L'écran du distributeur affiche les frais, tu calcules mentalement, et tu te demandes si le jeu en vaut la chandelle. Combien te coûte vraiment cette habitude sur un mois ?"
   * Visa : "Tu atterris à Bangkok avec un visa de 30 jours et une liste qui en demanderait 90. L'air chaud te frappe en sortant de l'aéroport. Et là, première question : par où commencer ?"
@@ -1606,7 +1753,7 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 
 📊 CONTEXTE NARRATIF (paragraphe 2-3, OBLIGATOIRE) :
 - Après le hook, 1 paragraphe cadre : où on en est / ce qui déclenche / ce qui est en jeu.
-- PAS de généralité — ancrer dans le cas concret du témoignage (qui est cette personne, quel est son projet, quel est l'enjeu).
+- ✅ Ancre dans le cas concret du témoignage : qui est cette personne, quel est son projet, quel est l'enjeu. Exemple : «Julien, 28 ans, vient de quitter son CDI pour tester 3 mois en Thaïlande avec 4 000 € — son enjeu : tenir sans toucher à son épargne.»
 - Inclure des benchmarks concrets si disponibles (coût/jour, coût/mois, durées, distances).
 
 📌 PREUVES INTÉGRÉES (OBLIGATOIRE) :
@@ -1624,18 +1771,17 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 - Peurs invisibles : "Les peurs invisibles qui stoppent les voyages longs" (si pertinent dans le témoignage).
 
 📌 RÉALITÉ VS FANTASME ET AFFILIATION :
-- "Réalité vs fantasme : 3 vérités que personne ne te dira" : 3 points vérifiables. ❌ Jamais de méta sur l'affiliation.
+- "Réalité vs fantasme : 3 vérités que personne ne te dira" : 3 points vérifiables. ✅ Garde le focus sur les faits terrain — les liens affiliés restent invisibles dans le flux narratif. Exemple : «Le coworking à 46 €/mois existe, mais le wifi tombe 3 fois par jour.»
 
 📌 VERDICT / CE QU'IL FAUT RETENIR :
 - Ton réaliste, pas vendeur. Minimum 2 paragraphes substantiels.
-- ❌ INTERDIT : Verdict générique type "Comparez les prix et réservez" seul.
+- ✅ Le verdict doit trancher avec un avis personnel étayé. Exemple : «Avec 1 500 €/mois, Chiang Mai reste imbattable — à condition d'accepter la chaleur d'avril.» Accompagne le CTA d'un fait concret qui le justifie.
 
-🚫 ANTI-PLATITUDE — PHRASES INTERDITES (chaque phrase doit contenir un fait, un chiffre, ou un choix) :
-- ❌ "il est important de", "il faut savoir que", "n'hésite pas à", "il convient de"
-- ❌ "il est essentiel de", "il est recommandé de", "il est conseillé de"
-- ❌ "comme on peut le voir", "il va sans dire que", "force est de constater"
-- ❌ "dans un premier temps", "en ce qui concerne", "il est à noter que"
-- Si une phrase ne contient ni fait concret, ni chiffre, ni choix éditorial → la supprimer ou la reformuler.
+✍️ GUIDE DE STYLE — PHRASES À HAUTE VALEUR (chaque phrase contient un fait, un chiffre, ou un choix) :
+- ✅ Remplace les tournures impersonnelles par des phrases directes avec tutoiement. Exemple : «Le visa te coûtera 35 €» au lieu de «Il est important de savoir que le visa coûte 35 €».
+- ✅ Chaque phrase apporte un fait concret ou un arbitrage. Exemple : «La ligne de bus 39 relie l'aéroport au centre pour 0,90 €» au lieu de «Il est recommandé de prendre le bus».
+- ✅ Attaque avec le sujet réel, pas une béquille syntaxique. Exemple : «Le décalage horaire depuis Paris (+5h/+6h) complique les visios» au lieu de «Dans un premier temps, il convient de noter le décalage».
+- ✅ Chaque phrase passe le test : «Est-ce que cette info aide le lecteur à prendre une décision ?» Si non, reformule avec un fait ou un chiffre.
 
 📐 STRUCTURE ÉDITORIALE (pilotée par le récit) :
 
@@ -1660,14 +1806,14 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 
 3. CE QU'IL FAUT RETENIR + SIGNATURE (champs séparés)
 
-📝 INTERDICTION STRICTE — NE JAMAIS GÉNÉRER DE <blockquote> :
-- ❌ INTERDIT : <blockquote>, <cite>, <q>. Le système les ajoutera en post-traitement.
+📝 FORMAT CITATIONS — GUILLEMETS FRANÇAIS INLINE UNIQUEMENT :
+- ✅ Utilise des guillemets français inline « ... » pour toutes les citations. Le système ajoutera les <blockquote> en post-traitement. Exemple : Un voyageur résume : « le budget a explosé dès le premier jour ».
 - Citations courtes UNIQUEMENT entre guillemets français inline : « ... »
 - Attribution : « ... » — ${extracted.author || 'auteur Reddit'}
 - OBLIGATOIRE : 2-5 citations inline depuis story.evidence.source_snippets
 
 ⚠️ RÈGLE ABSOLUE — H2 SPÉCIFIQUES (blacklist étendue) :
-- H2 "nus" INTERDITS : "Contexte", "Événement central", "Conseils pratiques", "En résumé", "Conclusion", "Budget", "Sécurité", "Culture locale", "Transport", "Hébergement", "Gastronomie", "Vie nocturne", "Introduction", "Présentation", "Analyse", "Bilan".
+- ✅ Chaque H2 contient un verbe décisionnel + la destination ou un angle concret. Exemple : «Pourquoi Bali coûte 40 % plus cher que prévu» au lieu de «Budget», «Trois erreurs de visa qui bloquent ton entrée au Vietnam» au lieu de «Conseils pratiques», «Le vrai coût d'un mois à Chiang Mai quartier par quartier» au lieu de «Hébergement».
 - Chaque H2 DOIT être ancré dans le cas spécifique : destination + angle unique.
 - H2 qualifiés AUTORISÉS : spécifiques à cet article (ex. "Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois", "Chiang Mai vs Bangkok : où ton budget tient le plus longtemps").
 
@@ -1683,21 +1829,21 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 🔍 ANALYSE CRITIQUE : coûts cachés, pieges, erreurs frequentes. Distinction faits / ressentis / interpretations.
 
 📐 DENSITÉ NARRATIVE : chaque paragraphe fait avancer l'histoire, une décision, ou réduit un risque.
-🚫 ZÉRO RÉPÉTITION : NE JAMAIS reformuler la même idée dans deux paragraphes différents. Si un conseil, un constat ou une recommandation a déjà été donné, ne PAS le re-énoncer même avec d'autres mots. Chaque paragraphe apporte une information NOUVELLE.
+✅ PROGRESSION CONSTANTE : chaque paragraphe apporte une information nouvelle qui fait avancer le récit. Si un conseil ou un constat a déjà été donné, passe au point suivant. Exemple : après avoir parlé du coût des retraits, enchaîne sur les alternatives (Wise, Revolut) — ne reformule pas le coût différemment.
 
 🎭 ÉCRITURE HUMAINE — CRUCIAL :
 - Varie la longueur des phrases : alterne courtes (5-8 mots) et longues (20-30 mots). Pas de rythme mécanique.
 - Commence certaines phrases par "Et", "Mais", "Sauf que", "Le problème,". Pas toujours sujet-verbe-complément.
 - Intègre 2-3 digressions courtes qui montrent une vraie connaissance du terrain (bruit du trafic, odeur d'encens, chaleur du tarmac).
-- INTERDIT : "il est important de", "il convient de", "force est de constater", "il va sans dire", "en ce qui concerne", "il est essentiel de". Ce sont des tics d'IA.
-- INTERDIT : paragraphes qui commencent tous par le même schéma (sujet + verbe). Varie les attaques.
+- ✅ Utilise des tournures directes et vivantes : «Le visa te coûtera 35 €», «Wise te fait économiser 15 € par retrait», «Ton estomac ne tiendra pas au pad thaï de rue le premier soir». Ces phrases sonnent humain.
+- ✅ Varie les attaques de paragraphes : commence par «Et», «Mais», «Sauf que», «Le problème,», une question, un chiffre-choc. Exemple : «Sauf que les 220 bahts de frais, multipliés par 8 retraits, ça fait une nuit d'hôtel.»
 - Les citations Reddit entre « » doivent TOUJOURS être fermées avec ».
 
 🇫🇷 NICHE FRANCOPHONE ASIE — L'article s'adresse a des voyageurs FRANCOPHONES qui partent en Asie :
 - References francaises : vols depuis Paris (CDG/ORY), Lyon, Marseille, Bruxelles.
-- 💶 DEVISE : TOUT montant DOIT être en EUROS (€). Si la source Reddit donne un prix en USD/$, CONVERTIS-LE en euros (taux ~0.92). Ex: "$2500" → "~2 300 €", "$50/night" → "~46 €/nuit". JAMAIS de USD, $, ou "dollars" dans l'article final ni dans le titre.
+- 💶 DEVISE : TOUT montant est en EUROS (€). Convertis chaque prix USD source en euros (taux ~0.92). Exemple : source «$2500» → article «~2 300 €», source «$50/night» → article «~46 €/nuit». Le symbole € se place après le nombre.
 - Contexte FR : vacances scolaires, conges payes, jours feries francais, ponts. Passeport francais pour les visas.
-- Ton naturel : tutoiement, expressions courantes ("galere", "bon plan", "se faire arnaquer", "valoir le coup"). PAS de francais litteraire.
+- ✅ Ton naturel : tutoiement, expressions courantes («galère», «bon plan», «se faire arnaquer», «valoir le coup»). Écris comme un pote qui a voyagé, pas comme un guide Michelin.
 - Specificites FR en Asie : decalage horaire depuis Paris, assurance carte bancaire francaise (Visa Premier), forfait mobile Free international, Revolut/Wise pour les paiements.
 
 📊 ÉLÉMENTS STRUCTURELS EVERGREEN (obligatoires si le sujet s'y prête) :
@@ -1706,19 +1852,19 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 - CHECKLIST : obligatoire si l'article est un guide pratique ou un plan d'action. Format <ul><li> avec items actionnables.
 
 🎯 AFFILIATION NATIVE (2-4 insertions max, DANS LE FLUX) :
-- Chaque insertion = problème concret → solution. PAS de bloc "partenaires" isolé.
+- ✅ Chaque insertion suit le schéma : problème concret → solution affiliée dans le flux. Exemple : «Les frais bancaires te coûtent 15 €/mois → ouvre un compte Wise avant de partir.»
 - Chaque CTA suit un paragraphe qui décrit un problème concret vécu.
 - CTA "préventif" TÔT (après le hook), CTA "solution" AU PIC (après révélation), CTA "setup long terme" APRÈS (avant conclusion).
 - Marquer chaque emplacement CTA avec : <!-- FV:CTA_SLOT reason="description du problème résolu" -->
 
-🚫 INTERDITS : H2 génériques, listes >5 items sans hiérarchie, ton scolaire, morale/prudence inutile, emphase artificielle.
+✅ STANDARDS : H2 spécifiques avec destination + angle, listes de 5 items max classées par priorité, ton éditorial engagé, conseils actionnables sans morale. Exemple de liste bien hiérarchisée : «1. Ouvre Wise (gratuit) 2. Configure les alertes de change 3. Préviens ta banque FR».
 
-🚫 INTERDIT ABSOLU — PLACEHOLDERS D'AFFILIATION :
-- ❌ JAMAIS écrire "Lien partenaire", "[lien]", "cliquez ici", "{{lien}}", "[url]" ou tout placeholder d'affiliation visible dans le texte.
+✅ CTA NATURELS — TOUJOURS DÉCRIRE L'ACTION RÉELLE :
+- ✅ Chaque CTA décrit l'action concrète du lecteur. Exemple : «Compare les vols vers Bangkok», «Trouve ton assurance voyage», «Réserve ta première nuit à Chiang Mai».
 - Les CTAs doivent décrire l'action réelle ("Compare les vols vers Bangkok", "Trouve ton assurance voyage") — jamais un placeholder technique.
 
 💶 CONVERSION MONÉTAIRE OBLIGATOIRE :
-- Tous les montants doivent être en euros (EUR) uniquement. Ne JAMAIS mentionner les dollars ou USD.
+- ✅ Tous les montants apparaissent en euros (EUR) uniquement. Convertis toute source USD avec taux ~0.92. Exemple : source «$1200/month» → article «~1 100 €/mois».
 - Si la source donne un montant en USD, convertir avec taux ~0.92 et afficher UNIQUEMENT en euros.
 - Exemple : « ~920 euros » ou « environ 200 euros ».
 - L'audience est francophone européenne : l'euro est la seule devise à utiliser.
@@ -1745,7 +1891,7 @@ ${marketingSection}
 FORMAT HTML: <h2>, <h3>, <p>, <ul><li>, <strong>.
 LONGUEUR OBLIGATOIRE: MINIMUM 2500 mots, IDÉAL 3000 mots. Un article EVERGREEN de moins de 1500 mots sera AUTOMATIQUEMENT REJETÉ. Pas de minimum par section, mais le total DOIT dépasser 2500 mots.
 
-🚨 EXPLOITATION DES DONNÉES EXTRAITES: INTÈGRE dans "developpement" les détails temporels, lieux, chiffres, entités extraites. UTILISE 90% minimum des données fournies. Pas d'invention. NE JAMAIS inventer de prix, montants en euros, distances ou durées non présents dans la source. Si un coût n'est pas sourcé, NE MENTIONNE PAS de prix — reformule sans chiffre. Exemples: au lieu de "coûte quelques euros", écris "reste abordable" ou "ne ruinera pas ton budget". ÉVITE les formulations vagues type "quelques euros", "plusieurs dizaines d'euros", "un budget modeste" — elles sonnent IA.
+🚨 EXPLOITATION DES DONNÉES EXTRAITES : INTÈGRE dans "developpement" les détails temporels, lieux, chiffres, entités extraites. UTILISE 90 % minimum des données fournies. ✅ Chaque prix affiché provient de la source Reddit ou du truth pack. Pour un coût non sourcé, reformule sans montant : «reste abordable», «ne ruinera pas ton budget», «le surcoût est réel». Exemple : «Le trajet en Grab coûte ~9 € (sourcé)» vs «Le trajet en Grab reste raisonnable (non sourcé)».
 
 📍 MARQUEURS ÉDITORIAUX (à insérer dans "developpement") :
 - <!-- FV:CTA_SLOT reason="description du problème résolu" --> : 2-4 max, aux emplacements où un widget d'affiliation serait pertinent.
@@ -1785,7 +1931,7 @@ Ces marqueurs sont invisibles pour le lecteur mais exploités par le pipeline. N
 
 ⚠️ RÈGLES ABSOLUES : Auteur ≠ commentaires. Toujours traçable au story.evidence. Pas d'invention. Sections absentes = null ou omises.
 
-⚠️ NE PAS RENVOYER les champs contexte, evenement_central, moment_critique, resolution. Tout dans "developpement" (HTML libre).
+⚠️ ✅ Intègre contexte, événement central, moment critique et résolution directement dans le champ "developpement" (HTML libre) — ces champs n'existent pas en sortie JSON.
 
 ⚠️ _editorial_self_check est OBLIGATOIRE : c'est ton auto-évaluation interne. Il n'est PAS publié — il sert au pipeline pour vérifier la qualité éditoriale. Remplis-le honnêtement.
 
@@ -1795,9 +1941,9 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
     const systemMessage = `Tu es un expert FlashVoyages. Rédige un article engageant basé sur le témoignage Reddit.
 
 🚨 TOP 3 RÈGLES CRITIQUES (VÉRIFIER AVANT DE RÉPONDRE) :
-1. HOOK CINÉMATIQUE : le premier paragraphe doit être une micro-scène sensorielle concrète (lieu, action, tension). ❌ JAMAIS "Te voilà...", ❌ JAMAIS mentionner Reddit/source dans le hook. Exemples : "Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil..." / "Tu atterris à Bangkok avec un visa de 30 jours..."
-2. CITATIONS INLINE OBLIGATOIRES : intègre 2-5 citations courtes entre guillemets français « ... » depuis les données du témoignage. Chaque citation est contextualisée : "Un voyageur résume : « ... »". ❌ PAS de <blockquote>. Si tu génères 0 citation inline, l'article sera REJETÉ.
-3. H2 DÉCISIONNELS (80%+ obligatoire) : chaque H2 doit poser un arbitrage, une tension ou un choix. Inclus un verbe décisionnel (choisir, éviter, optimiser, sacrifier, risquer) ou un connecteur de tension (mais, vs, en revanche, caché, vrai). ❌ JAMAIS de H2 nu générique ("Conseils pratiques", "Conclusion", "Budget", "Transports"). ✅ BON : "Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois".
+1. HOOK CINÉMATIQUE : le premier paragraphe est une micro-scène sensorielle concrète (lieu, action, tension). ✅ Ouvre par une action ou une sensation vécue. Exemples : «Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil...» / «Tu atterris à Bangkok avec un visa de 30 jours...» / «L'odeur de citronnelle monte du trottoir de Khao San Road...»
+2. CITATIONS INLINE OBLIGATOIRES : intègre 2-5 citations courtes entre guillemets français « ... » depuis les données du témoignage. ✅ Contextualise chaque citation : «Un voyageur résume : « le budget a explosé dès le premier jour »». ✅ Utilise uniquement le format inline « ... » (le système gère les blockquotes). Minimum 2 citations pour validation.
+3. H2 DÉCISIONNELS (80%+ obligatoire) : chaque H2 pose un arbitrage, une tension ou un choix. ✅ Inclus un verbe décisionnel (choisir, éviter, optimiser, sacrifier, risquer) ou un connecteur de tension (mais, vs, en revanche, caché, vrai). ✅ Exemples : «Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois», «Chiang Mai vs Bangkok : où ton budget tient le plus longtemps», «Le piège du ferry Krabi-Koh Lanta que personne ne mentionne».
 
 🇫🇷 RÉPONSE UNIQUEMENT EN FRANÇAIS (PRIORITÉ ABSOLUE) :
 - Produis TOUT le JSON en français dès la première réponse. Aucun champ en anglais.
@@ -1808,10 +1954,10 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 📝 RÈGLES POUR LE TITRE (OBLIGATOIRE) — Format SEO + intention claire :
 - Structure : [Révélation personnelle forte] + [Intent SEO]
 - Intent explicite : budget / sécurité / long séjour / erreurs à éviter / guide pratique
-- ❌ INTERDIT : Ajouter des dates dans les titres (pas de "(2024)", "(2026)", etc.)
-- ⚠️ JAMAIS D'EMOJI DANS LE TITRE - Les emojis sont INTERDITS dans les titres H1 et H2
-- ❌ ANTI-DÉCONTEXTUALISATION TITRE : si tu mets un chiffre dans le titre, il DOIT correspondre à son contexte d'origine dans la source. Ex: si la source dit "$50/month for coworking", le titre NE PEUT PAS dire "vivre avec 50 USD" — c'est une déformation du fait.
-- 💶 TITRE EN EUROS UNIQUEMENT : JAMAIS de USD, $, ou "dollars" dans le titre. Convertis en euros (taux ~0.92). Ex: source "$2500" → titre "2 300 €". Le symbole € se place APRÈS le nombre.
+- ✅ Titre sans date — sauf si l'année est liée à une actualité (changement de visa, nouvelle loi). Exemple : «Visa nomade Thaïlande : retour d'expérience» plutôt que «Visa nomade Thaïlande (2026)».
+- ✅ Titres H1 et H2 en texte pur — les emojis restent dans le corps de l'article (paragraphes, listes). Exemple : «<h2>Nos recommandations</h2>» et non «<h2>🎯 Nos recommandations</h2>».
+- ✅ FIDÉLITÉ CHIFFRES TITRE : chaque chiffre dans le titre garde son contexte source. Exemple : si la source dit «$50/month for coworking», le titre peut dire «coworking à ~46 €/mois» — le chiffre reste lié au coworking, pas au coût de la vie global.
+- 💶 TITRE EN EUROS UNIQUEMENT : convertis en euros (taux ~0.92). Exemple : source «$2500» → titre «2 300 €». Le symbole € se place après le nombre.
 - Exemples BONS :
   ✅ "Comment voyager 12 mois en Asie avec 23 000 € sans rentrer fauché"
   ✅ "Voyager seule en Asie : budget, sécurité et erreurs à éviter (guide complet)"
@@ -1819,26 +1965,25 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
   ✅ "Visa Nomade Digital en Thaïlande : Mon Retour d'Expérience"
   ✅ "Vivre à Bali avec 1000€/mois : Budget Réaliste pour Nomades"
   ✅ "Arnaque eSIM en Indonésie : Comment je l'ai évitée"
-- Exemples MAUVAIS (trop fades, avec emojis, ou avec dates) :
-  ❌ "Témoignage voyage: retours et leçons"
-  ❌ "Mon expérience en Asie"
-  ❌ "🎯 Nos recommandations" (emoji interdit)
-  ❌ "Vivre à Bali : Choix de Logement (2026)" (date interdite)
+- ✅ Transforme les titres fades en titres spécifiques :
+  «Témoignage voyage: retours et leçons» → «Comment j'ai tenu 6 mois en Thaïlande avec 1 200 €/mois»
+  «Mon expérience en Asie» → «Visa run au Laos : ce que 3 passages m'ont appris»
+  «Vivre à Bali : Choix de Logement (2026)» → «Vivre à Bali : Canggu ou Ubud, le vrai coût mois par mois»
 - Le titre DOIT contenir une destination asiatique précise (ville ou pays)
 - Le titre DOIT être actionnable et spécifique
 - Maximum 70 caractères pour le SEO
-- ❌ INTERDIT ABSOLU : Ajouter des dates dans les titres (pas de "(2024)", "(2026)", etc.) sauf si l'année est pertinente pour l'actualité (ex: changement de visa en ${new Date().getFullYear()})
+- ✅ Titres intemporels par défaut. Réserve l'année aux actualités datées (changement de visa, nouvelle loi en ${new Date().getFullYear()}). Exemple : «Nouveau visa nomade Thaïlande ${new Date().getFullYear()} : conditions et retours» est OK ; «Bali : guide logement (${new Date().getFullYear()})» ne l'est pas.
 
 ${anglesBlock}
-⚠️ RÈGLE ABSOLUE - EMOJIS INTERDITS DANS LES TITRES H2:
-- JAMAIS d'emoji au début ou dans un titre H2
+⚠️ RÈGLE ABSOLUE - TITRES H2 EN TEXTE PUR :
+- ✅ Les titres H2 sont rédigés en texte uniquement — les emojis enrichissent le corps de l'article.
 - Les emojis sont autorisés UNIQUEMENT dans le corps du texte (paragraphes, listes)
 - Exemples CORRECTS: <h2>Nos recommandations</h2>, <h2>Les erreurs frequentes</h2>, <h2>Limites et biais de cet article</h2>
-- Exemples INTERDITS: <h2>🎯 Nos recommandations</h2>, <h2>💬 Ce que dit le témoignage</h2>
+- ✅ Exemples corrects : <h2>Nos recommandations</h2>, <h2>Ce que la communauté en dit vraiment</h2>
 
 ⚠️ INTERDICTION DE RÉPÉTER LE BLOCKQUOTE:
 - Le blockquote principal apparaît UNE SEULE FOIS dans l'article
-- NE JAMAIS répéter le titre du post Reddit dans le corps de l'article
+- ✅ Reformule le sujet du post Reddit avec tes propres mots dans le corps de l'article. Exemple : si le titre Reddit est «Best coworking in Chiang Mai?», écris «trouver le bon espace de travail à Chiang Mai» — pas une copie du titre.
 
 ${correctionBlock}
 🎯 COHÉRENCE TITRE/CONTENU — RÈGLE ANTI-DRIFT:
@@ -1846,38 +1991,32 @@ ${correctionBlock}
 - Le titre doit contenir le nom de la destination principale.
 - Les H2 doivent référencer cette destination quand pertinent.
 - Les autres destinations mentionnées dans les commentaires ne sont que des points de comparaison secondaires.
-- ❌ INTERDIT: Titre sur "Bali" mais contenu qui parle principalement de "Chiang Mai".
+- ✅ Le titre et le contenu ciblent la même destination principale. Exemple : si le titre mentionne «Bali», 80 %+ du contenu parle de Bali — les autres destinations ne sont que des comparaisons brèves.
 
 ⚠️ CONTRAINTE CRITIQUE ABSOLUE: Ce site est spécialisé ASIE uniquement. 
-- NE MENTIONNE JAMAIS de destinations non-asiatiques (Portugal, Espagne, Lisbonne, Barcelone, Madrid, Porto, France, Paris, Italie, Rome, Grèce, Turquie, Istanbul, Europe, Amérique, USA, Brésil, Mexique, etc.)
+- ✅ Cite uniquement des destinations asiatiques : Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour, Cambodge, Laos, Myanmar, Malaisie. Si le témoignage mentionne une destination hors Asie, remplace-la par un équivalent asiatique ou ignore-la.
 - Utilise UNIQUEMENT des destinations asiatiques: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
 - Si le témoignage mentionne une destination non-asiatique, remplace-la par une destination asiatique équivalente ou ignore-la complètement
 
 🌐 LANGUE OBLIGATOIRE: TOUT le contenu doit être en FRANÇAIS. 
-- ❌ INTERDIT ABSOLU: "Indonesia just launched..." → ✅ CORRECT: "L'Indonésie vient de lancer..."
-- ❌ INTERDIT ABSOLU: "Thailand LTR visa is available..." → ✅ CORRECT: "Le visa LTR de Thaïlande est disponible..."
-- ❌ INTERDIT ABSOLU: "Vietnam doesn't have..." → ✅ CORRECT: "Le Vietnam n'a pas..."
-- ❌ INTERDIT ABSOLU: "The regular tourist visa..." → ✅ CORRECT: "Le visa touristique régulier..."
-- ❌ INTERDIT ABSOLU: "Requirements are reasonable..." → ✅ CORRECT: "Les exigences sont raisonnables..."
-- ❌ INTERDIT ABSOLU: "Essential for Vietnam" → ✅ CORRECT: "Essentiel pour le Vietnam"
-- ❌ INTERDIT ABSOLU: "Underestimating" → ✅ CORRECT: "Sous-estimer"
-- ❌ INTERDIT ABSOLU: "Not budgeting" → ✅ CORRECT: "Ne pas prévoir de budget"
-- ❌ INTERDIT ABSOLU: "Fatigue setting in" → ✅ CORRECT: "La fatigue s'installe"
-- ❌ INTERDIT ABSOLU: "Critical Moment" → ✅ CORRECT: "Moment critique"
-- ❌ INTERDIT ABSOLU: "What Reddit testimonials" → ✅ CORRECT: "Ce que les témoignages Reddit"
+- ✅ Traduis TOUT en français dès la rédaction. Exemples de bonnes traductions :
+  «L'Indonésie vient de lancer...», «Le visa LTR de Thaïlande est disponible...», «Le Vietnam n'a pas...»,
+  «Le visa touristique régulier...», «Les exigences sont raisonnables...», «Essentiel pour le Vietnam»,
+  «Sous-estimer», «Ne pas prévoir de budget», «La fatigue s'installe», «Moment critique»,
+  «Ce que les témoignages Reddit...»
 - Traduis TOUS les textes anglais en français AVANT de les mettre dans le JSON
 - Ne laisse AUCUN texte en anglais dans le contenu final (0% anglais toléré)
 - VÉRIFIE que chaque champ du JSON est en français avant de répondre
 - Si tu détectes du texte anglais dans le témoignage source, traduis-le immédiatement
-- Les phrases mixtes FR/EN sont INTERDITES - tout doit être 100% français
+- ✅ Chaque phrase est 100 % français. Les termes techniques anglais courants (coworking, digital nomad, hostel) restent en italique ; tout le reste est traduit.
 
 🚨 GARDE-FOUS EXPLICITES (SOURCE OF TRUTH) :
-- ❌ Pas d'invention : aucun lieu, chiffre, durée ou risque inventé ; tout doit être sourcé ou issu des données extraites
-- ❌ NE JAMAIS INVENTER DE PRIX OU MONTANTS EN EUROS : si un coût n'est PAS dans la source Reddit ou le truth pack, NE MENTIONNE AUCUN PRIX — reformule la phrase sans montant. INTERDIT : "quelques euros", "plusieurs dizaines d'euros", "un budget modeste" — ces formulations sonnent IA. Préfère : "reste abordable", "le surcoût est réel", "pèse sur ton budget".
-- ❌ INTERDIT ABSOLU des placeholders/collages: "2quelques", "coûtentquelques", "coûtentquelques", "prixquelques", "tempsquelques". Si un token paraît cassé, corrige-le en français naturel.
-- ❌ NE JAMAIS MENTIONNER DE LIEU NON SOURCÉ : si une ville ou destination n'apparaît PAS dans le post Reddit source ni dans les lieux autorisés, NE LA MENTIONNE PAS. Un lieu inventé bloque la publication.
-- ❌ ANTI-DÉCONTEXTUALISATION (CRITIQUE) : un chiffre de la source ne peut JAMAIS être utilisé dans un contexte différent de l'original. Exemple INTERDIT : si la source dit "$50-100/month for coworking spaces", tu NE PEUX PAS écrire "vivre avec 50 USD par mois" ou utiliser 50 USD dans le titre comme budget de vie. Le chiffre 50 USD se rapporte au COWORKING, pas au coût de la vie. Chaque chiffre garde son contexte d'origine.
-- ❌ Pas d'angles plats : toute section doit répondre à une vraie question utilisateur
+- ✅ Chaque fait (lieu, chiffre, durée, risque) provient de la source Reddit ou du truth pack. Exemple : si la source mentionne «$1200/month in Chiang Mai», tu peux écrire «~1 100 €/mois à Chiang Mai» — mais pas inventer un coût pour Bangkok.
+- ✅ Prix uniquement sourcés : si un coût vient de la source Reddit ou du truth pack, affiche-le en euros. Sinon, reformule sans montant. Exemples valides : «reste abordable», «le surcoût est réel», «pèse sur ton budget». Exemple concret : «Le trajet en grab te reviendra à...» → OK si le prix est sourcé, sinon «Le trajet en grab reste raisonnable».
+- ✅ Vérifie que chaque mot est un vrai mot français — corrige les tokens collés en français naturel. Exemple : «coûtentquelques» → «coûtent quelques», «2quelques» → «deux ou trois».
+- ✅ Cite uniquement les lieux présents dans le post Reddit source ou la liste des lieux autorisés. Un lieu non sourcé bloque la publication. Exemple : si la source parle de Chiang Mai et Bangkok, reste sur ces deux villes — pas de Phuket improvisé.
+- ✅ FIDÉLITÉ CONTEXTUELLE DES CHIFFRES : chaque chiffre garde le contexte exact de sa source. Exemple : source «$50-100/month for coworking spaces» → article «~46–92 €/mois pour un espace de coworking» — le chiffre reste lié au coworking, jamais détourné vers le coût de la vie.
+- ✅ Chaque section répond à une vraie question du lecteur. Exemple : au lieu de «Présentation de Chiang Mai», écris «Combien coûte vraiment un mois à Chiang Mai ?»
 - ✅ SEO before affiliate : résoudre l'intention du lecteur avant de proposer un partenaire
 - Si une section est absente dans le JSON story, ne la crée pas
 - Sépare strictement l'auteur et la communauté
@@ -1885,21 +2024,21 @@ ${correctionBlock}
 - Toutes les sections doivent être traçables au story.evidence
 - Toute donnée factuelle (chiffre, lieu, durée, coût) doit provenir soit de la source Reddit, soit du truth pack fourni dans les données ci-dessous. Aucune donnée inventée.
 
-🚫 ANTI-PLATITUDE (VÉRIFIER AVANT RÉPONSE) :
-- INTERDIT : "il est important de", "il faut savoir que", "n'hésite pas à", "il convient de", "il est essentiel de", "il est recommandé de"
+✍️ STYLE DIRECT (VÉRIFIER AVANT RÉPONSE) :
+- ✅ Chaque phrase attaque avec un sujet concret et un fait. Exemple : «Le visa coûte 35 € et se demande en ligne en 10 minutes» au lieu de «Il est important de savoir que le visa coûte 35 €». Teste chaque phrase : si tu peux la supprimer sans perdre d'info, reformule-la.
 - Chaque phrase doit contenir un fait, un chiffre, ou un choix éditorial. Pas de remplissage.
 
 🤖 ANTI-PATTERNS IA (VÉRIFIER AVANT RÉPONSE — REJET AUTOMATIQUE) :
-Les formulations suivantes sont INTERDITES car elles signalent immédiatement un contenu généré par IA :
-- ❌ "arbitrer entre X et Y sans sacrifier Z" → reformule avec un verbe concret
-- ❌ "Ce que les autres guides ne disent pas" → remplace par un H2 factuel et spécifique
-- ❌ "La vraie question n'est pas X mais Y" → pose la question directement
-- ❌ "Option 1 / Option 2 / Option 3" avec format Avantages/Compromis/CTA identique → chaque alternative doit avoir un format narratif DIFFÉRENT (un paragraphe fluide, un mini-récit, une liste, un dialogue intérieur...)
-- ❌ "Erreur 1 / Erreur 2 / Erreur 3" numérotées → raconte chaque piège comme un mini-scénario
-- ❌ "Stratégie A / Stratégie B" → nomme chaque approche par son résultat concret
-- ❌ Phrases d'ouverture fragmentées dramatiques ("Deux semaines. Quatre destinations. Un dilemme.")
-- ❌ "Tu dois trancher entre trois tensions majeures" → montre les tensions, ne les annonce pas
-- ❌ "hors des sentiers battus" / "la vraie [destination]" / "expériences authentiques" → décris concrètement ce que tu veux dire
+✅ VOIX NATURELLE — Reformulations qui sonnent humain :
+- ✅ Au lieu de «arbitrer entre X et Y sans sacrifier Z» → utilise un verbe concret : «Chiang Mai te coûte 40 % moins cher que Bali, mais tu perds la plage.»
+- ✅ Au lieu de «Ce que les autres guides ne disent pas» → un H2 factuel : «Le piège du ferry Krabi-Koh Lanta que personne ne mentionne» ou «Pourquoi 3 jours à Chiang Mai changent tout»
+- ✅ Au lieu de «La vraie question n'est pas X mais Y» → pose la question directement : «Combien de temps peux-tu tenir avec 1 500 €/mois à Bali ?»
+- ✅ Au lieu de «Option 1 / Option 2 / Option 3» (format identique) → varie les formats : un paragraphe fluide, puis un mini-récit, puis une liste comparative
+- ✅ Au lieu de pièges numérotés «Erreur 1 / Erreur 2» → raconte chaque piège comme un mini-scénario vécu : «Tu arrives à l'ATM, tu retires 10 000 bahts, et tu découvres 220 bahts de frais — par retrait.»
+- ✅ Au lieu de «Stratégie A / Stratégie B» → nomme par le résultat : «La méthode lente (et pas chère)» vs «L'option express à 46 €»
+- ✅ Ouvre avec une scène ou un fait, pas avec des fragments dramatiques. Exemple : «L'écran du distributeur affiche les frais — tu calcules vite.»
+- ✅ Montre les tensions au lieu de les annoncer. Exemple : «Le Grab coûte 4x le bus, mais il te dépose devant la porte à 2h du matin.»
+- ✅ Décris concrètement au lieu de clichés. Exemple : «le marché de nuit de Chiang Mai, à deux rues du temple Doi Suthep» au lieu de «hors des sentiers battus»
 Si tu utilises une de ces formulations, l'article sera REJETÉ par le quality gate.
 
 ✍️ VOIX D'AUTEUR (OBLIGATOIRE) :
@@ -1929,8 +2068,8 @@ ${editorialBlock}
 
 🚨 RAPPEL CRITIQUE — SECTIONS SERP OBLIGATOIRES DANS "developpement" :
 Le champ "developpement" DOIT contenir ces 3 H2 comme dernières sections de contenu (AVANT FAQ/Comparatif/Retenir) :
-1. Un H2 avec un angle différenciant SPÉCIFIQUE à cet article (❌ PAS "Ce que les autres guides ne disent pas" — c'est un titre IA typique. ✅ Exemple : "Pourquoi 3 jours à Chiang Mai changent tout" ou "Le piège du ferry Krabi-Koh Lanta que personne ne mentionne")
-2. Un H2 sur les pièges concrets avec un titre NARRATIF (❌ PAS "Les erreurs fréquentes..." — trop générique. ✅ Exemple : "Quatre décisions qui plombent un séjour en [destination]" ou "Ce que j'aurais aimé savoir avant de réserver")
+1. Un H2 avec un angle différenciant SPÉCIFIQUE à cet article. ✅ Exemples : «Pourquoi 3 jours à Chiang Mai changent tout», «Le piège du ferry Krabi-Koh Lanta que personne ne mentionne», «Ce qui change vraiment entre 1 mois et 3 mois à Bali»
+2. Un H2 sur les pièges concrets avec un titre NARRATIF. ✅ Exemples : «Quatre décisions qui plombent un séjour en [destination]», «Ce que j'aurais aimé savoir avant de réserver», «Les 3 frais cachés qui grèvent ton budget dès la première semaine»
 3. <h2>Limites et biais de cet article</h2> — transparence E-E-A-T, 1-2 paragraphes honnêtes sur les sources utilisées. Cite explicitement le lien Reddit source.
 Si tu omets ces 3 sections, l'article sera REJETÉ par le quality gate.`;
 
@@ -1983,7 +2122,7 @@ L'article ENTIER doit parler de cette destination. Le titre, les H2, le contenu,
       destinationDirective = `\n🌏 ARTICLE RÉGIONAL (MULTI-PAYS): Cet article couvre PLUSIEURS pays d'Asie du Sud-Est.
 - Le titre et la conclusion doivent mentionner "Asie du Sud-Est" (pas un seul pays).
 - Chaque H2 peut couvrir un pays différent (Thaïlande, Vietnam, Indonésie, Philippines, etc.) — c'est souhaité.
-- NE PAS forcer tous les H2 sur un seul pays. La diversité géographique est la valeur ajoutée de cet article.
+- ✅ Répartis les H2 sur plusieurs pays — la diversité géographique est la valeur ajoutée d'un article régional. Exemple : un H2 Thaïlande, un H2 Vietnam, un H2 Indonésie.
 - Les recommandations doivent couvrir au moins 2-3 pays différents.\n`;
     }
 
@@ -2048,22 +2187,22 @@ TON ARTICLE ENTIER DOIT ORBITER AUTOUR DE CETTE TENSION. Chaque H2 doit y contri
 🔑 MOTS-CLÉS DU HOOK DANS L'INTRO (OBLIGATOIRE) : Les 2 premiers paragraphes (<p>) de l'article DOIVENT reprendre au moins 3 mots significatifs du hook stratégique ci-dessus (ex: si le hook parle d'"arbitrage", "confort", "optimiser" → ces mots ou leurs dérivés doivent apparaître dans l'intro). Le lecteur doit reconnaître immédiatement la tension annoncée.
 ` : ''}
 ${(() => {
-  const tp = buildPromptTruthPack(extracted);
+  const tp = buildPromptTruthPack(extracted, story);
   if (tp.isPoor) {
     return `📋 CONTRAINTES FACTUELLES : Aucun chiffre source precis disponible. Utilise des formulations qualitatives (des frais, des dizaines d'euros, plusieurs jours) sans inventer de montants. Lieux autorises : ${tp.allowedLocations.join(', ') || 'ceux mentionnes dans les donnees ci-dessus'}.
 Ne mentionne aucun lieu absent de cette liste.`;
   }
   return `📋 CONTRAINTES FACTUELLES :
 - Nombres autorises : ${tp.allowedNumbers.join(', ')}
-- Lieux autorises : ${tp.allowedLocations.join(', ')}
-- Ne mentionne aucun lieu ni chiffre absent de ces listes. Si tu as besoin de plus de contenu, approfondis les analyses et arbitrages.`;
+- Lieux autorises : ${tp.allowedLocations.join(', ')}${tp.allowedDurations.length > 0 ? '\n- Durees/distances autorisees : ' + tp.allowedDurations.join(', ') : ''}
+- Tous les chiffres, lieux et durees de l\'article doivent provenir de ces listes. Si tu as besoin de plus de contenu, approfondis les analyses et arbitrages.`;
 })()}
 
 📐 RAPPEL LONGUEUR : Ton champ "developpement" doit contenir au minimum 6 sections H2 avec chacune 2-3 paragraphes denses. Chaque section doit introduire un arbitrage, un cout, un risque ou un trade-off — pas de paragraphe purement descriptif.
 
 ⚠️ RAPPEL CRITIQUE: Intègre TOUT dans "developpement" avec des titres H2 NARRATIFS uniques. Utilise les données non-null du squelette narratif comme matière première, PAS comme structure de sections.
 
-🚨 NE JAMAIS créer de H2 avec ces titres (ils seront supprimés automatiquement) :
+🚨 H2 RÉSERVÉS AU SYSTÈME (seront supprimés si générés — utilise des titres narratifs à la place) :
 - "Contexte", "Événement central", "Moment critique", "Résolution"
 - "Chronologie de l'expérience", "Risques et pièges réels", "Conseils pratiques"
 - "Ce que la communauté apporte", "Ce que l'auteur retient"
@@ -2380,7 +2519,7 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
         console.log(`📏 EVERGREEN WORD COUNT: ${wordCount} mots`);
         
         // PHASE 2.1b: Injecter truth pack + extracted dans options pour l'expansion
-        if (!options._truthPack) options._truthPack = buildPromptTruthPack(extracted);
+        if (!options._truthPack) options._truthPack = buildPromptTruthPack(extracted, story);
         if (!options._extracted) options._extracted = extracted;
 
         // SERP SAFETY NET: injecter les sections SERP manquantes comme squelettes
@@ -3065,6 +3204,570 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
     return content;
   }
 
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // FV-108: MICRO-PROMPT PIPELINE (replaces single mega-prompt)
+  // ═══════════════════════════════════════════════════════════════════════
+
+  /**
+   * STEP 1/4: Generate the cinematic hook opening + context paragraph.
+   * Short focused prompt, max_tokens: 1500.
+   */
+  async generateIntroHook(extracted, story, pattern, options = {}) {
+    const editorialMode = options.editorial_mode || 'evergreen';
+    const mainDestination = options.main_destination || null;
+    const mainDestFR = mainDestination ? (COUNTRY_DISPLAY_NAMES[mainDestination.toLowerCase()] || mainDestination) : '';
+    const redditSourceUrl = options.reddit_source_url || extracted?.meta?.url || '';
+
+    const storyContext = story.story.context?.summary || '';
+    const storyCentralEvent = story.story.central_event?.summary || '';
+
+    // Extract available citations
+    const evidenceSnippets = story.evidence?.source_snippets || [];
+    const availableCitations = evidenceSnippets
+      .filter(s => s.snippet && s.snippet.length > 0)
+      .map(s => s.snippet.substring(0, 200))
+      .slice(0, 3);
+
+    const systemPrompt = `Tu es un rédacteur voyage expert FlashVoyages. Génère UNIQUEMENT l'introduction de l'article (hook cinématique + paragraphe de contexte).
+
+RÈGLES D'ÉCRITURE :
+- Tutoiement obligatoire, ton direct et éditorial.
+- Le hook (2-4 phrases) est une micro-scène sensorielle tirée du témoignage : lieu, bruit, tension, geste concret.
+- Après le hook, 1 paragraphe de contexte : qui est cette personne, quel est son projet, quel est l'enjeu.
+- Inclure 1 citation courte du témoignage entre guillemets français « ... ».
+- Langue : 100% français. Zéro anglais.
+- Format : HTML pur (<p> uniquement, pas de <h2>). 2-3 paragraphes max.
+- Charge émotionnelle : ${pattern.emotional_load?.label || 'modérée'}.
+- Ton : ${pattern.story_type === 'warning' ? 'factuel et alerte' : pattern.story_type === 'question' ? 'clarifiant' : 'progressif et structuré'}.
+
+✅ Le hook plonge dans une action ou sensation vécue (lieu, geste, tension). La source Reddit reste invisible dans le hook. Exemple : «L’écran du distributeur affiche 220 bahts de frais — tu calcules mentalement.»
+${editorialMode === 'news' ? 'FORMAT NEWS : Hook court et factuel (1-2 phrases max).' : ''}
+
+EXEMPLE DE QUALITE ATTENDUE (hook cinematique):
+\`\`\`html
+${FEW_SHOT_EXAMPLES.hook}
+\`\`\``;
+
+    const userPrompt = `TITRE: ${extracted.title || 'Témoignage Reddit'}
+AUTEUR: ${extracted.author || 'auteur Reddit'}
+${mainDestFR ? 'DESTINATION PRINCIPALE: ' + mainDestFR : ''}
+${options.angle ? 'TENSION ÉDITORIALE: ' + options.angle.primary_angle?.tension : ''}
+${options.angle ? 'HOOK STRATÉGIQUE: ' + options.angle.primary_angle?.hook : ''}
+
+CONTEXTE NARRATIF: ${storyContext || 'Non disponible'}
+ÉVÉNEMENT CENTRAL: ${storyCentralEvent || 'Non disponible'}
+
+CITATIONS DISPONIBLES:
+${availableCitations.map((c, i) => (i+1) + '. "' + c + '"').join('\n') || 'Aucune'}
+${redditSourceUrl ? '\nURL SOURCE: ' + redditSourceUrl : ''}
+
+EXTRAIT DU POST REDDIT:
+${(extracted.post?.clean_text || extracted.source_text || '').substring(0, 1500)}
+
+Génère UNIQUEMENT le HTML de l'introduction (2-3 paragraphes <p>). Pas de JSON, pas de H2, juste le HTML brut.`;
+
+    console.log('   📝 Step 1/4: generateIntroHook...');
+    const responseData = await callOpenAIWithRetry({
+      apiKey: this.apiKey,
+      provider: LLM_PROVIDER,
+      _trackingStep: 'micro-intro-hook',
+      body: {
+        model: LLM_MODEL,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        max_tokens: 1500,
+        temperature: 0.7
+      },
+      sourceText: extracted.post?.clean_text || '',
+      article: extracted,
+      type: 'generation'
+    });
+
+    if (!responseData.choices?.[0]?.message?.content) {
+      throw new Error('Réponse LLM invalide: contenu manquant (generateIntroHook)');
+    }
+
+    let intro = responseData.choices[0].message.content.trim();
+    // Clean markdown wrappers
+    intro = intro.replace(/^\`\`\`(?:html)?\s*\n?/, '').replace(/\n?\`\`\`\s*$/, '');
+    // Translate if needed
+    const engDetect = this.detectEnglishContent(intro);
+    if (engDetect.isEnglish && engDetect.ratio > 0.1) {
+      intro = await this.translateToFrench(intro);
+    }
+    console.log(`   ✅ Intro hook: ${intro.length} chars`);
+    return intro;
+  }
+
+  /**
+   * STEP 2/4: Generate the main H2 body sections (core content).
+   * Focused prompt for decisional H2 sections, max_tokens: 8000.
+   */
+  async generateBodySections(extracted, story, pattern, options = {}, introHtml = '') {
+    const editorialMode = options.editorial_mode || 'evergreen';
+    const mainDestination = options.main_destination || null;
+    const mainDestFR = mainDestination ? (COUNTRY_DISPLAY_NAMES[mainDestination.toLowerCase()] || mainDestination) : '';
+    const redditSourceUrl = options.reddit_source_url || extracted?.meta?.url || '';
+
+    // Build truth pack
+    const tp = buildPromptTruthPack(extracted, story);
+
+    // Extract story elements
+    const storyContext = story.story.context?.summary || '';
+    const storyCentralEvent = story.story.central_event?.summary || '';
+    const storyCriticalMoment = story.story.critical_moment?.summary || '';
+    const storyResolution = story.story.resolution?.summary || '';
+    const storyAuthorLessons = (story.story.author_lessons || []).map(item => typeof item === 'string' ? item : (item.lesson || '')).filter(Boolean);
+    const storyCommunityInsights = (story.story.community_insights || []).map(item => typeof item === 'string' ? item : (item.value || item.insight || '')).filter(Boolean);
+    const storyOpenQuestions = (story.story.open_questions || []).map(item => typeof item === 'string' ? item : (item.question || '')).filter(Boolean);
+
+    // Evidence citations
+    const evidenceSnippets = story.evidence?.source_snippets || [];
+    const availableCitations = evidenceSnippets
+      .filter(s => s.snippet && s.snippet.length > 0)
+      .map(s => s.snippet.substring(0, 200))
+      .slice(0, 5);
+
+    // Extracted signals
+    const extractedSignals = extracted.post?.signals || {};
+    const locationsData = extractedSignals.locations?.slice(0, 5).join(', ') || '';
+    const costsData = extractedSignals.costs?.slice(0, 5).join(', ') || '';
+
+    const truthPackBlock = tp.isPoor
+      ? `CONTRAINTES FACTUELLES: Pas de chiffres précis disponibles. Formulations qualitatives uniquement. Lieux autorisés: ${tp.allowedLocations.join(', ') || 'ceux du témoignage'}.`
+      : `CONTRAINTES FACTUELLES:
+- Nombres autorisés: ${tp.allowedNumbers.join(', ')}
+- Lieux autorisés: ${tp.allowedLocations.join(', ')}${tp.allowedDurations.length > 0 ? '\n- Durées/distances autorisées: ' + tp.allowedDurations.join(', ') : ''}
+- Tous les chiffres, lieux et durées doivent provenir de ces listes.`;
+
+    const isNews = editorialMode === 'news';
+
+    const systemPrompt = `Tu es un rédacteur expert FlashVoyages. Génère les SECTIONS H2 du corps de l'article (PAS l'intro, PAS la conclusion).
+
+RÈGLES DE STRUCTURE :
+- ${isNews ? '3-4 H2 factuels, 600-800 mots total.' : '4-6 H2 décisionnels, 1800-2500 mots total.'}
+- Chaque H2 pose un arbitrage, une tension ou un choix. Inclure un verbe décisionnel (choisir, éviter, optimiser, risquer).
+- ✅ Chaque H2 contient un verbe décisionnel + destination ou angle concret. Exemple : «Pourquoi Bali coûte 40 % plus cher que prévu» au lieu de «Budget».
+- EXEMPLE DE QUALITE ATTENDUE (H2 decisionnel + premier paragraphe):
+\`\`\`html
+${FEW_SHOT_EXAMPLES.decisionalH2}
+\`\`\`
+- Tutoiement obligatoire. Ton direct. Pas de remplissage.
+- Intégrer 2-4 citations courtes du témoignage entre « ... ».
+- Format HTML : <h2>, <h3>, <p>, <ul><li>, <strong>. Pas de <blockquote>.
+- Langue : 100% français. Zéro anglais. Tous montants en euros.
+- Chaque paragraphe apporte un fait, chiffre ou choix éditorial. Pas de platitudes.
+- ✅ Phrases directes avec tutoiement : «Le visa te coûtera 35 €» au lieu de «Il est important de savoir que...».
+
+${isNews ? `CADRE NEWS :
+- Bloc "Ce que ça change concrètement" (3-7 bullets actionnables).
+- Si argent impliqué : montants en euros.
+- Mini-scénario "Si tu es dans ce cas, fais ça".
+- 1 CTA max, intégré naturellement.` : `CADRE EVERGREEN :
+- Arc narratif : situation, surprise, impact, options, choix, plan d'action.
+- Marqueurs obligatoires dans le HTML : <!-- FV:CTA_SLOT reason="..." --> (2-4), <!-- FV:DIFF_ANGLE -->, <!-- FV:COMMON_MISTAKES -->.
+- SECTIONS SERP : un H2 angle différenciant spécifique, un H2 pièges/erreurs narratif, <h2>Limites et biais de cet article</h2>.
+- Tableau comparatif si 2+ options. Checklist si guide pratique.`}
+
+${truthPackBlock}`;
+
+    const userPrompt = `TITRE: ${extracted.title || 'Témoignage Reddit'}
+${mainDestFR ? 'DESTINATION: ' + mainDestFR : ''}
+${options.angle ? 'TENSION CENTRALE: ' + options.angle.primary_angle?.tension : ''}
+${options.angle ? 'ENJEU LECTEUR: ' + options.angle.primary_angle?.stake : ''}
+
+INTRO DÉJÀ GÉNÉRÉE (pour continuité de ton) :
+${introHtml.substring(0, 500)}
+
+DONNÉES EXTRAITES :
+${locationsData ? '- Destinations: ' + locationsData : ''}
+${costsData ? '- Coûts: ' + costsData : ''}
+
+SQUELETTE NARRATIF :
+${storyContext ? 'CONTEXTE: ' + storyContext : ''}
+${storyCentralEvent ? 'ÉVÉNEMENT CENTRAL: ' + storyCentralEvent : ''}
+${storyCriticalMoment ? 'MOMENT CRITIQUE: ' + storyCriticalMoment : ''}
+${storyResolution ? 'RÉSOLUTION: ' + storyResolution : ''}
+${storyAuthorLessons.length > 0 ? 'LEÇONS AUTEUR:\n' + storyAuthorLessons.map((l, i) => (i+1) + '. ' + l).join('\n') : ''}
+${storyCommunityInsights.length > 0 ? 'INSIGHTS COMMUNAUTÉ:\n' + storyCommunityInsights.map((c, i) => (i+1) + '. ' + c).join('\n') : ''}
+${storyOpenQuestions.length > 0 ? 'QUESTIONS OUVERTES:\n' + storyOpenQuestions.map((q, i) => (i+1) + '. ' + q).join('\n') : ''}
+
+CITATIONS DISPONIBLES :
+${availableCitations.map((c, i) => (i+1) + '. "' + c + '"').join('\n') || 'Aucune'}
+
+TEXTE COMPLET DU POST :
+${(extracted.post?.clean_text || extracted.source_text || '').substring(0, 3000)}
+
+COMMENTAIRES :
+${(extracted.comments_snippets || []).slice(0, 5).map((c, i) => (i+1) + '. ' + c).join('\n') || 'Aucun'}
+${redditSourceUrl ? '\nURL SOURCE: ' + redditSourceUrl : ''}
+
+${options.outline ? `PLAN D'ARTICLE (FV-111 — suis cette structure) :
+${options.outline.sections.map((s, i) => `H2 #${i+1}: ${s.title}
+- Points clés : ${s.keyPoints.join(' | ')}
+- Evidence : ${s.evidence.slice(0, 2).join(' ; ').substring(0, 150)}
+- Chiffres autorisés : ${s.truthPackNumbers.join(', ') || 'aucun'}
+- CTO slot : ${s.ctaSlot ? 'OUI' : 'NON'}`).join('\n')}
+
+HOOK SUGGÉRÉ: ${options.outline.hookSuggestion.strategy} - ${options.outline.hookSuggestion.element}
+VERDICT: ${options.outline.mandatoryElements.verdictDirection.tone} — ${options.outline.mandatoryElements.verdictDirection.direction}
+FAQ TOPICS: ${options.outline.mandatoryElements.faqTopics.join(' | ')}` : ''}
+Génère UNIQUEMENT le HTML des sections H2 du corps en suivant le plan ci-dessus si fourni. Pas de JSON, pas d'intro, pas de conclusion. HTML brut.`;
+
+    console.log('   📝 Step 2/4: generateBodySections...');
+    const responseData = await callOpenAIWithRetry({
+      apiKey: this.apiKey,
+      provider: LLM_PROVIDER,
+      _trackingStep: 'micro-body-sections',
+      body: {
+        model: LLM_MODEL,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        max_tokens: 8000,
+        temperature: 0.7
+      },
+      sourceText: extracted.post?.clean_text || '',
+      article: extracted,
+      type: 'generation'
+    });
+
+    if (!responseData.choices?.[0]?.message?.content) {
+      throw new Error('Réponse LLM invalide: contenu manquant (generateBodySections)');
+    }
+
+    let body = responseData.choices[0].message.content.trim();
+    body = body.replace(/^\`\`\`(?:html)?\s*\n?/, '').replace(/\n?\`\`\`\s*$/, '');
+    const engDetect = this.detectEnglishContent(body);
+    if (engDetect.isEnglish && engDetect.ratio > 0.1) {
+      body = await this.translateToFrench(body);
+    }
+    console.log(`   ✅ Body sections: ${body.length} chars`);
+    return body;
+  }
+
+  /**
+   * STEP 3/4: Generate conclusion (verdict + recommendations + FAQ).
+   * Focused prompt, max_tokens: 3000.
+   */
+  async generateConclusion(extracted, story, pattern, options = {}, introHtml = '', bodyHtml = '') {
+    const editorialMode = options.editorial_mode || 'evergreen';
+    const mainDestination = options.main_destination || null;
+    const mainDestFR = mainDestination ? (COUNTRY_DISPLAY_NAMES[mainDestination.toLowerCase()] || mainDestination) : '';
+    const redditSourceUrl = options.reddit_source_url || extracted?.meta?.url || '';
+    const isNews = editorialMode === 'news';
+
+    // Build truth pack
+    const tp = buildPromptTruthPack(extracted, story);
+    const truthPackBlock = tp.isPoor
+      ? 'Pas de chiffres précis. Formulations qualitatives.'
+      : `Nombres autorisés: ${tp.allowedNumbers.join(', ')}. Lieux autorisés: ${tp.allowedLocations.join(', ')}.${tp.allowedDurations.length > 0 ? ' Durées/distances autorisées: ' + tp.allowedDurations.join(', ') + '.' : ''}`;
+
+    const systemPrompt = `Tu es un rédacteur expert FlashVoyages. Génère la CONCLUSION de l'article : verdict, recommandations, FAQ et signature.
+
+RÈGLES :
+- Tutoiement. Ton réaliste, pas vendeur. Langue 100% français.
+- Verdict : 2 paragraphes substantiels avec prise de position tranchée.
+- Format : "Si tu [situation], privilégie/évite [option concrète]."
+- EXEMPLE DE QUALITE ATTENDUE (verdict tranchant):
+\`\`\`html
+${FEW_SHOT_EXAMPLES.verdict}
+\`\`\`
+${isNews ? `MODE NEWS :
+- Champ "a_retenir" : 2-3 bullets HTML des takeaways clés.
+- 1 CTA soft max. Pas de FAQ.` : `MODE EVERGREEN :
+- Recommandations : <h2>Nos recommandations : Par où commencer ?</h2> + 3 options avec CTA narratifs.
+- Ce qu'il faut retenir : 2 paragraphes de verdict.
+- FAQ : 4-6 questions/réponses au format <details><summary>Question ?</summary><p>Réponse.</p></details>.
+  Questions basées sur les vraies interrogations du témoignage. Réponses concises (2-3 phrases).
+- Signature : CTA soft de fin.`}
+
+CONTRAINTES : ${truthPackBlock}
+✅ Les CTAs décrivent l'action réelle : «Compare les vols», «Vérifie les conditions du visa». Citations en guillemets français inline « ... » uniquement.
+
+Réponds en JSON :
+${isNews ? `{
+  "recommandations": "...",
+  "a_retenir": "...",
+  "signature": "...",
+  "citations": [],
+  "opportunites_liens_internes": []
+}` : `{
+  "recommandations": "...",
+  "faq": "...",
+  "ce_qu_il_faut_retenir": "...",
+  "signature": "...",
+  "citations": [],
+  "opportunites_liens_internes": [],
+  "articles_connexes": []
+}`}`;
+
+    const userPrompt = `TITRE: ${extracted.title || 'Témoignage Reddit'}
+${mainDestFR ? 'DESTINATION: ' + mainDestFR : ''}
+
+INTRO (déjà générée, pour continuité) :
+${introHtml.substring(0, 400)}
+
+CORPS (déjà généré, résumé des H2) :
+${bodyHtml.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').substring(0, 1500)}
+
+${redditSourceUrl ? 'URL SOURCE REDDIT: ' + redditSourceUrl : ''}
+${options.angle ? 'TENSION CENTRALE: ' + options.angle.primary_angle?.tension : ''}
+
+Génère UNIQUEMENT le JSON de conclusion.`;
+
+    console.log('   📝 Step 3/4: generateConclusion...');
+    const responseData = await callOpenAIWithRetry({
+      apiKey: this.apiKey,
+      provider: LLM_PROVIDER,
+      _trackingStep: 'micro-conclusion',
+      body: {
+        model: LLM_MODEL,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        max_tokens: 3000,
+        temperature: 0.7,
+        ...(LLM_PROVIDER === 'openai' && { response_format: { type: "json_object" } })
+      },
+      sourceText: extracted.post?.clean_text || '',
+      article: extracted,
+      type: 'generation'
+    });
+
+    if (!responseData.choices?.[0]?.message?.content) {
+      throw new Error('Réponse LLM invalide: contenu manquant (generateConclusion)');
+    }
+
+    const rawContent = responseData.choices[0].message.content;
+    const conclusion = safeJsonParse(rawContent, 'generateConclusion_response');
+    console.log(`   ✅ Conclusion: ${Object.keys(conclusion).join(', ')}`);
+    return conclusion;
+  }
+
+  /**
+   * STEP 4/4: Deterministic assembly — NO LLM call.
+   * Combines intro + body + conclusion into the final JSON structure.
+   */
+  assembleArticle(introHtml, bodyHtml, conclusionJson, extracted, options = {}) {
+    const editorialMode = options.editorial_mode || 'evergreen';
+    const isNews = editorialMode === 'news';
+
+    console.log('   🔧 Step 4/4: assembleArticle (deterministic)...');
+
+    // Build the full developpement field: intro + body
+    const developpement = introHtml + '\n\n' + bodyHtml;
+
+    // Build title from extracted
+    const titre = extracted.title || 'Témoignage Reddit décrypté par FlashVoyages';
+    const title_tag = titre.substring(0, 60);
+
+    // Assemble the article JSON
+    const article = {
+      titre,
+      title_tag,
+      developpement,
+    };
+
+    if (!isNews) {
+      article.quick_guide = null;
+      article.faq = conclusionJson.faq || null;
+      article.recommandations = conclusionJson.recommandations || null;
+      article.ce_qu_il_faut_retenir = conclusionJson.ce_qu_il_faut_retenir || null;
+    } else {
+      article.a_retenir = conclusionJson.a_retenir || null;
+      if (conclusionJson.recommandations) article.recommandations = conclusionJson.recommandations;
+    }
+
+    article.signature = conclusionJson.signature || null;
+    article.citations = conclusionJson.citations || [];
+    article.opportunites_liens_internes = conclusionJson.opportunites_liens_internes || [];
+    if (!isNews) article.articles_connexes = conclusionJson.articles_connexes || [];
+
+    // Build _editorial_self_check
+    const _editorial_self_check = {
+      decisions_taken: ['Micro-prompt pipeline v1 (FV-108)'],
+      mistakes_to_avoid: [],
+      differentiating_angles: [],
+      cta_slots_proposed: []
+    };
+
+    console.log(`   ✅ Article assemblé: ${Object.keys(article).length} champs, developpement=${developpement.length} chars`);
+
+    return { article, _editorial_self_check };
+  }
+
+  /**
+   * FV-108: New orchestrator — calls 4-step micro-generation pipeline.
+   * Maintains the exact same input/output contract as generateFinalArticle_legacy.
+   * Falls back to legacy on any micro-step failure.
+   */
+  async generateFinalArticle(extraction, analysis, extracted, pattern, story, options = {}) {
+    const editorialMode = options.editorial_mode || 'evergreen';
+    console.log(`\n🔬 MICRO-PROMPT PIPELINE (FV-108) — mode: ${editorialMode.toUpperCase()}`);
+
+    try {
+      // ── STEP 1: Intro Hook ──
+      const introHtml = await this.generateIntroHook(extracted, story, pattern, options);
+
+      // ── STEP 2: Body Sections ──
+      const bodyHtml = await this.generateBodySections(extracted, story, pattern, options, introHtml);
+
+      // ── STEP 3: Conclusion (JSON) ──
+      const conclusionJson = await this.generateConclusion(extracted, story, pattern, options, introHtml, bodyHtml);
+
+      // ── STEP 4: Deterministic Assembly ──
+      const assembled = this.assembleArticle(introHtml, bodyHtml, conclusionJson, extracted, options);
+      const content = assembled;
+
+      console.log('✅ Micro-prompt pipeline: article assemblé, lancement post-processing...');
+
+      // ═══ POST-PROCESSING (reused from legacy) ═══
+      if (content.article) {
+        const article = content.article;
+        const sections = [];
+
+        // 0. Quick Guide
+        let quickGuideText = article.quick_guide?.trim() || '';
+        if (quickGuideText) {
+          const englishDetection = this.detectEnglishContent(quickGuideText);
+          if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
+            quickGuideText = await this.translateToFrench(quickGuideText);
+          }
+          if (!quickGuideText.includes('<div class="quick-guide">') && !quickGuideText.includes('<h3>Points clés')) {
+            sections.push('<div class="quick-guide">\n<h3>Points clés de ce témoignage</h3>\n' + quickGuideText + '\n</div>');
+          } else {
+            sections.push(quickGuideText);
+          }
+        }
+
+        if (article.developpement && article.developpement.trim()) {
+          let devHtml = article.developpement.trim();
+          devHtml = devHtml.replace(/^\`\`\`(?:html)?\s*\n?/, '').replace(/\n?\`\`\`\s*$/, '');
+          const englishDetection = this.detectEnglishContent(devHtml);
+          if (englishDetection.isEnglish && englishDetection.ratio > 0.1) {
+            devHtml = await this.translateToFrench(devHtml);
+          }
+          devHtml = await this.translateBlockquotesInText(devHtml);
+          sections.push(devHtml);
+
+          // Recommendations + verdict
+          if (editorialMode === 'news') {
+            if (article.recommandations?.trim()) {
+              let recoText = article.recommandations.trim();
+              const engReco = this.detectEnglishContent(recoText);
+              if (engReco.isEnglish && engReco.ratio > 0.1) recoText = await this.translateToFrench(recoText);
+              sections.push(recoText);
+            }
+            const retenirField = article.a_retenir || article.ce_qu_il_faut_retenir || '';
+            if (retenirField.trim()) {
+              let retenirText = retenirField.trim();
+              if (!retenirText.includes('<h2>')) sections.push('<h2>À retenir</h2>\n' + retenirText);
+              else sections.push(retenirText);
+            } else {
+              sections.push('<h2>À retenir</h2>\n<ul><li>Les points clés de cette actualité</li></ul>');
+            }
+          } else {
+            if (article.recommandations?.trim()) {
+              let recoText = article.recommandations.trim();
+              const engReco = this.detectEnglishContent(recoText);
+              if (engReco.isEnglish && engReco.ratio > 0.1) recoText = await this.translateToFrench(recoText);
+              sections.push(recoText);
+            } else {
+              sections.push('<h2>Nos recommandations : Par où commencer ?</h2>\n<p>Nous recommandons de privilégier l\'Asie du Sud-Est pour un budget maîtrisé.</p>');
+            }
+            if (article.faq?.trim()) {
+              let faqText = article.faq.trim();
+              if (!faqText.includes('<h2>')) faqText = '<h2 class="wp-block-heading">Questions fréquentes</h2>\n' + faqText;
+              sections.push(faqText);
+            }
+            if (article.ce_qu_il_faut_retenir?.trim()) {
+              let retenirText = article.ce_qu_il_faut_retenir.trim();
+              if (!retenirText.includes('<h2>')) sections.push('<h2>Ce qu\'il faut retenir</h2>\n' + retenirText);
+              else sections.push(retenirText);
+            } else {
+              sections.push('<h2>Ce qu\'il faut retenir</h2>\n<p>Les points clés de cet article et les outils utiles.</p>');
+            }
+          }
+          if (article.signature?.trim()) sections.push(article.signature);
+        }
+
+        let htmlContent = sections.filter(Boolean).join('\n\n');
+        htmlContent = htmlContent.replace(/\`\`\`(?:html)?\s*\n?/g, '');
+
+        // Guard: check minimum text length
+        const textOnly = htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+        const textLength = textOnly.length;
+        console.log(`📏 MICRO-PIPELINE ASSEMBLAGE: ${sections.length} section(s), ${htmlContent.length} chars HTML, ${textLength} chars texte`);
+
+        if (textLength < 500) {
+          console.error(`❌ MICRO-PIPELINE: Article trop court (${textLength} chars). Fallback vers legacy...`);
+          throw new Error('MICRO_PIPELINE_SHORT: ' + textLength + ' chars < 500');
+        }
+
+        // Blockquote cleanup
+        const blockquotesBefore = (htmlContent.match(/<blockquote[^>]*>.*?<\/blockquote>/gs) || []).length;
+        htmlContent = htmlContent.replace(/<blockquote[^>]*>.*?<\/blockquote>/gs, '');
+        if (blockquotesBefore > 0) {
+          console.log(`🧹 ${blockquotesBefore} blockquote(s) supprimé(s)`);
+        }
+
+        // EVERGREEN expansion if needed
+        if (editorialMode === 'evergreen') {
+          const wordCount = textOnly.split(/\s+/).filter(w => w.length > 0).length;
+          console.log(`📏 EVERGREEN WORD COUNT (micro-pipeline): ${wordCount} mots`);
+          if (!options._truthPack) options._truthPack = buildPromptTruthPack(extracted, story);
+          if (!options._extracted) options._extracted = extracted;
+          const MAX_EXPANSION_PASSES = wordCount >= 2200 ? 0 : wordCount < 1200 ? 3 : wordCount < 1800 ? 2 : 1;
+          if (wordCount < 2500 && MAX_EXPANSION_PASSES > 0) {
+            console.log(`⚠️ MICRO-PIPELINE trop court (${wordCount} < 2500). Expansion...`);
+            let currentWords = wordCount;
+            for (let pass = 1; pass <= MAX_EXPANSION_PASSES && currentWords < 2500; pass++) {
+              try {
+                htmlContent = await this.expandEvergreenContent(htmlContent, extraction, options);
+                const expandedText = htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+                const expandedWords = expandedText.split(/\s+/).filter(w => w.length > 0).length;
+                console.log(`📏 EXPANSION ${pass}: ${expandedWords} mots (+${expandedWords - currentWords})`);
+                if (expandedWords <= currentWords) break;
+                currentWords = expandedWords;
+              } catch (e) {
+                console.warn(`⚠️ Expansion passe ${pass} échouée: ${e.message}`);
+                break;
+              }
+            }
+          }
+        }
+
+        // Title processing
+        let finalTitle = article.titre || 'Témoignage Reddit décrypté par FlashVoyages';
+        finalTitle = this.convertTitleUSDToEUR(finalTitle);
+        const titleTag = article.title_tag || finalTitle.substring(0, 60);
+
+        const finalContent = {
+          title: finalTitle,
+          title_tag: titleTag,
+          content: htmlContent,
+          _truthPack: options._truthPack || null
+        };
+
+        console.log(`📄 MICRO-PIPELINE: Article final "${finalContent.title}" (${sections.length} sections)`);
+        return finalContent;
+      }
+
+      return content;
+
+    } catch (microError) {
+      console.warn(`⚠️ MICRO-PROMPT PIPELINE FAILED: ${microError.message}. Fallback to legacy...`);
+      return this.generateFinalArticle_legacy(extraction, analysis, extracted, pattern, story, options);
+    }
+  }
+
+
   /**
    * EXPANSION EVERGREEN : enrichit un article trop court via un appel LLM dédié.
    * Appelé uniquement si l'article EVERGREEN fait < 1500 mots après génération initiale.
@@ -3078,7 +3781,7 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
     console.log('\n📐 EXPANSION EVERGREEN: Enrichissement du contenu...');
 
     // PHASE 2.1b: Construire truth pack + claims existants pour contraindre l'expansion
-    const truthPack = options._truthPack || buildPromptTruthPack(options._extracted || {});
+    const truthPack = options._truthPack || buildPromptTruthPack(options._extracted || {}, options._story || null);
     const existingClaims = extractExistingClaims(htmlContent);
     const angle = options.angle || null;
 
@@ -3154,14 +3857,14 @@ EQUILIBRE SECTIONS :
 
 TON ET STYLE :
 - Tutoiement OBLIGATOIRE : utilise "tu", "ton", "ta", "tes" (jamais "vous" ni "il faut" ni "on doit").
-- PHRASES INTERDITES : "il est important de", "il convient de", "il est a noter", "force est de constater", "dans un premier temps", "en ce qui concerne", "nous allons voir", "il va sans dire".
+- ✅ PHRASES DIRECTES : remplace les béquilles syntaxiques par des sujets concrets. Exemple : «Le visa coûte 35 € et se demande en ligne» au lieu de «Il est important de noter que le visa coûte 35 €».
 
-INTERDIT ABSOLUMENT :
-- Introduire un NOUVEAU lieu non liste dans "Lieux autorises"
-- Introduire un NOUVEAU prix ou chiffre non present dans "Nombres autorises". Si tu veux parler d'un cout non source, NE MENTIONNE PAS de montant — reformule sans chiffre. INTERDIT : "quelques euros", "plusieurs dizaines d'euros", "un budget modeste".
-- Inventer un nouvel exemple concret, une anecdote ou un scenario non source
-- Ajouter un paragraphe purement descriptif sans prise de position
-- Creer des paragraphes courts (< 3 phrases) — fusionne-les avec le paragraphe precedent ou suivant`;
+CONTRAINTES FACTUELLES STRICTES :
+- ✅ Utilise uniquement les lieux listés dans "Lieux autorisés". Exemple : si Chiang Mai et Bangkok sont autorisés, reste sur ces villes.
+- ✅ Utilise uniquement les chiffres listés dans "Nombres autorisés". Pour un coût non sourcé, reformule sans montant : «reste abordable», «le surcoût est réel», «pèse sur ton budget».
+- ✅ Enrichis les analyses et arbitrages existants plutôt que d'inventer de nouveaux exemples ou anecdotes.
+- ✅ Chaque paragraphe contient un avis, un arbitrage, un chiffre ou une recommandation concrète.
+- ✅ Fusionne les paragraphes courts (< 3 phrases) avec le paragraphe précédent ou suivant pour créer des blocs denses.`;
 
     const angleBlock = angle ? `
 ANGLE EDITORIAL STRATEGIQUE :
@@ -3455,18 +4158,18 @@ RÈGLES :
 - La phrase DOIT commencer par "Si tu" suivi d'un verbe
 - Après la virgule, utilise OBLIGATOIREMENT un de ces verbes : privilégie, évite, opte pour, choisis, pars sur, mise sur
 - Place chaque phrase à la FIN du dernier paragraphe d'une section H2 existante
-- NE PAS créer de nouveau paragraphe — ajoute la phrase à la suite du texte existant`
+- ✅ Insère la phrase à la suite du dernier paragraphe existant de la section H2 — pas de nouveau paragraphe.`
           );
           break;
       }
     }
     
     // PHASE 2.1d: Construire les contraintes truth pack pour l'improve
-    const improveTruthPack = context.extracted ? buildPromptTruthPack(context.extracted) : null;
+    const improveTruthPack = context.extracted ? buildPromptTruthPack(context.extracted, context.story || null) : null;
     const improveTruthPackBlock = improveTruthPack
       ? (improveTruthPack.isPoor
         ? `\n7. AUCUN nouveau chiffre, prix ou montant ne doit etre introduit (aucune source disponible). Lieux autorises : ${improveTruthPack.allowedLocations.join(', ')}.`
-        : `\n7. NE PAS introduire de nouveau lieu, prix, chiffre ou claim factuel non present dans l'article original.\n   Nombres autorises : ${improveTruthPack.allowedNumbers.join(', ')}\n   Lieux autorises : ${improveTruthPack.allowedLocations.join(', ')}`)
+        : `\n7. ✅ Utilise uniquement les lieux et chiffres déjà présents dans l'article original.\n   Nombres autorises : ${improveTruthPack.allowedNumbers.join(', ')}\n   Lieux autorises : ${improveTruthPack.allowedLocations.join(', ')}${improveTruthPack.allowedDurations?.length > 0 ? '\n   Durees/distances autorisees : ' + improveTruthPack.allowedDurations.join(', ') : ''}`)
       : '';
     const improveAngleBlock = context.angle
       ? `\n8. TENSION EDITORIALE a respecter : "${context.angle.primary_angle?.tension || ''}". Ne pas diluer cette tension. Chaque correction doit maintenir ou renforcer cette tension — jamais l'aplatir.`
@@ -3480,9 +4183,9 @@ RÈGLES ABSOLUES (par ordre de priorité):
 2. TRADUIS EN FRANÇAIS tout contenu anglais résiduel
 3. CORRIGE LES ESPACES MANQUANTS entre les mots collés (ex: "Salutà tous" → "Salut à tous")
 4. Corrige les phrases qui ne se terminent pas par . ! ? (ajoute la ponctuation)
-5. NE SUPPRIME JAMAIS de contenu — tu AMÉLIORES et CORRIGES seulement
+5. ✅ Conserve 100 % du contenu existant — améliore et corrige sans supprimer.
 6. Conserve TOUS les widgets (<script>, <aside class="affiliate-module">), liens, blockquotes, et structure HTML${improveTruthPackBlock}${improveAngleBlock}
-9. NE PAS ajouter de nouveaux exemples, scenarios concrets ou anecdotes si non deja presents dans l'article.
+9. ✅ Enrichis les analyses et arbitrages existants — les nouveaux exemples ou anecdotes doivent être tracés à la source.
 
 ANOMALIES À CORRIGER:
 ${correctionInstructions.map((instr, i) => `${i + 1}. ${instr}`).join('\n')}
@@ -3493,21 +4196,20 @@ CORRECTIONS SUPPLEMENTAIRES (si detectees) :
 - Utilise TOUJOURS le tutoiement ("tu", "ton", "ta") — jamais "vous", "il faut" ou "on doit" de maniere impersonnelle.
 - REPETITIONS : Si deux paragraphes expriment la meme idee ou le meme conseil (meme reformule), SUPPRIME le second et ne garde que le meilleur des deux.
 
-INTERDIT ABSOLUMENT:
-- NE PAS wrapper le HTML dans \`\`\`html ou \`\`\`
-- NE PAS ajouter d'explications
-- NE PAS inventer de prix, montants en euros, distances ou durees non presents dans l'article original. Si un cout n'est pas source, NE MENTIONNE PAS de prix — reformule sans chiffre.
-- CONVERTIR tous les montants USD/$  en euros (taux ~0.92). Ex: "$500" → "~460 €". JAMAIS de USD/$/dollars dans le texte final.
-- NE PAS modifier les attributs des balises HTML
-- NE PAS supprimer de sections ou paragraphes
-- NE PAS introduire de nouveau lieu, nouveau prix, nouveau scenario non present dans l'article
-- NE JAMAIS renommer ces H2 structurels (les garder TELS QUELS) : "Ce qu'il faut retenir", "Ce que les autres guides ne disent pas", "Les erreurs fréquentes", "FAQ", "Nos recommandations"
+CONTRAINTES DE SORTIE :
+- ✅ Retourne le HTML brut directement — commence par la première balise, sans wrapper markdown.
+- ✅ Le résultat contient uniquement le HTML corrigé, sans explication ni commentaire.
+- ✅ Prix uniquement sourcés : chaque montant vient de l'article original. Pour un coût non sourcé, reformule sans montant.
+- ✅ Convertis les montants USD en euros (taux ~0.92). Exemple : «$500» → «~460 €».
+- ✅ Conserve les attributs HTML, les sections et les paragraphes existants.
+- ✅ Utilise uniquement les lieux et prix déjà dans l'article original.
+- ✅ Garde les H2 structurels tels quels : «Ce qu'il faut retenir», «Ce que les autres guides ne disent pas», «Les erreurs fréquentes», «FAQ», «Nos recommandations».
 
 FORMAT DE RÉPONSE (CRITIQUE):
 - Retourne L'INTÉGRALITÉ du contenu HTML corrigé — du premier au dernier caractère.
 - Le contenu retourné DOIT avoir une longueur similaire à l'entrée (±10%).
 - Commence directement par la première balise HTML (<h2>, <div>, <p>).
-- NE PAS résumer, NE PAS tronquer, NE PAS retourner seulement les parties modifiées.`;
+- ✅ Retourne L'INTÉGRALITÉ du contenu HTML — du premier au dernier caractère, longueur similaire à l'entrée (±10%).`;
 
     // PROTECTION: Remplacer les liens internes par des placeholders avant envoi au LLM
     // Le LLM strip systématiquement les <a> tags et laisse le texte nu
@@ -3737,7 +4439,7 @@ FORMAT HTML OBLIGATOIRE:
 - Utilise <p> pour les paragraphes
 - Utilise <ul><li> pour les listes
 - Utilise <strong> pour le gras
-- JAMAIS de Markdown (##, ###, **, etc.)
+- ✅ Utilise exclusivement le format HTML (<h2>, <h3>, <strong>, etc.)
 
 RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
 
@@ -3778,7 +4480,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   8. MISE EN PERSPECTIVE (OBLIGATOIRE)
   
   TON: Humble, préventif, éducatif. L'émotion doit émerger du contenu.
-  FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <em>, <strong>. JAMAIS de Markdown.
+  FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <em>, <strong>. ✅ Format HTML uniquement.
   LONGUEUR: MINIMUM 1200 mots, IDÉAL 1500-2000 mots. Développe chaque section en profondeur avec des détails concrets."
 }`;
 
@@ -3806,7 +4508,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   4. Mise en perspective
   
   TON: Réfléchi, adaptatif, encourageant. L'émotion doit émerger du contenu réel.
-  FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <em>, <strong>. JAMAIS de Markdown.
+  FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <em>, <strong>. ✅ Format HTML uniquement.
   LONGUEUR: MINIMUM 1200 mots, IDÉAL 1500-2000 mots. Développe chaque section en profondeur avec des détails concrets."
 }`;
 
@@ -3832,7 +4534,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
   8. MISE EN PERSPECTIVE (OBLIGATOIRE)
   
   TON: Comparatif, objectif, informatif. L'émotion doit émerger du contenu.
-  FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <em>, <strong>. JAMAIS de Markdown.
+  FORMAT HTML: <h2>, <h3>, <p>, <blockquote>, <em>, <strong>. ✅ Format HTML uniquement.
   LONGUEUR: MINIMUM 1200 mots, IDÉAL 1500-2000 mots. Développe chaque section en profondeur avec des détails concrets."
 }`;
 

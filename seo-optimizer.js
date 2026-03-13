@@ -411,7 +411,13 @@ class SeoOptimizer {
       'le', 'la', 'les', 'un', 'une', 'des', 'de', 'du', 'et', 'ou', 'à', 'au', 'en', 'sur', 'pour', 'avec', 'dans', 'par', 'sous', 'vers', 'chez', 'on',
       'the', 'a', 'an', 'and', 'or', 'to', 'of', 'in', 'on', 'at', 'for', 'with', 'by', 'from',
       '|', '—', ':', '.', ',', ';', '!', '?', '(', ')', '[', ']', '{', '}',
-      'flashvoyage', 'flash', 'voyage' // Marque, toujours autorisé
+      'flashvoyage', 'flash', 'voyage', // Marque, toujours autorisé
+      // FV-120: Power words and meta template terms (always valid)
+      'guide', 'budget', 'erreurs', 'v\u00e9rit\u00e9', 'combien', 'co\u00fbte', 'vraiment',
+      'd\u00e9taill\u00e9', 'prix', 'r\u00e9els', 'astuces', '\u00e9conomiser', 'comparatif',
+      'crit\u00e8res', 'choisir', 'conseils', 'pratiques', '\u00e9viter', 't\u00e9moignage',
+      'filtre', 'prochain', 'itin\u00e9raire', 'test\u00e9s', 'voyageurs', 'retour',
+      'exp\u00e9rience', 'destination', 'complet', 'cette'
     ]);
     
     // Extraire les tokens audités (normalisés) - seulement ceux avec source_path valide
@@ -487,6 +493,19 @@ class SeoOptimizer {
         if (normalized.length > 0 && !stopwords.has(normalized)) {
           originalDescTokens.add(normalized);
         }
+      });
+    }
+
+    // FV-120: Add secondary keywords to valid tokens
+    if (report.debug && report.debug.seo_data && report.debug.seo_data.secondaryKeywords) {
+      report.debug.seo_data.secondaryKeywords.forEach(kw => {
+        const words = kw.split(/\s+/);
+        words.forEach(w => {
+          const normalized = this.normalizeToken(w);
+          if (normalized.length > 0 && !stopwords.has(normalized)) {
+            originalDescTokens.add(normalized);
+          }
+        });
       });
     }
     
@@ -641,7 +660,11 @@ class SeoOptimizer {
     
     // Extraire les top termes (stopwords FR/EN minimal)
     seoData.keywords = this.extractTopKeywords(keywordSources.join(' '));
-    
+
+    // FV-120: Extract secondary keywords (bigrams, location+activity, budget terms)
+    seoData.secondaryKeywords = this.extractSecondaryKeywords(seoData, storyData, extracted);
+    console.log(`   \u{1f4ca} SEO_SECONDARY_KEYWORDS: ${seoData.secondaryKeywords.length} extracted [${seoData.secondaryKeywords.slice(0, 5).join(', ')}]`);
+
     // Construire primaryTopic (1 phrase courte via templates + tokens existants)
     seoData.primaryTopic = this.buildPrimaryTopic(seoData, storyData);
     
@@ -751,6 +774,96 @@ class SeoOptimizer {
     return results;
   }
 
+
+  /**
+   * FV-120: Extract bigrams (2-word phrases) from text
+   * @param {string} text - Text to extract bigrams from
+   * @returns {Array<string>} List of bigrams
+   */
+  extractBigrams(text) {
+    if (!text || typeof text !== 'string') return [];
+    const stopwords = new Set([
+      'le', 'la', 'les', 'un', 'une', 'des', 'de', 'du', 'et', 'ou', 'mais', 'donc', 'car',
+      'the', 'a', 'an', 'and', 'or', 'but', 'so', 'not', 'no',
+      '\u00e0', 'au', 'en', 'dans', 'sur', 'pour', 'avec', 'sans', 'par',
+      'to', 'in', 'on', 'at', 'for', 'with', 'by', 'from'
+    ]);
+    const normalized = text.toLowerCase().replace(/[^\w\s\u00e0-\u00f6\u00f8-\u00ff]/g, ' ').replace(/\s+/g, ' ').trim();
+    const words = normalized.split(' ').filter(w => w.length > 2 && !stopwords.has(w));
+    const bigrams = [];
+    for (let i = 0; i < words.length - 1; i++) {
+      bigrams.push(`${words[i]} ${words[i + 1]}`);
+    }
+    return bigrams;
+  }
+
+  /**
+   * FV-120: Extract secondary keywords including bigrams, location+activity combos, budget terms
+   * @param {Object} seoData - SEO data with places, keywords, post_title
+   * @param {Object} storyData - Story data from pipeline
+   * @param {Object} extracted - Extracted data from pipeline
+   * @returns {Array<string>} Secondary keywords
+   */
+  extractSecondaryKeywords(seoData, storyData, extracted) {
+    const secondary = [];
+    const seen = new Set();
+    const addUnique = (term) => {
+      const norm = this.normalizeText(term);
+      if (norm.length > 3 && !seen.has(norm)) {
+        seen.add(norm);
+        secondary.push(norm);
+      }
+    };
+
+    // 1. Bigrams from post_title and story context
+    const bigramSources = [
+      seoData.post_title || '',
+      storyData?.context?.summary || '',
+      storyData?.central_event?.summary || ''
+    ].join(' ');
+    const bigrams = this.extractBigrams(bigramSources);
+    bigrams.slice(0, 8).forEach(bg => addUnique(bg));
+
+    // 2. Location + activity combinations
+    const activities = [
+      'plong\u00e9e', 'snorkeling', 'randonn\u00e9e', 'trekking', 'street food',
+      'temple', 'plage', 'surf', 'yoga', 'm\u00e9ditation', 'cuisine',
+      'march\u00e9', 'nightlife', 'shopping', 'massage', 'diving',
+      'kayak', 'v\u00e9lo', 'moto', 'bateau', 'ferry'
+    ];
+    const places = seoData.places || [];
+    for (const place of places.slice(0, 3)) {
+      for (const activity of activities) {
+        const fullText = bigramSources.toLowerCase();
+        if (fullText.includes(activity)) {
+          addUnique(`${activity} ${place}`);
+        }
+      }
+    }
+
+    // 3. Budget-related terms from truth pack numbers
+    const truthPack = storyData?.truth_pack || storyData?.budget || extracted?.budget || null;
+    if (truthPack && typeof truthPack === 'object') {
+      const budgetTerms = [];
+      for (const [key, val] of Object.entries(truthPack)) {
+        if (typeof val === 'number' || (typeof val === 'string' && /\d/.test(val))) {
+          const cleanKey = key.replace(/_/g, ' ').toLowerCase();
+          budgetTerms.push(`${cleanKey} ${places[0] || ''}`);
+          budgetTerms.push(`budget ${cleanKey}`);
+        }
+      }
+      budgetTerms.filter(t => t.trim().length > 5).slice(0, 5).forEach(t => addUnique(t));
+    }
+    // Generic budget combos with destination
+    if (places.length > 0) {
+      addUnique(`budget ${places[0]}`);
+      addUnique(`co\u00fbt vie ${places[0]}`);
+      addUnique(`prix ${places[0]}`);
+    }
+
+    return secondary.slice(0, 15);
+  }
+
   /**
    * Helper: Extrait les top keywords d'un texte (stopwords FR/EN minimal)
    */
@@ -840,6 +953,27 @@ class SeoOptimizer {
     return null;
   }
 
+
+  /**
+   * FV-120: Detect article angle type from seoData for power word selection
+   * @param {Object} seoData - SEO data
+   * @returns {string} angle type: budget|comparison|mistake|guide|truth|default
+   */
+  detectAngleType(seoData) {
+    const allText = [
+      seoData.post_title || '',
+      seoData.primaryTopic || '',
+      ...(seoData.keywords || [])
+    ].join(' ').toLowerCase();
+
+    if (/budget|co[u\u00fb]t|prix|combien|argent|d[e\u00e9]pense|[\u20ac$]|money|cheap/.test(allText)) return 'budget';
+    if (/erreur|mistake|[e\u00e9]viter|piege|arnaque|avoid|wrong|don't/.test(allText)) return 'mistake';
+    if (/\bvs\b|compar|versus|ou\b|choix|mieux|meilleur|diff[e\u00e9]rence/.test(allText)) return 'comparison';
+    if (/v[e\u00e9]rit[e\u00e9]|r[e\u00e9]alit[e\u00e9]|vraiment|truth|real|honest/.test(allText)) return 'truth';
+    if (/guide|conseil|astuce|tip|how|comment/.test(allText)) return 'guide';
+    return 'default';
+  }
+
   /**
    * PHASE 8.4: Génération title/meta (templates + audit tokens)
    * @param {Object} seoData - Données SEO extraites
@@ -852,17 +986,40 @@ class SeoOptimizer {
       metaDescription: null
     };
     
-    // Construire le title via template
-    // Template: {post_title} — {place?} | FlashVoyage (si place existe)
+    // FV-120: Improved title tag - primary keyword in first 30 chars, power words, 60 char limit
     if (seoData.post_title) {
       let title = seoData.post_title;
-      
-      // Ajouter le lieu si disponible
-      if (seoData.places && seoData.places.length > 0) {
-        const place = seoData.places[0];
-        title = `${title} — ${place}`;
-        
-        // Auditer le token "place"
+      const place = (seoData.places && seoData.places.length > 0) ? seoData.places[0] : null;
+
+      // Detect angle type for power word selection
+      const angleType = this.detectAngleType(seoData);
+      const powerWords = {
+        budget: 'Budget',
+        comparison: 'Guide',
+        mistake: 'Erreurs',
+        guide: 'Guide',
+        truth: 'Vérité',
+        default: 'Guide'
+      };
+      const powerWord = powerWords[angleType] || powerWords.default;
+
+      // Ensure primary keyword (place) appears in first 30 chars
+      if (place) {
+        const titleLower = title.toLowerCase();
+        const placeLower = place.toLowerCase();
+        const first30 = titleLower.substring(0, 30);
+
+        if (!first30.includes(placeLower)) {
+          // Restructure: "{PowerWord} {Place} : {title}"
+          title = `${powerWord} ${place} : ${title}`;
+        } else {
+          // Place already early, add power word if room
+          if (!titleLower.includes(powerWord.toLowerCase())) {
+            title = `${powerWord} ${title}`;
+          }
+        }
+
+        // Audit the place token
         const source = this.findTokenSourceInSeoData(place, seoData);
         if (source) {
           this.tokenAudit.push({
@@ -874,25 +1031,67 @@ class SeoOptimizer {
           });
           console.log(`   ✅ SEO_TOKEN_ADDED: token="${place}" source_path="${source.source_path}" context="meta_title"`);
         }
+      } else {
+        // No place, add power word if not present
+        if (!title.toLowerCase().includes(powerWord.toLowerCase())) {
+          title = `${powerWord} : ${title}`;
+        }
       }
-      
-      // Ajouter le suffixe FlashVoyage
-      title = `${title} | FlashVoyage`;
+
+      // Strict 60 char limit with FlashVoyage suffix
+      const suffix = ' | FlashVoyage';
+      const maxTitleBody = 60 - suffix.length;
+      if (title.length > maxTitleBody) {
+        let truncated = title.substring(0, maxTitleBody);
+        const lastSpace = truncated.lastIndexOf(' ');
+        if (lastSpace > maxTitleBody * 0.6) {
+          truncated = truncated.substring(0, lastSpace);
+        }
+        title = truncated;
+      }
+
+      title = `${title}${suffix}`;
       meta.title = title;
     } else {
       // Fallback si pas de post_title
       meta.title = 'FlashVoyage';
     }
     
-    // Construire la meta description (140-160 chars)
-    // Basé sur primaryTopic + {place?}
-    const descriptionParts = [];
-    
-    // Ajouter primaryTopic si disponible
+    // FV-120: Angle-specific meta description templates
+    const descPlace = (seoData.places && seoData.places.length > 0) ? seoData.places[0] : null;
+    const descAngle = this.detectAngleType(seoData);
+    let description = '';
+
+    const placeLabel = descPlace || 'cette destination';
+    const metaTemplates = {
+      budget: `Combien coûte vraiment ${placeLabel} ? Budget détaillé, prix réels et astuces pour économiser.`,
+      comparison: seoData.keywords.length >= 2
+        ? `${seoData.keywords[0]} vs ${seoData.keywords[1]} : le guide complet pour choisir à ${placeLabel}.`
+        : `Guide comparatif ${placeLabel} : tous les critères pour bien choisir.`,
+      mistake: `Les erreurs que tout le monde fait à ${placeLabel}. Conseils pratiques pour les éviter.`,
+      truth: `La vérité sur ${placeLabel} : témoignage et conseils sans filtre pour ton prochain voyage.`,
+      guide: `Guide pratique ${placeLabel} : itinéraire, budget et conseils testés par des voyageurs.`,
+      default: seoData.primaryTopic
+        ? `${seoData.primaryTopic}. Conseils pratiques et retour d'expérience sur ${placeLabel}.`
+        : `Guide voyage ${placeLabel} : conseils, budget et itinéraire par FlashVoyage.`
+    };
+
+    description = metaTemplates[descAngle] || metaTemplates.default;
+
+    // Audit tokens used in description
+    if (descPlace) {
+      const source = this.findTokenSourceInSeoData(descPlace, seoData);
+      if (source) {
+        this.tokenAudit.push({
+          token: descPlace,
+          context: 'meta_description',
+          source_path: source.source_path,
+          source_type: source.source_type,
+          timestamp: Date.now()
+        });
+      }
+    }
     if (seoData.primaryTopic) {
-      descriptionParts.push(seoData.primaryTopic);
-      
-      // Auditer les tokens de primaryTopic
       const topicWords = this.extractTokens(seoData.primaryTopic).filter(w => w.length > 2);
       topicWords.forEach(word => {
         const source = this.findTokenSourceInSeoData(word, seoData);
@@ -907,37 +1106,12 @@ class SeoOptimizer {
         }
       });
     }
-    
-    // Ajouter le lieu si disponible
-    if (seoData.places && seoData.places.length > 0) {
-      const place = seoData.places[0];
-      descriptionParts.push(`à ${place}`);
-      
-      // Auditer le token "place" (déjà fait pour title, mais on le refait pour la description)
-      const source = this.findTokenSourceInSeoData(place, seoData);
-      if (source) {
-        this.tokenAudit.push({
-          token: place,
-          context: 'meta_description',
-          source_path: source.source_path,
-          source_type: source.source_type,
-          timestamp: Date.now()
-        });
-      }
-    }
-    
-    // Construire la description
-    let description = descriptionParts.join('. ');
-    
-    // Truncate déterministe à 140-160 chars
+
+    // Strict 160 char limit
     if (description.length > 160) {
-      // Tronquer à 157 chars et ajouter "..."
       description = description.substring(0, 157).trim() + '...';
-    } else if (description.length < 140) {
-      // Si trop court, on garde tel quel (pas d'invention pour compléter)
-      // On pourrait ajouter un suffixe générique si nécessaire, mais on évite l'invention
     }
-    
+
     meta.metaDescription = description || null;
     
     return meta;

@@ -700,6 +700,379 @@ Retourne UNIQUEMENT le fragment HTML corrigé. Garde la structure HTML identique
   }
 }
 
+
+// ─── Fixer 12 : H2 génériques → H2 décisionnels ──────────
+
+/**
+ * Détecte les H2 trop génériques ("Budget", "Transport", "Hébergement", etc.)
+ * et les remplace par des titres décisionnels incluant la destination.
+ */
+export async function fixGenericH2Titles(html, title = '') {
+  if (!html || typeof html !== 'string') return { html, fixed: false, description: null };
+
+  const destination = extractDestinationFromTitle(title) || '';
+  if (!destination) return { html, fixed: false, description: null };
+
+  const genericH2Map = {
+    'budget': `Combien coûte vraiment un mois à ${destination}`,
+    'transport': `Comment se déplacer efficacement à ${destination}`,
+    'transports': `Comment se déplacer efficacement à ${destination}`,
+    'hébergement': `Où dormir à ${destination} selon ton budget`,
+    'hebergement': `Où dormir à ${destination} selon ton budget`,
+    'conclusion': `Ce qu'il faut retenir avant de partir à ${destination}`,
+    'conseils': `Nos recommandations pratiques pour ${destination}`,
+    'conseils pratiques': `Ce que tu dois savoir avant d'aller à ${destination}`,
+    'nourriture': `Que manger et quel budget food à ${destination}`,
+    'climat': `Quand partir à ${destination} selon la météo`,
+    'météo': `Quand partir à ${destination} selon la météo`,
+    'visa': `Faut-il un visa pour ${destination} et comment l'obtenir`,
+    'sécurité': `${destination} est-il sûr pour les voyageurs`,
+    'santé': `Précautions santé à connaître avant ${destination}`,
+    'internet': `Comment rester connecté à ${destination}`,
+    'culture': `Ce qui surprend les voyageurs à ${destination}`,
+    'itinéraire': `Comment organiser ton séjour à ${destination}`,
+    'shopping': `Que ramener de ${destination} et où acheter`,
+  };
+
+  let out = html;
+  let fixCount = 0;
+  const fixes = [];
+
+  // Match <h2>...</h2> with possible attributes
+  const h2Regex = /<h2([^>]*)>\s*(.*?)\s*<\/h2>/gi;
+  out = out.replace(h2Regex, (full, attrs, content) => {
+    const stripped = content.replace(/<[^>]*>/g, '').trim().toLowerCase();
+    const replacement = genericH2Map[stripped];
+    if (replacement) {
+      fixCount++;
+      fixes.push(`"${content}" → "${replacement}"`);
+      return `<h2${attrs}>${replacement}</h2>`;
+    }
+    return full;
+  });
+
+  return {
+    html: out,
+    fixed: fixCount > 0,
+    description: fixCount > 0 ? `${fixCount} H2 générique(s) remplacé(s): ${fixes.slice(0, 3).join('; ')}` : null
+  };
+}
+
+// ─── Fixer 13 : Patterns IA détectables ───────────────────
+
+/**
+ * Détecte et corrige les patterns d'écriture IA reconnaissables :
+ * - "La vraie question n'est pas X mais Y" (déjà partiellement dans 4b, ici plus large)
+ * - Listes numérotées "Erreur 1:", "Erreur 2:", "Erreur 3:"
+ * - "Il est important de noter que", "Il convient de souligner"
+ * - Transitions génériques IA
+ */
+export async function fixAIPatterns(html) {
+  if (!html || typeof html !== 'string') return { html, fixed: false, description: null };
+  let out = html;
+  let fixCount = 0;
+
+  const aiPatterns = [
+    // "Il est important de noter que..." → remove filler
+    [/\bIl est important de noter que\s+/gi, ''],
+    [/\bIl convient de souligner que\s+/gi, ''],
+    [/\bIl est essentiel de comprendre que\s+/gi, ''],
+    [/\bForce est de constater que\s+/gi, ''],
+    [/\bEn définitive,\s+/gi, ''],
+    [/\bEn résumé,\s+ce qu['']il faut retenir,?\s+c['']est que\s+/gi, ''],
+    // "Erreur 1: ..." pattern
+    [/\bErreur\s+1\s*[:\-–]\s*/gi, 'Première erreur fréquente : '],
+    [/\bErreur\s+2\s*[:\-–]\s*/gi, 'Autre piège courant : '],
+    [/\bErreur\s+3\s*[:\-–]\s*/gi, 'Dernier point à surveiller : '],
+    [/\bErreur\s+4\s*[:\-–]\s*/gi, 'Aussi à éviter : '],
+    [/\bErreur\s+5\s*[:\-–]\s*/gi, 'Enfin, attention à : '],
+    // "Conseil 1/2/3" identical format
+    [/\bConseil\s+1\s*[:\-–]\s*/gi, 'Premier réflexe : '],
+    [/\bConseil\s+2\s*[:\-–]\s*/gi, 'Ensuite, pense à : '],
+    [/\bConseil\s+3\s*[:\-–]\s*/gi, 'Autre astuce : '],
+    // "Avantage/Inconvénient" numbered lists
+    [/\bAvantage\s+(\d+)\s*[:\-–]\s*/gi, '✓ '],
+    [/\bInconvénient\s+(\d+)\s*[:\-–]\s*/gi, '✗ '],
+    // Generic AI transitions
+    [/\bPlongeons\s+dans\s+le\s+vif\s+du\s+sujet\s*[.!]?\s*/gi, ''],
+    [/\bSans\s+plus\s+attendre,?\s+voici\s+/gi, 'Voici '],
+    [/\bVous\s+l['']aurez\s+compris,?\s+/gi, ''],
+    [/\bComme\s+son\s+nom\s+l['']indique,?\s+/gi, ''],
+    // "Dans cet article, nous allons..." meta-reference
+    [/\bDans\s+cet\s+article,?\s+(?:nous\s+allons|on\s+va)\s+(?:voir|explorer|découvrir)\s+/gi, ''],
+  ];
+
+  for (const [re, replacement] of aiPatterns) {
+    out = out.replace(re, (...args) => {
+      fixCount++;
+      return replacement;
+    });
+  }
+
+  return {
+    html: out,
+    fixed: fixCount > 0,
+    description: fixCount > 0 ? `${fixCount} pattern(s) IA corrigé(s)` : null
+  };
+}
+
+// ─── Fixer 14 : Phrases décisionnelles manquantes ─────────
+
+/**
+ * Vérifie que l'article contient suffisamment de phrases décisionnelles
+ * "Si tu [verbe], privilégie/évite/opte pour..."
+ * Si < 3 trouvées, en ajoute dans les sections contenant des comparaisons.
+ */
+export async function fixMissingDecisionPhrases(html, title = '') {
+  if (!html || typeof html !== 'string') return { html, fixed: false, description: null };
+
+  const destination = extractDestinationFromTitle(title) || 'ta destination';
+
+  // Count existing decision phrases
+  const decisionPatterns = /si\s+tu\s+\w+.*?(?:privil[ée]gie|[ée]vite|opte\s+pour|choisis|pr[ée]f[eè]re)/gi;
+  const existing = (html.match(decisionPatterns) || []).length;
+  if (existing >= 3) return { html, fixed: false, description: null };
+
+  const root = parse(html);
+  const sections = [];
+  let currentSection = null;
+
+  // Build section map (H2 → content until next H2)
+  for (const child of root.childNodes) {
+    const tag = (child.tagName || '').toLowerCase();
+    if (tag === 'h2') {
+      if (currentSection) sections.push(currentSection);
+      currentSection = { heading: child.text.trim(), elements: [child] };
+    } else if (currentSection) {
+      currentSection.elements.push(child);
+    }
+  }
+  if (currentSection) sections.push(currentSection);
+
+  // Find sections with comparison/recommendation content
+  const comparisonKeywords = /compar|versus|vs\.?|plutôt|mieux|meilleur|recommand|choisir|entre|ou\s+bien|alternative/i;
+
+  const decisionTemplates = [
+    `Si tu voyages avec un petit budget, privilégie les options locales plutôt que les services internationaux.`,
+    `Si tu restes plus d'une semaine à ${destination}, opte pour un abonnement plutôt qu'un achat à la journée.`,
+    `Si tu préfères le confort à l'économie, évite les options les moins chères qui impliquent souvent des compromis sur le temps.`,
+    `Si tu voyages en famille à ${destination}, privilégie les solutions tout compris pour simplifier la logistique.`,
+    `Si tu es flexible sur les dates, opte pour la basse saison — les prix chutent et l'expérience reste souvent meilleure.`,
+    `Si tu débutes à ${destination}, évite de tout réserver à l'avance : les prix sur place sont souvent plus compétitifs.`,
+  ];
+
+  let out = html;
+  let added = 0;
+  const needed = 3 - existing;
+  let templateIdx = 0;
+
+  for (const section of sections) {
+    if (added >= needed) break;
+    const sectionText = section.elements.map(el => el.text || el.rawText || '').join(' ');
+    if (!comparisonKeywords.test(sectionText)) continue;
+
+    // Find the last <p> in this section to append after it
+    const lastP = [...section.elements].reverse().find(el => (el.tagName || '').toLowerCase() === 'p');
+    if (!lastP) continue;
+
+    const phrase = decisionTemplates[templateIdx % decisionTemplates.length];
+    const insertHtml = `<p><strong>💡 Notre conseil :</strong> ${phrase}</p>`;
+    const lastPHtml = lastP.outerHTML;
+
+    if (out.includes(lastPHtml)) {
+      out = out.replace(lastPHtml, lastPHtml + '\n' + insertHtml);
+      added++;
+      templateIdx++;
+    }
+  }
+
+  // If we still haven't added enough (no comparison sections found), add before FAQ or at end
+  if (added < needed) {
+    const remaining = needed - added;
+    const extraPhrases = [];
+    for (let i = 0; i < remaining; i++) {
+      const phrase = decisionTemplates[(templateIdx + i) % decisionTemplates.length];
+      extraPhrases.push(`<p><strong>💡 Notre conseil :</strong> ${phrase}</p>`);
+    }
+    const block = extraPhrases.join('\n');
+
+    const faqMatch = out.match(/<h2[^>]*>\s*(?:questions?\s+fr[ée]quentes?|faq)\s*<\/h2>/i);
+    if (faqMatch) {
+      const faqIdx = out.indexOf(faqMatch[0]);
+      out = out.slice(0, faqIdx) + block + '\n' + out.slice(faqIdx);
+    } else {
+      out = out + '\n' + block;
+    }
+    added += remaining;
+  }
+
+  return {
+    html: out,
+    fixed: added > 0,
+    description: added > 0 ? `${added} phrase(s) décisionnelle(s) ajoutée(s) (total: ${existing + added})` : null
+  };
+}
+
+// ─── Fixer 15 : FAQ vide ou placeholder ───────────────────
+
+/**
+ * Détecte les sections FAQ vides ou avec des questions placeholder.
+ * Génère des questions déterministes à partir des H2 et de la destination.
+ */
+export async function fixEmptyFAQ(html, title = '') {
+  if (!html || typeof html !== 'string') return { html, fixed: false, description: null };
+
+  const destination = extractDestinationFromTitle(title) || '';
+  if (!destination) return { html, fixed: false, description: null };
+
+  // Find FAQ section
+  const faqHeaderMatch = html.match(/<h2([^>]*)>\s*(questions?\s+fr[ée]quentes?|faq)\s*<\/h2>/i);
+  if (!faqHeaderMatch) return { html, fixed: false, description: null };
+
+  const faqStart = html.indexOf(faqHeaderMatch[0]);
+  const afterFaq = html.slice(faqStart + faqHeaderMatch[0].length);
+
+  // Find where the next H2 starts (end of FAQ section)
+  const nextH2Match = afterFaq.match(/<h2[\s>]/i);
+  const faqContent = nextH2Match ? afterFaq.slice(0, afterFaq.indexOf(nextH2Match[0])) : afterFaq;
+
+  // Check if FAQ has real content (non-empty Q&A)
+  const hasRealQuestions = /<h3[^>]*>[^<]{15,}<\/h3>/i.test(faqContent);
+  const hasPlaceholders = /\[question\]|\[réponse\]|\[à\s+compléter\]|lorem\s+ipsum|TODO/i.test(faqContent);
+  const isEffectivelyEmpty = faqContent.replace(/<[^>]*>/g, '').trim().length < 50;
+
+  if (hasRealQuestions && !hasPlaceholders) {
+    return { html, fixed: false, description: null };
+  }
+
+  // Collect H2 titles for FAQ generation
+  const h2s = [];
+  const h2Regex = /<h2[^>]*>\s*(.*?)\s*<\/h2>/gi;
+  let m;
+  while ((m = h2Regex.exec(html)) !== null) {
+    const text = m[1].replace(/<[^>]*>/g, '').trim();
+    if (!/faq|questions?\s+fr[ée]quentes?/i.test(text)) {
+      h2s.push(text);
+    }
+  }
+
+  // Deterministic FAQ generation from destination + H2 topics
+  const faqTemplates = [
+    { q: `Quel budget prévoir pour ${destination} ?`, a: `Le budget dépend de ton style de voyage. Consulte la section budget de cet article pour une estimation détaillée selon que tu voyages en mode backpacker, confort ou premium.` },
+    { q: `Quelle est la meilleure période pour visiter ${destination} ?`, a: `La haute saison touristique n'est pas toujours la meilleure période. Vérifie la météo et les prix selon la saison pour trouver le meilleur compromis.` },
+    { q: `Faut-il un visa pour aller à ${destination} ?`, a: `Les conditions de visa varient selon ta nationalité. Vérifie les exigences actuelles auprès de l'ambassade ou du consulat avant ton départ.` },
+    { q: `Comment se déplacer à ${destination} ?`, a: `Plusieurs options existent : transports en commun, taxis, scooters ou location de voiture. Le choix dépend de ton budget et de ton itinéraire.` },
+    { q: `${destination} est-il adapté aux familles ?`, a: `${destination} peut convenir aux familles avec une bonne préparation. Prévois des hébergements adaptés et vérifie les conditions sanitaires.` },
+    { q: `Où loger à ${destination} ?`, a: `Le choix du quartier dépend de tes priorités : budget, proximité des sites, vie nocturne ou tranquillité. Compare les options dans notre section hébergement.` },
+  ];
+
+  // Select 4 relevant FAQs, prioritizing those that match H2 topics
+  const topicKeywords = {
+    budget: /budget|prix|co[ûu]t|argent|€|euro|baht|dépens/i,
+    period: /saison|période|quand|mois|climat|météo/i,
+    visa: /visa|passport|entrée|frontière|douane/i,
+    transport: /transport|déplac|vol|bus|train|scooter/i,
+    family: /famille|enfant|kid/i,
+    lodging: /hébergement|hôtel|dormir|loger|auberge|hostel/i,
+  };
+
+  const h2Text = h2s.join(' ');
+  const scored = faqTemplates.map((faq, idx) => {
+    const keys = Object.values(topicKeywords);
+    const matchesH2 = keys.some(re => re.test(h2Text) && re.test(faq.q));
+    return { ...faq, score: matchesH2 ? 10 : 5 - idx * 0.1 };
+  });
+  scored.sort((a, b) => b.score - a.score);
+  const selected = scored.slice(0, 4);
+
+  // Build FAQ HTML
+  const faqHtml = selected.map(f =>
+    `<h3>${f.q}</h3>\n<p>${f.a}</p>`
+  ).join('\n');
+
+  // Replace FAQ content
+  let out = html;
+  if (nextH2Match) {
+    const endIdx = faqStart + faqHeaderMatch[0].length + afterFaq.indexOf(nextH2Match[0]);
+    out = html.slice(0, faqStart + faqHeaderMatch[0].length) + '\n' + faqHtml + '\n' + html.slice(endIdx);
+  } else {
+    out = html.slice(0, faqStart + faqHeaderMatch[0].length) + '\n' + faqHtml;
+  }
+
+  return {
+    html: out,
+    fixed: true,
+    description: `FAQ régénérée avec ${selected.length} questions pour ${destination}`
+  };
+}
+
+// ─── Fixer 16 : Widgets affiliés orphelins ────────────────
+
+/**
+ * Détecte les widgets affiliés (aside.affiliate-module) qui apparaissent
+ * sans paragraphe d'introduction contextuel juste avant.
+ * Ajoute une phrase d'intro basée sur le type de widget.
+ */
+export async function fixOrphanedWidgets(html) {
+  if (!html || typeof html !== 'string') return { html, fixed: false, description: null };
+
+  // Predefined contextual intros by widget type (from widget-placer config)
+  const widgetIntros = {
+    flights: "Comparer les prix de plusieurs compagnies avant de réserver permet souvent d'économiser sur le billet d'avion.",
+    hotels: "Les tarifs d'hébergement varient fortement selon la plateforme — un comparateur te fait gagner du temps et de l'argent.",
+    transport: "Les transports locaux représentent une part du budget : compare bus, trains et ferries avant de choisir.",
+    esim: "Une connexion internet fiable est essentielle en voyage — les eSIM offrent une solution simple et sans surcoût d'itinérance.",
+    insurance: "L'assurance voyage est indispensable, surtout pour les séjours longs — compare les offres adaptées aux nomades.",
+    default: "Voici un outil qui peut t'aider à planifier cette étape de ton voyage."
+  };
+
+  let out = html;
+  let fixCount = 0;
+  const fixes = [];
+
+  // Match affiliate modules
+  const widgetRegex = /<aside\s+class="affiliate-module"[^>]*data-placement-id="([^"]*)"[^>]*>/gi;
+  let match;
+  const replacements = [];
+
+  while ((match = widgetRegex.exec(out)) !== null) {
+    const widgetStart = match.index;
+    const placementId = match[1] || 'default';
+
+    // Check what comes before the widget (up to 300 chars back)
+    const before = out.slice(Math.max(0, widgetStart - 300), widgetStart).trim();
+
+    // Check if there's already an intro paragraph right before
+    const hasIntro = /<p[^>]*>[^<]{20,}<\/p>\s*$/i.test(before);
+    if (hasIntro) continue;
+
+    // Determine widget type from placement ID
+    let widgetType = 'default';
+    if (/flight|vol|avion|kiwi/i.test(placementId)) widgetType = 'flights';
+    else if (/hotel|hébergement|booking|hostel/i.test(placementId)) widgetType = 'hotels';
+    else if (/transport|bus|train|12go|ferry/i.test(placementId)) widgetType = 'transport';
+    else if (/esim|airalo|sim|internet/i.test(placementId)) widgetType = 'esim';
+    else if (/insurance|assurance|safety/i.test(placementId)) widgetType = 'insurance';
+
+    const intro = widgetIntros[widgetType];
+    replacements.push({ position: widgetStart, intro, placementId: widgetType });
+  }
+
+  // Apply replacements in reverse order to preserve indices
+  for (let i = replacements.length - 1; i >= 0; i--) {
+    const r = replacements[i];
+    const introParagraph = `<p>${r.intro}</p>\n`;
+    out = out.slice(0, r.position) + introParagraph + out.slice(r.position);
+    fixCount++;
+    fixes.push(`intro ajoutée avant widget "${r.placementId}"`);
+  }
+
+  return {
+    html: out,
+    fixed: fixCount > 0,
+    description: fixCount > 0 ? `${fixCount} widget(s) orphelin(s) contextualisé(s): ${fixes.join('; ')}` : null
+  };
+}
 // ─── Runner : applique tous les fixers ────────────────────
 
 /**
@@ -803,6 +1176,47 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null, con
     console.log(`    ✅ ${linkVolumeFix.description}`);
   }
 
+
+  // 12. H2 génériques → titres décisionnels
+  const genericH2Result = await fixGenericH2Titles(currentHtml, title);
+  if (genericH2Result.fixed) {
+    currentHtml = genericH2Result.html;
+    appliedFixes.push({ type: 'generic-h2', description: genericH2Result.description });
+    console.log(`    ✅ ${genericH2Result.description}`);
+  }
+
+  // 13. Patterns IA détectables
+  const aiPatternResult = await fixAIPatterns(currentHtml);
+  if (aiPatternResult.fixed) {
+    currentHtml = aiPatternResult.html;
+    appliedFixes.push({ type: 'ai-patterns', description: aiPatternResult.description });
+    console.log(`    ✅ ${aiPatternResult.description}`);
+  }
+
+  // 14. Phrases décisionnelles manquantes
+  const decisionResult = await fixMissingDecisionPhrases(currentHtml, title);
+  if (decisionResult.fixed) {
+    currentHtml = decisionResult.html;
+    appliedFixes.push({ type: 'decision-phrases', description: decisionResult.description });
+    console.log(`    ✅ ${decisionResult.description}`);
+  }
+
+  // 15. FAQ vide ou placeholder
+  const faqResult = await fixEmptyFAQ(currentHtml, title);
+  if (faqResult.fixed) {
+    currentHtml = faqResult.html;
+    appliedFixes.push({ type: 'empty-faq', description: faqResult.description });
+    console.log(`    ✅ ${faqResult.description}`);
+  }
+
+  // 16. Widgets affiliés orphelins (sans intro contextuelle)
+  const orphanWidgetResult = await fixOrphanedWidgets(currentHtml);
+  if (orphanWidgetResult.fixed) {
+    currentHtml = orphanWidgetResult.html;
+    appliedFixes.push({ type: 'orphaned-widgets', description: orphanWidgetResult.description });
+    console.log(`    ✅ ${orphanWidgetResult.description}`);
+  }
+
   // 5. Corrections LLM ciblées (issues avec fix_type = 'llm', max 3)
   const llmIssues = issues
     .filter(i => i.fix_type === 'llm' && i.severity === 'critical')
@@ -843,5 +1257,10 @@ export default {
   fixEditorialAntiPatterns,
   fixFactualOverclaims,
   fixWithLlm,
+  fixGenericH2Titles,
+  fixAIPatterns,
+  fixMissingDecisionPhrases,
+  fixEmptyFAQ,
+  fixOrphanedWidgets,
   applyAllFixes
 };

@@ -65,6 +65,19 @@ import { lookupIATA, isKnownLocation, getAllLocationNames } from './airport-look
 import LiveDataEnricher from './live-data-enricher.js';
 import QualityAnalyzer from './quality-analyzer.js';
 
+
+// FV-115: Extracted pass modules
+import * as RemovalPasses from './finalizer-passes/removal-passes.js';
+import * as DedupPasses from './finalizer-passes/dedup-passes.js';
+import * as StructurePasses from './finalizer-passes/structure-passes.js';
+import * as TextPasses from './finalizer-passes/text-passes.js';
+import * as TranslationPasses from './finalizer-passes/translation-passes.js';
+import * as WidgetPasses from './finalizer-passes/widget-passes.js';
+import * as QAPasses from './finalizer-passes/qa-passes.js';
+import * as LinkPasses from './finalizer-passes/link-passes.js';
+// FV-114: Invariant checks between phases
+import { checkInvariants } from './finalizer-invariants.js';
+
 class ArticleFinalizer {
   constructor() {
     this.widgets = REAL_TRAVELPAYOUTS_WIDGETS;
@@ -74,6 +87,23 @@ class ArticleFinalizer {
     // Import IntelligentContentAnalyzerOptimized pour traduction
     this.intelligentContentAnalyzer = null;
     this._initAnalyzer();
+
+    // FV-115: Bind extracted pass functions to this instance
+    const passModules = [
+      RemovalPasses, DedupPasses, StructurePasses, TextPasses,
+      TranslationPasses, WidgetPasses, QAPasses, LinkPasses
+    ];
+    for (const mod of passModules) {
+      for (const [name, fn] of Object.entries(mod)) {
+        if (typeof fn === 'function') {
+          this[name] = fn.bind(this);
+        }
+      }
+    }
+
+    // FV-114: Invariant check storage
+    this._invariantViolations = [];
+
   }
   
   async _initAnalyzer() {
@@ -84,6 +114,9 @@ class ArticleFinalizer {
       console.warn('⚠️ IntelligentContentAnalyzerOptimized non disponible pour traduction');
     }
   }
+
+
+  // FV-114 runPhase merged into FV-113 DAG-based runPhase below
 
   /**
    * Supprime les phrases contenant des termes non-Asie (sanitizer post-LLM)
@@ -206,6 +239,49 @@ class ArticleFinalizer {
    * Finalise l'article complet
    * PATCH 1: Accepte pipelineContext pour propagation final_destination
    */
+  /**
+   * Execute a group of finalizer passes in a named phase.
+   * Provides error isolation and char-delta logging per phase.
+   * Passes that return a falsy value are treated as no-ops (original html preserved).
+   * Async passes are awaited automatically.
+   *
+   * passConfigs: array of strings (method names) or objects { name, args }
+   */
+  async runPhase(phaseName, html, ctx, passConfigs) {
+    const startLen = html.length;
+    for (const cfg of passConfigs) {
+      const passName = typeof cfg === 'string' ? cfg : cfg.name;
+      const args = typeof cfg === 'string' ? [] : (cfg.args || []);
+      try {
+        if (typeof this[passName] === 'function') {
+          const result = this[passName](html, ...args);
+          // Handle async methods transparently
+          html = (result instanceof Promise ? await result : result) || html;
+        } else {
+          console.warn(`[finalizer][${phaseName}] Pass ${passName} not found — skipped`);
+        }
+      } catch (err) {
+        console.warn(`[finalizer][${phaseName}] Pass ${passName} failed: ${err.message}`);
+      }
+    }
+    const delta = html.length - startLen;
+    console.log(`[finalizer] Phase ${phaseName}: ${passConfigs.length} passes, ${delta > 0 ? '+' : ''}${delta} chars delta`);
+    // FV-114: Check invariants after each phase
+    try {
+      const violations = checkInvariants(html, phaseName);
+      if (violations.length > 0) {
+        console.warn(`\u26a0\ufe0f INVARIANT [${phaseName}]: ${violations.length} violation(s)`);
+        for (const v of violations) {
+          console.warn(`   - [${v.invariant}] ${v.message}`);
+        }
+        this._invariantViolations.push({ phase: phaseName, violations });
+      }
+    } catch (e) {
+      // checkInvariants may not exist yet — fail silently
+    }
+    return html;
+  }
+
   async finalizeArticle(article, analysis, pipelineContext = null) {
     // PHASE 6.0: Log d'entrée unique (preuve d'exécution)
     const htmlLength = article?.content ? (typeof article.content === 'string' ? article.content.length : 0) : 0;
@@ -213,10 +289,10 @@ class ArticleFinalizer {
     const hasPattern = Boolean(pipelineContext?.pattern);
     const hasAffiliatePlan = Boolean(pipelineContext?.affiliate_plan?.placements?.length > 0);
     console.log(`✅ FINALIZER_INPUT_READY: has_story=${hasStory} has_pattern=${hasPattern} has_affiliate_plan=${hasAffiliatePlan} html_length=${htmlLength}`);
-    
+
     console.log('\n🎨 FINALISATION DE L\'ARTICLE');
     console.log('==============================\n');
-    
+
     // PATCH 1: Créer pipelineContext si non fourni (fallback)
     if (!pipelineContext) {
       pipelineContext = {
@@ -227,15 +303,17 @@ class ArticleFinalizer {
     }
     const editorialMode = (pipelineContext?.editorial_mode || pipelineContext?.editorialMode || 'evergreen').toLowerCase();
     pipelineContext.editorial_mode = editorialMode;
-    
-    // SANITIZER POST-LLM: Supprimer les phrases contenant des termes non-Asie
-    // 3) Corriger "finalDestination is not defined" - déclarer et normaliser en lowercase
+
+    // Prepare shared context variables
     const finalDestinationRaw = pipelineContext?.final_destination ?? analysis?.final_destination ?? null;
     const finalDestination = finalDestinationRaw ? finalDestinationRaw.toLowerCase() : null;
+
+    // SANITIZER POST-LLM: Supprimer les phrases contenant des termes non-Asie
     if (analysis?.main_destination || analysis?.destination || finalDestination) {
-      const beforeLength = article.content.length;      // FIX 2: Passer final_destination pour exclusion
+      const beforeLength = article.content.length;
       article.content = this.stripNonAsiaSentences(article.content, finalDestination);
-      const afterLength = article.content.length;      if (beforeLength !== afterLength) {
+      const afterLength = article.content.length;
+      if (beforeLength !== afterLength) {
         console.log(`🧹 Sanitizer: ${beforeLength - afterLength} caractères supprimés (phrases non-Asie)`);
       }
     }
@@ -268,93 +346,79 @@ class ArticleFinalizer {
 
     // Compteur diagnostic FAQ (utilisé tout au long de la chaîne)
     const _faqCount = (s) => (s.match(/<!-- wp:details/g) || []).length;
-
     console.log(`📊 FAQ_TRACE [ENTRY]: ${_faqCount(finalContent)} wp:details (placeholder: ${faqPlaceholderMap.size})`);
 
-    // 1. Remplacer les placeholders de widgets
-    // PATCH 1: Passer pipelineContext
-    const widgetResult = await this.replaceWidgetPlaceholders(finalContent, analysis, pipelineContext);
-    finalContent = widgetResult.content;
-    // DEBUG: Vérifier les widgets dans finalContent APRÈS assignation
-    const widgetsAfterAssign = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets dans finalContent APRÈS widgetResult.content: count=${widgetsAfterAssign.count}, types=[${widgetsAfterAssign.types.join(', ')}], widgetResult.count=${widgetResult.count}`);    enhancements.widgetsReplaced = widgetResult.count;
+    // Create a shared temp report for passes that require it
+    const tempReport = {
+      checks: [],
+      actions: [],
+      issues: [],
+      metrics: {}
+    };
 
-    // 2. Vérifier et améliorer le quote highlight
-    const quoteResult = this.ensureQuoteHighlight(finalContent, analysis);
-    finalContent = quoteResult.content;
-    
-    // DEBUG: Vérifier les widgets APRÈS ensureQuoteHighlight
-    const widgetsAfterQuote = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS ensureQuoteHighlight: count=${widgetsAfterQuote.count}, types=[${widgetsAfterQuote.types.join(', ')}]`);
-    
-    enhancements.quoteHighlight = quoteResult.hasQuote ? 'Oui' : 'Non';
+    // Destination name for placeholder replacement
+    const destName = pipelineContext?.final_destination || pipelineContext?.geo_defaults?.country || '';
+    const destCapitalized = destName ? destName.charAt(0).toUpperCase() + destName.slice(1) : '';
+    const destArticle = destCapitalized && /^[aeiouàâéèêëïîôùûü]/i.test(destCapitalized) ? `l'${destCapitalized}` : `le ${destCapitalized}`;
 
-    // 3. Vérifier et améliorer l'intro FOMO
-    const fomoResult = this.ensureFomoIntro(finalContent, analysis);
-    finalContent = fomoResult.content;
-    
-    // DEBUG: Vérifier les widgets APRÈS ensureFomoIntro
-    const widgetsAfterFomo = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS ensureFomoIntro: count=${widgetsAfterFomo.count}, types=[${widgetsAfterFomo.types.join(', ')}]`);
-    enhancements.fomoIntro = fomoResult.hasFomo ? 'Oui' : 'Non';
+    // ═══════════════════════════════════════════════════════════════════
+    // Phase 1: REMOVALS — all content removal before any additions
+    // ═══════════════════════════════════════════════════════════════════
+    finalContent = await this.runPhase('removal', finalContent, null, [
+      { name: 'removeParasiticSections', args: [] },
+      { name: 'removeOldStructureResidues', args: [] },
+      { name: 'removeForbiddenH2Section', args: [] },
+      { name: 'removeEmptySections', args: [] },
+      { name: 'removeParasiticText', args: [] },
+      { name: 'removePlaceholdersAndEmptyCitations', args: [] },
+      { name: 'removeGenericVerdictPhrase', args: [] },
+    ]);
 
-    // 4. Vérifier et ajouter CTA si manquant
-    const ctaResult = this.ensureCTA(finalContent, analysis);
-    finalContent = ctaResult.content;
-    enhancements.ctaPresent = ctaResult.hasCTA ? 'Oui' : 'Non';
-    let widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS ensureCTA: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    // ═══════════════════════════════════════════════════════════════════
+    // Phase 2: DEDUPLICATION
+    // ═══════════════════════════════════════════════════════════════════
+    finalContent = await this.runPhase('dedup', finalContent, null, [
+      { name: 'removeDuplicateParagraphs', args: [tempReport] },
+      { name: 'removeDuplicateH2Sections', args: [] },
+      { name: 'deduplicateBlockquotes', args: [] },      // ONCE only (was 3x before)
+      { name: 'removeDuplicateBlockquotes', args: [] },
+      { name: 'removeRepetitions', args: [] },
+      { name: 'removeRepetitivePhrases', args: [tempReport] },
+    ]);
 
-    // PHASE 6.0.4: Remplacer les liens morts href="#"
-    finalContent = this.replaceDeadLinks(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS replaceDeadLinks: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    
-    // PHASE 6.0.4.1: Corriger les liens mal formés (href contenant du HTML ou non fermés)
-    finalContent = this.fixMalformedLinks(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS fixMalformedLinks: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    
-    // PHASE 6.0.5: Nettoyer les duplications de sections H2 (notamment "Limites et biais")
-    finalContent = this.removeDuplicateH2Sections(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeDuplicateSections: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    
-    // PHASE 6.0.6: Nettoyer les duplications de blockquotes
-    finalContent = this.removeDuplicateBlockquotes(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeDuplicateBlockquotes: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    
-    // PHASE 6.0.7: Nettoyer le texte parasite du renforcement SEO
-    finalContent = this.removeParasiticText(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeParasiticText: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    
-    // PHASE 6.0.8: Remplacer "Questions encore ouvertes" par "Nos recommandations"
+    // Also detect section duplications (was inline before)
+    finalContent = this.detectSectionDuplications(finalContent, 'Ce que la communauté apporte', tempReport) || finalContent;
+
+    // ═══════════════════════════════════════════════════════════════════
+    // Phase 3: HTML STRUCTURE
+    // ═══════════════════════════════════════════════════════════════════
+    finalContent = await this.runPhase('structure', finalContent, null, [
+      { name: 'fixH2InsideP', args: [] },               // extractH2FromParagraphs
+      { name: 'mergeShortParagraphs', args: [] },        // mergeMicroParagraphs
+      { name: 'balanceParagraphs', args: [tempReport] },
+      { name: 'fixH2InsideP', args: [] },               // safety re-extract after balance
+      { name: 'fixMalformedLinks', args: [] },
+      { name: 'closeUnclosedAnchors', args: [] },
+      { name: 'removeTrailingOrphans', args: [] },
+    ]);
+
+    console.log(`📊 FAQ_TRACE [POST-structure]: ${_faqCount(finalContent)}`);
+
+    // ═══════════════════════════════════════════════════════════════════
+    // Phase 4: HEADINGS
+    // ═══════════════════════════════════════════════════════════════════
+    finalContent = await this.runPhase('headings', finalContent, null, [
+      { name: 'removeEmojisFromH2', args: [] },
+      { name: 'fixH2GeoCoherence', args: [article?.title || pipelineContext?.generatedTitle || ''] },
+      { name: 'validateH2Titles', args: [tempReport] },
+    ]);
+
+    // Inline: Replace "Questions ouvertes" headings
     finalContent = finalContent.replace(/<h2[^>]*>Questions (encore )?ouvertes[^<]*<\/h2>/gi, '<h2>Nos recommandations : Par où commencer ?</h2>');
     finalContent = finalContent.replace(/Questions (encore )?ouvertes/gi, 'Nos recommandations');
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS replace Questions ouvertes: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    
-    // PHASE 6.0.8b: Garantir un paragraphe intro avant le premier H2
-    finalContent = this.ensureIntroBeforeFirstH2(finalContent);
-    
-    // PHASE 6.0.9: Supprimer les emojis des titres H2 (SEO et cohérence éditoriale)
-    finalContent = this.removeEmojisFromH2(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeEmojisFromH2: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    
-    // PHASE 6.0.9b: Corriger la cohérence géographique des H2 avec le titre
-    finalContent = this.fixH2GeoCoherence(finalContent, article?.title || pipelineContext?.generatedTitle || '');
-    
-    // PHASE 6.0.9c: Traduire les noms de villes/pays anglais → français dans tout le HTML
-    finalContent = this.translateCityNamesToFrench(finalContent);
-    
-    // PHASE 6.0.9d: Remplacer les placeholders "la destination" dans les H2 par le vrai nom
-    const destName = pipelineContext?.final_destination || pipelineContext?.geo_defaults?.country || '';
+
+    // Inline: Replace destination placeholders in H2
     if (destName) {
-      const destCapitalized = destName.charAt(0).toUpperCase() + destName.slice(1);
-      const destArticle = /^[aeiouàâéèêëïîôùûü]/i.test(destCapitalized) ? `l'${destCapitalized}` : `le ${destCapitalized}`;
       finalContent = finalContent.replace(/(<h2[^>]*>)([\s\S]*?)(<\/h2>)/gi, (match, open, inner, close) => {
         let fixed = inner;
         fixed = fixed.replace(/\ben la destination\b/gi, `au ${destCapitalized}`);
@@ -366,227 +430,101 @@ class ArticleFinalizer {
         return open + fixed + close;
       });
     }
-    
-    // PHASE 6.0.10: Supprimer les sections vides (labels emoji sans contenu)
-    finalContent = this.removeEmptySections(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeEmptySections: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
 
-    // PHASE 6.0.10.1: Supprimer explicitement la section interdite "Ce que dit le témoignage"
-    finalContent = this.removeForbiddenH2Section(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-
-    // PHASE 6.0.10.1a: Supprimer les sections parasites (Contexte, Événement central, Moment critique, Résolution) en format Option B
-    finalContent = this.removeParasiticSections(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeParasiticSections: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-
-    // PHASE 6.0.10.1a.1: Supprimer les résidus de l'ancienne structure (Ce que la communauté apporte, Conseils pratiques, listes mal formées) en Option B
-    finalContent = this.removeOldStructureResidues(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeOldStructureResidues: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-
-    // PHASE 6.0.10.1b: Supprimer verdict générique (Pendant que vous / Chez Flash Voyages) dans "Ce qu'il faut retenir"
-    finalContent = this.removeGenericVerdictPhrase(finalContent);
-
-    // PHASE 6.0.10.1c: Dédupliquer les blockquotes (même citation Reddit insérée 2 fois)
-    finalContent = this.deduplicateBlockquotes(finalContent);
-    
-    // PHASE 6.0.10.2: Nettoyer placeholders et citations vides
-    finalContent = this.removePlaceholdersAndEmptyCitations(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    
-    // Créer un objet report temporaire pour les fonctions de nettoyage
-    const tempReport = {
-      checks: [],
-      actions: [],
-      issues: [],
-      metrics: {}
-    };
-    
+    // ═══════════════════════════════════════════════════════════════════
+    // Phase 5: TEXT NORMALIZATION
+    // ═══════════════════════════════════════════════════════════════════
     console.log(`📊 FAQ_TRACE [PRE-normalizeSpacing]: ${_faqCount(finalContent)}`);
-    // PHASE 6.0.10.5: Normaliser les espaces et sauts de ligne
-    finalContent = this.normalizeSpacing(finalContent, tempReport);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS normalizeSpacing: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
+    finalContent = await this.runPhase('text', finalContent, null, [
+      { name: 'normalizeSpacing', args: [tempReport] },
+      { name: 'fixWordGlue', args: [null] },
+    ]);
     console.log(`📊 FAQ_TRACE [POST-normalizeSpacing]: ${_faqCount(finalContent)}`);
-    
-    // PHASE 6.0.11: Supprimer les répétitions de phrases
-    finalContent = this.removeRepetitions(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeRepetitions: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    
-    // PHASE 6.0.11.5: Nettoyer les duplications de paragraphes (amélioré avec détection par section)
-    finalContent = this.removeDuplicateParagraphs(finalContent, tempReport);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeDuplicateParagraphs: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
 
-    // PHASE 6.0.11.6: Détecter et supprimer les duplications dans "Ce que la communauté apporte"
-    finalContent = this.detectSectionDuplications(finalContent, 'Ce que la communauté apporte', tempReport);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS detectSectionDuplications: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    
-    // PHASE 6.0.11.7: Passe finale de suppression des phrases répétitives (aligné avec quality-analyzer.js)
-    finalContent = this.removeRepetitivePhrases(finalContent, tempReport);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS removeRepetitivePhrases: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    
-    // PHASE 6.0.11.8: Extraire les H2 imbriqués dans les P AVANT balanceParagraphs
-    finalContent = this.fixH2InsideP(finalContent);
-    
-    // PHASE 6.0.11.9: Fusionner les micro-paragraphes consécutifs (< 80 chars) pour densifier le contenu
-    finalContent = this.mergeShortParagraphs(finalContent);
+    // Inline: Add final punctuation to paragraphs (addFinalPunctuation)
+    {
+      let dotFixed = 0;
+      finalContent = finalContent.replace(/(<p[^>]*>)([\s\S]*?)(<\/p>)/gi, (match, open, content, close) => {
+        const trimmed = content.replace(/\s+$/g, '');
+        if (trimmed.length < 10) return match; // trop court = pas une vraie phrase
+        const lastChar = trimmed.slice(-1);
+        // Ne rien ajouter si ça finit déjà par une ponctuation, un guillemet, un placeholder, un tag, etc.
+        if (/[.!?:;)»…\u2026\u00BB>_\]]/.test(lastChar)) return match;
+        // Ne rien ajouter si le contenu finit par un tag HTML (ex: </strong>, </a>)
+        if (/<\/[a-z]+>\s*$/i.test(trimmed)) {
+          // Vérifier le dernier caractère de texte avant le tag fermant
+          const textBeforeTag = trimmed.replace(/<\/[a-z]+>\s*$/i, '').replace(/<[^>]+>/g, '').trim();
+          const lastTextChar = textBeforeTag.slice(-1);
+          if (/[.!?:;)»…\u2026\u00BB\]]/.test(lastTextChar)) return match;
+          // Insérer le point avant le tag fermant
+          const tagMatch = trimmed.match(/(<\/[a-z]+>)\s*$/i);
+          if (tagMatch) {
+            dotFixed++;
+            return open + trimmed.slice(0, -tagMatch[0].length) + '.' + tagMatch[0] + close;
+          }
+        }
+        // Terminé par une lettre ou un chiffre → ajouter un point
+        if (/[a-zA-ZÀ-ÿ0-9]/.test(lastChar)) {
+          dotFixed++;
+          return open + trimmed + '.' + close;
+        }
+        return match;
+      });
+      if (dotFixed > 0) {
+        console.log(`   ✏️ PONCTUATION_FINALE: ${dotFixed} point(s) ajouté(s) en fin de paragraphe`);
+      }
+    }
 
-    // PHASE 6.0.12: Équilibrer les paragraphes (après toutes les corrections de contenu)
-    finalContent = this.balanceParagraphs(finalContent, tempReport);
-    
-    // PHASE 6.0.12.1: Re-extraire les H2 imbriqués APRÈS balanceParagraphs (safety net)
-    finalContent = this.fixH2InsideP(finalContent);
-    widgetsAfterCTA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS balanceParagraphs: count=${widgetsAfterCTA.count}, types=[${widgetsAfterCTA.types.join(', ')}]`);
-    console.log(`📊 FAQ_TRACE [POST-balanceParagraphs]: ${_faqCount(finalContent)}`);
-    
-    // PHASE 6.0.12.2: Rendre les tableaux responsive pour mobile
-    finalContent = this.makeTablesResponsive(finalContent, tempReport);
-
-    // PHASE 6.0.12.3: Validation des titres H2 (pas de placeholder, grammaire, longueur)
-    finalContent = this.validateH2Titles(finalContent, tempReport);
-
-    // CORRECTION FINALE AMÉLIORÉE: Nettoyer une dernière fois les paragraphes vides ou avec juste un point
-    // Patterns multiples pour capturer toutes les variantes
-    const cleanupPatterns = [
-      /<p[^>]*>\s*<\/p>/gi,                // <p></p> complètement vide
-      /<p[^>]*>\s*\.\s*<\/p>/gi,           // <p>.</p> avec espaces
-      /<p[^>]*>\.<\/p>/gi,                 // <p>.</p> sans espaces
-      /<p[^>]*>\s*[.\s]+\s*<\/p>/gi,      // <p> . </p> ou <p>...</p>
-      /<p[^>]*>\s*\.\.\.\s*<\/p>/gi,      // <p>...</p>
-      /<p[^>]*>\s*\.\s*\.\s*\.\s*<\/p>/gi // <p> . . . </p>
-    ];
-    
-    const emptyParasBefore = (finalContent.match(/<p[^>]*>\s*\.\s*<\/p>/gi) || []).length;    
-    cleanupPatterns.forEach(pattern => {
-      finalContent = finalContent.replace(pattern, '');
+    // Inline: Normalize geo compound names (normalizeGeoNames: sud-est → Sud-Est)
+    finalContent = finalContent.replace(/(?<=>)([^<]+)(?=<)/g, (match, textContent) => {
+      return textContent
+        .replace(/\bsud-est\b/g, 'Sud-Est')
+        .replace(/\bsud-ouest\b/g, 'Sud-Ouest')
+        .replace(/\bnord-est\b/g, 'Nord-Est')
+        .replace(/\bnord-ouest\b/g, 'Nord-Ouest')
+        .replace(/\bmoyen-orient\b/g, 'Moyen-Orient');
     });
-    
-    const emptyParasAfter = (finalContent.match(/<p[^>]*>\s*\.\s*<\/p>/gi) || []).length;
-    const removed = emptyParasBefore - emptyParasAfter;    
-    if (removed > 0) {
-      console.log(`   🧹 Nettoyage final: ${removed} paragraphe(s) vide(s) ou avec juste un point supprimé(s)`);
-    }
-    
-    // PHASE 5.C: Injecter les modules d'affiliation si activé (APRÈS balanceParagraphs pour placement correct)
-    if (ENABLE_AFFILIATE_INJECTOR && pipelineContext?.affiliate_plan?.placements?.length > 0) {
-      try {
-        const { renderAffiliateModule } = await import('./affiliate-module-renderer.js');
-        const affiliatePlan = pipelineContext.affiliate_plan;
-        const geoDefaults = pipelineContext.geo_defaults || {};
-        
-        let injectedCount = 0;
-        const injectedTypes = [];
-        
-        const totalPlacements = affiliatePlan.placements.length;
-        affiliatePlan.placements.forEach((placement, placementIndex) => {
-          const widgetType = placement.id || placement.type || '';
-          const widgetAlreadyPresent = widgetType && new RegExp(`data-widget-type=["']${widgetType}["']`, 'i').test(finalContent);
-          if (widgetAlreadyPresent) {
-            console.log(`   ⏭️ Widget ${widgetType} déjà présent dans le HTML — skip injection module affilié`);
-            return;
-          }
-          const moduleHtml = renderAffiliateModule(placement, geoDefaults);
-          if (!moduleHtml) return;
-          const options = { placementId: placement.id, placementIndex, totalPlacements };
-          const injected = this.injectAffiliateModule(finalContent, moduleHtml, placement.anchor, options);
-          if (injected !== finalContent) {
-            finalContent = injected;
-            injectedCount++;
-            injectedTypes.push(placement.id);
-          }
-        });
-        
-        if (injectedCount > 0) {
-          console.log(`✅ AFFILIATE_INJECTED: count=${injectedCount} types=[${injectedTypes.join(', ')}]`);
-        }
 
-      } catch (error) {
-        console.warn('⚠️ Erreur injection modules affiliation (fallback silencieux):', error.message);
+    // Inline: Accent and typo fixes (fixAccentsTypos)
+    const _accentFixes = [
+      [/\bAchete\b/g, 'Achète'],
+      [/\bachete\b/g, 'achète'],
+      [/\bPrevois\b/g, 'Prévois'],
+      [/\bprevois\b/g, 'prévois'],
+      [/\bPrevoit\b/g, 'Prévoit'],
+      [/\bprevoit\b/g, 'prévoit'],
+      [/\bPrevoyez\b/g, 'Prévois'],   // vous → tu
+      [/\bDecouvre\b/g, 'Découvre'],
+      [/\bdecouvre\b/g, 'découvre'],
+      [/\bDecouvrez\b/g, 'Découvre'],  // vous → tu
+      [/\bdecouvrez\b/g, 'découvre'],
+      [/\bConsultez\b/g, 'Consulte'],  // vous → tu
+      [/\bconsultez\b/g, 'consulte'],
+      [/\bN'hesitez pas\b/gi, "N'hésite pas"],
+      [/\bVeuillez\b/g, 'Merci de'],   // registre formel → neutre
+    ];
+    finalContent = finalContent.replace(/(?<=>)([^<]+)(?=<)/g, (match, textContent) => {
+      let fixed = textContent;
+      for (const [pattern, replacement] of _accentFixes) {
+        fixed = fixed.replace(pattern, replacement);
       }
-    }
+      return fixed;
+    });
 
-    // PHASE 5.D: Insertion d'images contextuelles inline (Pexels > Flickr CC-BY)
-    if (ENABLE_INLINE_IMAGES && !DRY_RUN) {
-      try {
-        const inlineImages = await this.insertContextualImages(finalContent, analysis, pipelineContext);
-        if (inlineImages.html !== finalContent) {
-          finalContent = inlineImages.html;
-          console.log(`✅ INLINE_IMAGES: ${inlineImages.count} image(s) insérée(s) [${inlineImages.sources.join(', ')}]`);
-        }
-      } catch (error) {
-        console.warn('⚠️ Erreur insertion images inline (fallback silencieux):', error.message);
-      }
-    }
-    
-    // PHASE 5.E: Conversion systématique USD → EUR
-    finalContent = this.convertCurrencyToEUR(finalContent);
+    // ═══════════════════════════════════════════════════════════════════
+    // Phase 6: TRANSLATION (after text normalization)
+    // ═══════════════════════════════════════════════════════════════════
+    finalContent = await this.runPhase('translation', finalContent, null, [
+      { name: 'translateCityNamesToFrench', args: [] },
+      { name: 'convertCurrencyToEUR', args: [] },
+    ]);
 
-    // PHASE 6.1: QA Report déterministe
-    const qaReport = await this.runQAReport(finalContent, pipelineContext, analysis);
-    finalContent = qaReport.finalHtml;
-    
-    // PHASE 6.1.0b: Re-dédupliquer les blockquotes APRÈS runQAReport (qui peut en insérer de nouveaux)
-    finalContent = this.deduplicateBlockquotes(finalContent);
-    
-    // PHASE 6.1.1: Remplacement placeholders liens d'affiliation (correction audit)
-    finalContent = this.replaceAffiliatePlaceholders(finalContent, pipelineContext, qaReport);
-    
-    // PHASE 6.1.2: Injection liens affiliés sur les mentions de partenaires (rule-based)
-    finalContent = this.injectPartnerBrandLinks(finalContent, pipelineContext);
-    
-    // DEBUG: Vérifier les widgets APRÈS runQAReport
-    const widgetsAfterQA = this.detectRenderedWidgets(finalContent);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets APRÈS runQAReport: count=${widgetsAfterQA.count}, types=[${widgetsAfterQA.types.join(', ')}]`);
-    console.log(`📊 FAQ_TRACE [POST-runQAReport]: ${_faqCount(finalContent)}`);
-    
-    // Log synthèse QA
-    const passCount = qaReport.checks.filter(c => c.status === 'pass').length;
-    const warnCount = qaReport.checks.filter(c => c.status === 'warn').length;
-    const failCount = qaReport.checks.filter(c => c.status === 'fail').length;
-    const actionsCount = qaReport.actions.length;
-    console.log(`✅ FINALIZER_QA: pass=${passCount} warn=${warnCount} fail=${failCount} actions=${actionsCount} html_before=${qaReport.metrics.html_length_before} html_after=${qaReport.metrics.html_length_after}`);
-    
-    // PHASE 6.1: Log détaillé des issues si présentes
-    if (qaReport.issues.length > 0) {
-      console.log(`📋 FINALIZER_QA_ISSUES: ${qaReport.issues.length} issue(s) détectée(s):`);
-      qaReport.issues.forEach((issue, idx) => {
-        console.log(`   [${idx + 1}] ${issue.code}: ${issue.message} (severity: ${issue.severity})`);
-        if (issue.evidence) {
-          console.log(`       Evidence: ${JSON.stringify(issue.evidence)}`);
-        }
-      });
-    }
-    
-    // PHASE 6.1: Log des checks qui ont échoué
-    if (failCount > 0) {
-      const failedChecks = qaReport.checks.filter(c => c.status === 'fail');
-      console.log(`❌ FINALIZER_QA_FAILED_CHECKS: ${failedChecks.length} check(s) en échec:`);
-      failedChecks.forEach((check, idx) => {
-        console.log(`   [${idx + 1}] ${check.name}: ${check.details}`);
-      });
-    }
-    
-    // PHASE 6.1: Flag strict - throw si fail en mode strict
-    if (process.env.FINALIZER_STRICT === '1' && failCount > 0) {
-      const failMessages = qaReport.checks.filter(c => c.status === 'fail').map(c => c.name).join(', ');
-      const issuesSummary = qaReport.issues.slice(0, 3).map(i => `${i.code}: ${i.message}`).join('; ');
-      throw new Error(`SOURCE_OF_TRUTH_VIOLATION: Finalizer QA failed (${failCount} check(s)): ${failMessages}. Issues: ${issuesSummary}`);
-    }
-
-    // TRADUCTION FORCÉE DES BLOCKQUOTES EN ANGLAIS (1 appel bulk si plusieurs)
+    // Bulk blockquote translation (complex inline logic with Cheerio, kept here)
     if (!FORCE_OFFLINE && this.intelligentContentAnalyzer) {
       try {
         const cheerioModule = await import('cheerio');
         const cheerio = cheerioModule.default || cheerioModule;
         // FIX: Protéger les <script> tags AVANT le parsing Cheerio xmlMode
-        // Cheerio xmlMode corrompt les scripts contenant des & non échappés dans les URLs
         const scriptMap = new Map();
         let scriptCounter = 0;
 
@@ -597,8 +535,7 @@ class ArticleFinalizer {
           return placeholder;
         });
 
-        // FIX: Protéger les commentaires Gutenberg (wp:details, wp:heading, wp:paragraph)
-        // Cheerio xmlMode corrompt ou supprime les commentaires HTML WordPress
+        // FIX: Protéger les commentaires Gutenberg
         const gutenbergMap = new Map();
         let gutenbergCounter = 0;
         protectedHtml = protectedHtml.replace(/<!-- \/?(wp:[a-z]+[^>]*) -->/g, (match) => {
@@ -660,36 +597,8 @@ class ArticleFinalizer {
         console.error(`❌ Erreur traduction blockquotes: ${error.message}`);
       }
     }
-    
-    console.log(`📊 FAQ_TRACE [POST-blockquoteTranslation]: ${_faqCount(finalContent)}`);
-    console.log('✅ Finalisation terminée:');
-    console.log(`   - Widgets remplacés: ${enhancements.widgetsReplaced}`);
-    console.log(`   - Quote highlight: ${enhancements.quoteHighlight}`);
-    console.log(`   - Intro FOMO: ${enhancements.fomoIntro}`);
-    console.log(`   - CTA présent: ${enhancements.ctaPresent}\n`);
-    // PHASE 6.2: Les shortcodes [fv_widget] sont désormais rendus par WordPress via le mu-plugin PHP.
-    // Ne plus les résoudre côté Node — laisser WordPress les traiter.
-    // (anciennement: finalContent = this.resolveWidgetShortcodes(finalContent, pipelineContext);)
 
-    // PHASE 6.3: Nettoyage des blocs orphelins en fin d'article
-    finalContent = this.removeTrailingOrphans(finalContent);
-
-    // NETTOYAGE FINAL : Forcer le nettoyage des titres "Événement central" avec anglais
-    // APPROCHE AGRESSIVE : Si le titre contient quoi que ce soit après "Événement central", on le nettoie
-    const eventTitleMatches = finalContent.match(/<h2[^>]*>Événement central[^<]*<\/h2>/gi);
-    if (eventTitleMatches) {
-      for (const match of eventTitleMatches) {
-        const titleContent = match.replace(/<h2[^>]*>|<\/h2>/gi, '').trim();
-        // APPROCHE AGRESSIVE : Si le titre n'est pas exactement "Événement central", on le nettoie
-        if (titleContent !== 'Événement central') {
-          console.log(`⚠️ FINALIZER: Titre "Événement central" avec contenu supplémentaire détecté: "${titleContent}" → nettoyage forcé`);
-          const escapedMatch = match.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-          finalContent = finalContent.replace(new RegExp(escapedMatch, 'g'), '<h2>Événement central</h2>');
-        }
-      }
-    }
-    
-    // NETTOYAGE FINAL : Forcer la traduction des balises <strong> avec anglais (bulk si plusieurs)
+    // Inline: Force translate strong tags with English
     const finalStrongsWithEnglish = finalContent.match(/<strong[^>]*>(Underestimating|Not budgeting|Essential for)[^<]*<\/strong>/gi);
     if (finalStrongsWithEnglish && this.intelligentContentAnalyzer) {
       const strongTexts = finalStrongsWithEnglish.map(m => (m.match(/<strong[^>]*>([^<]+)<\/strong>/i) || [])[1]).filter(Boolean);
@@ -703,112 +612,158 @@ class ArticleFinalizer {
           finalContent = finalContent.replace(new RegExp(escapedMatch, 'g'), `<strong>${translatedText}</strong>`);
         });
       }
-    }    
-    // NETTOYAGE FINAL ABSOLU: Garantir qu'aucun paragraphe vide ou duplication ne subsiste
-    // Cette passe finale est CRITIQUE pour garantir la qualité sur TOUTES les générations
-    const finalCleanupBefore = {
-      emptyParas: (finalContent.match(/<p[^>]*>\s*\.\s*<\/p>/gi) || []).length + (finalContent.match(/<p[^>]*>\s*<\/p>/gi) || []).length,
-      limitesCount: (finalContent.match(/<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi) || []).length + (finalContent.match(/<h2[^>]*>.*?limits?\s*(and\s*)?bias(es)?.*?<\/h2>/gi) || []).length
-    };
-    
-    // Supprimer TOUS les paragraphes complètement vides (sans contenu, même collés à d'autres balises)
-    finalContent = finalContent.replace(/<p[^>]*>\s*<\/p>\s*/gi, '');
-    
-    // Supprimer TOUS les paragraphes avec juste un point (patterns exhaustifs)
-    finalContent = finalContent.replace(/<p[^>]*>\s*\.\s*<\/p>/gi, '');
-    finalContent = finalContent.replace(/<p[^>]*>\.<\/p>/gi, '');
-    finalContent = finalContent.replace(/<p[^>]*>\s*[.\s]+\s*<\/p>/gi, '');
-    finalContent = finalContent.replace(/<p[^>]*>\s*\.\.\.\s*<\/p>/gi, '');
-    // Pattern supplémentaire pour paragraphes avec juste un point suivi d'un espace et d'un lien
-    finalContent = finalContent.replace(/<p[^>]*>\s*\.\s+[^<]*<\/p>/gi, (match) => {
-      // Si le paragraphe contient un lien, garder seulement le lien, sinon supprimer
-      const linkMatch = match.match(/<a[^>]*>.*?<\/a>/i);
-      return linkMatch ? `<p>${linkMatch[0]}</p>` : '';
-    });
-    
-    // Supprimer les duplications de "Limites et biais" une dernière fois
-    finalContent = this.removeDuplicateH2Sections(finalContent);
-    
-    const finalCleanupAfter = {
-      emptyParas: (finalContent.match(/<p[^>]*>\s*\.\s*<\/p>/gi) || []).length + (finalContent.match(/<p[^>]*>\s*<\/p>/gi) || []).length,
-      limitesCount: (finalContent.match(/<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi) || []).length + (finalContent.match(/<h2[^>]*>.*?limits?\s*(and\s*)?bias(es)?.*?<\/h2>/gi) || []).length
-    };
-    
-    if (finalCleanupBefore.emptyParas > finalCleanupAfter.emptyParas || finalCleanupBefore.limitesCount > finalCleanupAfter.limitesCount) {
-      console.log(`   🧹 NETTOYAGE FINAL ABSOLU: ${finalCleanupBefore.emptyParas - finalCleanupAfter.emptyParas} paragraphe(s) vide(s) et ${finalCleanupBefore.limitesCount - finalCleanupAfter.limitesCount} duplication(s) "Limites et biais" supprimé(s)`);
     }
-    
-    // PHASE 6.4.9: Ajouter le point final manquant aux paragraphes
-    // Le LLM omet souvent le point en fin de phrase. On l'ajoute si le paragraphe
-    // se termine par une lettre (pas par ., !, ?, :, ), », …, ou un placeholder).
-    {
-      let dotFixed = 0;
-      finalContent = finalContent.replace(/(<p[^>]*>)([\s\S]*?)(<\/p>)/gi, (match, open, content, close) => {
-        const trimmed = content.replace(/\s+$/g, '');
-        if (trimmed.length < 10) return match; // trop court = pas une vraie phrase
-        const lastChar = trimmed.slice(-1);
-        // Ne rien ajouter si ça finit déjà par une ponctuation, un guillemet, un placeholder, un tag, etc.
-        if (/[.!?:;)»…\u2026\u00BB>_\]]/.test(lastChar)) return match;
-        // Ne rien ajouter si le contenu finit par un tag HTML (ex: </strong>, </a>)
-        if (/<\/[a-z]+>\s*$/i.test(trimmed)) {
-          // Vérifier le dernier caractère de texte avant le tag fermant
-          const textBeforeTag = trimmed.replace(/<\/[a-z]+>\s*$/i, '').replace(/<[^>]+>/g, '').trim();
-          const lastTextChar = textBeforeTag.slice(-1);
-          if (/[.!?:;)»…\u2026\u00BB\]]/.test(lastTextChar)) return match;
-          // Insérer le point avant le tag fermant
-          const tagMatch = trimmed.match(/(<\/[a-z]+>)\s*$/i);
-          if (tagMatch) {
-            dotFixed++;
-            return open + trimmed.slice(0, -tagMatch[0].length) + '.' + tagMatch[0] + close;
+
+    console.log(`📊 FAQ_TRACE [POST-translation]: ${_faqCount(finalContent)}`);
+
+    // ═══════════════════════════════════════════════════════════════════
+    // Phase 7: CONTENT ADDITIONS (after all removals/cleanups)
+    // ═══════════════════════════════════════════════════════════════════
+    finalContent = this.ensureIntroBeforeFirstH2(finalContent) || finalContent;
+
+    const quoteResult = this.ensureQuoteHighlight(finalContent, analysis);
+    finalContent = quoteResult.content;
+    enhancements.quoteHighlight = quoteResult.hasQuote ? 'Oui' : 'Non';
+
+    const fomoResult = this.ensureFomoIntro(finalContent, analysis);
+    finalContent = fomoResult.content;
+    enhancements.fomoIntro = fomoResult.hasFomo ? 'Oui' : 'Non';
+
+    const ctaResult = this.ensureCTA(finalContent, analysis);
+    finalContent = ctaResult.content;
+    enhancements.ctaPresent = ctaResult.hasCTA ? 'Oui' : 'Non';
+
+    console.log(`[finalizer] Phase additions: 4 passes, content additions applied`);
+
+    // ═══════════════════════════════════════════════════════════════════
+    // Phase 8: WIDGETS & AFFILIATE
+    // ═══════════════════════════════════════════════════════════════════
+    // 8a. Replace widget placeholders
+    const widgetResult = await this.replaceWidgetPlaceholders(finalContent, analysis, pipelineContext);
+    finalContent = widgetResult.content;
+    enhancements.widgetsReplaced = widgetResult.count;
+    const widgetsAfterWidgets = this.detectRenderedWidgets(finalContent);
+    console.log(`🔍 DEBUG finalizeArticle: Widgets après replaceWidgetPlaceholders: count=${widgetsAfterWidgets.count}, types=[${widgetsAfterWidgets.types.join(', ')}]`);
+
+    // 8b. Inject affiliate modules (if enabled)
+    if (ENABLE_AFFILIATE_INJECTOR && pipelineContext?.affiliate_plan?.placements?.length > 0) {
+      try {
+        const { renderAffiliateModule } = await import('./affiliate-module-renderer.js');
+        const affiliatePlan = pipelineContext.affiliate_plan;
+        const geoDefaults = pipelineContext.geo_defaults || {};
+
+        let injectedCount = 0;
+        const injectedTypes = [];
+
+        const totalPlacements = affiliatePlan.placements.length;
+        affiliatePlan.placements.forEach((placement, placementIndex) => {
+          const widgetType = placement.id || placement.type || '';
+          const widgetAlreadyPresent = widgetType && new RegExp(`data-widget-type=["']${widgetType}["']`, 'i').test(finalContent);
+          if (widgetAlreadyPresent) {
+            console.log(`   ⏭️ Widget ${widgetType} déjà présent dans le HTML — skip injection module affilié`);
+            return;
           }
+          const moduleHtml = renderAffiliateModule(placement, geoDefaults);
+          if (!moduleHtml) return;
+          const options = { placementId: placement.id, placementIndex, totalPlacements };
+          const injected = this.injectAffiliateModule(finalContent, moduleHtml, placement.anchor, options);
+          if (injected !== finalContent) {
+            finalContent = injected;
+            injectedCount++;
+            injectedTypes.push(placement.id);
+          }
+        });
+
+        if (injectedCount > 0) {
+          console.log(`✅ AFFILIATE_INJECTED: count=${injectedCount} types=[${injectedTypes.join(', ')}]`);
         }
-        // Terminé par une lettre ou un chiffre → ajouter un point
-        if (/[a-zA-ZÀ-ÿ0-9]/.test(lastChar)) {
-          dotFixed++;
-          return open + trimmed + '.' + close;
-        }
-        return match;
-      });
-      if (dotFixed > 0) {
-        console.log(`   ✏️ PONCTUATION_FINALE: ${dotFixed} point(s) ajouté(s) en fin de paragraphe`);
+      } catch (error) {
+        console.warn('⚠️ Erreur injection modules affiliation (fallback silencieux):', error.message);
       }
     }
 
-    // PHASE 6.5: Normalisation des noms géographiques composés (sud-est → Sud-Est)
-    finalContent = finalContent.replace(/(?<=>)([^<]+)(?=<)/g, (match, textContent) => {
-      return textContent
-        .replace(/\bsud-est\b/g, 'Sud-Est')
-        .replace(/\bsud-ouest\b/g, 'Sud-Ouest')
-        .replace(/\bnord-est\b/g, 'Nord-Est')
-        .replace(/\bnord-ouest\b/g, 'Nord-Ouest')
-        .replace(/\bmoyen-orient\b/g, 'Moyen-Orient');
-    });
+    console.log(`[finalizer] Phase widgets: widget + affiliate injection complete`);
 
-    // PHASE 6.6: Corrections d'accent et fautes courantes du LLM
-    const _accentFixes = [
-      [/\bAchete\b/g, 'Achète'],
-      [/\bachete\b/g, 'achète'],
-      [/\bPrevois\b/g, 'Prévois'],
-      [/\bprevois\b/g, 'prévois'],
-      [/\bPrevoit\b/g, 'Prévoit'],
-      [/\bprevoit\b/g, 'prévoit'],
-      [/\bPrevoyez\b/g, 'Prévois'],   // vous → tu
-      [/\bDecouvre\b/g, 'Découvre'],
-      [/\bdecouvre\b/g, 'découvre'],
-      [/\bDecouvrez\b/g, 'Découvre'],  // vous → tu
-      [/\bdecouvrez\b/g, 'découvre'],
-      [/\bConsultez\b/g, 'Consulte'],  // vous → tu
-      [/\bconsultez\b/g, 'consulte'],
-      [/\bN'hesitez pas\b/gi, "N'hésite pas"],
-      [/\bVeuillez\b/g, 'Merci de'],   // registre formel → neutre
-    ];
-    finalContent = finalContent.replace(/(?<=>)([^<]+)(?=<)/g, (match, textContent) => {
-      let fixed = textContent;
-      for (const [pattern, replacement] of _accentFixes) {
-        fixed = fixed.replace(pattern, replacement);
+    // ═══════════════════════════════════════════════════════════════════
+    // Phase 9: LINKS
+    // ═══════════════════════════════════════════════════════════════════
+    finalContent = await this.runPhase('links', finalContent, null, [
+      { name: 'replaceDeadLinks', args: [] },
+      { name: 'deduplicateNestedLinks', args: [] },
+    ]);
+
+    // ═══════════════════════════════════════════════════════════════════
+    // Phase 10: IMAGES
+    // ═══════════════════════════════════════════════════════════════════
+    if (ENABLE_INLINE_IMAGES && !DRY_RUN) {
+      try {
+        const inlineImages = await this.insertContextualImages(finalContent, analysis, pipelineContext);
+        if (inlineImages.html !== finalContent) {
+          finalContent = inlineImages.html;
+          console.log(`✅ INLINE_IMAGES: ${inlineImages.count} image(s) insérée(s) [${inlineImages.sources.join(', ')}]`);
+        }
+      } catch (error) {
+        console.warn('⚠️ Erreur insertion images inline (fallback silencieux):', error.message);
       }
-      return fixed;
-    });
+    }
+    console.log(`[finalizer] Phase images: contextual image insertion complete`);
+
+    // ═══════════════════════════════════════════════════════════════════
+    // Phase 11: QA & VALIDATION (last, after everything is stable)
+    // ═══════════════════════════════════════════════════════════════════
+    // runQAReport is a mega-method that internally runs: checkInventionGuard,
+    // detectAndTranslateEnglish, forceTranslateRecommendationsSection,
+    // forceTranslateCitationsInLists, validateAndFixCitations,
+    // validateInternalLinks, validateRecommendationLinks,
+    // validateTemporalConsistency, ensureSerpSections, fillEmptySections,
+    // reconcileWidgetDestinations, capitalizeProperNouns, fixWordGlue, etc.
+    const qaReport = await this.runQAReport(finalContent, pipelineContext, analysis);
+    finalContent = qaReport.finalHtml;
+
+    // Post-QA affiliate passes
+    finalContent = this.replaceAffiliatePlaceholders(finalContent, pipelineContext, qaReport) || finalContent;
+    finalContent = this.injectPartnerBrandLinks(finalContent, pipelineContext) || finalContent;
+    finalContent = this.sanitizeAffiliateWidgetIntegrity(finalContent) || finalContent;
+
+    // Log synthèse QA
+    const passCount = qaReport.checks.filter(c => c.status === 'pass').length;
+    const warnCount = qaReport.checks.filter(c => c.status === 'warn').length;
+    const failCount = qaReport.checks.filter(c => c.status === 'fail').length;
+    const actionsCount = qaReport.actions.length;
+    console.log(`✅ FINALIZER_QA: pass=${passCount} warn=${warnCount} fail=${failCount} actions=${actionsCount} html_before=${qaReport.metrics.html_length_before} html_after=${qaReport.metrics.html_length_after}`);
+
+    // PHASE 6.1: Log détaillé des issues si présentes
+    if (qaReport.issues.length > 0) {
+      console.log(`📋 FINALIZER_QA_ISSUES: ${qaReport.issues.length} issue(s) détectée(s):`);
+      qaReport.issues.forEach((issue, idx) => {
+        console.log(`   [${idx + 1}] ${issue.code}: ${issue.message} (severity: ${issue.severity})`);
+        if (issue.evidence) {
+          console.log(`       Evidence: ${JSON.stringify(issue.evidence)}`);
+        }
+      });
+    }
+
+    // PHASE 6.1: Log des checks qui ont échoué
+    if (failCount > 0) {
+      const failedChecks = qaReport.checks.filter(c => c.status === 'fail');
+      console.log(`❌ FINALIZER_QA_FAILED_CHECKS: ${failedChecks.length} check(s) en échec:`);
+      failedChecks.forEach((check, idx) => {
+        console.log(`   [${idx + 1}] ${check.name}: ${check.details}`);
+      });
+    }
+
+    // PHASE 6.1: Flag strict - throw si fail en mode strict
+    if (process.env.FINALIZER_STRICT === '1' && failCount > 0) {
+      const failMessages = qaReport.checks.filter(c => c.status === 'fail').map(c => c.name).join(', ');
+      const issuesSummary = qaReport.issues.slice(0, 3).map(i => `${i.code}: ${i.message}`).join('; ');
+      throw new Error(`SOURCE_OF_TRUTH_VIOLATION: Finalizer QA failed (${failCount} check(s)): ${failMessages}. Issues: ${issuesSummary}`);
+    }
+
+    console.log(`📊 FAQ_TRACE [POST-runQAReport]: ${_faqCount(finalContent)}`);
+
+    // ═══════════════════════════════════════════════════════════════════
+    // Phase 12: FINAL CLEANUP (idempotent, safe to run last)
+    // ═══════════════════════════════════════════════════════════════════
 
     // RESTAURATION FAQ GUTENBERG: Réinsérer la section FAQ protégée
     console.log(`📊 FAQ_TRACE [PRE-RESTORE]: ${_faqCount(finalContent)}, placeholder present: ${[...faqPlaceholderMap.keys()].some(p => finalContent.includes(p))}`);
@@ -825,44 +780,13 @@ class ArticleFinalizer {
       }
     }
 
-    // PHASE FINALE: Réparation des tags HTML orphelins (div, a)
-    // Les étapes de suppression de sections (removeForbiddenH2Section, removeParasiticSections, etc.)
-    // peuvent supprimer un </div> ou </a> qui se trouvait dans la section supprimée,
-    // créant un tag ouvrant orphelin. On corrige ici.
-    {
-      const _countTag = (h, t) => [(h.match(new RegExp('<' + t + '[\\s>]', 'gi')) || []).length, (h.match(new RegExp('</' + t + '>', 'gi')) || []).length];
-      for (const tag of ['div', 'a']) {
-        const [opens, closes] = _countTag(finalContent, tag);
-        if (opens > closes) {
-          const missing = opens - closes;
-          for (let i = 0; i < missing; i++) {
-            // Ajouter le tag fermant manquant avant la fin du contenu
-            finalContent += `</${tag}>`;
-          }
-          console.log(`🔧 TAG_BALANCE_REPAIR: ajouté ${missing} </${tag}> manquant(s)`);
-        } else if (closes > opens) {
-          // Supprimer les tags fermants orphelins (de la fin vers le début)
-          let remaining = closes - opens;
-          while (remaining > 0) {
-            const idx = finalContent.lastIndexOf(`</${tag}>`);
-            if (idx === -1) break;
-            // Vérifier que ce close tag n'a pas de open correspondant après la dernière suppression
-            finalContent = finalContent.substring(0, idx) + finalContent.substring(idx + tag.length + 3);
-            remaining--;
-          }
-          console.log(`🔧 TAG_BALANCE_REPAIR: supprimé ${closes - opens} </${tag}> orphelin(s)`);
-        }
-      }
-    }
-
-    // PHASE NEWS: contraintes de rendu (pas de sections evergreen lourdes, 1 CTA max, pas de disclaimer visible)
+    // NEWS-specific (conditional)
     if (editorialMode === 'news') {
-      finalContent = this.applyNewsRenderingProfile(finalContent);
+      finalContent = this.applyNewsRenderingProfile(finalContent) || finalContent;
     }
 
-    // PHASE 3 FIX: Second passage fixWordGlue après toutes les traductions LLM
-    // Les traductions (detectAndTranslateEnglish, blockquote translation, etc.) re-introduisent du glue
-    finalContent = this.fixWordGlue(finalContent, null);
+    // Second fixWordGlue after all translations (Phase 12 safety pass)
+    finalContent = this.fixWordGlue(finalContent, null) || finalContent;
 
     // PHASE 6.2: Injection donnees live (prix, securite, devise, etc.)
     try {
@@ -877,10 +801,96 @@ class ArticleFinalizer {
     }
 
     // Dernier filet de sécurité linguistique APRÈS enrichissement live-data.
-    finalContent = this.fixWordGlue(finalContent, null);
-    finalContent = this.applyDeterministicFinalTextCleanup(finalContent);
+    finalContent = this.fixWordGlue(finalContent, null) || finalContent;
+    finalContent = this.applyDeterministicFinalTextCleanup(finalContent) || finalContent;
 
-    // DEBUG: Vérifier les widgets AVANT le return final
+    // NETTOYAGE FINAL ABSOLU: Garantir qu'aucun paragraphe vide ou duplication ne subsiste
+    const finalCleanupBefore = {
+      emptyParas: (finalContent.match(/<p[^>]*>\s*\.\s*<\/p>/gi) || []).length + (finalContent.match(/<p[^>]*>\s*<\/p>/gi) || []).length,
+      limitesCount: (finalContent.match(/<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi) || []).length + (finalContent.match(/<h2[^>]*>.*?limits?\s*(and\s*)?bias(es)?.*?<\/h2>/gi) || []).length
+    };
+
+    // Supprimer TOUS les paragraphes complètement vides
+    finalContent = finalContent.replace(/<p[^>]*>\s*<\/p>\s*/gi, '');
+
+    // Supprimer TOUS les paragraphes avec juste un point (patterns exhaustifs)
+    finalContent = finalContent.replace(/<p[^>]*>\s*\.\s*<\/p>/gi, '');
+    finalContent = finalContent.replace(/<p[^>]*>\.<\/p>/gi, '');
+    finalContent = finalContent.replace(/<p[^>]*>\s*[.\s]+\s*<\/p>/gi, '');
+    finalContent = finalContent.replace(/<p[^>]*>\s*\.\.\.\s*<\/p>/gi, '');
+    // Pattern supplémentaire pour paragraphes avec juste un point suivi d'un espace et d'un lien
+    finalContent = finalContent.replace(/<p[^>]*>\s*\.\s+[^<]*<\/p>/gi, (match) => {
+      const linkMatch = match.match(/<a[^>]*>.*?<\/a>/i);
+      return linkMatch ? `<p>${linkMatch[0]}</p>` : '';
+    });
+
+    // Supprimer les duplications de "Limites et biais" une dernière fois
+    finalContent = this.removeDuplicateH2Sections(finalContent) || finalContent;
+
+    const finalCleanupAfter = {
+      emptyParas: (finalContent.match(/<p[^>]*>\s*\.\s*<\/p>/gi) || []).length + (finalContent.match(/<p[^>]*>\s*<\/p>/gi) || []).length,
+      limitesCount: (finalContent.match(/<h2[^>]*>.*?limites?\s*(et\s*)?biais.*?<\/h2>/gi) || []).length + (finalContent.match(/<h2[^>]*>.*?limits?\s*(and\s*)?bias(es)?.*?<\/h2>/gi) || []).length
+    };
+
+    if (finalCleanupBefore.emptyParas > finalCleanupAfter.emptyParas || finalCleanupBefore.limitesCount > finalCleanupAfter.limitesCount) {
+      console.log(`   🧹 NETTOYAGE FINAL ABSOLU: ${finalCleanupBefore.emptyParas - finalCleanupAfter.emptyParas} paragraphe(s) vide(s) et ${finalCleanupBefore.limitesCount - finalCleanupAfter.limitesCount} duplication(s) "Limites et biais" supprimé(s)`);
+    }
+
+    // NETTOYAGE FINAL: Forcer le nettoyage des titres "Événement central" avec anglais
+    const eventTitleMatches = finalContent.match(/<h2[^>]*>Événement central[^<]*<\/h2>/gi);
+    if (eventTitleMatches) {
+      for (const match of eventTitleMatches) {
+        const titleContent = match.replace(/<h2[^>]*>|<\/h2>/gi, '').trim();
+        if (titleContent !== 'Événement central') {
+          console.log(`⚠️ FINALIZER: Titre "Événement central" avec contenu supplémentaire détecté: "${titleContent}" → nettoyage forcé`);
+          const escapedMatch = match.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          finalContent = finalContent.replace(new RegExp(escapedMatch, 'g'), '<h2>Événement central</h2>');
+        }
+      }
+    }
+
+    // PHASE FINALE: Réparation des tags HTML orphelins (div, a)
+    {
+      const _countTag = (h, t) => [(h.match(new RegExp('<' + t + '[\\s>]', 'gi')) || []).length, (h.match(new RegExp('</' + t + '>', 'gi')) || []).length];
+      for (const tag of ['div', 'a']) {
+        const [opens, closes] = _countTag(finalContent, tag);
+        if (opens > closes) {
+          const missing = opens - closes;
+          for (let i = 0; i < missing; i++) {
+            finalContent += `</${tag}>`;
+          }
+          console.log(`🔧 TAG_BALANCE_REPAIR: ajouté ${missing} </${tag}> manquant(s)`);
+        } else if (closes > opens) {
+          let remaining = closes - opens;
+          while (remaining > 0) {
+            const idx = finalContent.lastIndexOf(`</${tag}>`);
+            if (idx === -1) break;
+            finalContent = finalContent.substring(0, idx) + finalContent.substring(idx + tag.length + 3);
+            remaining--;
+          }
+          console.log(`🔧 TAG_BALANCE_REPAIR: supprimé ${closes - opens} </${tag}> orphelin(s)`);
+        }
+      }
+    }
+
+    // Responsive tables
+    finalContent = this.makeTablesResponsive(finalContent, tempReport) || finalContent;
+
+    console.log(`[finalizer] Phase final: cleanup, tag balance, and FAQ restoration complete`);
+
+    // ═══════════════════════════════════════════════════════════════════
+    // SUMMARY LOG
+    // ═══════════════════════════════════════════════════════════════════
+    console.log('✅ Finalisation terminée:');
+    console.log(`   - Widgets remplacés: ${enhancements.widgetsReplaced}`);
+    console.log(`   - Quote highlight: ${enhancements.quoteHighlight}`);
+    console.log(`   - Intro FOMO: ${enhancements.fomoIntro}`);
+    console.log(`   - CTA présent: ${enhancements.ctaPresent}\n`);
+    // PHASE 6.2: Les shortcodes [fv_widget] sont désormais rendus par WordPress via le mu-plugin PHP.
+
+    // ═══════════════════════════════════════════════════════════════════
+    // BUILD RETURN VALUE
+    // ═══════════════════════════════════════════════════════════════════
     const widgetsBeforeReturn = this.detectRenderedWidgets(finalContent);
     console.log(`🔍 DEBUG finalizeArticle: Widgets AVANT return final: count=${widgetsBeforeReturn.count}, types=[${widgetsBeforeReturn.types.join(', ')}]`);
 
@@ -897,57 +907,41 @@ class ArticleFinalizer {
     if (returnValue.title) {
       returnValue.title = this.convertTitleUSDToEUR(returnValue.title);
     }
-    
-    // DEBUG: Vérifier les widgets dans returnValue.content APRÈS création de l'objet
-    const widgetsInReturnValue = this.detectRenderedWidgets(returnValue.content);
-    console.log(`🔍 DEBUG finalizeArticle: Widgets dans returnValue.content APRÈS création objet: count=${widgetsInReturnValue.count}, types=[${widgetsInReturnValue.types.join(', ')}]`);
-    
-    // NETTOYAGE FINAL ABSOLU: DÉSACTIVÉ - Causait suppression excessive de contenu
-    // Le premier appel à removeOldStructureResidues est suffisant
-    // DÉSACTIVÉ: Le 2ème appel à removeOldStructureResidues supprimait 1250+ chars de contenu valide
-    // Le premier appel est suffisant - pas besoin de nettoyer une seconde fois
+
+    // NETTOYAGE FINAL ABSOLU: Post-processing on returnValue.content
     if (returnValue.content) {
       console.log('   ℹ️ Nettoyage final des résidus SKIP (déjà fait en amont)');
-      
+
       // FIX CHEERIO WRAPPER: Supprimer les balises <html><head><body> parasites
       // FILET DE SÉCURITÉ: Supprimer les wrappers markdown ```html...``` si présents
-      // (Bug de la Passe 2 LLM qui peut wrapper le HTML dans des code fences)
-      // Supprimer TOUS les wrappers markdown (```, backticks, guillemets parasites)
-      // Stratégie agressive : supprimer tout ce qui n'est pas du HTML avant le premier tag
       returnValue.content = returnValue.content
         .replace(/```(?:html)?\s*\n?/g, '')   // Supprimer toutes les occurrences de ```html ou ```
         .replace(/^[\s"'\u201C\u201D\u2018\u2019`]+(?=<)/m, ''); // Supprimer guillemets/backticks parasites avant le premier tag
       if (/^[^<]+/.test(returnValue.content.trim())) {
-        // S'il reste du texte non-HTML au début, le nettoyer
         const firstTag = returnValue.content.indexOf('<');
         if (firstTag > 0 && firstTag < 50) {
           console.log(`   ⚠️ FILET DE SÉCURITÉ: ${firstTag} caractères parasites supprimés avant le premier tag HTML`);
           returnValue.content = returnValue.content.substring(firstTag);
         }
       }
-      
-      
-      // FIX BROKEN LINKS: Réparer les liens cassés par le LLM (href="https://www</p> → suppression)
-      // Ces liens incomplets sont inutilisables et cassent le HTML
+
+      // FIX BROKEN LINKS: Réparer les liens cassés par le LLM
       returnValue.content = returnValue.content
-        .replace(/<a\s+href="https?:\/\/www\s*<\/p>/gi, '')  // <a href="https://www</p> → supprimer
-        .replace(/<a\s+href="\s*https?:?=?"?\s*www<?[^"]*"?>/gi, '')  // liens malformés → supprimer
-        .replace(/<a\s+href="https?:\/\/www"[^>]*>[^<]*<\/a>/gi, '')  // <a href="https://www">...</a> → supprimer
-        // FIX: NE PAS supprimer </a></li> — c'est la fermeture normale des liens dans les listes
-        // L'ancienne regex .replace(/\s*<\/a><\/li>/gi, '</li>') supprimait les </a> légitimes
-        // ce qui causait des liens non fermés qui englobaient tout le reste de l'article
-        .replace(/<p>\s*com\s*<\/p>/gi, '')  // <p>com</p> orphelins → supprimer
-        .replace(/<p>\s*com">.*?<\/p><\/a>/gi, '')  // fragments de liens → supprimer
-        
+        .replace(/<a\s+href="https?:\/\/www\s*<\/p>/gi, '')
+        .replace(/<a\s+href="\s*https?:?=?"?\s*www<?[^"]*"?>/gi, '')
+        .replace(/<a\s+href="https?:\/\/www"[^>]*>[^<]*<\/a>/gi, '')
+        .replace(/<p>\s*com\s*<\/p>/gi, '')
+        .replace(/<p>\s*com">.*?<\/p><\/a>/gi, '');
+
       // FIX BROKEN HTML TAGS: Réparer les balises HTML imbriquées incorrectement
       returnValue.content = returnValue.content
-        .replace(/<\/p><\/p>/g, '</p>')  // </p></p> → </p>
+        .replace(/<\/p><\/p>/g, '</p>')
         .replace(/<\/p><\/p><\/p>/g, '</p>')
         .replace(/<\/p><\/p><\/p><\/p>/g, '</p>')
-        .replace(/<p><p>/g, '<p>')  // <p><p> → <p>
-        .replace(/<\/li><\/p>/g, '</li>')  // </li></p> → </li>
-        .replace(/<\/ul><\/p>/g, '</ul>')  // </ul></p> → </ul>
-      
+        .replace(/<p><p>/g, '<p>')
+        .replace(/<\/li><\/p>/g, '</li>')
+        .replace(/<\/ul><\/p>/g, '</ul>');
+
       // Ces balises sont ajoutées par Cheerio $.html() et ne doivent pas être envoyées à WordPress
       returnValue.content = returnValue.content
         .replace(/<html[^>]*>/gi, '')
@@ -955,13 +949,10 @@ class ArticleFinalizer {
         .replace(/<head[^>]*>[\s\S]*?<\/head>/gi, '')
         .replace(/<body[^>]*>/gi, '')
         .replace(/<\/body>/gi, '')
-        // FIX TRANSLATION SPACES: Corriger les H2/H3 cassés par la traduction (<h 2=""> → <h2>)
         .replace(/<h\s+(\d)([^>]*)>/gi, '<h$1$2>')
         .replace(/<\/h\s+(\d)>/gi, '</h$1>')
-        // FIX META TAGS: Supprimer les balises <title> et <meta> parasites dans le body
         .replace(/<title[^>]*>[\s\S]*?<\/title>/gi, '')
         .replace(/<meta[^>]*>/gi, '')
-        // FIX URL SPACES: Corriger les URLs avec espaces parasites (www. booking. com → www.booking.com)
         .replace(/https?:\/\/www\.\s+/gi, 'https://www.')
         .replace(/www\.\s+([a-z])/gi, 'www.$1')
         .replace(/\.\s+com/gi, '.com')
@@ -969,54 +960,38 @@ class ArticleFinalizer {
         .replace(/\.\s+org/gi, '.org')
         .replace(/\.\s+net/gi, '.net')
         .replace(/\.\s+io/gi, '.io')
-        // FIX TRANSLATION ACCENT SPACES: DÉSACTIVÉ - cette regex supprimait les espaces CORRECTES
-        // entre mots ("roaming élevés" → "roamingélevés", "temps à" → "tempsà")
-        // Le LLM Passe 2 gère les cas "isol ée" → "isolée" de manière plus fiable
-        // .replace(/([a-z])\s+(é|è|ê|ë|à|â|ù|û|î|ï|ô|ö|ç)/gi, '$1$2')
-        // FIX TRANSLATION COMMON PATTERNS: Corriger les patterns courants de traduction cassée
-        .replace(/\bà\s+([a-z])/gi, 'à $1')  // à  x → à x (normaliser l'espace)
-        // FIX MISSING SPACES: Pattern générique pour mots collés (filet de sécurité)
-        // Pattern 1: xàx → x à x (mot collé avant et après à)
+        .replace(/\bà\s+([a-z])/gi, 'à $1')
         .replace(/([a-zéèêëàâùûîïôöç])à([a-zéèêëàâùûîïôöç])/gi, '$1 à $2')
-        // Pattern 2: xà[ESPACE] → x à[ESPACE] (mot collé avant à suivi d'espace)
-        // Exclut les mots français finissant par à (déjà, voilà, holà, celà)
         .replace(/([a-zéèêëâùûîïôöç]{3,})à(\s)/gi, (m, word, sp) => {
           const full = word + 'à';
           if (/(?:déjà|voilà|holà|cela)$/i.test(full)) return m;
           return word + ' à' + sp;
         })
-        // DÉSACTIVÉ Pattern 3 et 4: ces regex cassent les mots français normaux
-        // Ex: "suggérées" → "sugg érées", "agréable" → "agr éable", "privilégier" → "privil égier"
-        // La Passe 2 LLM gère les vrais mots collés ("bienéquilibré" → "bien équilibré") de manière plus fiable
-        // .replace(/([a-zéèêëàâùûîïôöç]{3,})é([a-zéèêëàâùûîïôöç]{4,})/gi, ...)
-        // .replace(/([a-zéèêëàâùûîïôöç]{3,})ê([a-zéèêëàâùûîïôöç]{3,})/gi, ...)
         .trim();
       console.log('   ✅ Nettoyage wrapper HTML Cheerio effectué');
 
-      // PHASE SÉCURITÉ HTML: Fermer les liens <a> non fermés avant </li>, </p>, <h2>, <h3>
-      // Prévient le bug où un <a> sans </a> englobe tout le reste de l'article
+      // PHASE SÉCURITÉ HTML: Fermer les liens <a> non fermés
       returnValue.content = this.closeUnclosedAnchors(returnValue.content);
 
-      // PHASE NETTOYAGE H3 ANGLAIS: Supprimer les H3 en anglais (questions Reddit parasites)
+      // PHASE NETTOYAGE H3 ANGLAIS: Supprimer les H3 en anglais
       returnValue.content = this.removeEnglishH3(returnValue.content);
-      
-      // PHASE NETTOYAGE LIENS IMBRIQUÉS: Dé-imbriquer les <a> dans <a> (double wrapping)
+
+      // PHASE NETTOYAGE LIENS IMBRIQUÉS: Dé-imbriquer les <a> dans <a>
       returnValue.content = this.deduplicateNestedLinks(returnValue.content);
     }
-    
-    // VALIDATION PRÉ-PUBLICATION CRITIQUE: Vérifier que l'article a du contenu réel
-    // Double gate : caractères (anti-vide) + mots (qualité SEO minimale)
+
+    // VALIDATION PRÉ-PUBLICATION CRITIQUE
     if (returnValue.content) {
       const textOnly = returnValue.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
       const textLength = textOnly.length;
       const wordCount = textOnly.split(/\s+/).filter(w => w.length > 0).length;
       console.log(`📏 VALIDATION PRÉ-PUBLICATION: ${textLength} caractères, ${wordCount} mots de texte réel`);
-      
+
       if (textLength < 800) {
         console.error(`❌ ARTICLE VIDE BLOQUÉ: seulement ${textLength} caractères (minimum: 800)`);
         console.error(`   💡 Causes possibles: JSON LLM tronqué, max_tokens insuffisant, erreur de parsing`);
         console.error(`   📋 Titre: ${returnValue.title || 'N/A'}`);
-        
+
         if (qaReport && qaReport.issues) {
           qaReport.issues.push({
             type: 'CRITICAL_EMPTY_ARTICLE',
@@ -1025,10 +1000,10 @@ class ArticleFinalizer {
             suggestion: 'Vérifier max_tokens dans generateFinalArticle et finish_reason du LLM'
           });
         }
-        
+
         throw new Error(`PRE_PUBLISH_VALIDATION_FAILED: Article trop court (${textLength} chars < 800 minimum). Publication bloquée.`);
       }
-      
+
       // Gate SEO: minimum 1000 mots pour être compétitif en SEO
       if (wordCount < 1000) {
         console.warn(`⚠️ ARTICLE COURT: ${wordCount} mots (minimum SEO recommandé: 1000). Publication autorisée mais signalée.`);
@@ -1041,12 +1016,13 @@ class ArticleFinalizer {
           });
         }
       }
-      
+
       console.log(`   ✅ Validation pré-publication OK: ${textLength} caractères`);
     }
-    
+
     return returnValue;
   }
+
 
   /**
    * 1. Détection unique des widgets rendus dans le HTML final
@@ -8910,6 +8886,75 @@ class ArticleFinalizer {
   }
 
   /**
+   * Garantit une FAQ courte et syntaxiquement valide en NEWS.
+   * Idempotent: n'ajoute pas de doublon si une FAQ correcte existe déjà.
+   */
+  ensureNewsFaqStructure(html) {
+    if (!html || typeof html !== 'string') return html;
+    let out = html;
+
+    // Normalisation minimale des details/summary cassés.
+    out = out
+      .replace(/<details>\s*<p>/gi, '<details><summary>Question fréquente</summary><p>')
+      .replace(/<summary>\s*<\/summary>/gi, '<summary>Question fréquente</summary>');
+
+    const hasFaqHeading = /<h2[^>]*>\s*(?:FAQ|Questions?\s+fr[ée]quentes?|Foire\s+aux\s+questions?)\s*<\/h2>/i.test(out)
+      || /<!-- wp:heading[^>]*-->\s*<h2[^>]*>\s*Questions?\s+fr[eé]quentes\s*<\/h2>\s*<!-- \/wp:heading -->/i.test(out);
+    const detailsCount = (out.match(/<details[\s>]/gi) || []).length + (out.match(/<!-- wp:details -->/gi) || []).length;
+    const summaryCount = (out.match(/<summary[\s>]/gi) || []).length;
+
+    if (hasFaqHeading && detailsCount >= 1 && summaryCount >= 1) return out;
+
+    const faqBlock = [
+      '<!-- wp:heading -->',
+      '<h2>Questions fréquentes</h2>',
+      '<!-- /wp:heading -->',
+      '<!-- wp:details -->',
+      '<details><summary>Faut-il réserver maintenant ou attendre ?</summary><p>Réserve dès que ton scénario de base est clair. Attendre peut coûter plus cher si les frais annexes augmentent.</p></details>',
+      '<!-- /wp:details -->',
+      '<!-- wp:details -->',
+      '<details><summary>Quel est le piège le plus fréquent ?</summary><p>Se concentrer sur le prix affiché sans intégrer bagages, transferts et conditions d’annulation.</p></details>',
+      '<!-- /wp:details -->'
+    ].join('\n');
+
+    const beforeConclusion = /<h2[^>]*>\s*(?:ce\s*qu.?il\s*faut\s*retenir|à\s*retenir|prochaines?\s*[ée]tapes?)\s*<\/h2>/i;
+    const m = out.match(beforeConclusion);
+    if (m) {
+      const idx = out.indexOf(m[0]);
+      out = out.slice(0, idx) + faqBlock + '\n' + out.slice(idx);
+    } else {
+      out = `${out}\n${faqBlock}`;
+    }
+    console.log('🧩 NEWS_FAQ_MINIMUM: FAQ concise ajoutée');
+    return out;
+  }
+
+  /**
+   * Limite les sauts de niveaux Hn pour stabiliser les checks SEO/Hn.
+   */
+  enforceNewsHeadingHierarchy(html) {
+    if (!html || typeof html !== 'string') return html;
+    let prevLevel = null;
+    let fixes = 0;
+    const out = html.replace(/<(h[1-6])([^>]*)>([\s\S]*?)<\/\1>/gi, (_full, tag, attrs, inner) => {
+      const level = Number(String(tag).replace('h', ''));
+      if (!Number.isFinite(level)) return _full;
+      let next = level;
+      if (prevLevel !== null && level > prevLevel + 1) {
+        next = prevLevel + 1;
+      }
+      if (next < 2 && prevLevel !== null) next = 2;
+      if (next !== level) fixes++;
+      prevLevel = next;
+      return `<h${next}${attrs}>${inner}</h${next}>`;
+    });
+    if (fixes > 0) {
+      console.log(`🧩 NEWS_HIERARCHY_FIX: ${fixes} heading(s) ajusté(s)`);
+    }
+    return out;
+  }
+
+  /**
    * Passe de convergence qualité NEWS (déterministe + idempotente).
    * Corrige uniquement les checks manquants pour stabiliser le score.
    */
@@ -8939,6 +8984,8 @@ class ArticleFinalizer {
     out = this.ensureMinimumNewsSerpSections(out, destination);
     out = this.enforceNewsDecisionAndCtaFriction(out);
     out = this.ensureNewsActionableConclusion(out);
+    out = this.ensureNewsFaqStructure(out);
+    out = this.enforceNewsHeadingHierarchy(out);
 
     const injectBeforeConclusionOrEnd = (content, block) => {
       const conclusionPattern = /<h2[^>]*>\s*(?:ce\s*qu.?il\s*faut\s*retenir|à\s*retenir|prochaines?\s*[ée]tapes?)\s*<\/h2>/i;
@@ -8979,7 +9026,7 @@ class ArticleFinalizer {
     };
 
     const injectPillarLinkIfMissing = (content) => {
-      const hasPillar = /href="[^"]*flashvoyage\.com[^"]*(guide|destination|conseils|budget)[^"]*"/i.test(content);
+      const hasPillar = /href="[^"]*flashvoyage\.com[^"]*(guide|destination|conseils|budget|methode|notre-methode)[^"]*"/i.test(content);
       if (hasPillar) return content;
       const linkPara = `<p>Pour aller plus loin, ouvre notre <a href="${pillarLink}">guide pratique pour arbitrer budget, timing et réservation</a>.</p>`;
       console.log('🧩 NEWS_CONVERGENCE: lien pilier ajouté');
@@ -9400,12 +9447,15 @@ class ArticleFinalizer {
     let out = html;
     let removed = 0;
 
-    // 1) Supprimer FAQ longue (bloc Gutenberg complet)
+    // 1) FAQ NEWS: conserver une version concise et valide (ne pas supprimer complètement)
     out = out.replace(
-      /<!-- wp:heading[^>]*-->\s*<h2[^>]*>\s*Questions?\s+fr[eé]quentes\s*<\/h2>\s*<!-- \/wp:heading -->\s*(?:<!-- wp:details -->[\s\S]*?<!-- \/wp:details -->\s*)+(?:<script type="application\/ld\+json">[\s\S]*?<\/script>\s*)?/gi,
-      () => {
-        removed++;
-        return '';
+      /(<!-- wp:heading[^>]*-->\s*<h2[^>]*>\s*Questions?\s+fr[eé]quentes\s*<\/h2>\s*<!-- \/wp:heading -->\s*)((?:<!-- wp:details -->[\s\S]*?<!-- \/wp:details -->\s*)+)((?:<script type="application\/ld\+json">[\s\S]*?<\/script>\s*)?)/gi,
+      (_full, heading, detailsBlock, schemaBlock) => {
+        const details = String(detailsBlock || '').match(/<!-- wp:details -->[\s\S]*?<!-- \/wp:details -->/gi) || [];
+        const kept = details.slice(0, 2).join('\n');
+        const keptSchema = schemaBlock || '';
+        if (details.length > 2) removed += (details.length - 2);
+        return `${heading}${kept}\n${keptSchema}`;
       }
     );
 
@@ -9468,6 +9518,9 @@ class ArticleFinalizer {
       }
       return `<h2${attrs}>${rewritten}</h2>`;
     });
+
+    out = this.ensureNewsFaqStructure(out);
+    out = this.enforceNewsHeadingHierarchy(out);
 
     if (removed > 0) {
       console.log(`🧹 NEWS_PROFILE: ${removed} bloc(s) evergreen/CTA supprimé(s)`);

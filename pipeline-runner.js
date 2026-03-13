@@ -39,6 +39,7 @@ import { createChatCompletion } from './openai-client.js';
 import { DESTINATION_ALIASES, CITY_TO_COUNTRY, COUNTRY_DISPLAY_NAMES } from './destinations.js';
 import { DRY_RUN, FORCE_OFFLINE, ENABLE_MARKETING_PASS, parseBool } from './config.js';
 import AngleHunter from './angle-hunter.js';
+import { buildArticleOutline } from './article-outline-builder.js';
 
 class PipelineRunner {
   constructor() {
@@ -137,10 +138,36 @@ class PipelineRunner {
       console.log(`   max_placements: ${angleResult.business_vector.max_placements} (${editorialMode} cap) | confidence: ${angleResult._debug.confidence} | fallback: ${angleResult._debug.fallback}`);
       pipelineReport.endStep('angle-hunter', angleResult, { status: 'pass' });
 
+      // ÉTAPE 3.8: Article Outline Builder (structure déterministe pré-LLM)
+      console.log("\n📐 ÉTAPE 3.8: Article Outline Builder");
+      pipelineReport.startStep('article-outline-builder');
+      // Build minimal truth pack for outline (numbers + locations from extracted data)
+      const outlineTruthPack = (() => {
+        const nums = [];
+        const locs = new Set();
+        const costs = extracted?.post?.signals?.costs || extracted?.post?.evidence?.costs || [];
+        for (const c of (Array.isArray(costs) ? costs : [])) {
+          const s = typeof c === 'string' ? c : (c?.value || (c?.amount ? c.amount + ' ' + (c.currency || '') : '')).trim();
+          if (s && /\d/.test(s)) nums.push(s);
+        }
+        for (const loc of (extracted?.post?.signals?.locations || [])) {
+          const s = (typeof loc === 'string' ? loc : (loc?.value || '')).trim();
+          if (s) locs.add(s);
+        }
+        if (extracted?._smart_destination) locs.add(extracted._smart_destination);
+        if (extracted?.destination) locs.add(extracted.destination);
+        return { allowedNumbers: nums, allowedLocations: [...locs].slice(0, 25), isPoor: nums.length === 0 };
+      })();
+      const articleOutline = buildArticleOutline(extracted, story, angleResult, outlineTruthPack);
+      console.log(`   OUTLINE: ${articleOutline.sections.length} sections, ${articleOutline._meta.ctaSlots} CTA slots, ${articleOutline._meta.evidenceItems} evidence items`);
+      console.log(`   hookStrategy=${articleOutline.hookSuggestion.strategy} verdictTone=${articleOutline.mandatoryElements.verdictDirection.tone}`);
+      console.log(`   quickGuide: ${articleOutline.mandatoryElements.quickGuide.length} bullets, faqTopics: ${articleOutline.mandatoryElements.faqTopics.length} topics`);
+      pipelineReport.endStep('article-outline-builder', articleOutline, { status: 'pass' });
+
       // ÉTAPE 4: Generator
       console.log('\n📋 ÉTAPE 4: Generator (intelligent-content-analyzer-optimized)');
       pipelineReport.startStep('generator');
-      const generated = await this.runGenerator(input, extracted, pattern, story, pipelineReport, editorialMode, angleResult);
+      const generated = await this.runGenerator(input, extracted, pattern, story, pipelineReport, editorialMode, angleResult, articleOutline);
       if (!generated) {
         throw new Error('Generator a échoué');
       }
@@ -725,7 +752,7 @@ class PipelineRunner {
   /**
    * ÉTAPE 4: Generator
    */
-  async runGenerator(input, extracted, pattern, story, pipelineReport, editorialMode = 'evergreen', angle = null) {
+  async runGenerator(input, extracted, pattern, story, pipelineReport, editorialMode = 'evergreen', angle = null, outline = null) {
     try {
       const existingTitles = await this.loadExistingTitles();
 
@@ -750,7 +777,9 @@ class PipelineRunner {
         // Mode éditorial (NEWS / EVERGREEN) — conditionne le prompt LLM
         editorial_mode: editorialMode,
         // Angle Hunter — stratégie éditoriale déterministe (Phase 1)
-        angle: angle
+        angle: angle,
+        // Article Outline — structure déterministe pré-LLM (FV-111)
+        outline: outline
       };
 
       // Générer le contenu (analysis n'est plus utilisé dans la nouvelle version)

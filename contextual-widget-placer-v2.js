@@ -824,7 +824,8 @@ Réponds UNIQUEMENT en JSON valide.`;
     let enhancedContent = content;
     const usedContexts = new Set(); // Éviter la duplication
     const placedPositions = []; // Track positions for spacing enforcement
-    const MIN_CHAR_GAP = 800; // Minimum 800 chars between widgets
+    const MIN_CHAR_GAP = 500; // FV-121: Minimum 500 chars between widgets (was 800)
+    const ARTICLE_LENGTH = content.length;
 
     let widgetIndex = 0;
     for (const widget of selectedWidgets) {
@@ -862,6 +863,17 @@ ${widgetScript}
 
       // Placement intelligent : suggestion LLM + mots-clés + garde narrative
       let smartIndex = this.findSmartPosition(enhancedContent, widget, widgetIndex, selectedWidgets.length);
+
+      // FV-121: First widget should appear within first 30% of article (early CTA)
+      if (widgetIndex === 0 && smartIndex != null && smartIndex > ARTICLE_LENGTH * 0.3) {
+        const earlyLimit = Math.floor(ARTICLE_LENGTH * 0.3);
+        const earlyContent = enhancedContent.substring(0, earlyLimit);
+        const lastPClose = earlyContent.lastIndexOf('</p>');
+        if (lastPClose > 200) {
+          console.log(`   ` + '\u{1f4cd}' + ` FV-121: First widget moved earlier: ${smartIndex} -> ${lastPClose + 4} (within 30%)`);
+          smartIndex = lastPClose + 4;
+        }
+      }
       
       // Spacing enforcement: ensure minimum gap from previously placed widgets
       if (smartIndex != null && placedPositions.length > 0) {
@@ -869,6 +881,21 @@ ${widgetScript}
         if (tooClose) {
           console.log(`   ⚠️ Spacing: ${widget.slot} trop proche d'un widget existant (< ${MIN_CHAR_GAP} chars) → fallback`);
           smartIndex = null; // Force fallback
+        }
+      }
+
+      // FV-121: Never place widget between an H2 and its first paragraph
+      if (smartIndex != null) {
+        const before = enhancedContent.substring(Math.max(0, smartIndex - 500), smartIndex);
+        const lastH2 = before.lastIndexOf('<h2');
+        const lastPClose = before.lastIndexOf('</p>');
+        if (lastH2 > -1 && lastH2 > lastPClose) {
+          console.log(`   ` + '\u26a0\ufe0f' + ` FV-121: ${widget.slot} between H2 and first paragraph ` + '\u2192' + ` moving after first </p>`);
+          const afterH2 = enhancedContent.substring(smartIndex);
+          const firstPClose = afterH2.indexOf('</p>');
+          if (firstPClose > -1) {
+            smartIndex = smartIndex + firstPClose + 4;
+          }
         }
       }
       
@@ -891,7 +918,13 @@ ${widgetScript}
         }
       }
       
-      if (smartIndex != null) {
+            // FV-121: Context validation - verify surrounding paragraph discusses widget topic
+      if (smartIndex != null && !this.validateSurroundingContext(enhancedContent, smartIndex, widget.slot)) {
+        console.log(`   \u26a0\ufe0f FV-121: ${widget.slot} context mismatch at position ${smartIndex} \u2192 fallback`);
+        smartIndex = null;
+      }
+
+if (smartIndex != null) {
         const insertedBlock = '\n\n' + widgetBlock + '\n\n';
         enhancedContent = enhancedContent.slice(0, smartIndex) + insertedBlock + enhancedContent.slice(smartIndex);
         // FIX: Mettre à jour les positions précédentes pour refléter l'insertion
@@ -995,6 +1028,41 @@ ${widgetScript}
   /**
    * Vérifie si un contexte similaire existe déjà
    */
+  /**
+   * FV-121: Validate that surrounding content discusses the widget's topic
+   * @param {string} content - Full HTML content
+   * @param {number} position - Insertion position
+   * @param {string} slot - Widget slot type
+   * @returns {boolean} true if context is relevant
+   */
+  validateSurroundingContext(content, position, slot) {
+    const start = Math.max(0, position - 300);
+    const end = Math.min(content.length, position + 300);
+    const surrounding = content.substring(start, end).replace(/<[^>]+>/g, ' ').toLowerCase();
+
+    const topicKeywords = {
+      flights: ['vol', 'avion', 'aéroport', 'billet', 'compagnie', 'flight', 'airport', 'départ', 'arrivée'],
+      hotels: ['hôtel', 'hébergement', 'logement', 'chambre', 'hostel', 'airbnb', 'booking', 'nuit'],
+      insurance: ['assurance', 'santé', 'médical', 'hôpital', 'urgence', 'maladie', 'couverture'],
+      esim: ['sim', 'internet', 'connexion', 'wifi', '4g', '5g', 'données', 'roaming', 'téléphone'],
+      transfers: ['transfert', 'navette', 'taxi', 'chauffeur', 'aéroport', 'pickup'],
+      tours: ['visite', 'excursion', 'activité', 'temple', 'musée', 'food tour', 'que faire'],
+      car_rental: ['voiture', 'location', 'conduire', 'road trip', 'véhicule', 'permis'],
+      bikes: ['scooter', 'moto', 'vélo', 'deux-roues', 'bike'],
+      flight_compensation: ['retard', 'annulé', 'compensation', 'indemnisation'],
+      events: ['événement', 'concert', 'festival', 'spectacle', 'match']
+    };
+
+    const keywords = topicKeywords[slot];
+    if (!keywords) return true;
+
+    const hasRelevantContext = keywords.some(kw => surrounding.includes(kw));
+    if (!hasRelevantContext) {
+      console.log(`   ` + '\u26a0\ufe0f' + ` FV-121: Context validation failed for ${slot} - no topic keywords in surrounding text`);
+    }
+    return hasRelevantContext;
+  }
+
   findExistingContext(content, slot) {
     const patterns = {
       flights: /Selon notre analyse de milliers de vols|D'après notre expérience avec des centaines de nomades|Les prix des vols varient|\[fv_widget[^\]]*type=["']?flights/gi,

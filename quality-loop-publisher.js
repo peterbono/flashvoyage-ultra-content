@@ -14,7 +14,7 @@
  * Usage:
  *   node quality-loop-publisher.js                     # Pipeline complet
  *   node quality-loop-publisher.js --dry-run            # Sans publication WordPress
- *   node quality-loop-publisher.js --max-loops 5        # Max iterations review
+ *   node quality-loop-publisher.js --max-loops 3        # Max iterations review (hard cap, default 3)
  *   node quality-loop-publisher.js --mode news          # Force le mode éditorial
  *   node quality-loop-publisher.js --target-score 95    # Active les paliers qualité (88→92→95)
  *   node quality-loop-publisher.js --score-stages 90,93,95 # Paliers personnalisés
@@ -255,7 +255,201 @@ async function generateArticle(generator) {
   };
 }
 
-// ─── Agent: LLM Rewriter ciblé ──────────────────────────
+// ─── Surgical Section-Level Rewrite ──────────────────────
+
+/**
+ * Split HTML article into sections by H2 tags.
+ * Returns array of { title, html, prevTitle, nextTitle }
+ * "intro" = content before first H2.
+ */
+function splitBySections(html) {
+  const parts = html.split(/(?=<h2[\s>])/i);
+  const sections = [];
+
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    if (!part.trim()) continue;
+
+    const h2Match = part.match(/<h2[^>]*>(.*?)<\/h2>/i);
+    let title;
+    if (h2Match) {
+      title = h2Match[1].replace(/<[^>]+>/g, '').trim();
+    } else if (sections.length === 0) {
+      title = 'intro';
+    } else {
+      title = `section-${i}`;
+    }
+
+    sections.push({ title, html: part, prevTitle: null, nextTitle: null });
+  }
+
+  for (let i = 0; i < sections.length; i++) {
+    sections[i].prevTitle = i > 0 ? sections[i - 1].title : null;
+    sections[i].nextTitle = i < sections.length - 1 ? sections[i + 1].title : null;
+  }
+
+  return sections;
+}
+
+/**
+ * Group issues by their location field, matching to section titles.
+ * Returns Map<sectionTitle, issues[]>
+ */
+function groupIssuesBySection(allIssues, sections) {
+  const grouped = new Map();
+
+  for (const issue of allIssues) {
+    const loc = (issue.location || '').trim();
+    if (!loc) continue;
+
+    const locLower = loc.toLowerCase().replace(/^h2\s*:\s*/i, '').trim();
+
+    let matchedTitle = null;
+
+    // Exact match
+    for (const section of sections) {
+      if (section.title.toLowerCase() === locLower) {
+        matchedTitle = section.title;
+        break;
+      }
+    }
+
+    // Substring match
+    if (!matchedTitle) {
+      for (const section of sections) {
+        const sLower = section.title.toLowerCase();
+        if (sLower.includes(locLower) || locLower.includes(sLower)) {
+          matchedTitle = section.title;
+          break;
+        }
+      }
+    }
+
+    // Handle intro/conclusion keywords
+    if (!matchedTitle) {
+      if (locLower === 'intro' || locLower === 'introduction') {
+        matchedTitle = sections[0]?.title || null;
+      } else if (locLower === 'conclusion') {
+        matchedTitle = sections[sections.length - 1]?.title || null;
+      }
+    }
+
+    if (matchedTitle) {
+      if (!grouped.has(matchedTitle)) grouped.set(matchedTitle, []);
+      grouped.get(matchedTitle).push(issue);
+    }
+  }
+
+  return grouped;
+}
+
+/**
+ * Rewrite a single section with focused issues.
+ */
+async function rewriteSection(sectionHtml, issues, title, prevTitle, nextTitle, ctx = {}) {
+  const issuesList = issues
+    .map((issue, i) => `${i + 1}. [${issue.severity}] ${issue.description}${issue.fix_suggestion ? ' \u2192 ' + issue.fix_suggestion : ''}`)
+    .join('\n');
+
+  const contextLine = [
+    prevTitle ? `Section pr\u00e9c\u00e9dente : "${prevTitle}"` : null,
+    nextTitle ? `Section suivante : "${nextTitle}"` : null,
+  ].filter(Boolean).join(' | ');
+
+  const systemPrompt = `Tu es un \u00e9diteur expert pour flashvoyage.com. Tu re\u00e7ois UNE SEULE SECTION d'un article et ses probl\u00e8mes sp\u00e9cifiques.
+
+R\u00c8GLES ABSOLUES :
+1. Corrige UNIQUEMENT les probl\u00e8mes list\u00e9s \u2014 ne modifie RIEN d'autre dans cette section
+2. Conserve TOUTE la structure HTML (balises, classes, attributs)
+3. Ne supprime AUCUN contenu qui n'est pas probl\u00e9matique
+4. Ne rajoute PAS de contenu non demand\u00e9
+5. Retourne L'INT\u00c9GRALIT\u00c9 du HTML de la section corrig\u00e9e
+6. TOUT en fran\u00e7ais, tutoiement obligatoire
+7. NE JAMAIS utiliser de formules IA : "arbitrer entre X et Y", "Ce que les autres guides ne disent pas", "Option 1/2/3"
+8. Ne cr\u00e9e jamais de balises mal ferm\u00e9es
+9. Garde la m\u00eame longueur approximative \u2014 pas d'inflation`;
+
+  const userPrompt = `ARTICLE : "${title}"
+${ctx.destination ? `DESTINATION : ${ctx.destination}` : ''}
+${contextLine ? `CONTEXTE : ${contextLine}` : ''}
+
+PROBL\u00c8MES \u00c0 CORRIGER DANS CETTE SECTION :
+${issuesList}
+
+SECTION HTML \u00c0 CORRIGER :
+${sectionHtml}
+
+Retourne la section HTML corrig\u00e9e (uniquement cette section, rien d'autre).`;
+
+  try {
+    const corrected = await generateWithClaude(systemPrompt, userPrompt, {
+      maxTokens: 6000,
+      trackingStep: 'quality-loop-section-rewriter'
+    });
+
+    if (corrected && corrected.trim().length > sectionHtml.length * 0.3) {
+      return corrected.trim();
+    }
+    console.warn('      \u26a0\ufe0f Section rewriter returned content too short, keeping original');
+    return sectionHtml;
+  } catch (err) {
+    console.error(`      \u274c Section rewrite failed: ${err.message}`);
+    return sectionHtml;
+  }
+}
+
+/**
+ * Surgical rewrite: only rewrite sections that have issues.
+ * Returns the full article HTML with only affected sections rewritten.
+ * Returns null if surgical rewrite is not possible (issues lack location).
+ */
+async function rewriteSections(html, allIssues, title, ctx = {}) {
+  const sections = splitBySections(html);
+  if (sections.length === 0) return null;
+
+  // Check if enough issues have location data
+  const issuesWithLocation = allIssues.filter(i => i.location && i.location.trim());
+  if (issuesWithLocation.length === 0) {
+    console.log('      \u2139\ufe0f No issues with location data \u2014 falling back to full rewrite');
+    return null;
+  }
+
+  const locatedRatio = issuesWithLocation.length / allIssues.length;
+  if (locatedRatio < 0.5) {
+    console.log(`      \u2139\ufe0f Only ${(locatedRatio * 100).toFixed(0)}% of issues have location \u2014 falling back to full rewrite`);
+    return null;
+  }
+
+  const grouped = groupIssuesBySection(issuesWithLocation, sections);
+  if (grouped.size === 0) {
+    console.log('      \u2139\ufe0f Could not match issues to sections \u2014 falling back to full rewrite');
+    return null;
+  }
+
+  const totalSections = sections.length;
+  const affectedSections = grouped.size;
+  console.log(`      \ud83d\udd2c Surgical rewrite: ${affectedSections}/${totalSections} sections affected`);
+
+  for (const [sectionTitle, issues] of grouped.entries()) {
+    const section = sections.find(s => s.title === sectionTitle);
+    if (!section) continue;
+
+    console.log(`      \u270f\ufe0f  Rewriting "${sectionTitle}" (${issues.length} issue(s))`);
+    const rewritten = await rewriteSection(
+      section.html,
+      issues,
+      title,
+      section.prevTitle,
+      section.nextTitle,
+      ctx
+    );
+    section.html = rewritten;
+  }
+
+  return sections.map(s => s.html).join('\n');
+}
+
+// ─── Agent: LLM Rewriter ciblé (full article fallback) ──
 async function rewriteWithFeedback(html, criticalFixes, title, ctx = {}) {
   const fixesList = criticalFixes
     .map((f, i) => `${i + 1}. [${f.agent}] ${f.issue}${f.action ? ' → ' + f.action : ''}`)
@@ -436,6 +630,12 @@ async function main() {
   const recurringIssueHistory = new Map();
   const iterationTelemetry = [];
 
+  // ─── Best version tracker (regression guard) ───────────
+  let bestScore = 0;
+  let bestHtml = null;
+  let bestIteration = 0;
+  let previousScore = null;
+
   // ══════════════════════════════════════════════════════════
   //  Phase 1: Génération initiale (avec retry)
   // ══════════════════════════════════════════════════════════
@@ -564,6 +764,32 @@ async function main() {
 
     console.log(`\n   📊 Score pondéré : ${reviewResult.weightedScore.toFixed(1)}/100 | Issues critiques : ${criticalIssues.length}`);
 
+    // ─── Best version tracking ───────────────────────────
+    const currentScore = reviewResult.weightedScore;
+    if (currentScore > bestScore) {
+      bestScore = currentScore;
+      bestHtml = article.content;
+      bestIteration = iteration;
+    }
+
+    // ─── Smart early exit: regression detection ──────────
+    if (previousScore !== null && currentScore < bestScore - 3) {
+      console.log(`\n   ⚠️ Quality loop: early exit at iteration ${iteration} (regression: current=${currentScore.toFixed(1)}, best=${bestScore.toFixed(1)} at iter=${bestIteration}). Rolling back.`);
+      article = { ...article, content: bestHtml };
+      writeFileSync('/tmp/last-generated-article.html', article.content);
+      iterationTelemetry.push(iterationTrace);
+      break;
+    }
+
+    // ─── Smart early exit: stagnation detection ──────────
+    if (previousScore !== null && Math.abs(currentScore - previousScore) < 2) {
+      console.log(`\n   ⚠️ Quality loop: early exit at iteration ${iteration} (stagnation: delta=${Math.abs(currentScore - previousScore).toFixed(1)})`);
+      iterationTelemetry.push(iterationTrace);
+      break;
+    }
+
+    previousScore = currentScore;
+
     const ceoResult = await runCeoValidator(reviewResult, ctx);
 
     const reachedStageTarget = stageTarget === null || reviewResult.weightedScore >= stageTarget;
@@ -623,7 +849,18 @@ async function main() {
       console.log(`\n   🔧 LLM Rewriter — ${fixes.length} correction(s) ciblée(s)`);
       fixes.forEach((f, i) => console.log(`      ${f.priority || i + 1}. [${f.agent}] ${f.issue?.substring(0, 100)}`));
 
-      const rewritten = await rewriteWithFeedback(article.content, fixes, article.title, ctx);
+      // Collect all panel issues for surgical rewrite (they have location data)
+      const allPanelIssues = reviewResult.allIssues || [];
+
+      // Try surgical section-level rewrite first
+      let rewritten = await rewriteSections(article.content, allPanelIssues, article.title, ctx);
+
+      // Fallback to full article rewrite if surgical rewrite was not possible
+      if (rewritten === null) {
+        console.log(`      \u21a9\ufe0f Falling back to full-article rewrite`);
+        rewritten = await rewriteWithFeedback(article.content, fixes, article.title, ctx);
+      }
+
       if (rewritten !== article.content) {
         article = { ...article, content: rewritten };
         writeFileSync('/tmp/last-generated-article.html', article.content);

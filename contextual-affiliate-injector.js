@@ -113,7 +113,7 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
   ].join(' ').toLowerCase();
 
   // 1. INSURANCE
-  const insuranceKeywords = ['sick', 'ill', 'hospital', 'injury', 'accident', 'claim', 'reimbursement', 'stolen', 'theft', 'baggage', 'missed flight', 'delay', 'medical', 'emergency', 'ambulance', 'doctor', 'clinic'];
+  const insuranceKeywords = ['sick', 'ill', 'hospital', 'injury', 'accident', 'claim', 'reimbursement', 'stolen', 'theft', 'baggage', 'missed flight', 'delay', 'medical', 'emergency', 'ambulance', 'doctor', 'clinic', 'assurance', 'santé', 'hôpital', 'maladie', 'urgence'];
   const insuranceThemeMatch = pattern?.theme_primary === 'health' || pattern?.theme_primary === 'safety' || 
                                pattern?.themes_secondary?.includes('health') || pattern?.themes_secondary?.includes('safety');
   const insuranceKeywordMatch = insuranceKeywords.some(kw => fullText.includes(kw));
@@ -143,7 +143,7 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
   }
 
   // 2. ESIM / CONNECTIVITY
-  const esimKeywords = ['sim', 'roaming', 'data', 'signal', 'internet', 'whatsapp', '4g', '5g', 'wifi', 'connection', 'connectivity', 'esim', 'e-sim', 'airalo', 'holafly'];
+  const esimKeywords = ['sim', 'roaming', 'data', 'signal', 'internet', 'whatsapp', '4g', '5g', 'wifi', 'connection', 'connectivity', 'esim', 'e-sim', 'airalo', 'holafly', 'données mobiles', 'téléphone'];
   const esimThemeMatch = pattern?.theme_primary === 'esim_connectivity' || pattern?.themes_secondary?.includes('esim_connectivity');
   const esimKeywordMatch = esimKeywords.some(kw => fullText.includes(kw));
   const multiCountry = geo_defaults && (fullText.includes('multiple') || fullText.includes('several') || fullText.includes('various'));
@@ -175,7 +175,7 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
   }
 
   // 3. FLIGHTS
-  const flightsKeywords = ['flight', 'connection', 'layover', 'delayed', 'cancelled', 'missed connection', 'airport', 'airline', 'booking', 'ticket', 'departure', 'arrival'];
+  const flightsKeywords = ['flight', 'connection', 'layover', 'delayed', 'cancelled', 'missed connection', 'airport', 'airline', 'booking', 'ticket', 'departure', 'arrival', 'vol', 'avion', 'aéroport', 'billet'];
   const flightsKeywordMatch = flightsKeywords.some(kw => fullText.includes(kw));
   const longTrip = story?.story?.context?.summary && story.story.context.summary.length > 500; // Long context = probable long trip
   
@@ -209,7 +209,7 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
   }
 
   // 4. ACCOMMODATION
-  const accommodationKeywords = ['hotel', 'hostel', 'booking', 'airbnb', 'accommodation', 'lodging', 'stay', 'reservation', 'check-in', 'check-out', 'room'];
+  const accommodationKeywords = ['hotel', 'hostel', 'booking', 'airbnb', 'accommodation', 'lodging', 'stay', 'reservation', 'check-in', 'check-out', 'room', 'hôtel', 'hébergement', 'logement', 'auberge', 'chambre'];
   const accommodationKeywordMatch = accommodationKeywords.some(kw => fullText.includes(kw));
   
   if (accommodationKeywordMatch) {
@@ -458,6 +458,61 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
   debug.final_count = finalPlacements.length;
   debug.max_allowed = maxPlacements;
   debug.story_type = pattern?.story_type || 'unknown';
+
+  // FV-121: Missing opportunity detection
+  // After placement, check if key topics are discussed but have no widget
+  const missingOpportunities = [];
+  const finalIds = new Set(finalPlacements.map(p => p.id));
+
+  const opportunityMap = {
+    flights: {
+      keywords: ['vol', 'avion', 'aéroport', 'flight', 'airport', "billet d'avion"],
+      label: 'flight widget'
+    },
+    accommodation: {
+      keywords: ['hôtel', 'hébergement', 'booking', 'hotel', 'hostel', 'airbnb', 'logement'],
+      label: 'hotel widget'
+    },
+    insurance: {
+      keywords: ['assurance', 'santé', 'hôpital', 'insurance', 'medical', 'urgence'],
+      label: 'insurance widget'
+    },
+    esim: {
+      keywords: ['sim', 'internet', '4g', '5g', 'esim', 'e-sim', 'données mobiles'],
+      label: 'eSIM widget'
+    }
+  };
+
+  for (const [widgetId, config] of Object.entries(opportunityMap)) {
+    if (finalIds.has(widgetId)) continue;
+    const hasTopicMention = config.keywords.some(kw => fullText.includes(kw));
+    if (hasTopicMention) {
+      const matchedKw = config.keywords.find(kw => fullText.includes(kw));
+      missingOpportunities.push({ widgetId, keyword: matchedKw, label: config.label });
+
+      if (finalPlacements.length < maxPlacements) {
+        const newPlacement = {
+          id: widgetId,
+          priority: 13,
+          anchor: 'after_context',
+          reason: [`FV-121_missing_opportunity: topic "${matchedKw}" discussed but no ${config.label}`],
+          confidence: 55,
+          payload: {
+            type: widgetId,
+            destination: geo_defaults?.country || 'asia',
+            city: geo_defaults?.city || null,
+            source: 'missing_opportunity_detection'
+          }
+        };
+        finalPlacements.push(newPlacement);
+        finalIds.add(widgetId);
+        console.log(`   \u{1f50d} FV-121_MISSING_OPPORTUNITY: added ${widgetId} (keyword="${matchedKw}")`);
+      }
+    }
+  }
+
+  debug.missing_opportunities = missingOpportunities;
+  debug.final_count = finalPlacements.length;
 
   return {
     placements: finalPlacements,
