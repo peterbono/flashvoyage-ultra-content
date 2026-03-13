@@ -1344,7 +1344,7 @@ Extrait les éléments clés selon la structure SUCCESS_STORY:
          Réponds UNIQUEMENT en JSON avec ces clés: citations, donnees_cles, structure, enseignements, defis, strategies, resultats, couts, erreurs, specificites, comparaisons, conseils.`;
 
     const userMessage = `TITRE: ${extracted.title}
-CONTENU: ${fullContent.substring(0, 1000)}`;
+CONTENU: ${fullContent.substring(0, 6000)}`;
 
     console.log(`📏 Taille system: ${systemMessage.length} caractères`);
     console.log(`📏 Taille user: ${userMessage.length} caractères`);
@@ -1359,7 +1359,7 @@ CONTENU: ${fullContent.substring(0, 1000)}`;
         { role: 'system', content: systemMessage },
         { role: 'user', content: userMessage }
       ],
-      max_tokens: 2000,
+      max_tokens: 4000,
       temperature: 0.7,
       ...(LLM_PROVIDER === 'openai' && { response_format: { type: "json_object" } })
       },

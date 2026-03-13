@@ -1515,7 +1515,7 @@ export function applyBlockingGate(report) {
 export async function checkAntiHallucination(html, pipelineContext, report, title = '') {
   try {
     // Importer le guard dynamiquement
-    const { runAntiHallucinationGuard } = await import('./src/anti-hallucination/anti-hallucination-guard.js');
+    const { runAntiHallucinationGuard } = await import('../src/anti-hallucination/anti-hallucination-guard.js');
     
     const extracted = pipelineContext?.extracted || {};
     
