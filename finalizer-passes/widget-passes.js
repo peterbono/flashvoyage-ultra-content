@@ -6,6 +6,7 @@
 
 import { REAL_TRAVELPAYOUTS_WIDGETS } from '../travelpayouts-real-widgets-database.js';
 import { DRY_RUN, FORCE_OFFLINE } from '../config.js';
+import { lookupIATA, isKnownLocation } from '../airport-lookup.js';
 
 export function resolveWidgetShortcodes(html, pipelineContext = null) {
   const shortcodeRegex = /\[fv_widget\s+type="([^"]+)"(?:\s+origin="([^"]*)")?(?:\s+destination="([^"]*)")?\s*\]/gi;
