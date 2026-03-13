@@ -3,6 +3,8 @@
  * FV-115: Extracted from article-finalizer.js
  * Each function is bound to the ArticleFinalizer instance at runtime.
  */
+import { FORCE_OFFLINE } from '../config.js';
+
 
 export function translateCityNamesToFrench(html) {
   // Map des noms anglais → français (word-boundary safe)
