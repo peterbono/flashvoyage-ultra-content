@@ -15,6 +15,7 @@
 
 import { parse } from 'node-html-parser';
 import axios from 'axios';
+import { existsSync, readFileSync } from 'fs';
 import { WORDPRESS_URL, WORDPRESS_USERNAME, WORDPRESS_APP_PASSWORD } from './config.js';
 
 // ─── Lookup Tables ───────────────────────────────────────
@@ -60,6 +61,13 @@ const DESTINATION_ALIASES = {
   'cambodge': 'cambodge', 'cambodia': 'cambodge',
 };
 
+const SEA_COUNTRIES = new Set(['thaïlande', 'vietnam', 'indonésie', 'singapour', 'malaisie', 'philippines', 'cambodge', 'laos', 'myanmar']);
+const EAST_ASIA_OUTLIERS = {
+  'chine': ['chine', 'china', 'pekin', 'beijing', 'shanghai', 'xian'],
+  'japon': ['japon', 'japan', 'tokyo', 'osaka', 'kyoto'],
+  'corée': ['coree', 'corée', 'korea', 'seoul', 'busan']
+};
+
 // ─── Gate 1: HTML Completeness ───────────────────────────
 
 function checkHtmlCompleteness(html) {
@@ -84,9 +92,11 @@ function checkHtmlCompleteness(html) {
   
   if (openTags.length > 0) {
     const unclosed = openTags.slice(-5).join(', ');
+    const structuralTags = new Set(['html', 'head', 'body', 'article', 'section', 'main', 'div', 'p', 'ul', 'ol', 'table']);
+    const onlySoftTags = openTags.every(t => !structuralTags.has(t));
     issues.push({
       gate: 'html-completeness',
-      severity: 'critical',
+      severity: onlySoftTags ? 'major' : 'critical',
       message: `Balises non fermées : ${unclosed}`,
       auto_fixable: true
     });
@@ -144,7 +154,7 @@ function checkHtmlCompleteness(html) {
 
 // ─── Gate 2: Fact-Check ──────────────────────────────────
 
-function checkFacts(html, destination) {
+function checkFacts(html, destination, title = '') {
   const issues = [];
   const text = parse(html).text.toLowerCase();
 
@@ -183,6 +193,63 @@ function checkFacts(html, destination) {
     }
   }
 
+  const destinationScopeIssues = checkDestinationScope(text, destination, title);
+  issues.push(...destinationScopeIssues);
+
+  return issues;
+}
+
+function countMentions(text, terms) {
+  let count = 0;
+  for (const term of terms) {
+    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp(`\\b${escaped}\\b`, 'gi');
+    const matches = text.match(re);
+    count += matches ? matches.length : 0;
+  }
+  return count;
+}
+
+function checkDestinationScope(text, destination, title = '') {
+  const issues = [];
+  const normalizedDestination = normalizeDestination(destination);
+  const titleLower = String(title || '').toLowerCase();
+  const isSeaTitle = /asie\s+du\s+sud-?est|sud-?est\s+asiat/i.test(titleLower) || /asie\s+du\s+sud-?est|sud-?est\s+asiat/i.test(text);
+  const isSeaDestination = normalizedDestination ? SEA_COUNTRIES.has(normalizedDestination) : false;
+
+  if (!isSeaTitle && !isSeaDestination) return issues;
+
+  let outlierMentions = 0;
+  const outlierDetails = [];
+  for (const [country, aliases] of Object.entries(EAST_ASIA_OUTLIERS)) {
+    const count = countMentions(text, aliases);
+    if (count > 0) {
+      outlierMentions += count;
+      outlierDetails.push(`${country}:${count}`);
+    }
+  }
+
+  if (outlierMentions >= 3) {
+    issues.push({
+      gate: 'fact-check',
+      severity: 'critical',
+      message: `Incohérence de périmètre destination (hors zone dominante): ${outlierDetails.join(', ')}`,
+      auto_fixable: false
+    });
+  }
+
+  if (normalizedDestination) {
+    const destinationCount = countMentions(text, [normalizedDestination]);
+    if (destinationCount === 0 && outlierMentions >= 2) {
+      issues.push({
+        gate: 'fact-check',
+        severity: 'major',
+        message: `Destination cible "${normalizedDestination}" absente alors que d'autres destinations dominent`,
+        auto_fixable: false
+      });
+    }
+  }
+
   return issues;
 }
 
@@ -210,7 +277,7 @@ async function checkInternalLinks(html, destination) {
     const href = link.getAttribute('href') || '';
     const text = link.text.trim();
 
-    if (text.length < 5 || /\.\.\.$/.test(text) || /[^.!?)\]'""»]$/.test(text.slice(-1)) && text.length < 20) {
+    if (isTruncatedAnchorText(text)) {
       issues.push({
         gate: 'internal-links',
         severity: 'critical',
@@ -250,7 +317,7 @@ async function checkInternalLinks(html, destination) {
             gate: 'internal-links',
             severity: 'critical',
             message: `Lien mort (404) : ${href.substring(0, 80)}`,
-            auto_fixable: false
+            auto_fixable: true
           });
         }
       }
@@ -304,12 +371,96 @@ function normalizeDestination(dest) {
   const lower = dest.toLowerCase().trim();
   return DESTINATION_ALIASES[lower] || COUNTRY_FOR_CITY[lower] || lower;
 }
+function escapeRegExp(str) {
+  return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function isTruncatedAnchorText(text) {
+  const cleaned = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!cleaned) return true;
+  const hasTooFewWords = cleaned.split(/\s+/).length <= 2;
+  const looksIncompleteTail = /\b(que|tu|l['’]|d['’]|un|une|le|la|les|des|en|du|de|et|ou|a|au|aux)\s*$/i.test(cleaned);
+  return cleaned.length < 12 || /\.\.\.$/.test(cleaned) || looksIncompleteTail || hasTooFewWords;
+}
+
+function loadInternalArticlesIndex() {
+  try {
+    const dbPath = `${process.cwd()}/articles-database.json`;
+    if (!existsSync(dbPath)) return [];
+    const raw = JSON.parse(readFileSync(dbPath, 'utf8'));
+    const articles = Array.isArray(raw?.articles) ? raw.articles : (Array.isArray(raw) ? raw : []);
+    return articles
+      .map(a => ({
+        title: String(a.title || a.post_title || a.name || '').trim(),
+        link: String(a.link || a.url || '').trim(),
+        slug: String(a.slug || '').trim()
+      }))
+      .filter(a => a.link.includes('flashvoyage.com') && (a.slug || a.title));
+  } catch {
+    return [];
+  }
+}
+
+function tokenize(text) {
+  return String(text || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+function extractSlug(url) {
+  try {
+    const u = new URL(url);
+    return u.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+  } catch {
+    return String(url || '').replace(/^https?:\/\/[^/]+\//i, '').replace(/^\/+|\/+$/g, '').toLowerCase();
+  }
+}
+
+function findBestReplacement(deadUrl, anchorText, destination, articlesIndex) {
+  const deadSlug = extractSlug(deadUrl);
+  const deadTokens = new Set(tokenize(deadSlug.replace(/-/g, ' ')));
+  const anchorTokens = new Set(tokenize(anchorText));
+  const destinationTokens = new Set(tokenize(destination || ''));
+
+  let best = null;
+  let bestScore = -1;
+
+  for (const candidate of articlesIndex) {
+    if (!candidate.link || candidate.link === deadUrl) continue;
+    const slug = candidate.slug || extractSlug(candidate.link);
+    if (!slug) continue;
+
+    const slugTokens = tokenize(slug.replace(/-/g, ' '));
+    const titleTokens = tokenize(candidate.title);
+
+    let score = 0;
+    for (const t of slugTokens) if (deadTokens.has(t)) score += 3;
+    for (const t of titleTokens) if (anchorTokens.has(t)) score += 2;
+    for (const t of slugTokens) if (destinationTokens.has(t)) score += 2;
+
+    if (deadSlug && slug && (deadSlug.startsWith(slug) || slug.startsWith(deadSlug))) score += 5;
+    if (candidate.title && anchorText && candidate.title.toLowerCase().includes(anchorText.toLowerCase().slice(0, 20))) score += 2;
+
+    if (score > bestScore) {
+      bestScore = score;
+      best = candidate;
+    }
+  }
+
+  return bestScore >= 4 ? best : null;
+}
 
 // ─── Auto-Fixers ─────────────────────────────────────────
 
 function autoFixHtml(html, issues, ctx = {}) {
   let fixed = html;
   let fixCount = 0;
+  const articlesIndex = Array.isArray(ctx.internalArticlesIndex) ? ctx.internalArticlesIndex : loadInternalArticlesIndex();
+  const replacementCache = new Map();
 
   if (issues.some(i => i.message.includes('</br>'))) {
     fixed = fixed.replace(/<\/br>/g, '');
@@ -331,7 +482,37 @@ function autoFixHtml(html, issues, ctx = {}) {
     fixCount++;
   }
 
+  // Neutraliser les liens internes morts (404) en conservant le texte visible
+  const deadLinkUrls = issues
+    .filter(i => i.gate === 'internal-links' && /Lien mort \(404\)\s*:/.test(i.message))
+    .map(i => i.message.replace(/^.*Lien mort \(404\)\s*:\s*/, '').trim())
+    .filter(Boolean);
+  for (const url of [...new Set(deadLinkUrls)]) {
+    const hrefRe = escapeRegExp(url);
+    const anchorPattern = new RegExp(`<a\\b([^>]*?)href=["']${hrefRe}["']([^>]*)>([\\s\\S]*?)<\\/a>`, 'gi');
+    let localFixes = 0;
+    fixed = fixed.replace(anchorPattern, (_m, beforeHref, afterHref, anchorText) => {
+      localFixes++;
+      const plainAnchor = parse(`<div>${anchorText}</div>`).text.trim();
+      if (!replacementCache.has(url)) {
+        replacementCache.set(url, findBestReplacement(url, plainAnchor, ctx.destination, articlesIndex));
+      }
+      const replacement = replacementCache.get(url);
+      if (replacement?.link) {
+        return `<a${beforeHref}href="${replacement.link}"${afterHref}>${anchorText}</a>`;
+      }
+      return anchorText;
+    });
+    if (localFixes > 0) {
+      fixCount += localFixes;
+    }
+  }
+
   return { html: fixed, fixCount };
+}
+
+export function __testAutoFixHtml(html, issues, ctx = {}) {
+  return autoFixHtml(html, issues, ctx);
 }
 
 // ─── Main Export ─────────────────────────────────────────
@@ -351,7 +532,7 @@ export async function validatePrePublish(html, ctx = {}) {
   const gate1 = checkHtmlCompleteness(html);
   console.log(`   Gate 1 (HTML Completeness) : ${gate1.length} issue(s)`);
 
-  const gate2 = checkFacts(html, destination);
+  const gate2 = checkFacts(html, destination, ctx.title || '');
   console.log(`   Gate 2 (Fact-Check) : ${gate2.length} issue(s)`);
 
   let gate3 = [];

@@ -954,19 +954,42 @@ class PipelineRunner {
     }
 
     const titleDestCount = titleDest ? (contentMentions.get(titleDest) || 0) : 0;
+    const normalizedMainDest = mainDestination ? (CITY_TO_COUNTRY[mainDestination] || mainDestination).toLowerCase() : null;
+    const mainDestCount = normalizedMainDest ? (contentMentions.get(normalizedMainDest) || 0) : 0;
+    const isSeaScopeTitle = /asie\s+du\s+sud-?est|sud-?est\s+asiat/i.test(titleLower);
+    const outlierCandidates = ['chine', 'china', 'japon', 'japan', 'coree', 'corée', 'korea'];
+    let outlierCount = 0;
+    for (const [dest, count] of contentMentions.entries()) {
+      if (outlierCandidates.includes(dest) && count > outlierCount) {
+        outlierCount = count;
+      }
+    }
 
     console.log(`\n🔍 COHERENCE_CHECK:`);
     console.log(`   Titre destination: ${titleDest || 'aucune'}`);
     console.log(`   Contenu dominant: ${dominantContentDest || 'aucun'} (${dominantContentCount} mentions)`);
     console.log(`   Titre dest dans contenu: ${titleDestCount} mentions`);
     if (mainDestination) {
-      console.log(`   Main destination attendue: ${mainDestination} (${contentMentions.get(mainDestination) || 0} mentions)`);
+      console.log(`   Main destination attendue: ${mainDestination} (${mainDestCount} mentions)`);
+    }
+    if (isSeaScopeTitle) {
+      console.log(`   Scope régional SEA détecté, mentions hors scope max: ${outlierCount}`);
     }
 
     // 4. Vérifier la cohérence
-    const isCoherent = !titleDest || !dominantContentDest || 
-                       titleDest === dominantContentDest ||
-                       titleDestCount >= dominantContentCount * 0.5; // Tolérance: le titre dest a au moins 50% des mentions
+    const hardMismatchMainDestination = Boolean(
+      normalizedMainDest &&
+      dominantContentDest &&
+      normalizedMainDest !== dominantContentDest &&
+      dominantContentCount >= 3 &&
+      mainDestCount === 0
+    );
+    const hardMismatchRegionalScope = Boolean(isSeaScopeTitle && outlierCount >= 2);
+    const isCoherent = !hardMismatchMainDestination &&
+                       !hardMismatchRegionalScope &&
+                       (!titleDest || !dominantContentDest ||
+                        titleDest === dominantContentDest ||
+                        titleDestCount >= dominantContentCount * 0.7); // Tolérance durcie: 70%
 
     if (isCoherent) {
       console.log(`   ✅ COHÉRENT: titre et contenu alignés`);

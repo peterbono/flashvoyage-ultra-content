@@ -16,6 +16,8 @@
  *   node quality-loop-publisher.js --dry-run            # Sans publication WordPress
  *   node quality-loop-publisher.js --max-loops 5        # Max iterations review
  *   node quality-loop-publisher.js --mode news          # Force le mode éditorial
+ *   node quality-loop-publisher.js --target-score 95    # Active les paliers qualité (88→92→95)
+ *   node quality-loop-publisher.js --score-stages 90,93,95 # Paliers personnalisés
  *   node quality-loop-publisher.js --post-review        # Vérification post-publication
  */
 
@@ -39,6 +41,79 @@ const getArg = (name, fallback) => {
   return idx >= 0 && args[idx + 1] ? args[idx + 1] : fallback;
 };
 const hasFlag = (name) => args.includes(`--${name}`);
+const parseOptionalScore = (value) => {
+  if (value === null || value === undefined || value === '') return null;
+  const num = Number(value);
+  if (!Number.isFinite(num)) return null;
+  return Math.max(0, Math.min(100, num));
+};
+const parseScoreStages = (value) => {
+  if (!value || typeof value !== 'string') return [];
+  const parsed = value
+    .split(',')
+    .map(v => parseOptionalScore(v.trim()))
+    .filter(v => Number.isFinite(v));
+  if (parsed.length === 0) return [];
+  return parsed.sort((a, b) => a - b);
+};
+const severityWeight = (severity = '') => {
+  const key = String(severity).toLowerCase();
+  if (key === 'critical') return 3;
+  if (key === 'major') return 2;
+  if (key === 'minor') return 1;
+  return 0;
+};
+const buildQualityBoostFixes = (reviewResult, targetScore) => {
+  const issues = (reviewResult?.allIssues || [])
+    .filter(i => i && i.description && i.severity)
+    .sort((a, b) => severityWeight(b.severity) - severityWeight(a.severity));
+
+  const topIssues = issues.slice(0, 6);
+  if (topIssues.length > 0) {
+    return topIssues.map((issue, idx) => ({
+      priority: idx + 1,
+      agent: issue._label || issue._agent || 'Panel',
+      issue: issue.description,
+      action: `Corriger ce point pour viser >= ${targetScore}/100 sans changer la structure globale`
+    }));
+  }
+
+  const lowAgents = Object.values(reviewResult?.agents || {})
+    .filter(a => Number.isFinite(a?.score))
+    .sort((a, b) => a.score - b.score)
+    .slice(0, 3);
+
+  return lowAgents.map((agent, idx) => ({
+    priority: idx + 1,
+    agent: agent?._label || 'Panel',
+    issue: `Score ${agent?.score || 0}/100 inférieur à la cible`,
+    action: `Renforcer précision factuelle, tonalité humaine et maillage interne pour atteindre >= ${targetScore}/100`
+  }));
+};
+
+const buildWpAuth = () => {
+  const url = process.env.WORDPRESS_URL;
+  const user = process.env.WORDPRESS_USERNAME;
+  const pass = process.env.WORDPRESS_APP_PASSWORD;
+  if (!url || !user || !pass) return null;
+  return {
+    url,
+    auth: Buffer.from(`${user}:${pass}`).toString('base64')
+  };
+};
+
+const issueKey = (issue = {}) => `${issue.gate || issue.category || 'na'}|${String(issue.message || issue.description || '').toLowerCase().slice(0, 140)}`;
+
+const criticalIssueMap = (issues = []) => {
+  const map = new Map();
+  for (const issue of issues.filter(i => i?.severity === 'critical')) {
+    const key = issueKey(issue);
+    map.set(key, (map.get(key) || 0) + 1);
+  }
+  return map;
+};
+
+const countCritical = (map) => Array.from(map.values()).reduce((acc, value) => acc + value, 0);
 
 const CONFIG = {
   maxLoops: parseInt(getArg('max-loops', '3'), 10),
@@ -46,7 +121,20 @@ const CONFIG = {
   forceMode: getArg('mode', null),
   verbose: hasFlag('verbose'),
   postReview: hasFlag('post-review'),
+  targetScore: parseOptionalScore(getArg('target-score', '')),
+  scoreStages: parseScoreStages(getArg('score-stages', '')),
 };
+if (CONFIG.targetScore !== null && CONFIG.scoreStages.length === 0) {
+  const baseStages = [88, 92, CONFIG.targetScore];
+  CONFIG.scoreStages = [...new Set(baseStages.map(s => Math.min(CONFIG.targetScore, s)).sort((a, b) => a - b))];
+}
+if (CONFIG.targetScore !== null && CONFIG.scoreStages.length > 0) {
+  CONFIG.scoreStages = CONFIG.scoreStages.map(s => Math.min(s, CONFIG.targetScore));
+  if (!CONFIG.scoreStages.includes(CONFIG.targetScore)) {
+    CONFIG.scoreStages.push(CONFIG.targetScore);
+  }
+  CONFIG.scoreStages = [...new Set(CONFIG.scoreStages)].sort((a, b) => a - b);
+}
 
 // ─── Agent: Pipeline Generator ───────────────────────────
 async function generateArticle(generator) {
@@ -100,7 +188,9 @@ RÈGLES ABSOLUES :
 4. Ne rajoute PAS de contenu non demandé
 5. Retourne L'INTÉGRALITÉ du HTML corrigé, du premier au dernier caractère
 6. TOUT en français, tutoiement obligatoire
-7. NE JAMAIS utiliser de formules IA : "arbitrer entre X et Y sans sacrifier Z", "Ce que les autres guides ne disent pas", "Option 1/2/3"`;
+7. NE JAMAIS utiliser de formules IA : "arbitrer entre X et Y sans sacrifier Z", "Ce que les autres guides ne disent pas", "Option 1/2/3"
+8. Interdiction absolue d'ajouter <html>, <head>, <body>. Retourne uniquement le fragment article HTML
+9. Ne crée jamais de balises <details>/<summary> mal fermées. Si tu modifies une FAQ, vérifie que chaque balise ouvrante est fermée`;
 
   const userPrompt = `TITRE : ${title}
 
@@ -231,15 +321,29 @@ async function main() {
   console.log(`   Max review loops: ${CONFIG.maxLoops}`);
   console.log(`   Dry run: ${CONFIG.dryRun}`);
   console.log(`   Force mode: ${CONFIG.forceMode || 'auto'}\n`);
+  if (CONFIG.targetScore !== null) {
+    console.log(`   Target score: ${CONFIG.targetScore}/100`);
+    console.log(`   Score stages: ${CONFIG.scoreStages.join(' → ')}\n`);
+    process.env.QUALITY_TARGET_SCORE = String(CONFIG.targetScore);
+  }
 
   if (CONFIG.dryRun) {
     process.env.FLASHVOYAGE_DRY_RUN = '1';
   }
+  if (CONFIG.forceMode === 'news' || CONFIG.forceMode === 'evergreen') {
+    process.env.FORCE_EDITORIAL_MODE = CONFIG.forceMode;
+    console.log(`   Editorial mode forcé: ${CONFIG.forceMode}`);
+  }
   process.env.ENABLE_MARKETING_PASS = '0';
   process.env.SKIP_WP_PUBLISH = '1';
+  process.env.STRICT_INTERNAL_LINK_DEST_MATCH = '1';
 
   const generator = new EnhancedUltraGenerator();
   const startTime = Date.now();
+  const wpAuth = buildWpAuth();
+  const recurringFixHistory = new Map();
+  const recurringIssueHistory = new Map();
+  const iterationTelemetry = [];
 
   // ══════════════════════════════════════════════════════════
   //  Phase 1: Génération initiale (avec retry)
@@ -275,8 +379,21 @@ async function main() {
 
   while (iteration < CONFIG.maxLoops && !approved) {
     iteration++;
+    const stageTarget = CONFIG.targetScore !== null
+      ? CONFIG.scoreStages[Math.min(iteration - 1, CONFIG.scoreStages.length - 1)]
+      : null;
+    const iterationTrace = {
+      iteration,
+      stageTarget,
+      validation: { criticalByGate: {} },
+      panel: { weightedScore: null, criticalIssues: 0 },
+      rewrite: { requestedFixes: 0, rollback: false, rollbackReason: null }
+    };
     console.log(`\n${'━'.repeat(60)}`);
     console.log(`  REVIEW ITERATION ${iteration}/${CONFIG.maxLoops}`);
+    if (stageTarget !== null) {
+      console.log(`  🎯 Palier qualité courant: ${stageTarget}/100`);
+    }
     console.log(`${'━'.repeat(60)}`);
 
     // ══════════════════════════════════════════════════════════
@@ -299,11 +416,15 @@ async function main() {
         .filter(i => i.severity === 'critical')
         .forEach(i => console.log(`      • [${i.gate}] ${i.message}`));
     }
+    for (const issue of validation.issues.filter(i => i.severity === 'critical')) {
+      const gate = issue.gate || 'unknown';
+      iterationTrace.validation.criticalByGate[gate] = (iterationTrace.validation.criticalByGate[gate] || 0) + 1;
+    }
 
     // Phase 2b: Auto-fixers programmatiques
     console.log('\n━━━ PHASE 2b : Auto-fixers ━━━');
     try {
-      const { html: autoFixed, totalFixed } = await applyAllFixes(article.content, article.title, []);
+      const { html: autoFixed, totalFixed } = await applyAllFixes(article.content, article.title, [], wpAuth);
       if (autoFixed !== article.content) {
         article = { ...article, content: autoFixed };
         writeFileSync('/tmp/last-generated-article.html', article.content);
@@ -331,28 +452,59 @@ async function main() {
     lastReviewResult = reviewResult;
 
     const criticalIssues = reviewResult.allIssues.filter(i => i.severity === 'critical');
+    iterationTrace.panel.weightedScore = Number(reviewResult.weightedScore.toFixed(1));
+    iterationTrace.panel.criticalIssues = criticalIssues.length;
+    for (const issue of reviewResult.allIssues) {
+      const key = issueKey(issue);
+      recurringIssueHistory.set(key, (recurringIssueHistory.get(key) || 0) + 1);
+    }
 
     console.log(`\n   📊 Score pondéré : ${reviewResult.weightedScore.toFixed(1)}/100 | Issues critiques : ${criticalIssues.length}`);
 
     const ceoResult = await runCeoValidator(reviewResult, ctx);
 
-    if (ceoResult.decision === 'APPROVE') {
+    const reachedStageTarget = stageTarget === null || reviewResult.weightedScore >= stageTarget;
+    if (ceoResult.decision === 'APPROVE' && reachedStageTarget) {
       console.log(`\n   ✅ CEO APPROVE — Score ${reviewResult.weightedScore.toFixed(1)}/100`);
       approved = true;
+      iterationTelemetry.push(iterationTrace);
       break;
     }
+    if (ceoResult.decision === 'APPROVE' && !reachedStageTarget) {
+      console.log(`\n   ⚠️ CEO APPROVE mais score ${reviewResult.weightedScore.toFixed(1)} < palier ${stageTarget}. Poursuite des améliorations.`);
+    }
 
-    console.log(`\n   🚫 CEO REJECT — ${ceoResult.reasoning?.substring(0, 150) || 'Qualité insuffisante'}`);
+    if (ceoResult.decision !== 'APPROVE') {
+      console.log(`\n   🚫 CEO REJECT — ${ceoResult.reasoning?.substring(0, 150) || 'Qualité insuffisante'}`);
+    }
 
     if (iteration >= CONFIG.maxLoops) {
       console.log(`\n   ⚠️ MAX ITERATIONS ATTEINT (${CONFIG.maxLoops})`);
+      iterationTelemetry.push(iterationTrace);
       break;
     }
 
     // ══════════════════════════════════════════════════════════
     //  Phase 3b: LLM Rewriter ciblé
     // ══════════════════════════════════════════════════════════
-    const fixes = ceoResult.critical_fixes || [];
+    const preRewriteHtml = article.content;
+    const preRewriteCriticalMap = criticalIssueMap(validation.issues || []);
+    let fixes = ceoResult.critical_fixes || [];
+    if (fixes.length === 0 && stageTarget !== null && reviewResult.weightedScore < stageTarget) {
+      fixes = buildQualityBoostFixes(reviewResult, stageTarget);
+    }
+    const dedupedFixes = fixes.filter((fix) => {
+      const key = `${(fix.agent || 'agent').toLowerCase()}|${String(fix.issue || '').toLowerCase().slice(0, 180)}`;
+      const nextCount = (recurringFixHistory.get(key) || 0) + 1;
+      recurringFixHistory.set(key, nextCount);
+      return nextCount <= 2;
+    });
+    if (dedupedFixes.length !== fixes.length) {
+      console.log(`   ℹ️ Fixes répétitifs ignorés: ${fixes.length - dedupedFixes.length}`);
+    }
+    fixes = dedupedFixes;
+    iterationTrace.rewrite.requestedFixes = fixes.length;
+
     if (fixes.length > 0) {
       console.log(`\n   🔧 LLM Rewriter — ${fixes.length} correction(s) ciblée(s)`);
       fixes.forEach((f, i) => console.log(`      ${f.priority || i + 1}. [${f.agent}] ${f.issue?.substring(0, 100)}`));
@@ -369,7 +521,7 @@ async function main() {
       .filter(i => i.fix_type === 'auto' && i.severity === 'critical');
     if (autoFixIssues.length > 0) {
       try {
-        const { html: fixedHtml } = await applyAllFixes(article.content, article.title, autoFixIssues);
+        const { html: fixedHtml } = await applyAllFixes(article.content, article.title, autoFixIssues, wpAuth);
         if (fixedHtml !== article.content) {
           article = { ...article, content: fixedHtml };
           console.log(`   ✅ Auto-fixes appliqués`);
@@ -378,6 +530,36 @@ async function main() {
         console.warn(`   ⚠️ Auto-fixes échoués : ${e.message}`);
       }
     }
+
+    // Guard anti-régression: rollback si les critiques gates augmentent après réécriture.
+    if (fixes.length > 0 || autoFixIssues.length > 0) {
+      try {
+        const probe = await validatePrePublish(article.content, {
+          destination,
+          title: article.title
+        });
+        const probeCriticalMap = criticalIssueMap(probe.issues || []);
+        const beforeTotal = countCritical(preRewriteCriticalMap);
+        const afterTotal = countCritical(probeCriticalMap);
+        let recurrentWorsened = false;
+        for (const [key, value] of probeCriticalMap.entries()) {
+          if (value > (preRewriteCriticalMap.get(key) || 0)) {
+            recurrentWorsened = true;
+            break;
+          }
+        }
+        if (afterTotal > beforeTotal || recurrentWorsened) {
+          console.log(`   ↩️ REGRESSION_GUARD: rollback (${beforeTotal}→${afterTotal} critical gates)`);
+          article = { ...article, content: preRewriteHtml };
+          iterationTrace.rewrite.rollback = true;
+          iterationTrace.rewrite.rollbackReason = `critical_gates_${beforeTotal}_to_${afterTotal}`;
+        }
+      } catch (e) {
+        console.warn(`   ⚠️ Regression guard non exécutable: ${e.message}`);
+        iterationTrace.rewrite.rollbackReason = `probe_error:${e.message}`;
+      }
+    }
+    iterationTelemetry.push(iterationTrace);
   }
 
   // ══════════════════════════════════════════════════════════
@@ -423,6 +605,11 @@ async function main() {
   }
 
   const reportPath = join(__dirname, 'pipeline-report-output.json');
+  const recurringIssuesTop = Array.from(recurringIssueHistory.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10)
+    .map(([key, count]) => ({ issueKey: key, count }));
+  const lastIteration = iterationTelemetry[iterationTelemetry.length - 1] || null;
   writeFileSync(reportPath, JSON.stringify({
     title: article.title,
     weightedScore: lastReviewResult?.weightedScore,
@@ -430,10 +617,15 @@ async function main() {
     iterations: iteration,
     duration: totalDuration,
     editorialMode: article.editorialMode,
+    targetScore: CONFIG.targetScore,
+    scoreStages: CONFIG.scoreStages,
     agentScores: lastReviewResult ? Object.fromEntries(
       Object.entries(lastReviewResult.agents).map(([id, r]) => [id, { score: r.score, verdict: r.verdict }])
     ) : null,
     dryRun: CONFIG.dryRun,
+    criticalByGate: lastIteration?.validation?.criticalByGate || {},
+    iterationTelemetry,
+    topRecurringIssues: recurringIssuesTop,
     timestamp: new Date().toISOString()
   }, null, 2));
 

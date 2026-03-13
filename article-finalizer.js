@@ -174,6 +174,34 @@ class ArticleFinalizer {
     return filtered.map(s => s.full).join('');
   }
 
+  detectRegionalScopeDrift(html, title = '', finalDestination = null) {
+    const text = String(html || '').replace(/<[^>]*>/g, ' ').toLowerCase();
+    const titleLower = String(title || '').toLowerCase();
+    const isSeaScope = /asie\s+du\s+sud-?est|sud-?est\s+asiat/.test(titleLower) ||
+      ['thaïlande', 'thailande', 'vietnam', 'indonésie', 'indonesie', 'malaisie', 'singapour', 'philippines', 'cambodge', 'laos', 'myanmar']
+        .includes(String(finalDestination || '').toLowerCase());
+    if (!isSeaScope) return [];
+
+    const outliers = [
+      { label: 'chine', aliases: ['chine', 'china', 'pekin', 'beijing', 'shanghai'] },
+      { label: 'japon', aliases: ['japon', 'japan', 'tokyo', 'osaka', 'kyoto'] },
+      { label: 'corée', aliases: ['corée', 'coree', 'korea', 'seoul', 'busan'] }
+    ];
+    const warnings = [];
+    for (const item of outliers) {
+      let count = 0;
+      for (const alias of item.aliases) {
+        const re = new RegExp(`\\b${alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
+        const matches = text.match(re);
+        count += matches ? matches.length : 0;
+      }
+      if (count >= 2) {
+        warnings.push(`scope_drift:${item.label}:${count}`);
+      }
+    }
+    return warnings;
+  }
+
   /**
    * Finalise l'article complet
    * PATCH 1: Accepte pipelineContext pour propagation final_destination
@@ -211,9 +239,16 @@ class ArticleFinalizer {
         console.log(`🧹 Sanitizer: ${beforeLength - afterLength} caractères supprimés (phrases non-Asie)`);
       }
     }
+    const scopeWarnings = this.detectRegionalScopeDrift(article.content, article.title, finalDestination);
+    if (scopeWarnings.length > 0) {
+      console.log(`⚠️ Scope drift détecté: ${scopeWarnings.join(', ')}`);
+    }
 
     let finalContent = article.content;
     const enhancements = { ...article.enhancements };
+    if (scopeWarnings.length > 0) {
+      enhancements.scopeWarnings = scopeWarnings;
+    }
 
     // PROTECTION FAQ GUTENBERG: Extraire la section FAQ complète avant tout traitement
     // Pattern identique à content-marketing-pass.js — protège heading + details + schema
@@ -8885,7 +8920,7 @@ class ArticleFinalizer {
       ctx.finalDestination || ctx.destination || ctx.mainDestination || 'Asie'
     ).trim();
     const title = String(ctx.title || '').trim();
-    const pillarLink = String(ctx.pillarLink || 'https://flashvoyage.com/conseils-voyage/').trim();
+    const pillarLink = String(ctx.pillarLink || 'https://flashvoyage.com/notre-methode/').trim();
 
     const qa = new QualityAnalyzer();
     const toScoreHtml = (content) => `<h1>${title}</h1>\n${content}`;

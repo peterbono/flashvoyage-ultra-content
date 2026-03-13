@@ -1,9 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import axios from 'axios';
 import SeoOptimizer from '../seo-optimizer.js';
 import ArticleFinalizer from '../article-finalizer.js';
 import QualityAnalyzer from '../quality-analyzer.js';
 import { runAllKPITests } from './kpi-quality.test.js';
+import { validatePrePublish, __testAutoFixHtml } from '../pre-publish-validator.js';
+import { fixTruncatedLinks } from '../review-auto-fixers.js';
 
 test('K10 is skipped in NEWS mode', async () => {
   const html = '<h1>Visa Vietnam: changement</h1><p>Impact immédiat pour ton voyage.</p>';
@@ -180,9 +183,9 @@ test('NEWS quality convergence injects a pillar link when missing', () => {
   const out = finalizer.ensureNewsQualityConvergence(html, {
     title: 'Thaïlande: nouvelle mise à jour logistique',
     finalDestination: 'Thaïlande',
-    pillarLink: 'https://flashvoyage.com/conseils-voyage/'
+    pillarLink: 'https://flashvoyage.com/notre-methode/'
   });
-  assert.match(out, /https:\/\/flashvoyage\.com\/conseils-voyage\//i);
+  assert.match(out, /https:\/\/flashvoyage\.com\/notre-methode\//i);
 });
 
 test('NEWS quality convergence improves score on weak input', () => {
@@ -219,4 +222,76 @@ test('Late glue pass does not reintroduce repas-economique collage', () => {
   const cleaned = finalizer.applyDeterministicFinalTextCleanup(afterGlue);
   assert.match(cleaned, /Repas économique/i);
   assert.doesNotMatch(cleaned, /repaséconomique/i);
+});
+
+test('SEO internal anchor builder avoids truncated stopword tails', () => {
+  const optimizer = new SeoOptimizer();
+  const anchor = optimizer._buildSafeInternalAnchor('Guide complet Vietnam et');
+  assert.ok(anchor.length >= 12);
+  assert.doesNotMatch(anchor, /\b(et|de|du|des|que|tu|la|le)\s*$/i);
+});
+
+test('Pre-publish gate blocks regional mismatch (SEA title with East Asia dominant content)', async () => {
+  const html = [
+    '<h1>Asie du Sud-Est : itinéraire optimisé</h1>',
+    '<p>En Chine, ce trajet change tout. La Chine impose aussi un autre rythme.</p>',
+    '<p>La Chine et Pékin reviennent comme contraintes principales.</p>',
+    '<a href="https://flashvoyage.com/guide-vietnam-budget/">Guide Vietnam budget pratique</a>',
+    '<a href="https://flashvoyage.com/guide-thailande-visa/">Guide Thaïlande visa complet</a>',
+    '<a href="https://flashvoyage.com/guide-cambodge-itineraire/">Guide Cambodge itinéraire réel</a>'
+  ].join('\n');
+  const result = await validatePrePublish(html, {
+    destination: 'thailand',
+    title: 'Asie du Sud-Est : itinéraire optimisé'
+  });
+  const scopeIssue = result.issues.find(i => i.gate === 'fact-check' && /Incohérence de périmètre destination/i.test(i.message));
+  assert.ok(scopeIssue, 'Expected a destination scope mismatch issue');
+  assert.equal(scopeIssue.severity, 'critical');
+});
+
+test('Truncated internal link fixer improves gate critical count', async () => {
+  const html = [
+    '<h1>Vietnam : arbitrages utiles</h1>',
+    '<p>Comparatif terrain.</p>',
+    '<a href="https://flashvoyage.com/guide-vietnam-budget/">Guide Vietnam et</a>',
+    '<a href="https://flashvoyage.com/guide-thailande-visa/">Guide Thaïlande visa complet</a>',
+    '<a href="https://flashvoyage.com/guide-cambodge-itineraire/">Guide Cambodge itinéraire réel</a>'
+  ].join('\n');
+
+  const before = await validatePrePublish(html, { destination: 'vietnam', title: 'Vietnam : arbitrages utiles' });
+  const beforeCriticalInternal = before.issues.filter(i => i.gate === 'internal-links' && i.severity === 'critical').length;
+  assert.ok(beforeCriticalInternal >= 1, 'Expected at least one critical internal-link issue before fix');
+
+  const originalGet = axios.get;
+  try {
+    axios.get = async () => ({
+      data: [{ title: { rendered: 'Guide Vietnam budget et décisions à prendre avant de réserver' } }]
+    });
+    const fixed = await fixTruncatedLinks(html, { url: 'https://flashvoyage.com', auth: 'test' });
+    const after = await validatePrePublish(fixed.html, { destination: 'vietnam', title: 'Vietnam : arbitrages utiles' });
+    const afterCriticalInternal = after.issues.filter(i => i.gate === 'internal-links' && i.severity === 'critical').length;
+    assert.ok(afterCriticalInternal <= beforeCriticalInternal, 'Critical internal-link count should not increase after fix');
+  } finally {
+    axios.get = originalGet;
+  }
+});
+
+test('Auto-fix substitutes dead internal link when fallback exists', () => {
+  const html = '<p>Voir <a href="https://flashvoyage.com/guide-vietnam-obsolete/">Guide Vietnam budget</a> avant réservation.</p>';
+  const issues = [{
+    gate: 'internal-links',
+    severity: 'critical',
+    message: 'Lien mort (404) : https://flashvoyage.com/guide-vietnam-obsolete/',
+    auto_fixable: true
+  }];
+  const { html: fixed, fixCount } = __testAutoFixHtml(html, issues, {
+    destination: 'vietnam',
+    internalArticlesIndex: [{
+      title: 'Guide Vietnam budget et arbitrages',
+      slug: 'guide-vietnam-budget-et-arbitrages',
+      link: 'https://flashvoyage.com/guide-vietnam-budget-et-arbitrages/'
+    }]
+  });
+  assert.ok(fixCount >= 1);
+  assert.match(fixed, /guide-vietnam-budget-et-arbitrages/i);
 });

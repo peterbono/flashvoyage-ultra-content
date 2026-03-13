@@ -1493,6 +1493,7 @@ class SeoOptimizer {
     const articleDestination = seoData.main_destination 
       ? this.normalizeText(seoData.main_destination)
       : (seoData.places && seoData.places.length > 0 ? this.normalizeText(seoData.places[0]) : null);
+    const strictDestinationMatch = String(process.env.STRICT_INTERNAL_LINK_DEST_MATCH || '').toLowerCase() === '1';
     
     for (const article of index.articles) {
       // Vérifier blacklist
@@ -1574,13 +1575,18 @@ class SeoOptimizer {
           (seoData.main_destination || '').toLowerCase().includes('asie') || 
           (seoData.main_destination || '').toLowerCase().includes('asia');
         
+        // Mode strict: n'autoriser que les liens de la même destination/pays
+        if (strictDestinationMatch && normalizedCandidateDest && normalizedArticleDest !== normalizedCandidateDest) {
+          continue;
+        }
+
         // Score bonus pour match destination (même pays) (+20 points)
         if (normalizedCandidateDest && normalizedArticleDest === normalizedCandidateDest) {
           score += 20;
           console.log(`   ✅ INTERNAL_LINK_MATCH: article_dest=${articleDestination} link_dest=${candidateDestination} (${normalizedArticleDest}) score_bonus=+20`);
         }
         // Bonus réduit pour articles de la même région (+10 au lieu de -10)
-        else if (normalizedCandidateDest && isRegionalArticle && seaCountries.includes(normalizedCandidateDest)) {
+        else if (!strictDestinationMatch && normalizedCandidateDest && isRegionalArticle && seaCountries.includes(normalizedCandidateDest)) {
           score += 10;
           console.log(`   ✅ INTERNAL_LINK_REGION: article_dest=${articleDestination} link_dest=${candidateDestination} (même région SEA) score_bonus=+10`);
         }
@@ -1775,6 +1781,33 @@ class SeoOptimizer {
     return bestTheme;
   }
 
+  _buildSafeInternalAnchor(rawTitle) {
+    const STOPWORD_TAIL = /\b(que|tu|l['’]|d['’]|un|une|le|la|les|des|en|du|de|et|ou|a|au|aux)\s*$/i;
+    const decodedTitle = this.decodeHtmlEntitiesForAnchor(rawTitle || '')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (!decodedTitle) return 'guide pratique';
+
+    const words = decodedTitle.split(/\s+/).filter(Boolean);
+    let anchor = words.slice(0, Math.min(10, words.length)).join(' ');
+
+    if (anchor.length > 80) {
+      anchor = anchor.substring(0, 80).replace(/\s+\S*$/, '').trim();
+    }
+
+    while (STOPWORD_TAIL.test(anchor)) {
+      anchor = anchor.replace(/\s+\S+\s*$/, '').trim();
+    }
+
+    const alphaCount = (anchor.match(/[a-zA-ZÀ-ÿ]/g) || []).length;
+    if (anchor.length < 12 || alphaCount < 8) {
+      return decodedTitle.length > 90 ? decodedTitle.substring(0, 90).trim() : decodedTitle;
+    }
+
+    return anchor;
+  }
+
   _buildTransitionPhrase(link, theme) {
     const TEMPLATES = {
       visa:         ['Si tu prépares aussi ton visa, on a détaillé ', 'Côté formalités, ', 'Pour anticiper les démarches de visa, '],
@@ -1788,12 +1821,7 @@ class SeoOptimizer {
       general:      ['On a aussi détaillé ', 'Dans le même esprit, ', 'Pour compléter, '],
     };
 
-    const decodedTitle = this.decodeHtmlEntitiesForAnchor(link.title);
-    const words = decodedTitle.split(/\s+/).filter(w => w.length > 0);
-    let shortAnchor = words.slice(0, Math.min(8, words.length)).join(' ');
-    if (shortAnchor.length > 55) {
-      shortAnchor = shortAnchor.substring(0, 55).replace(/\s+\S*$/, '') || shortAnchor.substring(0, 55);
-    }
+    const shortAnchor = this._buildSafeInternalAnchor(link.title);
 
     const templates = TEMPLATES[theme] || TEMPLATES.general;
     if (!this._transitionCounters) this._transitionCounters = {};
@@ -1904,10 +1932,7 @@ class SeoOptimizer {
         const existingList = modifiedHtml.match(/<h3>[^<]*(?:À lire aussi|À lire également)[^<]*<\/h3>\s*<ul>([\s\S]*?)<\/ul>/i);
         if (existingList) {
           const newItems = unplacedLinks.map(link => {
-            const decoded = this.decodeHtmlEntitiesForAnchor(link.title);
-            const words = decoded.split(/\s+/).filter(w => w.length > 0);
-            let anchor = words.slice(0, 8).join(' ');
-            if (anchor.length > 55) anchor = anchor.substring(0, 55).replace(/\s+\S*$/, '');
+            const anchor = this._buildSafeInternalAnchor(link.title);
             return `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(anchor)}</a></li>`;
           }).join('\n');
           modifiedHtml = modifiedHtml.replace(existingList[0], existingList[0].replace('</ul>', newItems + '\n</ul>'));
@@ -1919,10 +1944,7 @@ class SeoOptimizer {
         const insertBefore = retainSection > 0 ? retainSection : (recoSection > 0 ? recoSection : -1);
 
         const listItems = unplacedLinks.map(link => {
-          const decoded = this.decodeHtmlEntitiesForAnchor(link.title);
-          const words = decoded.split(/\s+/).filter(w => w.length > 0);
-          let anchor = words.slice(0, 8).join(' ');
-          if (anchor.length > 55) anchor = anchor.substring(0, 55).replace(/\s+\S*$/, '');
+          const anchor = this._buildSafeInternalAnchor(link.title);
           return `  <li><a href="${this.escapeHtml(link.url)}">${this.escapeHtml(anchor)}</a></li>`;
         }).join('\n');
         const fallbackSection = `\n<h3>À lire aussi</h3>\n<ul>\n${listItems}\n</ul>\n\n`;

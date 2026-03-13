@@ -29,6 +29,25 @@ function extractDestinationFromTitle(title) {
   return null;
 }
 
+function isTruncatedAnchorText(text) {
+  const cleaned = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!cleaned) return true;
+  const tooShort = cleaned.length < 12 || cleaned.split(/\s+/).length <= 2;
+  const incompleteTail = /\b(que|tu|l['’]|d['’]|un|une|le|la|les|des|en|du|de|et|ou|a|au|aux)\s*$/i.test(cleaned);
+  return tooShort || cleaned.endsWith('...') || incompleteTail;
+}
+
+function normalizeAnchorFromTitle(title) {
+  let anchor = String(title || '').replace(/\s+/g, ' ').trim();
+  if (anchor.length > 90) {
+    anchor = anchor.substring(0, 90).replace(/\s+\S*$/, '').trim();
+  }
+  while (/\b(que|tu|l['’]|d['’]|un|une|le|la|les|des|en|du|de|et|ou|a|au|aux)\s*$/i.test(anchor)) {
+    anchor = anchor.replace(/\s+\S+\s*$/, '').trim();
+  }
+  return anchor;
+}
+
 // ─── Fixer 1 : Image incohérente ──────────────────────────
 
 /**
@@ -133,13 +152,7 @@ export async function fixTruncatedLinks(html, wpAuth) {
     const text = link.text.trim();
     const href = link.getAttribute('href') || '';
 
-    const isTruncated =
-      text.length < 15 ||
-      /\b(que|tu|l['']|d['']|un|le|la|les|des|en|du|de|et|ou|à|au)\s*$/i.test(text) ||
-      text.endsWith('...') ||
-      /[a-zàâéèêëïôùûü]$/i.test(text) && text.split(/\s+/).length <= 3;
-
-    if (!isTruncated) continue;
+    if (!isTruncatedAnchorText(text)) continue;
 
     let fullTitle = null;
     if (wpAuth) {
@@ -163,9 +176,8 @@ export async function fixTruncatedLinks(html, wpAuth) {
 
     if (!fullTitle) continue;
 
-    const shortTitle = fullTitle.length > 80
-      ? fullTitle.substring(0, 77) + '...'
-      : fullTitle;
+    const shortTitle = normalizeAnchorFromTitle(fullTitle);
+    if (!shortTitle) continue;
 
     const oldAnchor = `>${text}</a>`;
     const newAnchor = `>${shortTitle}</a>`;
@@ -181,6 +193,55 @@ export async function fixTruncatedLinks(html, wpAuth) {
     html: fixedHtml,
     fixed: fixCount > 0,
     description: fixCount > 0 ? `${fixCount} lien(s) tronqué(s) corrigé(s): ${fixes.join('; ')}` : null
+  };
+}
+
+export async function fixDeadInternalLinks(html, wpAuth) {
+  if (!wpAuth) return { html, fixed: false, description: null };
+  const root = parse(html);
+  const internalLinks = root.querySelectorAll('a').filter(a => {
+    const href = a.getAttribute('href') || '';
+    return href.includes('flashvoyage.com') && href.startsWith('http');
+  });
+
+  let fixedHtml = html;
+  let fixCount = 0;
+  const fixes = [];
+
+  for (const link of internalLinks.slice(0, 12)) {
+    const href = link.getAttribute('href') || '';
+    const text = link.text.trim();
+    try {
+      await axios.head(href, { timeout: 5000, headers: { Authorization: `Basic ${wpAuth.auth}` }, maxRedirects: 3 });
+    } catch (err) {
+      if (err.response?.status !== 404) continue;
+
+      const query = normalizeAnchorFromTitle(text).split(/\s+/).slice(0, 5).join(' ');
+      if (!query) continue;
+      try {
+        const res = await axios.get(`${wpAuth.url}/wp-json/wp/v2/posts?search=${encodeURIComponent(query)}&_fields=link,title&per_page=5`, {
+          headers: { Authorization: `Basic ${wpAuth.auth}` },
+          timeout: 5000
+        });
+        const fallback = Array.isArray(res.data)
+          ? res.data.find(p => p?.link && p.link !== href)
+          : null;
+        if (!fallback?.link) continue;
+        const escapedHref = href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const hrefRegex = new RegExp(`href=["']${escapedHref}["']`, 'g');
+        fixedHtml = fixedHtml.replace(hrefRegex, `href="${fallback.link}"`);
+        fixCount++;
+        fixes.push(`404 "${text.substring(0, 40)}..." → ${fallback.link}`);
+      } catch {
+        // no fallback found, keep as-is
+      }
+    }
+  }
+
+  return {
+    html: fixedHtml,
+    fixed: fixCount > 0,
+    description: fixCount > 0 ? `${fixCount} lien(s) 404 remplacé(s): ${fixes.join('; ')}` : null
   };
 }
 
@@ -410,6 +471,14 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null) {
     console.log(`    ✅ ${linkResult.description}`);
   }
 
+  // 2b. Liens internes 404
+  const deadLinkResult = await fixDeadInternalLinks(currentHtml, wpAuth);
+  if (deadLinkResult.fixed) {
+    currentHtml = deadLinkResult.html;
+    appliedFixes.push({ type: 'dead-links', description: deadLinkResult.description });
+    console.log(`    ✅ ${deadLinkResult.description}`);
+  }
+
   // 3. Phrases cassées
   const phraseResult = await fixBrokenPhrases(currentHtml);
   if (phraseResult.fixed) {
@@ -456,6 +525,7 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null) {
 export default {
   fixIncoherentImage,
   fixTruncatedLinks,
+  fixDeadInternalLinks,
   fixBrokenPhrases,
   fixBrokenCitations,
   fixWithLlm,
