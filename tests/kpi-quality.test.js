@@ -518,6 +518,20 @@ describe('KPI Tests K1-K10 (unit tests)', () => {
     });
   });
 
+  describe('FAQ structure sanity (NEWS/SEO support)', () => {
+    it('detecte une FAQ avec details/summary valides', () => {
+      const html = [
+        '<h2>Questions fréquentes</h2>',
+        '<details><summary>Faut-il réserver tôt ?</summary><p>Oui, surtout en haute saison.</p></details>',
+        '<details><summary>Quel est le risque principal ?</summary><p>Les frais cachés si tu compares mal.</p></details>'
+      ].join('');
+      const details = (html.match(/<details>/gi) || []).length;
+      const summaries = (html.match(/<summary>/gi) || []).length;
+      assert.ok(details >= 2);
+      assert.equal(details, summaries);
+    });
+  });
+
   describe('runAllKPITests — integration', () => {
     it('retourne un summary avec passed/failed/skipped', async () => {
       const { results, summary } = await runAllKPITests(SAMPLE_HTML_GOOD, {

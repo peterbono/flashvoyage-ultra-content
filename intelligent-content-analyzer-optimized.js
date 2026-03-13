@@ -4165,7 +4165,8 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2500 mots.`;
     }
     
     // Phase 1 summary
-    if (anomalies.length === 0) {
+    const hasTargetedInstructions = Array.isArray(context.targetedInstructions) && context.targetedInstructions.length > 0;
+    if (anomalies.length === 0 && !hasTargetedInstructions) {
       console.log('   ✅ Phase 1: Aucune anomalie détectée — skip de la passe LLM (économie de coût)');
       return rawContent;
     }
@@ -4247,6 +4248,16 @@ RÈGLES :
       }
     }
     
+    // Inject quality gate targeted instructions from context
+    if (Array.isArray(context.targetedInstructions) && context.targetedInstructions.length > 0) {
+      for (const ti of context.targetedInstructions) {
+        if (typeof ti === 'string' && ti.trim().length > 0) {
+          correctionInstructions.push(ti.trim());
+        }
+      }
+      console.log('   Targeted instructions injectees:', context.targetedInstructions.length);
+    }
+
     // PHASE 2.1d: Construire les contraintes truth pack pour l'improve
     const improveTruthPack = context.extracted ? buildPromptTruthPack(context.extracted, context.story || null) : null;
     const improveTruthPackBlock = improveTruthPack

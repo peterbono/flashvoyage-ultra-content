@@ -1,10 +1,10 @@
 {
-  "_cachedAt": 1773254862742,
+  "_cachedAt": 1773401775086,
   "data": {
-    "avgPrice": 376,
+    "avgPrice": 370,
     "minPrice": 349,
     "currency": "EUR",
-    "sampleSize": 9,
+    "sampleSize": 7,
     "origin": "Paris"
   }
 }

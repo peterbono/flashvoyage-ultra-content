@@ -2,6 +2,8 @@
 
 Système de génération et publication automatique d'articles de voyage sur WordPress, alimenté par des discussions Reddit et des flux RSS, piloté par un calendrier éditorial stratégique et optimisé par un pipeline LLM multi-étapes avec contrôle qualité intégré.
 
+Depuis la branche `refactor-v2`, le repo intègre un **quality loop multi-agents** de niveau production : pré‑gates déterministes (HTML, maillage, fact‑check, FAQ), panel d’experts LLM (SEO, Affiliation, Éditorial, UX, Intégrité) et CEO virtuel, réécriture contrainte par diff‑guard, puis auto‑fixers programmatiques. L’objectif opérationnel est un score qualité ≥ 85% sur le HTML final, avec une trajectoire progressive vers 90–95% sur les contenus à forte preuve source.
+
 **Site** : [flashvoyage.com](https://flashvoyage.com) | **Jira** : [flashvoyage.atlassian.net](https://flashvoyage.atlassian.net)
 
 ## Ce que fait le projet

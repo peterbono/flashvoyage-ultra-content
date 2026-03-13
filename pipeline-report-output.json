@@ -1,0 +1,117 @@
+{
+  "title": "Témoignage Reddit décrypté par FlashVoyages",
+  "weightedScore": 57.4,
+  "approved": false,
+  "iterations": 2,
+  "duration": "19.3",
+  "editorialMode": "evergreen",
+  "targetScore": 95,
+  "scoreStages": [
+    88,
+    92,
+    95
+  ],
+  "agentScores": {
+    "seo-expert": {
+      "score": 62,
+      "verdict": "FAIL"
+    },
+    "affiliation-expert": {
+      "score": 62,
+      "verdict": "FAIL"
+    },
+    "editorial-expert": {
+      "score": 42,
+      "verdict": "FAIL"
+    },
+    "ux-bugs-expert": {
+      "score": 62,
+      "verdict": "FAIL"
+    },
+    "integrity-expert": {
+      "score": 62,
+      "verdict": "FAIL"
+    }
+  },
+  "dryRun": false,
+  "criticalByGate": {},
+  "iterationTelemetry": [
+    {
+      "iteration": 1,
+      "stageTarget": 88,
+      "validation": {
+        "criticalByGate": {
+          "internal-links": 3
+        }
+      },
+      "panel": {
+        "weightedScore": 57.4,
+        "criticalIssues": 16
+      },
+      "rewrite": {
+        "requestedFixes": 16,
+        "rollback": true,
+        "rollbackReason": "critical_gates_3_to_1"
+      }
+    },
+    {
+      "iteration": 2,
+      "stageTarget": 92,
+      "validation": {
+        "criticalByGate": {}
+      },
+      "panel": {
+        "weightedScore": 57.4,
+        "criticalIssues": 18
+      },
+      "rewrite": {
+        "requestedFixes": 0,
+        "rollback": false,
+        "rollbackReason": null
+      }
+    }
+  ],
+  "topRecurringIssues": [
+    {
+      "issueKey": "Title Tag SEO|le title tag 'japan : témoignage reddit décrypté par flashvoyages' est faible. il commence par 'japan :' (mot-clé générique mal placé), cont",
+      "count": 1
+    },
+    {
+      "issueKey": "Maillage interne insuffisant|l'article contient seulement 5 liens internes identifiables (vers 'voyager au japon : quand voir les cerisiers', 'planifier un long voyage',",
+      "count": 1
+    },
+    {
+      "issueKey": "Structure FAQ défaillante|la section faq utilise 3 éléments <details>/<summary> (bon format html5), mais : (1) aucun json-ld faqpage fourni, (2) les questions ne couv",
+      "count": 1
+    },
+    {
+      "issueKey": "Hiérarchie H1/H2/H3 incohérente|plusieurs problèmes : (1) h1 = 'témoignage reddit décrypté par flashvoyages' (générique, pas optimisé seo), (2) premier h2 = 'pourquoi atten",
+      "count": 1
+    },
+    {
+      "issueKey": "Intention de recherche partiellement couverte|l'article cible implicitement 'visa japon longue durée' ou 'logistique visa asie centrale', mais le h1 et title tag ne reflètent pas cette i",
+      "count": 1
+    },
+    {
+      "issueKey": "Contenu dupliqué / brouillon visible|plusieurs passages semblent incomplets ou mal intégrés : (1) 'étape 2' manque dans le plan d'action (saute de étape 1 à étape 3). (2) fin de",
+      "count": 1
+    },
+    {
+      "issueKey": "Densité de mots-clés et pertinence|l'article mentionne 'visa', 'japon', 'ambassade', 'asie centrale' de façon répétée mais pas toujours naturelle. manque de variantes lsi (lat",
+      "count": 1
+    },
+    {
+      "issueKey": "Images et alt-text|3 images pexels sont présentes avec alt-text descriptifs ('une scène vibrante de vendeurs...', 'vue époustouflante du mont fuji...', 'majest",
+      "count": 1
+    },
+    {
+      "issueKey": "Données live / fraîcheur|section 'infos pratiques — japon (maj : 13 mars 2026)' est présente et à jour. cependant, les prix (385€ vol, 7€ repas) ne sont pas sourcés ",
+      "count": 1
+    },
+    {
+      "issueKey": "CTA (Call-to-Action) peu clair|l'article contient 3 placeholders cta ('<!-- fv: cta_slot reason=\"...\" -->') qui ne sont pas remplis. fin d'article : cta implicite ('partag",
+      "count": 1
+    }
+  ],
+  "timestamp": "2026-03-13T22:49:47.943Z"
+}

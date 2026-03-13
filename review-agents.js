@@ -212,7 +212,7 @@ RUBRIQUE DE SCORING :
 CALIBRATION: Un article avec tutoiement, citations inline, H2 décisionnels, et un hook immersif doit scorer >= 82, même s'il a 1-2 formulations mécaniques mineures.
 
 Critères impitoyables :
-1. Détection IA : formulations mécaniques, titres typés IA ("Ce que les autres ne disent pas"), structures "Option 1/2/3", "La vraie question n'est pas X mais Y"
+1. Détection IA : formulations mécaniques, structures "Option 1/2/3", "La vraie question n'est pas X mais Y". EXCEPTION SERP : les titres H2 tels que "Ce que les autres ne disent pas", "Erreurs fréquentes" ou "Ce que personne ne vous dit" servent un objectif SERP et ne doivent PAS être pénalisés.
 2. Citations : toute citation doit être une phrase COMPLÈTE avec un sens clair. Phrase tronquée = critical.
 3. Sections creuses : un H2 qui promet beaucoup mais dont le contenu est vague ou creux = major.
 4. Clichés : "la vraie Thaïlande", "hors des sentiers battus" (sauf si déconstruit)

@@ -1,6 +1,6 @@
 {
-  "totalPublished": 43,
-  "currentClusterId": "amerique-latine",
+  "totalPublished": 73,
+  "currentClusterId": "asie-sud-est",
   "history": [
     {
       "date": "2026-02-23T16:02:38.396Z",
@@ -323,6 +323,216 @@
       "articleType": "support",
       "hint": "patagonie trek",
       "title": "Voyager 2 semaines en Thaïlande : arbitrer entre Bangkok, Chiang Mai et Krabi sans sacrifier l'authenticité"
+    },
+    {
+      "date": "2026-03-12T20:32:13.491Z",
+      "clusterId": "amerique-latine",
+      "articleType": "support",
+      "hint": "machu picchu guide",
+      "title": "Témoignage voyage: retours et leçons"
+    },
+    {
+      "date": "2026-03-12T20:43:06.088Z",
+      "clusterId": "amerique-latine",
+      "articleType": "news",
+      "hint": "Mexique",
+      "title": "Enregistrement en ligne sur Norse Atlantic : le piège qui t'abandonne à Bangkok"
+    },
+    {
+      "date": "2026-03-12T20:52:24.288Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "pillar",
+      "hint": "safari guide complet",
+      "title": "Témoignage voyage: retours et leçons"
+    },
+    {
+      "date": "2026-03-12T21:04:07.672Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "desert maroc",
+      "title": "Réserver un vol pour Bali sans assurance voyage : l'erreur qui coûte 53 GBP et bien plus"
+    },
+    {
+      "date": "2026-03-12T21:23:17.161Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "desert maroc",
+      "title": "Asie du Sud-Est en 16 jours : arbitrer entre Palawan et les îles de Thaïlande sans se noyer en transit"
+    },
+    {
+      "date": "2026-03-12T21:36:10.195Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "desert maroc",
+      "title": "Antécédents judiciaires et visa Japon : la vérité sur ce qu'il faut déclarer"
+    },
+    {
+      "date": "2026-03-12T21:50:47.134Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "news",
+      "hint": "Maroc",
+      "title": "Thaïlande en mai : comment arbitrer entre Chiang Mai, Bangkok et une île sans sacrifier ton rythme"
+    },
+    {
+      "date": "2026-03-12T22:04:22.800Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "pillar",
+      "hint": "itineraire asie du sud-est",
+      "title": "4 semaines au Vietnam avec 230 € de boucle Ha Giang : où se joue vraiment ton budget"
+    },
+    {
+      "date": "2026-03-12T22:12:37.646Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "temples angkor",
+      "title": "Bali impossible depuis l'Allemagne : quelles destinations indonésiennes choisir en 2 semaines"
+    },
+    {
+      "date": "2026-03-13T09:18:17.119Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "temples angkor",
+      "title": "Vietnam après la Chine : pourquoi ce choix d'itinéraire change tout pour un premier voyage"
+    },
+    {
+      "date": "2026-03-13T09:41:56.324Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "temples angkor",
+      "title": "Vietnam : pourquoi le discours rassurant des blogs cache deux pièges concrets"
+    },
+    {
+      "date": "2026-03-13T09:52:14.932Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "news",
+      "hint": "Thailande",
+      "title": "Témoignage voyage: retours et leçons"
+    },
+    {
+      "date": "2026-03-13T10:03:00.444Z",
+      "clusterId": "japon",
+      "articleType": "pillar",
+      "hint": "guide japon complet",
+      "title": "Japon en solo : arbitrer entre Tokyo et Hakone pour transformer un voyage en expérience"
+    },
+    {
+      "date": "2026-03-13T10:19:36.011Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "japan rail pass",
+      "title": "Voyager seul au Japon : arrêter d'optimiser chaque minute pour vraiment en profiter"
+    },
+    {
+      "date": "2026-03-13T10:30:55.491Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "japan rail pass",
+      "title": "Japon en solo : 10 jours de randonnée sans tomber dans le piège de l'improvisation"
+    },
+    {
+      "date": "2026-03-13T10:38:32.769Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "japan rail pass",
+      "title": "Japon solo : 10 jours de randonnée entre liberté et surcharge informationnelle"
+    },
+    {
+      "date": "2026-03-13T10:56:35.501Z",
+      "clusterId": "japon",
+      "articleType": "news",
+      "hint": "Japon",
+      "title": "Japon en premier solo : arbitrer entre Tokyo, Osaka et la fatigue logistique"
+    },
+    {
+      "date": "2026-03-13T11:40:44.277Z",
+      "clusterId": "amerique-latine",
+      "articleType": "pillar",
+      "hint": "tour amerique latine",
+      "title": "Corée du Sud en 8 jours : les 2 pièges que personne ne mentionne avant de partir"
+    },
+    {
+      "date": "2026-03-13T12:02:38.393Z",
+      "clusterId": "amerique-latine",
+      "articleType": "support",
+      "hint": "machu picchu guide",
+      "title": "8 semaines en Asie du Sud-Est : comment arbitrer entre culture, nature et fatigue logistique"
+    },
+    {
+      "date": "2026-03-13T12:28:48.155Z",
+      "clusterId": "amerique-latine",
+      "articleType": "support",
+      "hint": "machu picchu guide",
+      "title": "Témoignage voyage: retours et leçons"
+    },
+    {
+      "date": "2026-03-13T12:51:52.854Z",
+      "clusterId": "amerique-latine",
+      "articleType": "support",
+      "hint": "machu picchu guide",
+      "title": "12 jours au Vietnam : faut-il vraiment descendre jusqu'à Ho Chi Minh ou rester au Nord"
+    },
+    {
+      "date": "2026-03-13T13:02:24.626Z",
+      "clusterId": "amerique-latine",
+      "articleType": "news",
+      "hint": "Mexique",
+      "title": "Voyager seul en Thaïlande à 55 ans : l'arbitrage entre confort et rencontres"
+    },
+    {
+      "date": "2026-03-13T16:09:18.253Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "pillar",
+      "hint": "safari guide complet",
+      "title": "Témoignage voyage: retours et leçons"
+    },
+    {
+      "date": "2026-03-13T16:34:51.882Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "desert maroc",
+      "title": "5 jours à Kyoto en solo : l'arbitrage entre temples classiques et expériences authentiques"
+    },
+    {
+      "date": "2026-03-13T16:47:31.991Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "desert maroc",
+      "title": "\"Voyage au Japon avec 2 300 € : les arbitrages cachés qui plombent ton budget\""
+    },
+    {
+      "date": "2026-03-13T17:18:27.942Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "desert maroc",
+      "title": "Témoignage voyage: retours et leçons"
+    },
+    {
+      "date": "2026-03-13T17:33:22.049Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "news",
+      "hint": "Maroc",
+      "title": "Budget 2 300 € pour l'Indonésie : où l'argent disparaît vraiment"
+    },
+    {
+      "date": "2026-03-13T21:49:55.488Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "pillar",
+      "hint": "itineraire asie du sud-est",
+      "title": "Témoignage Reddit décrypté par FlashVoyages"
+    },
+    {
+      "date": "2026-03-13T22:24:00.260Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "temples angkor",
+      "title": "Témoignage Reddit décrypté par FlashVoyages"
+    },
+    {
+      "date": "2026-03-13T22:45:47.725Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "temples angkor",
+      "title": "Témoignage Reddit décrypté par FlashVoyages"
     }
   ]
 }

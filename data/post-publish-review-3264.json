@@ -1,0 +1,110 @@
+{
+  "postId": 3264,
+  "title": "Voyager 2 semaines en Thaïlande : arbitrer entre Bangkok, Chiang Mai et Krabi sans sacrifier l'authenticité",
+  "url": "https://flashvoyage.com/voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite/",
+  "destination": "Thaïlande",
+  "startedAt": "2026-03-12T20:07:15.393Z",
+  "iterations": [
+    {
+      "iteration": 1,
+      "scores": {
+        "seo-expert": {
+          "score": 72,
+          "verdict": "FAIL",
+          "issueCount": 7,
+          "criticalCount": 1
+        },
+        "affiliation-expert": {
+          "score": 78,
+          "verdict": "PASS",
+          "issueCount": 4,
+          "criticalCount": 0
+        },
+        "editorial-expert": {
+          "score": 58,
+          "verdict": "FAIL",
+          "issueCount": 13,
+          "criticalCount": 3
+        },
+        "ux-bugs-expert": {
+          "score": 92,
+          "verdict": "PASS",
+          "issueCount": 5,
+          "criticalCount": 0
+        },
+        "integrity-expert": {
+          "score": 72,
+          "verdict": "FAIL",
+          "issueCount": 8,
+          "criticalCount": 0
+        }
+      },
+      "weightedScore": 75.8,
+      "criticalCount": 4,
+      "ceoDecision": "REJECT",
+      "ceoReasoning": "L'article présente 3 problèmes critiques éditoriaux (titre typé IA, citation Reddit incomplète, contenu vague) et des failles d'intégrité majeures (sources invérifiables, données non datées, contradictions internes). Bien que le score pondéré soit 73.2, les 4 issues critiques identifiées et la faiblesse éditoriale (58/100) justifient un rejet. Le contenu nécessite une réécriture substantielle avant publication.",
+      "fixesApplied": [
+        {
+          "type": "phrases",
+          "description": "1 phrase(s) cassée(s) corrigée(s): \"Oui. Une intoxication alimentaire ou une blessure ...\" → corrigé"
+        }
+      ]
+    },
+    {
+      "iteration": 2,
+      "scores": {
+        "seo-expert": {
+          "score": 72,
+          "verdict": "FAIL",
+          "issueCount": 8,
+          "criticalCount": 0
+        },
+        "affiliation-expert": {
+          "score": 78,
+          "verdict": "PASS",
+          "issueCount": 3,
+          "criticalCount": 0
+        },
+        "editorial-expert": {
+          "score": 58,
+          "verdict": "FAIL",
+          "issueCount": 13,
+          "criticalCount": 3
+        },
+        "ux-bugs-expert": {
+          "score": 92,
+          "verdict": "PASS",
+          "issueCount": 3,
+          "criticalCount": 0
+        },
+        "integrity-expert": {
+          "score": 72,
+          "verdict": "PASS",
+          "issueCount": 10,
+          "criticalCount": 0
+        }
+      },
+      "weightedScore": 75.8,
+      "criticalCount": 3,
+      "ceoDecision": "APPROVE",
+      "ceoReasoning": "L'article atteint le seuil de 75.8/100 avec une excellente exécution UX/Bugs (92) et une bonne couverture éditoriale malgré des faiblesses SEO et éditoriales. Aucun bug CRITICAL au sens technique (pas d'image fausse, lien mort ou phrase cassée irréparable). Les trois issues critiques signalées sont des problèmes de style/tonalité éditoriaux, non des blocages de publication.",
+      "fixesApplied": []
+    }
+  ],
+  "finalDecision": "APPROVED",
+  "generatorRecommendations": [
+    "Éviter les formulations typées IA : 'arbitrer entre X sans sacrifier Y', 'Ce que les autres ne disent pas', 'Si tu veux X... Si tu veux Y...' répétées 3+ fois. Générer des structures plus variées et personnelles.",
+    "Implémenter une vérification de complétude des phrases : détecter les citations ou énumérations qui s'arrêtent sans conclusion logique avant publication.",
+    "Ajouter un module de validation des durées/distances : croiser les données avec des sources fiables (Google Maps, horaires officiels) pour éviter les imprécisions sur les trajets.",
+    "Générer automatiquement un title tag optimisé (50-60 chars) distinct du H1, avec les mots-clés principaux en début.",
+    "Corriger la hiérarchie des titres : vérifier que chaque H3 est précédé d'un H2, et que les sauts de niveau n'existent pas.",
+    "Augmenter le nombre de liens internes contextuels : minimum 1 lien interne par 500 mots, tous cohérents avec le sujet principal.",
+    "Utiliser schema.org/FAQPage (JSON-LD) au lieu de balises HTML5 <details>/<summary> pour les FAQ.",
+    "Ajouter une section 'Sources et vérifications' détaillant les prix, durées et données factuelles avec dates et contexte (saison, année).",
+    "Générer des alt text SEO-optimisés incluant mots-clés contextuels : ex. 'Temple Chiang Mai — architecture traditionnelle thaïlandaise' au lieu de 'Tranquil seaside scene'.",
+    "Implémenter un contrôle de cohérence des liens partenaires : éviter d'insérer des liens vers d'autres pays (Vietnam, Indonésie) dans un article Thaïlande."
+  ],
+  "totalFixesApplied": 1,
+  "finishedAt": "2026-03-12T20:08:46.930Z",
+  "durationSeconds": 91.5
+}
