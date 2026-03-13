@@ -3213,7 +3213,81 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
    * STEP 1/4: Generate the cinematic hook opening + context paragraph.
    * Short focused prompt, max_tokens: 1500.
    */
-  async generateIntroHook(extracted, story, pattern, options = {}) {
+  /**
+   * Generate an SEO-optimized title for the article using the LLM.
+   * Returns { titre, title_tag }.
+   */
+  async generateSEOTitle(extracted, story, options = {}) {
+    const mainDestination = options.main_destination || null;
+    const mainDestFR = mainDestination ? (COUNTRY_DISPLAY_NAMES[mainDestination.toLowerCase()] || mainDestination) : '';
+    const redditTitle = extracted.title || '';
+    const angle = options.angle?.primary_angle?.tension || '';
+
+    const systemPrompt = `Tu es un expert SEO voyage pour FlashVoyages. Génère un titre H1 et un title_tag SEO pour un article basé sur un témoignage Reddit.
+
+RÈGLES :
+- Le titre H1 (60-80 caractères) doit être accrocheur, contenir la destination principale et un angle éditorial fort.
+- Le title_tag (50-60 caractères MAX) est optimisé pour Google : mot-clé principal en tête, distinct du H1.
+- Langue : 100% français. Zéro anglais. Montants en euros.
+- NE JAMAIS utiliser "Témoignage Reddit" ou "décrypté" dans le titre.
+- Le titre doit donner envie de cliquer : tension, chiffre concret, ou promesse de valeur.
+
+EXEMPLES :
+- H1 : «Thaïlande : pourquoi ton budget de 50 €/jour ne suffira pas»
+  title_tag : «Budget Thaïlande : coût réel et pièges à éviter»
+- H1 : «Bali en couple : l'itinéraire que personne ne recommande (et qui marche)»
+  title_tag : «Itinéraire Bali couple : guide alternatif et budget»
+- H1 : «Japon 3 semaines : le vrai coût quand on sort des sentiers battus»
+  title_tag : «Japon 3 semaines budget réel : guide complet»
+
+Réponds UNIQUEMENT en JSON : { "titre": "...", "title_tag": "..." }`;
+
+    const userPrompt = `TITRE REDDIT ORIGINAL : ${redditTitle}
+${mainDestFR ? 'DESTINATION : ' + mainDestFR : ''}
+${angle ? 'ANGLE ÉDITORIAL : ' + angle : ''}
+${extracted.post?.clean_text ? 'EXTRAIT DU POST :\n' + extracted.post.clean_text.substring(0, 500) : ''}
+
+Génère le JSON avec titre H1 et title_tag SEO.`;
+
+    console.log('   📝 Step 0/4: generateSEOTitle...');
+    try {
+      const responseData = await callOpenAIWithRetry({
+        apiKey: this.apiKey,
+        provider: LLM_PROVIDER,
+        _trackingStep: 'micro-seo-title',
+        body: {
+          model: LLM_MODEL,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+          ],
+          max_tokens: 300,
+          temperature: 0.7,
+          ...(LLM_PROVIDER === 'openai' && { response_format: { type: "json_object" } })
+        },
+        sourceText: extracted.post?.clean_text || '',
+        article: extracted,
+        type: 'generation'
+      });
+
+      if (!responseData.choices?.[0]?.message?.content) {
+        throw new Error('No content in SEO title response');
+      }
+
+      const parsed = safeJsonParse(responseData.choices[0].message.content, 'generateSEOTitle');
+      const titre = parsed.titre || null;
+      const titleTag = parsed.title_tag || null;
+      if (titre) {
+        console.log(`   ✅ SEO Title: "${titre}" | tag: "${titleTag}"`);
+      }
+      return { titre, titleTag };
+    } catch (err) {
+      console.warn(`   ⚠️ SEO title generation failed: ${err.message}. Will use fallback.`);
+      return { titre: null, titleTag: null };
+    }
+  }
+
+    async generateIntroHook(extracted, story, pattern, options = {}) {
     const editorialMode = options.editorial_mode || 'evergreen';
     const mainDestination = options.main_destination || null;
     const mainDestFR = mainDestination ? (COUNTRY_DISPLAY_NAMES[mainDestination.toLowerCase()] || mainDestination) : '';
@@ -3369,8 +3443,12 @@ ${isNews ? `CADRE NEWS :
 - 1 CTA max, intégré naturellement.` : `CADRE EVERGREEN :
 - Arc narratif : situation, surprise, impact, options, choix, plan d'action.
 - Marqueurs obligatoires dans le HTML : <!-- FV:CTA_SLOT reason="..." --> (2-4), <!-- FV:DIFF_ANGLE -->, <!-- FV:COMMON_MISTAKES -->.
-- SECTIONS SERP : un H2 angle différenciant spécifique, un H2 pièges/erreurs narratif, <h2>Limites et biais de cet article</h2>.
-- Tableau comparatif si 2+ options. Checklist si guide pratique.`}
+- Tableau comparatif si 2+ options. Checklist si guide pratique.
+
+SECTIONS SERP OBLIGATOIRES (non négociable — inclure ces 3 H2 parmi les sections) :
+1. **Angle différenciant** : Un H2 qui aborde ce que les autres guides ne disent PAS sur cette destination/sujet. Commence par <!-- FV:DIFF_ANGLE -->. Exemple : «Ce que les blogs voyage ne te disent pas sur [destination]» ou «L'angle mort des guides classiques sur [sujet]».
+2. **Erreurs courantes** : Un H2 sur les pièges et erreurs fréquentes des voyageurs. Commence par <!-- FV:COMMON_MISTAKES -->. Exemple : «Les 3 erreurs qui plombent ton budget à [destination]» ou «Pourquoi 80 % des voyageurs se trompent sur [sujet]».
+3. **Limites et biais** : <h2>Limites et biais de cet article</h2> — 1-2 paragraphes honnêtes sur les limites du témoignage (un seul point de vue, période spécifique, etc.).`}
 
 ${truthPackBlock}`;
 
@@ -3563,9 +3641,9 @@ Génère UNIQUEMENT le JSON de conclusion.`;
     // Build the full developpement field: intro + body
     const developpement = introHtml + '\n\n' + bodyHtml;
 
-    // Build title from extracted
-    const titre = extracted.title || 'Témoignage Reddit décrypté par FlashVoyages';
-    const title_tag = titre.substring(0, 60);
+    // Build title — prefer LLM-generated SEO title, fallback to extracted
+    const titre = options._seoTitle || extracted.title || 'Témoignage Reddit décrypté par FlashVoyages';
+    const title_tag = (options._seoTitleTag || titre).substring(0, 60);
 
     // Assemble the article JSON
     const article = {
@@ -3612,6 +3690,11 @@ Génère UNIQUEMENT le JSON de conclusion.`;
     console.log(`\n🔬 MICRO-PROMPT PIPELINE (FV-108) — mode: ${editorialMode.toUpperCase()}`);
 
     try {
+      // ── STEP 0: SEO Title ──
+      const seoTitleResult = await this.generateSEOTitle(extracted, story, options);
+      if (seoTitleResult.titre) options._seoTitle = seoTitleResult.titre;
+      if (seoTitleResult.titleTag) options._seoTitleTag = seoTitleResult.titleTag;
+
       // ── STEP 1: Intro Hook ──
       const introHtml = await this.generateIntroHook(extracted, story, pattern, options);
 
