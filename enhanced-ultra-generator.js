@@ -228,6 +228,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         'singapore', 'singapour'
       ];
       const nonAsiaDestinations = [
+        // Amériques - grandes villes
+      'new york', 'los angeles', 'san francisco', 'chicago', 'miami', 'las vegas', 'boston', 'seattle', 'washington dc', 'hawaii', 'honolulu',
+      'toronto', 'montreal', 'montréal', 'vancouver',
         // Europe
       'ireland', 'irlande', 'galway', 'dublin', 'istanbul', 'turkey', 'turquie', 'portugal', 'spain', 'espagne', 'lisbon', 'lisbonne', 'barcelona', 'barcelone', 'greece', 'grèce', 'cyprus', 'chypre', 'france', 'paris', 'london', 'londres', 'italy', 'italie', 'rome', 'europe', 'uk', 'united kingdom', 'royaume-uni', 'royaume uni', 'britain', 'britannique', 'england', 'angleterre', 'scotland', 'écosse', 'wales', 'pays de galles', 'germany', 'allemagne', 'berlin', 'netherlands', 'pays-bas', 'amsterdam', 'switzerland', 'suisse', 'austria', 'autriche', 'vienna', 'vienne', 'prague', 'czech', 'tchèque', 'poland', 'pologne', 'hungary', 'hongrie', 'budapest', 'croatia', 'croatie', 'dubrovnik',
         // Amériques
@@ -266,6 +269,18 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           if (!hardGate.ok) {
             console.log(`🚫 Article rejeté (NEWS_HARD_GATE=${hardGate.reason}): ${article.title}`);
             return false;
+          }
+        }
+        // GATE GÉOGRAPHIQUE UNIVERSELLE: le titre doit mentionner une destination Asie
+        // (sauf si le titre est générique et le body est fortement asiatique)
+        {
+          const _titleHasAsia = asiaDestinations.some(dest => matchesWord(titleLower, dest));
+          if (!_titleHasAsia) {
+            const _bodyAsiaCount = asiaDestinations.filter(dest => matchesWord(articleText, dest)).length;
+            if (_bodyAsiaCount < 2) {
+              console.log(`\u{1f6ab} Article rejet\u00e9 (titre sans destination asiatique, body faible: ${_bodyAsiaCount} mentions Asie): ${article.title}`);
+              return false;
+            }
           }
         }
         if (article.type !== 'community' && article.type !== 'nomade') {
@@ -320,6 +335,9 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
   applyRelaxedFilter(sources, { enforceNewsHardGate = false } = {}) {
     // Même liste non-Asie que applySourceFilters pour garder la cohérence
     const nonAsiaDestinations = [
+      // Amériques - grandes villes
+      'new york', 'los angeles', 'san francisco', 'chicago', 'miami', 'las vegas', 'boston', 'seattle', 'washington dc', 'hawaii', 'honolulu',
+      'toronto', 'montreal', 'montréal', 'vancouver',
       'ireland', 'irlande', 'galway', 'dublin',
       'egypt', 'égypte', 'egypte', 'cairo', 'le caire', 'giza', 'gizeh', 'alexandria', 'alexandrie', 'luxor', 'louxor', 'aswan', 'assouan',
       'morocco', 'maroc', 'marrakech', 'tunisia', 'tunisie', 'algeria', 'algérie', 'africa', 'afrique',
@@ -450,6 +468,49 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const scraperMethods = isGitHubActions ? GITHUB_ACTIONS_SCRAPER_METHODS : REDDIT_SCRAPER_METHODS;
       const allBatches = [];
       let selectedArticle = null;
+
+      // ── FORCE_SOURCE_URL: skip scraping entirely ──
+      const _forceSourceUrl = process.env.FORCE_SOURCE_URL || null;
+      if (_forceSourceUrl) {
+        console.log(`\n\u{1f3af} FORCE_SOURCE_URL: ${_forceSourceUrl}`);
+        console.log('   Skip scraping, fetching forced Reddit post directly...\n');
+        try {
+          const _forceToken = await getRedditOAuthToken();
+          let _forcePath = new URL(_forceSourceUrl).pathname.replace(/\/$/, "");
+          const _forceApiUrl = _forceToken
+            ? 'https://oauth.reddit.com' + _forcePath + '.json?raw_json=1'
+            : _forceSourceUrl.replace(/\/$/, "") + '.json?raw_json=1';
+          const _forceHeaders = _forceToken
+            ? { 'Authorization': 'Bearer ' + _forceToken, 'User-Agent': 'FlashVoyagesBot/1.0' }
+            : { 'User-Agent': 'FlashVoyagesBot/1.0' };
+          const _forceResp = await (await import('axios')).default.get(_forceApiUrl, { headers: _forceHeaders, timeout: 15000 });
+          const _forceData = _forceResp.data;
+          if (Array.isArray(_forceData) && _forceData.length >= 1 && _forceData[0]?.data?.children?.[0]?.data) {
+            const _post = _forceData[0].data.children[0].data;
+            const _sub = _post.subreddit_name_prefixed || ('r/' + (_post.subreddit || 'travel'));
+            selectedArticle = {
+              title: _post.title || 'Untitled',
+              source_text: _post.selftext || '',
+              selftext: _post.selftext || '',
+              link: _forceSourceUrl,
+              url: _forceSourceUrl,
+              author: _post.author || '[deleted]',
+              score: _post.score || 0,
+              num_comments: _post.num_comments || 0,
+              subreddit: _sub,
+              source: 'Reddit ' + _sub,
+              type: 'community',
+              source_reliability: 0.9,
+            };
+            console.log(`   \u2705 Forced article: "${selectedArticle.title}"`);
+            console.log(`   Source: ${_sub} | Score: ${_post.score} | Comments: ${_post.num_comments}`);
+          } else {
+            console.error('   \u274c FORCE_SOURCE_URL: unexpected Reddit API response structure');
+          }
+        } catch (_forceErr) {
+          console.error(`   \u274c FORCE_SOURCE_URL fetch failed: ${_forceErr.message}`);
+        }
+      }
 
       // PHASE 1.5: Calendrier editorial — decide le type d'article et le cluster
       const calendar = new EditorialCalendar();

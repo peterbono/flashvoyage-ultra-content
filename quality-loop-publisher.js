@@ -19,6 +19,7 @@
  *   node quality-loop-publisher.js --target-score 95    # Active les paliers qualité (88→92→95)
  *   node quality-loop-publisher.js --score-stages 90,93,95 # Paliers personnalisés
  *   node quality-loop-publisher.js --post-review        # Vérification post-publication
+ *   node quality-loop-publisher.js --url <reddit-url>  # Force une URL Reddit spécifique
  */
 
 import { writeFileSync } from 'fs';
@@ -204,6 +205,7 @@ const CONFIG = {
   postReview: hasFlag('post-review'),
   targetScore: parseOptionalScore(getArg('target-score', '')),
   scoreStages: parseScoreStages(getArg('score-stages', '')),
+  forceUrl: getArg('url', null),
 };
 if (CONFIG.targetScore !== null && CONFIG.scoreStages.length === 0) {
   const baseStages = [88, 92, CONFIG.targetScore];
@@ -618,6 +620,10 @@ async function main() {
   if (CONFIG.forceMode === 'news' || CONFIG.forceMode === 'evergreen') {
     process.env.FORCE_EDITORIAL_MODE = CONFIG.forceMode;
     console.log(`   Editorial mode forcé: ${CONFIG.forceMode}`);
+  }
+  if (CONFIG.forceUrl) {
+    process.env.FORCE_SOURCE_URL = CONFIG.forceUrl;
+    console.log(`   Force URL: ${CONFIG.forceUrl}`);
   }
   process.env.ENABLE_MARKETING_PASS = '0';
   process.env.SKIP_WP_PUBLISH = '1';
