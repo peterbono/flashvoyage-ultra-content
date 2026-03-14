@@ -1301,34 +1301,46 @@ export async function fixEmptySections(html) {
  */
 export async function fixCostsWithoutEUR(html) {
   // Check if EUR already present
-  if (/\d+\s*(€|euros?)/i.test(html)) {
+  if (/\d+\s*(€|euros?)\b/i.test(html)) {
     return { html, fixes: [], fixCount: 0 };
   }
-  
-  // Conversion rates (approximate)
-  const conversions = {
-    usd: { symbol: /\/g, rate: 0.92, name: 'USD' },
-    inr: { symbol: /(\d+(?:[\s.,]\d+)?)\s*(?:roupies?|₹|INR)/gi, rate: 0.011, name: 'INR' },
-    thb: { symbol: /(\d+(?:[\s.,]\d+)?)\s*(?:bahts?|THB|฿)/gi, rate: 0.026, name: 'THB' },
-    idr: { symbol: /(\d+(?:[\s.,]\d+)?)\s*(?:roupies?\s*indonésiennes?|IDR)/gi, rate: 0.000058, name: 'IDR' },
-  };
   
   let fixCount = 0;
   let result = html;
   
-  for (const [key, conv] of Object.entries(conversions)) {
-    result = result.replace(conv.symbol, (match, amount) => {
-      const num = parseFloat(amount.replace(/\s/g, '').replace(',', '.'));
-      if (isNaN(num) || num <= 0) return match;
-      const eurAmount = Math.round(num * conv.rate);
-      if (eurAmount <= 0) return match;
-      fixCount++;
-      return match + ;
-    });
-    if (fixCount > 0) break; // Only need one EUR mention
-  }
+  // Try to find USD amounts and add EUR equivalent
+  result = result.replace(/\$(\d+(?:[.,]\d+)?)/g, (match, amount) => {
+    const num = parseFloat(amount.replace(",", "."));
+    if (isNaN(num) || num <= 0) return match;
+    const eurAmount = Math.round(num * 0.92);
+    if (eurAmount <= 0) return match;
+    fixCount++;
+    return match + " (environ " + eurAmount + "\u00a0€)";
+  });
+  if (fixCount > 0) return { html: result, fixes: [fixCount + " équivalent(s) EUR ajouté(s)"], fixCount };
   
-  return { html: result, fixes: fixCount > 0 ? [] : [], fixCount };
+  // Try INR
+  result = result.replace(/(\d+(?:[\s.,]\d+)?)\s*(?:roupies?|₹|INR)/gi, (match, amount) => {
+    const num = parseFloat(amount.replace(/\s/g, "").replace(",", "."));
+    if (isNaN(num) || num <= 0) return match;
+    const eurAmount = Math.round(num * 0.011);
+    if (eurAmount <= 0) return match;
+    fixCount++;
+    return match + " (environ " + eurAmount + "\u00a0€)";
+  });
+  if (fixCount > 0) return { html: result, fixes: [fixCount + " équivalent(s) EUR ajouté(s)"], fixCount };
+  
+  // Try THB
+  result = result.replace(/(\d+(?:[\s.,]\d+)?)\s*(?:bahts?|THB)/gi, (match, amount) => {
+    const num = parseFloat(amount.replace(/\s/g, "").replace(",", "."));
+    if (isNaN(num) || num <= 0) return match;
+    const eurAmount = Math.round(num * 0.026);
+    if (eurAmount <= 0) return match;
+    fixCount++;
+    return match + " (environ " + eurAmount + "\u00a0€)";
+  });
+  
+  return { html: result, fixes: fixCount > 0 ? [fixCount + " équivalent(s) EUR ajouté(s)"] : [], fixCount };
 }
 
 export async function applyAllFixes(html, title, issues = [], wpAuth = null, context = {}) {
