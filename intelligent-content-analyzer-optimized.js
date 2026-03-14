@@ -1821,6 +1821,11 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 1. SITUATION (hook + tension) → 2. SURPRISE/RÉVÉLATION → 3. IMPACT RÉEL → 4. OPTIONS CONCRÈTES → 5. CHOIX RECOMMANDÉ → 6. PLAN D'ACTION
 
 📝 CITATIONS INLINE (2-5 OBLIGATOIRES) : intégrées contextualisées dans le flux narratif.
+🚫 RÈGLE ABSOLUE — ADRESSE AU LECTEUR, PAS À L'AUTEUR REDDIT :
+- Le "tu" s'adresse TOUJOURS au lecteur/visiteur du site, JAMAIS à l'auteur du post Reddit.
+- ❌ INTERDIT : "comme tu l'expliques sur r/solotravel", "tu as posté sur Reddit"
+- ✅ CORRECT : "Une voyageuse partage sur Reddit : « ... »", "Un témoignage sur r/solotravel révèle que..."
+- Les citations Reddit sont en 3ème personne : "l'auteur explique", "un voyageur raconte", "une utilisatrice témoigne".
 
 📊 DONNÉES TANGIBLES : budget, chronologie, chiffres intégrés naturellement. Mots-clés SEO : "budget réel", "chronologie", "contraintes".
 
@@ -1829,6 +1834,7 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 🔍 ANALYSE CRITIQUE : coûts cachés, pieges, erreurs frequentes. Distinction faits / ressentis / interpretations.
 
 📐 DENSITÉ NARRATIVE : chaque paragraphe fait avancer l'histoire, une décision, ou réduit un risque.
+🚫 INTERDIT : UNE SEULE PHRASE PAR <p>. Chaque balise <p> contient 3-5 phrases qui forment un argument complet. Une phrase isolée dans un <p> = rythme saccadé = échec éditorial. Regroupe les phrases qui parlent du même sujet dans le même <p>.
 ✅ PROGRESSION CONSTANTE : chaque paragraphe apporte une information nouvelle qui fait avancer le récit. Si un conseil ou un constat a déjà été donné, passe au point suivant. Exemple : après avoir parlé du coût des retraits, enchaîne sur les alternatives (Wise, Revolut) — ne reformule pas le coût différemment.
 
 🎭 ÉCRITURE HUMAINE — CRUCIAL :
@@ -1848,7 +1854,7 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 
 📊 ÉLÉMENTS STRUCTURELS EVERGREEN (obligatoires si le sujet s'y prête) :
 - TABLEAU COMPARATIF : obligatoire si l'article compare 2+ options, destinations ou produits. Format HTML <table> avec <thead> et <tbody>. Ex: comparatif budget, avantages/inconvénients, destinations côte à côte.
-- FAQ SEO : 3-5 questions/réponses en fin de développement si le sujet a une intention informationnelle. Format : <h3>Question ?</h3><p>Réponse.</p>
+- FAQ SEO : 3-5 questions/réponses en fin de développement si le sujet a une intention informationnelle. Format OBLIGATOIRE : <details><summary>Question ?</summary><p>Réponse détaillée.</p></details> — PAS de <h3> pour les questions FAQ, utilise UNIQUEMENT <details><summary>.
 - CHECKLIST : obligatoire si l'article est un guide pratique ou un plan d'action. Format <ul><li> avec items actionnables.
 
 🎯 AFFILIATION NATIVE (2-4 insertions max, DANS LE FLUX) :

@@ -68,7 +68,7 @@ function affiliateWidget(type, dest) {
 
 function faqSection(pairs) {
   return `<h2>Questions fréquentes</h2>\n` +
-    pairs.map(([q, a]) => `<h3>${escHtml(q)}</h3>\n<p>${a}</p>`).join('\n');
+    pairs.map(([q, a]) => `<details><summary>${escHtml(q)}</summary><p>${a}</p></details>`).join('\n');
 }
 
 function faqSchema(pairs, url) {

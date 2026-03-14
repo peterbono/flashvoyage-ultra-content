@@ -946,7 +946,7 @@ export async function fixEmptyFAQ(html, title = '') {
       { q: 'Comment se déplacer à ' + destination + ' ?', a: 'Plusieurs options existent : transports en commun, taxis, scooters ou location de voiture. Le choix dépend de ton budget et de ton itinéraire.' },
       { q: destination + ' est-il adapté aux voyageurs solo ?', a: 'Oui, avec une bonne préparation. Prévois des hébergements bien notés et renseigne-toi sur les conditions locales.' },
     ];
-    const faqHtml = '<h2>Questions fréquentes</h2>\n' + faqQuestions.map(f => '<h3>' + f.q + '</h3>\n<p>' + f.a + '</p>').join('\n');
+    const faqHtml = '<h2>Questions fréquentes</h2>\n' + faqQuestions.map(f => '<details><summary>' + f.q + '</summary><p>' + f.a + '</p></details>').join('\n');
     
     // Insert before conclusion/retenir or at end
     const beforeConclusion = /<h2[^>]*>\s*(?:ce\s*qu.?il\s*faut\s*retenir|à\s*retenir|nos\s*recommandations?|articles?\s*connexes?)\s*<\/h2>/i;
@@ -1021,7 +1021,7 @@ export async function fixEmptyFAQ(html, title = '') {
 
   // Build FAQ HTML
   const faqHtml = selected.map(f =>
-    `<h3>${f.q}</h3>\n<p>${f.a}</p>`
+    `<details><summary>${f.q}</summary><p>${f.a}</p></details>`
   ).join('\n');
 
   // Replace FAQ content

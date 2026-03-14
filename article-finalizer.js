@@ -1776,6 +1776,8 @@ class ArticleFinalizer {
   // A) Placement déterministe en mode OFFLINE - AMÉLIORÉ pour cohérence éditoriale
   placeWidgetsOffline(html, widgetScripts) {
     let out = html;
+    // FIX: Add wp-block-quote class to all blockquotes for WordPress native styling
+    out = out.replace(/<blockquote(?!\s+class)([^>]*)>/gi, '<blockquote class="wp-block-quote">');
 
     const flights = widgetScripts.flights || '';
     const connectivity = widgetScripts.connectivity || '';
@@ -2393,7 +2395,7 @@ class ArticleFinalizer {
         }
         // Si insertion dans les 500 premiers chars → label neutre (pas de Reddit dans le hook)
         const citeLabel = insertAfterIndex < 500 ? 'Témoignage de voyageur' : 'Extrait Reddit';
-        const citationBlock = `<blockquote><p>${escaped}</p><p><cite>— ${citeLabel}</cite></p></blockquote>`;
+        const citationBlock = `<blockquote class="wp-block-quote"><p>${escaped}</p><p><cite>— ${citeLabel}</cite></p></blockquote>`;
         if (insertAfterIndex > 0) {
           finalHtml = finalHtml.slice(0, insertAfterIndex) + '\n\n' + citationBlock + '\n\n' + finalHtml.slice(insertAfterIndex);
           console.log(`✅ FINALIZER: Citation du récit insérée depuis evidence.source_snippets (après hook narratif)`);
@@ -8820,6 +8822,8 @@ class ArticleFinalizer {
   applyDeterministicFinalTextCleanup(html) {
     if (!html || typeof html !== 'string') return html;
     let out = html;
+    // FIX: Add wp-block-quote class to all blockquotes for WordPress native styling
+    out = out.replace(/<blockquote(?!\s+class)([^>]*)>/gi, '<blockquote class="wp-block-quote">');
 
     // Corriger ponctuation cassée en début de paragraphe
     out = out.replace(/<p[^>]*>\s*[?.!,:;]\s*/gi, '<p>');
@@ -8902,6 +8906,8 @@ class ArticleFinalizer {
   ensureMinimumNewsSerpSections(html, finalDestination = '') {
     if (!html || typeof html !== 'string') return html;
     let out = html;
+    // FIX: Add wp-block-quote class to all blockquotes for WordPress native styling
+    out = out.replace(/<blockquote(?!\s+class)([^>]*)>/gi, '<blockquote class="wp-block-quote">');
     const destination = String(finalDestination || '').trim() || 'Asie';
     const lower = out.toLowerCase();
 
@@ -8952,6 +8958,8 @@ class ArticleFinalizer {
   enforceNewsDecisionAndCtaFriction(html) {
     if (!html || typeof html !== 'string') return html;
     let out = html;
+    // FIX: Add wp-block-quote class to all blockquotes for WordPress native styling
+    out = out.replace(/<blockquote(?!\s+class)([^>]*)>/gi, '<blockquote class="wp-block-quote">');
 
     const text = out.replace(/<[^>]+>/g, ' ');
     const decisionRegex = /notre\s+(arbitrage|verdict|conseil)|si\s+tu\s+\w+[^.]{0,120}(choisis|privil[eé]gie|opte|[eé]vite)|mieux\s+vaut/i;
@@ -8987,6 +8995,8 @@ class ArticleFinalizer {
   ensureNewsActionableConclusion(html) {
     if (!html || typeof html !== 'string') return html;
     let out = html;
+    // FIX: Add wp-block-quote class to all blockquotes for WordPress native styling
+    out = out.replace(/<blockquote(?!\s+class)([^>]*)>/gi, '<blockquote class="wp-block-quote">');
 
     const actionablePattern = /<h2[^>]*>\s*(?:ce\s*qu.?il\s*faut\s*retenir|à\s*retenir|en\s*r[ée]sum[ée]|conclusion|prochaines?\s*[ée]tapes?)[^<]*<\/h2>/i;
     if (actionablePattern.test(out)) {
@@ -9028,6 +9038,8 @@ class ArticleFinalizer {
   ensureNewsFaqStructure(html) {
     if (!html || typeof html !== 'string') return html;
     let out = html;
+    // FIX: Add wp-block-quote class to all blockquotes for WordPress native styling
+    out = out.replace(/<blockquote(?!\s+class)([^>]*)>/gi, '<blockquote class="wp-block-quote">');
 
     // Normalisation minimale des details/summary cassés.
     out = out
@@ -9114,6 +9126,8 @@ class ArticleFinalizer {
     };
 
     let out = html;
+    // FIX: Add wp-block-quote class to all blockquotes for WordPress native styling
+    out = out.replace(/<blockquote(?!\s+class)([^>]*)>/gi, '<blockquote class="wp-block-quote">');
     const before = getScore(out);
 
     // Garde-fous déjà existants (idempotents)
@@ -9581,6 +9595,8 @@ class ArticleFinalizer {
   applyNewsRenderingProfile(html) {
     if (!html || typeof html !== 'string') return html;
     let out = html;
+    // FIX: Add wp-block-quote class to all blockquotes for WordPress native styling
+    out = out.replace(/<blockquote(?!\s+class)([^>]*)>/gi, '<blockquote class="wp-block-quote">');
     let removed = 0;
 
     // 1) FAQ NEWS: conserver une version concise et valide (ne pas supprimer complètement)
