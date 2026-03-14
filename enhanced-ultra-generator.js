@@ -522,7 +522,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       console.log(`   Hints: ${directive.searchHints.slice(0, 3).join(', ')}`);
       console.log(`   RSS actif: ${directive.useRss ? 'oui' : 'non'}\n`);
       const forcedEditorialMode = String(process.env.FORCE_EDITORIAL_MODE || '').toLowerCase();
-      const enforceNewsHardGate = directive.articleType === 'news' || forcedEditorialMode === 'news';
+      const enforceNewsHardGate = forcedEditorialMode ? forcedEditorialMode === 'news' : directive.articleType === 'news';
       if (enforceNewsHardGate) {
         console.log('🛡️ SOURCE_FILTER: NEWS hard gate géographique activé');
       }
