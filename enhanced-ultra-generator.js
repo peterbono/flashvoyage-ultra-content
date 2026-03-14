@@ -2105,12 +2105,39 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
     const hasFaqHeading = /<h[23][^>]*>\s*(?:faq|questions?\s+fr[ée]quentes?)\s*<\/h[23]>/i.test(html)
       || /<!-- wp:heading[^>]*-->\s*<h2[^>]*>\s*questions?\s+fr[eé]quentes\s*<\/h2>/i.test(html);
     const detailsCount = (String(html).match(/<details[\s>]/gi) || []).length;
-    if (!hasFaqHeading || detailsCount >= 2) return html;
-    const extra = [
+
+    // If FAQ heading exists AND we already have 2+ details, nothing to do
+    if (hasFaqHeading && detailsCount >= 2) return html;
+
+    const faqDetails = [
+      '<!-- wp:details -->',
       '<details><summary>Quel budget prévoir sans mauvaise surprise ?</summary><p>Prévois une marge pour les frais annexes et vérifie toujours le coût total avant réservation.</p></details>',
-      '<details><summary>Quelle erreur éviter en priorité ?</summary><p>Ne base pas ta décision sur un seul prix affiché : compare bagages, transferts et conditions d’annulation.</p></details>'
-    ].slice(0, 2 - detailsCount).join('\n');
-    return `${html}\n${extra}`;
+      '<!-- /wp:details -->',
+      '<!-- wp:details -->',
+      "<details><summary>Quelle erreur éviter en priorité ?</summary><p>Ne base pas ta décision sur un seul prix affiché : compare bagages, transferts et conditions d'annulation.</p></details>",
+      '<!-- /wp:details -->'
+    ].join('\n');
+
+    // If no FAQ heading at all, create the full section (H2 + details)
+    if (!hasFaqHeading) {
+      const faqBlock = [
+        '<!-- wp:heading -->',
+        '<h2>Questions fréquentes</h2>',
+        '<!-- /wp:heading -->',
+        faqDetails
+      ].join('\n');
+      // Insert before conclusion/retenir section or at end
+      const beforeConclusion = /<h2[^>]*>\s*(?:ce\s*qu.?il\s*faut\s*retenir|à\s*retenir|nos\s*recommandations?|articles?\s*connexes?)\s*<\/h2>/i;
+      const m = html.match(beforeConclusion);
+      if (m) {
+        const idx = html.indexOf(m[0]);
+        return html.slice(0, idx) + faqBlock + '\n' + html.slice(idx);
+      }
+      return html + '\n' + faqBlock;
+    }
+
+    // FAQ heading exists but fewer than 2 details: add missing details after heading
+    return html + '\n' + faqDetails;
   }
 
   enforceSourceTraceability(html = '', sourceUrl = '') {
