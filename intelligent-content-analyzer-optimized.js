@@ -1957,24 +1957,38 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 - Titres H2, paragraphes, listes, citations : tout doit être rédigé en français dans ta sortie.
 - Vérifie chaque clé du JSON avant de répondre : 0% d'anglais toléré dans la sortie.
 
-📝 RÈGLES POUR LE TITRE (OBLIGATOIRE) — Format SEO + intention claire :
-- Structure : [Révélation personnelle forte] + [Intent SEO]
+📝 RÈGLES POUR LE TITRE (OBLIGATOIRE) — HOOK ÉMOTIONNEL + SEO :
+- Structure : [Tension/Enjeu émotionnel] + [Destination] + [Curiosity gap]
+- Le titre doit provoquer une ÉMOTION : peur de rater, regret, surprise, soulagement, injustice.
+- Patterns qui HOOKENT (utilise-en un) :
+  • REGRET : "J'aurais dû savoir ça avant [destination]" / "L'erreur à X€ que j'ai faite à [destination]"
+  • TENSION : "[Destination] : le moment où j'ai compris que [révélation]"
+  • INJUSTICE : "Pourquoi personne ne te prévient sur [problème] à [destination]"
+  • CURIOSITÉ : "[Chiffre inattendu] + [destination] : ce que ça change vraiment"
+  • CONTRASTE : "[Destination] : ce que tu crois vs ce qui t'attend vraiment"
+- ❌ INTERDITS : titres descriptifs plats ("X risques que...", "l'itinéraire qu'on te cache", "guide complet", "tout savoir sur")
+- Le lecteur doit ressentir : "il FAUT que je lise ça sinon je vais le regretter"
 - Intent explicite : budget / sécurité / long séjour / erreurs à éviter / guide pratique
 - ✅ Titre sans date — sauf si l'année est liée à une actualité (changement de visa, nouvelle loi). Exemple : «Visa nomade Thaïlande : retour d'expérience» plutôt que «Visa nomade Thaïlande (2026)».
 - ✅ Titres H1 et H2 en texte pur — les emojis restent dans le corps de l'article (paragraphes, listes). Exemple : «<h2>Nos recommandations</h2>» et non «<h2>🎯 Nos recommandations</h2>».
 - ✅ FIDÉLITÉ CHIFFRES TITRE : chaque chiffre dans le titre garde son contexte source. Exemple : si la source dit «$50/month for coworking», le titre peut dire «coworking à ~46 €/mois» — le chiffre reste lié au coworking, pas au coût de la vie global.
 - 💶 TITRE EN EUROS UNIQUEMENT : convertis en euros (taux ~0.92). Exemple : source «$2500» → titre «2 300 €». Le symbole € se place après le nombre.
-- Exemples BONS :
-  ✅ "Comment voyager 12 mois en Asie avec 23 000 € sans rentrer fauché"
-  ✅ "Voyager seule en Asie : budget, sécurité et erreurs à éviter (guide complet)"
-  ✅ "Budget réel pour voyager 6–18 mois en Asie (+ conseils de voyageurs)"
-  ✅ "Visa Nomade Digital en Thaïlande : Mon Retour d'Expérience"
-  ✅ "Vivre à Bali avec 1000€/mois : Budget Réaliste pour Nomades"
-  ✅ "Arnaque eSIM en Indonésie : Comment je l'ai évitée"
-- ✅ Transforme les titres fades en titres spécifiques :
-  «Témoignage voyage: retours et leçons» → «Comment j'ai tenu 6 mois en Thaïlande avec 1 200 €/mois»
-  «Mon expérience en Asie» → «Visa run au Laos : ce que 3 passages m'ont appris»
-  «Vivre à Bali : Choix de Logement (2026)» → «Vivre à Bali : Canggu ou Ubud, le vrai coût mois par mois»
+- Exemples HOOKS (à imiter) :
+  ✅ "J'ai claqué 400€ de trop en Thaïlande — l'erreur bête que tout le monde fait"
+  ✅ "Vietnam solo : le truc que j'aurais voulu savoir avant de réserver"
+  ✅ "Bali à 1000€/mois ? Voilà ce qu'on ne te dit pas"
+  ✅ "Pourquoi ton premier mois à Bangkok va te coûter le double"
+  ✅ "Visa run au Laos : ce que 3 passages m'ont vraiment coûté"
+  ✅ "Corée du Sud : l'arnaque transport que 90% des touristes se prennent"
+- ❌ Exemples FADES (à ne JAMAIS produire) :
+  ❌ "Guide complet pour voyager en Asie" → FADE, zéro émotion
+  ❌ "5 risques que les blogs cachent" → LISTICLE GÉNÉRIQUE
+  ❌ "L'itinéraire qu'on te cache" → CLICKBAIT VIDE, pas de stakes concrets
+  ❌ "Budget, sécurité et erreurs à éviter" → CATALOGUE, pas de tension
+- ✅ Transforme TOUJOURS les titres fades en hooks émotionnels :
+  «Témoignage voyage: retours et leçons» → «J'ai tenu 6 mois en Thaïlande avec 1 200€ — voilà comment»
+  «Mon expérience en Asie» → «Visa run au Laos : ce que 3 passages m'ont appris (et coûté)»
+  «Vivre à Bali : Choix de Logement» → «Bali : Canggu ou Ubud ? Le vrai coût que personne n'affiche»
 - Le titre DOIT contenir une destination asiatique précise (ville ou pays)
 - Le titre DOIT être actionnable et spécifique
 - Maximum 70 caractères pour le SEO
