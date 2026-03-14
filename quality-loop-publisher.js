@@ -589,8 +589,16 @@ async function publishArticle(article) {
   let finalContent = article.content || '';
   finalContent = finalContent.replace(/<blockquote(?!\s+class)([^>]*)>/gi, '<blockquote class="wp-block-quote"$1>');
   
-  // Merge consecutive short <p> tags (< 150 chars each) into grouped paragraphs
-  // This fixes the "one sentence per paragraph" issue for better reading rhythm
+  // Step 1: Remove AI filler sentences (empty calories that scream "AI-generated")
+  const aiFillers = [
+    /<p[^>]*>\s*(?:La r[eé]alit[eé] est plus nuanc[eé]e[^<]*|C'est un point important[^<]*|Il faut savoir que[^<]*|Chaque choix a un co[uû]t[^<]*|C'est l[aà] que tout change[^<]*|Et c'est exactement le probl[eè]me[^<]*|C'est une question l[eé]gitime[^<]*)\s*<\/p>/gi,
+    /<p[^>]*>\s*(?:Mais ce n'est pas tout[^<]*|Et ce n'est que le d[eé]but[^<]*|La suite va te surprendre[^<]*)\s*<\/p>/gi,
+  ];
+  for (const filler of aiFillers) {
+    finalContent = finalContent.replace(filler, '');
+  }
+  
+  // Step 2: Merge consecutive short <p> (< 180 chars) — group by 2+ for natural rhythm
   {
     const pRegex = /<p([^>]*)>(.*?)<\/p>/gs;
     const parts = [];
@@ -602,27 +610,29 @@ async function publishArticle(article) {
       }
       const attrs = match[1] || '';
       const text = match[2] || '';
-      const isShort = text.replace(/<[^>]*>/g, '').trim().length < 150;
+      const plainLen = text.replace(/<[^>]*>/g, '').trim().length;
+      const isShort = plainLen < 180 && plainLen > 5;
       const hasSpecialClass = /class=/.test(attrs);
-      parts.push({ type: 'p', attrs, text, isShort: isShort && !hasSpecialClass, html: match[0] });
+      const hasLink = /<a\s/.test(text);
+      parts.push({ type: 'p', attrs, text, isShort: isShort && !hasSpecialClass && !hasLink, html: match[0] });
       lastIndex = match.index + match[0].length;
     }
     if (lastIndex < finalContent.length) {
       parts.push({ type: 'other', html: finalContent.slice(lastIndex) });
     }
     
-    // Group consecutive short paragraphs (max 3 per group)
+    // Group consecutive short paragraphs (flush at 2+)
     let merged = '';
     let grouping = [];
     for (const part of parts) {
       if (part.type === 'p' && part.isShort) {
         grouping.push(part.text);
-        if (grouping.length >= 3) {
+        if (grouping.length >= 4) {
           merged += '<p>' + grouping.join(' ') + '</p>\n';
           grouping = [];
         }
       } else {
-        if (grouping.length > 1) {
+        if (grouping.length >= 2) {
           merged += '<p>' + grouping.join(' ') + '</p>\n';
         } else if (grouping.length === 1) {
           merged += '<p>' + grouping[0] + '</p>\n';
@@ -631,7 +641,7 @@ async function publishArticle(article) {
         merged += part.html;
       }
     }
-    if (grouping.length > 1) {
+    if (grouping.length >= 2) {
       merged += '<p>' + grouping.join(' ') + '</p>\n';
     } else if (grouping.length === 1) {
       merged += '<p>' + grouping[0] + '</p>\n';

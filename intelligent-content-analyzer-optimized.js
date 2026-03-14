@@ -1833,16 +1833,23 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 
 🔍 ANALYSE CRITIQUE : coûts cachés, pieges, erreurs frequentes. Distinction faits / ressentis / interpretations.
 
-📐 DENSITÉ NARRATIVE : chaque paragraphe fait avancer l'histoire, une décision, ou réduit un risque.
-🚫 INTERDIT : UNE SEULE PHRASE PAR <p>. Chaque balise <p> contient 3-5 phrases qui forment un argument complet. Une phrase isolée dans un <p> = rythme saccadé = échec éditorial. Regroupe les phrases qui parlent du même sujet dans le même <p>.
-✅ PROGRESSION CONSTANTE : chaque paragraphe apporte une information nouvelle qui fait avancer le récit. Si un conseil ou un constat a déjà été donné, passe au point suivant. Exemple : après avoir parlé du coût des retraits, enchaîne sur les alternatives (Wise, Revolut) — ne reformule pas le coût différemment.
+📐 STRUCTURE PARAGRAPHES — CONTRAINTES DURES :
+- MINIMUM 200 caractères par <p> (sauf max 2 one-liners dramatiques par article entier).
+- Chaque <p> = un BLOC DE PENSÉE de 3-5 phrases qui développent UNE idée complète.
+- INTERDIT les filler IA : "La réalité est plus nuancée.", "Chaque choix a un coût.", "C'est un point important.", "Il faut savoir que...". Ces phrases ne disent RIEN — supprime-les.
+- INTERDIT le rythme "ping-pong" : phrase courte → phrase courte → phrase courte. C'est le pattern #1 qui trahit l'IA.
+- Structure de paragraphe HUMAINE : [accroche courte] + [développement 2-3 phrases] + [conclusion ou transition]. Pas 5 phrases courtes alignées.
+- RATIO OBLIGATOIRE : 70%+ des paragraphes font 200+ caractères. Max 30% de paragraphes courts (<150 chars).
+✅ PROGRESSION CONSTANTE : chaque paragraphe apporte une information nouvelle. Ne reformule JAMAIS un point déjà fait.
 
-🎭 ÉCRITURE HUMAINE — CRUCIAL :
-- Varie la longueur des phrases : alterne courtes (5-8 mots) et longues (20-30 mots). Pas de rythme mécanique.
-- Commence certaines phrases par "Et", "Mais", "Sauf que", "Le problème,". Pas toujours sujet-verbe-complément.
-- Intègre 2-3 digressions courtes qui montrent une vraie connaissance du terrain (bruit du trafic, odeur d'encens, chaleur du tarmac).
-- ✅ Utilise des tournures directes et vivantes : «Le visa te coûtera 35 €», «Wise te fait économiser 15 € par retrait», «Ton estomac ne tiendra pas au pad thaï de rue le premier soir». Ces phrases sonnent humain.
-- ✅ Varie les attaques de paragraphes : commence par «Et», «Mais», «Sauf que», «Le problème,», une question, un chiffre-choc. Exemple : «Sauf que les 220 bahts de frais, multipliés par 8 retraits, ça fait une nuit d'hôtel.»
+🎭 ÉCRITURE HUMAINE — TON DE CONVERSATION ENTRE POTES :
+- Tu écris comme un pote qui RACONTE son voyage au bar. Pas comme un guide touristique.
+- MÉLANGE dans le même paragraphe : un fait concret + un ressenti/sensation + une conséquence pratique. Exemple : «Le bus pour Vientiane part à 7h, sauf que personne te dit que la gare routière est à 45 minutes du centre — et le tuk-tuk pour y aller te coûte autant que le billet de bus. Tu te retrouves à 6h du mat dans le noir, ton sac de 15 kilos sur le dos, à négocier en lao avec un chauffeur qui sent que t'es pressé.»
+- DIGRESSIONS OBLIGATOIRES (2-3 par article) : insère des apartés sensoriels ou anecdotiques entre parenthèses ou en incise. Exemples : "(le café au 7-Eleven est étrangement bon)", "— le genre de truc que tu découvres en slip à 6h du mat dans un dortoir de Chiang Mai", "(spoiler : c'est toujours plus loin que sur Google Maps)".
+- VARIE les attaques de paragraphes : "Et là,", "Sauf que", "Le truc c'est que", "Bon.", "Résultat :", une question directe, un chiffre-choc. JAMAIS deux paragraphes consécutifs qui commencent par "Le/La/Les/Tu/Il".
+- EXPRESSIONS ORALES naturelles : "franchement", "genre", "du coup", "en vrai", "le truc c'est que", "bon", "bref". 2-3 par section, pas plus.
+- LONGUEUR DE PHRASES : alterne UNE phrase courte percutante (5-8 mots) pour DEUX phrases longues développées (20-35 mots). Ratio 1:2, pas 1:1.
+- Citations Reddit : intégrées DANS le flux narratif entre « », fermées avec ». TOUJOURS contextualisées (qui parle, pourquoi c'est pertinent).
 - Les citations Reddit entre « » doivent TOUJOURS être fermées avec ».
 
 🇫🇷 NICHE FRANCOPHONE ASIE — L'article s'adresse a des voyageurs FRANCOPHONES qui partent en Asie :
