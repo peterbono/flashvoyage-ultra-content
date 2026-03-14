@@ -1496,7 +1496,8 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
         tags: finalizedArticle.tags,
         featuredImage: finalizedArticle.featuredImage,
         wpPostId: publishedArticle.id,
-        pipelineContext
+        pipelineContext,
+        _qualityGatePassed: finalizedArticle._qualityGatePassed || false
       };
 
     } catch (error) {
