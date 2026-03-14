@@ -14,6 +14,7 @@ import costTracker from './llm-cost-tracker.js';
 import RssSignalFetcher from './rss-signal-fetcher.js';
 import EditorialCalendar from './editorial-calendar.js';
 import AuthorManager from './author-manager.js';
+import { applyAllFixes } from './review-auto-fixers.js';
 
 // Reddit OAuth token cache (module-scoped)
 let _redditTokenCache = { token: null, expires: 0 };
@@ -1117,6 +1118,22 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
 
           // Wrapping: le quality analyzer cherche un h1 pour le check "destination dans titre"
           // mais finalizedArticle.content n'a pas de h1 (le titre est un champ separe)
+          // AUTO-FIXERS: Apply programmatic fixes before quality gate scoring
+          try {
+            const autoFixContext = {
+              destination: finalizedArticle.destination || finalizedArticle.final_destination || '',
+              sourceUrl: pipelineContext?.source_truth?.source_url || pipelineContext?.source_url || null
+            };
+            const { html: autoFixedHtml, totalFixed: autoFixCount } = await applyAllFixes(
+              finalizedArticle.content, finalizedArticle.title || '', [], null, autoFixContext
+            );
+            if (autoFixedHtml !== finalizedArticle.content) {
+              finalizedArticle.content = autoFixedHtml;
+              console.log(`\u2705 AUTO-FIXERS pre-gate: ${autoFixCount} fix(es) appliqu\u00e9(s)`);
+            }
+          } catch (autoFixErr) {
+            console.warn(`\u26a0\ufe0f Auto-fixers pre-gate \u00e9chou\u00e9s: ${autoFixErr.message}`);
+          }
           const contentForScoring = `<h1>${finalizedArticle.title || ''}</h1>\n${finalizedArticle.content}`;
           const prePublishScore = qualityAnalyzer.getGlobalScore(contentForScoring, editorialMode, finalizedArticle.angle);
           const prePublishPct = parseFloat(prePublishScore.globalScore);
@@ -1241,6 +1258,23 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
                   if (improvedContent && improvedContent.length > finalizedArticle.content.length * 0.65) {
                     finalizedArticle.content = improvedContent;
                     await reinjectInternalLinks(`POST-IMPROVE-${iteration}`);
+
+                    // AUTO-FIXERS: Apply programmatic fixes after LLM improve
+                    try {
+                      const autoFixCtx = {
+                        destination: finalizedArticle.destination || finalizedArticle.final_destination || '',
+                        sourceUrl: pipelineContext?.source_truth?.source_url || pipelineContext?.source_url || null
+                      };
+                      const { html: postImproveFixed, totalFixed: postFixCount } = await applyAllFixes(
+                        finalizedArticle.content, finalizedArticle.title || '', [], null, autoFixCtx
+                      );
+                      if (postImproveFixed !== finalizedArticle.content) {
+                        finalizedArticle.content = postImproveFixed;
+                        console.log(`   \u2705 AUTO-FIXERS post-improve (iter ${iteration}): ${postFixCount} fix(es)`);
+                      }
+                    } catch (afErr) {
+                      console.warn(`   \u26a0\ufe0f Auto-fixers post-improve \u00e9chou\u00e9s: ${afErr.message}`);
+                    }
                     
                     const recheckHtml = `<h1>${finalizedArticle.title || ''}</h1>\n${finalizedArticle.content}`;
                     const recheck = qualityAnalyzer.getGlobalScore(recheckHtml, editorialMode, finalizedArticle.angle);
