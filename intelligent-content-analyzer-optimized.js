@@ -2408,6 +2408,13 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
             console.warn('   ⚠️ Recommandations absentes - ajout minimal');
             sections.push(`<h2>Nos recommandations : Par où commencer ?</h2>\n<p>Nous recommandons de privilégier l'Asie du Sud-Est pour un budget maîtrisé.</p>`);
           }
+          // FAQ section (FIX: was missing in Option B path)
+          if (article.faq && article.faq.trim()) {
+            let faqText = article.faq.trim();
+            if (!faqText.includes('<h2>')) faqText = `<h2 class="wp-block-heading">Questions fréquentes</h2>\n${faqText}`;
+            sections.push(faqText);
+            console.log(`   ✅ FAQ intégrée Option B (${(faqText.match(/<details/g) || []).length} questions)`);
+          }
           if (article.ce_qu_il_faut_retenir && article.ce_qu_il_faut_retenir.trim()) {
             let retenirText = article.ce_qu_il_faut_retenir.trim();
             if (!retenirText.includes('<h2>')) sections.push(`<h2>Ce qu'il faut retenir</h2>\n${retenirText}`);
