@@ -28,7 +28,7 @@ import { dirname, join } from 'path';
 import EnhancedUltraGenerator from './enhanced-ultra-generator.js';
 import { runAllAgents, runCeoValidator } from './review-agents.js';
 import { validatePrePublish } from './pre-publish-validator.js';
-import { applyAllFixes } from './review-auto-fixers.js';
+import { applyAllFixes, fixIncoherentImage, fixAffiliateCoverage, fixMinimumInternalLinks, fixInternalLinkVolume } from './review-auto-fixers.js';
 import { generateWithClaude } from './anthropic-client.js';
 import axios from 'axios';
 
@@ -819,6 +819,95 @@ async function main() {
       break;
     }
 
+
+    // ══════════════════════════════════════════════════════════
+    //  Phase 3a: Route non-text issues to specialized fixers
+    // ══════════════════════════════════════════════════════════
+    const allPanelIssuesForRouting = reviewResult.allIssues || [];
+    const imageIssues = allPanelIssuesForRouting.filter(i => 
+      i._label === 'UX/Bugs' && /image|img|photo|illustration|alt/i.test(i.description)
+    );
+    const widgetIssues = allPanelIssuesForRouting.filter(i => 
+      i._label === 'Affiliation' && /widget|module|affili/i.test(i.description)
+    );
+    const linkIssues = allPanelIssuesForRouting.filter(i => 
+      i._label === 'SEO' && /lien|link|maillage|internal/i.test(i.description)
+    );
+    const llmRoutableIssues = allPanelIssuesForRouting.filter(i => 
+      !imageIssues.includes(i) && !widgetIssues.includes(i) && !linkIssues.includes(i)
+    );
+
+    let specializedFixCount = 0;
+    // Image issues → fixIncoherentImage
+    if (imageIssues.length > 0) {
+      try {
+        const imgResult = await fixIncoherentImage(article.content, article.title);
+        if (imgResult.fixed) {
+          article = { ...article, content: imgResult.html };
+          writeFileSync('/tmp/last-generated-article.html', article.content);
+          specializedFixCount++;
+          console.log(`   🖼️  Image fixer: ${imgResult.description}`);
+        }
+      } catch (e) {
+        console.warn(`   ⚠️ Image fixer échoué: ${e.message}`);
+      }
+    }
+    // Widget/affiliation issues → fixAffiliateCoverage
+    if (widgetIssues.length > 0) {
+      try {
+        const affResult = await fixAffiliateCoverage(article.content, destination);
+        if (affResult.fixed) {
+          article = { ...article, content: affResult.html };
+          writeFileSync('/tmp/last-generated-article.html', article.content);
+          specializedFixCount++;
+          console.log(`   🔗 Affiliate fixer: ${affResult.description}`);
+        }
+      } catch (e) {
+        console.warn(`   ⚠️ Affiliate fixer échoué: ${e.message}`);
+      }
+    }
+    // Link/SEO issues → fixMinimumInternalLinks + fixInternalLinkVolume
+    if (linkIssues.length > 0) {
+      try {
+        const linkMinResult = await fixMinimumInternalLinks(article.content, article.title, destination);
+        if (linkMinResult.fixed) {
+          article = { ...article, content: linkMinResult.html };
+          writeFileSync('/tmp/last-generated-article.html', article.content);
+          specializedFixCount++;
+          console.log(`   🔗 Internal links fixer: ${linkMinResult.description}`);
+        }
+        const linkVolResult = await fixInternalLinkVolume(article.content);
+        if (linkVolResult.fixed) {
+          article = { ...article, content: linkVolResult.html };
+          writeFileSync('/tmp/last-generated-article.html', article.content);
+          specializedFixCount++;
+          console.log(`   🔗 Link volume fixer: ${linkVolResult.description}`);
+        }
+      } catch (e) {
+        console.warn(`   ⚠️ Link fixer échoué: ${e.message}`);
+      }
+    }
+    if (specializedFixCount > 0) {
+      console.log(`   ✅ ${specializedFixCount} specialized fix(es) applied before LLM rewrite`);
+    }
+
+    // Run auto-fixers after each panel iteration (not just initial pass)
+    try {
+      const { html: postPanelFixed, totalFixed: postPanelFixCount } = await applyAllFixes(
+        article.content, article.title, [], wpAuth, {
+          destination,
+          sourceUrl: ctx.sourceUrl
+        }
+      );
+      if (postPanelFixed !== article.content) {
+        article = { ...article, content: postPanelFixed };
+        writeFileSync('/tmp/last-generated-article.html', article.content);
+        console.log(`   ✅ Post-panel auto-fixers: ${postPanelFixCount} fix(es)`);
+      }
+    } catch (e) {
+      console.warn(`   ⚠️ Post-panel auto-fixers échoués: ${e.message}`);
+    }
+
     // ══════════════════════════════════════════════════════════
     //  Phase 3b: LLM Rewriter ciblé
     // ══════════════════════════════════════════════════════════
@@ -856,7 +945,8 @@ async function main() {
       fixes.forEach((f, i) => console.log(`      ${f.priority || i + 1}. [${f.agent}] ${f.issue?.substring(0, 100)}`));
 
       // Collect all panel issues for surgical rewrite (they have location data)
-      const allPanelIssues = reviewResult.allIssues || [];
+      // Use only LLM-routable issues (non-text issues already handled by specialized fixers)
+      const allPanelIssues = llmRoutableIssues || reviewResult.allIssues || [];
 
       // Try surgical section-level rewrite first
       let rewritten = await rewriteSections(article.content, allPanelIssues, article.title, ctx);

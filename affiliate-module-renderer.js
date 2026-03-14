@@ -148,10 +148,17 @@ function generateWidgetScript(placement, geo_defaults) {
       return `[fv_widget type="insurance"]`;
 
     case 'accommodation':
-      // Pas de widget hotels disponible, fallback vers flights
-      const accOrigin = geo_defaults?.origin || 'PAR';
-      const accDest = geo_defaults?.destination || 'BKK';
-      return `[fv_widget type="flights" origin="${accOrigin}" destination="${accDest}"]`;
+    case 'hotels': {
+      const hotelCity = geo_defaults?.city || 'bangkok';
+      const hotelCityDisplay = hotelCity.charAt(0).toUpperCase() + hotelCity.slice(1);
+      const bookingUrl = `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(hotelCity)}&aid=2397601`;
+      return `<aside class="affiliate-module affiliate-module--hotels" data-fv-segment="affiliate">` +
+        `<h3 class="affiliate-module-title">🏨 Hébergements à ${hotelCityDisplay}</h3>` +
+        `<p class="affiliate-module-description">Compare les meilleurs hôtels, hostels et appartements à ${hotelCityDisplay}. Réservation flexible et meilleurs prix garantis.</p>` +
+        `<a href="${bookingUrl}" target="_blank" rel="nofollow sponsored" class="affiliate-module-cta">Voir les hébergements →</a>` +
+        `<p class="affiliate-module-disclaimer"><small>Lien partenaire : une commission peut être perçue, sans surcoût pour toi.</small></p>` +
+        `</aside>`;
+    }
 
     case 'coworking':
       return `<p><a href="https://www.coworker.com/?ref=flashvoyage" target="_blank" rel="nofollow">Trouver un espace de coworking</a></p>`;

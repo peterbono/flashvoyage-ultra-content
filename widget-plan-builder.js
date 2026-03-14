@@ -13,14 +13,16 @@ export class WidgetPlanBuilder {
     this.providers = {
       flights: "Travelpayouts-Aviasales",
       esim: "Airalo",
-      insurance: "Travelpayouts-VisitorCoverage" // Ré-activé via shortcode mu-plugin
+      insurance: "Travelpayouts-VisitorCoverage", // Ré-activé via shortcode mu-plugin
+      hotels: "Booking-Affiliate" // Text-based affiliate card (no Travelpayouts widget available)
     };
 
     // Presets de rendu recommandés
     this.presets = {
       flights: "search_bar",
       esim: "compact_card",
-      insurance: "compact_card" // Ré-activé via shortcode mu-plugin
+      insurance: "compact_card", // Ré-activé via shortcode mu-plugin
+      hotels: "affiliate_card" // Text-based card with Booking.com affiliate link
     };
 
     // Contraintes par défaut

@@ -102,7 +102,17 @@ export const REAL_TRAVELPAYOUTS_WIDGETS = {
   // ===== HÔTELS =====
   // HOTELLOOK SUPPRIMÉ - Plus de partenaire hôtels dédié
   hotels: {
-    // Section vide - Hotellook retiré
+    // Hotellook retiré — fallback to text-based Booking.com affiliate card
+    bookingAffiliate: {
+      generic: {
+        brand: "Booking.com",
+        type: "Hotel Affiliate Card",
+        reward: "Commission variable",
+        category: "Hotels",
+        script: null, // No script — rendered as text-based affiliate card by affiliate-module-renderer
+        note: "Text-based affiliate card with Booking.com link. City injected dynamically from geo_defaults."
+      }
+    }
   },
 
   // ===== ASSURANCE (INSURANCE) =====
