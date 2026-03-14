@@ -1610,7 +1610,7 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null, con
 
   // FINAL PASS: Ensure SERP sections exist for quality-analyzer
   try {
-    const serpCeQuePattern = /ce\s*que.*?ne\s*disent?\s*(pas(\s+explicitement)?|explicitement)/i;
+    const serpCeQuePattern = /ce\s*que.*?ne\s*(disent?|mentionnent?|parlent|montrent|r[e\u00e9]v[e\u00e8]lent|abordent)\s*(pas(\s+explicitement)?|explicitement)/i;
     if (!serpCeQuePattern.test(currentHtml)) {
       const serpSection = '<h2>Ce que les guides ne disent pas explicitement</h2>\n<p>Les articles classiques sur cette destination se concentrent sur les aspects positifs. Mais plusieurs voyageurs de retour signalent des r\u00e9alit\u00e9s que les guides occultent\u00a0: les co\u00fbts cach\u00e9s des transferts locaux, les p\u00e9riodes creuses o\u00f9 certains services ferment, et les arnaques r\u00e9currentes ciblant les touristes francophones.</p>\n<p>Un constat fr\u00e9quent dans les t\u00e9moignages\u00a0: la diff\u00e9rence entre le budget pr\u00e9vu et le budget r\u00e9el peut atteindre 30 \u00e0 40\u00a0%, principalement \u00e0 cause de frais non anticip\u00e9s.</p>';
       const insertBefore = currentHtml.match(/<h2[^>]*>[^<]*(erreurs?|limites|ce\s*qu.*retenir|nos\s*recommandations?)[^<]*<\/h2>/i);

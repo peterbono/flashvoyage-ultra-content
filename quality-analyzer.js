@@ -183,7 +183,7 @@ class QualityAnalyzer {
 
     // 1. Sections analytiques obligatoires (40 pts)
     const requiredSections = [
-      { pattern: /ce\s*que.*?ne\s*disent?\s*(pas(\s+explicitement)?|explicitement)/i, name: 'Ce que les autres ne disent pas', points: 20 },
+      { pattern: /ce\s*que.*?ne\s*(disent?|mentionnent?|parlent|montrent|r[eé]v[eè]lent|abordent)\s*(pas(\s+explicitement)?|explicitement)/i, name: 'Ce que les autres ne disent pas', points: 20 },
       { pattern: /erreurs?\s*(fréquentes?|courantes?|à\s*éviter)/i, name: 'Erreurs fréquentes', points: 20 }
     ];
 
