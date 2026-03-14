@@ -29,7 +29,7 @@
  */
 
 import { isKnownLocation } from './airport-lookup.js';
-import { CITY_TO_COUNTRY } from './destinations.js';
+import { CITY_TO_COUNTRY, COUNTRY_DISPLAY_NAMES } from './destinations.js';
 
 class SeoOptimizer {
   constructor() {
@@ -1027,13 +1027,21 @@ class SeoOptimizer {
         const titleLower = title.toLowerCase();
         const placeLower = place.toLowerCase();
 
-        // Check if destination is ALREADY present anywhere in the title
-        const destAlreadyPresent = titleLower.includes(placeLower);
+        // Also check display name (e.g. 'india' → 'Inde') so we don't duplicate
+        const displayName = COUNTRY_DISPLAY_NAMES[placeLower] || null;
+        const displayNameLower = displayName ? displayName.toLowerCase() : null;
+
+        // Check if destination is ALREADY present anywhere in the title (slug OR display name)
+        const destAlreadyPresent = titleLower.includes(placeLower) 
+          || (displayNameLower && titleLower.includes(displayNameLower));
         const first30 = titleLower.substring(0, 30);
+
+        // Use the display name for title when available (avoid raw slug like 'india')
+        const placeForTitle = displayName || place;
 
         if (!destAlreadyPresent) {
           // Destination not in title at all — add "{PowerWord} {Place} : {title}"
-          title = `${powerWord} ${place} : ${title}`;
+          title = `${powerWord} ${placeForTitle} : ${title}`;
         } else if (!first30.includes(placeLower)) {
           // Destination present but not in first 30 chars — just add power word, don't duplicate destination
           if (!titleLower.includes(powerWord.toLowerCase())) {
@@ -1818,10 +1826,13 @@ class SeoOptimizer {
     // Trier par score décroissant
     const sorted = matched.sort((a, b) => b.matchScore - a.matchScore);
     
-    const filtered = sorted.filter(article => article.matchScore >= 3);
+    // FV-FIX: Raise threshold to 10 so wrong-destination articles (pillar +15, mismatch -10 = 5)
+    // don't sneak through. Same-destination articles easily reach 20+ with the dest bonus.
+    const minScore = articleDestination ? 10 : 3; // stricter when we know the destination
+    const filtered = sorted.filter(article => article.matchScore >= minScore);
     
     if (filtered.length < sorted.length) {
-      console.log(`   🔗 Liens filtrés: ${sorted.length} → ${filtered.length} (seuil pertinence: 5)`);
+      console.log(`   🔗 Liens filtrés: ${sorted.length} → ${filtered.length} (seuil pertinence: ${minScore})`);
     }
     
     return filtered;

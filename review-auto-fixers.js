@@ -1223,6 +1223,60 @@ export async function fixTruncatedAnchorText(html) {
  * @param {Object} wpAuth - { url, auth } pour WordPress API
  * @returns {Promise<Object>} { html, fixes[], totalFixed }
  */
+
+/**
+ * Removes HTML comment placeholders left by LLM generation
+ * e.g. <!-- Insertion module Get Your Guide --> or <!-- Widget transport -->
+ */
+export async function fixHTMLCommentPlaceholders(html) {
+  const commentPattern = /<!--\s*(?:Insertion|Widget|Module|Placeholder|TODO|FIXME|Insert|Ajouter)[^>]*-->/gi;
+  const matches = html.match(commentPattern);
+  if (!matches || matches.length === 0) return { html, fixes: [], fixCount: 0 };
+  let fixedHtml = html;
+  let fixCount = 0;
+  const fixes = [];
+  for (const match of matches) {
+    fixedHtml = fixedHtml.replace(match, "");
+    fixCount++;
+    fixes.push(match.substring(0, 60));
+  }
+  if (fixCount > 0) {
+    console.log("    \u2705 " + fixCount + " placeholder comment(s) HTML supprimé(s)");
+  }
+  return { html: fixedHtml, fixes, fixCount };
+}
+
+
+/**
+ * Fixes common JSON-LD typos introduced by LLM rewrites
+ */
+export async function fixJsonLdTypos(html) {
+  if (!html) return { html, fixes: [], fixCount: 0 };
+  let fixedHtml = html;
+  let fixCount = 0;
+  const fixes = [];
+
+  const patterns = [
+    [/"mains+Entity"/gi, '"mainEntity"', 'mainEntity'],
+    [/"mains+EntityOfPage"/gi, '"mainEntityOfPage"', 'mainEntityOfPage'],
+    [/"@s+type"/gi, '"@type"', '@type'],
+    [/"@s+context"/gi, '"@context"', '@context'],
+  ];
+
+  for (const [regex, replacement, label] of patterns) {
+    if (regex.test(fixedHtml)) {
+      fixedHtml = fixedHtml.replace(regex, replacement);
+      fixCount++;
+      fixes.push(label);
+    }
+  }
+
+  if (fixCount > 0) {
+    console.log("    \u2705 " + fixCount + " JSON-LD typo(s) fixed: " + fixes.join(", "));
+  }
+  return { html: fixedHtml, fixes, fixCount };
+}
+
 export async function applyAllFixes(html, title, issues = [], wpAuth = null, context = {}) {
   console.log('\n  🔧 Application des auto-fixes...');
   let currentHtml = html;
@@ -1365,6 +1419,20 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null, con
     console.log(`    ✅ ${placeholderResult.description}`);
   }
 
+  // Remove HTML comment placeholders (LLM artifacts)
+  const commentResult = await fixHTMLCommentPlaceholders(currentHtml);
+  if (commentResult.fixCount > 0) {
+    currentHtml = commentResult.html;
+    totalFixes += commentResult.fixCount;
+
+  // Fix JSON-LD typos
+  const jsonLdResult = await fixJsonLdTypos(currentHtml);
+  if (jsonLdResult.fixCount > 0) {
+    currentHtml = jsonLdResult.html;
+    totalFixes += jsonLdResult.fixCount;
+  }
+  }
+
   // 18. Textes d'ancre tronqués
   const anchorResult = await fixTruncatedAnchorText(currentHtml);
   if (anchorResult.fixed) {
@@ -1434,6 +1502,37 @@ export function fixCorruptedSpaces(html) {
     [/soutien(émotionnel|financier|moral)/gi, 'soutien $1'],
     [/expérience(inoubliable|unique|enrichissante)/gi, 'exp\u00e9rience $1'],
   ];
+
+  // Fix: French short words (articles/pronouns/prepositions) glued to next word starting with accented char
+  // Catches: esépuisé → es épuisé, aéchoué → a échoué, petiteéchoppe → petite échoppe
+  const frenchShortWords = 'a|à|de|du|en|la|le|les|un|une|des|est|et|ou|tu|il|elle|on|je|ne|se|ce|sa|ma|ta|au|es|si|ni|me|te|nous|vous|leur|mon|ton|son|cette|ces|par|pour|sur|dans|avec|sans|qui|que|dont|mais|donc|car|peu|pas|plus|très|tout|bien|trop|ici|bon|mal|vrai|faux|petit|petite|grand|grande|beau|belle|bon|bonne|vieux|vieille|jeune|autre|même|seul|seule';
+  const shortWordGlueRegex = new RegExp(
+    '(?<=\\s|>|^)(' + frenchShortWords + ')([éèêëàâäùûüôîïç][a-zà-ÿ]{2,})', 'gi'
+  );
+  const beforeShort = result;
+  result = result.replace(shortWordGlueRegex, (match, word, rest, offset) => {
+    // Skip if inside HTML tag
+    const ctx = result.substring(Math.max(0, offset - 10), offset);
+    if (ctx.includes('<') && !ctx.includes('>')) return match;
+    fixCount++;
+    return word + ' ' + rest;
+  });
+
+  // Fix: word ending with consonant/vowel glued to word starting with accented vowel (generic catch-all)
+  // Catches patterns like: villageéloigné → village éloigné, marchéépicé → marché épicé
+  const genericGlueRegex = /([a-zà-ÿ]{3,})([éèêëàâäùûüôîïç][a-zà-ÿ]{3,})/gi;
+  const beforeGeneric = result;
+  result = result.replace(genericGlueRegex, (match, word1, word2, offset) => {
+    // Skip if inside HTML tag or HTML entity
+    const ctx = result.substring(Math.max(0, offset - 10), offset + match.length + 5);
+    if ((ctx.includes('<') && !ctx.includes('>')) || ctx.includes('&') ) return match;
+    // Only split if both parts look like real words (3+ chars each)
+    if (word1.length >= 3 && word2.length >= 3) {
+      fixCount++;
+      return word1 + ' ' + word2;
+    }
+    return match;
+  });
   
   for (const [p, r] of gluedPatterns) {
     const b = result;
@@ -1467,6 +1566,8 @@ export default {
   fixEmptyFAQ,
   fixOrphanedWidgets,
   fixPlaceholderPatterns,
+  fixHTMLCommentPlaceholders,
+  fixJsonLdTypos,
   fixTruncatedAnchorText,
   fixCorruptedSpaces,
   applyAllFixes
