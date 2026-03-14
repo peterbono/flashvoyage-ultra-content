@@ -650,7 +650,7 @@ class ArticleFinalizer {
     console.log(`🔍 DEBUG finalizeArticle: Widgets après replaceWidgetPlaceholders: count=${widgetsAfterWidgets.count}, types=[${widgetsAfterWidgets.types.join(', ')}]`);
 
     // 8b. Inject affiliate modules (if enabled)
-    if (ENABLE_AFFILIATE_INJECTOR && pipelineContext?.affiliate_plan?.placements?.length > 0) {
+    if ((typeof ENABLE_AFFILIATE_INJECTOR !== "undefined" ? ENABLE_AFFILIATE_INJECTOR : true) && pipelineContext?.affiliate_plan?.placements?.length > 0) {
       try {
         const { renderAffiliateModule } = await import('./affiliate-module-renderer.js');
         const affiliatePlan = pipelineContext.affiliate_plan;
@@ -2813,7 +2813,7 @@ class ArticleFinalizer {
     // PHASE 6.2.4: CHECK C amélioré - CTA/Affiliate plan: conformité stricte
     const affiliatePlan = pipelineContext?.affiliate_plan;
     const hasAffiliatePlan = affiliatePlan?.placements?.length > 0;
-    const enableAffiliateInjector = ENABLE_AFFILIATE_INJECTOR;
+    const enableAffiliateInjector = typeof ENABLE_AFFILIATE_INJECTOR !== "undefined" ? ENABLE_AFFILIATE_INJECTOR : true;
     
     if (hasAffiliatePlan && enableAffiliateInjector) {
       const expectedCount = affiliatePlan.placements.length;
