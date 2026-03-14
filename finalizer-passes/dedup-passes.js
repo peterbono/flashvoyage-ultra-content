@@ -394,13 +394,11 @@ export function removeDuplicateBlockquotes(html) {
 export function deduplicateBlockquotes(html) {
   if (!html || typeof html !== 'string') return html;
   
-  // Extraire tous les blockquotes
   const blockquoteRegex = /<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi;
   const seen = new Set();
   let dedupCount = 0;
   
-  // NOUVEAU : Extraire le texte de l'intro (paragraphes avant le premier H2)
-  // pour détecter si un blockquote répète le contenu de l'intro
+  // Extraire le texte de l'intro (avant le premier H2) pour détecter les répétitions
   const firstH2Idx = html.search(/<h2[\s>]/i);
   let introText = '';
   if (firstH2Idx > 0) {
@@ -411,14 +409,29 @@ export function deduplicateBlockquotes(html) {
       .toLowerCase();
   }
   
+  // Helper: n-gram overlap similarity (catches same quote with minor variations)
+  const ngramSimilarity = (a, b, n = 3) => {
+    if (!a || !b || a.length < n || b.length < n) return 0;
+    const getNgrams = (str) => {
+      const ngrams = new Set();
+      for (let i = 0; i <= str.length - n; i++) {
+        ngrams.add(str.substring(i, i + n));
+      }
+      return ngrams;
+    };
+    const ngramsA = getNgrams(a);
+    const ngramsB = getNgrams(b);
+    const intersection = [...ngramsA].filter(ng => ngramsB.has(ng)).length;
+    const smaller = Math.min(ngramsA.size, ngramsB.size);
+    return smaller > 0 ? intersection / smaller : 0;
+  };
+  
   const result = html.replace(blockquoteRegex, (fullMatch, innerContent) => {
-    // Normaliser le contenu pour la comparaison (retirer HTML, espaces multiples)
     const normalized = innerContent.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
     
-    // Si le contenu est trop court (< 20 chars), le garder (pas une vraie citation)
     if (normalized.length < 20) return fullMatch;
     
-    // NOUVEAU : Vérifier si le blockquote répète le contenu de l'intro
+    // Check intro repetition
     if (introText.length > 50 && normalized.length > 30) {
       const bqWords = new Set(normalized.split(/\s+/).filter(w => w.length > 3));
       const introWords = new Set(introText.split(/\s+/).filter(w => w.length > 3));
@@ -426,36 +439,40 @@ export function deduplicateBlockquotes(html) {
       const jaccard = bqWords.size > 0 ? intersection / bqWords.size : 0;
       if (jaccard >= 0.50) {
         dedupCount++;
-        console.log(`   🔍 BLOCKQUOTE_DEDUP: blockquote répète l'intro (Jaccard=${jaccard.toFixed(2)} ≥ 0.50), supprimé`);
-        return ''; // Supprimer le blockquote qui répète l'intro
+        console.log('   BLOCKQUOTE_DEDUP: blockquote repeats intro (Jaccard=' + jaccard.toFixed(2) + ')');
+        return '';
       }
     }
     
-    // Vérifier si une citation similaire existe déjà (substring ou Jaccard ≥ 60%)
     for (const seenText of seen) {
+      // Exact or substring match
       if (normalized === seenText || normalized.includes(seenText) || seenText.includes(normalized)) {
         dedupCount++;
-        console.log(`   🔍 BLOCKQUOTE_DEDUP: exact/substring match`);
-        return ''; // Supprimer le doublon
+        console.log('   BLOCKQUOTE_DEDUP: exact/substring match');
+        return '';
       }
-      // Check substring overlap (80%)
-      const shorter = normalized.length < seenText.length ? normalized : seenText;
-      const longer = normalized.length >= seenText.length ? normalized : seenText;
-      if (shorter.length > 30 && longer.includes(shorter.substring(0, Math.floor(shorter.length * 0.8)))) {
-        dedupCount++;
-        return ''; // Supprimer le quasi-doublon
+      
+      // N-gram overlap >= 80%
+      if (normalized.length > 30 && seenText.length > 30) {
+        const ngSim = ngramSimilarity(normalized, seenText);
+        if (ngSim >= 0.80) {
+          dedupCount++;
+          console.log('   BLOCKQUOTE_DEDUP: n-gram similarity=' + ngSim.toFixed(2));
+          return '';
+        }
       }
-      // Check Jaccard word similarity (≥ 60% des mots en commun)
-      if (shorter.length > 30) {
+      
+      // Jaccard word similarity >= 55% (lowered from 60% to catch more rephrased quotes)
+      if (normalized.length > 30 && seenText.length > 30) {
         const wordsA = new Set(normalized.split(/\s+/).filter(w => w.length > 3));
         const wordsB = new Set(seenText.split(/\s+/).filter(w => w.length > 3));
         const intersection = [...wordsA].filter(w => wordsB.has(w)).length;
         const union = new Set([...wordsA, ...wordsB]).size;
         const jaccard = union > 0 ? intersection / union : 0;
-        if (jaccard >= 0.6) {
+        if (jaccard >= 0.55) {
           dedupCount++;
-          console.log(`   🔍 BLOCKQUOTE_DEDUP: Jaccard=${jaccard.toFixed(2)} ≥ 0.60`);
-          return ''; // Supprimer le quasi-doublon
+          console.log('   BLOCKQUOTE_DEDUP: Jaccard=' + jaccard.toFixed(2));
+          return '';
         }
       }
     }
@@ -465,12 +482,11 @@ export function deduplicateBlockquotes(html) {
   });
   
   if (dedupCount > 0) {
-    console.log(`   🧹 ${dedupCount} blockquote(s) dupliquée(s) supprimée(s)`);
+    console.log('   ' + dedupCount + ' blockquote(s) deduplicated');
   }
   
   return result;
 }
-
 
 export function removeDuplicateH2Sections(html) {
   console.log('🧹 removeDuplicateH2Sections: Détection des sections H2 dupliquées...');

@@ -187,6 +187,8 @@ class SeoOptimizer {
     const faqPattern = /<h[23][^>]*>(?:FAQ|Questions?\s+fr[ée]quentes?|Foire\s+aux\s+questions?)[^<]*<\/h[23]>/i;
     if (faqPattern.test(html)) {
       const faqItems = [];
+
+      // Format A: Classic headings (h3/h4/strong/b) + p
       const qaPairs = html.matchAll(/<(?:h[34]|strong|b)[^>]*>([^<]{10,200})\?<\/(?:h[34]|strong|b)>\s*(?:<[^>]+>\s*)*<p>([^<]{20,1000})<\/p>/gi);
       for (const m of qaPairs) {
         faqItems.push({
@@ -195,6 +197,21 @@ class SeoOptimizer {
           acceptedAnswer: { '@type': 'Answer', text: m[2].trim() },
         });
       }
+
+      // Format B: Gutenberg wp:details blocks (<summary>Q</summary> ... <p>A</p>)
+      if (faqItems.length === 0) {
+        const gutenbergPairs = html.matchAll(/<details[^>]*>\s*<summary>([^<]{10,300})<\/summary>[\s\S]*?<p>([^<]{20,2000})<\/p>[\s\S]*?<\/details>/gi);
+        for (const m of gutenbergPairs) {
+          const question = m[1].trim();
+          const answer = m[2].trim();
+          faqItems.push({
+            '@type': 'Question',
+            name: question.endsWith('?') ? question : question + ' ?',
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          });
+        }
+      }
+
       if (faqItems.length > 0) {
         schemas.push({
           '@context': 'https://schema.org',
@@ -202,6 +219,8 @@ class SeoOptimizer {
           mainEntity: faqItems,
         });
         console.log(`📋 SCHEMA: FAQPage injecte (${faqItems.length} questions)`);
+      } else {
+        console.warn('⚠️ SCHEMA: Section FAQ detectee mais aucune paire Q/R extractible');
       }
     }
 

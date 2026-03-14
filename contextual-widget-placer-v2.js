@@ -38,12 +38,12 @@ class ContextualWidgetPlacer {
       ],
       hotels: [
         {
-          context: "Les vols représentent une part importante du budget voyage. Notre partenaire Aviasales compare les prix de nombreuses compagnies pour t'aider à économiser.",
-          cta: "Compare les prix de vols :"
+          context: "L'hébergement représente une part importante du budget voyage. Notre partenaire Booking.com compare les prix de nombreux hôtels, hostels et appartements pour t'aider à économiser.",
+          cta: "Compare les hébergements :"
         },
         {
-          context: "Les prix des vols peuvent varier selon la compagnie. Notre outil agrège toutes les offres pour te garantir le meilleur tarif.",
-          cta: "Trouve les meilleures offres :"
+          context: "Les prix des hébergements varient selon la plateforme. Notre outil agrège toutes les offres pour te garantir le meilleur tarif.",
+          cta: "Trouve les meilleurs hébergements :"
         }
       ],
       transport: [
@@ -1140,8 +1140,8 @@ if (smartIndex != null) {
       car_rental: 'car_rental',
       bikes: 'bikes',
       flight_compensation: 'flight_compensation',
-      events: 'events'
-      // hotels: pas de widget Travelpayouts dédié, retourne null (pas de fallback trompeur)
+      events: 'events',
+      hotels: 'hotels', // Booking.com affiliate card (text-based, rendered by affiliate-module-renderer)
     };
     return mapping[slot] || null;
   }

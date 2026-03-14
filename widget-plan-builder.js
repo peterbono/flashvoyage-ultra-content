@@ -43,8 +43,13 @@ export class WidgetPlanBuilder {
    * @returns {Object} Plan de widgets structuré
    */
   buildWidgetPlan(affiliateSlots, geo, articleContext, articleId) {
+    // Ensure default slots exist (flights, insurance, hotels) when no slots provided
+    let slots = Array.isArray(affiliateSlots) && affiliateSlots.length > 0
+      ? [...affiliateSlots]
+      : this._buildDefaultSlots(articleContext);
+
     // Trier les slots par score décroissant
-    const intents = affiliateSlots
+    const intents = slots
       .sort((a, b) => b.score - a.score)
       .slice(0, 4); // Max 4 slots
 

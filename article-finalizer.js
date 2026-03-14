@@ -398,6 +398,7 @@ class ArticleFinalizer {
       { name: 'balanceParagraphs', args: [tempReport] },
       { name: 'fixH2InsideP', args: [] },               // safety re-extract after balance
       { name: 'fixMalformedLinks', args: [] },
+      { name: 'fixBrokenInternalLinks', args: [] },
       { name: 'closeUnclosedAnchors', args: [] },
       { name: 'removeTrailingOrphans', args: [] },
     ]);

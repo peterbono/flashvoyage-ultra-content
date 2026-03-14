@@ -232,6 +232,91 @@ export function deduplicateNestedLinks(html) {
  * @returns {string} HTML corrigé
  */
 
+/**
+ * Auto-fix broken internal links pointing to non-existent FlashVoyage URLs.
+ * Detects fabricated slugs (LLM hallucinations) and either fixes or removes them.
+ * @param {string} html - HTML content
+ * @returns {string} HTML with broken internal links fixed
+ */
+export function fixBrokenInternalLinks(html) {
+  if (!html || typeof html !== 'string') return html;
+
+  let fixedCount = 0;
+  let removedCount = 0;
+
+  // Known valid URL patterns for flashvoyage.com
+  const VALID_PATH_PATTERNS = [
+    /^\/$/,                                    // Homepage
+    /^\/destination\/[a-z-]+\/?$/,              // /destination/thailand/
+    /^\/category\/[a-z-]+\/?$/,                 // /category/nomade-digital/
+    /^\/[a-z0-9-]{5,120}\/?$/,                   // /slug-article/ (valid article slug)
+    /^\/tag\/[a-z-]+\/?$/,                      // /tag/bangkok/
+    /^\/author\/[a-z-]+\/?$/,                   // /author/name/
+  ];
+
+  // Known broken URL patterns (LLM hallucinations)
+  const BROKEN_PATTERNS = [
+    /flashvoyage\.com\/[a-z]{2}\//, // /fr/, /en/ - no localization
+    /flashvoyage\.com\/blog\//,     // /blog/ prefix doesn't exist
+    /flashvoyage\.com\/articles?\//,// /article(s)/ prefix doesn't exist
+    /flashvoyage\.com\/guide\//,    // /guide/ prefix doesn't exist
+    /flashvoyage\.com\/page\//,     // /page/ prefix doesn't exist
+    /flashvoyage\.com\/post\//,     // /post/ prefix doesn't exist
+    /flashvoyage\.com\/[^"]*\s/,    // URL containing spaces
+    /flashvoyage\.com\/[^"]*[A-Z]/, // URL with uppercase (WordPress uses lowercase slugs)
+    /flashvoyage\.com\/#/,           // Anchor-only links
+    /flashvoyage\.com\/wp-content/,  // Direct file links
+    /flashvoyage\.com\/wp-admin/,    // Admin links
+    /flashvoyage\.com\/[^/"]*\.[a-z]+$/, // File extensions (not slug)
+  ];
+
+  const linkRegex = /<a\s+([^>]*?)href\s*=\s*["']([^"']+)["']([^>]*)>([\s\S]*?)<\/a>/gi;
+
+  const result = html.replace(linkRegex, (fullMatch, pre, href, post, innerContent) => {
+    // Only process internal FlashVoyage links
+    const isInternal = /flashvoyage/i.test(href);
+    if (!isInternal) return fullMatch;
+
+    // Check against known broken patterns
+    const isBroken = BROKEN_PATTERNS.some(p => p.test(href));
+
+    if (isBroken) {
+      // Extract the anchor text (strip HTML)
+      const anchorText = innerContent.replace(/<[^>]*>/g, '').trim();
+
+      if (anchorText && anchorText.length > 2) {
+        // Replace broken link with plain text (keep the anchor text, remove the link)
+        removedCount++;
+        console.log('   BROKEN_LINK_FIX: removed broken link "' + href.substring(0, 80) + '" (kept text: "' + anchorText.substring(0, 50) + '")');
+        return anchorText;
+      } else {
+        // No useful anchor text — remove entirely
+        removedCount++;
+        return '';
+      }
+    }
+
+    // Additional check: href="#" or empty (already handled by replaceDeadLinks but safety net)
+    if (href === '#' || href === '' || href === 'https://flashvoyage.com/#' || href === 'https://flashvoyage.com') {
+      const anchorText = innerContent.replace(/<[^>]*>/g, '').trim();
+      if (anchorText && anchorText.length > 2) {
+        removedCount++;
+        return anchorText;
+      }
+      removedCount++;
+      return '';
+    }
+
+    return fullMatch;
+  });
+
+  if (removedCount > 0) {
+    console.log('   ' + removedCount + ' broken internal link(s) fixed');
+  }
+
+  return result;
+}
+
 export function validateInternalLinks(html) {
   const errors = [];
   if (!html || typeof html !== 'string') return { valid: true, errors: [] };
