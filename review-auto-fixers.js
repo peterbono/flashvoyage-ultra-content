@@ -1331,7 +1331,9 @@ export async function fixEmptySections(html) {
     if (/quick[-_]?guide|affiliate|faq|details/i.test(parentClass)) continue;
     
     const next = el.nextElementSibling;
-    if (!next || next.tagName === 'H2' || next.tagName === 'H3') {
+        // H2 followed by H3 is valid nesting (FAQ)
+    if (el.tagName === 'H2' && next && next.tagName === 'H3') continue;
+if (!next || next.tagName === 'H2' || next.tagName === 'H3') {
       console.log('   ✅ fixEmptySections: removed empty heading "' + headingText + '"');
       toRemove.push(el);
       fixCount++;

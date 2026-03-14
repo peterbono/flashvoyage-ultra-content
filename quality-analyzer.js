@@ -777,7 +777,10 @@ class QualityAnalyzer {
       
       if (!isProtected && !isInsideContainer) {
         const next = el.nextElementSibling;
-        if (!next || next.tagName === 'H2' || next.tagName === 'H3') {
+                // H2 followed by H3 is valid nesting (FAQ, sub-sections)
+        if (el.tagName === 'H2' && next && next.tagName === 'H3') return;
+if (!next || next.tagName === 'H2' || next.tagName === 'H3') {
+          console.log(`   ⚠️ EMPTY_SECTION_DEBUG: "${el.text.trim().substring(0,60)}" next=${next?.tagName || 'null'} parent=${parentClass.substring(0,30)}`);
           emptySections++;
         }
       }
