@@ -1286,7 +1286,8 @@ export async function fixEmptySections(html) {
   let fixCount = 0;
   const { parse } = await import('node-html-parser');
   
-  const protectedH2 = /questions?\s*fr[éèe]quentes?|faq|ce\s*qu.*retenir|nos\s*recommandations?|limites|erreurs?\s*fr[éèe]quentes?|conclusion|verdict|serp|quick.?guide/i;
+  // ALIGNED WITH quality-analyzer.js — same protections, same logic
+  // Only protect the SERP patterns that quality-analyzer protects
   const protectedSerpPatterns = [
     /ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement)/i,
     /erreurs?\s*(fréquentes?|courantes?|à\s*éviter)/i
@@ -1298,14 +1299,16 @@ export async function fixEmptySections(html) {
   
   for (const el of headings) {
     const headingText = el.text.trim();
-    if (protectedH2.test(headingText)) continue;
-    if (protectedSerpPatterns.some(p => p.test(headingText))) continue;
+    const h2Text = headingText.toLowerCase();
+    
+    // Same protection as quality-analyzer.js
+    if (protectedSerpPatterns.some(p => p.test(h2Text))) continue;
     const parentClass = el.parentNode?.getAttribute?.('class') || '';
     if (/quick[-_]?guide|affiliate|faq|details/i.test(parentClass)) continue;
     
     const next = el.nextElementSibling;
     if (!next || next.tagName === 'H2' || next.tagName === 'H3') {
-      console.log('   \u2705 fixEmptySections: removed empty heading "' + headingText + '"');
+      console.log('   ✅ fixEmptySections: removed empty heading "' + headingText + '"');
       toRemove.push(el);
       fixCount++;
     }
@@ -1314,7 +1317,7 @@ export async function fixEmptySections(html) {
   for (const el of toRemove.reverse()) { el.remove(); }
   
   const result = fixCount > 0 ? root.toString() : html;
-  return { html: result, fixes: fixCount > 0 ? [fixCount + ' section(s) vide(s) supprim\u00e9e(s)'] : [], fixCount };
+  return { html: result, fixes: fixCount > 0 ? [fixCount + ' section(s) vide(s) supprimée(s)'] : [], fixCount };
 }
 
 /**
@@ -1495,9 +1498,7 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null, con
   const orphanWidgetResult = await fixOrphanedWidgets(currentHtml);
   if (orphanWidgetResult.fixCount > 0) { currentHtml = orphanWidgetResult.html; appliedFixes.push(...orphanWidgetResult.fixes); console.log("    ✅ " + orphanWidgetResult.fixes.join(", ")); }
 
-  // Fix empty sections (blocking check)
-  const emptySectionResult = await fixEmptySections(currentHtml);
-  if (emptySectionResult.fixCount > 0) { currentHtml = emptySectionResult.html; appliedFixes.push(...emptySectionResult.fixes); console.log("    ✅ " + emptySectionResult.fixes.join(", ")); }
+  // fixEmptySections moved to very end (after all other fixers including LLM)
 
   // Fix costs without EUR
   const costEurResult = await fixCostsWithoutEUR(currentHtml);
@@ -1563,6 +1564,18 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null, con
       console.log('    \u2705 ' + spaceResult.description);
     }
   } catch (e) {}
+
+  // FINAL PASS: Fix empty sections LAST — after all other fixers (including LLM) that might create new empty headings
+  try {
+    const emptySectionResult = await fixEmptySections(currentHtml);
+    if (emptySectionResult.fixCount > 0) {
+      currentHtml = emptySectionResult.html;
+      appliedFixes.push(...emptySectionResult.fixes);
+      console.log( ✅ FINAL:  + emptySectionResult.fixes.join(, ));
+    }
+  } catch (e) {
+    console.warn('    ⚠️ fixEmptySections final pass failed:', e.message);
+  }
 
   return {
     html: currentHtml,
