@@ -1342,8 +1342,10 @@ export function validateH2Titles(html, report) {
     }
 
     // H2 trop court (< 4 mots de texte)
+    // Exception: FAQ, retenir, recommandations sont des H2 structurels légitimes
+    const protectedH2 = /questions?\s*fr[ée]quentes?|faq|ce\s*qu.*retenir|nos\s*recommandations?|en\s*bref|checklist|conclusion|verdict|comparatif|r[ée]sum[ée]/i;
     const words = fixed.trim().split(/\s+/).filter(w => w.length > 1);
-    if (words.length < 3) {
+    if (words.length < 3 && !protectedH2.test(fixed.trim())) {
       fixCount++;
       console.log(`   🧹 H2 trop court supprime: "${title}" (${words.length} mots)`);
       return '';

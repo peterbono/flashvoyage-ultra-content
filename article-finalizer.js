@@ -11232,7 +11232,9 @@ class ArticleFinalizer {
       // Exception: FAQ, retenir, recommandations, etc. sont des H2 structurels légitimes
       const protectedH2Patterns = /questions?\s*fr[ée]quentes?|faq|ce\s*qu.*retenir|nos\s*recommandations?|en\s*bref|checklist|conclusion|verdict|comparatif|r[ée]sum[ée]/i;
       const words = fixed.trim().split(/\s+/).filter(w => w.length > 1);
-      if (words.length < 3 && !protectedH2Patterns.test(fixed.trim())) {
+      const isProtectedH2 = protectedH2Patterns.test(fixed.trim());
+      if (words.length < 3) console.log(`   🔍 H2_SHORT_CHECK: "${fixed.trim()}" words=${words.length} protected=${isProtectedH2}`);
+      if (words.length < 3 && !isProtectedH2) {
         fixCount++;
         console.log(`   🧹 H2 trop court supprime: "${title}" (${words.length} mots)`);
         return '';

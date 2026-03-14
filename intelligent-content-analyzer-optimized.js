@@ -3716,6 +3716,7 @@ Génère UNIQUEMENT le JSON de conclusion.`;
       const content = assembled;
 
       console.log('✅ Micro-prompt pipeline: article assemblé, lancement post-processing...');
+      console.log('🔍 FAQ DEBUG: article.faq present=' + !!(content.article?.faq), 'length=' + (content.article?.faq?.length || 0), 'trimmed=' + !!(content.article?.faq?.trim()));
 
       // ═══ POST-PROCESSING (reused from legacy) ═══
       if (content.article) {
@@ -3771,6 +3772,7 @@ Génère UNIQUEMENT le JSON de conclusion.`;
             } else {
               sections.push('<h2>Nos recommandations : Par où commencer ?</h2>\n<p>Nous recommandons de privilégier l\'Asie du Sud-Est pour un budget maîtrisé.</p>');
             }
+            console.log('🔍 FAQ_PUSH: entering FAQ block, faq length=' + (article.faq?.length || 0));
             if (article.faq?.trim()) {
               let faqText = article.faq.trim();
               if (!faqText.includes('<h2>')) faqText = '<h2 class="wp-block-heading">Questions fréquentes</h2>\n' + faqText;
