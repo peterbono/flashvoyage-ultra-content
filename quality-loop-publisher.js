@@ -585,9 +585,63 @@ async function publishArticle(article) {
     }
   }
 
+  // Last-pass: ensure wp-block-quote class on all blockquotes + merge short paragraphs
+  let finalContent = article.content || '';
+  finalContent = finalContent.replace(/<blockquote(?!\s+class)([^>]*)>/gi, '<blockquote class="wp-block-quote"$1>');
+  
+  // Merge consecutive short <p> tags (< 150 chars each) into grouped paragraphs
+  // This fixes the "one sentence per paragraph" issue for better reading rhythm
+  {
+    const pRegex = /<p([^>]*)>(.*?)<\/p>/gs;
+    const parts = [];
+    let lastIndex = 0;
+    let match;
+    while ((match = pRegex.exec(finalContent)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push({ type: 'other', html: finalContent.slice(lastIndex, match.index) });
+      }
+      const attrs = match[1] || '';
+      const text = match[2] || '';
+      const isShort = text.replace(/<[^>]*>/g, '').trim().length < 150;
+      const hasSpecialClass = /class=/.test(attrs);
+      parts.push({ type: 'p', attrs, text, isShort: isShort && !hasSpecialClass, html: match[0] });
+      lastIndex = match.index + match[0].length;
+    }
+    if (lastIndex < finalContent.length) {
+      parts.push({ type: 'other', html: finalContent.slice(lastIndex) });
+    }
+    
+    // Group consecutive short paragraphs (max 3 per group)
+    let merged = '';
+    let grouping = [];
+    for (const part of parts) {
+      if (part.type === 'p' && part.isShort) {
+        grouping.push(part.text);
+        if (grouping.length >= 3) {
+          merged += '<p>' + grouping.join(' ') + '</p>\n';
+          grouping = [];
+        }
+      } else {
+        if (grouping.length > 1) {
+          merged += '<p>' + grouping.join(' ') + '</p>\n';
+        } else if (grouping.length === 1) {
+          merged += '<p>' + grouping[0] + '</p>\n';
+        }
+        grouping = [];
+        merged += part.html;
+      }
+    }
+    if (grouping.length > 1) {
+      merged += '<p>' + grouping.join(' ') + '</p>\n';
+    } else if (grouping.length === 1) {
+      merged += '<p>' + grouping[0] + '</p>\n';
+    }
+    finalContent = merged;
+  }
+  
   const postData = {
     title: article.title,
-    content: article.content,
+    content: finalContent,
     status: 'publish',
     ...(categoryIds.length && { categories: categoryIds }),
     ...(tagIds.length && { tags: tagIds }),
