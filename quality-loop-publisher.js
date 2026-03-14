@@ -238,6 +238,7 @@ async function generateArticle(generator) {
 
   const title = typeof result.title === 'string' ? result.title : (result.title?.rendered || 'Article sans titre');
   console.log(`✅ AGENT[Generator] — Article généré: "${title}" (${content.length} chars)`);
+  if (result._qualityGatePassed) console.log(`   🔓 Quality gate flag: PASSED`);
   
   const destinationHint = result?.pipelineContext?.final_destination || result?.final_destination || '';
   const titleTag = normalizeTitleTag(result.title_tag || title, destinationHint);
@@ -253,7 +254,8 @@ async function generateArticle(generator) {
     slug: result.slug,
     wpPostId: result.wpPostId || result.id,
     pipelineContext: result.pipelineContext,
-    report: result
+    report: result,
+    _qualityGatePassed: result._qualityGatePassed || false
   };
 }
 
