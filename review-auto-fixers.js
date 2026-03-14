@@ -1518,21 +1518,9 @@ export function fixCorruptedSpaces(html) {
     return word + ' ' + rest;
   });
 
-  // Fix: word ending with consonant/vowel glued to word starting with accented vowel (generic catch-all)
-  // Catches patterns like: villageéloigné → village éloigné, marchéépicé → marché épicé
-  const genericGlueRegex = /([a-zà-ÿ]{3,})([éèêëàâäùûüôîïç][a-zà-ÿ]{3,})/gi;
-  const beforeGeneric = result;
-  result = result.replace(genericGlueRegex, (match, word1, word2, offset) => {
-    // Skip if inside HTML tag or HTML entity
-    const ctx = result.substring(Math.max(0, offset - 10), offset + match.length + 5);
-    if ((ctx.includes('<') && !ctx.includes('>')) || ctx.includes('&') ) return match;
-    // Only split if both parts look like real words (3+ chars each)
-    if (word1.length >= 3 && word2.length >= 3) {
-      fixCount++;
-      return word1 + ' ' + word2;
-    }
-    return match;
-  });
+  // REMOVED: genericGlueRegex was too aggressive — splits normal French words
+  // (e.g. différemment → diff éremment, itinéraire → Itin éraire)
+  // Using only the whitelist-based shortWordGlueRegex above instead
   
   for (const [p, r] of gluedPatterns) {
     const b = result;
