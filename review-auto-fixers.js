@@ -1284,25 +1284,36 @@ export async function fixJsonLdTypos(html) {
  */
 export async function fixEmptySections(html) {
   let fixCount = 0;
+  const { parse } = await import('node-html-parser');
+  
   const protectedH2 = /questions?\s*fr[éèe]quentes?|faq|ce\s*qu.*retenir|nos\s*recommandations?|limites|erreurs?\s*fr[éèe]quentes?|conclusion|verdict|serp|quick.?guide/i;
+  const protectedSerpPatterns = [
+    /ce\s*que\s*(les\s*(autres|témoignages|reddit)\s*)?ne\s*disent?\s*(pas|explicitement)/i,
+    /erreurs?\s*(fréquentes?|courantes?|à\s*éviter)/i
+  ];
   
-  // Remove H2/H3 headings that have no content before the next heading
-  // Fixed regex: closing tag must match opening tag (\1 backreference)
-  let result = html.replace(/<(h[23])([^>]*)>([^<]*)<\/\1>\s*(?=<h[23])/gi, (match, tag, attrs, title) => {
-    if (protectedH2.test(title.trim())) return match;
-    fixCount++;
-    console.log('   \u2705 fixEmptySections: removed empty heading "' + title.trim() + '"');
-    return '';
-  });
+  const root = parse(html);
+  const headings = root.querySelectorAll('h2, h3');
+  const toRemove = [];
   
-  // Also handle heading at the very end of the document
-  result = result.replace(/<(h[23])([^>]*)>([^<]*)<\/\1>\s*$/gi, (match, tag, attrs, title) => {
-    if (protectedH2.test(title.trim())) return match;
-    fixCount++;
-    console.log('   \u2705 fixEmptySections: removed trailing empty heading "' + title.trim() + '"');
-    return '';
-  });
+  for (const el of headings) {
+    const headingText = el.text.trim();
+    if (protectedH2.test(headingText)) continue;
+    if (protectedSerpPatterns.some(p => p.test(headingText))) continue;
+    const parentClass = el.parentNode?.getAttribute?.('class') || '';
+    if (/quick[-_]?guide|affiliate|faq|details/i.test(parentClass)) continue;
+    
+    const next = el.nextElementSibling;
+    if (!next || next.tagName === 'H2' || next.tagName === 'H3') {
+      console.log('   \u2705 fixEmptySections: removed empty heading "' + headingText + '"');
+      toRemove.push(el);
+      fixCount++;
+    }
+  }
   
+  for (const el of toRemove.reverse()) { el.remove(); }
+  
+  const result = fixCount > 0 ? root.toString() : html;
   return { html: result, fixes: fixCount > 0 ? [fixCount + ' section(s) vide(s) supprim\u00e9e(s)'] : [], fixCount };
 }
 
