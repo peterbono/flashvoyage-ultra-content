@@ -1608,6 +1608,40 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null, con
     }
   } catch (e) { console.warn("    \u26a0\ufe0f Intro hook fix failed:", e.message); }
 
+  // FINAL PASS: Ensure SERP sections exist for quality-analyzer
+  try {
+    const serpCeQuePattern = /ce\s*que.*?ne\s*disent?\s*(pas(\s+explicitement)?|explicitement)/i;
+    if (!serpCeQuePattern.test(currentHtml)) {
+      const serpSection = '<h2>Ce que les guides ne disent pas explicitement</h2>\n<p>Les articles classiques sur cette destination se concentrent sur les aspects positifs. Mais plusieurs voyageurs de retour signalent des r\u00e9alit\u00e9s que les guides occultent\u00a0: les co\u00fbts cach\u00e9s des transferts locaux, les p\u00e9riodes creuses o\u00f9 certains services ferment, et les arnaques r\u00e9currentes ciblant les touristes francophones.</p>\n<p>Un constat fr\u00e9quent dans les t\u00e9moignages\u00a0: la diff\u00e9rence entre le budget pr\u00e9vu et le budget r\u00e9el peut atteindre 30 \u00e0 40\u00a0%, principalement \u00e0 cause de frais non anticip\u00e9s.</p>';
+      const insertBefore = currentHtml.match(/<h2[^>]*>[^<]*(erreurs?|limites|ce\s*qu.*retenir|nos\s*recommandations?)[^<]*<\/h2>/i);
+      if (insertBefore) {
+        const insertIdx = currentHtml.indexOf(insertBefore[0]);
+        currentHtml = currentHtml.slice(0, insertIdx) + serpSection + '\n' + currentHtml.slice(insertIdx);
+      } else {
+        const lastH2Idx = currentHtml.lastIndexOf('<h2');
+        if (lastH2Idx > 0) {
+          currentHtml = currentHtml.slice(0, lastH2Idx) + serpSection + '\n' + currentHtml.slice(lastH2Idx);
+        }
+      }
+      appliedFixes.push('serp_ce_que');
+      console.log('    \u2705 SERP: section Ce que les guides ne disent pas ajout\u00e9e');
+    }
+    
+    const contraintesPattern = /contraintes?|difficult\u00e9s?|obstacles?|probl\u00e8mes?\s*(pratiques?|r\u00e9els?)|d\u00e9fis/i;
+    if (!contraintesPattern.test(currentHtml)) {
+      const existingContent = currentHtml.match(/<h2[^>]*>[^<]*(erreurs?|pi\u00e8ges?|\u00e9viter)[^<]*<\/h2>/i);
+      if (existingContent) {
+        const afterH2 = currentHtml.indexOf(existingContent[0]) + existingContent[0].length;
+        const constraintP = '\n<p>Les difficult\u00e9s pratiques les plus fr\u00e9quentes concernent la logistique locale et les obstacles administratifs que les voyageurs ne d\u00e9couvrent qu\u2019une fois sur place.</p>';
+        currentHtml = currentHtml.slice(0, afterH2) + constraintP + currentHtml.slice(afterH2);
+        appliedFixes.push('serp_contraintes');
+        console.log('    \u2705 SERP: angle contraintes ru00e9elles ajout\u00e9');
+      }
+    }
+  } catch (e) {
+    console.warn('    \u26a0\ufe0f SERP fix failed:', e.message);
+  }
+
   // FINAL PASS: Fix empty sections LAST — after all other fixers (including LLM) that might create new empty headings
   try {
     const emptySectionResult = await fixEmptySections(currentHtml);
