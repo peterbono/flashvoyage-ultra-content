@@ -384,6 +384,7 @@ class ArticleFinalizer {
       { name: 'removeDuplicateBlockquotes', args: [] },
       { name: 'removeRepetitions', args: [] },
       { name: 'removeRepetitivePhrases', args: [tempReport] },
+      { name: 'dedup10grams', args: [] },
     ]);
 
     // Also detect section duplications (was inline before)
@@ -8685,6 +8686,93 @@ class ArticleFinalizer {
   /**
    * Nettoyage déterministe final (ponctuation/phrases tronquées/résidus typographiques).
    */
+  /**
+   * Dedup 10-gram repetitions to align with quality-analyzer scoring.
+   * Finds 10-word sequences that appear in multiple sentences and removes
+   * the second occurrence's sentence from its containing <p> or <li>.
+   */
+  dedup10grams(html) {
+    if (!html || typeof html !== 'string') return html;
+    
+    // Strip HTML to get plain text, excluding affiliate modules and FAQ details
+    let textForCheck = html
+      .replace(/<aside[^>]*class="[^"]*affiliate[^"]*"[^>]*>[\s\S]*?<\/aside>/gi, '')
+      .replace(/<details[\s\S]*?<\/details>/gi, '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ');
+    
+    // Split into sentences and build 10-gram map (same logic as quality-analyzer)
+    const sentences = textForCheck.split(/[.!?]+/).map(s => s.trim().toLowerCase()).filter(s => s.length > 20);
+    const ngramToSentences = new Map();
+    
+    sentences.forEach((sentence, sIdx) => {
+      const words = sentence.split(/\s+/).filter(w => w.length > 2);
+      for (let i = 0; i <= words.length - 10; i++) {
+        const ngram = words.slice(i, i + 10).join(' ');
+        if (!ngramToSentences.has(ngram)) ngramToSentences.set(ngram, []);
+        ngramToSentences.get(ngram).push(sIdx);
+      }
+    });
+    
+    // Collect sentence indices that should be removed (second+ occurrence)
+    const sentenceIndicesToRemove = new Set();
+    ngramToSentences.forEach((indices, ngram) => {
+      if (indices.length > 1) {
+        // Keep the first, mark the rest for removal
+        for (let i = 1; i < indices.length; i++) {
+          sentenceIndicesToRemove.add(indices[i]);
+        }
+      }
+    });
+    
+    if (sentenceIndicesToRemove.size === 0) return html;
+    
+    // Get the actual sentence texts to remove
+    const sentencesToRemove = [...sentenceIndicesToRemove].map(i => sentences[i]);
+    console.log('   DEDUP_10GRAM: ' + sentencesToRemove.length + ' sentence(s) with repeated 10-grams');
+    
+    // Remove these sentences from paragraphs in the HTML
+    let result = html;
+    for (const sentence of sentencesToRemove) {
+      // Build a flexible regex from the sentence words to find it in HTML
+      // (HTML may have tags interspersed)
+      const words = sentence.split(/\s+/).filter(w => w.length > 3).slice(0, 8);
+      if (words.length < 4) continue;
+      
+      // Escape regex special chars
+      const escaped = words.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      // Match the sentence with possible HTML tags between words
+      const pattern = new RegExp(
+        escaped.join('[^.!?]{0,40}'),
+        'gi'
+      );
+      
+      // Find paragraphs containing this pattern
+      const pRegex = /<(p|li)\b[^>]*>[\s\S]*?<\/(p|li)>/gi;
+      let pMatch;
+      const candidates = [];
+      while ((pMatch = pRegex.exec(result)) !== null) {
+        const pText = pMatch[0].replace(/<[^>]+>/g, ' ').toLowerCase();
+        if (pattern.test(pText)) {
+          candidates.push({ index: pMatch.index, match: pMatch[0] });
+          pattern.lastIndex = 0; // reset regex
+        }
+      }
+      
+      // If found in multiple paragraphs, remove all but the first
+      if (candidates.length > 1) {
+        // Remove from last to first to preserve indices
+        for (let i = candidates.length - 1; i >= 1; i--) {
+          const c = candidates[i];
+          result = result.slice(0, c.index) + result.slice(c.index + c.match.length);
+          console.log('   DEDUP_10GRAM: removed duplicate paragraph at index ' + c.index);
+        }
+      }
+    }
+    
+    return result;
+  }
+
   applyDeterministicFinalTextCleanup(html) {
     if (!html || typeof html !== 'string') return html;
     let out = html;
