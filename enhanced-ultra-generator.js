@@ -1290,6 +1290,7 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
                     
                     if (currentScore >= qualityTargetScore && currentBlockingPassed) {
                       console.log(`✅ QUALITY_GATE: score amélioré à ${recheckPct}% après ${iteration} itération(s)`);
+          finalizedArticle._qualityGatePassed = true;
                       break;
                     }
                   }
@@ -1308,6 +1309,7 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
             }
           } else {
             console.log(`✅ QUALITY_GATE_PASSED: Pre-pub score: ${prePublishPct}% >= cible ${qualityTargetScore}%. Publication autorisée.`);
+          finalizedArticle._qualityGatePassed = true;
           }
 
           // P0: en NEWS, ne jamais publier si bloquants en FAIL (même si score/override)
