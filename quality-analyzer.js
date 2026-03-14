@@ -557,7 +557,7 @@ class QualityAnalyzer {
 
       // costs_in_eur: si l'article mentionne des coûts, au moins un en EUR (bonus, pas bloquant)
       const hasCostMention = /\d+\s*(€|euro|usd|\$|baht|roupie)/i.test(text);
-      const hasEurCost = /\d+\s*(€|euros?)\b/i.test(text);
+      const hasEurCost = /\d+\s*(€|euros?)/i.test(text);
       if (hasCostMention && !hasEurCost) {
         score.details.push({ check: 'EVERGREEN coûts en EUR', status: 'Coûts sans EUR', points: -3 });
         score.total = Math.max(0, score.total - 3);

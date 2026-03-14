@@ -1284,15 +1284,26 @@ export async function fixJsonLdTypos(html) {
  */
 export async function fixEmptySections(html) {
   let fixCount = 0;
-  // Pattern: H2 or H3 followed by whitespace/newlines then another H2/H3 (no content between)
-  let result = html.replace(/<(h[23])([^>]*)>([^<]+)<\/>\s*(?=<h[23])/gi, (match, tag, attrs, title) => {
-    // Don't remove FAQ, retenir, recommandations headings
-    const protectedH2 = /questions?\s*fr[ée]quentes?|faq|ce\s*qu.*retenir|nos\s*recommandations?|limites|erreurs?\s*fr[ée]quentes?|conclusion|verdict/i;
+  const protectedH2 = /questions?\s*fr[éèe]quentes?|faq|ce\s*qu.*retenir|nos\s*recommandations?|limites|erreurs?\s*fr[éèe]quentes?|conclusion|verdict|serp|quick.?guide/i;
+  
+  // Remove H2/H3 headings that have no content before the next heading
+  // Fixed regex: closing tag must match opening tag (\1 backreference)
+  let result = html.replace(/<(h[23])([^>]*)>([^<]*)<\/\1>\s*(?=<h[23])/gi, (match, tag, attrs, title) => {
     if (protectedH2.test(title.trim())) return match;
     fixCount++;
-    return ''; // Remove the empty section heading
+    console.log('   \u2705 fixEmptySections: removed empty heading "' + title.trim() + '"');
+    return '';
   });
-  return { html: result, fixes: fixCount > 0 ? [] : [], fixCount };
+  
+  // Also handle heading at the very end of the document
+  result = result.replace(/<(h[23])([^>]*)>([^<]*)<\/\1>\s*$/gi, (match, tag, attrs, title) => {
+    if (protectedH2.test(title.trim())) return match;
+    fixCount++;
+    console.log('   \u2705 fixEmptySections: removed trailing empty heading "' + title.trim() + '"');
+    return '';
+  });
+  
+  return { html: result, fixes: fixCount > 0 ? [fixCount + ' section(s) vide(s) supprim\u00e9e(s)'] : [], fixCount };
 }
 
 /**
@@ -1301,7 +1312,7 @@ export async function fixEmptySections(html) {
  */
 export async function fixCostsWithoutEUR(html) {
   // Check if EUR already present
-  if (/\d+\s*(€|euros?)\b/i.test(html)) {
+  if (/\d+\s*(€|euros?)/i.test(html)) {
     return { html, fixes: [], fixCount: 0 };
   }
   
