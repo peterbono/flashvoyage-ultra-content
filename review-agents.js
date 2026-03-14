@@ -160,7 +160,15 @@ Critères d'évaluation :
 5. Schema FAQ : section FAQ avec details/summary et/ou JSON-LD FAQPage
 6. Maillage interne : liens vers d'autres articles du site (minimum 3)
 
-Score >= 90 = PASS, sinon FAIL.`,
+Score >= 90 = PASS, sinon FAIL.
+
+CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
+Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui remplit les critères de base DOIT scorer minimum 70/100.
+- Un article avec des problèmes mineurs uniquement = 80-89
+- Un article publiable en l'état = 85-95
+- Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
+- Score < 70 = problèmes MAJEURS multiples (pas juste des améliorations souhaitables)
+NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est publiable, score >= 80.`,
     buildUserPrompt(ctx) {
       const root = parse(ctx.html || '');
       const h1Node = root.querySelector('h1');
@@ -205,7 +213,15 @@ Critères :
 5. Ratio valeur/promotion : l'article apporte plus de valeur qu'il ne vend
 6. Disclaimer affiliation visible
 
-Score >= 85 = PASS, sinon FAIL.`,
+Score >= 85 = PASS, sinon FAIL.
+
+CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
+Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui remplit les critères de base DOIT scorer minimum 70/100.
+- Un article avec des problèmes mineurs uniquement = 80-89
+- Un article publiable en l'état = 85-95
+- Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
+- Score < 70 = problèmes MAJEURS multiples (pas juste des améliorations souhaitables)
+NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est publiable, score >= 80.`,
     buildUserPrompt(ctx) {
       const root = parse(ctx.html);
       const modules = root.querySelectorAll('aside.affiliate-module, div[data-fv-segment="affiliate"]');
@@ -257,7 +273,15 @@ Critères impitoyables :
 5. Voix/personnalité : le texte a-t-il une identité propre ou est-il générique ?
 6. Cohérence narrative : fil rouge clair du début à la fin
 
-Score >= 85 = PASS, sinon FAIL.`,
+Score >= 85 = PASS, sinon FAIL.
+
+CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
+Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui remplit les critères de base DOIT scorer minimum 70/100.
+- Un article avec des problèmes mineurs uniquement = 80-89
+- Un article publiable en l'état = 85-95
+- Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
+- Score < 70 = problèmes MAJEURS multiples (pas juste des améliorations souhaitables)
+NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est publiable, score >= 80.`,
     buildUserPrompt(ctx) {
       const text = extractTextFromHtml(ctx.html);
       return `TITRE : ${ctx.title}\n\nTEXTE COMPLET :\n${truncate(text)}`;
@@ -310,7 +334,15 @@ fix_type :
 - "llm" = nécessite réécriture par LLM (phrase cassée, citation)
 - "manual" = nécessite intervention humaine
 
-Score >= 90 = PASS, sinon FAIL. Un seul bug CRITICAL = FAIL automatique.`,
+Score >= 90 = PASS, sinon FAIL. Un seul bug CRITICAL = FAIL automatique.
+
+CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
+Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui remplit les critères de base DOIT scorer minimum 70/100.
+- Un article avec des problèmes mineurs uniquement = 80-89
+- Un article publiable en l'état = 85-95
+- Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
+- Score < 70 = problèmes MAJEURS multiples (pas juste des améliorations souhaitables)
+NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est publiable, score >= 80.`,
     buildUserPrompt(ctx) {
       const root = parse(ctx.html);
       const images = root.querySelectorAll('img').map(img => ({
@@ -366,7 +398,15 @@ Critères :
 5. Géographie : les lieux mentionnés existent-ils et sont-ils dans le bon pays/région ?
 6. Hallucinations : affirmations invérifiables présentées comme des faits
 
-Score >= 90 = PASS, sinon FAIL.`,
+Score >= 90 = PASS, sinon FAIL.
+
+CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
+Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui remplit les critères de base DOIT scorer minimum 70/100.
+- Un article avec des problèmes mineurs uniquement = 80-89
+- Un article publiable en l'état = 85-95
+- Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
+- Score < 70 = problèmes MAJEURS multiples (pas juste des améliorations souhaitables)
+NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est publiable, score >= 80.`,
     buildUserPrompt(ctx) {
       const text = extractTextFromHtml(ctx.html);
       return `TITRE : ${ctx.title}\nDATE PUBLICATION : ${ctx.date || 'inconnue'}\nDESTINATION : ${ctx.destination || 'inconnue'}\n\nTEXTE COMPLET :\n${truncate(text)}`;
