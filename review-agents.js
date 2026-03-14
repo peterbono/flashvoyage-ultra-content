@@ -41,9 +41,16 @@ function parseAgentJson(raw) {
 
   let depth = 0;
   let end = -1;
+  let inString = false;
+  let escape = false;
   for (let i = start; i < cleaned.length; i++) {
-    if (cleaned[i] === '{') depth++;
-    else if (cleaned[i] === '}') {
+    const c = cleaned[i];
+    if (escape) { escape = false; continue; }
+    if (c === '\\') { escape = true; continue; }
+    if (c === '"') { inString = !inString; continue; }
+    if (inString) continue;
+    if (c === '{') depth++;
+    else if (c === '}') {
       depth--;
       if (depth === 0) { end = i + 1; break; }
     }
@@ -56,7 +63,38 @@ function parseAgentJson(raw) {
   // Supprimer les trailing commas avant } ou ]
   jsonStr = jsonStr.replace(/,\s*([\]}])/g, '$1');
 
-  return JSON.parse(jsonStr);
+  // Fix common LLM JSON mistakes
+  // 1. Unescaped newlines inside strings
+  jsonStr = jsonStr.replace(/"([^"]*?)\n([^"]*?)"/g, (m, a, b) => '"' + a + '\\n' + b + '"');
+  
+  // 2. Control characters inside strings
+  jsonStr = jsonStr.replace(/[\x00-\x1f]/g, (c) => {
+    if (c === '\n' || c === '\r' || c === '\t') return c;
+    return '';
+  });
+
+  try {
+    return JSON.parse(jsonStr);
+  } catch (e) {
+    // Last resort: try to truncate at the error position and close the JSON
+    const posMatch = e.message.match(/position (\d+)/);
+    if (posMatch) {
+      const pos = parseInt(posMatch[1]);
+      // Try to find the last valid point before the error
+      let truncated = jsonStr.substring(0, pos);
+      // Close any open strings, arrays, objects
+      const openBraces = (truncated.match(/\{/g) || []).length - (truncated.match(/\}/g) || []).length;
+      const openBrackets = (truncated.match(/\[/g) || []).length - (truncated.match(/\]/g) || []).length;
+      truncated = truncated.replace(/,\s*$/, ''); // remove trailing comma
+      truncated += ']'.repeat(Math.max(0, openBrackets)) + '}'.repeat(Math.max(0, openBraces));
+      try {
+        return JSON.parse(truncated);
+      } catch {
+        // If truncation still fails, throw original error
+      }
+    }
+    throw e;
+  }
 }
 
 async function callLlm(systemPrompt, userPrompt, { model = 'claude-haiku-4-5-20251001', maxTokens = 4096, trackingStep = 'review-agent' } = {}) {
@@ -382,28 +420,35 @@ export async function runAgent(agentId, ctx) {
   const userPrompt = agent.buildUserPrompt(ctx);
   const t0 = Date.now();
 
-  try {
-    const raw = await callLlm(agent.system, userPrompt, {
-      maxTokens: 8192,
-      trackingStep: `review-${agentId}`
-    });
-    const result = parseAgentJson(raw);
-    result._agentId = agentId;
-    result._label = agent.label;
-    result._durationMs = Date.now() - t0;
-    return result;
-  } catch (err) {
-    console.error(`  ❌ Agent [${agent.label}] erreur: ${err.message}`);
-    return {
-      _agentId: agentId,
-      _label: agent.label,
-      _durationMs: Date.now() - t0,
-      _error: err.message,
-      score: 0,
-      issues: [{ severity: 'critical', category: 'agent-error', description: `Agent ${agentId} a échoué: ${err.message}`, fix_suggestion: 'Relancer' }],
-      strengths: [],
-      verdict: 'FAIL'
-    };
+  const MAX_RETRIES = 2;
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const raw = await callLlm(agent.system, userPrompt, {
+        maxTokens: 8192,
+        trackingStep: `review-${agentId}`
+      });
+      const result = parseAgentJson(raw);
+      result._agentId = agentId;
+      result._label = agent.label;
+      result._durationMs = Date.now() - t0;
+      return result;
+    } catch (err) {
+      if (attempt < MAX_RETRIES && (err.message.includes('JSON') || err.message.includes('position'))) {
+        console.warn(`  ⚠️ Agent [${agent.label}] JSON error (attempt ${attempt}/${MAX_RETRIES}), retrying...`);
+        continue;
+      }
+      console.error(`  ❌ Agent [${agent.label}] erreur: ${err.message}`);
+      return {
+        _agentId: agentId,
+        _label: agent.label,
+        _durationMs: Date.now() - t0,
+        _error: err.message,
+        score: 0,
+        issues: [{ severity: 'critical', category: 'agent-error', description: `Agent ${agentId} a échoué: ${err.message}`, fix_suggestion: 'Relancer' }],
+        strengths: [],
+        verdict: 'FAIL'
+      };
+    }
   }
 }
 
