@@ -567,6 +567,13 @@ ${JSON.stringify(summary, null, 2)}`;
       trackingStep: 'review-ceo-validator'
     });
     const decision = parseAgentJson(raw);
+    // Fallback weighted_score from panel if CEO did not provide it
+    if (decision.weighted_score === undefined || decision.weighted_score === null) {
+      decision.weighted_score = panelResult.weightedScore;
+    }
+    if (!decision.reasoning) {
+      decision.reasoning = decision.summary || decision.rationale || "No reasoning provided";
+    }
     const icon = decision.decision === 'APPROVE' ? '✅' : '🚫';
     console.log(`  ${icon} CEO : ${decision.decision} (score pondéré: ${decision.weighted_score}) — ${decision.reasoning}`);
     return decision;
