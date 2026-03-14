@@ -296,6 +296,27 @@ export function fixBrokenInternalLinks(html) {
       }
     }
 
+    // FV-FIX: Check destination mismatch for valid internal links
+    // If we know the article's destination, remove links pointing to other destinations
+    if (this && this._currentDestination) {
+      try {
+        const urlObj = new URL(href.startsWith('http') ? href : 'https://flashvoyage.com' + href);
+        const slug = urlObj.pathname.replace(/^/|/$/g, '');
+        // Check if slug contains a different destination name
+        const otherDests = ['thailand', 'thailande', 'vietnam', 'indonesie', 'bali', 'japon', 'japan', 'coree', 'philippines', 'singapour', 'singapore', 'cambodge', 'cambodia', 'malaisie', 'malaysia', 'laos', 'myanmar', 'taiwan', 'nepal', 'sri-lanka', 'inde', 'india'];
+        const currentDest = this._currentDestination.toLowerCase();
+        for (const dest of otherDests) {
+          if (dest !== currentDest && slug.includes(dest)) {
+            // This link is about a different destination
+            const anchorText2 = innerContent.replace(/<[^>]*>/g, '').trim();
+            removedCount++;
+            console.log('   DEST_MISMATCH_FIX: removed link to "' + dest + '" article in "' + currentDest + '" article');
+            return anchorText2 || '';
+          }
+        }
+      } catch(e) {}
+    }
+
     // Additional check: href="#" or empty (already handled by replaceDeadLinks but safety net)
     if (href === '#' || href === '' || href === 'https://flashvoyage.com/#' || href === 'https://flashvoyage.com') {
       const anchorText = innerContent.replace(/<[^>]*>/g, '').trim();

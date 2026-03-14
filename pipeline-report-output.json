@@ -1,9 +1,9 @@
 {
-  "title": "Témoignage Reddit décrypté par FlashVoyages",
-  "weightedScore": 57.4,
+  "title": "Inde solo : 8 pièges que les blogs voyage cachent aux voyageurs",
+  "weightedScore": 70.5,
   "approved": false,
-  "iterations": 2,
-  "duration": "19.3",
+  "iterations": 3,
+  "duration": "38.6",
   "editorialMode": "evergreen",
   "targetScore": 95,
   "scoreStages": [
@@ -13,7 +13,7 @@
   ],
   "agentScores": {
     "seo-expert": {
-      "score": 62,
+      "score": 72,
       "verdict": "FAIL"
     },
     "affiliation-expert": {
@@ -21,15 +21,15 @@
       "verdict": "FAIL"
     },
     "editorial-expert": {
-      "score": 42,
+      "score": 72,
       "verdict": "FAIL"
     },
     "ux-bugs-expert": {
-      "score": 62,
+      "score": 72,
       "verdict": "FAIL"
     },
     "integrity-expert": {
-      "score": 62,
+      "score": 72,
       "verdict": "FAIL"
     }
   },
@@ -40,18 +40,16 @@
       "iteration": 1,
       "stageTarget": 88,
       "validation": {
-        "criticalByGate": {
-          "internal-links": 3
-        }
+        "criticalByGate": {}
       },
       "panel": {
-        "weightedScore": 57.4,
-        "criticalIssues": 16
+        "weightedScore": 58.9,
+        "criticalIssues": 32
       },
       "rewrite": {
-        "requestedFixes": 16,
-        "rollback": true,
-        "rollbackReason": "critical_gates_3_to_1"
+        "requestedFixes": 7,
+        "rollback": false,
+        "rollbackReason": null
       }
     },
     {
@@ -61,8 +59,24 @@
         "criticalByGate": {}
       },
       "panel": {
-        "weightedScore": 57.4,
-        "criticalIssues": 18
+        "weightedScore": 70.5,
+        "criticalIssues": 12
+      },
+      "rewrite": {
+        "requestedFixes": 12,
+        "rollback": false,
+        "rollbackReason": null
+      }
+    },
+    {
+      "iteration": 3,
+      "stageTarget": 95,
+      "validation": {
+        "criticalByGate": {}
+      },
+      "panel": {
+        "weightedScore": 70.5,
+        "criticalIssues": 10
       },
       "rewrite": {
         "requestedFixes": 0,
@@ -73,45 +87,45 @@
   ],
   "topRecurringIssues": [
     {
-      "issueKey": "Title Tag SEO|le title tag 'japan : témoignage reddit décrypté par flashvoyages' est faible. il commence par 'japan :' (mot-clé générique mal placé), cont",
+      "issueKey": "Structure H2/H3|le titre h2 'les 6 risques concrets que les guides classiques ignorent en inde — et pourquoi ton premier mois en inde peut devenir un cauche",
       "count": 1
     },
     {
-      "issueKey": "Maillage interne insuffisant|l'article contient seulement 5 liens internes identifiables (vers 'voyager au japon : quand voir les cerisiers', 'planifier un long voyage',",
+      "issueKey": "Maillage interne insuffisant|l'article contient seulement 3 liens internes: 1) itinéraire en irlande (hors-sujet géographique), 2) vivre à lombok (pertinent), 3) optimis",
       "count": 1
     },
     {
-      "issueKey": "Structure FAQ défaillante|la section faq utilise 3 éléments <details>/<summary> (bon format html5), mais : (1) aucun json-ld faqpage fourni, (2) les questions ne couv",
+      "issueKey": "FAQ Structure|la faq utilise des balises <details>/<summary> html natives (5 questions), mais il manque: 1) aucun json-ld faqpage fourni, 2) les questions",
       "count": 1
     },
     {
-      "issueKey": "Hiérarchie H1/H2/H3 incohérente|plusieurs problèmes : (1) h1 = 'témoignage reddit décrypté par flashvoyages' (générique, pas optimisé seo), (2) premier h2 = 'pourquoi atten",
+      "issueKey": "Densité mots-clés / Bourrage|répétition excessive de phrases clés sans variation naturelle: 'un investissement réel' apparaît 8+ fois de manière maladroite ('après un in",
       "count": 1
     },
     {
-      "issueKey": "Intention de recherche partiellement couverte|l'article cible implicitement 'visa japon longue durée' ou 'logistique visa asie centrale', mais le h1 et title tag ne reflètent pas cette i",
+      "issueKey": "Title Tag SEO|title tag fourni: 'india : inde solo : 8 pièges que les blogs voyage cachent' (63 caractères). problèmes: 1) commence par 'india :' (redonda",
       "count": 1
     },
     {
-      "issueKey": "Contenu dupliqué / brouillon visible|plusieurs passages semblent incomplets ou mal intégrés : (1) 'étape 2' manque dans le plan d'action (saute de étape 1 à étape 3). (2) fin de",
+      "issueKey": "Structure H2/H3 - Logique|après le h2 'ce que dit le témoignage', il y a une blockquote reddit mais aucun contenu explicatif. le h2 suivant 'pourquoi ces pièges passe",
       "count": 1
     },
     {
-      "issueKey": "Densité de mots-clés et pertinence|l'article mentionne 'visa', 'japon', 'ambassade', 'asie centrale' de façon répétée mais pas toujours naturelle. manque de variantes lsi (lat",
+      "issueKey": "Contenu / Intention de recherche|l'article promet '8 pièges' dans le titre h1 et title tag, mais n'en énumère clairement que 3-4 (les 'erreurs'). les 8 pièges ne sont jamais",
       "count": 1
     },
     {
-      "issueKey": "Images et alt-text|3 images pexels sont présentes avec alt-text descriptifs ('une scène vibrante de vendeurs...', 'vue époustouflante du mont fuji...', 'majest",
+      "issueKey": "Images / Alt text|les 3 images pexels ont des alt texts descriptifs mais génériques ('rue bondée à varanasi...', 'avion de chasse f-35...', 'hélicoptère milit",
       "count": 1
     },
     {
-      "issueKey": "Données live / fraîcheur|section 'infos pratiques — japon (maj : 13 mars 2026)' est présente et à jour. cependant, les prix (385€ vol, 7€ repas) ne sont pas sourcés ",
+      "issueKey": "Clarté / Lisibilité|plusieurs phrases sont mal construites ou contiennent des erreurs: 'tu n'es pas un échec. tu es juste humain.' (répétition maladroite), 'un ",
       "count": 1
     },
     {
-      "issueKey": "CTA (Call-to-Action) peu clair|l'article contient 3 placeholders cta ('<!-- fv: cta_slot reason=\"...\" -->') qui ne sont pas remplis. fin d'article : cta implicite ('partag",
+      "issueKey": "Maillage interne - Pertinence|le lien vers 'itinéraire en irlande: comment choisir entre nord et sud' dans la section sur l'inde est complètement hors contexte. aucun lec",
       "count": 1
     }
   ],
-  "timestamp": "2026-03-13T22:49:47.943Z"
+  "timestamp": "2026-03-14T02:26:56.487Z"
 }

@@ -1008,7 +1008,13 @@ class SeoOptimizer {
     // FV-120: Improved title tag - primary keyword in first 30 chars, power words, 60 char limit
     if (seoData.post_title) {
       let title = seoData.post_title;
-      const place = (seoData.places && seoData.places.length > 0) ? seoData.places[0] : null;
+      // Use final_destination (pipeline context) first, then places[0] as fallback
+      let place = null;
+      if (seoData.main_destination && typeof seoData.main_destination === 'string') {
+        place = seoData.main_destination;
+      } else if (seoData.places && seoData.places.length > 0 && typeof seoData.places[0] === 'string') {
+        place = seoData.places[0];
+      }
 
       // Detect angle type for power word selection
       const angleType = this.detectAngleType(seoData);
@@ -1087,6 +1093,15 @@ class SeoOptimizer {
 
       title = `${title}${suffix}`;
       meta.title = title;
+      // Final cleanup: remove destination slug duplication (e.g. "india : Inde solo" -> "Inde solo")
+      if (place && meta.title) {
+        const slugPattern = new RegExp('^(Guide |Erreurs |Budget |Vérité )?'+ place.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*:\\s*', 'i');
+        const displayName2 = COUNTRY_DISPLAY_NAMES[place.toLowerCase()] || null;
+        if (displayName2 && meta.title.toLowerCase().includes(displayName2.toLowerCase())) {
+          // Display name is in title, remove the slug prefix if present
+          meta.title = meta.title.replace(slugPattern, '$1');
+        }
+      }
     } else {
       // Fallback si pas de post_title
       meta.title = 'FlashVoyage';

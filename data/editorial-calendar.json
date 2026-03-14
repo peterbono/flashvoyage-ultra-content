@@ -1,6 +1,6 @@
 {
-  "totalPublished": 73,
-  "currentClusterId": "asie-sud-est",
+  "totalPublished": 78,
+  "currentClusterId": "japon",
   "history": [
     {
       "date": "2026-02-23T16:02:38.396Z",
@@ -533,6 +533,41 @@
       "articleType": "support",
       "hint": "temples angkor",
       "title": "Témoignage Reddit décrypté par FlashVoyages"
+    },
+    {
+      "date": "2026-03-13T23:32:57.613Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "support",
+      "hint": "temples angkor",
+      "title": "New York première fois : 6 pièges que les blogs voyage cachent"
+    },
+    {
+      "date": "2026-03-14T00:05:03.387Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "news",
+      "hint": "Thailande",
+      "title": "Inde en solo : 8 pièges que les blogs voyage oublient de mentionner"
+    },
+    {
+      "date": "2026-03-14T00:46:09.629Z",
+      "clusterId": "japon",
+      "articleType": "pillar",
+      "hint": "guide japon complet",
+      "title": "Inde solo : 8 pièges que les blogs voyage oublient de mentionner"
+    },
+    {
+      "date": "2026-03-14T01:17:37.237Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "japan rail pass",
+      "title": "Inde solo : 8 pièges que les blogs voyage cachent (et qui coûtent cher)"
+    },
+    {
+      "date": "2026-03-14T02:20:10.713Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "japan rail pass",
+      "title": "Inde solo : 8 pièges que les blogs voyage cachent aux voyageurs"
     }
   ]
 }

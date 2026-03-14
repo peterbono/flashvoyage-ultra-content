@@ -434,6 +434,23 @@ export class WidgetPlanBuilder {
     if (!city) return null;
     return lookupIATA(city); // Retourne null si non trouvé (pas de fallback toxique)
   }
+
+  /**
+   * Builds default affiliate slots when none are detected upstream
+   * Ensures at minimum: flights, insurance, hotels are present
+   */
+  _buildDefaultSlots(articleContext) {
+    const defaults = [
+      { slot: "flights", score: 0.9, source: "default" },
+      { slot: "insurance", score: 0.8, source: "default" },
+      { slot: "hotels", score: 0.7, source: "default" }
+    ];
+    if (articleContext?.hasInternetSection || articleContext?.type === "nomade") {
+      defaults.push({ slot: "esim", score: 0.6, source: "default" });
+    }
+    return defaults;
+  }
+
 }
 
 export default WidgetPlanBuilder;

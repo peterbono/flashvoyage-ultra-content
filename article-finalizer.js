@@ -389,6 +389,9 @@ class ArticleFinalizer {
     // Also detect section duplications (was inline before)
     finalContent = this.detectSectionDuplications(finalContent, 'Ce que la communauté apporte', tempReport) || finalContent;
 
+    // Set current destination for link-passes destination mismatch check
+    this._currentDestination = pipelineContext?.final_destination || analysis?.final_destination || null;
+
     // ═══════════════════════════════════════════════════════════════════
     // Phase 3: HTML STRUCTURE
     // ═══════════════════════════════════════════════════════════════════
