@@ -1571,7 +1571,7 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null, con
     if (emptySectionResult.fixCount > 0) {
       currentHtml = emptySectionResult.html;
       appliedFixes.push(...emptySectionResult.fixes);
-      console.log( ✅ FINAL:  + emptySectionResult.fixes.join(, ));
+      console.log("    ✅ FINAL: " + emptySectionResult.fixes.join(", "));
     }
   } catch (e) {
     console.warn('    ⚠️ fixEmptySections final pass failed:', e.message);
