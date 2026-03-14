@@ -1393,10 +1393,58 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null, con
     console.log(`    📝 ${appliedFixes.length} correction(s) appliquée(s)`);
   }
 
+  // Fix corrupted spaces (last step)
+  try {
+    const spaceResult = fixCorruptedSpaces(currentHtml);
+    if (spaceResult.fixed) {
+      currentHtml = spaceResult.html;
+      appliedFixes.push('corrupted_spaces: ' + spaceResult.description);
+      console.log('    \u2705 ' + spaceResult.description);
+    }
+  } catch (e) {}
+
   return {
     html: currentHtml,
     fixes: appliedFixes,
     totalFixed: appliedFixes.length
+  };
+}
+
+
+// Fix corrupted spaces (words glued together after LLM rewrite)
+export function fixCorruptedSpaces(html) {
+  if (!html) return { html, fixed: false, description: '' };
+  let result = html;
+  let fixCount = 0;
+  
+  // Fix: lowercase accented char immediately followed by uppercase letter (missing space)
+  const before1 = result;
+  result = result.replace(/([a-zà-ÿ])([A-ZÀ-ß])/g, (m, p1, p2, offset) => {
+    // Skip if inside HTML tag
+    const before = result.substring(Math.max(0, offset - 10), offset);
+    if (before.includes('<') && !before.includes('>')) return m;
+    fixCount++;
+    return p1 + ' ' + p2;
+  });
+  
+  // Fix: common glued French patterns
+  const gluedPatterns = [
+    [/([^\s<>])(être|avoir)(?=[^<])/g, '$1 $2'],
+    [/système(économique|politique|social)/gi, 'syst\u00e8me $1'],
+    [/soutien(émotionnel|financier|moral)/gi, 'soutien $1'],
+    [/expérience(inoubliable|unique|enrichissante)/gi, 'exp\u00e9rience $1'],
+  ];
+  
+  for (const [p, r] of gluedPatterns) {
+    const b = result;
+    result = result.replace(p, r);
+    if (result !== b) fixCount++;
+  }
+  
+  return {
+    html: result,
+    fixed: fixCount > 0,
+    description: fixCount > 0 ? fixCount + ' espace(s) manquant(s) restaure(s)' : ''
   };
 }
 
@@ -1420,5 +1468,6 @@ export default {
   fixOrphanedWidgets,
   fixPlaceholderPatterns,
   fixTruncatedAnchorText,
+  fixCorruptedSpaces,
   applyAllFixes
 };
