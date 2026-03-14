@@ -11229,8 +11229,10 @@ class ArticleFinalizer {
       }
 
       // H2 trop court (< 4 mots de texte)
+      // Exception: FAQ, retenir, recommandations, etc. sont des H2 structurels légitimes
+      const protectedH2Patterns = /questions?\s*fr[ée]quentes?|faq|ce\s*qu.*retenir|nos\s*recommandations?|en\s*bref|checklist|conclusion|verdict|comparatif|r[ée]sum[ée]/i;
       const words = fixed.trim().split(/\s+/).filter(w => w.length > 1);
-      if (words.length < 3) {
+      if (words.length < 3 && !protectedH2Patterns.test(fixed.trim())) {
         fixCount++;
         console.log(`   🧹 H2 trop court supprime: "${title}" (${words.length} mots)`);
         return '';
