@@ -94,8 +94,8 @@ function destinationTokens(destination = '') {
 // ─── Fixer 1 : Image incohérente ──────────────────────────
 
 /**
- * Détecte si l'image hero (première <img>) a un alt text qui référence
- * un lieu différent de la destination de l'article. Si oui, remplace via Pexels.
+ * Détecte TOUTES les images <img> dont le alt/src référence un lieu
+ * différent de la destination de l'article. Remplace chacune via Pexels.
  */
 export async function fixIncoherentImage(html, title) {
   const root = parse(html);
@@ -106,9 +106,6 @@ export async function fixIncoherentImage(html, title) {
   if (!destination) return { html, fixed: false, description: null };
 
   const destLower = destination.toLowerCase();
-  const firstImg = images[0];
-  const alt = (firstImg.getAttribute('alt') || '').toLowerCase();
-  const src = (firstImg.getAttribute('src') || '').toLowerCase();
 
   const wrongLocations = [
     'mauritius', 'maurice', 'quatre cocos', 'maldives', 'hawaii', 'caribbean',
@@ -117,61 +114,74 @@ export async function fixIncoherentImage(html, title) {
     'brazil', 'brésil', 'australia', 'australie', 'fiji', 'tahiti', 'seychelles'
   ];
 
-  const isWrongLocation = wrongLocations.some(loc => alt.includes(loc) || src.includes(loc));
-  const mentionsDest = alt.includes(destLower) || src.includes(destLower);
+  let fixedHtml = html;
+  let fixCount = 0;
+  const replacedAlts = [];
 
-  if (!isWrongLocation && mentionsDest) {
+  for (const img of images) {
+    const alt = (img.getAttribute('alt') || '').toLowerCase();
+    const src = (img.getAttribute('src') || '').toLowerCase();
+
+    const isWrongLocation = wrongLocations.some(loc => alt.includes(loc) || src.includes(loc));
+    const mentionsDest = alt.includes(destLower) || src.includes(destLower);
+
+    // Skip if no wrong location detected or already mentions correct destination
+    if (!isWrongLocation || mentionsDest) continue;
+
+    console.log(`    🖼️ Image incohérente détectée : alt="${img.getAttribute('alt')}" pour destination "${destination}"`);
+
+    try {
+      const query = `${destination} travel ${fixCount === 0 ? 'landscape' : fixCount === 1 ? 'culture' : 'nature'}`;
+      const newImage = await imageManager.searchCascade(query, { orientation: 'landscape' });
+
+      if (!newImage) continue;
+
+      const oldSrc = img.getAttribute('src');
+      const oldAlt = img.getAttribute('alt');
+
+      if (oldSrc) {
+        fixedHtml = fixedHtml.replace(oldSrc, newImage.url);
+      }
+      if (oldAlt) {
+        const newAlt = `${destination} — ${newImage.alt || 'paysage voyage'}`;
+        fixedHtml = fixedHtml.replace(
+          `alt="${oldAlt}"`,
+          `alt="${newAlt}"`
+        );
+        replacedAlts.push(oldAlt.substring(0, 40));
+      }
+
+      // Update figcaption if it immediately follows this image's figure
+      const figcaptionMatch = fixedHtml.match(new RegExp(
+        `${newImage.url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^<]*</img>\\s*<figcaption>Photo\\s*:\\s*[^<]+</figcaption>`
+      ));
+      if (!figcaptionMatch && newImage.photographer) {
+        // Fallback: replace first unprocessed figcaption near the replaced image
+        const genericFigcaption = fixedHtml.match(/<figcaption>Photo\s*:\s*[^<]+<\/figcaption>/);
+        if (genericFigcaption && fixCount === 0) {
+          const imgSource = newImage.source === 'pexels' ? 'Pexels' : newImage.source === 'flickr' ? 'Flickr' : newImage.source;
+          fixedHtml = fixedHtml.replace(
+            genericFigcaption[0],
+            `<figcaption>Photo : ${newImage.photographer} / <a href="${newImage.sourceUrl || 'https://www.pexels.com'}" target="_blank" rel="noopener nofollow">${imgSource}</a></figcaption>`
+          );
+        }
+      }
+
+      fixCount++;
+    } catch (err) {
+      console.error(`    ❌ Erreur remplacement image: ${err.message}`);
+    }
+  }
+
+  if (fixCount === 0) {
     return { html, fixed: false, description: null };
   }
 
-  if (!isWrongLocation && !mentionsDest) {
-    return { html, fixed: false, description: null };
-  }
-
-  console.log(`    🖼️ Image incohérente détectée : alt="${firstImg.getAttribute('alt')}" pour destination "${destination}"`);
-
-  try {
-    const query = `${destination} travel landscape`;
-    const newImage = await imageManager.searchCascade(query, { orientation: 'landscape' });
-
-    if (!newImage) {
-      return { html, fixed: false, description: `Image incohérente mais pas de remplacement trouvé pour "${query}"` };
-    }
-
-    const oldSrc = firstImg.getAttribute('src');
-    const oldAlt = firstImg.getAttribute('alt');
-
-    let fixedHtml = html;
-
-    if (oldSrc) {
-      fixedHtml = fixedHtml.replace(oldSrc, newImage.url);
-    }
-    if (oldAlt) {
-      const newAlt = `${destination} — ${newImage.alt || 'paysage voyage'}`;
-      fixedHtml = fixedHtml.replace(
-        `alt="${oldAlt}"`,
-        `alt="${newAlt}"`
-      );
-    }
-
-    const figcaptionMatch = fixedHtml.match(/<figcaption>Photo\s*:\s*[^<]+<\/figcaption>/);
-    if (figcaptionMatch && newImage.photographer) {
-      const source = newImage.source === 'pexels' ? 'Pexels' : newImage.source === 'flickr' ? 'Flickr' : newImage.source;
-      fixedHtml = fixedHtml.replace(
-        figcaptionMatch[0],
-        `<figcaption>Photo : ${newImage.photographer} / <a href="${newImage.sourceUrl || 'https://www.pexels.com'}" target="_blank" rel="noopener nofollow">${source}</a></figcaption>`
-      );
-    }
-
-    return {
-      html: fixedHtml,
-      fixed: true,
-      description: `Image hero remplacée : "${oldAlt?.substring(0, 60)}..." → image ${destination} (${newImage.source})`
-    };
-  } catch (err) {
-    console.error(`    ❌ Erreur remplacement image: ${err.message}`);
-    return { html, fixed: false, description: `Erreur remplacement image: ${err.message}` };
-  }
+  return {
+    html: fixedHtml,
+    fixed: true,
+    description: `${fixCount} image(s) incohérente(s) remplacée(s) : ${replacedAlts.map(a => `"${a}..."`).join(', ')} → images ${destination}`
+  };
 }
 
 // ─── Fixer 2 : Liens internes tronqués ────────────────────
@@ -1073,6 +1083,136 @@ export async function fixOrphanedWidgets(html) {
     description: fixCount > 0 ? `${fixCount} widget(s) orphelin(s) contextualisé(s): ${fixes.join('; ')}` : null
   };
 }
+// ─── Fixer: Placeholder patterns detection ─────────────────
+
+/**
+ * Détecte les patterns "placeholder" vagues répétés plus de 2 fois
+ * (ex: "un coût significatif", "un budget à vérifier", "un coût non négligeable").
+ * Les remplace par des formulations plus variées ou les signale.
+ */
+export async function fixPlaceholderPatterns(html) {
+  const placeholderPatterns = [
+    { regex: /un coût significatif/gi, label: 'un coût significatif' },
+    { regex: /un budget à vérifier/gi, label: 'un budget à vérifier' },
+    { regex: /un coût non négligeable/gi, label: 'un coût non négligeable' },
+    { regex: /un prix raisonnable/gi, label: 'un prix raisonnable' },
+    { regex: /une expérience unique/gi, label: 'une expérience unique' },
+    { regex: /une expérience inoubliable/gi, label: 'une expérience inoubliable' },
+    { regex: /il est important de noter/gi, label: 'il est important de noter' },
+    { regex: /il convient de souligner/gi, label: 'il convient de souligner' },
+    { regex: /à ne pas manquer/gi, label: 'à ne pas manquer' },
+    { regex: /un incontournable/gi, label: 'un incontournable' },
+  ];
+
+  const replacementPool = {
+    'un coût significatif': ['un budget conséquent', 'une dépense notable', 'un investissement réel'],
+    'un budget à vérifier': ['un tarif à comparer', 'un montant à anticiper', 'un prix variable selon la saison'],
+    'un coût non négligeable': ['un poste de dépense important', 'une ligne budgétaire à prévoir', 'un tarif qui pèse'],
+    'un prix raisonnable': ['un tarif accessible', 'un rapport qualité-prix correct', 'un coût maîtrisé'],
+    'une expérience unique': ['un moment marquant', 'une découverte à part', 'un souvenir durable'],
+    'une expérience inoubliable': ['un temps fort du voyage', 'un moment gravé en mémoire', 'une parenthèse mémorable'],
+    'il est important de noter': ['à retenir', 'point clé', 'détail essentiel'],
+    'il convient de souligner': ['à garder en tête', 'fait notable', 'élément décisif'],
+    'à ne pas manquer': ['à inscrire sur ta liste', 'à prévoir absolument', 'parmi les essentiels'],
+    'un incontournable': ['un classique assumé', 'un passage obligé', 'une étape phare'],
+  };
+
+  let fixedHtml = html;
+  let fixCount = 0;
+  const fixes = [];
+
+  for (const { regex, label } of placeholderPatterns) {
+    const matches = html.match(regex);
+    if (!matches || matches.length <= 2) continue;
+
+    // Keep first two occurrences, replace extras
+    const pool = replacementPool[label] || [];
+    let occurrenceIndex = 0;
+    fixedHtml = fixedHtml.replace(regex, (match) => {
+      occurrenceIndex++;
+      if (occurrenceIndex <= 2) return match; // keep first 2
+      const replacement = pool[(occurrenceIndex - 3) % pool.length] || match;
+      fixCount++;
+      return replacement;
+    });
+    fixes.push(`"${label}" x${matches.length} → diversifié`);
+  }
+
+  return {
+    html: fixedHtml,
+    fixed: fixCount > 0,
+    description: fixCount > 0 ? `${fixCount} placeholder(s) diversifié(s): ${fixes.join('; ')}` : null
+  };
+}
+
+// ─── Fixer: Truncated anchor text ──────────────────────────
+
+/**
+ * Détecte les <a> dont le texte d'ancre se termine par une virgule,
+ * des points de suspension, ou un mot incomplet, et nettoie la ponctuation.
+ */
+export async function fixTruncatedAnchorText(html) {
+  // Match anchor tags and capture their inner text
+  const anchorRegex = /<a\s([^>]*)>([^<]+)<\/a>/g;
+
+  let fixedHtml = html;
+  let fixCount = 0;
+  const fixes = [];
+
+  // Patterns indicating truncated anchor text
+  const truncatedEndings = [
+    /,\s*$/,                    // ends with comma
+    /\.{2,}\s*$/,              // ends with ellipsis dots
+    /…\s*$/,                    // ends with unicode ellipsis
+    /\s+\S{1,2}$/,             // ends with 1-2 char word fragment (likely truncated)
+    /\s+l['']$/i,              // ends with l' (French article fragment)
+    /\s+d['']$/i,              // ends with d' (French preposition fragment)
+    /\s+qu['']$/i,             // ends with qu' (French conjunction fragment)
+    /\s+et$/i,                  // ends with dangling "et"
+    /\s+de$/i,                  // ends with dangling "de"
+    /\s+en$/i,                  // ends with dangling "en"
+  ];
+
+  fixedHtml = fixedHtml.replace(anchorRegex, (fullMatch, attrs, text) => {
+    const trimmedText = text.trim();
+
+    for (const pattern of truncatedEndings) {
+      if (pattern.test(trimmedText)) {
+        // Clean: remove trailing problematic punctuation/fragments
+        let cleaned = trimmedText;
+
+        // Remove trailing comma
+        cleaned = cleaned.replace(/,\s*$/, '');
+        // Remove trailing ellipsis
+        cleaned = cleaned.replace(/\.{2,}\s*$/, '');
+        cleaned = cleaned.replace(/…\s*$/, '');
+        // Remove trailing incomplete word fragments (1-2 chars after space)
+        cleaned = cleaned.replace(/\s+\S{1,2}$/, '');
+        // Remove dangling French articles/prepositions
+        cleaned = cleaned.replace(/\s+(?:l['']|d['']|qu['']|et|de|en)$/i, '');
+
+        cleaned = cleaned.trim();
+
+        // Safety: don't reduce anchor text to less than 3 chars
+        if (cleaned.length < 3) return fullMatch;
+
+        if (cleaned !== trimmedText) {
+          fixCount++;
+          fixes.push(`"${trimmedText.substring(0, 30)}..." → "${cleaned.substring(0, 30)}..."`);
+          return `<a ${attrs}>${cleaned}</a>`;
+        }
+      }
+    }
+    return fullMatch;
+  });
+
+  return {
+    html: fixedHtml,
+    fixed: fixCount > 0,
+    description: fixCount > 0 ? `${fixCount} ancre(s) tronquée(s) nettoyée(s): ${fixes.join('; ')}` : null
+  };
+}
+
 // ─── Runner : applique tous les fixers ────────────────────
 
 /**
@@ -1217,6 +1357,22 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null, con
     console.log(`    ✅ ${orphanWidgetResult.description}`);
   }
 
+  // 17. Placeholder patterns vagues répétés
+  const placeholderResult = await fixPlaceholderPatterns(currentHtml);
+  if (placeholderResult.fixed) {
+    currentHtml = placeholderResult.html;
+    appliedFixes.push({ type: 'placeholder-patterns', description: placeholderResult.description });
+    console.log(`    ✅ ${placeholderResult.description}`);
+  }
+
+  // 18. Textes d'ancre tronqués
+  const anchorResult = await fixTruncatedAnchorText(currentHtml);
+  if (anchorResult.fixed) {
+    currentHtml = anchorResult.html;
+    appliedFixes.push({ type: 'truncated-anchors', description: anchorResult.description });
+    console.log(`    ✅ ${anchorResult.description}`);
+  }
+
   // 5. Corrections LLM ciblées (issues avec fix_type = 'llm', max 3)
   const llmIssues = issues
     .filter(i => i.fix_type === 'llm' && i.severity === 'critical')
@@ -1262,5 +1418,7 @@ export default {
   fixMissingDecisionPhrases,
   fixEmptyFAQ,
   fixOrphanedWidgets,
+  fixPlaceholderPatterns,
+  fixTruncatedAnchorText,
   applyAllFixes
 };

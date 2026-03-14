@@ -1007,13 +1007,21 @@ class SeoOptimizer {
       if (place) {
         const titleLower = title.toLowerCase();
         const placeLower = place.toLowerCase();
+
+        // Check if destination is ALREADY present anywhere in the title
+        const destAlreadyPresent = titleLower.includes(placeLower);
         const first30 = titleLower.substring(0, 30);
 
-        if (!first30.includes(placeLower)) {
-          // Restructure: "{PowerWord} {Place} : {title}"
+        if (!destAlreadyPresent) {
+          // Destination not in title at all — add "{PowerWord} {Place} : {title}"
           title = `${powerWord} ${place} : ${title}`;
+        } else if (!first30.includes(placeLower)) {
+          // Destination present but not in first 30 chars — just add power word, don't duplicate destination
+          if (!titleLower.includes(powerWord.toLowerCase())) {
+            title = `${powerWord} : ${title}`;
+          }
         } else {
-          // Place already early, add power word if room
+          // Place already early in title, add power word if room (don't re-add destination)
           if (!titleLower.includes(powerWord.toLowerCase())) {
             title = `${powerWord} ${title}`;
           }
