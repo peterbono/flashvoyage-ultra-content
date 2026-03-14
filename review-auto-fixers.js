@@ -1471,15 +1471,15 @@ export async function applyAllFixes(html, title, issues = [], wpAuth = null, con
 
   // 16. Widgets affiliés orphelins (sans intro contextuelle)
   const orphanWidgetResult = await fixOrphanedWidgets(currentHtml);
-  if (orphanWidgetResult.fixCount > 0) { currentHtml = orphanWidgetResult.html; allFixes.push(...orphanWidgetResult.fixes); }
+  if (orphanWidgetResult.fixCount > 0) { currentHtml = orphanWidgetResult.html; appliedFixes.push(...orphanWidgetResult.fixes); console.log("    ✅ " + orphanWidgetResult.fixes.join(", ")); }
 
   // Fix empty sections (blocking check)
   const emptySectionResult = await fixEmptySections(currentHtml);
-  if (emptySectionResult.fixCount > 0) { currentHtml = emptySectionResult.html; allFixes.push(...emptySectionResult.fixes); }
+  if (emptySectionResult.fixCount > 0) { currentHtml = emptySectionResult.html; appliedFixes.push(...emptySectionResult.fixes); console.log("    ✅ " + emptySectionResult.fixes.join(", ")); }
 
   // Fix costs without EUR
   const costEurResult = await fixCostsWithoutEUR(currentHtml);
-  if (costEurResult.fixCount > 0) { currentHtml = costEurResult.html; allFixes.push(...costEurResult.fixes); }
+  if (costEurResult.fixCount > 0) { currentHtml = costEurResult.html; appliedFixes.push(...costEurResult.fixes); console.log("    ✅ " + costEurResult.fixes.join(", ")); }
   // (orphanWidget handling already done above)
 
   // 17. Placeholder patterns vagues répétés
