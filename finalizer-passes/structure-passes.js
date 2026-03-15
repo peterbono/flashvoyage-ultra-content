@@ -447,6 +447,7 @@ export function ensureMinimumNewsSerpSections(html, finalDestination = '') {
   if (!html || typeof html !== 'string') return html;
   let out = html;
   const destination = String(finalDestination || '').trim() || 'Asie';
+const destFrMap2 = {thailand:'Thaïlande',japan:'Japon',indonesia:'Indonésie',vietnam:'Vietnam',cambodia:'Cambodge',laos:'Laos',philippines:'Philippines',malaysia:'Malaisie',bali:'Bali',india:'Inde',china:'Chine'};  const destinationFr = destFrMap2[destination.toLowerCase()] || destination;
   const lower = out.toLowerCase();
 
   const hasAutres = /<h2[^>]*>[^<]*ce\s*que\s*(les\s*)?autres[^<]*ne\s*disent?\s*pas[^<]*<\/h2>/i.test(out);
@@ -702,7 +703,7 @@ export function ensureNewsQualityConvergence(html, ctx = {}) {
     const hasImpactList = /<h2[^>]*>[^<]*(impact|change|concr[eè]t)[^<]*<\/h2>\s*(?:<p[^>]*>[\s\S]*?<\/p>\s*)?(?:<ul|<ol)/i.test(content);
     if (hasImpactList) return content;
     const block = [
-      `<h2>Ce qui change concrètement pour ton voyage en ${destination}</h2>`,
+      `<h2>Ce qui change concrètement pour ton voyage en ${destinationFr}</h2>`,
       '<ul>',
       '<li>Impact budget: les frais invisibles (bagages, transferts, annulation) peuvent effacer un prix attractif.</li>',
       '<li>Impact planning: un choix trop tardif augmente le risque de compromis coûteux.</li>',

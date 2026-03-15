@@ -265,7 +265,7 @@ export async function fixAffiliateCoverage(html, destination = '') {
   if (modules.length >= 2) return { html, fixed: false, description: null };
 
   const disclosure = '<p class="affiliate-module-disclaimer"><small>Liens partenaires: une commission peut être perçue, sans surcoût pour toi.</small></p>';
-  const safeDest = destination || 'ta destination';
+  const destFrMap = {thailand:'la Thaïlande',japan:'le Japon',indonesia:"l'Indonésie",vietnam:'le Vietnam',cambodia:'le Cambodge',laos:'le Laos',philippines:'les Philippines',malaysia:'la Malaisie',bali:'Bali',india:"l'Inde"}; const safeDest = destFrMap[(destination||'').toLowerCase()] || destination || 'ta destination';
   const buildModule = (id, title, txt) => [
     `<aside class="affiliate-module" data-placement-id="${id}">`,
     `<h3>${title}</h3>`,
