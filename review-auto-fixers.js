@@ -946,11 +946,18 @@ export async function fixEmptyFAQ(html, title = '') {
     if (!faqHeaderMatch) {
     if (!destination) return { html, fixed: false, description: null };
     
+    // Extract live prices for FAQ
+    const _liveVol = html.match(/Vol[^:]*:\s*<strong>([^<]+)<\/strong>/i);
+    const _liveMeal = html.match(/Repas[^:]*:\s*<strong>([^<]+)<\/strong>/i);
+    const _liveHotel = html.match(/Nuit[^:]*:\s*<strong>([^<]+)<\/strong>/i);
+    const _fp = _liveVol ? _liveVol[1].trim() : 'variable';
+    const _mp = _liveMeal ? _liveMeal[1].trim() : 'variable';
+    const _hp = _liveHotel ? _liveHotel[1].trim() : 'variable';
     const faqQuestions = [
-      { q: 'Quel budget prévoir pour ' + destination + ' ?', a: 'Le budget dépend de ton style de voyage. Prévois une marge pour les frais annexes et vérifie toujours le coût total avant réservation.' },
-      { q: 'Quelle erreur éviter en priorité à ' + destination + ' ?', a: 'Ne base pas ta décision sur un seul prix affiché : compare bagages, transferts et conditions d\u2019annulation.' },
-      { q: 'Comment se déplacer à ' + destination + ' ?', a: 'Plusieurs options existent : transports en commun, taxis, scooters ou location de voiture. Le choix dépend de ton budget et de ton itinéraire.' },
-      { q: destination + ' est-il adapté aux voyageurs solo ?', a: 'Oui, avec une bonne préparation. Prévois des hébergements bien notés et renseigne-toi sur les conditions locales.' },
+      { q: 'Combien coûte un vol pour ' + destination + ' ?', a: 'En moyenne, un vol A/R depuis Paris coûte ' + _fp + '. Réserve 2-3 mois à l\'avance pour les meilleurs tarifs.' },
+      { q: 'Quel budget quotidien à ' + destination + ' ?', a: 'Compte ' + _mp + ' par repas et ' + _hp + ' par nuit en budget. Un backpacker dépense 30-50€/jour tout compris.' },
+      { q: 'Comment se déplacer à ' + destination + ' ?', a: 'Bus locaux pour les longues distances, grab/taxi pour les courts trajets. Compare sur 12go.asia pour les inter-villes.' },
+      { q: destination + ' est-il sûr pour voyager seul ?', a: 'Globalement oui. Utilise des apps de taxi (Grab, Bolt), garde tes objets de valeur en sécurité, et informe quelqu\'un de ton itinéraire.' },
     ];
     const faqHtml = '<h2>Questions fréquentes</h2>\n' + faqQuestions.map(f => '<details><summary>' + f.q + '</summary><p>' + f.a + '</p></details>').join('\n');
     
@@ -997,13 +1004,23 @@ export async function fixEmptyFAQ(html, title = '') {
   }
 
   // Deterministic FAQ generation from destination + H2 topics
+  // Extract real prices from live data section if present
+  const liveDataMatch = html.match(/Vol[^:]*:\s*<strong>([^<]+)<\/strong>/i);
+  const mealMatch = html.match(/Repas[^:]*:\s*<strong>([^<]+)<\/strong>/i);
+  const hotelMatch = html.match(/Nuit[^:]*:\s*<strong>([^<]+)<\/strong>/i);
+  const transportMatch = html.match(/Transport[^:]*:\s*<strong>([^<]+)<\/strong>/i);
+  const flightPrice = liveDataMatch ? liveDataMatch[1].trim() : 'variable selon la saison';
+  const mealPrice = mealMatch ? mealMatch[1].trim() : 'variable';
+  const hotelPrice = hotelMatch ? hotelMatch[1].trim() : 'variable';
+  const transportPrice = transportMatch ? transportMatch[1].trim() : 'quelques euros';
+  
   const faqTemplates = [
-    { q: `Quel budget prévoir pour ${destination} ?`, a: `Le budget dépend de ton style de voyage. Consulte la section budget de cet article pour une estimation détaillée selon que tu voyages en mode backpacker, confort ou premium.` },
-    { q: `Quelle est la meilleure période pour visiter ${destination} ?`, a: `La haute saison touristique n'est pas toujours la meilleure période. Vérifie la météo et les prix selon la saison pour trouver le meilleur compromis.` },
-    { q: `Faut-il un visa pour aller à ${destination} ?`, a: `Les conditions de visa varient selon ta nationalité. Vérifie les exigences actuelles auprès de l'ambassade ou du consulat avant ton départ.` },
-    { q: `Comment se déplacer à ${destination} ?`, a: `Plusieurs options existent : transports en commun, taxis, scooters ou location de voiture. Le choix dépend de ton budget et de ton itinéraire.` },
-    { q: `${destination} est-il adapté aux familles ?`, a: `${destination} peut convenir aux familles avec une bonne préparation. Prévois des hébergements adaptés et vérifie les conditions sanitaires.` },
-    { q: `Où loger à ${destination} ?`, a: `Le choix du quartier dépend de tes priorités : budget, proximité des sites, vie nocturne ou tranquillité. Compare les options dans notre section hébergement.` },
+    { q: `Combien coûte un vol pour ${destination} depuis la France ?`, a: `En moyenne, un vol aller-retour Paris → ${destination} coûte ${flightPrice}. Les prix varient selon la saison et l'anticipation de la réservation. Utilise Google Flights ou Skyscanner pour comparer — réserver 2-3 mois à l'avance donne généralement les meilleurs tarifs.` },
+    { q: `Quel budget quotidien prévoir sur place à ${destination} ?`, a: `Compte environ ${mealPrice} par repas économique et ${hotelPrice} par nuit en hôtel budget. Un budget backpacker réaliste tourne autour de 30-50€/jour tout compris (logement, nourriture, transport, activités). En mode confort, prévois 70-100€/jour.` },
+    { q: `Quelle est la meilleure période pour visiter ${destination} ?`, a: `Évite la haute saison touristique (décembre-février) si tu veux des prix bas et moins de monde. La basse saison (mai-septembre) offre des tarifs 30-40% moins chers, mais vérifie la saison des pluies qui peut impacter certaines régions.` },
+    { q: `Comment se déplacer à ${destination} ?`, a: `Le transport local coûte environ ${transportPrice} par trajet. Les bus locaux sont l'option la moins chère pour les longues distances. Pour les trajets courts, le scooter (si tu es à l'aise) ou le grab/taxi sont pratiques. Compare les prix sur 12go.asia pour les trajets inter-villes.` },
+    { q: `Faut-il un visa pour ${destination} ?`, a: `Les conditions varient selon ta nationalité. La plupart des passeports européens bénéficient d'une exemption de visa pour les courts séjours (15-30 jours). Pour les séjours plus longs, vérifie les options de visa on arrival ou e-visa sur le site officiel de l'ambassade.` },
+    { q: `${destination} est-il sûr pour voyager seul ?`, a: `Globalement oui. Les arnaques touristiques classiques (taxis, prix gonflés) existent mais se gèrent avec du bon sens. Garde tes objets de valeur en sécurité, utilise des applications de taxi (Grab, Bolt) plutôt que de négocier dans la rue, et informe quelqu'un de ton itinéraire.` },
   ];
 
   // Select 4 relevant FAQs, prioritizing those that match H2 topics

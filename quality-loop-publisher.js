@@ -614,6 +614,54 @@ function fixEncodingBreaks(html) {
   out = out.replace(/"main Entity"/g, '"mainEntity"');
   out = out.replace(/"accepted Answer"/g, '"acceptedAnswer"');
   
+
+  // ── PART 2: Fix missing spaces (joined words) ──
+  // Words that got concatenated without space, typically around accented chars or HTML entities
+  const joinFixes = [
+    [/peutêtre/g, 'peut être'],
+    [/peuventêtre/g, 'peuvent être'],
+    [/trèsélevé/g, 'très élevé'],
+    [/humiditéélevée/g, 'humidité élevée'],
+    [/parétape/g, 'par étape'],
+    [/quatreétape/g, 'quatre étape'],
+    [/lesétape/g, 'les étape'],
+    [/desétape/g, 'des étape'],
+    [/uneétape/g, 'une étape'],
+    [/chaqueétape/g, 'chaque étape'],
+    [/unéchec/g, 'un échec'],
+    [/unîle/g, 'une île'],
+    [/deuxîle/g, 'deux île'],
+    [/étaient/g, 'étaient'],  // This one is correct as-is, skip
+    [/ellesétaient/g, 'elles étaient'],
+    [/quiétaient/g, 'qui étaient'],
+  ];
+  
+  for (const [pattern, replacement] of joinFixes) {
+    const before = out;
+    out = out.replace(pattern, replacement);
+    if (out !== before) fixCount++;
+  }
+  
+  // Generic pattern: detect common French words that got joined without space
+  // Pattern: lowercase letter + accented uppercase start of common word
+  out = out.replace(/(?<=>)([^<]+)(?=<)/g, (match, text) => {
+    let fixed = text;
+    // Fix: word ending + "é" starting next word (very common pattern)
+    fixed = fixed.replace(/([a-zé])([ÉÈÊÀÂÎÔÙ])/g, '$1 $2');
+    // Fix: "nt" + "être" pattern
+    fixed = fixed.replace(/ntêtre/g, 'nt être');
+    // Fix: common suffix + "é" prefix patterns  
+    fixed = fixed.replace(/([st])é([a-z]{3,})/g, (m, pre, post) => {
+      // Only split if it creates two valid words
+      const candidates = ['étaient', 'étape', 'élevé', 'éviter', 'étranger', 'échec', 'économ'];
+      for (const c of candidates) {
+        if (('é' + post).startsWith(c.slice(1))) return pre + ' é' + post;
+      }
+      return m;
+    });
+    return fixed;
+  });
+
   if (fixCount > 0) {
     console.log(`🔧 ENCODING_FIXER: ${fixCount} encoding break(s) repaired`);
   }
@@ -640,6 +688,17 @@ function fixGhostLinks(html) {
     if (/<a\s/i.test(match)) return match;
     fixCount++;
     return '';
+  });
+  
+
+  // Remove internal-link-transition <p> tags that ended up INSIDE blockquotes
+  out = out.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (match, inner) => {
+    const cleaned = inner.replace(/<p\s+class="internal-link-transition"[^>]*>[\s\S]*?<\/p>/gi, '');
+    if (cleaned !== inner) {
+      fixCount++;
+      return match.replace(inner, cleaned);
+    }
+    return match;
   });
   
   if (fixCount > 0) {
@@ -735,6 +794,78 @@ function fixEmptyFaqEntries(html) {
   
   if (fixCount > 0) {
     console.log(`🔧 EMPTY_FAQ_FIXER: ${fixCount} empty FAQ entry/entries removed`);
+  }
+  return out;
+}
+
+
+
+// ─── WALL-OF-TEXT SPLITTER ──────────────────────────────────
+// Splits paragraphs that exceed 200 words into smaller ones at sentence boundaries
+function splitWallParagraphs(html) {
+  let out = html;
+  let fixCount = 0;
+  const MAX_WORDS = 150;
+  
+  out = out.replace(/<p(?:\s[^>]*)?>([^<]{500,})<\/p>/g, (match, text) => {
+    const wordCount = text.split(/\s+/).length;
+    if (wordCount <= MAX_WORDS) return match;
+    
+    // Split at sentence boundaries
+    const sentences = text.split(/(?<=[.!?])\s+/);
+    if (sentences.length <= 2) return match; // Can't split meaningful
+    
+    const paragraphs = [];
+    let current = [];
+    let currentWords = 0;
+    
+    for (const sentence of sentences) {
+      const words = sentence.split(/\s+/).length;
+      if (currentWords + words > MAX_WORDS && current.length > 0) {
+        paragraphs.push(current.join(' '));
+        current = [sentence];
+        currentWords = words;
+      } else {
+        current.push(sentence);
+        currentWords += words;
+      }
+    }
+    if (current.length > 0) paragraphs.push(current.join(' '));
+    
+    if (paragraphs.length > 1) {
+      fixCount++;
+      return paragraphs.map(p => `<p>${p}</p>`).join('\n');
+    }
+    return match;
+  });
+  
+  if (fixCount > 0) {
+    console.log(`🔧 WALL_SPLITTER: ${fixCount} wall paragraph(s) split`);
+  }
+  return out;
+}
+
+
+
+// ─── SLUG ANCHOR FIXER ──────────────────────────────────────
+// Detects and fixes <a> tags where the anchor text is a raw URL slug
+function fixSlugAnchors(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  out = out.replace(/<a\s+href="([^"]*)"[^>]*>([\w-]+(?:-[\w-]+){3,})<\/a>/g, (match, href, text) => {
+    // If text looks like a slug (lowercase, hyphens, no spaces, >3 words)
+    if (/^[a-z0-9]+(-[a-z0-9]+){3,}$/.test(text)) {
+      // Convert slug to readable title
+      const readable = text.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      fixCount++;
+      return `<a href="${href}">${readable}</a>`;
+    }
+    return match;
+  });
+  
+  if (fixCount > 0) {
+    console.log(`🔧 SLUG_ANCHOR_FIXER: ${fixCount} slug anchor(s) humanized`);
   }
   return out;
 }
@@ -914,6 +1045,8 @@ async function publishArticle(article) {
   finalContent = fixGhostLinks(finalContent);
   finalContent = fixDuplicateCitations(finalContent);
   finalContent = fixEmptyFaqEntries(finalContent);
+  finalContent = splitWallParagraphs(finalContent);
+  finalContent = fixSlugAnchors(finalContent);
   console.log('✅ Post-processing fixes applied (encoding, ghost links, dedup, empty FAQ)');
 
   const postData = {
