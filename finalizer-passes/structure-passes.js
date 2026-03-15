@@ -3,6 +3,7 @@
  * FV-115: Extracted from article-finalizer.js
  * Each function is bound to the ArticleFinalizer instance at runtime.
  */
+import QualityAnalyzer from '../quality-analyzer.js';
 
 export function extractSections(html, sectionDefinitions) {
   const sections = {};
