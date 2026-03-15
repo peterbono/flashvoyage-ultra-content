@@ -723,7 +723,7 @@ export function limitSiTuSentences(html) {
   // Count "Si tu" occurrences in text (not in HTML attributes)
   const siTuPattern = /Si tu ([a-zéèêàâîôûç]+)/gi;
   let count = 0;
-  out = out.replace(/<p[^>]*>([sS]*?)</p>/gi, (pTag, content) => {
+  out = out.replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, (pTag, content) => {
     // Check if this paragraph starts with or contains "Si tu"
     const hasSiTu = /Si tu [a-zéèêàâîôûç]/i.test(content);
     if (!hasSiTu) return pTag;
