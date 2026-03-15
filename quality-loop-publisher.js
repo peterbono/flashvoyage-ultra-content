@@ -509,6 +509,46 @@ Retourne l'article HTML complet corrigé.`;
 }
 
 // ─── Agent: Publisher ────────────────────────────────────
+// ─── Title Listicle Rewriter ─────────────────────────────────
+function rewriteListicleTitle(title) {
+  // Detect listicle patterns
+  const listiclePatterns = [
+    /^\d+\s+(risques?|pi[eè]ges?|erreurs?|choses?|raisons?|astuces?|conseils?)\s+(que|qui|pour|à|cachée?s?)/i,
+    /:\s*\d+\s+(risques?|pi[eè]ges?|erreurs?|choses?|raisons?|astuces?|conseils?)/i,
+    /les blogs (?:voyage )?(?:cachent|oublient|ne disent pas|ignorent)/i,
+    /guide complet|tout savoir sur/i,
+  ];
+  
+  const isListicle = listiclePatterns.some(p => p.test(title));
+  if (!isListicle) return title;
+  
+  console.log('  ✏️ TITLE REWRITE: listicle détecté — "' + title + '"');
+  
+  // Extract destination and topic from the title
+  const destMatch = title.match(/(Tha[ïi]lande|Vietnam|Japon|Bali|Indon[ée]sie|Laos|Cambodge|Philippines|Cor[ée]e(?:\s+du\s+Sud)?|Malaisie|Singapour|Myanmar|Birmanie|Sri\s*Lanka|N[ée]pal|Inde|Bangkok|Chiang\s*Mai|Tokyo|Seoul|Hanoi|Ho\s*Chi\s*Minh)/i);
+  const dest = destMatch ? destMatch[1] : '';
+  
+  // Extract the core topic
+  const topicClues = title.replace(/^\d+\s+/, '').replace(dest, '').replace(/[:,\-–—]/g, ' ').trim().toLowerCase();
+  
+  // Deterministic rewrite patterns based on content
+  const hooks = [
+    dest + " : ce que j'aurais voulu savoir avant de réserver",
+    "Pourquoi personne ne te prévient vraiment sur " + dest,
+    dest + " solo : le moment où j'ai compris que j'avais tout faux",
+    "Ce que " + dest + " m'a coûté (et que les blogs ne montrent pas)",
+    dest + " : la vérité que tu ne liras nulle part ailleurs",
+  ];
+  
+  // Pick based on hash of original title for determinism
+  let hash = 0;
+  for (let i = 0; i < title.length; i++) hash = ((hash << 5) - hash + title.charCodeAt(i)) | 0;
+  const pick = hooks[Math.abs(hash) % hooks.length];
+  
+  console.log('  ✏️ TITLE REWRITTEN: "' + pick + '"');
+  return pick;
+}
+
 async function publishArticle(article) {
   const wpUrl = process.env.WORDPRESS_URL;
   const wpUser = process.env.WORDPRESS_USERNAME;
@@ -598,7 +638,8 @@ async function publishArticle(article) {
     finalContent = finalContent.replace(filler, '');
   }
   
-  // Step 2: Merge consecutive short <p> (< 180 chars) — group by 2+ for natural rhythm
+  // Step 2: AGGRESSIVE paragraph merger — merge short <p> INTO previous paragraph
+  // Instead of only merging consecutive shorts, append each short <p> to the previous <p>
   {
     const pRegex = /<p([^>]*)>(.*?)<\/p>/gs;
     const parts = [];
@@ -610,47 +651,69 @@ async function publishArticle(article) {
       }
       const attrs = match[1] || '';
       const text = match[2] || '';
-      const plainLen = text.replace(/<[^>]*>/g, '').trim().length;
-      const isShort = plainLen < 180 && plainLen > 5;
+      const plainText = text.replace(/<[^>]*>/g, '').trim();
       const hasSpecialClass = /class=/.test(attrs);
-      const hasLink = /<a\s/.test(text);
-      parts.push({ type: 'p', attrs, text, isShort: isShort && !hasSpecialClass && !hasLink, html: match[0] });
+      const hasLink = /<a\s/.test(text) && /internal-link|transition/.test(text);
+      const isShort = plainText.length < 160 && plainText.length > 5;
+      parts.push({ 
+        type: 'p', attrs, text, plainText,
+        isShort: isShort && !hasSpecialClass && !hasLink,
+        isMergeable: !hasSpecialClass && !hasLink && plainText.length > 5,
+        html: match[0] 
+      });
       lastIndex = match.index + match[0].length;
     }
     if (lastIndex < finalContent.length) {
       parts.push({ type: 'other', html: finalContent.slice(lastIndex) });
     }
     
-    // Group consecutive short paragraphs (flush at 2+)
+    // Build merged output: append short <p> to previous <p> when possible
     let merged = '';
-    let grouping = [];
-    for (const part of parts) {
-      if (part.type === 'p' && part.isShort) {
-        grouping.push(part.text);
-        if (grouping.length >= 4) {
-          merged += '<p>' + grouping.join(' ') + '</p>\n';
-          grouping = [];
+    let lastParagraphText = null;
+    let lastParagraphStart = -1;
+    
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+      
+      if (part.type !== 'p') {
+        // Non-paragraph element breaks the chain
+        if (lastParagraphText !== null) {
+          merged += '<p>' + lastParagraphText + '</p>\n';
+          lastParagraphText = null;
         }
+        merged += part.html;
+        continue;
+      }
+      
+      if (part.isShort && lastParagraphText !== null) {
+        // Short paragraph: merge into previous
+        lastParagraphText += ' ' + part.text;
+      } else if (part.isMergeable) {
+        // Start new paragraph buffer
+        if (lastParagraphText !== null) {
+          merged += '<p>' + lastParagraphText + '</p>\n';
+        }
+        lastParagraphText = part.text;
       } else {
-        if (grouping.length >= 2) {
-          merged += '<p>' + grouping.join(' ') + '</p>\n';
-        } else if (grouping.length === 1) {
-          merged += '<p>' + grouping[0] + '</p>\n';
+        // Special paragraph (has class, link, etc): flush and output as-is
+        if (lastParagraphText !== null) {
+          merged += '<p>' + lastParagraphText + '</p>\n';
+          lastParagraphText = null;
         }
-        grouping = [];
         merged += part.html;
       }
     }
-    if (grouping.length >= 2) {
-      merged += '<p>' + grouping.join(' ') + '</p>\n';
-    } else if (grouping.length === 1) {
-      merged += '<p>' + grouping[0] + '</p>\n';
+    if (lastParagraphText !== null) {
+      merged += '<p>' + lastParagraphText + '</p>\n';
     }
     finalContent = merged;
   }
   
+  // Rewrite listicle titles into emotional hooks
+  const finalTitle = rewriteListicleTitle(article.title);
+  
   const postData = {
-    title: article.title,
+    title: finalTitle,
     content: finalContent,
     status: 'publish',
     ...(categoryIds.length && { categories: categoryIds }),
