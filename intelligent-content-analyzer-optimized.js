@@ -1969,6 +1969,10 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 
 7. H2 DÉCISIONNELS (80%+ obligatoire) : chaque H2 pose un arbitrage, une tension ou un choix. ✅ Verbe décisionnel (choisir, éviter, optimiser, sacrifier, risquer) ou connecteur de tension (mais, vs, en revanche, caché, vrai). ✅ Exemples : «Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois», «Chiang Mai vs Bangkok : où ton budget tient le plus longtemps».
 
+8. BLOCKQUOTES PROPRES : Les citations Reddit dans les blockquotes doivent être des PHRASES COMPLÈTES en français, pas des fragments. ❌ INTERDIT : mettre des liens internes dans les blockquotes. ❌ INTERDIT : laisser des slugs ou URLs dans le texte des citations. ✅ Chaque blockquote contient UNE citation pertinente, traduite proprement en français.
+
+9. ANCHOR TEXT NATUREL : Le texte des liens internes doit être une phrase naturelle en français. ❌ INTERDIT : "voyager au vietnam avec 500 e comment optimiser chaque depense" (slug brut). ❌ INTERDIT : "Article Title Complet Avec Majuscules". ✅ OBLIGATOIRE : "optimiser son budget au Vietnam", "les vrais coûts du JR Pass" (phrase courte naturelle).
+
 🇫🇷 RÉPONSE UNIQUEMENT EN FRANÇAIS (PRIORITÉ ABSOLUE) :
 - Produis TOUT le JSON en français dès la première réponse. Aucun champ en anglais.
 - Si la source Reddit est en anglais, interprète et rédige directement en français (pas de copier-coller puis traduction).

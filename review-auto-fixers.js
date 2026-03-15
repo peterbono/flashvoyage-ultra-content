@@ -950,9 +950,9 @@ export async function fixEmptyFAQ(html, title = '') {
     const _liveVol = html.match(/Vol[^:]*:\s*<strong>([^<]+)<\/strong>/i);
     const _liveMeal = html.match(/Repas[^:]*:\s*<strong>([^<]+)<\/strong>/i);
     const _liveHotel = html.match(/Nuit[^:]*:\s*<strong>([^<]+)<\/strong>/i);
-    const _fp = _liveVol ? _liveVol[1].trim() : 'variable';
-    const _mp = _liveMeal ? _liveMeal[1].trim() : 'variable';
-    const _hp = _liveHotel ? _liveHotel[1].trim() : 'variable';
+    const _fp = _liveVol ? _liveVol[1].trim().replace(/&euro;/g, '€').replace(/~/g, '') : 'variable selon la saison';
+    const _mp = _liveMeal ? _liveMeal[1].trim().replace(/&euro;/g, '€').replace(/~/g, '') : '5-10€';
+    const _hp = _liveHotel ? _liveHotel[1].trim().replace(/&euro;/g, '€').replace(/~/g, '') : '15-30€';
     const faqQuestions = [
       { q: 'Combien coûte un vol pour ' + destination + ' ?', a: 'En moyenne, un vol A/R depuis Paris coûte ' + _fp + '. Réserve 2-3 mois à l\'avance pour les meilleurs tarifs.' },
       { q: 'Quel budget quotidien à ' + destination + ' ?', a: 'Compte ' + _mp + ' par repas et ' + _hp + ' par nuit en budget. Un backpacker dépense 30-50€/jour tout compris.' },
@@ -1009,10 +1009,14 @@ export async function fixEmptyFAQ(html, title = '') {
   const mealMatch = html.match(/Repas[^:]*:\s*<strong>([^<]+)<\/strong>/i);
   const hotelMatch = html.match(/Nuit[^:]*:\s*<strong>([^<]+)<\/strong>/i);
   const transportMatch = html.match(/Transport[^:]*:\s*<strong>([^<]+)<\/strong>/i);
-  const flightPrice = liveDataMatch ? liveDataMatch[1].trim() : 'variable selon la saison';
-  const mealPrice = mealMatch ? mealMatch[1].trim() : 'variable';
-  const hotelPrice = hotelMatch ? hotelMatch[1].trim() : 'variable';
-  const transportPrice = transportMatch ? transportMatch[1].trim() : 'quelques euros';
+  const rawFlight = liveDataMatch ? liveDataMatch[1].trim() : '';
+  const flightPrice = rawFlight ? rawFlight.replace(/&euro;/g, '€').replace(/&amp;/g, '&').replace(/~/g, '').trim() : 'variable selon la saison (vérifie sur Google Flights ou Skyscanner)';
+  const rawMeal = mealMatch ? mealMatch[1].trim() : '';
+  const mealPrice = rawMeal ? rawMeal.replace(/&euro;/g, '€').replace(/~/g, '').trim() : '5-10€';
+  const rawHotel = hotelMatch ? hotelMatch[1].trim() : '';
+  const hotelPrice = rawHotel ? rawHotel.replace(/&euro;/g, '€').replace(/~/g, '').trim() : '15-30€';
+  const rawTransport = transportMatch ? transportMatch[1].trim() : '';
+  const transportPrice = rawTransport ? rawTransport.replace(/&euro;/g, '€').replace(/~/g, '').trim() : '1-3€';
   
   const faqTemplates = [
     { q: `Combien coûte un vol pour ${destination} depuis la France ?`, a: `En moyenne, un vol aller-retour Paris → ${destination} coûte ${flightPrice}. Les prix varient selon la saison et l'anticipation de la réservation. Utilise Google Flights ou Skyscanner pour comparer — réserver 2-3 mois à l'avance donne généralement les meilleurs tarifs.` },

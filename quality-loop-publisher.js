@@ -854,9 +854,11 @@ function fixSlugAnchors(html) {
   let out = html;
   let fixCount = 0;
   
-  out = out.replace(/<a\s+href="([^"]*)"[^>]*>([\w-]+(?:-[\w-]+){3,})<\/a>/g, (match, href, text) => {
-    // If text looks like a slug (lowercase, hyphens, no spaces, >3 words)
-    if (/^[a-z0-9]+(-[a-z0-9]+){3,}$/.test(text)) {
+  out = out.replace(/<a\s+href="([^"]*)"[^>]*>([a-z0-9][a-z0-9- ]{15,})<\/a>/g, (match, href, text) => {
+    // Skip if text contains uppercase (likely a proper title already)
+    if (/[A-Z]/.test(text)) return match;
+    // If text looks like a slug (lowercase, hyphens, no uppercase)
+    if (/^[a-z0-9]+[- ][a-z0-9- ]+$/.test(text) && text.length > 20) {
       // Convert slug to readable title
       const readable = text.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
       fixCount++;
@@ -895,6 +897,87 @@ function fixNestedLinks(html) {
   
   if (fixCount > 0) {
     console.log(`🔧 NESTED_LINK_FIXER: ${fixCount} nested link(s) flattened`);
+  }
+  return out;
+}
+
+
+
+// ─── BLOCKQUOTE CONTENT CLEANER ─────────────────────────────
+// Cleans blockquote content: removes slugified link text, fixes broken translations
+function cleanBlockquoteContent(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  out = out.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (match, inner) => {
+    let cleaned = inner;
+    
+    // Fix: link with slug as anchor text inside blockquote
+    // <a href="...">slug-text-like-this</a> → just keep the text without slugified anchor
+    cleaned = cleaned.replace(/<a\s+href="[^"]*"[^>]*>([a-z0-9]+(?:-[a-z0-9]+){3,})<\/a>/gi, (linkMatch, slugText) => {
+      fixCount++;
+      return ''; // Remove slugified links from blockquotes entirely
+    });
+    
+    // Fix: remove "internal-link-transition" paragraphs from inside blockquotes
+    cleaned = cleaned.replace(/<p\s+class="internal-link-transition"[^>]*>[\s\S]*?<\/p>/gi, () => {
+      fixCount++;
+      return '';
+    });
+    
+    // Fix: remove empty <p></p> left after cleaning
+    cleaned = cleaned.replace(/<p>\s*<\/p>/g, '');
+    
+    if (cleaned !== inner) {
+      return match.replace(inner, cleaned);
+    }
+    return match;
+  });
+  
+  if (fixCount > 0) {
+    console.log(`🔧 BLOCKQUOTE_CLEANER: ${fixCount} issue(s) cleaned in blockquotes`);
+  }
+  return out;
+}
+
+
+
+// ─── UNICODE CONTENT SCRUBBER ───────────────────────────────
+// Cleans common Unicode artifacts that appear in LLM-generated content
+function scrubUnicodeArtifacts(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  const replacements = [
+    // Smart quotes normalization
+    [/\u201C|\u201D/g, '"'],      // Left/right double quotes → standard
+    [/\u2018|\u2019/g, "'"],      // Left/right single quotes → apostrophe
+    [/\u2013/g, '–'],             // En dash (keep as-is, it's valid)
+    [/\u2014/g, '—'],             // Em dash (keep as-is)
+    // Zero-width characters
+    [/\u200B/g, ''],              // Zero-width space
+    [/\u200C/g, ''],              // Zero-width non-joiner
+    [/\u200D/g, ''],              // Zero-width joiner
+    [/\uFEFF/g, ''],              // BOM
+    // Common LLM artifacts
+    [/\u00A0/g, ' '],             // Non-breaking space → regular space
+    [/\u2026/g, '...'],           // Ellipsis → three dots
+    // Double spaces
+    [/  +/g, ' '],                // Multiple spaces → single
+    // Fix common HTML entity issues
+    [/&amp;#8217;/g, "'"],        // Double-encoded apostrophe
+    [/&amp;#8211;/g, '–'],        // Double-encoded en-dash
+    [/&amp;#8212;/g, '—'],        // Double-encoded em-dash
+  ];
+  
+  for (const [pattern, replacement] of replacements) {
+    const before = out;
+    out = out.replace(pattern, replacement);
+    if (out !== before) fixCount++;
+  }
+  
+  if (fixCount > 0) {
+    console.log(`🔧 UNICODE_SCRUBBER: ${fixCount} artifact type(s) cleaned`);
   }
   return out;
 }
@@ -1078,6 +1161,7 @@ async function publishArticle(article) {
   
   
   // ─── POST-PROCESSING FIXES (TPG quality standards) ─────────
+  finalContent = scrubUnicodeArtifacts(finalContent);
   finalContent = fixEncodingBreaks(finalContent);
   finalContent = fixGhostLinks(finalContent);
   finalContent = fixDuplicateCitations(finalContent);
@@ -1085,6 +1169,7 @@ async function publishArticle(article) {
   finalContent = splitWallParagraphs(finalContent);
   finalContent = fixSlugAnchors(finalContent);
   finalContent = fixNestedLinks(finalContent);
+  finalContent = cleanBlockquoteContent(finalContent);
   console.log('✅ Post-processing fixes applied (encoding, ghost links, dedup, empty FAQ)');
 
   const postData = {
