@@ -44,20 +44,20 @@ export function fixEncodingBreaks(html) {
     if (out !== before) fixCount++;
   }
   
-  // Generic pattern: letter + space + accented letter that should be joined
-  // Only in text nodes (not HTML tags/attributes)
+  // Generic pattern: single letter + space + accented letter (broken encoding)
+  // Only merge when the prefix is 1-2 chars (likely a broken word, not a real word boundary)
+  // e.g. "ma îtrisable" → "maîtrisable", "a éroport" → "aéroport"
+  // BUT NOT "routine établie" (routine is a real complete word)
   out = out.replace(/(?<=>)([^<]+)(?=<)/g, (match, text) => {
-    // Fix: consonant + space + accented vowel that forms a French word
     let fixed = text;
-    // Pattern: word-internal space before accented char
-    fixed = fixed.replace(/(\w) ([éèêëàâäùûüôöîïçÉÈÊËÀÂÄÙÛÜÔÖÎÏÇ])(\w{2,})/g, (m, before, accent, after) => {
-      // Only merge if it looks like one word was split
-      const merged = before + accent + after;
-      // Simple heuristic: if the merged form is longer than 3 chars and starts/ends with common French patterns
-      if (merged.length >= 4) {
-        return merged;
-      }
-      return m;
+    // Only merge if the character before the space is preceded by a non-word char or start of text
+    // i.e., the "word" before the space is very short (1-2 chars = likely a broken syllable)
+    fixed = fixed.replace(/(?:^|[\s>])([a-zA-ZÀ-ÿ]{1,2}) ([éèêëàâäùûüôöîïçÉÈÊËÀÂÄÙÛÜÔÖÎÏÇ])([a-zA-ZÀ-ÿ]{2,})/g, (m, before, accent, after) => {
+      // Don't merge common French short words: le, la, de, ne, se, ce, je, te, me, un, en, tu, du, au, si, sa, ma, ta, et, ou
+      const shortWords = ['le','la','de','ne','se','ce','je','te','me','un','en','tu','du','au','si','sa','ma','ta','et','ou','il','on','où','ni','ça'];
+      if (shortWords.includes(before.toLowerCase())) return m;
+      // Merge: likely a broken encoding
+      return m.charAt(0) === ' ' || m.charAt(0) === '>' ? m.charAt(0) + before + accent + after : before + accent + after;
     });
     return fixed;
   });
@@ -597,6 +597,14 @@ export function fixFaqCountryGrammar(html) {
     [/pour Tha[ïi]lande/g, 'pour la Thaïlande'],
     [/pour visiter Tha[ïi]lande/g, 'pour visiter la Thaïlande'],
     [/visiter Tha[ïi]lande/g, 'visiter la Thaïlande'],
+    [/visiter Vietnam/g, 'visiter le Vietnam'],
+    [/visiter Japon/g, 'visiter le Japon'],
+    [/visiter Cambodge/g, 'visiter le Cambodge'],
+    [/visiter Laos/g, 'visiter le Laos'],
+    [/visiter Indon[ée]sie/g, "visiter l'Indonésie"],
+    [/visiter Philippines/g, 'visiter les Philippines'],
+    [/visiter Malaisie/g, 'visiter la Malaisie'],
+    [/visiter Inde/g, "visiter l'Inde"],
     [/sur place (?:à|en) Tha[ïi]lande/g, 'sur place en Thaïlande'],
     [/sur place Tha[ïi]lande/g, 'sur place en Thaïlande'],
     [/(?:à|au) Japon\b/g, 'au Japon'],
@@ -678,18 +686,49 @@ export function capExcessiveH2s(html) {
  */
 export function fixGenericAccentJoins(html) {
   let out = html;
-  // Pattern: word ending in accented char + word starting with accented char (no space)
-  // e.g. "sécuritéémotionnel" has "é" + "é" touching
+  
+  // Known French words that end with 'e' followed by accented start
+  // These are the most common joins the LLM creates
+  const knownJoins = [
+    [/routine[ée]tabli/gi, 'routine établi'],
+    [/cens[ée][eê]tre/gi, 'censé être'],
+    [/Prochaine[ée]tape/gi, 'Prochaine étape'],
+    [/prochaine[ée]tape/gi, 'prochaine étape'],
+    [/sécurité[ée]motionn/gi, 'sécurité émotionn'],
+    [/coût[ée]motionn/gi, 'coût émotionn'],
+    [/sociét[ée]/gi, (m) => m.length > 8 ? m.slice(0, 7) + ' ' + m.slice(7) : m],
+    [/difficult[ée]norme/gi, 'difficulté énorme'],
+    [/qualit[ée]lev/gi, 'qualité élev'],
+    [/activit[ée]conomiq/gi, 'activité économiq'],
+    [/libert[ée]conomiq/gi, 'liberté économiq'],
+    [/communaut[ée]xpat/gi, 'communauté expat'],
+    [/expérienc[ée]xception/gi, 'expérience exception'],
+    [/personn[ée]trang/gi, 'personne étrang'],
+    [/voyag[ée]xtrême/gi, 'voyage extrême'],
+    [/ville[ée]loign/gi, 'ville éloigné'],
+    [/duré[ée]stim/gi, 'durée estim'],
+  ];
+  
+  for (const [pattern, replacement] of knownJoins) {
+    out = out.replace(pattern, replacement);
+  }
+  
+  // Generic pattern: two accented chars touching = likely missing space
   const accentedVowels = 'éèêëàâäîïôùûüÿç';
-  // Two accented chars touching = likely missing space
   out = out.replace(new RegExp('([a-z\\u00e0-\\u00ff])([' + accentedVowels + '])([' + accentedVowels + '])([a-z])', 'gi'), (match, pre, end, start, post) => {
-    // Don't break real words like "créée", "agréée" 
     if ((end === 'é' && start === 'e') || (end === 'e' && start === 'é')) return match;
     return pre + end + ' ' + start + post;
   });
-  // Also fix: consonant + accented vowel immediately (like "tél" after another word)
-  // Pattern: lowercase + é/è/ê/à + lowercase (potential join after word ending in consonant)
-  out = out.replace(/([a-z])([éèêàâîôûç])([A-Z])/g, '$1$2 $3');
+  
+  // Generic: word ending in common suffix + accented vowel starting next word
+  // Pattern: [consonant][e][accented-vowel][consonant] where the 'e' ends a word
+  // This catches "routineétablie" = routine + établie
+  out = out.replace(/([bcdfghjklmnpqrstvwxz])e([éèêà])([a-z])/gi, (match, cons, accent, next) => {
+    // Check if it's a real word ending in -ne, -te, -re, -le, etc.
+    // before the accented vowel
+    return cons + 'e ' + accent + next;
+  });
+  
   return out;
 }
 
@@ -753,6 +792,67 @@ export function limitSiTuSentences(html) {
   return out;
 }
 
+/**
+ * Fix truncated sentences ending with just a period after short text.
+ * Detects patterns like "tu es constamment ." and removes the orphan period.
+ */
+export function fixTruncatedSentences(html) {
+  let out = html;
+  // Remove sentences that end abruptly with just ". " after a short word
+  // e.g., "tu es constamment ." → remove the whole sentence or the orphan period
+  out = out.replace(/ \./g, '.');
+  // Fix double periods
+  out = out.replace(/\.\./g, '.');
+  // Remove paragraphs that are clearly truncated (less than 20 chars of actual text)
+  out = out.replace(/<p[^>]*>\s*([^<]{1,15})\s*<\/p>/g, (match, text) => {
+    const trimmed = text.trim();
+    // Keep if it's a complete short sentence or a number/date
+    if (/[.!?]$/.test(trimmed) && trimmed.length > 5) return match;
+    if (/^\d/.test(trimmed)) return match;
+    // Remove if it's clearly truncated
+    if (trimmed.length < 10 && !/[.!?]$/.test(trimmed)) return '';
+    return match;
+  });
+  return out;
+}
+
+/**
+ * Merge consecutive short paragraphs to improve reading rhythm.
+ * Two consecutive <p> tags with <100 chars each get merged into one.
+ */
+export function mergeShortParagraphs(html) {
+  let out = html;
+  // Find consecutive short paragraphs and merge them
+  // Only merge if both are short AND they're about the same topic (consecutive)
+  let changed = true;
+  let iterations = 0;
+  while (changed && iterations < 10) {
+    changed = false;
+    iterations++;
+    out = out.replace(
+      /<p([^>]*)>([^<]{10,99})<\/p>\s*<p([^>]*)>([^<]{10,99})<\/p>/g,
+      (match, attrs1, text1, attrs2, text2) => {
+        // Don't merge if either has special classes
+        if (attrs1.includes('class=') || attrs2.includes('class=')) return match;
+        // Don't merge if second paragraph starts with a list marker or special char
+        if (/^[•\-\d]/.test(text2.trim())) return match;
+        // Don't merge if they seem to be different thoughts (second starts with capital after a period)
+        if (/\.$/.test(text1.trim()) && /^[A-ZÀÂÄÉÈÊËÎÏÔÙÛÜ]/.test(text2.trim())) {
+          // They could still be merged if both are very short
+          if (text1.trim().length + text2.trim().length < 150) {
+            changed = true;
+            return '<p' + attrs1 + '>' + text1.trim() + ' ' + text2.trim() + '</p>';
+          }
+          return match;
+        }
+        changed = true;
+        return '<p' + attrs1 + '>' + text1.trim() + ' ' + text2.trim() + '</p>';
+      }
+    );
+  }
+  return out;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
@@ -762,6 +862,7 @@ export function applyPostProcessingFixers(html) {
   c = fixDuplicateCitations(c);
   c = fixEmptyFaqEntries(c);
   c = splitWallParagraphs(c);
+  c = mergeShortParagraphs(c);
   c = fixSlugAnchors(c);
   c = fixNestedLinks(c);
   c = cleanBlockquoteContent(c);
@@ -771,6 +872,7 @@ export function applyPostProcessingFixers(html) {
   c = capExcessiveH2s(c);
   c = cleanAiTells(c);
   c = limitSiTuSentences(c);
+  c = fixTruncatedSentences(c);
   return c;
 }
 
