@@ -982,6 +982,34 @@ export function fixBrandNames(html) {
   return out;
 }
 
+/**
+ * Fix broken destination placeholders in templates.
+ * "en la destination" → remove or replace with actual destination from context.
+ */
+export function fixDestinationPlaceholders(html) {
+  let out = html;
+  // Remove "en la destination" or "à la destination" from H2s and text
+  out = out.replace(/en la destination/gi, 'sur place');
+  out = out.replace(/à la destination/gi, 'sur place');
+  out = out.replace(/de la destination/gi, 'du voyage');
+  out = out.replace(/la destination/gi, 'ta destination');
+  // Fix "en the destination" English leaks
+  out = out.replace(/en the destination/gi, 'sur place');
+  return out;
+}
+
+/**
+ * Clean up FAQ formatting issues like <strong> inside <summary>.
+ */
+export function fixFaqFormatting(html) {
+  let out = html;
+  // Remove <strong> tags from inside <summary> tags
+  out = out.replace(/<summary>\s*<strong>(.*?)<\/strong>\s*<\/summary>/gi, '<summary>$1</summary>');
+  // Remove <em> tags from inside <summary> tags
+  out = out.replace(/<summary>\s*<em>(.*?)<\/em>\s*<\/summary>/gi, '<summary>$1</summary>');
+  return out;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
@@ -1003,6 +1031,8 @@ export function applyPostProcessingFixers(html) {
   c = limitSiTuSentences(c);
   c = fixTruncatedSentences(c);
   c = fixBrokenInternalLinkText(c);
+  c = fixFaqFormatting(c);
+  c = fixDestinationPlaceholders(c);
   c = fixBrandNames(c);
   return c;
 }
