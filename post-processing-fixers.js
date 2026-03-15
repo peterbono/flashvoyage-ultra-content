@@ -824,25 +824,36 @@ export function fixSmartQuoteSpaces(html) {
 export function capExcessiveH2s(html) {
   const h2Count = (html.match(/<h2[^>]*>/gi) || []).length;
   if (h2Count <= 8) return html;
-  
+
   let out = html;
+
+  // Step 1: Remove entire generic filler sections
   const genericH2Patterns = [
-    // "Limites et biais" with its content until next H2 or end
     /<h2[^>]*>\s*Limites?\s*(et\s*)?biais[^<]*<\/h2>[\s\S]*?(?=<h2|$)/i,
-    // "Comparatif des destinations" table section
     /<h2[^>]*>\s*Comparatif\s*des\s*destinations?[^<]*<\/h2>[\s\S]*?(?=<h2|$)/i,
-    // "Ce qui change concrètement" impact block (generic filler)
-    /<h2[^>]*>\s*Ce\s*qui\s*change\s*concr[èe]tement[^<]*<\/h2>[\s\S]*?(?=<h2|$)/i,
-    // "Que faire maintenant" action block (generic)
+    /<h2[^>]*>\s*Ce\s*qui\s*change\s*concr[\u00e8e]tement[^<]*<\/h2>[\s\S]*?(?=<h2|$)/i,
     /<h2[^>]*>\s*Que\s*faire\s*maintenant[^<]*<\/h2>[\s\S]*?(?=<h2|$)/i,
   ];
-  
+
   for (const pattern of genericH2Patterns) {
-    const currentH2Count = (out.match(/<h2[^>]*>/gi) || []).length;
-    if (currentH2Count <= 8) break;
+    if ((out.match(/<h2[^>]*>/gi) || []).length <= 8) break;
     out = out.replace(pattern, '');
   }
-  
+
+  // Step 2: If still > 8 H2s, downgrade less important ones to H3
+  if ((out.match(/<h2[^>]*>/gi) || []).length > 8) {
+    const downgradePatterns = [
+      /Questions ouvertes/i,
+      /Ce que les guides ne disent pas explicitement/i,
+      /Ce que dit le t[\u00e9e]moignage/i,
+      /Ce que les blogs/i,
+    ];
+    for (const pat of downgradePatterns) {
+      if ((out.match(/<h2[^>]*>/gi) || []).length <= 8) break;
+      out = out.replace(new RegExp('<h2([^>]*)>([^<]*?' + pat.source + '[^<]*?)</h2>', 'i'), '<h3$1>$2</h3>');
+    }
+  }
+
   return out;
 }
 
