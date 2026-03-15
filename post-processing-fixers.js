@@ -94,7 +94,8 @@ export function fixEncodingBreaks(html) {
       /([a-zA-ZÀ-ÿ]{2,})\s+(égr[eéa][a-zé]*)/gi,     // intégré, intégrés, intégrées
       /([a-zA-ZÀ-ÿ]{2,})\s+(épar[a-z]*)/gi,           // préparé, séparé
       /([a-zA-ZÀ-ÿ]{2,})\s+(écipit[a-z]*)/gi,         // précipité
-      /([a-zA-ZÀ-ÿ]{2,})\s+(évis[a-z]*)/gi,           // imprévisible (handled by joinFixes but belt+suspenders)
+      /([a-zA-ZÀ-ÿ]{2,})\s+(évis[a-z]*)/gi,           // imprévisible
+      /([a-zA-ZÀ-ÿ]{2,})\s+(ècle[s]?\b)/gi,           // siècle (handled by joinFixes but belt+suspenders)
     ];
     for (const rx of neverStandalone) {
       fixed = fixed.replace(rx, (m, prefix, suffix) => {
@@ -154,6 +155,13 @@ export function fixEncodingBreaks(html) {
     [/aprèsles/g, 'après les'],
     [/aprèsce/g, 'après ce'],
     [/depuisavoir/g, 'depuis avoir'],
+    [/(?<=\s|>)aété(?=\s|<|[.,;:!?])/g, 'a été'],
+    [/(?<=\s|>)avaitété(?=\s|<|[.,;:!?])/g, 'avait été'],
+    [/(?<=\s|>)auraété(?=\s|<|[.,;:!?])/g, 'aura été'],
+    [/ontété/g, 'ont été'],
+    [/sontété/g, 'sont été'],
+    [/si\s+ècle/g, 'siècle'],
+    [/si\s+ècles/g, 'siècles'],
 
     [/paraîtévident/g, 'paraît évident'],
     [/coucheémotionnelle/g, 'couche émotionnelle'],
