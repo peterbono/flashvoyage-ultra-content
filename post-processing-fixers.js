@@ -54,7 +54,7 @@ export function fixEncodingBreaks(html) {
     // i.e., the "word" before the space is very short (1-2 chars = likely a broken syllable)
     fixed = fixed.replace(/(?:^|[\s>])([a-zA-ZÀ-ÿ]{1,2}) ([éèêëàâäùûüôöîïçÉÈÊËÀÂÄÙÛÜÔÖÎÏÇ])([a-zA-ZÀ-ÿ]{2,})/g, (m, before, accent, after) => {
       // Don't merge common French short words: le, la, de, ne, se, ce, je, te, me, un, en, tu, du, au, si, sa, ma, ta, et, ou
-      const shortWords = ['le','la','de','ne','se','ce','je','te','me','un','en','tu','du','au','si','sa','ma','ta','et','ou','il','on','où','ni','ça'];
+      const shortWords = ['le','la','de','ne','se','ce','je','te','me','un','en','tu','du','au','si','sa','ma','ta','et','ou','il','on','où','ni','ça','as','va','ai','es','eu','a','y','à'];
       if (shortWords.includes(before.toLowerCase())) return m;
       // Merge: likely a broken encoding
       return m.charAt(0) === ' ' || m.charAt(0) === '>' ? m.charAt(0) + before + accent + after : before + accent + after;
@@ -84,6 +84,17 @@ export function fixEncodingBreaks(html) {
   // ── PART 2: Fix missing spaces (joined words) ──
   // Words that got concatenated without space, typically around accented chars or HTML entities
   const joinFixes = [
+    [/aprèsavoir/g, 'après avoir'],
+    [/aprèsêtre/g, 'après être'],
+    [/aprèsun/g, 'après un'],
+    [/aprèsune/g, 'après une'],
+    [/aprèsle/g, 'après le'],
+    [/aprèsla/g, 'après la'],
+    [/aprèsdes/g, 'après des'],
+    [/aprèsles/g, 'après les'],
+    [/aprèsce/g, 'après ce'],
+    [/depuisavoir/g, 'depuis avoir'],
+
     [/paraîtévident/g, 'paraît évident'],
     [/coucheémotionnelle/g, 'couche émotionnelle'],
     [/tempséconomisé/g, 'temps économisé'],
@@ -720,14 +731,47 @@ export function fixGenericAccentJoins(html) {
     return pre + end + ' ' + start + post;
   });
   
-  // Generic: word ending in common suffix + accented vowel starting next word
-  // Pattern: [consonant][e][accented-vowel][consonant] where the 'e' ends a word
-  // This catches "routineétablie" = routine + établie
-  out = out.replace(/([bcdfghjklmnpqrstvwxz])e([éèêà])([a-z])/gi, (match, cons, accent, next) => {
-    // Check if it's a real word ending in -ne, -te, -re, -le, etc.
-    // before the accented vowel
-    return cons + 'e ' + accent + next;
-  });
+  // Generic: detect word joins based on common French word endings
+  // Common endings that are ALWAYS word-final: -tion, -ment, -ence, -ure, -ique, -ise, -igue, -ude, -age, -ade, -ère, -ète, -ite, -ote, -ute, -ine, -ane, -one, -une
+  const wordEndings = [
+    'tion', 'ment', 'ence', 'ance', 'ure', 'ique', 'ise', 'igue', 'ude', 'age', 'ade',
+    'ère', 'ète', 'ite', 'ote', 'ute', 'ine', 'ane', 'one', 'une',
+    'igue', 'ogue', 'gue', 'que', 'ble', 'ple', 'gle', 'fle', 'cle',
+    'tre', 'dre', 'vre', 'pre', 'bre', 'gre', 'cre', 'fre',
+    'ste', 'nce', 'nse', 'rse', 'lse',
+    'ais', 'ait', 'ant', 'ent', 'ont', 'int',
+    'eur', 'oir', 'air', 'our',
+    'ès', 'as', 'is', 'us', 'os',
+  ];
+  
+  for (const ending of wordEndings) {
+    // Match: word ending in this suffix + accented vowel starting next word (no space)
+    const regex = new RegExp('(' + ending + ')([éèêëàâäîïôùûüç])([a-zà-ÿ])', 'gi');
+    out = out.replace(regex, (match, end, accent, next) => {
+      // Don't split known valid French words that span this boundary
+      const fullMatch = end + accent + next;
+      const validPrefixes = ['éta', 'étr', 'éch', 'éne', 'émo', 'épi', 'équ', 'éle', 'éva', 'évo', 'éco', 'édu'];
+      // Check if the accented part starts a valid word
+      const accentPart = accent + next;
+      if (validPrefixes.some(p => accentPart.startsWith(p.slice(0, 2)))) {
+        return end + ' ' + accent + next;
+      }
+      // For other accented vowels, also split
+      return end + ' ' + accent + next;
+    });
+  }
+  
+  // Also catch: common verb/pronoun + accented word joins
+  const verbJoins = [
+    [/\bva([éèêà])([a-z])/gi, 'va $1$2'],
+    [/\bas([éèêà])([a-z])/gi, 'as $1$2'],
+    [/\btu([éèêà])([a-z])/gi, 'tu $1$2'],
+    [/\bje([éèêà])([a-z])/gi, 'je $1$2'],
+    [/\baprès([a-z])/gi, 'après $1'],
+  ];
+  for (const [pattern, replacement] of verbJoins) {
+    out = out.replace(pattern, replacement);
+  }
   
   return out;
 }
@@ -853,6 +897,17 @@ export function mergeShortParagraphs(html) {
   return out;
 }
 
+/**
+ * Fix broken internal link text insertions like "Les notre article sur Laos te vendent"
+ */
+export function fixBrokenInternalLinkText(html) {
+  let out = html;
+  // Remove "notre article sur [X]" or "notre guide [X]" orphan text
+  out = out.replace(/\bLes notre article sur [^.]+/gi, '');
+  out = out.replace(/\bnotre article sur ([A-Z][a-z]+) /gi, '');
+  return out;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
@@ -873,6 +928,7 @@ export function applyPostProcessingFixers(html) {
   c = cleanAiTells(c);
   c = limitSiTuSentences(c);
   c = fixTruncatedSentences(c);
+  c = fixBrokenInternalLinkText(c);
   return c;
 }
 
