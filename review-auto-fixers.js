@@ -648,10 +648,11 @@ export async function fixFactualOverclaims(html) {
       return value;
     });
   }
-  out = out
-    .replace(/\b\d+\s*quelques\s+euros\b/gi, 'un budget à préciser')
-    .replace(/\bco[ûu]tent\s*quelques\b/gi, 'coûtent')
-    .replace(/\b2quelques\b/gi, 'quelques');
+  // BUG FIX: Stop replacing prices with euphemisms
+  // out = out
+    // .replace(/\b\d+\s*quelques\s+euros\b/gi, 'un budget à préciser')
+    // .replace(/\bco[ûu]tent\s*quelques\b/gi, 'coûtent')
+    // .replace(/\b2quelques\b/gi, 'quelques');
   return {
     html: out,
     fixed: fixCount > 0,
@@ -834,6 +835,11 @@ export async function fixAIPatterns(html) {
  * Si < 3 trouvées, en ajoute dans les sections contenant des comparaisons.
  */
 export async function fixMissingDecisionPhrases(html, title = '') {
+  // DISABLED: Ne plus injecter des conseils generiques 'Notre conseil'
+  // Les conseils doivent etre tisses dans le narratif par le LLM, pas ajoutes en post-processing
+  return { html, fixed: false, description: null };
+  // BUG FIX: Disabled - was injecting generic filler 'Notre conseil' templates
+  return { html, fixed: false, description: null };
   if (!html || typeof html !== 'string') return { html, fixed: false, description: null };
 
   const destination = extractDestinationFromTitle(title) || 'ta destination';
@@ -1115,6 +1121,10 @@ export async function fixOrphanedWidgets(html) {
  * Les remplace par des formulations plus variées ou les signale.
  */
 export async function fixPlaceholderPatterns(html) {
+  // DISABLED: Ne plus diversifier les euphemismes — garder les prix originaux
+  return { html, fixed: false, description: null };
+  // BUG FIX: Disabled - was replacing real prices with random euphemisms
+  return { html, fixed: false, description: null };
   const placeholderPatterns = [
     { regex: /un coût significatif/gi, label: 'un coût significatif' },
     { regex: /un budget à vérifier/gi, label: 'un budget à vérifier' },

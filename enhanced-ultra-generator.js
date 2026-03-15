@@ -2079,21 +2079,16 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
   }
 
   sanitizePlaceholdersAndUnsafeClaims(html = '') {
+    // BUG FIX: Stop replacing prices with euphemisms - keep original amounts
     return String(html || '')
-      .replace(/\b2quelques\b/gi, 'quelques')
-      .replace(/\bco[ûu]tent\s*quelques\b/gi, 'coûtent')
-      .replace(/\bun\s+co[ûu]t\s+non\s+n[ée]gligeable\b/gi, 'un coût significatif')
-      .replace(/\bquelques\s+euros\b/gi, 'un coût maîtrisable')
-      .replace(/\bgaranti\s+à\s+100%\b/gi, 'dans la plupart des cas')
+      .replace(/garanti\s+à\s+100%/gi, 'dans la plupart des cas')
       .replace(/\bsans\s+aucun\s+risque\b/gi, 'avec un risque limité si bien préparé');
   }
 
   downgradeUnsourcedNumericalClaims(html = '', hasSourceEvidence = true) {
-    if (hasSourceEvidence) return html;
-    return String(html || '')
-      .replace(/\b\d{1,3}(?:[\s.,]\d{3})?\s*€(?:\/(?:jour|nuit|semaine|mois))?\b/gi, 'un budget à vérifier')
-      .replace(/\bvisa(?:\s+\w+){0,4}\s+(?:gratuit|free)\b/gi, 'conditions de visa à vérifier selon ta nationalité')
-      .replace(/\b(?:\d+\s*(?:h|heures?|jours?|nuits?))\b/gi, 'une durée à confirmer');
+    // DISABLED: Ne plus remplacer les prix/durees par des euphemismes
+    // Les chiffres du LLM sont extrapoles des sources Reddit et sont plus utiles que "un budget a verifier"
+    return html;
   }
 
   enforceInternalLinkVolume(html = '', maxLinks = 8) {

@@ -549,6 +549,197 @@ function rewriteListicleTitle(title) {
   return pick;
 }
 
+
+// ─── ENCODING BREAKS FIXER ──────────────────────────────────
+// Repairs words split with erroneous spaces around accented characters
+// e.g. "a éroport" → "aéroport", "cons équent" → "conséquent"
+function fixEncodingBreaks(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  // Known broken words (deterministic dictionary)
+  const knownFixes = [
+    [/\bma îtris/g, 'maîtris'],
+    [/\ba éroport/g, 'aéroport'],
+    [/\bcons équent/g, 'conséquent'],
+    [/\bdégag é/g, 'dégagé'],
+    [/\bs avoir/g, 'savoir'],
+    [/\bl à/g, 'là'],
+    [/\bpeut- être/g, 'peut-être'],
+    [/\bé tranger/g, 'étranger'],
+    [/\bé conomis/g, 'économis'],
+    [/\bé puisé/g, 'épuisé'],
+    [/\bé vit/g, 'évit'],
+    [/\bà  /g, 'à '],
+    [/\bcoût é/g, 'coûté'],
+    [/\bd' avoir/g, "d'avoir"],
+    [/\bd' un/g, "d'un"],
+    [/\bd' une/g, "d'une"],
+    [/\bl' é/g, "l'é"],
+    [/\bl' a/g, "l'a"],
+    [/\bl' h/g, "l'h"],
+    [/\bl' i/g, "l'i"],
+    [/\bl' o/g, "l'o"],
+    [/\bn' a/g, "n'a"],
+    [/\bn' est/g, "n'est"],
+    [/\bqu' /g, "qu'"],
+    [/\bs' /g, "s'"],
+  ];
+  
+  for (const [pattern, replacement] of knownFixes) {
+    const before = out;
+    out = out.replace(pattern, replacement);
+    if (out !== before) fixCount++;
+  }
+  
+  // Generic pattern: letter + space + accented letter that should be joined
+  // Only in text nodes (not HTML tags/attributes)
+  out = out.replace(/(?<=>)([^<]+)(?=<)/g, (match, text) => {
+    // Fix: consonant + space + accented vowel that forms a French word
+    let fixed = text;
+    // Pattern: word-internal space before accented char
+    fixed = fixed.replace(/(\w) ([éèêëàâäùûüôöîïçÉÈÊËÀÂÄÙÛÜÔÖÎÏÇ])(\w{2,})/g, (m, before, accent, after) => {
+      // Only merge if it looks like one word was split
+      const merged = before + accent + after;
+      // Simple heuristic: if the merged form is longer than 3 chars and starts/ends with common French patterns
+      if (merged.length >= 4) {
+        return merged;
+      }
+      return m;
+    });
+    return fixed;
+  });
+  
+  // Fix JSON-LD "main Entity" → "mainEntity"
+  out = out.replace(/"main Entity"/g, '"mainEntity"');
+  out = out.replace(/"accepted Answer"/g, '"acceptedAnswer"');
+  
+  if (fixCount > 0) {
+    console.log(`🔧 ENCODING_FIXER: ${fixCount} encoding break(s) repaired`);
+  }
+  return out;
+}
+
+// ─── GHOST LINKS FIXER ──────────────────────────────────────
+// Removes <p class="internal-link-transition"> that have no actual <a href> inside
+// Also removes standalone transition phrases with article titles but no links
+function fixGhostLinks(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  // Remove <p class="internal-link-transition"> that contain no <a href>
+  out = out.replace(/<p\s+class="internal-link-transition"[^>]*>(?:(?!<a\s+href)[^<]|<(?!a\s+href))*<\/p>/gi, () => {
+    fixCount++;
+    return '';
+  });
+  
+  // Remove orphan transition phrases: "Pour aller plus loin, Article Title."
+  // These are standalone text references without links
+  out = out.replace(/<p[^>]*>\s*(?:Pour aller plus loin|Côté budget|Si tu hésites|Sur la question)[^<]*(?!<a\s)[^<]*\.\s*<\/p>/gi, (match) => {
+    // Only remove if there's no <a> inside
+    if (/<a\s/i.test(match)) return match;
+    fixCount++;
+    return '';
+  });
+  
+  if (fixCount > 0) {
+    console.log(`🔧 GHOST_LINKS_FIXER: ${fixCount} ghost link(s) removed`);
+  }
+  return out;
+}
+
+// ─── DUPLICATE CITATIONS FIXER ──────────────────────────────
+// Deduplicates blockquote content (same quote appearing multiple times)
+// Also fixes quotes where the same sentence is repeated inside one blockquote
+function fixDuplicateCitations(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  // Fix 1: Same sentence repeated within a single blockquote
+  out = out.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (match, inner) => {
+    // Extract text content from <p> tags inside blockquote
+    const pMatches = [...inner.matchAll(/<p>([^<]*)<\/p>/gi)];
+    if (pMatches.length > 0) {
+      const firstText = pMatches[0][1].trim();
+      // Check if the first paragraph contains the same text repeated
+      const sentences = firstText.split(/\.\s+/).filter(s => s.trim().length > 10);
+      if (sentences.length >= 2) {
+        // Check for duplicate sentences
+        const unique = [...new Set(sentences.map(s => s.trim().toLowerCase()))];
+        if (unique.length < sentences.length) {
+          // Has duplicates - keep only unique sentences
+          const deduped = unique.join('. ') + '.';
+          const newInner = inner.replace(pMatches[0][0], `<p>${deduped}</p>`);
+          fixCount++;
+          return match.replace(inner, newInner);
+        }
+      }
+    }
+    return match;
+  });
+  
+  // Fix 2: Remove duplicate blockquotes (same content appearing twice in article)
+  const blockquotes = [...out.matchAll(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi)];
+  const seen = new Set();
+  for (const bq of blockquotes) {
+    const normalized = bq[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    if (normalized.length < 20) continue;
+    if (seen.has(normalized)) {
+      // Duplicate - remove this one
+      out = out.replace(bq[0], '');
+      fixCount++;
+    } else {
+      seen.add(normalized);
+    }
+  }
+  
+  if (fixCount > 0) {
+    console.log(`🔧 DEDUP_CITATIONS: ${fixCount} duplicate citation(s) fixed`);
+  }
+  return out;
+}
+
+// ─── EMPTY FAQ FIXER ────────────────────────────────────────
+// Removes <details> FAQ entries that have no answer (empty or whitespace-only)
+function fixEmptyFaqEntries(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  // Match <details> that only contain a <summary> with no <p> answer, or empty <p>
+  out = out.replace(/<details[^>]*>\s*<summary[^>]*>[\s\S]*?<\/summary>\s*(?:<p[^>]*>\s*<\/p>\s*)?<\/details>/gi, (match) => {
+    // Check if there's actual answer content
+    const answerMatch = match.match(/<\/summary>([\s\S]*)<\/details>/i);
+    if (answerMatch) {
+      const answerContent = answerMatch[1].replace(/<[^>]+>/g, '').trim();
+      if (answerContent.length < 5) {
+        fixCount++;
+        return ''; // Remove empty FAQ entry
+      }
+    }
+    return match;
+  });
+  
+  // Also remove from JSON-LD schema any questions without answers
+  out = out.replace(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi, (match, json) => {
+    try {
+      const data = JSON.parse(json);
+      if (data['@type'] === 'FAQPage' && data.mainEntity) {
+        data.mainEntity = data.mainEntity.filter(q => 
+          q.acceptedAnswer && q.acceptedAnswer.text && q.acceptedAnswer.text.trim().length >= 5
+        );
+        return '<script type="application/ld+json">' + JSON.stringify(data) + '</script>';
+      }
+    } catch(e) {}
+    return match;
+  });
+  
+  if (fixCount > 0) {
+    console.log(`🔧 EMPTY_FAQ_FIXER: ${fixCount} empty FAQ entry/entries removed`);
+  }
+  return out;
+}
+
+
 async function publishArticle(article) {
   const wpUrl = process.env.WORDPRESS_URL;
   const wpUser = process.env.WORDPRESS_USERNAME;
@@ -717,6 +908,14 @@ async function publishArticle(article) {
   // Rewrite listicle titles into emotional hooks
   const finalTitle = rewriteListicleTitle(article.title);
   
+  
+  // ─── POST-PROCESSING FIXES (TPG quality standards) ─────────
+  finalContent = fixEncodingBreaks(finalContent);
+  finalContent = fixGhostLinks(finalContent);
+  finalContent = fixDuplicateCitations(finalContent);
+  finalContent = fixEmptyFaqEntries(finalContent);
+  console.log('✅ Post-processing fixes applied (encoding, ghost links, dedup, empty FAQ)');
+
   const postData = {
     title: finalTitle,
     content: finalContent,
