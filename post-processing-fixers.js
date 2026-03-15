@@ -175,6 +175,11 @@ export function fixEncodingBreaks(html) {
     [/dé\s+çu/g, 'déçu'],
     [/dé\s+çue/g, 'déçue'],
     [/puêtre/g, 'pu être'],
+    [/(?<=\s|>)aépousé/g, 'a épousé'],
+    [/(?<=\s|>)aévolué/g, 'a évolué'],
+    [/(?<=\s|>)aémergé/g, 'a émergé'],
+    [/(?<=\s|>)aéchoué/g, 'a échoué'],
+    [/(?<=\s|>)aétabli/g, 'a établi'],
     [/épuis\s+ées/g, 'épuisées'],
     [/épuis\s+és/g, 'épuisés'],
     [/épuis\s+ée/g, 'épuisée'],
@@ -187,6 +192,7 @@ export function fixEncodingBreaks(html) {
     [/int\s+érêt/g, 'intérêt'],
     [/int\s+éress/g, 'intéress'],
     [/int\s+égr/g, 'intégr'],
+    [/int\s+ègre/g, 'intègre'],
     [/int\s+égral/g, 'intégral'],
     [/si\s+ècles/g, 'siècles'],
 
@@ -1167,7 +1173,7 @@ export function validateFaqAnswers(html) {
     const hasGarbage = /co[\u00fbu]te (ta|ton|sa|ses|leur) /.test(clean) && !/co[\u00fbu]te (environ|entre|autour|en moyenne)/.test(clean);
     const hasBodyLeak = /co[\u00fbu]te [a-z]+ [a-z]+ [a-z]+ en tant que/.test(clean);
     const hasSentenceBreak = /co[ûu]te environ [a-z]+ [A-Z]/.test(clean) || /co[ûu]te environ utilise/.test(clean);
-    const hasIncoherent = /scooter \(es /.test(clean) || /co[ûu]te [a-z]+ [a-z]+ au lieu/.test(clean);
+    const hasIncoherent = /scooter \(es /.test(clean) || /co[\u00fbu]te [a-z]+ [a-z]+ au lieu/.test(clean);
     const tooShort = clean.length < 20;
     if (!hasGarbage && !hasBodyLeak && !hasSentenceBreak && !hasIncoherent && !tooShort) return match;
     const q = question.replace(/<[^>]+>/g, "").toLowerCase();
@@ -1205,6 +1211,37 @@ export function fixTruncatedFragments(html) {
   out = out.replace(/ (?:de|du|des|le|la|les|en|au|aux) (?:de|du|des|le|la|les|en|au|aux)[.,]/g, '.');
   // Remove lone preposition at end of sentence: 'du thaï de en.'
   out = out.replace(/ (?:de|du|des|en|au|aux) (?:en|de|du)[.]/g, '.');
+  return out;
+}
+
+
+/**
+ * Clean the "Questions ouvertes" section which often contains raw Reddit text.
+ * Decode HTML entities and remove duplicate/raw content.
+ */
+export function cleanQuestionsOuvertes(html) {
+  let out = html;
+  // Decode common HTML entities in the whole document
+  out = out.replace(/&quot;/g, '"');
+  out = out.replace(/&#039;/g, "'");
+  out = out.replace(/&#8217;/g, "\u2019");
+  out = out.replace(/&#8211;/g, "\u2013");
+  // Remove duplicate question items in "Questions ouvertes" section
+  const qoMatch = out.match(/(<h2[^>]*>Questions ouvertes<\/h2>)(.*?)(?=<h2|<\/div|$)/s);
+  if (qoMatch) {
+    let qoSection = qoMatch[2];
+    // Remove exact duplicate <li> items
+    const seen = new Set();
+    qoSection = qoSection.replace(/<li[^>]*>(.*?)<\/li>/gs, (match, content) => {
+      const clean = content.replace(/<[^>]+>/g, "").trim().toLowerCase().substring(0, 100);
+      if (seen.has(clean)) return "";
+      seen.add(clean);
+      return match;
+    });
+    // Remove items that are just "? text" (raw Reddit fragments)
+    qoSection = qoSection.replace(/<li[^>]*>\s*\?[^<]*<\/li>/g, "");
+    out = out.replace(qoMatch[2], qoSection);
+  }
   return out;
 }
 
@@ -1307,6 +1344,7 @@ export function applyPostProcessingFixers(html) {
   c = deduplicateRedditAttributions(c);
   c = cleanConclusionSlugs(c);
   c = fixSlugLeaksInQuotes(c);
+  c = cleanQuestionsOuvertes(c);
   c = fixTruncatedFragments(c);
   c = fixBrandNames(c);
   return c;
