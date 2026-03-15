@@ -84,6 +84,13 @@ export function fixEncodingBreaks(html) {
   // ── PART 2: Fix missing spaces (joined words) ──
   // Words that got concatenated without space, typically around accented chars or HTML entities
   const joinFixes = [
+    [/paraîtévident/g, 'paraît évident'],
+    [/coucheémotionnelle/g, 'couche émotionnelle'],
+    [/tempséconomisé/g, 'temps économisé'],
+    [/3étapes/g, '3 étapes'],
+    [/2étapes/g, '2 étapes'],
+    [/4étapes/g, '4 étapes'],
+    [/5étapes/g, '5 étapes'],
     [/peutêtre/g, 'peut être'],
     [/peuventêtre/g, 'peuvent être'],
     [/trèsélevé/g, 'très élevé'],
@@ -566,6 +573,20 @@ export function scrubUnicodeArtifacts(html) {
   return out;
 }
 
+/**
+ * Convert straight apostrophes in French contractions to Unicode smart quotes.
+ * Prevents WordPress wptexturize from breaking "l'autoroute" into "l' autoroute".
+ */
+export function smartenFrenchApostrophes(html) {
+  let out = html;
+  out = out.replace(/(?<=>)([^<]+)(?=<)/g, (match, text) => {
+    return text.replace(/([ldcnsjmt]|qu|jusqu|lorsqu|puisqu|quelqu)'([a-z\u00e0-\u00ff])/gi, '$1\u2019$2');
+  });
+  // Also handle apostrophes NOT inside tags (like at the very start of content)
+  out = out.replace(/([ldcnsjmt]|qu|jusqu|lorsqu|puisqu|quelqu)'([a-z\u00e0-\u00ff])/gi, '$1\u2019$2');
+  return out;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
@@ -577,6 +598,7 @@ export function applyPostProcessingFixers(html) {
   c = fixSlugAnchors(c);
   c = fixNestedLinks(c);
   c = cleanBlockquoteContent(c);
+  c = smartenFrenchApostrophes(c);
   return c;
 }
 
