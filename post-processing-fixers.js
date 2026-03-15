@@ -90,7 +90,11 @@ export function fixEncodingBreaks(html) {
       /([a-zA-ZÀ-ÿ]{2,})\s+(ésit[a-z]*)/gi,        // hésiter, hésitant
       /([a-zA-ZÀ-ÿ]{2,})\s+(écess[a-z]*)/gi,       // nécessaire, accessible
       /([a-zA-ZÀ-ÿ]{2,})\s+(ésent[a-z]*)/gi,       // représenter, présenté
-      /([a-zA-ZÀ-ÿ]{2,})\s+(ûr[es]?\b)/gi,         // sûr, sûre, sûres (handled by joinFixes but belt+suspenders)
+      /([a-zA-ZÀ-ÿ]{2,})\s+(ûr[es]?\b)/gi,         // sûr, sûre, sûres
+      /([a-zA-ZÀ-ÿ]{2,})\s+(égr[eéa][a-zé]*)/gi,     // intégré, intégrés, intégrées
+      /([a-zA-ZÀ-ÿ]{2,})\s+(épar[a-z]*)/gi,           // préparé, séparé
+      /([a-zA-ZÀ-ÿ]{2,})\s+(écipit[a-z]*)/gi,         // précipité
+      /([a-zA-ZÀ-ÿ]{2,})\s+(évis[a-z]*)/gi,           // imprévisible (handled by joinFixes but belt+suspenders)
     ];
     for (const rx of neverStandalone) {
       fixed = fixed.replace(rx, (m, prefix, suffix) => {
