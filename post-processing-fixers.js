@@ -587,6 +587,86 @@ export function smartenFrenchApostrophes(html) {
   return out;
 }
 
+/**
+ * Fix FAQ questions that use bare country names without articles/prepositions.
+ * "à Thaïlande" → "en Thaïlande", "pour Thaïlande" → "pour la Thaïlande"
+ */
+export function fixFaqCountryGrammar(html) {
+  const countryFixes = [
+    [/(?:à|au) Tha[ïi]lande/g, 'en Thaïlande'],
+    [/pour Tha[ïi]lande/g, 'pour la Thaïlande'],
+    [/(?:à|au) Japon\b/g, 'au Japon'],
+    [/pour Japon\b/g, 'pour le Japon'],
+    [/(?:à|au) Vietnam\b/g, 'au Vietnam'],
+    [/pour Vietnam\b/g, 'pour le Vietnam'],
+    [/(?:à|au) Cambodge\b/g, 'au Cambodge'],
+    [/pour Cambodge\b/g, 'pour le Cambodge'],
+    [/(?:à|au) Laos\b/g, 'au Laos'],
+    [/pour Laos\b/g, 'pour le Laos'],
+    [/(?:à|au|en) Indon[ée]sie\b/g, 'en Indonésie'],
+    [/pour Indon[ée]sie\b/g, "pour l'Indonésie"],
+    [/(?:à|au|en) Philippines\b/g, 'aux Philippines'],
+    [/pour Philippines\b/g, 'pour les Philippines'],
+    [/(?:à|au|en) Malaisie\b/g, 'en Malaisie'],
+    [/pour Malaisie\b/g, 'pour la Malaisie'],
+    [/(?:à|au) Bali\b/g, 'à Bali'],
+    [/pour Bali\b/g, 'pour Bali'],
+    [/(?:à|au|en) Inde\b/g, 'en Inde'],
+    [/pour Inde\b/g, "pour l'Inde"],
+    // Fix "au Thailand" English leak
+    [/au Thailand\b/gi, 'en Thaïlande'],
+    [/(?:à|en|au) Thailand\b/gi, 'en Thaïlande'],
+  ];
+  let out = html;
+  for (const [pattern, replacement] of countryFixes) {
+    out = out.replace(pattern, replacement);
+  }
+  return out;
+}
+
+/**
+ * Fix smart quote apostrophes followed by a space in French contractions.
+ * Catches "’ é" → "’é" patterns that WP texturize creates.
+ */
+export function fixSmartQuoteSpaces(html) {
+  let out = html;
+  // Fix ’ + space + lowercase letter in French text
+  out = out.replace(/\u2019\s+([a-z\u00e0-\u00ff])/g, '\u2019$1');
+  // Fix &#8217; + space patterns (HTML entity form)
+  out = out.replace(/&#8217;\s+([a-z\u00e0-\u00ff])/g, '\u2019$1');
+  return out;
+}
+
+/**
+ * Remove generic padding H2 sections when total H2 count exceeds 8.
+ * Targets: "Limites et biais", "Comparatif des destinations", 
+ * "Ce que les autres ne disent pas" (when generic), "Ce qui change concrètement"
+ */
+export function capExcessiveH2s(html) {
+  const h2Count = (html.match(/<h2[^>]*>/gi) || []).length;
+  if (h2Count <= 8) return html;
+  
+  let out = html;
+  const genericH2Patterns = [
+    // "Limites et biais" with its content until next H2 or end
+    /<h2[^>]*>\s*Limites?\s*(et\s*)?biais[^<]*<\/h2>[\s\S]*?(?=<h2|$)/i,
+    // "Comparatif des destinations" table section
+    /<h2[^>]*>\s*Comparatif\s*des\s*destinations?[^<]*<\/h2>[\s\S]*?(?=<h2|$)/i,
+    // "Ce qui change concrètement" impact block (generic filler)
+    /<h2[^>]*>\s*Ce\s*qui\s*change\s*concr[èe]tement[^<]*<\/h2>[\s\S]*?(?=<h2|$)/i,
+    // "Que faire maintenant" action block (generic)
+    /<h2[^>]*>\s*Que\s*faire\s*maintenant[^<]*<\/h2>[\s\S]*?(?=<h2|$)/i,
+  ];
+  
+  for (const pattern of genericH2Patterns) {
+    const currentH2Count = (out.match(/<h2[^>]*>/gi) || []).length;
+    if (currentH2Count <= 8) break;
+    out = out.replace(pattern, '');
+  }
+  
+  return out;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
@@ -599,6 +679,9 @@ export function applyPostProcessingFixers(html) {
   c = fixNestedLinks(c);
   c = cleanBlockquoteContent(c);
   c = smartenFrenchApostrophes(c);
+  c = fixFaqCountryGrammar(c);
+  c = fixSmartQuoteSpaces(c);
+  c = capExcessiveH2s(c);
   return c;
 }
 

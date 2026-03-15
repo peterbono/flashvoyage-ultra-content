@@ -1680,6 +1680,8 @@ Tu DOIS proposer un titre et un angle éditorial UNIQUES : ni même formulation,
    - Exemple : « ~920 euros » ou « environ 200 euros »
    - Si pas d'argent impliqué, ce bloc peut être omis
 
+LONGUEUR MINIMALE DES PARAGRAPHES : Chaque <p> doit contenir AU MINIMUM 2-3 phrases (120+ caractères). Jamais de paragraphes d'une seule phrase courte — ça donne un rythme robotique. Développe chaque idée avec un détail concret, un exemple, ou une nuance.
+
 4. MINI-SCÉNARIO « Si tu es dans ce cas → fais ça » (2-4 phrases) :
    - Situation concrète du lecteur → action immédiate recommandée
    - Pas de conditionnel vague : être directif
@@ -1884,8 +1886,9 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 
 📊 MOINS WIKIPEDIA, PLUS DÉCISION (OBLIGATOIRE — vérifié automatiquement) :
 - Chaque section DOIT se terminer par une recommandation, un choix, ou un verdict — pas par un résumé neutre.
-- MINIMUM 3 phrases de décision dans l'article, utilisant EXACTEMENT ce format : "Si tu [verbe situation], privilégie/évite/opte pour/choisis/pars sur [option concrète]."
-- Exemples : "Si tu voyages en basse saison, privilégie les hébergements sans réservation.", "Si tu hésites entre deux options, opte pour celle qui protège ton budget."
+- MAXIMUM 3 phrases de décision dans TOUT l'article (pas plus !), utilisant ce format : "Si tu [verbe situation], privilégie/évite/opte pour/choisis/pars sur [option concrète]."
+- VARIÉTÉ OBLIGATOIRE : ne mets JAMAIS deux "Si tu..." dans des paragraphes consécutifs. Espace-les d'au moins 2-3 paragraphes.
+- Les autres paragraphes doivent utiliser des formulations variées : impératifs directs ("Réserve...", "Prévois..."), questions rhétoriques, ou conseils narratifs.
 - Un article sans prise de position sera REJETÉ.
 
 STYLE : transitions fluides, questions rhétoriques, variation du rythme, tutoiement, ton expert accessible.
@@ -2082,6 +2085,8 @@ ${correctionBlock}
 - ✅ Montre les tensions au lieu de les annoncer. Exemple : «Le Grab coûte 4x le bus, mais il te dépose devant la porte à 2h du matin.»
 - ✅ Décris concrètement au lieu de clichés. Exemple : «le marché de nuit de Chiang Mai, à deux rues du temple Doi Suthep» au lieu de «hors des sentiers battus»
 Si tu utilises une de ces formulations, l'article sera REJETÉ par le quality gate.
+
+ANTI-RÉPÉTITION : Ne termine JAMAIS plus de 2 paragraphes consécutifs par le même pattern syntaxique. Si tu remarques que tes derniers paragraphes finissent tous par "Si tu [X], [Y]" ou tous par un impératif, CHANGE le pattern du suivant. Variété = crédibilité.
 
 ✍️ VOIX D'AUTEUR (OBLIGATOIRE) :
 - Écris comme un rédacteur voyage expérimenté qui a un POINT DE VUE, pas comme un assistant qui résume
