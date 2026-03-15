@@ -1077,6 +1077,96 @@ export function fixBrokenInternalLinkText(html) {
  * Remove slug-like text that leaks into article body or quotes.
  * Patterns like 'notre guide visa Thaïlande', 'notre guide arbitrages Thaïlande'
  */
+
+/**
+ * Validate FAQ answers - detect and fix obviously corrupted FAQ responses.
+ */
+
+/**
+ * Remove slug-like article titles that leaked into conclusion/body text.
+ */
+
+/**
+ * Reduce repetitive "Un voyageur explique :" attributions.
+ * Keep first 2 occurrences, vary the rest.
+ */
+export function deduplicateRedditAttributions(html) {
+  let out = html;
+  const pats = [
+    "Un voyageur explique",
+    "Un expat formule",
+    "Un expat pose",
+    "Un expat r\u00e9sume",
+    "Un expat le formule",
+    "Un expat le reconna\u00eet",
+    "La communaut\u00e9 confirme",
+  ];
+  const alts = [
+    "Comme le note un membre",
+    "Selon un t\u00e9moignage",
+    "Un retour terrain",
+    "D\u2019apr\u00e8s un expat",
+    "Un habitu\u00e9 confirme",
+  ];
+  for (const pat of pats) {
+    const re = new RegExp(pat + "\\s*:\\s*", "g");
+    const matches = [...out.matchAll(re)];
+    if (matches.length > 2) {
+      let idx = 0;
+      out = out.replace(re, (m) => {
+        idx++;
+        if (idx <= 2) return m;
+        return alts[(idx - 3) % alts.length] + " : ";
+      });
+    }
+  }
+  // Fix nested attributions: "Un expat dit : \u00ab Un voyageur explique : \u00ab"
+  out = out.replace(/Un (?:expat|voyageur|membre)[^«»:]{0,30}:\s*«\s*Un (?:voyageur|expat|membre) explique\s*:\s*«/g, "«");
+  return out;
+}
+
+export function cleanConclusionSlugs(html) {
+  let out = html;
+  // Remove slug fragments: "budget 2 200 e en Thailande 5 Arbitrages..."
+  out = out.replace(/budget\s+\d[\d\s]*e\s+en\s+Tha[i\u00ee]land[e]?\s+\d[^.!?<]{10,}(?:ruiner|sacrifier|budget|\u00e9conomiser|\u00e9viter|sauver)/gi, "");
+  // Remove "combiner travail a distance et muay thai sans sacrifier ton budget"
+  out = out.replace(/combiner\s+travail\s+[\u00e0a]\s+distance[^.!?<]{5,}(?:budget|sacrifier)/gi, "");
+  // Remove "optimiser son itin\u00e9raire sans sacrifier" slug patterns
+  out = out.replace(/optimiser\s+son\s+itin[\u00e9e]raire[^.!?<]{5,}(?:sacrifier|budget)/gi, "");
+  // Clean double spaces and empty paragraphs
+  out = out.replace(/\s{2,}/g, " ");
+  out = out.replace(/<p[^>]*>\s*[.,;:!?]?\s*<\/p>/g, "");
+  return out;
+}
+
+export function validateFaqAnswers(html) {
+  let out = html;
+  out = out.replace(/<details[^>]*>\s*<summary[^>]*>(.*?)<\/summary>\s*<p[^>]*>(.*?)<\/p>\s*<\/details>/gs, (match, question, answer) => {
+    const clean = answer.replace(/<[^>]+>/g, "").trim();
+    const hasGarbage = /co[\u00fbu]te (ta|ton|sa|ses|leur) /.test(clean) && !/co[\u00fbu]te (environ|entre|autour|en moyenne)/.test(clean);
+    const hasBodyLeak = /co[\u00fbu]te [a-z]+ [a-z]+ [a-z]+ en tant que/.test(clean);
+    const tooShort = clean.length < 20;
+    if (!hasGarbage && !hasBodyLeak && !tooShort) return match;
+    const q = question.replace(/<[^>]+>/g, "").toLowerCase();
+    let a;
+    if (q.includes("vol") || q.includes("avion")) {
+      a = "En moyenne, un vol aller-retour Paris-Asie du Sud-Est co\u00fbte entre 400\u20ac et 700\u20ac selon la saison. R\u00e9serve 2-3 mois \u00e0 l\u2019avance et compare sur Google Flights ou Skyscanner.";
+    } else if (q.includes("budget") || q.includes("combien")) {
+      a = "Compte 30-50\u20ac/jour en mode backpacker, 70-100\u20ac/jour en mode confort. Les repas locaux co\u00fbtent 2-5\u20ac, les h\u00f4tels budget 10-25\u20ac/nuit.";
+    } else if (q.includes("transport") || q.includes("d\u00e9placer")) {
+      a = "Utilise Grab pour les trajets urbains (prix fixe). Les bus locaux co\u00fbtent 1-3\u20ac. Pour les inter-villes, compare sur 12go.asia.";
+    } else if (q.includes("p\u00e9riode") || q.includes("saison") || q.includes("quand")) {
+      a = "La meilleure p\u00e9riode est novembre-f\u00e9vrier (saison s\u00e8che). \u00c9vite mars-mai (chaleur extr\u00eame). La mousson (juin-octobre) peut compliquer les d\u00e9placements.";
+    } else if (clean.length > 50 && !hasBodyLeak) {
+      return match;
+    } else {
+      return "";
+    }
+    return "<details><summary>" + question + "</summary><p>" + a + "</p></details>";
+  });
+  return out;
+}
+
 export function fixSlugLeaksInQuotes(html) {
   let out = html;
   // Remove 'notre guide [word] [destination]' patterns that are slug text
@@ -1187,8 +1277,11 @@ export function applyPostProcessingFixers(html) {
   c = limitSiTuSentences(c);
   c = fixTruncatedSentences(c);
   c = fixBrokenInternalLinkText(c);
+  c = validateFaqAnswers(c);
   c = fixFaqFormatting(c);
   c = fixDestinationPlaceholders(c);
+  c = deduplicateRedditAttributions(c);
+  c = cleanConclusionSlugs(c);
   c = fixSlugLeaksInQuotes(c);
   c = fixTruncatedFragments(c);
   c = fixBrandNames(c);

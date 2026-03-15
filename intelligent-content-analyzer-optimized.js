@@ -3391,7 +3391,7 @@ ${availableCitations.map((c, i) => (i+1) + '. "' + c + '"').join('\n') || 'Aucun
 ${redditSourceUrl ? '\nURL SOURCE: ' + redditSourceUrl : ''}
 
 EXTRAIT DU POST REDDIT:
-${(extracted.post?.clean_text || extracted.source_text || '').substring(0, 1500)}
+${(extracted.post?.clean_text || extracted.source_text || '').substring(0, 800)}
 
 Génère UNIQUEMENT le HTML de l'introduction (2-3 paragraphes <p>). Pas de JSON, pas de H2, juste le HTML brut.`;
 
@@ -3616,7 +3616,9 @@ ${isNews ? `MODE NEWS :
 - Ce qu'il faut retenir : 2 paragraphes de verdict.
 - FAQ : 4-6 questions/réponses au format <details><summary>Question ?</summary><p>Réponse.</p></details>.
   Questions basées sur les vraies interrogations du témoignage. Réponses concises (2-3 phrases).
-- Signature : CTA soft de fin.`}
+  IMPORTANT: Chaque réponse FAQ doit être une phrase COMPLETE et autonome. Ne copie JAMAIS de fragments du corps. Les réponses doivent donner des chiffres concrets.
+- Signature : CTA soft de fin.
+- INTERDIT : ne jamais inclure de titres d articles, slugs ou URLs dans le texte. Les liens vont dans opportunites_liens_internes uniquement.`}
 
 CONTRAINTES : ${truthPackBlock}
 ✅ Les CTAs décrivent l'action réelle : «Compare les vols», «Vérifie les conditions du visa». Citations en guillemets français inline « ... » uniquement.
