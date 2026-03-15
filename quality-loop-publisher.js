@@ -642,23 +642,15 @@ function fixEncodingBreaks(html) {
     if (out !== before) fixCount++;
   }
   
-  // Generic pattern: detect common French words that got joined without space
-  // Pattern: lowercase letter + accented uppercase start of common word
+  // Generic pattern: detect missing spaces before accented chars in text nodes
   out = out.replace(/(?<=>)([^<]+)(?=<)/g, (match, text) => {
     let fixed = text;
-    // Fix: word ending + "é" starting next word (very common pattern)
-    fixed = fixed.replace(/([a-zé])([ÉÈÊÀÂÎÔÙ])/g, '$1 $2');
+    // Common French word endings + accented char that starts next word
+    fixed = fixed.replace(/\b(cette|encore|une|par|les|des|ses|mes|tes|nos|vos|leurs|chaque|entre|quatre|notre|votre|autre|contre|toute|grande|elle|elles|ils|que|qui|mais|puis|sans|avec|dans|sous|sur|vers|pour|dont|tout|bien|très|plus|aussi|même|comme|quand|après|avant)(é|è|ê|à|â|î|ô|û)([a-zà-ÿ])/gi, '$1 $2$3');
     // Fix: "nt" + "être" pattern
     fixed = fixed.replace(/ntêtre/g, 'nt être');
-    // Fix: common suffix + "é" prefix patterns  
-    fixed = fixed.replace(/([st])é([a-z]{3,})/g, (m, pre, post) => {
-      // Only split if it creates two valid words
-      const candidates = ['étaient', 'étape', 'élevé', 'éviter', 'étranger', 'échec', 'économ'];
-      for (const c of candidates) {
-        if (('é' + post).startsWith(c.slice(1))) return pre + ' é' + post;
-      }
-      return m;
-    });
+    // Fix: "t" + "é" patterns (peutêtre, doitêtre, etc.)
+    fixed = fixed.replace(/(peu|doi|fai|soi|veu)tê/g, '$1t ê');
     return fixed;
   });
 
@@ -675,8 +667,9 @@ function fixGhostLinks(html) {
   let out = html;
   let fixCount = 0;
   
-  // Remove <p class="internal-link-transition"> that contain no <a href>
-  out = out.replace(/<p\s+class="internal-link-transition"[^>]*>(?:(?!<a\s+href)[^<]|<(?!a\s+href))*<\/p>/gi, () => {
+  // Remove ALL <p class="internal-link-transition"> paragraphs — they break the narrative flow
+  // Internal links should be woven inline within regular paragraphs (TPG style), not in standalone blocks
+  out = out.replace(/<p\s+class="internal-link-transition"[^>]*>[\s\S]*?<\/p>/gi, () => {
     fixCount++;
     return '';
   });
@@ -714,29 +707,37 @@ function fixDuplicateCitations(html) {
   let out = html;
   let fixCount = 0;
   
-  // Fix 1: Same sentence repeated within a single blockquote
+  // Fix 1: Same sentence repeated within a single blockquote <p>
   out = out.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (match, inner) => {
-    // Extract text content from <p> tags inside blockquote
-    const pMatches = [...inner.matchAll(/<p>([^<]*)<\/p>/gi)];
-    if (pMatches.length > 0) {
-      const firstText = pMatches[0][1].trim();
-      // Check if the first paragraph contains the same text repeated
-      const sentences = firstText.split(/\.\s+/).filter(s => s.trim().length > 10);
+    let newInner = inner;
+    // Check each <p> for repeated sentences
+    newInner = newInner.replace(/<p>([^<]+)<\/p>/g, (pMatch, pText) => {
+      // Split into sentences and deduplicate
+      const sentences = pText.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 10);
       if (sentences.length >= 2) {
-        // Check for duplicate sentences
-        const unique = [...new Set(sentences.map(s => s.trim().toLowerCase()))];
+        const seen = new Set();
+        const unique = [];
+        for (const s of sentences) {
+          const normalized = s.trim().toLowerCase().replace(/[.,!?;:]+$/, '');
+          if (!seen.has(normalized)) {
+            seen.add(normalized);
+            unique.push(s);
+          } else {
+            fixCount++;
+          }
+        }
         if (unique.length < sentences.length) {
-          // Has duplicates - keep only unique sentences
-          const deduped = unique.join('. ') + '.';
-          const newInner = inner.replace(pMatches[0][0], `<p>${deduped}</p>`);
-          fixCount++;
-          return match.replace(inner, newInner);
+          return '<p>' + unique.join(' ') + '</p>';
         }
       }
+      return pMatch;
+    });
+    if (newInner !== inner) {
+      return match.replace(inner, newInner);
     }
     return match;
   });
-  
+
   // Fix 2: Remove duplicate blockquotes (same content appearing twice in article)
   const blockquotes = [...out.matchAll(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi)];
   const seen = new Set();
@@ -1038,6 +1039,14 @@ async function publishArticle(article) {
   
   // Rewrite listicle titles into emotional hooks
   const finalTitle = rewriteListicleTitle(article.title);
+  // Also update the H1 in the HTML content to match the rewritten title
+  if (finalTitle !== article.title) {
+    const h1Regex = /<h1[^>]*>.*?<\/h1>/i;
+    if (h1Regex.test(finalContent)) {
+      finalContent = finalContent.replace(h1Regex, '<h1 class="wp-block-heading">' + finalTitle.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</h1>');
+      console.log('  ✏️ H1 also updated in HTML content');
+    }
+  }
   
   
   // ─── POST-PROCESSING FIXES (TPG quality standards) ─────────
