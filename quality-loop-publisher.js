@@ -646,7 +646,7 @@ function fixEncodingBreaks(html) {
   out = out.replace(/(?<=>)([^<]+)(?=<)/g, (match, text) => {
     let fixed = text;
     // Common French word endings + accented char that starts next word
-    fixed = fixed.replace(/\b(cette|encore|une|par|les|des|ses|mes|tes|nos|vos|leurs|chaque|entre|quatre|notre|votre|autre|contre|toute|grande|elle|elles|ils|que|qui|mais|puis|sans|avec|dans|sous|sur|vers|pour|dont|tout|bien|très|plus|aussi|même|comme|quand|après|avant)(é|è|ê|à|â|î|ô|û)([a-zà-ÿ])/gi, '$1 $2$3');
+    fixed = fixed.replace(/\b(cette|encore|une|par|les|des|ses|mes|tes|nos|vos|leurs|chaque|entre|quatre|notre|votre|autre|contre|toute|grande|elle|elles|ils|que|qui|mais|puis|sans|avec|dans|sous|sur|vers|pour|dont|tout|bien|très|plus|aussi|même|comme|quand|après|avant|en|tu|un|le|la|de|se|ne|ce|je|te|me|son|mon|ton|ou|où|du|au|si|sa|ma|ta|et|réservoir|littéralement)(é|è|ê|à|â|î|ô|û)([a-zà-ÿ])/gi, '$1 $2$3');
     // Fix: "nt" + "être" pattern
     fixed = fixed.replace(/ntêtre/g, 'nt être');
     // Fix: "t" + "é" patterns (peutêtre, doitêtre, etc.)
@@ -872,6 +872,34 @@ function fixSlugAnchors(html) {
 }
 
 
+
+// ─── NESTED LINK FIXER ──────────────────────────────────────
+// Detects and fixes nested <a> tags which are invalid HTML
+// e.g. <a href="x">text <a href="y">inner</a> more</a> → keep only the outer link
+function fixNestedLinks(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  // Pattern: <a href="...">...<a href="...">...</a>...</a>
+  // Fix by removing inner <a> tags and keeping their text
+  let prev = '';
+  while (prev !== out) {
+    prev = out;
+    out = out.replace(/<a\s+href="([^"]*)"[^>]*>((?:(?!<\/a>)[\s\S])*?)<a\s+href="[^"]*"[^>]*>([\s\S]*?)<\/a>([\s\S]*?)<\/a>/gi, 
+      (match, outerHref, before, innerText, after) => {
+        fixCount++;
+        return `<a href="${outerHref}">${before}${innerText}${after}</a>`;
+      }
+    );
+  }
+  
+  if (fixCount > 0) {
+    console.log(`🔧 NESTED_LINK_FIXER: ${fixCount} nested link(s) flattened`);
+  }
+  return out;
+}
+
+
 async function publishArticle(article) {
   const wpUrl = process.env.WORDPRESS_URL;
   const wpUser = process.env.WORDPRESS_USERNAME;
@@ -1056,6 +1084,7 @@ async function publishArticle(article) {
   finalContent = fixEmptyFaqEntries(finalContent);
   finalContent = splitWallParagraphs(finalContent);
   finalContent = fixSlugAnchors(finalContent);
+  finalContent = fixNestedLinks(finalContent);
   console.log('✅ Post-processing fixes applied (encoding, ghost links, dedup, empty FAQ)');
 
   const postData = {
