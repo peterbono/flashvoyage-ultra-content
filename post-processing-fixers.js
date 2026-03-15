@@ -924,9 +924,61 @@ export function mergeShortParagraphs(html) {
  */
 export function fixBrokenInternalLinkText(html) {
   let out = html;
-  // Remove "notre article sur [X]" or "notre guide [X]" orphan text
-  out = out.replace(/\bLes notre article sur [^.]+/gi, '');
-  out = out.replace(/\bnotre article sur ([A-Z][a-z]+) /gi, '');
+  // Remove orphan internal link reference text (when link text leaks without <a> wrapper)
+  // Patterns: "notre guide X Y", "notre article sur X"
+  out = out.replace(/Les notre (guide|article)[^.]{0,50}(?=[.!?,])/gi, '');
+  out = out.replace(/notre (guide|article) [a-zéèêàâîôûçA-ZÉÈÊÀÂÎÔÛÇ]+ [a-zéèêàâîôûçA-ZÉÈÊÀÂÎÔÛÇ]+(?= )/gi, '');
+  // Remove orphan "En déménageant notre guide..." type patterns
+  out = out.replace(/En déménageant notre (guide|article)[^.]{0,50}/gi, '');
+  // "comme si c'était une simple affaire de choisir" orphan intro
+  out = out.replace(/parlent de comme si/gi, 'parlent de cette question comme si');
+  return out;
+}
+
+/**
+ * Fix brand names and compound words that were incorrectly split by encoding fixers.
+ * Must run as the VERY LAST fixer.
+ */
+export function fixBrandNames(html) {
+  let out = html;
+  const brandFixes = [
+    [/i Phone/g, 'iPhone'],
+    [/i Phones/g, 'iPhones'],
+    [/i Pad/g, 'iPad'],
+    [/i Pads/g, 'iPads'],
+    [/Pay Pal/g, 'PayPal'],
+    [/Whats App/g, 'WhatsApp'],
+    [/Wi Fi/g, 'WiFi'],
+    [/wi fi/gi, 'WiFi'],
+    [/You Tube/g, 'YouTube'],
+    [/Face Book/g, 'Facebook'],
+    [/Insta gram/g, 'Instagram'],
+    [/Air Bnb/g, 'Airbnb'],
+    [/e SIM/g, 'eSIM'],
+    [/e Sim/g, 'eSIM'],
+    [/E Sim/g, 'eSIM'],
+    [/Air Asia/g, 'AirAsia'],
+    [/Trip Advisor/g, 'TripAdvisor'],
+    [/Booking Com/g, 'Booking.com'],
+    [/Grab Car/g, 'GrabCar'],
+    [/Google Fi/g, 'Google Fi'], // This one is correct as-is
+    // Common French words that get split
+    [/expériment és/g, 'expérimentés'],
+    [/expérienc és/g, 'expériencés'],
+    [/supplément aire/g, 'supplémentaire'],
+    [/complèt ement/g, 'complètement'],
+    [/immédi atement/g, 'immédiatement'],
+    [/différ emment/g, 'différemment'],
+    [/particuli èrement/g, 'particulièrement'],
+    [/enti èrement/g, 'entièrement'],
+    [/premi ère/g, 'première'],
+    [/derni ère/g, 'dernière'],
+    [/financi ère/g, 'financière'],
+    [/réserv ation/g, 'réservation'],
+  ];
+  for (const [pattern, replacement] of brandFixes) {
+    out = out.replace(pattern, replacement);
+  }
   return out;
 }
 
@@ -951,6 +1003,7 @@ export function applyPostProcessingFixers(html) {
   c = limitSiTuSentences(c);
   c = fixTruncatedSentences(c);
   c = fixBrokenInternalLinkText(c);
+  c = fixBrandNames(c);
   return c;
 }
 
