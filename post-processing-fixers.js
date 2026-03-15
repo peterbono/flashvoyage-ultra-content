@@ -163,6 +163,11 @@ export function fixEncodingBreaks(html) {
     'élevé', 'élevée', 'élevés', 'état', 'étape', 'étaient', 'était',
     'étranger', 'étrangère', 'échange', 'échec', 'édition',
     'énergie', 'énergétique', 'énorme',
+    'étudiant', 'étudiante', 'étudiants', 'étudiantes', 'études', 'étude',
+    'également', 'égal', 'égale', 'égalité',
+    'événement', 'événements', 'évolution', 'évidence',
+    'écriture', 'écrit', 'école', 'écologique',
+    'édifice', 'éducation', 'éduqué',
   ];
   
   for (const wordStart of accentedWordStarts) {
@@ -763,7 +768,7 @@ export function fixGenericAccentJoins(html) {
     'ste', 'nce', 'nse', 'rse', 'lse',
     'ais', 'ait', 'ant', 'ent', 'ont', 'int',
     'eur', 'oir', 'air', 'our',
-    'ès', 'as', 'is', 'us', 'os',
+    'ès', 'as', 'is', 'us', 'os', 'sa', 'ra', 'na', 'ta', 'la', 'va', 'da', 'pa', 'ga', 'ba', 'ma', 'fa', 'ca',
   ];
   
   for (const ending of wordEndings) {
@@ -889,29 +894,44 @@ export function fixTruncatedSentences(html) {
 export function mergeShortParagraphs(html) {
   let out = html;
   // Find consecutive short paragraphs and merge them
-  // Only merge if both are short AND they're about the same topic (consecutive)
+  // Handles paragraphs with inline HTML tags (a, strong, em, etc.)
   let changed = true;
   let iterations = 0;
-  while (changed && iterations < 10) {
+  
+  function stripTags(s) { return s.replace(/<[^>]+>/g, '').trim(); }
+  
+  while (changed && iterations < 15) {
     changed = false;
     iterations++;
     out = out.replace(
-      /<p([^>]*)>([^<]{10,99})<\/p>\s*<p([^>]*)>([^<]{10,99})<\/p>/g,
-      (match, attrs1, text1, attrs2, text2) => {
-        // Don't merge if either has special classes
+      /<p([^>]*)>((?:(?!<\/p>)[\s\S])+)<\/p>[\s]*<p([^>]*)>((?:(?!<\/p>)[\s\S])+)<\/p>/g,
+      (match, attrs1, content1, attrs2, content2) => {
+        // Don't merge if either has special classes (widget, blockquote-wrapper, etc.)
         if (attrs1.includes('class=') || attrs2.includes('class=')) return match;
-        // Don't merge if second paragraph starts with a list marker or special char
-        if (/^[•\-\d]/.test(text2.trim())) return match;
-        // Don't merge if combined would be too long (>400 chars)
-        if (text1.trim().length + text2.trim().length > 400) return match;
-        // Don't merge if first paragraph ends with : (it's introducing something)
-        if (/:\s*$/.test(text1.trim())) return match;
-        // Merge if both short, or if one is very short
-        const len1 = text1.trim().length;
-        const len2 = text2.trim().length;
-        if (len1 < 80 || len2 < 80 || (len1 + len2 < 250)) {
+        // Don't merge if content has block-level elements
+        if (/<(div|table|ul|ol|h[1-6]|blockquote|details)/i.test(content1 + content2)) return match;
+        
+        const text1 = stripTags(content1);
+        const text2 = stripTags(content2);
+        
+        // Skip very short content (likely labels or markers)
+        if (text1.length < 5 || text2.length < 5) return match;
+        // Don't merge if second paragraph starts with a list marker
+        if (/^[•\-\d]/.test(text2)) return match;
+        // Don't merge if combined text would be too long (>500 chars)
+        if (text1.length + text2.length > 500) return match;
+        // Don't merge if first paragraph ends with : (introducing something)
+        if (/:\s*$/.test(text1)) return match;
+        // Don't merge if second paragraph starts with a capital after a sentence end
+        // (new topic) — but DO merge if first ends without period
+        if (/[.!?]\s*$/.test(text1) && text1.length > 120) return match;
+        
+        // Merge if either is short (<100 chars text) or combined is moderate
+        const len1 = text1.length;
+        const len2 = text2.length;
+        if (len1 < 100 || len2 < 100 || (len1 + len2 < 300)) {
           changed = true;
-          return '<p' + attrs1 + '>' + text1.trim() + ' ' + text2.trim() + '</p>';
+          return '<p' + attrs1 + '>' + content1.trim() + ' ' + content2.trim() + '</p>';
         }
         return match;
       }
