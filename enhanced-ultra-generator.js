@@ -2682,7 +2682,7 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
       const wordpressData = {
         title: article.title,
         content: article.content,
-        status: 'publish',
+        status: process.env.FORCE_WP_STATUS || 'publish',
         excerpt: article.excerpt || '',
         categories: article.categoryIds || [],
         tags: article.tagIds || [],

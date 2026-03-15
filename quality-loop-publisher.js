@@ -748,7 +748,7 @@ async function publishArticle(article) {
   const postData = {
     title: finalTitle,
     content: finalContent,
-    status: 'publish',
+    status: process.env.FORCE_WP_STATUS || 'publish',
     ...(categoryIds.length && { categories: categoryIds }),
     ...(tagIds.length && { tags: tagIds }),
     ...(article.slug && { slug: article.slug }),
