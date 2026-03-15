@@ -627,6 +627,7 @@ async function publishArticle(article) {
 
   // Last-pass: ensure wp-block-quote class on all blockquotes + merge short paragraphs
   let finalContent = article.content || '';
+  const beforeMergeCount = (finalContent.match(/<p[^>]*>/g) || []).length;
   finalContent = finalContent.replace(/<blockquote(?!\s+class)([^>]*)>/gi, '<blockquote class="wp-block-quote"$1>');
   
   // Step 1: Remove AI filler sentences (empty calories that scream "AI-generated")
@@ -676,7 +677,9 @@ async function publishArticle(article) {
       const part = parts[i];
       
       if (part.type !== 'p') {
-        // Non-paragraph element breaks the chain
+        // Whitespace-only 'other' (newlines between paragraphs) — skip, don't break chain
+        if (/^\s*$/.test(part.html)) continue;
+        // Real non-paragraph element breaks the chain
         if (lastParagraphText !== null) {
           merged += '<p>' + lastParagraphText + '</p>\n';
           lastParagraphText = null;
@@ -708,6 +711,8 @@ async function publishArticle(article) {
     }
     finalContent = merged;
   }
+  const afterMergeCount = (finalContent.match(/<p[^>]*>/g) || []).length;
+  console.log('  📝 PARAGRAPH MERGER: ' + beforeMergeCount + ' → ' + afterMergeCount + ' paragraphs (' + (beforeMergeCount - afterMergeCount) + ' merged)');
   
   // Rewrite listicle titles into emotional hooks
   const finalTitle = rewriteListicleTitle(article.title);
