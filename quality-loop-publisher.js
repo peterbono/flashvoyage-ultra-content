@@ -514,9 +514,10 @@ function rewriteListicleTitle(title) {
   // Detect listicle patterns
   const listiclePatterns = [
     /^\d+\s+(risques?|pi[eè]ges?|erreurs?|choses?|raisons?|astuces?|conseils?)\s+(que|qui|pour|à|cachée?s?)/i,
-    /:\s*\d+\s+(risques?|pi[eè]ges?|erreurs?|choses?|raisons?|astuces?|conseils?)/i,
-    /les blogs (?:voyage )?(?:cachent|oublient|ne disent pas|ignorent)/i,
-    /guide complet|tout savoir sur/i,
+    /:\s*(?:les\s+)?\d+\s+(risques?|pi[eè]ges?|erreurs?|choses?|raisons?|astuces?|conseils?)/i,
+    /\d+\s+(risques?|pi[eè]ges?|erreurs?)\s+(que|qui|pour|à|cachée?s?|des|du)/i,
+    /les\s+(?:blogs?|guides?)\s+(?:voyage\s+)?(?:cachent|oublient|ne\s+(?:disent|montrent)\s+pas|ignorent)/i,
+    /guide complet|tout savoir sur|tout ce que/i,
   ];
   
   const isListicle = listiclePatterns.some(p => p.test(title));
