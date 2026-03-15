@@ -8656,7 +8656,7 @@ class ArticleFinalizer {
       'tu', 'il', 'je', 'on', 'où', 'se', 'ne', 'te', 'me', 'en',
       'repas',
       // Common nouns that should NOT be joined with following accented word
-      'visa', 'yoga', 'spa', 'quota', 'ultra', 'extra', 'mega', 'meta',
+      'via', 'visa', 'yoga', 'spa', 'quota', 'ultra', 'extra', 'mega', 'meta',
       'budget', 'transit', 'ticket', 'billet', 'objet', 'projet', 'sujet', 'effet', 'aspect',
       'coût', 'début', 'réseau', 'bureau', 'niveau', 'milieu',
       'communauté', 'séjour', 'retour', 'détour', 'parcours', 'secours', 'recours',

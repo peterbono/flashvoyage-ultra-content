@@ -179,6 +179,15 @@ export function fixEncodingBreaks(html) {
     [/épuis\s+és/g, 'épuisés'],
     [/épuis\s+ée/g, 'épuisée'],
     [/épuis\s+é\b/g, 'épuisé'],
+    [/int\s+érioris/g, 'intérioris'],
+    [/inqui\s+étude/g, 'inquiétude'],
+    [/inqui\s+études/g, 'inquiétudes'],
+    [/int\s+érieur/g, 'intérieur'],
+    [/int\s+érieure/g, 'intérieure'],
+    [/int\s+érêt/g, 'intérêt'],
+    [/int\s+éress/g, 'intéress'],
+    [/int\s+égr/g, 'intégr'],
+    [/int\s+égral/g, 'intégral'],
     [/si\s+ècles/g, 'siècles'],
 
     [/paraîtévident/g, 'paraît évident'],
@@ -838,6 +847,8 @@ export function fixGenericAccentJoins(html) {
     [/voyag[ée]xtrême/gi, 'voyage extrême'],
     [/ville[ée]loign/gi, 'ville éloigné'],
     [/duré[ée]stim/gi, 'durée estim'],
+    [/via[éèê]cran/gi, 'via écran'],
+    [/via[éèê]([a-z])/gi, 'via é$1'],
   ];
   
   for (const [pattern, replacement] of knownJoins) {
@@ -1057,6 +1068,33 @@ export function fixBrokenInternalLinkText(html) {
  * Fix brand names and compound words that were incorrectly split by encoding fixers.
  * Must run as the VERY LAST fixer.
  */
+
+/**
+ * Remove obviously truncated sentence fragments like 'de en.', 'du de.', 'la le.'
+ */
+
+/**
+ * Remove slug-like text that leaks into article body or quotes.
+ * Patterns like 'notre guide visa Thaïlande', 'notre guide arbitrages Thaïlande'
+ */
+export function fixSlugLeaksInQuotes(html) {
+  let out = html;
+  // Remove 'notre guide [word] [destination]' patterns that are slug text
+  out = out.replace(/notre guide [a-zà-ÿ-]+ (Thaïlande|Japon|Indonésie|Vietnam|Cambodge|Laos|Philippines|Malaisie|Bali|Inde|Myanmar|Sri Lanka)/gi, '');
+  // Remove English fragments that are clearly not translated
+  out = out.replace(/<blockquote[^>]*>\s*<p[^>]*>\s*You[\u2019']re[^<]*<\/p>\s*<\/blockquote>/gi, '');
+  return out;
+}
+
+export function fixTruncatedFragments(html) {
+  let out = html;
+  // Remove fragments that are just prepositions/articles: 'de en.', 'du de la.'
+  out = out.replace(/ (?:de|du|des|le|la|les|en|au|aux) (?:de|du|des|le|la|les|en|au|aux)[.,]/g, '.');
+  // Remove lone preposition at end of sentence: 'du thaï de en.'
+  out = out.replace(/ (?:de|du|des|en|au|aux) (?:en|de|du)[.]/g, '.');
+  return out;
+}
+
 export function fixBrandNames(html) {
   let out = html;
   const brandFixes = [
@@ -1151,6 +1189,8 @@ export function applyPostProcessingFixers(html) {
   c = fixBrokenInternalLinkText(c);
   c = fixFaqFormatting(c);
   c = fixDestinationPlaceholders(c);
+  c = fixSlugLeaksInQuotes(c);
+  c = fixTruncatedFragments(c);
   c = fixBrandNames(c);
   return c;
 }
