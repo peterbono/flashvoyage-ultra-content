@@ -2809,6 +2809,8 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
             if (this.articleFinalizer) {
               updatedContent = this.articleFinalizer.fixWordGlue(updatedContent, null);
               updatedContent = this.articleFinalizer.applyDeterministicFinalTextCleanup(updatedContent);
+              // Re-apply post-processing fixers after finalizer to undo any re-joins
+              updatedContent = applyPostProcessingFixers(updatedContent);
             }
             try {
               await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts/${publishedArticle.id}`, {

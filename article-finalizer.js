@@ -1776,8 +1776,6 @@ class ArticleFinalizer {
   // A) Placement déterministe en mode OFFLINE - AMÉLIORÉ pour cohérence éditoriale
   placeWidgetsOffline(html, widgetScripts) {
     let out = html;
-    // FIX: Add wp-block-quote class to all blockquotes for WordPress native styling
-    out = out.replace(/<blockquote(?!\s+class)([^>]*)>/gi, '<blockquote class="wp-block-quote">');
 
     const flights = widgetScripts.flights || '';
     const connectivity = widgetScripts.connectivity || '';
@@ -3486,7 +3484,9 @@ class ArticleFinalizer {
             'gi'
           );
           const before = cleanedHtml;
-          cleanedHtml = cleanedHtml.replace(numericPattern, 'quelques euros');
+          // BUG FIX: Do NOT replace prices with euphemisms — keep original text intact
+          // cleanedHtml = cleanedHtml.replace(numericPattern, 'quelques euros');
+          console.log('  [invention_guard] Detected numeric claim (kept intact):', issue.value);
           if (cleanedHtml !== before) cleanedCount++;
         } else if (issue.type === 'location_claim') {
           // Supprimer la phrase contenant le lieu inventé
@@ -8655,6 +8655,15 @@ class ArticleFinalizer {
       'aucun', 'aucune', 'autres', 'autre', 'nombreux', 'nombreuses',
       'tu', 'il', 'je', 'on', 'où', 'se', 'ne', 'te', 'me', 'en',
       'repas',
+      // Common nouns that should NOT be joined with following accented word
+      'visa', 'yoga', 'spa', 'quota', 'ultra', 'extra', 'mega', 'meta',
+      'budget', 'transit', 'ticket', 'billet', 'objet', 'projet', 'sujet', 'effet', 'aspect',
+      'coût', 'début', 'réseau', 'bureau', 'niveau', 'milieu',
+      'communauté', 'séjour', 'retour', 'détour', 'parcours', 'secours', 'recours',
+      'train', 'avion', 'bateau', 'hôtel', 'hostel', 'auberge',
+      'temps', 'corps', 'bras', 'pays', 'avis', 'choisis',
+      'normal', 'général', 'local', 'total', 'final', 'oral', 'global',
+      'court', 'lourd', 'chaud', 'froid',
     ]);
     const WORD_SUFFIX_RE = /(?:er|ir|re|oir|ais|ait|aient|ons|ent|ant|ment|eux|oux|age|tion|eur|ard|ois|ais|ence|ance|ure|ble|que|ise|ose|ude|es|ez|ing|ns|ts)$/i;
     cleanedWithSpaces = cleanedWithSpaces.replace(/\b([a-zàâäéèêëïîôùûüÿçœ]{1,})\s(é|è|ê|à|â|ù|û|ô|î|œ)([a-zàâäéèêëïîôùûüÿçœ]{1,})\b/gi, (match, left, accent, right) => {
@@ -8872,8 +8881,9 @@ class ArticleFinalizer {
     });
 
     // Supprimer les formulations vagues typiques de l'IA
-    out = out.replace(/\bquelques\s+euros\b/gi, 'un coût non négligeable');
-    out = out.replace(/\bplusieurs\s+dizaines\s+d['']euros\b/gi, 'un surcoût significatif');
+    // BUG FIX: disabled price sanitization
+    // out = out.replace(/\bquelques\s+euros\b/gi, 'un coût non négligeable');
+    // out = out.replace(/\bplusieurs\s+dizaines\s+d['']euros\b/gi, 'un surcoût significatif');
     out = out.replace(/\bun\s+budget\s+modeste\b/gi, 'un budget raisonnable');
 
     // Ajouter espaces après ponctuation manquants uniquement dans les noeuds texte
