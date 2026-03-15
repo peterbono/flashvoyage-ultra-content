@@ -523,6 +523,27 @@ export function splitWallParagraphs(html) {
 
 // ─── SLUG ANCHOR FIXER ──────────────────────────────────────
 // Detects and fixes <a> tags where the anchor text is a raw URL slug
+
+/**
+ * Fix sentences that are actually article slugs/titles wrapped around internal links.
+ * Pattern: "tu arrives budget 2 200 e en <a>Thailande 5 Arbitrages Caches</a> qui peuvent te ruiner"
+ */
+export function fixSlugSentenceLinks(html) {
+  let out = html;
+  out = out.replace(/([ >])([^<]{5,80})<a\s+href="(https?:\/\/flashvoyage\.com\/[^"]+)"[^>]*>([^<]+)<\/a>([^<]{0,80}[.!?])/g, (match, pre, before, href, linkText, after) => {
+    const slug = href.replace(/https?:\/\/flashvoyage\.com\//, "").replace(/\//g, "");
+    const fullText = (before + linkText + after).toLowerCase().replace(/[^a-z0-9]/g, " ").replace(/\s+/g, " ").trim();
+    const slugText = slug.replace(/-/g, " ").trim();
+    const slugWords = slugText.split(" ").filter(w => w.length > 2);
+    const overlap = slugWords.filter(w => fullText.includes(w)).length;
+    if (overlap >= slugWords.length * 0.6) {
+      return pre + "consulte " + '<a href="' + href + '">cet article</a>.';
+    }
+    return match;
+  });
+  return out;
+}
+
 export function fixSlugAnchors(html) {
   let out = html;
   let fixCount = 0;
@@ -1145,8 +1166,10 @@ export function validateFaqAnswers(html) {
     const clean = answer.replace(/<[^>]+>/g, "").trim();
     const hasGarbage = /co[\u00fbu]te (ta|ton|sa|ses|leur) /.test(clean) && !/co[\u00fbu]te (environ|entre|autour|en moyenne)/.test(clean);
     const hasBodyLeak = /co[\u00fbu]te [a-z]+ [a-z]+ [a-z]+ en tant que/.test(clean);
+    const hasSentenceBreak = /co[ûu]te environ [a-z]+ [A-Z]/.test(clean) || /co[ûu]te environ utilise/.test(clean);
+    const hasIncoherent = /scooter \(es /.test(clean) || /co[ûu]te [a-z]+ [a-z]+ au lieu/.test(clean);
     const tooShort = clean.length < 20;
-    if (!hasGarbage && !hasBodyLeak && !tooShort) return match;
+    if (!hasGarbage && !hasBodyLeak && !hasSentenceBreak && !hasIncoherent && !tooShort) return match;
     const q = question.replace(/<[^>]+>/g, "").toLowerCase();
     let a;
     if (q.includes("vol") || q.includes("avion")) {
@@ -1266,6 +1289,7 @@ export function applyPostProcessingFixers(html) {
   c = fixEmptyFaqEntries(c);
   c = splitWallParagraphs(c);
   c = mergeShortParagraphs(c);
+  c = fixSlugSentenceLinks(c);
   c = fixSlugAnchors(c);
   c = fixNestedLinks(c);
   c = cleanBlockquoteContent(c);
