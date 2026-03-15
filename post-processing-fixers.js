@@ -84,6 +84,22 @@ export function fixEncodingBreaks(html) {
   // ── PART 2: Fix missing spaces (joined words) ──
   // Words that got concatenated without space, typically around accented chars or HTML entities
   const joinFixes = [
+    [/fant\s+ôme/g, 'fantôme'],
+    [/si\s+ège/g, 'siège'],
+    [/pi\s+ège/g, 'piège'],
+    [/coll\s+ège/g, 'collège'],
+    [/prot\s+ège/g, 'protège'],
+    [/man\s+ège/g, 'manège'],
+    [/strat\s+égi/g, 'stratégi'],
+    [/privil\s+égi/g, 'privilégi'],
+    [/exig\s+é/g, 'exigé'],
+    [/rési\s+dence/g, 'résidence'],
+    [/expéri\s+ence/g, 'expérience'],
+    [/itiné\s+raire/g, 'itinéraire'],
+    [/réser\s+vation/g, 'réservation'],
+    [/réfé\s+rence/g, 'référence'],
+    [/diffé\s+rence/g, 'différence'],
+
     [/aprèsavoir/g, 'après avoir'],
     [/aprèsêtre/g, 'après être'],
     [/aprèsun/g, 'après un'],
@@ -169,6 +185,12 @@ export function fixEncodingBreaks(html) {
       return match;
     });
     if (out !== before) fixCount++;
+  }
+
+
+  // SECOND PASS: Re-apply joinFixes to undo any re-splits by generic patterns
+  for (const [pattern, replacement] of joinFixes) {
+    out = out.replace(pattern, replacement);
   }
 
   if (fixCount > 0) {
