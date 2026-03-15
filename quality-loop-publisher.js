@@ -655,6 +655,39 @@ function fixEncodingBreaks(html) {
     return fixed;
   });
 
+
+  // SMART JOIN: Detect words joined to common French word-starts with accented chars
+  // e.g. "chocémotionnel" → "choc émotionnel", "repaséconomique" → "repas économique"
+  const accentedWordStarts = [
+    'émotionnel', 'émotionnelle', 'émotion', 'économique', 'économie',
+    'évaluer', 'évaluation', 'éviter', 'épuisant', 'épuisé', 'épuisée', 'épuisement',
+    'élevé', 'élevée', 'élevés', 'état', 'étape', 'étaient', 'était',
+    'étranger', 'étrangère', 'échange', 'échec', 'édition',
+    'énergie', 'énergétique', 'énorme',
+  ];
+  
+  for (const wordStart of accentedWordStarts) {
+    // Match: any word char + this accented word start (without space)
+    const regex = new RegExp('([a-zA-ZÀ-ÿ]{2,})(' + wordStart + ')', 'gi');
+    const before = out;
+    out = out.replace(regex, (match, prefix, suffix) => {
+      // Don't split if prefix is just an accent modifier (like "r" + "éel" = réel)
+      // Check: is prefix a known French word by itself?
+      const prefixLower = prefix.toLowerCase();
+      // Skip if the full match is a known valid word
+      const fullWord = (prefix + suffix).toLowerCase();
+      const validWords = ['réellement', 'référence', 'réfléchir', 'préparation', 'prépare', 'prévue', 'prévois', 'prévoir', 'prévient', 'récupération', 'différence', 'différente', 'différemment', 'irrégulière', 'supplémentaire', 'supplémentaires', 'immédiate', 'fréquente', 'fréquentes', 'anesthésique', 'anesthésiques', 'anesthésiant', 'thérapeute', 'thérapie', 'scénarios', 'scénario', 'crédit', 'itinéraire', 'intérieure', 'privilégie', 'transférables'];
+      if (validWords.some(v => fullWord.startsWith(v) || fullWord === v)) return match;
+      
+      // If prefix ends naturally (not mid-syllable), split
+      if (prefixLower.length >= 3) {
+        return prefix + ' ' + suffix;
+      }
+      return match;
+    });
+    if (out !== before) fixCount++;
+  }
+
   if (fixCount > 0) {
     console.log(`🔧 ENCODING_FIXER: ${fixCount} encoding break(s) repaired`);
   }
