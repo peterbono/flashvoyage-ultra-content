@@ -3,6 +3,7 @@
 import UltraStrategicGenerator from './ultra-strategic-generator.js';
 // OBSOLETE: import ContentEnhancer from './content-enhancer.js'; // Remplacé par seo-optimizer.js
 import IntelligentContentAnalyzerOptimized from './intelligent-content-analyzer-optimized.js';
+import { applyPostProcessingFixers } from './post-processing-fixers.js';
 // OBSOLETE: import { CompleteLinkingStrategy } from './complete-linking-strategy.js'; // Remplacé par seo-optimizer.js
 import ArticleFinalizer from './article-finalizer.js';
 import WidgetPlanBuilder from './widget-plan-builder.js';
@@ -1019,6 +1020,9 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
       // DEBUG: Vérifier les widgets APRÈS déduplication
       console.log(`🔍 DEBUG WIDGETS APRÈS DEDUP: count=${widgetsRendered}, types=[${detected.types.join(', ')}]`);
       
+      // Apply post-processing fixers (encoding, ghost links, dedup, FAQ, etc.)
+      finalizedArticle.content = applyPostProcessingFixers(finalizedArticle.content);
+
       // TEMPORAIRE: Sauvegarder le contenu APRÈS déduplication pour vérification des corrections génériques
       try {
         const fs = await import('fs');
@@ -1346,6 +1350,9 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
         }
         finalizedArticle.content = this.articleFinalizer.sanitizeAffiliateWidgetIntegrity(finalizedArticle.content);
       }
+
+      // FINAL post-processing fixers (after finalizer, before WP upload)
+      finalizedArticle.content = applyPostProcessingFixers(finalizedArticle.content);
 
       // 10. Publication WordPress
       console.log('📝 Publication sur WordPress...');
@@ -2636,6 +2643,8 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
     const skipWpPublish = process.env.SKIP_WP_PUBLISH === '1';
     if (DRY_RUN || FORCE_OFFLINE || skipWpPublish) {
       console.log(`🧪 ${DRY_RUN ? 'DRY_RUN' : 'FORCE_OFFLINE'}: publication WordPress bloquée`);
+      // DRY_RUN save final content for audit
+      try { const fs2 = await import('fs'); fs2.writeFileSync('/tmp/last-generated-article.html', article.content, 'utf-8'); console.log('💾 DRY_RUN: contenu final sauvegardé dans /tmp/last-generated-article.html'); } catch(e) {}
       // Générer une URL fictive pour les tests
       const fakeUrl = `https://flashvoyage.com/temoignage-voyage-retours-et-lecons-test-${Date.now()}/`;
       return {

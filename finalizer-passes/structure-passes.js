@@ -453,6 +453,13 @@ export function ensureMinimumNewsSerpSections(html, finalDestination = '') {
   const hasLimites = /<h2[^>]*>[^<]*limites?\s*(et\s*)?biais[^<]*<\/h2>/i.test(out);
   const hasErreurs = /<h2[^>]*>[^<]*erreurs?\s*(fr[eé]quentes?|courantes?)[^<]*<\/h2>/i.test(out);
 
+  // Skip padding sections if article already has 5+ H2s and substantial content
+  const existingH2Count = (out.match(/<h2[^>]*>/gi) || []).length;
+  const textLength = out.replace(/<[^>]+>/g, '').length;
+  if (existingH2Count >= 5 && textLength > 8000) {
+    return out; // Article is substantial, don't add generic padding
+  }
+
   const blocks = [];
   if (!hasAutres) {
     blocks.push(
@@ -468,7 +475,7 @@ export function ensureMinimumNewsSerpSections(html, finalDestination = '') {
   }
   if (!hasErreurs) {
     blocks.push(
-      `<h2>Les erreurs fréquentes qui coûtent cher aux voyageurs en ${destination}</h2>` +
+      `<h2>Les erreurs fréquentes qui coûtent cher aux voyageurs en ${destinationFr}</h2>` +
       '<p>Réserver trop tard, multiplier les transferts et sous-estimer les temps de trajet fait vite exploser le budget. Priorise 1-2 zones cohérentes et sécurise les réservations critiques.</p>'
     );
   }
@@ -649,6 +656,17 @@ export function ensureNewsQualityConvergence(html, ctx = {}) {
   const destination = String(
     ctx.finalDestination || ctx.destination || ctx.mainDestination || 'Asie'
   ).trim();
+
+  // Translate English destination names to French
+  const destFrenchMap = {
+    'thailand': 'Thaïlande', 'japan': 'Japon', 'indonesia': 'Indonésie',
+    'vietnam': 'Vietnam', 'cambodia': 'Cambodge', 'laos': 'Laos',
+    'philippines': 'Philippines', 'malaysia': 'Malaisie', 'singapore': 'Singapour',
+    'south korea': 'Corée du Sud', 'taiwan': 'Taïwan', 'hong kong': 'Hong Kong',
+    'india': 'Inde', 'nepal': 'Népal', 'sri lanka': 'Sri Lanka',
+    'myanmar': 'Myanmar', 'china': 'Chine', 'bali': 'Bali',
+  };
+  const destinationFr = destFrenchMap[destination.toLowerCase().trim()] || destination;
   const title = String(ctx.title || '').trim();
   const pillarLink = String(ctx.pillarLink || 'https://flashvoyage.com/notre-methode/').trim();
 
