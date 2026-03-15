@@ -902,17 +902,18 @@ export function mergeShortParagraphs(html) {
         if (attrs1.includes('class=') || attrs2.includes('class=')) return match;
         // Don't merge if second paragraph starts with a list marker or special char
         if (/^[•\-\d]/.test(text2.trim())) return match;
-        // Don't merge if they seem to be different thoughts (second starts with capital after a period)
-        if (/\.$/.test(text1.trim()) && /^[A-ZÀÂÄÉÈÊËÎÏÔÙÛÜ]/.test(text2.trim())) {
-          // They could still be merged if both are very short
-          if (text1.trim().length + text2.trim().length < 150) {
-            changed = true;
-            return '<p' + attrs1 + '>' + text1.trim() + ' ' + text2.trim() + '</p>';
-          }
-          return match;
+        // Don't merge if combined would be too long (>400 chars)
+        if (text1.trim().length + text2.trim().length > 400) return match;
+        // Don't merge if first paragraph ends with : (it's introducing something)
+        if (/:\s*$/.test(text1.trim())) return match;
+        // Merge if both short, or if one is very short
+        const len1 = text1.trim().length;
+        const len2 = text2.trim().length;
+        if (len1 < 80 || len2 < 80 || (len1 + len2 < 250)) {
+          changed = true;
+          return '<p' + attrs1 + '>' + text1.trim() + ' ' + text2.trim() + '</p>';
         }
-        changed = true;
-        return '<p' + attrs1 + '>' + text1.trim() + ' ' + text2.trim() + '</p>';
+        return match;
       }
     );
   }
