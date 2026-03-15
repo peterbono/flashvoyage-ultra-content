@@ -4284,14 +4284,15 @@ RETOURNE l'article HTML COMPLET enrichi. MINIMUM 2500 mots.`;
 
 INSÈRE EXACTEMENT ${Math.max(2, 3 - anomaly.count)} phrases de décision dans le dernier <p> de ${Math.max(2, 3 - anomaly.count)} sections H2 différentes. Chaque phrase DOIT suivre UN de ces formats EXACTS (copie-colle la structure, remplace les crochets) :
 
-- "Si tu [verbe ta situation], privilégie [option concrète]."
-- "Si tu [verbe ta situation], évite [piège concret]."
-- "Si tu [verbe ta situation], opte pour [solution concrète]."
-- "Si tu [verbe ta situation], pars sur [choix recommandé]."
+- "Si tu [verbe ta situation], privilégie [option concrète]." (MAXIMUM 1-2 dans TOUT l'article)
+- ALTERNATIVE (préférée) : Utilise l'impératif direct — "Réserve...", "Prévois...", "Compare...", "Vérifie..."
+- ALTERNATIVE : Question rhétorique — "Tu hésites entre X et Y ? Commence par..."
+- ⚠️ INTERDICTION ABSOLUE : ne mets JAMAIS "Si tu..." à la fin de chaque paragraphe. C'est le pattern #1 qui fait détecter l'article comme IA.
 
 EXEMPLES CONCRETS à adapter au sujet de l'article :
-- "Si tu voyages avec un budget serré, privilégie les bus locaux plutôt que les vols intérieurs."
-- "Si tu veux éviter la foule, opte pour la basse saison entre mai et septembre."
+- "Privilégie les bus locaux plutôt que les vols intérieurs si ton budget est serré."
+- "Choisis la basse saison (mai-septembre) pour éviter la foule et payer 30% moins cher."
+- ⚠️ NOTE : Ces exemples utilisent l'impératif DIRECT, pas "Si tu...". C'est le ton à adopter.
 - "Si tu hésites entre deux îles, pars sur celle qui correspond à ton rythme."
 
 RÈGLES :

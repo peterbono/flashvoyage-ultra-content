@@ -595,6 +595,10 @@ export function fixFaqCountryGrammar(html) {
   const countryFixes = [
     [/(?:à|au) Tha[ïi]lande/g, 'en Thaïlande'],
     [/pour Tha[ïi]lande/g, 'pour la Thaïlande'],
+    [/pour visiter Tha[ïi]lande/g, 'pour visiter la Thaïlande'],
+    [/visiter Tha[ïi]lande/g, 'visiter la Thaïlande'],
+    [/sur place (?:à|en) Tha[ïi]lande/g, 'sur place en Thaïlande'],
+    [/sur place Tha[ïi]lande/g, 'sur place en Thaïlande'],
     [/(?:à|au) Japon\b/g, 'au Japon'],
     [/pour Japon\b/g, 'pour le Japon'],
     [/(?:à|au) Vietnam\b/g, 'au Vietnam'],
@@ -667,9 +671,92 @@ export function capExcessiveH2s(html) {
   return out;
 }
 
+/**
+ * Fix generic word joins around accented characters.
+ * Catches patterns like "sécuritéémotionnel" → "sécurité émotionnel"
+ * by detecting two accented vowels touching (word boundary missing).
+ */
+export function fixGenericAccentJoins(html) {
+  let out = html;
+  // Pattern: word ending in accented char + word starting with accented char (no space)
+  // e.g. "sécuritéémotionnel" has "é" + "é" touching
+  const accentedVowels = 'éèêëàâäîïôùûüÿç';
+  // Two accented chars touching = likely missing space
+  out = out.replace(new RegExp('([a-z\\u00e0-\\u00ff])([' + accentedVowels + '])([' + accentedVowels + '])([a-z])', 'gi'), (match, pre, end, start, post) => {
+    // Don't break real words like "créée", "agréée" 
+    if ((end === 'é' && start === 'e') || (end === 'e' && start === 'é')) return match;
+    return pre + end + ' ' + start + post;
+  });
+  // Also fix: consonant + accented vowel immediately (like "tél" after another word)
+  // Pattern: lowercase + é/è/ê/à + lowercase (potential join after word ending in consonant)
+  out = out.replace(/([a-z])([éèêàâîôûç])([A-Z])/g, '$1$2 $3');
+  return out;
+}
+
+/**
+ * Remove common AI tell phrases from the article.
+ */
+export function cleanAiTells(html) {
+  let out = html;
+  const aiTells = [
+    [/il est essentiel de /gi, ''],
+    [/il est crucial de /gi, ''],
+    [/Il est important de noter que /gi, ''],
+    [/Il convient de souligner que /gi, ''],
+    [/Force est de constater que /gi, ''],
+    [/N'hésitez pas à /gi, ''],
+    [/il est essentiel que /gi, ''],
+    [/il est crucial que /gi, ''],
+  ];
+  for (const [pattern, replacement] of aiTells) {
+    out = out.replace(pattern, replacement);
+  }
+  return out;
+}
+
+/**
+ * Limit "Si tu..." sentences to max 3 in the entire article.
+ * Rewrites excess occurrences to imperative form.
+ */
+export function limitSiTuSentences(html) {
+  let out = html;
+  // Count "Si tu" occurrences in text (not in HTML attributes)
+  const siTuPattern = /Si tu ([a-zéèêàâîôûç]+)/gi;
+  let count = 0;
+  out = out.replace(/<p[^>]*>([sS]*?)</p>/gi, (pTag, content) => {
+    // Check if this paragraph starts with or contains "Si tu"
+    const hasSiTu = /Si tu [a-zéèêàâîôûç]/i.test(content);
+    if (!hasSiTu) return pTag;
+    
+    count++;
+    if (count <= 3) return pTag; // Keep first 3
+    
+    // For excess: try to rewrite "Si tu [verbe], [conseil]" → "[Conseil]"
+    let rewritten = content;
+    // Pattern: "Si tu [verbe...], [privilégie/évite/opte/choisis/pars] [reste]"
+    rewritten = rewritten.replace(
+      /Si tu [^,]+,\s*(privil[eé]gie|[eé]vite|opte pour|choisis|pars sur)\s+/gi,
+      (m, verb) => {
+        // Capitalize the verb
+        return verb.charAt(0).toUpperCase() + verb.slice(1) + ' ';
+      }
+    );
+    // If no comma pattern, try: "Si tu [verbe...], [reste de phrase]"
+    rewritten = rewritten.replace(
+      /Si tu [^,]+,\s*/gi,
+      ''
+    );
+    
+    return pTag.replace(content, rewritten);
+  });
+  
+  return out;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
+  c = fixGenericAccentJoins(c);
   c = fixEncodingBreaks(c);
   c = fixGhostLinks(c);
   c = fixDuplicateCitations(c);
@@ -682,6 +769,8 @@ export function applyPostProcessingFixers(html) {
   c = fixFaqCountryGrammar(c);
   c = fixSmartQuoteSpaces(c);
   c = capExcessiveH2s(c);
+  c = cleanAiTells(c);
+  c = limitSiTuSentences(c);
   return c;
 }
 
