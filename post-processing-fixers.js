@@ -81,7 +81,16 @@ export function fixEncodingBreaks(html) {
       /([a-zA-ZÀ-ÿ]{2,})\s+(ème[s]?\b)/gi,       // problème, thème
       /([a-zA-ZÀ-ÿ]{2,})\s+(ère[s]?\b)/gi,       // manière, matière (but NOT "ère" alone)
       /([a-zA-ZÀ-ÿ]{2,})\s+(ète[s]?\b)/gi,       // complète, secrète
-      /([a-zA-ZÀ-ÿ]{2,})\s+(ège[s]?\b)/gi,       // piège, collège (handled by joinFixes but belt+suspenders)
+      /([a-zA-ZÀ-ÿ]{2,})\s+(ège[s]?\b)/gi,       // piège, collège
+      /([a-zA-ZÀ-ÿ]{2,})\s+(ément\b)/gi,          // précisément, exactement
+      /([a-zA-ZÀ-ÿ]{2,})\s+(éress[eéa][a-z]*)/gi,  // intéressé, intéressant
+      /([a-zA-ZÀ-ÿ]{2,})\s+(égal[eés]*\b)/gi,      // illégales, inégalité
+      /([a-zA-ZÀ-ÿ]{2,})\s+(édit[eéa][a-z]*)/gi,   // inédit, accrédité
+      /([a-zA-ZÀ-ÿ]{2,})\s+(éfici[a-z]*)/gi,       // bénéficier, déficit
+      /([a-zA-ZÀ-ÿ]{2,})\s+(ésit[a-z]*)/gi,        // hésiter, hésitant
+      /([a-zA-ZÀ-ÿ]{2,})\s+(écess[a-z]*)/gi,       // nécessaire, accessible
+      /([a-zA-ZÀ-ÿ]{2,})\s+(ésent[a-z]*)/gi,       // représenter, présenté
+      /([a-zA-ZÀ-ÿ]{2,})\s+(ûr[es]?\b)/gi,         // sûr, sûre, sûres (handled by joinFixes but belt+suspenders)
     ];
     for (const rx of neverStandalone) {
       fixed = fixed.replace(rx, (m, prefix, suffix) => {
@@ -211,7 +220,30 @@ export function fixEncodingBreaks(html) {
       const prefixLower = prefix.toLowerCase();
       // Skip if the full match is a known valid word
       const fullWord = (prefix + suffix).toLowerCase();
-      const validWords = ['réellement', 'référence', 'réfléchir', 'préparation', 'prépare', 'prévue', 'prévois', 'prévoir', 'prévient', 'récupération', 'différence', 'différente', 'différemment', 'irrégulière', 'supplémentaire', 'supplémentaires', 'immédiate', 'fréquente', 'fréquentes', 'anesthésique', 'anesthésiques', 'anesthésiant', 'thérapeute', 'thérapie', 'scénarios', 'scénario', 'crédit', 'itinéraire', 'intérieure', 'privilégie', 'transférables'];
+      const validWords = [
+        'réellement', 'référence', 'réfléchir', 'préparation', 'prépare', 'prévue', 'prévois', 'prévoir', 'prévient',
+        'récupération', 'différence', 'différente', 'différemment', 'irrégulière', 'irrégulier',
+        'supplémentaire', 'supplémentaires', 'immédiate', 'fréquente', 'fréquentes',
+        'anesthésique', 'anesthésiques', 'anesthésiant', 'thérapeute', 'thérapie',
+        'scénarios', 'scénario', 'crédit', 'itinéraire', 'intérieure', 'privilégie', 'transférables',
+        // ill-/in-/ir- prefix compounds
+        'illégal', 'illégale', 'illégales', 'illégalement',
+        'inégal', 'inégale', 'inégales', 'inégalité', 'inégalités',
+        'irréel', 'irréelle', 'irréaliste', 'irrégulières',
+        'inédit', 'inédite', 'inédits', 'inédites',
+        'inévitable', 'inévitables', 'inévitablement',
+        'inéfficace', 'inefficace', 'inefficaces',
+        // dé-/pré- compounds
+        'déséquilibre', 'déséquilibré', 'déséquilibrée',
+        'précisément', 'antérieurement', 'intérieurement', 'extérieurement',
+        'intéressant', 'intéressante', 'intéressé', 'intéressée', 'intéresser',
+        'désintéressé', 'désintéressée',
+        // Other common compounds
+        'nécessaire', 'nécessaires', 'nécessairement', 'nécessité',
+        'bénéficier', 'bénéfique', 'bénéfiques', 'bénéficiaire',
+        'représenter', 'représenté', 'représentée', 'représentation',
+        'hésiter', 'hésitant', 'hésitante', 'hésitation',
+      ];
       if (validWords.some(v => fullWord.startsWith(v) || fullWord === v)) return match;
       
       // If prefix ends naturally (not mid-syllable), split
