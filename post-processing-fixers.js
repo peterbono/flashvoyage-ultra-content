@@ -62,6 +62,37 @@ export function fixEncodingBreaks(html) {
     return fixed;
   });
   
+  // Pattern 2: Longer prefix + space + accented SUFFIX that is NEVER a standalone word
+  // e.g. "para ît" → "paraît", "organis és" → "organisés", "bient ôt" → "bientôt"
+  // These suffixes cannot exist as standalone French words, so they MUST be part of the preceding word
+  out = out.replace(/(?<=>)([^<]+)(?=<)/g, (match, text) => {
+    let fixed = text;
+    // Accent-starting suffixes that are NEVER standalone words
+    const neverStandalone = [
+      // circumflex suffixes
+      /([a-zA-ZÀ-ÿ]{2,})\s+(î[a-z]+)/gi,        // paraît, connaître, maître
+      /([a-zA-ZÀ-ÿ]{2,})\s+(ô[a-z]+)/gi,         // bientôt, plutôt, côté (when split)
+      // common verb/adj suffixes starting with é
+      /([a-zA-ZÀ-ÿ]{3,})\s+(és\b)/gi,            // organisés, modifiés
+      /([a-zA-ZÀ-ÿ]{3,})\s+(ée\b)/gi,            // organisée, modifiée
+      /([a-zA-ZÀ-ÿ]{3,})\s+(ées\b)/gi,           // organisées
+      /([a-zA-ZÀ-ÿ]{2,})\s+(érieur[es]?\b)/gi,   // intérieur, extérieur
+      /([a-zA-ZÀ-ÿ]{2,})\s+(èbre[s]?\b)/gi,      // célèbre
+      /([a-zA-ZÀ-ÿ]{2,})\s+(ème[s]?\b)/gi,       // problème, thème
+      /([a-zA-ZÀ-ÿ]{2,})\s+(ère[s]?\b)/gi,       // manière, matière (but NOT "ère" alone)
+      /([a-zA-ZÀ-ÿ]{2,})\s+(ète[s]?\b)/gi,       // complète, secrète
+      /([a-zA-ZÀ-ÿ]{2,})\s+(ège[s]?\b)/gi,       // piège, collège (handled by joinFixes but belt+suspenders)
+    ];
+    for (const rx of neverStandalone) {
+      fixed = fixed.replace(rx, (m, prefix, suffix) => {
+        // Safety: don't merge if result would be > 25 chars
+        if (prefix.length + suffix.length > 25) return m;
+        return prefix + suffix;
+      });
+    }
+    return fixed;
+  });
+
   // Fix JSON-LD "main Entity" → "mainEntity"
   out = out.replace(/"main Entity"/g, '"mainEntity"');
   out = out.replace(/"accepted Answer"/g, '"acceptedAnswer"');
@@ -851,11 +882,15 @@ export function limitSiTuSentences(html) {
         return verb.charAt(0).toUpperCase() + verb.slice(1) + ' ';
       }
     );
-    // If no comma pattern, try: "Si tu [verbe...], [reste de phrase]"
+    // If no comma pattern, try: "Si tu [verbe...], [reste de phrase]" or "Si tu [verbe...]: [reste]"
     rewritten = rewritten.replace(
-      /Si tu [^,]+,\s*/gi,
+      /Si tu [^,:]+[,:]+\s*/gi,
       ''
     );
+    // Last resort: strip "Si tu" and capitalize
+    if (/Si tu/i.test(rewritten)) {
+      rewritten = rewritten.replace(/Si tu /gi, '');
+    }
     
     return pTag.replace(content, rewritten);
   });
