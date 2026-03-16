@@ -797,6 +797,12 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       
       console.log('\n✅ PIPELINE_RUNNER: Pipeline terminé avec succès');
       // VIZ-BRIDGE: Emit stage_complete events from pipeline report
+      // VIZ-BRIDGE: scout stage_complete (unconditional — scout always runs)
+      this.vizBridge.emit({ type: "stage_complete", agent: "scout", data: {
+        duration_ms: report.steps?.extractor?.timing?.duration || 0,
+        status: "success",
+        detail: "Scout phase completed",
+      }});
       // Skip if quality-loop-publisher manages its own events
       if (process.env.SKIP_WP_PUBLISH !== "1") {
       {
