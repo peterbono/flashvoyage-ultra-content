@@ -1,7 +1,332 @@
 {
-  "crawled_at": "2026-03-14T02:20:19.204Z",
-  "total_articles": 52,
+  "crawled_at": "2026-03-16T07:38:49.634Z",
+  "total_articles": 65,
   "articles": [
+    {
+      "id": 3550,
+      "title": "Japon : les 2 pièges que les guides cachent aux backpackers",
+      "url": "https://flashvoyage.com/japon-les-2-pieges-que-les-guides-cachent-aux-backpackers/",
+      "slug": "japon-les-2-pieges-que-les-guides-cachent-aux-backpackers",
+      "excerpt": "Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 11 contributions sur r/backpacking . Sources vérifiées, enrichies par nos données temps r&#8230;\n",
+      "content": "\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 11 contributions sur r/backpacking. Sources vérifiées, enrichies par nos données temps réel.\n\nAu cœur de cette destination, une expérience t&#8217; attend. Tu as 5 000 livres sterling en poche, onze semaines devant toi, et trois pays à traverser : Philippines, Vietnam, Japon.\nSur le papier, c&#8217; est jouable.\nMais à Tokyo, en juillet, tu découvres que les ryokans de Kinosaki Onsen coûtent deux fois plus cher que prévu, et",
+      "categories": [
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
+        }
+      ],
+      "tags": [
+        {
+          "id": 76,
+          "name": "Japon",
+          "slug": "japon"
+        }
+      ],
+      "date": "2026-03-15T17:35:18",
+      "modified": "2026-03-15T17:35:31",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3550.jpg"
+    },
+    {
+      "id": 3549,
+      "title": "Japon : la vérité que tu ne liras nulle part ailleurs",
+      "url": "https://flashvoyage.com/japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs/",
+      "slug": "japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs",
+      "excerpt": "Japon : la vérité que tu ne liras nulle part ailleurs Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 30 contributions sur r/solotravel. Sources vérifiées, enrichies par nos don",
+      "content": "Japon : la vérité que tu ne liras nulle part ailleurs\n\n\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 30 contributions sur r/solotravel. Sources vérifiées, enrichies par nos données temps réel.\n\n Imagine arriver sur place sans avoir prévu ce détail. Le billet d&#8217;avion est confirmé pour le 27 mars. Les réservations d&#8217;hôtels à Kyoto et Tokyo sont payées. Tu as passé des mois à étudier le japonais, à préparer chaque détail de ce voyage qui devaitêtre parfait. Et",
+      "categories": [
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
+        }
+      ],
+      "tags": [
+        {
+          "id": 76,
+          "name": "Japon",
+          "slug": "japon"
+        }
+      ],
+      "date": "2026-03-15T17:14:02",
+      "modified": "2026-03-15T17:14:02",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773594837723.jpg"
+    },
+    {
+      "id": 3546,
+      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
+      "url": "https://flashvoyage.com/indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient/",
+      "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+      "excerpt": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 30 contributions sur r/solotravel. Sources vérifiées, enrichies ",
+      "content": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient\n\n\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 30 contributions sur r/solotravel. Sources vérifiées, enrichies par nos données temps réel.\n\n La réalité du terrain est bien différente des guides classiques. Tu descends de l&#8217;avion à Denpasar, ton sac à dos de 55 litres sur les épaules, et tu ouvres ton appli bancaire: ~11 040 euros USD, six mois devant toi, dix pays à explorer. Les avis pleuvent déjà ",
+      "categories": [
+        {
+          "id": 182,
+          "name": "Indonésie",
+          "slug": "indonesie"
+        }
+      ],
+      "tags": [
+        {
+          "id": 177,
+          "name": "Indonésie",
+          "slug": "indonesie"
+        }
+      ],
+      "date": "2026-03-15T17:06:07",
+      "modified": "2026-03-15T17:06:07",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773594358690.jpg"
+    },
+    {
+      "id": 3517,
+      "title": "Ce que Vietnam m&#8217;a coûté (et que les blogs ne montrent pas)",
+      "url": "https://flashvoyage.com/ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas/",
+      "slug": "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "excerpt": "Ce que Vietnam m&#8217;a coûté (et que les blogs ne montrent pas) Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 22 contributions sur r/solotravel. Sources vérifiées, enrichies",
+      "content": "Ce que Vietnam m&#8217;a coûté (et que les blogs ne montrent pas)\n\n\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 22 contributions sur r/solotravel. Sources vérifiées, enrichies par nos données temps réel.\n\n Au cœur de cette destination, une expérience t&#8217;attend. Tu ouvres ton carnet de voyage trois semaines avant le départ: deux jours à Ho Chi Minh, deux à Da Nang, trois à Hanoi. Sur le papier, c&#8217;est parfait — du temps pour respirer, pas de course folle entr",
+      "categories": [
+        {
+          "id": 59,
+          "name": "Vietnam",
+          "slug": "vietnam"
+        }
+      ],
+      "tags": [
+        {
+          "id": 95,
+          "name": "Vietnam",
+          "slug": "vietnam"
+        }
+      ],
+      "date": "2026-03-15T16:23:09",
+      "modified": "2026-03-15T16:23:09",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773591784233.jpg"
+    },
+    {
+      "id": 3504,
+      "title": "Thaïlande : ce que j&#8217;aurais voulu savoir avant de réserver",
+      "url": "https://flashvoyage.com/thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver/",
+      "slug": "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver",
+      "excerpt": "Thaïlande : ce que j&#8217;aurais voulu savoir avant de réserver Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 23 contributions sur r/solotravel. Sources vérifiées, enrichies ",
+      "content": "Thaïlande : ce que j&#8217;aurais voulu savoir avant de réserver\n\n\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 23 contributions sur r/solotravel. Sources vérifiées, enrichies par nos données temps réel.\n\n Au cœur de cette destination, une expérience t&#8217;attend. Trois jours en Thaïlande, et déjà l&#8217;épuisement te rattrape. Tu es assis dans un café de Bangkok, ton ordinateur portable ouvert devant toi, incapable de te concentrer sur tes cours. Autour de toi, les",
+      "categories": [
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "tags": [
+        {
+          "id": 75,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "date": "2026-03-15T16:14:48",
+      "modified": "2026-03-15T16:14:48",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773591280952.jpg"
+    },
+    {
+      "id": 3501,
+      "title": "Ce que Thaïlande m&#8217;a coûté (et que les blogs ne montrent pas)",
+      "url": "https://flashvoyage.com/ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas/",
+      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "excerpt": "Thaïlande : 3 risques que les blogs voyage cachent aux futurs expatriés Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 30 contributions sur r/solotravel. Sources vérifiées, enr",
+      "content": "Thaïlande : 3 risques que les blogs voyage cachent aux futurs expatriés\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 30 contributions sur r/solotravel. Sources vérifiées, enrichies par nos données temps réel.\n\nTu sors du parc de Saïgon, encoreétourdi par le bruit des raquettes de badminton, les cris des enfants qui jouent au volley, cetteénergie collective qui pulse sous le soleil. Autour de toi, des dizaines de personnes — locaux, touristes, expatriés — qui se croisen",
+      "categories": [
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "tags": [
+        {
+          "id": 75,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "date": "2026-03-15T16:05:18",
+      "modified": "2026-03-15T16:05:18",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773590709896.jpg"
+    },
+    {
+      "id": 3497,
+      "title": "Vietnam 6 semaines : l&#8217;itinéraire que tu dois abandonner pour réussir",
+      "url": "https://flashvoyage.com/vietnam-6-semaines-litineraire-que-tu-dois-abandonner-pour-reussir/",
+      "slug": "vietnam-6-semaines-litineraire-que-tu-dois-abandonner-pour-reussir",
+      "excerpt": "Vietnam 6 semaines : l&#8217;itinéraire que tu dois abandonner pour réussir Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 8 contributions sur r/solotravel. Sources vérifiées, ",
+      "content": "Vietnam 6 semaines : l&#8217;itinéraire que tu dois abandonner pour réussir\n\n\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 8 contributions sur r/solotravel. Sources vérifiées, enrichies par nos données temps réel.\n\n La réalité du terrain est bien différente des guides classiques. Tu fixes l&#8217;écran de ton ordinateur: treize villes, six semaines, quatre jours parétape. Le curseur clignote sur la ligne . Hô-Chi-Minh-Ville disparaît en premier — trop loin du circuit. ",
+      "categories": [
+        {
+          "id": 59,
+          "name": "Vietnam",
+          "slug": "vietnam"
+        }
+      ],
+      "tags": [
+        {
+          "id": 95,
+          "name": "Vietnam",
+          "slug": "vietnam"
+        }
+      ],
+      "date": "2026-03-15T15:53:55",
+      "modified": "2026-03-15T15:53:55",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773590030234.jpg"
+    },
+    {
+      "id": 3494,
+      "title": "Thaïlande : les vrais arbitrages budgétaires que personne ne te montre",
+      "url": "https://flashvoyage.com/thailande-les-vrais-arbitrages-budgetaires-que-personne-ne-te-montre/",
+      "slug": "thailande-les-vrais-arbitrages-budgetaires-que-personne-ne-te-montre",
+      "excerpt": "Thaïlande : les vrais arbitrages budgétaires que personne ne te montre Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 23 contributions sur r/solotravel. Sources vérifiées, enri",
+      "content": "Thaïlande : les vrais arbitrages budgétaires que personne ne te montre\n\n\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 23 contributions sur r/solotravel. Sources vérifiées, enrichies par nos données temps réel.\n\n La réalité du terrain est bien différente des guides classiques. Une fois là-bas, tu devras réserver chaque vol suivant à la semaine, au prix fort, sans visibilité sur tes trois prochains mois. La flexibilité a un coût invisible.\nEntre les billets à prix variab",
+      "categories": [
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "tags": [
+        {
+          "id": 75,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "date": "2026-03-15T15:47:52",
+      "modified": "2026-03-15T15:47:52",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773589664834.jpg"
+    },
+    {
+      "id": 3490,
+      "title": "Japon en solo à 23 ans : pourquoi 18 jours c&#8217;est trop (ou pas assez)",
+      "url": "https://flashvoyage.com/japon-en-solo-a-23-ans-pourquoi-18-jours-cest-trop-ou-pas-assez/",
+      "slug": "japon-en-solo-a-23-ans-pourquoi-18-jours-cest-trop-ou-pas-assez",
+      "excerpt": "Japon en solo à 23 ans : pourquoi 18 jours c&#8217;est trop (ou pas assez) Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 30 contributions sur r/solotravel. Sources vérifiées, ",
+      "content": "Japon en solo à 23 ans : pourquoi 18 jours c&#8217;est trop (ou pas assez)\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 30 contributions sur r/solotravel. Sources vérifiées, enrichies par nos données temps réel.\n\nLa vérité, c&#8217;est que la plupart des voyageurs passent à côté de l&#8217;essentiel. Tu fixes ton écran, le doigt suspendu au-dessus du bouton .\n1 300 euros pour le vol, plus 3 à 4 000 euros sur place — dix-huit jours à traverser le Japon en solo, sans fil",
+      "categories": [
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
+        }
+      ],
+      "tags": [
+        {
+          "id": 76,
+          "name": "Japon",
+          "slug": "japon"
+        }
+      ],
+      "date": "2026-03-15T11:35:31",
+      "modified": "2026-03-15T11:38:19",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773574525973.jpg"
+    },
+    {
+      "id": 3487,
+      "title": "Japon seul à 19 ans : 4 pièges que les blogs voyage cachent",
+      "url": "https://flashvoyage.com/japon-seul-a-19-ans-4-pieges-que-les-blogs-voyage-cachent/",
+      "slug": "japon-seul-a-19-ans-4-pieges-que-les-blogs-voyage-cachent",
+      "excerpt": "Japon seul à 19 ans : 4 pièges que les blogs voyage cachent Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 21 contributions sur r/solotravel. Sources vérifiées, enrichies par n",
+      "content": "Japon seul à 19 ans : 4 pièges que les blogs voyage cachent\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 21 contributions sur r/solotravel. Sources vérifiées, enrichies par nos données temps réel.\n\nCe que personne ne te dit avant de partir : Tu fermes ton navigateur après avoir cliqué « confirmer la réservation »: vol aller-retour pour Tokyo, auberges réservées de mars à avril, itinéraire épinglé sur Google Maps.\nÀ 19 ans, depuis ton appartement canadien, tu viens de t",
+      "categories": [
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
+        }
+      ],
+      "tags": [
+        {
+          "id": 76,
+          "name": "Japon",
+          "slug": "japon"
+        }
+      ],
+      "date": "2026-03-15T11:26:43",
+      "modified": "2026-03-15T11:26:43",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773573992859.jpg"
+    },
+    {
+      "id": 3484,
+      "title": "Thaïlande : 3 risques cachés que les blogs voyage oublient de mentionner",
+      "url": "https://flashvoyage.com/thailande-3-risques-caches-que-les-blogs-voyage-oublient-de-mentionner/",
+      "slug": "thailande-3-risques-caches-que-les-blogs-voyage-oublient-de-mentionner",
+      "excerpt": "Thaïlande : 3 risques cachés que les blogs voyage oublient de mentionner Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 15 contributions sur r/digitalnomad. Sources vérifiées, ",
+      "content": "Thaïlande : 3 risques cachés que les blogs voyage oublient de mentionner\n\n\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 15 contributions sur r/digitalnomad. Sources vérifiées, enrichies par nos données temps réel.\n\n Ce que personne ne te dit avant de partir : Tu fermes ton laptop dans ton petit appartement de Shoreditch, tu respires un coup, et tu cliques sur « Envoyer ».\n\nLe message est parti: dans un mois, tu seras à Bangkok.\n\nVingt-cinq ans, une première startupécho",
+      "categories": [
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "tags": [
+        {
+          "id": 75,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "date": "2026-03-15T11:18:29",
+      "modified": "2026-03-15T11:18:29",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773573500937.jpg"
+    },
+    {
+      "id": 3425,
+      "title": "Corée du Sud en solo : l&#8217;itinéraire qu&#8217;on te cache (et ses vrais compromis)",
+      "url": "https://flashvoyage.com/coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis/",
+      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+      "excerpt": "Corée du Sud en solo : l&#8217;itinéraire qu&#8217;on te cache (et ses vrais compromis) Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 30 contributions sur r/solotravel. Source",
+      "content": "Corée du Sud en solo : l&#8217;itinéraire qu&#8217;on te cache (et ses vrais compromis)\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 30 contributions sur r/solotravel. Sources vérifiées, enrichies par nos données temps réel.\n\nImagine arriver sur place sans avoir prévu ce détail. Tu fermes ton sac à dos de 40 litres, tu jettes un œil à ton billet d&#8217;avion pour Bangkok, et soudain la question t&#8217;arrête net: à 40 ans, as-tu vraiment ta place dans un dortoir de 8",
+      "categories": [
+        {
+          "id": 63,
+          "name": "Corée du Sud",
+          "slug": "coree-du-sud"
+        }
+      ],
+      "tags": [
+        {
+          "id": 183,
+          "name": "Corée du Sud",
+          "slug": "coree-du-sud"
+        }
+      ],
+      "date": "2026-03-14T20:55:07",
+      "modified": "2026-03-14T20:58:35",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773521701551.jpg"
+    },
+    {
+      "id": 3410,
+      "title": "Laos solo : 2 risques que les blogs voyage cachent aux femmes seules",
+      "url": "https://flashvoyage.com/laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules/",
+      "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
+      "excerpt": "Laos solo : 2 risques que les blogs voyage cachent aux femmes seules Flash Voyage | Rédaction Basé sur un témoignage réel et les retours de 18 contributions sur r/solotravel. Sources vérifiées, enrich",
+      "content": "Laos solo : 2 risques que les blogs voyage cachent aux femmes seules\n\nFlash Voyage | Rédaction\nBasé sur un témoignage réel et les retours de 18 contributions sur r/solotravel. Sources vérifiées, enrichies par nos données temps réel.\n\nImagine arriver sur place sans avoir prévu ce détail. Tu fermes ton navigateur après avoir scrollé trois heures sur les blogs voyage: Laos, c&#8217;est le paradis du routard, les prix sont imbattables, l&#8217;atmosphère est zen.\nPuis tu ouvres Reddit.\nTu es une voy",
+      "categories": [
+        {
+          "id": 138,
+          "name": "Digital Nomades Asie",
+          "slug": "digital-nomades-asie"
+        }
+      ],
+      "tags": [
+        {
+          "id": 193,
+          "name": "laos",
+          "slug": "laos"
+        }
+      ],
+      "date": "2026-03-14T19:48:33",
+      "modified": "2026-03-14T20:58:36",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773517704688.jpg"
+    },
     {
       "id": 3264,
       "title": "Voyager 2 semaines en Thaïlande : arbitrer entre Bangkok, Chiang Mai et Krabi sans sacrifier l&#8217;authenticité",
@@ -268,14 +593,19 @@
       "content": "La chaleur moite de Bangkok enveloppe tes épaules alors que tu marches dans une ruelle animée, un sac à dos bien ajusté.\nChaque mouvement est un rappel du choix que tu dois faire: investir dans un vaccin coûteux ou risquer une rencontre imprévue avec un animal malade.\nVoyager à travers la Thaïlande, le Laos, le Cambodge, le Vietnam et l&#8217; Indonésie est un rêve pour beaucoup.\nCependant, chaque choix d&#8217; itinéraire implique un renoncement.\nTe priveras-tu d&#8217; une expérience unique po",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 142,
+          "name": "Santé &amp; Assurance",
+          "slug": "sante-assurance"
+        },
+        {
+          "id": 187,
+          "name": "Vie de Nomade",
+          "slug": "vie-de-nomade"
         }
       ],
       "tags": [],
       "date": "2026-03-04T22:15:31",
-      "modified": "2026-03-04T22:15:44",
+      "modified": "2026-03-14T15:54:24",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3182.jpg"
     },
     {
@@ -287,14 +617,19 @@
       "content": "Bangkok, une métropole vibrante, ou Chiang Mai, un havre de paix culturel ?\nChoisir entre ces deux destinations en Thaïlande implique bien plus que de simples préférences personnelles.\nChaque décision peut transformer ton expérience de voyage, te faisant osciller entre le tumulte urbain et la sérénité montagnarde.\nPour les nomades numériques, ces choix déterminent non seulement leur qualité de vie, mais aussi les opportunités de travail et de loisirs. Comme le souligne un voyageur, « penser à es",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        },
+        {
+          "id": 187,
+          "name": "Vie de Nomade",
+          "slug": "vie-de-nomade"
         }
       ],
       "tags": [],
       "date": "2026-03-04T22:05:07",
-      "modified": "2026-03-04T22:05:17",
+      "modified": "2026-03-14T15:50:27",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3174.jpg"
     },
     {
@@ -306,14 +641,19 @@
       "content": "En arrivant en Thaïlande, chaque décision financière devient un arbitrage délicat entre confort et prolongation de séjour. Pour ceux qui espèrent vivre avec ~460 euros par mois, l&#8217;optimisation des dépenses est essentielle. Pour t&#8217;aider à planifier ton voyage, découvre nos tours en Thaïlande. Après avoir vécu aux Philippines, un voyageur témoigne : « Je suis certain de pouvoir vivre confortablement avec ~460 euros par mois aux Philippines. » Cette déclaration met en lumière le défi qu",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
         }
       ],
       "tags": [],
       "date": "2026-03-04T21:38:37",
-      "modified": "2026-03-04T21:38:48",
+      "modified": "2026-03-14T15:50:28",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3167.jpg"
     },
     {
@@ -325,14 +665,19 @@
       "content": "Avec un revenu mensuel compris entre 10 000 et 14 000 euros, le rêve de s&#8217; installer en Asie du Sud-Est semble à portée de main.\nCependant, chaque choix logistique, qu&#8217; il s&#8217; agisse de retirer de l&#8217; argent ou de payer par carte, peut devenir un arbitrage crucial entre confort et coût de la vie.\nPour un expatrié habitué aux dépenses américaines, comprendre les subtilités financières d&#8217; une vie en Thaïlande ou au Vietnam est essentiel.\nOptimiser son budget en Thaïland",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 187,
+          "name": "Vie de Nomade",
+          "slug": "vie-de-nomade"
         }
       ],
       "tags": [],
       "date": "2026-03-04T21:19:08",
-      "modified": "2026-03-04T21:19:19",
+      "modified": "2026-03-14T15:54:25",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3159.jpg"
     },
     {
@@ -344,14 +689,19 @@
       "content": "Dans les rues animées de Bangkok, un dilemme se dessine pour les travailleurs à distance : comment optimiser sa présence en Thaïlande sans se heurter aux complexités fiscales ? Chaque choix semble raisonnable, mais cache des implications légales et financières importantes.\nL&#8217; auteur, travaillant pour une entreprise allemande, se heurte à une question cruciale : « Quel est l&#8217; impact sur les impôts, la sécurité sociale et l&#8217; assurance santé ? »\nComment arbitrer : Les défis fiscau",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        },
+        {
+          "id": 139,
+          "name": "Visa &amp; Formalités",
+          "slug": "visa-formalites-digital-nomades-asie"
         }
       ],
       "tags": [],
       "date": "2026-03-04T20:46:34",
-      "modified": "2026-03-04T20:55:06",
+      "modified": "2026-03-14T15:50:29",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3150.jpg"
     },
     {
@@ -363,14 +713,19 @@
       "content": "Le Japon, pays aux mille contrastes, se révèleêtre un terrain de jeu fascinant pour les nomades numériques.\nChaque choix de destination et de café peut sembler anodin, mais il cache souvent des implications logistiques qui peuvent transformer un séjour en un véritable casse-tête.\nMais comment optimiser son itinéraire sans sacrifier son confort? Un voyageur expérimenté raconte : « Le Japon est facile à aimer mais difficile à improviser. Trop de quartiers, trop d&#8217; options. »Comment arbitrer ",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
+        },
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
         }
       ],
       "tags": [],
       "date": "2026-03-04T20:24:48",
-      "modified": "2026-03-04T20:42:35",
+      "modified": "2026-03-14T15:51:02",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3131.jpg"
     },
     {
@@ -382,14 +737,19 @@
       "content": "Sur l&#8217; île de Koh Lanta, chaque dépense se transforme en un arbitrage complexe entre confort et optimisation.\nPour ceux qui envisagent de s&#8217; y installer, il ne s&#8217; agit pas seulement de budgétiser les coûts de l&#8217; hébergement, mais aussi de comprendre les subtilités de la vie insulaire.\nAvec un budget mensuel de quelques euros alloué pour le quotidien, chaque choix logistique devient critique. « Nous avons passé beaucoup de temps en Thaïlande, mais nous n&#8217; avons jamai",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
         }
       ],
       "tags": [],
       "date": "2026-03-04T20:13:35",
-      "modified": "2026-03-04T20:42:36",
+      "modified": "2026-03-14T15:50:30",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3122.jpg"
     },
     {
@@ -401,14 +761,19 @@
       "content": "Chaque décision prise à Bali peut transformer ton rêve de voyage en un cauchemar financier.\nAvec un budget mensuel de ~1quelques euros, tu découvres rapidement que chaque choix, du logement à la nourriture, doit être un arbitrage entre confort et durée de séjour. Un voyageur avertit: « Les chiffres ne justifient plus le prix, Bali c&#8217; est juste pour le&#8217; vibe&#8217; maintenant.\n» En effet, le coût de la vie à Bali dépasse celui de bien d&#8217; autres destinations populaires comme Chia",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 182,
+          "name": "Indonésie",
+          "slug": "indonesie"
         }
       ],
       "tags": [],
       "date": "2026-03-04T20:07:23",
-      "modified": "2026-03-04T20:42:36",
+      "modified": "2026-03-14T15:50:46",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3115.jpg"
     },
     {
@@ -420,14 +785,19 @@
       "content": "Dans le tumulte vibrant de Hô-Chi-Minh-Ville, un freelance en marketing entreprend un voyage administratif : obtenir le visa de nomade digital pour la Thaïlande.\nLes choix logistiques peuvent sembler simples, mais chaque décision entraîne son lot de renoncements et de cons équences cachées.\nChoisir entre confort et efficacité, le voyageur doit naviguer dans un processus en ligne complexe mais structuré, tout en équilibrant son temps et ses ressources.Comment arbitrer: Les défis du visa numérique",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 187,
+          "name": "Vie de Nomade",
+          "slug": "vie-de-nomade"
+        },
+        {
+          "id": 139,
+          "name": "Visa &amp; Formalités",
+          "slug": "visa-formalites-digital-nomades-asie"
         }
       ],
       "tags": [],
       "date": "2026-03-04T19:51:24",
-      "modified": "2026-03-04T20:42:37",
+      "modified": "2026-03-14T15:54:27",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3107.jpg"
     },
     {
@@ -439,14 +809,19 @@
       "content": "Envisager un voyage en Indonésie, c’est s’ouvrir à une multitude de choix.\nChaque île présente ses propres richesses et défis, et l&#8217; arbitrage entre ce qui est essentiel et ce qui peut être sacrifié est crucial pour optimiser ton séjour. La question qui hante de nombreux voyageurs est de savoir si Bali, souvent comparée à Ibiza ou Koh Phi Phi pour son ambiance festive, peut convenir à ceux qui recherchent avant tout la nature et la culture.\nBali: entre paradis instagrammable et réalité bud",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 182,
+          "name": "Indonésie",
+          "slug": "indonesie"
+        },
+        {
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
         }
       ],
       "tags": [],
       "date": "2026-03-04T19:28:11",
-      "modified": "2026-03-04T20:42:38",
+      "modified": "2026-03-14T15:50:46",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3099.jpg"
     },
     {
@@ -458,14 +833,19 @@
       "content": "Décider de son itinéraire en Asie du Sud-Est peut être un véritable casse-tête, surtout lorsque l&#8217; on souhaite sortir des sentiers battus.\nEntre la nature sauvage, la culture riche et les villes animées, chaque choix implique un arbitrage qui peut affecter le confort et l&#8217; expérience globale du voyage.\nLes voyageurs expérimentés cherchent souvent à éviter le « banana pancake trail » typique pour découvrir des endroits moins fréquentés, mais cela nécessite de faire des choix logistiqu",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 1,
+          "name": "Destinations",
+          "slug": "destinations-asie"
+        },
+        {
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
         }
       ],
       "tags": [],
       "date": "2026-03-04T19:08:20",
-      "modified": "2026-03-04T20:43:44",
+      "modified": "2026-03-14T15:54:28",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3090.jpg"
     },
     {
@@ -477,14 +857,19 @@
       "content": "Prendre une décision sur l&#8217; endroit où séjourner à Bali peut sembler anodin, mais chaque choix cache un renoncement.\nEntre les plages animées de Kuta et les retraites paisibles d&#8217; Ubud, il faut arbitrer entre des expériences qui semblent toutes indispensables.\n« Je veux me détendre mais aussi vivre des aventures », explique un voyageur de 25 ans qui souhaite tirer le meilleur parti de ses trois semaines à Bali.\nEn planifiant un séjour en Indonésie, les voyageurs se retrouvent souvent",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 182,
+          "name": "Indonésie",
+          "slug": "indonesie"
+        },
+        {
+          "id": 140,
+          "name": "Logement &amp; Coliving",
+          "slug": "logement-coliving"
         }
       ],
       "tags": [],
       "date": "2026-03-04T19:02:54",
-      "modified": "2026-03-04T20:42:39",
+      "modified": "2026-03-14T15:50:47",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3082.jpg"
     },
     {
@@ -496,14 +881,24 @@
       "content": "Planifier un voyage en Indonésie nécessite une attention particulière aux détails logistiques, souvent négligés par les guides traditionnels. Entre les choix de transport et les itinéraires variés, chaque décision peut avoir un impact significatif sur l&#8217; expérience globale.Les choix logistiques cruciaux lors de ton séjour en Indonésie  Améliorations de l&#8217; itinéraire des Dolomites Améliorations de l&#8217; itinéraire des Dolomites Bonjour à tous, je cherche des suggestions, des retour",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 182,
+          "name": "Indonésie",
+          "slug": "indonesie"
+        },
+        {
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
         }
       ],
       "tags": [],
       "date": "2026-03-04T18:58:43",
-      "modified": "2026-03-04T20:42:39",
+      "modified": "2026-03-14T15:50:48",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3074.jpg"
     },
     {
@@ -515,14 +910,19 @@
       "content": "Chaque choix d&#8217; itinéraire vers Galway en Irlande implique un renoncement.\nDécider ce qu&#8217; il faut garder et ce qu&#8217; il faut sacrifier oblige à arbitrer entre des expériences qui semblent toutes indispensables.\nDans le cadre d&#8217; un voyage père-fils prévu pour juillet 2026, ces dilemmes prennent une dimension émotionnelle et logistique unique.\nAlors que certains voyageurs optent pour des itinéraires linéaires sans se poser de questions, d&#8217; autres, comme cet auteur, cher",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 1,
+          "name": "Destinations",
+          "slug": "destinations-asie"
+        },
+        {
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
         }
       ],
       "tags": [],
       "date": "2026-03-04T18:50:49",
-      "modified": "2026-03-04T20:42:40",
+      "modified": "2026-03-14T15:55:16",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3065.jpg"
     },
     {
@@ -534,14 +934,19 @@
       "content": "Une fois sorti de l&#8217; aéroport, tu te rends vite compte que chaque décision que tu prends ici peut transformer ton voyage. Quand tu te retrouves face à un dilemme logistique, savoir quoi sacrifier et quoi privilégier pour profiter au mieux de ton séjour.Planification des Vols vers la destination: Comment Éviter les Mauvaises Surprises\n\nPoints clés de ce témoignage\nDécider entre différentes étapes vers la destination implique des choix difficiles. Voici comment optimiser ton itinéraire.\n   P",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 1,
+          "name": "Destinations",
+          "slug": "destinations-asie"
+        },
+        {
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
         }
       ],
       "tags": [],
       "date": "2026-03-04T18:22:05",
-      "modified": "2026-03-04T20:42:41",
+      "modified": "2026-03-14T15:55:19",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3056.jpg"
     },
     {
@@ -553,14 +958,19 @@
       "content": "Dans l&#8217;effervescence de Hong Kong, les lumières scintillent, promettant des nuits de découvertes inoubliables. Mais entre cette ville vibrante et la sérénité de Tokyo, se pose la question cruciale : quelle destination choisir pour enrichir ce voyage en Asie ?Chaque décision d&#8217;itinéraire en Asie de l&#8217;Est oblige à arbitrer entre des expériences uniques et des moments mémorables. Comment choisir entre la modernité de Shanghai, la culture de Séoul et le charme de Taipei ?Comment ar",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
+        },
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
         }
       ],
       "tags": [],
       "date": "2026-03-04T18:10:01",
-      "modified": "2026-03-04T18:10:14",
+      "modified": "2026-03-14T15:55:20",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3048.jpg"
     },
     {
@@ -572,14 +982,19 @@
       "content": "Préparer un voyage au Japon, c&#8217;est jongler entre des désirs multiples et un temps limité.Chaque décision concernant les visites à Tokyo ou les excursions vers le mont Fuji peut faire la différence entre un séjour réussi et un parcours frustrant.Pour un couple souhaitant profiter pleinement de la nature, de l&#8217;art et de la culture japonaise, chaque étape de l&#8217;itinéraire doit être soigneusement pesée.Comme l&#8217;exprime un voyageur : « Nous aimerions explorer les lieux proches, ",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
+        },
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
         }
       ],
       "tags": [],
       "date": "2026-03-04T17:49:53",
-      "modified": "2026-03-04T17:50:03",
+      "modified": "2026-03-14T15:55:21",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3040.jpg"
     },
     {
@@ -591,14 +1006,19 @@
       "content": "Dans le tumulte vibrant de Tokyo, chaque coin de rue semble offrir une expérience irremplaçable.\nCependant, voyager au Japon implique des choix logistiques cruciaux, surtout avec un itinéraire chargé de 17 jours couvrant Tokyo, Kamakura, Fuji, Kyoto et Osaka.\nL&#8217;arbitrage est inévitable : que sacrifier pour optimiser ce périple sans perdre l&#8217;essence même de ces destinations mythiques ?\nÀ chaque étape, des décisions doivent être prises.\nFaut-il passer plus de tempsà explorer les rues d",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
+        },
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
         }
       ],
       "tags": [],
       "date": "2026-03-04T17:44:30",
-      "modified": "2026-03-04T17:44:41",
+      "modified": "2026-03-14T15:55:22",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3032.jpg"
     },
     {
@@ -610,14 +1030,19 @@
       "content": "Dans les rues animées de Da Nang, un dilemme logistique se profile pour les voyageurs. Pour ceux qui, comme moi, ont fait face à des erreurs de visa, chaque décision prise lors de la préparation du voyage peut influencer le déroulement de ton séjour au Vietnam.\nLe 4 mars, je me suis retrouvé à l&#8217;immigration, face à une situation complexe : « Overstayed visa in Vietnam », un problème qui aurait puêtre évité avec une vérification minutieuse. Ce n&#8217;était pas le résultat que j&#8217;espér",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 59,
+          "name": "Vietnam",
+          "slug": "vietnam"
+        },
+        {
+          "id": 139,
+          "name": "Visa &amp; Formalités",
+          "slug": "visa-formalites-digital-nomades-asie"
         }
       ],
       "tags": [],
       "date": "2026-03-04T17:05:45",
-      "modified": "2026-03-04T17:06:02",
+      "modified": "2026-03-14T15:55:23",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3024.jpg"
     },
     {
@@ -629,14 +1054,19 @@
       "content": "Le soleil tape fort sur Nusa Penida alors que tu hésites entre traîner une valise à roulettes ou porter un sac à dos léger.\nEntre confort et praticité, comment optimiser ton équipement pour ne rien sacrifier de ce voyage en 2027?\nPour explorer l&#8217;Indonésie, chaque décision d&#8217;itinéraire et de bagage doit être mûrement réfléchie.\nUn voyageur averti note: « Les conseils et recommandations sont les bienvenus, voir ci-dessous pour mon itinéraire, avantages et inconvénients.\nChoisir entre v",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 182,
+          "name": "Indonésie",
+          "slug": "indonesie"
+        },
+        {
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
         }
       ],
       "tags": [],
       "date": "2026-02-23T18:41:03",
-      "modified": "2026-02-23T18:41:21",
+      "modified": "2026-03-14T15:55:24",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-3015.jpg"
     },
     {
@@ -648,14 +1078,19 @@
       "content": "\nPoints clés de ce témoignage\nVietnam, de mai à novembre, voyage solo, budget modeste, défis climatiques en saison des pluies.\n\nL&#8217;air lourd et humide du Vietnam en mai te frappe dès que tu sors de l&#8217;aéroport.\nLe bruit des gouttes de pluie tambourinant sur le toit en tôle d&#8217;un café de rue te rappelle que la saison des pluies ne fait que commencer. On en parle dans Voyager au Vietnam avec 500 € : Comment optimiser chaque dépense.\nDans ce contexte, chaque décision concernant ton i",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
+        },
+        {
+          "id": 59,
+          "name": "Vietnam",
+          "slug": "vietnam"
         }
       ],
       "tags": [],
       "date": "2026-02-23T16:02:19",
-      "modified": "2026-02-23T16:05:08",
+      "modified": "2026-03-14T15:55:26",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-3005.jpg"
     },
     {
@@ -667,14 +1102,19 @@
       "content": "{\"@context\":\"https://schema.org\",\"@type\":\"Article\",\"headline\":\"Choisir son itinéraire au Vietnam: l'art de l'arbitrage logistique\",\"description\":\"\",\"author\":{\"@type\":\"Person\",\"name\":\"FlashVoyage\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"FlashVoyage\",\"url\":\"https://flashvoyage.com\",\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https://flashvoyage.com/wp-content/uploads/flashvoyage-logo. png\"}},\"datePublished\":\"2026-02-23T15:11:38.094Z\",\"dateModified\":\"2026-02-23T15:11:38.094Z\",\"mainEntityOfPage\":{\"@ty",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
+        },
+        {
+          "id": 59,
+          "name": "Vietnam",
+          "slug": "vietnam"
         }
       ],
       "tags": [],
       "date": "2026-02-23T15:16:12",
-      "modified": "2026-02-23T15:16:30",
+      "modified": "2026-03-14T15:51:06",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2997.jpg"
     },
     {
@@ -686,14 +1126,19 @@
       "content": "\nPoints clés de ce témoignage\nDestination : Indonésie. Durée : un mois. Type : aventure culturelle. Difficulté : modérée.\n\nDans les ruelles tortueuses de Bali, le parfum des épices se mêle à l&#8217;odeur de l&#8217;encens brûlé.\nTu traverses les rizières d&#8217;un vertéclatant, le bruit du moteur de ton scooter résonne dans l&#8217;air. On en parle dans Vivre en Indonésie avec 1000 € : les frais cachés à connaître.\nEntre chaque virage, une nouvelle décision t&#8217;attend : quel sentier emprun",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 182,
+          "name": "Indonésie",
+          "slug": "indonesie"
+        },
+        {
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
         }
       ],
       "tags": [],
       "date": "2026-02-23T11:50:39",
-      "modified": "2026-02-23T11:50:54",
+      "modified": "2026-03-14T15:50:49",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2989.jpg"
     },
     {
@@ -705,14 +1150,19 @@
       "content": "\nPoints clés de ce témoignage\nDestinations : Taipei, Kuala Lumpur | Durée : 4-5 jours | Budget : Modeste | Type : Relaxation et culture | Difficulté : Logistique\n\nTu viens de débarquer à l&#8217;aéroport de Hong Kong, l&#8217;air encore chargé des souvenirs de ton voyage en Nouvelle-Zélande.\nEntre la fatigue du voyage et l&#8217;excitation du dépaysement, une question tourne en boucle dans ton esprit : comment tirer le meilleur parti de ces 4-5 jours supplémentaires en la destination avant de re",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 1,
+          "name": "Destinations",
+          "slug": "destinations-asie"
+        },
+        {
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
         }
       ],
       "tags": [],
       "date": "2026-02-23T10:54:23",
-      "modified": "2026-02-23T10:54:40",
+      "modified": "2026-03-14T15:54:34",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2980.jpg"
     },
     {
@@ -724,14 +1174,19 @@
       "content": "\nPoints clés de ce témoignage\nDestination : Japon. Durée : 1 mois. Budget : ~3300 GBP. Type : Voyage sabbatique. Difficulté : Moyenne.\n\nChaque fois que tu te retrouves face à un distributeur automatique au Japon, l&#8217;écran affiche des chiffres qui te semblent abstraits.\nAvec un budget de 3300 GBP pour un mois, chaque transaction devient un arbitrage délicat entre confort et durée de voyage. On en parle dans Voyager au Japon : Quand voir les cerisiers sans la foule.\nPour un voyage qui s&#8217",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
         }
       ],
       "tags": [],
       "date": "2026-02-23T08:29:05",
-      "modified": "2026-02-23T08:29:18",
+      "modified": "2026-03-14T15:51:02",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2967.jpg"
     },
     {
@@ -743,14 +1198,19 @@
       "content": "Entre les lumières scintillantes de Séoul et les rizières verdoyantes du Vietnam, chaque choix d&#8217;itinéraire devient un arbitrage crucial.\nLes voyageurs, souvent piégés par l&#8217;abondance d&#8217;options, se demandent : « Que dois-je absolument garder et qu&#8217;est-ce qui peut être sacrifié ? On en parle dans Vivre en Indonésie avec 1000 € : les frais cachés à connaître. » Dans ce contexte, chaque décision peut coûter une expérience irremplaçable.\nPlanifier un voyage de Séoul à travers",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
+        },
+        {
+          "id": 59,
+          "name": "Vietnam",
+          "slug": "vietnam"
         }
       ],
       "tags": [],
       "date": "2026-02-23T07:59:20",
-      "modified": "2026-02-23T07:59:37",
+      "modified": "2026-03-14T15:51:07",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2959.jpg"
     },
     {
@@ -762,14 +1222,19 @@
       "content": "\nPoints clés de ce témoignage\nVoyage d&#8217;un mois en Indonésie avec un itinéraire incluant Jakarta, Lombok, Gilli, et Labuan Bajo. Concilier détente et visites sans trekking.\n\nLe soleil se lève à Jakarta, et avec lui, les promesses d&#8217;une aventure en Indonésie.\nTu te tiens sur le balcon de ton hôtel, café à la main, contemplant les toits de la ville. On en parle dans Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget.\nChaque choix d&#8217;itinéraire semble un arbitrage entre une",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 182,
+          "name": "Indonésie",
+          "slug": "indonesie"
+        },
+        {
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
         }
       ],
       "tags": [],
       "date": "2026-02-23T07:52:55",
-      "modified": "2026-02-23T07:53:14",
+      "modified": "2026-03-14T15:50:49",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2952.jpg"
     },
     {
@@ -781,14 +1246,19 @@
       "content": "\nPoints clés de ce témoignage\nExplore l&#8217;Asie du Sud-Est en un mois avec 2500 € : Thaïlande, Malaisie, Singapour. Prépare ton budget pour éviter les pièges.\n\nLe bruit des tuk-tuks résonne dans les rues animées de Bangkok alors que tu te faufiles entre les étals de street food, ton sac à dos bien accroché.\nComment éviter les dépenses imprévues tout en profitant au maximum de ton séjour en Asie du Sud-Est? On en parle dans Voyager au Vietnam avec 500 € : Comment optimiser chaque dépense.\nPour",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
         }
       ],
       "tags": [],
       "date": "2026-02-21T10:25:43",
-      "modified": "2026-02-21T10:25:54",
+      "modified": "2026-03-14T15:54:30",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2945.jpg"
     },
     {
@@ -800,14 +1270,19 @@
       "content": "\nPoints clés de ce témoignage\nDestinations principales : Flores, Labuan Bajo, Jakarta, Yogyakarta, Bali. Durée : 14 jours. Budget : Approximatif. Type : Culture et nature. Difficulté : Modérée.\n\nSur le tarmac de Jakarta, l&#8217;air chaud et humide s&#8217;engouffre dans tes poumons.\nTu lances un regard autour de l&#8217;aéroport, excité à l&#8217;idée des deux semaines qui t&#8217;attendent en Indonésie. On en parle dans Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget.\nMais une ques",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 182,
+          "name": "Indonésie",
+          "slug": "indonesie"
+        },
+        {
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
         }
       ],
       "tags": [],
       "date": "2026-02-21T10:15:03",
-      "modified": "2026-02-21T10:15:13",
+      "modified": "2026-03-14T15:50:50",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2938.jpg"
     },
     {
@@ -819,14 +1294,19 @@
       "content": "\nPoints clés de ce témoignage\nDestinations : Tokyo, Japon. Durée : 2 semaines. Type : Itinéraire mixte Japon-Corée du Sud. Difficulté : Choix logistiques complexes.\n\nChaque fois que tu as l&#8217;occasion de revisiter le Japon, c&#8217;est un peu comme déballer un cadeau que tu connais déjà mais qui te réserve encore des surprises.\nL&#8217;air vif de Tokyo au petit matin te pousse à te demander: quelle expérience ne dois-tu absolument pas manquer cette fois-ci. On en parle dans Voyager au Japon ",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
+        },
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
         }
       ],
       "tags": [],
       "date": "2026-02-21T09:41:20",
-      "modified": "2026-02-21T09:41:34",
+      "modified": "2026-03-14T15:51:03",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2931.jpg"
     },
     {
@@ -838,14 +1318,19 @@
       "content": "\nPoints clés de ce témoignage\nDestination : Malaisie. Durée : 2 semaines. Budget : ~quelques euros. Type : Découverte culinaire et culturelle. Difficulté : Moyenne.\n\nLa chaleur moite de Kuala Lumpur t&#8217;enveloppe dès la sortie de l&#8217;aéroport.\nLes étals de Jalan Alor débordent de saveurs, mais chaque ringgit dépensé te rappelle que ton budget est limité. On en parle dans 48 Heures à Singapour : Optimisez Chaque Centime de Votre Budget.\nAvec quelques euros pour deux semaines en Malaisie, ",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 1,
+          "name": "Destinations",
+          "slug": "destinations-asie"
         }
       ],
       "tags": [],
       "date": "2026-02-21T09:23:42",
-      "modified": "2026-02-21T09:23:58",
+      "modified": "2026-03-14T15:54:33",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2924.jpg"
     },
     {
@@ -857,14 +1342,19 @@
       "content": "\nPoints clés de ce témoignage\nJapon, 3 mois, e SIM, connectivité fiable, budget modéré\n\nEntre les néons vibrants de Shibuya et la quiétude des temples de Kyoto, trouver une connexion internet fiable au Japon peut être un défi insoupçonné.\nAvec un budget limité de ~18 euros pour ton e SIM, chaque choix devient un arbitrage crucial entre confort et durée de connexion. On en parle dans Voyager au Japon : Quand voir les cerisiers sans la foule.\n\nVoyager à travers l&#8217;Asie avec une e SIM, c&#8217",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 191,
+          "name": "eSIM &amp; Internet",
+          "slug": "esim-internet"
+        },
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
         }
       ],
       "tags": [],
       "date": "2026-02-20T23:39:39",
-      "modified": "2026-02-20T23:40:24",
+      "modified": "2026-03-14T15:51:04",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2916.jpg"
     },
     {
@@ -876,14 +1366,24 @@
       "content": "\nPoints clés de ce témoignage\nDestination : Hô-Chi-Minh-Ville, Durée : indéterminée, Budget : 50-~110 euros/mois pour le coworking, Type : Nomade numérique, Difficulté : Équilibrer coût et flexibilité.\n\nTu traverses les rues animées de Hô-Chi-Minh-Ville, les klaxons résonnent et l&#8217;odeur des stands de nourriture de rue t&#8217;enveloppe.\n\nComment maximiser ton budget tout en maintenant ta productivité?\nL&#8217;enjeu est de taille: « Meilleurs espaces de coworking à Hô-Chi-Minh-Ville? Tu ret",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 140,
+          "name": "Logement &amp; Coliving",
+          "slug": "logement-coliving"
+        },
+        {
+          "id": 187,
+          "name": "Vie de Nomade",
+          "slug": "vie-de-nomade"
+        },
+        {
+          "id": 59,
+          "name": "Vietnam",
+          "slug": "vietnam"
         }
       ],
       "tags": [],
       "date": "2026-02-18T23:09:07",
-      "modified": "2026-02-18T23:09:36",
+      "modified": "2026-03-14T15:51:08",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2910.jpg"
     },
     {
@@ -895,14 +1395,19 @@
       "content": "\nPoints clés de ce témoignage\nExplore l&#8217;Asie du Sud-Est avec un budget mensuel réaliste. Découvre les visas nomades, les coûts cachés et les vérités que les guides traditionnels ne te disent pas.\n\nChaque fois que tu penses maîtriser ton budget en Asie du Sud-Est, un détail imprévu surgit pour te rappeler la réalité.\nL&#8217;écran de l&#8217;ATM affiche des frais de retrait, ou un agent te parle d&#8217;un visa que tu n&#8217;avais pas prévu. On en parle dans Visa Run en Thaïlande : Secrets",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 187,
+          "name": "Vie de Nomade",
+          "slug": "vie-de-nomade"
         }
       ],
       "tags": [],
       "date": "2026-02-18T22:58:44",
-      "modified": "2026-02-18T22:59:14",
+      "modified": "2026-03-14T15:54:31",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2904.jpg"
     },
     {
@@ -914,14 +1419,24 @@
       "content": "\nPoints clés de ce témoignage\nDestination : Chiang Mai, Thaïlande. Durée : 9 mois. Budget : ~46 euros par mois pour le coworking. Type : Nomade digital. Difficulté : Modérée.\n\nL&#8217;air est humide et chaud en arrivant à Chiang Mai. Les rues sont animées, remplies de scooters et de vendeurs ambulants. Tu sens déjà que la vie ici sera différente. Mais derrière l&#8217;excitation, une question persiste: comment gérer ton budget pour durer?\nPourquoi chaque choix logistique à Chiang Mai est un arbi",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 140,
+          "name": "Logement &amp; Coliving",
+          "slug": "logement-coliving"
+        },
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
         }
       ],
       "tags": [],
       "date": "2026-02-18T22:11:00",
-      "modified": "2026-02-18T22:11:09",
+      "modified": "2026-03-14T15:50:31",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2898.jpg"
     },
     {
@@ -933,14 +1448,19 @@
       "content": "\nPoints clés de ce témoignage\nSingapour en 48 heures : Découvrez comment maximiser votre séjour avec un budget serré. Explorez les jardins, la culture locale et profitez de la nature sans dépasser votre budget.\n\nL&#8217;air chaud et humide de Singapour vous enveloppe dès que vous posez le pied hors de l&#8217;aéroport.\nAvec 48 heures seulement devant toi, chaque minute compte et chaque décision pèse sur ton portefeuille.\nEst-il possible de vivre une expérience riche et mémorable sans exploser to",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 62,
+          "name": "Singapour",
+          "slug": "singapour"
         }
       ],
       "tags": [],
       "date": "2026-02-18T21:52:32",
-      "modified": "2026-02-18T21:53:26",
+      "modified": "2026-03-14T15:51:09",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2888.jpg"
     },
     {
@@ -952,14 +1472,19 @@
       "content": "\nPoints clés de ce témoignage\nIndonésie, 3 mois, 1000 €/mois, nomade digital, complexité moyenne\n\nLe soleil se lève sur les rizières verdoyantes de Bali. Le chant des oiseaux se mêle aux murmures du vent, mais ton esprit est préoccupé. Avec un budget de 1000 € par mois, comment optimiser chaque euro pour vivre pleinement ton expérience en Indonésie ?\nAlors que tu te prépares pour vivre en Indonésie, un choix se pose : Bali ou Lombok ?\nPour en savoir plus, consulte notre article sur Visa Run en T",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 182,
+          "name": "Indonésie",
+          "slug": "indonesie"
         }
       ],
       "tags": [],
       "date": "2026-02-18T21:22:00",
-      "modified": "2026-02-18T21:22:48",
+      "modified": "2026-03-14T15:50:51",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2878.jpg"
     },
     {
@@ -971,14 +1496,19 @@
       "content": "\nPoints clés de ce témoignage\nDestination : Thaïlande. Durée : variable selon le visa. Budget : attention aux coûts cachés. Type : visa run. Difficulté : moyenne, en fonction du choix de la frontière.\n\nDans les rues animées de Bangkok, l&#8217;air est étouffant et les klaxons des tuk-tuks résonnent à chaque coin de rue.\nAvec ton visa de 30 jours bientôt expiré, tu te demandes quelle frontière traverser pour prolonger ton séjour en Thaïlande sans encombre.\n\nUn voyageur explique: « Poipet (Cambodg",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        },
+        {
+          "id": 139,
+          "name": "Visa &amp; Formalités",
+          "slug": "visa-formalites-digital-nomades-asie"
         }
       ],
       "tags": [],
       "date": "2026-02-18T20:46:05",
-      "modified": "2026-02-18T20:46:53",
+      "modified": "2026-03-14T15:50:32",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2867.jpg"
     },
     {
@@ -990,14 +1520,19 @@
       "content": "\nPoints clés de ce témoignage\nJapon, fin avril, budget flexible, éviter les foules, focus sur les cerisiers.\n\nLe soleil se lève à Tokyo, illuminant déjà les premières fleurs de cerisier dans les parcs encore désertés par les touristes.\n\nMais comment éviter les hordes de touristes tout en profitant pleinement de ce spectacle éphémère de la nature ?\nPour de nombreux voyageurs, le défi est d&#8217;équilibrer la découverte des cerisiers en fleurs avec l&#8217;envie d&#8217;éviter les foules étouffan",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
+        },
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
         }
       ],
       "tags": [],
       "date": "2026-02-18T20:08:26",
-      "modified": "2026-02-18T20:09:11",
+      "modified": "2026-03-14T15:51:05",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2857.jpg"
     },
     {
@@ -1009,14 +1544,19 @@
       "content": "\nPoints clés de ce témoignage\nDestination : Japon. Durée : Flexible. Budget : Flexible mais authentique. Type de voyage : Découverte culturelle et nature. Difficulté : Moyenne.\n\nÀ l&#8217;aube, lorsque Tokyo s&#8217;éveille doucement, les pétales de cerisier tombent lentement sur le sol, créant un tapis rose pastel.\nMais alors que la beauté est indéniable, la foule qui se presse pour admirer ce spectacle naturel peut rapidement transformer l&#8217;émerveillement en frustration.\nComment choisir l",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 185,
+          "name": "Itinéraires par pays",
+          "slug": "itineraires-par-pays"
+        },
+        {
+          "id": 61,
+          "name": "Japon",
+          "slug": "japon"
         }
       ],
       "tags": [],
       "date": "2026-02-18T19:22:02",
-      "modified": "2026-02-18T19:22:47",
+      "modified": "2026-03-14T15:51:05",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2847.jpg"
     },
     {
@@ -1028,14 +1568,19 @@
       "content": "\nPoints clés de ce témoignage\nDestination : Vietnam. Durée : 30 jours. Budget : 500 €. Type : Budget serré. Difficulté : Moyenne.\n\nLe moteur du bus vrombit alors que tu quittes Hô-Chi-Minh-Ville, direction Phnom Penh.\nLe trajet de six heures te laisse le temps de réfléchir à ces 500 euros que tu as pour ton mois au Vietnam.\nChaque choix doit être réfléchi, chaque dépense optimisée.\nMais comment faire pour que ton budget ne s&#8217;effondre pas au moindre imprévu?Optimiser les coûts de transport ",
       "categories": [
         {
-          "id": 138,
-          "name": "Digital Nomades Asie",
-          "slug": "digital-nomades-asie"
+          "id": 186,
+          "name": "Coût de la vie",
+          "slug": "cout-de-la-vie"
+        },
+        {
+          "id": 59,
+          "name": "Vietnam",
+          "slug": "vietnam"
         }
       ],
       "tags": [],
       "date": "2026-02-18T18:30:51",
-      "modified": "2026-02-18T18:31:35",
+      "modified": "2026-03-14T15:51:09",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/02/featured-2837.jpg"
     }
   ]

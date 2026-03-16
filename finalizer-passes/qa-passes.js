@@ -1167,7 +1167,8 @@ export function checkInventionGuard(html, pipelineContext, report) {
           'gi'
         );
         const before = cleanedHtml;
-        cleanedHtml = cleanedHtml.replace(numericPattern, 'quelques euros');
+  // BUG FIX: disabled price sanitization
+  // cleanedHtml = cleanedHtml.replace(numericPattern, 'quelques euros');
         if (cleanedHtml !== before) cleanedCount++;
       } else if (issue.type === 'location_claim') {
         // Supprimer la phrase contenant le lieu inventé

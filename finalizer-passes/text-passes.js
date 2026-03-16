@@ -949,8 +949,9 @@ export function applyDeterministicFinalTextCleanup(html) {
   });
 
   // Supprimer les formulations vagues typiques de l'IA
-  out = out.replace(/\bquelques\s+euros\b/gi, 'un coût non négligeable');
-  out = out.replace(/\bplusieurs\s+dizaines\s+d['']euros\b/gi, 'un surcoût significatif');
+  // BUG FIX: disabled price sanitization
+  // out = out.replace(/\bquelques\s+euros\b/gi, 'un coût non négligeable');
+  // out = out.replace(/\bplusieurs\s+dizaines\s+d['']euros\b/gi, 'un surcoût significatif');
   out = out.replace(/\bun\s+budget\s+modeste\b/gi, 'un budget raisonnable');
 
   // Ajouter espaces après ponctuation manquants uniquement dans les noeuds texte

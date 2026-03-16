@@ -623,13 +623,12 @@ function autoFixHtml(html, issues, ctx = {}) {
   }
 
   // Nettoyage des placeholders récurrents qui cassent la qualité.
-  const beforeCleanup = fixed;
-  fixed = fixed
-    .replace(/\b\d+\s*quelques\s+euros\b/gi, 'un budget à préciser')
-    .replace(/\bco[ûu]tent\s*quelques\b/gi, 'coûtent')
-    .replace(/\bun\s+co[ûu]t\s+non\s+n[ée]gligeable\b/gi, 'un coût significatif')
-    .replace(/\b2quelques\b/gi, 'quelques');
-  if (fixed !== beforeCleanup) fixCount++;
+  // fixed = fixed
+  //   .replace(/\b\d+\s*quelques\s+euros\b/gi, 'un budget à préciser')
+  //   .replace(/\bco[ûu]tent\s*quelques\b/gi, 'coûtent')
+  //   .replace(/\bun\s+co[ûu]t\s+non\s+n[ée]gligeable\b/gi, 'un coût significatif')
+  //   .replace(/\b2quelques\b/gi, 'quelques');
+  // if (fixed !== beforeCleanup) fixCount++;
 
   return { html: fixed, fixCount };
 }
