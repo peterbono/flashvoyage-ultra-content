@@ -27,6 +27,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import EnhancedUltraGenerator from './enhanced-ultra-generator.js';
 import { runAllAgents, runCeoValidator } from './review-agents.js';
+import costTracker from './llm-cost-tracker.js';
 import { validatePrePublish } from './pre-publish-validator.js';
 import { applyAllFixes } from './review-auto-fixers.js';
 import { generateWithClaude } from './anthropic-client.js';
@@ -1332,6 +1333,17 @@ async function main() {
   }
 
   console.log(`\n${'═'.repeat(60)}\n`);
+
+  // Cost report (includes generator + review agents)
+  costTracker.printSummary();
+  costTracker.saveToDisk({
+    id: article.wpPostId || null,
+    title: article.title,
+    iteration: iteration,
+    approved: approved,
+    score: lastReviewResult?.weightedScore || 0,
+  });
+
   process.exit(approved ? 0 : 1);
 }
 
