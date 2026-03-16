@@ -46,7 +46,20 @@ export function initVizBridge() {
     return { emit: () => {}, shutdown: () => {} };
   }
 
+  // Heartbeat to keep connections alive through Codespace proxy
+  const heartbeatInterval = setInterval(() => {
+    if (wss) {
+      wss.clients.forEach((client) => {
+        if (client.readyState === 1) client.ping();
+      });
+    }
+  }, 15000);
+
+  wss.on('close', () => clearInterval(heartbeatInterval));
+
   wss.on('connection', (ws) => {
+    ws.isAlive = true;
+    ws.on('pong', () => { ws.isAlive = true; });
     console.log('\u{1f4e1} VIZ-BRIDGE: Client connected');
 
     // Send current run state on connect so late joiners get context
@@ -119,6 +132,7 @@ function emitEvent(event) {
   }
 
   // Broadcast to all connected clients
+  console.log(`📡 VIZ-EMIT: ${event.type} agent=${event.agent || "null"} clients=${wss ? wss.clients.size : 0}`);
   if (wss) {
     const payload = JSON.stringify(event);
     wss.clients.forEach((client) => {
