@@ -231,8 +231,10 @@ function detectDeterministicIssues(ctx) {
   if (images.length > 0) bonuses.ux += 2;
   // Check for broken encoding
   const encodingIssues = (text.match(/\b[a-z]\s[A-Z][a-z]{2,}/g) || []).length;
-  if (encodingIssues > 3) {
-    issues.ux.push({ severity: 'minor', category: 'encodage', description: `${encodingIssues} artefact(s) d'encodage`, fix_suggestion: 'Corriger espaces parasites', location: 'global' });
+  if (encodingIssues > 15) {
+    issues.ux.push({ severity: 'major', category: 'encodage', description: `${encodingIssues} artefact(s) d'encodage`, fix_suggestion: 'Corriger espaces parasites', location: 'global' });
+  } else if (encodingIssues > 5) {
+    issues.ux.push({ severity: 'minor', category: 'encodage', description: `${encodingIssues} artefact(s) d'encodage mineurs`, fix_suggestion: 'Corriger espaces parasites', location: 'global' });
   } else {
     bonuses.ux += 2; // clean encoding
   }
