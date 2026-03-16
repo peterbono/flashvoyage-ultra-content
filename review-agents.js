@@ -18,7 +18,7 @@ function extractTextFromHtml(html) {
   return parse(html).text.replace(/\s+/g, ' ').trim();
 }
 
-function truncate(str, max = 50000) {
+function truncate(str, max = 15000) {
   if (str.length <= max) return str;
   return str.slice(0, max) + '\n<!-- fin du contenu fourni pour analyse -->';
 }
@@ -97,7 +97,7 @@ function parseAgentJson(raw) {
   }
 }
 
-async function callLlm(systemPrompt, userPrompt, { model = 'claude-3-5-sonnet-20241022', maxTokens = 4096, trackingStep = 'review-agent' } = {}) {
+async function callLlm(systemPrompt, userPrompt, { model = 'claude-haiku-4-5-20251001', maxTokens = 4096, trackingStep = 'review-agent' } = {}) {
   if (model.startsWith('claude') || model.startsWith('claude-haiku')) {
     return generateWithClaude(systemPrompt, userPrompt, { model, maxTokens, temperature: 0.3, trackingStep });
   }
@@ -128,9 +128,14 @@ const AGENTS = {
 Tu audites un article publié sur flashvoyage.com.
 ${CURRENT_DATE_CTX}
 
+MÉTHODE DE SCORING — Procède en 3 étapes :
+1. Liste 3 POINTS FORTS de l'article (cite un extrait pour chaque)
+2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
+3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
+
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) avec cette structure exacte :
 {
-  "score": <number 0-100>,
+  "score": <number 0-100, ex: 85 si 0 critical, 1 major = 85-8 = 77>,
   "satisfied": true|false,
   "issues": [
     { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "fix_suggestion": "string", "location": "string (titre H2 de la section concernée, ou intro / conclusion)" }
@@ -162,13 +167,7 @@ Critères d'évaluation :
 
 Score >= 90 = PASS, sinon FAIL.
 
-CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
-Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui passe le pre-publish validator DOIT scorer minimum 78/100.
-- Un article avec des problèmes mineurs uniquement = 80-89
-- Un article publiable en l'état = 85-95
-- Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
-- Score < 70 = problèmes MAJEURS multiples (pas juste des améliorations souhaitables)
-NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est publiable, score >= 80.`,
+CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.`,
     buildUserPrompt(ctx) {
       const root = parse(ctx.html || '');
       const h1Node = root.querySelector('h1');
@@ -190,9 +189,14 @@ NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est p
 Tu audites la monétisation d'un article publié sur flashvoyage.com.
 ${CURRENT_DATE_CTX}
 
+MÉTHODE DE SCORING — Procède en 3 étapes :
+1. Liste 3 POINTS FORTS de l'article (cite un extrait pour chaque)
+2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
+3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
+
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
-  "score": <number 0-100>,
+  "score": <number 0-100, ex: 85 si 0 critical, 1 major = 85-8 = 77>,
   "satisfied": true|false,
   "issues": [
     { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "fix_suggestion": "string", "location": "string (titre H2 de la section concernée, ou intro / conclusion)" }
@@ -224,13 +228,7 @@ CALIBRATION: Un article avec 2+ modules affiliés, CTAs contextuels, et disclaim
 
 Score >= 85 = PASS, sinon FAIL.
 
-CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
-Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui passe le pre-publish validator DOIT scorer minimum 78/100.
-- Un article avec des problèmes mineurs uniquement = 80-89
-- Un article publiable en l'état = 85-95
-- Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
-- Score < 70 = problèmes MAJEURS multiples (pas juste des améliorations souhaitables)
-NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est publiable, score >= 80.`,
+CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.`,
     buildUserPrompt(ctx) {
       const root = parse(ctx.html);
       const modules = root.querySelectorAll('aside.affiliate-module, div[data-fv-segment="affiliate"]');
@@ -250,9 +248,14 @@ NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est p
 Tu audites un article généré par IA publié sur flashvoyage.com.
 ${CURRENT_DATE_CTX}
 
+MÉTHODE DE SCORING — Procède en 3 étapes :
+1. Liste 3 POINTS FORTS de l'article (cite un extrait pour chaque)
+2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
+3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
+
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
-  "score": <number 0-100>,
+  "score": <number 0-100, ex: 85 si 0 critical, 1 major = 85-8 = 77>,
   "satisfied": true|false,
   "issues": [
     { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "location": "string (titre H2 de la section concernée, ou intro / conclusion)", "fix_suggestion": "string" }
@@ -284,13 +287,7 @@ Critères impitoyables :
 
 Score >= 85 = PASS, sinon FAIL.
 
-CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
-Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui passe le pre-publish validator DOIT scorer minimum 78/100.
-- Un article avec des problèmes mineurs uniquement = 80-89
-- Un article publiable en l'état = 85-95
-- Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
-- Score < 70 = problèmes MAJEURS multiples (pas juste des améliorations souhaitables)
-NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est publiable, score >= 80.`,
+CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.`,
     buildUserPrompt(ctx) {
       const text = extractTextFromHtml(ctx.html);
       return `TITRE : ${ctx.title}\n\nTEXTE COMPLET :\n${truncate(text)}`;
@@ -306,9 +303,14 @@ Tu audites un article publié sur un site WordPress de voyage.
 ${CURRENT_DATE_CTX}
 IMPORTANT : Le HTML que tu reçois peut être tronqué pour des raisons de taille. Si tu vois "fin du contenu fourni pour analyse", ce n'est PAS un bug de l'article — c'est simplement la limite du texte fourni. NE RAPPORTE PAS cela comme une issue.
 
+MÉTHODE DE SCORING — Procède en 3 étapes :
+1. Liste 3 POINTS FORTS de l'article (cite un extrait pour chaque)
+2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
+3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
+
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
-  "score": <number 0-100>,
+  "score": <number 0-100, ex: 85 si 0 critical, 1 major = 85-8 = 77>,
   "satisfied": true|false,
   "issues": [
     { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "location": "string (titre H2 de la section concernée, ou intro / conclusion)", "fix_type": "auto"|"llm"|"manual" }
@@ -345,13 +347,7 @@ fix_type :
 
 Score >= 85 = PASS, sinon FAIL. Un seul bug CRITICAL = FAIL automatique.
 
-CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
-Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui passe le pre-publish validator DOIT scorer minimum 78/100.
-- Un article avec des problèmes mineurs uniquement = 80-89
-- Un article publiable en l'état = 85-95
-- Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
-- Score < 70 = problèmes MAJEURS multiples (pas juste des améliorations souhaitables)
-NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est publiable, score >= 80.`,
+CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.`,
     buildUserPrompt(ctx) {
       const root = parse(ctx.html);
       const images = root.querySelectorAll('img').map(img => ({
@@ -376,9 +372,14 @@ NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est p
 Tu vérifies l'intégrité factuelle d'un article publié sur flashvoyage.com.
 ${CURRENT_DATE_CTX}
 
+MÉTHODE DE SCORING — Procède en 3 étapes :
+1. Liste 3 POINTS FORTS de l'article (cite un extrait pour chaque)
+2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
+3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
+
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
-  "score": <number 0-100>,
+  "score": <number 0-100, ex: 85 si 0 critical, 1 major = 85-8 = 77>,
   "satisfied": true|false,
   "issues": [
     { "severity": "critical"|"major"|"minor", "category": "string", "description": "string", "location": "string (titre H2 de la section concernée, ou intro / conclusion)", "fix_suggestion": "string" }
@@ -409,13 +410,7 @@ Critères :
 
 Score >= 90 = PASS, sinon FAIL.
 
-CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
-Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui passe le pre-publish validator DOIT scorer minimum 78/100.
-- Un article avec des problèmes mineurs uniquement = 80-89
-- Un article publiable en l'état = 85-95
-- Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
-- Score < 70 = problèmes MAJEURS multiples (pas juste des améliorations souhaitables)
-NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est publiable, score >= 80.`,
+CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.`,
     buildUserPrompt(ctx) {
       const text = extractTextFromHtml(ctx.html);
       return `TITRE : ${ctx.title}\nDATE PUBLICATION : ${ctx.date || 'inconnue'}\nDESTINATION : ${ctx.destination || 'inconnue'}\n\nTEXTE COMPLET :\n${truncate(text)}`;
