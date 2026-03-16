@@ -1879,11 +1879,26 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 - ✅ Chaque CTA décrit l'action concrète du lecteur. Exemple : «Compare les vols vers Bangkok», «Trouve ton assurance voyage», «Réserve ta première nuit à Chiang Mai».
 - Les CTAs doivent décrire l'action réelle ("Compare les vols vers Bangkok", "Trouve ton assurance voyage") — jamais un placeholder technique.
 
+🔗 TRANSITIONS BLOCS PARTENAIRES/CTA (OBLIGATOIRE) :
+- Chaque bloc partenaire/CTA DOIT être précédé d'une phrase de transition naturelle qui fait le lien avec le paragraphe précédent.
+- ❌ INTERDIT : un bloc CTA qui tombe du ciel sans contexte. Pas de rupture narrative.
+- ✅ Exemple : "Avant de partir, compare les prix des vols : les tarifs varient énormément selon la saison." [bloc partenaire]
+- ✅ Exemple : "Pour éviter ce surcoût, le plus simple reste d'ouvrir un compte Wise avant le départ." [bloc partenaire]
+- ✅ Exemple : "Si tu veux verrouiller un bon tarif, voici où chercher en priorité." [bloc partenaire]
+- La transition DOIT mentionner le BÉNÉFICE pour le lecteur, pas juste annoncer un lien.
+- ❌ INTERDIT : "Voici un lien utile :", "Découvrez notre partenaire :", "Cliquez ici :".
+- 🎯 COHÉRENCE GÉOGRAPHIQUE : Les blocs partenaires DOIVENT correspondre à la destination de l'article. ❌ INTERDIT : un widget Amsterdam dans un article Vietnam. ❌ INTERDIT : un CTA "vols vers Tokyo" dans un article sur Bali. Chaque CTA doit référencer la bonne destination.
+
 💶 CONVERSION MONÉTAIRE OBLIGATOIRE :
 - ✅ Tous les montants apparaissent en euros (EUR) uniquement. Convertis toute source USD avec taux ~0.92. Exemple : source «$1200/month» → article «~1 100 €/mois».
 - Si la source donne un montant en USD, convertir avec taux ~0.92 et afficher UNIQUEMENT en euros.
 - Exemple : « ~920 euros » ou « environ 200 euros ».
 - L'audience est francophone européenne : l'euro est la seule devise à utiliser.
+- TOUJOURS convertir en euros (€). Le public est francophone européen.
+- ❌ INTERDIT : livres sterling (£/GBP), dollars ($) sauf contexte strictement américain (ex: prix d'entrée US). Toute autre devise étrangère doit être convertie.
+- ✅ Si la source dit "250 GBP", écris "environ 290 €". Si la source dit "£150/night", écris "~175 €/nuit".
+- ✅ Si la source dit "5000 THB", convertis en euros (~130 €). Idem pour toute devise asiatique.
+- Le symbole € se place APRÈS le nombre : "290 €", pas "€290".
 
 📊 MOINS WIKIPEDIA, PLUS DÉCISION (OBLIGATOIRE — vérifié automatiquement) :
 - Chaque section DOIT se terminer par une recommandation, un choix, ou un verdict — pas par un résumé neutre.
@@ -1965,16 +1980,53 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 ❌ TIRET CADRATIN INTERDIT : N'utilise JAMAIS le tiret cadratin « — » dans le texte. C'est un tic d'écriture IA immédiatement repérable. Remplace par : une virgule, un point, deux-points, ou reformule. ✅ "Le budget a explosé, et personne ne l'avait prévu." ❌ "Le budget a explosé — et personne ne l'avait prévu."
 RYTHME PARAGRAPHES TPG : Alterne INTENTIONNELLEMENT paragraphes courts et moyens. Pattern obligatoire : 1 paragraphe court (1-2 phrases, punchline ou transition) → 1-2 paragraphes moyens (3-4 phrases, argumentation développée). ❌ INTERDIT : 3 paragraphes courts d'affilée. ❌ INTERDIT : mur de texte de 6+ phrases. ❌ INTERDIT : une seule phrase par <p> sauf punchline intentionnelle. Chaque paragraphe moyen développe, illustre et nuance. Utilise "franchement", "en vrai", "du coup", "genre", "le truc c'est que" (2-3 par section). Ajoute 2-3 digressions sensorielles entre parenthèses : "(le café au 7-Eleven est étrangement correct)", "(spoiler : c'est toujours plus loin que sur Maps)".
 
-3. HOOK EN 3 TEMPS (réf TPG) : Le début de l'article suit un arc en 3 paragraphes : (1) FRICTION — micro-scène sensorielle concrète qui pose le problème (lieu, action, tension). (2) EMPATHIE — tu reconnais que le lecteur vit cette question ("Et c'est exactement le dilemme que des milliers de voyageurs affrontent chaque année"). (3) PROMESSE DE VALEUR — tu annonces ce que l'article apporte ("On a recoupé les retours de 30 voyageurs et expatriés — voici ce que les blogs ignorent"). ❌ INTERDIT de passer directement du hook aux infos sans empathie + promesse.
+3. HOOK EN 3 TEMPS + CONTRAT ÉDITORIAL (réf TPG) : Le début de l'article suit un arc en 4 paragraphes OBLIGATOIRES :
+(1) FRICTION — micro-scène sensorielle concrète qui pose le problème (lieu, action, tension).
+(2) EMPATHIE — tu reconnais que le lecteur vit cette question ("Et c'est exactement le dilemme que des milliers de voyageurs affrontent chaque année").
+(3) PROMESSE DE VALEUR — tu annonces ce que l'article apporte ("On a recoupé les retours de 30 voyageurs et expatriés sur les forums — voici ce que les blogs ignorent").
+(4) 🔒 CONTRAT ÉDITORIAL (OBLIGATOIRE — ne JAMAIS sauter) — Un paragraphe dédié qui explique au lecteur COMMENT cet article a été produit. Ce paragraphe DOIT :
+   - Indiquer le NOMBRE EXACT de témoignages analysés (utilise le count réel des données fournies, ex: "On a recoupé les retours de [N] voyageurs et expatriés sur les forums")
+   - Dire "forums de voyageurs" ou "communautés d'expatriés" (JAMAIS "Reddit")
+   - Promettre ce que le lecteur va obtenir (risques + solutions concrètes)
+   - Exemples OBLIGATOIRES à imiter :
+     ✅ "Ce constat, ce n'est pas nous qui l'inventons. On a recoupé les retours de 30 voyageurs et expatriés sur les forums, ceux qui y vivent vraiment. Voici les 3 risques qu'aucun blog ne mentionne, et surtout, comment les anticiper concrètement."
+     ✅ "Pour cet article, on a épluché [N] témoignages sur les forums de voyageurs et communautés d'expatriés. Le but : extraire les galères réelles, les vrais chiffres, et les solutions qui marchent."
+     ✅ "Ce guide repose sur [N] retours de terrain, recueillis sur les forums francophones et internationaux de voyageurs. Pas de théorie, que du vécu."
+   - ❌ INTERDIT de sauter ce paragraphe. ❌ INTERDIT de le fusionner avec le hook ou l'empathie. C'est un paragraphe DISTINCT.
+❌ INTERDIT de passer directement du hook aux infos sans empathie + promesse + contrat éditorial.
 ❌ INTERDIT de mentionner "Reddit" ou "r/xxx" dans le corps de l'article. Utilise : "forums de voyageurs", "communautés d'expatriés", "témoignages en ligne".
 
 4. TITRE HOOK ÉMOTIONNEL : Le titre provoque une émotion forte (regret, peur, surprise). ❌ INTERDIT les listicles : "X risques que...", "X choses que...", "X erreurs que...". ❌ INTERDIT : "les blogs cachent", "guide complet", "tout savoir". ✅ Patterns : "J'ai [vécu X] à [destination] — [conséquence inattendue]", "[Destination] : le moment où j'ai compris que [révélation]", "Pourquoi personne ne te prévient sur [problème concret] à [destination]".
 
 5. LIENS INTERNES INLINE (pas en bloc) : Les liens internes doivent être tissés DANS les phrases, comme TPG fait. ✅ "les frais cachés du JR Pass peuvent représenter <a href='...'>un vrai piège logistique</a>". ❌ INTERDIT les blocs dédiés type "Pour aller plus loin, Article Title." ou "<p class='internal-link-transition'>". Fréquence : 1 lien interne tous les 100-150 mots, toujours contextuel.
 
-6. CITATIONS INLINE — CONTEXTUALISÉES ET QUANTIFIÉES : intègre 2-5 citations courtes entre guillemets français « ... » depuis les données du témoignage. ✅ CHAQUE citation DOIT être introduite avec un CONTEXTE HUMAIN + QUANTIFICATION. ✅ "Un expatrié installé depuis 3 ans résume ce que 8 autres confirment : « le budget a explosé dès le premier jour »" ✅ "Ce point revient dans 12 témoignages sur 30 : « ... »" ✅ "Une voyageuse qui a vécu 6 mois sur place prévient : « ... »" ❌ INTERDIT : "Un voyageur explique :" seul (trop générique). Varie les verbes : résume, prévient, confirme, nuance, met en garde. ❌ INTERDIT : "Reddit", "r/xxx", "utilisateur Reddit" — toujours "voyageur", "expatriée", "francophone sur place". ✅ Format inline « ... » uniquement (le système gère les blockquotes). ❌ INTERDIT de répéter la même citation 2 fois. Minimum 2 citations uniques pour validation.
+6. CITATIONS INLINE — TOUJOURS QUANTIFIÉES (RÈGLE CRITIQUE) : intègre 2-5 citations courtes entre guillemets français « ... » depuis les données du témoignage.
+🔒 RÈGLE ABSOLUE : CHAQUE citation DOIT être introduite avec un CONTEXTE HUMAIN + une QUANTIFICATION CHIFFRÉE. Pas d'exception.
+✅ EXEMPLES OBLIGATOIRES À IMITER (5 patterns) :
+  1. "Ce point revient dans 8 témoignages sur 30 : « le budget a explosé dès le premier jour »"
+  2. "Un expatrié installé depuis 3 ans résume ce que 12 autres confirment : « on sous-estime toujours les frais de visa »"
+  3. "Une voyageuse qui a vécu 6 mois sur place, et dont l'avis est partagé par 15 autres témoignages : « les arnaques transport sont systématiques »"
+  4. "Parmi les [N] retours analysés, 18 mentionnent exactement ce problème : « les ATM prennent 220 bahts à chaque retrait »"
+  5. "Ce constat revient mot pour mot dans un tiers des témoignages : « personne ne te prévient sur les frais cachés »"
+❌ FORMULATIONS BANNIES (produire l'une d'elles = article rejeté) :
+  ❌ "Un voyageur explique : « ... »" — trop générique, AUCUNE quantification
+  ❌ "Comme le dit un expatrié : « ... »" — zéro contexte chiffré
+  ❌ "Un internaute partage : « ... »" — pas de quantification, pas de profil
+  ❌ "Selon un témoignage : « ... »" — vague, non quantifié
+  ❌ "On peut lire sur les forums : « ... »" — pas de chiffre, pas de profil humain
+✅ Varie les verbes d'introduction : résume, prévient, confirme, nuance, met en garde, alerte, tempère, relativise.
+❌ INTERDIT : "Reddit", "r/xxx", "utilisateur Reddit" — toujours "voyageur", "expatriée", "francophone sur place".
+✅ Format inline « ... » uniquement (le système gère les blockquotes).
+❌ INTERDIT de répéter la même citation 2 fois. Minimum 2 citations uniques pour validation.
 
 7. H2 DÉCISIONNELS (80%+ obligatoire) : chaque H2 pose un arbitrage, une tension ou un choix. ✅ Verbe décisionnel (choisir, éviter, optimiser, sacrifier, risquer) ou connecteur de tension (mais, vs, en revanche, caché, vrai). ✅ Exemples : «Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois», «Chiang Mai vs Bangkok : où ton budget tient le plus longtemps».
+✅ BONUS CURATION : certains H2 peuvent communiquer la méthode de curation pour renforcer la crédibilité. Exemples :
+  - «Ce que 30 voyageurs disent vraiment sur [sujet]»
+  - «Le risque n°1 cité par les expatriés (et ignoré par tous les guides)»
+  - «Pourquoi les retours des forums contredisent les blogs»
+  - «Les 3 pièges que [N] témoignages mentionnent sur [destination]»
+  - «Ce que les expatriés de [destination] répètent depuis 2 ans»
+Ces H2 "curation" renforcent la proposition de valeur unique de FlashVoyage. En utiliser 1-2 par article.
 
 
 9. RAPPELS DE SOURCING (2-3 par article) : Le lecteur qui scanne doit comprendre que cet article synthétise des dizaines de retours réels. Insère 2-3 rappels dans le flux :
@@ -1982,7 +2034,28 @@ RYTHME PARAGRAPHES TPG : Alterne INTENTIONNELLEMENT paragraphes courts et moyens
 ✅ En transition : "Et ce n'est pas un cas isolé.", "On retrouve le même retour chez des voyageurs à [destination]."
 ❌ Le sourcing doit vivre DANS le texte, pas seulement dans le byline que personne ne lit.
 
+📊 ENCARTS DE CRÉDIBILITÉ VISUELS (1-2 par article, OBLIGATOIRE) :
+Insère 1 à 2 encarts de crédibilité dans le CORPS de l'article (pas juste le byline).
+- Le PREMIER encart se place après l'intro (avant le premier H2).
+- Un SECOND encart optionnel peut être placé mi-article (après 40-60% du contenu).
+- Format HTML OBLIGATOIRE :
+<div class='fv-source-anchor' style='margin:1.5rem 0;padding:0.8rem 1rem;background:#f0f7ff;border-left:3px solid #2563eb;border-radius:4px;font-size:0.88rem;color:#4b5563;'>📊 <strong>Synthèse de [N] témoignages</strong> de voyageurs et expatriés | [X] risques identifiés | Sources : forums de voyageurs francophones et internationaux</div>
+- Remplace [N] par le nombre réel de témoignages dans les données. Remplace [X] par le nombre de risques/problèmes identifiés dans l'analyse.
+- ❌ INTERDIT de mentionner Reddit dans cet encart. ✅ "forums de voyageurs", "communautés d'expatriés".
+- Cet encart sert d'ancre visuelle pour le lecteur qui scanne : il voit immédiatement que l'article est basé sur des données réelles.
+
 8. BLOCKQUOTES PROPRES : Les citations Reddit dans les blockquotes doivent être des PHRASES COMPLÈTES en français, pas des fragments. ❌ INTERDIT : mettre des liens internes dans les blockquotes. ❌ INTERDIT : laisser des slugs ou URLs dans le texte des citations. ✅ Chaque blockquote contient UNE citation pertinente, traduite proprement en français.
+
+10. ❌ ZÉRO RÉPÉTITION (RÈGLE ABSOLUE) : Chaque phrase de l'article doit être UNIQUE. Aucune phrase ni aucun paragraphe ne doit être répété, même reformulé.
+- ❌ INTERDIT de répéter la même phrase ou le même paragraphe, même avec des mots légèrement différents.
+- ❌ INTERDIT de réutiliser la même formule d'introduction : si tu as déjà dit "Voici ce que synthétise la communauté", ne le redis pas.
+- ❌ INTERDIT de reprendre le même chiffre + la même citation dans deux sections différentes.
+- ✅ OBLIGATOIRE : avant de rédiger chaque paragraphe, vérifie mentalement que tu n'as pas déjà dit la même chose.
+- ✅ Si tu veux rappeler un point important, reformule-le sous un angle NOUVEAU avec des données DIFFÉRENTES.
+- Exemples de répétitions BANNIES :
+  ❌ Section 1 : "Les frais bancaires grèvent le budget" → Section 3 : "Les frais bancaires pèsent sur le budget" (même idée, paraphrasée)
+  ❌ Intro : "On a analysé 30 témoignages" → Mi-article : "Comme le montrent les 30 témoignages analysés" (redondant)
+  ✅ OK : Intro mentionne 30 témoignages → Mi-article utilise un NOUVEAU chiffre : "18 des témoignages pointent spécifiquement le problème du change"
 
 9. ANCHOR TEXT NATUREL : Le texte des liens internes doit être une phrase naturelle en français. ❌ INTERDIT : "voyager au vietnam avec 500 e comment optimiser chaque depense" (slug brut). ❌ INTERDIT : "Article Title Complet Avec Majuscules". ✅ OBLIGATOIRE : "optimiser son budget au Vietnam", "les vrais coûts du JR Pass" (phrase courte naturelle).
 
