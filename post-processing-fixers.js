@@ -1193,7 +1193,7 @@ export function validateFaqAnswers(html) {
     } else {
       return "";
     }
-    return "<details><summary>" + question + "</summary><p>" + a + "</p></details>";
+    return '<div class="fv-faq-item" style="margin-bottom:0.5rem;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;"><details style="padding:0;"><summary style="padding:1rem 1.2rem;cursor:pointer;font-weight:600;font-size:1rem;background:#f9fafb;list-style:none;display:flex;align-items:center;justify-content:space-between;"><span>' + question + '</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="transition:transform 0.2s;flex-shrink:0;margin-left:0.5rem;"><path d="M5 7.5L10 12.5L15 7.5" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><div style="padding:0 1.2rem 1rem;font-size:0.95rem;line-height:1.6;color:#374151;"><p>' + a + '</p></div></details></div>';
   });
   return out;
 }
@@ -1357,6 +1357,258 @@ export function fixFaqFormatting(html) {
   return out;
 }
 
+
+// ─── CURRENCY CONVERSION (EUR) ─────────────────────────────
+// Converts GBP/USD amounts to EUR in text nodes only (not in hrefs)
+// Rates: 1 GBP ≈ 1.16 EUR, 1 USD ≈ 0.92 EUR
+function roundToNearest5or10(n) {
+  if (n <= 50) return Math.round(n / 5) * 5;
+  return Math.round(n / 10) * 10;
+}
+
+export function convertToEuros(html) {
+  let out = html;
+  let fixCount = 0;
+
+  // Only process text nodes (between > and <)
+  out = out.replace(/(?<=>)([^<]+)(?=<)/g, (match, text) => {
+    let fixed = text;
+
+    // Pattern 1: "250 livres sterling" or "250 livres"
+    fixed = fixed.replace(/(\d[\d.,]*)\s*livres?\s*(?:sterling)?/gi, (m, amount) => {
+      const num = parseFloat(amount.replace(/\s/g, "").replace(",", "."));
+      if (isNaN(num) || num <= 0) return m;
+      const eur = roundToNearest5or10(num * 1.16);
+      fixCount++;
+      return "environ " + eur + " \u20ac";
+    });
+
+    // Pattern 2: "\u00a3250" or "\u00a3 250"
+    fixed = fixed.replace(/\u00a3\s*(\d[\d.,]*)/g, (m, amount) => {
+      const num = parseFloat(amount.replace(/\s/g, "").replace(",", "."));
+      if (isNaN(num) || num <= 0) return m;
+      const eur = roundToNearest5or10(num * 1.16);
+      fixCount++;
+      return "environ " + eur + " \u20ac";
+    });
+
+    // Pattern 3: "$300" or "$ 300" (but not CSS vars)
+    fixed = fixed.replace(/\$\s*(\d[\d.,]*)/g, (m, amount) => {
+      const num = parseFloat(amount.replace(/\s/g, "").replace(",", "."));
+      if (isNaN(num) || num <= 0) return m;
+      const eur = roundToNearest5or10(num * 0.92);
+      fixCount++;
+      return "environ " + eur + " \u20ac";
+    });
+
+    // Pattern 4: "300 USD" or "300 dollars"
+    fixed = fixed.replace(/(\d[\d.,]*)\s*(?:USD|dollars?\s*(?:am\u00e9ricains?)?)/gi, (m, amount) => {
+      const num = parseFloat(amount.replace(/\s/g, "").replace(",", "."));
+      if (isNaN(num) || num <= 0) return m;
+      const eur = roundToNearest5or10(num * 0.92);
+      fixCount++;
+      return "environ " + eur + " \u20ac";
+    });
+
+    // Pattern 5: "300 GBP"
+    fixed = fixed.replace(/(\d[\d.,]*)\s*GBP/gi, (m, amount) => {
+      const num = parseFloat(amount.replace(/\s/g, "").replace(",", "."));
+      if (isNaN(num) || num <= 0) return m;
+      const eur = roundToNearest5or10(num * 1.16);
+      fixCount++;
+      return "environ " + eur + " \u20ac";
+    });
+
+    return fixed;
+  });
+
+  if (fixCount > 0) {
+    console.log("\ud83d\udcb1 CURRENCY_FIXER: " + fixCount + " amount(s) converted to EUR");
+  }
+  return out;
+}
+
+// ─── PARTNER BLOCK DESTINATION MISMATCH ────────────────────
+// Detects partner/CTA blocks mentioning wrong destinations and removes them
+export function fixPartnerDestinationMismatch(html) {
+  let out = html;
+  let fixCount = 0;
+
+  // Extract article destination from title or first H2
+  const titleMatch = out.match(/<h1[^>]*>([^<]+)<\/h1>/i) || out.match(/<h2[^>]*>([^<]+)<\/h2>/i);
+  if (!titleMatch) return out;
+
+  const titleText = titleMatch[1].replace(/<[^>]+>/g, "").toLowerCase();
+
+  // Known destinations to detect
+  const destinations = [
+    "tha\u00eflande", "thailande", "vietnam", "cambodge", "laos",
+    "indon\u00e9sie", "indonesie", "bali", "japon", "philippines",
+    "malaisie", "singapour", "myanmar", "sri lanka", "inde",
+    "bangkok", "tokyo", "hanoi", "ho chi minh", "chiang mai",
+    "amsterdam", "paris", "londres", "london", "new york",
+    "barcelone", "rome", "berlin", "lisbonne", "madrid"
+  ];
+
+  // Find which destination the article is about
+  const articleDest = destinations.find(d => titleText.includes(d));
+  if (!articleDest) return out; // Cannot determine destination
+
+  // Check partner blocks (class="fv-" or "Liens partenaires" sections or widget divs)
+  const partnerBlockPatterns = [
+    /(<div[^>]*class="[^"]*fv-(?:partner|cta|affiliate|widget)[^"]*"[^>]*>[\s\S]*?<\/div>)/gi,
+    /(<div[^>]*class="[^"]*(?:partner|affiliate|sponsor)[^"]*"[^>]*>[\s\S]*?<\/div>)/gi,
+    /((?:<h[23][^>]*>\s*Liens?\s*partenaires?[^<]*<\/h[23]>)[\s\S]*?(?=<h[23]|$))/gi,
+  ];
+
+  for (const pattern of partnerBlockPatterns) {
+    out = out.replace(pattern, (block) => {
+      const blockText = block.replace(/<[^>]+>/g, " ").toLowerCase();
+      // Check if the block mentions a DIFFERENT destination than the article
+      const blockDests = destinations.filter(d => blockText.includes(d) && d !== articleDest);
+      // Only remove if block mentions other destinations but NOT the article destination
+      if (blockDests.length > 0 && !blockText.includes(articleDest)) {
+        fixCount++;
+        console.log("\ud83d\udea9 PARTNER_MISMATCH: removed block mentioning " + blockDests.join(", ") + " in " + articleDest + " article");
+        return "";
+      }
+      return block;
+    });
+  }
+
+  if (fixCount > 0) {
+    console.log("\ud83d\udea9 PARTNER_DEST_FIXER: " + fixCount + " mismatched partner block(s) removed");
+  }
+  return out;
+}
+
+// ─── PARAGRAPH DEDUPLICATION (NEAR-DUPLICATE) ──────────────
+// Detects near-duplicate paragraphs (>80% word overlap) and removes second occurrence
+export function deduplicateParagraphs(html) {
+  let out = html;
+  let fixCount = 0;
+
+  // Extract all paragraphs
+  const paraRegex = /<p[^>]*>((?:(?!<\/p>)[\s\S])+)<\/p>/gi;
+  const allParas = [...out.matchAll(paraRegex)];
+
+  // Normalize text for comparison
+  function normalize(text) {
+    return text
+      .replace(/<[^>]+>/g, " ")
+      .toLowerCase()
+      .replace(/[^a-z\u00e0-\u00ff0-9\s]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function getWords(text) {
+    return text.split(" ").filter(w => w.length > 2);
+  }
+
+  function similarity(words1, words2) {
+    if (words1.length === 0 || words2.length === 0) return 0;
+    const set2 = new Set(words2);
+    const common = words1.filter(w => set2.has(w)).length;
+    return common / Math.max(words1.length, words2.length);
+  }
+
+  const seen = [];
+  const toRemove = new Set();
+
+  for (const para of allParas) {
+    const norm = normalize(para[1]);
+    if (norm.length < 40) continue; // Skip very short paragraphs
+    const words = getWords(norm);
+    if (words.length < 5) continue;
+
+    for (const prev of seen) {
+      if (similarity(words, prev.words) > 0.8) {
+        toRemove.add(para[0]);
+        fixCount++;
+        break;
+      }
+    }
+    seen.push({ text: norm, words });
+  }
+
+  // Remove duplicate paragraphs (second occurrence)
+  for (const dup of toRemove) {
+    const lastIdx = out.lastIndexOf(dup);
+    const firstIdx = out.indexOf(dup);
+    if (lastIdx !== firstIdx) {
+      out = out.slice(0, lastIdx) + out.slice(lastIdx + dup.length);
+    } else {
+      // Only one occurrence — matched by similarity with a previous one
+      out = out.replace(dup, "");
+    }
+  }
+
+  // Also detect repeated phrases like "Voici ce que synthétise" appearing twice
+  const repeatedPhrases = [
+    "Voici ce que synth\u00e9tise",
+    "Voici ce qui ressort",
+    "Voici les points cl\u00e9s",
+    "Ce qu.il faut retenir",
+  ];
+
+  for (const phrase of repeatedPhrases) {
+    const re = new RegExp(phrase, "gi");
+    const matches = [...out.matchAll(re)];
+    if (matches.length > 1) {
+      // Remove the paragraph containing the second occurrence
+      let count = 0;
+      out = out.replace(new RegExp("<p[^>]*>[^<]*" + phrase + "[^<]*<\/p>", "gi"), (m) => {
+        count++;
+        if (count > 1) {
+          fixCount++;
+          return "";
+        }
+        return m;
+      });
+    }
+  }
+
+  if (fixCount > 0) {
+    console.log("\ud83d\udd04 DEDUP_PARAGRAPHS: " + fixCount + " near-duplicate paragraph(s) removed");
+  }
+  return out;
+}
+
+// ─── SOURCE BANNER INJECTION ───────────────────────────────
+// Inserts a credibility banner after the byline div and before the first H2
+export function injectSourceBanner(html) {
+  let out = html;
+
+  // Don't inject if already present
+  if (out.includes("fv-source-anchor")) return out;
+
+  // Extract N from byline text ("retours de X contributions" or "X contributions")
+  const bylineMatch = out.match(/retours?\s+de\s+(?:<[^>]+>)*(\d+)\s*contributions?/i)
+    || out.match(/(\d+)\s*contributions?/i);
+  const N = bylineMatch ? bylineMatch[1] : "plusieurs";
+
+  // Find insertion point: after fv-byline div, before first H2
+  const bylineIdx = out.indexOf("fv-byline");
+  const bylineEnd = bylineIdx > 0 ? out.indexOf("</div>", bylineIdx) : -1;
+  const firstH2 = out.indexOf("<h2");
+
+  let insertPos;
+  if (bylineEnd > 0 && firstH2 > bylineEnd) {
+    insertPos = bylineEnd + 6; // after </div>
+  } else if (firstH2 > 0) {
+    insertPos = firstH2;
+  } else {
+    return out; // No suitable insertion point
+  }
+
+  const banner = '\n<div class="fv-source-anchor" style="margin:1.5rem 0;padding:0.8rem 1rem;background:#f0f7ff;border-left:3px solid #2563eb;border-radius:4px;font-size:0.88rem;color:#4b5563;">\n\ud83d\udcca <strong>Synth\u00e8se de ' + N + ' t\u00e9moignages</strong> de voyageurs et expatri\u00e9s | Sources : forums de voyageurs francophones et internationaux\n</div>\n';
+
+  out = out.slice(0, insertPos) + banner + out.slice(insertPos);
+  console.log("\ud83c\udff7\ufe0f SOURCE_BANNER: credibility banner injected (N=" + N + ")");
+  return out;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
@@ -1390,6 +1642,11 @@ export function applyPostProcessingFixers(html) {
   c = stripRedditFromBody(c);
   c = replaceEmDashes(c);
   c = fixBrandNames(c);
+  // v2 fixers
+  c = convertToEuros(c);
+  c = fixPartnerDestinationMismatch(c);
+  c = deduplicateParagraphs(c);
+  c = injectSourceBanner(c);
   return c;
 }
 

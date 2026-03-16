@@ -8159,139 +8159,108 @@ class ArticleFinalizer {
    * Mappe les catégories/tags vers les IDs WordPress
    */
   async getCategoriesAndTagsIds(categories, tags) {
-    console.log('🏷️ Mapping des catégories et tags...');
+    console.log("Mapping des categories et tags...");
 
     try {
-      const { WORDPRESS_URL, WORDPRESS_USERNAME, WORDPRESS_APP_PASSWORD } = await import('./config.js');
-      const auth = Buffer.from(`${WORDPRESS_USERNAME}:${WORDPRESS_APP_PASSWORD}`).toString('base64');
+      const { WORDPRESS_URL, WORDPRESS_USERNAME, WORDPRESS_APP_PASSWORD } = await import("./config.js");
+      const auth = Buffer.from(`${WORDPRESS_USERNAME}:${WORDPRESS_APP_PASSWORD}`).toString("base64");
+      const headers = { Authorization: `Basic ${auth}`, "Content-Type": "application/json" };
 
-      // Mapping manuel pour les catégories courantes (IDs WordPress réels)
+      // Known category IDs (verified against WordPress)
       const categoryMap = {
-        'Destinations': 1, // ID réel WordPress
-        'Digital Nomades Asie': 138, // ID réel WordPress
-        
-        // Sous-catégories de Destinations (parent: 1)
-        'Vietnam': 59, // ID réel WordPress
-        'Thaïlande': 60, // ID réel WordPress
-        'Japon': 61, // ID réel WordPress
-        'Singapour': 62, // ID réel WordPress
-        'Corée du Sud': 63, // ID réel WordPress
-        'Philippines': 64, // ID réel WordPress
-        'Indonésie': 182, // ID réel WordPress
-        
-        // Autres catégories
-        'Communauté & Réseau': 17,
-        'Logement & Coliving': 140, // ID réel WordPress
-        'Transport & Mobilité': 19,
-        'Santé & Assurance': 20,
-        'Finance & Fiscalité': 143, // ID réel WordPress
-        'Travail & Productivité': 22,
-        'Voyage & Découverte': 23,
-        'Guides Pratiques': 165, // ID réel WordPress
-        'Comparaisons': 167, // ID réel WordPress
-        'Analyses': 168 // ID réel WordPress
+        "Destinations": 1,
+        "Digital Nomades Asie": 138,
+        "Vietnam": 59,
+        "Tha\u00eflande": 60,
+        "Japon": 61,
+        "Singapour": 62,
+        "Cor\u00e9e du Sud": 63,
+        "Philippines": 64,
+        "Indon\u00e9sie": 182,
+        "Itin\u00e9raires & Budget": 184,
+        "Itin\u00e9raires par pays": 185,
+        "Co\u00fbt de la vie": 186,
+        "Vie de Nomade": 187,
+        "Outils Voyage": 188,
+        "Trouver un vol": 189,
+        "Assurance voyage": 190,
+        "eSIM & Internet": 191,
+        "Transferts a\u00e9roport": 192,
+        "Logement & Coliving": 140,
+        "Transport & Mobilit\u00e9": 141,
+        "Sant\u00e9 & Assurance": 142,
+        "Finance & Fiscalit\u00e9": 143,
+        "Visa & Formalit\u00e9s": 139,
+        "Ressources": 164,
+        "Guides Pratiques": 165,
+        "T\u00e9moignages": 166,
+        "Comparaisons": 167,
+        "Analyses": 168
       };
 
-      // Mapping manuel pour les tags courants (IDs WordPress réels)
-      const tagMap = {
-        // Tags génériques
-        'Asie': 172, // ID réel WordPress
-        'Budget': 87, // ID réel WordPress
-        'Débutant': 150, // ID réel WordPress
-        
-        // Tags par type de contenu
-        'Témoignage': 155, // ID réel WordPress (Témoignages)
-        'Témoignages': 155, // Même ID
-        'Guide': 84, // ID réel WordPress
-        'Guide Local': 106, // ID réel WordPress
-        'Guides pratiques': 55, // ID réel WordPress
-        'Nomadisme Digital': 176, // ID réel WordPress
-        'Visa': 77, // ID réel WordPress
-        
-        // Tags par destination
-        'Thaïlande': 75, // ID réel WordPress
-        'Indonésie': 177, // ID réel WordPress
-        'Vietnam': 95, // ID réel WordPress
-        'Japon': 76, // ID réel WordPress
-        
-        // Tags par audience
-        'communauté': 192, // ID à vérifier
-        'voyage': 193, // ID à vérifier
-        'travail': 194, // ID à vérifier
-        'logement': 195, // ID à vérifier
-        'finance': 196, // ID à vérifier
-        'santé': 197, // ID à vérifier
-        'transport': 198, // ID à vérifier
-        
-        // Tags affiliation - Assurance
-        'Assurance voyage': 200, // À créer si inexistant
-        'Santé': 217, // À créer si inexistant
-        'Sécurité': 218, // À créer si inexistant
-        
-        // Tags affiliation - Connectivité
-        'eSIM': 201, // À créer si inexistant
-        'Connectivité': 202, // À créer si inexistant
-        'Internet': 219, // À créer si inexistant
-        
-        // Tags affiliation - Vols
-        'Vols': 203, // À créer si inexistant
-        'Avion': 220, // À créer si inexistant
-        'Comparateur': 221, // À créer si inexistant
-        
-        // Tags affiliation - Hébergement
-        'Hébergement': 204, // À créer si inexistant
-        'Hôtel': 222, // À créer si inexistant
-        'Logement': 223, // À créer si inexistant
-        
-        // Tags affiliation - Activités
-        'Activités': 205, // À créer si inexistant
-        'Excursions': 206, // À créer si inexistant
-        'Visites': 224, // À créer si inexistant
-        
-        // Tags affiliation - Transferts
-        'Aéroport': 207, // À créer si inexistant
-        'Transfert': 208, // À créer si inexistant
-        'Navette': 225, // À créer si inexistant
-        
-        // Tags affiliation - Location véhicule
-        'Location voiture': 209, // À créer si inexistant
-        'Road trip': 210, // À créer si inexistant
-        'Scooter': 211, // À créer si inexistant
-        'Moto': 226, // À créer si inexistant
-        'Vélo': 227, // À créer si inexistant
-        
-        // Tags affiliation - Coworking
-        'Coworking': 212, // À créer si inexistant
-        'Remote': 213, // À créer si inexistant
-        'Productivité': 228, // À créer si inexistant
-        
-        // Tags affiliation - Compensation vol
-        'Retard vol': 214, // À créer si inexistant
-        'Indemnisation': 215, // À créer si inexistant
-        
-        // Tags affiliation - Événements
-        'Événements': 216, // À créer si inexistant
-        'Concert': 229, // À créer si inexistant
-        'Festival': 230 // À créer si inexistant
+      // Known tag IDs (verified against WordPress)
+      const knownTagMap = {
+        "actualite": 171, "Analyses": 157, "Asie": 172, "bon-plan": 175,
+        "Budget": 87, "Business": 179, "Coliving": 158, "Comparaisons": 156,
+        "Confirm\u00e9": 151, "Cor\u00e9e du Sud": 183, "Coworking": 159, "D\u00e9butant": 150,
+        "Destinations": 51, "\u00c9v\u00e9nement": 163, "Expert": 152, "expertise": 174,
+        "Famille": 153, "Fiscalit\u00e9": 160, "Formalit\u00e9s": 116, "Guide": 84,
+        "Guide Local": 106, "Guides pratiques": 55, "Indon\u00e9sie": 177,
+        "Inspiration": 181, "Japon": 76, "laos": 193, "Nomade": 136,
+        "Nomadisme Digital": 176, "Pratique": 85, "Prix": 86, "Promo": 83,
+        "Revenus": 178, "Senior": 154, "Singapour": 100, "strategique": 173,
+        "Succ\u00e8s": 180, "T\u00e9moignages": 155, "Tendance": 162, "Tha\u00eflande": 75,
+        "Tourism": 122, "Tourisme": 123, "Transport": 110, "Urgent": 161,
+        "Vietnam": 95, "Visa": 77, "Voyage": 79
       };
 
+      // Resolve category IDs (use map, no API needed)
       const categoryIds = categories
         .map(cat => categoryMap[cat])
         .filter(id => id !== undefined);
 
-      const tagIds = tags
-        .map(tag => tagMap[tag])
-        .filter(id => id !== undefined);
+      // Resolve tag IDs: use known map first, then search/create via WP API
+      const tagIds = [];
+      for (const tag of tags) {
+        if (knownTagMap[tag]) {
+          tagIds.push(knownTagMap[tag]);
+          continue;
+        }
+        // Tag not in known map: search WP API then create if needed
+        try {
+          const axios = (await import("axios")).default;
+          const searchRes = await axios.get(
+            `${WORDPRESS_URL}/wp-json/wp/v2/tags?search=${encodeURIComponent(tag)}&per_page=5`,
+            { headers }
+          );
+          const found = searchRes.data.find(t => t.name.toLowerCase() === tag.toLowerCase());
+          if (found) {
+            tagIds.push(found.id);
+            console.log(`   Tag "${tag}" found via API -> ID ${found.id}`);
+          } else {
+            // Create the tag on WordPress
+            const createRes = await axios.post(
+              `${WORDPRESS_URL}/wp-json/wp/v2/tags`,
+              { name: tag },
+              { headers }
+            );
+            tagIds.push(createRes.data.id);
+            console.log(`   Tag "${tag}" created -> ID ${createRes.data.id}`);
+          }
+        } catch (err) {
+          console.warn(`   Warning: Could not resolve tag "${tag}": ${err.message}`);
+        }
+      }
 
-      console.log(`   ✅ Catégories: ${categoryIds.length} IDs trouvés`);
-      console.log(`   ✅ Tags: ${tagIds.length} IDs trouvés`);
+      console.log(`   Categories: ${categoryIds.length} IDs -> [${categoryIds.join(", ")}]`);
+      console.log(`   Tags: ${tagIds.length} IDs -> [${tagIds.join(", ")}]`);
 
       return {
         categories: categoryIds,
         tags: tagIds
       };
     } catch (error) {
-      console.error('   ❌ Erreur mapping:', error.message);
+      console.error("   Error mapping:", error.message);
       return { categories: [], tags: [] };
     }
   }
@@ -9064,15 +9033,42 @@ class ArticleFinalizer {
     if (hasFaqHeading && detailsCount >= 1 && summaryCount >= 1) return out;
 
     const faqBlock = [
+      '<style>',
+      '.fv-faq-item details[open] summary svg { transform: rotate(180deg); }',
+      '.fv-faq-item summary::-webkit-details-marker { display: none; }',
+      '.fv-faq-item summary::marker { display: none; }',
+      '</style>',
       '<!-- wp:heading -->',
-      '<h2>Questions fréquentes</h2>',
+      '<h2 style="margin-bottom:1rem;">Questions fréquentes</h2>',
       '<!-- /wp:heading -->',
+      '<div class="fv-faq" style="margin:2rem 0;">',
       '<!-- wp:details -->',
-      '<details><summary>Faut-il réserver maintenant ou attendre ?</summary><p>Réserve dès que ton scénario de base est clair. Attendre peut coûter plus cher si les frais annexes augmentent.</p></details>',
+      '<div class="fv-faq-item" style="margin-bottom:0.5rem;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">',
+      '<details style="padding:0;">',
+      '<summary style="padding:1rem 1.2rem;cursor:pointer;font-weight:600;font-size:1rem;background:#f9fafb;list-style:none;display:flex;align-items:center;justify-content:space-between;">',
+      '<span>Faut-il réserver maintenant ou attendre ?</span>',
+      '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="transition:transform 0.2s;flex-shrink:0;margin-left:0.5rem;"><path d="M5 7.5L10 12.5L15 7.5" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      '</summary>',
+      '<div style="padding:0 1.2rem 1rem;font-size:0.95rem;line-height:1.6;color:#374151;">',
+      '<p>Réserve dès que ton scénario de base est clair. Attendre peut coûter plus cher si les frais annexes augmentent.</p>',
+      '</div>',
+      '</details>',
+      '</div>',
       '<!-- /wp:details -->',
       '<!-- wp:details -->',
-      '<details><summary>Quel est le piège le plus fréquent ?</summary><p>Se concentrer sur le prix affiché sans intégrer bagages, transferts et conditions d’annulation.</p></details>',
-      '<!-- /wp:details -->'
+      '<div class="fv-faq-item" style="margin-bottom:0.5rem;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">',
+      '<details style="padding:0;">',
+      '<summary style="padding:1rem 1.2rem;cursor:pointer;font-weight:600;font-size:1rem;background:#f9fafb;list-style:none;display:flex;align-items:center;justify-content:space-between;">',
+      '<span>Quel est le piège le plus fréquent ?</span>',
+      '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="transition:transform 0.2s;flex-shrink:0;margin-left:0.5rem;"><path d="M5 7.5L10 12.5L15 7.5" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      '</summary>',
+      '<div style="padding:0 1.2rem 1rem;font-size:0.95rem;line-height:1.6;color:#374151;">',
+      '<p>Se concentrer sur le prix affiché sans intégrer bagages, transferts et conditions d\u2019annulation.</p>',
+      '</div>',
+      '</details>',
+      '</div>',
+      '<!-- /wp:details -->',
+      '</div>'
     ].join('\n');
 
     const beforeConclusion = /<h2[^>]*>\s*(?:ce\s*qu.?il\s*faut\s*retenir|à\s*retenir|prochaines?\s*[ée]tapes?)\s*<\/h2>/i;
