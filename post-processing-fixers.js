@@ -2366,7 +2366,7 @@ export function fixGenericH2s(html) {
     [/(<h2[^>]*>)\s*Questions?\s+fréquentes?\s*(<\/h2>)/gi, `$1Questions fréquentes sur ${destination}$2`],
     [/(<h2[^>]*>)\s*FAQ\s*(<\/h2>)/gi, `$1FAQ sur ${destination}$2`],
     [/(<h2[^>]*>)\s*Nos\s+recommandations\s*(?::\s*[Pp]ar\s+où\s+commencer\s*\??)?\s*(<\/h2>)/gi, `$1Nos recommandations pour ${destination}$2`],
-    [/(<h2[^>]*>)\s*Ce\s+qu['']il\s+faut\s+retenir\s*(<\/h2>)/gi, `$1Ce qu'il faut retenir${suffix}$2`],
+    [/(<h2[^>]*>)\s*Ce\s+qu[\u0027\u2018\u2019]il\s+faut\s+retenir\s*(<\/h2>)/gi, `$1Ce qu'il faut retenir${suffix}$2`],
     [/(<h2[^>]*>)\s*(?:En\s+)?[Cc]onclusion\s*(<\/h2>)/gi, `$1Ce qu'il faut retenir${suffix}$2`],
     [/(<h2[^>]*>)\s*Ce\s+que\s+dit\s+le\s+témoignage\s*(<\/h2>)/gi, `$1Ce que révèle ce témoignage${suffix}$2`],
   ];
