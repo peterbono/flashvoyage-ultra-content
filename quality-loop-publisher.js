@@ -941,17 +941,23 @@ async function main() {
     }
 
     // ─── Smart early exit: regression detection ──────────
-    if (previousScore !== null && currentScore < bestScore - 3) {
-      console.log(`\n   ⚠️ Quality loop: early exit at iteration ${iteration} (regression: current=${currentScore.toFixed(1)}, best=${bestScore.toFixed(1)} at iter=${bestIteration}). Rolling back.`);
+    // ANY regression from best → rollback + stop (threshold: 1 point)
+    if (previousScore !== null && currentScore < bestScore - 1) {
+      console.log(`\n   ⚠️ EARLY EXIT iter ${iteration}: regression (current=${currentScore.toFixed(1)}, best=${bestScore.toFixed(1)} at iter=${bestIteration}). Rolling back to best version.`);
       article = { ...article, content: bestHtml };
-      writeFileSync('/tmp/last-generated-article.html', article.content);
+      writeFileSync("/tmp/last-generated-article.html", article.content);
       iterationTelemetry.push(iterationTrace);
       break;
     }
 
     // ─── Smart early exit: stagnation detection ──────────
+    // Score barely moved → rollback to best version + stop
     if (previousScore !== null && Math.abs(currentScore - previousScore) < 2) {
-      console.log(`\n   ⚠️ Quality loop: early exit at iteration ${iteration} (stagnation: delta=${Math.abs(currentScore - previousScore).toFixed(1)})`);
+      console.log(`\n   ⚠️ EARLY EXIT iter ${iteration}: stagnation (delta=${Math.abs(currentScore - previousScore).toFixed(1)}). Using best version (iter=${bestIteration}, score=${bestScore.toFixed(1)}).`);
+      if (bestHtml && bestScore > currentScore) {
+        article = { ...article, content: bestHtml };
+        writeFileSync("/tmp/last-generated-article.html", article.content);
+      }
       iterationTelemetry.push(iterationTrace);
       break;
     }
@@ -1113,6 +1119,13 @@ async function main() {
       }
     }
     iterationTelemetry.push(iterationTrace);
+  }
+
+  // ─── Final rollback guard: always use best version ─────
+  if (bestHtml && bestScore > (lastReviewResult?.weightedScore || 0)) {
+    console.log(`\n   🔄 FINAL ROLLBACK: using best version from iteration ${bestIteration} (score ${bestScore.toFixed(1)} > current ${lastReviewResult?.weightedScore?.toFixed(1) || "?"})`);
+    article = { ...article, content: bestHtml };
+    writeFileSync("/tmp/last-generated-article.html", article.content);
   }
 
   // ══════════════════════════════════════════════════════════
