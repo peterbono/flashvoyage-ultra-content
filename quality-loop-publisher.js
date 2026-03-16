@@ -1174,8 +1174,8 @@ async function main() {
   console.log(`${'═'.repeat(60)}`);
   console.log(`   Titre: ${article.title}`);
   console.log(`   Score pondéré: ${lastReviewResult?.weightedScore?.toFixed(1) || '?'}/100`);
-  // OVERRIDE: Si le pre-pub quality gate >= 95%, publier malgre CEO REJECT
-  if (!approved && article._qualityGatePassed) {
+  // OVERRIDE: Publier si quality gate passed ET score >= 80
+  if (!approved && article._qualityGatePassed && lastReviewResult?.weightedScore >= 80) {
     console.log("\n   PRE-PUB OVERRIDE: Quality gate passed — publication autorisee");
     approved = true;
   }
