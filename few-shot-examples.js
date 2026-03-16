@@ -4,10 +4,15 @@
  * These exemplary snippets are injected into the LLM prompts so the model
  * can calibrate tone, density and editorial posture before generating.
  *
- * Three categories:
- *   hook           – cinematic opening (sensory, in-scene, no meta)
- *   decisionalH2   – H2 title with decisional verb + first paragraph
- *   verdict        – trenchant conclusion with conditional recommendation
+ * Eight categories:
+ *   hook             – cinematic opening (sensory, in-scene, no meta)
+ *   decisionalH2     – H2 title with decisional verb + first paragraph
+ *   verdict          – trenchant conclusion with conditional recommendation
+ *   seoTitle         – input/output pair for SEO title generation
+ *   bodySection      – complete H2 section (~350 words) with citation, prices, CTA
+ *   faq              – 3 FAQ items in <details><summary> format
+ *   recommendation   – "Nos recommandations" block with 3 tiered options
+ *   comparisonTable  – HTML <table> comparing 3-4 options with prices
  */
 
 export const FEW_SHOT_EXAMPLES = {
@@ -18,6 +23,43 @@ export const FEW_SHOT_EXAMPLES = {
   decisionalH2: `<h2>Pourquoi Chiang Mai coûte 40 % moins cher que Bali — et ce que tu sacrifies en échange</h2>
 <p>Sur le papier, le calcul est simple : un studio climatisé à Nimman revient à 350 € par mois contre 580 € pour un équivalent à Canggu. Le coworking Punspace facture 85 € mensuels là où Dojo Bali en demande 160. Mais ce différentiel masque un arbitrage que peu de guides mentionnent. À Chiang Mai, tu gagnes en budget ce que tu perds en réseau international : la communauté est plus petite, les événements tech moins fréquents, et les vols directs vers l'Europe inexistants. Si ton activité dépend de rencontres clients en personne ou de connexions avec des startups, ce « rabais » de 40 % a un prix invisible que ton tableur ne capture pas.</p>`,
 
-  verdict: `<p>Si ton budget plafonne à 1 500 € par mois et que tu travailles en asynchrone, privilégie Chiang Mai de novembre à janvier puis bascule sur Da Nang pendant la saison des brûlis. En revanche, si tu factures plus de 4 000 € mensuels et que tu as besoin de networking régulier, Bali reste un investissement — pas une dépense. Le vrai piège, c'est de choisir une destination pour son image Instagram plutôt que pour sa compatibilité avec ton rythme de travail.</p>`
+  verdict: `<p>Si ton budget plafonne à 1 500 € par mois et que tu travailles en asynchrone, privilégie Chiang Mai de novembre à janvier puis bascule sur Da Nang pendant la saison des brûlis. En revanche, si tu factures plus de 4 000 € mensuels et que tu as besoin de networking régulier, Bali reste un investissement — pas une dépense. Le vrai piège, c'est de choisir une destination pour son image Instagram plutôt que pour sa compatibilité avec ton rythme de travail.</p>`,
+
+  seoTitle: {
+    input: "Article about budget travel in Thailand",
+    output: {
+      titre: "Budget 2 200 € en Thaïlande : 5 arbitrages cachés qui peuvent te ruiner",
+      title_tag: "Budget Thaïlande : les 5 pièges cachés (2026)"
+    }
+  },
+
+  bodySection: `<h2>Comment arbitrer entre ryokan et auberge — le calcul que personne ne te montre</h2>
+<p>Tu arrives à Kyoto avec un budget hébergement de 45 € par nuit. Sur Booking, les auberges de jeunesse affichent 28 € en dortoir mixte, les ryokans « économiques » démarrent à 85 €. Le choix semble évident — sauf que tu oublies trois postes cachés.</p>
+<p>En auberge, tu paies 28 € la nuit mais tu dînes dehors : 12 à 18 € par repas dans le quartier de Gion. En ryokan, le tarif de 85 € inclut le kaiseki du soir et le petit-déjeuner japonais. « J'ai fait le calcul après cinq jours, confie un voyageur sur r/japantravel. Le ryokan me revenait à 85 € tout compris contre 28 + 15 + 8 = 51 € en auberge — soit 34 € d'écart, pas 57. »</p>
+<p>Deuxième poste invisible : le temps. Les auberges bon marché à Kyoto se concentrent autour de la gare, à 25 minutes en bus des temples du nord. Un ryokan à Higashiyama te place à pied de Kiyomizu-dera — tu économises 45 minutes et 4,80 € de transport par jour.</p>
+<p>Troisième facteur, souvent ignoré : la fatigue. Après trois semaines de dortoirs aux Philippines et au Vietnam, le futon d'un ryokan avec onsen privé n'est pas un luxe — c'est une question de récupération qui conditionne ta capacité à profiter des dix derniers jours.</p>
+<!-- FV:CTA_SLOT reason="comparateur hébergement Kyoto" -->
+<p>Le vrai arbitrage n'est donc pas « 28 € contre 85 € » mais « 51 € sans repos contre 85 € avec récupération ». Sur trois nuits à Kyoto, l'écart réel tombe à 102 € — le prix d'un déjeuner par jour pendant tout ton séjour au Japon.</p>`,
+
+  faq: `<details><summary>Combien coûte réellement une semaine au Japon en haute saison ?</summary><p>En juin-juillet, compte entre 420 € et 680 € par semaine pour un voyageur solo en mode backpacker. Ce budget inclut l'hébergement en mix auberge/ryokan (35-85 €/nuit), les transports locaux hors JR Pass (8-15 €/jour) et trois repas (18-30 €/jour). Les ryokans doublent leurs tarifs en haute saison — un « économique » à 80 € passe à 160 €.</p></details>
+<details><summary>Le JR Pass vaut-il le coup pour un itinéraire Tokyo–Kyoto–Takayama ?</summary><p>Le JR Pass 14 jours coûte 280 € et couvre le Shinkansen Tokyo–Kyoto (aller simple : 120 €) ainsi que la ligne principale vers Kanazawa. Mais les trains privés vers Takayama via la Vallée de Kiso ne sont pas inclus — prévois 40 € supplémentaires. Si tu fais moins de trois trajets longue distance, des billets individuels reviennent moins cher.</p></details>
+<details><summary>Faut-il réserver les ryokans à l'avance en été ?</summary><p>Oui, minimum trois semaines avant ton arrivée. En juillet, les ryokans de Kinosaki Onsen et Hakone affichent complet deux à trois semaines à l'avance. Les auberges de jeunesse à Tokyo saturent aussi vite. Réserve sur Booking ou Japanican avec annulation gratuite, puis ajuste ton itinéraire une fois sur place.</p></details>`,
+
+  recommendation: `<h2>Nos recommandations : par où commencer ?</h2>
+<p><strong>Budget serré (moins de 50 €/jour) :</strong> Privilégie les auberges de jeunesse en réservant trois semaines à l'avance. Évite les ryokans en haute saison. Achète des pass régionaux (Kansai Area Pass à 22 €/jour) plutôt que le JR Pass national. Mange dans les konbini — un repas complet chez Lawson ou 7-Eleven revient à 4-6 €.</p>
+<p><strong>Budget confortable (50-100 €/jour) :</strong> Alterne deux nuits en auberge, une nuit en ryokan. Le JR Pass 7 jours (200 €) devient rentable si tu fais au moins Tokyo–Kyoto aller-retour plus un trajet vers Hiroshima. Réserve les ryokans sur Japanican pour accéder aux tarifs locaux — souvent 15 à 20 % moins chers que sur Booking.</p>
+<p><strong>Budget large (plus de 100 €/jour) :</strong> Réserve des ryokans haut de gamme à Kinosaki Onsen ou Hakone (150-250 €/nuit, kaiseki inclus). Prends le Green Car sur les Shinkansen pour 40 € de supplément — les sièges 2+2 valent le surcoût sur les trajets de plus de deux heures. Envisage un pocket Wi-Fi plutôt qu'une SIM locale — à 5 €/jour, c'est plus fiable dans les zones rurales.</p>`,
+
+  comparisonTable: `<table>
+<thead>
+<tr><th>Option</th><th>Coût / nuit</th><th>Repas inclus</th><th>Localisation</th><th>Verdict</th></tr>
+</thead>
+<tbody>
+<tr><td>Auberge de jeunesse (dortoir)</td><td>28 €</td><td>Non</td><td>Gare de Kyoto (25 min des temples)</td><td>Budget max, confort minimal</td></tr>
+<tr><td>Ryokan économique</td><td>85 € (160 € en haute saison)</td><td>Dîner kaiseki + petit-déj</td><td>Higashiyama (à pied des sites)</td><td>Meilleur rapport si tu comptes les repas</td></tr>
+<tr><td>Hôtel business</td><td>55-75 €</td><td>Petit-déjeuner buffet</td><td>Centre-ville</td><td>Compromis pratique, zéro charme</td></tr>
+<tr><td>Airbnb (studio)</td><td>45-65 €</td><td>Cuisine disponible</td><td>Variable</td><td>Idéal pour séjours de 4+ nuits</td></tr>
+</tbody>
+</table>`
 
 };

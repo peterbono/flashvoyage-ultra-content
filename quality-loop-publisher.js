@@ -64,10 +64,38 @@ const severityWeight = (severity = '') => {
   if (key === 'minor') return 1;
   return 0;
 };
+
+// Helper: build agent score map from reviewResult for rewrite prioritization
+const getAgentScoreMap = (reviewResult) => {
+  const map = new Map();
+  for (const [id, agent] of Object.entries(reviewResult?.agents || {})) {
+    const label = agent?._label || id;
+    map.set(label.toLowerCase(), agent?.score ?? 100);
+  }
+  return map;
+};
+
+const getLowestAgent = (reviewResult) => {
+  let lowest = { label: null, score: 100 };
+  for (const [id, agent] of Object.entries(reviewResult?.agents || {})) {
+    const score = agent?.score ?? 100;
+    if (score < lowest.score) {
+      lowest = { label: agent?._label || id, score };
+    }
+  }
+  return lowest;
+};
 const buildQualityBoostFixes = (reviewResult, targetScore) => {
   const issues = (reviewResult?.allIssues || [])
     .filter(i => i && i.description && i.severity)
-    .sort((a, b) => severityWeight(b.severity) - severityWeight(a.severity));
+    .sort((a, b) => {
+      // Sort by agent score ascending (lowest agent first), then by severity descending
+      const agentScoreMap = getAgentScoreMap(reviewResult);
+      const aAgentScore = agentScoreMap.get((a._label || a._agent || 'panel').toLowerCase()) ?? 100;
+      const bAgentScore = agentScoreMap.get((b._label || b._agent || 'panel').toLowerCase()) ?? 100;
+      if (aAgentScore !== bAgentScore) return aAgentScore - bAgentScore;
+      return severityWeight(b.severity) - severityWeight(a.severity);
+    });
 
   const topIssues = issues.slice(0, 6);
   if (topIssues.length > 0) {
@@ -351,6 +379,9 @@ function groupIssuesBySection(allIssues, sections) {
  * Rewrite a single section with focused issues.
  */
 async function rewriteSection(sectionHtml, issues, title, prevTitle, nextTitle, ctx = {}) {
+  const scoreContext = ctx._lowestAgent
+    ? `\nCONTEXTE QUALIT\u00c9 : Score pond\u00e9r\u00e9 actuel = ${ctx._weightedScore || "?"}/100. Agent le plus bas : ${ctx._lowestAgent.label} (${ctx._lowestAgent.score}/100).\nFocus les corrections sur les crit\u00e8res de l'agent le plus bas. Ne modifie PAS les parties de l'article qui fonctionnent bien.`
+    : '';
   const issuesList = issues
     .map((issue, i) => `${i + 1}. [${issue.severity}] ${issue.description}${issue.fix_suggestion ? ' \u2192 ' + issue.fix_suggestion : ''}`)
     .join('\n');
@@ -371,7 +402,7 @@ R\u00c8GLES ABSOLUES :
 6. TOUT en fran\u00e7ais, tutoiement obligatoire
 7. NE JAMAIS utiliser de formules IA : "arbitrer entre X et Y", "Ce que les autres guides ne disent pas", "Option 1/2/3"
 8. Ne cr\u00e9e jamais de balises mal ferm\u00e9es
-9. Garde la m\u00eame longueur approximative \u2014 pas d'inflation`;
+9. Garde la m\u00eame longueur approximative \u2014 pas d'inflation${scoreContext}`;
 
   const userPrompt = `ARTICLE : "${title}"
 ${ctx.destination ? `DESTINATION : ${ctx.destination}` : ''}
@@ -455,6 +486,9 @@ async function rewriteSections(html, allIssues, title, ctx = {}) {
 
 // ─── Agent: LLM Rewriter ciblé (full article fallback) ──
 async function rewriteWithFeedback(html, criticalFixes, title, ctx = {}) {
+  const scoreContext = ctx._lowestAgent
+    ? `\nCONTEXTE QUALIT\u00c9 : Score pond\u00e9r\u00e9 actuel = ${ctx._weightedScore || "?"}/100. Agent le plus bas : ${ctx._lowestAgent.label} (${ctx._lowestAgent.score}/100).\nFocus les corrections sur les crit\u00e8res de l'agent le plus bas. Ne modifie PAS les parties de l'article qui fonctionnent bien.`
+    : '';
   const fixesList = criticalFixes
     .map((f, i) => `${i + 1}. [${f.agent}] ${f.issue}${f.action ? ' → ' + f.action : ''}`)
     .join('\n');
@@ -477,7 +511,7 @@ RÈGLES ABSOLUES :
 9. Ne crée jamais de balises <details>/<summary> mal fermées. Si tu modifies une FAQ, vérifie que chaque balise ouvrante est fermée
 10. Ne crée pas de texte d'ancre tronqué. Chaque lien <a> doit avoir une ancre complète et naturelle
 11. Limite le maillage interne à 3-8 liens flashvoyage cohérents, pas de section d'ancres massives
-12. Si une source Reddit est fournie, conserve un lien explicite vers cette source et n'invente pas de citation sans source`;
+12. Si une source Reddit est fournie, conserve un lien explicite vers cette source et n'invente pas de citation sans source${scoreContext}`;
 
   const userPrompt = `TITRE : ${title}
 ${destinationLine}
@@ -1027,12 +1061,14 @@ async function main() {
       const allPanelIssues = reviewResult.allIssues || [];
 
       // Try surgical section-level rewrite first
-      let rewritten = await rewriteSections(article.content, allPanelIssues, article.title, ctx);
+      const lowestAgent = getLowestAgent(reviewResult);
+      const rewriteCtx = { ...ctx, _lowestAgent: lowestAgent.label ? lowestAgent : null, _weightedScore: reviewResult.weightedScore?.toFixed(1) };
+      let rewritten = await rewriteSections(article.content, allPanelIssues, article.title, rewriteCtx);
 
       // Fallback to full article rewrite if surgical rewrite was not possible
       if (rewritten === null) {
         console.log(`      \u21a9\ufe0f Falling back to full-article rewrite`);
-        rewritten = await rewriteWithFeedback(article.content, fixes, article.title, ctx);
+        rewritten = await rewriteWithFeedback(article.content, fixes, article.title, rewriteCtx);
       }
 
       if (rewritten !== article.content) {

@@ -1747,7 +1747,13 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 📖 OUVERTURE IMMERSIVE — HOOK CINÉMATIQUE (premier paragraphe, OBLIGATOIRE) :
 - Ouvrir sur une micro-scène sensorielle (2-4 phrases) : lieu, odeur, bruit, geste, tension. Puis 1 question qui accroche.
 - La scène doit être tirée du témoignage (lieu réel, situation réelle, enjeu réel).
-- ✅ Ouvre TOUJOURS par une micro-scène sensorielle (lieu + action + tension), puis enchaîne sur une question. Exemple : «L'écran du distributeur affiche 220 bahts de frais — tu calcules mentalement si ça vaut le coup.» La source (forums/communautés de voyageurs) reste invisible dans le hook. Dans le corps, utilise « forums de voyageurs », « communautés d'expatriés » — JAMAIS « Reddit » ou « r/xxx » (le lecteur moyen ne connaît pas).
+REGLE SOURCE : Ne mentionne jamais Reddit, r/xxx, ou subreddit dans le texte. Le lecteur voit un temoignage de voyageur, pas un post Reddit. Utilise « forums de voyageurs », « communautes d'expatries ».
+
+REGLE INTEGRITE : Utilise UNIQUEMENT les faits, prix, lieux et dates du brief ci-dessous. Aucun ajout exterieur.
+
+REGLE DEDUP : Chaque paragraphe apporte exactement 1 fait nouveau. Pas de repetition de citation, chiffre, ou formulation.
+
+- ✅ Ouvre TOUJOURS par une micro-scène sensorielle (lieu + action + tension), puis enchaîne sur une question. Exemple : «L'écran du distributeur affiche 220 bahts de frais — tu calcules mentalement si ça vaut le coup.»
 - Exemples calibrés :
   * Budget : "Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil. L'écran du distributeur affiche les frais, tu calcules mentalement, et tu te demandes si le jeu en vaut la chandelle. Combien te coûte vraiment cette habitude sur un mois ?"
   * Visa : "Tu atterris à Bangkok avec un visa de 30 jours et une liste qui en demanderait 90. L'air chaud te frappe en sortant de l'aéroport. Et là, première question : par où commencer ?"
@@ -1823,12 +1829,10 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 1. SITUATION (hook + tension) → 2. SURPRISE/RÉVÉLATION → 3. IMPACT RÉEL → 4. OPTIONS CONCRÈTES → 5. CHOIX RECOMMANDÉ → 6. PLAN D'ACTION
 
 📝 CITATIONS INLINE (2-5 OBLIGATOIRES) : intégrées contextualisées dans le flux narratif.
-🚫 RÈGLE ABSOLUE — ADRESSE AU LECTEUR, PAS À L'AUTEUR REDDIT :
-- Le "tu" s'adresse TOUJOURS au lecteur/visiteur du site, JAMAIS à l'auteur du post Reddit.
-- ❌ INTERDIT : "comme tu l'expliques sur r/solotravel", "tu as posté sur Reddit"
-- ✅ CORRECT : "Une voyageuse installée depuis 2 ans partage : « ... »", "Un témoignage sur les forums de voyageurs révèle que..."
+🚫 ADRESSE AU LECTEUR :
+- Le "tu" s'adresse TOUJOURS au lecteur/visiteur du site, JAMAIS a l'auteur du post source.
 - ❌ INTERDIT dans le CORPS : "Reddit", "r/xxx", "subreddit". Réservé au byline et à la boîte source en bas.
-- Les citations Reddit sont en 3ème personne : "l'auteur explique", "un voyageur raconte", "une utilisatrice témoigne".
+- Les citations sont en 3eme personne : "l'auteur explique", "un voyageur raconte", "une utilisatrice temoigne".
 
 📊 DONNÉES TANGIBLES : budget, chronologie, chiffres intégrés naturellement. Mots-clés SEO : "budget réel", "chronologie", "contraintes".
 
@@ -1839,11 +1843,9 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 📐 STRUCTURE PARAGRAPHES — CONTRAINTES DURES :
 - MINIMUM 200 caractères par <p> (sauf max 2 one-liners dramatiques par article entier).
 - Chaque <p> = un BLOC DE PENSÉE de 3-5 phrases qui développent UNE idée complète.
-- INTERDIT les filler IA : "La réalité est plus nuancée.", "Chaque choix a un coût.", "C'est un point important.", "Il faut savoir que...". Ces phrases ne disent RIEN — supprime-les.
-- INTERDIT le rythme "ping-pong" : phrase courte → phrase courte → phrase courte. C'est le pattern #1 qui trahit l'IA.
-- Structure de paragraphe HUMAINE : [accroche courte] + [développement 2-3 phrases] + [conclusion ou transition]. Pas 5 phrases courtes alignées.
-- RATIO OBLIGATOIRE : 70%+ des paragraphes font 200+ caractères. Max 30% de paragraphes courts (<150 chars).
-✅ PROGRESSION CONSTANTE : chaque paragraphe apporte une information nouvelle. Ne reformule JAMAIS un point déjà fait.
+- Chaque phrase contient un fait ou une decision. Supprimable sans perte d'info = a supprimer.
+- Structure de paragraphe : [accroche courte] + [developpement 2-3 phrases] + [conclusion ou transition].
+- 70 %+ des paragraphes font 200+ caracteres.
 
 🎭 ÉCRITURE HUMAINE — TON DE CONVERSATION ENTRE POTES :
 - Tu écris comme un pote qui RACONTE son voyage au bar. Pas comme un guide touristique.
@@ -1881,7 +1883,7 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 
 🔗 TRANSITIONS BLOCS PARTENAIRES/CTA (OBLIGATOIRE) :
 - Chaque bloc partenaire/CTA DOIT être précédé d'une phrase de transition naturelle qui fait le lien avec le paragraphe précédent.
-- ❌ INTERDIT : un bloc CTA qui tombe du ciel sans contexte. Pas de rupture narrative.
+- Chaque CTA decoule naturellement du paragraphe qui precede.
 - ✅ Exemple : "Avant de partir, compare les prix des vols : les tarifs varient énormément selon la saison." [bloc partenaire]
 - ✅ Exemple : "Pour éviter ce surcoût, le plus simple reste d'ouvrir un compte Wise avant le départ." [bloc partenaire]
 - ✅ Exemple : "Si tu veux verrouiller un bon tarif, voici où chercher en priorité." [bloc partenaire]
@@ -1889,16 +1891,7 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 - ❌ INTERDIT : "Voici un lien utile :", "Découvrez notre partenaire :", "Cliquez ici :".
 - 🎯 COHÉRENCE GÉOGRAPHIQUE : Les blocs partenaires DOIVENT correspondre à la destination de l'article. ❌ INTERDIT : un widget Amsterdam dans un article Vietnam. ❌ INTERDIT : un CTA "vols vers Tokyo" dans un article sur Bali. Chaque CTA doit référencer la bonne destination.
 
-💶 CONVERSION MONÉTAIRE OBLIGATOIRE :
-- ✅ Tous les montants apparaissent en euros (EUR) uniquement. Convertis toute source USD avec taux ~0.92. Exemple : source «$1200/month» → article «~1 100 €/mois».
-- Si la source donne un montant en USD, convertir avec taux ~0.92 et afficher UNIQUEMENT en euros.
-- Exemple : « ~920 euros » ou « environ 200 euros ».
-- L'audience est francophone européenne : l'euro est la seule devise à utiliser.
-- TOUJOURS convertir en euros (€). Le public est francophone européen.
-- ❌ INTERDIT : livres sterling (£/GBP), dollars ($) sauf contexte strictement américain (ex: prix d'entrée US). Toute autre devise étrangère doit être convertie.
-- ✅ Si la source dit "250 GBP", écris "environ 290 €". Si la source dit "£150/night", écris "~175 €/nuit".
-- ✅ Si la source dit "5000 THB", convertis en euros (~130 €). Idem pour toute devise asiatique.
-- Le symbole € se place APRÈS le nombre : "290 €", pas "€290".
+💶 CONVERSION MONETAIRE : Tous les montants en euros uniquement (taux USD ~0.92, GBP ~1.16). Symbole € apres le nombre. Exemples : $1200/month → ~1 100 €/mois, 5000 THB → ~130 €.
 
 📊 MOINS WIKIPEDIA, PLUS DÉCISION (OBLIGATOIRE — vérifié automatiquement) :
 - Chaque section DOIT se terminer par une recommandation, un choix, ou un verdict — pas par un résumé neutre.
@@ -1946,15 +1939,6 @@ Ces marqueurs sont invisibles pour le lecteur mais exploités par le pipeline. N
     "opportunites_liens_internes": [...],
     "articles_connexes": [...]
   },
-  "_editorial_self_check": {
-    "decisions_taken": ["...", "...", "..."],  // 3 décisions éditoriales prises dans cet article
-    "mistakes_to_avoid": ["...", "...", "..."],  // 3 erreurs que le lecteur doit éviter
-    "differentiating_angles": ["...", "..."],  // 2 angles qui différencient cet article des concurrents
-    "cta_slots_proposed": [  // 2-4 emplacements CTA proposés avec justification
-      { "position": "after_hook", "reason": "..." },
-      { "position": "after_costs", "reason": "..." }
-    ]
-  }
 }
 
 ⚠️ ANGLES SERP : Intégrer "chronologie"/"timeline", "budget réel"/"coûts réels", "contraintes"/"difficultés" dans le développement.
@@ -1965,7 +1949,6 @@ Ces marqueurs sont invisibles pour le lecteur mais exploités par le pipeline. N
 
 ⚠️ ✅ Intègre contexte, événement central, moment critique et résolution directement dans le champ "developpement" (HTML libre) — ces champs n'existent pas en sortie JSON.
 
-⚠️ _editorial_self_check est OBLIGATOIRE : c'est ton auto-évaluation interne. Il n'est PAS publié — il sert au pipeline pour vérifier la qualité éditoriale. Remplis-le honnêtement.
 
 Réponds UNIQUEMENT en JSON avec cette structure.`;
     }
@@ -1977,7 +1960,6 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 1. PRIX RÉELS OBLIGATOIRES : GARDE TOUS LES CHIFFRES. Chaque montant en euros, dollars, bahts, yen etc. DOIT rester dans l'article tel quel. ❌ INTERDIT : "quelques euros", "un budget conséquent", "un coût maîtrisable", "une dépense notable", "un investissement réel". ✅ OBLIGATOIRE : "45€/nuit", "1 300€ le vol A/R", "180 bahts le trajet". Si tu n'as pas le chiffre exact, écris "prix variable selon la saison — vérifier avant de réserver" mais JAMAIS un euphémisme vague. Réf: ThePointsGuy écrit "$395 annual fee" pas "un coût significatif".
 
 2. 
-❌ TIRET CADRATIN INTERDIT : N'utilise JAMAIS le tiret cadratin « — » dans le texte. C'est un tic d'écriture IA immédiatement repérable. Remplace par : une virgule, un point, deux-points, ou reformule. ✅ "Le budget a explosé, et personne ne l'avait prévu." ❌ "Le budget a explosé — et personne ne l'avait prévu."
 RYTHME PARAGRAPHES TPG : Alterne INTENTIONNELLEMENT paragraphes courts et moyens. Pattern obligatoire : 1 paragraphe court (1-2 phrases, punchline ou transition) → 1-2 paragraphes moyens (3-4 phrases, argumentation développée). ❌ INTERDIT : 3 paragraphes courts d'affilée. ❌ INTERDIT : mur de texte de 6+ phrases. ❌ INTERDIT : une seule phrase par <p> sauf punchline intentionnelle. Chaque paragraphe moyen développe, illustre et nuance. Utilise "franchement", "en vrai", "du coup", "genre", "le truc c'est que" (2-3 par section). Ajoute 2-3 digressions sensorielles entre parenthèses : "(le café au 7-Eleven est étrangement correct)", "(spoiler : c'est toujours plus loin que sur Maps)".
 
 3. HOOK EN 3 TEMPS + CONTRAT ÉDITORIAL (réf TPG) : Le début de l'article suit un arc en 4 paragraphes OBLIGATOIRES :
@@ -1994,7 +1976,6 @@ RYTHME PARAGRAPHES TPG : Alterne INTENTIONNELLEMENT paragraphes courts et moyens
      ✅ "Ce guide repose sur [N] retours de terrain, recueillis sur les forums francophones et internationaux de voyageurs. Pas de théorie, que du vécu."
    - ❌ INTERDIT de sauter ce paragraphe. ❌ INTERDIT de le fusionner avec le hook ou l'empathie. C'est un paragraphe DISTINCT.
 ❌ INTERDIT de passer directement du hook aux infos sans empathie + promesse + contrat éditorial.
-❌ INTERDIT de mentionner "Reddit" ou "r/xxx" dans le corps de l'article. Utilise : "forums de voyageurs", "communautés d'expatriés", "témoignages en ligne".
 
 4. TITRE HOOK ÉMOTIONNEL : Le titre provoque une émotion forte (regret, peur, surprise). ❌ INTERDIT les listicles : "X risques que...", "X choses que...", "X erreurs que...". ❌ INTERDIT : "les blogs cachent", "guide complet", "tout savoir". ✅ Patterns : "J'ai [vécu X] à [destination] — [conséquence inattendue]", "[Destination] : le moment où j'ai compris que [révélation]", "Pourquoi personne ne te prévient sur [problème concret] à [destination]".
 
@@ -2008,14 +1989,8 @@ RYTHME PARAGRAPHES TPG : Alterne INTENTIONNELLEMENT paragraphes courts et moyens
   3. "Une voyageuse qui a vécu 6 mois sur place, et dont l'avis est partagé par 15 autres témoignages : « les arnaques transport sont systématiques »"
   4. "Parmi les [N] retours analysés, 18 mentionnent exactement ce problème : « les ATM prennent 220 bahts à chaque retrait »"
   5. "Ce constat revient mot pour mot dans un tiers des témoignages : « personne ne te prévient sur les frais cachés »"
-❌ FORMULATIONS BANNIES (produire l'une d'elles = article rejeté) :
-  ❌ "Un voyageur explique : « ... »" — trop générique, AUCUNE quantification
-  ❌ "Comme le dit un expatrié : « ... »" — zéro contexte chiffré
-  ❌ "Un internaute partage : « ... »" — pas de quantification, pas de profil
-  ❌ "Selon un témoignage : « ... »" — vague, non quantifié
-  ❌ "On peut lire sur les forums : « ... »" — pas de chiffre, pas de profil humain
+Chaque citation DOIT inclure un contexte humain + une quantification chiffree. Formulations generiques sans quantification = article rejete.
 ✅ Varie les verbes d'introduction : résume, prévient, confirme, nuance, met en garde, alerte, tempère, relativise.
-❌ INTERDIT : "Reddit", "r/xxx", "utilisateur Reddit" — toujours "voyageur", "expatriée", "francophone sur place".
 ✅ Format inline « ... » uniquement (le système gère les blockquotes).
 ❌ INTERDIT de répéter la même citation 2 fois. Minimum 2 citations uniques pour validation.
 
@@ -2041,7 +2016,6 @@ Insère 1 à 2 encarts de crédibilité dans le CORPS de l'article (pas juste le
 - Format HTML OBLIGATOIRE :
 <div class='fv-source-anchor' style='margin:1.5rem 0;padding:0.8rem 1rem;background:#f0f7ff;border-left:3px solid #2563eb;border-radius:4px;font-size:0.88rem;color:#4b5563;'>📊 <strong>Synthèse de [N] témoignages</strong> de voyageurs et expatriés | [X] risques identifiés | Sources : forums de voyageurs francophones et internationaux</div>
 - Remplace [N] par le nombre réel de témoignages dans les données. Remplace [X] par le nombre de risques/problèmes identifiés dans l'analyse.
-- ❌ INTERDIT de mentionner Reddit dans cet encart. ✅ "forums de voyageurs", "communautés d'expatriés".
 - Cet encart sert d'ancre visuelle pour le lecteur qui scanne : il voit immédiatement que l'article est basé sur des données réelles.
 
 8. BLOCKQUOTES PROPRES : Les citations Reddit dans les blockquotes doivent être des PHRASES COMPLÈTES en français, pas des fragments. ❌ INTERDIT : mettre des liens internes dans les blockquotes. ❌ INTERDIT : laisser des slugs ou URLs dans le texte des citations. ✅ Chaque blockquote contient UNE citation pertinente, traduite proprement en français.
@@ -2059,11 +2033,7 @@ Insère 1 à 2 encarts de crédibilité dans le CORPS de l'article (pas juste le
 
 9. ANCHOR TEXT NATUREL : Le texte des liens internes doit être une phrase naturelle en français. ❌ INTERDIT : "voyager au vietnam avec 500 e comment optimiser chaque depense" (slug brut). ❌ INTERDIT : "Article Title Complet Avec Majuscules". ✅ OBLIGATOIRE : "optimiser son budget au Vietnam", "les vrais coûts du JR Pass" (phrase courte naturelle).
 
-🇫🇷 RÉPONSE UNIQUEMENT EN FRANÇAIS (PRIORITÉ ABSOLUE) :
-- Produis TOUT le JSON en français dès la première réponse. Aucun champ en anglais.
-- Si la source Reddit est en anglais, interprète et rédige directement en français (pas de copier-coller puis traduction).
-- Titres H2, paragraphes, listes, citations : tout doit être rédigé en français dans ta sortie.
-- Vérifie chaque clé du JSON avant de répondre : 0% d'anglais toléré dans la sortie.
+🇫🇷 TOUT EN FRANCAIS : Produis 100 % du JSON en francais. Source anglaise → redige directement en francais.
 
 📝 RÈGLES POUR LE TITRE (OBLIGATOIRE) — HOOK ÉMOTIONNEL + SEO :
 - Structure : [Tension/Enjeu émotionnel] + [Destination] + [Curiosity gap]
@@ -2088,15 +2058,7 @@ Insère 1 à 2 encarts de crédibilité dans le CORPS de l'article (pas juste le
   ✅ "Pourquoi ton premier mois à Bangkok va te coûter le double"
   ✅ "Visa run au Laos : ce que 3 passages m'ont vraiment coûté"
   ✅ "Corée du Sud : l'arnaque transport que 90% des touristes se prennent"
-- ❌ Exemples FADES (à ne JAMAIS produire) :
-  ❌ "Guide complet pour voyager en Asie" → FADE, zéro émotion
-  ❌ "5 risques que les blogs cachent" → LISTICLE GÉNÉRIQUE
-  ❌ "L'itinéraire qu'on te cache" → CLICKBAIT VIDE, pas de stakes concrets
-  ❌ "Budget, sécurité et erreurs à éviter" → CATALOGUE, pas de tension
-- ✅ Transforme TOUJOURS les titres fades en hooks émotionnels :
-  «Témoignage voyage: retours et leçons» → «J'ai tenu 6 mois en Thaïlande avec 1 200€ — voilà comment»
-  «Mon expérience en Asie» → «Visa run au Laos : ce que 3 passages m'ont appris (et coûté)»
-  «Vivre à Bali : Choix de Logement» → «Bali : Canggu ou Ubud ? Le vrai coût que personne n'affiche»
+- Transforme les titres descriptifs en hooks emotionnels avec tension + destination + enjeu concret.
 - Le titre DOIT contenir une destination asiatique précise (ville ou pays)
 - Le titre DOIT être actionnable et spécifique
 - Maximum 70 caractères pour le SEO
@@ -2126,50 +2088,25 @@ ${correctionBlock}
 - Utilise UNIQUEMENT des destinations asiatiques: Indonésie, Vietnam, Thaïlande, Japon, Corée du Sud, Philippines, Singapour
 - Si le témoignage mentionne une destination non-asiatique, remplace-la par une destination asiatique équivalente ou ignore-la complètement
 
-🌐 LANGUE OBLIGATOIRE: TOUT le contenu doit être en FRANÇAIS. 
-- ✅ Traduis TOUT en français dès la rédaction. Exemples de bonnes traductions :
-  «L'Indonésie vient de lancer...», «Le visa LTR de Thaïlande est disponible...», «Le Vietnam n'a pas...»,
-  «Le visa touristique régulier...», «Les exigences sont raisonnables...», «Essentiel pour le Vietnam»,
-  «Sous-estimer», «Ne pas prévoir de budget», «La fatigue s'installe», «Moment critique»,
-  «Ce que les témoignages Reddit...»
-- Traduis TOUS les textes anglais en français AVANT de les mettre dans le JSON
-- Ne laisse AUCUN texte en anglais dans le contenu final (0% anglais toléré)
-- VÉRIFIE que chaque champ du JSON est en français avant de répondre
-- Si tu détectes du texte anglais dans le témoignage source, traduis-le immédiatement
+🌐 LANGUE : Cf. regle FRANCAIS ci-dessus. Termes techniques anglais courants (coworking, digital nomad, hostel) en italique.
 - ✅ Chaque phrase est 100 % français. Les termes techniques anglais courants (coworking, digital nomad, hostel) restent en italique ; tout le reste est traduit.
 
-🚨 GARDE-FOUS EXPLICITES (SOURCE OF TRUTH) :
-- ✅ Chaque fait (lieu, chiffre, durée, risque) provient de la source Reddit ou du truth pack. Exemple : si la source mentionne «$1200/month in Chiang Mai», tu peux écrire «~1 100 €/mois à Chiang Mai» — mais pas inventer un coût pour Bangkok.
-- ✅ Prix uniquement sourcés : si un coût vient de la source Reddit ou du truth pack, affiche-le en euros. Sinon, reformule sans montant. Exemples valides : «reste abordable», «le surcoût est réel», «pèse sur ton budget». Exemple concret : «Le trajet en grab te reviendra à...» → OK si le prix est sourcé, sinon «Le trajet en grab reste raisonnable».
-- ✅ Vérifie que chaque mot est un vrai mot français — corrige les tokens collés en français naturel. Exemple : «coûtentquelques» → «coûtent quelques», «2quelques» → «deux ou trois».
-- ✅ Cite uniquement les lieux présents dans le post Reddit source ou la liste des lieux autorisés. Un lieu non sourcé bloque la publication. Exemple : si la source parle de Chiang Mai et Bangkok, reste sur ces deux villes — pas de Phuket improvisé.
-- ✅ FIDÉLITÉ CONTEXTUELLE DES CHIFFRES : chaque chiffre garde le contexte exact de sa source. Exemple : source «$50-100/month for coworking spaces» → article «~46–92 €/mois pour un espace de coworking» — le chiffre reste lié au coworking, jamais détourné vers le coût de la vie.
-- ✅ Chaque section répond à une vraie question du lecteur. Exemple : au lieu de «Présentation de Chiang Mai», écris «Combien coûte vraiment un mois à Chiang Mai ?»
-- ✅ SEO before affiliate : résoudre l'intention du lecteur avant de proposer un partenaire
-- Si une section est absente dans le JSON story, ne la crée pas
-- Sépare strictement l'auteur et la communauté
-- Priorité absolue à la fidélité de la source
-- Toutes les sections doivent être traçables au story.evidence
-- Toute donnée factuelle (chiffre, lieu, durée, coût) doit provenir soit de la source Reddit, soit du truth pack fourni dans les données ci-dessous. Aucune donnée inventée.
+🚨 GARDE-FOUS (SOURCE OF TRUTH) :
+- Chaque fait provient de la source ou du truth pack. Prix non source → formulation qualitative («reste abordable»).
+- Chaque chiffre garde le contexte exact de sa source ($50/month coworking → ~46 €/mois pour un espace de coworking).
+- Cite uniquement les lieux presents dans le brief. Un lieu non source bloque la publication.
+- Chaque section repond a une vraie question du lecteur. SEO before affiliate.
+- Separe strictement auteur et communaute. Sections absentes dans le JSON story = ne pas creer.
 
-✍️ STYLE DIRECT (VÉRIFIER AVANT RÉPONSE) :
-- ✅ Chaque phrase attaque avec un sujet concret et un fait. Exemple : «Le visa coûte 35 € et se demande en ligne en 10 minutes» au lieu de «Il est important de savoir que le visa coûte 35 €». Teste chaque phrase : si tu peux la supprimer sans perdre d'info, reformule-la.
-- Chaque phrase doit contenir un fait, un chiffre, ou un choix éditorial. Pas de remplissage.
+✍️ STYLE DIRECT : Chaque phrase attaque avec un sujet concret + fait. Teste : si supprimable sans perte d'info, reformule.
 
-🤖 ANTI-PATTERNS IA (VÉRIFIER AVANT RÉPONSE — REJET AUTOMATIQUE) :
-✅ VOIX NATURELLE — Reformulations qui sonnent humain :
-- ✅ Au lieu de «arbitrer entre X et Y sans sacrifier Z» → utilise un verbe concret : «Chiang Mai te coûte 40 % moins cher que Bali, mais tu perds la plage.»
-- ✅ Au lieu de «Ce que les autres guides ne disent pas» → un H2 factuel : «Le piège du ferry Krabi-Koh Lanta que personne ne mentionne» ou «Pourquoi 3 jours à Chiang Mai changent tout»
-- ✅ Au lieu de «La vraie question n'est pas X mais Y» → pose la question directement : «Combien de temps peux-tu tenir avec 1 500 €/mois à Bali ?»
-- ✅ Au lieu de «Option 1 / Option 2 / Option 3» (format identique) → varie les formats : un paragraphe fluide, puis un mini-récit, puis une liste comparative
-- ✅ Au lieu de pièges numérotés «Erreur 1 / Erreur 2» → raconte chaque piège comme un mini-scénario vécu : «Tu arrives à l'ATM, tu retires 10 000 bahts, et tu découvres 220 bahts de frais — par retrait.»
-- ✅ Au lieu de «Stratégie A / Stratégie B» → nomme par le résultat : «La méthode lente (et pas chère)» vs «L'option express à 46 €»
-- ✅ Ouvre avec une scène ou un fait, pas avec des fragments dramatiques. Exemple : «L'écran du distributeur affiche les frais — tu calcules vite.»
-- ✅ Montre les tensions au lieu de les annoncer. Exemple : «Le Grab coûte 4x le bus, mais il te dépose devant la porte à 2h du matin.»
-- ✅ Décris concrètement au lieu de clichés. Exemple : «le marché de nuit de Chiang Mai, à deux rues du temple Doi Suthep» au lieu de «hors des sentiers battus»
-Si tu utilises une de ces formulations, l'article sera REJETÉ par le quality gate.
+🤖 VOIX NATURELLE (rejet si non respecte) :
+- Verbes concrets, pas d'abstractions : «Chiang Mai te coute 40 % moins cher que Bali, mais tu perds la plage.»
+- H2 factuels, pas de formules creuses : «Le piege du ferry Krabi-Koh Lanta» au lieu de «Ce que les guides ne disent pas»
+- Varie les formats : paragraphe fluide, mini-recit, liste comparative. Pas de «Option 1 / Option 2».
+- Raconte les pieges comme des scenarios vecus, pas des listes numerotees.
+- Montre les tensions concretement : «Le Grab coute 4x le bus, mais il te depose devant la porte a 2h du matin.»
 
-ANTI-RÉPÉTITION : Ne termine JAMAIS plus de 2 paragraphes consécutifs par le même pattern syntaxique. Si tu remarques que tes derniers paragraphes finissent tous par "Si tu [X], [Y]" ou tous par un impératif, CHANGE le pattern du suivant. Variété = crédibilité.
 
 ✍️ VOIX D'AUTEUR (OBLIGATOIRE) :
 - Écris comme un rédacteur voyage expérimenté qui a un POINT DE VUE, pas comme un assistant qui résume

@@ -163,7 +163,7 @@ Critères d'évaluation :
 Score >= 90 = PASS, sinon FAIL.
 
 CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
-Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui remplit les critères de base DOIT scorer minimum 70/100.
+Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui passe le pre-publish validator DOIT scorer minimum 78/100.
 - Un article avec des problèmes mineurs uniquement = 80-89
 - Un article publiable en l'état = 85-95
 - Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
@@ -213,10 +213,19 @@ Critères :
 5. Ratio valeur/promotion : l'article apporte plus de valeur qu'il ne vend
 6. Disclaimer affiliation visible
 
+RUBRIQUE DE SCORING :
+- 90-100: 3+ modules bien placés, CTAs naturels et contextuels, disclaimer visible, toutes opportunités couvertes
+- 80-89: 2+ modules, CTAs acceptables, 1-2 opportunités manquées mineures
+- 70-79: Modules présents mais mal distribués OU 2+ opportunités manquées significatives
+- 60-69: Modules insuffisants, CTAs agressifs ou hors contexte
+- <60: Pas de modules affiliés ou totalement hors sujet
+
+CALIBRATION: Un article avec 2+ modules affiliés, CTAs contextuels, et disclaimer visible doit scorer >= 85.
+
 Score >= 85 = PASS, sinon FAIL.
 
 CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
-Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui remplit les critères de base DOIT scorer minimum 70/100.
+Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui passe le pre-publish validator DOIT scorer minimum 78/100.
 - Un article avec des problèmes mineurs uniquement = 80-89
 - Un article publiable en l'état = 85-95
 - Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
@@ -257,11 +266,11 @@ satisfied = true signifie que tu considères l'article publiable en l'état sur 
 IMPORTANT — LOCALISATION DES ISSUES : Pour chaque issue, tu DOIS indiquer le champ "location" correspondant au titre H2 de la section où se trouve le problème. Utilise "intro" pour le contenu avant le premier H2, "conclusion" pour le dernier paragraphe/section, ou le texte exact du H2 (ex: "Que voir à Tokyo en 3 jours ?"). Cela permet de ne réécrire QUE les sections problématiques.
 
 RUBRIQUE DE SCORING :
-- 90-100: Voix humaine distinctive, zéro pattern IA, arc narratif fort
-- 80-89: Bon style général, 1-2 formulations mécaniques tolérées
-- 70-79: Style acceptable mais plusieurs patterns IA ou sections creuses
-- 60-69: Style clairement IA avec plusieurs clichés
-- <60: Article IA non retravaillé
+- 90-100: Tutoiement, >=3 citations inline quantifiées, H2 décisionnels (80%+), hook immersif sensoriel, zéro pattern IA
+- 85-89: Tutoiement, 2+ citations, H2 décisionnels (60%+), hook OK, 1-2 formulations mécaniques tolérées
+- 80-84: Style acceptable, hook présent mais faible, H2 mixtes (décisionnels + descriptifs)
+- 70-79: Plusieurs patterns IA ou sections creuses, manque de personnalité
+- <70: Article clairement IA non retravaillé
 
 CALIBRATION: Un article avec tutoiement, citations inline, H2 décisionnels, et un hook immersif doit scorer >= 82, même s'il a 1-2 formulations mécaniques mineures.
 
@@ -276,7 +285,7 @@ Critères impitoyables :
 Score >= 85 = PASS, sinon FAIL.
 
 CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
-Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui remplit les critères de base DOIT scorer minimum 70/100.
+Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui passe le pre-publish validator DOIT scorer minimum 78/100.
 - Un article avec des problèmes mineurs uniquement = 80-89
 - Un article publiable en l'état = 85-95
 - Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
@@ -291,7 +300,7 @@ NE CONFONDS PAS "améliorations possibles" avec "problèmes". Si l'article est p
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   'ux-bugs-expert': {
     label: 'UX/Bugs',
-    weight: 2,
+    weight: 1.5,
     system: `Tu es un expert QA/UX spécialisé dans les médias digitaux.
 Tu audites un article publié sur un site WordPress de voyage.
 ${CURRENT_DATE_CTX}
@@ -334,10 +343,10 @@ fix_type :
 - "llm" = nécessite réécriture par LLM (phrase cassée, citation)
 - "manual" = nécessite intervention humaine
 
-Score >= 90 = PASS, sinon FAIL. Un seul bug CRITICAL = FAIL automatique.
+Score >= 85 = PASS, sinon FAIL. Un seul bug CRITICAL = FAIL automatique.
 
 CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
-Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui remplit les critères de base DOIT scorer minimum 70/100.
+Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui passe le pre-publish validator DOIT scorer minimum 78/100.
 - Un article avec des problèmes mineurs uniquement = 80-89
 - Un article publiable en l'état = 85-95
 - Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
@@ -401,7 +410,7 @@ Critères :
 Score >= 90 = PASS, sinon FAIL.
 
 CALIBRATION CRITIQUE — LIS ATTENTIVEMENT :
-Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui remplit les critères de base DOIT scorer minimum 70/100.
+Tu as tendance à sous-scorer. Un article PUBLIÉ sur un site professionnel qui passe le pre-publish validator DOIT scorer minimum 78/100.
 - Un article avec des problèmes mineurs uniquement = 80-89
 - Un article publiable en l'état = 85-95
 - Score < 60 = réservé à un article catastrophique (contenu hors-sujet, HTML cassé partout, 0 structure)
@@ -436,11 +445,11 @@ Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 
 Règles de décision :
 - Un seul bug CRITICAL (image fausse, phrase cassée, lien mort) = REJECT obligatoire
-- Score moyen pondéré < 82 = REJECT
+- Score moyen pondéré < 80 = REJECT
+- Score moyen pondéré >= 85 ET 0 critical = APPROVE (même si 1-2 agents non-satisfied)
 - Score moyen pondéré >= 82 ET 0 critical ET tous satisfied = APPROVE
-- SOFT APPROVE : Score moyen pondéré >= 80 ET 0 critical ET au maximum 1 agent non-satisfied → "SOFT_APPROVE" (publier avec note d'amélioration)
-- TOUS les agents non-satisfied (>= 2 agents) ET score < 82 = REJECT
-- Pondérations : UX/Bugs x2, Éditorial x1.5, SEO x1, Affiliation x1, Intégrité x1
+- SOFT APPROVE : Score moyen pondéré >= 80 ET 0 critical ET au maximum 2 agents non-satisfied → "SOFT_APPROVE"
+- Pondérations : UX/Bugs x1.5, Éditorial x1.5, SEO x1, Affiliation x1, Intégrité x1
 
 Ordonne les critical_fixes par priorité (1 = plus urgent).
 Ajoute dans generator_recommendations les améliorations que le pipeline de génération devrait intégrer pour éviter ces problèmes à l'avenir.`;
