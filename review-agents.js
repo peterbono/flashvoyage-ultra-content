@@ -467,7 +467,7 @@ Ajoute dans generator_recommendations les améliorations que le pipeline de gén
  * @param {Object} ctx - { html, title, url, editorialMode, destination, date }
  * @returns {Promise<Object>} { score, issues, strengths, verdict }
  */
-export async function runAgent(agentId, ctx) {
+export async function runAgent(agentId, ctx, vizBridge) {
   const agent = AGENTS[agentId];
   if (!agent) throw new Error(`Agent inconnu: ${agentId}`);
 
@@ -492,6 +492,22 @@ export async function runAgent(agentId, ctx) {
         const sev = deficit >= 15 ? 'critical' : deficit >= 8 ? 'major' : 'minor';
         result.issues = [{ severity: sev, category: 'scoring-gap', description: `Score ${result.score}/100 sans issues (${deficit} pts manquants)`, fix_suggestion: 'Ameliorer la qualite generale', location: 'global' }];
         console.warn(`  ⚠️ [${agent.label}] Score ${result.score} avec 0 issues — issue synthetique ajoutee`);
+      }
+
+      if (vizBridge) {
+        vizBridge.emit({
+          type: 'sub_agent_complete',
+          agent: 'marie',
+          data: {
+            subAgent: result._agentId,
+            label: result._label,
+            score: result.score,
+            issues: (result.issues || []).length,
+            satisfied: result.satisfied || false,
+            verdict: result.verdict || 'FAIL',
+            duration_ms: result._durationMs
+          }
+        });
       }
 
       return result;
@@ -520,12 +536,12 @@ export async function runAgent(agentId, ctx) {
  * @param {Object} ctx - Contexte article
  * @returns {Promise<Object>} { agents: { [id]: result }, allIssues, weightedScore }
  */
-export async function runAllAgents(ctx) {
+export async function runAllAgents(ctx, vizBridge) {
   const agentIds = Object.keys(AGENTS);
   console.log(`\n  🔍 Lancement de ${agentIds.length} agents experts en parallèle...`);
 
   const results = await Promise.all(
-    agentIds.map(id => runAgent(id, ctx))
+    agentIds.map(id => runAgent(id, ctx, vizBridge))
   );
 
   const agents = {};
@@ -561,7 +577,7 @@ export async function runAllAgents(ctx) {
  * @param {Object} ctx - Contexte article (titre, url)
  * @returns {Promise<Object>} Décision CEO
  */
-export async function runCeoValidator(panelResult, ctx) {
+export async function runCeoValidator(panelResult, ctx, vizBridge) {
   console.log(`\n  👔 Agent CEO/Validator — Analyse de la synthèse...`);
 
   const summary = Object.entries(panelResult.agents).map(([id, r]) => ({
@@ -599,6 +615,22 @@ ${JSON.stringify(summary, null, 2)}`;
     }
     const icon = decision.decision === 'APPROVE' ? '✅' : '🚫';
     console.log(`  ${icon} CEO : ${decision.decision} (score pondéré: ${decision.weighted_score}) — ${decision.reasoning}`);
+
+    if (vizBridge) {
+      vizBridge.emit({
+        type: 'sub_agent_complete',
+        agent: 'marie',
+        data: {
+          subAgent: 'ceo',
+          label: 'CEO',
+          score: null,
+          decision: decision.decision === 'APPROVE' ? 'APPROVE' : 'REJECT',
+          reasoning: (decision.reasoning || '').substring(0, 200),
+          duration_ms: 0
+        }
+      });
+    }
+
     return decision;
   } catch (err) {
     console.error(`  ❌ Agent CEO erreur: ${err.message}`);

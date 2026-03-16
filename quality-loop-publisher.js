@@ -826,6 +826,7 @@ async function main() {
   process.env.STRICT_INTERNAL_LINK_DEST_MATCH = '1';
 
   const generator = new EnhancedUltraGenerator();
+  const vizBridge = generator.vizBridge;
   const startTime = Date.now();
   const wpAuth = buildWpAuth();
   const recurringFixHistory = new Map();
@@ -872,6 +873,15 @@ async function main() {
 
   while (iteration < CONFIG.maxLoops && !approved) {
     iteration++;
+
+    if (vizBridge) {
+      vizBridge.emit({
+        type: 'quality_loop_start',
+        agent: 'marie',
+        data: { iteration, maxIterations: CONFIG.maxLoops }
+      });
+    }
+
     const stageTarget = CONFIG.targetScore !== null
       ? CONFIG.scoreStages[Math.min(iteration - 1, CONFIG.scoreStages.length - 1)]
       : null;
@@ -953,7 +963,7 @@ async function main() {
       date: new Date().toISOString().split('T')[0]
     };
 
-    const reviewResult = await runAllAgents(ctx);
+    const reviewResult = await runAllAgents(ctx, vizBridge);
     lastReviewResult = reviewResult;
 
     const criticalIssues = reviewResult.allIssues.filter(i => i.severity === 'critical');
@@ -998,7 +1008,24 @@ async function main() {
 
     previousScore = currentScore;
 
-    const ceoResult = await runCeoValidator(reviewResult, ctx);
+    const ceoResult = await runCeoValidator(reviewResult, ctx, vizBridge);
+
+    if (vizBridge) {
+      vizBridge.emit({
+        type: 'quality_loop_iteration',
+        agent: 'marie',
+        data: {
+          iteration,
+          weightedScore: reviewResult.weightedScore,
+          decision: ceoResult.decision === 'APPROVE' ? 'APPROVE' : 'REJECT',
+          agentScores: Object.fromEntries(
+            Object.entries(reviewResult.agents).map(([id, r]) => [id, r.score])
+          ),
+          criticalCount: reviewResult.criticalCount,
+          totalIssues: reviewResult.allIssues.length
+        }
+      });
+    }
 
     const reachedStageTarget = stageTarget === null || reviewResult.weightedScore >= stageTarget;
     if (ceoResult.decision === 'APPROVE' && reachedStageTarget) {
@@ -1054,6 +1081,12 @@ async function main() {
     iterationTrace.rewrite.requestedFixes = fixes.length;
 
     if (fixes.length > 0) {
+
+      if (vizBridge) {
+        vizBridge.emit({ type: 'stage_start', agent: 'rewriter' });
+      }
+
+      const rewriteStartTime = Date.now();
       console.log(`\n   🔧 LLM Rewriter — ${fixes.length} correction(s) ciblée(s)`);
       fixes.forEach((f, i) => console.log(`      ${f.priority || i + 1}. [${f.agent}] ${f.issue?.substring(0, 100)}`));
 
@@ -1075,6 +1108,19 @@ async function main() {
         article = { ...article, content: rewritten };
         writeFileSync('/tmp/last-generated-article.html', article.content);
         console.log(`   ✅ Article réécrit (${rewritten.length} chars)`);
+      }
+
+      if (vizBridge) {
+        vizBridge.emit({
+          type: 'stage_complete',
+          agent: 'rewriter',
+          data: {
+            iteration,
+            status: 'success',
+            detail: `Iteration ${iteration}: ${fixes.length} fixes applied`,
+            duration_ms: Date.now() - rewriteStartTime
+          }
+        });
       }
 
       // Passe déterministe post-réécriture pour réduire les régressions affiliation/intégrité.
