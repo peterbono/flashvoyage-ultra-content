@@ -128,10 +128,12 @@ const AGENTS = {
 Tu audites un article publié sur flashvoyage.com.
 ${CURRENT_DATE_CTX}
 
-MÉTHODE DE SCORING — Procède en 3 étapes :
+MÉTHODE DE SCORING — Procède en 3 étapes OBLIGATOIRES :
 1. Liste 3 POINTS FORTS de l'article (cite un extrait pour chaque)
 2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
 3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
+
+RÈGLE CRITIQUE : Si ton score < 85, tu DOIS lister dans "issues" CHAQUE problème qui a causé une déduction. Un score de 72 avec 0 issues est INVALIDE. Minimum 2 issues par article.
 
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) avec cette structure exacte :
 {
@@ -189,10 +191,12 @@ CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (fo
 Tu audites la monétisation d'un article publié sur flashvoyage.com.
 ${CURRENT_DATE_CTX}
 
-MÉTHODE DE SCORING — Procède en 3 étapes :
+MÉTHODE DE SCORING — Procède en 3 étapes OBLIGATOIRES :
 1. Liste 3 POINTS FORTS de l'article (cite un extrait pour chaque)
 2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
 3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
+
+RÈGLE CRITIQUE : Si ton score < 85, tu DOIS lister dans "issues" CHAQUE problème qui a causé une déduction. Un score de 72 avec 0 issues est INVALIDE. Minimum 2 issues par article.
 
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
@@ -248,10 +252,12 @@ CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (fo
 Tu audites un article généré par IA publié sur flashvoyage.com.
 ${CURRENT_DATE_CTX}
 
-MÉTHODE DE SCORING — Procède en 3 étapes :
+MÉTHODE DE SCORING — Procède en 3 étapes OBLIGATOIRES :
 1. Liste 3 POINTS FORTS de l'article (cite un extrait pour chaque)
 2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
 3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
+
+RÈGLE CRITIQUE : Si ton score < 85, tu DOIS lister dans "issues" CHAQUE problème qui a causé une déduction. Un score de 72 avec 0 issues est INVALIDE. Minimum 2 issues par article.
 
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
@@ -303,10 +309,12 @@ Tu audites un article publié sur un site WordPress de voyage.
 ${CURRENT_DATE_CTX}
 IMPORTANT : Le HTML que tu reçois peut être tronqué pour des raisons de taille. Si tu vois "fin du contenu fourni pour analyse", ce n'est PAS un bug de l'article — c'est simplement la limite du texte fourni. NE RAPPORTE PAS cela comme une issue.
 
-MÉTHODE DE SCORING — Procède en 3 étapes :
+MÉTHODE DE SCORING — Procède en 3 étapes OBLIGATOIRES :
 1. Liste 3 POINTS FORTS de l'article (cite un extrait pour chaque)
 2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
 3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
+
+RÈGLE CRITIQUE : Si ton score < 85, tu DOIS lister dans "issues" CHAQUE problème qui a causé une déduction. Un score de 72 avec 0 issues est INVALIDE. Minimum 2 issues par article.
 
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
@@ -372,10 +380,12 @@ CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (fo
 Tu vérifies l'intégrité factuelle d'un article publié sur flashvoyage.com.
 ${CURRENT_DATE_CTX}
 
-MÉTHODE DE SCORING — Procède en 3 étapes :
+MÉTHODE DE SCORING — Procède en 3 étapes OBLIGATOIRES :
 1. Liste 3 POINTS FORTS de l'article (cite un extrait pour chaque)
 2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
 3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
+
+RÈGLE CRITIQUE : Si ton score < 85, tu DOIS lister dans "issues" CHAQUE problème qui a causé une déduction. Un score de 72 avec 0 issues est INVALIDE. Minimum 2 issues par article.
 
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
@@ -475,6 +485,15 @@ export async function runAgent(agentId, ctx) {
       result._agentId = agentId;
       result._label = agent.label;
       result._durationMs = Date.now() - t0;
+
+      // Validation: score < 85 with 0 issues is suspicious
+      if (result.score < 85 && (!result.issues || result.issues.length === 0)) {
+        const deficit = 85 - result.score;
+        const sev = deficit >= 15 ? 'critical' : deficit >= 8 ? 'major' : 'minor';
+        result.issues = [{ severity: sev, category: 'scoring-gap', description: `Score ${result.score}/100 sans issues (${deficit} pts manquants)`, fix_suggestion: 'Ameliorer la qualite generale', location: 'global' }];
+        console.warn(`  ⚠️ [${agent.label}] Score ${result.score} avec 0 issues — issue synthetique ajoutee`);
+      }
+
       return result;
     } catch (err) {
       if (attempt < MAX_RETRIES && (err.message.includes('JSON') || err.message.includes('position'))) {
