@@ -1041,12 +1041,12 @@ async function main() {
     const reviewResult = await runAllAgents(ctx, vizBridge);
     lastReviewResult = reviewResult;
 
-    // ─── Merge gate validation issues into panel review issues ───
+    // ─── Gate issues feed the rewriter but DON'T affect panel scores ───
     const convertedGateIssues = convertGateIssuesToReviewFormat(validation.issues || []);
+    // Store gate issues separately for the rewriter
+    reviewResult._gateIssues = convertedGateIssues;
     if (convertedGateIssues.length > 0) {
-      const beforeCount = reviewResult.allIssues.length;
-      reviewResult.allIssues = [...convertedGateIssues, ...reviewResult.allIssues];
-      console.log(`   🔗 GATE→REVIEW MERGE: ${convertedGateIssues.length} gate issue(s) injected into review pipeline (${beforeCount} → ${reviewResult.allIssues.length} total)`);
+      console.log(`   🔗 GATE ISSUES: ${convertedGateIssues.length} issue(s) de validation (pour rewriter, pas pour score)`);
       convertedGateIssues.forEach(gi => console.log(`      • [${gi.severity}] [${gi._gate}] ${gi.description}`));
     }
 
@@ -1140,7 +1140,12 @@ async function main() {
     const preRewriteCriticalMap = criticalIssueMap(validation.issues || []);
     let fixes = ceoResult.critical_fixes || [];
     if (fixes.length === 0 && stageTarget !== null && reviewResult.weightedScore < stageTarget) {
-      fixes = buildQualityBoostFixes(reviewResult, stageTarget);
+      // Combine panel + gate issues for the rewriter (gate issues don't affect score)
+      const rewriterReviewResult = {
+        ...reviewResult,
+        allIssues: [...reviewResult.allIssues, ...(reviewResult._gateIssues || [])]
+      };
+      fixes = buildQualityBoostFixes(rewriterReviewResult, stageTarget);
     }
     if (stageTarget !== null && reviewResult.weightedScore < stageTarget && scoreStagnating) {
       const bundle = buildFamilyFixBundle({
