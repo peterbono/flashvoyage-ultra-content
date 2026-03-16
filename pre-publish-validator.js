@@ -168,6 +168,108 @@ function checkHtmlCompleteness(html) {
     }
   }
 
+
+  // ── Duplicate paragraph detection ──
+  const longParagraphs = paragraphs
+    .map(p => p.text.trim())
+    .filter(t => t.length > 50);
+  const duplicateParagraphs = [];
+  for (let i = 0; i < longParagraphs.length; i++) {
+    for (let j = i + 1; j < longParagraphs.length; j++) {
+      if (longParagraphs[i] === longParagraphs[j]) {
+        duplicateParagraphs.push(longParagraphs[i]);
+      } else {
+        // Near-exact duplicate: >90% word overlap
+        const wordsA = new Set(longParagraphs[i].toLowerCase().split(/\s+/).filter(w => w.length > 2));
+        const wordsB = new Set(longParagraphs[j].toLowerCase().split(/\s+/).filter(w => w.length > 2));
+        if (wordsA.size > 0 && wordsB.size > 0) {
+          let overlap = 0;
+          for (const w of wordsA) if (wordsB.has(w)) overlap++;
+          const similarity = overlap / Math.max(wordsA.size, wordsB.size);
+          if (similarity > 0.9) {
+            duplicateParagraphs.push(longParagraphs[i]);
+          }
+        }
+      }
+    }
+  }
+  if (duplicateParagraphs.length > 2) {
+    issues.push({
+      gate: 'html-completeness',
+      severity: 'critical',
+      message: `${duplicateParagraphs.length} paragraphes dupliqués ou quasi-identiques détectés : "${duplicateParagraphs[0].substring(0, 60)}..."`,
+      auto_fixable: false
+    });
+  } else if (duplicateParagraphs.length > 0) {
+    issues.push({
+      gate: 'html-completeness',
+      severity: 'major',
+      message: `${duplicateParagraphs.length} paragraphe(s) dupliqué(s) détecté(s) : "${duplicateParagraphs[0].substring(0, 60)}..."`,
+      auto_fixable: false
+    });
+  }
+
+  // ── Encoding artifacts detection ──
+  const fullText = root.text;
+  const encodingPatterns = [
+    { re: /\b([a-zà-ÿ])\s([A-Z][a-zà-ÿ]{2,})/g, label: 'mot coupé (ex: "e SIM")' },
+    { re: /\b(view)\s*(Box)\b/gi, label: 'artefact SVG (viewBox)' },
+    { re: /([A-ZÀ-Ÿa-zà-ÿ]{2,})\s{2,}([A-ZÀ-Ÿa-zà-ÿ]{2,})/g, label: 'espaces multiples intra-mot' },
+  ];
+  const encodingArtifacts = [];
+  for (const { re, label } of encodingPatterns) {
+    const matches = fullText.match(re);
+    if (matches && matches.length > 0) {
+      // Filter false positives for the first pattern (single lowercase letter + capitalized word)
+      const filtered = label.includes('mot coupé')
+        ? matches.filter(m => !/^[aàâäyoô]\s(A|E|I|O|U|Y|Un|Une|Il|Le|La|Les|De|Du|Des|En|Et|Au|Ou|On|Ce|Sa|Se|Si|Je|Tu|Ne|Ni|Or)$/i.test(m))
+        : matches;
+      if (filtered.length > 2) {
+        encodingArtifacts.push({ label, count: filtered.length, sample: filtered[0] });
+      }
+    }
+  }
+  if (encodingArtifacts.length > 0) {
+    for (const art of encodingArtifacts) {
+      issues.push({
+        gate: 'html-completeness',
+        severity: 'major',
+        message: `Artefact d'encodage détecté (${art.label}) : ${art.count} occurrences, ex: "${art.sample}"`,
+        auto_fixable: false
+      });
+    }
+  }
+
+  // ── Generic H2 detection ──
+  const genericH2Patterns = [
+    /^nos\s+recommandations$/i,
+    /^ce\s+qu['\u2019]il\s+faut\s+retenir$/i,
+    /^questions?\s+fréquentes?$/i,
+    /^nos\s+conseils$/i,
+    /^en\s+résumé$/i,
+    /^conclusion$/i,
+    /^informations?\s+pratiques?$/i,
+    /^notre\s+avis$/i,
+    /^à\s+retenir$/i,
+  ];
+  const h2Elements = root.querySelectorAll('h2');
+  for (const h2 of h2Elements) {
+    const h2Text = h2.text.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+    for (const pattern of genericH2Patterns) {
+      if (pattern.test(h2Text)) {
+        issues.push({
+          gate: 'html-completeness',
+          severity: 'minor',
+          message: `H2 trop générique (manque la destination) : "${h2Text}"`,
+          auto_fixable: false
+        });
+        break;
+      }
+    }
+  }
+
+
+
   return issues;
 }
 
@@ -214,6 +316,89 @@ function checkFacts(html, destination, title = '') {
 
   const destinationScopeIssues = checkDestinationScope(text, destination, title);
   issues.push(...destinationScopeIssues);
+
+
+  // ── Untranslated English content detection ──
+  const bodyRoot = parse(html);
+  // Remove blockquotes (citations) before checking
+  const blockquotes = bodyRoot.querySelectorAll('blockquote');
+  for (const bq of blockquotes) bq.remove();
+  const bodyText = bodyRoot.text;
+  
+  const commonEnglishPhrases = [
+    'tips and tricks', 'hidden gems', 'must-visit', 'must visit',
+    'top things to do', 'best places', 'travel guide', 'bucket list',
+    'off the beaten path', 'insider tips', 'local guide', 'day trip',
+    'things to know', 'what to expect', 'how to get', 'where to stay',
+    'best time to visit', 'getting around', 'cost of living',
+    "don't miss", 'worth visiting', 'highly recommend',
+    'you should', 'make sure to', 'keep in mind',
+  ];
+  
+  const englishPhraseMatches = [];
+  for (const phrase of commonEnglishPhrases) {
+    const phraseEscaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$' + '&');
+    if (new RegExp(phraseEscaped, 'gi').test(bodyText)) {
+      englishPhraseMatches.push(phrase);
+    }
+  }
+  
+  // Count English-looking words vs total words (simple heuristic)
+  const englishStopwords = new Set([
+    'the', 'is', 'are', 'was', 'were', 'been', 'being', 'have', 'has', 'had',
+    'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might',
+    'shall', 'can', 'need', 'must', 'that', 'which', 'who', 'whom', 'this',
+    'these', 'those', 'there', 'here', 'where', 'when', 'how', 'what', 'why',
+    'not', 'but', 'and', 'for', 'with', 'about', 'against', 'between',
+    'through', 'during', 'before', 'after', 'above', 'below', 'from', 'into',
+    'out', 'off', 'over', 'under', 'again', 'further', 'then', 'once',
+    'each', 'every', 'both', 'few', 'more', 'most', 'other', 'some', 'such',
+    'only', 'own', 'same', 'than', 'too', 'very', 'just', 'because',
+    'while', 'if', 'or', 'so', 'yet', 'also', 'back', 'even', 'still',
+    'already', 'since', 'however', 'although', 'though', 'whether',
+    'your', 'their', 'its', 'our', 'his', 'her', 'my',
+    'you', 'they', 'we', 'he', 'she', 'it',
+  ]);
+  // French-English shared words to exclude from English count
+  const frenchEnglishShared = new Set([
+    'a', 'est', 'le', 'la', 'les', 'de', 'des', 'du', 'un', 'une', 'en',
+    'et', 'ou', 'que', 'qui', 'ne', 'pas', 'plus', 'par', 'pour', 'sur',
+    'dans', 'avec', 'son', 'ses', 'aux', 'au', 'ce', 'se', 'si', 'je',
+    'tu', 'il', 'on', 'nous', 'vous', 'ils', 'mon', 'ma', 'mes', 'ton',
+    'ta', 'tes', 'hotel', 'restaurant', 'transport', 'budget', 'guide',
+    'route', 'temple', 'village', 'centre', 'service', 'note', 'place',
+    'simple', 'possible', 'nature', 'culture', 'experience',
+  ]);
+  
+  const allWords = bodyText.split(/\s+/).filter(w => w.length > 2);
+  if (allWords.length > 50) {
+    let englishWordCount = 0;
+    for (const word of allWords) {
+      const lower = word.toLowerCase().replace(/[^a-z]/g, '');
+      if (lower.length > 2 && englishStopwords.has(lower) && !frenchEnglishShared.has(lower)) {
+        englishWordCount++;
+      }
+    }
+    const englishRatio = englishWordCount / allWords.length;
+    if (englishRatio > 0.05) {
+      issues.push({
+        gate: 'fact-check',
+        severity: 'major',
+        message: `Contenu anglais non traduit détecté : ~${Math.round(englishRatio * 100)}% de mots anglais (${englishWordCount}/${allWords.length})`,
+        auto_fixable: false
+      });
+    }
+  }
+  
+  if (englishPhraseMatches.length >= 2) {
+    issues.push({
+      gate: 'fact-check',
+      severity: 'major',
+      message: `Expressions anglaises non traduites : ${englishPhraseMatches.slice(0, 5).map(p => '"' + p + '"').join(', ')}`,
+      auto_fixable: false
+    });
+  }
+
 
   return issues;
 }
@@ -325,7 +510,40 @@ async function checkInternalLinks(html, destination) {
     }
   }
 
-  if (WORDPRESS_URL && WORDPRESS_USERNAME && WORDPRESS_APP_PASSWORD) {
+
+  // ── Duplicate links detection ──
+  const hrefCounts = new Map();
+  const anchorHrefCounts = new Map();
+  for (const link of links) {
+    const href2 = (link.getAttribute('href') || '').trim();
+    const text2 = link.text.trim();
+    hrefCounts.set(href2, (hrefCounts.get(href2) || 0) + 1);
+    const key = `${text2}||||${href2}`;
+    anchorHrefCounts.set(key, (anchorHrefCounts.get(key) || 0) + 1);
+  }
+  for (const [href2, count] of hrefCounts) {
+    if (count > 2) {
+      issues.push({
+        gate: 'internal-links',
+        severity: 'minor',
+        message: `Lien dupliqué ${count}x : ${href2.substring(0, 80)}`,
+        auto_fixable: false
+      });
+    }
+  }
+  for (const [key, count] of anchorHrefCounts) {
+    if (count > 2) {
+      const [anchorText2, href2] = key.split('||||');
+      issues.push({
+        gate: 'internal-links',
+        severity: 'minor',
+        message: `Même ancre + href répétés ${count}x : "${anchorText2.substring(0, 40)}" → ${href2.substring(0, 60)}`,
+        auto_fixable: false
+      });
+    }
+  }
+
+    if (WORDPRESS_URL && WORDPRESS_USERNAME && WORDPRESS_APP_PASSWORD) {
     const auth = Buffer.from(`${WORDPRESS_USERNAME}:${WORDPRESS_APP_PASSWORD}`).toString('base64');
     for (const link of links.slice(0, 10)) {
       const href = link.getAttribute('href') || '';
