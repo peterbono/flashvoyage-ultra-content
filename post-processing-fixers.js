@@ -2146,6 +2146,114 @@ export function repairAuthorBoxLinks(html) {
 }
 
 
+
+// --- FIX v5: EXTENDED ENCODING BREAK DICTIONARY ---
+export function fixExtendedEncodingBreaks(html) {
+  let out = html;
+  let fixCount = 0;
+  // Common French words that get split by tokenizer
+  const dict = [
+    [/ant\s+[\u00e9e]c[\u00e9e]dents?/gi, m => { fixCount++; return m.replace(/ant\s+/, 'ant'); }],
+    [/mon\s+[\u00e9e]taires?/gi, m => { fixCount++; return m.replace(/mon\s+/, 'mon'); }],
+    [/cet\s*[\u00e2a]ge/gi, m => { fixCount++; return m.replace(/cet\s*/, 'cet '); }],
+    [/exp[\u00e9e]riment[\u00e9e]s[\u00e9e]noncent/gi, () => { fixCount++; return 'exp\u00e9riment\u00e9s \u00e9noncent'; }],
+    [/pers\s+[\u00e9e]v[\u00e9e]rance/gi, () => { fixCount++; return 'pers\u00e9v\u00e9rance'; }],
+    [/bien-\s+[\u00ea]tre/gi, () => { fixCount++; return 'bien-\u00eatre'; }],
+    [/inqu\s*i[\u00e9e]tude/gi, () => { fixCount++; return 'inqui\u00e9tude'; }],
+    [/int\s*[\u00e9e]rioriser/gi, () => { fixCount++; return 'int\u00e9rioriser'; }],
+    [/d\s*[\u00e9e]sagr[\u00e9e]able/gi, () => { fixCount++; return 'd\u00e9sagr\u00e9able'; }],
+    [/r\s*[\u00e9e]cup[\u00e9e]rer/gi, () => { fixCount++; return 'r\u00e9cup\u00e9rer'; }],
+    [/s\s*[\u00e9e]curit[\u00e9e]/gi, () => { fixCount++; return 's\u00e9curit\u00e9'; }],
+    [/n\s*[\u00e9e]cessaire/gi, () => { fixCount++; return 'n\u00e9cessaire'; }],
+    [/pr\s*[\u00e9e]voir/gi, () => { fixCount++; return 'pr\u00e9voir'; }],
+  ];
+  for (const [pattern, replacer] of dict) {
+    out = out.replace(pattern, replacer);
+  }
+  // Generic: fix "X \u00e9Y" patterns where X is 2-4 chars (common prefix before accented vowel)
+  out = out.replace(/\b([a-z]{2,4})\s+([\u00e9\u00e8\u00ea\u00e0\u00f9\u00ee\u00f4\u00fb\u00e7][a-z\u00e0-\u00ff]{3,})/gi, (m, prefix, rest) => {
+    // Check if joined form is a plausible French word (no double vowels at junction)
+    const joined = prefix + rest;
+    // Allow only if the prefix ends with a consonant
+    if (/[bcdfghjklmnpqrstvwxyz]$/i.test(prefix)) {
+      fixCount++;
+      return joined;
+    }
+    return m;
+  });
+  if (fixCount > 0) console.log('\ud83d\udd24 EXT_ENCODING: ' + fixCount + ' extended encoding break(s) fixed');
+  return out;
+}
+
+// --- FIX v5: CLEAN EM DASH HTML ENTITIES ---
+export function cleanEmDashEntities(html) {
+  let out = html;
+  let fixCount = 0;
+  // Remove standalone &#8212; (em dash) paragraphs
+  out = out.replace(/<p[^>]*>\s*&#8212;\s*<\/p>/gi, () => { fixCount++; return ''; });
+  out = out.replace(/<p[^>]*>\s*\u2014\s*<\/p>/gi, () => { fixCount++; return ''; });
+  // Replace inline &#8212; with : or nothing
+  out = out.replace(/\s*&#8212;\s*/g, () => { fixCount++; return ' '; });
+  if (fixCount > 0) console.log('\u2014 EM_DASH_ENTITIES: ' + fixCount + ' em dash entit(ies) cleaned');
+  return out;
+}
+
+// --- FIX v5: REPAIR FAQ SVG TAGS ---
+// LLM generates broken SVG in FAQ: missing <path>, broken closing tags, unclosed opening tag
+export function repairFaqSvg(html) {
+  let out = html;
+  let fixCount = 0;
+  const goodSvg = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;transition:transform 0.2s;"><path d="M5 7.5L10 12.5L15 7.5" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  // Pattern 1: <svg ...view Box..."</svg> (unclosed opening tag, no path)
+  out = out.replace(/<svg[^]*?view\s*Box[^]*?"<\/svg>/gi, () => {
+    fixCount++;
+    return goodSvg;
+  });
+  // Pattern 2: <svg ...viewBox...></svg> (closed but no path)
+  out = out.replace(/<svg[^>]*viewBox[^>]*>\s*<\/svg>/gi, () => {
+    fixCount++;
+    return goodSvg;
+  });
+  // Pattern 3: <svg ...>/svg> (broken close)
+  out = out.replace(/<svg[^>]*view\s*Box[^>]*>[^<]*\/svg>/gi, () => {
+    fixCount++;
+    return goodSvg;
+  });
+  if (fixCount > 0) console.log('\ud83c\udfa8 FAQ_SVG: ' + fixCount + ' broken SVG(s) repaired');
+  return out;
+}
+
+// --- FIX v5: CLEAN FV-AUTHORITY-MOVE DIVS ---
+// These are internal pipeline markers that should not appear in final output
+export function cleanAuthorityMoves(html) {
+  let out = html;
+  let fixCount = 0;
+  out = out.replace(/<div[^>]*class="fv-authority-move"[^>]*>[\s\S]*?<\/div>/gi, () => {
+    fixCount++;
+    return '';
+  });
+  if (fixCount > 0) console.log('\ud83e\uddf9 AUTHORITY_MOVES: ' + fixCount + ' internal marker(s) removed');
+  return out;
+}
+
+// --- FIX v5: FIX BROKEN REDDIT URL IN AUTHOR BOX ---
+export function fixBrokenRedditUrls(html) {
+  let out = html;
+  let fixCount = 0;
+  // Fix URLs where "r/VietNam" was replaced by "les forums de voyageurs Nam" in URLs
+  out = out.replace(/reddit\.com\/les forums de voyageurs([^"\s]*)/gi, (m, rest) => {
+    fixCount++;
+    return 'reddit.com/r/vietnam' + rest;
+  });
+  // Fix "Viet Nam" in URLs
+  out = out.replace(/reddit\.com\/r\/Viet\s+Nam/gi, () => {
+    fixCount++;
+    return 'reddit.com/r/Vietnam';
+  });
+  if (fixCount > 0) console.log('\ud83d\udd17 REDDIT_URL: ' + fixCount + ' broken Reddit URL(s) fixed');
+  return out;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
@@ -2202,6 +2310,15 @@ export function applyPostProcessingFixers(html) {
   c = fixWordCollisions(c);
   c = removeEmptyFaqItems(c);
   c = repairAuthorBoxLinks(c);
+  // v5 fixers
+  c = fixExtendedEncodingBreaks(c);
+  c = cleanEmDashEntities(c);
+  c = repairFaqSvg(c);
+  c = cleanAuthorityMoves(c);
+  c = fixBrokenRedditUrls(c);
+  // Clean data-fv attributes from remaining elements
+  c = c.replace(/<p[^>]*data-fv-[^>]*class="fv-authority-move"[^>]*>[\s\S]*?<\/p>/gi, "");
+  c = c.replace(/ data-fv-(?:proof|move)="[^"]*"/gi, "");
   return c;
 }
 
