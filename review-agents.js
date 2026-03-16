@@ -668,6 +668,32 @@ export async function runAgent(agentId, ctx, vizBridge) {
       result._label = agent.label;
       result._durationMs = Date.now() - t0;
 
+      // Inject deterministic issues for this agent domain
+      const deterministicMap = { 'seo-expert': 'seo', 'affiliation-expert': 'affiliation', 'editorial-expert': 'editorial', 'ux-bugs-expert': 'ux', 'integrity-expert': 'integrity' };
+      const detDomain = deterministicMap[agentId];
+      if (detDomain && (!result.issues || result.issues.length === 0)) {
+        const detIssues = detectDeterministicIssues(ctx);
+        const domainIssues = detIssues[detDomain] || [];
+        if (domainIssues.length > 0) {
+          result.issues = domainIssues;
+          console.log(`  \u2705 [${agent.label}] ${domainIssues.length} issue(s) d\u00e9terministe(s) inject\u00e9e(s)`);
+        }
+      }
+
+      // Recalculate score based on actual issues
+      if (result.issues && result.issues.length > 0) {
+        const criticals = result.issues.filter(i => i.severity === 'critical').length;
+        const majors = result.issues.filter(i => i.severity === 'major').length;
+        const minors = result.issues.filter(i => i.severity === 'minor').length;
+        const calcScore = Math.max(50, 85 - (criticals * 15) - (majors * 8) - (minors * 3));
+        if (calcScore < result.score) {
+          console.log(`  \u2139\ufe0f [${agent.label}] Score recalcul\u00e9: ${result.score} \u2192 ${calcScore} (${criticals}C/${majors}M/${minors}m)`);
+          result.score = calcScore;
+        }
+        result.satisfied = (criticals === 0 && majors === 0 && result.score >= 90);
+        result.verdict = result.score >= 90 ? 'PASS' : 'FAIL';
+      }
+
       // Validation: score < 85 with 0 issues — RETRY with forced extraction
       if (result.score < 85 && (!result.issues || result.issues.length === 0)) {
         console.warn(`  ⚠️ [${agent.label}] Score ${result.score} avec 0 issues — tentative de retry forcé...`);
