@@ -975,31 +975,70 @@ export function cleanAiTells(html) {
  * Limit "Si tu..." sentences to max 3 in the entire article.
  * Rewrites excess occurrences to imperative form.
  */
+
+/**
+ * Remove untranslated English fragments from article body.
+ * Detects English sentences (>3 words) that leaked from Reddit.
+ */
+
+/**
+ * Fix H2s that are truncated mid-phrase.
+ * e.g., "l'illusion du " with nothing after "du"
+ */
+export function fixTruncatedH2s(html) {
+  let out = html;
+  // Detect H2s ending with a preposition/article (incomplete phrase)
+  out = out.replace(/<h2([^>]*)>(.*?)\s+(du|de|des|le|la|les|un|une|l’|l')\s*<\/h2>/gi, (match, attrs, text, prep) => {
+    // Remove the dangling preposition
+    return '<h2' + attrs + '>' + text.trim() + '</h2>';
+  });
+  return out;
+}
+
+export function removeEnglishLeaks(html) {
+  let out = html;
+  // Remove common English leak patterns
+  out = out.replace(/No problem!/g, '');
+  out = out.replace(/advice on what needs tweaking/gi, '');
+  // Remove list items that are pure English
+  out = out.replace(/<li[^>]*>\s*No problem!\s*<\/li>/gi, '');
+  // Remove paragraphs that are >70% English words
+  out = out.replace(/(?<=>)([^<]{20,})(?=<)/g, (match, text) => {
+    const words = text.trim().split(/\s+/);
+    if (words.length < 4) return match;
+    const engWords = words.filter(w => /^(the|is|are|was|were|have|has|had|will|would|could|should|can|do|does|did|not|but|and|or|for|with|from|this|that|what|how|you|your|my|our|their|its|it|he|she|we|they|I|a|an|of|to|in|on|at|by|as|if|so|no|up|out|just|about|really|very|also|too|even|still|already|always|never|often|sometimes|actually|basically|honestly|literally|need|want|help|trip|travel|solo|first|time|day|night|get|go|come|take|make|know|think|see|find|try|use|tell|ask|look|feel|give|work|call|keep|let|say|mean|put|run|move|live|stay|play|read|pay|buy|eat|drink|sleep|walk|drive|fly)$/i.test(w));
+    if (engWords.length / words.length > 0.6) return ''; // >60% English = remove
+    return match;
+  });
+  // Clean empty elements
+  out = out.replace(/<p[^>]*>\s*<\/p>/g, '');
+  out = out.replace(/<li[^>]*>\s*<\/li>/g, '');
+  return out;
+}
+
 export function limitSiTuSentences(html) {
   let out = html;
   // Count ALL "Si tu" in the document (not just paragraph starts)
   const allSiTu = (out.match(/Si tu [a-z\u00e0-\u00ff]/gi) || []).length;
   if (allSiTu <= 4) return out; // Under threshold, nothing to do
 
-  // Strategy: convert excess "Si tu" to alternative formulations
+  // Strategy: simply REMOVE excess "Si tu" sentences (4th+ occurrence)
+  // Previous approach tried grammatical rewrites that produced broken French
+  // Safest approach: keep first 4, delete the rest entirely
   let kept = 0;
-  const alternatives = [
-    (verb) => "Pour " + verb,
-    (verb) => "En cas de " + verb,
-    (verb) => "Quand tu " + verb,
-    (verb) => verb.charAt(0).toUpperCase() + verb.slice(1),
-  ];
 
-  // Process all text, replacing excess "Si tu" patterns
-  out = out.replace(/Si tu ([a-z\u00e0-\u00ff][^,.:;!?<]{2,40})/gi, (match, rest) => {
+  // Process all text, removing excess "Si tu" sentences
+  // Match "Si tu [verb phrase]" up to the next period/comma/end of tag
+  out = out.replace(/Si tu ([a-z\u00e0-\u00ff][^<]*?)([.!?])/gi, (match, rest, punct) => {
     kept++;
-    if (kept <= 4) return match; // Keep first 4
-    const altIdx = (kept - 5) % alternatives.length;
-    // Try to use the verb after "Si tu" with an alternative
-    const verb = rest.trim();
-    const alt = alternatives[altIdx];
-    return alt(verb);
+    if (kept <= 4) return match; // Keep first 4 as-is
+    // For excess occurrences, just remove the "Si tu" clause
+    // This is safer than trying to rewrite grammar
+    return '';
   });
+
+  // Clean up empty paragraphs left behind
+  out = out.replace(/<p[^>]*>\s*<\/p>/g, '');
 
   return out;
 }
@@ -1628,6 +1667,8 @@ export function applyPostProcessingFixers(html) {
   c = fixSmartQuoteSpaces(c);
   c = capExcessiveH2s(c);
   c = cleanAiTells(c);
+  c = fixTruncatedH2s(c);
+  c = removeEnglishLeaks(c);
   c = limitSiTuSentences(c);
   c = fixTruncatedSentences(c);
   c = fixBrokenInternalLinkText(c);
