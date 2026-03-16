@@ -14,7 +14,8 @@
  */
 
 class PipelineReport {
-  constructor() {
+  constructor(vizBridge = null) {
+    this._vizBridge = vizBridge;
     this.report = {
       success: false,
       blocking: false,
@@ -47,6 +48,10 @@ class PipelineReport {
    * @param {string} stepName - Nom de l'étape
    */
   startStep(stepName) {
+    if (this._vizBridge) {
+      const vizAgent = this._mapStepToVizAgent(stepName);
+      if (vizAgent) this._vizBridge.emit({ type: "stage_start", agent: vizAgent });
+    }
     this.stepTimings[stepName] = {
       start: Date.now(),
       end: null,
@@ -115,6 +120,10 @@ class PipelineReport {
 
     this.report.steps[stepName] = stepReport;
     this.report.timings[stepName] = timing;
+    if (this._vizBridge) {
+      const vizAgent = this._mapStepToVizAgent(stepName);
+      if (vizAgent) this._vizBridge.emit({ type: "stage_complete", agent: vizAgent, data: { duration_ms: timing?.duration || 0, status: stepReport.status || "success", detail: "Completed: " + stepName }});
+    }
 
     // Vérifier si cette étape a des violations bloquantes
     if (stepReport.qaReport?.blocking === true) {
@@ -338,6 +347,10 @@ class PipelineReport {
    */
   getReport() {
     return this.report;
+  }
+  _mapStepToVizAgent(stepName) {
+    const map = { extractor: "extractor", generator: "generator", finalizer: "finalizer" };
+    return map[stepName] || null;
   }
 }
 

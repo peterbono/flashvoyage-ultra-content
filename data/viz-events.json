@@ -1,0 +1,128 @@
+[
+  {
+    "id": "run-1773670787516",
+    "article": "Hanoi Airport Taxi chaos - pre-book taxis",
+    "destination": "",
+    "timestamp": "2026-03-16T14:19:47.516Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 260,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 81522,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 11796,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "extractor",
+        "duration_ms": 260,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 81522,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 11796,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 84.3/100",
+        "score": 84
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published as draft, ID: null"
+      }
+    ]
+  },
+  {
+    "id": "run-1773673085540",
+    "article": "Best Airlines to use to travel to Vietnam?",
+    "destination": "vietnam",
+    "timestamp": "2026-03-16T14:58:05.540Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 680,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 58852,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 5876,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "extractor",
+        "duration_ms": 680,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 58852,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 5876,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 88.8/100",
+        "score": 89
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published as draft, ID: null"
+      }
+    ]
+  }
+]

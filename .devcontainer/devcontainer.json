@@ -17,7 +17,9 @@
       }
     }
   },
-  "forwardPorts": [],
+  "forwardPorts": [
+    8765
+  ],
   "secrets": {
     "OPENAI_API_KEY": {
       "description": "Cle API OpenAI pour la generation de contenu"
@@ -39,6 +41,13 @@
     },
     "TRAVELPAYOUTS_API_TOKEN": {
       "description": "Token API Travelpayouts"
+    }
+  },
+  "portsAttributes": {
+    "8765": {
+      "label": "VIZ WebSocket",
+      "onAutoForward": "openBrowser",
+      "visibility": "public"
     }
   }
 }

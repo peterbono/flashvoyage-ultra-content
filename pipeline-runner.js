@@ -52,6 +52,7 @@ class PipelineRunner {
     this.editorialEnhancer = new EditorialEnhancer();
     this.serpEnhancer = new SerpCompetitiveEnhancer();
     this.finalizer = new ArticleFinalizer();
+    this._vizBridge = null;
   }
 
   /**
@@ -65,7 +66,7 @@ class PipelineRunner {
    */
   async runPipeline(input) {
     // Initialiser le rapport unifié
-    const pipelineReport = new PipelineReport();
+    const pipelineReport = new PipelineReport(this._vizBridge);
     pipelineReport.initialize();
     
     // Stocker l'input original pour l'anti-hallucination guard (contient le texte brut)

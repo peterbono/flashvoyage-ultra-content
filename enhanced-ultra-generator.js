@@ -16,6 +16,7 @@ import RssSignalFetcher from './rss-signal-fetcher.js';
 import EditorialCalendar from './editorial-calendar.js';
 import AuthorManager from './author-manager.js';
 import { applyAllFixes } from './review-auto-fixers.js';
+import { initVizBridge } from "./viz-bridge.js";
 
 // Reddit OAuth token cache (module-scoped)
 let _redditTokenCache = { token: null, expires: 0 };
@@ -72,6 +73,10 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
     
     // NOUVEAU: Pipeline Runner comme orchestrateur principal (respecte le pipeline décrit)
     this.pipelineRunner = new PipelineRunner();
+
+    // VIZ-BRIDGE: Initialize WebSocket bridge for 3D visualization
+    this.vizBridge = initVizBridge();
+    this.pipelineRunner._vizBridge = this.vizBridge;
     
     // Initialiser les composants nécessaires
     this.initializeComponents();
@@ -698,6 +703,12 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // ============================================================
       
       console.log('\n🚀 PIPELINE_RUNNER: Démarrage du pipeline FlashVoyage');
+      // VIZ-BRIDGE: Emit pipeline_start with article info
+      this.vizBridge.emit({ type: 'pipeline_start', agent: null, data: {
+        runId: 'run-' + Date.now(),
+        article: selectedArticle?.title || '',
+        destination: selectedArticle?.geo?.country || selectedArticle?.destination || '',
+      }});
       console.log('===================================================\n');
       
       // Adapter selectedArticle au format attendu par pipeline-runner
@@ -728,6 +739,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       };
       
       // Exécuter le pipeline complet
+      // VIZ-BRIDGE: scout stage
+      this.vizBridge.emit({ type: 'stage_start', agent: 'scout' });
       const pipelineReport = await this.pipelineRunner.runPipeline(pipelineInput);
       
       // pipelineReport est déjà le rapport finalisé (retourné par finalize())
@@ -783,6 +796,28 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const story = report.steps?.['story-compiler']?.data || report.steps?.['story-compiler']?.debug || {};
       
       console.log('\n✅ PIPELINE_RUNNER: Pipeline terminé avec succès');
+      // VIZ-BRIDGE: Emit stage_complete events from pipeline report
+      {
+        const vizStageMap = {
+          'extractor': 'extractor',
+          'pattern-detector': null,
+          'story-compiler': null,
+          'editorial-router': null,
+          'generator': 'generator',
+          'finalizer': 'finalizer',
+        };
+        for (const [step, vizAgent] of Object.entries(vizStageMap)) {
+          if (!vizAgent) continue;
+          const s = report.steps?.[step];
+          if (s) {
+            this.vizBridge.emit({ type: 'stage_complete', agent: vizAgent, data: {
+              duration_ms: s.timing?.duration || 0,
+              status: s.status || 'success',
+              detail: 'Completed: ' + step,
+            }});
+          }
+        }
+      }
       console.log(`   Titre: ${finalArticle.title}`);
       console.log(`   Contenu: ${finalArticle.content?.length || 0} caractères`);
       console.log(`   QA Report: ${finalArticle.qaReport?.checks?.length || 0} checks`);
@@ -1029,7 +1064,11 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
       console.log(`🔍 DEBUG WIDGETS APRÈS DEDUP: count=${widgetsRendered}, types=[${detected.types.join(', ')}]`);
       
       // Apply post-processing fixers (encoding, ghost links, dedup, FAQ, etc.)
+      this.vizBridge.emit({ type: 'stage_start', agent: 'post-processing' });
       finalizedArticle.content = applyPostProcessingFixers(finalizedArticle.content);
+      this.vizBridge.emit({ type: 'stage_complete', agent: 'post-processing', data: {
+        status: 'success', detail: 'Post-processing fixers applied',
+      }});
 
       // TEMPORAIRE: Sauvegarder le contenu APRÈS déduplication pour vérification des corrections génériques
       try {
@@ -1156,7 +1195,12 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
             : prePublishThreshold;
           let finalGatePct = prePublishPct;
           let finalGateBlockingPassed = !!prePublishScore.blockingPassed;
-          console.log(`\n📊 PRE-PUBLISH QUALITY GATE: ${prePublishPct}% (seuil: ${prePublishThreshold}% | cible: ${qualityTargetScore}%) [${editorialMode.toUpperCase()}] — blocking: ${prePublishScore.blockingPassed ? 'OK' : 'FAIL'}`);
+          // VIZ-BRIDGE: marie score
+      this.vizBridge.emit({ type: 'stage_complete', agent: 'marie', data: {
+        status: 'success', detail: 'Score: ' + prePublishPct + '/100', score: Math.round(prePublishPct),
+      }});
+      this.vizBridge.emit({ type: 'score_update', agent: 'marie', data: { score: Math.round(prePublishPct) } });
+      console.log(`\n📊 PRE-PUBLISH QUALITY GATE: ${prePublishPct}% (seuil: ${prePublishThreshold}% | cible: ${qualityTargetScore}%) [${editorialMode.toUpperCase()}] — blocking: ${prePublishScore.blockingPassed ? 'OK' : 'FAIL'}`);
           // Détail des checks bloquants pour diagnostic
           if (!prePublishScore.blockingPassed && prePublishScore.categories?.blocking?.checks) {
             prePublishScore.categories.blocking.checks.forEach(chk => {
@@ -1366,6 +1410,13 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
       console.log('📝 Publication sur WordPress...');
       const publishedArticle = await this.publishToWordPress(finalizedArticle);
       
+      // VIZ-BRIDGE: publisher complete
+      this.vizBridge.emit({ type: 'stage_complete', agent: 'publisher', data: {
+        status: 'success', detail: 'Published as draft, ID: ' + publishedArticle.id,
+      }});
+      this.vizBridge.emit({ type: 'pipeline_complete', agent: null, data: {
+        article: finalizedArticle.title, wpPostId: publishedArticle.id,
+      }});
       console.log('✅ Article publié avec succès!');
       console.log('🔗 Lien:', publishedArticle.link);
 
@@ -2986,6 +3037,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const generator = new EnhancedUltraGenerator();
   generator.generateAndPublishEnhancedArticle()
     .then(() => {
+      if (generator.vizBridge) generator.vizBridge.shutdown();
       console.log('\n✅ Processus terminé avec succès !');
       process.exit(0);
     })
