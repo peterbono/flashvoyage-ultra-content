@@ -959,7 +959,7 @@ export async function fixEmptyFAQ(html, title = '') {
       { q: 'Comment se déplacer à ' + destination + ' ?', a: 'Bus locaux pour les longues distances, grab/taxi pour les courts trajets. Compare sur 12go.asia pour les inter-villes.' },
       { q: destination + ' est-il sûr pour voyager seul ?', a: 'Globalement oui. Utilise des apps de taxi (Grab, Bolt), garde tes objets de valeur en sécurité, et informe quelqu\'un de ton itinéraire.' },
     ];
-    const faqHtml = '<h2>Questions fréquentes</h2>\n' + faqQuestions.map(f => '<details><summary>' + f.q + '</summary><p>' + f.a + '</p></details>').join('\n');
+    const faqHtml = '<h2>Questions fréquentes</h2>\n' + faqQuestions.map(f => '<div class="fv-faq-item" style="border:1px solid #e5e7eb;border-radius:8px;margin-bottom:0.75rem;overflow:hidden;"><details style="padding:0;"><summary style="padding:1rem 1.2rem;cursor:pointer;font-weight:600;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;">' + f.q + '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;transition:transform 0.2s;"><path d="M5 7.5L10 12.5L15 7.5" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/></svg></summary><div style="padding:0 1.2rem 1rem;color:#4b5563;line-height:1.6;">' + f.a + '</div></details></div>').join('\n');
     
     // Insert before conclusion/retenir or at end
     const beforeConclusion = /<h2[^>]*>\s*(?:ce\s*qu.?il\s*faut\s*retenir|à\s*retenir|nos\s*recommandations?|articles?\s*connexes?)\s*<\/h2>/i;
@@ -1048,7 +1048,7 @@ export async function fixEmptyFAQ(html, title = '') {
 
   // Build FAQ HTML
   const faqHtml = selected.map(f =>
-    `<details><summary>${f.q}</summary><p>${f.a}</p></details>`
+    `<div class="fv-faq-item" style="border:1px solid #e5e7eb;border-radius:8px;margin-bottom:0.75rem;overflow:hidden;"><details style="padding:0;"><summary style="padding:1rem 1.2rem;cursor:pointer;font-weight:600;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;">${f.q}<svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;transition:transform 0.2s;"><path d="M5 7.5L10 12.5L15 7.5" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/></svg></summary><div style="padding:0 1.2rem 1rem;color:#4b5563;line-height:1.6;">${f.a}</div></details></div>`
   ).join('\n');
 
   // Replace FAQ content

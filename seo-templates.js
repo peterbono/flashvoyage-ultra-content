@@ -68,7 +68,7 @@ function affiliateWidget(type, dest) {
 
 function faqSection(pairs) {
   return `<h2>Questions fréquentes</h2>\n` +
-    pairs.map(([q, a]) => `<details><summary>${escHtml(q)}</summary><p>${a}</p></details>`).join('\n');
+    pairs.map(([q, a]) => `<div class="fv-faq-item" style="border:1px solid #e5e7eb;border-radius:8px;margin-bottom:0.75rem;overflow:hidden;"><details style="padding:0;"><summary style="padding:1rem 1.2rem;cursor:pointer;font-weight:600;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;">${escHtml(q)}<svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;transition:transform 0.2s;"><path d="M5 7.5L10 12.5L15 7.5" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/></svg></summary><div style="padding:0 1.2rem 1rem;color:#4b5563;line-height:1.6;">${a}</div></details></div>`).join('\n');
 }
 
 function faqSchema(pairs, url) {

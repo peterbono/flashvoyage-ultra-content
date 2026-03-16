@@ -887,8 +887,9 @@ Retourne UNIQUEMENT le HTML: <h3>Checklist avant de partir</h3><ul><li>Action 1<
       const q = this.escapeHtml(question);
       const a = this.escapeHtml(answer);
       return `<!-- wp:details -->
-<details class="wp-block-details">
-<summary>${q}</summary>
+<div class="fv-faq-item" style="border:1px solid #e5e7eb;border-radius:8px;margin-bottom:0.75rem;overflow:hidden;">
+<details style="padding:0;">
+<summary style="padding:1rem 1.2rem;cursor:pointer;font-weight:600;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;">${q}<svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;transition:transform 0.2s;"><path d="M5 7.5L10 12.5L15 7.5" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/></svg></summary>
 <!-- wp:paragraph -->
 <p>${a}</p>
 <!-- /wp:paragraph -->

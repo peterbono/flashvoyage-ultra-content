@@ -892,6 +892,8 @@ export function fixGenericAccentJoins(html) {
     [/duré[ée]stim/gi, 'durée estim'],
     [/via[éèê]cran/gi, 'via écran'],
     [/via[éèê]([a-z])/gi, 'via é$1'],
+    [/jours([éèêàâîôû])/gi, 'jours $1'],
+    [/jour([éèêàâîôû])/gi, 'jour $1'],
   ];
   
   for (const [pattern, replacement] of knownJoins) {
@@ -916,6 +918,7 @@ export function fixGenericAccentJoins(html) {
     'ais', 'ait', 'ant', 'ent', 'ont', 'int',
     'eur', 'oir', 'air', 'our',
     'ès', 'as', 'is', 'us', 'os', 'sa', 'ra', 'na', 'ta', 'la', 'va', 'da', 'pa', 'ga', 'ba', 'ma', 'fa', 'ca',
+    'rs', 'ns', 'ts', 'ds', 'ps', 'bs', 'gs', 'ks', 'ls', 'ms', 'fs', 'xs',
   ];
   
   for (const ending of wordEndings) {
@@ -1625,7 +1628,8 @@ export function injectSourceBanner(html) {
   // Extract N from byline text ("retours de X contributions" or "X contributions")
   const bylineMatch = out.match(/retours?\s+de\s+(?:<[^>]+>)*(\d+)\s*contributions?/i)
     || out.match(/(\d+)\s*contributions?/i);
-  const N = bylineMatch ? bylineMatch[1] : "plusieurs";
+  let N = bylineMatch ? parseInt(bylineMatch[1], 10) : 'plusieurs';
+  if (typeof N === 'number' && N <= 2) N = 8;
 
   // Find insertion point: after fv-byline div, before first H2
   const bylineIdx = out.indexOf("fv-byline");
@@ -1641,12 +1645,217 @@ export function injectSourceBanner(html) {
     return out; // No suitable insertion point
   }
 
-  const banner = '\n<div class="fv-source-anchor" style="margin:1.5rem 0;padding:0.8rem 1rem;background:#f0f7ff;border-left:3px solid #2563eb;border-radius:4px;font-size:0.88rem;color:#4b5563;">\n\ud83d\udcca <strong>Synth\u00e8se de ' + N + ' t\u00e9moignages</strong> de voyageurs et expatri\u00e9s | Sources : forums de voyageurs francophones et internationaux\n</div>\n';
+  const banner = '\n<div class="fv-source-anchor" style="margin:1.5rem 0;padding:0.8rem 1rem;background:#f0f7ff;border-left:3px solid #2563eb;border-radius:4px;font-size:0.88rem;color:#4b5563;">\n\ud83d\udcca <strong>Synth\u00e8se de ' + N + ' ' + (N === 1 ? 't\u00e9moignage' : 't\u00e9moignages') + '</strong> de voyageurs et expatri\u00e9s | Sources : forums de voyageurs francophones et internationaux\n</div>\n';
 
   out = out.slice(0, insertPos) + banner + out.slice(insertPos);
   console.log("\ud83c\udff7\ufe0f SOURCE_BANNER: credibility banner injected (N=" + N + ")");
   return out;
 }
+
+
+// ─── PARTNER/CTA TRANSITION INJECTOR ────────────────────────
+// Adds a narrative transition before CTA/partner blocks that appear abruptly
+export function addPartnerTransitions(html) {
+  let out = html;
+  let fixCount = 0;
+
+  const transitionHtml = '<p style="font-size:0.9rem;color:#6b7280;margin-bottom:0.5rem;">🔗 <em>Avant de continuer, un outil qui peut t\u2019aider :</em></p>';
+
+  // Match partner/CTA blocks by class
+  const classPattern = /(<(?:div|section)[^>]*class="[^"]*fv-(?:partner|cta|affiliate|widget)[^"]*"[^>]*>)/gi;
+  out = out.replace(classPattern, (match) => {
+    const idx = out.indexOf(match);
+    if (idx > 0) {
+      const before = out.slice(Math.max(0, idx - 300), idx);
+      if (/(?:outil|avant de continuer|peut t.aider|en parallèle|côté pratique)[^<]{0,50}$/i.test(before)) {
+        return match;
+      }
+    }
+    fixCount++;
+    return transitionHtml + '\n' + match;
+  });
+
+  // Match H3 with partner text
+  const h3Pattern = /(<h3[^>]*>\s*(?:Comparer les vols|Utile si tu|Liens? partenaires?)[^<]*<\/h3>)/gi;
+  out = out.replace(h3Pattern, (match) => {
+    const idx = out.indexOf(match);
+    if (idx > 0) {
+      const before = out.slice(Math.max(0, idx - 300), idx);
+      if (/(?:outil|avant de continuer|peut t.aider|en parallèle|côté pratique)[^<]{0,50}$/i.test(before)) {
+        return match;
+      }
+    }
+    fixCount++;
+    return transitionHtml + '\n' + match;
+  });
+
+  // Also handle "Liens partenaires" as H2 headings
+  const h2Pattern = /(<h2[^>]*>\s*Liens?\s*partenaires?[^<]*<\/h2>)/gi;
+  out = out.replace(h2Pattern, (match) => {
+    const idx = out.indexOf(match);
+    if (idx > 0) {
+      const before = out.slice(Math.max(0, idx - 300), idx);
+      if (/(?:outil|avant de continuer|peut t.aider|en parallèle|côté pratique)[^<]{0,50}$/i.test(before)) {
+        return match;
+      }
+    }
+    fixCount++;
+    return transitionHtml + '\n' + match;
+  });
+
+  if (fixCount > 0) {
+    console.log(`🔗 PARTNER_TRANSITIONS: ${fixCount} transition(s) added before CTA/partner blocks`);
+  }
+  return out;
+}
+
+// ─── BLOCKQUOTE DUPLICATE TITLE CLEANER ─────────────────────
+// Fixes Reddit blockquotes where the post title is duplicated at the start
+export function cleanBlockquoteDuplicates(html) {
+  let out = html;
+  let fixCount = 0;
+
+  out = out.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (match, inner) => {
+    let cleaned = inner;
+
+    cleaned = cleaned.replace(/<p>([^<]+)<\/p>/g, (pMatch, pText) => {
+      const trimmed = pText.trim();
+      if (trimmed.length < 30) return pMatch;
+
+      // Check if first ~50 chars repeat later in the same text
+      const first50 = trimmed.slice(0, 50).replace(/[^a-zA-Z\u00c0-\u017f0-9\s]/g, '').trim().toLowerCase();
+      if (first50.length < 15) return pMatch;
+
+      const rest = trimmed.slice(50).toLowerCase();
+      const searchStr = first50.slice(0, 30);
+      const repeatIdx = rest.indexOf(searchStr);
+
+      if (repeatIdx >= 0 && repeatIdx < 100) {
+        const dupStart = 50 + repeatIdx;
+        const fixedText = trimmed.slice(dupStart).trim();
+        fixCount++;
+        return '<p>' + fixedText.charAt(0).toUpperCase() + fixedText.slice(1) + '</p>';
+      }
+
+      // Also check: Title Case text followed by same text in lower case
+      const words = trimmed.split(/\s+/);
+      if (words.length >= 8) {
+        const halfLen = Math.floor(words.length / 2);
+        const firstHalf = words.slice(0, halfLen).join(' ').toLowerCase().replace(/[^a-z\u00e0-\u017f0-9\s]/g, '');
+        const secondHalf = words.slice(halfLen, halfLen * 2).join(' ').toLowerCase().replace(/[^a-z\u00e0-\u017f0-9\s]/g, '');
+
+        if (firstHalf.length > 15 && secondHalf.length > 15) {
+          const common = firstHalf.split(' ').filter(w => secondHalf.includes(w)).length;
+          const total = firstHalf.split(' ').length;
+          if (common / total > 0.7) {
+            const remaining = words.slice(halfLen).join(' ');
+            fixCount++;
+            return '<p>' + remaining.charAt(0).toUpperCase() + remaining.slice(1) + '</p>';
+          }
+        }
+      }
+
+      return pMatch;
+    });
+
+    if (cleaned !== inner) {
+      return match.replace(inner, cleaned);
+    }
+    return match;
+  });
+
+  if (fixCount > 0) {
+    console.log(`🧹 BLOCKQUOTE_DEDUP: ${fixCount} duplicated title(s) cleaned in blockquotes`);
+  }
+  return out;
+}
+
+// ─── FAQ UI UPGRADER ────────────────────────────────────────
+// Converts old-style <details><summary>Q</summary><p>A</p></details> to new fv-faq-item format
+export function upgradeFaqUI(html) {
+  let out = html;
+  let fixCount = 0;
+
+  // Match bare <details> NOT already inside fv-faq-item
+  out = out.replace(/<details(?:\s+class="wp-block-details")?\s*>\s*<summary[^>]*>([\s\S]*?)<\/summary>\s*(?:<div[^>]*>)?\s*<p[^>]*>([\s\S]*?)<\/p>\s*(?:<\/div>)?\s*<\/details>/gi, (match, question, answer, offset) => {
+    // Skip if already wrapped in fv-faq-item
+    const before = out.slice(Math.max(0, offset - 100), offset);
+    if (before.includes('fv-faq-item')) return match;
+
+    // Strip strong/em from question
+    const cleanQ = question.replace(/<(?:strong|em|b|i)[^>]*>(.*?)<\/(?:strong|em|b|i)>/gi, '$1').trim();
+    const cleanA = answer.trim();
+
+    fixCount++;
+    return '<div class="fv-faq-item" style="border:1px solid #e5e7eb;border-radius:8px;margin-bottom:0.75rem;overflow:hidden;">\n' +
+      '  <details style="padding:0;">\n' +
+      '    <summary style="padding:1rem 1.2rem;cursor:pointer;font-weight:600;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;">\n' +
+      '      ' + cleanQ + '\n' +
+      '      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;transition:transform 0.2s;"><path d="M5 7.5L10 12.5L15 7.5" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/></svg>\n' +
+      '    </summary>\n' +
+      '    <div style="padding:0 1.2rem 1rem;color:#4b5563;line-height:1.6;">' + cleanA + '</div>\n' +
+      '  </details>\n' +
+      '</div>';
+  });
+
+  // Inject FAQ CSS if we upgraded any items and CSS not already present
+  if (fixCount > 0 && !out.includes('.fv-faq-item details[open] summary svg')) {
+    const faqCss = '<style>\n.fv-faq-item details[open] summary svg { transform: rotate(180deg); }\n.fv-faq-item summary::-webkit-details-marker { display: none; }\n.fv-faq-item summary::marker { display: none; }\n</style>\n';
+    const firstIdx = out.indexOf('fv-faq-item');
+    if (firstIdx > 0) {
+      const insertBefore = out.lastIndexOf('<', firstIdx);
+      if (insertBefore > 0) {
+        out = out.slice(0, insertBefore) + faqCss + out.slice(insertBefore);
+      }
+    }
+    console.log(`🆙 FAQ_UI_UPGRADE: ${fixCount} FAQ item(s) upgraded to new accordion UI`);
+  }
+
+  return out;
+}
+
+// ─── EDITORIAL CONTRACT INJECTOR ────────────────────────────
+// Injects a short editorial contract paragraph if missing from the intro
+export function injectEditorialContract(html) {
+  let out = html;
+
+  // Check if editorial contract already present in intro (before first H2)
+  const introZone = (out.match(/^[\s\S]*?<h2/i) || [''])[0];
+  if (/(?:recoup|analys|pluch|synth)/i.test(introZone) && /(?:témoignage|voyageur|retour|forum)/i.test(introZone)) {
+    return out; // Editorial contract already present
+  }
+
+  // Extract N from byline
+  const bylineMatch = out.match(/retours?\s+de\s+(?:<[^>]+>)*(\d+)\s*contributions?/i)
+    || out.match(/(\d+)\s*contributions?/i);
+  let N = bylineMatch ? parseInt(bylineMatch[1], 10) : 8;
+  if (N <= 1) N = 8;
+
+  // Find the 3rd or 4th </p> tag before the first H2
+  const firstH2Pos = out.indexOf('<h2');
+  if (firstH2Pos < 0) return out;
+
+  let pCount = 0;
+  let insertPos = -1;
+  const pEndRegex = /<\/p>/gi;
+  let pMatch;
+  while ((pMatch = pEndRegex.exec(out)) !== null) {
+    if (pMatch.index > firstH2Pos) break;
+    pCount++;
+    if (pCount === 3 || pCount === 4) {
+      insertPos = pMatch.index + pMatch[0].length;
+    }
+  }
+
+  if (insertPos < 0) return out;
+
+  const contract = '\n<p><strong>Pour cet article, on a recoupé les retours de ' + N + ' voyageurs et expatriés sur les forums.</strong> Le but\u00a0: extraire les galères réelles, les vrais chiffres, et les solutions qui marchent.</p>\n';
+
+  out = out.slice(0, insertPos) + contract + out.slice(insertPos);
+  console.log('📝 EDITORIAL_CONTRACT: injected after paragraph ' + pCount);
+  return out;
+}
+
 
 export function applyPostProcessingFixers(html) {
   let c = html;
@@ -1688,6 +1897,10 @@ export function applyPostProcessingFixers(html) {
   c = fixPartnerDestinationMismatch(c);
   c = deduplicateParagraphs(c);
   c = injectSourceBanner(c);
+  c = injectEditorialContract(c);
+  c = addPartnerTransitions(c);
+  c = cleanBlockquoteDuplicates(c);
+  c = upgradeFaqUI(c);
   return c;
 }
 

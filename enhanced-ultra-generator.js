@@ -2186,10 +2186,10 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
 
     const faqDetails = [
       '<!-- wp:details -->',
-      '<details><summary>Quel budget prévoir sans mauvaise surprise ?</summary><p>Prévois une marge pour les frais annexes et vérifie toujours le coût total avant réservation.</p></details>',
+      '<div class="fv-faq-item" style="border:1px solid #e5e7eb;border-radius:8px;margin-bottom:0.75rem;overflow:hidden;"><details style="padding:0;"><summary style="padding:1rem 1.2rem;cursor:pointer;font-weight:600;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;">Quel budget prévoir sans mauvaise surprise ?<svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;transition:transform 0.2s;"><path d="M5 7.5L10 12.5L15 7.5" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/></svg></summary><div style="padding:0 1.2rem 1rem;color:#4b5563;line-height:1.6;">Prévois une marge pour les frais annexes et vérifie toujours le coût total avant réservation.</div></details></div>',
       '<!-- /wp:details -->',
       '<!-- wp:details -->',
-      "<details><summary>Quelle erreur éviter en priorité ?</summary><p>Ne base pas ta décision sur un seul prix affiché : compare bagages, transferts et conditions d'annulation.</p></details>",
+      "<div class=\"fv-faq-item\" style=\"border:1px solid #e5e7eb;border-radius:8px;margin-bottom:0.75rem;overflow:hidden;\"><details style=\"padding:0;\"><summary style=\"padding:1rem 1.2rem;cursor:pointer;font-weight:600;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;\">Quelle erreur éviter en priorité ?<svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" style=\"flex-shrink:0;transition:transform 0.2s;\"><path d=\"M5 7.5L10 12.5L15 7.5\" stroke=\"#6b7280\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg></summary><div style=\"padding:0 1.2rem 1rem;color:#4b5563;line-height:1.6;\">Ne base pas ta décision sur un seul prix affiché : compare bagages, transferts et conditions d'annulation.</div></details></div>",
       '<!-- /wp:details -->'
     ].join('\n');
 
