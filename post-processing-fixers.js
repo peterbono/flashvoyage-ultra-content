@@ -2412,7 +2412,7 @@ export function fixGenericH2s(html, providedDestination = null) {
       else if (/ce qu.il faut retenir/i.test(h2Text)) newText = `Ce qu'il faut retenir ${suffix}`;
       else if (/conclusion/i.test(h2Text)) newText = `Ce qu'il faut retenir ${suffix}`;
       else if (/nos recommandations/i.test(h2Text)) newText = `Nos recommandations pour ${destination}`;
-      fixed = fixed.replace(m[0], m[0].replace(m[1], newText));
+      fixed = fixed.replaceAll(m[0], m[0].replace(m[1], newText));
       count++;
     }
   }
