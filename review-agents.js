@@ -210,8 +210,8 @@ function detectDeterministicIssues(ctx) {
   // === UX/BUGS ===
   const openTags = (html.match(/<(p|div|section|details|summary)\b/gi) || []).length;
   const closeTags = (html.match(/<\/(p|div|section|details|summary)>/gi) || []).length;
-  if (Math.abs(openTags - closeTags) > 2) {
-    issues.ux.push({ severity: 'critical', category: 'html-structure', description: `D\u00e9s\u00e9quilibre HTML: ${openTags} vs ${closeTags}`, fix_suggestion: 'Corriger balises', location: 'global' });
+  if (Math.abs(openTags - closeTags) > 5) {
+    issues.ux.push({ severity: 'major', category: 'html-structure', description: `D\u00e9s\u00e9quilibre HTML: ${openTags} vs ${closeTags}`, fix_suggestion: 'Corriger balises', location: 'global' });
   } else {
     bonuses.ux += 3; // clean HTML
   }
