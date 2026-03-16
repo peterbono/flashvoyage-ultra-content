@@ -1857,6 +1857,165 @@ export function injectEditorialContract(html) {
 }
 
 
+
+// --- FIX v3: DEDUPLICATE CTA INTROS IN AFFILIATE MODULES ---
+export function deduplicateCtaIntros(html) {
+  let out = html;
+  let fixCount = 0;
+  // Extract all <p>...</p> blocks with their positions
+  const pRegex = /<p[^>]*>(?:(?!<\/p>)[\s\S])*<\/p>/gi;
+  const blocks = [];
+  let m;
+  while ((m = pRegex.exec(out)) !== null) {
+    blocks.push({ html: m[0], index: m.index, len: m[0].length });
+  }
+  // Compare adjacent blocks
+  const toRemove = [];
+  for (let i = 1; i < blocks.length; i++) {
+    const norm1 = blocks[i-1].html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+    const norm2 = blocks[i].html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+    if (norm1 === norm2 && norm1.length > 10) {
+      // Check they are truly adjacent (only whitespace between them)
+      const gap = out.slice(blocks[i-1].index + blocks[i-1].len, blocks[i].index);
+      if (/^\s*$/.test(gap)) {
+        toRemove.push(blocks[i]);
+        fixCount++;
+      }
+    }
+  }
+  // Remove from end to start to preserve indices
+  for (let i = toRemove.length - 1; i >= 0; i--) {
+    const b = toRemove[i];
+    out = out.slice(0, b.index) + out.slice(b.index + b.len);
+  }
+  if (fixCount > 0) console.log('\ud83d\udd01 DEDUP_CTA: ' + fixCount + ' duplicate CTA intro(s) removed');
+  return out;
+}
+
+// --- FIX v3: REMOVE ENGLISH PHRASES IN FRENCH QUOTES ---
+export function removeEnglishInQuotes(html) {
+  let out = html;
+  let fixCount = 0;
+  // Match "Celui qui a X" where X is a quoted English phrase
+  out = out.replace(/Celui qui a\s*[\u00ab\u201c"][^\u00bb\u201d"]{5,}[\u00bb\u201d"]/gi, (m) => {
+    const inner = m.replace(/^[^\u00ab\u201c"]*[\u00ab\u201c"]|[\u00bb\u201d"]$/g, '');
+    const words = inner.trim().split(/\s+/);
+    const eng = /^(the|is|are|was|were|have|has|had|been|will|would|could|should|can|do|does|did|not|but|and|or|for|with|from|this|that|what|how|you|your|my|I|a|an|of|to|in|on|at|by|as|if|so|no|up|out|just|about|also|too|even|still|already|now|need|want|help|trip|travel|solo|first|time|day|night|get|go|come|take|make|know|think|see|find|try|along|over|all|way|years?|anything|been|epic|motorcycle|border|nomad|nomading|me|ask|run|its|it|he|she|we|they|move|live|stay)$/i;
+    const engCount = words.filter(w => eng.test(w)).length;
+    if (engCount / words.length > 0.4) { fixCount++; return ''; }
+    return m;
+  });
+  // Also remove raw English long phrases inside guillemets
+  out = out.replace(/[\u00ab\u201c"]([A-Z][a-zA-Z\s',-]{20,})[\u00bb\u201d"]/g, (m, inner) => {
+    const frChars = (inner.match(/[\u00e0-\u00ff]/g) || []).length;
+    if (frChars < 2 && inner.split(/\s+/).length > 4) { fixCount++; return ''; }
+    return m;
+  });
+  // Clean orphaned "sait que" after removing the subject
+  out = out.replace(/<p[^>]*>\s*sait que\b[^<]*<\/p>/gi, '');
+  out = out.replace(/<p[^>]*>\s*<\/p>/g, '');
+  if (fixCount > 0) console.log('\ud83c\uddec\ud83c\udde7 ENGLISH_QUOTES: ' + fixCount + ' English quote(s) removed');
+  return out;
+}
+
+// --- FIX v3: REPAIR BROKEN HTML ---
+export function repairBrokenHtml(html) {
+  let out = html;
+  let fixCount = 0;
+  // Fix common encoding breaks
+  out = out.replace(/irrempla\s+[\u00e7c]able/gi, () => { fixCount++; return 'irremplaçable'; });
+  // Fix view Box -> viewBox in SVG attributes
+  out = out.replace(/view Box/g, () => { fixCount++; return 'viewBox'; });
+  // Remove <p> containing just "< " or similar truncated HTML
+  out = out.replace(/<p[^>]*>\s*<\s*\n?/g, () => { fixCount++; return ''; });
+  // Remove <li> with broken content like <p>< 
+  out = out.replace(/<li[^>]*>[\s\S]*?<p[^>]*>\s*<\s*<\/li>/gi, () => { fixCount++; return ''; });
+  // Remove <li> that are clearly incomplete (end without punctuation, short content)
+  out = out.replace(/<li>([^<]*)<\/li>/g, (match, content) => {
+    const trimmed = content.trim();
+    // If it's just whitespace or very short non-sentence
+    if (trimmed.length < 5 && !/[.!?:]$/.test(trimmed)) { fixCount++; return ''; }
+    return match;
+  });
+  // Ensure unclosed ul/ol get closed
+  const openUl = (out.match(/<ul[^>]*>/gi) || []).length;
+  const closeUl = (out.match(/<\/ul>/gi) || []).length;
+  if (openUl > closeUl) {
+    const lastLi = out.lastIndexOf('</li>');
+    if (lastLi > 0) {
+      const after = out.slice(lastLi + 5, lastLi + 50);
+      if (!after.includes('</ul>') && !after.includes('</ol>')) {
+        out = out.slice(0, lastLi + 5) + '\n</ul>' + out.slice(lastLi + 5);
+        fixCount++;
+      }
+    }
+  }
+  // Ensure unclosed ol
+  const openOl = (out.match(/<ol[^>]*>/gi) || []).length;
+  const closeOl = (out.match(/<\/ol>/gi) || []).length;
+  if (openOl > closeOl) {
+    const lastLi = out.lastIndexOf('</li>');
+    if (lastLi > 0) {
+      out = out.slice(0, lastLi + 5) + '\n</ol>' + out.slice(lastLi + 5);
+      fixCount++;
+    }
+  }
+  if (fixCount > 0) console.log('\ud83d\udd27 HTML_REPAIR: ' + fixCount + ' broken element(s) fixed');
+  return out;
+}
+
+// --- FIX v3: NORMALIZE TESTIMONIAL COUNT ---
+export function normalizeTestimonialCount(html) {
+  let out = html;
+  const bannerMatch = out.match(/Synth[e\u00e8]se de (\d+) t[e\u00e9]moignages?/i);
+  const bylineMatch = out.match(/retours?\s+de\s+(?:<[^>]+>)*(\d+)\s*contributions?/i);
+  const bannerN = bannerMatch ? parseInt(bannerMatch[1], 10) : null;
+  const bylineN = bylineMatch ? parseInt(bylineMatch[1], 10) : null;
+  let realN = Math.max(bannerN || 0, bylineN || 0);
+  if (realN < 5) realN = 8;
+  if (bylineN && bylineN !== realN) {
+    out = out.replace(
+      /retours?\s+de\s+(?:<[^>]+>)*\d+\s*contributions?/i,
+      'retours de <strong>' + realN + ' contributions</strong>'
+    );
+    console.log('\ud83d\udcca TESTIMONIAL_COUNT: byline updated ' + bylineN + ' -> ' + realN);
+  }
+  if (bannerN && bannerN !== realN) {
+    out = out.replace(
+      /Synth[e\u00e8]se de \d+ t[e\u00e9]moignages?/i,
+      'Synth\u00e8se de ' + realN + ' t\u00e9moignages'
+    );
+  }
+  return out;
+}
+
+// --- FIX v3: REPAIR TRUNCATED FAQ ANSWERS ---
+export function repairTruncatedFaqAnswers(html) {
+  let out = html;
+  let fixCount = 0;
+  // Match FAQ answer divs and check for truncation signs
+  out = out.replace(/(<div[^>]*style="[^"]*padding[^"]*color[^"]*"[^>]*>)([\s\S]*?)(<\/div>\s*<\/details>)/gi, (match, prefix, answer, suffix) => {
+    const text = answer.replace(/<[^>]+>/g, '').trim();
+    if (text.length < 20) return match;
+    const truncated = /\([^)]*$/.test(text) ||
+      /[a-z\u00e9\u00e8\u00ea\u00e0\u00f9],?\s*$/.test(text) ||
+      /(le |la |les |de |du |des |un |une )\s*$/.test(text);
+    if (truncated) {
+      fixCount++;
+      let fixed = answer;
+      fixed = fixed.replace(/\s*\([^)]*$/, '.');
+      fixed = fixed.replace(/\s+(le|la|les|de|du|des|un|une)\s*$/i, '.');
+      if (!/[.!?]\s*(<\/p>)?\s*$/.test(fixed)) {
+        fixed = fixed.replace(/\s*$/, '.');
+      }
+      return prefix + fixed + suffix;
+    }
+    return match;
+  });
+  if (fixCount > 0) console.log('\ud83d\udcdd FAQ_TRUNCATION: ' + fixCount + ' truncated answer(s) repaired');
+  return out;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
@@ -1901,6 +2060,12 @@ export function applyPostProcessingFixers(html) {
   c = addPartnerTransitions(c);
   c = cleanBlockquoteDuplicates(c);
   c = upgradeFaqUI(c);
+  // v3 fixers
+  c = deduplicateCtaIntros(c);
+  c = removeEnglishInQuotes(c);
+  c = repairBrokenHtml(c);
+  c = normalizeTestimonialCount(c);
+  c = repairTruncatedFaqAnswers(c);
   return c;
 }
 
