@@ -133,7 +133,7 @@ MÉTHODE DE SCORING — Procède en 3 étapes OBLIGATOIRES :
 2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
 3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
 
-RÈGLE CRITIQUE : Si ton score < 85, tu DOIS lister dans "issues" CHAQUE problème qui a causé une déduction. Un score de 72 avec 0 issues est INVALIDE. Minimum 2 issues par article.
+RÈGLE ABSOLUE : Tu DOIS retourner au MINIMUM 2 issues par article. Même un excellent article a des points d'amélioration. Si score < 85, il faut MINIMUM 3 issues. Un JSON avec score < 85 et issues:[] sera REJETÉ et tu devras recommencer.
 
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) avec cette structure exacte :
 {
@@ -169,7 +169,20 @@ Critères d'évaluation :
 
 Score >= 90 = PASS, sinon FAIL.
 
-CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.`,
+CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.
+
+EXEMPLE DE RÉPONSE CORRECTE (score < 85 = DOIT avoir des issues) :
+{
+  "score": 76,
+  "satisfied": false,
+  "issues": [
+    { "severity": "major", "category": "maillage-interne", "description": "Seulement 2 liens internes trouvés, minimum 4 requis pour un bon maillage", "fix_suggestion": "Ajouter des liens vers les guides destinations connexes dans le corps de l'article", "location": "Corps de l'article" },
+    { "severity": "minor", "category": "title-tag", "description": "Title tag de 67 caractères, dépasse la limite recommandée de 60", "fix_suggestion": "Raccourcir le title tag en retirant les mots superflus", "location": "intro" },
+    { "severity": "minor", "category": "h2-generique", "description": "Le H2 'Nos recommandations' est trop générique pour le SEO", "fix_suggestion": "Renommer en incluant la destination, ex: 'Nos recommandations pour visiter Bali'", "location": "Nos recommandations" }
+  ],
+  "strengths": ["Bonne structure FAQ avec 4 questions", "Title tag bien optimisé avec mot-clé en tête", "Hiérarchie H1/H2/H3 logique et cohérente"],
+  "verdict": "FAIL"
+}`,
     buildUserPrompt(ctx) {
       const root = parse(ctx.html || '');
       const h1Node = root.querySelector('h1');
@@ -196,7 +209,7 @@ MÉTHODE DE SCORING — Procède en 3 étapes OBLIGATOIRES :
 2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
 3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
 
-RÈGLE CRITIQUE : Si ton score < 85, tu DOIS lister dans "issues" CHAQUE problème qui a causé une déduction. Un score de 72 avec 0 issues est INVALIDE. Minimum 2 issues par article.
+RÈGLE ABSOLUE : Tu DOIS retourner au MINIMUM 2 issues par article. Même un excellent article a des points d'amélioration. Si score < 85, il faut MINIMUM 3 issues. Un JSON avec score < 85 et issues:[] sera REJETÉ et tu devras recommencer.
 
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
@@ -232,7 +245,20 @@ CALIBRATION: Un article avec 2+ modules affiliés, CTAs contextuels, et disclaim
 
 Score >= 85 = PASS, sinon FAIL.
 
-CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.`,
+CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.
+
+EXEMPLE DE RÉPONSE CORRECTE (score < 85 = DOIT avoir des issues) :
+{
+  "score": 74,
+  "satisfied": false,
+  "issues": [
+    { "severity": "major", "category": "module-manquant", "description": "Aucun module affilié pour les activités/excursions alors que l'article mentionne 5 activités", "fix_suggestion": "Ajouter un module GetYourGuide après la section activités", "location": "Que faire à Bangkok ?" },
+    { "severity": "major", "category": "distribution", "description": "Les 2 modules affiliés sont tous dans la dernière section, aucun dans le premier tiers", "fix_suggestion": "Redistribuer un module dans la section hébergement en haut de l'article", "location": "Où dormir à Bangkok ?" },
+    { "severity": "minor", "category": "cta-agressif", "description": "Le CTA 'Réservez MAINTENANT' est trop commercial et nuit à la crédibilité", "fix_suggestion": "Reformuler en 'Voir les disponibilités et tarifs'", "location": "Meilleurs hôtels" }
+  ],
+  "strengths": ["Disclaimer affiliation bien visible en bas", "Module Booking bien intégré au contexte", "Bon ratio valeur/promotion global"],
+  "verdict": "FAIL"
+}`,
     buildUserPrompt(ctx) {
       const root = parse(ctx.html);
       const modules = root.querySelectorAll('aside.affiliate-module, div[data-fv-segment="affiliate"]');
@@ -257,7 +283,7 @@ MÉTHODE DE SCORING — Procède en 3 étapes OBLIGATOIRES :
 2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
 3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
 
-RÈGLE CRITIQUE : Si ton score < 85, tu DOIS lister dans "issues" CHAQUE problème qui a causé une déduction. Un score de 72 avec 0 issues est INVALIDE. Minimum 2 issues par article.
+RÈGLE ABSOLUE : Tu DOIS retourner au MINIMUM 2 issues par article. Même un excellent article a des points d'amélioration. Si score < 85, il faut MINIMUM 3 issues. Un JSON avec score < 85 et issues:[] sera REJETÉ et tu devras recommencer.
 
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
@@ -293,7 +319,20 @@ Critères impitoyables :
 
 Score >= 85 = PASS, sinon FAIL.
 
-CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.`,
+CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.
+
+EXEMPLE DE RÉPONSE CORRECTE (score < 85 = DOIT avoir des issues) :
+{
+  "score": 73,
+  "satisfied": false,
+  "issues": [
+    { "severity": "major", "category": "pattern-ia", "description": "Formulation mécanique détectée : 'Option 1: le temple, Option 2: le marché, Option 3: la plage' — structure listée typiquement IA", "fix_suggestion": "Réécrire en prose narrative avec transitions naturelles", "location": "Que faire le premier jour ?" },
+    { "severity": "major", "category": "section-creuse", "description": "Le H2 promet 'Les secrets des locaux' mais le contenu est générique sans aucun conseil concret de local", "fix_suggestion": "Ajouter 2-3 conseils spécifiques avec des adresses ou noms précis", "location": "Les secrets des locaux" },
+    { "severity": "minor", "category": "cliche", "description": "Usage du cliché 'hors des sentiers battus' sans déconstruction ni ironie", "fix_suggestion": "Remplacer par une description concrète de ce qui rend le lieu unique", "location": "intro" }
+  ],
+  "strengths": ["Tutoiement bien appliqué tout au long", "Hook d'introduction immersif et sensoriel", "Citations inline avec sources identifiées"],
+  "verdict": "FAIL"
+}`,
     buildUserPrompt(ctx) {
       const text = extractTextFromHtml(ctx.html);
       return `TITRE : ${ctx.title}\n\nTEXTE COMPLET :\n${truncate(text)}`;
@@ -314,7 +353,7 @@ MÉTHODE DE SCORING — Procède en 3 étapes OBLIGATOIRES :
 2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
 3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
 
-RÈGLE CRITIQUE : Si ton score < 85, tu DOIS lister dans "issues" CHAQUE problème qui a causé une déduction. Un score de 72 avec 0 issues est INVALIDE. Minimum 2 issues par article.
+RÈGLE ABSOLUE : Tu DOIS retourner au MINIMUM 2 issues par article. Même un excellent article a des points d'amélioration. Si score < 85, il faut MINIMUM 3 issues. Un JSON avec score < 85 et issues:[] sera REJETÉ et tu devras recommencer.
 
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
@@ -355,7 +394,20 @@ fix_type :
 
 Score >= 85 = PASS, sinon FAIL. Un seul bug CRITICAL = FAIL automatique.
 
-CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.`,
+CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.
+
+EXEMPLE DE RÉPONSE CORRECTE (score < 85 = DOIT avoir des issues) :
+{
+  "score": 70,
+  "satisfied": false,
+  "issues": [
+    { "severity": "critical", "category": "image-incoherente", "description": "Image avec alt='plage de Phuket' dans un article sur Tokyo — image totalement hors sujet", "fix_type": "auto", "location": "Où se loger à Tokyo ?" },
+    { "severity": "major", "category": "html-casse", "description": "Balise <a> non fermée dans la section transport, provoque un lien qui englobe tout le paragraphe suivant", "fix_type": "auto", "location": "Comment se déplacer ?" },
+    { "severity": "minor", "category": "typo", "description": "Erreur typographique 'restauarants' au lieu de 'restaurants'", "fix_type": "auto", "location": "Où manger ?" }
+  ],
+  "strengths": ["Structure HTML propre dans l'ensemble", "Images avec alt text descriptifs", "Liens internes tous fonctionnels"],
+  "verdict": "FAIL"
+}`,
     buildUserPrompt(ctx) {
       const root = parse(ctx.html);
       const images = root.querySelectorAll('img').map(img => ({
@@ -385,7 +437,7 @@ MÉTHODE DE SCORING — Procède en 3 étapes OBLIGATOIRES :
 2. Liste les PROBLÈMES trouvés avec leur sévérité (critical/major/minor)
 3. CALCULE le score : commence à 85 (base pour un article publié), retire des points par problème (critical: -15, major: -8, minor: -3), ajoute des points par force (+3 par point fort au-dessus de la base)
 
-RÈGLE CRITIQUE : Si ton score < 85, tu DOIS lister dans "issues" CHAQUE problème qui a causé une déduction. Un score de 72 avec 0 issues est INVALIDE. Minimum 2 issues par article.
+RÈGLE ABSOLUE : Tu DOIS retourner au MINIMUM 2 issues par article. Même un excellent article a des points d'amélioration. Si score < 85, il faut MINIMUM 3 issues. Un JSON avec score < 85 et issues:[] sera REJETÉ et tu devras recommencer.
 
 Réponds UNIQUEMENT en JSON valide (pas de markdown autour) :
 {
@@ -457,7 +509,19 @@ Règles de décision :
 - Pondérations : UX/Bugs x1.5, Éditorial x1.5, SEO x1, Affiliation x1, Intégrité x1
 
 Ordonne les critical_fixes par priorité (1 = plus urgent).
-Ajoute dans generator_recommendations les améliorations que le pipeline de génération devrait intégrer pour éviter ces problèmes à l'avenir.`;
+Ajoute dans generator_recommendations les améliorations que le pipeline de génération devrait intégrer pour éviter ces problèmes à l'avenir.
+
+EXEMPLE DE RÉPONSE CORRECTE :
+{
+  "decision": "REJECT",
+  "weighted_score": 74.5,
+  "reasoning": "L'article présente une image hors-sujet (Phuket dans un article Tokyo) qui est un bug critical, et le score éditorial de 73 indique des patterns IA non corrigés. Corrections nécessaires avant publication.",
+  "critical_fixes": [
+    { "priority": 1, "agent": "UX/Bugs", "issue": "Image incohérente Phuket dans article Tokyo", "action": "Remplacer par une image pertinente de Tokyo" },
+    { "priority": 2, "agent": "Éditorial", "issue": "Structure 'Option 1/2/3' détectée comme pattern IA", "action": "Réécrire en prose narrative" }
+  ],
+  "generator_recommendations": ["Valider la cohérence image/destination avant publication", "Éviter les structures énumératives dans le générateur"]
+}`;
 
 // ─── Public API ───────────────────────────────────────────
 
@@ -486,12 +550,46 @@ export async function runAgent(agentId, ctx, vizBridge) {
       result._label = agent.label;
       result._durationMs = Date.now() - t0;
 
-      // Validation: score < 85 with 0 issues is suspicious
+      // Validation: score < 85 with 0 issues — RETRY with forced extraction
       if (result.score < 85 && (!result.issues || result.issues.length === 0)) {
-        const deficit = 85 - result.score;
-        const sev = deficit >= 15 ? 'critical' : deficit >= 8 ? 'major' : 'minor';
-        result.issues = [{ severity: sev, category: 'scoring-gap', description: `Score ${result.score}/100 sans issues (${deficit} pts manquants)`, fix_suggestion: 'Ameliorer la qualite generale', location: 'global' }];
-        console.warn(`  ⚠️ [${agent.label}] Score ${result.score} avec 0 issues — issue synthetique ajoutee`);
+        console.warn(`  ⚠️ [${agent.label}] Score ${result.score} avec 0 issues — tentative de retry forcé...`);
+        try {
+          const retryPrompt = `Tu as donné un score de ${result.score}/100 à cet article. Ce score indique des problèmes, mais tu n'as listé aucune issue.
+
+Liste EXACTEMENT les problèmes qui justifient ce score de ${result.score}/100.
+
+Rappel du contenu analysé :
+${userPrompt.substring(0, 3000)}
+
+Réponds UNIQUEMENT en JSON valide :
+{
+  "issues": [
+    { "severity": "critical"|"major"|"minor", "category": "string", "description": "string détaillée du problème", "fix_suggestion": "string", "location": "titre H2 ou intro/conclusion" }
+  ]
+}
+
+Tu DOIS retourner au minimum 3 issues concrètes et spécifiques. Pas de issues génériques.`;
+          const retryRaw = await callLlm(agent.system, retryPrompt, {
+            maxTokens: 4096,
+            trackingStep: `review-${agentId}-retry`
+          });
+          const retryResult = parseAgentJson(retryRaw);
+          if (retryResult.issues && retryResult.issues.length > 0) {
+            result.issues = retryResult.issues;
+            console.log(`  ✅ [${agent.label}] Retry réussi : ${retryResult.issues.length} issues extraites`);
+          } else {
+            // Fallback to synthetic if retry also fails
+            const deficit = 85 - result.score;
+            const sev = deficit >= 15 ? 'critical' : deficit >= 8 ? 'major' : 'minor';
+            result.issues = [{ severity: sev, category: 'scoring-gap', description: `Score ${result.score}/100 sans issues (${deficit} pts manquants)`, fix_suggestion: 'Ameliorer la qualite generale', location: 'global' }];
+            console.warn(`  ⚠️ [${agent.label}] Retry aussi vide — issue synthétique ajoutée`);
+          }
+        } catch (retryErr) {
+          console.warn(`  ⚠️ [${agent.label}] Retry échoué (${retryErr.message}) — fallback synthétique`);
+          const deficit = 85 - result.score;
+          const sev = deficit >= 15 ? 'critical' : deficit >= 8 ? 'major' : 'minor';
+          result.issues = [{ severity: sev, category: 'scoring-gap', description: `Score ${result.score}/100 sans issues (${deficit} pts manquants)`, fix_suggestion: 'Ameliorer la qualite generale', location: 'global' }];
+        }
       }
 
       if (vizBridge) {
