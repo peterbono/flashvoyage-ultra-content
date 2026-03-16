@@ -217,9 +217,9 @@ function detectDeterministicIssues(ctx) {
   // === UX/BUGS ===
   const openTags = (html.match(/<(p|div|section|details|summary)\b/gi) || []).length;
   const closeTags = (html.match(/<\/(p|div|section|details|summary)>/gi) || []).length;
-  if (Math.abs(openTags - closeTags) > 15) {
+  if (Math.abs(openTags - closeTags) > 20) {
     issues.ux.push({ severity: 'major', category: 'html-structure', description: `D\u00e9s\u00e9quilibre HTML: ${openTags} vs ${closeTags}`, fix_suggestion: 'Corriger balises', location: 'global' });
-  } else if (Math.abs(openTags - closeTags) > 10) {
+  } else if (Math.abs(openTags - closeTags) > 12) {
     bonuses.ux += 1; // slight imbalance but acceptable
   } else {
     bonuses.ux += 3; // clean HTML

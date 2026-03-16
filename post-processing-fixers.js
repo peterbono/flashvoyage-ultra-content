@@ -2344,6 +2344,22 @@ export function fixGenericH2s(html, providedDestination = null) {
   }
   if (!destination) return html; // Can't fix without knowing destination
 
+  // Normalize destination: English → French, proper capitalization
+  const destMap = {
+    'japan': 'Japon', 'thailand': 'Thaïlande', 'vietnam': 'Vietnam',
+    'bali': 'Bali', 'indonesia': 'Indonésie', 'malaysia': 'Malaisie',
+    'philippines': 'Philippines', 'cambodia': 'Cambodge', 'laos': 'Laos',
+    'myanmar': 'Myanmar', 'singapore': 'Singapour', 'korea': 'Corée',
+    'taiwan': 'Taïwan', 'india': 'Inde', 'sri lanka': 'Sri Lanka',
+    'nepal': 'Népal', 'china': 'Chine', 'mongolia': 'Mongolie',
+    'hong kong': 'Hong Kong', 'macao': 'Macao',
+    'japon': 'Japon', 'thaïlande': 'Thaïlande', 'indonésie': 'Indonésie',
+    'malaisie': 'Malaisie', 'cambodge': 'Cambodge', 'singapour': 'Singapour',
+    'corée': 'Corée', 'taïwan': 'Taïwan', 'inde': 'Inde',
+    'népal': 'Népal', 'chine': 'Chine', 'mongolie': 'Mongolie',
+  };
+  destination = destMap[destination.toLowerCase()] || destination.charAt(0).toUpperCase() + destination.slice(1);
+
   // Determine preposition
   const feminineCountries = ['thaïlande', 'indonésie', 'malaisie', 'inde', 'chine', 'mongolie', 'corée'];
   const isCity = /^[A-Z]/.test(destination) && !feminineCountries.includes(destination.toLowerCase()) && destination.length < 15;
