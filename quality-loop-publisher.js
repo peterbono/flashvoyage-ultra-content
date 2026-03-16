@@ -226,6 +226,75 @@ const criticalIssueMap = (issues = []) => {
 
 const countCritical = (map) => Array.from(map.values()).reduce((acc, value) => acc + value, 0);
 
+// ─── Gate Issue → Review Issue Converter ─────────────────
+const GATE_CATEGORY_MAP = {
+  'html-completeness': 'html-structure',
+  'fact-check': 'factual-integrity',
+  'internal-links': 'internal-links',
+  'seo-meta': 'seo',
+};
+
+const GATE_LOCATION_HEURISTICS = [
+  { pattern: /lien/i, location: 'maillage interne' },
+  { pattern: /faq|details|summary/i, location: 'section FAQ' },
+  { pattern: /h1|h2|h3|h4|hiérarchie/i, location: 'structure Hn' },
+  { pattern: /title.?tag|meta.?description/i, location: 'meta SEO' },
+  { pattern: /balise/i, location: 'global' },
+];
+
+function convertGateIssuesToReviewFormat(gateIssues = []) {
+  return gateIssues
+    .filter(gi => gi && gi.message && gi.severity)
+    .map(gi => {
+      const category = GATE_CATEGORY_MAP[gi.gate] || gi.gate || 'html-structure';
+
+      // Try to infer a location from the message text
+      let location = 'global';
+      for (const hint of GATE_LOCATION_HEURISTICS) {
+        if (hint.pattern.test(gi.message)) {
+          location = hint.location;
+          break;
+        }
+      }
+
+      // Build a fix suggestion from the gate + message
+      let fix_suggestion = 'Corriger le problème détecté par la validation pré-publication';
+      if (gi.gate === 'html-completeness') {
+        if (/balises? non ferm/i.test(gi.message)) {
+          fix_suggestion = 'Fermer toutes les balises HTML ouvertes';
+        } else if (/tronqué/i.test(gi.message)) {
+          fix_suggestion = 'Compléter le contenu tronqué';
+        } else if (/hiérarchie/i.test(gi.message)) {
+          fix_suggestion = 'Corriger la hiérarchie des titres Hn (pas de saut de niveau)';
+          location = 'structure Hn';
+        } else if (/mots? collés?/i.test(gi.message)) {
+          fix_suggestion = 'Ajouter les espaces manquants entre les mots collés';
+        }
+      } else if (gi.gate === 'internal-links') {
+        fix_suggestion = 'Corriger les liens internes : compléter ancre et href';
+        location = 'maillage interne';
+      } else if (gi.gate === 'fact-check') {
+        fix_suggestion = 'Vérifier et corriger les données factuelles';
+        location = 'global';
+      } else if (gi.gate === 'seo-meta') {
+        fix_suggestion = 'Corriger les meta SEO (title tag, meta description)';
+        location = 'meta SEO';
+      }
+
+      return {
+        severity: gi.severity,
+        category,
+        description: gi.message,
+        fix_suggestion,
+        location,
+        _source: 'gate-validator',
+        _gate: gi.gate,
+        _label: `Gate:${gi.gate || 'unknown'}`,
+        _agent: `Gate:${gi.gate || 'unknown'}`,
+      };
+    });
+}
+
 const CONFIG = {
   maxLoops: parseInt(getArg('max-loops', '3'), 10),
   dryRun: hasFlag('dry-run') || process.env.FLASHVOYAGE_DRY_RUN === '1',
@@ -971,6 +1040,16 @@ async function main() {
 
     const reviewResult = await runAllAgents(ctx, vizBridge);
     lastReviewResult = reviewResult;
+
+    // ─── Merge gate validation issues into panel review issues ───
+    const convertedGateIssues = convertGateIssuesToReviewFormat(validation.issues || []);
+    if (convertedGateIssues.length > 0) {
+      const beforeCount = reviewResult.allIssues.length;
+      reviewResult.allIssues = [...convertedGateIssues, ...reviewResult.allIssues];
+      console.log(`   🔗 GATE→REVIEW MERGE: ${convertedGateIssues.length} gate issue(s) injected into review pipeline (${beforeCount} → ${reviewResult.allIssues.length} total)`);
+      convertedGateIssues.forEach(gi => console.log(`      • [${gi.severity}] [${gi._gate}] ${gi.description}`));
+    }
+
 
     const criticalIssues = reviewResult.allIssues.filter(i => i.severity === 'critical');
     iterationTrace.panel.weightedScore = Number(reviewResult.weightedScore.toFixed(1));
