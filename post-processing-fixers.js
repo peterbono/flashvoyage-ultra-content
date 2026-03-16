@@ -1252,6 +1252,31 @@ export function cleanQuestionsOuvertes(html) {
  * Replace em dashes (—) with appropriate punctuation.
  * Em dashes are an AI writing tell that readers spot instantly.
  */
+
+/**
+ * Remove Reddit/r/xxx mentions from article body.
+ * Keep them only in byline (fv-byline div) and source box (À propos).
+ */
+export function stripRedditFromBody(html) {
+  let out = html;
+  // Replace "Extrait Reddit" with "Extrait de témoignage"
+  out = out.replace(/Extrait Reddit/gi, "Extrait de témoignage");
+  // Replace "témoignage Reddit" with "témoignage en ligne"
+  out = out.replace(/témoignage(?:s)? Reddit/gi, "témoignage en ligne");
+  // Replace "sur Reddit" with "sur les forums"
+  out = out.replace(/sur Reddit/gi, "sur les forums");
+  // Replace "r/Thailand" etc in body text (but not in hrefs)
+  // Only replace r/xxx when NOT inside an href attribute
+  out = out.replace(/(?<!href="[^"]*?)\br\/[A-Za-z_]+/g, "les forums de voyageurs");
+  // Replace standalone "Reddit" (not in hrefs or byline class)
+  // We do this carefully: only in text nodes
+  out = out.replace(/(?<=>)([^<]+)(?=<)/g, (match, text) => {
+    return text
+      .replace(/\bReddit\b/g, "les forums")
+      .replace(/\br\/[A-Za-z_]+/g, "les forums de voyageurs");
+  });
+  return out;
+}
 export function replaceEmDashes(html) {
   let out = html;
   // Em dash between two clauses: replace with comma or period
@@ -1362,6 +1387,7 @@ export function applyPostProcessingFixers(html) {
   c = fixSlugLeaksInQuotes(c);
   c = cleanQuestionsOuvertes(c);
   c = fixTruncatedFragments(c);
+  c = stripRedditFromBody(c);
   c = replaceEmDashes(c);
   c = fixBrandNames(c);
   return c;

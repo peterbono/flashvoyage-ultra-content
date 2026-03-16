@@ -560,7 +560,7 @@ class ArticleFinalizer {
           const englishWords = (fullText.match(/\b(the|a|an|is|are|was|were|have|has|had|will|would|can|could|should|this|that|from|basically|don't|I'm|I|you|he|she|it|we|they|here|there|my|your|his|her|our|their|stable|internet|all|also|career|safety|world|country|freelance|digital|nomad|hiding|cheap|destination|coming|third)\b/gi) || []).length;
           const totalWords = fullText.split(/\s+/).length;
           const englishRatio = totalWords > 0 ? englishWords / totalWords : 0;
-          if (englishRatio > 0.25 && totalWords > 10 && !fullText.includes('Extrait Reddit traduit')) {
+          if (englishRatio > 0.25 && totalWords > 10 && !fullText.includes('Extrait de témoignage traduit')) {
             const paragraphs = bq.find('p');
             const textParts = [];
             paragraphs.each((idx, p) => {
@@ -2392,7 +2392,7 @@ class ArticleFinalizer {
           }
         }
         // Si insertion dans les 500 premiers chars → label neutre (pas de Reddit dans le hook)
-        const citeLabel = insertAfterIndex < 500 ? 'Témoignage de voyageur' : 'Extrait Reddit';
+        const citeLabel = insertAfterIndex < 500 ? 'Témoignage de voyageur' : 'Extrait de témoignage';
         const citationBlock = `<blockquote class="wp-block-quote"><p>${escaped}</p><p><cite>— ${citeLabel}</cite></p></blockquote>`;
         if (insertAfterIndex > 0) {
           finalHtml = finalHtml.slice(0, insertAfterIndex) + '\n\n' + citationBlock + '\n\n' + finalHtml.slice(insertAfterIndex);
@@ -2431,7 +2431,7 @@ class ArticleFinalizer {
           ? afterH2 + firstPAfterH2.index + firstPAfterH2[0].length
           : afterH2;
         // Si insertion dans les 500 premiers chars → label neutre (pas de Reddit dans le hook)
-        const citeLabelFallback = insertIdx < 500 ? 'Témoignage de voyageur' : 'Extrait Reddit';
+        const citeLabelFallback = insertIdx < 500 ? 'Témoignage de voyageur' : 'Extrait de témoignage';
         const newBlockquote = `<blockquote><p>${escapedExcerpt}</p><p><cite>— ${citeLabelFallback}</cite></p></blockquote>`;
         finalHtml = finalHtml.slice(0, insertIdx) + '\n\n' + newBlockquote + '\n\n' + finalHtml.slice(insertIdx);
         console.log(`✅ FINALIZER: Citation du récit insérée depuis extracted (post) (après hook)`);
@@ -2439,7 +2439,7 @@ class ArticleFinalizer {
         const firstP2 = finalHtml.match(/<p[^>]*>.*?<\/p>/i);
         if (firstP2) {
           const idx = firstP2.index + firstP2[0].length;
-          const citeLabelP = idx < 500 ? 'Témoignage de voyageur' : 'Extrait Reddit';
+          const citeLabelP = idx < 500 ? 'Témoignage de voyageur' : 'Extrait de témoignage';
           const blockquoteP = `<blockquote><p>${escapedExcerpt}</p><p><cite>— ${citeLabelP}</cite></p></blockquote>`;
           finalHtml = finalHtml.slice(0, idx) + '\n\n' + blockquoteP + '\n\n' + finalHtml.slice(idx);
           console.log(`✅ FINALIZER: Citation du récit insérée depuis extracted (post)`);
@@ -2496,7 +2496,7 @@ class ArticleFinalizer {
             
             for (const pMatch of paragraphs) {
               const pText = pMatch[1].replace(/<[^>]+>/g, '').trim();
-              if (pText.length > 10 && !pText.includes('Extrait Reddit') && !pText.includes('—')) {
+              if (pText.length > 10 && !pText.includes('Extrait de témoignage') && !pText.includes('—')) {
                 const response = await callOpenAIWithRetry({
                   apiKey,
                   _trackingStep: 'finalizer-translate-blockquote',
@@ -2724,7 +2724,7 @@ class ArticleFinalizer {
         const citationBlock = `
 <blockquote>
   <p>${escapedText}</p>
-  <p><cite>Extrait Reddit</cite></p>
+  <p><cite>Extrait de témoignage</cite></p>
 </blockquote>
 `;
         
@@ -9822,7 +9822,7 @@ class ArticleFinalizer {
     const invalidCitations = [];
     
     // AMÉLIORATION: Pattern pour détecter les citations vides (guillemets vides avec attribution)
-    // Ex: « » — auteur Reddit ou «  » — Extrait Reddit
+    // Ex: « » — auteur Reddit ou «  » — Extrait de témoignage
     const emptyCitationPattern = /<p[^>]*>«\s*»\s*[—–]\s*[^<]+<\/p>/gi;
     const emptyCitationMatches = html.match(emptyCitationPattern);
     if (emptyCitationMatches) {
