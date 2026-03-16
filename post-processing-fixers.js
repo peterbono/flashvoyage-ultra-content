@@ -2320,7 +2320,7 @@ export function warnMissingSerpSections(html) {
   return html;
 }
 
-export function fixGenericH2s(html) {
+export function fixGenericH2s(html, providedDestination = null) {
   // Extract destination from the article content
   const destMatch = html.match(/<meta[^>]*destination[^>]*content="([^"]+)"/i)
     || html.match(/data-destination="([^"]+)"/i);
@@ -2339,6 +2339,9 @@ export function fixGenericH2s(html) {
     }
   }
 
+  if (!destination && providedDestination) {
+    destination = providedDestination;
+  }
   if (!destination) return html; // Can't fix without knowing destination
 
   // Determine preposition

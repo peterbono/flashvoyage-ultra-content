@@ -159,6 +159,10 @@ function detectDeterministicIssues(ctx) {
   }
   if (h2s.length >= 5 && h2s.length <= 10) bonuses.seo += 2; // good H2 count
   if (h2s.length >= 4) bonuses.seo += 1;
+  // Decision-oriented H2s (verbs like comment, pourquoi, erreur, piège)
+  const decisionH2s = h2s.filter(h => /comment|pourquoi|erreur|pi[èe]ge|choisi|d[ée]cid|vrai|r[ée]el|cach[eé]|secret/i.test(h));
+  if (decisionH2s.length >= 3) bonuses.seo += 2;
+  else if (decisionH2s.length >= 1) bonuses.seo += 1;
 
   // === AFFILIATION ===
   if (affiliateWidgets.length === 0 && ctaSlots.length === 0) {
@@ -171,6 +175,9 @@ function detectDeterministicIssues(ctx) {
   if (hasRecoSection) bonuses.affiliation += 3;
   // Natural CTA integration
   if (ctaSlots.length >= 2) bonuses.affiliation += 2;
+  // Partner transitions (natural affiliate integration)
+  const partnerTransitions = [...html.matchAll(/partner-transition|transition-partenaire|affiliate-module/gi)];
+  if (partnerTransitions.length > 0) bonuses.affiliation += 2;
 
   // === EDITORIAL ===
   if (wordCount < 2000) {
@@ -210,8 +217,10 @@ function detectDeterministicIssues(ctx) {
   // === UX/BUGS ===
   const openTags = (html.match(/<(p|div|section|details|summary)\b/gi) || []).length;
   const closeTags = (html.match(/<\/(p|div|section|details|summary)>/gi) || []).length;
-  if (Math.abs(openTags - closeTags) > 10) {
+  if (Math.abs(openTags - closeTags) > 15) {
     issues.ux.push({ severity: 'major', category: 'html-structure', description: `D\u00e9s\u00e9quilibre HTML: ${openTags} vs ${closeTags}`, fix_suggestion: 'Corriger balises', location: 'global' });
+  } else if (Math.abs(openTags - closeTags) > 10) {
+    bonuses.ux += 1; // slight imbalance but acceptable
   } else {
     bonuses.ux += 3; // clean HTML
   }
@@ -229,11 +238,15 @@ function detectDeterministicIssues(ctx) {
   }
   const images = [...html.matchAll(/<img[^>]*>/gi)];
   if (images.length > 0) bonuses.ux += 2;
+  // Quick Guide section
+  if (/quick-guide|guide-rapide|wp-block-heading.*guide/i.test(html)) bonuses.ux += 2;
+  // Structured details/summary (accordion)
+  if (/<details/i.test(html)) bonuses.ux += 1;
   // Check for broken encoding
   const encodingIssues = (text.match(/\b[a-z]\s[A-Z][a-z]{2,}/g) || []).length;
   if (encodingIssues > 15) {
     issues.ux.push({ severity: 'major', category: 'encodage', description: `${encodingIssues} artefact(s) d'encodage`, fix_suggestion: 'Corriger espaces parasites', location: 'global' });
-  } else if (encodingIssues > 8) {
+  } else if (encodingIssues > 10) {
     issues.ux.push({ severity: 'minor', category: 'encodage', description: `${encodingIssues} artefact(s) d'encodage mineurs`, fix_suggestion: 'Corriger espaces parasites', location: 'global' });
   } else {
     bonuses.ux += 2; // clean encoding

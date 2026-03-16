@@ -984,7 +984,7 @@ async function main() {
     console.log('\n━━━ PHASE 2 : Validation Gates ━━━');
     // Apply targeted post-processing fixers before validation
     const preFixContent = article.content;
-    article = { ...article, content: fixGenericH2s(article.content) };
+    article = { ...article, content: fixGenericH2s(article.content, destination) };
     article = { ...article, content: removeEnglishLeaks(article.content) };
     article = { ...article, content: deduplicateParagraphs(article.content) };
     warnMissingSerpSections(article.content);
