@@ -2016,6 +2016,136 @@ export function repairTruncatedFaqAnswers(html) {
   return out;
 }
 
+
+// --- FIX v4: REPAIR MISSING OPENING TAGS ---
+// LLM sometimes generates "cite>" instead of "<cite>", "small>" instead of "<small>", etc.
+export function repairMissingOpenTags(html) {
+  let out = html;
+  let fixCount = 0;
+  // Fix missing < in opening tags: "cite>" -> "<cite>", "small>" -> "<small>", "strong>" -> "<strong>"
+  // Only match when preceded by whitespace, newline, or > (not part of another tag)
+  const tags = ['cite', 'small', 'strong', 'em', 'b', 'i', 'a'];
+  for (const tag of tags) {
+    // Match "tag>" at start of content (after > or whitespace), not already preceded by <
+    const re = new RegExp('(?<=[>\\s])(' + tag + '>)', 'g');
+    out = out.replace(re, (match) => {
+      fixCount++;
+      return '<' + match;
+    });
+    // Also fix the closing variant: "/tag>" -> "</tag>"
+    const reClose = new RegExp('(?<=[>\\s])/' + tag + '>', 'g');
+    out = out.replace(reClose, (match) => {
+      fixCount++;
+      return '<' + match;
+    });
+  }
+  // Fix "p>" at start of line
+  out = out.replace(/^p>/gm, () => { fixCount++; return '<p>'; });
+  // Fix broken </svg> like ">/svg>" or "/svg>"
+  out = out.replace(/>\s*\/svg>/gi, () => { fixCount++; return '</svg>'; });
+  out = out.replace(/(?<![<])\/svg>/gi, () => { fixCount++; return '</svg>'; });
+  if (fixCount > 0) console.log('\ud83c\udff7\ufe0f OPEN_TAGS: ' + fixCount + ' missing opening tag(s) repaired');
+  return out;
+}
+
+// --- FIX v4: STRIP HTML COMMENT DIRECTIVES ---
+// Remove internal pipeline comments like <!-- FV: DIFF_ANGLE -->, <!-- FV: CTA_SLOT ... -->
+export function stripHtmlComments(html) {
+  let out = html;
+  let fixCount = 0;
+  // Remove FV pipeline comments
+  out = out.replace(/<!--\s*FV:[^>]*-->/gi, () => { fixCount++; return ''; });
+  // Remove empty paragraphs containing only whitespace or comments
+  out = out.replace(/<p[^>]*>\s*<\/p>/g, '');
+  if (fixCount > 0) console.log('\ud83e\uddf9 HTML_COMMENTS: ' + fixCount + ' pipeline comment(s) stripped');
+  return out;
+}
+
+// --- FIX v4: FIX WORD COLLISIONS FROM WORD_GLUE ---
+// Words like "litétroit" (lit étroit), "J'aiété" (J'ai été), "troisîles" (trois îles)
+export function fixWordCollisions(html) {
+  let out = html;
+  let fixCount = 0;
+  // Common collision patterns: lowercase + uppercase letter junction without space
+  // e.g., "litétroit" should be "lit étroit" — detect camelCase-like but with accented chars
+  // Pattern: word ending + word starting where they shouldn't be joined
+  const collisions = [
+    [/lit\u00e9troit/gi, 'lit \u00e9troit'],
+    [/J'ai\u00e9t\u00e9/gi, "J'ai \u00e9t\u00e9"],
+    [/trois\u00eeles/gi, 'trois \u00eeles'],
+    [/bien-\s+\u00eatre/gi, 'bien-\u00eatre'],
+    [/pers\s+\u00e9v\u00e9rance/gi, 'pers\u00e9v\u00e9rance'],
+    [/bien-\s+être/gi, 'bien-être'],
+    [/pers\s+évérance/gi, 'persévérance'],
+    [/J'aiété/gi, "J'ai été"],
+    [/litétroit/gi, 'lit étroit'],
+    [/troisîles/gi, 'trois îles'],
+  ];
+  for (const [pattern, replacement] of collisions) {
+    const before = out;
+    out = out.replace(pattern, replacement);
+    if (out !== before) fixCount++;
+  }
+  // Generic: detect common French word endings glued to next word
+  // Pattern: consonant + accented vowel where a space should be (heuristic)
+  out = out.replace(/([a-z])([A-Z\u00C0-\u00DC])/g, (m, a, b) => {
+    fixCount++;
+    return a + ' ' + b;
+  });
+  if (fixCount > 0) console.log('\ud83e\udde9 WORD_COLLISIONS: ' + fixCount + ' collision(s) fixed');
+  return out;
+}
+
+// --- FIX v4: REMOVE EMPTY FAQ ENTRIES ---
+// Catches FAQ items with empty or near-empty answers, including bare <details> without answer div
+export function removeEmptyFaqItems(html) {
+  let out = html;
+  let fixCount = 0;
+  // Remove fv-faq-item wrappers with empty answer
+  out = out.replace(/<div class="fv-faq-item"[^>]*>[\s\S]*?<\/details>\s*<\/div>/gi, (match) => {
+    // Extract answer content
+    const answerMatch = match.match(/<div[^>]*>([\s\S]*?)<\/div>\s*<\/details>/);
+    if (answerMatch) {
+      const text = answerMatch[1].replace(/<[^>]+>/g, '').trim();
+      if (text.length < 10) { fixCount++; return ''; }
+    }
+    return match;
+  });
+  // Remove bare <details> with no answer content
+  out = out.replace(/<details>\s*<summary>[^<]*<\/summary>\s*<\/details>/gi, () => {
+    fixCount++;
+    return '';
+  });
+  if (fixCount > 0) console.log('\ud83d\uddd1\ufe0f EMPTY_FAQ: ' + fixCount + ' empty FAQ item(s) removed');
+  return out;
+}
+
+// --- FIX v4: REPAIR BROKEN AUTHOR BOX LINKS ---
+export function repairAuthorBoxLinks(html) {
+  let out = html;
+  let fixCount = 0;
+  // Fix "a href=" without opening < inside author box
+  out = out.replace(/<p>a href=/g, () => { fixCount++; return '<p><a href='; });
+  // Fix HTML entities in href: &#8221; -> "
+  out = out.replace(/href=&#8221;([^&]+)&#8221;/g, (m, url) => {
+    fixCount++;
+    return 'href="' + url + '"';
+  });
+  // Fix target=&#8221;_blank&#8221;
+  out = out.replace(/target=&#8221;([^&]+)&#8221;/g, (m, val) => {
+    fixCount++;
+    return 'target="' + val + '"';
+  });
+  // Fix rel=&#8221;...&#8221;
+  out = out.replace(/rel=&#8221;([^&]+)&#8221;/g, (m, val) => {
+    fixCount++;
+    return 'rel="' + val + '"';
+  });
+  if (fixCount > 0) console.log('\ud83d\udd17 AUTHOR_BOX: ' + fixCount + ' broken link(s) repaired');
+  return out;
+}
+
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
@@ -2066,6 +2196,12 @@ export function applyPostProcessingFixers(html) {
   c = repairBrokenHtml(c);
   c = normalizeTestimonialCount(c);
   c = repairTruncatedFaqAnswers(c);
+  // v4 fixers
+  c = repairMissingOpenTags(c);
+  c = stripHtmlComments(c);
+  c = fixWordCollisions(c);
+  c = removeEmptyFaqItems(c);
+  c = repairAuthorBoxLinks(c);
   return c;
 }
 
