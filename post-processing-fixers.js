@@ -2062,32 +2062,35 @@ export function stripHtmlComments(html) {
 }
 
 // --- FIX v4: FIX WORD COLLISIONS FROM WORD_GLUE ---
-// Words like "litétroit" (lit étroit), "J'aiété" (J'ai été), "troisîles" (trois îles)
 export function fixWordCollisions(html) {
   let out = html;
   let fixCount = 0;
-  // Common collision patterns: lowercase + uppercase letter junction without space
-  // e.g., "litétroit" should be "lit étroit" — detect camelCase-like but with accented chars
-  // Pattern: word ending + word starting where they shouldn't be joined
-  const collisions = [
-    [/lit\u00e9troit/gi, 'lit \u00e9troit'],
-    [/J'ai\u00e9t\u00e9/gi, "J'ai \u00e9t\u00e9"],
-    [/trois\u00eeles/gi, 'trois \u00eeles'],
-    [/bien-\s+\u00eatre/gi, 'bien-\u00eatre'],
-    [/pers\s+\u00e9v\u00e9rance/gi, 'pers\u00e9v\u00e9rance'],
+  // Explicit known collision patterns (safe, no false positives)
+  const explicit = [
+    [/litétroit/gi, 'lit étroit'],
+    [/J'aiété/gi, "J'ai été"],
+    [/troisîles/gi, 'trois îles'],
     [/bien-\s+être/gi, 'bien-être'],
     [/pers\s+évérance/gi, 'persévérance'],
-    [/J'aiété/gi, "J'ai été"],
-    [/litétroit/gi, 'lit étroit'],
-    [/troisîles/gi, 'trois îles'],
+    [/bonétat/gi, 'bon état'],
+    [/pourêtre/gi, 'pour être'],
+    [/pourévacuer/gi, "pour évacuer"],
+    [/peutêtre/gi, 'peut-être'],
+    [/peut\sêtre/gi, 'peut-être'],
+    [/maladieévitable/gi, 'maladie évitable'],
+    [/cetâge/gi, 'cet âge'],
+    [/expérimentésénoncent/gi, 'expérimentés énoncent'],
+    [/unétat/gi, 'un état'],
+    [/tonétat/gi, 'ton état'],
+    [/enétat/gi, 'en état'],
+    [/dansunétat/gi, 'dans un état'],
   ];
-  for (const [pattern, replacement] of collisions) {
+  for (const [pattern, replacement] of explicit) {
     const before = out;
     out = out.replace(pattern, replacement);
     if (out !== before) fixCount++;
   }
-  // Generic: detect common French word endings glued to next word
-  // Pattern: consonant + accented vowel where a space should be (heuristic)
+  // Safer generic: only split camelCase-like patterns (lowercase + Uppercase)
   out = out.replace(/([a-z])([A-Z\u00C0-\u00DC])/g, (m, a, b) => {
     fixCount++;
     return a + ' ' + b;
@@ -2124,28 +2127,15 @@ export function removeEmptyFaqItems(html) {
 export function repairAuthorBoxLinks(html) {
   let out = html;
   let fixCount = 0;
-  // Fix "a href=" without opening < inside author box
-  out = out.replace(/<p>a href=/g, () => { fixCount++; return '<p><a href='; });
-  // Fix HTML entities in href: &#8221; -> "
-  out = out.replace(/href=&#8221;([^&]+)&#8221;/g, (m, url) => {
-    fixCount++;
-    return 'href="' + url + '"';
-  });
-  // Fix target=&#8221;_blank&#8221;
-  out = out.replace(/target=&#8221;([^&]+)&#8221;/g, (m, val) => {
-    fixCount++;
-    return 'target="' + val + '"';
-  });
-  // Fix rel=&#8221;...&#8221;
-  out = out.replace(/rel=&#8221;([^&]+)&#8221;/g, (m, val) => {
-    fixCount++;
-    return 'rel="' + val + '"';
-  });
+  // Fix "a href=" without opening < (multiple contexts)
+  out = out.replace(/([>\s])a href=/g, (m, pre) => { fixCount++; return pre + '<a href='; });
+  // Fix HTML entities in attributes: &#8221; -> "
+  out = out.replace(/&#8221;/g, () => { fixCount++; return '"'; });
+  // Fix &#8220; -> "
+  out = out.replace(/&#8220;/g, () => { fixCount++; return '"'; });
   if (fixCount > 0) console.log('\ud83d\udd17 AUTHOR_BOX: ' + fixCount + ' broken link(s) repaired');
   return out;
 }
-
-
 
 // --- FIX v5: EXTENDED ENCODING BREAK DICTIONARY ---
 export function fixExtendedEncodingBreaks(html) {
