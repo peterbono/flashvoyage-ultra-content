@@ -824,6 +824,13 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const srcScore = pipelineInput.source.score || 0;
       const srcAuthor = pipelineInput.source.author || null;
 
+      // Selectionner un auteur par rotation round-robin
+      const destination = finalArticle.meta?.destination || finalArticle.destination || '';
+      const { author: selectedAuthor, wpId: selectedAuthorWpId } = await this.authorManager.getAuthorForArticle(destination);
+      finalArticle._authorName = selectedAuthor.name;
+      finalArticle._authorWpId = selectedAuthorWpId;
+      finalArticle._authorBio = selectedAuthor.bio;
+
       let subredditDisplay = 'Reddit';
       if (articleLink.includes('reddit.com')) {
         const subMatch = articleLink.match(/reddit\.com\/r\/([^/]+)/);
@@ -835,7 +842,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       const scoreText = srcScore > 10 ? ` · ${srcScore} upvotes` : '';
 
       const bylineHtml = `<!-- wp:html -->\n<div class="fv-byline" style="margin-bottom:1.5rem;padding:1rem 1.2rem;background:#f8f9fa;border-left:4px solid #2563eb;border-radius:4px;font-size:0.92rem;line-height:1.5;color:#374151;">
-<strong>Flash Voyage | Rédaction</strong><br>
+<strong>${selectedAuthor.name}</strong> · Flash Voyage<br>
 Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage réel</a> et les retours de <strong>${contributionText}</strong> sur <strong>${subredditDisplay}</strong>${scoreText}. Sources vérifiées, enrichies par nos données temps réel.
 </div>\n<!-- /wp:html -->\n\n`;
 
@@ -843,7 +850,8 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
 
       // Bloc auteur en fin d'article : crédibilité E-E-A-T
       const authorBoxHtml = `\n\n<!-- wp:html -->\n<div class="fv-author-box" style="margin-top:2.5rem;padding:1.5rem;background:#f0f4ff;border:1px solid #dbeafe;border-radius:8px;font-size:0.93rem;line-height:1.6;color:#1e293b;">
-<p style="margin:0 0 0.7rem;font-weight:700;font-size:1rem;">À propos de cet article</p>
+<p style="margin:0 0 0.7rem;font-weight:700;font-size:1rem;">À propos de ${selectedAuthor.name}</p>
+<p style="margin:0 0 0.5rem;">${selectedAuthor.bio}</p>
 <p style="margin:0 0 0.5rem;">Cet article est produit par la <strong>rédaction Flash Voyage</strong>. Notre méthode : nous identifions les discussions de voyageurs francophones et internationaux sur Reddit, vérifions les informations, puis les enrichissons avec des données temps réel (prix des vols, coût de la vie, conditions de sécurité).</p>
 <p style="margin:0 0 0.5rem;">Pourquoi cette approche ? Un article de blog classique reflète <em>une</em> expérience. Nos articles croisent les retours de <strong>dizaines de voyageurs</strong> qui ont vécu la même situation — c'est plus fiable qu'un avis isolé.</p>
 <p style="margin:0;"><a href="${articleLink}" target="_blank" rel="noopener">Voir la discussion originale sur ${subredditDisplay}</a> · <a href="/notre-methode/">Notre méthode</a></p>
@@ -928,7 +936,7 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
 
       // Catégories et tags (APRÈS final_destination pour que le mapping destination fonctionne)
       finalArticle.categories = await this.getCategoriesForContent(analysis, finalArticle.content, affiliatePlacements);
-      finalArticle.tags = await this.getTagsForContent(analysis, affiliatePlacements);
+      finalArticle.tags = await this.getTagsForContent(analysis, affiliatePlacements, finalArticle.content);
       
       console.log('📊 Article final construit:', {
         title: finalArticle.title,
@@ -1982,61 +1990,121 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
 
   // Obtenir les tags selon l'analyse et les placements affiliés
   // UTILISE final_destination comme source of truth + tags affiliation
-  async getTagsForContent(analysis, affiliatePlacements = []) {
+  async getTagsForContent(analysis, affiliatePlacements = [], content = "") {
     const tags = new Set();
     
-    // Mapping produit affilié → tags
-    const AFFILIATE_TAGS = {
-      insurance: ['Assurance voyage', 'Santé', 'Sécurité'],
-      esim: ['eSIM', 'Connectivité', 'Internet'],
-      flights: ['Vols', 'Avion', 'Comparateur'],
-      accommodation: ['Hébergement', 'Hôtel', 'Logement'],
-      tours: ['Activités', 'Excursions', 'Visites'],
-      transfers: ['Aéroport', 'Transfert', 'Navette'],
-      car_rental: ['Location voiture', 'Road trip'],
-      bikes: ['Scooter', 'Moto', 'Vélo'],
-      coworking: ['Coworking', 'Remote', 'Productivité'],
-      flight_compensation: ['Retard vol', 'Indemnisation'],
-      events: ['Événements', 'Concert', 'Festival']
-    };
+    // Strip HTML to get plain text for keyword scanning
+    const plainText = (content || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").toLowerCase();
+    const titleText = (analysis.title || "").toLowerCase();
+    const combinedText = titleText + " " + plainText;
     
-    // 1. Tag destination
-    if (analysis.final_destination && analysis.final_destination !== 'Asie') {
+    // ─── SMART CONTENT-BASED TAG DETECTION ─────────────────────
+    // Keyword → tag mapping: scan article content for topic signals
+    const CONTENT_TAG_RULES = [
+      // Health & Medical
+      { keywords: ["vaccin", "vaccination", "médecin", "médical", "hôpital", "pharmacie", "maladie", "dengue", "paludisme", "malaria", "santé", "docteur", "clinique", "urgence", "soin"], tag: "Santé" },
+      // Insurance
+      { keywords: ["assurance", "couverture", "mutuelle", "rapatriement", "safety wing", "safetywing", "chapka", "world nomads", "allianz"], tag: "Assurance voyage" },
+      // Budget & Cost
+      { keywords: ["budget", "coût", "prix", "€", "euro", "argent", "dépens", "économi", "pas cher", "tarif", "combien", "financ"], tag: "Budget" },
+      // Visa & Formalities
+      { keywords: ["visa", "passeport", "douane", "immigration", "formalité", "séjour", "overstay", "e-visa", "evisa", "exemption"], tag: "Visa" },
+      // Transport
+      { keywords: ["transport", "vol ", "avion", "train", "bus ", "ferry", "scooter", "moto", "taxi", "grab ", "gojek", "aéroport", "gare", "métro", "tuk-tuk", "tuktuk"], tag: "Transport" },
+      // Accommodation
+      { keywords: ["hôtel", "hostel", "auberge", "airbnb", "logement", "hébergement", "chambre", "guest house", "guesthouse", "resort", "villa"], tag: "Hébergement" },
+      // Digital Nomad
+      { keywords: ["nomad", "remote", "télétravail", "freelance", "coworking", "co-working", "digital nomad"], tag: "Nomadisme Digital" },
+      // Food & Cuisine
+      { keywords: ["cuisine", "gastronomie", "restaurant", "street food", "nourriture", "plat ", "recette", "manger", "spécialité culinaire"], tag: "Gastronomie" },
+      // Culture
+      { keywords: ["temple", "pagode", "culture", "tradition", "cérémonie", "festival", "fête", "musée", "patrimoine", "histoire"], tag: "Culture" },
+      // Itinerary
+      { keywords: ["itinéraire", "circuit", "road trip", "roadtrip", "étape", "parcours", "trajet", "jour 1", "jour 2", "semaine"], tag: "Itinéraire" },
+      // Coliving & Coworking
+      { keywords: ["coliving", "co-living", "coworking", "co-working", "espace partagé", "communauté nomade"], tag: "Coliving" },
+      // eSIM & Connectivity
+      { keywords: ["esim", "e-sim", "sim card", "carte sim", "internet", "wifi", "4g", "5g", "data", "connexion", "roaming"], tag: "eSIM" },
+      // Safety
+      { keywords: ["sécurité", "arnaque", "danger", "vol ", "pickpocket", "escroq", "prudence", "risque", "safe"], tag: "Sécurité" },
+      // Practical tips
+      { keywords: ["conseil", "astuce", "guide pratique", "check-list", "checklist", "préparer", "organiser", "planifier", "erreur à éviter"], tag: "Guide" },
+    ];
+    
+    // Scan content for each rule
+    for (const rule of CONTENT_TAG_RULES) {
+      const matchCount = rule.keywords.reduce((count, kw) => {
+        const regex = new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+        return count + (combinedText.match(regex) || []).length;
+      }, 0);
+      // Require at least 2 keyword matches to avoid false positives
+      if (matchCount >= 2) {
+        tags.add(rule.tag);
+      }
+    }
+    
+    // ─── DESTINATION TAG (from analysis metadata) ──────────────
+    if (analysis.final_destination && analysis.final_destination !== "Asie") {
       const destTag = this.normalizeDestinationTag(analysis.final_destination);
       if (destTag) tags.add(destTag);
     }
     
-    // 2. Tags affiliation
+    // Also detect destination mentions in content for multi-destination articles
+    const DESTINATION_KEYWORDS = {
+      "Thaïlande": ["thaïlande", "thailand", "bangkok", "chiang mai", "phuket", "pattaya", "koh samui", "krabi"],
+      "Vietnam": ["vietnam", "hanoi", "hanoï", "ho chi minh", "saigon", "saïgon", "da nang", "hoi an", "hué"],
+      "Japon": ["japon", "japan", "tokyo", "osaka", "kyoto", "hiroshima", "okinawa", "nara", "fukuoka"],
+      "Indonésie": ["indonésie", "indonesia", "bali", "jakarta", "ubud", "lombok", "yogyakarta", "java", "sumatra"],
+      "Corée du Sud": ["corée du sud", "south korea", "séoul", "seoul", "busan", "jeju"],
+      "Singapour": ["singapour", "singapore"],
+      "Philippines": ["philippines", "manille", "manila", "cebu", "palawan", "boracay", "siargao"],
+    };
+    
+    for (const [destTag, keywords] of Object.entries(DESTINATION_KEYWORDS)) {
+      const found = keywords.some(kw => combinedText.includes(kw));
+      if (found) tags.add(destTag);
+    }
+    
+    // ─── AFFILIATE-BASED TAGS (keep existing logic) ────────────
+    const AFFILIATE_TAGS = {
+      insurance: ["Assurance voyage", "Santé"],
+      esim: ["eSIM"],
+      flights: ["Transport"],
+      accommodation: ["Hébergement"],
+      tours: ["Culture"],
+      transfers: ["Transport"],
+      car_rental: ["Transport"],
+      bikes: ["Transport"],
+      coworking: ["Coliving"],
+      flight_compensation: ["Transport"],
+      events: ["Culture"]
+    };
+    
     if (affiliatePlacements && affiliatePlacements.length > 0) {
       affiliatePlacements.slice(0, 2).forEach(p => {
         const themeTags = AFFILIATE_TAGS[p.id] || [];
-        themeTags.slice(0, 2).forEach(t => tags.add(t));
+        themeTags.forEach(t => tags.add(t));
       });
     }
     
-    // 3. Tags type de contenu
-    if (analysis.type_contenu?.includes('TEMOIGNAGE')) {
-      tags.add('Témoignage');
+    // ─── CONTENT TYPE TAGS ─────────────────────────────────────
+    if (analysis.type_contenu?.includes("TEMOIGNAGE")) {
+      tags.add("Témoignages");
     }
-    if (analysis.type_contenu?.includes('GUIDE')) {
-      tags.add('Guide');
+    if (analysis.type_contenu?.includes("GUIDE")) {
+      tags.add("Guide");
     }
-    
-    // 4. Tag budget si mentionné dans le titre
-    if (/budget|€|euro|prix|coût|argent|dépens/i.test(analysis.title || '')) {
-      tags.add('Budget');
+    if (analysis.type_contenu?.includes("COMPARAISON")) {
+      tags.add("Comparaisons");
     }
     
-    // 5. Tag nomadisme si pertinent
-    if (/nomad|remote|digital|travail/i.test(analysis.title || '') || 
-        analysis.type_contenu?.includes('TEMOIGNAGE')) {
-      tags.add('Nomadisme Digital');
-    }
+    // Always add "Asie" as base tag for the site
+    tags.add("Asie");
     
-    console.log(`🏷️ Tags assignés: ${[...tags].join(', ')}`);
-    return [...tags].slice(0, 8); // Max 8 tags
+    console.log(`🏷️ Smart tags detected (${tags.size}): ${[...tags].join(", ")}`);
+    return [...tags].slice(0, 10); // Max 10 tags
   }
-  
+
   /**
    * Normalise une destination en tag WordPress
    */
@@ -2686,7 +2754,8 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
         excerpt: article.excerpt || '',
         categories: article.categoryIds || [],
         tags: article.tagIds || [],
-        meta: wpMeta
+        meta: wpMeta,
+        ...(article._authorWpId ? { author: article._authorWpId } : {})
       };
       
       // Authentification
@@ -2706,16 +2775,20 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
       console.log(`   ID: ${publishedArticle.id}`);
       console.log(`   URL: ${publishedArticle.link}`);
 
-      // Assigner un auteur E-E-A-T
-      try {
-        const destination = article.meta?.destination || article.destination || '';
-        const { author, wpId } = await this.authorManager.getAuthorForArticle(destination);
-        if (wpId) {
-          await this.authorManager.assignAuthor(publishedArticle.id, wpId);
-          console.log(`   👤 Auteur assigne: ${author.name}`);
+      // Auteur E-E-A-T: deja assigne a la creation via wordpressData.author
+      if (!article._authorWpId) {
+        try {
+          const destination = article.meta?.destination || article.destination || '';
+          const { author, wpId } = await this.authorManager.getAuthorForArticle(destination);
+          if (wpId) {
+            await this.authorManager.assignAuthor(publishedArticle.id, wpId);
+            console.log(`   👤 Auteur assigne (fallback): ${author.name}`);
+          }
+        } catch (err) {
+          console.warn(`   ⚠️ Assignation auteur echouee: ${err.message}`);
         }
-      } catch (err) {
-        console.warn(`   ⚠️ Assignation auteur echouee: ${err.message}`);
+      } else {
+        console.log(`   👤 Auteur assigne a la creation: ${article._authorName || 'ID ' + article._authorWpId}`);
       }
       
       // Uploader l'image featured si disponible

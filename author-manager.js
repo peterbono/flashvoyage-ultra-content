@@ -2,7 +2,7 @@
  * Author Manager — Gere un pool d'auteurs WordPress pour le E-E-A-T.
  *
  * Cree les profils auteur sur WordPress si inexistants, et assigne
- * un auteur pertinent a chaque article en fonction de la destination.
+ * un auteur a chaque article via rotation round-robin.
  */
 
 import fs from 'fs';
@@ -14,30 +14,37 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STATE_PATH = path.join(__dirname, 'data', 'authors.json');
 
 /**
- * Pool d'auteurs avec specialisations geographiques.
- * Chaque auteur a une bio E-E-A-T qui demontre l'experience terrain.
+ * Pool d'auteurs avec WordPress IDs pre-enregistres.
+ * Rotation round-robin pour varier les signatures.
  */
 const AUTHOR_PROFILES = [
   {
-    slug: 'claire-nomade',
-    name: 'Claire Dumontier',
-    bio: 'Nomade digitale depuis 2019, Claire a vecu 3 ans en Asie du Sud-Est — Bangkok, Chiang Mai, Bali et Ho Chi Minh. Elle partage ses arbitrages budget, logement et connectivite pour les francophones qui veulent tenter l\'aventure.',
-    specialties: ['thailand', 'indonesia', 'vietnam', 'cambodia', 'laos', 'myanmar', 'malaysia', 'singapore', 'philippines'],
-    email: 'claire@flashvoyage.com',
+    slug: 'claire-moreau',
+    name: 'Claire Moreau',
+    bio: 'Redactrice en chef, specialisee Asie du Sud-Est. 8 ans d\'experience en redaction voyage. Basee entre Paris et Bangkok.',
+    email: 'claire.moreau@flashvoyage.com',
+    wpId: 3,
   },
   {
-    slug: 'thomas-japon',
-    name: 'Thomas Lefebvre',
-    bio: 'Passionne du Japon depuis son premier voyage en 2016, Thomas y retourne chaque annee. JR Pass, ryokans, cerisiers, street food a Osaka — il decrypte le Japon pour les voyageurs francophones avec des conseils concrets et testes.',
-    specialties: ['japan', 'korea', 'taiwan'],
-    email: 'thomas@flashvoyage.com',
+    slug: 'sophie-leclerc',
+    name: 'Sophie Leclerc',
+    bio: 'Journaliste voyage independante, experte Asie. 5 ans sur le terrain entre Vietnam, Thailande et Indonesie.',
+    email: 'sophie.leclerc@flashvoyage.com',
+    wpId: 4,
   },
   {
-    slug: 'julie-backpack',
-    name: 'Julie Renard',
-    bio: 'Julie a parcouru 14 pays d\'Asie en solo avec un budget serré. Specialiste des itineraires hors sentiers battus, elle aide les voyageurs a eviter les pieges classiques et a decouvrir l\'Asie authentique.',
-    specialties: ['india', 'nepal', 'sri lanka'],
-    email: 'julie@flashvoyage.com',
+    slug: 'thomas-renard',
+    name: 'Thomas Renard',
+    bio: 'Reporter terrain, specialiste budget et aventure. Nomade digital depuis 4 ans, bases aux Philippines et en Indonesie.',
+    email: 'thomas.renard@flashvoyage.com',
+    wpId: 5,
+  },
+  {
+    slug: 'marc-delacroix',
+    name: 'Marc Delacroix',
+    bio: 'Redacteur senior, expert logistique et transport en Asie. 10 ans d\'experience, ancien guide touristique au Japon.',
+    email: 'marc.delacroix@flashvoyage.com',
+    wpId: 6,
   },
 ];
 
@@ -50,28 +57,25 @@ export class AuthorManager {
     try {
       return JSON.parse(fs.readFileSync(STATE_PATH, 'utf-8'));
     } catch {
-      return { wpUserIds: {} };
+      return { wpUserIds: {}, rotationIndex: 0 };
     }
   }
 
   _saveState() {
+    fs.mkdirSync(path.dirname(STATE_PATH), { recursive: true });
     fs.writeFileSync(STATE_PATH, JSON.stringify(this.state, null, 2));
   }
 
   /**
-   * Selectionne l'auteur le plus pertinent pour une destination.
+   * Selectionne le prochain auteur par rotation round-robin.
+   * Avance l'index et persiste l'etat.
    */
-  pickAuthor(destination) {
-    const dest = (destination || '').toLowerCase();
-
-    for (const author of AUTHOR_PROFILES) {
-      if (author.specialties.some(s => dest.includes(s) || s.includes(dest))) {
-        return author;
-      }
-    }
-
-    // Fallback: Claire (couverture Asie du Sud-Est la plus large)
-    return AUTHOR_PROFILES[0];
+  pickAuthor() {
+    const index = (this.state.rotationIndex || 0) % AUTHOR_PROFILES.length;
+    const author = AUTHOR_PROFILES[index];
+    this.state.rotationIndex = index + 1;
+    this._saveState();
+    return author;
   }
 
   /**
@@ -79,6 +83,11 @@ export class AuthorManager {
    * Retourne le WP user ID.
    */
   async ensureAuthorExists(author) {
+    // ID deja connu dans le profil
+    if (author.wpId) {
+      return author.wpId;
+    }
+
     // Deja en cache?
     if (this.state.wpUserIds[author.slug]) {
       return this.state.wpUserIds[author.slug];
@@ -149,11 +158,12 @@ export class AuthorManager {
   }
 
   /**
-   * Point d'entree: choisit un auteur, le cree si besoin, retourne le WP user ID.
+   * Point d'entree: choisit le prochain auteur (round-robin), le cree si besoin,
+   * retourne le profil et le WP user ID.
    */
   async getAuthorForArticle(destination) {
-    const author = this.pickAuthor(destination);
-    console.log(`   👤 Auteur selectionne: ${author.name} (${author.slug})`);
+    const author = this.pickAuthor();
+    console.log(`   👤 Auteur selectionne: ${author.name} (${author.slug}) [round-robin]`);
     const wpId = await this.ensureAuthorExists(author);
     return { author, wpId };
   }

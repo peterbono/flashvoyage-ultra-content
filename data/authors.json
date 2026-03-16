@@ -1,5 +1,9 @@
 {
   "wpUserIds": {
-    "claire-nomade": 2
-  }
+    "claire-moreau": 3,
+    "sophie-leclerc": 4,
+    "thomas-renard": 5,
+    "marc-delacroix": 6
+  },
+  "rotationIndex": 0
 }
