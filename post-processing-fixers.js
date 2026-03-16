@@ -2374,6 +2374,9 @@ export function fixGenericH2s(html, providedDestination = null) {
   } else if (['japon', 'vietnam', 'cambodge', 'laos', 'myanmar', 'népal', 'sri lanka'].includes(destLower)) {
     prep = 'au';
     destination = destination.charAt(0).toUpperCase() + destination.slice(1);
+  } else if (['philippines', 'maldives'].includes(destLower)) {
+    prep = 'aux';
+    destination = destination.charAt(0).toUpperCase() + destination.slice(1);
   } else {
     prep = 'à';
   }
@@ -2396,6 +2399,22 @@ export function fixGenericH2s(html, providedDestination = null) {
     const before = fixed;
     fixed = fixed.replace(pattern, replacement);
     if (fixed !== before) count++;
+  }
+
+  // Fallback pass: catch any remaining generic H2s using text extraction
+  const remainingH2s = [...fixed.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
+  for (const m of remainingH2s) {
+    const h2Text = m[1].replace(/<[^>]*>/g, '').trim();
+    const isGeneric = /^(nos recommandations|ce qu.il faut retenir|questions?\s+fr[éè]quentes?|faq|conclusion|en conclusion)$/i.test(h2Text);
+    if (isGeneric) {
+      let newText = h2Text;
+      if (/questions?\s+fr[éè]quentes?|faq/i.test(h2Text)) newText = `Questions fréquentes sur ${destination}`;
+      else if (/ce qu.il faut retenir/i.test(h2Text)) newText = `Ce qu'il faut retenir ${suffix}`;
+      else if (/conclusion/i.test(h2Text)) newText = `Ce qu'il faut retenir ${suffix}`;
+      else if (/nos recommandations/i.test(h2Text)) newText = `Nos recommandations pour ${destination}`;
+      fixed = fixed.replace(m[0], m[0].replace(m[1], newText));
+      count++;
+    }
   }
 
   if (count > 0) {
