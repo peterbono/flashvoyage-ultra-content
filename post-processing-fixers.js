@@ -2065,36 +2065,58 @@ export function stripHtmlComments(html) {
 export function fixWordCollisions(html) {
   let out = html;
   let fixCount = 0;
-  // Explicit known collision patterns (safe, no false positives)
-  const explicit = [
-    [/litétroit/gi, 'lit étroit'],
-    [/J'aiété/gi, "J'ai été"],
-    [/troisîles/gi, 'trois îles'],
-    [/bien-\s+être/gi, 'bien-être'],
-    [/pers\s+évérance/gi, 'persévérance'],
-    [/bonétat/gi, 'bon état'],
-    [/pourêtre/gi, 'pour être'],
-    [/pourévacuer/gi, "pour évacuer"],
-    [/peutêtre/gi, 'peut-être'],
-    [/peut\sêtre/gi, 'peut-être'],
-    [/maladieévitable/gi, 'maladie évitable'],
-    [/cetâge/gi, 'cet âge'],
-    [/expérimentésénoncent/gi, 'expérimentés énoncent'],
-    [/unétat/gi, 'un état'],
-    [/tonétat/gi, 'ton état'],
-    [/enétat/gi, 'en état'],
-    [/dansunétat/gi, 'dans un état'],
+  
+  // Strategy: Find consonant directly followed by accented vowel starting a new word
+  // This is the universal pattern for word_glue collisions
+  // Safe pattern: only split between known word-ending consonants and accent-starting words
+  
+  // Common French word endings that collide with accent-starting words
+  // dois+é, des+é, ton+é, son+é, mon+é, un+é, Il+é, sont+é, ont+é, est+é, pas+é, plus+é, très+é
+  // et+ê, pour+ê, tout+à, mais+à, pas+à
+  
+  const splits = [
+    // consonant or s/t/n ending + \u00e9 (é)
+    [/\bdois(\u00e9)/gi, 'dois $1'],
+    [/\bdes(\u00e9)/gi, 'des $1'],
+    [/\bton(\u00e9)/gi, 'ton $1'],
+    [/\bson(\u00e9)/gi, 'son $1'],
+    [/\bmon(\u00e9)/gi, 'mon $1'],
+    [/\bun(\u00e9)/gi, 'un $1'],
+    [/\bIl(\u00e9)/gi, 'Il $1'],
+    [/\bsont(\u00e9)/gi, 'sont $1'],
+    [/\bont(\u00e9)/gi, 'ont $1'],
+    [/\best(\u00e9)/gi, 'est $1'],
+    [/\bpas(\u00e9)/gi, 'pas $1'],
+    [/\bplus(\u00e9)/gi, 'plus $1'],
+    [/\btr\u00e8s(\u00e9)/gi, 'tr\u00e8s $1'],
+    [/\bces(\u00e9)/gi, 'ces $1'],
+    [/\bles(\u00e9)/gi, 'les $1'],
+    // + \u00ea (ê)
+    [/\bet(\u00ea)/gi, 'et $1'],
+    [/\bpour(\u00ea)/gi, 'pour $1'],
+    // + \u00e0 (à)
+    [/\btout(\u00e0)/gi, 'tout $1'],
+    [/\bmais(\u00e0)/gi, 'mais $1'],
+    [/\bpas(\u00e0)/gi, 'pas $1'],
+    // Specific known words
+    [/bien-\s+\u00eatre/gi, 'bien-\u00eatre'],
+    [/pers\s+\u00e9v\u00e9rance/gi, 'pers\u00e9v\u00e9rance'],
+    [/peut\s?\u00eatre/gi, 'peut-\u00eatre'],
+    [/peut\u00eatre/gi, 'peut-\u00eatre'],
+    [/cet\u00e2ge/gi, 'cet \u00e2ge'],
   ];
-  for (const [pattern, replacement] of explicit) {
+  
+  for (const [pattern, replacement] of splits) {
     const before = out;
     out = out.replace(pattern, replacement);
     if (out !== before) fixCount++;
   }
-  // Safer generic: only split camelCase-like patterns (lowercase + Uppercase)
-  out = out.replace(/([a-z])([A-Z\u00C0-\u00DC])/g, (m, a, b) => {
-    fixCount++;
-    return a + ' ' + b;
-  });
+  
+  // Fix double </strong>
+  out = out.replace(/<\/strong><\/strong>/g, () => { fixCount++; return '</strong>'; });
+  // Fix "forums de voyageurs Nam" in body
+  out = out.replace(/forums de voyageurs Nam/g, () => { fixCount++; return 'forums de voyageurs'; });
+  
   if (fixCount > 0) console.log('\ud83e\udde9 WORD_COLLISIONS: ' + fixCount + ' collision(s) fixed');
   return out;
 }
@@ -2297,11 +2319,11 @@ export function applyPostProcessingFixers(html) {
   // v4 fixers
   c = repairMissingOpenTags(c);
   c = stripHtmlComments(c);
-  c = fixWordCollisions(c);
   c = removeEmptyFaqItems(c);
   c = repairAuthorBoxLinks(c);
   // v5 fixers
   c = fixExtendedEncodingBreaks(c);
+  c = fixWordCollisions(c); // must run AFTER encoding fixes
   c = cleanEmDashEntities(c);
   c = repairFaqSvg(c);
   c = cleanAuthorityMoves(c);
