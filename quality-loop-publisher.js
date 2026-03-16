@@ -29,6 +29,7 @@ import EnhancedUltraGenerator from './enhanced-ultra-generator.js';
 import { runAllAgents, runCeoValidator } from './review-agents.js';
 import costTracker from './llm-cost-tracker.js';
 import { validatePrePublish } from './pre-publish-validator.js';
+import { fixGenericH2s, warnMissingSerpSections, deduplicateParagraphs, removeEnglishLeaks } from './post-processing-fixers.js';
 import { applyAllFixes } from './review-auto-fixers.js';
 import { generateWithClaude } from './anthropic-client.js';
 import axios from 'axios';
@@ -981,6 +982,17 @@ async function main() {
     //  Phase 2: Validation Gates
     // ══════════════════════════════════════════════════════════
     console.log('\n━━━ PHASE 2 : Validation Gates ━━━');
+    // Apply targeted post-processing fixers before validation
+    const preFixContent = article.content;
+    article = { ...article, content: fixGenericH2s(article.content) };
+    article = { ...article, content: removeEnglishLeaks(article.content) };
+    article = { ...article, content: deduplicateParagraphs(article.content) };
+    warnMissingSerpSections(article.content);
+    if (article.content !== preFixContent) {
+      writeFileSync('/tmp/last-generated-article.html', article.content);
+      console.log('   ✅ Post-processing fixers applied in quality loop');
+    }
+
     const validation = await validatePrePublish(article.content, {
       destination,
       title: article.title
