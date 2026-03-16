@@ -97,7 +97,7 @@ function parseAgentJson(raw) {
   }
 }
 
-async function callLlm(systemPrompt, userPrompt, { model = 'claude-haiku-4-5-20251001', maxTokens = 4096, trackingStep = 'review-agent' } = {}) {
+async function callLlm(systemPrompt, userPrompt, { model = 'claude-sonnet-4-5-20241022', maxTokens = 4096, trackingStep = 'review-agent' } = {}) {
   if (model.startsWith('claude') || model.startsWith('claude-haiku')) {
     return generateWithClaude(systemPrompt, userPrompt, { model, maxTokens, temperature: 0.3, trackingStep });
   }
