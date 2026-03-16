@@ -118,6 +118,124 @@ const CURRENT_DATE_CTX = `IMPORTANT : Nous sommes en mars 2026. Les dates de pub
 
 // ─── Agent definitions ────────────────────────────────────
 
+
+// ─── Deterministic Issue Detection ────────────────────────
+// Programmatic detection of common quality issues, since LLM agents
+// consistently fail to report issues even when prompted.
+
+function detectDeterministicIssues(ctx) {
+  const html = ctx.html || '';
+  const text = extractTextFromHtml(html);
+  const issues = { seo: [], affiliation: [], editorial: [], ux: [], integrity: [] };
+
+  // --- SEO Issues ---
+  const h2s = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)].map(m => m[1].replace(/<[^>]*>/g, '').trim());
+  const internalLinks = [...html.matchAll(/href="[^"]*flashvoyage[^"]*"/gi)];
+  const faqSection = /<h[23][^>]*>\s*(?:FAQ|Questions?\s+fr[ée]quentes?)/i.test(html);
+  const hasSchema = html.includes('FAQPage') || html.includes('application/ld+json');
+
+  if (internalLinks.length < 3) {
+    issues.seo.push({ severity: 'major', category: 'maillage-interne', description: `Seulement ${internalLinks.length} lien(s) interne(s), minimum 3 requis pour le maillage SEO`, fix_suggestion: 'Ajouter des liens vers des articles connexes de flashvoyage.com', location: 'global' });
+  }
+  if (!faqSection) {
+    issues.seo.push({ severity: 'major', category: 'faq-manquante', description: 'Section FAQ absente — requis pour le SEO et les featured snippets', fix_suggestion: 'Ajouter une section FAQ avec 3-5 questions pertinentes', location: 'conclusion' });
+  }
+  const genericH2s = h2s.filter(h => /^(nos recommandations|ce qu.il faut retenir|questions? fréquentes?|faq|conclusion|en conclusion)$/i.test(h));
+  if (genericH2s.length > 0) {
+    issues.seo.push({ severity: 'minor', category: 'h2-generique', description: `${genericH2s.length} H2 générique(s) sans mot-clé: "${genericH2s.join('", "')}"`, fix_suggestion: 'Renommer les H2 en incluant la destination ou le sujet principal', location: genericH2s[0] });
+  }
+  // Check H2 count
+  if (h2s.length < 4) {
+    issues.seo.push({ severity: 'major', category: 'structure-h2', description: `Seulement ${h2s.length} H2 — minimum 4 pour un article evergreen`, fix_suggestion: 'Ajouter des sections H2 pour couvrir plus d\'angles', location: 'global' });
+  }
+
+  // --- Affiliation Issues ---
+  const affiliateWidgets = [...html.matchAll(/class="affiliate-module"|<script[^>]*travelpayouts|kiwi\.com|booking\.com|airalo/gi)];
+  const ctaSlots = [...html.matchAll(/FV:CTA_SLOT/gi)];
+  if (affiliateWidgets.length === 0 && ctaSlots.length === 0) {
+    issues.affiliation.push({ severity: 'major', category: 'cta-absent', description: 'Aucun widget affilié ni slot CTA détecté dans l\'article', fix_suggestion: 'Intégrer des widgets Travelpayouts, Booking ou Airalo aux endroits stratégiques', location: 'global' });
+  }
+  // Check recommendation section
+  const hasRecoSection = h2s.some(h => /recommandation|nos choix|par où commencer/i.test(h));
+  if (!hasRecoSection) {
+    issues.affiliation.push({ severity: 'minor', category: 'section-reco-manquante', description: 'Pas de section "Nos recommandations" avec liens affiliés', fix_suggestion: 'Ajouter une section avec des recommandations produits/services', location: 'global' });
+  }
+
+  // --- Editorial Issues ---
+  const wordCount = text.split(/\s+/).filter(Boolean).length;
+  if (wordCount < 2000) {
+    issues.editorial.push({ severity: 'major', category: 'contenu-court', description: `Article trop court: ${wordCount} mots (minimum 2000 pour evergreen)`, fix_suggestion: 'Enrichir les sections avec plus de détails, exemples et données', location: 'global' });
+  }
+  // Check for tutoiement
+  const vousCount = (text.match(/\bvous\b/gi) || []).length;
+  const tuCount = (text.match(/\btu\b|\bton\b|\bta\b|\btes\b/gi) || []).length;
+  if (vousCount > tuCount && vousCount > 3) {
+    issues.editorial.push({ severity: 'major', category: 'vouvoiement', description: `Utilisation du vouvoiement (${vousCount}x "vous" vs ${tuCount}x tutoiement) — doit être 100% tutoiement`, fix_suggestion: 'Remplacer tout le vouvoiement par du tutoiement', location: 'global' });
+  }
+  // Check for robotic patterns
+  const roboticPatterns = ['il est important de', 'il convient de', 'force est de constater', 'il va sans dire', 'dans le cadre de', 'en ce qui concerne', 'il est à noter'];
+  const roboticFound = roboticPatterns.filter(p => text.toLowerCase().includes(p));
+  if (roboticFound.length > 0) {
+    issues.editorial.push({ severity: 'minor', category: 'patterns-ia', description: `${roboticFound.length} pattern(s) robotique(s) détecté(s): "${roboticFound.join('", "')}"`, fix_suggestion: 'Reformuler en langage naturel avec tutoiement', location: 'global' });
+  }
+  // Check for French quotes
+  const frQuotes = (html.match(/[«»]/g) || []).length / 2;
+  if (frQuotes < 2) {
+    issues.editorial.push({ severity: 'minor', category: 'citations-manquantes', description: `Seulement ${Math.floor(frQuotes)} citation(s) avec guillemets français — minimum 2 pour la crédibilité`, fix_suggestion: 'Ajouter des citations du témoignage entre « et »', location: 'global' });
+  }
+  // Check SERP sections
+  const hasDiffAngle = h2s.some(h => /ce que les (autres|blogs)|angle mort|ne (te )?disent pas|personne ne parle/i.test(h));
+  const hasCommonMistakes = h2s.some(h => /erreur|piège|éviter|se trompent|plombent/i.test(h));
+  const hasLimits = h2s.some(h => /limite|biais/i.test(h));
+  if (!hasDiffAngle) {
+    issues.editorial.push({ severity: 'minor', category: 'serp-diff-angle', description: 'Section "angle différenciant" manquante (ce que les autres guides ne disent pas)', fix_suggestion: 'Ajouter un H2 sur ce que les blogs classiques omettent sur cette destination', location: 'global' });
+  }
+  if (!hasCommonMistakes) {
+    issues.editorial.push({ severity: 'minor', category: 'serp-erreurs', description: 'Section "erreurs courantes" manquante', fix_suggestion: 'Ajouter un H2 sur les pièges et erreurs fréquentes des voyageurs', location: 'global' });
+  }
+
+  // --- UX/Bugs Issues ---
+  // Unclosed tags
+  const openTags = (html.match(/<(p|div|section|details|summary)\b/gi) || []).length;
+  const closeTags = (html.match(/<\/(p|div|section|details|summary)>/gi) || []).length;
+  if (Math.abs(openTags - closeTags) > 2) {
+    issues.ux.push({ severity: 'critical', category: 'html-structure', description: `Déséquilibre HTML: ${openTags} ouvertures vs ${closeTags} fermetures`, fix_suggestion: 'Corriger les balises HTML non fermées', location: 'global' });
+  }
+  // Duplicate paragraphs
+  const paragraphs = [...html.matchAll(/<p[^>]*>(.*?)<\/p>/gis)].map(m => m[1].replace(/<[^>]*>/g, '').trim()).filter(p => p.length > 50);
+  const seen = new Set();
+  let dupCount = 0;
+  for (const p of paragraphs) {
+    const key = p.substring(0, 100).toLowerCase();
+    if (seen.has(key)) dupCount++;
+    seen.add(key);
+  }
+  if (dupCount > 0) {
+    issues.ux.push({ severity: 'major', category: 'paragraphes-dupliques', description: `${dupCount} paragraphe(s) dupliqué(s) détecté(s)`, fix_suggestion: 'Supprimer les paragraphes en double', location: 'global' });
+  }
+  // Check images
+  const images = [...html.matchAll(/<img[^>]*>/gi)];
+  if (images.length === 0) {
+    issues.ux.push({ severity: 'minor', category: 'images-manquantes', description: 'Aucune image dans l\'article', fix_suggestion: 'Ajouter des images pertinentes pour illustrer le contenu', location: 'global' });
+  }
+
+  // --- Integrity Issues ---
+  // English content
+  const englishWords = (text.match(/\b(the|this|that|with|from|have|your|about|will|would|could|should|their|which|these|those|been|some|more|just|very|also|than|into|only|other|still|even|made|after|before|between|through|during|without)\b/gi) || []).length;
+  const totalWords = text.split(/\s+/).length;
+  const englishRatio = englishWords / totalWords;
+  if (englishRatio > 0.02) {
+    issues.integrity.push({ severity: 'major', category: 'contenu-anglais', description: `${(englishRatio * 100).toFixed(1)}% de mots anglais détectés (${englishWords} mots) — doit être < 1%`, fix_suggestion: 'Traduire tout le contenu anglais résiduel en français', location: 'global' });
+  }
+  // Source attribution
+  const hasSourceLink = /reddit\.com|source.*verif/i.test(html);
+  if (!hasSourceLink) {
+    issues.integrity.push({ severity: 'minor', category: 'attribution-source', description: 'Pas de lien vers la source Reddit originale', fix_suggestion: 'Ajouter un lien vers le post Reddit source pour la traçabilité', location: 'conclusion' });
+  }
+
+  return issues;
+}
+
 const AGENTS = {
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
