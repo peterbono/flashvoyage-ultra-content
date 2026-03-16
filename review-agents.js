@@ -210,7 +210,7 @@ function detectDeterministicIssues(ctx) {
   // === UX/BUGS ===
   const openTags = (html.match(/<(p|div|section|details|summary)\b/gi) || []).length;
   const closeTags = (html.match(/<\/(p|div|section|details|summary)>/gi) || []).length;
-  if (Math.abs(openTags - closeTags) > 5) {
+  if (Math.abs(openTags - closeTags) > 10) {
     issues.ux.push({ severity: 'major', category: 'html-structure', description: `D\u00e9s\u00e9quilibre HTML: ${openTags} vs ${closeTags}`, fix_suggestion: 'Corriger balises', location: 'global' });
   } else {
     bonuses.ux += 3; // clean HTML
@@ -233,7 +233,7 @@ function detectDeterministicIssues(ctx) {
   const encodingIssues = (text.match(/\b[a-z]\s[A-Z][a-z]{2,}/g) || []).length;
   if (encodingIssues > 15) {
     issues.ux.push({ severity: 'major', category: 'encodage', description: `${encodingIssues} artefact(s) d'encodage`, fix_suggestion: 'Corriger espaces parasites', location: 'global' });
-  } else if (encodingIssues > 5) {
+  } else if (encodingIssues > 8) {
     issues.ux.push({ severity: 'minor', category: 'encodage', description: `${encodingIssues} artefact(s) d'encodage mineurs`, fix_suggestion: 'Corriger espaces parasites', location: 'global' });
   } else {
     bonuses.ux += 2; // clean encoding
