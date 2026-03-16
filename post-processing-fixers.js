@@ -2266,6 +2266,126 @@ export function fixBrokenRedditUrls(html) {
   return out;
 }
 
+
+/**
+ * Rename generic H2s by injecting the article's destination.
+ * "Questions fréquentes" → "Questions fréquentes sur le Japon"
+ * "Nos recommandations" → "Nos recommandations pour le Japon"
+ * "Ce qu'il faut retenir" → "Ce qu'il faut retenir sur le Japon"
+ */
+
+/**
+ * Check for mandatory SERP sections in evergreen articles.
+ * Logs warnings for missing sections. Does NOT inject content (that's the generator's job).
+ * Returns HTML unchanged but logs diagnostics for the quality loop.
+ */
+export function warnMissingSerpSections(html) {
+  // Only applies to evergreen articles (check for CTA_SLOT markers)
+  if (!html.includes('FV:CTA_SLOT') && !html.includes('evergreen')) return html;
+
+  const h2s = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)].map(m => m[1].replace(/<[^>]*>/g, '').trim().toLowerCase());
+
+  const checks = [
+    {
+      name: 'DIFF_ANGLE',
+      patterns: ['ce que les autres', 'ce que les blogs', 'angle mort', 'ne disent pas', 'ne te disent pas', 'personne ne parle'],
+      label: 'Section "angle différenciant"'
+    },
+    {
+      name: 'COMMON_MISTAKES',
+      patterns: ['erreur', 'piège', 'éviter', 'se trompent', 'plombent'],
+      label: 'Section "erreurs courantes"'
+    },
+    {
+      name: 'LIMITS_BIAS',
+      patterns: ['limite', 'biais', 'limites et biais', 'limites de cet article'],
+      label: 'Section "limites et biais"'
+    }
+  ];
+
+  const missing = [];
+  for (const check of checks) {
+    const found = h2s.some(h2 => check.patterns.some(p => h2.includes(p)));
+    if (!found) {
+      missing.push(check.label);
+    }
+  }
+
+  if (missing.length > 0) {
+    console.log(`   ⚠️ SERP_SECTIONS: ${missing.length} section(s) SERP manquante(s): ${missing.join(', ')}`);
+  } else {
+    console.log(`   ✅ SERP_SECTIONS: 3/3 sections SERP obligatoires présentes`);
+  }
+
+  return html;
+}
+
+export function fixGenericH2s(html) {
+  // Extract destination from the article content
+  const destMatch = html.match(/<meta[^>]*destination[^>]*content="([^"]+)"/i)
+    || html.match(/data-destination="([^"]+)"/i);
+
+  // Try to extract from first H1 or strong destination mentions
+  let destination = destMatch ? destMatch[1] : null;
+  if (!destination) {
+    // Try common patterns in the title/content
+    const h1Match = html.match(/<h1[^>]*>(.*?)<\/h1>/i);
+    if (h1Match) {
+      const h1Text = h1Match[1].replace(/<[^>]*>/g, '');
+      // Extract country/city names from h1
+      const destPatterns = /\b(Japon|Thaïlande|Vietnam|Bali|Indonésie|Malaisie|Philippines|Cambodge|Laos|Myanmar|Singapour|Corée|Taiwan|Inde|Sri Lanka|Népal|Chine|Mongolie|Taipei|Tokyo|Kyoto|Osaka|Bangkok|Chiang Mai|Hanoï|Hô Chi Minh|Siem Reap|Luang Prabang|Ubud|Lombok|Kuala Lumpur|Manille|Cebu|Colombo|Katmandou|Pékin|Shanghai|Hong Kong|Macao|Séoul|Busan)\b/i;
+      const dm = h1Text.match(destPatterns);
+      if (dm) destination = dm[1];
+    }
+  }
+
+  if (!destination) return html; // Can't fix without knowing destination
+
+  // Determine preposition
+  const feminineCountries = ['thaïlande', 'indonésie', 'malaisie', 'inde', 'chine', 'mongolie', 'corée'];
+  const isCity = /^[A-Z]/.test(destination) && !feminineCountries.includes(destination.toLowerCase()) && destination.length < 15;
+  const destLower = destination.toLowerCase();
+
+  let prep = 'sur';
+  if (destLower.startsWith('le ') || destLower.startsWith('la ') || destLower.startsWith("l'")) {
+    prep = 'sur';
+  } else if (feminineCountries.includes(destLower)) {
+    prep = 'en';
+    destination = destination.charAt(0).toUpperCase() + destination.slice(1);
+  } else if (['japon', 'vietnam', 'cambodge', 'laos', 'myanmar', 'népal', 'sri lanka'].includes(destLower)) {
+    prep = 'au';
+    destination = destination.charAt(0).toUpperCase() + destination.slice(1);
+  } else {
+    prep = 'à';
+  }
+
+  const suffix = ` ${prep} ${destination}`;
+
+  // Generic H2 patterns and their replacements
+  const replacements = [
+    [/(<h2[^>]*>)\s*Questions?\s+fréquentes?\s*(<\/h2>)/gi, `$1Questions fréquentes sur ${destination}$2`],
+    [/(<h2[^>]*>)\s*FAQ\s*(<\/h2>)/gi, `$1FAQ sur ${destination}$2`],
+    [/(<h2[^>]*>)\s*Nos\s+recommandations\s*(?::\s*[Pp]ar\s+où\s+commencer\s*\??)?\s*(<\/h2>)/gi, `$1Nos recommandations pour ${destination}$2`],
+    [/(<h2[^>]*>)\s*Ce\s+qu['']il\s+faut\s+retenir\s*(<\/h2>)/gi, `$1Ce qu'il faut retenir${suffix}$2`],
+    [/(<h2[^>]*>)\s*(?:En\s+)?[Cc]onclusion\s*(<\/h2>)/gi, `$1Ce qu'il faut retenir${suffix}$2`],
+    [/(<h2[^>]*>)\s*Ce\s+que\s+dit\s+le\s+témoignage\s*(<\/h2>)/gi, `$1Ce que révèle ce témoignage${suffix}$2`],
+  ];
+
+  let fixed = html;
+  let count = 0;
+  for (const [pattern, replacement] of replacements) {
+    const before = fixed;
+    fixed = fixed.replace(pattern, replacement);
+    if (fixed !== before) count++;
+  }
+
+  if (count > 0) {
+    console.log(`   ✅ GENERIC_H2_FIX: ${count} H2 générique(s) renommé(s) avec destination "${destination}"`);
+  }
+
+  return fixed;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
@@ -2286,6 +2406,8 @@ export function applyPostProcessingFixers(html) {
   c = capExcessiveH2s(c);
   c = cleanAiTells(c);
   c = fixTruncatedH2s(c);
+  c = fixGenericH2s(c);
+  c = warnMissingSerpSections(c);
   c = removeEnglishLeaks(c);
   c = limitSiTuSentences(c);
   c = fixTruncatedSentences(c);
