@@ -193,6 +193,11 @@ export function fixEncodingBreaks(html) {
     [/int\s+éress/g, 'intéress'],
     [/int\s+égr/g, 'intégr'],
     [/int\s+ègre/g, 'intègre'],
+    [/sépar\s+ément/g, 'séparément'],
+    [/complèt\s+ement/g, 'complètement'],
+    [/immédiat\s+ement/g, 'immédiatement'],
+    [/particulièr\s+ement/g, 'particulièrement'],
+    [/précis\s+ément/g, 'précisément'],
     [/int\s+égral/g, 'intégral'],
     [/si\s+ècles/g, 'siècles'],
 
@@ -972,47 +977,33 @@ export function cleanAiTells(html) {
  */
 export function limitSiTuSentences(html) {
   let out = html;
-  // Count "Si tu" occurrences in text (not in HTML attributes)
-  const siTuPattern = /Si tu ([a-zéèêàâîôûç]+)/gi;
-  let count = 0;
-  out = out.replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, (pTag, content) => {
-    // Check if this paragraph starts with or contains "Si tu"
-    const hasSiTu = /Si tu [a-zéèêàâîôûç]/i.test(content);
-    if (!hasSiTu) return pTag;
-    
-    count++;
-    if (count <= 3) return pTag; // Keep first 3
-    
-    // For excess: try to rewrite "Si tu [verbe], [conseil]" → "[Conseil]"
-    let rewritten = content;
-    // Pattern: "Si tu [verbe...], [privilégie/évite/opte/choisis/pars] [reste]"
-    rewritten = rewritten.replace(
-      /Si tu [^,]+,\s*(privil[eé]gie|[eé]vite|opte pour|choisis|pars sur)\s+/gi,
-      (m, verb) => {
-        // Capitalize the verb
-        return verb.charAt(0).toUpperCase() + verb.slice(1) + ' ';
-      }
-    );
-    // If no comma pattern, try: "Si tu [verbe...], [reste de phrase]" or "Si tu [verbe...]: [reste]"
-    rewritten = rewritten.replace(
-      /Si tu [^,:]+[,:]+\s*/gi,
-      ''
-    );
-    // Last resort: strip "Si tu" and capitalize
-    if (/Si tu/i.test(rewritten)) {
-      rewritten = rewritten.replace(/Si tu /gi, '');
-    }
-    
-    return pTag.replace(content, rewritten);
+  // Count ALL "Si tu" in the document (not just paragraph starts)
+  const allSiTu = (out.match(/Si tu [a-z\u00e0-\u00ff]/gi) || []).length;
+  if (allSiTu <= 4) return out; // Under threshold, nothing to do
+
+  // Strategy: convert excess "Si tu" to alternative formulations
+  let kept = 0;
+  const alternatives = [
+    (verb) => "Pour " + verb,
+    (verb) => "En cas de " + verb,
+    (verb) => "Quand tu " + verb,
+    (verb) => verb.charAt(0).toUpperCase() + verb.slice(1),
+  ];
+
+  // Process all text, replacing excess "Si tu" patterns
+  out = out.replace(/Si tu ([a-z\u00e0-\u00ff][^,.:;!?<]{2,40})/gi, (match, rest) => {
+    kept++;
+    if (kept <= 4) return match; // Keep first 4
+    const altIdx = (kept - 5) % alternatives.length;
+    // Try to use the verb after "Si tu" with an alternative
+    const verb = rest.trim();
+    const alt = alternatives[altIdx];
+    return alt(verb);
   });
-  
+
   return out;
 }
 
-/**
- * Fix truncated sentences ending with just a period after short text.
- * Detects patterns like "tu es constamment ." and removes the orphan period.
- */
 export function fixTruncatedSentences(html) {
   let out = html;
   // Remove sentences that end abruptly with just ". " after a short word
