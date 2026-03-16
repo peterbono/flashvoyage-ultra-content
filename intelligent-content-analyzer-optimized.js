@@ -1747,7 +1747,7 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 📖 OUVERTURE IMMERSIVE — HOOK CINÉMATIQUE (premier paragraphe, OBLIGATOIRE) :
 - Ouvrir sur une micro-scène sensorielle (2-4 phrases) : lieu, odeur, bruit, geste, tension. Puis 1 question qui accroche.
 - La scène doit être tirée du témoignage (lieu réel, situation réelle, enjeu réel).
-- ✅ Ouvre TOUJOURS par une micro-scène sensorielle (lieu + action + tension), puis enchaîne sur une question. Exemple : «L'écran du distributeur affiche 220 bahts de frais — tu calcules mentalement si ça vaut le coup.» La source Reddit reste invisible dans le hook ; elle apparaît plus tard dans l'article.
+- ✅ Ouvre TOUJOURS par une micro-scène sensorielle (lieu + action + tension), puis enchaîne sur une question. Exemple : «L'écran du distributeur affiche 220 bahts de frais — tu calcules mentalement si ça vaut le coup.» La source (forums/communautés de voyageurs) reste invisible dans le hook. Dans le corps, utilise « forums de voyageurs », « communautés d'expatriés » — JAMAIS « Reddit » ou « r/xxx » (le lecteur moyen ne connaît pas).
 - Exemples calibrés :
   * Budget : "Chaque fois que je devais sortir du cash en Thaïlande, ça commençait pareil. L'écran du distributeur affiche les frais, tu calcules mentalement, et tu te demandes si le jeu en vaut la chandelle. Combien te coûte vraiment cette habitude sur un mois ?"
   * Visa : "Tu atterris à Bangkok avec un visa de 30 jours et une liste qui en demanderait 90. L'air chaud te frappe en sortant de l'aéroport. Et là, première question : par où commencer ?"
@@ -1826,7 +1826,8 @@ Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit 
 🚫 RÈGLE ABSOLUE — ADRESSE AU LECTEUR, PAS À L'AUTEUR REDDIT :
 - Le "tu" s'adresse TOUJOURS au lecteur/visiteur du site, JAMAIS à l'auteur du post Reddit.
 - ❌ INTERDIT : "comme tu l'expliques sur r/solotravel", "tu as posté sur Reddit"
-- ✅ CORRECT : "Une voyageuse partage sur Reddit : « ... »", "Un témoignage sur r/solotravel révèle que..."
+- ✅ CORRECT : "Une voyageuse installée depuis 2 ans partage : « ... »", "Un témoignage sur les forums de voyageurs révèle que..."
+- ❌ INTERDIT dans le CORPS : "Reddit", "r/xxx", "subreddit". Réservé au byline et à la boîte source en bas.
 - Les citations Reddit sont en 3ème personne : "l'auteur explique", "un voyageur raconte", "une utilisatrice témoigne".
 
 📊 DONNÉES TANGIBLES : budget, chronologie, chiffres intégrés naturellement. Mots-clés SEO : "budget réel", "chronologie", "contraintes".
@@ -1960,17 +1961,26 @@ Réponds UNIQUEMENT en JSON avec cette structure.`;
 
 1. PRIX RÉELS OBLIGATOIRES : GARDE TOUS LES CHIFFRES. Chaque montant en euros, dollars, bahts, yen etc. DOIT rester dans l'article tel quel. ❌ INTERDIT : "quelques euros", "un budget conséquent", "un coût maîtrisable", "une dépense notable", "un investissement réel". ✅ OBLIGATOIRE : "45€/nuit", "1 300€ le vol A/R", "180 bahts le trajet". Si tu n'as pas le chiffre exact, écris "prix variable selon la saison — vérifier avant de réserver" mais JAMAIS un euphémisme vague. Réf: ThePointsGuy écrit "$395 annual fee" pas "un coût significatif".
 
-2. RYTHME PARAGRAPHES TPG : Alterne INTENTIONNELLEMENT paragraphes courts et moyens. Pattern obligatoire : 1 paragraphe court (1-2 phrases, punchline ou transition) → 1-2 paragraphes moyens (3-4 phrases, argumentation développée). ❌ INTERDIT : 3 paragraphes courts d'affilée. ❌ INTERDIT : mur de texte de 6+ phrases. ❌ INTERDIT : une seule phrase par <p> sauf punchline intentionnelle. Chaque paragraphe moyen développe, illustre et nuance. Utilise "franchement", "en vrai", "du coup", "genre", "le truc c'est que" (2-3 par section). Ajoute 2-3 digressions sensorielles entre parenthèses : "(le café au 7-Eleven est étrangement correct)", "(spoiler : c'est toujours plus loin que sur Maps)".
+2. 
+❌ TIRET CADRATIN INTERDIT : N'utilise JAMAIS le tiret cadratin « — » dans le texte. C'est un tic d'écriture IA immédiatement repérable. Remplace par : une virgule, un point, deux-points, ou reformule. ✅ "Le budget a explosé, et personne ne l'avait prévu." ❌ "Le budget a explosé — et personne ne l'avait prévu."
+RYTHME PARAGRAPHES TPG : Alterne INTENTIONNELLEMENT paragraphes courts et moyens. Pattern obligatoire : 1 paragraphe court (1-2 phrases, punchline ou transition) → 1-2 paragraphes moyens (3-4 phrases, argumentation développée). ❌ INTERDIT : 3 paragraphes courts d'affilée. ❌ INTERDIT : mur de texte de 6+ phrases. ❌ INTERDIT : une seule phrase par <p> sauf punchline intentionnelle. Chaque paragraphe moyen développe, illustre et nuance. Utilise "franchement", "en vrai", "du coup", "genre", "le truc c'est que" (2-3 par section). Ajoute 2-3 digressions sensorielles entre parenthèses : "(le café au 7-Eleven est étrangement correct)", "(spoiler : c'est toujours plus loin que sur Maps)".
 
-3. HOOK EN 3 TEMPS (réf TPG) : Le début de l'article suit un arc en 3 paragraphes : (1) FRICTION — micro-scène sensorielle concrète qui pose le problème (lieu, action, tension). (2) EMPATHIE — tu reconnais que le lecteur vit cette question ("Et c'est exactement le dilemme que des milliers de voyageurs affrontent chaque année"). (3) PROMESSE DE VALEUR — tu annonces ce que l'article apporte ("On a épluché 30 témoignages Reddit pour te donner la réponse que les blogs ignorent"). ❌ INTERDIT de passer directement du hook aux infos sans empathie + promesse.
+3. HOOK EN 3 TEMPS (réf TPG) : Le début de l'article suit un arc en 3 paragraphes : (1) FRICTION — micro-scène sensorielle concrète qui pose le problème (lieu, action, tension). (2) EMPATHIE — tu reconnais que le lecteur vit cette question ("Et c'est exactement le dilemme que des milliers de voyageurs affrontent chaque année"). (3) PROMESSE DE VALEUR — tu annonces ce que l'article apporte ("On a recoupé les retours de 30 voyageurs et expatriés — voici ce que les blogs ignorent"). ❌ INTERDIT de passer directement du hook aux infos sans empathie + promesse.
+❌ INTERDIT de mentionner "Reddit" ou "r/xxx" dans le corps de l'article. Utilise : "forums de voyageurs", "communautés d'expatriés", "témoignages en ligne".
 
 4. TITRE HOOK ÉMOTIONNEL : Le titre provoque une émotion forte (regret, peur, surprise). ❌ INTERDIT les listicles : "X risques que...", "X choses que...", "X erreurs que...". ❌ INTERDIT : "les blogs cachent", "guide complet", "tout savoir". ✅ Patterns : "J'ai [vécu X] à [destination] — [conséquence inattendue]", "[Destination] : le moment où j'ai compris que [révélation]", "Pourquoi personne ne te prévient sur [problème concret] à [destination]".
 
 5. LIENS INTERNES INLINE (pas en bloc) : Les liens internes doivent être tissés DANS les phrases, comme TPG fait. ✅ "les frais cachés du JR Pass peuvent représenter <a href='...'>un vrai piège logistique</a>". ❌ INTERDIT les blocs dédiés type "Pour aller plus loin, Article Title." ou "<p class='internal-link-transition'>". Fréquence : 1 lien interne tous les 100-150 mots, toujours contextuel.
 
-6. CITATIONS INLINE OBLIGATOIRES : intègre 2-5 citations courtes entre guillemets français « ... » depuis les données du témoignage. ✅ Contextualise : «Un voyageur résume : « le budget a explosé dès le premier jour »». ✅ Format inline « ... » uniquement (le système gère les blockquotes). ❌ INTERDIT de répéter la même citation 2 fois. Minimum 2 citations uniques pour validation.
+6. CITATIONS INLINE — CONTEXTUALISÉES ET QUANTIFIÉES : intègre 2-5 citations courtes entre guillemets français « ... » depuis les données du témoignage. ✅ CHAQUE citation DOIT être introduite avec un CONTEXTE HUMAIN + QUANTIFICATION. ✅ "Un expatrié installé depuis 3 ans résume ce que 8 autres confirment : « le budget a explosé dès le premier jour »" ✅ "Ce point revient dans 12 témoignages sur 30 : « ... »" ✅ "Une voyageuse qui a vécu 6 mois sur place prévient : « ... »" ❌ INTERDIT : "Un voyageur explique :" seul (trop générique). Varie les verbes : résume, prévient, confirme, nuance, met en garde. ❌ INTERDIT : "Reddit", "r/xxx", "utilisateur Reddit" — toujours "voyageur", "expatriée", "francophone sur place". ✅ Format inline « ... » uniquement (le système gère les blockquotes). ❌ INTERDIT de répéter la même citation 2 fois. Minimum 2 citations uniques pour validation.
 
 7. H2 DÉCISIONNELS (80%+ obligatoire) : chaque H2 pose un arbitrage, une tension ou un choix. ✅ Verbe décisionnel (choisir, éviter, optimiser, sacrifier, risquer) ou connecteur de tension (mais, vs, en revanche, caché, vrai). ✅ Exemples : «Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois», «Chiang Mai vs Bangkok : où ton budget tient le plus longtemps».
+
+
+9. RAPPELS DE SOURCING (2-3 par article) : Le lecteur qui scanne doit comprendre que cet article synthétise des dizaines de retours réels. Insère 2-3 rappels dans le flux :
+✅ "Sur les forums, le constat est unanime :", "Ce point divise les expatriés : une moitié recommande X, l'autre Y.", "Parmi les 30 témoignages analysés, 22 mentionnent ce piège."
+✅ En transition : "Et ce n'est pas un cas isolé.", "On retrouve le même retour chez des voyageurs à [destination]."
+❌ Le sourcing doit vivre DANS le texte, pas seulement dans le byline que personne ne lit.
 
 8. BLOCKQUOTES PROPRES : Les citations Reddit dans les blockquotes doivent être des PHRASES COMPLÈTES en français, pas des fragments. ❌ INTERDIT : mettre des liens internes dans les blockquotes. ❌ INTERDIT : laisser des slugs ou URLs dans le texte des citations. ✅ Chaque blockquote contient UNE citation pertinente, traduite proprement en français.
 

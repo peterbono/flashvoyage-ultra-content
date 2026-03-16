@@ -1247,6 +1247,20 @@ export function cleanQuestionsOuvertes(html) {
   return out;
 }
 
+
+/**
+ * Replace em dashes (—) with appropriate punctuation.
+ * Em dashes are an AI writing tell that readers spot instantly.
+ */
+export function replaceEmDashes(html) {
+  let out = html;
+  // Em dash between two clauses: replace with comma or period
+  // Pattern: "word — word" => "word, word" (or ". Word" if after a complete thought)
+  out = out.replace(/ — /g, ", ");
+  // Also catch without spaces
+  out = out.replace(/—/g, ", ");
+  return out;
+}
 export function fixBrandNames(html) {
   let out = html;
   const brandFixes = [
@@ -1348,6 +1362,7 @@ export function applyPostProcessingFixers(html) {
   c = fixSlugLeaksInQuotes(c);
   c = cleanQuestionsOuvertes(c);
   c = fixTruncatedFragments(c);
+  c = replaceEmDashes(c);
   c = fixBrandNames(c);
   return c;
 }
