@@ -332,14 +332,14 @@ async function callOpenAIWithRetry(config, retries = 3) {
 
 // Fallback template déterministe (C)
 function generateTemplateFallback(sourceText, article, type = 'analysis') {
-  if (!sourceText || sourceText.length < 200) {
-    throw new Error('Fallback template refusé: source_text < 200 chars');
+  if (!sourceText || sourceText.length < 30) {
+    throw new Error('Fallback template refusé: source_text < 30 chars');
   }
   
   // Extraire phrases clés du source_text
   const sentences = sourceText
     .split(/[.!?]\s+/)
-    .filter(s => s.length > 20 && s.length < 200)
+    .filter(s => s.length > 20 && s.length < 30)
     .slice(0, 10);
   
   const bullets = sentences.slice(0, 6).map(s => s.trim());
@@ -1273,7 +1273,7 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
       // Utiliser extracted.post.clean_text ou extracted.selftext (compatibilité)
       const fullContent = extracted.post?.clean_text || extracted.selftext || extracted.post?.selftext || '';
       
-      if (!fullContent || fullContent.length < 200) {
+      if (!fullContent || fullContent.length < 30) {
         throw new Error(`CONTENU INSUFFISANT: extracted.post.clean_text length=${fullContent.length} < 200`);
       }
       
@@ -1466,7 +1466,7 @@ CONTENU: ${fullContent.substring(0, 6000)}`;
     // PRIORITÉ 3: ÉVÉNEMENT CLÉ / MOMENT DÉCISIF (contexte narratif)
     const centralEvent = story?.story?.central_event?.summary;
     const criticalMoment = story?.story?.critical_moment?.summary;
-    if (centralEvent && centralEvent.length > 20 && centralEvent.length < 200) {
+    if (centralEvent && centralEvent.length > 20 && centralEvent.length < 30) {
       // Extraire la phrase la plus percutante (première phrase ou plus courte)
       const sentences = centralEvent.split(/[.!?]\s+/).filter(s => s.length > 15 && s.length < 100);
       if (sentences.length > 0) {
@@ -1474,7 +1474,7 @@ CONTENU: ${fullContent.substring(0, 6000)}`;
         const keySentence = sentences.sort((a, b) => a.length - b.length)[0].trim();
         keyPoints.push({ label: 'Événement clé', value: keySentence });
       }
-    } else if (criticalMoment && criticalMoment.length > 20 && criticalMoment.length < 200) {
+    } else if (criticalMoment && criticalMoment.length > 20 && criticalMoment.length < 30) {
       const sentences = criticalMoment.split(/[.!?]\s+/).filter(s => s.length > 15 && s.length < 100);
       if (sentences.length > 0) {
         const keySentence = sentences.sort((a, b) => a.length - b.length)[0].trim();
@@ -1484,7 +1484,7 @@ CONTENU: ${fullContent.substring(0, 6000)}`;
     
     // PRIORITÉ 4: RÉSULTAT/RÉSOLUTION (impact)
     const resolution = story?.story?.resolution?.summary;
-    if (resolution && resolution.length > 20 && resolution.length < 200) {
+    if (resolution && resolution.length > 20 && resolution.length < 30) {
       const sentences = resolution.split(/[.!?]\s+/).filter(s => s.length > 15 && s.length < 100);
       if (sentences.length > 0) {
         const keySentence = sentences.sort((a, b) => a.length - b.length)[0].trim();
@@ -4874,7 +4874,7 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
       const personalQuotes = lines.filter(line => 
         /^(I|We|My|Our|I'm|We're|I've|We've)/.test(line.trim()) && 
         line.length > 20 && 
-        line.length < 200
+        line.length < 30
       );
       
       // Identifier les détails clés (chiffres, résultats, conseils)

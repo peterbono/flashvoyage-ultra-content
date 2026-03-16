@@ -797,6 +797,8 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       
       console.log('\n✅ PIPELINE_RUNNER: Pipeline terminé avec succès');
       // VIZ-BRIDGE: Emit stage_complete events from pipeline report
+      // Skip if quality-loop-publisher manages its own events
+      if (process.env.SKIP_WP_PUBLISH !== "1") {
       {
         const vizStageMap = {
           'extractor': 'extractor',
@@ -818,6 +820,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           }
         }
       }
+      } // end SKIP_WP_PUBLISH guard for batch stage_complete
       console.log(`   Titre: ${finalArticle.title}`);
       console.log(`   Contenu: ${finalArticle.content?.length || 0} caractères`);
       console.log(`   QA Report: ${finalArticle.qaReport?.checks?.length || 0} checks`);
@@ -1195,11 +1198,13 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
             : prePublishThreshold;
           let finalGatePct = prePublishPct;
           let finalGateBlockingPassed = !!prePublishScore.blockingPassed;
-          // VIZ-BRIDGE: marie score
-      this.vizBridge.emit({ type: 'stage_complete', agent: 'marie', data: {
-        status: 'success', detail: 'Score: ' + prePublishPct + '/100', score: Math.round(prePublishPct),
-      }});
-      this.vizBridge.emit({ type: 'score_update', agent: 'marie', data: { score: Math.round(prePublishPct) } });
+          // VIZ-BRIDGE: marie score (skip if quality-loop manages this)
+      if (process.env.SKIP_WP_PUBLISH !== '1') {
+        this.vizBridge.emit({ type: 'stage_complete', agent: 'marie', data: {
+          status: 'success', detail: 'Score: ' + prePublishPct + '/100', score: Math.round(prePublishPct),
+        }});
+        this.vizBridge.emit({ type: 'score_update', agent: 'marie', data: { score: Math.round(prePublishPct) } });
+      }
       console.log(`\n📊 PRE-PUBLISH QUALITY GATE: ${prePublishPct}% (seuil: ${prePublishThreshold}% | cible: ${qualityTargetScore}%) [${editorialMode.toUpperCase()}] — blocking: ${prePublishScore.blockingPassed ? 'OK' : 'FAIL'}`);
           // Détail des checks bloquants pour diagnostic
           if (!prePublishScore.blockingPassed && prePublishScore.categories?.blocking?.checks) {
@@ -1410,13 +1415,15 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
       console.log('📝 Publication sur WordPress...');
       const publishedArticle = await this.publishToWordPress(finalizedArticle);
       
-      // VIZ-BRIDGE: publisher complete
-      this.vizBridge.emit({ type: 'stage_complete', agent: 'publisher', data: {
-        status: 'success', detail: 'Published as draft, ID: ' + publishedArticle.id,
-      }});
-      this.vizBridge.emit({ type: 'pipeline_complete', agent: null, data: {
-        article: finalizedArticle.title, wpPostId: publishedArticle.id,
-      }});
+      // VIZ-BRIDGE: publisher complete (skip if quality-loop manages this)
+      if (process.env.SKIP_WP_PUBLISH !== '1') {
+        this.vizBridge.emit({ type: 'stage_complete', agent: 'publisher', data: {
+          status: 'success', detail: 'Published as draft, ID: ' + publishedArticle.id,
+        }});
+        this.vizBridge.emit({ type: 'pipeline_complete', agent: null, data: {
+          article: finalizedArticle.title, wpPostId: publishedArticle.id,
+        }});
+      }
       console.log('✅ Article publié avec succès!');
       console.log('🔗 Lien:', publishedArticle.link);
 

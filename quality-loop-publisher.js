@@ -871,6 +871,11 @@ async function main() {
   let approved = false;
   let lastReviewResult = null;
 
+  // VIZ-BRIDGE: marie quality review starts
+  if (vizBridge) {
+    vizBridge.emit({ type: 'stage_start', agent: 'marie' });
+  }
+
   while (iteration < CONFIG.maxLoops && !approved) {
     iteration++;
 
@@ -1256,6 +1261,37 @@ async function main() {
     }
   } else {
     console.log(`\n⚠️ Non approuvé par le panel — publication annulée`);
+  }
+
+  // VIZ-BRIDGE: marie stage complete with final score
+  if (vizBridge) {
+    vizBridge.emit({ type: 'stage_complete', agent: 'marie', data: {
+      status: approved ? 'success' : 'warning',
+      detail: 'Score: ' + (lastReviewResult?.weightedScore?.toFixed(1) || '?') + '/100 (' + iteration + ' iterations)',
+      score: Math.round(lastReviewResult?.weightedScore || 0),
+    }});
+    vizBridge.emit({ type: 'score_update', agent: 'marie', data: {
+      score: Math.round(lastReviewResult?.weightedScore || 0),
+    }});
+  }
+
+  // VIZ-BRIDGE: publisher stage
+  if (vizBridge) {
+    vizBridge.emit({ type: 'stage_start', agent: 'publisher' });
+    vizBridge.emit({ type: 'stage_complete', agent: 'publisher', data: {
+      status: approved ? 'success' : 'skipped',
+      detail: approved ? ('Published: ' + (article.wpPostId || 'draft')) : 'Rejected - not published',
+    }});
+  }
+
+  // VIZ-BRIDGE: pipeline complete
+  if (vizBridge) {
+    vizBridge.emit({ type: 'pipeline_complete', agent: null, data: {
+      article: article.title,
+      wpPostId: article.wpPostId || null,
+      score: Math.round(lastReviewResult?.weightedScore || 0),
+      duration_ms: Date.now() - startTime,
+    }});
   }
 
   const reportPath = join(__dirname, 'pipeline-report-output.json');
