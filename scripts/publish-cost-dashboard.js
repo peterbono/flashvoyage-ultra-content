@@ -30,16 +30,14 @@ function buildDashboardHTML(history) {
   const totalWords = history.reduce((s, h) => s + (h.wordCount || 0), 0);
   const costPerWord = totalWords > 0 ? (totalCost / totalWords) : 0;
 
-  // Trend: compare les 5 derniers articles avec les 5 d'avant
-  let trendIcon = '→';
+  let trendIcon = '\u2192';
   if (history.length >= 10) {
     const recent5 = history.slice(-5).reduce((s, h) => s + h.totalCostUSD, 0) / 5;
     const prev5 = history.slice(-10, -5).reduce((s, h) => s + h.totalCostUSD, 0) / 5;
-    if (recent5 < prev5 * 0.9) trendIcon = '↓ (baisse)';
-    else if (recent5 > prev5 * 1.1) trendIcon = '↑ (hausse)';
+    if (recent5 < prev5 * 0.9) trendIcon = '\u2193 (baisse)';
+    else if (recent5 > prev5 * 1.1) trendIcon = '\u2191 (hausse)';
   }
 
-  // Aggregate step costs across all articles
   const stepTotals = {};
   for (const h of history) {
     if (!h.byStep) continue;
@@ -52,7 +50,6 @@ function buildDashboardHTML(history) {
     }
   }
 
-  // Aggregate model costs
   const modelTotals = {};
   for (const h of history) {
     if (!h.byModel) continue;
@@ -63,250 +60,204 @@ function buildDashboardHTML(history) {
     }
   }
 
-  // Chart data
-  const chartLabels = history.map((h, i) => h.date ? new Date(h.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }) : `#${i + 1}`);
-  const chartCosts = history.map(h => parseFloat((h.totalCostUSD || 0).toFixed(4)));
-  const chartTokens = history.map(h => h.totalTokens || 0);
-  const chartCalls = history.map(h => h.totalCalls || 0);
+  // Chart data for Google Charts
+  const chartRows = history.map((h, i) => {
+    const label = h.date ? new Date(h.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }) : `#${i + 1}`;
+    return `['${label}', ${(h.totalCostUSD || 0).toFixed(4)}, ${avgCost.toFixed(4)}]`;
+  }).join(',\n          ');
 
-  // Step breakdown chart data (top 8 steps by cost)
+  const tokenRows = history.map((h, i) => {
+    const label = h.date ? new Date(h.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }) : `#${i + 1}`;
+    return `['${label}', ${h.totalTokens || 0}]`;
+  }).join(',\n          ');
+
   const sortedSteps = Object.entries(stepTotals).sort((a, b) => b[1].costUSD - a[1].costUSD);
-  const stepLabels = sortedSteps.map(([k]) => k);
-  const stepCosts = sortedSteps.map(([, v]) => parseFloat(v.costUSD.toFixed(4)));
+  const stepRows = sortedSteps.map(([k, v]) => `['${k}', ${v.costUSD.toFixed(4)}]`).join(',\n          ');
 
-  // Model pie chart data
   const modelLabels = Object.keys(modelTotals);
-  const modelCosts = Object.values(modelTotals).map(v => parseFloat(v.costUSD.toFixed(4)));
+  const modelRows = modelLabels.map(m => `['${m}', ${modelTotals[m].costUSD.toFixed(4)}]`).join(',\n          ');
 
-  // Detect outliers (>2x average)
   const outlierThreshold = avgCost * 2;
 
-  // Article table rows
-  const tableRows = [...history].reverse().map((h, idx) => {
+  const tableRows = [...history].reverse().map((h) => {
     const isOutlier = (h.totalCostUSD || 0) > outlierThreshold && totalArticles > 3;
-    const rowClass = isOutlier ? 'outlier' : '';
-    const dateStr = h.date ? new Date(h.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
-    const title = h.title || '—';
-    const link = h.url ? `<a href="${h.url}" target="_blank">${title.substring(0, 50)}${title.length > 50 ? '…' : ''}</a>` : title.substring(0, 50);
+    const rowClass = isOutlier ? ' class="outlier"' : '';
+    const dateStr = h.date ? new Date(h.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' }) : '\u2014';
+    const title = h.title || '\u2014';
+    const link = h.url ? `<a href="${h.url}" target="_blank">${title.substring(0, 50)}${title.length > 50 ? '\u2026' : ''}</a>` : title.substring(0, 50);
     const cost = `$${(h.totalCostUSD || 0).toFixed(4)}`;
     const tokens = (h.totalTokens || 0).toLocaleString('fr-FR');
     const calls = h.totalCalls || 0;
-    const words = h.wordCount || '—';
-    const cpw = h.costPerWord ? `$${(h.costPerWord * 1000).toFixed(3)}/1k` : '—';
-    const dur = h.durationMs ? `${(h.durationMs / 60000).toFixed(1)}min` : '—';
-    const llmRatio = h.llmTimeRatio ? `${(h.llmTimeRatio * 100).toFixed(0)}%` : '—';
-    const alert = isOutlier ? ' ⚠️' : '';
-    return `<tr class="${rowClass}"><td>${dateStr}</td><td>${link}</td><td>${cost}${alert}</td><td>${tokens}</td><td>${calls}</td><td>${words}</td><td>${cpw}</td><td>${dur}</td><td>${llmRatio}</td></tr>`;
+    const words = h.wordCount || '\u2014';
+    const cpw = h.costPerWord ? `$${(h.costPerWord * 1000).toFixed(3)}/1k` : '\u2014';
+    const dur = h.durationMs ? `${(h.durationMs / 60000).toFixed(1)}min` : '\u2014';
+    const llmRatio = h.llmTimeRatio ? `${(h.llmTimeRatio * 100).toFixed(0)}%` : '\u2014';
+    const alert = isOutlier ? ' \u26a0\ufe0f' : '';
+    return `<tr${rowClass}><td class="mdl-data-table__cell--non-numeric">${dateStr}</td><td class="mdl-data-table__cell--non-numeric">${link}</td><td>${cost}${alert}</td><td>${tokens}</td><td>${calls}</td><td>${words}</td><td>${cpw}</td><td class="mdl-data-table__cell--non-numeric">${dur}</td><td>${llmRatio}</td></tr>`;
   }).join('\n');
 
-  // Monthly projection based on editorial calendar (1 article/day = 30/month)
+  const stepTableRows = sortedSteps.map(([step, data]) => {
+    const pct = totalCost > 0 ? ((data.costUSD / totalCost) * 100).toFixed(1) : '0';
+    return `<tr><td class="mdl-data-table__cell--non-numeric"><strong>${step}</strong></td><td>${data.calls}</td><td>${data.tokensIn.toLocaleString('fr-FR')}</td><td>${data.tokensOut.toLocaleString('fr-FR')}</td><td>$${data.costUSD.toFixed(4)}</td><td>${pct}%</td></tr>`;
+  }).join('\n');
+
   const PLANNED_ARTICLES_PER_MONTH = 30;
   const monthlyProjection = avgCost * PLANNED_ARTICLES_PER_MONTH;
-
-  // Current month spend
   const now = new Date();
   const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
   const thisMonthArticles = history.filter(h => h.date && new Date(h.date) >= currentMonthStart);
   const thisMonthCost = thisMonthArticles.reduce((s, h) => s + (h.totalCostUSD || 0), 0);
   const thisMonthCount = thisMonthArticles.length;
 
-  // Dev LLM cost this month (calls made outside article generation — tracked via env)
-  const devLlmCostPath = path.join(path.dirname(COST_HISTORY_PATH), 'dev-llm-cost.jsonl');
-  let devCostThisMonth = 0;
-  try {
-    const devLines = fs.readFileSync(devLlmCostPath, 'utf-8').trim().split('\n').filter(Boolean);
-    for (const line of devLines) {
-      const entry = JSON.parse(line);
-      if (entry.date && new Date(entry.date) >= currentMonthStart) {
-        devCostThisMonth += entry.costUSD || 0;
-      }
-    }
-  } catch (e) { /* no dev cost file yet */ }
-
   return `<!-- wp:html -->
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-blue.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
-  .fv-dash { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; color: #1a1a2e; }
-  .fv-dash h1 { font-size: 28px; margin-bottom: 8px; }
-  .fv-dash .subtitle { color: #666; margin-bottom: 24px; font-size: 14px; }
-  .fv-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
-  .fv-kpi { background: #f8f9fa; border-radius: 12px; padding: 20px; text-align: center; border: 1px solid #e9ecef; }
-  .fv-kpi .value { font-size: 28px; font-weight: 700; color: #0066cc; }
-  .fv-kpi .label { font-size: 12px; color: #495057; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
-  .fv-kpi.alert .value { color: #e63946; }
-  .fv-charts { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 32px; }
-  .fv-chart-box { background: #fff; border: 1px solid #e9ecef; border-radius: 12px; padding: 20px; }
-  .fv-chart-box h3 { margin-top: 0; font-size: 16px; color: #1a1a2e; font-weight: 700; }
-  .fv-table-wrap { overflow-x: auto; margin-bottom: 32px; }
-  .fv-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .fv-table th { background: #1a1a2e !important; color: #ffffff !important; padding: 12px 10px !important; text-align: left; font-weight: 700 !important; font-size: 14px !important; white-space: nowrap; letter-spacing: 0.3px; text-transform: uppercase; }
-  .fv-table td { padding: 10px 10px; border-bottom: 1px solid #dee2e6; font-size: 13px; }
-  .fv-table tr:nth-child(even) { background: #f8f9fa; }
-  .fv-table tr:hover { background: #e8f0fe; }
-  .fv-table tr.outlier { background: #fff3f3; }
-  .fv-table tr.outlier:hover { background: #ffe0e0; }
-  .fv-table a { color: #0066cc; text-decoration: none; }
-  .fv-table a:hover { text-decoration: underline; }
-  .fv-step-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 32px; }
-  .fv-step-table th { background: #1a1a2e !important; color: #ffffff !important; padding: 12px 10px !important; text-align: left; font-weight: 700 !important; font-size: 14px !important; letter-spacing: 0.3px; text-transform: uppercase; }
-  .fv-step-table td { padding: 10px 10px; border-bottom: 1px solid #dee2e6; font-size: 13px; }
-  .fv-step-table tr:nth-child(even) { background: #f8f9fa; }
-  .fv-step-table tr:hover { background: #e8f0fe; }
-  @media (max-width: 768px) {
-    .fv-charts { grid-template-columns: 1fr; }
+  .fv-dash { max-width: 1260px; margin: 0 auto; padding: 16px; }
+  .fv-dash h1 { font-size: 28px; font-weight: 500; color: #263238; margin-bottom: 4px; }
+  .fv-dash .subtitle { color: #78909c; font-size: 14px; margin-bottom: 24px; }
+  .fv-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .fv-kpi-card { min-height: 0; }
+  .fv-kpi-card .mdl-card__title { padding: 16px 16px 8px; }
+  .fv-kpi-card .kpi-value { font-size: 30px; font-weight: 700; color: #1a73e8; }
+  .fv-kpi-card .kpi-label { font-size: 12px; color: #5f6368; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; margin-top: 4px; }
+  .fv-charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+  .fv-chart-card { min-height: 0; width: 100%; }
+  .fv-chart-card .mdl-card__title { padding-bottom: 0; }
+  .fv-chart-card .mdl-card__supporting-text { width: 100%; box-sizing: border-box; padding: 8px 16px 16px; }
+  .chart-container { width: 100%; min-height: 280px; }
+  .fv-table-section { margin-bottom: 32px; }
+  .fv-table-section h2 { font-size: 20px; font-weight: 500; color: #263238; margin-bottom: 12px; }
+  .fv-full-table { width: 100%; font-size: 13px; }
+  .fv-full-table th { background: #263238 !important; color: #ffffff !important; font-weight: 600 !important; font-size: 13px !important; padding: 12px 12px !important; }
+  .fv-full-table td { padding: 10px 12px !important; }
+  .fv-full-table tr.outlier { background: #fce4ec !important; }
+  .fv-full-table a { color: #1a73e8; text-decoration: none; }
+  .fv-full-table a:hover { text-decoration: underline; }
+  @media (max-width: 840px) {
+    .fv-charts-grid { grid-template-columns: 1fr; }
     .fv-kpis { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 
 <div class="fv-dash">
-<h1>💰 LLM Cost Dashboard</h1>
-<p class="subtitle">Mis à jour : ${new Date().toLocaleString('fr-FR')} — ${totalArticles} article(s) tracké(s)</p>
+<h1><i class="material-icons" style="vertical-align:middle;margin-right:8px;color:#1a73e8">analytics</i>LLM Cost Dashboard</h1>
+<p class="subtitle">Mis \u00e0 jour : ${new Date().toLocaleString('fr-FR')} \u2014 ${totalArticles} article(s) track\u00e9(s)</p>
 
 <div class="fv-kpis">
-  <div class="fv-kpi"><div class="value">$${totalCost.toFixed(2)}</div><div class="label">Coût total</div></div>
-  <div class="fv-kpi"><div class="value">$${avgCost.toFixed(4)}</div><div class="label">Coût moyen / article</div></div>
-  <div class="fv-kpi"><div class="value">${avgTokens.toLocaleString('fr-FR')}</div><div class="label">Tokens moyens / article</div></div>
-  <div class="fv-kpi"><div class="value">${avgDuration}s</div><div class="label">Durée moyenne</div></div>
-  <div class="fv-kpi"><div class="value">$${(costPerWord * 1000).toFixed(3)}</div><div class="label">Coût / 1000 mots</div></div>
-  <div class="fv-kpi"><div class="value">$${monthlyProjection.toFixed(2)}</div><div class="label">Projection / mois (${PLANNED_ARTICLES_PER_MONTH} art.) ${trendIcon}</div></div>
-  <div class="fv-kpi"><div class="value">$${thisMonthCost.toFixed(2)}</div><div class="label">Ce mois (${thisMonthCount} art.)</div></div>
-  <div class="fv-kpi${devCostThisMonth > 0 ? '' : ''}"><div class="value">$${devCostThisMonth.toFixed(2)}</div><div class="label">Dev/LLM ce mois</div></div>
+  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">$${totalCost.toFixed(2)}</div><div class="kpi-label">Co\u00fbt total</div></div></div></div>
+  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">$${avgCost.toFixed(4)}</div><div class="kpi-label">Co\u00fbt moyen / article</div></div></div></div>
+  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">${avgTokens.toLocaleString('fr-FR')}</div><div class="kpi-label">Tokens moyens / article</div></div></div></div>
+  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">${avgDuration}s</div><div class="kpi-label">Dur\u00e9e moyenne</div></div></div></div>
+  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">$${(costPerWord * 1000).toFixed(3)}</div><div class="kpi-label">Co\u00fbt / 1000 mots</div></div></div></div>
+  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">$${monthlyProjection.toFixed(2)}</div><div class="kpi-label">Projection / mois (${PLANNED_ARTICLES_PER_MONTH} art.) ${trendIcon}</div></div></div></div>
+  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">$${thisMonthCost.toFixed(2)}</div><div class="kpi-label">Ce mois (${thisMonthCount} art.)</div></div></div></div>
 </div>
 
-<div class="fv-charts">
-  <div class="fv-chart-box">
-    <h3>Coût par article (USD)</h3>
-    <canvas id="costChart" height="200"></canvas>
+<div class="fv-charts-grid">
+  <div class="mdl-card mdl-shadow--2dp fv-chart-card">
+    <div class="mdl-card__title"><h3 class="mdl-card__title-text">Co\u00fbt par article (USD)</h3></div>
+    <div class="mdl-card__supporting-text"><div id="costChart" class="chart-container"></div></div>
   </div>
-  <div class="fv-chart-box">
-    <h3>Répartition par modèle</h3>
-    <canvas id="modelChart" height="200"></canvas>
-  </div>
-</div>
-
-<div class="fv-charts">
-  <div class="fv-chart-box">
-    <h3>Coût par étape pipeline (total)</h3>
-    <canvas id="stepChart" height="200"></canvas>
-  </div>
-  <div class="fv-chart-box">
-    <h3>Tokens par article</h3>
-    <canvas id="tokensChart" height="200"></canvas>
+  <div class="mdl-card mdl-shadow--2dp fv-chart-card">
+    <div class="mdl-card__title"><h3 class="mdl-card__title-text">R\u00e9partition par mod\u00e8le</h3></div>
+    <div class="mdl-card__supporting-text"><div id="modelChart" class="chart-container"></div></div>
   </div>
 </div>
 
-<h2>Détail par étape pipeline (cumulé)</h2>
-<table class="fv-step-table">
-<thead><tr><th>Étape</th><th>Appels</th><th>Tokens IN</th><th>Tokens OUT</th><th>Coût USD</th><th>% du total</th></tr></thead>
+<div class="fv-charts-grid">
+  <div class="mdl-card mdl-shadow--2dp fv-chart-card">
+    <div class="mdl-card__title"><h3 class="mdl-card__title-text">Co\u00fbt par \u00e9tape pipeline</h3></div>
+    <div class="mdl-card__supporting-text"><div id="stepChart" class="chart-container" style="min-height:${Math.max(300, sortedSteps.length * 28)}px"></div></div>
+  </div>
+  <div class="mdl-card mdl-shadow--2dp fv-chart-card">
+    <div class="mdl-card__title"><h3 class="mdl-card__title-text">Tokens par article</h3></div>
+    <div class="mdl-card__supporting-text"><div id="tokensChart" class="chart-container"></div></div>
+  </div>
+</div>
+
+<div class="fv-table-section">
+<h2><i class="material-icons" style="vertical-align:middle;margin-right:6px;font-size:22px">layers</i>D\u00e9tail par \u00e9tape pipeline</h2>
+<div style="overflow-x:auto">
+<table class="mdl-data-table mdl-js-data-table fv-full-table">
+<thead><tr><th class="mdl-data-table__cell--non-numeric">\u00c9tape</th><th>Appels</th><th>Tokens IN</th><th>Tokens OUT</th><th>Co\u00fbt USD</th><th>% du total</th></tr></thead>
 <tbody>
-${sortedSteps.map(([step, data]) => {
-    const pct = totalCost > 0 ? ((data.costUSD / totalCost) * 100).toFixed(1) : '0';
-    return `<tr><td><strong>${step}</strong></td><td>${data.calls}</td><td>${data.tokensIn.toLocaleString('fr-FR')}</td><td>${data.tokensOut.toLocaleString('fr-FR')}</td><td>$${data.costUSD.toFixed(4)}</td><td>${pct}%</td></tr>`;
-  }).join('\n')}
+${stepTableRows}
 </tbody>
 </table>
+</div>
+</div>
 
-<h2>Historique des articles</h2>
-<div class="fv-table-wrap">
-<table class="fv-table">
-<thead><tr><th>Date</th><th>Article</th><th>Coût</th><th>Tokens</th><th>Appels</th><th>Mots</th><th>Coût/1k mots</th><th>Durée</th><th>LLM %</th></tr></thead>
+<div class="fv-table-section">
+<h2><i class="material-icons" style="vertical-align:middle;margin-right:6px;font-size:22px">history</i>Historique des articles</h2>
+<div style="overflow-x:auto">
+<table class="mdl-data-table mdl-js-data-table fv-full-table">
+<thead><tr><th class="mdl-data-table__cell--non-numeric">Date</th><th class="mdl-data-table__cell--non-numeric">Article</th><th>Co\u00fbt</th><th>Tokens</th><th>Appels</th><th>Mots</th><th>Co\u00fbt/1k mots</th><th class="mdl-data-table__cell--non-numeric">Dur\u00e9e</th><th>LLM %</th></tr></thead>
 <tbody>
 ${tableRows}
 </tbody>
 </table>
 </div>
+</div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2/dist/chartjs-plugin-datalabels.min.js"></script>
-<script>
-(function() {
-  // Register datalabels plugin
-  if (window.ChartDataLabels) Chart.register(ChartDataLabels);
+<script type="text/javascript">
+  google.charts.load('current', {packages: ['corechart', 'bar']});
+  google.charts.setOnLoadCallback(drawAllCharts);
 
-  const colors = {
-    blue: '#0066cc',
-    lightBlue: 'rgba(0,102,204,0.15)',
-    orange: '#ff6b35',
-    lightOrange: 'rgba(255,107,53,0.15)',
-    green: '#2ec4b6',
-    purple: '#9b5de5',
-    pink: '#f15bb5',
-    yellow: '#fee440',
-    gray: '#adb5bd'
-  };
-  const palette = [colors.blue, colors.orange, colors.green, colors.purple, colors.pink, colors.yellow, colors.gray, '#00bbf9'];
+  function drawAllCharts() {
+    // Cost per article
+    var costData = google.visualization.arrayToDataTable([
+      ['Article', 'Co\\u00fbt USD', 'Moyenne'],
+      ${chartRows}
+    ]);
+    new google.visualization.ComboChart(document.getElementById('costChart')).draw(costData, {
+      seriesType: 'area', series: {1: {type: 'line', lineDashStyle: [4, 4]}},
+      colors: ['#1a73e8', '#ea4335'], legend: {position: 'bottom'},
+      hAxis: {textStyle: {fontSize: 10}}, vAxis: {format: '$#,##0.000', textStyle: {fontSize: 11}},
+      chartArea: {width: '85%', height: '70%'}, backgroundColor: 'transparent',
+      areaOpacity: 0.15
+    });
 
-  // Cost per article line chart
-  new Chart(document.getElementById('costChart'), {
-    type: 'line',
-    data: {
-      labels: ${JSON.stringify(chartLabels)},
-      datasets: [{
-        label: 'Coût USD',
-        data: ${JSON.stringify(chartCosts)},
-        borderColor: colors.blue,
-        backgroundColor: colors.lightBlue,
-        fill: true,
-        tension: 0.3,
-        pointRadius: 4
-      }, {
-        label: 'Moyenne',
-        data: Array(${totalArticles}).fill(${avgCost.toFixed(4)}),
-        borderColor: colors.orange,
-        borderDash: [5, 5],
-        pointRadius: 0,
-        fill: false
-      }]
-    },
-    options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true, ticks: { callback: v => '$' + v.toFixed(3) } } } }
-  });
+    // Model donut
+    var modelData = google.visualization.arrayToDataTable([
+      ['Mod\\u00e8le', 'Co\\u00fbt USD'],
+      ${modelRows}
+    ]);
+    new google.visualization.PieChart(document.getElementById('modelChart')).draw(modelData, {
+      pieHole: 0.45, colors: ['#1a73e8', '#ea4335', '#34a853', '#fbbc04', '#9334e6'],
+      legend: {position: 'bottom', textStyle: {fontSize: 12}},
+      pieSliceText: 'value', pieSliceTextStyle: {fontSize: 13, bold: true},
+      chartArea: {width: '90%', height: '80%'}, backgroundColor: 'transparent',
+      tooltip: {text: 'both'}
+    });
 
-  // Model pie chart
-  new Chart(document.getElementById('modelChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ${JSON.stringify(modelLabels)},
-      datasets: [{ data: ${JSON.stringify(modelCosts)}, backgroundColor: palette.slice(0, ${modelLabels.length}) }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'bottom' },
-        datalabels: {
-          color: '#fff',
-          font: { weight: 'bold', size: 13 },
-          formatter: (value, ctx) => {
-            const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
-            const pct = ((value / total) * 100).toFixed(0);
-            return '$' + value.toFixed(2) + '\n(' + pct + '%)';
-          },
-          textAlign: 'center'
-        }
-      }
-    }
-  });
+    // Step bar chart
+    var stepData = google.visualization.arrayToDataTable([
+      ['\\u00c9tape', 'Co\\u00fbt USD'],
+      ${stepRows}
+    ]);
+    new google.visualization.BarChart(document.getElementById('stepChart')).draw(stepData, {
+      colors: ['#1a73e8'], legend: {position: 'none'},
+      hAxis: {format: '$#,##0.000', textStyle: {fontSize: 11}},
+      vAxis: {textStyle: {fontSize: 11}},
+      chartArea: {width: '60%', height: '85%'}, backgroundColor: 'transparent',
+      bar: {groupWidth: '70%'}
+    });
 
-  // Step bar chart
-  new Chart(document.getElementById('stepChart'), {
-    type: 'bar',
-    data: {
-      labels: ${JSON.stringify(stepLabels)},
-      datasets: [{ label: 'Coût USD', data: ${JSON.stringify(stepCosts)}, backgroundColor: palette.slice(0, ${stepLabels.length}) }]
-    },
-    options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { callback: v => '$' + v.toFixed(3) } } } }
-  });
-
-  // Tokens per article
-  new Chart(document.getElementById('tokensChart'), {
-    type: 'bar',
-    data: {
-      labels: ${JSON.stringify(chartLabels)},
-      datasets: [{ label: 'Tokens', data: ${JSON.stringify(chartTokens)}, backgroundColor: colors.lightBlue, borderColor: colors.blue, borderWidth: 1 }]
-    },
-    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
-  });
-})();
+    // Tokens per article
+    var tokenData = google.visualization.arrayToDataTable([
+      ['Article', 'Tokens'],
+      ${tokenRows}
+    ]);
+    new google.visualization.ColumnChart(document.getElementById('tokensChart')).draw(tokenData, {
+      colors: ['#1a73e8'], legend: {position: 'none'},
+      hAxis: {textStyle: {fontSize: 10}}, vAxis: {textStyle: {fontSize: 11}},
+      chartArea: {width: '85%', height: '70%'}, backgroundColor: 'transparent'
+    });
+  }
 </script>
 <!-- /wp:html -->`;
 }
