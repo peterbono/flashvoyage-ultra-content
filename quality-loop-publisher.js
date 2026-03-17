@@ -1104,6 +1104,8 @@ async function main() {
     }
     article = { ...article, content: removeEnglishLeaks(article.content) };
     article = { ...article, content: deduplicateParagraphs(article.content) };
+    article = { ...article, content: fixFrenchCountryArticles(article.content) };
+    article = { ...article, content: deduplicateFaqSections(article.content) };
     warnMissingSerpSections(article.content);
     if (article.content !== preFixContent) {
       writeFileSync('/tmp/last-generated-article.html', article.content);
