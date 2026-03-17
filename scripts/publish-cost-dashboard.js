@@ -138,7 +138,7 @@ function buildDashboardHTML(history) {
   .fv-chart-box h3 { margin-top: 0; font-size: 16px; color: #1a1a2e; font-weight: 700; }
   .fv-table-wrap { overflow-x: auto; margin-bottom: 32px; }
   .fv-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .fv-table th { background: #1a1a2e; color: #ffffff; padding: 12px 10px; text-align: left; font-weight: 700; font-size: 14px; white-space: nowrap; letter-spacing: 0.3px; text-transform: uppercase; }
+  .fv-table th { background: #1a1a2e !important; color: #ffffff !important; padding: 12px 10px !important; text-align: left; font-weight: 700 !important; font-size: 14px !important; white-space: nowrap; letter-spacing: 0.3px; text-transform: uppercase; }
   .fv-table td { padding: 10px 10px; border-bottom: 1px solid #dee2e6; font-size: 13px; }
   .fv-table tr:nth-child(even) { background: #f8f9fa; }
   .fv-table tr:hover { background: #e8f0fe; }
@@ -147,7 +147,7 @@ function buildDashboardHTML(history) {
   .fv-table a { color: #0066cc; text-decoration: none; }
   .fv-table a:hover { text-decoration: underline; }
   .fv-step-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 32px; }
-  .fv-step-table th { background: #1a1a2e; color: #ffffff; padding: 12px 10px; text-align: left; font-weight: 700; font-size: 14px; letter-spacing: 0.3px; text-transform: uppercase; }
+  .fv-step-table th { background: #1a1a2e !important; color: #ffffff !important; padding: 12px 10px !important; text-align: left; font-weight: 700 !important; font-size: 14px !important; letter-spacing: 0.3px; text-transform: uppercase; }
   .fv-step-table td { padding: 10px 10px; border-bottom: 1px solid #dee2e6; font-size: 13px; }
   .fv-step-table tr:nth-child(even) { background: #f8f9fa; }
   .fv-step-table tr:hover { background: #e8f0fe; }
