@@ -128,6 +128,7 @@ function detectDeterministicIssues(ctx) {
   const text = extractTextFromHtml(html);
   const issues = { seo: [], affiliation: [], editorial: [], ux: [], integrity: [] };
   const bonuses = { seo: 0, affiliation: 0, editorial: 0, ux: 0, integrity: 0 };
+  const isNews = (ctx.editorialMode || '').toLowerCase() === 'news';
 
   const h2s = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)].map(m => m[1].replace(/<[^>]*>/g, '').trim());
   const internalLinks = [...html.matchAll(/href="[^"]*flashvoyage[^"]*"/gi)];
@@ -140,53 +141,97 @@ function detectDeterministicIssues(ctx) {
   const paragraphs = [...html.matchAll(/<p[^>]*>(.*?)<\/p>/gis)].map(m => m[1].replace(/<[^>]*>/g, '').trim()).filter(p => p.length > 50);
 
   // === SEO ===
-  if (internalLinks.length < 3) {
-    issues.seo.push({ severity: 'major', category: 'maillage-interne', description: `Seulement ${internalLinks.length} lien(s) interne(s) (min 3)`, fix_suggestion: 'Ajouter liens vers articles connexes flashvoyage.com', location: 'global' });
+  const minInternalLinks = isNews ? 1 : 3;
+  if (internalLinks.length < minInternalLinks) {
+    issues.seo.push({ severity: 'major', category: 'maillage-interne', description: `Seulement ${internalLinks.length} lien(s) interne(s) (min ${minInternalLinks})`, fix_suggestion: 'Ajouter liens vers articles connexes flashvoyage.com', location: 'global' });
   } else if (internalLinks.length >= 5) {
     bonuses.seo += 3; // excellent maillage
   } else {
-    bonuses.seo += 1; // adequate maillage
+    bonuses.seo += isNews ? 2 : 1; // adequate maillage (news gets slightly more bonus)
   }
-  if (!faqSection) {
-    issues.seo.push({ severity: 'major', category: 'faq-manquante', description: 'Section FAQ absente', fix_suggestion: 'Ajouter section FAQ', location: 'conclusion' });
+  if (!isNews) {
+    // FAQ only required for evergreen
+    if (!faqSection) {
+      issues.seo.push({ severity: 'major', category: 'faq-manquante', description: 'Section FAQ absente', fix_suggestion: 'Ajouter section FAQ', location: 'conclusion' });
+    } else {
+      bonuses.seo += 3; // FAQ present
+      if (hasSchema) bonuses.seo += 2; // Schema markup
+    }
   } else {
-    bonuses.seo += 3; // FAQ present
-    if (hasSchema) bonuses.seo += 2; // Schema markup
+    // News: FAQ is optional, no penalty, small bonus if present
+    if (faqSection) bonuses.seo += 1;
   }
   const genericH2s = h2s.filter(h => /^(nos recommandations|ce qu.il faut retenir|questions? fr[ée]quentes?|faq|conclusion|en conclusion)$/i.test(h));
   if (genericH2s.length > 0) {
     issues.seo.push({ severity: 'minor', category: 'h2-generique', description: `${genericH2s.length} H2 g\u00e9n\u00e9rique(s): "${genericH2s.join('", "')}"`, fix_suggestion: 'Renommer avec destination', location: genericH2s[0] });
   }
-  if (h2s.length >= 5 && h2s.length <= 10) bonuses.seo += 2; // good H2 count
-  if (h2s.length >= 4) bonuses.seo += 1;
+  if (isNews) {
+    // News: 2-4 H2s is ideal
+    if (h2s.length >= 2 && h2s.length <= 4) bonuses.seo += 3;
+    else if (h2s.length >= 1) bonuses.seo += 1;
+  } else {
+    if (h2s.length >= 5 && h2s.length <= 10) bonuses.seo += 2; // good H2 count
+    if (h2s.length >= 4) bonuses.seo += 1;
+  }
   // Decision-oriented H2s (verbs like comment, pourquoi, erreur, piège)
   const decisionH2s = h2s.filter(h => /comment|pourquoi|erreur|pi[èe]ge|choisi|d[ée]cid|vrai|r[ée]el|cach[eé]|secret/i.test(h));
-  if (decisionH2s.length >= 3) bonuses.seo += 2;
-  else if (decisionH2s.length >= 1) bonuses.seo += 1;
+  if (isNews) {
+    if (decisionH2s.length >= 1) bonuses.seo += 2;
+  } else {
+    if (decisionH2s.length >= 3) bonuses.seo += 2;
+    else if (decisionH2s.length >= 1) bonuses.seo += 1;
+  }
 
   // === AFFILIATION ===
-  if (affiliateWidgets.length === 0 && ctaSlots.length === 0) {
-    issues.affiliation.push({ severity: 'major', category: 'cta-absent', description: 'Aucun widget affili\u00e9 ni CTA', fix_suggestion: 'Int\u00e9grer widgets Travelpayouts/Booking/Airalo', location: 'global' });
+  if (isNews) {
+    // News: 0 widgets is acceptable, 1 widget gets full bonus
+    if (affiliateWidgets.length >= 1 || ctaSlots.length >= 1) {
+      bonuses.affiliation += 5; // full bonus for any widget in news
+    } else {
+      bonuses.affiliation += 2; // no penalty, small base bonus for news without widgets
+    }
   } else {
-    bonuses.affiliation += 3;
-    if (affiliateWidgets.length >= 2) bonuses.affiliation += 2; // multiple widgets
+    if (affiliateWidgets.length === 0 && ctaSlots.length === 0) {
+      issues.affiliation.push({ severity: 'major', category: 'cta-absent', description: 'Aucun widget affili\u00e9 ni CTA', fix_suggestion: 'Int\u00e9grer widgets Travelpayouts/Booking/Airalo', location: 'global' });
+    } else {
+      bonuses.affiliation += 3;
+      if (affiliateWidgets.length >= 2) bonuses.affiliation += 2; // multiple widgets
+    }
   }
-  const hasRecoSection = h2s.some(h => /recommandation|nos choix|par o[uù] commencer/i.test(h));
-  if (hasRecoSection) bonuses.affiliation += 3;
+  if (!isNews) {
+    // Reco section bonus only for evergreen
+    const hasRecoSection = h2s.some(h => /recommandation|nos choix|par o[uù] commencer/i.test(h));
+    if (hasRecoSection) bonuses.affiliation += 3;
+  }
   // Natural CTA integration
-  if (ctaSlots.length >= 2) bonuses.affiliation += 2;
+  if (isNews) {
+    if (ctaSlots.length >= 1) bonuses.affiliation += 2;
+  } else {
+    if (ctaSlots.length >= 2) bonuses.affiliation += 2;
+  }
   // Partner transitions (natural affiliate integration)
   const partnerTransitions = [...html.matchAll(/partner-transition|transition-partenaire|affiliate-module/gi)];
   if (partnerTransitions.length > 0) bonuses.affiliation += 2;
 
   // === EDITORIAL ===
-  if (wordCount < 2000) {
-    issues.editorial.push({ severity: 'major', category: 'contenu-court', description: `${wordCount} mots (min 2000)`, fix_suggestion: 'Enrichir les sections', location: 'global' });
-  } else if (wordCount >= 2500) {
-    bonuses.editorial += 3; // good length
-    if (wordCount >= 3000) bonuses.editorial += 2;
+  if (isNews) {
+    // News: lower word count thresholds
+    if (wordCount < 500) {
+      issues.editorial.push({ severity: 'major', category: 'contenu-court', description: `${wordCount} mots (min 500 pour news)`, fix_suggestion: 'Enrichir les sections', location: 'global' });
+    } else if (wordCount >= 800) {
+      bonuses.editorial += 3; // excellent length for news
+    } else if (wordCount >= 600) {
+      bonuses.editorial += 1; // good length for news
+    }
   } else {
-    bonuses.editorial += 1;
+    if (wordCount < 2000) {
+      issues.editorial.push({ severity: 'major', category: 'contenu-court', description: `${wordCount} mots (min 2000)`, fix_suggestion: 'Enrichir les sections', location: 'global' });
+    } else if (wordCount >= 2500) {
+      bonuses.editorial += 3; // good length
+      if (wordCount >= 3000) bonuses.editorial += 2;
+    } else {
+      bonuses.editorial += 1;
+    }
   }
   const vousCount = (text.match(/\bvous\b/gi) || []).length;
   const tuCount = (text.match(/\btu\b|\bton\b|\bta\b|\btes\b/gi) || []).length;
@@ -195,10 +240,18 @@ function detectDeterministicIssues(ctx) {
   } else if (tuCount > 10) {
     bonuses.editorial += 2; // good tutoiement
   }
-  if (Math.floor(frQuotes) >= 3) bonuses.editorial += 3; // citations
-  else if (Math.floor(frQuotes) >= 2) bonuses.editorial += 1;
-  else if (Math.floor(frQuotes) < 2) {
-    issues.editorial.push({ severity: 'minor', category: 'citations-manquantes', description: `${Math.floor(frQuotes)} citation(s) (min 2)`, fix_suggestion: 'Ajouter citations entre \u00ab \u00bb', location: 'global' });
+  if (isNews) {
+    // News: 1 quote is acceptable, 0 is minor (not major)
+    if (Math.floor(frQuotes) >= 1) bonuses.editorial += 2;
+    else {
+      issues.editorial.push({ severity: 'minor', category: 'citations-manquantes', description: `${Math.floor(frQuotes)} citation(s) (min 1 pour news)`, fix_suggestion: 'Ajouter au moins une citation entre \u00ab \u00bb', location: 'global' });
+    }
+  } else {
+    if (Math.floor(frQuotes) >= 3) bonuses.editorial += 3; // citations
+    else if (Math.floor(frQuotes) >= 2) bonuses.editorial += 1;
+    else if (Math.floor(frQuotes) < 2) {
+      issues.editorial.push({ severity: 'minor', category: 'citations-manquantes', description: `${Math.floor(frQuotes)} citation(s) (min 2)`, fix_suggestion: 'Ajouter citations entre \u00ab \u00bb', location: 'global' });
+    }
   }
   // SERP sections
   const hasDiffAngle = h2s.some(h => /ce que les (autres|blogs)|angle mort|ne (te )?disent pas|personne ne (parle|mentionne)/i.test(h));
@@ -238,8 +291,8 @@ function detectDeterministicIssues(ctx) {
   }
   const images = [...html.matchAll(/<img[^>]*>/gi)];
   if (images.length > 0) bonuses.ux += 2;
-  // Quick Guide section
-  if (/quick-guide|guide-rapide|wp-block-heading.*guide/i.test(html)) bonuses.ux += 2;
+  // Quick Guide section (skip for news)
+  if (!isNews && /quick-guide|guide-rapide|wp-block-heading.*guide/i.test(html)) bonuses.ux += 2;
   // Structured details/summary (accordion)
   if (/<details/i.test(html)) bonuses.ux += 1;
   // Check for broken encoding
@@ -271,6 +324,58 @@ function detectDeterministicIssues(ctx) {
   bonuses.integrity += 2; // base trust for generated content
 
   return { issues, bonuses };
+}
+
+
+// ─── News Mode Calibration Helper ──────────────────────────
+function getNewsCalibration(agentType) {
+  const calibrations = {
+    seo: `
+MODE NEWS — CALIBRATION SPÉCIALE :
+Cet article est un article NEWS (actualité voyage), pas un guide evergreen.
+- La FAQ n'est PAS requise pour les articles news. Ne pénalise PAS son absence.
+- Le nombre de mots attendu est 500-1000, pas 2000+. Un article news de 600+ mots est BON.
+- 2-4 H2 suffisent (pas besoin de 5-10 comme pour un guide).
+- 1+ lien interne suffit (pas 3+).
+- Le maillage interne est moins critique pour les news.
+- Score >= 88 pour un article news bien structuré avec bon title tag et H2 pertinents.`,
+
+    affiliation: `
+MODE NEWS — CALIBRATION SPÉCIALE :
+Cet article est un article NEWS (actualité voyage), pas un guide evergreen.
+- 0 widget affilié est ACCEPTABLE pour un article news. Ne pénalise PAS l'absence de widgets.
+- 1 widget bien placé est un BONUS, pas une exigence.
+- Les sections "Nos recommandations" ne sont pas attendues.
+- 1 CTA suffit (pas 2+).
+- L'objectif premier d'un article news est l'information, pas la monétisation.
+- Score >= 88 pour un article news même sans widget affilié si le contenu est informatif.`,
+
+    editorial: `
+MODE NEWS — CALIBRATION SPÉCIALE :
+Cet article est un article NEWS (actualité voyage), pas un guide evergreen.
+- Le nombre de mots attendu est 500-1000, pas 2000+.
+- Le style est plus direct et factuel — moins de narration immersive attendue.
+- 1 citation guillemets français suffit.
+- Les H2 décisionnels sont un bonus mais pas obligatoires.
+- Le hook doit être accrocheur et informatif, pas nécessairement sensoriel/immersif.
+- Score >= 85 pour un article news bien écrit et factuel.`,
+
+    ux: `
+MODE NEWS — CALIBRATION SPÉCIALE :
+Cet article est un article NEWS (actualité voyage), pas un guide evergreen.
+- La section "Quick Guide" n'est PAS attendue pour les news.
+- Moins d'images sont nécessaires (1 image suffit).
+- L'article est plus court donc moins de structures accordion attendues.
+- Score >= 88 pour un article news avec HTML propre et sans bugs.`,
+
+    integrity: `
+MODE NEWS — CALIBRATION SPÉCIALE :
+Cet article est un article NEWS (actualité voyage), pas un guide evergreen.
+- Les faits doivent être particulièrement précis car c'est de l'actualité.
+- Les dates et sources sont PLUS importantes que pour un evergreen.
+- Score >= 88 pour un article news avec des faits vérifiables et cohérents.`
+  };
+  return calibrations[agentType] || '';
 }
 
 const AGENTS = {
@@ -347,7 +452,8 @@ EXEMPLE DE RÉPONSE CORRECTE (score < 85 = DOIT avoir des issues) :
       const summaryCount = root.querySelectorAll('summary').length;
       const hasFaqHeading = /<h[23][^>]*>\s*(?:FAQ|Questions?\s+fr[ée]quentes?|Foire\s+aux\s+questions?)\s*<\/h[23]>/i.test(ctx.html || '');
       const hasFaqJsonLd = /<script[^>]+type=["']application\/ld\+json["'][^>]*>[\s\S]*?"@type"\s*:\s*"FAQPage"[\s\S]*?<\/script>/i.test(ctx.html || '');
-      return `TITLE_TAG (SEO): ${titleTag}\nH1 (éditorial): ${h1Text}\nURL : ${ctx.url}\nMODE : ${ctx.editorialMode}\nFAQ STRUCTURE: details=${detailsCount}, summary=${summaryCount}, heading=${hasFaqHeading ? 'yes' : 'no'}, jsonld=${hasFaqJsonLd ? 'yes' : 'no'}\n\nHTML DE L'ARTICLE :\n${truncate(ctx.html)}`;
+      const newsCalib = (ctx.editorialMode || '').toLowerCase() === 'news' ? '\n\n' + getNewsCalibration('seo') : '';
+      return `TITLE_TAG (SEO): ${titleTag}\nH1 (éditorial): ${h1Text}\nURL : ${ctx.url}\nMODE : ${ctx.editorialMode}\nFAQ STRUCTURE: details=${detailsCount}, summary=${summaryCount}, heading=${hasFaqHeading ? 'yes' : 'no'}, jsonld=${hasFaqJsonLd ? 'yes' : 'no'}${newsCalib}\n\nHTML DE L'ARTICLE :\n${truncate(ctx.html)}`;
     }
   },
 
@@ -421,7 +527,8 @@ EXEMPLE DE RÉPONSE CORRECTE (score < 85 = DOIT avoir des issues) :
         type: m.getAttribute('data-placement-id') || 'unknown',
         text: m.text.substring(0, 200)
       }));
-      return `TITRE : ${ctx.title}\nDESTINATION : ${ctx.destination || 'inconnue'}\nMODULES AFFILIÉS DÉTECTÉS (${modules.length}) :\n${JSON.stringify(moduleInfo, null, 2)}\n\nHTML :\n${truncate(ctx.html)}`;
+      const newsCalib = (ctx.editorialMode || '').toLowerCase() === 'news' ? '\n\n' + getNewsCalibration('affiliation') : '';
+      return `TITRE : ${ctx.title}\nDESTINATION : ${ctx.destination || 'inconnue'}\nMODE : ${ctx.editorialMode || 'evergreen'}\nMODULES AFFILIÉS DÉTECTÉS (${modules.length}) :\n${JSON.stringify(moduleInfo, null, 2)}${newsCalib}\n\nHTML :\n${truncate(ctx.html)}`;
     }
   },
 
@@ -490,7 +597,8 @@ EXEMPLE DE RÉPONSE CORRECTE (score < 85 = DOIT avoir des issues) :
 }`,
     buildUserPrompt(ctx) {
       const text = extractTextFromHtml(ctx.html);
-      return `TITRE : ${ctx.title}\n\nTEXTE COMPLET :\n${truncate(text)}`;
+      const newsCalib = (ctx.editorialMode || '').toLowerCase() === 'news' ? '\n\n' + getNewsCalibration('editorial') : '';
+      return `TITRE : ${ctx.title}\nMODE : ${ctx.editorialMode || 'evergreen'}${newsCalib}\n\nTEXTE COMPLET :\n${truncate(text)}`;
     }
   },
 
@@ -575,7 +683,8 @@ EXEMPLE DE RÉPONSE CORRECTE (score < 85 = DOIT avoir des issues) :
         href: (a.getAttribute('href') || '').substring(0, 100),
         text: a.text.trim().substring(0, 100)
       }));
-      return `TITRE : ${ctx.title}\nDESTINATION ATTENDUE : ${ctx.destination || 'inconnue'}\n\nIMAGES (${images.length}) :\n${JSON.stringify(images, null, 2)}\n\nLIENS INTERNES (${links.length}) :\n${JSON.stringify(links, null, 2)}\n\nHTML COMPLET :\n${truncate(ctx.html)}`;
+      const newsCalib = (ctx.editorialMode || '').toLowerCase() === 'news' ? '\n\n' + getNewsCalibration('ux') : '';
+      return `TITRE : ${ctx.title}\nDESTINATION ATTENDUE : ${ctx.destination || 'inconnue'}\nMODE : ${ctx.editorialMode || 'evergreen'}\n\nIMAGES (${images.length}) :\n${JSON.stringify(images, null, 2)}\n\nLIENS INTERNES (${links.length}) :\n${JSON.stringify(links, null, 2)}${newsCalib}\n\nHTML COMPLET :\n${truncate(ctx.html)}`;
     }
   },
 
@@ -630,7 +739,8 @@ Score >= 90 = PASS, sinon FAIL.
 CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.`,
     buildUserPrompt(ctx) {
       const text = extractTextFromHtml(ctx.html);
-      return `TITRE : ${ctx.title}\nDATE PUBLICATION : ${ctx.date || 'inconnue'}\nDESTINATION : ${ctx.destination || 'inconnue'}\n\nTEXTE COMPLET :\n${truncate(text)}`;
+      const newsCalib = (ctx.editorialMode || '').toLowerCase() === 'news' ? '\n\n' + getNewsCalibration('integrity') : '';
+      return `TITRE : ${ctx.title}\nDATE PUBLICATION : ${ctx.date || 'inconnue'}\nDESTINATION : ${ctx.destination || 'inconnue'}\nMODE : ${ctx.editorialMode || 'evergreen'}${newsCalib}\n\nTEXTE COMPLET :\n${truncate(text)}`;
     }
   }
 };
@@ -875,11 +985,16 @@ export async function runCeoValidator(panelResult, ctx, vizBridge) {
 
   const allSatisfied = summary.every(s => s.satisfied === true);
 
+  const isNewsMode = (ctx.editorialMode || '').toLowerCase() === 'news';
+  const modeNote = isNewsMode
+    ? `\nMODE : NEWS (actualité) — Seuils ajustés : score >= 82 + 0 critical = APPROVE. Les articles news sont plus courts (500-1000 mots), n'ont pas besoin de FAQ, et peuvent avoir 0 widget affilié.`
+    : `\nMODE : EVERGREEN (guide)`;
+
   const userPrompt = `ARTICLE : "${ctx.title}"
 URL : ${ctx.url || 'N/A'}
 SCORE PONDÉRÉ : ${panelResult.weightedScore}/100
 ISSUES CRITIQUES : ${panelResult.criticalCount}
-TOUS AGENTS SATISFIED : ${allSatisfied ? 'OUI' : 'NON'}
+TOUS AGENTS SATISFIED : ${allSatisfied ? 'OUI' : 'NON'}${modeNote}
 
 RAPPORTS DES EXPERTS :
 ${JSON.stringify(summary, null, 2)}`;
