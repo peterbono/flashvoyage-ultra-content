@@ -277,9 +277,9 @@ function buildDashboardHTML(history) {
     new google.visualization.AreaChart(document.getElementById('costChart')).draw(costData, {
       colors: ['#1a73e8', '#ea4335'],
       legend: { position: 'top', textStyle: { fontSize: 12, color: '#5f6368' } },
-      hAxis: { textStyle: { fontSize: 10, color: '#80868b' }, gridlines: { color: '#f1f3f4' }, baselineColor: '#dadce0' },
+      hAxis: { textStyle: { fontSize: 10, color: '#80868b' }, gridlines: { color: '#f1f3f4' }, baselineColor: '#dadce0', showTextEvery: Math.max(1, Math.ceil(${totalArticles} / 15)), slantedText: true, slantedTextAngle: 45 },
       vAxis: { format: '$#,##0.000', textStyle: { fontSize: 11, color: '#80868b' }, gridlines: { color: '#f1f3f4', count: 5 }, baselineColor: '#dadce0', minValue: 0 },
-      chartArea: { width: '85%', height: '72%', top: 40 },
+      chartArea: { left: 60, right: 20, top: 40, height: '68%' },
       backgroundColor: 'transparent',
       areaOpacity: 0.08,
       lineWidth: 2,
@@ -332,9 +332,9 @@ function buildDashboardHTML(history) {
     new google.visualization.ColumnChart(document.getElementById('tokensChart')).draw(tokenData, {
       colors: ['#1a73e8'],
       legend: { position: 'none' },
-      hAxis: { textStyle: { fontSize: 10, color: '#80868b' }, gridlines: { color: '#f1f3f4' } },
+      hAxis: { textStyle: { fontSize: 10, color: '#80868b' }, gridlines: { color: '#f1f3f4' }, showTextEvery: Math.max(1, Math.ceil(${totalArticles} / 15)), slantedText: true, slantedTextAngle: 45 },
       vAxis: { textStyle: { fontSize: 11, color: '#80868b' }, gridlines: { color: '#f1f3f4', count: 5 }, baselineColor: '#dadce0' },
-      chartArea: { width: '85%', height: '80%' },
+      chartArea: { left: 60, right: 20, height: '72%' },
       backgroundColor: 'transparent',
       bar: { groupWidth: '70%' },
       animation: { startup: true, duration: 600 }
