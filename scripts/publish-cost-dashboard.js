@@ -30,12 +30,12 @@ function buildDashboardHTML(history) {
   const totalWords = history.reduce((s, h) => s + (h.wordCount || 0), 0);
   const costPerWord = totalWords > 0 ? (totalCost / totalWords) : 0;
 
-  let trendIcon = '\u2192';
+  let trendIcon = '\u2192', trendClass = 'neutral';
   if (history.length >= 10) {
     const recent5 = history.slice(-5).reduce((s, h) => s + h.totalCostUSD, 0) / 5;
     const prev5 = history.slice(-10, -5).reduce((s, h) => s + h.totalCostUSD, 0) / 5;
-    if (recent5 < prev5 * 0.9) trendIcon = '\u2193 (baisse)';
-    else if (recent5 > prev5 * 1.1) trendIcon = '\u2191 (hausse)';
+    if (recent5 < prev5 * 0.9) { trendIcon = '\u2193'; trendClass = 'down'; }
+    else if (recent5 > prev5 * 1.1) { trendIcon = '\u2191'; trendClass = 'up'; }
   }
 
   const stepTotals = {};
@@ -60,7 +60,6 @@ function buildDashboardHTML(history) {
     }
   }
 
-  // Chart data for Google Charts
   const chartRows = history.map((h, i) => {
     const label = h.date ? new Date(h.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }) : `#${i + 1}`;
     return `['${label}', ${(h.totalCostUSD || 0).toFixed(4)}, ${avgCost.toFixed(4)}]`;
@@ -84,7 +83,7 @@ function buildDashboardHTML(history) {
     const rowClass = isOutlier ? ' class="outlier"' : '';
     const dateStr = h.date ? new Date(h.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' }) : '\u2014';
     const title = h.title || '\u2014';
-    const link = h.url ? `<a href="${h.url}" target="_blank">${title.substring(0, 50)}${title.length > 50 ? '\u2026' : ''}</a>` : title.substring(0, 50);
+    const link = h.url ? `<a href="${h.url}" target="_blank">${title.substring(0, 55)}${title.length > 55 ? '\u2026' : ''}</a>` : title.substring(0, 55);
     const cost = `$${(h.totalCostUSD || 0).toFixed(4)}`;
     const tokens = (h.totalTokens || 0).toLocaleString('fr-FR');
     const calls = h.totalCalls || 0;
@@ -93,12 +92,13 @@ function buildDashboardHTML(history) {
     const dur = h.durationMs ? `${(h.durationMs / 60000).toFixed(1)}min` : '\u2014';
     const llmRatio = h.llmTimeRatio ? `${(h.llmTimeRatio * 100).toFixed(0)}%` : '\u2014';
     const alert = isOutlier ? ' \u26a0\ufe0f' : '';
-    return `<tr${rowClass}><td class="mdl-data-table__cell--non-numeric">${dateStr}</td><td class="mdl-data-table__cell--non-numeric">${link}</td><td>${cost}${alert}</td><td>${tokens}</td><td>${calls}</td><td>${words}</td><td>${cpw}</td><td class="mdl-data-table__cell--non-numeric">${dur}</td><td>${llmRatio}</td></tr>`;
+    return `<tr${rowClass}><td>${dateStr}</td><td class="al">${link}</td><td>${cost}${alert}</td><td>${tokens}</td><td>${calls}</td><td>${words}</td><td>${cpw}</td><td>${dur}</td><td>${llmRatio}</td></tr>`;
   }).join('\n');
 
   const stepTableRows = sortedSteps.map(([step, data]) => {
     const pct = totalCost > 0 ? ((data.costUSD / totalCost) * 100).toFixed(1) : '0';
-    return `<tr><td class="mdl-data-table__cell--non-numeric"><strong>${step}</strong></td><td>${data.calls}</td><td>${data.tokensIn.toLocaleString('fr-FR')}</td><td>${data.tokensOut.toLocaleString('fr-FR')}</td><td>$${data.costUSD.toFixed(4)}</td><td>${pct}%</td></tr>`;
+    const barW = totalCost > 0 ? Math.max(2, (data.costUSD / totalCost) * 100) : 0;
+    return `<tr><td class="al"><strong>${step}</strong></td><td>${data.calls}</td><td>${data.tokensIn.toLocaleString('fr-FR')}</td><td>${data.tokensOut.toLocaleString('fr-FR')}</td><td>$${data.costUSD.toFixed(4)}</td><td><div class="bar-cell"><div class="bar-fill" style="width:${barW.toFixed(0)}%"></div><span>${pct}%</span></div></td></tr>`;
   }).join('\n');
 
   const PLANNED_ARTICLES_PER_MONTH = 30;
@@ -110,152 +110,227 @@ function buildDashboardHTML(history) {
   const thisMonthCount = thisMonthArticles.length;
 
   return `<!-- wp:html -->
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-blue.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 <style>
-  .fv-dash { max-width: 1260px; margin: 0 auto; padding: 16px; }
-  .fv-dash h1 { font-size: 28px; font-weight: 500; color: #263238; margin-bottom: 4px; }
-  .fv-dash .subtitle { color: #78909c; font-size: 14px; margin-bottom: 24px; }
-  .fv-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
-  .fv-kpi-card { min-height: 0; }
-  .fv-kpi-card .mdl-card__title { padding: 16px 16px 8px; }
-  .fv-kpi-card .kpi-value { font-size: 30px; font-weight: 700; color: #1a73e8; }
-  .fv-kpi-card .kpi-label { font-size: 12px; color: #5f6368; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; margin-top: 4px; }
-  .fv-charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
-  .fv-chart-card { min-height: 0; width: 100%; }
-  .fv-chart-card .mdl-card__title { padding-bottom: 0; }
-  .fv-chart-card .mdl-card__supporting-text { width: 100%; box-sizing: border-box; padding: 8px 16px 16px; }
-  .chart-container { width: 100%; min-height: 280px; }
-  .fv-table-section { margin-bottom: 32px; }
-  .fv-table-section h2 { font-size: 20px; font-weight: 500; color: #263238; margin-bottom: 12px; }
-  .fv-full-table { width: 100%; font-size: 13px; }
-  .fv-full-table th { background: #263238 !important; color: #ffffff !important; font-weight: 600 !important; font-size: 13px !important; padding: 12px 12px !important; }
-  .fv-full-table td { padding: 10px 12px !important; }
-  .fv-full-table tr.outlier { background: #fce4ec !important; }
-  .fv-full-table a { color: #1a73e8; text-decoration: none; }
-  .fv-full-table a:hover { text-decoration: underline; }
-  @media (max-width: 840px) {
-    .fv-charts-grid { grid-template-columns: 1fr; }
-    .fv-kpis { grid-template-columns: repeat(2, 1fr); }
+  .ga-dash * { box-sizing: border-box; margin: 0; padding: 0; }
+  .ga-dash { font-family: 'Google Sans', 'Roboto', -apple-system, sans-serif; max-width: 1300px; margin: 0 auto; padding: 24px; color: #202124; background: #f8f9fa; min-height: 100vh; }
+
+  /* Header */
+  .ga-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #dadce0; }
+  .ga-header h1 { font-size: 22px; font-weight: 500; color: #202124; display: flex; align-items: center; gap: 10px; }
+  .ga-header h1 .material-icons-outlined { font-size: 28px; color: #1a73e8; }
+  .ga-header .ga-meta { font-size: 13px; color: #5f6368; }
+
+  /* KPI strip - GA4 style metric cards */
+  .ga-kpi-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-bottom: 24px; background: #fff; border-radius: 8px; border: 1px solid #dadce0; overflow: hidden; }
+  .ga-kpi { padding: 20px 24px; border-right: 1px solid #dadce0; position: relative; cursor: default; transition: background 0.15s; }
+  .ga-kpi:last-child { border-right: none; }
+  .ga-kpi:hover { background: #f1f3f4; }
+  .ga-kpi .kpi-label { font-size: 12px; color: #5f6368; font-weight: 500; text-transform: none; letter-spacing: 0; margin-bottom: 8px; }
+  .ga-kpi .kpi-value { font-size: 28px; font-weight: 500; color: #202124; line-height: 1.2; }
+  .ga-kpi .kpi-sub { font-size: 11px; color: #80868b; margin-top: 4px; }
+  .ga-kpi .kpi-trend { font-size: 12px; font-weight: 500; margin-top: 4px; }
+  .ga-kpi .kpi-trend.up { color: #d93025; }
+  .ga-kpi .kpi-trend.down { color: #1e8e3e; }
+  .ga-kpi .kpi-trend.neutral { color: #80868b; }
+
+  /* Cards */
+  .ga-card { background: #fff; border: 1px solid #dadce0; border-radius: 8px; overflow: hidden; }
+  .ga-card-header { padding: 16px 20px 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f3f4; }
+  .ga-card-header h3 { font-size: 14px; font-weight: 500; color: #202124; }
+  .ga-card-body { padding: 16px 20px 20px; }
+
+  /* Chart grid */
+  .ga-charts { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .ga-charts-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .chart-div { width: 100%; min-height: 300px; }
+
+  /* Tables - GA4 style */
+  .ga-tbl-wrap { overflow-x: auto; }
+  .ga-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .ga-tbl thead th { background: #f8f9fa !important; color: #5f6368 !important; font-weight: 500 !important; font-size: 12px !important; padding: 12px 16px !important; text-align: right; border-bottom: 1px solid #dadce0 !important; white-space: nowrap; text-transform: none; }
+  .ga-tbl thead th.al { text-align: left; }
+  .ga-tbl tbody td { padding: 12px 16px; text-align: right; border-bottom: 1px solid #f1f3f4; color: #202124; font-size: 13px; }
+  .ga-tbl tbody td.al { text-align: left; }
+  .ga-tbl tbody tr:hover { background: #f8f9fa; }
+  .ga-tbl tbody tr.outlier { background: #fce8e6; }
+  .ga-tbl tbody tr.outlier:hover { background: #f8d7da; }
+  .ga-tbl a { color: #1a73e8; text-decoration: none; font-weight: 500; }
+  .ga-tbl a:hover { text-decoration: underline; }
+
+  /* Inline bar in table */
+  .bar-cell { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+  .bar-fill { height: 8px; background: #1a73e8; border-radius: 4px; min-width: 2px; opacity: 0.7; }
+  .bar-cell span { font-size: 12px; color: #5f6368; min-width: 36px; text-align: right; }
+
+  /* Section titles */
+  .ga-section { margin-bottom: 24px; }
+  .ga-section-title { font-size: 16px; font-weight: 500; color: #202124; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .ga-section-title .material-icons-outlined { font-size: 20px; color: #5f6368; }
+
+  @media (max-width: 900px) {
+    .ga-kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    .ga-kpi:nth-child(2) { border-right: none; }
+    .ga-kpi:nth-child(2) { border-bottom: 1px solid #dadce0; }
+    .ga-kpi:nth-child(1) { border-bottom: 1px solid #dadce0; }
+    .ga-charts, .ga-charts-row2 { grid-template-columns: 1fr; }
   }
 </style>
 
-<div class="fv-dash">
-<h1><i class="material-icons" style="vertical-align:middle;margin-right:8px;color:#1a73e8">analytics</i>LLM Cost Dashboard</h1>
-<p class="subtitle">Mis \u00e0 jour : ${new Date().toLocaleString('fr-FR')} \u2014 ${totalArticles} article(s) track\u00e9(s)</p>
+<div class="ga-dash">
 
-<div class="fv-kpis">
-  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">$${totalCost.toFixed(2)}</div><div class="kpi-label">Co\u00fbt total</div></div></div></div>
-  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">$${avgCost.toFixed(4)}</div><div class="kpi-label">Co\u00fbt moyen / article</div></div></div></div>
-  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">${avgTokens.toLocaleString('fr-FR')}</div><div class="kpi-label">Tokens moyens / article</div></div></div></div>
-  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">${avgDuration}s</div><div class="kpi-label">Dur\u00e9e moyenne</div></div></div></div>
-  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">$${(costPerWord * 1000).toFixed(3)}</div><div class="kpi-label">Co\u00fbt / 1000 mots</div></div></div></div>
-  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">$${monthlyProjection.toFixed(2)}</div><div class="kpi-label">Projection / mois (${PLANNED_ARTICLES_PER_MONTH} art.) ${trendIcon}</div></div></div></div>
-  <div class="mdl-card mdl-shadow--2dp fv-kpi-card"><div class="mdl-card__title"><div><div class="kpi-value">$${thisMonthCost.toFixed(2)}</div><div class="kpi-label">Ce mois (${thisMonthCount} art.)</div></div></div></div>
+<div class="ga-header">
+  <h1><span class="material-icons-outlined">analytics</span> LLM Cost Dashboard</h1>
+  <div class="ga-meta">${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })} &bull; ${totalArticles} articles</div>
 </div>
 
-<div class="fv-charts-grid">
-  <div class="mdl-card mdl-shadow--2dp fv-chart-card">
-    <div class="mdl-card__title"><h3 class="mdl-card__title-text">Co\u00fbt par article (USD)</h3></div>
-    <div class="mdl-card__supporting-text"><div id="costChart" class="chart-container"></div></div>
+<div class="ga-kpi-strip">
+  <div class="ga-kpi">
+    <div class="kpi-label">Co\u00fbt total</div>
+    <div class="kpi-value">$${totalCost.toFixed(2)}</div>
+    <div class="kpi-sub">${totalArticles} articles g\u00e9n\u00e9r\u00e9s</div>
   </div>
-  <div class="mdl-card mdl-shadow--2dp fv-chart-card">
-    <div class="mdl-card__title"><h3 class="mdl-card__title-text">R\u00e9partition par mod\u00e8le</h3></div>
-    <div class="mdl-card__supporting-text"><div id="modelChart" class="chart-container"></div></div>
+  <div class="ga-kpi">
+    <div class="kpi-label">Co\u00fbt moyen / article</div>
+    <div class="kpi-value">$${avgCost.toFixed(4)}</div>
+    <div class="kpi-trend ${trendClass}">${trendIcon} vs 5 pr\u00e9c\u00e9dents</div>
   </div>
-</div>
-
-<div class="fv-charts-grid">
-  <div class="mdl-card mdl-shadow--2dp fv-chart-card">
-    <div class="mdl-card__title"><h3 class="mdl-card__title-text">Co\u00fbt par \u00e9tape pipeline</h3></div>
-    <div class="mdl-card__supporting-text"><div id="stepChart" class="chart-container" style="min-height:${Math.max(300, sortedSteps.length * 28)}px"></div></div>
+  <div class="ga-kpi">
+    <div class="kpi-label">Tokens moyens</div>
+    <div class="kpi-value">${avgTokens.toLocaleString('fr-FR')}</div>
+    <div class="kpi-sub">par article</div>
   </div>
-  <div class="mdl-card mdl-shadow--2dp fv-chart-card">
-    <div class="mdl-card__title"><h3 class="mdl-card__title-text">Tokens par article</h3></div>
-    <div class="mdl-card__supporting-text"><div id="tokensChart" class="chart-container"></div></div>
+  <div class="ga-kpi">
+    <div class="kpi-label">Projection mensuelle</div>
+    <div class="kpi-value">$${monthlyProjection.toFixed(2)}</div>
+    <div class="kpi-sub">${PLANNED_ARTICLES_PER_MONTH} art./mois &bull; ce mois: $${thisMonthCost.toFixed(2)} (${thisMonthCount})</div>
   </div>
 </div>
 
-<div class="fv-table-section">
-<h2><i class="material-icons" style="vertical-align:middle;margin-right:6px;font-size:22px">layers</i>D\u00e9tail par \u00e9tape pipeline</h2>
-<div style="overflow-x:auto">
-<table class="mdl-data-table mdl-js-data-table fv-full-table">
-<thead><tr><th class="mdl-data-table__cell--non-numeric">\u00c9tape</th><th>Appels</th><th>Tokens IN</th><th>Tokens OUT</th><th>Co\u00fbt USD</th><th>% du total</th></tr></thead>
-<tbody>
-${stepTableRows}
-</tbody>
-</table>
-</div>
+<div class="ga-charts">
+  <div class="ga-card">
+    <div class="ga-card-header"><h3>Co\u00fbt par article</h3></div>
+    <div class="ga-card-body"><div id="costChart" class="chart-div"></div></div>
+  </div>
+  <div class="ga-card">
+    <div class="ga-card-header"><h3>R\u00e9partition par mod\u00e8le</h3></div>
+    <div class="ga-card-body"><div id="modelChart" class="chart-div"></div></div>
+  </div>
 </div>
 
-<div class="fv-table-section">
-<h2><i class="material-icons" style="vertical-align:middle;margin-right:6px;font-size:22px">history</i>Historique des articles</h2>
-<div style="overflow-x:auto">
-<table class="mdl-data-table mdl-js-data-table fv-full-table">
-<thead><tr><th class="mdl-data-table__cell--non-numeric">Date</th><th class="mdl-data-table__cell--non-numeric">Article</th><th>Co\u00fbt</th><th>Tokens</th><th>Appels</th><th>Mots</th><th>Co\u00fbt/1k mots</th><th class="mdl-data-table__cell--non-numeric">Dur\u00e9e</th><th>LLM %</th></tr></thead>
-<tbody>
-${tableRows}
-</tbody>
-</table>
+<div class="ga-charts-row2">
+  <div class="ga-card">
+    <div class="ga-card-header"><h3>Co\u00fbt par \u00e9tape pipeline</h3></div>
+    <div class="ga-card-body"><div id="stepChart" class="chart-div" style="min-height:${Math.max(320, sortedSteps.length * 26)}px"></div></div>
+  </div>
+  <div class="ga-card">
+    <div class="ga-card-header"><h3>Tokens par article</h3></div>
+    <div class="ga-card-body"><div id="tokensChart" class="chart-div"></div></div>
+  </div>
 </div>
+
+<div class="ga-section">
+  <div class="ga-section-title"><span class="material-icons-outlined">account_tree</span> D\u00e9tail par \u00e9tape pipeline</div>
+  <div class="ga-card">
+    <div class="ga-tbl-wrap">
+    <table class="ga-tbl">
+    <thead><tr><th class="al">\u00c9tape</th><th>Appels</th><th>Tokens IN</th><th>Tokens OUT</th><th>Co\u00fbt USD</th><th>% du total</th></tr></thead>
+    <tbody>${stepTableRows}</tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<div class="ga-section">
+  <div class="ga-section-title"><span class="material-icons-outlined">schedule</span> Historique des articles</div>
+  <div class="ga-card">
+    <div class="ga-tbl-wrap">
+    <table class="ga-tbl">
+    <thead><tr><th class="al">Date</th><th class="al">Article</th><th>Co\u00fbt</th><th>Tokens</th><th>Appels</th><th>Mots</th><th>Co\u00fbt/1k mots</th><th>Dur\u00e9e</th><th>LLM %</th></tr></thead>
+    <tbody>${tableRows}</tbody>
+    </table>
+    </div>
+  </div>
 </div>
 
 </div>
 
 <script type="text/javascript">
-  google.charts.load('current', {packages: ['corechart', 'bar']});
+  google.charts.load('current', {packages: ['corechart']});
   google.charts.setOnLoadCallback(drawAllCharts);
 
   function drawAllCharts() {
-    // Cost per article
+    var gaColors = ['#1a73e8', '#ea4335', '#34a853', '#fbbc04', '#9334e6', '#e8710a', '#f439a0', '#24c1e0'];
+
+    // Cost per article - area chart
     var costData = google.visualization.arrayToDataTable([
-      ['Article', 'Co\\u00fbt USD', 'Moyenne'],
+      ['Article', 'Co\u00fbt USD', 'Moyenne'],
       ${chartRows}
     ]);
-    new google.visualization.ComboChart(document.getElementById('costChart')).draw(costData, {
-      seriesType: 'area', series: {1: {type: 'line', lineDashStyle: [4, 4]}},
-      colors: ['#1a73e8', '#ea4335'], legend: {position: 'bottom'},
-      hAxis: {textStyle: {fontSize: 10}}, vAxis: {format: '$#,##0.000', textStyle: {fontSize: 11}},
-      chartArea: {width: '85%', height: '70%'}, backgroundColor: 'transparent',
-      areaOpacity: 0.15
+    new google.visualization.AreaChart(document.getElementById('costChart')).draw(costData, {
+      colors: ['#1a73e8', '#ea4335'],
+      legend: { position: 'top', textStyle: { fontSize: 12, color: '#5f6368' } },
+      hAxis: { textStyle: { fontSize: 10, color: '#80868b' }, gridlines: { color: '#f1f3f4' }, baselineColor: '#dadce0' },
+      vAxis: { format: '$#,##0.000', textStyle: { fontSize: 11, color: '#80868b' }, gridlines: { color: '#f1f3f4', count: 5 }, baselineColor: '#dadce0', minValue: 0 },
+      chartArea: { width: '85%', height: '72%', top: 40 },
+      backgroundColor: 'transparent',
+      areaOpacity: 0.08,
+      lineWidth: 2,
+      series: { 1: { lineWidth: 1.5, lineDashStyle: [4, 3], areaOpacity: 0 } },
+      focusTarget: 'category',
+      crosshair: { trigger: 'focus', orientation: 'vertical', color: '#dadce0', opacity: 0.8 },
+      animation: { startup: true, duration: 600 }
     });
 
-    // Model donut
+    // Model donut - GA4 style
     var modelData = google.visualization.arrayToDataTable([
-      ['Mod\\u00e8le', 'Co\\u00fbt USD'],
+      ['Mod\u00e8le', 'Co\u00fbt USD'],
       ${modelRows}
     ]);
     new google.visualization.PieChart(document.getElementById('modelChart')).draw(modelData, {
-      pieHole: 0.45, colors: ['#1a73e8', '#ea4335', '#34a853', '#fbbc04', '#9334e6'],
-      legend: {position: 'bottom', textStyle: {fontSize: 12}},
-      pieSliceText: 'value', pieSliceTextStyle: {fontSize: 13, bold: true},
-      chartArea: {width: '90%', height: '80%'}, backgroundColor: 'transparent',
-      tooltip: {text: 'both'}
+      pieHole: 0.55,
+      colors: gaColors,
+      legend: { position: 'labeled', textStyle: { fontSize: 12, color: '#5f6368' } },
+      pieSliceText: 'percentage',
+      pieSliceTextStyle: { fontSize: 12, color: '#fff' },
+      chartArea: { width: '95%', height: '85%' },
+      backgroundColor: 'transparent',
+      tooltip: { text: 'both', textStyle: { fontSize: 13 } },
+      animation: { startup: true, duration: 600 }
     });
 
-    // Step bar chart
+    // Step horizontal bar
     var stepData = google.visualization.arrayToDataTable([
-      ['\\u00c9tape', 'Co\\u00fbt USD'],
+      ['\u00c9tape', 'Co\u00fbt USD'],
       ${stepRows}
     ]);
     new google.visualization.BarChart(document.getElementById('stepChart')).draw(stepData, {
-      colors: ['#1a73e8'], legend: {position: 'none'},
-      hAxis: {format: '$#,##0.000', textStyle: {fontSize: 11}},
-      vAxis: {textStyle: {fontSize: 11}},
-      chartArea: {width: '60%', height: '85%'}, backgroundColor: 'transparent',
-      bar: {groupWidth: '70%'}
+      colors: ['#1a73e8'],
+      legend: { position: 'none' },
+      hAxis: { format: '$#,##0.000', textStyle: { fontSize: 11, color: '#80868b' }, gridlines: { color: '#f1f3f4' }, baselineColor: '#dadce0' },
+      vAxis: { textStyle: { fontSize: 11, color: '#202124' } },
+      chartArea: { width: '55%', height: '88%' },
+      backgroundColor: 'transparent',
+      bar: { groupWidth: '65%' },
+      animation: { startup: true, duration: 600 }
     });
 
-    // Tokens per article
+    // Tokens bar
     var tokenData = google.visualization.arrayToDataTable([
       ['Article', 'Tokens'],
       ${tokenRows}
     ]);
     new google.visualization.ColumnChart(document.getElementById('tokensChart')).draw(tokenData, {
-      colors: ['#1a73e8'], legend: {position: 'none'},
-      hAxis: {textStyle: {fontSize: 10}}, vAxis: {textStyle: {fontSize: 11}},
-      chartArea: {width: '85%', height: '70%'}, backgroundColor: 'transparent'
+      colors: ['#1a73e8'],
+      legend: { position: 'none' },
+      hAxis: { textStyle: { fontSize: 10, color: '#80868b' }, gridlines: { color: '#f1f3f4' } },
+      vAxis: { textStyle: { fontSize: 11, color: '#80868b' }, gridlines: { color: '#f1f3f4', count: 5 }, baselineColor: '#dadce0' },
+      chartArea: { width: '85%', height: '72%' },
+      backgroundColor: 'transparent',
+      bar: { groupWidth: '70%' },
+      animation: { startup: true, duration: 600 }
     });
   }
 </script>
