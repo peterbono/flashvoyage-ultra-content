@@ -2424,6 +2424,172 @@ export function fixGenericH2s(html, providedDestination = null) {
   return fixed;
 }
 
+
+
+// ─── FRENCH COUNTRY ARTICLES FIXER ──────────────────────────
+// Fixes missing articles/prepositions before country names in French
+// e.g. "sur Japon" → "sur le Japon", "à Thaïlande" → "en Thaïlande"
+export function fixFrenchCountryArticles(html) {
+  let out = html;
+  let fixCount = 0;
+
+  // Country definitions: [name, gender, startsWithVowel]
+  // gender: 'm' = masculine, 'f' = feminine, 'p' = plural, 'mv' = masculine starting with vowel
+  const countries = [
+    { name: 'Japon', gender: 'm' },
+    { name: 'Vietnam', gender: 'm' },
+    { name: 'Cambodge', gender: 'm' },
+    { name: 'Laos', gender: 'm' },
+    { name: 'Myanmar', gender: 'm' },
+    { name: 'Mexique', gender: 'm' },
+    { name: 'Brésil', gender: 'm' },
+    { name: 'Canada', gender: 'm' },
+    { name: 'Maroc', gender: 'm' },
+    { name: 'Portugal', gender: 'm' },
+    { name: 'Népal', gender: 'm' },
+    { name: 'Sri Lanka', gender: 'm' },
+    { name: 'Costa Rica', gender: 'm' },
+    { name: 'Pérou', gender: 'm' },
+    { name: 'Chili', gender: 'm' },
+    { name: 'Panama', gender: 'm' },
+    { name: 'Guatemala', gender: 'm' },
+    { name: 'Belize', gender: 'm' },
+    { name: 'Thaïlande', gender: 'f' },
+    { name: 'Malaisie', gender: 'f' },
+    { name: 'Corée', gender: 'f' },
+    { name: 'Birmanie', gender: 'f' },
+    { name: 'Chine', gender: 'f' },
+    { name: 'France', gender: 'f' },
+    { name: 'Espagne', gender: 'f' },
+    { name: 'Italie', gender: 'f' },
+    { name: 'Grèce', gender: 'f' },
+    { name: 'Turquie', gender: 'f' },
+    { name: 'Colombie', gender: 'f' },
+    { name: 'Tanzanie', gender: 'f' },
+    { name: 'Jordanie', gender: 'f' },
+    { name: 'Croatie', gender: 'f' },
+    { name: 'Norvège', gender: 'f' },
+    { name: 'Suède', gender: 'f' },
+    { name: 'Suisse', gender: 'f' },
+    { name: 'Belgique', gender: 'f' },
+    { name: 'Pologne', gender: 'f' },
+    { name: 'Roumanie', gender: 'f' },
+    { name: 'Hongrie', gender: 'f' },
+    { name: 'Australie', gender: 'f' },
+    { name: 'Nouvelle-Zélande', gender: 'f' },
+    { name: 'Indonésie', gender: 'fv' },
+    { name: 'Inde', gender: 'fv' },
+    { name: 'Irlande', gender: 'fv' },
+    { name: 'Islande', gender: 'fv' },
+    { name: 'Éthiopie', gender: 'fv' },
+    { name: 'Ouganda', gender: 'mv' },
+    { name: 'Iran', gender: 'mv' },
+    { name: 'Irak', gender: 'mv' },
+    { name: 'Ouzbékistan', gender: 'mv' },
+    { name: 'Équateur', gender: 'mv' },
+    { name: 'Philippines', gender: 'p' },
+    { name: 'Maldives', gender: 'p' },
+    { name: 'Émirats', gender: 'p' },
+    { name: 'États-Unis', gender: 'p' },
+    { name: 'Pays-Bas', gender: 'p' },
+    { name: 'Seychelles', gender: 'p' },
+  ];
+
+  for (const { name, gender } of countries) {
+    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Word boundary after country name to avoid matching demonyms like "Japonais"
+    const wb = '(?=[\\s.,;:!?\\-<"\'\\)]|$)';
+
+    // "sur {Country}" → "sur le/la/les/l' {Country}"
+    const surRx = new RegExp('(\\b[Ss]ur) (' + escaped + ')' + wb, 'g');
+    // "à {Country}" → "au/en/aux/à l' {Country}"
+    const aRx = new RegExp('((?:^|(?<=\\s|>))[ÀàAa]) (' + escaped + ')' + wb, 'g');
+    // "de {Country}" → "du/de la/des/de l' {Country}"
+    const deRx = new RegExp('(\\b[Dd]e) (' + escaped + ')' + wb, 'g');
+
+    const before = out;
+
+    if (gender === 'm') {
+      out = out.replace(surRx, '$1 le $2');
+      out = out.replace(aRx, (m, prep) => prep.charAt(0).toLowerCase() === 'a' || prep.charAt(0) === 'à' || prep.charAt(0) === 'À' ? 'au ' + name : m);
+      out = out.replace(deRx, (m, prep) => prep.charAt(0).toLowerCase() === 'd' ? 'du ' + name : m);
+    } else if (gender === 'f') {
+      out = out.replace(surRx, '$1 la $2');
+      out = out.replace(aRx, (m, prep) => prep.charAt(0).toLowerCase() === 'a' || prep.charAt(0) === 'à' || prep.charAt(0) === 'À' ? 'en ' + name : m);
+      out = out.replace(deRx, '$1 la $2');
+    } else if (gender === 'fv') {
+      // Feminine starting with vowel: l', en, de l'
+      out = out.replace(surRx, "$1 l'" + name);
+      out = out.replace(aRx, (m, prep) => prep.charAt(0).toLowerCase() === 'a' || prep.charAt(0) === 'à' || prep.charAt(0) === 'À' ? 'en ' + name : m);
+      out = out.replace(deRx, (m, prep) => prep.charAt(0).toLowerCase() === 'd' ? "de l'" + name : m);
+    } else if (gender === 'mv') {
+      // Masculine starting with vowel: l', en, de l'
+      out = out.replace(surRx, "$1 l'" + name);
+      out = out.replace(aRx, (m, prep) => prep.charAt(0).toLowerCase() === 'a' || prep.charAt(0) === 'à' || prep.charAt(0) === 'À' ? 'en ' + name : m);
+      out = out.replace(deRx, (m, prep) => prep.charAt(0).toLowerCase() === 'd' ? "de l'" + name : m);
+    } else if (gender === 'p') {
+      out = out.replace(surRx, '$1 les $2');
+      out = out.replace(aRx, (m, prep) => prep.charAt(0).toLowerCase() === 'a' || prep.charAt(0) === 'à' || prep.charAt(0) === 'À' ? 'aux ' + name : m);
+      out = out.replace(deRx, (m, prep) => prep.charAt(0).toLowerCase() === 'd' ? 'des ' + name : m);
+    }
+
+    if (out !== before) fixCount++;
+  }
+
+  // Fix incorrect contractions that may have been introduced or pre-existing
+  const contractionsBefore = out;
+  out = out.replace(/(?:^|(?<=\s|>))à le (\w)/g, 'au $1');
+  out = out.replace(/(?:^|(?<=\s|>))À le (\w)/g, 'Au $1');
+  out = out.replace(/(?:^|(?<=\s|>))à les (\w)/g, 'aux $1');
+  out = out.replace(/(?:^|(?<=\s|>))À les (\w)/g, 'Aux $1');
+  out = out.replace(/\bde le (\w)/g, 'du $1');
+  out = out.replace(/\bDe le (\w)/g, 'Du $1');
+  out = out.replace(/\bde les (\w)/g, 'des $1');
+  out = out.replace(/\bDe les (\w)/g, 'Des $1');
+  if (out !== contractionsBefore) fixCount++;
+
+  if (fixCount > 0) {
+    console.log(`🔧 COUNTRY_ARTICLES_FIXER: ${fixCount} missing article(s) before country names fixed`);
+  }
+  return out;
+}
+
+
+// ─── DUPLICATE FAQ SECTIONS FIXER ──────────────────────────
+// Removes duplicate FAQ sections, keeping only the first one
+export function deduplicateFaqSections(html) {
+  let out = html;
+  
+  // Find all H2 tags containing "Questions fréquentes" or "FAQ"
+  const faqH2Regex = /<h2[^>]*>(?:[^<]*(?:questions?\s+fr[éè]quentes?|faq)[^<]*)<\/h2>/gi;
+  const matches = [...out.matchAll(faqH2Regex)];
+  
+  if (matches.length <= 1) return out; // 0 or 1 FAQ section — nothing to deduplicate
+  
+  console.log(`🔧 FAQ_DEDUP: Found ${matches.length} FAQ sections, removing ${matches.length - 1} duplicate(s)`);
+  
+  // For each duplicate FAQ (index 1+), remove from its H2 to the next H2 or end of document
+  // Process in reverse order to preserve indices
+  for (let i = matches.length - 1; i >= 1; i--) {
+    const faqStart = matches[i].index;
+    // Find the next H2 after this FAQ section
+    const afterFaq = out.slice(faqStart + matches[i][0].length);
+    const nextH2Match = afterFaq.match(/<h2[^>]*>/i);
+    
+    let faqEnd;
+    if (nextH2Match) {
+      faqEnd = faqStart + matches[i][0].length + nextH2Match.index;
+    } else {
+      faqEnd = out.length; // FAQ goes to end of document
+    }
+    
+    // Remove the duplicate FAQ section
+    out = out.slice(0, faqStart) + out.slice(faqEnd);
+  }
+  
+  return out;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
@@ -2488,7 +2654,10 @@ export function applyPostProcessingFixers(html) {
   c = repairFaqSvg(c);
   c = cleanAuthorityMoves(c);
   c = fixBrokenRedditUrls(c);
-  // Clean data-fv attributes from remaining elements
+  // v6 fixers — country articles & FAQ dedup
+  c = fixFrenchCountryArticles(c);
+  c = deduplicateFaqSections(c);
+    // Clean data-fv attributes from remaining elements
   c = c.replace(/<p[^>]*data-fv-[^>]*class="fv-authority-move"[^>]*>[\s\S]*?<\/p>/gi, "");
   c = c.replace(/ data-fv-(?:proof|move)="[^"]*"/gi, "");
   return c;

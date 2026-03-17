@@ -657,7 +657,7 @@ function rewriteListicleTitle(title) {
 
 
 // ─── ENCODING BREAKS FIXER ──────────────────────────────────
-import { applyPostProcessingFixers, scrubUnicodeArtifacts, fixEncodingBreaks, fixGhostLinks, fixDuplicateCitations, fixEmptyFaqEntries, splitWallParagraphs, fixSlugAnchors, fixNestedLinks, cleanBlockquoteContent } from './post-processing-fixers.js';
+import { applyPostProcessingFixers, scrubUnicodeArtifacts, fixEncodingBreaks, fixGhostLinks, fixDuplicateCitations, fixEmptyFaqEntries, splitWallParagraphs, fixSlugAnchors, fixNestedLinks, cleanBlockquoteContent, fixFrenchCountryArticles, deduplicateFaqSections } from './post-processing-fixers.js';
 
 
 
@@ -827,7 +827,7 @@ async function publishArticle(article) {
   console.log('  📝 PARAGRAPH MERGER: ' + beforeMergeCount + ' → ' + afterMergeCount + ' paragraphs (' + (beforeMergeCount - afterMergeCount) + ' merged)');
   
   // Rewrite listicle titles into emotional hooks
-  const finalTitle = rewriteListicleTitle(article.title);
+  let finalTitle = rewriteListicleTitle(article.title);
   // Also update the H1 in the HTML content to match the rewritten title
   if (finalTitle !== article.title) {
     const h1Regex = /<h1[^>]*>.*?<\/h1>/i;
@@ -848,23 +848,123 @@ async function publishArticle(article) {
   finalContent = fixSlugAnchors(finalContent);
   finalContent = fixNestedLinks(finalContent);
   finalContent = cleanBlockquoteContent(finalContent);
-  console.log('✅ Post-processing fixes applied (encoding, ghost links, dedup, empty FAQ)');
+  finalContent = fixFrenchCountryArticles(finalContent);
+  finalContent = deduplicateFaqSections(finalContent);
+  console.log('✅ Post-processing fixes applied (encoding, ghost links, dedup, empty FAQ, country articles, FAQ dedup)');
 
-  const postData = {
+  // ─── TITLE DEDUPLICATION CHECK ───
+  try {
+    const searchRes = await axios.get(wpUrl + '/wp-json/wp/v2/posts', {
+      params: { search: finalTitle, status: 'publish', per_page: 5 },
+      headers: { Authorization: 'Basic ' + auth }
+    });
+    if (searchRes.data?.length > 0) {
+      const normalize = (s) => s.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+      const normalizedTitle = normalize(finalTitle);
+      for (const existing of searchRes.data) {
+        const existingNorm = normalize(existing.title?.rendered || '');
+        // Calculate similarity (Dice coefficient on bigrams)
+        const bigrams = (s) => { const b = new Set(); for (let i = 0; i < s.length - 1; i++) b.add(s.slice(i, i+2)); return b; };
+        const a = bigrams(normalizedTitle);
+        const b = bigrams(existingNorm);
+        let intersection = 0;
+        for (const bg of a) if (b.has(bg)) intersection++;
+        const similarity = a.size + b.size > 0 ? (2 * intersection) / (a.size + b.size) : 0;
+        if (similarity > 0.85) {
+          // Extract destination to differentiate
+          const destMatch = finalTitle.match(/(?:à|au|en|aux|sur)\s+(?:l[ae']?\s*)?([A-ZÀ-Ÿ][a-zA-ZÀ-ÿ\s-]+)/);
+          const dateSuffix = new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+          const oldTitle = finalTitle;
+          finalTitle = destMatch 
+            ? finalTitle + ' — Guide ' + dateSuffix
+            : finalTitle + ' (' + dateSuffix + ')';
+          console.log('  ⚠️ TITLE_DEDUP: Similar title exists (similarity=' + (similarity * 100).toFixed(0) + '%), renamed: "' + oldTitle + '" → "' + finalTitle + '"');
+          break;
+        }
+      }
+    }
+  } catch (dedupErr) {
+    console.warn('  ⚠️ Title dedup check failed: ' + dedupErr.message);
+  }
+
+    // ─── SEO METADATA (Rank Math / Yoast) ───
+  const seoTitle = (finalTitle.length > 60 ? finalTitle.substring(0, 57) + '...' : finalTitle) + ' | FlashVoyage';
+  const plainText = finalContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  const seoDesc = plainText.length > 155 
+    ? plainText.substring(0, 155).replace(/\s+\S*$/, '') + '...'
+    : plainText;
+  // Extract focus keyword from title: main destination + travel topic
+  const titleWords = finalTitle.replace(/[^a-zA-ZÀ-ÿ\s]/g, '').split(/\s+/).filter(w => w.length > 3);
+  const stopWords = ['pour','dans','avec','plus','tout','bien','très','aussi','même','comme','quand','après','avant','cette','notre','votre','entre','leurs','quel','quoi','dont','sans','vers','chez'];
+  const focusWords = titleWords.filter(w => !stopWords.includes(w.toLowerCase())).slice(0, 3);
+  const seoFocusKeyword = focusWords.join(' ');
+  console.log('  🔍 SEO meta generated: title=' + seoTitle.length + 'ch, desc=' + seoDesc.length + 'ch, keyword="' + seoFocusKeyword + '"');
+
+    const postData = {
     title: finalTitle,
     content: finalContent,
     status: process.env.FORCE_WP_STATUS || 'publish',
     ...(categoryIds.length && { categories: categoryIds }),
     ...(tagIds.length && { tags: tagIds }),
     ...(article.slug && { slug: article.slug }),
-    ...(featuredMediaId && { featured_media: featuredMediaId })
+    ...(featuredMediaId && { featured_media: featuredMediaId }),
+    meta: {
+      rank_math_title: seoTitle,
+      rank_math_description: seoDesc,
+      rank_math_focus_keyword: seoFocusKeyword,
+      _yoast_wpseo_title: seoTitle,
+      _yoast_wpseo_metadesc: seoDesc,
+    }
   };
 
   const response = await axios.post(`${wpUrl}/wp-json/wp/v2/posts`, postData, {
     headers: { Authorization: `Basic ${auth}`, 'Content-Type': 'application/json' }
   });
 
-  return { link: response.data.link, id: response.data.id };
+  // ─── FEATURED IMAGE FALLBACK (Pexels) ───
+  if (!featuredMediaId && process.env.PEXELS_API_KEY) {
+    try {
+      // Extract destination from title for image search
+      const destMatch = finalTitle.match(/(?:à|au|en|aux|sur)\s+(?:l[ae']?\s*)?([A-ZÀ-Ÿ][a-zA-ZÀ-ÿ\s-]+)/);
+      const searchQuery = destMatch ? destMatch[1].trim() + ' travel' : finalTitle.replace(/[^a-zA-ZÀ-ÿ\s]/g, '').trim().split(/\s+/).slice(0, 3).join(' ') + ' travel';
+      console.log('  📸 No featured image — searching Pexels for: "' + searchQuery + '"');
+      const pexelsRes = await axios.get('https://api.pexels.com/v1/search', {
+        params: { query: searchQuery, per_page: 1, orientation: 'landscape' },
+        headers: { 'Authorization': process.env.PEXELS_API_KEY }
+      });
+      if (pexelsRes.data.photos?.length > 0) {
+        const photo = pexelsRes.data.photos[0];
+        const imgUrl = photo.src.large2x || photo.src.large || photo.src.original;
+        const imgResponse = await axios.get(imgUrl, { responseType: 'arraybuffer' });
+        const buffer = Buffer.from(imgResponse.data);
+        const filename = 'featured-pexels-' + Date.now() + '.jpg';
+        const uploadRes = await axios.post(wpUrl + '/wp-json/wp/v2/media', buffer, {
+          headers: {
+            Authorization: 'Basic ' + auth,
+            'Content-Type': 'image/jpeg',
+            'Content-Disposition': 'attachment; filename="' + filename + '"'
+          }
+        });
+        const mediaId = uploadRes.data.id;
+        // Set alt text and caption
+        await axios.post(wpUrl + '/wp-json/wp/v2/media/' + mediaId, {
+          alt_text: searchQuery.replace(' travel', ''),
+          caption: 'Photo : ' + (photo.photographer || 'Pexels') + ' / Pexels'
+        }, { headers: { Authorization: 'Basic ' + auth, 'Content-Type': 'application/json' } });
+        // Set as featured image on the post
+        await axios.post(wpUrl + '/wp-json/wp/v2/posts/' + response.data.id, {
+          featured_media: mediaId
+        }, { headers: { Authorization: 'Basic ' + auth, 'Content-Type': 'application/json' } });
+        console.log('  ✅ Pexels featured image set: ' + photo.photographer + ' (id: ' + mediaId + ')');
+      }
+    } catch (imgErr) {
+      console.warn('  ⚠️ Pexels featured image fallback failed: ' + imgErr.message);
+    }
+  }
+
+    return { link: response.data.link, id: response.data.id };
 }
 
 // ─── Orchestrateur principal ─────────────────────────────
