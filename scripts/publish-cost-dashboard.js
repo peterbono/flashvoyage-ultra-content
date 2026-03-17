@@ -320,7 +320,7 @@ function buildDashboardHTML(history) {
     new google.visualization.PieChart(document.getElementById('modelChart')).draw(modelData, {
       pieHole: 0.5, colors: gaColors,
       legend: { position: 'bottom', alignment: 'center', textStyle: { fontSize: 12, color: '#5f6368' } },
-      pieSliceText: 'label', pieSliceTextStyle: { fontSize: 11, color: '#fff', bold: true },
+      pieSliceText: 'percentage', pieSliceTextStyle: { fontSize: 13, color: '#fff', bold: true },
       chartArea: { width: '90%', height: '78%' }, backgroundColor: 'transparent',
       tooltip: { text: 'both', textStyle: { fontSize: 13 }, trigger: 'selection' },
       sliceVisibilityThreshold: 0, enableInteractivity: true, animation: { startup: true, duration: 400 }
