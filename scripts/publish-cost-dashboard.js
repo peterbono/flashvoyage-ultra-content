@@ -115,7 +115,12 @@ function buildDashboardHTML(history) {
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 <style>
   .ga-dash * { box-sizing: border-box; margin: 0; padding: 0; }
-  .ga-dash { font-family: 'Google Sans', 'Roboto', -apple-system, sans-serif; max-width: 1300px; margin: 0 auto; padding: 24px; color: #202124; background: #f8f9fa; min-height: 100vh; }
+  /* WP theme overrides */
+  .ga-dash, .ga-dash * { max-width: none !important; }
+  .entry-content, .post-content, .page-content, .wp-block-post-content, article .content, .site-content .content-area { max-width: none !important; width: 100% !important; padding-left: 0 !important; padding-right: 0 !important; }
+  .ga-dash .ga-card, .ga-dash table { max-width: none !important; }
+
+  .ga-dash { font-family: 'Google Sans', 'Roboto', -apple-system, sans-serif; max-width: 100% !important; width: 100% !important; margin: 0 auto; padding: 24px; color: #202124; background: #f8f9fa; min-height: 100vh; box-sizing: border-box; }
 
   /* Header */
   .ga-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #dadce0; }
@@ -137,7 +142,7 @@ function buildDashboardHTML(history) {
   .ga-kpi .kpi-trend.neutral { color: #80868b; }
 
   /* Cards */
-  .ga-card { background: #fff; border: 1px solid #dadce0; border-radius: 8px; overflow: hidden; }
+  .ga-card { background: #fff; border: 1px solid #dadce0; border-radius: 8px; overflow: hidden; width: 100% !important; }
   .ga-card-header { padding: 16px 20px 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f3f4; }
   .ga-card-header h3 { font-size: 14px; font-weight: 500; color: #202124; }
   .ga-card-body { padding: 16px 20px 20px; }
@@ -148,8 +153,8 @@ function buildDashboardHTML(history) {
   .chart-div { width: 100%; min-height: 300px; }
 
   /* Tables - GA4 style */
-  .ga-tbl-wrap { overflow-x: auto; }
-  .ga-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .ga-tbl-wrap { overflow-x: auto; width: 100% !important; }
+  .ga-tbl { width: 100% !important; min-width: 100% !important; border-collapse: collapse; font-size: 13px; table-layout: auto; }
   .ga-tbl thead th { background: #f8f9fa !important; color: #5f6368 !important; font-weight: 500 !important; font-size: 12px !important; padding: 12px 16px !important; text-align: right; border-bottom: 1px solid #dadce0 !important; white-space: nowrap; text-transform: none; }
   .ga-tbl thead th.al { text-align: left; }
   .ga-tbl tbody td { padding: 12px 16px; text-align: right; border-bottom: 1px solid #f1f3f4; color: #202124; font-size: 13px; }
@@ -166,7 +171,7 @@ function buildDashboardHTML(history) {
   .bar-cell span { font-size: 12px; color: #5f6368; min-width: 36px; text-align: right; }
 
   /* Section titles */
-  .ga-section { margin-bottom: 24px; }
+  .ga-section { margin-bottom: 24px; width: 100% !important; }
   .ga-section-title { font-size: 16px; font-weight: 500; color: #202124; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
   .ga-section-title .material-icons-outlined { font-size: 20px; color: #5f6368; }
 
