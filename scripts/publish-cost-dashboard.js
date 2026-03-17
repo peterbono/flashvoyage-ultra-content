@@ -142,15 +142,15 @@ function buildDashboardHTML(history) {
   .ga-kpi .kpi-trend.neutral { color: #80868b; }
 
   /* Cards */
-  .ga-card { background: #fff; border: 1px solid #dadce0; border-radius: 8px; overflow: hidden; width: 100% !important; }
+  .ga-card { background: #fff; border: 1px solid #dadce0; border-radius: 8px; overflow: hidden; width: 100% !important; display: flex; flex-direction: column; }
   .ga-card-header { padding: 16px 20px 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f3f4; }
   .ga-card-header h3 { font-size: 14px; font-weight: 500; color: #202124; }
-  .ga-card-body { padding: 16px 20px 20px; }
+  .ga-card-body { padding: 16px 20px 20px; flex: 1; display: flex; flex-direction: column; }
 
   /* Chart grid */
   .ga-charts { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
-  .ga-charts-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-  .chart-div { width: 100%; min-height: 300px; }
+  .ga-charts-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; align-items: stretch; }
+  .chart-div { width: 100%; min-height: 300px; flex: 1; }
 
   /* Tables - GA4 style */
   .ga-tbl-wrap { overflow-x: auto; width: 100% !important; }
@@ -302,8 +302,9 @@ function buildDashboardHTML(history) {
       pieSliceTextStyle: { fontSize: 11, color: '#fff', bold: true },
       chartArea: { width: '90%', height: '78%' },
       backgroundColor: 'transparent',
-      tooltip: { text: 'both', textStyle: { fontSize: 13 } },
+      tooltip: { text: 'both', textStyle: { fontSize: 13 }, trigger: 'selection' },
       sliceVisibilityThreshold: 0,
+      enableInteractivity: true,
       animation: { startup: true, duration: 600 }
     });
 
@@ -333,11 +334,17 @@ function buildDashboardHTML(history) {
       legend: { position: 'none' },
       hAxis: { textStyle: { fontSize: 10, color: '#80868b' }, gridlines: { color: '#f1f3f4' } },
       vAxis: { textStyle: { fontSize: 11, color: '#80868b' }, gridlines: { color: '#f1f3f4', count: 5 }, baselineColor: '#dadce0' },
-      chartArea: { width: '85%', height: '72%' },
+      chartArea: { width: '85%', height: '80%' },
       backgroundColor: 'transparent',
       bar: { groupWidth: '70%' },
       animation: { startup: true, duration: 600 }
     });
+
+    // Resize tokens chart to fill container
+    var tokensEl = document.getElementById('tokensChart');
+    if (tokensEl && tokensEl.parentElement) {
+      tokensEl.style.height = tokensEl.parentElement.offsetHeight + 'px';
+    }
   }
 </script>
 <!-- /wp:html -->`;
