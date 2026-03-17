@@ -189,7 +189,7 @@ function buildDashboardHTML(history) {
     <div class="ga-card-body"><div id="stepChart" class="chart-div" style="min-height:400px"></div></div>
   </div>
   <div class="ga-card">
-    <div class="ga-card-header"><h3>Tokens par article</h3></div>
+    <div class="ga-card-header"><h3>Tokens journaliers</h3></div>
     <div class="ga-card-body"><div id="tokensChart" class="chart-div"></div></div>
   </div>
 </div>
