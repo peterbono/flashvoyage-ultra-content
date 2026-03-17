@@ -21,22 +21,9 @@ const WP_PASS = process.env.WORDPRESS_APP_PASSWORD;
 const PAGE_SLUG = 'llm-cost-dashboard';
 
 function buildDashboardHTML(history) {
+  // Pre-compute server-side aggregates for tables (always show all data)
   const totalArticles = history.length;
   const totalCost = history.reduce((s, h) => s + (h.totalCostUSD || 0), 0);
-  const avgCost = totalArticles > 0 ? totalCost / totalArticles : 0;
-  const totalTokens = history.reduce((s, h) => s + (h.totalTokens || 0), 0);
-  const avgTokens = totalArticles > 0 ? Math.round(totalTokens / totalArticles) : 0;
-  const avgDuration = totalArticles > 0 ? Math.round(history.reduce((s, h) => s + (h.durationMs || 0), 0) / totalArticles / 1000) : 0;
-  const totalWords = history.reduce((s, h) => s + (h.wordCount || 0), 0);
-  const costPerWord = totalWords > 0 ? (totalCost / totalWords) : 0;
-
-  let trendIcon = '\u2192', trendClass = 'neutral';
-  if (history.length >= 10) {
-    const recent5 = history.slice(-5).reduce((s, h) => s + h.totalCostUSD, 0) / 5;
-    const prev5 = history.slice(-10, -5).reduce((s, h) => s + h.totalCostUSD, 0) / 5;
-    if (recent5 < prev5 * 0.9) { trendIcon = '\u2193'; trendClass = 'down'; }
-    else if (recent5 > prev5 * 1.1) { trendIcon = '\u2191'; trendClass = 'up'; }
-  }
 
   const stepTotals = {};
   for (const h of history) {
@@ -50,36 +37,17 @@ function buildDashboardHTML(history) {
     }
   }
 
-  const modelTotals = {};
-  for (const h of history) {
-    if (!h.byModel) continue;
-    for (const [model, data] of Object.entries(h.byModel)) {
-      if (!modelTotals[model]) modelTotals[model] = { calls: 0, costUSD: 0 };
-      modelTotals[model].calls += data.calls || 0;
-      modelTotals[model].costUSD += data.costUSD || 0;
-    }
-  }
-
-  const chartRows = history.map((h, i) => {
-    const label = h.date ? new Date(h.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }) : `#${i + 1}`;
-    return `['${label}', ${(h.totalCostUSD || 0).toFixed(4)}, ${avgCost.toFixed(4)}]`;
-  }).join(',\n          ');
-
-  const tokenRows = history.map((h, i) => {
-    const label = h.date ? new Date(h.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }) : `#${i + 1}`;
-    return `['${label}', ${h.totalTokens || 0}]`;
-  }).join(',\n          ');
-
   const sortedSteps = Object.entries(stepTotals).sort((a, b) => b[1].costUSD - a[1].costUSD);
-  const stepRows = sortedSteps.map(([k, v]) => `['${k}', ${v.costUSD.toFixed(4)}]`).join(',\n          ');
+  const outlierThreshold = totalArticles > 3 ? (totalCost / totalArticles) * 2 : Infinity;
 
-  const modelLabels = Object.keys(modelTotals);
-  const modelRows = modelLabels.map(m => `['${m}', ${modelTotals[m].costUSD.toFixed(4)}]`).join(',\n          ');
-
-  const outlierThreshold = avgCost * 2;
+  const stepTableRows = sortedSteps.map(([step, data]) => {
+    const pct = totalCost > 0 ? ((data.costUSD / totalCost) * 100).toFixed(1) : '0';
+    const barW = totalCost > 0 ? Math.max(2, (data.costUSD / totalCost) * 100) : 0;
+    return `<tr><td class="al"><strong>${step}</strong></td><td>${data.calls}</td><td>${data.tokensIn.toLocaleString('fr-FR')}</td><td>${data.tokensOut.toLocaleString('fr-FR')}</td><td>$${data.costUSD.toFixed(4)}</td><td><div class="bar-cell"><div class="bar-fill" style="width:${barW.toFixed(0)}%"></div><span>${pct}%</span></div></td></tr>`;
+  }).join('\n');
 
   const tableRows = [...history].reverse().map((h) => {
-    const isOutlier = (h.totalCostUSD || 0) > outlierThreshold && totalArticles > 3;
+    const isOutlier = (h.totalCostUSD || 0) > outlierThreshold;
     const rowClass = isOutlier ? ' class="outlier"' : '';
     const dateStr = h.date ? new Date(h.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' }) : '\u2014';
     const title = h.title || '\u2014';
@@ -95,19 +63,17 @@ function buildDashboardHTML(history) {
     return `<tr${rowClass}><td>${dateStr}</td><td class="al">${link}</td><td>${cost}${alert}</td><td>${tokens}</td><td>${calls}</td><td>${words}</td><td>${cpw}</td><td>${dur}</td><td>${llmRatio}</td></tr>`;
   }).join('\n');
 
-  const stepTableRows = sortedSteps.map(([step, data]) => {
-    const pct = totalCost > 0 ? ((data.costUSD / totalCost) * 100).toFixed(1) : '0';
-    const barW = totalCost > 0 ? Math.max(2, (data.costUSD / totalCost) * 100) : 0;
-    return `<tr><td class="al"><strong>${step}</strong></td><td>${data.calls}</td><td>${data.tokensIn.toLocaleString('fr-FR')}</td><td>${data.tokensOut.toLocaleString('fr-FR')}</td><td>$${data.costUSD.toFixed(4)}</td><td><div class="bar-cell"><div class="bar-fill" style="width:${barW.toFixed(0)}%"></div><span>${pct}%</span></div></td></tr>`;
-  }).join('\n');
-
-  const PLANNED_ARTICLES_PER_MONTH = 30;
-  const monthlyProjection = avgCost * PLANNED_ARTICLES_PER_MONTH;
-  const now = new Date();
-  const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-  const thisMonthArticles = history.filter(h => h.date && new Date(h.date) >= currentMonthStart);
-  const thisMonthCost = thisMonthArticles.reduce((s, h) => s + (h.totalCostUSD || 0), 0);
-  const thisMonthCount = thisMonthArticles.length;
+  // Serialize history for client-side filtering (strip heavy byStep/byModel to save bytes)
+  const clientHistory = history.map(h => ({
+    d: h.date || null,
+    c: h.totalCostUSD || 0,
+    t: h.totalTokens || 0,
+    w: h.wordCount || 0,
+    calls: h.totalCalls || 0,
+    dur: h.durationMs || 0,
+    models: h.byModel ? Object.entries(h.byModel).map(([m, v]) => ({ m, c: v.costUSD })) : [],
+    steps: h.byStep ? Object.entries(h.byStep).map(([s, v]) => ({ s, c: v.costUSD })) : []
+  }));
 
   return `<!-- wp:html -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -122,18 +88,24 @@ function buildDashboardHTML(history) {
 
   .ga-dash { font-family: 'Google Sans', 'Roboto', -apple-system, sans-serif; max-width: 100% !important; width: 100% !important; margin: 0 auto; padding: 24px; color: #202124; background: #f8f9fa; min-height: 100vh; box-sizing: border-box; }
 
-  /* Header */
-  .ga-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #dadce0; }
+  .ga-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #dadce0; flex-wrap: wrap; gap: 12px; }
   .ga-header h1 { font-size: 22px; font-weight: 500; color: #202124; display: flex; align-items: center; gap: 10px; }
   .ga-header h1 .material-icons-outlined { font-size: 28px; color: #1a73e8; }
+  .ga-header-right { display: flex; align-items: center; gap: 16px; }
   .ga-header .ga-meta { font-size: 13px; color: #5f6368; }
 
-  /* KPI strip - GA4 style metric cards */
-  .ga-kpi-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-bottom: 24px; background: #fff; border-radius: 8px; border: 1px solid #dadce0; overflow: hidden; }
+  /* Date range pills - GA4 style */
+  .ga-pills { display: flex; gap: 0; background: #fff; border: 1px solid #dadce0; border-radius: 20px; overflow: hidden; }
+  .ga-pill { padding: 6px 16px; font-size: 13px; font-weight: 500; color: #5f6368; cursor: pointer; border: none; background: transparent; transition: all 0.15s; white-space: nowrap; font-family: inherit; }
+  .ga-pill:hover { background: #f1f3f4; color: #202124; }
+  .ga-pill.active { background: #e8f0fe; color: #1a73e8; }
+  .ga-pill + .ga-pill { border-left: 1px solid #dadce0; }
+
+  .ga-kpi-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-bottom: 20px; background: #fff; border-radius: 8px; border: 1px solid #dadce0; overflow: hidden; }
   .ga-kpi { padding: 20px 24px; border-right: 1px solid #dadce0; position: relative; cursor: default; transition: background 0.15s; }
   .ga-kpi:last-child { border-right: none; }
   .ga-kpi:hover { background: #f1f3f4; }
-  .ga-kpi .kpi-label { font-size: 12px; color: #5f6368; font-weight: 500; text-transform: none; letter-spacing: 0; margin-bottom: 8px; }
+  .ga-kpi .kpi-label { font-size: 12px; color: #5f6368; font-weight: 500; margin-bottom: 8px; }
   .ga-kpi .kpi-value { font-size: 28px; font-weight: 500; color: #202124; line-height: 1.2; }
   .ga-kpi .kpi-sub { font-size: 11px; color: #80868b; margin-top: 4px; }
   .ga-kpi .kpi-trend { font-size: 12px; font-weight: 500; margin-top: 4px; }
@@ -141,45 +113,38 @@ function buildDashboardHTML(history) {
   .ga-kpi .kpi-trend.down { color: #1e8e3e; }
   .ga-kpi .kpi-trend.neutral { color: #80868b; }
 
-  /* Cards */
   .ga-card { background: #fff; border: 1px solid #dadce0; border-radius: 8px; overflow: hidden; width: 100% !important; display: flex; flex-direction: column; }
   .ga-card-header { padding: 16px 20px 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f3f4; }
   .ga-card-header h3 { font-size: 14px; font-weight: 500; color: #202124; }
   .ga-card-body { padding: 16px 20px 20px; flex: 1; display: flex; flex-direction: column; }
 
-  /* Chart grid */
   .ga-charts { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
   .ga-charts-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; align-items: stretch; }
   .chart-div { width: 100%; min-height: 300px; flex: 1; }
 
-  /* Tables - GA4 style */
   .ga-tbl-wrap { overflow-x: auto; width: 100% !important; }
   .ga-tbl { width: 100% !important; min-width: 100% !important; border-collapse: collapse; font-size: 13px; table-layout: auto; }
-  .ga-tbl thead th { background: #f8f9fa !important; color: #5f6368 !important; font-weight: 500 !important; font-size: 12px !important; padding: 12px 16px !important; text-align: right; border-bottom: 1px solid #dadce0 !important; white-space: nowrap; text-transform: none; }
+  .ga-tbl thead th { background: #f8f9fa !important; color: #5f6368 !important; font-weight: 500 !important; font-size: 12px !important; padding: 12px 16px !important; text-align: right; border-bottom: 1px solid #dadce0 !important; white-space: nowrap; }
   .ga-tbl thead th.al { text-align: left; }
   .ga-tbl tbody td { padding: 12px 16px; text-align: right; border-bottom: 1px solid #f1f3f4; color: #202124; font-size: 13px; }
   .ga-tbl tbody td.al { text-align: left; }
   .ga-tbl tbody tr:hover { background: #f8f9fa; }
   .ga-tbl tbody tr.outlier { background: #fce8e6; }
-  .ga-tbl tbody tr.outlier:hover { background: #f8d7da; }
   .ga-tbl a { color: #1a73e8; text-decoration: none; font-weight: 500; }
   .ga-tbl a:hover { text-decoration: underline; }
 
-  /* Inline bar in table */
   .bar-cell { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
   .bar-fill { height: 8px; background: #1a73e8; border-radius: 4px; min-width: 2px; opacity: 0.7; }
   .bar-cell span { font-size: 12px; color: #5f6368; min-width: 36px; text-align: right; }
 
-  /* Section titles */
   .ga-section { margin-bottom: 24px; width: 100% !important; }
   .ga-section-title { font-size: 16px; font-weight: 500; color: #202124; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
   .ga-section-title .material-icons-outlined { font-size: 20px; color: #5f6368; }
 
   @media (max-width: 900px) {
     .ga-kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    .ga-kpi:nth-child(1), .ga-kpi:nth-child(2) { border-bottom: 1px solid #dadce0; }
     .ga-kpi:nth-child(2) { border-right: none; }
-    .ga-kpi:nth-child(2) { border-bottom: 1px solid #dadce0; }
-    .ga-kpi:nth-child(1) { border-bottom: 1px solid #dadce0; }
     .ga-charts, .ga-charts-row2 { grid-template-columns: 1fr; }
   }
 </style>
@@ -188,30 +153,23 @@ function buildDashboardHTML(history) {
 
 <div class="ga-header">
   <h1><span class="material-icons-outlined">analytics</span> LLM Cost Dashboard</h1>
-  <div class="ga-meta">${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })} &bull; ${totalArticles} articles</div>
+  <div class="ga-header-right">
+    <div class="ga-pills">
+      <button class="ga-pill" data-range="7">7j</button>
+      <button class="ga-pill" data-range="14">14j</button>
+      <button class="ga-pill active" data-range="28">28j</button>
+      <button class="ga-pill" data-range="90">90j</button>
+      <button class="ga-pill" data-range="0">Tout</button>
+    </div>
+    <div class="ga-meta">${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
+  </div>
 </div>
 
 <div class="ga-kpi-strip">
-  <div class="ga-kpi">
-    <div class="kpi-label">Co\u00fbt total</div>
-    <div class="kpi-value">$${totalCost.toFixed(2)}</div>
-    <div class="kpi-sub">${totalArticles} articles g\u00e9n\u00e9r\u00e9s</div>
-  </div>
-  <div class="ga-kpi">
-    <div class="kpi-label">Co\u00fbt moyen / article</div>
-    <div class="kpi-value">$${avgCost.toFixed(4)}</div>
-    <div class="kpi-trend ${trendClass}">${trendIcon} vs 5 pr\u00e9c\u00e9dents</div>
-  </div>
-  <div class="ga-kpi">
-    <div class="kpi-label">Tokens moyens</div>
-    <div class="kpi-value">${avgTokens.toLocaleString('fr-FR')}</div>
-    <div class="kpi-sub">par article</div>
-  </div>
-  <div class="ga-kpi">
-    <div class="kpi-label">Projection mensuelle</div>
-    <div class="kpi-value">$${monthlyProjection.toFixed(2)}</div>
-    <div class="kpi-sub">${PLANNED_ARTICLES_PER_MONTH} art./mois &bull; ce mois: $${thisMonthCost.toFixed(2)} (${thisMonthCount})</div>
-  </div>
+  <div class="ga-kpi"><div class="kpi-label">Co\u00fbt total</div><div class="kpi-value" id="kpi-cost">--</div><div class="kpi-sub" id="kpi-cost-sub"></div></div>
+  <div class="ga-kpi"><div class="kpi-label">Co\u00fbt moyen / article</div><div class="kpi-value" id="kpi-avg">--</div><div class="kpi-trend" id="kpi-trend"></div></div>
+  <div class="ga-kpi"><div class="kpi-label">Tokens moyens</div><div class="kpi-value" id="kpi-tokens">--</div><div class="kpi-sub">par article</div></div>
+  <div class="ga-kpi"><div class="kpi-label">Projection mensuelle</div><div class="kpi-value" id="kpi-proj">--</div><div class="kpi-sub" id="kpi-proj-sub"></div></div>
 </div>
 
 <div class="ga-charts">
@@ -228,7 +186,7 @@ function buildDashboardHTML(history) {
 <div class="ga-charts-row2">
   <div class="ga-card">
     <div class="ga-card-header"><h3>Co\u00fbt par \u00e9tape pipeline</h3></div>
-    <div class="ga-card-body"><div id="stepChart" class="chart-div" style="min-height:${Math.max(320, sortedSteps.length * 26)}px"></div></div>
+    <div class="ga-card-body"><div id="stepChart" class="chart-div" style="min-height:400px"></div></div>
   </div>
   <div class="ga-card">
     <div class="ga-card-header"><h3>Tokens par article</h3></div>
@@ -237,115 +195,154 @@ function buildDashboardHTML(history) {
 </div>
 
 <div class="ga-section">
-  <div class="ga-section-title"><span class="material-icons-outlined">account_tree</span> D\u00e9tail par \u00e9tape pipeline</div>
-  <div class="ga-card">
-    <div class="ga-tbl-wrap">
-    <table class="ga-tbl">
-    <thead><tr><th class="al">\u00c9tape</th><th>Appels</th><th>Tokens IN</th><th>Tokens OUT</th><th>Co\u00fbt USD</th><th>% du total</th></tr></thead>
-    <tbody>${stepTableRows}</tbody>
-    </table>
-    </div>
-  </div>
+  <div class="ga-section-title"><span class="material-icons-outlined">account_tree</span> D\u00e9tail par \u00e9tape pipeline (cumul\u00e9)</div>
+  <div class="ga-card"><div class="ga-tbl-wrap">
+  <table class="ga-tbl">
+  <thead><tr><th class="al">\u00c9tape</th><th>Appels</th><th>Tokens IN</th><th>Tokens OUT</th><th>Co\u00fbt USD</th><th>% du total</th></tr></thead>
+  <tbody>${stepTableRows}</tbody>
+  </table>
+  </div></div>
 </div>
 
 <div class="ga-section">
   <div class="ga-section-title"><span class="material-icons-outlined">schedule</span> Historique des articles</div>
-  <div class="ga-card">
-    <div class="ga-tbl-wrap">
-    <table class="ga-tbl">
-    <thead><tr><th class="al">Date</th><th class="al">Article</th><th>Co\u00fbt</th><th>Tokens</th><th>Appels</th><th>Mots</th><th>Co\u00fbt/1k mots</th><th>Dur\u00e9e</th><th>LLM %</th></tr></thead>
-    <tbody>${tableRows}</tbody>
-    </table>
-    </div>
-  </div>
+  <div class="ga-card"><div class="ga-tbl-wrap">
+  <table class="ga-tbl">
+  <thead><tr><th class="al">Date</th><th class="al">Article</th><th>Co\u00fbt</th><th>Tokens</th><th>Appels</th><th>Mots</th><th>Co\u00fbt/1k mots</th><th>Dur\u00e9e</th><th>LLM %</th></tr></thead>
+  <tbody>${tableRows}</tbody>
+  </table>
+  </div></div>
 </div>
 
 </div>
 
 <script type="text/javascript">
+(function() {
+  var RAW = ${JSON.stringify(clientHistory)};
+  var gaColors = ['#1a73e8', '#ea4335', '#34a853', '#fbbc04', '#9334e6', '#e8710a', '#f439a0', '#24c1e0'];
+  var currentRange = 28;
+
   google.charts.load('current', {packages: ['corechart']});
-  google.charts.setOnLoadCallback(drawAllCharts);
+  google.charts.setOnLoadCallback(function() { render(currentRange); });
 
-  function drawAllCharts() {
-    var gaColors = ['#1a73e8', '#ea4335', '#34a853', '#fbbc04', '#9334e6', '#e8710a', '#f439a0', '#24c1e0'];
+  // Pill click handlers
+  document.querySelectorAll('.ga-pill').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.ga-pill').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentRange = parseInt(btn.dataset.range);
+      render(currentRange);
+    });
+  });
 
-    // Cost per article - area chart
-    var costData = google.visualization.arrayToDataTable([
-      ['Article', 'Co\u00fbt USD', 'Moyenne'],
-      ${chartRows}
-    ]);
+  function filterByRange(data, days) {
+    if (!days) return data;
+    var cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - days);
+    return data.filter(function(h) { return h.d && new Date(h.d) >= cutoff; });
+  }
+
+  function aggregateByDay(data) {
+    var byDay = {};
+    data.forEach(function(h) {
+      if (!h.d) return;
+      var key = new Date(h.d).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
+      if (!byDay[key]) byDay[key] = { cost: 0, tokens: 0, count: 0 };
+      byDay[key].cost += h.c;
+      byDay[key].tokens += h.t;
+      byDay[key].count++;
+    });
+    return Object.entries(byDay).map(function(e) { return { label: e[0], cost: e[1].cost, tokens: e[1].tokens, count: e[1].count }; });
+  }
+
+  function render(days) {
+    var filtered = filterByRange(RAW, days);
+    if (filtered.length === 0) filtered = RAW;
+    var daily = aggregateByDay(filtered);
+
+    // KPIs
+    var totalCost = filtered.reduce(function(s, h) { return s + h.c; }, 0);
+    var avgCost = filtered.length > 0 ? totalCost / filtered.length : 0;
+    var avgTokens = filtered.length > 0 ? Math.round(filtered.reduce(function(s, h) { return s + h.t; }, 0) / filtered.length) : 0;
+
+    document.getElementById('kpi-cost').textContent = '$' + totalCost.toFixed(2);
+    document.getElementById('kpi-cost-sub').textContent = filtered.length + ' articles';
+    document.getElementById('kpi-avg').textContent = '$' + avgCost.toFixed(4);
+    document.getElementById('kpi-tokens').textContent = avgTokens.toLocaleString('fr-FR');
+    document.getElementById('kpi-proj').textContent = '$' + (avgCost * 30).toFixed(2);
+    document.getElementById('kpi-proj-sub').textContent = '30 art./mois';
+
+    // Trend
+    var trendEl = document.getElementById('kpi-trend');
+    if (filtered.length >= 10) {
+      var r5 = filtered.slice(-5).reduce(function(s, h) { return s + h.c; }, 0) / 5;
+      var p5 = filtered.slice(-10, -5).reduce(function(s, h) { return s + h.c; }, 0) / 5;
+      var pct = ((r5 - p5) / p5 * 100).toFixed(0);
+      if (r5 < p5 * 0.9) { trendEl.textContent = '\u2193 ' + pct + '% vs 5 pr\u00e9c.'; trendEl.className = 'kpi-trend down'; }
+      else if (r5 > p5 * 1.1) { trendEl.textContent = '\u2191 +' + pct + '% vs 5 pr\u00e9c.'; trendEl.className = 'kpi-trend up'; }
+      else { trendEl.textContent = '\u2192 stable'; trendEl.className = 'kpi-trend neutral'; }
+    } else { trendEl.textContent = ''; }
+
+    // Cost area chart - aggregated by day
+    var costRows = [['Jour', 'Co\u00fbt USD', 'Moyenne']];
+    daily.forEach(function(d) { costRows.push([d.label, d.cost, avgCost * d.count]); });
+    var costData = google.visualization.arrayToDataTable(costRows);
     new google.visualization.AreaChart(document.getElementById('costChart')).draw(costData, {
       colors: ['#1a73e8', '#ea4335'],
       legend: { position: 'top', textStyle: { fontSize: 12, color: '#5f6368' } },
-      hAxis: { textStyle: { fontSize: 10, color: '#80868b' }, gridlines: { color: '#f1f3f4' }, baselineColor: '#dadce0', showTextEvery: Math.max(1, Math.ceil(${totalArticles} / 15)), slantedText: true, slantedTextAngle: 45 },
-      vAxis: { format: '$#,##0.000', textStyle: { fontSize: 11, color: '#80868b' }, gridlines: { color: '#f1f3f4', count: 5 }, baselineColor: '#dadce0', minValue: 0 },
-      chartArea: { left: 60, right: 20, top: 40, height: '68%' },
-      backgroundColor: 'transparent',
-      areaOpacity: 0.08,
-      lineWidth: 2,
+      hAxis: { textStyle: { fontSize: 10, color: '#80868b' }, gridlines: { color: '#f1f3f4' }, slantedText: true, slantedTextAngle: 45 },
+      vAxis: { format: '$#,##0.000', textStyle: { fontSize: 11, color: '#80868b' }, gridlines: { color: '#f1f3f4', count: 5 }, minValue: 0 },
+      chartArea: { left: 65, right: 20, top: 40, height: '65%' },
+      backgroundColor: 'transparent', areaOpacity: 0.08, lineWidth: 2,
       series: { 1: { lineWidth: 1.5, lineDashStyle: [4, 3], areaOpacity: 0 } },
-      focusTarget: 'category',
-      crosshair: { trigger: 'focus', orientation: 'vertical', color: '#dadce0', opacity: 0.8 },
-      animation: { startup: true, duration: 600 }
+      focusTarget: 'category', crosshair: { trigger: 'focus', orientation: 'vertical', color: '#dadce0', opacity: 0.8 },
+      animation: { startup: true, duration: 400 }
     });
 
-    // Model donut - GA4 style
-    var modelData = google.visualization.arrayToDataTable([
-      ['Mod\u00e8le', 'Co\u00fbt USD'],
-      ${modelRows}
-    ]);
+    // Model donut
+    var modelAgg = {};
+    filtered.forEach(function(h) { h.models.forEach(function(m) { modelAgg[m.m] = (modelAgg[m.m] || 0) + m.c; }); });
+    var modelRows = [['Mod\u00e8le', 'Co\u00fbt USD']];
+    Object.entries(modelAgg).sort(function(a, b) { return b[1] - a[1]; }).forEach(function(e) { modelRows.push([e[0], e[1]]); });
+    var modelData = google.visualization.arrayToDataTable(modelRows);
     new google.visualization.PieChart(document.getElementById('modelChart')).draw(modelData, {
-      pieHole: 0.5,
-      colors: gaColors,
+      pieHole: 0.5, colors: gaColors,
       legend: { position: 'bottom', alignment: 'center', textStyle: { fontSize: 12, color: '#5f6368' } },
-      pieSliceText: 'label',
-      pieSliceTextStyle: { fontSize: 11, color: '#fff', bold: true },
-      chartArea: { width: '90%', height: '78%' },
-      backgroundColor: 'transparent',
+      pieSliceText: 'label', pieSliceTextStyle: { fontSize: 11, color: '#fff', bold: true },
+      chartArea: { width: '90%', height: '78%' }, backgroundColor: 'transparent',
       tooltip: { text: 'both', textStyle: { fontSize: 13 }, trigger: 'selection' },
-      sliceVisibilityThreshold: 0,
-      enableInteractivity: true,
-      animation: { startup: true, duration: 600 }
+      sliceVisibilityThreshold: 0, enableInteractivity: true, animation: { startup: true, duration: 400 }
     });
 
-    // Step horizontal bar
-    var stepData = google.visualization.arrayToDataTable([
-      ['\u00c9tape', 'Co\u00fbt USD'],
-      ${stepRows}
-    ]);
+    // Step bar chart
+    var stepAgg = {};
+    filtered.forEach(function(h) { h.steps.forEach(function(s) { stepAgg[s.s] = (stepAgg[s.s] || 0) + s.c; }); });
+    var stepRows = [['\\u00c9tape', 'Co\u00fbt USD']];
+    Object.entries(stepAgg).sort(function(a, b) { return b[1] - a[1]; }).forEach(function(e) { stepRows.push([e[0], e[1]]); });
+    var stepData = google.visualization.arrayToDataTable(stepRows);
+    var stepH = Math.max(350, Object.keys(stepAgg).length * 26);
+    document.getElementById('stepChart').style.minHeight = stepH + 'px';
     new google.visualization.BarChart(document.getElementById('stepChart')).draw(stepData, {
-      colors: ['#1a73e8'],
-      legend: { position: 'none' },
-      hAxis: { format: '$#,##0.000', textStyle: { fontSize: 11, color: '#80868b' }, gridlines: { color: '#f1f3f4' }, baselineColor: '#dadce0' },
+      colors: ['#1a73e8'], legend: { position: 'none' },
+      hAxis: { format: '$#,##0.000', textStyle: { fontSize: 11, color: '#80868b' }, gridlines: { color: '#f1f3f4' } },
       vAxis: { textStyle: { fontSize: 11, color: '#202124' } },
-      chartArea: { width: '55%', height: '88%' },
-      backgroundColor: 'transparent',
-      bar: { groupWidth: '65%' },
-      animation: { startup: true, duration: 600 }
+      chartArea: { width: '55%', height: '88%' }, backgroundColor: 'transparent',
+      bar: { groupWidth: '65%' }, animation: { startup: true, duration: 400 }
     });
 
-    // Tokens bar
-    var tokenData = google.visualization.arrayToDataTable([
-      ['Article', 'Tokens'],
-      ${tokenRows}
-    ]);
+    // Tokens column chart - aggregated by day
+    var tokenRows = [['Jour', 'Tokens']];
+    daily.forEach(function(d) { tokenRows.push([d.label, d.tokens]); });
+    var tokenData = google.visualization.arrayToDataTable(tokenRows);
     new google.visualization.ColumnChart(document.getElementById('tokensChart')).draw(tokenData, {
-      colors: ['#1a73e8'],
-      legend: { position: 'none' },
-      hAxis: { textStyle: { fontSize: 10, color: '#80868b' }, gridlines: { color: '#f1f3f4' }, showTextEvery: Math.max(1, Math.ceil(${totalArticles} / 15)), slantedText: true, slantedTextAngle: 45 },
-      vAxis: { textStyle: { fontSize: 11, color: '#80868b' }, gridlines: { color: '#f1f3f4', count: 5 }, baselineColor: '#dadce0' },
-      chartArea: { left: 60, right: 20, height: '72%' },
-      backgroundColor: 'transparent',
-      bar: { groupWidth: '70%' },
-      animation: { startup: true, duration: 600 }
+      colors: ['#1a73e8'], legend: { position: 'none' },
+      hAxis: { textStyle: { fontSize: 10, color: '#80868b' }, slantedText: true, slantedTextAngle: 45 },
+      vAxis: { textStyle: { fontSize: 11, color: '#80868b' }, gridlines: { color: '#f1f3f4', count: 5 } },
+      chartArea: { left: 65, right: 20, height: '72%' }, backgroundColor: 'transparent',
+      bar: { groupWidth: '70%' }, animation: { startup: true, duration: 400 }
     });
-
-    // Resize tokens chart to fill container
-    var tokensEl = document.getElementById('tokensChart');
-    if (tokensEl && tokensEl.parentElement) {
-      tokensEl.style.height = tokensEl.parentElement.offsetHeight + 'px';
-    }
   }
+})();
 </script>
 <!-- /wp:html -->`;
 }
