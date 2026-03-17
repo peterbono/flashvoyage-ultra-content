@@ -1035,7 +1035,10 @@ async function main() {
     process.exit(1);
   }
 
-  writeFileSync('/tmp/last-generated-article.html', article.content);
+      // Final pass: fix country articles + dedup FAQ (must run AFTER auto-fixers that create FAQ)
+    article = { ...article, content: fixFrenchCountryArticles(article.content) };
+    article = { ...article, content: deduplicateFaqSections(article.content) };
+    writeFileSync('/tmp/last-generated-article.html', article.content);
   const destination = article.report?.pipelineContext?.final_destination || null;
 
   let iteration = 0;
@@ -1104,8 +1107,7 @@ async function main() {
     }
     article = { ...article, content: removeEnglishLeaks(article.content) };
     article = { ...article, content: deduplicateParagraphs(article.content) };
-    article = { ...article, content: fixFrenchCountryArticles(article.content) };
-    article = { ...article, content: deduplicateFaqSections(article.content) };
+    // fixFrenchCountryArticles + deduplicateFaqSections moved to post-autofix
     warnMissingSerpSections(article.content);
     if (article.content !== preFixContent) {
       writeFileSync('/tmp/last-generated-article.html', article.content);

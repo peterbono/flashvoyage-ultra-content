@@ -13,6 +13,36 @@ import { generateWithClaude } from './anthropic-client.js';
 import axios from 'axios';
 import { existsSync, readFileSync } from 'fs';
 
+// Helper: correct French preposition for country names
+function withPreposition(prep, destination) {
+  const dest = (destination || '').trim();
+  const rules = {
+    'Japon': { sur: 'sur le Japon', à: 'au Japon', de: 'du Japon' },
+    'Vietnam': { sur: 'sur le Vietnam', à: 'au Vietnam', de: 'du Vietnam' },
+    'Cambodge': { sur: 'sur le Cambodge', à: 'au Cambodge', de: 'du Cambodge' },
+    'Laos': { sur: 'sur le Laos', à: 'au Laos', de: 'du Laos' },
+    'Myanmar': { sur: 'sur le Myanmar', à: 'au Myanmar', de: 'du Myanmar' },
+    'Thaïlande': { sur: 'sur la Thaïlande', à: 'en Thaïlande', de: 'de la Thaïlande' },
+    'Malaisie': { sur: 'sur la Malaisie', à: 'en Malaisie', de: 'de la Malaisie' },
+    'Corée': { sur: 'sur la Corée', à: 'en Corée', de: 'de la Corée' },
+    'Corée du Sud': { sur: 'sur la Corée du Sud', à: 'en Corée du Sud', de: 'de la Corée du Sud' },
+    'Chine': { sur: 'sur la Chine', à: 'en Chine', de: 'de la Chine' },
+    'Birmanie': { sur: 'sur la Birmanie', à: 'en Birmanie', de: 'de la Birmanie' },
+    'Mongolie': { sur: 'sur la Mongolie', à: 'en Mongolie', de: 'de la Mongolie' },
+    'Indonésie': { sur: "sur l'Indonésie", à: 'en Indonésie', de: "de l'Indonésie" },
+    'Inde': { sur: "sur l'Inde", à: 'en Inde', de: "de l'Inde" },
+    'Philippines': { sur: 'sur les Philippines', à: 'aux Philippines', de: 'des Philippines' },
+    'Maldives': { sur: 'sur les Maldives', à: 'aux Maldives', de: 'des Maldives' },
+  };
+  // Try exact match first, then case-insensitive
+  const match = rules[dest] || Object.entries(rules).find(([k]) => k.toLowerCase() === dest.toLowerCase())?.[1];
+  if (match && match[prep]) return match[prep];
+  // Default: just concat (for cities like Tokyo, Bangkok)
+  return prep + ' ' + dest;
+}
+
+
+
 const imageManager = new ImageSourceManager();
 
 // ─── Utilitaires ──────────────────────────────────────────
@@ -726,8 +756,8 @@ export async function fixGenericH2Titles(html, title = '') {
 
   const genericH2Map = {
     'budget': `Combien coûte vraiment un mois à ${destination}`,
-    'transport': `Comment se déplacer efficacement à ${destination}`,
-    'transports': `Comment se déplacer efficacement à ${destination}`,
+    'transport': `Comment se déplacer efficacement ${withPreposition('à', destination)}`,
+    'transports': `Comment se déplacer efficacement ${withPreposition('à', destination)}`,
     'hébergement': `Où dormir à ${destination} selon ton budget`,
     'hebergement': `Où dormir à ${destination} selon ton budget`,
     'conclusion': `Ce qu'il faut retenir avant de partir à ${destination}`,
@@ -955,8 +985,8 @@ export async function fixEmptyFAQ(html, title = '') {
     const _hp = _liveHotel ? _liveHotel[1].trim().replace(/&euro;/g, '€').replace(/~/g, '') : '15-30€';
     const faqQuestions = [
       { q: 'Combien coûte un vol pour ' + destination + ' ?', a: 'En moyenne, un vol A/R depuis Paris coûte ' + _fp + '. Réserve 2-3 mois à l\'avance pour les meilleurs tarifs.' },
-      { q: 'Quel budget quotidien à ' + destination + ' ?', a: 'Compte ' + _mp + ' par repas et ' + _hp + ' par nuit en budget. Un backpacker dépense 30-50€/jour tout compris.' },
-      { q: 'Comment se déplacer à ' + destination + ' ?', a: 'Bus locaux pour les longues distances, grab/taxi pour les courts trajets. Compare sur 12go.asia pour les inter-villes.' },
+      { q: 'Quel budget quotidien ' + withPreposition('à', destination) + ' ?', a: 'Compte ' + _mp + ' par repas et ' + _hp + ' par nuit en budget. Un backpacker dépense 30-50€/jour tout compris.' },
+      { q: 'Comment se déplacer ' + withPreposition('à', destination) + ' ?', a: 'Bus locaux pour les longues distances, grab/taxi pour les courts trajets. Compare sur 12go.asia pour les inter-villes.' },
       { q: destination + ' est-il sûr pour voyager seul ?', a: 'Globalement oui. Utilise des apps de taxi (Grab, Bolt), garde tes objets de valeur en sécurité, et informe quelqu\'un de ton itinéraire.' },
     ];
     const faqHtml = '<h2>Questions fréquentes</h2>\n' + faqQuestions.map(f => '<div class="fv-faq-item" style="border:1px solid #e5e7eb;border-radius:8px;margin-bottom:0.75rem;overflow:hidden;"><details style="padding:0;"><summary style="padding:1rem 1.2rem;cursor:pointer;font-weight:600;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;">' + f.q + '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;transition:transform 0.2s;"><path d="M5 7.5L10 12.5L15 7.5" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/></svg></summary><div style="padding:0 1.2rem 1rem;color:#4b5563;line-height:1.6;">' + f.a + '</div></details></div>').join('\n');
@@ -1020,9 +1050,9 @@ export async function fixEmptyFAQ(html, title = '') {
   
   const faqTemplates = [
     { q: `Combien coûte un vol pour ${destination} depuis la France ?`, a: `En moyenne, un vol aller-retour Paris → ${destination} coûte ${flightPrice}. Les prix varient selon la saison et l'anticipation de la réservation. Utilise Google Flights ou Skyscanner pour comparer — réserver 2-3 mois à l'avance donne généralement les meilleurs tarifs.` },
-    { q: `Quel budget quotidien prévoir sur place à ${destination} ?`, a: `Compte environ ${mealPrice} par repas économique et ${hotelPrice} par nuit en hôtel budget. Un budget backpacker réaliste tourne autour de 30-50€/jour tout compris (logement, nourriture, transport, activités). En mode confort, prévois 70-100€/jour.` },
+    { q: `Quel budget quotidien prévoir sur place ${withPreposition('à', destination)} ?`, a: `Compte environ ${mealPrice} par repas économique et ${hotelPrice} par nuit en hôtel budget. Un budget backpacker réaliste tourne autour de 30-50€/jour tout compris (logement, nourriture, transport, activités). En mode confort, prévois 70-100€/jour.` },
     { q: `Quelle est la meilleure période pour visiter ${destination} ?`, a: `Évite la haute saison touristique (décembre-février) si tu veux des prix bas et moins de monde. La basse saison (mai-septembre) offre des tarifs 30-40% moins chers, mais vérifie la saison des pluies qui peut impacter certaines régions.` },
-    { q: `Comment se déplacer à ${destination} ?`, a: `Le transport local coûte environ ${transportPrice} par trajet. Les bus locaux sont l'option la moins chère pour les longues distances. Pour les trajets courts, le scooter (si tu es à l'aise) ou le grab/taxi sont pratiques. Compare les prix sur 12go.asia pour les trajets inter-villes.` },
+    { q: `Comment se déplacer ${withPreposition('à', destination)} ?`, a: `Le transport local coûte environ ${transportPrice} par trajet. Les bus locaux sont l'option la moins chère pour les longues distances. Pour les trajets courts, le scooter (si tu es à l'aise) ou le grab/taxi sont pratiques. Compare les prix sur 12go.asia pour les trajets inter-villes.` },
     { q: `Faut-il un visa pour ${destination} ?`, a: `Les conditions varient selon ta nationalité. La plupart des passeports européens bénéficient d'une exemption de visa pour les courts séjours (15-30 jours). Pour les séjours plus longs, vérifie les options de visa on arrival ou e-visa sur le site officiel de l'ambassade.` },
     { q: `${destination} est-il sûr pour voyager seul ?`, a: `Globalement oui. Les arnaques touristiques classiques (taxis, prix gonflés) existent mais se gèrent avec du bon sens. Garde tes objets de valeur en sécurité, utilise des applications de taxi (Grab, Bolt) plutôt que de négocier dans la rue, et informe quelqu'un de ton itinéraire.` },
   ];
