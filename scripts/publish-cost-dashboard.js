@@ -174,7 +174,7 @@ function buildDashboardHTML(history) {
 
 <div class="ga-charts">
   <div class="ga-card">
-    <div class="ga-card-header"><h3>Co\u00fbt par article</h3></div>
+    <div class="ga-card-header"><h3>Co\u00fbt journalier</h3></div>
     <div class="ga-card-body"><div id="costChart" class="chart-div"></div></div>
   </div>
   <div class="ga-card">
@@ -285,7 +285,8 @@ function buildDashboardHTML(history) {
 
     // Cost area chart - aggregated by day
     var costRows = [['Jour', 'Co\u00fbt USD', 'Moyenne']];
-    daily.forEach(function(d) { costRows.push([d.label, d.cost, avgCost * d.count]); });
+    var dailyAvg = daily.length > 0 ? daily.reduce(function(s, d) { return s + d.cost; }, 0) / daily.length : 0;
+    daily.forEach(function(d) { costRows.push([d.label, d.cost, dailyAvg]); });
     var costData = google.visualization.arrayToDataTable(costRows);
     new google.visualization.AreaChart(document.getElementById('costChart')).draw(costData, {
       colors: ['#1a73e8', '#ea4335'],
