@@ -942,6 +942,16 @@ async function main() {
   let approved = false;
   let lastReviewResult = null;
 
+  // VIZ-BRIDGE: pipeline start
+  if (vizBridge) {
+    vizBridge.emit({ type: 'pipeline_start', agent: null, data: {
+      runId: `run-${Date.now()}`,
+      article: article.title || 'Generating...',
+      destination: destination || '',
+      editorialMode: article.editorialMode || 'evergreen',
+    }});
+  }
+
   // VIZ-BRIDGE: marie quality review starts
   if (vizBridge) {
     vizBridge.emit({ type: 'stage_start', agent: 'marie' });

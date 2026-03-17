@@ -100,6 +100,7 @@ function emitEvent(event) {
   if (event.type === 'pipeline_start') {
     currentRun = {
       id: event.data?.runId || `run-${Date.now()}`,
+      editorialMode: event.data?.editorialMode || 'evergreen',
       article: event.data?.article || '',
       destination: event.data?.destination || '',
       timestamp: event.timestamp,
