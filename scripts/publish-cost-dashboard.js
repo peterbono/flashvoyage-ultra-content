@@ -301,8 +301,19 @@ function buildDashboardHTML(history) {
     });
 
     // Model donut
+    var modelNames = {
+      'claude-haiku-4-5-20251001': 'Claude Haiku',
+      'claude-3-5-haiku-20241022': 'Claude Haiku',
+      'claude-3-haiku-20240307': 'Claude Haiku',
+      'claude-sonnet-4-20250514': 'Claude Sonnet',
+      'claude-3-5-sonnet-20241022': 'Claude Sonnet',
+      'gpt-4o': 'GPT-4o',
+      'gpt-4o-mini': 'GPT-4o Mini',
+      'gpt-4-turbo': 'GPT-4 Turbo',
+      'gpt-3.5-turbo': 'GPT-3.5'
+    };
     var modelAgg = {};
-    filtered.forEach(function(h) { h.models.forEach(function(m) { modelAgg[m.m] = (modelAgg[m.m] || 0) + m.c; }); });
+    filtered.forEach(function(h) { h.models.forEach(function(m) { var name = modelNames[m.m] || m.m; modelAgg[name] = (modelAgg[name] || 0) + m.c; }); });
     var modelRows = [['Mod\u00e8le', 'Co\u00fbt USD']];
     Object.entries(modelAgg).sort(function(a, b) { return b[1] - a[1]; }).forEach(function(e) { modelRows.push([e[0], e[1]]); });
     var modelData = google.visualization.arrayToDataTable(modelRows);
