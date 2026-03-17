@@ -70,7 +70,7 @@ function buildDashboardHTML(history) {
   const chartCalls = history.map(h => h.totalCalls || 0);
 
   // Step breakdown chart data (top 8 steps by cost)
-  const sortedSteps = Object.entries(stepTotals).sort((a, b) => b[1].costUSD - a[1].costUSD).slice(0, 8);
+  const sortedSteps = Object.entries(stepTotals).sort((a, b) => b[1].costUSD - a[1].costUSD);
   const stepLabels = sortedSteps.map(([k]) => k);
   const stepCosts = sortedSteps.map(([, v]) => parseFloat(v.costUSD.toFixed(4)));
 
@@ -131,24 +131,26 @@ function buildDashboardHTML(history) {
   .fv-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
   .fv-kpi { background: #f8f9fa; border-radius: 12px; padding: 20px; text-align: center; border: 1px solid #e9ecef; }
   .fv-kpi .value { font-size: 28px; font-weight: 700; color: #0066cc; }
-  .fv-kpi .label { font-size: 12px; color: #666; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .fv-kpi .label { font-size: 12px; color: #495057; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
   .fv-kpi.alert .value { color: #e63946; }
   .fv-charts { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 32px; }
   .fv-chart-box { background: #fff; border: 1px solid #e9ecef; border-radius: 12px; padding: 20px; }
-  .fv-chart-box h3 { margin-top: 0; font-size: 16px; color: #333; }
+  .fv-chart-box h3 { margin-top: 0; font-size: 16px; color: #1a1a2e; font-weight: 700; }
   .fv-table-wrap { overflow-x: auto; margin-bottom: 32px; }
   .fv-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .fv-table th { background: #0066cc; color: #fff; padding: 10px 8px; text-align: left; font-weight: 600; white-space: nowrap; }
-  .fv-table td { padding: 8px; border-bottom: 1px solid #eee; }
-  .fv-table tr:hover { background: #f0f7ff; }
+  .fv-table th { background: #1a1a2e; color: #ffffff; padding: 12px 10px; text-align: left; font-weight: 700; font-size: 14px; white-space: nowrap; letter-spacing: 0.3px; text-transform: uppercase; }
+  .fv-table td { padding: 10px 10px; border-bottom: 1px solid #dee2e6; font-size: 13px; }
+  .fv-table tr:nth-child(even) { background: #f8f9fa; }
+  .fv-table tr:hover { background: #e8f0fe; }
   .fv-table tr.outlier { background: #fff3f3; }
   .fv-table tr.outlier:hover { background: #ffe0e0; }
   .fv-table a { color: #0066cc; text-decoration: none; }
   .fv-table a:hover { text-decoration: underline; }
   .fv-step-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 32px; }
-  .fv-step-table th { background: #495057; color: #fff; padding: 8px; text-align: left; }
-  .fv-step-table td { padding: 8px; border-bottom: 1px solid #eee; }
-  .fv-step-table tr:hover { background: #f8f9fa; }
+  .fv-step-table th { background: #1a1a2e; color: #ffffff; padding: 12px 10px; text-align: left; font-weight: 700; font-size: 14px; letter-spacing: 0.3px; text-transform: uppercase; }
+  .fv-step-table td { padding: 10px 10px; border-bottom: 1px solid #dee2e6; font-size: 13px; }
+  .fv-step-table tr:nth-child(even) { background: #f8f9fa; }
+  .fv-step-table tr:hover { background: #e8f0fe; }
   @media (max-width: 768px) {
     .fv-charts { grid-template-columns: 1fr; }
     .fv-kpis { grid-template-columns: repeat(2, 1fr); }
@@ -216,8 +218,12 @@ ${tableRows}
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2/dist/chartjs-plugin-datalabels.min.js"></script>
 <script>
 (function() {
+  // Register datalabels plugin
+  if (window.ChartDataLabels) Chart.register(ChartDataLabels);
+
   const colors = {
     blue: '#0066cc',
     lightBlue: 'rgba(0,102,204,0.15)',
@@ -263,7 +269,22 @@ ${tableRows}
       labels: ${JSON.stringify(modelLabels)},
       datasets: [{ data: ${JSON.stringify(modelCosts)}, backgroundColor: palette.slice(0, ${modelLabels.length}) }]
     },
-    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom' },
+        datalabels: {
+          color: '#fff',
+          font: { weight: 'bold', size: 13 },
+          formatter: (value, ctx) => {
+            const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+            const pct = ((value / total) * 100).toFixed(0);
+            return '$' + value.toFixed(2) + '\n(' + pct + '%)';
+          },
+          textAlign: 'center'
+        }
+      }
+    }
   });
 
   // Step bar chart
