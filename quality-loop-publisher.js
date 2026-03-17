@@ -1348,6 +1348,8 @@ async function main() {
     }
   }
 
+  let publishedUrl = null;
+
   if (CONFIG.dryRun) {
     console.log(`\n🧪 DRY RUN — Pas de publication WordPress`);
     console.log(`   HTML sauvegardé: /tmp/last-generated-article.html`);
@@ -1358,6 +1360,7 @@ async function main() {
       if (pubResult?.link) {
         console.log(`\n🔗 ARTICLE PUBLIÉ: ${pubResult.link}`);
         article.wpPostId = pubResult.id;
+        publishedUrl = pubResult.link;
       }
     } catch (err) {
       const detail = err.response?.data?.message || err.response?.data?.code || '';
@@ -1442,9 +1445,14 @@ async function main() {
   costTracker.saveToDisk({
     id: article.wpPostId || null,
     title: article.title,
+    url: publishedUrl,
     iteration: iteration,
     approved: approved,
     score: lastReviewResult?.weightedScore || 0,
+    finalScore: lastReviewResult?.weightedScore || null,
+    agentScores: lastReviewResult ? Object.fromEntries(
+      Object.entries(lastReviewResult.agents).map(([id, r]) => [id, { score: r.score, verdict: r.verdict }])
+    ) : null,
   });
 
   // Auto-refresh du dashboard WordPress

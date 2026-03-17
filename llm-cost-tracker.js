@@ -212,7 +212,10 @@ class LLMCostTracker {
           tokensOut: v.completionTokens,
           costUSD: parseFloat(v.costUSD.toFixed(6))
         }])
-      )
+      ),
+      finalScore: articleMeta.finalScore ?? null,
+      approved: articleMeta.approved ?? null,
+      agentScores: articleMeta.agentScores || null,
     };
 
     const dir = dirname(COST_HISTORY_PATH);
