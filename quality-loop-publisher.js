@@ -1433,6 +1433,11 @@ async function main() {
     writeFileSync("/tmp/last-generated-article.html", article.content);
   }
 
+  // ── Final cleanup pass (after ALL auto-fixers, rollbacks, etc.) ──
+  article = { ...article, content: fixFrenchCountryArticles(article.content) };
+  article = { ...article, content: deduplicateFaqSections(article.content) };
+  writeFileSync('/tmp/last-generated-article.html', article.content);
+
   // ══════════════════════════════════════════════════════════
   //  Phase 4: Publication
   // ══════════════════════════════════════════════════════════
