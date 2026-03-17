@@ -1447,6 +1447,18 @@ async function main() {
     score: lastReviewResult?.weightedScore || 0,
   });
 
+  // Auto-refresh du dashboard WordPress
+  try {
+    const { execFileSync } = await import('child_process');
+    const { dirname } = await import('path');
+    const { fileURLToPath } = await import('url');
+    const __dir = dirname(fileURLToPath(import.meta.url));
+    execFileSync('node', ['scripts/publish-cost-dashboard.js'], { cwd: __dir, timeout: 15000, stdio: 'pipe' });
+    console.log('📊 Dashboard coûts mis à jour automatiquement');
+  } catch (dashErr) {
+    console.warn(`⚠️ Dashboard coûts non mis à jour: ${dashErr.message}`);
+  }
+
   process.exit(approved ? 0 : 1);
 }
 
