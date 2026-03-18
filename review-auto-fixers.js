@@ -295,7 +295,7 @@ export async function fixAffiliateCoverage(html, destination = '') {
   if (modules.length >= 2) return { html, fixed: false, description: null };
 
   const disclosure = '<p class="affiliate-module-disclaimer"><small>Liens partenaires: une commission peut être perçue, sans surcoût pour toi.</small></p>';
-  const destFrMap = {thailand:'la Thaïlande',japan:'le Japon',indonesia:"l'Indonésie",vietnam:'le Vietnam',cambodia:'le Cambodge',laos:'le Laos',philippines:'les Philippines',malaysia:'la Malaisie',bali:'Bali',india:"l'Inde"}; const safeDest = destFrMap[(destination||'').toLowerCase()] || destination || 'ta destination';
+  const destFrMap = {thailand:'la Thaïlande',japan:'le Japon',indonesia:"l'Indonésie",vietnam:'le Vietnam',cambodia:'le Cambodge',laos:'le Laos',philippines:'les Philippines',malaysia:'la Malaisie',bali:'Bali',india:"l'Inde"}; const safeDest = destFrMap[(destination||'').toLowerCase()] || destination || 'cette destination';
   const buildModule = (id, title, txt) => [
     `<aside class="affiliate-module" data-placement-id="${id}">`,
     `<h3>${title}</h3>`,
@@ -872,7 +872,7 @@ export async function fixMissingDecisionPhrases(html, title = '') {
   return { html, fixed: false, description: null };
   if (!html || typeof html !== 'string') return { html, fixed: false, description: null };
 
-  const destination = extractDestinationFromTitle(title) || 'ta destination';
+  const destination = extractDestinationFromTitle(title) || 'cette destination';
 
   // Count existing decision phrases
   const decisionPatterns = /si\s+tu\s+\w+.*?(?:privil[ée]gie|[ée]vite|opte\s+pour|choisis|pr[ée]f[eè]re)/gi;
@@ -1087,7 +1087,7 @@ export async function fixEmptyFAQ(html, title = '') {
   ] : [
     { q: `Combien coûte un vol pour ${destination} depuis la France ?`, a: `En moyenne, un vol aller-retour Paris → ${destination} coûte ${flightPrice}. Compare sur Google Flights ou Skyscanner — réserver 2-3 mois à l'avance donne les meilleurs tarifs.` },
     { q: `Quel budget quotidien prévoir ${withPreposition('à', destination)} ?`, a: `Compte environ ${mealPrice} par repas économique et ${hotelPrice} par nuit en hébergement budget. Le budget quotidien réaliste dépend fortement de la destination — consulte les chiffres de cet article pour une estimation basée sur des retours récents.` },
-    { q: `Quelle est la meilleure période pour visiter ${destination} ?`, a: `Les saisons varient fortement selon la région. Vérifie le climat spécifique de ta destination. Hors haute saison touristique, les prix baissent de 20-40%.` },
+    { q: `Quelle est la meilleure période pour visiter ${destination} ?`, a: `Les saisons varient fortement selon les régions de ${destination}. Hors haute saison touristique, les prix baissent de 20-40 %. Vérifie le climat de la zone exacte que tu vises.` },
     { q: `Comment se déplacer ${withPreposition('à', destination)} ?`, a: `Le transport local coûte environ ${transportPrice} par trajet. Compare les options sur 12go.asia pour les trajets inter-villes. Pour les courts trajets urbains, les apps de VTC locales offrent les meilleurs tarifs.` },
     { q: `Faut-il un visa pour ${destination} ?`, a: `Les conditions varient selon ta nationalité. Vérifie les options sur le site officiel de l'ambassade.` },
     { q: `${destination} est-il sûr pour voyager seul ?`, a: `Globalement oui. Garde tes objets de valeur en sécurité, utilise des applications de transport (Grab, Bolt) plutôt que de négocier dans la rue, et informe quelqu'un de ton itinéraire.` },
