@@ -1420,7 +1420,7 @@ export function makeTablesResponsive(html, report) {
   const wrapperStyle = 'overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.5em 0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1)';
 
   // Style pour la table elle-même
-  const tableStyle = 'width:100%;border-collapse:collapse;font-size:14px;min-width:600px';
+  const tableStyle = 'max-width:100%;border-collapse:collapse;font-size:14px;overflow-x:auto;display:block';
 
   // Style pour les cellules d'en-tête
   const thStyle = 'background:#1a365d;color:#fff;padding:12px 10px;text-align:left;font-weight:600;font-size:13px;white-space:nowrap';

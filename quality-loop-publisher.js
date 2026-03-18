@@ -657,7 +657,7 @@ function rewriteListicleTitle(title) {
 
 
 // ─── ENCODING BREAKS FIXER ──────────────────────────────────
-import { applyPostProcessingFixers, scrubUnicodeArtifacts, fixEncodingBreaks, fixGhostLinks, fixDuplicateCitations, fixEmptyFaqEntries, splitWallParagraphs, fixSlugAnchors, fixNestedLinks, cleanBlockquoteContent, fixFrenchCountryArticles, deduplicateFaqSections } from './post-processing-fixers.js';
+import { applyPostProcessingFixers, scrubUnicodeArtifacts, fixEncodingBreaks, fixGhostLinks, fixDuplicateCitations, fixEmptyFaqEntries, splitWallParagraphs, fixSlugAnchors, fixNestedLinks, cleanBlockquoteContent, fixFrenchCountryArticles, deduplicateFaqSections, fixOrphanClosingTags, removeEnglishBlockquotes, validateTitleNumberPromise, fixBlockquoteIssues, removeTestimonialLabel, fixConsecutiveHeadings } from './post-processing-fixers.js';
 
 
 
@@ -826,8 +826,10 @@ async function publishArticle(article) {
   const afterMergeCount = (finalContent.match(/<p[^>]*>/g) || []).length;
   console.log('  📝 PARAGRAPH MERGER: ' + beforeMergeCount + ' → ' + afterMergeCount + ' paragraphs (' + (beforeMergeCount - afterMergeCount) + ' merged)');
   
-  // Rewrite listicle titles into emotional hooks
-  let finalTitle = rewriteListicleTitle(article.title);
+  // DISABLED: Title rewriter was degrading good LLM-generated titles
+  // The new intro prompts (Contrarian/Stat Bomb) already produce quality titles
+  let finalTitle = article.title;
+  // let finalTitle = rewriteListicleTitle(article.title);
   // Also update the H1 in the HTML content to match the rewritten title
   if (finalTitle !== article.title) {
     const h1Regex = /<h1[^>]*>.*?<\/h1>/i;
@@ -850,7 +852,36 @@ async function publishArticle(article) {
   finalContent = cleanBlockquoteContent(finalContent);
   finalContent = fixFrenchCountryArticles(finalContent);
   finalContent = deduplicateFaqSections(finalContent);
-  console.log('✅ Post-processing fixes applied (encoding, ghost links, dedup, empty FAQ, country articles, FAQ dedup)');
+  finalContent = fixOrphanClosingTags(finalContent);
+  finalContent = fixBlockquoteIssues(finalContent);
+  finalContent = removeTestimonialLabel(finalContent);
+  finalContent = fixConsecutiveHeadings(finalContent);
+
+  // ── NUCLEAR CLEANUP: remove all blockquotes, activity widgets, orphan widget text ──
+  // Blockquotes: quote selection too unreliable → remove all
+  finalContent = finalContent.replace(/<blockquote[^>]*>[\s\S]*?<\/blockquote>/gi, '');
+  finalContent = finalContent.replace(/<footer[^>]*>[\s\S]*?[Ee]xtrait de t[ée]moignage[\s\S]*?<\/footer>/gi, '');
+  // Activity/tours widgets: always wrong destination → remove all traces
+  finalContent = finalContent.replace(/<div[^>]*(?:data-id="(?:activit|tours)|class="[^"]*tp-widget)[^>]*>[\s\S]*?<\/div>/gi, '');
+  finalContent = finalContent.replace(/<[^>]*>CHOSES [ÀA] FAIRE[^<]*<\/[^>]*>/gi, '');
+  finalContent = finalContent.replace(/<a[^>]*>Voir tous les produits[^<]*<\/a>/gi, '');
+  finalContent = finalContent.replace(/<[^>]*>Powered by travelpayouts<\/[^>]*>/gi, '');
+  // Orphan widget placeholders
+  finalContent = finalContent.replace(/<p[^>]*>🔗\s*<em>Avant de continuer[^<]*<\/em><\/p>\s*/gi, '');
+  finalContent = finalContent.replace(/<h[23][^>]*>\s*Comparer les vols\s*<\/h[23]>\s*<p[^>]*>[^<]*compare[^<]*<\/p>\s*<p[^>]*>Liens partenaires[^<]*<\/p>/gi, '');
+  finalContent = finalContent.replace(/<p[^>]*>\s*Liens? partenaires?:?\s*une commission[^<]*<\/p>/gi, '');
+  finalContent = finalContent.replace(/<div[^>]*class="[^"]*fv-(?:partner|widget|affiliate)[^"]*"[^>]*>\s*<\/div>/gi, '');
+
+  // Replace all checkbox/ballot box variants with ✔️ in checklists
+  // U+2610 (☐), U+25A1 (□), U+25FB (◻), U+25A2 (▢)
+  finalContent = finalContent.replace(/[\u2610\u25A1\u25FB\u25A2□☐]/g, '✔️');
+  // Remove bullet point on <li> items that have ✔️ (double marker)
+  finalContent = finalContent.replace(/<li([^>]*)>(\s*✔️)/gi, '<li$1 style="list-style:none;">$2');
+
+  // Remove leaked pipeline jargon: "CTA:" labels visible in article text
+  finalContent = finalContent.replace(/\bCTA\s*:\s*/gi, '');
+
+  console.log('✅ Post-processing fixes applied (encoding, ghost links, dedup, empty FAQ, country articles, FAQ dedup, orphan divs, blockquotes, FAQ arrows)');
 
   // ─── TITLE DEDUPLICATION CHECK ───
   try {
@@ -902,10 +933,33 @@ async function publishArticle(article) {
   const seoFocusKeyword = focusWords.join(' ');
   console.log('  🔍 SEO meta generated: title=' + seoTitle.length + 'ch, desc=' + seoDesc.length + 'ch, keyword="' + seoFocusKeyword + '"');
 
+    // ─── AUTHOR ASSIGNMENT ───
+  // Map generated author name to WP user ID for proper author box display
+  const WP_AUTHORS = {
+    'claire moreau': 3,
+    'thomas renard': 5,
+    'sophie leclerc': 4,
+    'marc delacroix': 6,
+    'claire dumontier': 2,
+  };
+  let authorId = null;
+  const articleAuthor = (article.author || article.authorName || '').toLowerCase().trim();
+  if (articleAuthor && WP_AUTHORS[articleAuthor]) {
+    authorId = WP_AUTHORS[articleAuthor];
+    console.log(`  👤 Author assigned: ${articleAuthor} (WP ID: ${authorId})`);
+  } else {
+    // Random author rotation if none specified
+    const authorIds = Object.values(WP_AUTHORS);
+    authorId = authorIds[Math.floor(Math.random() * authorIds.length)];
+    const authorName = Object.keys(WP_AUTHORS).find(k => WP_AUTHORS[k] === authorId);
+    console.log(`  👤 Author auto-assigned: ${authorName} (WP ID: ${authorId})`);
+  }
+
     const postData = {
     title: finalTitle,
     content: finalContent,
     status: process.env.FORCE_WP_STATUS || 'publish',
+    author: authorId,
     ...(categoryIds.length && { categories: categoryIds }),
     ...(tagIds.length && { tags: tagIds }),
     ...(article.slug && { slug: article.slug }),
@@ -1010,6 +1064,16 @@ async function main() {
   let bestIteration = 0;
   let previousScore = null;
 
+  // VIZ-BRIDGE: pipeline start (emit early so viz knows the mode immediately)
+  if (vizBridge) {
+    vizBridge.emit({ type: 'pipeline_start', agent: null, data: {
+      runId: `run-${Date.now()}`,
+      article: 'Generating...',
+      destination: '',
+      editorialMode: CONFIG.forceMode || 'evergreen',
+    }});
+  }
+
   // ══════════════════════════════════════════════════════════
   //  Phase 1: Génération initiale (avec retry)
   // ══════════════════════════════════════════════════════════
@@ -1045,13 +1109,13 @@ async function main() {
   let approved = false;
   let lastReviewResult = null;
 
-  // VIZ-BRIDGE: pipeline start
+  // VIZ-BRIDGE: update run info now that we have the article title
   if (vizBridge) {
     vizBridge.emit({ type: 'pipeline_start', agent: null, data: {
       runId: `run-${Date.now()}`,
       article: article.title || 'Generating...',
       destination: destination || '',
-      editorialMode: article.editorialMode || 'evergreen',
+      editorialMode: article.editorialMode || CONFIG.forceMode || 'evergreen',
     }});
   }
 
@@ -1106,8 +1170,13 @@ async function main() {
       h2FixPasses++;
     }
     article = { ...article, content: removeEnglishLeaks(article.content) };
+    article = { ...article, content: removeEnglishBlockquotes(article.content) };
+    article = { ...article, content: fixBlockquoteIssues(article.content) };
     article = { ...article, content: deduplicateParagraphs(article.content) };
     // fixFrenchCountryArticles + deduplicateFaqSections moved to post-autofix
+    // Title-number coherence check
+    const titleCheck = validateTitleNumberPromise(article.content, article.title || '');
+    if (titleCheck.issue) console.log(`   ⚠️ ${titleCheck.issue}`);
     warnMissingSerpSections(article.content);
     if (article.content !== preFixContent) {
       writeFileSync('/tmp/last-generated-article.html', article.content);

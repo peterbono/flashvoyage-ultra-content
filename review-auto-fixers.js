@@ -1048,13 +1048,49 @@ export async function fixEmptyFAQ(html, title = '') {
   const rawTransport = transportMatch ? transportMatch[1].trim() : '';
   const transportPrice = rawTransport ? rawTransport.replace(/&euro;/g, '€').replace(/~/g, '').trim() : '1-3€';
   
-  const faqTemplates = [
-    { q: `Combien coûte un vol pour ${destination} depuis la France ?`, a: `En moyenne, un vol aller-retour Paris → ${destination} coûte ${flightPrice}. Les prix varient selon la saison et l'anticipation de la réservation. Utilise Google Flights ou Skyscanner pour comparer — réserver 2-3 mois à l'avance donne généralement les meilleurs tarifs.` },
-    { q: `Quel budget quotidien prévoir sur place ${withPreposition('à', destination)} ?`, a: `Compte environ ${mealPrice} par repas économique et ${hotelPrice} par nuit en hôtel budget. Un budget backpacker réaliste tourne autour de 30-50€/jour tout compris (logement, nourriture, transport, activités). En mode confort, prévois 70-100€/jour.` },
-    { q: `Quelle est la meilleure période pour visiter ${destination} ?`, a: `Évite la haute saison touristique (décembre-février) si tu veux des prix bas et moins de monde. La basse saison (mai-septembre) offre des tarifs 30-40% moins chers, mais vérifie la saison des pluies qui peut impacter certaines régions.` },
-    { q: `Comment se déplacer ${withPreposition('à', destination)} ?`, a: `Le transport local coûte environ ${transportPrice} par trajet. Les bus locaux sont l'option la moins chère pour les longues distances. Pour les trajets courts, le scooter (si tu es à l'aise) ou le grab/taxi sont pratiques. Compare les prix sur 12go.asia pour les trajets inter-villes.` },
-    { q: `Faut-il un visa pour ${destination} ?`, a: `Les conditions varient selon ta nationalité. La plupart des passeports européens bénéficient d'une exemption de visa pour les courts séjours (15-30 jours). Pour les séjours plus longs, vérifie les options de visa on arrival ou e-visa sur le site officiel de l'ambassade.` },
-    { q: `${destination} est-il sûr pour voyager seul ?`, a: `Globalement oui. Les arnaques touristiques classiques (taxis, prix gonflés) existent mais se gèrent avec du bon sens. Garde tes objets de valeur en sécurité, utilise des applications de taxi (Grab, Bolt) plutôt que de négocier dans la rue, et informe quelqu'un de ton itinéraire.` },
+  // Destination-aware FAQ templates
+  const destLower = (destination || '').toLowerCase();
+  const FAQ_BY_REGION = {
+    japan: {
+      transport: { q: `Comment se déplacer ${withPreposition('à', destination)} ?`, a: `Le JR Pass couvre les Shinkansen et la majorité des lignes JR. Pour le reste : carte Suica/Pasmo (métro, bus urbains) à environ ${transportPrice} par trajet. Bus locaux pour les zones rurales (Kamikochi, Hakone). Pas besoin de voiture sauf Tohoku ou Shikoku hors sentiers battus.` },
+      season: { q: `Quelle est la meilleure période pour visiter ${destination} ?`, a: `Mars-avril (cherry blossom) et octobre-novembre (momiji) : les plus belles, mais +30-50% sur l'hébergement. Mai-juin et septembre : meilleur compromis météo-prix-foule. Décembre-février : froid mais tarifs plancher.` },
+      budget: { q: `Quel budget quotidien prévoir ${withPreposition('à', destination)} ?`, a: `Mode backpacker : 50-70€/jour (auberge 25-35€, konbini 10-15€, transports 5-10€). Mode confort avec ryokan : 120-180€/jour. Les prix affichés n'incluent pas la taxe de séjour (3-10%).` },
+      safety: { q: `${destination} est-il sûr pour voyager seul ?`, a: `Le Japon est l'un des pays les plus sûrs au monde. Criminalité très basse, transports ponctuels, objets perdus souvent retrouvés. Seuls pièges : les frais cachés (taxes, suppléments restaurants) et la barrière linguistique hors grandes villes.` },
+    },
+    thailand: {
+      transport: { q: `Comment se déplacer ${withPreposition('à', destination)} ?`, a: `À Bangkok : BTS/MRT pour les zones centrales (0.50-1.50€/trajet), Grab pour le reste (2-5€). En province : songthaews (0.30-1€), bus longue distance ou vols intérieurs low-cost (20-50€). Évite les tuk-tuk pour les longues distances — négocie avant de monter.` },
+      season: { q: `Quelle est la meilleure période pour visiter ${destination} ?`, a: `Novembre-février : saison sèche, idéale mais prix au plus haut. Juin-octobre : saison des pluies (averses courtes l'après-midi, tarifs -30-40%). Évite février-avril dans le Nord — qualité de l'air critique (brûlis).` },
+      budget: { q: `Quel budget quotidien prévoir ${withPreposition('à', destination)} ?`, a: `Budget serré : 25-40€/jour (guesthouse 8-15€, street food 2-5€/repas, transports 2-5€). Mode confort : 60-100€/jour. Bangkok coûte 20-30% plus cher que les provinces.` },
+      safety: { q: `${destination} est-il sûr pour voyager seul ?`, a: `Globalement oui. Arnaques classiques : taxis sans compteur, temples "fermés" (faux), prix gonflés dans les zones touristiques. Utilise Grab plutôt que de négocier dans la rue. Les îles du sud sont sûres mais attention aux courants marins.` },
+    },
+    vietnam: {
+      transport: { q: `Comment se déplacer ${withPreposition('à', destination)} ?`, a: `Grab pour les trajets urbains (1-3€). Bus couchette pour les longues distances (10-20€). Train Réunification Hanoi-HCMV : 30h, 50€ en couchette — le tronçon Huế-Đà Nẵng est le plus scenic. Vols intérieurs : 30-50€.` },
+      season: { q: `Quelle est la meilleure période pour visiter ${destination} ?`, a: `Nord (Hanoi, Sapa) : octobre-décembre (sec, frais). Centre (Huế, Hội An) : février-mai (avant la mousson). Sud (HCMV, delta) : décembre-avril (saison sèche). Évite le Tết (fin janvier/début février) — tout ferme.` },
+      budget: { q: `Quel budget quotidien prévoir ${withPreposition('à', destination)} ?`, a: `Le Vietnam reste très abordable : repas à 1-3€, café à 0.50€, nuit en auberge 5-8€. Budget réaliste backpacker : 20-35€/jour. Les excursions touristiques (baie d'Ha Long, grottes Phong Nha) ajoutent 30-80€ par activité.` },
+      safety: { q: `${destination} est-il sûr pour voyager seul ?`, a: `Oui, mais circulation chaotique — traverse la rue lentement et régulièrement. Pickpockets dans les zones touristiques de HCMV et Hanoi. Vérifie les avis récents pour les homestays isolés. L'eau du robinet n'est pas potable.` },
+    },
+  };
+  // Detect region from destination name
+  const regionKey = destLower.includes('japon') || destLower.includes('tokyo') || destLower.includes('kyoto') || destLower.includes('osaka') ? 'japan'
+    : destLower.includes('thai') || destLower.includes('bangkok') ? 'thailand'
+    : destLower.includes('vietnam') || destLower.includes('hanoi') || destLower.includes('saigon') ? 'vietnam'
+    : null;
+  const regionTemplates = regionKey ? FAQ_BY_REGION[regionKey] : null;
+
+  const faqTemplates = regionTemplates ? [
+    { q: `Combien coûte un vol pour ${destination} depuis la France ?`, a: `En moyenne, un vol aller-retour Paris → ${destination} coûte ${flightPrice}. Les prix varient selon la saison. Compare sur Google Flights ou Skyscanner — réserver 2-3 mois à l'avance donne les meilleurs tarifs.` },
+    regionTemplates.budget,
+    regionTemplates.season,
+    regionTemplates.transport,
+    { q: `Faut-il un visa pour ${destination} ?`, a: `Les conditions varient selon ta nationalité. La plupart des passeports européens bénéficient d'une exemption de visa pour les courts séjours (15-30 jours). Vérifie les options de visa sur le site officiel de l'ambassade.` },
+    regionTemplates.safety,
+  ] : [
+    { q: `Combien coûte un vol pour ${destination} depuis la France ?`, a: `En moyenne, un vol aller-retour Paris → ${destination} coûte ${flightPrice}. Compare sur Google Flights ou Skyscanner — réserver 2-3 mois à l'avance donne les meilleurs tarifs.` },
+    { q: `Quel budget quotidien prévoir ${withPreposition('à', destination)} ?`, a: `Compte environ ${mealPrice} par repas économique et ${hotelPrice} par nuit en hébergement budget. Le budget quotidien réaliste dépend fortement de la destination — consulte les chiffres de cet article pour une estimation basée sur des retours récents.` },
+    { q: `Quelle est la meilleure période pour visiter ${destination} ?`, a: `Les saisons varient fortement selon la région. Vérifie le climat spécifique de ta destination. Hors haute saison touristique, les prix baissent de 20-40%.` },
+    { q: `Comment se déplacer ${withPreposition('à', destination)} ?`, a: `Le transport local coûte environ ${transportPrice} par trajet. Compare les options sur 12go.asia pour les trajets inter-villes. Pour les courts trajets urbains, les apps de VTC locales offrent les meilleurs tarifs.` },
+    { q: `Faut-il un visa pour ${destination} ?`, a: `Les conditions varient selon ta nationalité. Vérifie les options sur le site officiel de l'ambassade.` },
+    { q: `${destination} est-il sûr pour voyager seul ?`, a: `Globalement oui. Garde tes objets de valeur en sécurité, utilise des applications de transport (Grab, Bolt) plutôt que de négocier dans la rue, et informe quelqu'un de ton itinéraire.` },
   ];
 
   // Select 4 relevant FAQs, prioritizing those that match H2 topics

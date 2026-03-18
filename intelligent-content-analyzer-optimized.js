@@ -639,6 +639,62 @@ class IntelligentContentAnalyzerOptimized {
   }
 
   /**
+   * Rank citations by editorial quality — prioritize emotion/insight over logistics
+   * Best practice from senior travel content writers:
+   * - The best quote makes the reader FEEL something
+   * - Logistics ("we stayed at Hotel X") = low value
+   * - Insight ("we couldn't do both without rushing") = high value
+   * - Regret/surprise/warning = highest value
+   */
+  rankCitationsByQuality(evidenceSnippets) {
+    if (!evidenceSnippets || evidenceSnippets.length === 0) return [];
+
+    const scored = evidenceSnippets
+      .filter(s => s.snippet && s.snippet.length > 15)
+      .map(s => {
+        const text = s.snippet.substring(0, 300);
+        let score = 0;
+
+        // HIGH VALUE: Emotional markers (regret, surprise, warning, realization)
+        const emotionPatterns = /\b(wish|regret|mistake|surprised|shocked|didn'?t expect|couldn'?t|wasn'?t worth|overrated|underrated|worst|best|amazing|terrible|disaster|scam|rip.?off|warning|avoid|don'?t|never again|game.?changer|life.?changing|jaw.?drop|blown away|disappointed|frustrat|overwhelm|exhaust|stress|panic|relief|grateful|lucky|unlucky|impossible|struggled|survived|barely|rushed|couldn'?t.*without|missed|skipped|sacrificed|wasted|saved|learned|realized|turned out|actually|honestly|truth is|real talk|nobody tells|what.*don'?t|je.*regrette|erreur|déçu|surprise|impossible|épuisé|arnaque|piège|évite|jamais|catastroph|galère|stress|pas pu|raté|sacrif|gaspill|économis|appris|réalis|en fait|honnêtement|la vérité|personne.*dit|on.*cru|sans courir)/gi;
+        const emotionMatches = (text.match(emotionPatterns) || []).length;
+        score += emotionMatches * 15;
+
+        // HIGH VALUE: Personal pronouns + verb (first person narrative)
+        const personalNarrative = /\b(I |We |I'm |We're |I've |We've |I was |We were |je |nous |j'ai |on a |j'étais|on était)/gi;
+        score += (text.match(personalNarrative) || []).length * 5;
+
+        // HIGH VALUE: Contains numbers/costs (concrete, credible)
+        const hasNumbers = /\d+\s*(€|EUR|\$|USD|%|jours?|days?|hours?|heures?|minutes?)/gi;
+        score += (text.match(hasNumbers) || []).length * 8;
+
+        // LOW VALUE: Pure logistics (itinerary, hotel names, transport routes)
+        const logisticsPatterns = /\b(->|→|itinerary|itinéraire|séjourner|stay at|hotel|hostel|airbnb|check.?in|check.?out|flight.*number|booking|réservation|confirmation|address|adresse|transit|layover|connection)\b/gi;
+        score -= (text.match(logisticsPatterns) || []).length * 10;
+
+        // LOW VALUE: Just listing cities/places without insight
+        const cityListPattern = /([A-Z][a-z]+\s*[-→>]\s*){2,}/g;
+        if (cityListPattern.test(text)) score -= 20;
+
+        // BONUS: Short and punchy (1-2 sentences, <150 chars = more impactful)
+        const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 5);
+        if (sentences.length <= 2 && text.length < 150) score += 10;
+        if (sentences.length > 4) score -= 5; // Too long = rambling
+
+        // BONUS: Contains contrast/tension
+        const contrastPatterns = /\b(but|mais|however|sauf|except|pourtant|en revanche|par contre|instead|contrairement|alors que|while)\b/gi;
+        score += (text.match(contrastPatterns) || []).length * 8;
+
+        return { text: text.substring(0, 200), score };
+      })
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 5)
+      .map(s => s.text);
+
+    return scored;
+  }
+
+  /**
    * Traduit les blockquotes en anglais dans un texte HTML
    */
   async translateBlockquotesInText(html) {
@@ -1637,12 +1693,11 @@ AFFILIATION POUR TÉMOIGNAGES (à intégrer dans le développement avec des H2 N
       return item.value || item.text || item.summary || item.question || '';
     }).filter(q => q && q.trim());
 
-    // Extraire les citations depuis evidence
+    // Extraire et SCORER les citations depuis evidence
+    // Best practice content writing: pick quotes with EMOTION, INSIGHT, TENSION
+    // Not logistics ("Tokyo -> Hakone -> Kyoto") but feelings ("On n'a pas pu faire les deux sans courir")
     const evidenceSnippets = story.evidence?.source_snippets || [];
-    const availableCitations = evidenceSnippets
-      .filter(s => s.snippet && s.snippet.length > 0)
-      .map(s => s.snippet.substring(0, 200))
-      .slice(0, 5); // Max 5 citations
+    const availableCitations = this.rankCitationsByQuality(evidenceSnippets);
 
     const anglesList = [...existingTitles, ...existingAngles].slice(0, 30);
     const anglesBlock = anglesList.length > 0 ? `
@@ -1804,7 +1859,7 @@ REGLE DEDUP : Chaque paragraphe apporte exactement 1 fait nouveau. Pas de repeti
    - Contenu en HTML libre (<h2>, <h3>, <p>, <ul><li>). Arc narratif (situation → surprise → impact → options → choix → plan d'action).
    - OBLIGATOIRE : Hook cinématique, 2-5 citations inline « ... », témoignage comme preuve, angles SERP, 3 CTA narratifs, affiliation dans le flux.
    - SECTIONS SERP OBLIGATOIRES (H2 dédiés) :
-     * H2 "Ce que les autres guides ne disent pas" — OBLIGATOIRE, angle différenciant.
+     * H2 angle différenciant — OBLIGATOIRE. Le titre DOIT nommer la destination ET un sujet précis. Pattern : «Le [sujet spécifique] de [destination] que les guides occultent». Exemples : «Le surcoût du JR Pass que les blogs ignorent», «La réalité des arnaques au tuk-tuk après 22h à Bangkok». INTERDIT : titres génériques «Ce que les guides ne disent pas» sans destination ni sujet. Le contenu DOIT contenir au minimum 2 faits spécifiques avec chiffres/prix/dates issus du témoignage. PATTERNS BANNIS (=filler générique, rejet automatique) : «les coûts cachés des transferts locaux», «les périodes creuses», «les arnaques récurrentes ciblant les touristes francophones». À la place : arnaques nommées avec lieu précis, coûts cachés en devise locale + EUR, fermetures saisonnières avec dates exactes.
      * H2 "Erreurs fréquentes à éviter" — OBLIGATOIRE, pièges concrets avec montants.
      * H2 "Limites et biais de cet article" — OBLIGATOIRE, transparence E-E-A-T, 1-2 paragraphes honnêtes sur les limites des sources.
    - OPTIONNEL (si le story le justifie) : peurs invisibles, réalité vs fantasme, leçons auteur.
@@ -2018,7 +2073,15 @@ Insère 1 à 2 encarts de crédibilité dans le CORPS de l'article (pas juste le
 - Remplace [N] par le nombre réel de témoignages dans les données. Remplace [X] par le nombre de risques/problèmes identifiés dans l'analyse.
 - Cet encart sert d'ancre visuelle pour le lecteur qui scanne : il voit immédiatement que l'article est basé sur des données réelles.
 
-8. BLOCKQUOTES PROPRES : Les citations Reddit dans les blockquotes doivent être des PHRASES COMPLÈTES en français, pas des fragments. ❌ INTERDIT : mettre des liens internes dans les blockquotes. ❌ INTERDIT : laisser des slugs ou URLs dans le texte des citations. ✅ Chaque blockquote contient UNE citation pertinente, traduite proprement en français.
+8. SÉLECTION DES CITATIONS (RÈGLE ÉDITORIALE SENIOR) :
+- La bonne citation = la phrase où le voyageur RESSENT quelque chose, pas celle où il décrit son itinéraire.
+- ✅ HAUTE VALEUR : regret, surprise, avertissement, réalisation, émotion, tension ("On n'a pas pu faire les deux sans courir", "J'aurais aimé savoir ça avant")
+- ❌ BASSE VALEUR : logistique pure (itinéraire, noms d'hôtels, dates, "nous séjournons à X"), descriptions factuelles sans insight
+- Les citations sont classées par qualité ci-dessous. UTILISE LA #1 en priorité (la plus émotionnelle).
+- Maximum 1 blockquote dans tout l'article. Les autres citations = guillemets français inline « ... ».
+- ❌ INTERDIT : mettre des liens internes dans les blockquotes.
+- ❌ INTERDIT : laisser des slugs ou URLs dans le texte des citations.
+- Chaque blockquote = 1-2 phrases MAX, en français. Pas de paragraphes entiers.
 
 10. ❌ ZÉRO RÉPÉTITION (RÈGLE ABSOLUE) : Chaque phrase de l'article doit être UNIQUE. Aucune phrase ni aucun paragraphe ne doit être répété, même reformulé.
 - ❌ INTERDIT de répéter la même phrase ou le même paragraphe, même avec des mots légèrement différents.
@@ -3370,31 +3433,89 @@ Génère le JSON avec titre H1 et title_tag SEO.`;
     const storyContext = story.story.context?.summary || '';
     const storyCentralEvent = story.story.central_event?.summary || '';
 
-    // Extract available citations
+    // Extract available citations — ranked by emotional/insight quality
     const evidenceSnippets = story.evidence?.source_snippets || [];
-    const availableCitations = evidenceSnippets
-      .filter(s => s.snippet && s.snippet.length > 0)
-      .map(s => s.snippet.substring(0, 200))
-      .slice(0, 3);
+    const availableCitations = this.rankCitationsByQuality(evidenceSnippets).slice(0, 3);
 
-    const systemPrompt = `Tu es un rédacteur voyage expert FlashVoyages. Génère UNIQUEMENT l'introduction de l'article (hook cinématique + paragraphe de contexte).
+    // Alternate between two intro styles
+    const introStyles = ['contrarian', 'stat_bomb'];
+    const selectedStyle = introStyles[Math.floor(Math.random() * introStyles.length)];
+    console.log(`   🎯 Intro style selected: ${selectedStyle.toUpperCase()}`);
 
-RÈGLES D'ÉCRITURE :
+    const styleInstructions = selectedStyle === 'contrarian'
+      ? `STYLE: CONTRARIAN — Ouvre en démolissant une croyance répandue.
+
+STRUCTURE OBLIGATOIRE (3 paragraphes <p>, rien d'autre) :
+
+P1 — LA FAUSSE VÉRITÉ (2 phrases max)
+- Phrase 1 : Énonce une croyance largement partagée sur ${mainDestFR || 'cette destination'}. Utilise "Tout le monde te dit que...", "Tu as lu partout que...", "Le consensus sur les blogs :...".
+- Phrase 2 : Démolition immédiate avec un fait concret du témoignage. Utilise "C'est un mensonge par omission.", "Sauf que les chiffres disent l'inverse.", "La réalité terrain est plus brutale."
+- Le contraste doit être MESURABLE : croyance chiffrée vs réalité chiffrée. Pas de contraste vague.
+
+P2 — LE TÉMOIN + LE VERDICT COLLECTIF (3-4 phrases)
+- Présente le protagoniste : prénom inventé + âge + profil concret (freelance, couple, backpacker solo, retraité). PAS "un voyageur".
+- Décris sa situation en 1 phrase factuelle (durée, lieu, contexte).
+- Puis le verdict collectif : "Sur {N} témoignages de voyageurs ayant fait le même arbitrage, {Y} arrivent au même constat : {conclusion en 1 phrase}."
+
+P3 — LA PUNCHLINE-PROBLÈME (1-2 phrases)
+- Reformule le vrai problème sous-jacent. Pas de solution ici, juste le diagnostic.
+- Pattern : "Parce que le vrai coût de ${mainDestFR || 'cette destination'}, ce n'est pas {élément évident}. C'est {élément caché}."
+
+ADRESSAGE "TU" (NON-NÉGOCIABLE) :
+- "Tu" = le LECTEUR qui planifie. TOUJOURS au futur ou présent de planification.
+- OK : "tu dépenseras", "tu risques de", "ça te coûtera", "si tu pars en juillet"
+- INTERDIT : "tu as dépensé", "tu es revenu", "tu as pris ce vol", "tu t'es fait arnaquer"
+- Le voyageur source = TOUJOURS 3e personne : "Lucas a dépensé...", "elle s'est fait arnaquer..."
+- Zéro mention de Reddit, forums, communauté. Dis "témoignages de voyageurs" ou "retours de terrain".`
+      : `STYLE: STAT BOMB + PROMISE STACK — Ouvre avec un chiffre dur, puis liste ce que l'article couvre.
+
+STRUCTURE OBLIGATOIRE (3 paragraphes <p>, rien d'autre) :
+
+P1 — LE CHIFFRE-CHOC (2-3 phrases)
+- Phrase 1 : Un fait chiffré brut et surprenant. Pattern : "Sur {N} voyageurs ayant fait {durée} à ${mainDestFR || 'cette destination'} avec un budget similaire, {X}% ont {constat mesurable}."
+- Phrase 2 : La comparaison immédiate qui éclaire le chiffre.
+- PAS de narration, PAS d'émotion. Juste les faits.
+
+P2 — LE TÉMOIN + LE RECOUPEMENT (3 phrases)
+- Présente le protagoniste : prénom inventé + âge + profil.
+- "On a croisé son expérience avec les retours de {N} voyageurs ayant fait le même arbitrage."
+- "Résultat : {conclusion factuelle en 1 phrase avec chiffre}."
+
+P3 — PROMISE STACK (3-4 phrases)
+- "Ce qu'on couvre ici :" suivi de 3 points CONCRETS entre tirets :
+  - Les vrais chiffres poste par poste (avec fourchettes)
+  - Les pièges de trésorerie / logistique que les guides ignorent
+  - Comment recalculer / décider / arbitrer avant de réserver
+- Chaque point doit être SPÉCIFIQUE à cette destination et ce sujet.
+
+ADRESSAGE "TU" (NON-NÉGOCIABLE) :
+- "Tu" = le LECTEUR qui planifie. TOUJOURS au futur ou présent de planification.
+- OK : "tu dépenseras", "tu risques de", "ça te coûtera", "si tu pars en juillet"
+- INTERDIT : "tu as dépensé", "tu es revenu", "tu as pris ce vol", "tu t'es fait arnaquer"
+- Le voyageur source = TOUJOURS 3e personne : "Lucas a dépensé...", "elle s'est fait arnaquer..."
+- Zéro mention de Reddit, forums, communauté. Dis "témoignages de voyageurs" ou "retours de terrain".`;
+
+    const selectedExample = selectedStyle === 'contrarian'
+      ? FEW_SHOT_EXAMPLES.hookContrarian
+      : FEW_SHOT_EXAMPLES.hookStatBomb;
+
+    const systemPrompt = `Tu es un rédacteur voyage expert FlashVoyages. Génère UNIQUEMENT l'introduction de l'article (hook + contexte + accroche).
+
+${styleInstructions}
+
+RÈGLES IMPÉRATIVES :
 - Tutoiement obligatoire, ton direct et éditorial.
-- Le hook (2-4 phrases) est une micro-scène sensorielle tirée du témoignage : lieu, bruit, tension, geste concret.
-- Après le hook, 1 paragraphe de contexte : qui est cette personne, quel est son projet, quel est l'enjeu.
-- Inclure 1 citation courte du témoignage entre guillemets français « ... ».
+- Invente un PRÉNOM RÉALISTE pour le voyageur (pas "un voyageur"). Ex: Lucas, Sophie, Thomas, Camille.
+- Ne mentionne JAMAIS Reddit, forums, communauté. Dis "témoignages de voyageurs" ou "retours de X voyageurs".
+- 1 citation courte du témoignage entre guillemets français « ... ».
 - Langue : 100% français. Zéro anglais.
-- Format : HTML pur (<p> uniquement, pas de <h2>). 2-3 paragraphes max.
+- Format : HTML pur (<p> uniquement, pas de <h2>). 3 paragraphes exactement.
 - Charge émotionnelle : ${pattern.emotional_load?.label || 'modérée'}.
-- Ton : ${pattern.story_type === 'warning' ? 'factuel et alerte' : pattern.story_type === 'question' ? 'clarifiant' : 'progressif et structuré'}.
+${editorialMode === 'news' ? 'FORMAT NEWS : Plus court et factuel, 2-3 paragraphes max.' : ''}
 
-✅ Le hook plonge dans une action ou sensation vécue (lieu, geste, tension). La source Reddit reste invisible dans le hook. Exemple : «L’écran du distributeur affiche 220 bahts de frais — tu calcules mentalement.»
-${editorialMode === 'news' ? 'FORMAT NEWS : Hook court et factuel (1-2 phrases max).' : ''}
-
-EXEMPLE DE QUALITE ATTENDUE (hook cinematique):
+EXEMPLE DE QUALITÉ ATTENDUE:
 \`\`\`html
-${FEW_SHOT_EXAMPLES.hook}
+${selectedExample}
 \`\`\``;
 
     const userPrompt = `TITRE: ${extracted.title || 'Témoignage Reddit'}
@@ -3472,12 +3593,9 @@ Génère UNIQUEMENT le HTML de l'introduction (2-3 paragraphes <p>). Pas de JSON
     const storyCommunityInsights = (story.story.community_insights || []).map(item => typeof item === 'string' ? item : (item.value || item.insight || '')).filter(Boolean);
     const storyOpenQuestions = (story.story.open_questions || []).map(item => typeof item === 'string' ? item : (item.question || '')).filter(Boolean);
 
-    // Evidence citations
+    // Evidence citations — ranked by emotional/insight quality
     const evidenceSnippets = story.evidence?.source_snippets || [];
-    const availableCitations = evidenceSnippets
-      .filter(s => s.snippet && s.snippet.length > 0)
-      .map(s => s.snippet.substring(0, 200))
-      .slice(0, 5);
+    const availableCitations = this.rankCitationsByQuality(evidenceSnippets);
 
     // Extracted signals
     const extractedSignals = extracted.post?.signals || {};
@@ -3510,6 +3628,22 @@ ${FEW_SHOT_EXAMPLES.decisionalH2}
 - Chaque paragraphe apporte un fait, chiffre ou choix éditorial. Pas de platitudes.
 - ✅ Phrases directes avec tutoiement : «Le visa te coûtera 35 €» au lieu de «Il est important de savoir que...».
 
+  ADRESSAGE "TU" :
+  - "Tu" = le LECTEUR qui planifie. JAMAIS le voyageur du témoignage.
+  - OK : "tu dépenseras", "si tu pars", "ça te coûtera"
+  - INTERDIT : "tu as dépensé", "tu es revenu de", "tu t'es fait arnaquer"
+  - Le voyageur source = 3e personne : "Lucas a dépensé...", "elle a constaté..."
+
+  COHÉRENCE TITRE/CONTENU :
+  - Si le titre contient un nombre (ex: "10 frais cachés", "5 pièges"), le contenu DOIT livrer EXACTEMENT ce nombre d'éléments, numérotés en H3 : <h3>1. Premier élément</h3>, <h3>2. Deuxième</h3>, etc.
+  - Si tu ne peux pas remplir le nombre promis, RÉDUIS le nombre dans le titre.
+
+  BLOCKQUOTES :
+  - Maximum 1 <blockquote> dans TOUT l'article. Toutes les autres citations = guillemets français « ... » inline.
+  - Le blockquote ne doit JAMAIS être le titre du post Reddit. Choisis la phrase la plus impactante d'un COMMENTAIRE.
+  - Le texte du blockquote doit être 100% en français. Zéro anglais.
+  - Chaque citation est précédée d'un contexte humain : "Un expatrié installé depuis 3 ans résume : « citation »"
+
 ${isNews ? `CADRE NEWS :
 - Bloc "Ce que ça change concrètement" (3-7 bullets actionnables).
 - Si argent impliqué : montants en euros.
@@ -3520,7 +3654,7 @@ ${isNews ? `CADRE NEWS :
 - Tableau comparatif si 2+ options. Checklist si guide pratique.
 
 SECTIONS SERP OBLIGATOIRES (non négociable — inclure ces 3 H2 parmi les sections) :
-1. **Angle différenciant** : Un H2 qui aborde ce que les autres guides ne disent PAS sur cette destination/sujet. Commence par <!-- FV:DIFF_ANGLE -->. Exemple : «Ce que les blogs voyage ne te disent pas sur [destination]» ou «L'angle mort des guides classiques sur [sujet]».
+1. **Angle différenciant** : Un H2 dont le titre NOMME la destination ET un sujet précis. Commence par <!-- FV:DIFF_ANGLE -->. Pattern obligatoire : «Le [sujet spécifique] de [destination] que les guides occultent». Exemples : «Le surcoût du JR Pass que les blogs ignorent», «La réalité des arnaques au tuk-tuk après 22h à Bangkok», «Les fermetures de temples à Bali entre janvier et mars». INTERDIT : titre générique sans destination ni sujet concret. Le contenu sous ce H2 DOIT contenir au minimum 2 faits spécifiques avec chiffres/prix/dates du témoignage. PATTERNS BANNIS (rejet automatique) : «les coûts cachés des transferts locaux», «les périodes creuses», «les arnaques récurrentes ciblant les touristes francophones». Exige plutôt : arnaques nommées avec lieu, coûts en devise locale + EUR, dates de fermeture précises.
 2. **Erreurs courantes** : Un H2 sur les pièges et erreurs fréquentes des voyageurs. Commence par <!-- FV:COMMON_MISTAKES -->. Exemple : «Les 3 erreurs qui plombent ton budget à [destination]» ou «Pourquoi 80 % des voyageurs se trompent sur [sujet]».
 3. **Limites et biais** : <h2>Limites et biais de cet article</h2> — 1-2 paragraphes honnêtes sur les limites du témoignage (un seul point de vue, période spécifique, etc.).`}
 
@@ -3635,8 +3769,15 @@ ${isNews ? `MODE NEWS :
 - Recommandations : <h2>Nos recommandations : Par où commencer ?</h2> + 3 options avec CTA narratifs.
 - Ce qu'il faut retenir : 2 paragraphes de verdict.
 - FAQ : 4-6 questions/réponses au format <details><summary>Question ?</summary><p>Réponse.</p></details>.
-  Questions basées sur les vraies interrogations du témoignage. Réponses concises (2-3 phrases).
-  IMPORTANT: Chaque réponse FAQ doit être une phrase COMPLETE et autonome. Ne copie JAMAIS de fragments du corps. Les réponses doivent donner des chiffres concrets.
+    RÈGLES FAQ NON-NÉGOCIABLES :
+    a) Chaque réponse utilise les CHIFFRES et LIEUX de cet article. Pas de fourchettes génériques.
+    b) DESTINATION-LOCK : Tous les moyens de transport mentionnés doivent EXISTER dans cette destination.
+       Pas de "scooter" au Japon urbain, pas de "tuk-tuk" en Corée, pas de "grab" au Japon.
+    c) Les saisons mentionnées doivent correspondre au CLIMAT RÉEL de la destination.
+       Exemple : la saison des pluies au Japon = juin-juillet (tsuyu), PAS "mai-septembre".
+    d) Les prix doivent refléter la RÉALITÉ de la destination. Un hostel au Japon = 25-35€, PAS "15-30€".
+    e) Chaque réponse = phrase COMPLETE et autonome. Ne copie JAMAIS de fragments du corps.
+    f) La FAQ COMPLÈTE l'article, elle ne le résume pas.
 - Signature : CTA soft de fin.
 - INTERDIT : ne jamais inclure de titres d articles, slugs ou URLs dans le texte. Les liens vont dans opportunites_liens_internes uniquement.`}
 
@@ -4376,7 +4517,7 @@ CONTRAINTES DE SORTIE :
 - ✅ Convertis les montants USD en euros (taux ~0.92). Exemple : «$500» → «~460 €».
 - ✅ Conserve les attributs HTML, les sections et les paragraphes existants.
 - ✅ Utilise uniquement les lieux et prix déjà dans l'article original.
-- ✅ Garde les H2 structurels tels quels : «Ce qu'il faut retenir», «Ce que les autres guides ne disent pas», «Les erreurs fréquentes», «FAQ», «Nos recommandations».
+- ✅ Garde les H2 structurels tels quels : «Ce qu'il faut retenir», «Les erreurs fréquentes», «FAQ», «Nos recommandations». Si un H2 contient «guides ne disent pas» ou «guides classiques» de manière générique, reformule-le pour nommer la destination ET un sujet précis (pattern : «Le [sujet] de [destination] que les guides occultent»).
 
 FORMAT DE RÉPONSE (CRITIQUE):
 - Retourne L'INTÉGRALITÉ du contenu HTML corrigé — du premier au dernier caractère.

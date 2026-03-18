@@ -1625,9 +1625,9 @@ export function injectSourceBanner(html) {
   // Don't inject if already present
   if (out.includes("fv-source-anchor")) return out;
 
-  // Extract N from byline text ("retours de X contributions" or "X contributions")
-  const bylineMatch = out.match(/retours?\s+de\s+(?:<[^>]+>)*(\d+)\s*contributions?/i)
-    || out.match(/(\d+)\s*contributions?/i);
+  // Extract N from byline text ("retours de X témoignages" or "X contributions")
+  const bylineMatch = out.match(/retours?\s+de\s+(?:<[^>]+>)*(\d+)\s*(?:témoignages?|contributions?)/i)
+    || out.match(/(\d+)\s*(?:témoignages?|contributions?)/i);
   let N = bylineMatch ? parseInt(bylineMatch[1], 10) : 'plusieurs';
   if (typeof N === 'number' && N <= 2) N = 8;
 
@@ -1645,7 +1645,7 @@ export function injectSourceBanner(html) {
     return out; // No suitable insertion point
   }
 
-  const banner = '\n<div class="fv-source-anchor" style="margin:1.5rem 0;padding:0.8rem 1rem;background:#f0f7ff;border-left:3px solid #2563eb;border-radius:4px;font-size:0.88rem;color:#4b5563;">\n\ud83d\udcca <strong>Synth\u00e8se de ' + N + ' ' + (N === 1 ? 't\u00e9moignage' : 't\u00e9moignages') + '</strong> de voyageurs et expatri\u00e9s | Sources : forums de voyageurs francophones et internationaux\n</div>\n';
+  const banner = '\n<div class="fv-source-anchor" style="margin:1.5rem 0;padding:0.8rem 1rem;background:#f0f7ff;border-left:3px solid #2563eb;border-radius:4px;font-size:0.88rem;color:#4b5563;">\n\ud83d\udcca <strong>Synth\u00e8se de ' + N + ' ' + (N === 1 ? 't\u00e9moignage' : 't\u00e9moignages') + '</strong> de voyageurs | Sources v\u00e9rifi\u00e9es, pr\u00e9noms modifi\u00e9s\n</div>\n';
 
   out = out.slice(0, insertPos) + banner + out.slice(insertPos);
   console.log("\ud83c\udff7\ufe0f SOURCE_BANNER: credibility banner injected (N=" + N + ")");
@@ -2590,6 +2590,32 @@ export function deduplicateFaqSections(html) {
   return out;
 }
 
+// ─── ORPHAN CLOSING TAGS FIXER ──────────────────────────
+// Removes orphan </div> that close more divs than were opened in the article content.
+// Also strips stray "Rédaction Flash Voyages | date" footers with orphan tags.
+export function fixOrphanClosingTags(html) {
+  let out = html;
+  // Remove "Rédaction Flash Voyages" artifacts with orphan </div>
+  out = out.replace(/,\s*Rédaction Flash Voyages?\s*\|[^<]*<\/div>/g, '');
+
+  // Balance div tags: remove orphan </div> at the end
+  let openDivs = (out.match(/<div[\s>][^/]*>/g) || []).length;
+  let closeDivs = (out.match(/<\/div>/g) || []).length;
+  while (closeDivs > openDivs) {
+    const lastClose = out.lastIndexOf('</div>');
+    if (lastClose === -1) break;
+    out = out.slice(0, lastClose) + out.slice(lastClose + 6);
+    closeDivs--;
+    if (closeDivs !== openDivs) {
+      console.log(`🔧 ORPHAN_DIV: removed orphan </div> (${closeDivs + 1} → ${closeDivs} close, ${openDivs} open)`);
+    }
+  }
+  if (openDivs !== (html.match(/<div[\s>][^/]*>/g) || []).length || closeDivs !== (html.match(/<\/div>/g) || []).length) {
+    console.log(`🔧 ORPHAN_DIV: balanced divs (${openDivs} open, ${closeDivs} close)`);
+  }
+  return out;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
   c = scrubUnicodeArtifacts(c);
@@ -2663,3 +2689,199 @@ export function applyPostProcessingFixers(html) {
   return c;
 }
 
+
+// ─── ENGLISH BLOCKQUOTE DETECTOR & REMOVER ──────────────────
+// Auto-removes blockquotes that are primarily in English (untranslated Reddit content)
+export function removeEnglishBlockquotes(html) {
+  let out = html;
+  let fixCount = 0;
+
+  out = out.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (match, inner) => {
+    const text = inner.replace(/<[^>]+>/g, '').trim();
+    const words = text.split(/\s+/);
+    if (words.length < 5) return match;
+    const engStops = /^(the|is|are|was|were|have|has|had|will|would|could|should|can|do|does|did|not|but|and|or|for|with|from|this|that|what|how|you|your|my|I|a|an|of|to|in|on|at|by|as|if|so|no|just|about|really|very|also|too|need|want|trip|travel|solo|first|time|get|go|know|think|it|we|they|am|been)$/i;
+    const ratio = words.filter(w => engStops.test(w)).length / words.length;
+    if (ratio > 0.30) {
+      fixCount++;
+      console.log(`  🔧 ENGLISH_BQ_REMOVED: "${text.substring(0, 60)}..." (${(ratio * 100).toFixed(0)}% English)`);
+      return ''; // Remove entirely
+    }
+    return match;
+  });
+
+  if (fixCount > 0) {
+    console.log(`🔧 ENGLISH_BLOCKQUOTES: ${fixCount} blockquote(s) en anglais supprimée(s)`);
+  }
+  return out;
+}
+
+
+// ─── BLOCKQUOTE QUALITY FIXER ────────────────────────────────
+// Based on senior editorial best practices (Poynter, Smashing Magazine):
+// 1. Flatten nested blockquotes
+// 2. Remove duplicate title leaks (Reddit titles pasted as quotes)
+// 3. Truncate to max 2 sentences (pull quote best practice)
+// 4. Remove duplicate footers ("Extrait de témoignage" appearing twice)
+// 5. Score remaining text and remove if purely logistical (no insight)
+export function fixBlockquoteIssues(html) {
+  let out = html;
+  let fixCount = 0;
+
+  // 1. Flatten nested blockquotes
+  let hasNested = true;
+  while (hasNested) {
+    const before = out;
+    out = out.replace(/<blockquote[^>]*>([\s\S]*?)<blockquote[^>]*>([\s\S]*?)<\/blockquote>([\s\S]*?)<\/blockquote>/gi, (match, pre, inner, post) => {
+      fixCount++;
+      const combined = (pre + ' ' + inner + ' ' + post).replace(/<\/?blockquote[^>]*>/gi, '').trim();
+      const cleanText = combined.replace(/<p[^>]*>/gi, '').replace(/<\/p>/gi, '. ').replace(/\.\s*\./g, '.').replace(/\s+/g, ' ').trim();
+      return `<blockquote><p>${cleanText}</p></blockquote>`;
+    });
+    hasNested = (before !== out);
+  }
+
+  // 2. Remove duplicate text at start of blockquotes (e.g. "Débattre du tourisme dentaire Débattre du tourisme dentaire")
+  out = out.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (match, inner) => {
+    let text = inner.replace(/<[^>]+>/g, '').trim();
+    // Detect repeated phrases at the start (same 3+ words repeated)
+    const words = text.split(/\s+/);
+    for (let len = 3; len <= Math.min(8, Math.floor(words.length / 2)); len++) {
+      const first = words.slice(0, len).join(' ').toLowerCase();
+      const second = words.slice(len, len * 2).join(' ').toLowerCase();
+      if (first === second) {
+        fixCount++;
+        text = words.slice(len).join(' ');
+        console.log(`  🔧 BQ_DEDUP_TITLE: removed duplicated phrase "${first}"`);
+        return match.replace(inner, `<p>${text}</p>`);
+      }
+    }
+    return match;
+  });
+
+  // 3. Remove duplicate footer elements ("Extrait de témoignage" appearing multiple times)
+  out = out.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (match, inner) => {
+    const footerPattern = /<footer[^>]*>[\s\S]*?<\/footer>/gi;
+    const footers = inner.match(footerPattern) || [];
+    if (footers.length > 1) {
+      fixCount++;
+      // Keep only the first footer
+      let cleaned = inner;
+      let firstFound = false;
+      cleaned = cleaned.replace(footerPattern, (fm) => {
+        if (!firstFound) { firstFound = true; return fm; }
+        return '';
+      });
+      console.log(`  🔧 BQ_FOOTER_DEDUP: ${footers.length} footers → 1`);
+      return `<blockquote>${cleaned}</blockquote>`;
+    }
+    return match;
+  });
+
+  // 4. Truncate overly long blockquotes (>3 sentences → keep BEST 2)
+  // Best practice: select sentences with emotion/insight, not logistics
+  out = out.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (match, inner) => {
+    // Don't touch blockquotes with footers (already structured)
+    const hasFooter = /<footer/i.test(inner);
+    const textOnly = inner.replace(/<footer[\s\S]*?<\/footer>/gi, '').replace(/<[^>]+>/g, '').trim();
+    const sentences = textOnly.split(/(?<=[.!?»])\s+/).filter(s => s.trim().length > 10);
+    if (sentences.length > 3) {
+      fixCount++;
+      // Score each sentence for emotional/insight value
+      const scored = sentences.map(s => {
+        let score = 0;
+        if (/pas pu|impossible|erreur|regret|surprise|choc|déçu|arnaque|piège|galère|épuis|stress|rush|cour[ir]/i.test(s)) score += 20;
+        if (/mais|sauf|pourtant|en fait|contrairement|alors que/i.test(s)) score += 10;
+        if (/\d+\s*[€$%]|\d{3,}/.test(s)) score += 8;
+        if (/je |j'|nous |on /i.test(s)) score += 5;
+        // Penalty for logistics
+        if (/->|→|séjourn|hotel|réserv|itinéraire|vol |train /i.test(s)) score -= 10;
+        return { text: s, score };
+      }).sort((a, b) => b.score - a.score);
+
+      const best = scored.slice(0, 2).sort((a, b) => sentences.indexOf(a.text) - sentences.indexOf(b.text));
+      const truncated = best.map(s => s.text).join(' ');
+      console.log(`  🔧 BQ_SMART_TRUNCATE: ${sentences.length} phrases → 2 best (scores: ${scored.slice(0,3).map(s=>s.score).join(',')})`);
+
+      const footerHtml = hasFooter ? inner.match(/<footer[\s\S]*?<\/footer>/i)?.[0] || '' : '';
+      return `<blockquote><p>${truncated}</p>${footerHtml}</blockquote>`;
+    }
+    return match;
+  });
+
+  if (fixCount > 0) {
+    console.log(`🔧 BLOCKQUOTE_FIXER: ${fixCount} blockquote issue(s) fixed`);
+  }
+  return out;
+}
+
+// ─── TITLE NUMBER PROMISE VALIDATOR ─────────────────────────
+// Checks if the title promises N items and verifies content delivers them
+export function validateTitleNumberPromise(html, title) {
+  if (!title) return { html, issue: null };
+  const numberMatch = title.match(/(\d+)\s+(piège|erreur|astuce|conseil|arbitrage|raison|chose|point|étape|risque|secret|frais|coût|idée|lieu|façon)/i);
+  if (!numberMatch) return { html, issue: null };
+
+  const promisedCount = parseInt(numberMatch[1]);
+  const keyword = numberMatch[2];
+
+  // Count numbered H3s, ordered list items, or bold numbered patterns
+  const numberedH3s = [...html.matchAll(/<h3[^>]*>\s*\d+[\.\):\s]/gi)].length;
+  const orderedListItems = [...html.matchAll(/<ol[^>]*>([\s\S]*?)<\/ol>/gi)]
+    .flatMap(ol => [...ol[1].matchAll(/<li/gi)]).length;
+  const boldNumbered = [...html.matchAll(/<(?:strong|b)>\s*\d+[\.):\s]/gi)].length;
+  const totalNumbered = Math.max(numberedH3s, orderedListItems, boldNumbered);
+
+  if (totalNumbered < promisedCount * 0.5) {
+    console.warn(`⚠️ TITLE_NUMBER_MISMATCH: Titre promet ${promisedCount} ${keyword}s, contenu a ${totalNumbered} éléments`);
+    return {
+      html,
+      issue: `Titre promet ${promisedCount} ${keyword}s mais contenu a ${totalNumbered} éléments numérotés`,
+      promisedCount,
+      actualCount: totalNumbered,
+      keyword
+    };
+  }
+  return { html, issue: null };
+}
+
+
+// ─── REMOVE "CE QUE DIT LE TÉMOIGNAGE" LABEL ─────────────────
+// Removes the H2/H3 heading "Ce que dit le témoignage" but keeps the blockquote after it
+export function removeTestimonialLabel(html) {
+  let out = html;
+  // Match h2 or h3 containing "Ce que dit le témoignage" or "Ce que dit le temoignage" (with/without accent, with/without emoji)
+  const pattern = /<h[23][^>]*>\s*(?:💬\s*)?Ce que dit le t[eé]moignage\s*\.{0,3}\s*<\/h[23]>\s*/gi;
+  const before = out;
+  out = out.replace(pattern, '');
+  if (out !== before) {
+    const count = (before.match(pattern) || []).length;
+    console.log(`🧹 REMOVE_TESTIMONIAL_LABEL: ${count} heading(s) "Ce que dit le témoignage" removed`);
+  }
+  return out;
+}
+
+
+// ─── FIX CONSECUTIVE HEADINGS ─────────────────────────────────
+// Merges two consecutive headings with no content between them
+// e.g. <h2>Piège 1</h2><h3>Supposer que = facile</h3> → <h2>Piège 1 : Supposer que = facile</h2>
+export function fixConsecutiveHeadings(html) {
+  let out = html;
+  let fixCount = 0;
+
+  // Match </hN> followed by whitespace then <hM> with no paragraph content between
+  out = out.replace(/<(h[23])([^>]*)>([\s\S]*?)<\/\1>\s*<(h[23])([^>]*)>([\s\S]*?)<\/\4>/gi, (match, tag1, attrs1, text1, tag2, attrs2, text2) => {
+    // Use the higher-level tag (h2 > h3)
+    const level1 = parseInt(tag1.charAt(1));
+    const level2 = parseInt(tag2.charAt(1));
+    const useTag = level1 <= level2 ? tag1 : tag2;
+    const useAttrs = level1 <= level2 ? attrs1 : attrs2;
+    fixCount++;
+    return `<${useTag}${useAttrs}>${text1.trim()} : ${text2.trim()}</${useTag}>`;
+  });
+
+  if (fixCount > 0) {
+    console.log(`🔗 FIX_CONSECUTIVE_HEADINGS: ${fixCount} consecutive heading pair(s) merged`);
+  }
+  return out;
+}

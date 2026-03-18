@@ -7831,14 +7831,18 @@ class ArticleFinalizer {
       sourcePreference: 'pexels'
     });
 
-    // Image 2 ("mid-article") — après le 3e/4e H2, source Pexels (meilleure pertinence que Flickr)
+    // Image 2 ("mid-article") — après le 3e/4e H2
+    // FIX: Use section-specific query with Flickr fallback for better contextual relevance
     const midH2Index = Math.min(Math.floor(h2Texts.length / 2), h2Texts.length - 1);
     if (midH2Index >= 0 && h2Texts[midH2Index]) {
       const sectionTheme = this._extractSectionTheme(h2Texts[midH2Index], specificDest);
+      // Extract specific keywords from the section content for better matching
+      const sectionContent = html.split(/<h2[^>]*>/gi)[midH2Index + 1] || '';
+      const contextKeywords = this._extractContextKeywords(sectionContent, specificDest);
       queries.push({
-        query: sectionTheme,
+        query: contextKeywords || sectionTheme,
         position: 'mid',
-        sourcePreference: 'pexels' // Pexels a de meilleure pertinence que Flickr pour le mid
+        sourcePreference: 'flickr' // Flickr has more specific/contextual images (temples, markets, trains)
       });
     }
 
@@ -7848,10 +7852,12 @@ class ArticleFinalizer {
         ? Math.max(0, h2Texts.length - 3)
         : Math.max(0, h2Texts.length - 2);
       const endTheme = this._extractSectionTheme(h2Texts[endH2Index] || '', specificDest);
+      const endSection = html.split(/<h2[^>]*>/gi)[endH2Index + 1] || '';
+      const endKeywords = this._extractContextKeywords(endSection, specificDest);
       queries.push({
-        query: endTheme || `${specificDest || 'asia'} people travel`,
+        query: endKeywords || endTheme || `${specificDest || 'asia'} people travel`,
         position: 'end',
-        sourcePreference: 'pexels'
+        sourcePreference: 'flickr' // Flickr for contextual relevance
       });
     }
 
@@ -7906,6 +7912,47 @@ class ArticleFinalizer {
       .slice(0, 2)
       .join(' ');
     return destination ? `${destination} ${words}` : words || 'asia travel';
+  }
+
+  /**
+   * Extract specific visual keywords from section content for image search
+   * E.g. "Le JR Pass ne couvre pas le Romancecar Tokyo-Hakone" → "Japan Shinkansen train station"
+   * Better than generic "Japan budget" from the H2 title alone
+   */
+  _extractContextKeywords(sectionHtml, destination) {
+    if (!sectionHtml) return null;
+    const text = sectionHtml.replace(/<[^>]+>/g, ' ').toLowerCase();
+
+    // Look for specific visual subjects in the section content
+    const visualSubjects = [
+      { pattern: /shinkansen|jr pass|train|gare|station/i, query: 'bullet train Shinkansen station' },
+      { pattern: /ryokan|onsen|bain/i, query: 'traditional ryokan onsen' },
+      { pattern: /temple|sanctuaire|shrine|torii/i, query: 'temple torii gate' },
+      { pattern: /konbini|7.eleven|lawson|combini/i, query: 'convenience store konbini' },
+      { pattern: /ramen|sushi|izakaya|kaiseki|tempura|street food|marché/i, query: 'local food restaurant' },
+      { pattern: /backpack|sac|valise|bagage|ta-q-bin/i, query: 'traveler backpack luggage' },
+      { pattern: /plage|beach|île|island|snorkel/i, query: 'tropical beach island' },
+      { pattern: /tuk.?tuk|songthaew|scooter|moto/i, query: 'tuk tuk street' },
+      { pattern: /marché|market|bazar|shopping/i, query: 'local market vendor' },
+      { pattern: /hostel|dortoir|auberge|guesthouse/i, query: 'hostel bunk bed' },
+      { pattern: /taxi|uber|grab|transfer/i, query: 'taxi city street' },
+      { pattern: /aéroport|airport|vol|avion/i, query: 'airport terminal departure' },
+      { pattern: /montagne|trek|randonnée|hiking|sommet/i, query: 'mountain hiking trail' },
+      { pattern: /rice|rizière|campagne|rural/i, query: 'rice field countryside' },
+      { pattern: /coucher.*soleil|sunset|lever/i, query: 'sunset scenic view' },
+      { pattern: /pourboire|tip|restaurant|serveur/i, query: 'restaurant dining local' },
+      { pattern: /visa|passeport|immigration|border/i, query: 'passport visa stamp' },
+      { pattern: /usj|universal|disney|parc/i, query: 'theme park entrance' },
+      { pattern: /teamlab|musée|museum|art/i, query: 'art museum exhibition' },
+    ];
+
+    for (const { pattern, query } of visualSubjects) {
+      if (pattern.test(text)) {
+        return destination ? `${destination} ${query}` : query;
+      }
+    }
+
+    return null; // Fallback to _extractSectionTheme
   }
 
   /**
@@ -8001,20 +8048,44 @@ class ArticleFinalizer {
     // Recalculer les H2 sur le HTML actuel
     const currentH2s = [...html.matchAll(/<h2[^>]*>.*?<\/h2>/gi)];
 
-    // Sections interdites
-    const forbiddenSections = /ce qu.il faut retenir|à lire également|articles connexes|nos recommandations/i;
+    // Sections interdites — never place images near conclusions, recommendations, FAQs
+    const forbiddenSections = /ce qu.il faut retenir|à lire également|articles connexes|nos recommandations|questions? fréquentes?|faq/i;
+
+    // ── SMART PLACEMENT RULES (Senior Content Writer Best Practices) ──
+    // 1. NEVER in the intro (before 1st H2) — text hooks first, image rewards after
+    // 2. After a "proof" section (data, testimony, comparison) — not before
+    // 3. NEVER right before a table or CTA — dilutes attention
+    // 4. After a "scene change" (new location, new theme)
+    // 5. Last image = desire trigger before conclusion
 
     switch (position) {
       case 'hook': {
-        // Après le 1er H2 + son premier paragraphe
-        if (currentH2s.length < 1) return -1;
-        const afterFirstH2 = currentH2s[0].index + currentH2s[0][0].length;
-        // Trouver la fin du premier <p> après le H2
-        const firstPAfter = html.substring(afterFirstH2).match(/<\/p>/i);
-        if (firstPAfter) {
-          return afterFirstH2 + firstPAfter.index + firstPAfter[0].length;
+        // Place after the FIRST section that contains proof/data (not just the 2nd H2)
+        // Look for the first section with numbers (prices, percentages, dates)
+        if (currentH2s.length < 2) return currentH2s.length === 1 ? currentH2s[0].index + currentH2s[0][0].length : -1;
+
+        // Find first section with concrete data (numbers, prices)
+        let bestIdx = 1; // default: after 2nd H2
+        for (let i = 1; i < Math.min(currentH2s.length, 4); i++) {
+          const sectionStart = currentH2s[i].index + currentH2s[i][0].length;
+          const sectionEnd = i + 1 < currentH2s.length ? currentH2s[i + 1].index : sectionStart + 2000;
+          const sectionText = html.substring(sectionStart, sectionEnd);
+          // Section with data = good place for image after it
+          if (/\d+\s*[€$%]|\d{3,}/.test(sectionText)) {
+            bestIdx = i;
+            break;
+          }
         }
-        return afterFirstH2;
+
+        const afterTargetH2 = currentH2s[bestIdx].index + currentH2s[bestIdx][0].length;
+        // Place AFTER the last </p> of this section (not after first — let the proof build up)
+        const nextH2 = bestIdx + 1 < currentH2s.length ? currentH2s[bestIdx + 1].index : html.length;
+        const sectionHtml = html.substring(afterTargetH2, nextH2);
+        const lastP = sectionHtml.lastIndexOf('</p>');
+        if (lastP !== -1) {
+          return afterTargetH2 + lastP + 4; // +4 for '</p>'
+        }
+        return afterTargetH2;
       }
 
       case 'mid': {
@@ -11442,7 +11513,7 @@ class ArticleFinalizer {
     const wrapperStyle = 'overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.5em 0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1)';
 
     // Style pour la table elle-même
-    const tableStyle = 'width:100%;border-collapse:collapse;font-size:14px;min-width:600px';
+    const tableStyle = 'max-width:100%;border-collapse:collapse;font-size:14px;overflow-x:auto;display:block';
 
     // Style pour les cellules d'en-tête
     const thStyle = 'background:#1a365d;color:#fff;padding:12px 10px;text-align:left;font-weight:600;font-size:13px;white-space:nowrap';

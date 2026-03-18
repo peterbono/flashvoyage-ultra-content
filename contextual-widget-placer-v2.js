@@ -1084,7 +1084,14 @@ if (smartIndex != null) {
    */
   getWidgetScript(slot, widgetPlan, pipelineContext = null) {
     console.log(`🔍 Récupération du shortcode pour ${slot}...`);
-    
+
+    // Disabled widget slots — return null immediately
+    const DISABLED_WIDGET_SLOTS = ['activities', 'tours'];
+    if (DISABLED_WIDGET_SLOTS.includes(slot)) {
+      console.log(`⛔ Widget slot "${slot}" is disabled — skipping`);
+      return null;
+    }
+
     // Vérifier que le slot existe dans le registry
     const widgetCategory = REAL_TRAVELPAYOUTS_WIDGETS[slot];
     if (!widgetCategory) {
@@ -1119,8 +1126,16 @@ if (smartIndex != null) {
       console.log(`⚠️ Pas de mapping shortcode pour ${slot}`);
       return null;
     }
-    
-    console.log(`✅ Shortcode ${shortcodeType} généré pour ${slot}`);
+
+    // FIX: Pass destination to ALL widget types (not just flights)
+    // Without destination, widgets default to Amsterdam or other random city
+    const dest = widgetPlan?.geo_defaults?.destination || pipelineContext?.geo_defaults?.destination || '';
+    if (dest) {
+      console.log(`✅ Shortcode ${shortcodeType} généré pour ${slot} (destination=${dest})`);
+      return `[fv_widget type="${shortcodeType}" destination="${dest}"]`;
+    }
+
+    console.log(`⚠️ Shortcode ${shortcodeType} généré SANS destination pour ${slot} — risque de widget incohérent`);
     return `[fv_widget type="${shortcodeType}"]`;
   }
 
@@ -1136,7 +1151,6 @@ if (smartIndex != null) {
       insurance: 'insurance',
       flights: 'flights',
       transfers: 'transfers',
-      tours: 'tours',
       car_rental: 'car_rental',
       bikes: 'bikes',
       flight_compensation: 'flight_compensation',

@@ -323,6 +323,175 @@ function detectDeterministicIssues(ctx) {
   // Fact-checking: numbers should be sourced
   bonuses.integrity += 2; // base trust for generated content
 
+  // === CHECK 1: BLOCKQUOTE LANGUAGE — detect English blockquotes ===
+  const blockquotes = [...html.matchAll(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi)];
+  for (const bq of blockquotes) {
+    const bqText = bq[1].replace(/<[^>]+>/g, '').trim();
+    if (bqText.length < 15) continue;
+    const bqWords = bqText.split(/\s+/);
+    const englishStopwords = /^(the|is|are|was|were|have|has|had|will|would|could|should|can|do|does|did|not|but|and|or|for|with|from|this|that|what|how|you|your|my|I|a|an|of|to|in|on|at|by|as|if|so|no|just|about|really|very|also|too|need|want|trip|travel|solo|first|time|get|go|know|think|it|we|they)$/i;
+    const engCount = bqWords.filter(w => englishStopwords.test(w)).length;
+    const engRatio = engCount / bqWords.length;
+    if (engRatio > 0.25 && bqWords.length >= 5) {
+      issues.integrity.push({
+        severity: 'critical',
+        category: 'blockquote-anglais',
+        description: `Blockquote en anglais non traduit: "${bqText.substring(0, 80)}..."`,
+        fix_suggestion: 'Traduire la citation en français ou la supprimer',
+        location: 'global'
+      });
+    }
+  }
+
+  // === CHECK 2: FAQ DESTINATION COHERENCE — detect wrong transport/seasons ===
+  const destination = (ctx.destination || ctx._smart_destination || '').toLowerCase();
+  const faqEntries = [...html.matchAll(/<details[^>]*>\s*<summary[^>]*>(.*?)<\/summary>\s*([\s\S]*?)<\/details>/gi)];
+  const destinationTransportMap = {
+    'japon': { invalid: /\bscooter|tuk.?tuk|grab|gojek|angkot|songthaew/i, expected: 'shinkansen, métro, JR Pass, bus locaux' },
+    'tokyo': { invalid: /\bscooter|tuk.?tuk|grab|gojek|angkot/i, expected: 'shinkansen, métro, JR Pass' },
+    'thailande': { invalid: /\bshinkansen|jr.?pass|tgv|uber\b/i, expected: 'BTS, MRT, Grab, songthaew' },
+    'bangkok': { invalid: /\bshinkansen|jr.?pass|tgv\b/i, expected: 'BTS, MRT, Grab, tuk-tuk' },
+    'vietnam': { invalid: /\bshinkansen|jr.?pass|bts|mrt\b/i, expected: 'Grab, bus couchette, train Réunification' },
+    'indonesie': { invalid: /\bshinkansen|jr.?pass|tgv|bts|mrt\b/i, expected: 'Gojek, Grab, ojek, bemo' },
+    'bali': { invalid: /\bshinkansen|jr.?pass|tgv|bts|mrt\b/i, expected: 'scooter, Grab, voiture avec chauffeur' },
+  };
+  const destinationSeasonMap = {
+    'japon': { invalid: /(?:haute saison|peak).*?(?:d[ée]cembre|janvier|f[ée]vrier)|(?:basse saison|off.?season).*?(?:mai|septembre)/i, note: 'Peak = mars-avril (cherry blossom) + oct-nov (momiji)' },
+  };
+  if (destination) {
+    for (const [dest, rules] of Object.entries(destinationTransportMap)) {
+      if (!destination.includes(dest)) continue;
+      for (const faq of faqEntries) {
+        const question = faq[1].replace(/<[^>]+>/g, '').toLowerCase();
+        const answer = faq[2].replace(/<[^>]+>/g, '');
+        if (/(transport|d[ée]placer|bouger|circuler)/i.test(question) && rules.invalid.test(answer)) {
+          issues.integrity.push({
+            severity: 'critical', category: 'faq-transport-incoherent',
+            description: `FAQ transport mentionne un mode inadapté pour ${dest}: "${answer.match(rules.invalid)[0]}"`,
+            fix_suggestion: `Remplacer par: ${rules.expected}`, location: 'FAQ'
+          });
+        }
+      }
+    }
+    for (const [dest, rules] of Object.entries(destinationSeasonMap)) {
+      if (!destination.includes(dest)) continue;
+      for (const faq of faqEntries) {
+        const answer = faq[2].replace(/<[^>]+>/g, '');
+        if (rules.invalid.test(answer)) {
+          issues.integrity.push({
+            severity: 'critical', category: 'faq-saison-fausse',
+            description: `FAQ saisons incorrectes pour ${dest}. ${rules.note}`,
+            fix_suggestion: `Corriger avec les vraies saisons: ${rules.note}`, location: 'FAQ'
+          });
+        }
+      }
+    }
+  }
+
+  // === CHECK 3: BUDGET INTERNAL CONSISTENCY ===
+  const budgetRegex = /(\d{1,4})\s*[€]\s*\/?\s*(nuit|jour|night|day|semaine|mois)/gi;
+  const budgetMentions = [...text.matchAll(budgetRegex)].map(m => ({
+    amount: parseInt(m[1]), unit: m[2].toLowerCase(),
+    context: text.substring(Math.max(0, m.index - 40), m.index + m[0].length + 40)
+  }));
+  const dailyRates = budgetMentions.map(b => {
+    let daily = b.amount;
+    if (/semaine/.test(b.unit)) daily = b.amount / 7;
+    if (/mois/.test(b.unit)) daily = b.amount / 30;
+    return { ...b, daily };
+  });
+  if (dailyRates.length >= 2) {
+    const sorted = dailyRates.sort((a, b) => a.daily - b.daily);
+    if (sorted[sorted.length - 1].daily > sorted[0].daily * 5 && sorted[0].daily > 0) {
+      issues.integrity.push({
+        severity: 'critical', category: 'budget-contradictoire',
+        description: `Incohérence budget: ${sorted[0].amount}€/${sorted[0].unit} vs ${sorted[sorted.length - 1].amount}€/${sorted[sorted.length - 1].unit}`,
+        fix_suggestion: 'Harmoniser les chiffres budget', location: 'global'
+      });
+    }
+  }
+
+  // === CHECK 4: WIDGET DESTINATION MISMATCH ===
+  if (destination) {
+    const widgetDestPatterns = [
+      ...html.matchAll(/(?:data-(?:city|location|destination)|city=|location=|destination=|q=)["']([^"']+)["']/gi),
+      ...html.matchAll(/(?:tiqets|getyourguide|viator|booking)\.com[^"]*?[?&](?:city|q|destination)=([^&"]+)/gi)
+    ];
+    const knownDestinations = {
+      'japon': ['tokyo', 'kyoto', 'osaka', 'japan', 'japon', 'nara', 'hiroshima', 'hakone', 'matsumoto'],
+      'thailande': ['bangkok', 'chiang', 'phuket', 'thailand', 'thailande', 'krabi', 'koh'],
+      'vietnam': ['hanoi', 'saigon', 'ho chi minh', 'hoi an', 'da nang', 'vietnam', 'halong'],
+      'indonesie': ['bali', 'jakarta', 'yogyakarta', 'indonesia', 'indonesie', 'lombok'],
+    };
+    const allowedCities = [];
+    for (const [dest, cities] of Object.entries(knownDestinations)) {
+      if (destination.includes(dest)) allowedCities.push(...cities);
+    }
+    if (allowedCities.length > 0) {
+      for (const wm of widgetDestPatterns) {
+        const widgetCity = decodeURIComponent(wm[1]).toLowerCase().replace(/[+%20]/g, ' ');
+        const isAllowed = allowedCities.some(c => widgetCity.includes(c) || c.includes(widgetCity));
+        if (!isAllowed && widgetCity.length > 2) {
+          issues.ux.push({
+            severity: 'critical', category: 'widget-destination-mismatch',
+            description: `Widget affilié pour "${widgetCity}" dans un article sur "${destination}"`,
+            fix_suggestion: `Remplacer le widget par un pour ${destination}`, location: 'global'
+          });
+        }
+      }
+    }
+  }
+
+  // === CHECK 5: GENERIC FILLER SECTION ===
+  const sectionParts = html.split(/(?=<h2[\s>])/i);
+  for (const part of sectionParts) {
+    const h2Match = part.match(/<h2[^>]*>(.*?)<\/h2>/i);
+    if (!h2Match) continue;
+    const sectionTitle = h2Match[1].replace(/<[^>]+>/g, '').trim();
+    const sectionText = part.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+    const sectionWords = sectionText.split(/\s+/).length;
+    if (/faq|questions?\s+fr[ée]quentes?/i.test(sectionTitle)) continue;
+    const hasNumbers = /\d+\s*[€$%]|\d{2,}/.test(sectionText);
+    const numberMatches = (sectionText.match(/\d+\s*[€$%]|\d{2,}/g) || []).length;
+    const fillerPhrases = (sectionText.match(/il est (important|essentiel|crucial|recommandé)|en général|souvent|parfois|certains|la plupart|beaucoup de|il convient/gi) || []).length;
+    if (sectionWords > 50 && sectionWords < 300 && !hasNumbers && fillerPhrases >= 2) {
+      issues.editorial.push({
+        severity: 'major', category: 'section-creuse',
+        description: `Section "${sectionTitle}" (${sectionWords} mots) sans données concrètes — ${fillerPhrases} phrases vagues, 0 chiffre`,
+        fix_suggestion: 'Ajouter des données chiffrées, noms de lieux, prix ou durées concrètes', location: sectionTitle
+      });
+    }
+    // Flag "guides ne disent pas" / "guides classiques" / "guides ignorent" sections with fewer than 2 specific numbers
+    const isGuidesSection = /guides?\s+(ne\s+disent|classiques?|ignorent|occultent|ne\s+mentionnent)/i.test(sectionTitle);
+    if (isGuidesSection && numberMatches < 2) {
+      issues.editorial.push({
+        severity: 'major', category: 'section-creuse',
+        description: `Section "${sectionTitle}" est une section "angle différenciant" mais ne contient que ${numberMatches} chiffre(s) — minimum 2 faits spécifiques avec données chiffrées requis`,
+        fix_suggestion: 'Remplacer le contenu générique par des faits précis : arnaques nommées avec lieu, coûts en devise locale + EUR, dates de fermeture exactes', location: sectionTitle
+      });
+    }
+  }
+
+  // === CHECK 6: TITLE NUMBER PROMISE DELIVERY ===
+  const titleText = ctx.title || ctx.titleTag || '';
+  const numberPromise = titleText.match(/(\d+)\s+(erreur|pi[èe]ge|astuce|conseil|chose|fa[çc]on|raison|secret|frais|co[uû]t|point|question|[ée]tape|id[ée]e|lieu|endroit|activit[ée]|exp[ée]rience)/i);
+  if (numberPromise) {
+    const promisedCount = parseInt(numberPromise[1]);
+    const numberedH3s = [...html.matchAll(/<h3[^>]*>\s*\d+[\.\):\s]/gi)].length;
+    const orderedListItems = [...html.matchAll(/<ol[^>]*>([\s\S]*?)<\/ol>/gi)]
+      .flatMap(ol => [...ol[1].matchAll(/<li/gi)]).length;
+    const boldNumbered = [...html.matchAll(/<(?:strong|b)>\s*\d+[\.):\s]/gi)].length;
+    const totalNumbered = Math.max(numberedH3s, orderedListItems, boldNumbered);
+    if (totalNumbered < promisedCount * 0.5) {
+      issues.seo.push({
+        severity: totalNumbered === 0 ? 'critical' : 'major',
+        category: 'title-promise-broken',
+        description: `Titre promet "${promisedCount} ${numberPromise[2]}" mais contenu ne livre que ~${totalNumbered} éléments numérotés`,
+        fix_suggestion: `Numéroter les ${promisedCount} éléments en H3 ou ajuster le titre`, location: 'global'
+      });
+    }
+  }
+
   return { issues, bonuses };
 }
 
