@@ -1747,6 +1747,15 @@ BLACKLIST STRICTE — JAMAIS UTILISER :
 USAGE DU "TU" : toujours suivi d'une conséquence concrète, d'un coût, ou d'une action. JAMAIS d'une émotion ou platitude.
 ❌ "Tu vas adorer ce pays !" → ✅ "Tu vas cramer 200 € en frais bancaires si tu ne configures pas Wise avant."
 
+TÉMOIGNAGES NOMMÉS (MINIMUM 3 PAR ARTICLE) :
+L'article DOIT mentionner au minimum 3 prénoms inventés avec profils distincts :
+- Protagoniste 1 : le cas principal (détaillé dans l'intro, suivi tout au long)
+- Protagoniste 2 : contre-exemple ou profil différent (couple vs solo, budget vs confort)
+- Protagoniste 3 : confirmation ou nuance (freelance, famille, retraité)
+Chaque protagoniste = prénom + âge + durée sur place + 1 fait chiffré unique.
+Exemple : "Marie, 34 ans, 3 semaines en couple, a dépensé 45 % de plus que prévu en excursions."
+NE JAMAIS utiliser un seul protagoniste pour tout l'article.
+
 - ZÉRO amplification : ne dramatise pas, ne projette pas, ne suppose pas. Restitue les faits tels qu'ils sont.
 - Distingue explicitement ce qui est CERTAIN (fait vérifié, citation directe) de ce qui est INCERTAIN (hypothèse, rumeur, non confirmé).
 
@@ -1913,11 +1922,29 @@ REGLE DEDUP : Chaque paragraphe apporte exactement 1 fait nouveau. Pas de repeti
    - Intégrer dans le récit narratif ou en encart structuré.
 
 1. DÉVELOPPEMENT (OBLIGATOIRE - UN SEUL CHAMP "developpement")
-   - LONGUEUR MINIMUM OBLIGATOIRE: 2500 mots. Articles < 1500 mots = REJETÉ.
+   - LONGUEUR : 2000-3000 mots. Assez pour couvrir le sujet EN PROFONDEUR, pas assez pour divaguer.
+   - ⛔ SCOPE LOCK : L'article couvre EXACTEMENT ce que le titre promet. RIEN DE PLUS.
+     Si le titre dit "2 risques" → l'article parle de CES 2 risques en profondeur. Pas de guide général, pas de FAQ sur les vols, pas de section budget générique.
+     Si le titre dit "5 frais cachés" → 5 frais, chacun développé. Pas de section "comment se déplacer" ou "meilleure période".
+     CHAQUE section H2 doit répondre directement à la promesse du titre. Si une section pourrait exister dans un article avec un AUTRE titre → elle n'a pas sa place ici.
    - Contenu en HTML libre (<h2>, <h3>, <p>, <ul><li>). Arc narratif (situation → surprise → impact → options → choix → plan d'action).
    - OBLIGATOIRE : Hook cinématique, 2-5 citations inline « ... », témoignage comme preuve, angles SERP, 3 CTA narratifs, affiliation dans le flux.
    - SECTIONS SERP OBLIGATOIRES (H2 dédiés) :
-     * H2 angle différenciant — OBLIGATOIRE. Le titre DOIT nommer la destination ET un sujet précis. Pattern : «Le [sujet spécifique] de [destination] que les guides occultent». Exemples : «Le surcoût du JR Pass que les blogs ignorent», «La réalité des arnaques au tuk-tuk après 22h à Bangkok». INTERDIT : titres génériques «Ce que les guides ne disent pas» sans destination ni sujet. Le contenu DOIT contenir au minimum 2 faits spécifiques avec chiffres/prix/dates issus du témoignage. PATTERNS BANNIS (=filler générique, rejet automatique) : «les coûts cachés des transferts locaux», «les périodes creuses», «les arnaques récurrentes ciblant les touristes francophones». À la place : arnaques nommées avec lieu précis, coûts cachés en devise locale + EUR, fermetures saisonnières avec dates exactes.
+     * ⛔ SECTION "CE QUE LES BLOGS IGNORENT" (OBLIGATOIRE, FORMAT STRICT) :
+     H2 : "Ce que les blogs ignorent sur [sujet précis] à [destination]"
+     FORMAT OBLIGATOIRE — 3 mythes débunkés :
+
+     <p><strong>Mythe #1 : « [croyance populaire citée textuellement] »</strong></p>
+     <p>Réalité terrain : [fait contraire avec chiffre exact]. Sur {N} témoignages analysés, {X} contredisent cette affirmation. [Conséquence en euros pour le lecteur].</p>
+
+     <p><strong>Mythe #2 : « [deuxième croyance] »</strong></p>
+     <p>Réalité terrain : [fait + lieu nommé + prix]. [Source : témoignage de {prénom}, {âge} ans, {durée} sur place].</p>
+
+     <p><strong>Mythe #3 : « [troisième croyance] »</strong></p>
+     <p>Réalité terrain : [fermeture/changement de règle/arnaque nommée avec dates]. [Action préventive en 1 phrase].</p>
+
+     CHAQUE mythe = 1 croyance populaire entre guillemets + 1 réalité avec chiffre + 1 source. PAS de vague "les guides oublient souvent..." — des FAITS.
+     PATTERNS BANNIS (=filler générique, rejet automatique) : «les coûts cachés des transferts locaux», «les périodes creuses», «les arnaques récurrentes ciblant les touristes francophones». À la place : arnaques nommées avec lieu précis, coûts cachés en devise locale + EUR, fermetures saisonnières avec dates exactes.
      * H2 "Erreurs fréquentes à éviter" — OBLIGATOIRE, pièges concrets avec montants.
      * H2 "Limites et biais de cet article" — OBLIGATOIRE, transparence E-E-A-T, 1-2 paragraphes honnêtes sur les limites des sources.
    - OPTIONNEL (si le story le justifie) : peurs invisibles, réalité vs fantasme, leçons auteur.
@@ -2000,7 +2027,8 @@ SANS CE BLOC, L'ARTICLE EST AUTOMATIQUEMENT REJETÉ PAR LE PANEL DE REVIEW.
 
 📊 ÉLÉMENTS STRUCTURELS EVERGREEN (obligatoires si le sujet s'y prête) :
 - TABLEAU COMPARATIF : obligatoire si l'article compare 2+ options, destinations ou produits. Format HTML <table> avec <thead> et <tbody>. Ex: comparatif budget, avantages/inconvénients, destinations côte à côte.
-- FAQ SEO : 3-5 questions/réponses en fin de développement si le sujet a une intention informationnelle. Format OBLIGATOIRE : <details><summary>Question ?</summary><p>Réponse détaillée.</p></details> — PAS de <h3> pour les questions FAQ, utilise UNIQUEMENT <details><summary>.
+- FAQ SEO : 3-5 questions/réponses en fin de développement. Format OBLIGATOIRE : <details><summary>Question ?</summary><p>Réponse détaillée.</p></details> — PAS de <h3> pour les questions FAQ.
+  ⛔ SCOPE LOCK FAQ : Les questions FAQ doivent porter UNIQUEMENT sur le sujet spécifique de l'article. Si l'article parle de "2 risques moto", les FAQ parlent de moto et de ces risques — PAS de "combien coûte un vol" ou "quelle est la meilleure saison" (sauf si directement lié au sujet).
 - CHECKLIST : obligatoire si l'article est un guide pratique ou un plan d'action. Format <ul><li> avec items actionnables.
 
 🎯 AFFILIATION NATIVE (2-4 insertions max, DANS LE FLUX) :
@@ -2174,6 +2202,13 @@ Insère 1 à 2 encarts de crédibilité dans le CORPS de l'article (pas juste le
   ✅ OK : Intro mentionne 30 témoignages → Mi-article utilise un NOUVEAU chiffre : "18 des témoignages pointent spécifiquement le problème du change"
 
 9. ANCHOR TEXT NATUREL : Le texte des liens internes doit être une phrase naturelle en français. ❌ INTERDIT : "voyager au vietnam avec 500 e comment optimiser chaque depense" (slug brut). ❌ INTERDIT : "Article Title Complet Avec Majuscules". ✅ OBLIGATOIRE : "optimiser son budget au Vietnam", "les vrais coûts du JR Pass" (phrase courte naturelle).
+
+SOURÇAGE DES DONNÉES (OBLIGATOIRE) :
+Chaque statistique DOIT avoir une attribution :
+- Données internes : "Source : synthèse FlashVoyage, [mois année], [N] témoignages analysés"
+- Prix : "Tarif vérifié [mois année]" ou "Source : [Numbeo/Rome2Rio/Google Flights], [mois année]"
+- Pourcentages : "Sur [N] voyageurs interrogés, [X] rapportent que..."
+INTERDIT : chiffres sans source. "73% des voyageurs" sans dire d'où ça vient = rejet.
 
 🇫🇷 TOUT EN FRANCAIS : Produis 100 % du JSON en francais. Source anglaise → redige directement en francais.
 
