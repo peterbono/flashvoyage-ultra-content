@@ -2906,15 +2906,16 @@ export function limitOutilsVoyageLinks(html) {
 /**
  * Cap H2 count at 8 by converting excess H2s to H3s
  */
-export function capH2Count(html) {
+export function capH2Count(html, maxH2 = 7) {
   const h2s = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
-  if (h2s.length <= 8) return html;
+  if (h2s.length <= maxH2) return html;
 
-  // Convert H2s beyond the 8th into H3s
+  console.log(`  📐 H2_CAP: ${h2s.length} H2s → capping at ${maxH2}`);
+  // Convert H2s beyond the cap into H3s
   let h2Count = 0;
   return html.replace(/<h2([^>]*)>(.*?)<\/h2>/gi, (match, attrs, text) => {
     h2Count++;
-    if (h2Count > 8) return '<h3' + attrs + '>' + text + '</h3>';
+    if (h2Count > maxH2) return '<h3' + attrs + '>' + text + '</h3>';
     return match;
   });
 }

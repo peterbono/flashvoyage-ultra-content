@@ -3750,7 +3750,7 @@ Génère UNIQUEMENT le HTML de l'introduction (2-3 paragraphes <p>). Pas de JSON
     const systemPrompt = `Tu es un rédacteur expert FlashVoyages. Génère les SECTIONS H2 du corps de l'article (PAS l'intro, PAS la conclusion).
 
 RÈGLES DE STRUCTURE :
-- ${isNews ? '3-4 H2 factuels, 600-800 mots total.' : '4-6 H2 décisionnels, 1800-2500 mots total.'}
+- ${isNews ? '3-4 H2 factuels, 600-800 mots total.' : '4-5 H2 décisionnels, 1800-2200 mots total. MAXIMUM ABSOLU : 2500 mots et 5 H2. Au-delà = scope creep = rejet.'}
 - Chaque H2 pose un arbitrage, une tension ou un choix. Inclure un verbe décisionnel (choisir, éviter, optimiser, risquer).
 - ✅ Chaque H2 contient un verbe décisionnel + destination ou angle concret. Exemple : «Pourquoi Bali coûte 40 % plus cher que prévu» au lieu de «Budget».
 - EXEMPLE DE QUALITE ATTENDUE (H2 decisionnel + premier paragraphe):
