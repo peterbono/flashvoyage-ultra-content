@@ -228,8 +228,48 @@ function moveHiddenTruth(extracted) {
     return move;
   }
 
+  // Build a destination-specific dynamic title instead of generic "Ce que les guides classiques ne mentionnent pas"
+  const destination = extracted?.destination
+    || (Array.isArray(extracted?.destinations) && extracted.destinations[0])
+    || '';
+  // Extract a topic hint from the first piece of content to make the title specific
+  const topicSource = parts[0] || '';
+  const topicKeywords = {
+    arnaque: 'arnaques', scam: 'arnaques', taxi: 'taxis', tuk: 'tuk-tuks', prix: 'prix',
+    ferry: 'ferrys', train: 'trains', visa: 'visas', hôtel: 'hébergement', hotel: 'hébergement',
+    budget: 'budget', frais: 'frais cachés', coût: 'coûts', cout: 'coûts', argent: 'dépenses',
+    transport: 'transports', vol: 'vols', avion: 'vols', bus: 'bus', métro: 'métro',
+    douane: 'douane', assurance: 'assurance', santé: 'santé', sécurité: 'sécurité',
+    nourriture: 'nourriture', restaurant: 'restaurants', logement: 'logement',
+    saison: 'saisons', météo: 'météo', pluie: 'saison des pluies', temple: 'temples',
+    plage: 'plages', marché: 'marchés', change: 'change', monnaie: 'change',
+  };
+  let topicLabel = '';
+  const lowerTopic = topicSource.toLowerCase();
+  for (const [keyword, label] of Object.entries(topicKeywords)) {
+    if (lowerTopic.includes(keyword)) {
+      topicLabel = label;
+      break;
+    }
+  }
+
+  let title;
+  if (destination && topicLabel) {
+    // Best case: "La réalité des arnaques à Bangkok que les guides occultent"
+    title = `La réalité des ${topicLabel} à ${destination} que les guides occultent`;
+  } else if (destination) {
+    // Fallback with destination only
+    title = `Ce que les guides occultent sur ${destination}`;
+  } else if (topicLabel) {
+    // Fallback with topic only
+    title = `La réalité des ${topicLabel} que les guides occultent`;
+  } else {
+    // Last resort — still better than fully generic
+    title = `Ce que les guides classiques ne mentionnent pas`;
+  }
+
   const proofAttr = escapeHtml(proofs[0]);
-  move.html = `\n<div data-fv-proof="${proofAttr}" data-fv-move="hidden_truth" class="fv-authority-move">\n<p><strong>Ce que les guides classiques ne mentionnent pas :</strong> ${parts.join('. ')}.</p>\n</div>\n`;
+  move.html = `\n<div data-fv-proof="${proofAttr}" data-fv-move="hidden_truth" class="fv-authority-move">\n<p><strong>${escapeHtml(title)} :</strong> ${parts.join('. ')}.</p>\n</div>\n`;
   move.added = true;
   move.proof_ids = proofs;
   move.reason = 'material_found';
@@ -387,6 +427,11 @@ class EditorialAuthorityBooster {
    * @returns {{ boostedHtml: string, authority_report: object }}
    */
   boost(draftHtml, extracted, story, pattern, editorial_mode) {
+    // DISABLED — moves inject noise blocks that break article flow (BUG 3+8)
+    return {
+      boostedHtml: draftHtml,
+      authority_report: { status: 'disabled', reason: 'moves_disabled_quality', moves_added: 0, moves_skipped: 4, moves: [], proofs_total: 0, violations: [] },
+    };
     // Skip non-evergreen content
     if (editorial_mode !== 'EVERGREEN') {
       return {

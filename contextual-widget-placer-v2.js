@@ -84,6 +84,9 @@ class ContextualWidgetPlacer {
    * @returns {Promise<string>} Contenu avec widgets placés
    */
   async placeWidgetsIntelligently(content, articleContext, widgetPlan, pipelineContext = null) {
+    // DISABLED — widgets inject wrong-destination content (Amsterdam in Vietnam articles)
+    console.log('  ⏭️ Widget placement DISABLED (quality control)');
+    return { content, placements: [], report: { status: 'disabled' } };
     try {
       console.log('\n🎯 PLACEMENT INTELLIGENT AVEC WIDGET_PLAN');
       console.log('==========================================\n');

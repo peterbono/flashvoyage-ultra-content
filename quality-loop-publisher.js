@@ -960,9 +960,28 @@ async function publishArticle(article) {
     console.log(`  👤 Author auto-assigned: ${authorName} (WP ID: ${authorId})`);
   }
 
-  // ═══ PRE-CLEANUP — Remove AI slop markers ═══
+  // ═══ PRE-CLEANUP — Remove AI slop markers + injected noise ═══
   finalContent = finalContent.replace(/📸\s*Capture d['']écran recommandée/gi, '');
   finalContent = finalContent.replace(/<p[^>]*>\s*📸[^<]*<\/p>/gi, '');
+  // BUG 1: Remove duplicate testimony banner (byline covers this already)
+  // Banner format: <div ...>📊 <strong>Synthèse de X témoignages</strong>...</div>
+  finalContent = finalContent.replace(/<div[^>]*>[\s\S]*?📊[\s\S]*?[Ss]ynth[èe]se[\s\S]*?<\/div>/gi, '');
+  finalContent = finalContent.replace(/<p[^>]*>[\s\S]*?📊[\s\S]*?<\/p>/gi, '');
+  // BUG 3: Remove "Ce que révèle ce témoignage" move blocks (LLM sometimes generates these)
+  finalContent = finalContent.replace(/<h[23][^>]*>[^<]*ce que r[ée]v[èe]le[^<]*t[ée]moignage[^<]*<\/h[23]>/gi, '');
+  finalContent = finalContent.replace(/<h[23][^>]*>[^<]*utile si tu travailles[^<]*<\/h[23]>/gi, '');
+  // Remove orphaned "Ce que dit le témoignage" sections
+  finalContent = finalContent.replace(/<h[23][^>]*>[^<]*ce que dit le t[ée]moignage[^<]*<\/h[23]>/gi, '');
+  // BUG 6: Strip links from FAQ <summary> tags
+  finalContent = finalContent.replace(/<summary([^>]*)>([\s\S]*?)<\/summary>/gi, (match, attrs, inner) => {
+    if (!/<a\s/i.test(inner)) return match;
+    return '<summary' + attrs + '>' + inner.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1') + '</summary>';
+  });
+  // BUG 7: In fv-author-box, keep ONLY reddit.com and notre-methode links
+  finalContent = finalContent.replace(/(<div[^>]*class="fv-author-box"[^>]*>)([\s\S]*?)(<\/div>)/gi, (match, open, inner, close) => {
+    const cleaned = inner.replace(/<a\s+[^>]*href="(?![^"]*(?:reddit\.com|notre-methode))[^"]*"[^>]*>([\s\S]*?)<\/a>/gi, '$1');
+    return open + cleaned + close;
+  });
 
   // ═══ DESTINATION EXTRACTION (used by verdict + checklist) ═══
   const destMatch = (article.title || '').match(/(?:japon|thailande|thaïlande|vietnam|bali|indonésie|indonesie|philippines|corée|coree|cambodge|laos|myanmar|malaisie|singapour|inde|sri lanka|népal|nepal|chine|taiwan|hong kong|macao)/i);
@@ -1023,6 +1042,9 @@ async function publishArticle(article) {
   }
 
   // 3. FV Tics de langage — inject by position in paragraphs (not by regex match)
+  // BUG 4: Protect checklist + verdict + FAQ from tic injection
+  let checklistBlock = '';
+  finalContent = finalContent.replace(/(<div[^>]*class="fv-checklist"[^>]*>[\s\S]*?<\/div>)/gi, (m) => { checklistBlock = m; return '<!--FV_CHECKLIST_PLACEHOLDER-->'; });
   const fvTicsCheck = [/spoiler\s*:/i, /le calcul est simple/i, /c.est l[àa] que [çc]a se corse/i, /sur \d+ t[ée]moignages/i, /le vrai co[uû]t/i, /verdict terrain\s*:/i];
   const ticsPresent = fvTicsCheck.filter(p => p.test(finalContent)).length;
   if (ticsPresent < 3) {
@@ -1057,10 +1079,13 @@ async function publishArticle(article) {
     }
     if (injected > 0) console.log(`  🎭 PERSONA_INJECTED: ${injected} tic(s) FV ajouté(s)`);
   }
+  // Re-insert checklist after tic injection (BUG 4 protection)
+  if (checklistBlock) finalContent = finalContent.replace('<!--FV_CHECKLIST_PLACEHOLDER-->', checklistBlock);
 
-  // 3b. Pull-stat injection if none exist
+  // 3b. Pull-stat injection DISABLED — context-less stats do more harm than good
+  // Let the LLM generate them naturally in the prompt. Don't auto-inject.
   const pullStatCount = (finalContent.match(/fv-pull-stat/gi) || []).length;
-  if (pullStatCount < 1) {
+  if (false && pullStatCount < 1) {
     // Find the most impactful number in the article
     const bigNumbers = [...finalContent.matchAll(/(\d{2,3})\s*(%|€|EUR|\$)/gi)];
     if (bigNumbers.length > 0) {
@@ -1119,6 +1144,9 @@ async function publishArticle(article) {
     if (!/<a\s/i.test(inner)) return match;
     return '<h3' + attrs + '>' + inner.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1') + '</h3>';
   });
+
+  // Final pass: cap H2s again (injections may have added more)
+  finalContent = capH2Count(finalContent);
 
     const postData = {
     title: finalTitle,
