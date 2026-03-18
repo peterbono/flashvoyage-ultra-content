@@ -17,8 +17,19 @@
 
 export const FEW_SHOT_EXAMPLES = {
 
+  // Style A: Contrarian — pattern interrupt + false assumption reversal
+  hookContrarian: `<p>La Thaïlande est la destination la moins chère d'Asie du Sud-Est. C'est aussi celle où les expatriés crament leur budget le plus vite.</p>
+<p>Marc, 32 ans, développeur freelance, s'est installé à Bangkok avec un tableur de dépenses millimétré et un budget de 1 800 €/mois. Quatre mois plus tard, son compte Wise affiche 1 847 € — le budget d'un seul mois, pas quatre. Sur 12 témoignages de freelances ayant fait le même calcul, 9 arrivent au même constat : les frais invisibles (border runs, assurance, visa extensions) ajoutent 35 à 50 % au budget prévu.</p>
+<p>Parce que le vrai coût de la Thaïlande, ce n'est pas le pad thaï à 1,50 €. C'est tout ce que tu n'as pas budgété autour.</p>`,
+
+  // Style B: Stat Bomb + Promise Stack — data-first, high intent-match
+  hookStatBomb: `<p>À Bangkok, un studio climatisé coûte 350 €/mois. À Bali, le même te revient à 580 €. Mais ajoute le coworking, les visas et les transferts bancaires — l'écart réel tombe à 12 %, pas 40 %.</p>
+<p>Marc, 32 ans, freelance, a testé Bangkok pendant quatre mois. On a croisé son expérience avec les retours de 12 expatriés ayant fait le même arbitrage. Résultat : le budget « officiel » des blogs sous-estime la réalité de 35 à 50 %, principalement à cause de trois postes que personne ne détaille.</p>
+<p>Ce qu'on couvre ici : les vrais chiffres poste par poste, les pièges de trésorerie que les guides ignorent, et comment recalculer ton budget avant de réserver.</p>`,
+
+  // Legacy hook kept for backwards compatibility
   hook: `<p>L'écran du distributeur affiche 220 bahts de frais — tu calcules mentalement pendant que la queue s'allonge derrière toi dans la chaleur moite de Silom. Ton compte Wise indique 1 847 € : le budget du mois, censé couvrir le loyer, le coworking et les trois border runs que tu n'avais pas anticipés.</p>
-<p>Ce voyageur, développeur freelance installé à Bangkok depuis quatre mois, pensait avoir tout prévu. « J'avais un tableur avec chaque ligne de dépense, raconte-t-il sur r/digitalnomad. Sauf que personne ne t'explique que le vrai coût de la Thaïlande, c'est les frais que tu ne vois pas. »</p>`,
+<p>Ce voyageur, développeur freelance installé à Bangkok depuis quatre mois, pensait avoir tout prévu. « J'avais un tableur avec chaque ligne de dépense, raconte-t-il sur un forum de voyageurs. Sauf que personne ne t'explique que le vrai coût de la Thaïlande, c'est les frais que tu ne vois pas. »</p>`,
 
   decisionalH2: `<h2>Pourquoi Chiang Mai coûte 40 % moins cher que Bali — et ce que tu sacrifies en échange</h2>
 <p>Sur le papier, le calcul est simple : un studio climatisé à Nimman revient à 350 € par mois contre 580 € pour un équivalent à Canggu. Le coworking Punspace facture 85 € mensuels là où Dojo Bali en demande 160. Mais ce différentiel masque un arbitrage que peu de guides mentionnent. À Chiang Mai, tu gagnes en budget ce que tu perds en réseau international : la communauté est plus petite, les événements tech moins fréquents, et les vols directs vers l'Europe inexistants. Si ton activité dépend de rencontres clients en personne ou de connexions avec des startups, ce « rabais » de 40 % a un prix invisible que ton tableur ne capture pas.</p>`,
@@ -49,6 +60,30 @@ export const FEW_SHOT_EXAMPLES = {
 <p><strong>Budget serré (moins de 50 €/jour) :</strong> Privilégie les auberges de jeunesse en réservant trois semaines à l'avance. Évite les ryokans en haute saison. Achète des pass régionaux (Kansai Area Pass à 22 €/jour) plutôt que le JR Pass national. Mange dans les konbini — un repas complet chez Lawson ou 7-Eleven revient à 4-6 €.</p>
 <p><strong>Budget confortable (50-100 €/jour) :</strong> Alterne deux nuits en auberge, une nuit en ryokan. Le JR Pass 7 jours (200 €) devient rentable si tu fais au moins Tokyo–Kyoto aller-retour plus un trajet vers Hiroshima. Réserve les ryokans sur Japanican pour accéder aux tarifs locaux — souvent 15 à 20 % moins chers que sur Booking.</p>
 <p><strong>Budget large (plus de 100 €/jour) :</strong> Réserve des ryokans haut de gamme à Kinosaki Onsen ou Hakone (150-250 €/nuit, kaiseki inclus). Prends le Green Car sur les Shinkansen pour 40 € de supplément — les sièges 2+2 valent le surcoût sur les trajets de plus de deux heures. Envisage un pocket Wi-Fi plutôt qu'une SIM locale — à 5 €/jour, c'est plus fiable dans les zones rurales.</p>`,
+
+  // Verdict Flash Voyage — structured decision guide
+  verdictBlock: `<h2>Verdict Flash Voyage : à qui c'est vraiment destiné</h2>
+<p><strong>Si tu es backpacker solo avec moins de 40 €/jour</strong> → Chiang Mai de novembre à février. Coworking Punspace à 85 €/mois, appart à 300 €. Le ratio qualité/prix est imbattable.</p>
+<p><strong>Si tu es en couple budget confort (3 000 €/mois)</strong> → Teste Canggu 2 mois. Le surcoût de 40 % par rapport à la Thaïlande est un investissement réseau, pas une dépense lifestyle.</p>
+<p><strong>Si tu es freelance qui veut closer des clients</strong> → Bali, pas Chiang Mai. Les événements tech y sont 3 fois plus fréquents.</p>
+<p><strong>Si tu cherches « le paradis pas cher »</strong> → Oublie. Ça n'existe pas. Chaque destination a un coût caché que ton tableur n'a pas prévu.</p>`,
+
+  // Checklist Flash Voyage — screenshot-worthy
+  checklistBlock: `<div class="fv-checklist" style="background:#f7fafc;border:2px solid #3182CE;border-radius:12px;padding:24px;margin:24px 0;">
+<h3 style="margin-top:0;color:#3182CE;">✈️ Checklist — Thaïlande 3 mois</h3>
+<h4>Avant de partir</h4>
+<p>✔️ Ouvrir Wise + Revolut — 0 % frais de change vs 3-5 % en banque classique</p>
+<p>✔️ Assurance couvrant les scooters — Visa Premier ne suffit pas (franchise 150 €)</p>
+<p>✔️ Réserver la première semaine seulement — chercher l'appart sur place (-20 à 40 %)</p>
+<h4>Sur place</h4>
+<p>✔️ Tester le DAB dès l'aéroport — frais réels : 220 THB (5,50 €) par retrait</p>
+<p>✔️ Négocier au mois, pas à la semaine — économie de 25 à 40 %</p>
+<p>✔️ Grab/Bolt au lieu des taxis — 30-50 % moins cher</p>
+<h4>À éviter</h4>
+<p>❌ Payer en euros (DCC) — surcoût 3 à 7 % par transaction</p>
+<p>❌ Tours aux comptoirs touristiques — 30-50 % plus cher que l'app locale</p>
+<p>❌ Change à l'aéroport — taux 8-12 % pire qu'en ville</p>
+</div>`,
 
   comparisonTable: `<table>
 <thead>

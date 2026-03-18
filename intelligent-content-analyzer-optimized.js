@@ -3782,7 +3782,15 @@ SECTIONS SERP OBLIGATOIRES (non négociable — inclure ces 3 H2 parmi les secti
 2. **Erreurs courantes** : Un H2 sur les pièges et erreurs fréquentes des voyageurs. Commence par <!-- FV:COMMON_MISTAKES -->. Exemple : «Les 3 erreurs qui plombent ton budget à [destination]» ou «Pourquoi 80 % des voyageurs se trompent sur [sujet]».
 3. **Limites et biais** : <h2>Limites et biais de cet article</h2> — 1-2 paragraphes honnêtes sur les limites du témoignage (un seul point de vue, période spécifique, etc.).`}
 
-${truthPackBlock}`;
+${truthPackBlock}
+
+PERSONA FLASH VOYAGE — TICS OBLIGATOIRES :
+Tu DOIS insérer ces phrases EXACTES dans ton texte :
+- Dans ta 1ère section H2 : commence un paragraphe par "Spoiler : "
+- Dans ta 2ème section H2 : inclus "Le calcul est simple." avant un breakdown de coûts
+- Dans ta 3ème section H2 : commence un paragraphe par "Et c'est là que ça se corse."
+- Avant une recommandation : utilise "Verdict terrain :"
+Ces phrases sont la SIGNATURE éditoriale Flash Voyage. Sans elles, l'article sera rejeté.`;
 
     const userPrompt = `TITRE: ${extracted.title || 'Témoignage Reddit'}
 ${mainDestFR ? 'DESTINATION: ' + mainDestFR : ''}
@@ -3879,6 +3887,20 @@ Génère UNIQUEMENT le HTML des sections H2 du corps en suivant le plan ci-dessu
 
     const systemPrompt = `Tu es un rédacteur expert FlashVoyages. Génère la CONCLUSION de l'article : verdict, recommandations, FAQ et signature.
 
+ÉLÉMENTS OBLIGATOIRES DANS CETTE ÉTAPE :
+
+1. VERDICT FLASH VOYAGE (champ JSON "verdict_html") :
+Tu DOIS générer un bloc HTML avec H2 "Verdict Flash Voyage : à qui c'est vraiment destiné" suivi de 3-4 paragraphs "<strong>Si tu es [profil spécifique avec chiffre]</strong> → [action directe impérative]".
+Le dernier profil = contrarian (qui NE devrait PAS faire ça).
+EXEMPLE :
+${FEW_SHOT_EXAMPLES.verdictBlock}
+
+2. CHECKLIST SAUVEGARDABLE (champ JSON "checklist_html", evergreen seulement) :
+Tu DOIS générer une div class="fv-checklist" avec la structure Avant de partir / Sur place / À éviter.
+10-12 items, chacun avec un chiffre concret (montant, %, durée).
+EXEMPLE :
+${FEW_SHOT_EXAMPLES.checklistBlock}
+
 RÈGLES :
 - Tutoiement. Ton réaliste, pas vendeur. Langue 100% français.
 - Verdict : 2 paragraphes substantiels avec prise de position tranchée.
@@ -3912,6 +3934,7 @@ Réponds en JSON :
 ${isNews ? `{
   "recommandations": "...",
   "a_retenir": "...",
+  "verdict_html": "...",
   "signature": "...",
   "citations": [],
   "opportunites_liens_internes": []
@@ -3919,6 +3942,8 @@ ${isNews ? `{
   "recommandations": "...",
   "faq": "...",
   "ce_qu_il_faut_retenir": "...",
+  "verdict_html": "...",
+  "checklist_html": "...",
   "signature": "...",
   "citations": [],
   "opportunites_liens_internes": [],
@@ -3950,7 +3975,7 @@ Génère UNIQUEMENT le JSON de conclusion.`;
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        max_tokens: 3000,
+        max_tokens: 5000,
         temperature: 0.7,
         ...(LLM_PROVIDER === 'openai' && { response_format: { type: "json_object" } })
       },
@@ -3993,8 +4018,11 @@ Génère UNIQUEMENT le JSON de conclusion.`;
       developpement,
     };
 
+    // Verdict and checklist from dedicated micro-step fields
+    article.verdict_html = conclusionJson.verdict_html || null;
     if (!isNews) {
       article.quick_guide = null;
+      article.checklist_html = conclusionJson.checklist_html || null;
       article.faq = conclusionJson.faq || null;
       article.recommandations = conclusionJson.recommandations || null;
       article.ce_qu_il_faut_retenir = conclusionJson.ce_qu_il_faut_retenir || null;
@@ -4081,7 +4109,21 @@ Génère UNIQUEMENT le JSON de conclusion.`;
           devHtml = await this.translateBlockquotesInText(devHtml);
           sections.push(devHtml);
 
-          // Recommendations + verdict
+          // Verdict + Checklist + Recommendations + FAQ assembly
+          // Order: verdict → checklist → recommandations → faq → ce_qu_il_faut_retenir → signature
+
+          // Insert verdict_html (from micro-step) before recommendations
+          if (article.verdict_html?.trim()) {
+            sections.push(article.verdict_html.trim());
+            console.log('   ✅ verdict_html from micro-step placed in assembly');
+          }
+
+          // Insert checklist_html (from micro-step, evergreen only) before FAQ
+          if (!isNews && article.checklist_html?.trim()) {
+            sections.push(article.checklist_html.trim());
+            console.log('   ✅ checklist_html from micro-step placed in assembly');
+          }
+
           if (editorialMode === 'news') {
             if (article.recommandations?.trim()) {
               let recoText = article.recommandations.trim();

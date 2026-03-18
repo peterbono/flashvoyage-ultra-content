@@ -1005,7 +1005,7 @@ async function publishArticle(article) {
     } else {
       finalContent = finalContent + verdictHtml;
     }
-    console.log('  🎯 VERDICT_INJECTED: Verdict Flash Voyage auto-injecté');
+    console.log('  ⚠️ VERDICT_FALLBACK: LLM n\'a pas généré le verdict — injection de secours');
   }
 
   // 2. Checklist Sauvegardable — inject if missing (evergreen only)
@@ -1038,7 +1038,7 @@ async function publishArticle(article) {
     } else {
       finalContent = finalContent + checklistHtml;
     }
-    console.log('  📋 CHECKLIST_INJECTED: Checklist Flash Voyage auto-injectée');
+    console.log('  ⚠️ CHECKLIST_FALLBACK: LLM n\'a pas généré la checklist — injection de secours');
   }
 
   // 3. FV Tics de langage — inject by position in paragraphs (not by regex match)
@@ -1077,7 +1077,7 @@ async function publishArticle(article) {
       finalContent = finalContent.replace(original, replaced);
       injected++;
     }
-    if (injected > 0) console.log(`  🎭 PERSONA_INJECTED: ${injected} tic(s) FV ajouté(s)`);
+    if (injected > 0) console.log(`  ⚠️ PERSONA_FALLBACK: LLM n'a pas généré les tics — ${injected} tic(s) injecté(s) en secours`);
   }
   // Re-insert checklist after tic injection (BUG 4 protection)
   if (checklistBlock) finalContent = finalContent.replace('<!--FV_CHECKLIST_PLACEHOLDER-->', checklistBlock);
