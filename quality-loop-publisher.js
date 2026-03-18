@@ -872,6 +872,22 @@ async function publishArticle(article) {
   finalContent = finalContent.replace(/<p[^>]*>\s*Liens? partenaires?:?\s*une commission[^<]*<\/p>/gi, '');
   finalContent = finalContent.replace(/<div[^>]*class="[^"]*fv-(?:partner|widget|affiliate)[^"]*"[^>]*>\s*<\/div>/gi, '');
 
+  // Cross-link to /outils-voyage/ when relevant keywords detected
+  const toolsLinks = [
+    { pattern: /compar\w+ (?:les |des )?vols|cherch\w+ (?:un |des )?vol/gi, url: '/outils-voyage/', text: 'notre comparateur de vols' },
+    { pattern: /budget|combien (?:ça |ca )?co[uû]te|calculer?\s+(?:ton |le )?budget/gi, url: '/outils-voyage/', text: 'nos outils budget' },
+    { pattern: /assurance voyage|couverture santé/gi, url: '/outils-voyage/', text: 'notre comparateur d\'assurances' },
+  ];
+  for (const { pattern, url, text } of toolsLinks) {
+    if (pattern.test(finalContent) && !finalContent.includes(url)) {
+      // Insert a natural link in the first matching paragraph
+      finalContent = finalContent.replace(pattern, (match) => {
+        return `${match} (<a href="${url}">${text}</a>)`;
+      });
+      break; // Only add one tools link per article
+    }
+  }
+
   // Replace all checkbox/ballot box variants with ✔️ in checklists
   // U+2610 (☐), U+25A1 (□), U+25FB (◻), U+25A2 (▢)
   finalContent = finalContent.replace(/[\u2610\u25A1\u25FB\u25A2□☐]/g, '✔️');
@@ -953,6 +969,79 @@ async function publishArticle(article) {
     authorId = authorIds[Math.floor(Math.random() * authorIds.length)];
     const authorName = Object.keys(WP_AUTHORS).find(k => WP_AUTHORS[k] === authorId);
     console.log(`  👤 Author auto-assigned: ${authorName} (WP ID: ${authorId})`);
+  }
+
+  // ═══ FLASH VOYAGE MANDATORY ELEMENTS — AUTO-INJECT IF MISSING ═══
+
+  // 1. Verdict Décisionnel — inject if missing
+  if (!/verdict flash voyage/i.test(finalContent) && !/si tu es\s+\w+[^<]*→/i.test(finalContent)) {
+    const destination = article.final_destination || article.analysis?.final_destination || 'cette destination';
+    const verdictHtml = `
+<h2>Verdict Flash Voyage : à qui c'est vraiment destiné</h2>
+<p><strong>Si tu es backpacker solo avec moins de 40 €/jour</strong> → ${destination} est faisable, mais prépare-toi à faire des concessions sur le confort. Privilégie les auberges et la street food.</p>
+<p><strong>Si tu es en couple avec un budget confort (80-120 €/jour)</strong> → Tu profiteras pleinement. Réserve 2-3 jours de plus que prévu — les meilleurs moments arrivent quand tu ralentis.</p>
+<p><strong>Si tu es freelance remote</strong> → Teste 1 mois avant de t'engager sur 3. Le wifi, les cafés, le coût de la vie — tout se vérifie sur place, pas sur les blogs.</p>
+<p><strong>Si tu cherches du luxe all-inclusive</strong> → Ce n'est pas ton article. Et ${destination} n'est probablement pas ta destination.</p>`;
+
+    // Insert before the methodology footer block or before FAQ
+    const insertBefore = finalContent.match(/<div class="fv-author-box"|<h2[^>]*>(?:Questions? fr[ée]quentes?|FAQ)/i);
+    if (insertBefore) {
+      finalContent = finalContent.slice(0, insertBefore.index) + verdictHtml + '\n' + finalContent.slice(insertBefore.index);
+    } else {
+      finalContent = finalContent + verdictHtml;
+    }
+    console.log('  🎯 VERDICT_INJECTED: Verdict Flash Voyage auto-injecté');
+  }
+
+  // 2. Checklist Sauvegardable — inject if missing (evergreen only)
+  const isEvergreen = (article.editorialMode || process.env.EDITORIAL_MODE || 'evergreen').toLowerCase() !== 'news';
+  if (isEvergreen && !/fv-checklist/i.test(finalContent)) {
+    const destination = article.final_destination || article.analysis?.final_destination || 'ta destination';
+    const checklistHtml = `
+<div class="fv-checklist" style="background:#f7fafc;border:2px solid #3182CE;border-radius:12px;padding:24px;margin:24px 0;">
+<h3 style="margin-top:0;color:#3182CE;">✈️ Checklist Flash Voyage — ${destination}</h3>
+<p style="font-size:0.9em;color:#718096;margin-bottom:16px;">📸 Capture d'écran recommandée</p>
+<h4>Avant de partir</h4>
+<p style="list-style:none;">✔️ Ouvrir un compte Wise + Revolut — deux cartes valent mieux qu'une en Asie</p>
+<p style="list-style:none;">✔️ Souscrire une assurance qui couvre les scooters — la carte Visa Premier ne suffit pas partout</p>
+<p style="list-style:none;">✔️ Réserver uniquement la première semaine — chercher le logement sur place</p>
+<h4>Sur place</h4>
+<p style="list-style:none;">✔️ Tester le premier DAB dès l'aéroport — vérifier les frais réels</p>
+<p style="list-style:none;">✔️ Négocier le loyer au mois (pas à la semaine) — économie de 20 à 35 %</p>
+<h4>À éviter</h4>
+<p style="list-style:none;">❌ Payer en euros à l'étranger (Dynamic Currency Conversion) — surcoût de 3 à 7 %</p>
+<p style="list-style:none;">❌ Réserver des tours le jour même aux comptoirs touristiques — 30 à 50 % plus cher</p>
+</div>`;
+
+    // Insert before verdict or before methodology footer
+    const checklistInsert = finalContent.match(/<h2[^>]*>Verdict Flash Voyage|<div class="fv-author-box"|<h2[^>]*>(?:Questions? fr[ée]quentes?|FAQ)/i);
+    if (checklistInsert) {
+      finalContent = finalContent.slice(0, checklistInsert.index) + checklistHtml + '\n' + finalContent.slice(checklistInsert.index);
+    } else {
+      finalContent = finalContent + checklistHtml;
+    }
+    console.log('  📋 CHECKLIST_INJECTED: Checklist Flash Voyage auto-injectée');
+  }
+
+  // 3. FV Tics de langage — inject if too few
+  const fvTicsPatterns = [/spoiler\s*:/i, /le calcul est simple/i, /c.est l[àa] que [çc]a se corse/i, /sur \d+ t[ée]moignages/i, /le vrai co[uû]t/i, /verdict terrain/i];
+  const ticsCount = fvTicsPatterns.filter(p => p.test(finalContent)).length;
+  if (ticsCount < 2) {
+    // Inject 2-3 tics naturally into existing paragraphs
+    const ticInjections = [
+      { search: /(<p[^>]*>)(Les (?:blogs|guides)[^<]{10,50})/i, replace: '$1Spoiler : $2' },
+      { search: /(<p[^>]*>)((?:Si tu|Quand tu)[^<]{10,40}(?:budget|dépens|co[uû]t)[^<]{0,60}<\/p>)/i, replace: '$1Le calcul est simple. $2' },
+      { search: /(<p[^>]*>)((?:Mais|Sauf que|En réalité)[^<]{10,80}<\/p>)/i, replace: '$1Et c\'est là que ça se corse. $2' },
+    ];
+    let injected = 0;
+    for (const { search, replace } of ticInjections) {
+      if (injected >= 2) break;
+      if (search.test(finalContent)) {
+        finalContent = finalContent.replace(search, replace);
+        injected++;
+      }
+    }
+    if (injected > 0) console.log(`  🎭 PERSONA_INJECTED: ${injected} tic(s) de langage FV ajouté(s)`);
   }
 
     const postData = {

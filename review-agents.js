@@ -492,6 +492,66 @@ function detectDeterministicIssues(ctx) {
     }
   }
 
+  // ═══ FLASH VOYAGE MANDATORY ELEMENTS ═══
+  const isEvergreen = (ctx.editorialMode || '').toLowerCase() !== 'news';
+
+  // Check 1: Verdict décisionnel
+  const hasVerdict = /verdict flash voyage|si tu es\s+\w+[^.]*→/gi.test(text);
+  if (!hasVerdict) {
+    issues.editorial.push({
+      severity: 'critical',
+      category: 'missing-verdict-fv',
+      description: 'Verdict Flash Voyage absent — bloc "Si tu es [profil] → [action]" manquant',
+      fix_suggestion: 'Ajouter H2 "Verdict Flash Voyage" avec 3-4 profils spécifiques',
+      location: 'global'
+    });
+  }
+
+  // Check 2: Checklist sauvegardable (evergreen only)
+  if (isEvergreen) {
+    const hasChecklist = /fv-checklist|checklist flash voyage/i.test(html) ||
+      (/avant de partir/i.test(text) && /sur place/i.test(text) && /[àa] [ée]viter/i.test(text));
+    if (!hasChecklist) {
+      issues.editorial.push({
+        severity: 'critical',
+        category: 'missing-checklist-fv',
+        description: 'Checklist Flash Voyage absente — structure Avant/Sur place/À éviter manquante',
+        fix_suggestion: 'Ajouter div fv-checklist avec items spécifiques chiffrés',
+        location: 'global'
+      });
+    }
+  }
+
+  // Check 3: FV persona tics (minimum 3)
+  const fvTics = [
+    /spoiler\s*:/i, /le calcul est simple/i, /et c.est l[àa] que [çc]a se corse/i,
+    /sur \d+ t[ée]moignages/i, /traduction\s*:/i, /on a fait le calcul/i,
+    /personne ne te le dira/i, /le vrai co[uû]t/i, /verdict terrain/i,
+    /[àa] tester si|[àa] [ée]viter si/i
+  ];
+  const ticsFound = fvTics.filter(p => p.test(text)).length;
+  if (ticsFound < 3) {
+    issues.editorial.push({
+      severity: 'major',
+      category: 'low-persona-fv',
+      description: `Seulement ${ticsFound}/3 tics de langage FV détectés`,
+      fix_suggestion: 'Insérer naturellement: "Spoiler:", "Le calcul est simple", "Verdict terrain:", etc.',
+      location: 'global'
+    });
+  }
+
+  // Check 4: Pull-stats (minimum 1)
+  const pullStatCount = (html.match(/fv-pull-stat/gi) || []).length;
+  if (pullStatCount < 1) {
+    issues.editorial.push({
+      severity: 'major',
+      category: 'missing-pull-stats',
+      description: `${pullStatCount} pull-stat(s) — minimum 1 requis`,
+      fix_suggestion: 'Ajouter div fv-pull-stat avec le chiffre le plus frappant de l\'article',
+      location: 'global'
+    });
+  }
+
   return { issues, bonuses };
 }
 
