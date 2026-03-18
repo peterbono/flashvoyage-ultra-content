@@ -1744,6 +1744,13 @@ BLACKLIST STRICTE — JAMAIS UTILISER :
 - "Chaque voyage est unique", "Il est important de noter que"
 - Toute phrase qui pourrait apparaître sur N'IMPORTE QUEL blog voyage → réécrire avec un fait concret
 
+CLICHÉS VOYAGE BANNIS (en plus de la blacklist ci-dessus) :
+- "joyau caché", "hors des sentiers battus", "baigné de soleil"
+- "eaux cristallines", "à couper le souffle", "creuset culturel"
+- "animé", "pittoresque", "niché", "se vante de"
+- "un festin pour les sens", "riche tapisserie", "chargé d'histoire"
+- "carte postale", "dépaysement garanti", "monde à part"
+
 USAGE DU "TU" : toujours suivi d'une conséquence concrète, d'un coût, ou d'une action. JAMAIS d'une émotion ou platitude.
 ❌ "Tu vas adorer ce pays !" → ✅ "Tu vas cramer 200 € en frais bancaires si tu ne configures pas Wise avant."
 
@@ -1847,6 +1854,13 @@ BLACKLIST STRICTE — JAMAIS UTILISER :
 - "Une expérience inoubliable", "un dépaysement total"
 - "Chaque voyage est unique", "Il est important de noter que"
 - Toute phrase qui pourrait apparaître sur N'IMPORTE QUEL blog voyage → réécrire avec un fait concret
+
+CLICHÉS VOYAGE BANNIS (en plus de la blacklist ci-dessus) :
+- "joyau caché", "hors des sentiers battus", "baigné de soleil"
+- "eaux cristallines", "à couper le souffle", "creuset culturel"
+- "animé", "pittoresque", "niché", "se vante de"
+- "un festin pour les sens", "riche tapisserie", "chargé d'histoire"
+- "carte postale", "dépaysement garanti", "monde à part"
 
 USAGE DU "TU" : toujours suivi d'une conséquence concrète, d'un coût, ou d'une action. JAMAIS d'une émotion ou platitude.
 ❌ "Tu vas adorer ce pays !" → ✅ "Tu vas cramer 200 € en frais bancaires si tu ne configures pas Wise avant."
@@ -2666,6 +2680,10 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
           } else {
             sections.push(`<h2>Ce qu'il faut retenir</h2>\n<p>Résume les points clés et rappelle les outils utiles (eSIM, assurance, vols). Propose une note d'action au lecteur.</p>`);
           }
+          if (article.quick_card_html && article.quick_card_html.trim()) {
+            sections.push(article.quick_card_html.trim());
+            console.log('   ✅ Quick-reference card intégrée');
+          }
         }
         if (article.signature && article.signature.trim()) sections.push(article.signature);
         } else {
@@ -2741,6 +2759,10 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
           else sections.push(retenirText);
         } else {
           sections.push(`<h2>Ce qu'il faut retenir</h2>\n<p>Les points clés de cet article et les outils utiles (eSIM, assurance, vols).</p>`);
+        }
+        if (article.quick_card_html && article.quick_card_html.trim()) {
+          sections.push(article.quick_card_html.trim());
+          console.log('   ✅ Quick-reference card intégrée');
         }
       }
       // Signature
@@ -3748,6 +3770,14 @@ Quand un chiffre est particulièrement frappant, mets-le en évidence avec ce fo
 </div>
 Maximum 2 pull-stats par article. Réserve-les aux chiffres qui choquent (pas les chiffres banals).
 
+STAT CALLOUT (2 maximum dans le body) :
+Quand un chiffre est SURPRENANT ou ÉCONOMISE de l'argent au lecteur, mets-le en évidence :
+<aside class="fv-stat" style="margin:2rem 0;padding:1.25rem 1.5rem;border-left:4px solid #f59e0b;background:#fffbeb;border-radius:0 8px 8px 0;max-width:540px;">
+<span style="font-size:2.5rem;font-weight:800;color:#b45309;">{CHIFFRE}{UNITÉ}</span>
+<p style="margin:0.5rem 0 0;font-size:0.95rem;color:#78350f;">{1 ligne de contexte expliquant pourquoi ce chiffre compte}</p>
+</aside>
+Règles : le chiffre doit être surprenant OU contredire une croyance OU sauver de l'argent. Max 2 par article. Minimum 250 mots entre deux callouts.
+
 - Langue : 100% français. Zéro anglais. Tous montants en euros.
 - Chaque paragraphe apporte un fait, chiffre ou choix éditorial. Pas de platitudes.
 - ✅ Phrases directes avec tutoiement : «Le visa te coûtera 35 €» au lieu de «Il est important de savoir que...».
@@ -3768,6 +3798,11 @@ Maximum 2 pull-stats par article. Réserve-les aux chiffres qui choquent (pas le
   - Le texte du blockquote doit être 100% en français. Zéro anglais.
   - Chaque citation est précédée d'un contexte humain : "Un expatrié installé depuis 3 ans résume : « citation »"
 
+RYTHME DES PHRASES :
+- Phrase courte. Puis une phrase plus longue qui développe et apporte de la nuance. Puis une autre courte.
+- JAMAIS 2 phrases longues (15+ mots) d'affilée — insère une phrase de moins de 8 mots entre elles.
+- Varie la longueur : le lecteur doit sentir un rythme, pas un métronome.
+
 ${isNews ? `CADRE NEWS :
 - Bloc "Ce que ça change concrètement" (3-7 bullets actionnables).
 - Si argent impliqué : montants en euros.
@@ -3784,13 +3819,21 @@ SECTIONS SERP OBLIGATOIRES (non négociable — inclure ces 3 H2 parmi les secti
 
 ${truthPackBlock}
 
-PERSONA FLASH VOYAGE — TICS OBLIGATOIRES :
-Tu DOIS insérer ces phrases EXACTES dans ton texte :
-- Dans ta 1ère section H2 : commence un paragraphe par "Spoiler : "
-- Dans ta 2ème section H2 : inclus "Le calcul est simple." avant un breakdown de coûts
-- Dans ta 3ème section H2 : commence un paragraphe par "Et c'est là que ça se corse."
-- Avant une recommandation : utilise "Verdict terrain :"
-Ces phrases sont la SIGNATURE éditoriale Flash Voyage. Sans elles, l'article sera rejeté.`;
+PERSONA FLASH VOYAGE — 3 TICS SIGNATURE (obligatoires, 1 de chaque minimum) :
+
+TIC 1 — COST ANCHOR : Compare au moins 1 prix à quelque chose que le lecteur connaît.
+Exemples : "Moins cher que ton Netflix", "Le prix d'un Uber à Paris", "Ce que tu dépenses en café en une semaine".
+→ Place-le quand tu mentionnes un prix pour la première fois.
+
+TIC 2 — INSIDER CORRECTION : Corrige au moins 1 croyance touristique avec l'autorité d'un expat.
+Exemples : "Les blogs disent X. Les expats savent que Y.", "Le guide Lonely Planet recommande Z — ignore-le, voici pourquoi."
+→ Place-le dans ta section la plus contrarian.
+
+TIC 3 — DIRECT ADDRESS : Parle directement AU lecteur au moins 1 fois.
+Exemples : "Toujours là ? La suite va te faire économiser.", "Si t'as skimmé jusqu'ici, reviens — cette partie est cruciale."
+→ Place-le avant une section dense ou technique.
+
+Ces 3 tics sont ta SIGNATURE. Le lecteur doit pouvoir reconnaître un article Flash Voyage sans voir le logo.`;
 
     const userPrompt = `TITRE: ${extracted.title || 'Témoignage Reddit'}
 ${mainDestFR ? 'DESTINATION: ' + mainDestFR : ''}
@@ -3901,6 +3944,21 @@ Tu DOIS générer une div class="fv-checklist" avec la structure Avant de partir
 EXEMPLE :
 ${FEW_SHOT_EXAMPLES.checklistBlock}
 
+3. QUICK-REFERENCE CARD (champ JSON "quick_card_html") :
+Génère une carte de référence ultra-dense avec les infos clés de la destination.
+Format HTML :
+<div class="fv-quick-card" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin:24px 0;">
+<h3 style="margin-top:0;font-size:1.1rem;">📋 {Destination} — Fiche rapide</h3>
+<ul style="list-style:none;padding:0;margin:0;">
+<li>🗓 <strong>Meilleure période :</strong> {mois}</li>
+<li>💰 <strong>Budget/jour :</strong> {montant} (backpacker) / {montant} (confort)</li>
+<li>✈️ <strong>Vol depuis Paris :</strong> ~{prix} A/R</li>
+<li>⚡ <strong>À faire :</strong> {1 chose}</li>
+<li>🚫 <strong>À éviter :</strong> {1 chose}</li>
+<li>🏨 <strong>Où dormir :</strong> {1 reco}</li>
+</ul>
+</div>
+
 RÈGLES :
 - Tutoiement. Ton réaliste, pas vendeur. Langue 100% français.
 - Verdict : 2 paragraphes substantiels avec prise de position tranchée.
@@ -3944,6 +4002,7 @@ ${isNews ? `{
   "ce_qu_il_faut_retenir": "...",
   "verdict_html": "...",
   "checklist_html": "...",
+  "quick_card_html": "...",
   "signature": "...",
   "citations": [],
   "opportunites_liens_internes": [],
@@ -4026,6 +4085,7 @@ Génère UNIQUEMENT le JSON de conclusion.`;
       article.faq = conclusionJson.faq || null;
       article.recommandations = conclusionJson.recommandations || null;
       article.ce_qu_il_faut_retenir = conclusionJson.ce_qu_il_faut_retenir || null;
+      article.quick_card_html = conclusionJson.quick_card_html || null;
     } else {
       article.a_retenir = conclusionJson.a_retenir || null;
       if (conclusionJson.recommandations) article.recommandations = conclusionJson.recommandations;
@@ -4084,6 +4144,7 @@ Génère UNIQUEMENT le JSON de conclusion.`;
       if (content.article) {
         const article = content.article;
         const sections = [];
+        const isNews = (options.editorial_mode || 'evergreen') === 'news';
 
         // 0. Quick Guide
         let quickGuideText = article.quick_guide?.trim() || '';
@@ -4160,6 +4221,10 @@ Génère UNIQUEMENT le JSON de conclusion.`;
               else sections.push(retenirText);
             } else {
               sections.push('<h2>Ce qu\'il faut retenir</h2>\n<p>Les points clés de cet article et les outils utiles.</p>');
+            }
+            if (article.quick_card_html?.trim()) {
+              sections.push(article.quick_card_html.trim());
+              console.log('   ✅ Quick-reference card intégrée');
             }
           }
           if (article.signature?.trim()) sections.push(article.signature);
