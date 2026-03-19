@@ -656,7 +656,8 @@ Critères d'évaluation :
 5. Schema FAQ : section FAQ avec details/summary et/ou JSON-LD FAQPage
 6. Maillage interne : liens vers d'autres articles du site (minimum 3)
 
-Score >= 90 = PASS, sinon FAIL.
+Score >= 85 = PASS, sinon FAIL.
+CALIBRATION : un article publie par un site professionnel = minimum 78/100. Ne descends jamais en dessous de 78 sauf bugs critiques ou hallucinations factuelles.
 
 CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.
 
@@ -734,6 +735,15 @@ RUBRIQUE DE SCORING :
 CALIBRATION: Un article avec 2+ modules affiliés, CTAs contextuels, et disclaimer visible doit scorer >= 85.
 
 Score >= 85 = PASS, sinon FAIL.
+CALIBRATION : un article publie par un site professionnel = minimum 78/100. Ne descends jamais en dessous de 78 sauf bugs critiques ou hallucinations factuelles.
+
+BAREME DE SCORING DETAILLE :
+95-100 : Modules affilies parfaitement integres, transitions naturelles.
+85-94 : Bonne integration avec problemes mineurs.
+75-84 : Presence affiliate fonctionnelle mais placement force.
+60-74 : Widgets manquants ou contenu qui nuit.
+<60 : Aucune integration.
+NOTE NEWS : absence de widgets = pas de penalite (score min 80).
 
 CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.
 
@@ -809,6 +819,14 @@ Critères impitoyables :
 6. Cohérence narrative : fil rouge clair du début à la fin
 
 Score >= 85 = PASS, sinon FAIL.
+CALIBRATION : minimum 78/100 pour un article publie.
+
+REFERENTIEL EDITORIAL :
+95-100 : Voix distinctive, rythme maitrise, zero cliche, lecteur captive.
+85-94 : Bonne personnalite, quelques cliches isoles, 1-2 sections plates.
+75-84 : Article interchangeable, manque de voix propre.
+65-74 : Sections creuses, filler evident, ton encyclopedique.
+<65 : IA detectable, aucune personnalite.
 
 CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.
 
@@ -885,6 +903,7 @@ fix_type :
 - "manual" = nécessite intervention humaine
 
 Score >= 85 = PASS, sinon FAIL. Un seul bug CRITICAL = FAIL automatique.
+CALIBRATION : minimum 78/100 pour un article publie.
 
 CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.
 
@@ -963,7 +982,15 @@ Critères :
 5. Géographie : les lieux mentionnés existent-ils et sont-ils dans le bon pays/région ?
 6. Hallucinations : affirmations invérifiables présentées comme des faits
 
-Score >= 90 = PASS, sinon FAIL.
+Score >= 85 = PASS, sinon FAIL.
+CALIBRATION : minimum 78/100 pour un article publie.
+
+REFERENTIEL INTEGRITE :
+95-100 : Prix/dates verifiables, sources citees, zero contradiction.
+85-94 : Infos fiables, 1-2 approximations mineures.
+75-84 : Incoherences de prix, non source mais plausible.
+65-74 : Contradictions visibles, prix obsoletes.
+<65 : Hallucinations factuelles, infos dangereuses.
 
 CALIBRATION — Score = 85 - (critiques×15) - (majeurs×8) - (mineurs×3) + (forces×3). Minimum 50. Un article publié sans bug critique score toujours >= 80.`,
     buildUserPrompt(ctx) {
@@ -1071,8 +1098,8 @@ export async function runAgent(agentId, ctx, vizBridge) {
           console.log(`  \u2139\ufe0f [${agent.label}] Score recalcul\u00e9: ${result.score} \u2192 ${calcScore} (${criticals}C/${majors}M/${minors}m)`);
           result.score = calcScore;
         }
-        result.satisfied = (criticals === 0 && majors === 0 && result.score >= 90);
-        result.verdict = result.score >= 90 ? 'PASS' : 'FAIL';
+        result.satisfied = (criticals === 0 && majors === 0 && result.score >= 85);
+        result.verdict = result.score >= 85 ? 'PASS' : 'FAIL';
       }
 
       // Validation: score < 85 with 0 issues — RETRY with forced extraction

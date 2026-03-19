@@ -913,6 +913,9 @@ async function publishArticle(article) {
 
   console.log('✅ Post-processing fixes applied (encoding, ghost links, dedup, empty FAQ, country articles, FAQ dedup, orphan divs, blockquotes, FAQ arrows)');
 
+  // Write back post-processed content to article object
+  article = { ...article, content: finalContent };
+
   // ─── TITLE DEDUPLICATION CHECK ───
   try {
     const searchRes = await axios.get(wpUrl + '/wp-json/wp/v2/posts', {
