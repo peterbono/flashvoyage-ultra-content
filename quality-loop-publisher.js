@@ -657,7 +657,7 @@ function rewriteListicleTitle(title) {
 
 
 // ─── ENCODING BREAKS FIXER ──────────────────────────────────
-import { applyPostProcessingFixers, scrubUnicodeArtifacts, fixEncodingBreaks, fixGhostLinks, fixDuplicateCitations, fixEmptyFaqEntries, splitWallParagraphs, fixSlugAnchors, fixNestedLinks, cleanBlockquoteContent, fixFrenchCountryArticles, deduplicateFaqSections, fixOrphanClosingTags, removeEnglishBlockquotes, validateTitleNumberPromise, fixBlockquoteIssues, removeTestimonialLabel, fixConsecutiveHeadings, limitOutilsVoyageLinks, capH2Count } from './post-processing-fixers.js';
+import { applyPostProcessingFixers, scrubUnicodeArtifacts, fixEncodingBreaks, fixGhostLinks, fixDuplicateCitations, fixEmptyFaqEntries, splitWallParagraphs, fixSlugAnchors, fixNestedLinks, cleanBlockquoteContent, fixFrenchCountryArticles, deduplicateFaqSections, fixOrphanClosingTags, removeEnglishBlockquotes, validateTitleNumberPromise, fixBlockquoteIssues, removeTestimonialLabel, fixConsecutiveHeadings, limitOutilsVoyageLinks, capH2Count, fixV7EncodingArtifacts, removeEmptyBlockquotes, removeRawRedditBlockquotes, fixConjunctionTruncation, stripLlmSyntheseBanner } from './post-processing-fixers.js';
 
 
 
@@ -858,6 +858,13 @@ async function publishArticle(article) {
   finalContent = fixConsecutiveHeadings(finalContent);
   finalContent = limitOutilsVoyageLinks(finalContent);
   finalContent = capH2Count(finalContent);
+
+  // v7 fixers — quality-93.5 post-mortem fixes
+  finalContent = fixV7EncodingArtifacts(finalContent);
+  finalContent = removeEmptyBlockquotes(finalContent);
+  finalContent = removeRawRedditBlockquotes(finalContent);
+  finalContent = fixConjunctionTruncation(finalContent);
+  finalContent = stripLlmSyntheseBanner(finalContent);
 
   // ── NUCLEAR CLEANUP: remove all blockquotes, activity widgets, orphan widget text ──
   // Blockquotes: quote selection too unreliable → remove all

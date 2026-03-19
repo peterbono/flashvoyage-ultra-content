@@ -2683,6 +2683,12 @@ export function applyPostProcessingFixers(html) {
   // v6 fixers — country articles & FAQ dedup
   c = fixFrenchCountryArticles(c);
   c = deduplicateFaqSections(c);
+  // v7 fixers — quality-93.5 post-mortem fixes
+  c = fixV7EncodingArtifacts(c);
+  c = removeEmptyBlockquotes(c);
+  c = removeRawRedditBlockquotes(c);
+  c = fixConjunctionTruncation(c);
+  c = stripLlmSyntheseBanner(c);
     // Clean data-fv attributes from remaining elements
   c = c.replace(/<p[^>]*data-fv-[^>]*class="fv-authority-move"[^>]*>[\s\S]*?<\/p>/gi, "");
   c = c.replace(/ data-fv-(?:proof|move)="[^"]*"/gi, "");
@@ -2918,4 +2924,195 @@ export function capH2Count(html, maxH2 = 7) {
     if (h2Count > maxH2) return '<h3' + attrs + '>' + text + '</h3>';
     return match;
   });
+}
+
+
+// ===================================================================
+// v7 FIXERS - Quality-93.5 article post-mortem
+// ===================================================================
+
+/**
+ * FIX v7-1: Additional encoding artifact fixes
+ * Catches word collisions and splits missed by v5 fixers
+ */
+export function fixV7EncodingArtifacts(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  // "\u00e7a" + word collision: \u00e7a+\u00e9limine, \u00e7a+augmente, \u00e7a+emp\u00eache
+  out = out.replace(/(?<=[\s>.,;:!?()\-]|^)\u00e7a([aeiouy\u00e9\u00e8\u00ea\u00eb\u00e0\u00e2\u00e4\u00f9\u00fb\u00fc\u00ee\u00ef\u00f4\u00f6][a-z\u00e0-\u00ff]{3,})/gi, function(m, rest) {
+    fixCount++;
+    return "\u00e7a " + rest;
+  });
+  
+  // "a \u00e9rienne" -> "a\u00e9rienne" (prefix "a" is part of the word, not the verb "a")
+  const aCompounds = [
+    [/\ba (\u00e9rienne?s?)\b/g, "a$1"],
+    [/\ba (\u00e9roport)/g, "a$1"],
+    [/\ba (\u00e9rodrome)/g, "a$1"],
+    [/\ba (\u00e9rogare)/g, "a$1"],
+    [/\ba (\u00e9rosol)/g, "a$1"],
+    [/\ba (\u00e9ration)/g, "a$1"],
+    [/\ba (\u00e9r\u00e9e?s?)\b/g, "a$1"],
+  ];
+  for (const [pattern, replacement] of aCompounds) {
+    const before = out;
+    out = out.replace(pattern, replacement);
+    if (out !== before) fixCount++;
+  }
+  
+  // Hyphenated compound with space before hyphen
+  out = out.replace(/peut- \u00eatre/g, function() { fixCount++; return "peut-\u00eatre"; });
+  out = out.replace(/aujourd[\u2019'] hui/g, function() { fixCount++; return "aujourd\u2019hui"; });
+  
+  if (fixCount > 0) console.log("\ud83d\udd24 V7_ENCODING: " + fixCount + " encoding artifact(s) fixed");
+  return out;
+}
+
+/**
+ * FIX v7-2: Remove empty or near-empty blockquotes
+ */
+export function removeEmptyBlockquotes(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  out = out.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, function(match, inner) {
+    var textOnly = inner.replace(/<[^>]+>/g, "").trim();
+    
+    if (textOnly.length === 0 || /^[,;:\s.\-\u2014\u2013]*$/.test(textOnly)) {
+      fixCount++;
+      return "";
+    }
+    
+    if (/^[,\s]*Extrait de t\u00e9moignage[s]?[,\s]*$/i.test(textOnly)) {
+      fixCount++;
+      return "";
+    }
+    
+    if (textOnly.length < 15 && !/[.!?]/.test(textOnly)) {
+      fixCount++;
+      return "";
+    }
+    
+    return match;
+  });
+  
+  if (fixCount > 0) console.log("\ud83e\uddf9 V7_EMPTY_BQ: " + fixCount + " empty/malformed blockquote(s) removed");
+  return out;
+}
+
+/**
+ * FIX v7-3: Remove raw Reddit content that leaked into blockquotes
+ */
+export function removeRawRedditBlockquotes(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  out = out.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, function(match, inner) {
+    var textOnly = inner.replace(/<[^>]+>/g, "").trim();
+    
+    if (/Besoin de retours sur/i.test(textOnly)) {
+      var sentences = textOnly.split(/[.!?]/).filter(function(s) { return s.trim().length > 20; });
+      if (sentences.length >= 2) {
+        var first = sentences[0].trim().toLowerCase().slice(0, 40);
+        var hasDuplicate = sentences.slice(1).some(function(s) { return s.trim().toLowerCase().startsWith(first); });
+        if (hasDuplicate) { fixCount++; return ""; }
+      }
+      if (/Besoin de retours sur l[\u2019']itin\u00e9raire/i.test(textOnly)) {
+        fixCount++;
+        return "";
+      }
+    }
+    
+    if (/\b(need feedback|itinerary check|trip report|rate my|roast my)\b/i.test(textOnly)) {
+      fixCount++;
+      return "";
+    }
+    
+    if (/(?:Posted by u\/|submitted by|self\.[A-Z])/i.test(textOnly)) {
+      fixCount++;
+      return "";
+    }
+    
+    return match;
+  });
+  
+  if (fixCount > 0) console.log("\ud83d\udea9 V7_RAW_REDDIT: " + fixCount + " raw Reddit blockquote(s) removed");
+  return out;
+}
+
+/**
+ * FIX v7-4: Fix truncated sentences ending with conjunction + period
+ */
+export function fixConjunctionTruncation(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  var patterns = [
+    [/ et\.<\/p>/g, ".</p>"],
+    [/ ou\.<\/p>/g, ".</p>"],
+    [/ mais\.<\/p>/g, ".</p>"],
+    [/ ni\.<\/p>/g, ".</p>"],
+    [/ car\.<\/p>/g, ".</p>"],
+    [/ donc\.<\/p>/g, ".</p>"],
+    [/ et\.<\/li>/g, ".</li>"],
+    [/ ou\.<\/li>/g, ".</li>"],
+    [/ et\. ([A-Z\u00c0-\u00dc])/g, ". $1"],
+    [/ ou\. ([A-Z\u00c0-\u00dc])/g, ". $1"],
+  ];
+  
+  for (var i = 0; i < patterns.length; i++) {
+    var before = out;
+    out = out.replace(patterns[i][0], patterns[i][1]);
+    if (out !== before) fixCount++;
+  }
+  
+  // Guillemet + dangling conjunction
+  out = out.replace(/(\u00bb)\s+(?:et|ou|mais|ni)\./g, function(m, guillemet) {
+    fixCount++;
+    return guillemet + ".";
+  });
+  
+  if (fixCount > 0) console.log("\u2702\ufe0f V7_TRUNC_CONJ: " + fixCount + " truncated conjunction(s) fixed");
+  return out;
+}
+
+/**
+ * FIX v7-5: Strip LLM-generated Synthese banner (keep only the programmatic one)
+ */
+export function stripLlmSyntheseBanner(html) {
+  let out = html;
+  let fixCount = 0;
+  
+  var bannerMatches = out.match(/<div[^>]*class=["']fv-source-anchor["'][^>]*>[\s\S]*?<\/div>/gi) || [];
+  
+  if (bannerMatches.length > 1) {
+    for (var i = 0; i < bannerMatches.length; i++) {
+      if (/\[N\]|\[X\]/.test(bannerMatches[i])) {
+        out = out.replace(bannerMatches[i], "");
+        fixCount++;
+      }
+    }
+    var remaining = out.match(/<div[^>]*class=["']fv-source-anchor["'][^>]*>[\s\S]*?<\/div>/gi) || [];
+    if (remaining.length > 1) {
+      for (var j = 1; j < remaining.length; j++) {
+        out = out.replace(remaining[j], "");
+        fixCount++;
+      }
+    }
+  } else if (bannerMatches.length === 1) {
+    if (/\[N\]|\[X\]/.test(bannerMatches[0])) {
+      out = out.replace(bannerMatches[0], "");
+      fixCount++;
+    }
+  }
+  
+  // Strip standalone paragraph with Synthese emoji
+  out = out.replace(/<p[^>]*>\s*\ud83d\udcca\s*(?:<strong>)?Synth\u00e8se de[^<]*t\u00e9moignages?[^<]*(?:<\/strong>)?[^<]*<\/p>/gi, function() {
+    fixCount++;
+    return "";
+  });
+  
+  if (fixCount > 0) console.log("\ud83c\udff7\ufe0f V7_SYNTH_BANNER: " + fixCount + " duplicate/broken Synth\u00e8se banner(s) stripped");
+  return out;
 }
