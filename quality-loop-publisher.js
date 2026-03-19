@@ -886,6 +886,24 @@ async function publishArticle(article) {
   // Remove leaked pipeline jargon: "CTA:" labels visible in article text
   finalContent = finalContent.replace(/\bCTA\s*:\s*/gi, '');
 
+  // Remove entire affiliate-module aside blocks for tours/activities (Amsterdam bug)
+  finalContent = finalContent.replace(/<aside[^>]*data-placement-id="(?:tours|activities)"[^>]*>[\s\S]*?<\/aside>/gi, '');
+  // Remove "Prix gonflés" + "arnaques touristiques" H3 blocks from angle-hunter
+  finalContent = finalContent.replace(/<h3[^>]*>[^<]*(?:prix gonfl|arnaques touristiques|Billets coupe-file)[^<]*<\/h3>\s*<p[^>]*>[^<]*<\/p>/gi, '');
+  // Remove "Utile si tu" H3 blocks (coworking, accommodation, etc.)
+  finalContent = finalContent.replace(/<h3[^>]*>\s*Utile si tu[^<]*<\/h3>\s*(?:<p[^>]*>[^<]*<\/p>\s*)*(?:<a[^>]*>[^<]*<\/a>\s*)?/gi, '');
+  // Remove "Trouver un espace de coworking" orphan links
+  finalContent = finalContent.replace(/<p[^>]*>\s*<a[^>]*>Trouver un espace[^<]*<\/a>\s*<\/p>/gi, '');
+  // Remove any remaining [fv_widget ...] shortcodes that weren't rendered
+  finalContent = finalContent.replace(/\[fv_widget[^\]]*\]/gi, '');
+
+  // Fix checklist items: each ✔️/❌ must be on its own line (<p>)
+  finalContent = finalContent.replace(/(<div[^>]*class="fv-checklist"[^>]*>)([\s\S]*?)(<\/div>)/gi, (match, open, inner, close) => {
+    // Split on ✔️ or ❌ that are NOT at the start of a <p>
+    let fixed = inner.replace(/([^>\n])(✔️|❌)/g, '$1</p>\n<p>$2');
+    return open + fixed + close;
+  });
+
   console.log('✅ Post-processing fixes applied (encoding, ghost links, dedup, empty FAQ, country articles, FAQ dedup, orphan divs, blockquotes, FAQ arrows)');
 
   // ─── TITLE DEDUPLICATION CHECK ───

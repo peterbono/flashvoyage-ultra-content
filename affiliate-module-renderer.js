@@ -167,7 +167,9 @@ function generateWidgetScript(placement, geo_defaults) {
       return `[fv_widget type="transfers"]`;
 
     case 'tours':
-      return `[fv_widget type="tours"]`;
+    case 'activities':
+      // DISABLED — always shows Amsterdam regardless of destination
+      return '';
 
     case 'car_rental':
       return `[fv_widget type="car_rental"]`;
