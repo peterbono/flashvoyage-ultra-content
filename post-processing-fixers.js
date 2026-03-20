@@ -2692,6 +2692,9 @@ export function applyPostProcessingFixers(html) {
     // Clean data-fv attributes from remaining elements
   c = c.replace(/<p[^>]*data-fv-[^>]*class="fv-authority-move"[^>]*>[\s\S]*?<\/p>/gi, "");
   c = c.replace(/ data-fv-(?:proof|move)="[^"]*"/gi, "");
+  // v7 fixers — conciseness, vocab diversity, AI citability
+  c = diversifyOverusedWords(c);
+  c = enhanceAiCitability(c);
   return c;
 }
 
@@ -3115,4 +3118,152 @@ export function stripLlmSyntheseBanner(html) {
   
   if (fixCount > 0) console.log("\ud83c\udff7\ufe0f V7_SYNTH_BANNER: " + fixCount + " duplicate/broken Synth\u00e8se banner(s) stripped");
   return out;
+}
+
+// ─── WORD COUNT CAP ──────────────────────────────────────────
+// Enforces max word count by trimming the weakest sections (filler, limites/biais)
+// Target: 2200 words evergreen, 1000 words news
+export function capWordCount(html, isNews = false) {
+  const MAX_WORDS = isNews ? 1000 : 2500;
+  const plainText = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  const currentWords = plainText.split(/\s+/).length;
+
+  if (currentWords <= MAX_WORDS) return html;
+
+  console.log(`  ✂️ WORD_CAP: ${currentWords} mots → cible ${MAX_WORDS}`);
+
+  let result = html;
+  const wordsToRemove = currentWords - MAX_WORDS;
+
+  // Strategy 1: Remove "Limites et biais" section entirely (often 150-300 words of filler)
+  const limitesRegex = /<h2[^>]*>(?:Limites et biais|Limites de cet article|Biais et limites)[^<]*<\/h2>([\s\S]*?)(?=<h2|<div class="fv-|$)/i;
+  const limitesMatch = result.match(limitesRegex);
+  if (limitesMatch && wordsToRemove > 100) {
+    const limitesWords = limitesMatch[0].replace(/<[^>]*>/g, ' ').split(/\s+/).length;
+    result = result.replace(limitesRegex, '');
+    console.log(`  ✂️ WORD_CAP: Removed "Limites et biais" section (-${limitesWords} words)`);
+    const newCount = result.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().split(/\s+/).length;
+    if (newCount <= MAX_WORDS) return result;
+  }
+
+  // Strategy 2: Trim the longest non-essential paragraphs (those without key data)
+  // Find paragraphs and score them by value (low value = generic, no numbers, no quotes)
+  const pRegex = /<p(?:\s[^>]*)?>([^<]{200,})<\/p>/g;
+  const paragraphs = [];
+  let match;
+  while ((match = pRegex.exec(result)) !== null) {
+    const text = match[1];
+    const words = text.split(/\s+/).length;
+    let value = 0;
+    // High-value signals: numbers, quotes, prices, named people
+    if (/\d/.test(text)) value += 3;
+    if (/[«»]/.test(text)) value += 3;
+    if (/\d+\s*€|euros?/i.test(text)) value += 5;
+    if (/\b[A-Z][a-zà-ÿ]+,\s*\d{2}\s*ans/.test(text)) value += 4; // Named person
+    if (/spoiler|verdict|calcul/i.test(text)) value += 2; // Tic de langage
+    // Low-value signals: generic filler
+    if (/il est important|en résumé|pour conclure|dans tous les cas/i.test(text)) value -= 3;
+    paragraphs.push({ full: match[0], text, words, value, index: match.index });
+  }
+
+  // Sort by value ascending (remove lowest-value first)
+  paragraphs.sort((a, b) => a.value - b.value);
+
+  let removedWords = 0;
+  const currentTotal = result.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().split(/\s+/).length;
+  const stillToRemove = currentTotal - MAX_WORDS;
+
+  for (const p of paragraphs) {
+    if (removedWords >= stillToRemove) break;
+    if (p.value >= 5) break; // Don't remove high-value paragraphs
+    result = result.replace(p.full, '');
+    removedWords += p.words;
+    console.log(`  ✂️ WORD_CAP: Trimmed low-value paragraph (-${p.words} words, value=${p.value})`);
+  }
+
+  const finalCount = result.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().split(/\s+/).length;
+  console.log(`  ✂️ WORD_CAP: Final word count: ${finalCount}`);
+  return result;
+}
+
+
+// ─── VOCABULARY DIVERSITY ────────────────────────────────────
+// Replaces overused words with synonyms to avoid redundant repetition penalty
+export function diversifyOverusedWords(html) {
+  const SYNONYM_MAP = {
+    'piège': ['angle mort', 'écueil', 'erreur courante', 'faux pas', 'mauvaise surprise'],
+    'galère': ['difficulté', 'complication', 'pépin', 'obstacle', 'souci'],
+    'arnaque': ['surcharge', 'abus tarifaire', 'pratique douteuse', 'entourloupe', 'tarif gonflé'],
+    'bon plan': ['astuce', 'combine', 'raccourci malin', 'alternative futée', 'option maligne'],
+    'incontournable': ['immanquable', 'à ne pas rater', 'essentiel', 'prioritaire', 'à cocher'],
+    'budget': ['enveloppe', 'dépenses', 'coût total', 'investissement', 'facture'],
+  };
+
+  let result = html;
+  let totalReplacements = 0;
+
+  for (const [word, synonyms] of Object.entries(SYNONYM_MAP)) {
+    // Count occurrences (case insensitive, word boundaries)
+    const regex = new RegExp(`\\b${word}s?\\b`, 'gi');
+    const matches = result.match(regex);
+    if (!matches || matches.length <= 3) continue; // 3 occurrences is fine
+
+    const MAX_KEEP = 3; // Keep first 3 as-is, replace the rest
+    let count = 0;
+    let synIndex = 0;
+
+    result = result.replace(regex, (match) => {
+      count++;
+      if (count <= MAX_KEEP) return match; // Keep first N
+      // Don't replace inside headings or data attributes
+      const synonym = synonyms[synIndex % synonyms.length];
+      synIndex++;
+      totalReplacements++;
+      // Preserve original casing
+      if (match[0] === match[0].toUpperCase()) {
+        return synonym.charAt(0).toUpperCase() + synonym.slice(1);
+      }
+      return synonym;
+    });
+
+    if (count > MAX_KEEP) {
+      console.log(`  🔄 VOCAB_DIVERSITY: "${word}" ${count}x → kept ${MAX_KEEP}, replaced ${count - MAX_KEEP}`);
+    }
+  }
+
+  if (totalReplacements > 0) {
+    console.log(`  🔄 VOCAB_DIVERSITY: ${totalReplacements} total word replacements`);
+  }
+  return result;
+}
+
+
+// ─── AI CITABILITY WRAPPER ──────────────────────────────────
+// Adds structured data-answer attributes to key fact paragraphs for LLM extraction
+// Also ensures the first paragraph after each H2 leads with the answer (answer-first pattern)
+export function enhanceAiCitability(html) {
+  let result = html;
+  let factCount = 0;
+
+  // Wrap paragraphs containing concrete facts (prices, dates, comparisons) with data-answer
+  result = result.replace(/<p>([^<]*\d+\s*€[^<]*)<\/p>/g, (match, text) => {
+    factCount++;
+    return `<p data-answer="true">${text}</p>`;
+  });
+
+  // Ensure H2 + first <p> pattern contains the key fact (not a preamble)
+  // Flag paragraphs that start with filler instead of facts
+  const fillerStarts = /^<p>(En effet|Il est important|Dans ce contexte|Comme mentionné|Il convient de|À noter que|Pour commencer)/i;
+  // Strip filler openers after H2 (e.g., "En effet, les prix..." → "Les prix...")
+  result = result.replace(/(<h2[^>]*>[^<]+<\/h2>\s*<p>)(En effet,?\s*|Il est important de\s+(?:noter|savoir|souligner)\s+que\s+|Dans ce contexte,?\s*|Comme mentionné\s+(?:plus haut|précédemment),?\s*|Il convient de\s+|À noter que\s+|Pour commencer,?\s*)([a-zà-ÿ])/gi,
+    (match, prefix, filler, firstChar) => {
+      console.log(`  🎯 AI_CITE: Stripped filler opener "${filler.trim()}" after H2`);
+      return prefix + firstChar.toUpperCase();
+    }
+  );
+
+  if (factCount > 0) {
+    console.log(`  🎯 AI_CITE: ${factCount} fact paragraphs marked for extraction`);
+  }
+  return result;
 }

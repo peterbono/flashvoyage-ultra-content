@@ -657,7 +657,7 @@ function rewriteListicleTitle(title) {
 
 
 // ─── ENCODING BREAKS FIXER ──────────────────────────────────
-import { applyPostProcessingFixers, scrubUnicodeArtifacts, fixEncodingBreaks, fixGhostLinks, fixDuplicateCitations, fixEmptyFaqEntries, splitWallParagraphs, fixSlugAnchors, fixNestedLinks, cleanBlockquoteContent, fixFrenchCountryArticles, deduplicateFaqSections, fixOrphanClosingTags, removeEnglishBlockquotes, validateTitleNumberPromise, fixBlockquoteIssues, removeTestimonialLabel, fixConsecutiveHeadings, limitOutilsVoyageLinks, capH2Count, fixV7EncodingArtifacts, removeEmptyBlockquotes, removeRawRedditBlockquotes, fixConjunctionTruncation, stripLlmSyntheseBanner } from './post-processing-fixers.js';
+import { applyPostProcessingFixers, scrubUnicodeArtifacts, fixEncodingBreaks, fixGhostLinks, fixDuplicateCitations, fixEmptyFaqEntries, splitWallParagraphs, fixSlugAnchors, fixNestedLinks, cleanBlockquoteContent, fixFrenchCountryArticles, deduplicateFaqSections, fixOrphanClosingTags, removeEnglishBlockquotes, validateTitleNumberPromise, fixBlockquoteIssues, removeTestimonialLabel, fixConsecutiveHeadings, limitOutilsVoyageLinks, capH2Count, fixV7EncodingArtifacts, removeEmptyBlockquotes, removeRawRedditBlockquotes, fixConjunctionTruncation, stripLlmSyntheseBanner, capWordCount } from './post-processing-fixers.js';
 
 
 
@@ -858,6 +858,7 @@ async function publishArticle(article) {
   finalContent = fixConsecutiveHeadings(finalContent);
   finalContent = limitOutilsVoyageLinks(finalContent);
   finalContent = capH2Count(finalContent);
+  finalContent = capWordCount(finalContent, (article.editorialMode || '').toLowerCase() === 'news');
 
   // v7 fixers — quality-93.5 post-mortem fixes
   finalContent = fixV7EncodingArtifacts(finalContent);
@@ -1175,6 +1176,7 @@ async function publishArticle(article) {
 
   // Final pass: cap H2s again (injections may have added more)
   finalContent = capH2Count(finalContent);
+  finalContent = capWordCount(finalContent, !isEvergreen);
 
     const postData = {
     title: finalTitle,

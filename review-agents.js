@@ -552,6 +552,66 @@ function detectDeterministicIssues(ctx) {
     });
   }
 
+  // Check 5: Vocabulary repetition (SearchLLM "Redundant Repetition" signal)
+  const overusedWords = { 'piège': 0, 'galère': 0, 'arnaque': 0, 'incontournable': 0, 'bon plan': 0 };
+  for (const word of Object.keys(overusedWords)) {
+    const re = new RegExp(`\\b${word}s?\\b`, 'gi');
+    overusedWords[word] = (text.match(re) || []).length;
+  }
+  const overused = Object.entries(overusedWords).filter(([, count]) => count > 4);
+  if (overused.length > 0) {
+    issues.editorial.push({
+      severity: 'major',
+      category: 'vocabulary-repetition',
+      description: `Mots surreprésentés : ${overused.map(([w, c]) => `"${w}" x${c}`).join(', ')} — pénalité SearchLLM "Redundant Repetition"`,
+      fix_suggestion: 'Remplacer les occurrences au-delà de 3 par des synonymes (angle mort, écueil, complication...)',
+      location: 'global'
+    });
+  }
+
+  // Check 6: Claim diversity — no H2 should repeat the same topic
+  const h2Topics = [];
+  const sectionParts2 = html.split(/(?=<h2[\s>])/i).filter(p => /<h2/i.test(p));
+  const topicKeywords = ['budget', 'transport', 'logement', 'visa', 'santé', 'sécurité', 'nourriture', 'culture', 'climat', 'coût', 'prix', 'arnaque', 'piège'];
+  for (const part of sectionParts2) {
+    const h2Match = part.match(/<h2[^>]*>(.*?)<\/h2>/i);
+    if (!h2Match) continue;
+    const title = h2Match[1].replace(/<[^>]+>/g, '').toLowerCase();
+    const bodyText = part.replace(/<h2[^>]*>.*?<\/h2>/i, '').replace(/<[^>]*>/g, '').toLowerCase();
+    const topics = topicKeywords.filter(kw => title.includes(kw) || (bodyText.match(new RegExp(`\\b${kw}`, 'g')) || []).length > 3);
+    h2Topics.push({ title: h2Match[1].replace(/<[^>]+>/g, ''), topics });
+  }
+  // Find duplicate topics across H2s
+  const topicSeen = {};
+  for (const { title, topics } of h2Topics) {
+    for (const t of topics) {
+      if (topicSeen[t]) {
+        issues.editorial.push({
+          severity: 'minor',
+          category: 'claim-diversity-low',
+          description: `Thème "${t}" apparaît dans 2+ H2 : "${topicSeen[t]}" et "${title}" — manque de diversité`,
+          fix_suggestion: 'Chaque H2 doit couvrir un angle différent. Fusionner ou recentrer.',
+          location: title
+        });
+        break; // One warning per duplicate is enough
+      }
+      topicSeen[t] = title;
+    }
+  }
+
+  // Check 7: Word count (conciseness signal)
+  const totalWords = text.split(/\s+/).length;
+  const maxWords = isEvergreen ? 2500 : 1000;
+  if (totalWords > maxWords) {
+    issues.editorial.push({
+      severity: totalWords > maxWords * 1.3 ? 'major' : 'minor',
+      category: 'word-count-excess',
+      description: `${totalWords} mots — dépasse le maximum de ${maxWords}. Conciseness = signal SEO fort (SearchLLM).`,
+      fix_suggestion: `Couper ${totalWords - maxWords} mots en supprimant les sections les moins denses en données`,
+      location: 'global'
+    });
+  }
+
   return { issues, bonuses };
 }
 

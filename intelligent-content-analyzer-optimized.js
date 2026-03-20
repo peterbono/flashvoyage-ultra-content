@@ -1765,6 +1765,8 @@ NE JAMAIS utiliser un seul protagoniste pour tout l'article.
 
 - ZÉRO amplification : ne dramatise pas, ne projette pas, ne suppose pas. Restitue les faits tels qu'ils sont.
 - Distingue explicitement ce qui est CERTAIN (fait vérifié, citation directe) de ce qui est INCERTAIN (hypothèse, rumeur, non confirmé).
+- VOCABULAIRE : N'utilise PAS le même mot ("piège", "galère", "arnaque") plus de 2 fois dans tout l'article news. Varie.
+- ANSWER-FIRST : Chaque paragraphe commence par le FAIT, pas par un préambule.
 
 📰 CADRE ÉDITORIAL NEWS — Contraintes de contenu (PAS un template rigide) :
 
@@ -1888,6 +1890,10 @@ REGLE SOURCE : Ne mentionne jamais Reddit, r/xxx, ou subreddit dans le texte. Le
 REGLE INTEGRITE : Utilise UNIQUEMENT les faits, prix, lieux et dates du brief ci-dessous. Aucun ajout exterieur.
 
 REGLE DEDUP : Chaque paragraphe apporte exactement 1 fait nouveau. Pas de repetition de citation, chiffre, ou formulation.
+
+REGLE VOCABULAIRE : N'utilise PAS le même mot ("piège", "galère", "arnaque", "budget", "incontournable") plus de 3 fois dans TOUT l'article. Synonymes obligatoires au-delà : "angle mort", "écueil", "complication", "enveloppe", "essentiel".
+
+REGLE ANSWER-FIRST : Après chaque H2, la PREMIÈRE phrase doit être la réponse (chiffre, fait, conseil actionnable). Jamais de préambule ("Dans cette section..." ou "Il est important de..."). Format : FAIT → CONTEXTE → NUANCE.
 
 - ✅ Ouvre TOUJOURS par une micro-scène sensorielle (lieu + action + tension), puis enchaîne sur une question. Exemple : «L'écran du distributeur affiche 220 bahts de frais — tu calcules mentalement si ça vaut le coup.»
 - Exemples calibrés :
@@ -3750,7 +3756,7 @@ Génère UNIQUEMENT le HTML de l'introduction (2-3 paragraphes <p>). Pas de JSON
     const systemPrompt = `Tu es un rédacteur expert FlashVoyages. Génère les SECTIONS H2 du corps de l'article (PAS l'intro, PAS la conclusion).
 
 RÈGLES DE STRUCTURE :
-- ${isNews ? '3-4 H2 factuels, 600-800 mots total.' : '4-5 H2 décisionnels, 1800-2200 mots total. MAXIMUM ABSOLU : 2500 mots et 5 H2. Au-delà = scope creep = rejet.'}
+- ${isNews ? '3-4 H2 factuels, 600-800 mots total. MAXIMUM ABSOLU : 1000 mots.' : '4-5 H2 décisionnels, 1800-2200 mots total. MAXIMUM ABSOLU : 2200 mots et 5 H2. CHAQUE MOT AU-DELÀ DE 2200 = du remplissage. Coupe. Sois concis. Un article de 2000 mots dense > un article de 3500 mots dilué.'}
 - Chaque H2 pose un arbitrage, une tension ou un choix. Inclure un verbe décisionnel (choisir, éviter, optimiser, risquer).
 - ✅ Chaque H2 contient un verbe décisionnel + destination ou angle concret. Exemple : «Pourquoi Bali coûte 40 % plus cher que prévu» au lieu de «Budget».
 - EXEMPLE DE QUALITE ATTENDUE (H2 decisionnel + premier paragraphe):
@@ -3802,6 +3808,19 @@ RYTHME DES PHRASES :
 - Phrase courte. Puis une phrase plus longue qui développe et apporte de la nuance. Puis une autre courte.
 - JAMAIS 2 phrases longues (15+ mots) d'affilée — insère une phrase de moins de 8 mots entre elles.
 - Varie la longueur : le lecteur doit sentir un rythme, pas un métronome.
+
+⚠️ CLAIM DIVERSITY (non-négociable) :
+- Chaque H2 couvre un ANGLE DIFFÉRENT (budget, logistique, culture, timing, confort, légal, santé...).
+- INTERDIT de revenir sur un point déjà traité dans une section précédente — même reformulé.
+- Si tu as mentionné "les frais bancaires" en H2-1, tu NE peux PAS reparler de frais bancaires en H2-3.
+- Chaque paragraphe apporte 1 FAIT NOUVEAU ou 1 PERSPECTIVE NOUVELLE. Zéro redite.
+- Vocabulaire : n'utilise PAS le même mot-clé ("piège", "galère", "arnaque", "budget") plus de 3 fois dans tout l'article. Varie avec des synonymes.
+
+🎯 CITABILITÉ AI (structure answer-first) :
+- Le PREMIER paragraphe après chaque H2 doit contenir la RÉPONSE DIRECTE (chiffre, fait, conseil). Pas de préambule.
+- ❌ "Dans cette section, nous allons voir..." → ✅ "Le JR Pass 7 jours coûte 245 € — rentable seulement si tu prends 3+ trajets longue distance."
+- Les faits clés (prix, durées, comparaisons) doivent être dans la PREMIÈRE phrase du paragraphe, pas enterrés à la fin.
+- Quand tu donnes un conseil, formule-le comme une réponse autonome qu'un moteur AI pourrait extraire et citer telle quelle.
 
 ${isNews ? `CADRE NEWS :
 - Bloc "Ce que ça change concrètement" (3-7 bullets actionnables).
