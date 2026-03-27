@@ -411,12 +411,66 @@ export async function runAntiHallucinationGuard({ html, extracted, context = {},
              (numberDigits === numDigits && numberDigits.length > 0);
     });
     
-    // Tolérance: pourcentages type "conseil" (5–30 %) non bloquants — ex. "prévoyez 15-20% de marge"
+    // Tolérance: pourcentages type "conseil" non bloquants
+    // Round percentages (multiples of 5 or 10) are general knowledge, not hallucinated data
+    // Small percentages (0-4%) are common in editorial contexts (fees, margins, "0% commission")
+    // 100% is always generic ("100% fiable", "100% garanti")
     const percentMatch = normalizedNumber.match(/^(\d+)\s*%$/);
     if (percentMatch) {
       const pct = parseInt(percentMatch[1], 10);
-      if (pct >= 5 && pct <= 30) {
-        continue; // Ne pas bloquer sur pourcentages conseil typiques
+      // Allow: 0% and 100% — always generic editorial language
+      if (pct === 0 || pct === 100) {
+        continue; // "0% de frais", "100% garanti" — toujours générique
+      }
+      // Allow: small percentages (1-4%) used for fees/margins: "1-2% de frais de change"
+      if (pct >= 1 && pct <= 4) {
+        continue; // Ne pas bloquer sur petits pourcentages (frais bancaires, commissions)
+      }
+      // Allow: common round percentages used in general advice (5%, 10%, 20%, 30%, 50%, 70%, 80%, etc.)
+      // Block: specific/precise percentages that look like sourced statistics (e.g., 37%, 68%, 82.5%)
+      if (pct >= 5 && pct <= 95 && (pct % 5 === 0)) {
+        continue; // Ne pas bloquer sur pourcentages ronds (conseil général)
+      }
+    }
+
+    // ===== GENERIC PATTERN WHITELIST =====
+    // These patterns represent common editorial language, NOT hallucinated data.
+    // A travel article saying "prévoir 3 jours" or "en 5 heures" is generic advice,
+    // not a factual claim that needs source verification.
+
+    // Tolérance: Generic durations — "N jours", "N nuits", "N semaines", "N mois" (N = 1-90)
+    const durationMatch = normalizedNumber.match(/^(\d+)\s*(jours?|nuits?|semaines?|weeks?|days?|nights?|mois|months?)$/);
+    if (durationMatch) {
+      const n = parseInt(durationMatch[1], 10);
+      if (n >= 1 && n <= 90) {
+        continue; // Generic duration: "3 jours", "5 nuits", "2 semaines", "6 mois" — editorial advice
+      }
+    }
+
+    // Tolérance: Age references — "N ans" / "N years" (N = 1-99)
+    const ageMatch = normalizedNumber.match(/^(\d+)\s*(ans?|annees?|years?)$/);
+    if (ageMatch) {
+      const n = parseInt(ageMatch[1], 10);
+      if (n >= 1 && n <= 99) {
+        continue; // Generic age/duration: "18 ans", "2 ans d'expérience" — common knowledge
+      }
+    }
+
+    // Tolérance: Generic hour durations — "N heures" / "N hours" (N = 1-48)
+    const hourMatch = normalizedNumber.match(/^(\d+)\s*(heures?|hours?)$/);
+    if (hourMatch) {
+      const n = parseInt(hourMatch[1], 10);
+      if (n >= 1 && n <= 48) {
+        continue; // Generic hours: "3 heures de trajet", "en 2 heures" — editorial advice
+      }
+    }
+
+    // Tolérance: Generic frequency — "N fois" (N = 1-20)
+    const foisMatch = normalizedNumber.match(/^(\d+)\s*(fois|times?)$/);
+    if (foisMatch) {
+      const n = parseInt(foisMatch[1], 10);
+      if (n >= 1 && n <= 20) {
+        continue; // Generic frequency: "2 fois par jour", "3 fois moins cher" — editorial
       }
     }
 
@@ -463,7 +517,26 @@ export async function runAntiHallucinationGuard({ html, extracted, context = {},
       'technique', 'stratégie', 'approche', 'processus', 'étape', 'phase',
       'période', 'moment', 'temps', 'date', 'jour', 'semaine', 'mois', 'année',
       'guide', 'liste', 'tableau', 'graphique', 'diagramme', 'schéma',
-      'document', 'fichier', 'dossier', 'page', 'ligne', 'mot', 'phrase'
+      'document', 'fichier', 'dossier', 'page', 'ligne', 'mot', 'phrase',
+      // Common travel vocabulary — NOT hallucinated locations
+      'asie', 'asia', 'europe', 'afrique', 'amérique', 'océanie',
+      'asie du sud-est', 'southeast asia', 'moyen-orient',
+      'chinatown', 'old town', 'vieille ville', 'centre-ville', 'downtown',
+      'airbnb', 'booking', 'agoda', 'hostelworld', 'skyscanner',
+      'grab', 'gojek', 'bolt', 'uber', 'wise', 'revolut', 'western union',
+      'lonely planet', 'routard', 'tripadvisor', 'google maps',
+      'backpacker', 'nomade', 'digital nomad', 'expatrié', 'expat',
+      'tuk-tuk', 'tuktuk', 'songthaew', 'baht bus', 'scooter', 'moto',
+      'street food', 'night market', 'marché de nuit', 'floating market',
+      'temple', 'pagode', 'mosquée', 'église', 'cathédrale',
+      'hostel', 'guesthouse', 'resort', 'ryokan', 'capsule hotel',
+      'onsen', 'spa', 'massage', 'coworking',
+      'shinsekai', 'shinjuku', 'shibuya', 'akihabara', 'harajuku', 'roppongi',
+      'khao san', 'sukhumvit', 'silom', 'siam', 'chatuchak',
+      'hoan kiem', 'old quarter', 'ben thanh',
+      'kuta', 'seminyak', 'canggu', 'uluwatu', 'tanah lot',
+      'orchard road', 'marina bay', 'little india', 'clarke quay',
+      'intramuros', 'makati', 'bgc', 'poblacion'
     ]);
     
     const detectedLocationsInText = detectLocations(text);

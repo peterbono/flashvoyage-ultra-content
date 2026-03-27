@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    overflow: hidden;
+    font-family: 'Inter', Arial, sans-serif;
+    background: #1A1A1A;
+  }
+
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Title section */
+  .title-section {
+    width: 100%;
+    text-align: center;
+    padding: 56px 56px 16px;
+  }
+
+  .title-section .accent-line {
+    width: 60px;
+    height: 4px;
+    background: #FFD700;
+    border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+
+  .title-section h1 {
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 52px;
+    color: #FFD700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+
+  .title-section .subtitle {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.50);
+    margin-top: 10px;
+  }
+
+  /* Bar chart area */
+  .chart-area {
+    width: 100%;
+    padding: 40px 72px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 36px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .bar-icon {
+    font-size: 36px;
+    width: 48px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .bar-label {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #FFFFFF;
+    width: 200px;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.3s ease;
+  }
+
+  /* Brighter, more saturated category colors */
+  .bar-fill.hebergement { background: #FF4757; }
+  .bar-fill.nourriture { background: #FF7F50; }
+  .bar-fill.transport { background: #FFD700; }
+  .bar-fill.activites { background: #2ED573; }
+  .bar-fill.esim { background: #1E90FF; }
+
+  .bar-price {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #FFFFFF;
+    width: 90px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* Total section */
+  .total-section {
+    width: 100%;
+    text-align: center;
+    padding: 24px 56px 64px;
+  }
+
+  .total-section .divider {
+    width: 80%;
+    height: 2px;
+    background: rgba(255, 215, 0, 0.20);
+    margin: 0 auto 32px;
+  }
+
+  .total-section .total-label {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.50);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .total-section .total-amount {
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 72px;
+    color: #FFD700;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+
+  .total-section .total-period {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.60);
+    margin-top: 8px;
+  }
+
+  /* Brand watermark — yellow small bottom-right */
+  .brand-watermark {
+    position: absolute;
+    bottom: 24px;
+    right: 40px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #FFD700;
+    opacity: 0.30;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <!-- Title -->
+    <div class="title-section">
+      <div class="accent-line"></div>
+      <h1>{{TITLE}}</h1>
+      <div class="subtitle">{{SUBTITLE}}</div>
+    </div>
+
+    <!-- Bar chart -->
+    <div class="chart-area">
+      <!-- Hebergement -->
+      <div class="bar-row">
+        <span class="bar-icon">🏨</span>
+        <div class="bar-label">{{CAT1_LABEL}}</div>
+        <div class="bar-track">
+          <div class="bar-fill hebergement" style="width: {{CAT1_PCT}}%;"></div>
+        </div>
+        <div class="bar-price">{{CAT1_PRICE}}</div>
+      </div>
+
+      <!-- Nourriture -->
+      <div class="bar-row">
+        <span class="bar-icon">🍜</span>
+        <div class="bar-label">{{CAT2_LABEL}}</div>
+        <div class="bar-track">
+          <div class="bar-fill nourriture" style="width: {{CAT2_PCT}}%;"></div>
+        </div>
+        <div class="bar-price">{{CAT2_PRICE}}</div>
+      </div>
+
+      <!-- Transport -->
+      <div class="bar-row">
+        <span class="bar-icon">🚗</span>
+        <div class="bar-label">{{CAT3_LABEL}}</div>
+        <div class="bar-track">
+          <div class="bar-fill transport" style="width: {{CAT3_PCT}}%;"></div>
+        </div>
+        <div class="bar-price">{{CAT3_PRICE}}</div>
+      </div>
+
+      <!-- Activites -->
+      <div class="bar-row">
+        <span class="bar-icon">🎟️</span>
+        <div class="bar-label">{{CAT4_LABEL}}</div>
+        <div class="bar-track">
+          <div class="bar-fill activites" style="width: {{CAT4_PCT}}%;"></div>
+        </div>
+        <div class="bar-price">{{CAT4_PRICE}}</div>
+      </div>
+
+      <!-- eSIM -->
+      <div class="bar-row">
+        <span class="bar-icon">📱</span>
+        <div class="bar-label">{{CAT5_LABEL}}</div>
+        <div class="bar-track">
+          <div class="bar-fill esim" style="width: {{CAT5_PCT}}%;"></div>
+        </div>
+        <div class="bar-price">{{CAT5_PRICE}}</div>
+      </div>
+    </div>
+
+    <!-- Total -->
+    <div class="total-section">
+      <div class="divider"></div>
+      <div class="total-label">Budget Total</div>
+      <div class="total-amount">{{TOTAL}}</div>
+      <div class="total-period">{{PERIOD}}</div>
+    </div>
+
+    <!-- Brand watermark -->
+    <div class="brand-watermark">- Flash Voyage -</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    overflow: hidden;
+    font-family: 'Inter', Arial, sans-serif;
+    background: #000;
+  }
+
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1350px;
+  }
+
+  /* Full photo background */
+  .photo {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url('{{IMAGE_URL}}');
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Dark gradient overlay — heavier for Histoires Vraies style */
+  .gradient-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 20%,
+      rgba(0, 0, 0, 0.10) 40%,
+      rgba(0, 0, 0, 0.40) 55%,
+      rgba(0, 0, 0, 0.75) 70%,
+      rgba(0, 0, 0, 0.92) 82%,
+      rgba(0, 0, 0, 0.98) 92%
+    );
+  }
+
+  /* Text block anchored to bottom center */
+  .text-block {
+    position: absolute;
+    bottom: 80px;
+    left: 0; right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 56px;
+  }
+
+  /* Yellow accent line above headline */
+  .accent-line {
+    width: 80px;
+    height: 4px;
+    background: #FFD700;
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  /* Big headline — Bebas Neue, white, ALL CAPS, 80px */
+  .headline {
+    color: #FFFFFF;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 80px;
+    font-weight: 400;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+    max-width: 950px;
+  }
+
+  /* Subtext — Inter 36px, white 80% */
+  .subtext {
+    color: rgba(255, 255, 255, 0.80);
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
+    max-width: 860px;
+  }
+
+  /* Swipe indicator — bottom right, YELLOW */
+  .swipe-indicator {
+    position: absolute;
+    bottom: 32px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #FFD700;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .swipe-indicator .arrow {
+    font-size: 24px;
+    color: #FFD700;
+  }
+
+  /* Brand watermark — bottom left, YELLOW text */
+  .brand-watermark {
+    position: absolute;
+    bottom: 30px;
+    left: 40px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFD700;
+    opacity: 0.70;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="photo"></div>
+    <div class="gradient-overlay"></div>
+
+    <div class="text-block">
+      <div class="accent-line"></div>
+      <div class="headline">{{HEADLINE}}</div>
+      <div class="subtext">{{SUBTEXT}}</div>
+    </div>
+
+    <!-- Swipe indicator bottom-right -->
+    <div class="swipe-indicator">
+      Swipe <span class="arrow">&#8594;</span>
+    </div>
+
+    <!-- Brand watermark bottom-left — yellow text -->
+    <div class="brand-watermark">- Flash Voyage -</div>
+  </div>
+</body>
+</html>

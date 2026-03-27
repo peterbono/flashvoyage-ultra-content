@@ -1080,26 +1080,117 @@ const isMainModule = process.argv[1] && (fileURLToPath(import.meta.url) === proc
 if (isMainModule) {
   const runner = new PipelineRunner();
   
-  // Exemple d'utilisation avec des données de test
+  // Test avec données réalistes pour dry-run
   const testInput = {
     post: {
-      title: 'Test Post',
-      selftext: 'Test content',
-      author: 'testuser',
-      url: 'https://reddit.com/r/test',
-      subreddit: 'test',
+      title: 'Just got back from 3 weeks in Japan - budget breakdown and tips',
+      selftext: `Just returned from my first solo trip to Japan (Tokyo, Kyoto, Osaka) and wanted to share my budget breakdown since I found it hard to find accurate numbers online.
+
+Total spent: 2,847 EUR for 21 days (not including flights)
+
+ACCOMMODATION (1,050 EUR total):
+- Tokyo: Stayed in hostels in Asakusa area, 25-30 EUR/night for dorm beds. Capsule hotels are fun for 1-2 nights (35 EUR) but not great for longer stays.
+- Kyoto: Splurged on a ryokan for 2 nights (85 EUR/night with dinner), rest in hostels (22 EUR/night). The ryokan was absolutely worth it.
+- Osaka: Cheapest hostels, 18-22 EUR/night in Namba area.
+
+FOOD (630 EUR total, ~30 EUR/day):
+- Konbini meals: 3-5 EUR (7-Eleven onigiri + drink = breakfast sorted)
+- Ramen shops: 8-12 EUR
+- Izakaya dinner: 15-25 EUR
+- I ate at a Michelin-starred ramen place for 9 EUR. Seriously.
+- Biggest surprise: vending machine drinks add up fast, spent maybe 3 EUR/day on them
+
+TRANSPORT (520 EUR):
+- JR Pass 21 days: 380 EUR - definitely worth it for Tokyo-Kyoto-Osaka triangle + day trips
+- Local trains/metro: ~7 EUR/day for the remaining city travel
+- Tip: get a Suica card immediately at the airport, it works everywhere
+
+ACTIVITIES (350 EUR):
+- Most temples: 3-5 EUR entry
+- TeamLab Borderless: 28 EUR (book 2 weeks ahead!)
+- Fushimi Inari: FREE and the best experience of the trip
+- Golden Gai in Shinjuku: budget 20-30 EUR for a bar crawl (drinks are 5-8 EUR each but the cover charges add up)
+
+BIGGEST MISTAKES:
+1. Not booking ryokans early enough - the good ones sell out 3 weeks ahead in March
+2. Exchanging money at the airport (terrible rates, lost about 40 EUR compared to 7-Eleven ATMs)
+3. Buying a pocket wifi instead of just getting an eSIM (saved nothing, more hassle)
+4. Not bringing enough cash - many small restaurants in Kyoto are cash only
+
+The thing nobody tells you: Japan is NOT as expensive as people say IF you eat like locals. Skip the tourist trap restaurants near temples. Walk 2 blocks in any direction and prices drop 40%.
+
+Also the shinkansen is incredible but the JR Pass only covers JR lines. I wasted 2 hours figuring out why my pass wouldn't work on a private line to Kurama temple.
+
+Would I go back? 100%. Already planning a return trip focused on Hokkaido.`,
+      author: 'solo_japan_traveler',
+      url: 'https://reddit.com/r/solotravel/comments/abc123/just_got_back_from_3_weeks_in_japan',
+      subreddit: 'solotravel',
       created_utc: Date.now() / 1000
     },
-    comments: [],
-    geo: {},
-    source: {}
+    comments: [
+      { body: 'Great breakdown! I spent about the same in 2 weeks. One tip: the JR Pass 7-day is better value if you concentrate your long-distance travel. I did Tokyo-Kyoto-Hiroshima in 7 days then used local passes after that.', author: 'japan_regular', score: 45 },
+      { body: 'The ryokan tip is so important. I booked mine 2 months ahead for cherry blossom season and it was still almost full. Kinosaki Onsen ryokans are amazing but book early.', author: 'onsen_lover', score: 32 },
+      { body: 'Disagree on the JR Pass 21 days. For most people doing 2-3 weeks, the 14-day pass + individual tickets for the rest is cheaper. Do the math for YOUR itinerary before buying.', author: 'budget_optimizer', score: 28 },
+      { body: 'Cash is king in Japan, especially outside Tokyo. I got caught with no cash in a small soba restaurant in rural Kyoto and it was embarrassing. Always have 10,000 yen on you minimum.', author: 'kyoto_based', score: 19 },
+      { body: 'For Osaka, stay in Shinsekai area instead of Namba. Way cheaper (15-18 EUR/night) and the street food is better. Kushikatsu for 1-2 EUR per stick is the best budget meal in Japan.', author: 'osaka_expert', score: 15 }
+    ],
+    geo: { country: 'Japan', city: 'Tokyo' },
+    source: { platform: 'reddit', subreddit: 'solotravel' }
   };
 
   runner.runPipeline(testInput)
-    .then(report => {
-      console.log('\n📊 PIPELINE REPORT:');
-      console.log(JSON.stringify(report, null, 2));
-      process.exit(report.success && !report.blocking ? 0 : 1);
+    .then(async (report) => {
+      console.log('\n📊 PIPELINE REPORT (generation):');
+      const finalArticle = report?.finalArticle;
+      if (!finalArticle || !finalArticle.content) {
+        console.error('❌ Pas d\'article final dans le rapport');
+        console.log(JSON.stringify(report, null, 2).substring(0, 2000));
+        process.exit(1);
+      }
+
+      // ── Run review agents on the final content ──
+      console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+      console.log('  REVIEW AGENTS — Analyse post-pipeline');
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+      try {
+        const { runAllAgents, runCeoValidator } = await import('./review-agents.js');
+        // Extract destination from various possible locations in the report
+        const destination = report?.steps?.['pattern-detector']?.data?.destination
+          || report?.steps?.['extractor']?.data?._smart_destination
+          || report?.steps?.['extractor']?.data?.destination
+          || null;
+        const ctx = {
+          html: finalArticle.content,
+          title: finalArticle.title || '',
+          titleTag: finalArticle.title_tag || finalArticle.title || '',
+          url: 'https://flashvoyage.com/test-dry-run/',
+          editorialMode: finalArticle.editorialMode || finalArticle.editorial_mode || 'evergreen',
+          destination,
+          date: new Date().toISOString().split('T')[0]
+        };
+
+        const reviewResult = await runAllAgents(ctx);
+        const ceoDecision = await runCeoValidator(reviewResult, ctx);
+
+        console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+        console.log('  REVIEW SCORES SUMMARY');
+        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+        for (const [id, result] of Object.entries(reviewResult.agents)) {
+          const icon = result.verdict === 'PASS' ? '✅' : '❌';
+          console.log(`  ${icon} ${result._label}: ${result.score}/100 (${result.verdict}) — ${(result.issues || []).length} issues`);
+        }
+        console.log(`\n  📊 Weighted Score: ${reviewResult.weightedScore.toFixed(1)}/100`);
+        console.log(`  📊 Critical Issues: ${reviewResult.criticalCount}`);
+        console.log(`  👔 CEO Decision: ${ceoDecision.decision || ceoDecision.verdict || 'N/A'}`);
+        if (ceoDecision.score) console.log(`  👔 CEO Score: ${ceoDecision.score}/100`);
+        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+
+        process.exit(reviewResult.weightedScore >= 90 ? 0 : 1);
+      } catch (reviewError) {
+        console.error('❌ Review agents error:', reviewError.message);
+        console.log(JSON.stringify(report, null, 2));
+        process.exit(1);
+      }
     })
     .catch(error => {
       console.error('❌ Erreur fatale:', error);

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    background: #000;
+  }
+
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1080px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Background photo */
+  .photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('{{IMAGE_URL}}');
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Heavy dark overlay for readability */
+  .dark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.72);
+  }
+
+  /* Content centered */
+  .content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 64px;
+  }
+
+  /* Giant stat number */
+  .stat-number {
+    color: #FFD600;
+    font-size: 200px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 4px;
+    text-shadow:
+      4px 4px 12px rgba(0, 0, 0, 0.8),
+      0 0 40px rgba(255, 214, 0, 0.25);
+    margin-bottom: 0;
+  }
+
+  /* Unit below the number */
+  .stat-unit {
+    color: #FFD600;
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    text-shadow:
+      3px 3px 8px rgba(0, 0, 0, 0.8);
+    margin-top: -8px;
+    margin-bottom: 36px;
+  }
+
+  /* Decorative line */
+  .divider {
+    width: 100px;
+    height: 3px;
+    background: #FFD600;
+    border-radius: 2px;
+    margin-bottom: 32px;
+  }
+
+  /* Context text */
+  .context {
+    color: #FFFFFF;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: center;
+    max-width: 800px;
+    text-shadow:
+      2px 2px 6px rgba(0, 0, 0, 0.9);
+    margin-bottom: 0;
+  }
+
+  /* Brand at bottom */
+  .bottom-block {
+    position: absolute;
+    bottom: 48px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    z-index: 2;
+  }
+
+  .separator {
+    width: 60px;
+    height: 3px;
+    background: #FFD600;
+    border-radius: 2px;
+  }
+
+  .brand {
+    color: #FFD600;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 26px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="photo"></div>
+    <div class="dark-overlay"></div>
+    <div class="content">
+      <div class="stat-number">{{STAT_NUMBER}}</div>
+      <div class="stat-unit">{{STAT_UNIT}}</div>
+      <div class="divider"></div>
+      <div class="context">{{CONTEXT}}</div>
+    </div>
+    <div class="bottom-block">
+      <div class="separator"></div>
+      <div class="brand">FLASH VOYAGE</div>
+    </div>
+  </div>
+</body>
+</html>

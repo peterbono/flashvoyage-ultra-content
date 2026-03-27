@@ -3649,11 +3649,18 @@ RÈGLES IMPÉRATIVES :
 - Tutoiement obligatoire, ton direct et éditorial.
 - Invente un PRÉNOM RÉALISTE pour le voyageur (pas "un voyageur"). Ex: Lucas, Sophie, Thomas, Camille.
 - Ne mentionne JAMAIS Reddit, forums, communauté. Dis "témoignages de voyageurs" ou "retours de X voyageurs".
-- 1 citation courte du témoignage entre guillemets français « ... ».
-- Langue : 100% français. Zéro anglais.
+- 1 citation courte du témoignage entre guillemets français « ... ». La citation DOIT être traduite en français — ZERO anglais.
+- Langue : 100% français. Zéro anglais. Si le témoignage est en anglais, TRADUIS tout.
 - Format : HTML pur (<p> uniquement, pas de <h2>). 3 paragraphes exactement.
 - Charge émotionnelle : ${pattern.emotional_load?.label || 'modérée'}.
 ${editorialMode === 'news' ? 'FORMAT NEWS : Plus court et factuel, 2-3 paragraphes max.' : ''}
+
+STYLE D'ECRITURE — OBLIGATOIRE :
+- Paragraphe 1 : HOOK sensoriel ou stat choc. PAS de "Imagine" ni "Tu rêves de". Commence in medias res (une scene, un chiffre, un constat brutal).
+- Paragraphe 2 : CONTEXTE du voyageur (prénom, âge, situation). 1 citation traduite en guillemets français « ... ». Croise avec le nombre de témoignages consultés.
+- Paragraphe 3 : PROMESSE de l'article en 1-2 phrases. Ce qu'on couvre, pourquoi c'est différent des guides classiques. Termine par une promesse chiffrée.
+- JAMAIS de phrases comme "il est important de savoir", "dans cet article nous allons", "force est de constater".
+- Varie la longueur des phrases : une courte percutante, une longue détaillée, une courte de transition.
 
 EXEMPLE DE QUALITÉ ATTENDUE:
 \`\`\`html
@@ -3816,6 +3823,8 @@ RYTHME DES PHRASES :
 - Chaque paragraphe apporte 1 FAIT NOUVEAU ou 1 PERSPECTIVE NOUVELLE. Zéro redite.
 - Vocabulaire : n'utilise PAS le même mot-clé ("piège", "galère", "arnaque", "budget") plus de 3 fois dans tout l'article. Varie avec des synonymes.
 
+💰 COHÉRENCE BUDGÉTAIRE CRITIQUE: Si tu mentionnes un prix dans une section, TOUS les autres prix du même poste (hébergement, nourriture, transport) doivent être cohérents dans tout l'article. Utilise des fourchettes explicites ('15-50€/nuit selon le standing') plutôt que des chiffres absolus contradictoires. Chaque chiffre doit préciser son contexte (hostel vs hôtel, street food vs restaurant, etc.).
+
 🎯 CITABILITÉ AI (structure answer-first) :
 - Le PREMIER paragraphe après chaque H2 doit contenir la RÉPONSE DIRECTE (chiffre, fait, conseil). Pas de préambule.
 - ❌ "Dans cette section, nous allons voir..." → ✅ "Le JR Pass 7 jours coûte 245 € — rentable seulement si tu prends 3+ trajets longue distance."
@@ -3838,21 +3847,40 @@ SECTIONS SERP OBLIGATOIRES (non négociable — inclure ces 3 H2 parmi les secti
 
 ${truthPackBlock}
 
-PERSONA FLASH VOYAGE — 3 TICS SIGNATURE (obligatoires, 1 de chaque minimum) :
+PERSONA FLASH VOYAGE — TICS SIGNATURE (obligatoires, minimum 4 parmi cette liste) :
 
-TIC 1 — COST ANCHOR : Compare au moins 1 prix à quelque chose que le lecteur connaît.
+Tu DOIS utiliser au minimum 4 de ces expressions EXACTES (mot pour mot) dans l'article :
+- "Spoiler :" suivi d'une revelation (ex: "Spoiler : le JR Pass ne couvre pas les trains privés.")
+- "Le calcul est simple" suivi d'une comparaison chiffrée
+- "Et c'est là que ça se corse" pour introduire une complication
+- "Sur [X] témoignages, [Y]% arrivent au même constat" (avec vrais chiffres du contexte)
+- "Traduction :" suivi d'un reformulation cash d'un euphemisme
+- "On a fait le calcul" avant de detailler un comparatif
+- "Personne ne te le dira, mais..." avant une verite qui derange
+- "Le vrai coût, c'est..." pour reveler un coût caché
+- "Verdict terrain :" avant un avis tranche
+- "À tester si..." ou "À éviter si..." pour segmenter les profils lecteurs
+
+TIC SUPPLEMENTAIRE — COST ANCHOR : Compare au moins 1 prix à quelque chose que le lecteur connaît.
 Exemples : "Moins cher que ton Netflix", "Le prix d'un Uber à Paris", "Ce que tu dépenses en café en une semaine".
-→ Place-le quand tu mentionnes un prix pour la première fois.
 
-TIC 2 — INSIDER CORRECTION : Corrige au moins 1 croyance touristique avec l'autorité d'un expat.
+TIC SUPPLEMENTAIRE — INSIDER CORRECTION : Corrige au moins 1 croyance touristique avec l'autorité d'un expat.
 Exemples : "Les blogs disent X. Les expats savent que Y.", "Le guide Lonely Planet recommande Z — ignore-le, voici pourquoi."
-→ Place-le dans ta section la plus contrarian.
 
-TIC 3 — DIRECT ADDRESS : Parle directement AU lecteur au moins 1 fois.
-Exemples : "Toujours là ? La suite va te faire économiser.", "Si t'as skimmé jusqu'ici, reviens — cette partie est cruciale."
-→ Place-le avant une section dense ou technique.
+Ces tics sont ta SIGNATURE. Le lecteur doit pouvoir reconnaître un article Flash Voyage sans voir le logo.
 
-Ces 3 tics sont ta SIGNATURE. Le lecteur doit pouvoir reconnaître un article Flash Voyage sans voir le logo.`;
+ANTI-PATTERNS IA (INTERDIT — la detection de ces patterns = rejet automatique) :
+- JAMAIS "il est important de", "il convient de", "force est de constater", "il va sans dire", "dans le cadre de"
+- JAMAIS commencer 2 sections consecutives par le même pattern syntaxique
+- JAMAIS "Option 1/Option 2/Option 3" — ecris en prose avec transitions naturelles
+- JAMAIS "La vraie question n'est pas X mais Y" — c'est un cliche IA detectable
+- Varie les OUVERTURES de section : question directe, chiffre choc, anecdote, affirmation contrarian, interpellation lecteur. JAMAIS le même pattern deux fois.
+- Varie la LONGUEUR des paragraphes : 1 phrase percutante, puis 3-4 phrases de developpement, puis 1-2 phrases courtes. Pas de paragraphes uniformes.
+
+TRANSITIONS ENTRE SECTIONS :
+- Pas de "Passons maintenant à..." ni "Voyons maintenant..."
+- Utilise des transitions conversationnelles : "Bon, le logement c'est réglé. Parlons bouffe.", "Tu crois avoir tout compris ? Attends de voir les transports.", "Et le pire dans tout ça ?"
+- Chaque transition doit donner ENVIE de lire la suite (teaser, question, promesse de revelation).`;
 
     const userPrompt = `TITRE: ${extracted.title || 'Témoignage Reddit'}
 ${mainDestFR ? 'DESTINATION: ' + mainDestFR : ''}
@@ -3949,18 +3977,26 @@ Génère UNIQUEMENT le HTML des sections H2 du corps en suivant le plan ci-dessu
 
     const systemPrompt = `Tu es un rédacteur expert FlashVoyages. Génère la CONCLUSION de l'article : verdict, recommandations, FAQ et signature.
 
-ÉLÉMENTS OBLIGATOIRES DANS CETTE ÉTAPE :
+ÉLÉMENTS OBLIGATOIRES DANS CETTE ÉTAPE — CHAQUE CHAMP DOIT ÊTRE REMPLI :
 
-1. VERDICT FLASH VOYAGE (champ JSON "verdict_html") :
-Tu DOIS générer un bloc HTML avec H2 "Verdict Flash Voyage : à qui c'est vraiment destiné" suivi de 3-4 paragraphs "<strong>Si tu es [profil spécifique avec chiffre]</strong> → [action directe impérative]".
-Le dernier profil = contrarian (qui NE devrait PAS faire ça).
-EXEMPLE :
+1. VERDICT FLASH VOYAGE (champ JSON "verdict_html") — CRITIQUE, NE PAS OMETTRE :
+Tu DOIS générer un bloc HTML COMPLET avec :
+- <h2>Verdict Flash Voyage : à qui c'est vraiment destiné</h2>
+- 3-4 paragraphes avec ce pattern EXACT : <p><strong>Si tu es [profil spécifique avec chiffre]</strong> → [action directe impérative]</p>
+- Le symbole → (fleche) est OBLIGATOIRE entre le profil et l'action.
+- Le dernier profil = contrarian (qui NE devrait PAS faire ça).
+- Termine par 1 phrase de conclusion avec "Verdict terrain :" ou "Le vrai arbitrage, c'est..."
+EXEMPLE EXACT A SUIVRE :
 ${FEW_SHOT_EXAMPLES.verdictBlock}
 
-2. CHECKLIST SAUVEGARDABLE (champ JSON "checklist_html", evergreen seulement) :
-Tu DOIS générer une div class="fv-checklist" avec la structure Avant de partir / Sur place / À éviter.
-10-12 items, chacun avec un chiffre concret (montant, %, durée).
-EXEMPLE :
+2. CHECKLIST SAUVEGARDABLE (champ JSON "checklist_html", evergreen seulement) — CRITIQUE, NE PAS OMETTRE :
+Tu DOIS générer une <div class="fv-checklist"> avec EXACTEMENT cette structure :
+- <h3> titre avec destination
+- <h4>Avant de partir</h4> suivi de 3-4 items avec checkmarks
+- <h4>Sur place</h4> suivi de 3-4 items avec checkmarks
+- <h4>À éviter</h4> suivi de 3-4 items avec croix rouges
+- Chaque item commence par ✔️ ou ❌ et contient un chiffre concret (montant, %, durée).
+EXEMPLE EXACT A SUIVRE :
 ${FEW_SHOT_EXAMPLES.checklistBlock}
 
 3. QUICK-REFERENCE CARD (champ JSON "quick_card_html") :
@@ -3979,8 +4015,9 @@ Format HTML :
 </div>
 
 RÈGLES :
-- Tutoiement. Ton réaliste, pas vendeur. Langue 100% français.
+- Tutoiement. Ton réaliste, pas vendeur. Langue 100% français. Zéro anglais.
 - Verdict : 2 paragraphes substantiels avec prise de position tranchée.
+- CHAQUE champ JSON doit contenir du HTML valide et complet. Pas de champ vide.
 - Format : "Si tu [situation], privilégie/évite [option concrète]."
 - EXEMPLE DE QUALITE ATTENDUE (verdict tranchant):
 \`\`\`html
@@ -3991,7 +4028,7 @@ ${isNews ? `MODE NEWS :
 - 1 CTA soft max. Pas de FAQ.` : `MODE EVERGREEN :
 - Recommandations : <h2>Nos recommandations : Par où commencer ?</h2> + 3 options avec CTA narratifs.
 - Ce qu'il faut retenir : 2 paragraphes de verdict.
-- FAQ : 4-6 questions/réponses au format <details><summary>Question ?</summary><p>Réponse.</p></details>.
+- FAQ : 4-6 questions/réponses au format <details><summary>Question en français ?</summary><p>Réponse complète en français.</p></details>.
     RÈGLES FAQ NON-NÉGOCIABLES :
     a) Chaque réponse utilise les CHIFFRES et LIEUX de cet article. Pas de fourchettes génériques.
     b) DESTINATION-LOCK : Tous les moyens de transport mentionnés doivent EXISTER dans cette destination.
@@ -4001,6 +4038,8 @@ ${isNews ? `MODE NEWS :
     d) Les prix doivent refléter la RÉALITÉ de la destination. Un hostel au Japon = 25-35€, PAS "15-30€".
     e) Chaque réponse = phrase COMPLETE et autonome. Ne copie JAMAIS de fragments du corps.
     f) La FAQ COMPLÈTE l'article, elle ne le résume pas.
+    g) LANGUE : 100% français. ZÉRO anglais dans les questions ET les réponses. Ne JAMAIS copier du texte anglais depuis le post source.
+    h) Chaque question doit être une VRAIE question que le lecteur se pose, formulée naturellement en français.
 - Signature : CTA soft de fin.
 - INTERDIT : ne jamais inclure de titres d articles, slugs ou URLs dans le texte. Les liens vont dans opportunites_liens_internes uniquement.`}
 

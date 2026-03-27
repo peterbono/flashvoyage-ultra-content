@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    overflow: hidden;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    background: #000;
+  }
+
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1350px;
+  }
+
+  /* Background photo — fills entire card */
+  .photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('{{IMAGE_URL}}');
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Heavy gradient: transparent top, solid black bottom — extended for taller format */
+  .gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 25%,
+      rgba(0, 0, 0, 0.35) 45%,
+      rgba(0, 0, 0, 0.70) 60%,
+      rgba(0, 0, 0, 0.92) 75%,
+      #000 85%
+    );
+  }
+
+  /* Text block anchored to bottom — more padding for 4:5 ratio */
+  .text-block {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 56px 52px 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Yellow headlines — bigger for mobile viewing */
+  .headline {
+    color: #FFD600;
+    font-size: 82px;
+    font-weight: 700;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    text-shadow:
+      3px 3px 8px rgba(0, 0, 0, 0.9),
+      0 0 20px rgba(0, 0, 0, 0.7);
+  }
+
+  .headline-2 {
+    margin-top: 4px;
+    margin-bottom: 22px;
+  }
+
+  /* White subtext — larger for mobile */
+  .subtext {
+    color: #FFFFFF;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 1.5px;
+    text-shadow:
+      2px 2px 6px rgba(0, 0, 0, 0.9),
+      0 0 15px rgba(0, 0, 0, 0.6);
+    margin-bottom: 32px;
+    max-width: 900px;
+  }
+
+  /* Thin separator line */
+  .separator {
+    width: 80px;
+    height: 3px;
+    background: #FFD600;
+    margin-bottom: 18px;
+    border-radius: 2px;
+  }
+
+  /* Brand signature */
+  .brand {
+    color: #FFD600;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 28px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 24px;
+  }
+
+  /* CTA — save prompt for Instagram */
+  .cta {
+    color: #FFFFFF;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    opacity: 0.7;
+    padding: 14px 32px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 40px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="photo"></div>
+    <div class="gradient-overlay"></div>
+    <div class="text-block">
+      <div class="headline">{{HEADLINE_1}}</div>
+      <div class="headline headline-2">{{HEADLINE_2}}</div>
+      <div class="subtext">{{SUBTEXT}}</div>
+      <div class="separator"></div>
+      <div class="brand">{{BRAND}}</div>
+      <div class="cta">{{CTA}}</div>
+    </div>
+  </div>
+</body>
+</html>

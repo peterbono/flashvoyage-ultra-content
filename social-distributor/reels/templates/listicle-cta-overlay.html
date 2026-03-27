@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* Full dark overlay */
+  .dark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+  }
+
+  /* Centered content */
+  .content-zone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 100px;
+    text-align: center;
+    z-index: 2;
+  }
+
+  /* Flash Voyage logo centered */
+  .logo-container {
+    margin-bottom: 40px;
+  }
+  .logo-container svg {
+    width: 200px;
+    height: 204px;
+  }
+
+  /* "Flash Voyage" text yellow */
+  .brand-name {
+    font-size: 56px;
+    font-weight: 900;
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 50px;
+    text-shadow:
+      3px 3px 0 rgba(0, 0, 0, 0.5),
+      0 0 20px rgba(255, 215, 0, 0.2);
+  }
+
+  /* CTA text white */
+  .cta-text {
+    font-size: 36px;
+    font-weight: 800;
+    color: white;
+    text-transform: uppercase;
+    line-height: 1.3;
+    max-width: 860px;
+    margin-bottom: 30px;
+    text-shadow:
+      2px 2px 0 rgba(0, 0, 0, 0.5),
+      0 3px 8px rgba(0, 0, 0, 0.6);
+    word-break: break-word;
+  }
+
+  /* "Commente INFO..." yellow */
+  .save-text {
+    font-size: 28px;
+    font-weight: 700;
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow:
+      2px 2px 0 rgba(0, 0, 0, 0.4);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="dark-overlay"></div>
+  <div class="content-zone">
+    <div class="logo-container">
+      {{LOGO_SVG}}
+    </div>
+    <div class="brand-name">Flash Voyage</div>
+    <div class="cta-text">{{CTA_TEXT}}</div>
+    <div class="save-text">{{SAVE_TEXT}}</div>
+  </div>
+</div>
+</body>
+</html>

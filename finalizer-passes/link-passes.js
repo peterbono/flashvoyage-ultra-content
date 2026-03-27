@@ -304,9 +304,24 @@ export function fixBrokenInternalLinks(html) {
         const slug = urlObj.pathname.replace(/^/|/$/g, '');
         // Check if slug contains a different destination name
         const otherDests = ['thailand', 'thailande', 'vietnam', 'indonesie', 'bali', 'japon', 'japan', 'coree', 'philippines', 'singapour', 'singapore', 'cambodge', 'cambodia', 'malaisie', 'malaysia', 'laos', 'myanmar', 'taiwan', 'nepal', 'sri-lanka', 'inde', 'india'];
+        // Equivalent destination pairs (FR/EN and variants that should NOT be treated as mismatches)
+        const destEquivalents = {
+          'japan': ['japon'], 'japon': ['japan'],
+          'thailand': ['thailande'], 'thailande': ['thailand'],
+          'indonesia': ['indonesie'], 'indonesie': ['indonesia', 'bali'],
+          'bali': ['indonesie', 'indonesia'],
+          'singapore': ['singapour'], 'singapour': ['singapore'],
+          'cambodia': ['cambodge'], 'cambodge': ['cambodia'],
+          'malaysia': ['malaisie'], 'malaisie': ['malaysia'],
+          'india': ['inde'], 'inde': ['india'],
+          'coree': ['korea'], 'korea': ['coree'],
+        };
         const currentDest = this._currentDestination.toLowerCase();
+        const currentEquivs = destEquivalents[currentDest] || [];
         for (const dest of otherDests) {
-          if (dest !== currentDest && slug.includes(dest)) {
+          // Skip if dest matches current destination OR is an equivalent (FR/EN pair)
+          if (dest === currentDest || currentEquivs.includes(dest)) continue;
+          if (slug.includes(dest)) {
             // This link is about a different destination
             const anchorText2 = innerContent.replace(/<[^>]*>/g, '').trim();
             removedCount++;

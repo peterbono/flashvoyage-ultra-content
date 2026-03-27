@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    overflow: hidden;
+    font-family: 'Inter', Arial, sans-serif;
+    background: #000000;
+  }
+
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1350px;
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Large logo icon (white version) — 240px */
+  .logo-large {
+    width: 240px;
+    height: 240px;
+    margin-bottom: 40px;
+  }
+
+  .logo-large svg {
+    width: 240px;
+    height: 240px;
+  }
+
+  /* Brand name — YELLOW, Bebas Neue, 64px */
+  .brand-name {
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 64px;
+    color: #FFD700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  /* Value proposition — WHITE, Inter, 28px */
+  .value-prop {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.80);
+    text-align: center;
+    max-width: 740px;
+    line-height: 1.5;
+    margin-bottom: 56px;
+    letter-spacing: 0.5px;
+  }
+
+  /* CTA button — YELLOW bg, BLACK text, rounded */
+  .cta-button {
+    background: #FFD700;
+    border-radius: 50px;
+    padding: 24px 60px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  .cta-button .cta-text {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #000000;
+    letter-spacing: 0.5px;
+  }
+
+  /* Save prompt — white 24px, 60% opacity */
+  .save-prompt {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.60);
+    letter-spacing: 0.5px;
+  }
+
+  /* Decorative dots */
+  .dot-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 48px;
+  }
+
+  .dot-row .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.30);
+  }
+
+  .dot-row .dot.active {
+    background: #FFD700;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Decorative dots -->
+    <div class="dot-row">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot active"></div>
+    </div>
+
+    <!-- Large logo -->
+    <div class="logo-large">
+      <svg width="240" height="240" viewBox="0 0 230 234" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M172.995 94.7653C172.175 87.4153 171.095 80.3853 169.515 75.4453C169.235 74.5653 161.415 73.9353 157.635 72.2953C156.005 71.5953 153.925 73.5353 153.145 74.2253L111.475 106.005L143.845 107.535L48.1554 178.125L87.1354 115.265L52.0154 113.785L117.695 68.5653C116.295 66.7853 111.675 64.5553 110.165 63.8553C108.145 62.8953 106.245 64.1953 105.795 64.4653L50.0254 94.0453C45.0554 75.9453 48.8154 59.2253 56.4454 45.1353C62.6254 47.4253 70.0554 60.4453 72.6154 68.5653C75.5554 59.9953 74.0654 53.3553 69.9354 46.5653C78.6654 48.4653 86.0654 52.0653 92.1754 57.7253C94.4854 55.7553 91.8754 46.2653 83.6454 41.6053C79.6854 39.6953 78.2654 38.6153 73.5954 37.3553C78.8454 35.1853 85.8954 33.1053 92.8454 31.9053C89.5054 29.1453 85.6954 26.9953 78.8654 27.1253C73.6654 27.2153 71.5154 28.6153 63.6154 30.5453C68.0954 24.0653 65.2654 11.8153 57.0454 5.95528C50.1054 0.955276 44.7954 0.735275 36.9554 0.855275C45.6554 9.52528 50.0854 20.3653 52.3554 28.7653C44.0054 22.4353 36.4754 20.3853 27.1254 20.2353C19.2654 21.1253 11.7654 22.5253 4.7054 30.4353C2.8354 33.0553 1.3654 35.1953 0.225402 37.3553C8.1454 35.2053 11.9554 33.3553 21.0554 33.4253C29.7854 33.4953 39.9554 35.7553 44.8054 37.8753C22.5954 43.3953 3.2954 61.4953 0.495402 88.8253C-1.0746 98.6053 1.1554 111.455 6.2154 124.555C14.9954 147.555 29.6454 168.165 47.7254 189.745C58.5654 202.005 72.7954 217.575 92.1754 233.705C116.045 210.855 150.175 177.235 167.355 132.205C171.015 122.225 173.355 110.435 172.995 94.7353V94.7653ZM16.3954 113.595C6.9354 86.3853 18.9554 58.8053 47.5154 45.9553C33.8754 60.0153 31.1354 80.0553 34.6754 102.065L16.3954 113.595Z" fill="#FFFFFF"/>
+        <path d="M228.795 12.1153C226.425 4.02528 216.205 0.0852758 208.675 0.00527581C193.965 -0.154724 183.195 3.29527 155.965 14.3553C154.875 14.8053 154.955 14.8153 153.035 14.0853C139.015 8.54527 125.845 6.03528 108.525 5.98528C97.8054 5.94528 93.8154 8.02527 87.4054 9.32527C102.775 10.2753 119.235 12.9253 138.615 21.0553C140.115 21.7553 138.975 22.7153 137.055 22.9853C126.005 23.6853 114.115 24.1353 107.595 29.6753C100.815 35.3353 108.165 41.4553 121.725 46.4453L129.625 49.1453C126.805 50.8253 119.355 51.0753 116.845 54.2153C114.805 56.8753 120.965 61.6553 128.605 64.7653C138.275 68.2253 144.075 66.1453 154.005 62.2753C156.985 61.2453 158.995 62.4253 161.165 63.5753C170.075 67.8753 178.195 70.0453 184.925 66.0253C190.875 62.5653 188.005 58.1253 183.035 52.5853C192.075 48.7453 202.055 44.2753 210.885 37.5453C220.775 31.1253 231.515 21.7853 228.795 12.1153ZM203.975 29.1053C189.775 40.2753 165.415 48.3153 143.885 58.4753C139.335 60.6753 132.965 59.6053 130.275 57.5753C129.075 56.6953 130.885 54.8853 133.705 52.9553C137.415 50.4453 139.365 48.7953 138.675 47.2053C126.915 42.8953 117.525 37.6453 117.185 34.0753C116.805 30.0853 131.665 29.7753 146.565 32.6553C150.765 33.4753 155.665 34.8153 157.405 34.3053C158.145 34.0753 154.995 31.5153 148.875 28.3753C146.925 27.4153 147.775 26.5053 149.285 25.5853C167.705 14.4753 186.865 5.35528 204.835 3.40528C201.905 5.57528 197.705 8.63528 198.055 11.7753C198.175 12.8653 201.855 10.6053 207.105 9.25527C214.415 7.30527 218.105 7.74528 219.675 9.43528C223.025 13.0553 217.815 19.4753 203.975 29.1053Z" fill="#FFFFFF"/>
+        <path d="M165.995 23.5553C167.165 22.3053 171.495 23.2053 171.645 25.8053C171.795 28.3153 169.795 27.5753 168.545 27.2553C166.665 26.7453 165.095 24.4753 165.995 23.5553Z" fill="#FFFFFF"/>
+        <path d="M177.795 20.5953C178.485 19.5153 183.185 20.3053 183.515 22.9653C183.715 24.4553 182.265 24.7953 181.225 24.6953C178.955 24.4453 177.125 21.4653 177.795 20.5953Z" fill="#FFFFFF"/>
+      </svg>
+    </div>
+
+    <!-- Brand name -->
+    <div class="brand-name">Flash Voyage</div>
+
+    <!-- Value proposition -->
+    <div class="value-prop">{{VALUE_PROP}}</div>
+
+    <!-- CTA button -->
+    <div class="cta-button">
+      <span class="cta-text">{{CTA_TEXT}}</span>
+    </div>
+
+    <!-- Save prompt -->
+    <div class="save-prompt">{{SAVE_TEXT}}</div>
+  </div>
+</body>
+</html>

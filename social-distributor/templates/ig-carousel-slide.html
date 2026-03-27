@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    overflow: hidden;
+    font-family: 'Inter', Arial, sans-serif;
+    background: #000;
+  }
+
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1350px;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SLIDE TYPE: HOOK (first slide — visual + headline)
+     Show when SLIDE_TYPE = "hook"
+     ═══════════════════════════════════════════════ */
+  .slide-hook {
+    display: {{HOOK_DISPLAY}};
+    position: relative;
+    width: 1080px;
+    height: 1350px;
+  }
+
+  .slide-hook .photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('{{IMAGE_URL}}');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .slide-hook .gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 20%,
+      rgba(0, 0, 0, 0.40) 45%,
+      rgba(0, 0, 0, 0.75) 60%,
+      rgba(0, 0, 0, 0.95) 78%,
+      #000 88%
+    );
+  }
+
+  .slide-hook .text-block {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 56px 80px 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .slide-hook .swipe-hint {
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .slide-hook .headline {
+    color: #FFD600;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 86px;
+    font-weight: 700;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow:
+      3px 3px 8px rgba(0, 0, 0, 0.9),
+      0 0 20px rgba(0, 0, 0, 0.7);
+    margin-bottom: 20px;
+    max-width: 950px;
+  }
+
+  .slide-hook .subtext {
+    color: #FFFFFF;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.3;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+    margin-bottom: 36px;
+    max-width: 850px;
+  }
+
+  .slide-hook .swipe-arrow {
+    color: #FFD600;
+    font-size: 48px;
+    opacity: 0.8;
+    letter-spacing: 8px;
+  }
+
+  .slide-hook .brand-top {
+    position: absolute;
+    top: 48px;
+    left: 56px;
+    z-index: 5;
+    color: #FFD600;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 28px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    opacity: 0.9;
+  }
+
+  .slide-hook .slide-counter {
+    position: absolute;
+    top: 48px;
+    right: 56px;
+    z-index: 5;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+  }
+
+  /* ═══════════════════════════════════════════════
+     SLIDE TYPE: DATA (info slides — clean background)
+     Show when SLIDE_TYPE = "data"
+     ═══════════════════════════════════════════════ */
+  .slide-data {
+    display: {{DATA_DISPLAY}};
+    position: relative;
+    width: 1080px;
+    height: 1350px;
+    background: #111111;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Subtle accent line at top */
+  .slide-data .top-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(to right, #FFD600, #FF8C00);
+  }
+
+  .slide-data .brand-top {
+    position: absolute;
+    top: 48px;
+    left: 56px;
+    color: #FFD600;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 28px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .slide-data .slide-counter {
+    position: absolute;
+    top: 48px;
+    right: 56px;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+
+  .slide-data .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 72px;
+  }
+
+  /* Category label */
+  .slide-data .label {
+    color: #FFD600;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  /* Big data value */
+  .slide-data .data-value {
+    color: #FFD600;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 160px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 4px;
+    text-shadow: 0 0 40px rgba(255, 214, 0, 0.15);
+    margin-bottom: 12px;
+  }
+
+  /* Data unit */
+  .slide-data .data-unit {
+    color: #FFD600;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 52px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    opacity: 0.9;
+    margin-bottom: 40px;
+  }
+
+  /* Decorative divider */
+  .slide-data .divider {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, #FFD600, #FF8C00);
+    border-radius: 2px;
+    margin-bottom: 40px;
+  }
+
+  /* Description text */
+  .slide-data .description {
+    color: #FFFFFF;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 1.4;
+    max-width: 800px;
+    opacity: 0.9;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SLIDE TYPE: CTA (last slide — follow prompt)
+     Show when SLIDE_TYPE = "cta"
+     ═══════════════════════════════════════════════ */
+  .slide-cta {
+    display: {{CTA_DISPLAY}};
+    position: relative;
+    width: 1080px;
+    height: 1350px;
+    background: #111111;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide-cta .top-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(to right, #FFD600, #FF8C00);
+  }
+
+  .slide-cta .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 72px;
+  }
+
+  .slide-cta .brand-large {
+    color: #FFD600;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 72px;
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+
+  .slide-cta .divider {
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(to right, #FFD600, #FF8C00);
+    border-radius: 2px;
+    margin-bottom: 48px;
+  }
+
+  .slide-cta .cta-text {
+    color: #FFFFFF;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.4;
+    max-width: 750px;
+    margin-bottom: 52px;
+  }
+
+  .slide-cta .cta-handle {
+    color: #FFD600;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 48px;
+  }
+
+  .slide-cta .cta-actions {
+    display: flex;
+    gap: 24px;
+  }
+
+  .slide-cta .cta-btn {
+    color: #FFFFFF;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 16px 36px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 40px;
+    opacity: 0.8;
+  }
+
+  .slide-cta .bottom-url {
+    position: absolute;
+    bottom: 64px;
+    color: rgba(255, 255, 255, 0.35);
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ═══ HOOK SLIDE ═══ -->
+    <div class="slide-hook">
+      <div class="photo"></div>
+      <div class="gradient-overlay"></div>
+      <div class="brand-top">FLASH VOYAGE</div>
+      <div class="slide-counter">{{SLIDE_NUMBER}} / {{TOTAL_SLIDES}}</div>
+      <div class="text-block">
+        <div class="swipe-hint">GUIDE COMPARATIF</div>
+        <div class="headline">{{HEADLINE}}</div>
+        <div class="subtext">{{SUBTEXT}}</div>
+        <div class="swipe-arrow">&#8594; &#8594; &#8594;</div>
+      </div>
+    </div>
+
+    <!-- ═══ DATA SLIDE ═══ -->
+    <div class="slide-data">
+      <div class="top-accent"></div>
+      <div class="brand-top">FLASH VOYAGE</div>
+      <div class="slide-counter">{{SLIDE_NUMBER}} / {{TOTAL_SLIDES}}</div>
+      <div class="content">
+        <div class="label">{{DATA_LABEL}}</div>
+        <div class="data-value">{{DATA_VALUE}}</div>
+        <div class="data-unit">{{DATA_UNIT}}</div>
+        <div class="divider"></div>
+        <div class="description">{{DATA_DESCRIPTION}}</div>
+      </div>
+    </div>
+
+    <!-- ═══ CTA SLIDE ═══ -->
+    <div class="slide-cta">
+      <div class="top-accent"></div>
+      <div class="content">
+        <div class="brand-large">FLASH VOYAGE</div>
+        <div class="divider"></div>
+        <div class="cta-text">{{CTA_TEXT}}</div>
+        <div class="cta-handle">@flashvoyagemedia</div>
+        <div class="cta-actions">
+          <div class="cta-btn">&#128278; Enregistrer</div>
+          <div class="cta-btn">&#128640; Partager</div>
+        </div>
+      </div>
+      <div class="bottom-url">flashvoyage.com</div>
+    </div>
+
+  </div>
+</body>
+</html>

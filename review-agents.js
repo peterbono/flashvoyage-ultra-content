@@ -389,11 +389,20 @@ function detectDeterministicIssues(ctx) {
   }
 
   // === CHECK 3: BUDGET INTERNAL CONSISTENCY ===
-  const budgetRegex = /(\d{1,4})\s*[€]\s*\/?\s*(nuit|jour|night|day|semaine|mois)/gi;
+  // Broader regex: catches "16€/nuit", "16 euros/nuit", "16 EUR/nuit", "150€ par nuit", etc.
+  const budgetRegex = /(\d{1,5})\s*(?:€|euros?|EUR)\s*(?:\/|\s*par\s+)\s*(nuit|jour|night|day|semaine|mois|personne)/gi;
   const budgetMentions = [...text.matchAll(budgetRegex)].map(m => ({
     amount: parseInt(m[1]), unit: m[2].toLowerCase(),
     context: text.substring(Math.max(0, m.index - 40), m.index + m[0].length + 40)
   }));
+  // Also match "nuit à 16€" / "nuit pour 150€" patterns (reversed order)
+  const budgetRegexReversed = /(nuit|jour|night|day|semaine|mois)\s+(?:à|pour|de|:)\s*(\d{1,5})\s*(?:€|euros?|EUR)/gi;
+  for (const m of text.matchAll(budgetRegexReversed)) {
+    budgetMentions.push({
+      amount: parseInt(m[2]), unit: m[1].toLowerCase(),
+      context: text.substring(Math.max(0, m.index - 40), m.index + m[0].length + 40)
+    });
+  }
   const dailyRates = budgetMentions.map(b => {
     let daily = b.amount;
     if (/semaine/.test(b.unit)) daily = b.amount / 7;
@@ -405,8 +414,8 @@ function detectDeterministicIssues(ctx) {
     if (sorted[sorted.length - 1].daily > sorted[0].daily * 5 && sorted[0].daily > 0) {
       issues.integrity.push({
         severity: 'critical', category: 'budget-contradictoire',
-        description: `Incohérence budget: ${sorted[0].amount}€/${sorted[0].unit} vs ${sorted[sorted.length - 1].amount}€/${sorted[sorted.length - 1].unit}`,
-        fix_suggestion: 'Harmoniser les chiffres budget', location: 'global'
+        description: `Incohérence budget: ${sorted[0].amount}€/${sorted[0].unit} vs ${sorted[sorted.length - 1].amount}€/${sorted[sorted.length - 1].unit} (ratio ${(sorted[sorted.length - 1].daily / sorted[0].daily).toFixed(1)}x). Utiliser des fourchettes explicites avec contexte (hostel vs hôtel).`,
+        fix_suggestion: 'Harmoniser les chiffres budget ou préciser le contexte (ex: hostel 16€/nuit vs hôtel 150€/nuit)', location: 'global'
       });
     }
   }
@@ -600,14 +609,14 @@ function detectDeterministicIssues(ctx) {
   }
 
   // Check 7: Word count (conciseness signal)
-  const totalWords = text.split(/\s+/).length;
+  const totalWordsCheck = text.split(/\s+/).length;
   const maxWords = isEvergreen ? 2500 : 1000;
-  if (totalWords > maxWords) {
+  if (totalWordsCheck > maxWords) {
     issues.editorial.push({
-      severity: totalWords > maxWords * 1.3 ? 'major' : 'minor',
+      severity: totalWordsCheck > maxWords * 1.3 ? 'major' : 'minor',
       category: 'word-count-excess',
-      description: `${totalWords} mots — dépasse le maximum de ${maxWords}. Conciseness = signal SEO fort (SearchLLM).`,
-      fix_suggestion: `Couper ${totalWords - maxWords} mots en supprimant les sections les moins denses en données`,
+      description: `${totalWordsCheck} mots — dépasse le maximum de ${maxWords}. Conciseness = signal SEO fort (SearchLLM).`,
+      fix_suggestion: `Couper ${totalWordsCheck - maxWords} mots en supprimant les sections les moins denses en données`,
       location: 'global'
     });
   }

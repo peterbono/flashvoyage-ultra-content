@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    background: #262728;
+  }
+
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1080px;
+  }
+
+  /* Background photo — fills entire card */
+  .photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('{{IMAGE_URL}}');
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Heavy gradient: transparent top, solid dark bottom */
+  .gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(38, 39, 40, 0) 25%,
+      rgba(38, 39, 40, 0.50) 45%,
+      rgba(38, 39, 40, 0.85) 60%,
+      rgba(38, 39, 40, 0.96) 75%,
+      #262728 88%
+    );
+  }
+
+  /* Text block anchored to bottom */
+  .text-block {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 52px 48px 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Headline 1 — WHITE, large mobile-first */
+  .headline-1 {
+    color: #FFFFFF;
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+    text-shadow:
+      3px 3px 8px rgba(0, 0, 0, 0.9),
+      0 0 20px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Headline 2 — RED accent */
+  .headline-2 {
+    color: #F70F28;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    text-shadow:
+      3px 3px 8px rgba(0, 0, 0, 0.9),
+      0 0 20px rgba(0, 0, 0, 0.7);
+    margin-top: 4px;
+    margin-bottom: 20px;
+  }
+
+  /* Red accent line between headline and subtext */
+  .accent-line {
+    width: 100px;
+    height: 3px;
+    background: #F70F28;
+    margin-bottom: 16px;
+    border-radius: 2px;
+  }
+
+  /* Subtext — white at 85% opacity */
+  .subtext {
+    color: rgba(255, 255, 255, 0.85);
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: 0.5px;
+    text-shadow:
+      2px 2px 6px rgba(0, 0, 0, 0.9),
+      0 0 15px rgba(0, 0, 0, 0.6);
+    margin-bottom: 28px;
+    max-width: 900px;
+  }
+
+  /* Thin separator line */
+  .separator {
+    width: 80px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.25);
+    margin-bottom: 16px;
+    border-radius: 2px;
+  }
+
+  /* Brand signature — RED */
+  .brand {
+    color: #F70F28;
+    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-size: 28px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    opacity: 0.90;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="photo"></div>
+    <div class="gradient-overlay"></div>
+    <div class="text-block">
+      <div class="headline-1">{{HEADLINE_1}}</div>
+      <div class="headline-2">{{HEADLINE_2}}</div>
+      <div class="accent-line"></div>
+      <div class="subtext">{{SUBTEXT}}</div>
+      <div class="separator"></div>
+      <div class="brand">{{BRAND}}</div>
+    </div>
+  </div>
+</body>
+</html>

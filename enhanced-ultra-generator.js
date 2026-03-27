@@ -1431,6 +1431,18 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
       console.log('✅ Article publié avec succès!');
       console.log('🔗 Lien:', publishedArticle.link);
 
+      // After WordPress publish, distribute to social media (VP Carousel)
+      if (!process.env.FLASHVOYAGE_DRY_RUN && !process.env.SKIP_SOCIAL) {
+        try {
+          const { distributeArticle } = await import('./social-distributor/index.js');
+          console.log('📱 Generating VP carousel + distributing to FB/IG/Threads...');
+          const socialResult = await distributeArticle(publishedArticle.id);
+          console.log(`📱 Social distribution complete — published: ${socialResult.published}, failed: ${socialResult.failed}`);
+        } catch (e) {
+          console.warn('⚠️ Social distribution failed (non-blocking):', e.message);
+        }
+      }
+
       // Enregistrer dans le calendrier editorial
       try {
         calendar.recordPublication(

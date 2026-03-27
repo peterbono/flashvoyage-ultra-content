@@ -113,3 +113,7 @@ configure-*
 
 # Used images tracking (local file to avoid duplicates)
 used-pexels-images.json
+
+# Social distributor secrets and runtime data
+social-distributor/data/tokens.json
+social-distributor/data/post-history.jsonl
