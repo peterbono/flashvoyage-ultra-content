@@ -1,0 +1,89 @@
+name: Daily Analytics & Trends
+
+on:
+  schedule:
+    # 6h00 Paris = 4h00 UTC — runs BEFORE the first reel at 7h00 Paris (5h00 UTC)
+    - cron: '0 4 * * *'
+
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Number of days to analyze'
+        required: false
+        default: '7'
+        type: string
+
+env:
+  NODE_ENV: production
+
+jobs:
+  analytics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Scan Google Trends
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "[ANALYTICS] Scanning Google Trends for destination priorities..."
+          node social-distributor/sources/trends-scanner.js --update 2>&1 || {
+            echo "[ANALYTICS] WARN: Trends scanner failed (non-fatal, using stale data)"
+          }
+
+      - name: Fetch IG stats (last 48h reels)
+        env:
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+        run: |
+          echo "[ANALYTICS] Fetching Instagram reel performance (last 48h)..."
+          node social-distributor/analytics/ig-stats-fetcher.js --days 2 2>&1 || {
+            echo "[ANALYTICS] WARN: IG stats fetch failed (non-fatal)"
+          }
+
+      - name: Fetch GA4 stats (last 7 days)
+        env:
+          GA4_SERVICE_ACCOUNT: ${{ secrets.GA4_SERVICE_ACCOUNT }}
+        run: |
+          DAYS="${{ github.event.inputs.days || '7' }}"
+          echo "[ANALYTICS] Fetching GA4 website analytics (last ${DAYS} days)..."
+          node social-distributor/analytics/ga4-fetcher.js --days "$DAYS" 2>&1 || {
+            echo "[ANALYTICS] WARN: GA4 fetch failed (non-fatal)"
+          }
+
+      - name: Generate performance report + update scheduler weights
+        run: |
+          echo "[ANALYTICS] Computing format performance scores..."
+          node social-distributor/analytics/performance-scorer.js --update 2>&1 || {
+            echo "[ANALYTICS] WARN: Performance scorer failed (non-fatal)"
+          }
+
+      - name: Commit updated data files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stage analytics data files (only if they exist and changed)
+          git add social-distributor/reels/data/trend-priorities.json 2>/dev/null || true
+          git add social-distributor/reels/data/performance-weights.json 2>/dev/null || true
+          git add social-distributor/reels/data/content-history.json 2>/dev/null || true
+          git add social-distributor/analytics/reports/ 2>/dev/null || true
+
+          # Only commit if there are staged changes
+          git diff --cached --quiet || {
+            git commit -m "chore: daily analytics update [$(date -u +%Y-%m-%d)]"
+            git push || echo "[ANALYTICS] WARN: git push failed (non-fatal)"
+          }
+
+          echo "[ANALYTICS] Done. Scheduler will use fresh data at next reel trigger."

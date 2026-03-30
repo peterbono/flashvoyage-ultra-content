@@ -64,48 +64,59 @@ jobs:
           ffmpeg -version | head -1
           npx puppeteer browsers install chrome 2>/dev/null || true
 
-      - name: Determine format from schedule
+      - name: Determine format from smart scheduler
         id: format
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "format=${{ github.event.inputs.format }}" >> $GITHUB_OUTPUT
+            FORMAT="${{ github.event.inputs.format }}"
+            if [ "$FORMAT" = "auto" ]; then
+              # Even manual "auto" uses the smart scheduler
+              echo "[SCHEDULER] Manual trigger with auto — delegating to smart scheduler..."
+              RESULT=$(node --input-type=module -e "
+                import { decideContent } from './social-distributor/reels/smart-scheduler.js';
+                const decision = await decideContent();
+                console.log(JSON.stringify(decision));
+              " 2>/dev/null | tail -1)
+              FORMAT=$(echo "$RESULT" | jq -r '.format // "pick"')
+              REASON=$(echo "$RESULT" | jq -r '.reason // "auto fallback"')
+              ARTICLE_ID=$(echo "$RESULT" | jq -r '.articleId // empty')
+              IS_BREAKING=$(echo "$RESULT" | jq -r '.isBreakingNews // false')
+              echo "[SCHEDULER] Smart decision: $FORMAT ($REASON)"
+            else
+              REASON="manual dispatch"
+              ARTICLE_ID=""
+              IS_BREAKING="false"
+            fi
+            echo "format=$FORMAT" >> $GITHUB_OUTPUT
+            echo "reason=$REASON" >> $GITHUB_OUTPUT
+            echo "article_id=$ARTICLE_ID" >> $GITHUB_OUTPUT
+            echo "is_breaking=$IS_BREAKING" >> $GITHUB_OUTPUT
             echo "publish=${{ github.event.inputs.test_only == 'true' && 'false' || 'true' }}" >> $GITHUB_OUTPUT
           else
-            # Determine format based on cron time + day of week
-            HOUR=$(date -u +%H)
-            DOW=$(date -u +%u)  # 1=Monday, 7=Sunday
+            # Cron trigger — smart scheduler decides based on trends + analytics + news + calendar
+            echo "[SCHEDULER] Cron trigger — running smart scheduler..."
+            RESULT=$(node --input-type=module -e "
+              import { decideContent } from './social-distributor/reels/smart-scheduler.js';
+              const decision = await decideContent();
+              console.log(JSON.stringify(decision));
+            " 2>/dev/null | tail -1)
 
-            if [ "$HOUR" = "05" ]; then
-              # 7h00 Paris slot
-              case $DOW in
-                1|3|5) FORMAT="pick" ;;     # Mon, Wed, Fri: Trip Pick
-                2|6)   FORMAT="budget" ;;   # Tue, Sat: Budget Jour
-                4)     FORMAT="pick" ;;     # Thu: Trip Pick
-                7)     FORMAT="avantapres" ;; # Sun: Avant/Apres
-              esac
-            elif [ "$HOUR" = "10" ]; then
-              # 12h30 Paris slot
-              case $DOW in
-                1|3|5|7) FORMAT="versus" ;; # Mon, Wed, Fri, Sun: Versus
-                2)       FORMAT="month" ;;  # Tue: Ou Partir En (1st Tue of month only)
-                4|6)     FORMAT="pick" ;;   # Thu, Sat: Trip Pick
-              esac
-              # Ou Partir En only on first Tuesday of month
-              if [ "$FORMAT" = "month" ] && [ "$(date -u +%d)" -gt "7" ]; then
-                FORMAT="pick"
-              fi
-            elif [ "$HOUR" = "16" ]; then
-              # 18h00 Paris slot — always Humor
-              # Alternate A/B: even days = humor, odd days = humor-tweet
-              DAY=$(date -u +%d)
-              if [ $((DAY % 2)) -eq 0 ]; then
-                FORMAT="humor"
-              else
-                FORMAT="humor-tweet"
-              fi
-            fi
+            FORMAT=$(echo "$RESULT" | jq -r '.format // "pick"')
+            REASON=$(echo "$RESULT" | jq -r '.reason // "fallback"')
+            ARTICLE_ID=$(echo "$RESULT" | jq -r '.articleId // empty')
+            IS_BREAKING=$(echo "$RESULT" | jq -r '.isBreakingNews // false')
 
-            echo "format=${FORMAT:-pick}" >> $GITHUB_OUTPUT
+            echo "[SCHEDULER] Decision: format=$FORMAT"
+            echo "[SCHEDULER] Reason: $REASON"
+            echo "[SCHEDULER] Article ID: ${ARTICLE_ID:-auto}"
+            echo "[SCHEDULER] Breaking news: $IS_BREAKING"
+
+            echo "format=$FORMAT" >> $GITHUB_OUTPUT
+            echo "reason=$REASON" >> $GITHUB_OUTPUT
+            echo "article_id=$ARTICLE_ID" >> $GITHUB_OUTPUT
+            echo "is_breaking=$IS_BREAKING" >> $GITHUB_OUTPUT
             echo "publish=true" >> $GITHUB_OUTPUT
           fi
 
@@ -118,23 +129,44 @@ jobs:
         run: |
           FORMAT="${{ steps.format.outputs.format }}"
           PUBLISH="${{ steps.format.outputs.publish }}"
+          ARTICLE_ID="${{ steps.format.outputs.article_id }}"
+          REASON="${{ steps.format.outputs.reason }}"
 
           echo "Format: $FORMAT"
           echo "Publish: $PUBLISH"
+          echo "Article ID: ${ARTICLE_ID:-auto}"
+          echo "Reason: $REASON"
 
           # Ensure tokens.json exists for the publisher (IG + FB + Threads)
           mkdir -p social-distributor/data
           echo '{"facebook":{"token":"'$FB_PAGE_TOKEN'","expiresAt":"never"},"threads":{"token":"'$THREADS_TOKEN'","expiresAt":"2026-05-23T00:00:00Z"}}' > social-distributor/data/tokens.json
 
-          if [ "$FORMAT" = "auto" ]; then
-            FORMAT="pick"  # Default for manual "auto"
+          # Build CLI args
+          ARGS="--format $FORMAT"
+          if [ -n "$ARTICLE_ID" ]; then
+            ARGS="$ARGS --post $ARTICLE_ID"
           fi
 
           if [ "$PUBLISH" = "true" ]; then
-            node social-distributor/reels/index-v2.js --format "$FORMAT" --publish
+            node social-distributor/reels/index-v2.js $ARGS --publish
           else
-            node social-distributor/reels/index-v2.js --format "$FORMAT" --test
+            node social-distributor/reels/index-v2.js $ARGS --test
           fi
+
+      - name: Record publication in content history
+        if: success() && steps.format.outputs.publish == 'true'
+        run: |
+          FORMAT="${{ steps.format.outputs.format }}"
+          ARTICLE_ID="${{ steps.format.outputs.article_id }}"
+          node --input-type=module -e "
+            import { recordPublication } from './social-distributor/reels/smart-scheduler.js';
+            recordPublication({
+              format: '${FORMAT}',
+              articleId: ${ARTICLE_ID:-null},
+              destination: null,
+            });
+            console.log('[SCHEDULER] Publication recorded in content history.');
+          " 2>&1 || echo "[SCHEDULER] WARN: Failed to record publication (non-fatal)"
 
       # Cross-publishing: Story + FB Reel + Threads
       # The reel pipeline (index-v2.js) calls cross-publisher.js internally after
@@ -156,6 +188,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add social-distributor/data/reel-history.jsonl social-distributor/reels/data/pexels-used.json 2>/dev/null || true
+          git add social-distributor/data/reel-history.jsonl social-distributor/reels/data/pexels-used.json social-distributor/reels/data/content-history.json 2>/dev/null || true
           git diff --cached --quiet || git commit -m "chore: update reel state after publish [$(date -u +%Y-%m-%d)]"
           git push || true

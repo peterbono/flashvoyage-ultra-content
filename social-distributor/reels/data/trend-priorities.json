@@ -1,0 +1,37 @@
+{
+  "lastUpdated": "2026-03-30T20:19:53.143Z",
+  "topDestinations": [
+    "thailande",
+    "vietnam",
+    "bali",
+    "laos"
+  ],
+  "trendingTopics": [
+    "voyage bali pas cher",
+    "voyage thailande pas cher",
+    "voyage thailande circuit",
+    "voyage thailande prix",
+    "prix voyage vietnam",
+    "voyage vietnam pas cher",
+    "voyage thailande phuket",
+    "voyage vietnam cambodge",
+    "voyage laos cambodge"
+  ],
+  "contentGaps": [],
+  "reelPriority": {
+    "bali": 0.26,
+    "thailande": 1,
+    "vietnam": 0.74,
+    "laos": 0.22
+  },
+  "reelSuggestions": [],
+  "stats": {
+    "totalDailyTrends": 10,
+    "travelRelevantRss": 0,
+    "risingDestQueries": 9,
+    "totalUniqueTrends": 9,
+    "articlesChecked": 32,
+    "matchedTrends": 9,
+    "gapTrends": 0
+  }
+}

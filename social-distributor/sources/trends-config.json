@@ -1,0 +1,105 @@
+{
+  "destinations": {
+    "seAsia": [
+      "bali",
+      "thailande",
+      "vietnam",
+      "philippines",
+      "cambodge",
+      "laos",
+      "myanmar",
+      "malaisie",
+      "singapour",
+      "indonesie",
+      "jakarta",
+      "bangkok",
+      "chiang mai",
+      "phuket",
+      "koh samui",
+      "koh phangan",
+      "hanoi",
+      "ho chi minh",
+      "da nang",
+      "hoi an",
+      "siem reap",
+      "luang prabang",
+      "kuala lumpur",
+      "cebu",
+      "palawan",
+      "el nido",
+      "siargao",
+      "ubud",
+      "lombok",
+      "nusa penida",
+      "java",
+      "raja ampat"
+    ],
+    "broader": [
+      "japon",
+      "coree du sud",
+      "sri lanka",
+      "inde",
+      "maldives",
+      "nepal"
+    ]
+  },
+  "searchPatterns": {
+    "fr": [
+      "{dest} budget 2026",
+      "{dest} visa",
+      "{dest} visa 2026",
+      "{dest} itineraire",
+      "vol pas cher {dest}",
+      "{dest} danger",
+      "{dest} securite",
+      "{dest} quand partir",
+      "{dest} digital nomad",
+      "{dest} cout de la vie",
+      "{dest} arnaques",
+      "{dest} backpack",
+      "ou partir en {month}",
+      "{dest} vs {dest2}",
+      "{dest} 2 semaines",
+      "{dest} 3 semaines",
+      "{dest} 1 mois",
+      "{dest} assurance voyage",
+      "{dest} vaccin",
+      "{dest} sim carte",
+      "{dest} internet",
+      "{dest} monnaie",
+      "{dest} transport"
+    ]
+  },
+  "months": {
+    "fr": [
+      "janvier", "fevrier", "mars", "avril", "mai", "juin",
+      "juillet", "aout", "septembre", "octobre", "novembre", "decembre"
+    ]
+  },
+  "scoring": {
+    "trendVolumeWeight": 0.4,
+    "relevanceWeight": 0.3,
+    "recencyWeight": 0.2,
+    "contentGapWeight": 0.1,
+    "minScoreThreshold": 0.3
+  },
+  "wpApi": {
+    "baseUrl": "https://flashvoyage.com/wp-json/wp/v2",
+    "postsPerPage": 100,
+    "cacheMaxAgeMs": 3600000
+  },
+  "rateLimiting": {
+    "delayBetweenRequestsMs": 2000,
+    "maxConcurrentRequests": 1,
+    "maxRetriesPerRequest": 2,
+    "retryDelayMs": 5000
+  },
+  "categories": {
+    "visa": ["visa", "passeport", "immigration", "e-visa", "visa-free", "exemption"],
+    "budget": ["budget", "prix", "cout", "pas cher", "depenses", "argent", "monnaie"],
+    "securite": ["danger", "securite", "arnaque", "scam", "safe", "risque", "vaccin"],
+    "transport": ["vol", "avion", "train", "bus", "ferry", "transport", "aeroport"],
+    "itineraire": ["itineraire", "semaines", "mois", "circuit", "route", "backpack"],
+    "pratique": ["sim", "internet", "assurance", "carte", "digital nomad", "cout de la vie"]
+  }
+}
