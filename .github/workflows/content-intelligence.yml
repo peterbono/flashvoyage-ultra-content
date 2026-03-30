@@ -1,0 +1,123 @@
+name: Content Intelligence Engine
+
+on:
+  schedule:
+    # 3h00 UTC = 5h00 Paris = 10h00 Bangkok
+    # Runs BEFORE daily-analytics.yml (4h00 UTC) so intelligence data
+    # is fresh when the analytics pipeline runs.
+    - cron: '0 3 * * *'
+
+  workflow_dispatch:
+    inputs:
+      modules:
+        description: 'Which modules to run (all, score, gaps, link, queue)'
+        required: false
+        default: 'all'
+        type: choice
+        options: ['all', 'score', 'gaps', 'link', 'queue']
+
+env:
+  NODE_ENV: production
+
+jobs:
+  intelligence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # --- Write GA4 service account key from secret ---
+      - name: Setup GA4 credentials
+        env:
+          GA4_SERVICE_ACCOUNT: ${{ secrets.GA4_SERVICE_ACCOUNT }}
+        run: |
+          if [ -n "$GA4_SERVICE_ACCOUNT" ]; then
+            echo "$GA4_SERVICE_ACCOUNT" > ga4-service-account.json
+            echo "[INTELLIGENCE] GA4 service account written"
+          else
+            echo "[INTELLIGENCE] WARN: No GA4_SERVICE_ACCOUNT secret, GA4 + SC data will be skipped"
+          fi
+
+      # --- Step 1: Score all articles ---
+      - name: Score all articles
+        if: ${{ github.event.inputs.modules == 'all' || github.event.inputs.modules == 'score' || github.event_name == 'schedule' }}
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: ./ga4-service-account.json
+        run: |
+          echo "[INTELLIGENCE] Step 1/4: Scoring all articles..."
+          node intelligence/run-intelligence.js --score 2>&1 || {
+            echo "[INTELLIGENCE] WARN: Article scoring failed (non-fatal, using stale data)"
+          }
+
+      # --- Step 2: Detect content gaps ---
+      - name: Detect content gaps
+        if: ${{ github.event.inputs.modules == 'all' || github.event.inputs.modules == 'gaps' || github.event_name == 'schedule' }}
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ./ga4-service-account.json
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "[INTELLIGENCE] Step 2/4: Detecting content gaps..."
+          node intelligence/run-intelligence.js --gaps 2>&1 || {
+            echo "[INTELLIGENCE] WARN: Gap detection failed (non-fatal)"
+          }
+
+      # --- Step 3: Link articles to reels ---
+      - name: Link articles to reels
+        if: ${{ github.event.inputs.modules == 'all' || github.event.inputs.modules == 'link' || github.event_name == 'schedule' }}
+        env:
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: ./ga4-service-account.json
+        run: |
+          echo "[INTELLIGENCE] Step 3/4: Linking articles to reels..."
+          node intelligence/run-intelligence.js --link 2>&1 || {
+            echo "[INTELLIGENCE] WARN: Article-reel linking failed (non-fatal)"
+          }
+
+      # --- Step 4: Prioritize next articles ---
+      - name: Prioritize next articles
+        if: ${{ github.event.inputs.modules == 'all' || github.event.inputs.modules == 'queue' || github.event_name == 'schedule' }}
+        run: |
+          echo "[INTELLIGENCE] Step 4/4: Building priority queue..."
+          node intelligence/run-intelligence.js --queue 2>&1 || {
+            echo "[INTELLIGENCE] WARN: Prioritization failed (non-fatal)"
+          }
+
+      # --- Cleanup credentials ---
+      - name: Cleanup credentials
+        if: always()
+        run: rm -f ga4-service-account.json
+
+      # --- Commit data files ---
+      - name: Commit intelligence data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stage intelligence output files
+          git add data/article-scores.json 2>/dev/null || true
+          git add data/content-gaps.json 2>/dev/null || true
+          git add data/article-reel-map.json 2>/dev/null || true
+          git add data/next-articles-queue.json 2>/dev/null || true
+
+          # Only commit if there are staged changes
+          git diff --cached --quiet || {
+            git commit -m "chore: content intelligence update [$(date -u +%Y-%m-%d)]"
+            git push || echo "[INTELLIGENCE] WARN: git push failed (non-fatal)"
+          }
+
+          echo "[INTELLIGENCE] Done. Editorial calendar will use fresh intelligence data."

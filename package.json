@@ -22,7 +22,17 @@
     "trends:report": "node social-distributor/sources/trends-scanner.js report",
     "trends:scan": "node social-distributor/sources/trends-scanner.js scan",
     "trends:update-reels": "node social-distributor/sources/trends-scanner.js update-reels",
-    "trends:deepdive": "node social-distributor/sources/trends-scanner.js deepdive"
+    "trends:deepdive": "node social-distributor/sources/trends-scanner.js deepdive",
+    "intelligence:full": "node social-distributor/analytics/content-intelligence-engine.js full",
+    "intelligence:quick": "node social-distributor/analytics/content-intelligence-engine.js quick",
+    "intelligence:daily": "node social-distributor/analytics/content-intelligence-engine.js daily",
+    "intelligence:summary": "node social-distributor/analytics/content-intelligence-engine.js summary",
+    "intelligence:score": "node social-distributor/analytics/article-scorer.js score",
+    "intelligence:gaps": "node social-distributor/analytics/content-gap-detector.js analyze",
+    "intelligence:fruit": "node social-distributor/analytics/search-console-fetcher.js fruit",
+    "intelligence:revenue": "node social-distributor/analytics/revenue-tracker.js report",
+    "intelligence:refresh": "node social-distributor/analytics/content-refresh-engine.js detect",
+    "intelligence:reel-route": "node social-distributor/analytics/article-reel-router.js test-all"
   },
   "keywords": [
     "flashvoyage",
@@ -47,6 +57,7 @@
     "express": "^4.21.2",
     "form-data": "^4.0.4",
     "google-trends-api": "^4.9.2",
+    "googleapis": "^171.4.0",
     "node-html-parser": "^7.0.2",
     "node-html-to-image": "^5.0.0",
     "openai": "^6.3.0",
