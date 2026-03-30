@@ -51,6 +51,11 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, '..', 'data');
 const REPORT_PATH = join(DATA_DIR, 'intelligence-report.json');
+const HEALTH_REPORT_PATH = join(DATA_DIR, 'health-report.json');
+
+const IG_ID = '17841442283434789';
+const GRAPH_API = 'https://graph.facebook.com/v21.0';
+const WP_API = 'https://flashvoyage.com/wp-json/wp/v2';
 
 // ── Logging ─────────────────────────────────────────────────────────────────
 
@@ -499,6 +504,159 @@ function generateReport(data, analysis, plans) {
   return report;
 }
 
+// ── Health Checks ──────────────────────────────────────────────────────────
+
+/**
+ * Run health checks against all API connections and return a structured report.
+ * Writes the report to data/health-report.json and returns it.
+ *
+ * @returns {Promise<Object>} Health report
+ */
+async function runHealthChecks() {
+  log('=== HEALTH CHECK ===');
+  const checks = {};
+
+  // 1. GA4 — try fetchSiteSummary(1)
+  try {
+    const { fetchSiteSummary } = await import('./ga4-fetcher.js');
+    const summary = await fetchSiteSummary(1);
+    if (summary.totalSessions === 0) {
+      checks.ga4 = { status: 'warn', detail: `0 sessions in the last day (totalPageviews=${summary.totalPageviews}). Could be low traffic or delayed data.` };
+    } else {
+      checks.ga4 = { status: 'ok', detail: `${summary.totalSessions} sessions, ${summary.totalPageviews} pageviews in last day` };
+    }
+  } catch (err) {
+    checks.ga4 = { status: 'critical', detail: `GA4 API error: ${err.message}` };
+  }
+
+  // 2. GSC — try fetchTopQueries(7, 1)
+  try {
+    const { fetchTopQueries } = await import('./search-console-fetcher.js');
+    const queries = await fetchTopQueries(7, 1);
+    if (queries.length === 0) {
+      checks.gsc = { status: 'warn', detail: 'No queries returned for last 7 days. Data may be delayed.' };
+    } else {
+      checks.gsc = { status: 'ok', detail: `Top query: "${queries[0].query}" (${queries[0].clicks} clicks, pos ${queries[0].position.toFixed(1)})` };
+    }
+  } catch (err) {
+    const msg = err.message || '';
+    if (msg.includes('permission') || msg.includes('403') || msg.includes('Forbidden')) {
+      checks.gsc = { status: 'critical', detail: `Permission error — service account may need re-adding to GSC: ${msg}` };
+    } else {
+      checks.gsc = { status: 'critical', detail: `GSC API error: ${msg}` };
+    }
+  }
+
+  // 3. IG Token — validate via GET /me?access_token=TOKEN
+  try {
+    const tokensPath = join(DATA_DIR, 'tokens.json');
+    const tokens = JSON.parse(readFileSync(tokensPath, 'utf-8'));
+    const fbToken = tokens.facebook?.token;
+    if (!fbToken) {
+      checks.instagram = { status: 'critical', detail: 'No Facebook/IG token found in tokens.json' };
+    } else {
+      const resp = await fetch(`${GRAPH_API}/${IG_ID}?fields=id,username&access_token=${fbToken}`, {
+        signal: AbortSignal.timeout(10000),
+      });
+      const data = await resp.json();
+      if (data.error) {
+        checks.instagram = { status: 'critical', detail: `IG token invalid: ${data.error.message} (code ${data.error.code})` };
+      } else {
+        checks.instagram = { status: 'ok', detail: `Authenticated as IG user: ${data.username || data.id}` };
+      }
+    }
+  } catch (err) {
+    checks.instagram = { status: 'critical', detail: `IG token check failed: ${err.message}` };
+  }
+
+  // 4. Threads Token — check expiry from tokens.json
+  try {
+    const tokensPath = join(DATA_DIR, 'tokens.json');
+    const tokens = JSON.parse(readFileSync(tokensPath, 'utf-8'));
+    const threadsExpiry = tokens.threads?.expiresAt;
+    const threadsToken = tokens.threads?.token;
+    if (!threadsToken) {
+      checks.threads = { status: 'critical', detail: 'No Threads token found in tokens.json' };
+    } else if (!threadsExpiry || threadsExpiry === 'never') {
+      checks.threads = { status: 'ok', detail: 'Threads token present (no expiry set)' };
+    } else {
+      const expiryDate = new Date(threadsExpiry);
+      const daysUntilExpiry = Math.floor((expiryDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+      if (daysUntilExpiry < 3) {
+        checks.threads = { status: 'critical', detail: `Threads token expires in ${daysUntilExpiry} day(s) (${threadsExpiry}). RENEW IMMEDIATELY.` };
+      } else if (daysUntilExpiry < 14) {
+        checks.threads = { status: 'warn', detail: `Threads token expires in ${daysUntilExpiry} days (${threadsExpiry}). Plan renewal soon.` };
+      } else {
+        checks.threads = { status: 'ok', detail: `Threads token valid for ${daysUntilExpiry} days (expires ${threadsExpiry})` };
+      }
+    }
+  } catch (err) {
+    checks.threads = { status: 'critical', detail: `Threads token check failed: ${err.message}` };
+  }
+
+  // 5. Travelpayouts — check if API token exists in env or config
+  try {
+    const tpToken = process.env.TRAVELPAYOUTS_TOKEN || process.env.TP_TOKEN || null;
+    if (!tpToken) {
+      checks.travelpayouts = { status: 'warn', detail: 'No TRAVELPAYOUTS_TOKEN or TP_TOKEN env var set. Revenue tracking may be limited.' };
+    } else {
+      checks.travelpayouts = { status: 'ok', detail: 'Travelpayouts API token found in environment' };
+    }
+  } catch (err) {
+    checks.travelpayouts = { status: 'warn', detail: `Travelpayouts check error: ${err.message}` };
+  }
+
+  // 6. WP API — try GET /wp/v2/posts?per_page=1
+  try {
+    const resp = await fetch(`${WP_API}/posts?per_page=1&_fields=id,title`, {
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!resp.ok) {
+      checks.wordpress = { status: 'critical', detail: `WP API returned HTTP ${resp.status}: ${resp.statusText}` };
+    } else {
+      const posts = await resp.json();
+      if (posts.length > 0) {
+        checks.wordpress = { status: 'ok', detail: `WP API reachable. Latest post: "${posts[0].title?.rendered || posts[0].id}"` };
+      } else {
+        checks.wordpress = { status: 'warn', detail: 'WP API reachable but returned 0 posts' };
+      }
+    }
+  } catch (err) {
+    checks.wordpress = { status: 'critical', detail: `WP API unreachable: ${err.message}` };
+  }
+
+  // Determine overall status
+  const statuses = Object.values(checks).map(c => c.status);
+  let overall = 'healthy';
+  if (statuses.includes('warn')) overall = 'degraded';
+  if (statuses.includes('critical')) overall = 'critical';
+
+  const report = {
+    checkedAt: new Date().toISOString(),
+    status: overall,
+    checks,
+  };
+
+  // Save report
+  if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
+  writeFileSync(HEALTH_REPORT_PATH, JSON.stringify(report, null, 2), 'utf-8');
+  log(`Health report saved to ${HEALTH_REPORT_PATH}`);
+
+  // Print summary
+  console.log('\n' + '='.repeat(50));
+  console.log('  FLASHVOYAGE HEALTH CHECK');
+  console.log('  ' + report.checkedAt);
+  console.log('='.repeat(50));
+  console.log(`\n  Overall: ${overall.toUpperCase()}\n`);
+  for (const [name, check] of Object.entries(checks)) {
+    const icon = check.status === 'ok' ? 'OK' : check.status === 'warn' ? 'WARN' : 'CRIT';
+    console.log(`  [${icon.padEnd(4)}] ${name.padEnd(15)} ${check.detail}`);
+  }
+  console.log('\n' + '='.repeat(50) + '\n');
+
+  return report;
+}
+
 // ── Run Modes ───────────────────────────────────────────────────────────────
 
 /**
@@ -625,6 +783,13 @@ switch (command) {
     break;
   }
 
+  case 'health':
+    runHealthChecks().catch(err => {
+      logError(err.message);
+      process.exit(1);
+    });
+    break;
+
   default:
     console.log(`
 FlashVoyage Content Intelligence Engine
@@ -634,6 +799,7 @@ Usage:
   node content-intelligence-engine.js quick     SEO-only analysis (GA4 + GSC, ~30s)
   node content-intelligence-engine.js daily     Daily cron mode (full + error handling)
   node content-intelligence-engine.js summary   Display last report summary
+  node content-intelligence-engine.js health    Run health checks on all API connections
 
 Data sources:
   - GA4 (property 505793742) — pageviews, sessions, duration
@@ -643,6 +809,7 @@ Data sources:
   - Travelpayouts Statistics — affiliate revenue data
 
 Output: social-distributor/data/intelligence-report.json
+Health: social-distributor/data/health-report.json
 
 Cron setup (daily at 06:00 Bangkok):
   0 23 * * * cd /Users/floriangouloubi/flashvoyage-content && node social-distributor/analytics/content-intelligence-engine.js daily >> /tmp/flashvoyage-intelligence.log 2>&1

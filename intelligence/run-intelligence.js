@@ -91,7 +91,7 @@ async function run() {
     try {
       const result = await prioritizeNextArticles({ count: 15 });
       log(`Priority queue: ${result.queueSize} items`);
-      log(`  P1=${result.summary.write_new}, P2=${result.summary.update}, P3=${result.summary.enrich}, P4=${result.summary.standard}, P5=${result.summary.review}`);
+      log(`  P1 update=${result.summary.update} enrich=${result.summary.enrich}, P2 write_new=${result.summary.write_new}, P3 standard=${result.summary.standard}, P4 review=${result.summary.review}`);
     } catch (err) {
       logError(`Prioritization failed: ${err.message}`);
     }

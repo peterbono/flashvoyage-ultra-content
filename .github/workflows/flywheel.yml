@@ -1,0 +1,90 @@
+name: Proactive Data Flywheel
+
+on:
+  schedule:
+    # Every 6 hours: 00h, 06h, 12h, 18h UTC
+    # = 07h, 13h, 19h, 01h Bangkok time
+    - cron: '0 0,6,12,18 * * *'
+
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: 'Which phase to run (all, ab-tests, velocity, refresh)'
+        required: false
+        default: 'all'
+        type: choice
+        options: ['all', 'ab-tests', 'velocity', 'refresh']
+
+env:
+  NODE_ENV: production
+
+jobs:
+  flywheel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # --- Setup credentials ---
+      - name: Setup credentials
+        env:
+          GA4_SERVICE_ACCOUNT: ${{ secrets.GA4_SERVICE_ACCOUNT }}
+        run: |
+          if [ -n "$GA4_SERVICE_ACCOUNT" ]; then
+            echo "$GA4_SERVICE_ACCOUNT" > ga4-service-account.json
+            echo "[FLYWHEEL] GA4 service account written"
+          fi
+
+      # --- Run flywheel ---
+      - name: Run flywheel orchestrator
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          TRAVELPAYOUTS_API_TOKEN: ${{ secrets.TRAVELPAYOUTS_API_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: ./ga4-service-account.json
+        run: |
+          echo "[FLYWHEEL] Starting proactive data flywheel..."
+          node social-distributor/analytics/flywheel-orchestrator.js run 2>&1 || {
+            echo "[FLYWHEEL] WARN: Flywheel run had errors (see logs above)"
+          }
+
+      # --- Cleanup ---
+      - name: Cleanup credentials
+        if: always()
+        run: rm -f ga4-service-account.json
+
+      # --- Commit data changes ---
+      - name: Commit flywheel data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stage flywheel output files
+          git add social-distributor/data/ab-tests.json 2>/dev/null || true
+          git add social-distributor/data/velocity-queue.json 2>/dev/null || true
+          git add social-distributor/data/flywheel-log.json 2>/dev/null || true
+          git add social-distributor/data/flywheel-daily-usage.json 2>/dev/null || true
+          git add social-distributor/data/intelligence-report.json 2>/dev/null || true
+
+          # Only commit if there are staged changes
+          git diff --cached --quiet || {
+            git commit -m "chore: flywheel cycle [$(date -u +%Y-%m-%dT%H:%M)]"
+            git push || echo "[FLYWHEEL] WARN: git push failed (non-fatal)"
+          }
+
+          echo "[FLYWHEEL] Done."

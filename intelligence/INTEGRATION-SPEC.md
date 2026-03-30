@@ -57,7 +57,7 @@ getNextDirective() {
 
 ```javascript
 _getIntelligenceOverride() {
-  // Only override for high-priority items (P1 write_new, P2 update, P3 enrich)
+  // Only override for high-priority items (P1 update/enrich, P2 write_new)
   const actionable = this.intelligenceQueue.filter(item =>
     ['write_new', 'update', 'enrich'].includes(item.action) &&
     !this._wasRecentlyUsed(item.topic)

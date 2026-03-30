@@ -1,0 +1,34 @@
+{
+  "weights": {
+    "ga4Pageviews": 0.20,
+    "ga4AvgDuration": 0.10,
+    "gscImpressions": 0.20,
+    "gscPositionInverse": 0.15,
+    "affiliateClicks": 0.15,
+    "reelEngagement": 0.10,
+    "trendsRelevance": 0.10
+  },
+  "lowHangingFruit": {
+    "minPosition": 5,
+    "maxPosition": 20,
+    "minImpressions": 50
+  },
+  "cannibalization": {
+    "minImpressions": 20,
+    "maxPositionDiff": 10
+  },
+  "refresh": {
+    "minAgeDays": 180,
+    "declineThresholdPercent": 30
+  },
+  "notes": {
+    "weights_sum": "Must equal 1.0",
+    "ga4Pageviews": "Raw traffic demand — higher weight = prioritize popular content",
+    "ga4AvgDuration": "Content quality signal — 5min cap, lower weight because noisy",
+    "gscImpressions": "SEO visibility / keyword demand — tied with pageviews as top signal",
+    "gscPositionInverse": "Ranking authority — position 1=10, position 50=0",
+    "affiliateClicks": "Monetization potential — directly tied to revenue",
+    "reelEngagement": "Social amplification — saves+shares weighted highest",
+    "trendsRelevance": "Timeliness — rising trends get a boost"
+  }
+}

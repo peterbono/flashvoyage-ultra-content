@@ -35,6 +35,37 @@ const GRAPH_API = 'https://graph.facebook.com/v21.0';
 const WP_API = 'https://flashvoyage.com/wp-json/wp/v2';
 const WP_AUTH = 'Basic ' + Buffer.from('admin7817:GjLl 9W0k lKwf LSOT PXur RYGR').toString('base64');
 
+// ── UTM Helper ─────────────────────────────────────────────────────────────
+
+/**
+ * Add UTM tracking parameters to a URL for full-funnel GA4 attribution.
+ * Only modifies flashvoyage.com URLs; returns other URLs unchanged.
+ *
+ * @param {string} url - The target URL
+ * @param {Object} params - UTM parameters
+ * @param {string} params.source - utm_source (e.g. 'instagram', 'facebook', 'threads')
+ * @param {string} params.medium - utm_medium (e.g. 'story', 'post', 'reel')
+ * @param {string} params.campaign - utm_campaign (e.g. 'reel_12345', 'article_678')
+ * @param {string} [params.content] - utm_content (optional, for A/B testing)
+ * @returns {string} URL with UTM parameters appended
+ */
+function addUTM(url, { source, medium, campaign, content }) {
+  if (!url) return url;
+  try {
+    const u = new URL(url);
+    // Only add UTM to flashvoyage.com URLs
+    if (!u.hostname.includes('flashvoyage.com')) return url;
+    u.searchParams.set('utm_source', source);
+    u.searchParams.set('utm_medium', medium);
+    u.searchParams.set('utm_campaign', campaign);
+    if (content) u.searchParams.set('utm_content', content);
+    return u.toString();
+  } catch {
+    // If URL parsing fails, return as-is
+    return url;
+  }
+}
+
 // ── Token helpers ───────────────────────────────────────────────────────────
 
 /**
@@ -182,6 +213,7 @@ function truncate(text, max = 500) {
  * @param {string} [params.articleUrl] - flashvoyage.com article URL (for Story link sticker)
  * @param {Buffer} [params.thumbnailBuffer] - A frame from the reel for Story (PNG 1080x1920)
  * @param {string} [params.thumbnailPublicUrl] - Public URL of the thumbnail (if already uploaded)
+ * @param {string} [params.reelId] - Reel identifier for UTM campaign tracking
  * @param {string} [params.pageToken] - FB page token (falls back to tokens.json)
  * @param {string} [params.threadsToken] - Threads token (falls back to tokens.json)
  * @returns {Promise<{ story: Object, facebook: Object, threads: Object }>}
@@ -193,9 +225,16 @@ export async function crossPublishReel(params) {
     articleUrl = null,
     thumbnailBuffer = null,
     thumbnailPublicUrl = null,
+    reelId = null,
     pageToken: pageTokenOverride,
     threadsToken: threadsTokenOverride,
   } = params;
+
+  // Build UTM-tagged article URLs per platform
+  const campaignId = reelId || `reel_${Date.now()}`;
+  const storyArticleUrl = articleUrl ? addUTM(articleUrl, { source: 'instagram', medium: 'story', campaign: campaignId }) : null;
+  const fbArticleUrl = articleUrl ? addUTM(articleUrl, { source: 'facebook', medium: 'reel', campaign: campaignId }) : null;
+  const threadsArticleUrl = articleUrl ? addUTM(articleUrl, { source: 'threads', medium: 'post', campaign: campaignId }) : null;
 
   // Load tokens (allow overrides for testing)
   const tokens = loadTokens();
@@ -233,36 +272,40 @@ export async function crossPublishReel(params) {
 
   // Run all three platforms in parallel
   const [storyResult, fbResult, threadsResult] = await Promise.all([
-    // 1. IG Story with link sticker
+    // 1. IG Story with link sticker (UTM: instagram/story)
     (thumbnailBuffer || threadsImageUrl)
       ? safeExec('IG Story', async () => {
           if (!threadsImageUrl) throw new Error('No thumbnail available for Story');
-          // We use publishIGStory which handles WP upload internally if given a buffer.
-          // But since we already have a public URL, we need to pass the buffer through
-          // because publishStory expects imageBuffer (it uploads to WP itself).
-          // To avoid double-uploading, pass the original buffer — publishStory handles WP internally.
           return publishIGStory({
             imageBuffer: thumbnailBuffer,
             pageToken,
-            link: articleUrl,
+            link: storyArticleUrl,
           });
         })
       : safeExec('IG Story', async () => {
           throw new Error('No thumbnail provided — Story skipped');
         }),
 
-    // 2. Facebook Reel
+    // 2. Facebook Reel (caption includes UTM link if article URL provided)
     safeExec('FB Reel', async () => {
+      // Append UTM-tagged article link to description for FB Reel
+      const fbDescription = fbArticleUrl
+        ? `${caption}\n\n${fbArticleUrl}`
+        : caption;
       return publishFBReel({
         videoUrl: videoPublicUrl,
-        description: caption,
+        description: fbDescription,
         pageToken,
       });
     }),
 
-    // 3. Threads post (caption + thumbnail image)
+    // 3. Threads post (caption + thumbnail image, UTM: threads/post)
     safeExec('Threads', async () => {
-      const threadsText = truncate(caption, 500);
+      // Append UTM-tagged article link to Threads text
+      const baseText = truncate(caption, threadsArticleUrl ? 450 : 500);
+      const threadsText = threadsArticleUrl
+        ? `${baseText}\n\n${threadsArticleUrl}`
+        : baseText;
       return publishThreadsPost({
         text: threadsText,
         imageUrl: threadsImageUrl || undefined,
@@ -303,6 +346,7 @@ export async function crossPublishReel(params) {
  * @param {string} params.imagePublicUrl - Public URL of the image (already on WP or CDN)
  * @param {string} [params.articleUrl] - flashvoyage.com article URL
  * @param {Buffer} [params.storyImageBuffer] - Custom image for Story (1080x1920). If null, skips Story.
+ * @param {string} [params.articleId] - Article identifier for UTM campaign tracking
  * @param {string} [params.pageToken] - FB page token (falls back to tokens.json)
  * @param {string} [params.threadsToken] - Threads token (falls back to tokens.json)
  * @returns {Promise<{ story: Object, facebook: Object, threads: Object }>}
@@ -313,9 +357,16 @@ export async function crossPublishPost(params) {
     imagePublicUrl,
     articleUrl = null,
     storyImageBuffer = null,
+    articleId = null,
     pageToken: pageTokenOverride,
     threadsToken: threadsTokenOverride,
   } = params;
+
+  // Build UTM-tagged article URLs per platform
+  const campaignId = articleId || `article_${Date.now()}`;
+  const storyArticleUrl = articleUrl ? addUTM(articleUrl, { source: 'instagram', medium: 'story', campaign: campaignId }) : null;
+  const fbArticleUrl = articleUrl ? addUTM(articleUrl, { source: 'facebook', medium: 'post', campaign: campaignId }) : null;
+  const threadsArticleUrl = articleUrl ? addUTM(articleUrl, { source: 'threads', medium: 'post', campaign: campaignId }) : null;
 
   // Load tokens (allow overrides for testing)
   const tokens = loadTokens();
@@ -335,20 +386,20 @@ export async function crossPublishPost(params) {
 
   // Run all three platforms in parallel
   const [storyResult, fbResult, threadsResult] = await Promise.all([
-    // 1. IG Story with link sticker
+    // 1. IG Story with link sticker (UTM: instagram/story)
     storyImageBuffer
       ? safeExec('IG Story', async () => {
           return publishIGStory({
             imageBuffer: storyImageBuffer,
             pageToken,
-            link: articleUrl,
+            link: storyArticleUrl,
           });
         })
       : safeExec('IG Story', async () => {
           throw new Error('No Story image buffer provided — Story skipped');
         }),
 
-    // 2. Facebook Photo + link in first comment
+    // 2. Facebook Photo + UTM-tagged link in first comment
     safeExec('FB Photo', async () => {
       // Publish the photo without the link (link kills organic reach)
       const { postId } = await publishPhoto({
@@ -357,13 +408,13 @@ export async function crossPublishPost(params) {
         pageToken,
       });
 
-      // Add the article link as first comment (if we have one)
+      // Add the UTM-tagged article link as first comment (if we have one)
       let commentId = null;
-      if (articleUrl) {
+      if (fbArticleUrl) {
         await delay(2000); // Wait for FB to process the post
         const commentResult = await addComment({
           postId,
-          message: `${articleUrl}`,
+          message: fbArticleUrl,
           pageToken,
         });
         commentId = commentResult.commentId;
@@ -372,9 +423,13 @@ export async function crossPublishPost(params) {
       return { postId, commentId };
     }),
 
-    // 3. Threads post (caption + image)
+    // 3. Threads post (caption + image, UTM: threads/post)
     safeExec('Threads', async () => {
-      const threadsText = truncate(caption, 500);
+      // Append UTM-tagged article link to Threads text
+      const baseText = truncate(caption, threadsArticleUrl ? 450 : 500);
+      const threadsText = threadsArticleUrl
+        ? `${baseText}\n\n${threadsArticleUrl}`
+        : baseText;
       return publishThreadsPost({
         text: threadsText,
         imageUrl: imagePublicUrl,
@@ -411,6 +466,8 @@ export async function crossPublishPost(params) {
  * @param {Buffer} [params.storyImageBuffer] - Story image for posts (1080x1920)
  * @returns {Promise<{ story: Object, facebook: Object, threads: Object }>}
  */
+export { addUTM };
+
 export async function crossPublish(params) {
   const { type, ...rest } = params;
 

@@ -7,12 +7,14 @@
  *   3. What articles to ENRICH (high traffic, missing widgets)
  *   4. What articles to FLAG for review (low traffic, old)
  *
- * Decision hierarchy (highest priority first):
- *   P1: WRITE NEW — Trending topic + content gap + high monetization
- *   P2: UPDATE    — Existing article + traffic growing + stale content
- *   P3: ENRICH    — High-traffic article + missing Travelpayouts widgets
- *   P4: STANDARD  — Fill editorial calendar cluster rotation
- *   P5: REVIEW    — Low-traffic article + 6+ months old → consider merging/deleting
+ * Decision hierarchy (highest priority first — ROI-first strategy):
+ *   P1: UPDATE/ENRICH — Existing articles with traffic (highest ROI, immediate revenue impact)
+ *   P2: WRITE NEW     — New articles (90-day indexing delay, lower immediate ROI)
+ *   P3: STANDARD      — Fill editorial calendar cluster rotation
+ *   P4: REVIEW        — Low-traffic article + 6+ months old → consider merging/deleting
+ *
+ * Revenue protection rule:
+ *   Any article with revenue > 0 (from Travelpayouts) NEVER falls below P2.
  *
  * Data sources consumed:
  *   - data/article-scores.json (from article-scorer.js)
@@ -44,26 +46,29 @@ const REEL_MAP_PATH = join(DATA_DIR, 'article-reel-map.json');
 // ── Thresholds ─────────────────────────────────────────────────────────────
 
 const THRESHOLDS = {
-  // For P1 WRITE NEW: minimum gap score to consider writing a new article
-  minGapScoreForNew: 40,
-
-  // For P2 UPDATE: articles scoring below this freshness are candidates for update
+  // For P1 UPDATE: articles scoring below this freshness are candidates for update
   staleFreshnessThreshold: 0.3, // ~6 months old
 
-  // For P2 UPDATE: must have at least this much traffic to justify updating
+  // For P1 UPDATE: must have at least this much traffic to justify updating
   minTrafficForUpdate: 0.1,
 
-  // For P3 ENRICH: minimum traffic signal to justify widget enrichment
+  // For P1 ENRICH: minimum traffic signal to justify widget enrichment
   minTrafficForEnrich: 0.15,
 
-  // For P5 REVIEW: articles below this composite score get flagged
+  // For P2 WRITE NEW: minimum gap score to consider writing a new article
+  minGapScoreForNew: 40,
+
+  // For P4 REVIEW: articles below this composite score get flagged
   reviewScoreThreshold: 15,
+
+  // Revenue protection: articles with revenue > 0 never fall below this priority
+  revenueProtectionMaxPriority: 'P2',
 
   // Max items per priority level in the queue
   maxPerPriority: {
-    write_new: 5,
-    update: 3,
+    update: 5,
     enrich: 5,
+    write_new: 5,
     standard: 3,
     review: 10,
   },
@@ -107,7 +112,7 @@ async function loadJsonSafe(filePath) {
  *   queue: Array<{
  *     rank: number,
  *     action: 'write_new' | 'update' | 'enrich' | 'standard' | 'review',
- *     priority: 'P1' | 'P2' | 'P3' | 'P4' | 'P5',
+ *     priority: 'P1' | 'P2' | 'P3' | 'P4',
  *     priorityScore: number,
  *     topic: string,
  *     articleType: 'pillar' | 'support' | 'news',
@@ -150,34 +155,7 @@ export async function prioritizeNextArticles({ count = 15 } = {}) {
 
   const queue = [];
 
-  // ── P1: WRITE NEW — Trending topic + content gap ──
-  {
-    const candidates = contentGaps
-      .filter(g => g.gapScore >= THRESHOLDS.minGapScoreForNew)
-      .slice(0, THRESHOLDS.maxPerPriority.write_new);
-
-    for (const gap of candidates) {
-      queue.push({
-        rank: 0, // assigned later
-        action: 'write_new',
-        priority: 'P1',
-        priorityScore: 100 + gap.gapScore, // P1 base = 100
-        topic: gap.topic,
-        articleType: gap.articleType || 'support',
-        context: {
-          gapScore: gap.gapScore,
-          destination: gap.destination,
-          category: gap.category,
-          suggestedTitle: gap.suggestedTitle,
-          suggestedReelAngle: gap.suggestedReelAngle,
-          reason: `Content gap: "${gap.topic}" (score ${gap.gapScore}, source: ${gap.source})`,
-        },
-      });
-    }
-    log(`P1 WRITE NEW: ${candidates.length} items`);
-  }
-
-  // ── P2: UPDATE — Existing article + traffic + stale ──
+  // ── P1: UPDATE — Existing article + traffic + stale (highest ROI) ──
   {
     const candidates = articleScores
       .filter(a =>
@@ -196,8 +174,8 @@ export async function prioritizeNextArticles({ count = 15 } = {}) {
       queue.push({
         rank: 0,
         action: 'update',
-        priority: 'P2',
-        priorityScore: 80 + article.compositeScore, // P2 base = 80
+        priority: 'P1',
+        priorityScore: 100 + article.compositeScore, // P1 base = 100
         topic: article.title,
         articleType: 'support', // updates are always support-level
         context: {
@@ -207,14 +185,15 @@ export async function prioritizeNextArticles({ count = 15 } = {}) {
           freshness: article.signals.freshness,
           traffic: article.signals.traffic,
           trendAlignment: article.signals.trendAlignment,
+          revenue: article.signals.revenue || 0,
           reason: `Stale article with traffic: freshness=${article.signals.freshness}, traffic=${article.signals.traffic}, trend=${article.signals.trendAlignment}`,
         },
       });
     }
-    log(`P2 UPDATE: ${candidates.length} items`);
+    log(`P1 UPDATE: ${candidates.length} items`);
   }
 
-  // ── P3: ENRICH — High-traffic articles missing widgets ──
+  // ── P1: ENRICH — High-traffic articles missing widgets (immediate revenue impact) ──
   {
     const candidates = articleScores
       .filter(a =>
@@ -229,8 +208,8 @@ export async function prioritizeNextArticles({ count = 15 } = {}) {
       queue.push({
         rank: 0,
         action: 'enrich',
-        priority: 'P3',
-        priorityScore: 60 + Math.round(article.signals.traffic * 40), // P3 base = 60
+        priority: 'P1',
+        priorityScore: 100 + Math.round(article.signals.traffic * 40), // P1 base = 100
         topic: article.title,
         articleType: 'support',
         context: {
@@ -238,15 +217,84 @@ export async function prioritizeNextArticles({ count = 15 } = {}) {
           slug: article.slug,
           compositeScore: article.compositeScore,
           traffic: article.signals.traffic,
+          revenue: article.signals.revenue || 0,
           reason: `High-traffic article missing widgets: ${article.slug} (traffic=${article.signals.traffic})`,
         },
       });
     }
-    log(`P3 ENRICH: ${candidates.length} items`);
+    log(`P1 ENRICH: ${candidates.length} items`);
   }
 
-  // ── P4: STANDARD — Editorial calendar cluster rotation ──
-  // Only fill if P1-P3 didn't produce enough items
+  // ── Revenue protection: articles with revenue > 0 never fall below P2 ──
+  // Scan all scored articles — if any has revenue but wasn't picked up by
+  // UPDATE or ENRICH, force it into the queue at P2 minimum.
+  {
+    const alreadyInQueue = new Set(queue.map(q => q.context?.wpId).filter(Boolean));
+    const revenueArticles = articleScores
+      .filter(a =>
+        (a.signals.revenue || 0) > 0 &&
+        !alreadyInQueue.has(a.wpId)
+      )
+      .sort((a, b) => (b.signals.revenue || 0) - (a.signals.revenue || 0));
+
+    for (const article of revenueArticles) {
+      // Determine the best action for this revenue-generating article
+      const needsWidgets = article.signals.monetization === 0 && article.flags.includes('missing_widgets');
+      const isStale = article.signals.freshness <= THRESHOLDS.staleFreshnessThreshold;
+      const action = needsWidgets ? 'enrich' : isStale ? 'update' : 'enrich';
+
+      queue.push({
+        rank: 0,
+        action,
+        priority: 'P2', // revenue protection floor
+        priorityScore: 80 + Math.round((article.signals.revenue || 0) * 20), // P2 base = 80
+        topic: article.title,
+        articleType: 'support',
+        context: {
+          wpId: article.wpId,
+          slug: article.slug,
+          compositeScore: article.compositeScore,
+          freshness: article.signals.freshness,
+          traffic: article.signals.traffic,
+          revenue: article.signals.revenue || 0,
+          reason: `Revenue protection: article generates revenue (${article.signals.revenue}), guaranteed P2 minimum`,
+        },
+      });
+    }
+    if (revenueArticles.length > 0) {
+      log(`REVENUE PROTECTION: ${revenueArticles.length} revenue-generating articles boosted to P2`);
+    }
+  }
+
+  // ── P2: WRITE NEW — Trending topic + content gap (90-day indexing delay) ──
+  {
+    const candidates = contentGaps
+      .filter(g => g.gapScore >= THRESHOLDS.minGapScoreForNew)
+      .slice(0, THRESHOLDS.maxPerPriority.write_new);
+
+    for (const gap of candidates) {
+      queue.push({
+        rank: 0,
+        action: 'write_new',
+        priority: 'P2',
+        priorityScore: 80 + gap.gapScore, // P2 base = 80
+        topic: gap.topic,
+        articleType: gap.articleType || 'support',
+        context: {
+          gapScore: gap.gapScore,
+          destination: gap.destination,
+          category: gap.category,
+          suggestedTitle: gap.suggestedTitle,
+          suggestedReelAngle: gap.suggestedReelAngle,
+          reason: `Content gap: "${gap.topic}" (score ${gap.gapScore}, source: ${gap.source})`,
+        },
+      });
+    }
+    log(`P2 WRITE NEW: ${candidates.length} items`);
+  }
+
+  // ── P3: STANDARD — Editorial calendar cluster rotation ──
+  // Only fill if P1-P2 didn't produce enough items
   {
     const existingCount = queue.length;
     const standardNeeded = Math.max(0, Math.min(
@@ -266,8 +314,8 @@ export async function prioritizeNextArticles({ count = 15 } = {}) {
         queue.push({
           rank: 0,
           action: 'standard',
-          priority: 'P4',
-          priorityScore: 40 - i, // P4 base = 40, decreasing
+          priority: 'P3',
+          priorityScore: 40 - i, // P3 base = 40, decreasing
           topic: `[Calendar rotation: ${cycleTypes[pos]} article]`,
           articleType: cycleTypes[pos],
           context: {
@@ -277,10 +325,10 @@ export async function prioritizeNextArticles({ count = 15 } = {}) {
         });
       }
     }
-    log(`P4 STANDARD: ${standardNeeded} items`);
+    log(`P3 STANDARD: ${standardNeeded} items`);
   }
 
-  // ── P5: REVIEW — Low-score articles to flag ──
+  // ── P4: REVIEW — Low-score articles to flag ──
   {
     const candidates = articleScores
       .filter(a => a.compositeScore <= THRESHOLDS.reviewScoreThreshold)
@@ -288,10 +336,13 @@ export async function prioritizeNextArticles({ count = 15 } = {}) {
       .slice(0, THRESHOLDS.maxPerPriority.review);
 
     for (const article of candidates) {
+      // Revenue protection: if this article generates revenue, skip review
+      if ((article.signals.revenue || 0) > 0) continue;
+
       queue.push({
         rank: 0,
         action: 'review',
-        priority: 'P5',
+        priority: 'P4',
         priorityScore: 10 - article.compositeScore, // lower score = more urgent review
         topic: article.title,
         articleType: 'support',
@@ -305,7 +356,7 @@ export async function prioritizeNextArticles({ count = 15 } = {}) {
         },
       });
     }
-    log(`P5 REVIEW: ${candidates.length} items`);
+    log(`P4 REVIEW: ${candidates.length} items`);
   }
 
   // ── Sort by priority score descending, assign ranks ──
@@ -336,7 +387,7 @@ export async function prioritizeNextArticles({ count = 15 } = {}) {
   await mkdir(DATA_DIR, { recursive: true });
   await writeFile(QUEUE_PATH, JSON.stringify(result, null, 2));
   log(`Priority queue: ${result.queueSize} items. Written to ${QUEUE_PATH}`);
-  log(`  P1 write_new=${summary.write_new}, P2 update=${summary.update}, P3 enrich=${summary.enrich}, P4 standard=${summary.standard}, P5 review=${summary.review}`);
+  log(`  P1 update=${summary.update} enrich=${summary.enrich}, P2 write_new=${summary.write_new}, P3 standard=${summary.standard}, P4 review=${summary.review}`);
   log(`Elapsed: ${((Date.now() - startTime) / 1000).toFixed(1)}s`);
 
   return result;
