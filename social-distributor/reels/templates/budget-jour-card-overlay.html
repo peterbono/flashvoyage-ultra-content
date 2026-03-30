@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* ── Dark overlay: full-frame editorial backdrop ── */
+  .dark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(10, 14, 26, 0.92),
+      rgba(26, 26, 46, 0.92)
+    );
+    z-index: 1;
+  }
+
+  /* ── Card container ── */
+  .card {
+    position: absolute;
+    top: 260px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 920px;
+    padding: 50px 40px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── Card title ── */
+  .card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    max-width: 840px;
+    word-break: break-word;
+  }
+
+  /* ── Duration badge: gold pill ── */
+  .duration-badge {
+    display: inline-block;
+    background: #FFD700;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 8px 28px;
+    border-radius: 24px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  }
+
+  /* ── Budget lines container ── */
+  .budget-lines {
+    width: 100%;
+  }
+
+  /* ── Single budget line ── */
+  .budget-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+  }
+
+  .budget-line + .budget-line {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .line-label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .line-emoji {
+    font-size: 36px;
+    line-height: 1;
+  }
+
+  .line-category {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.80);
+  }
+
+  .line-price {
+    display: inline-block;
+    background: rgba(0, 209, 126, 0.9);
+    color: #FFFFFF;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    padding: 10px 26px;
+    border-radius: 18px;
+    white-space: nowrap;
+  }
+
+  /* ── Gold divider before total ── */
+  .gold-divider {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      #FFD700,
+      transparent
+    );
+    margin: 24px 0;
+  }
+
+  /* ── Total row ── */
+  .total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .total-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .total-price {
+    display: inline-block;
+    background: #FFD700;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 46px;
+    font-weight: 900;
+    padding: 12px 34px;
+    border-radius: 22px;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(255, 215, 0, 0.35);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="dark-overlay"></div>
+  <div class="card">
+    <div class="card-title">{{CARD_TITLE}}</div>
+    <div class="duration-badge">{{DURATION_BADGE}}</div>
+    <div class="budget-lines">
+      <div class="budget-line" style="{{LINE_1_STYLE}}">
+        <div class="line-label">
+          <span class="line-emoji">{{LINE_1_EMOJI}}</span>
+          <span class="line-category">{{LINE_1_LABEL}}</span>
+        </div>
+        <span class="line-price">{{LINE_1_PRICE}}</span>
+      </div>
+      <div class="budget-line" style="{{LINE_2_STYLE}}">
+        <div class="line-label">
+          <span class="line-emoji">{{LINE_2_EMOJI}}</span>
+          <span class="line-category">{{LINE_2_LABEL}}</span>
+        </div>
+        <span class="line-price">{{LINE_2_PRICE}}</span>
+      </div>
+      <div class="budget-line" style="{{LINE_3_STYLE}}">
+        <div class="line-label">
+          <span class="line-emoji">{{LINE_3_EMOJI}}</span>
+          <span class="line-category">{{LINE_3_LABEL}}</span>
+        </div>
+        <span class="line-price">{{LINE_3_PRICE}}</span>
+      </div>
+      <div class="budget-line" style="{{LINE_4_STYLE}}">
+        <div class="line-label">
+          <span class="line-emoji">{{LINE_4_EMOJI}}</span>
+          <span class="line-category">{{LINE_4_LABEL}}</span>
+        </div>
+        <span class="line-price">{{LINE_4_PRICE}}</span>
+      </div>
+    </div>
+    <div class="gold-divider" style="{{DIVIDER_STYLE}}"></div>
+    <div class="total-row" style="{{TOTAL_STYLE}}">
+      <span class="total-label">TOTAL / JOUR</span>
+      <span class="total-price">{{TOTAL_PRICE}}</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

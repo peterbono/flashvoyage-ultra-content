@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* ── Bottom gradient: clear top (photo visible), dark bottom for readability ── */
+  .gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.15) 15%,
+      rgba(0, 0, 0, 0.50) 40%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+    z-index: 1;
+  }
+
+  /* ── Top zone: situation text ── */
+  .situation-zone {
+    position: absolute;
+    top: 240px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 70px;
+    z-index: 3;
+  }
+  .situation-text {
+    font-size: {{FONT_SIZE}}px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.12;
+    max-width: 940px;
+    text-shadow:
+      3px 3px 0 #000,
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      0 4px 15px rgba(0, 0, 0, 0.9);
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+  }
+
+  /* ── Emoji reaction zone (centered) ── */
+  .reaction-zone {
+    position: absolute;
+    bottom: 420px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 4;
+  }
+  .reaction-emoji {
+    font-size: 140px;
+    line-height: 1;
+    filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.6));
+  }
+
+  /* ── Footer CTA: "TAG UN POTE" ── */
+  .footer-cta {
+    position: absolute;
+    bottom: 310px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    z-index: 3;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="gradient-overlay"></div>
+  <div class="situation-zone">
+    <div class="situation-text">{{SITUATION_TEXT}}</div>
+  </div>
+  <div class="reaction-zone">
+    <div class="reaction-emoji">{{REACTION_EMOJI}}</div>
+  </div>
+  <div class="footer-cta">TAG UN POTE</div>
+</div>
+</body>
+</html>

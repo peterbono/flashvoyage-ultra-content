@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* ── Full vignette: edges dark, center clear for footage ── */
+  .vignette-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0) 30%,
+      rgba(0, 0, 0, 0.60) 100%
+    );
+    z-index: 1;
+  }
+
+  /* ── Bottom gradient for text readability ── */
+  .bottom-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 45%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.20) 20%,
+      rgba(0, 0, 0, 0.65) 50%,
+      rgba(0, 0, 0, 0.90) 100%
+    );
+    z-index: 2;
+  }
+
+  /* ── Series badge: top-left ── */
+  /* "TRIP PICK" gold label, position: top 220px, left 60px */
+  .series-badge {
+    position: absolute;
+    top: 220px;
+    left: 60px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 3;
+  }
+  .series-badge-icon {
+    width: 8px;
+    height: 8px;
+    background: #FFD700;
+    border-radius: 50%;
+  }
+  .series-badge-text {
+    font-size: 24px;
+    font-weight: 800;
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  }
+
+  /* ── Center reveal: location name with emphasis ── */
+  .reveal-zone {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 60px;
+    z-index: 3;
+    text-align: center;
+  }
+
+  .location-name {
+    font-size: 80px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    text-shadow:
+      3px 3px 0 #000,
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      0 4px 12px rgba(0, 0, 0, 0.9);
+    max-width: 960px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+    margin-bottom: 20px;
+  }
+
+  /* ── Gold underline accent ── */
+  .gold-accent-line {
+    width: 120px;
+    height: 6px;
+    background: #FFD700;
+    border-radius: 3px;
+    margin-bottom: 24px;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+  }
+
+  /* ── Country / detail text below location ── */
+  .location-detail {
+    font-size: 36px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.80);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow:
+      2px 2px 0 rgba(0, 0, 0, 0.5),
+      0 2px 6px rgba(0, 0, 0, 0.6);
+    max-width: 860px;
+    word-break: break-word;
+  }
+
+  /* ── Bottom text: reason / hook (only on title card) ── */
+  .bottom-hook {
+    position: absolute;
+    bottom: 320px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 80px;
+    z-index: 3;
+  }
+  .hook-text {
+    font-size: 40px;
+    font-weight: 800;
+    color: #FFD700;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.2;
+    letter-spacing: 0px;
+    text-shadow:
+      2px 2px 0 rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(255, 215, 0, 0.3);
+    max-width: 920px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+  }
+
+  /* ── Map pin indicator at center-bottom of reveal zone ── */
+  .pin-indicator {
+    margin-top: 16px;
+  }
+
+  /* ── Watermark: only on CTA ── */
+  .brand-watermark {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    opacity: 0;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-watermark.visible {
+    opacity: 0.45;
+  }
+  .brand-watermark svg {
+    width: 40px;
+    height: 42px;
+  }
+  .brand-watermark span {
+    font-size: 14px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="vignette-overlay"></div>
+  <div class="bottom-gradient"></div>
+  <div class="series-badge">
+    <div class="series-badge-icon"></div>
+    <div class="series-badge-text">{{SERIES_LABEL}}</div>
+  </div>
+  <div class="reveal-zone">
+    <div class="location-name">{{LOCATION_NAME}}</div>
+    <div class="gold-accent-line"></div>
+    <div class="location-detail">{{LOCATION_DETAIL}}</div>
+    <div class="pin-indicator">
+      <svg width="28" height="36" viewBox="0 0 28 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 0C6.268 0 0 6.268 0 14c0 10.5 14 22 14 22s14-11.5 14-22C28 6.268 21.732 0 14 0zm0 19a5 5 0 110-10 5 5 0 010 10z" fill="#FF3B30"/>
+      </svg>
+    </div>
+  </div>
+  <div class="bottom-hook">
+    <div class="hook-text">{{HOOK_TEXT}}</div>
+  </div>
+  <div class="brand-watermark {{WATERMARK_CLASS}}">
+    <span>flashvoyage</span>
+    {{LOGO_SVG}}
+  </div>
+</div>
+</body>
+</html>

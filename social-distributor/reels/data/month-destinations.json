@@ -1,0 +1,122 @@
+{
+  "janvier": {
+    "month_short": "JAN",
+    "destinations": [
+      { "name": "Chiang Mai", "country": "Tha\u00eflande", "reason": "", "pexelsQuery": "chiang mai golden temple sunset stunning aerial drone thailand" },
+      { "name": "Bali", "country": "Indon\u00e9sie", "reason": "", "pexelsQuery": "bali rice terraces aerial drone breathtaking sunrise paradise indonesia" },
+      { "name": "Goa", "country": "Inde", "reason": "", "pexelsQuery": "goa india tropical beach golden hour sunset paradise stunning" },
+      { "name": "Luang Prabang", "country": "Laos", "reason": "", "pexelsQuery": "luang prabang laos golden temple sunrise mekong river beautiful" },
+      { "name": "Koh Samui", "country": "Tha\u00eflande", "reason": "", "pexelsQuery": "koh samui turquoise beach paradise aerial drone crystal clear water thailand" }
+    ]
+  },
+  "f\u00e9vrier": {
+    "month_short": "F\u00c9V",
+    "destinations": [
+      { "name": "Siem Reap", "country": "Cambodge", "reason": "", "pexelsQuery": "angkor wat temple stunning sunrise golden light breathtaking cambodia" },
+      { "name": "Ha Long", "country": "Vietnam", "reason": "", "pexelsQuery": "ha long bay vietnam aerial drone breathtaking emerald water stunning limestone" },
+      { "name": "El Nido", "country": "Philippines", "reason": "", "pexelsQuery": "el nido palawan turquoise lagoon paradise aerial drone crystal clear philippines" },
+      { "name": "Hoi An", "country": "Vietnam", "reason": "", "pexelsQuery": "hoi an vietnam beautiful lanterns golden hour colorful street night lights" },
+      { "name": "Langkawi", "country": "Malaisie", "reason": "", "pexelsQuery": "langkawi malaysia turquoise beach paradise aerial drone stunning sunset" }
+    ]
+  },
+  "mars": {
+    "month_short": "MAR",
+    "destinations": [
+      { "name": "Krabi", "country": "Tha\u00eflande", "reason": "", "pexelsQuery": "krabi thailand turquoise water limestone cliffs aerial drone paradise stunning" },
+      { "name": "Lombok", "country": "Indon\u00e9sie", "reason": "", "pexelsQuery": "lombok gili islands turquoise crystal clear water paradise aerial indonesia" },
+      { "name": "Bagan", "country": "Myanmar", "reason": "", "pexelsQuery": "bagan myanmar ancient temples sunrise hot air balloon breathtaking golden hour" },
+      { "name": "Koh Phi Phi", "country": "Tha\u00eflande", "reason": "", "pexelsQuery": "phi phi islands thailand turquoise water paradise aerial drone stunning beach" },
+      { "name": "Nha Trang", "country": "Vietnam", "reason": "", "pexelsQuery": "nha trang vietnam beautiful turquoise beach paradise aerial drone golden sunset" }
+    ]
+  },
+  "avril": {
+    "month_short": "AVR",
+    "destinations": [
+      { "name": "Chiang Rai", "country": "Tha\u00eflande", "reason": "", "pexelsQuery": "white temple chiang rai thailand stunning beautiful golden hour breathtaking" },
+      { "name": "Siargao", "country": "Philippines", "reason": "", "pexelsQuery": "siargao philippines turquoise water paradise palm trees aerial drone stunning" },
+      { "name": "Luang Prabang", "country": "Laos", "reason": "", "pexelsQuery": "kuang si waterfall laos turquoise emerald pool paradise stunning beautiful" },
+      { "name": "Yogyakarta", "country": "Indon\u00e9sie", "reason": "", "pexelsQuery": "borobudur temple sunrise stunning aerial breathtaking indonesia golden light" },
+      { "name": "Koh Lanta", "country": "Tha\u00eflande", "reason": "", "pexelsQuery": "koh lanta thailand stunning beach sunset golden hour paradise aerial drone" }
+    ]
+  },
+  "mai": {
+    "month_short": "MAI",
+    "destinations": [
+      { "name": "Bohol", "country": "Philippines", "reason": "", "pexelsQuery": "bohol philippines turquoise beach aerial drone paradise crystal clear water" },
+      { "name": "Hanoi", "country": "Vietnam", "reason": "", "pexelsQuery": "hanoi vietnam beautiful street sunset golden hour colorful night lights stunning" },
+      { "name": "Perhentian Islands", "country": "Malaisie", "reason": "", "pexelsQuery": "perhentian islands malaysia turquoise crystal clear water paradise beach stunning" },
+      { "name": "Ubud", "country": "Indon\u00e9sie", "reason": "", "pexelsQuery": "ubud bali rice terraces aerial drone breathtaking sunrise lush tropical paradise" },
+      { "name": "Phi Phi Islands", "country": "Tha\u00eflande", "reason": "", "pexelsQuery": "phi phi islands thailand turquoise paradise aerial drone stunning crystal clear" }
+    ]
+  },
+  "juin": {
+    "month_short": "JUIN",
+    "destinations": [
+      { "name": "Komodo", "country": "Indon\u00e9sie", "reason": "", "pexelsQuery": "komodo island indonesia aerial drone turquoise water paradise breathtaking" },
+      { "name": "Coron", "country": "Philippines", "reason": "", "pexelsQuery": "coron palawan turquoise lagoon paradise aerial drone crystal clear stunning philippines" },
+      { "name": "Sapa", "country": "Vietnam", "reason": "", "pexelsQuery": "sapa vietnam rice terraces aerial drone breathtaking sunrise lush green paradise" },
+      { "name": "Kuala Lumpur", "country": "Malaisie", "reason": "", "pexelsQuery": "kuala lumpur skyline sunset stunning aerial drone night lights beautiful malaysia" },
+      { "name": "Pai", "country": "Tha\u00eflande", "reason": "", "pexelsQuery": "pai thailand lush green mountains sunrise golden hour stunning breathtaking nature" }
+    ]
+  },
+  "juillet": {
+    "month_short": "JUIL",
+    "destinations": [
+      { "name": "Raja Ampat", "country": "Indon\u00e9sie", "reason": "", "pexelsQuery": "raja ampat indonesia turquoise crystal clear water paradise aerial drone breathtaking" },
+      { "name": "Cebu", "country": "Philippines", "reason": "", "pexelsQuery": "cebu philippines turquoise waterfall paradise crystal clear water stunning aerial" },
+      { "name": "Phong Nha", "country": "Vietnam", "reason": "", "pexelsQuery": "phong nha cave vietnam stunning emerald river paradise breathtaking nature" },
+      { "name": "Langkawi", "country": "Malaisie", "reason": "", "pexelsQuery": "langkawi malaysia aerial drone turquoise beach paradise stunning cable car sunset" },
+      { "name": "Singapour", "country": "Singapour", "reason": "", "pexelsQuery": "singapore marina bay skyline stunning night lights beautiful aerial drone" }
+    ]
+  },
+  "ao\u00fbt": {
+    "month_short": "AO\u00dbT",
+    "destinations": [
+      { "name": "Flores", "country": "Indon\u00e9sie", "reason": "", "pexelsQuery": "flores indonesia turquoise crater lake aerial drone breathtaking stunning paradise" },
+      { "name": "Palawan", "country": "Philippines", "reason": "", "pexelsQuery": "palawan philippines turquoise lagoon paradise aerial drone crystal clear stunning" },
+      { "name": "Da Nang", "country": "Vietnam", "reason": "", "pexelsQuery": "da nang vietnam golden bridge sunset stunning aerial drone beautiful coastline" },
+      { "name": "Tioman Island", "country": "Malaisie", "reason": "", "pexelsQuery": "tioman island malaysia crystal clear turquoise water paradise beach stunning" },
+      { "name": "Ngapali Beach", "country": "Myanmar", "reason": "", "pexelsQuery": "ngapali beach myanmar golden sunset paradise turquoise water stunning beautiful" }
+    ]
+  },
+  "septembre": {
+    "month_short": "SEP",
+    "destinations": [
+      { "name": "Bali", "country": "Indon\u00e9sie", "reason": "", "pexelsQuery": "bali uluwatu cliff temple sunset stunning aerial drone paradise indonesia" },
+      { "name": "Chiang Mai", "country": "Tha\u00eflande", "reason": "", "pexelsQuery": "chiang mai thailand golden temple stunning mountain sunrise breathtaking aerial" },
+      { "name": "Ninh Binh", "country": "Vietnam", "reason": "", "pexelsQuery": "ninh binh vietnam aerial drone stunning limestone karsts emerald river paradise" },
+      { "name": "Koh Rong Samloem", "country": "Cambodge", "reason": "", "pexelsQuery": "koh rong cambodia turquoise beach paradise crystal clear water stunning aerial" },
+      { "name": "Vang Vieng", "country": "Laos", "reason": "", "pexelsQuery": "vang vieng laos stunning karst mountains aerial drone emerald river paradise" }
+    ]
+  },
+  "octobre": {
+    "month_short": "OCT",
+    "destinations": [
+      { "name": "Bangkok", "country": "Tha\u00eflande", "reason": "", "pexelsQuery": "bangkok thailand grand palace golden temple stunning sunset aerial drone beautiful" },
+      { "name": "Hue", "country": "Vietnam", "reason": "", "pexelsQuery": "hue vietnam imperial citadel stunning sunrise golden hour beautiful aerial" },
+      { "name": "Boracay", "country": "Philippines", "reason": "", "pexelsQuery": "boracay white beach turquoise water paradise sunset stunning aerial philippines" },
+      { "name": "Java", "country": "Indon\u00e9sie", "reason": "", "pexelsQuery": "mount bromo java indonesia sunrise breathtaking aerial drone stunning volcanic" },
+      { "name": "Nusa Lembongan", "country": "Indon\u00e9sie", "reason": "", "pexelsQuery": "nusa lembongan bali turquoise crystal clear water paradise stunning aerial drone" }
+    ]
+  },
+  "novembre": {
+    "month_short": "NOV",
+    "destinations": [
+      { "name": "Koh Lipe", "country": "Tha\u00eflande", "reason": "", "pexelsQuery": "koh lipe thailand crystal clear turquoise water paradise beach stunning aerial drone" },
+      { "name": "Phu Quoc", "country": "Vietnam", "reason": "", "pexelsQuery": "phu quoc island vietnam turquoise beach paradise sunset golden hour stunning aerial" },
+      { "name": "Siem Reap", "country": "Cambodge", "reason": "", "pexelsQuery": "angkor thom bayon temple stunning sunrise golden light breathtaking cambodia aerial" },
+      { "name": "Nusa Penida", "country": "Indon\u00e9sie", "reason": "", "pexelsQuery": "nusa penida kelingking beach stunning aerial drone turquoise water paradise bali" },
+      { "name": "Si Phan Don", "country": "Laos", "reason": "", "pexelsQuery": "4000 islands mekong laos golden sunset stunning river paradise beautiful aerial" }
+    ]
+  },
+  "d\u00e9cembre": {
+    "month_short": "D\u00c9C",
+    "destinations": [
+      { "name": "Phuket", "country": "Tha\u00eflande", "reason": "", "pexelsQuery": "phuket thailand turquoise beach paradise aerial drone stunning crystal clear sunset" },
+      { "name": "Ho Chi Minh", "country": "Vietnam", "reason": "", "pexelsQuery": "ho chi minh saigon vietnam city skyline night lights stunning beautiful aerial" },
+      { "name": "Koh Rong", "country": "Cambodge", "reason": "", "pexelsQuery": "koh rong island cambodia turquoise beach paradise crystal clear water stunning" },
+      { "name": "Gili Islands", "country": "Indon\u00e9sie", "reason": "", "pexelsQuery": "gili islands indonesia turquoise crystal clear water paradise sunset stunning aerial" },
+      { "name": "Luang Prabang", "country": "Laos", "reason": "", "pexelsQuery": "luang prabang laos mekong river golden sunset stunning temple beautiful aerial" }
+    ]
+  }
+}

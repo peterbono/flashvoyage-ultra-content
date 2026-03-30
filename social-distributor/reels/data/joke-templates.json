@@ -1,0 +1,262 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "description": "Proven joke templates extracted from Thailuminati, VoyagesPirates, and viral travel memes. Each template has named slots ({action}, {twist}, etc.) that Haiku fills with article context.",
+    "updated": "2026-03-29"
+  },
+
+  "templates": [
+    {
+      "id": "quand_tu_twist",
+      "pattern": "Quand tu {action} et que {twist}",
+      "mechanic": "subversion",
+      "theme": "generic",
+      "example": "Quand tu expliques ton itinéraire à ta mère et que t'as même pas réservé l'hôtel",
+      "slots": ["action", "twist"]
+    },
+    {
+      "id": "moi_qui_alors",
+      "pattern": "Moi qui {setup} alors que {reality}",
+      "mechanic": "contrast",
+      "theme": "generic",
+      "example": "Moi qui planifie un road trip au Vietnam alors que j'ai même pas le permis",
+      "slots": ["setup", "reality"]
+    },
+    {
+      "id": "potes_3h",
+      "pattern": "Les potes à {time} après avoir {action} ({kicker})",
+      "mechanic": "hyperbole",
+      "theme": "squad",
+      "example": "Les potes à 4h du mat après avoir claqué le budget du mois en 2 jours (aucun regret)",
+      "slots": ["time", "action", "kicker"]
+    },
+    {
+      "id": "ton_pote_qui",
+      "pattern": "Ton pote qui {reaction} quand tu {trigger}",
+      "mechanic": "fomo",
+      "theme": "squad",
+      "example": "Ton pote qui fait sa crise quand tu lui annonces que tu pars sans lui",
+      "slots": ["reaction", "trigger"]
+    },
+    {
+      "id": "retour_bureau",
+      "pattern": "Le premier {moment} après {trip}",
+      "mechanic": "shared_pain",
+      "theme": "post_trip",
+      "example": "Le premier lundi au bureau après un mois en Asie",
+      "slots": ["moment", "trip"]
+    },
+    {
+      "id": "espoir_philosophique",
+      "pattern": "J'espère que la prochaine fois que tu {negative}... c'est parce que tu {thailand_twist}",
+      "mechanic": "subversion",
+      "theme": "aspirational",
+      "example": "J'espère que la prochaine fois que tu stresses c'est parce que tu choisis entre Bangkok et Phuket",
+      "slots": ["negative", "thailand_twist"]
+    },
+    {
+      "id": "moi_age_destination",
+      "pattern": "Moi à {age} ans à {destination} qui {crisis}",
+      "mechanic": "shared_pain",
+      "theme": "quarter_life",
+      "example": "Moi à 29 ans à Chiang Mai qui se demande quel métier faire quand je serai grand",
+      "slots": ["age", "destination", "crisis"]
+    },
+    {
+      "id": "ce_moment_ou",
+      "pattern": "Ce moment où tu {discovery} et que {consequence}",
+      "mechanic": "subversion",
+      "theme": "culture_shock",
+      "example": "Ce moment où tu découvres que le massage coûte 6 € et que tu deviens accro",
+      "slots": ["discovery", "consequence"]
+    },
+    {
+      "id": "budget_prevu_vs",
+      "pattern": "Le budget {label} : {planned}. Le budget réel : {reality}",
+      "mechanic": "contrast",
+      "theme": "budget",
+      "example": "Le budget prévu à Bali : 50 €/jour. Le budget réel : on en parle pas",
+      "slots": ["label", "planned", "reality"]
+    },
+    {
+      "id": "quand_tu_realises",
+      "pattern": "Quand tu réalises que {cheap_thing} coûte {less_than} ({kicker})",
+      "mechanic": "hyperbole",
+      "theme": "budget",
+      "example": "Quand tu réalises que vivre à Bali coûte moins cher que ton loyer à Paris (help)",
+      "slots": ["cheap_thing", "less_than", "kicker"]
+    },
+    {
+      "id": "amitie_adulte",
+      "pattern": "L'amitié adulte c'est : {normal_thing}. {place}. En {month}.",
+      "mechanic": "subversion",
+      "theme": "aspirational",
+      "example": "L'amitié adulte c'est : 'Tu me manques, on se fait un café'. En Thaïlande. En mai.",
+      "slots": ["normal_thing", "place", "month"]
+    },
+    {
+      "id": "job_salary_trip",
+      "pattern": "Quand t'aimes pas le job mais {motivation}",
+      "mechanic": "shared_pain",
+      "theme": "work_vs_travel",
+      "example": "Quand t'aimes pas le job mais le salaire finance le trip en Thaïlande",
+      "slots": ["motivation"]
+    },
+    {
+      "id": "squad_booking",
+      "pattern": "Quand toute la bande {action} ({emotion})",
+      "mechanic": "hyperbole",
+      "theme": "squad",
+      "example": "Quand toute la bande a enfin réservé le vol pour Bangkok (Top Gun vibes)",
+      "slots": ["action", "emotion"]
+    },
+    {
+      "id": "compare_absurde",
+      "pattern": "Les gens : {normal}. Moi : {absurd}",
+      "mechanic": "contrast",
+      "theme": "generic",
+      "example": "Les gens : 'J'investis dans l'immobilier'. Moi : 'J'investis dans un one-way pour Bali'",
+      "slots": ["normal", "absurd"]
+    },
+    {
+      "id": "confession_voyageur",
+      "pattern": "Je {confession} et j'assume ({kicker})",
+      "mechanic": "shared_pain",
+      "theme": "generic",
+      "example": "Je connais mieux la carte de Bangkok que celle de ma propre ville et j'assume (pas désolé)",
+      "slots": ["confession", "kicker"]
+    },
+    {
+      "id": "cauchemar_fomo",
+      "pattern": "Mon/Ma {person} qui fait des cauchemars que {fomo_scenario}",
+      "mechanic": "fomo",
+      "theme": "squad",
+      "example": "Mon pote qui fait des cauchemars que je pars en Thaïlande sans lui",
+      "slots": ["person", "fomo_scenario"]
+    }
+  ],
+
+  "few_shot_examples": [
+    {
+      "article_context": "Article sur les vols pas chers Paris-Bangkok à 399€",
+      "joke": "Moi qui planifie un road trip en Thaïlande alors que j'ai même pas payé mon loyer (priorités)",
+      "score": 9,
+      "why": "Subversion des priorités + auto-dérision + parenthetical kicker"
+    },
+    {
+      "article_context": "Article sur le coût de la vie à Bali",
+      "joke": "Quand tu réalises que vivre à Bali coûte moins cher que ton Uber Eats du mois (help)",
+      "score": 9,
+      "why": "Comparaison absurde relatable + kicker parenthétique"
+    },
+    {
+      "article_context": "Article sur les temples de Chiang Mai",
+      "joke": "Moi qui explique à mon boss que 3 semaines à Chiang Mai c'est un plan de développement personnel",
+      "score": 8,
+      "why": "Subversion du jargon corporate + situation universelle"
+    },
+    {
+      "article_context": "Article sur les îles du Vietnam",
+      "joke": "Les gens : 'Tu fais quoi dans la vie ?' Moi : 'Je compare des îles au Vietnam à 2h du mat'",
+      "score": 9,
+      "why": "Contraste social + absurde du comportement + heure tardive"
+    },
+    {
+      "article_context": "Article sur la street food à Bangkok",
+      "joke": "Les potes à 3h du mat devant un pad thai à 1,50 € en criant 'ON VIT MIEUX QU'À PARIS' (vrai)",
+      "score": 10,
+      "why": "Scène vivante + hyperbole vraie + parenthetical kicker + tag-a-friend"
+    },
+    {
+      "article_context": "Article sur le retour de vacances en Asie",
+      "joke": "Le premier Excel au bureau après un mois à Bali ça devrait être considéré comme de la torture",
+      "score": 9,
+      "why": "Douleur partagée universelle + hyperbole + spécifique (Excel, pas 'travail')"
+    },
+    {
+      "article_context": "Article sur les massages en Thaïlande",
+      "joke": "Ce moment où tu découvres qu'un massage coûte 6 € et que tu deviens un client quotidien (accro)",
+      "score": 8,
+      "why": "Découverte + escalade comique + kicker"
+    },
+    {
+      "article_context": "Article sur les digital nomads à Chiang Mai",
+      "joke": "Moi à 29 ans à Chiang Mai qui se demande quel métier faire quand je serai grand (bientôt)",
+      "score": 9,
+      "why": "Quarter-life crisis relatable + contraste destination exotique / panique existentielle"
+    },
+    {
+      "article_context": "Article sur les arnaques en Asie du Sud-Est",
+      "joke": "Mon niveau de négociation au marché de Chatuchak devrait être sur mon CV (skill validé)",
+      "score": 8,
+      "why": "Humour sur compétence inattendue + kicker corporate"
+    },
+    {
+      "article_context": "Article sur le budget 2 semaines en Thaïlande",
+      "joke": "Le budget prévu à Bangkok : 40 €/jour. Le budget réel : on en parle à personne (surtout pas maman)",
+      "score": 9,
+      "why": "Contraste planifié/réel + secret partagé + parenthetical"
+    },
+    {
+      "article_context": "Article sur le visa Thaïlande",
+      "joke": "Moi qui renouvelle mon visa en courant à la frontière comme si c'était les Jeux Olympiques (médaille d'or)",
+      "score": 8,
+      "why": "Hyperbole visuelle + situation connue des expats/backpackers"
+    },
+    {
+      "article_context": "Article sur les Full Moon Party à Koh Phangan",
+      "joke": "Ton pote qui dit 'cette année on est raisonnables' 30 min avant de réserver la Full Moon Party",
+      "score": 10,
+      "why": "Promesse brisée universelle + timing comique + tag-a-friend naturel"
+    },
+    {
+      "article_context": "Article sur les vols intérieurs pas chers",
+      "joke": "Les gens achètent des actions. Moi j'achète des vols Chiang Mai-Phuket à 25 € (investissement)",
+      "score": 8,
+      "why": "Contraste adulte/voyageur + montant précis crédible + kicker ironique"
+    },
+    {
+      "article_context": "Article sur le scooter en Asie du Sud-Est",
+      "joke": "Conduire un scooter à Bali c'est comme un jeu vidéo sauf que t'as qu'une seule vie (pas de respawn)",
+      "score": 9,
+      "why": "Analogie gaming + danger réel minimisé = humour noir léger + kicker"
+    },
+    {
+      "article_context": "Article sur les hébergements pas chers au Vietnam",
+      "joke": "L'hôtel au Vietnam : 12 € la nuit, vue sur mer, petit-déj inclus. L'hôtel à Paris : 12 € le croissant",
+      "score": 10,
+      "why": "Comparaison absurde mais vraie + structure parallèle + pas de kicker nécessaire car la chute EST la comparaison"
+    }
+  ],
+
+  "anti_patterns": [
+    "Ne fais JAMAIS une simple observation factuelle ('La Thaïlande c'est pas cher') — ce n'est PAS une blague",
+    "Ne fais JAMAIS un jeu de mots ou un calembour — c'est le niveau humour de papa",
+    "N'explique JAMAIS la blague — si tu dois expliquer, c'est raté",
+    "Ne sois JAMAIS inspirant/motivationnel/wholesome — on veut du rire, pas des larmes de bonheur",
+    "N'utilise JAMAIS un prix comme punchline ('29 €!') — le prix est un setup, pas une chute",
+    "Ne commence JAMAIS par 'Saviez-vous que...' ou 'Le saviez-vous' — c'est un cours, pas une blague",
+    "N'utilise JAMAIS d'émojis DANS le texte de la blague — ils seront ajoutés séparément",
+    "Ne fais PAS de blague sur la nourriture épicée — c'est un cliché mort",
+    "Ne fais PAS de blague sur se perdre avec Google Maps — déjà vu 10 000 fois",
+    "Ne fais PAS de liste de prix ('vol 29€, hotel 12€, repas 3€') — c'est un budget, pas une blague",
+    "Ne mets PAS 'lol' ou 'mdr' DANS la blague — le kicker parenthétique suffit",
+    "N'utilise PAS 'incroyable', 'magique', 'paradis' — c'est du marketing, pas de l'humour"
+  ],
+
+  "kickers": [
+    "(aucun regret)", "(help)", "(on en parle pas)", "(vrai)", "(pas désolé)",
+    "(priorités)", "(c'est un mode de vie)", "(médaille d'or)", "(surtout pas maman)",
+    "(investissement)", "(accro)", "(pas de respawn)", "(skill validé)", "(bientôt)",
+    "(sans retour)", "(on assume)", "(la base)", "(confirmed)", "(envoyez de l'aide)"
+  ],
+
+  "pexels_queries_by_mechanic": {
+    "subversion": ["confused person funny", "man explaining seriously", "woman facepalm"],
+    "hyperbole": ["friends celebrating travel", "group laughing night", "excited tourists"],
+    "shared_pain": ["tired office worker", "alarm clock morning", "sad airport goodbye"],
+    "contrast": ["luxury vs budget travel", "before after travel", "split screen funny"],
+    "fomo": ["jealous reaction", "shocked face", "person crying funny"],
+    "aspirational": ["friends sunset beach", "motorcycle thailand", "coffee shop tropical"]
+  }
+}

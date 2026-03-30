@@ -100,19 +100,25 @@ HOOK: {{HOOK}}
 STATS: {{STATS}}
 
 Le Reel doit :
-- Scène 1 (3s): Le titre accrocheur (ex: "BUDGET 2 SEMAINES THAÏLANDE")
-- Scène 2 (5s): Les chiffres clés un par un
-- Scène 3 (4s): Le total ou la comparaison
-- Scène 4 (3s): CTA "Enregistre pour ton prochain voyage"
+- Scène 1 (3s): Titre accrocheur EN MAJUSCULES, max 40 caractères (ex: "BUDGET 2 SEMAINES THAÏLANDE")
+- Scène 2 (5s): UN SEUL chiffre clé le plus impactant, formaté lisiblement (ex: "Hébergement : 450 €"), max 35 caractères
+- Scène 3 (4s): Le budget total en gros, max 30 caractères (ex: "TOTAL : 1 200 €")
+- Scène 4 (3s): CTA court, max 35 caractères (ex: "Enregistre pour ton voyage !")
 
-Réponds UNIQUEMENT en JSON valide :
+RÈGLES STRICTES :
+- Chaque "text" doit faire MAXIMUM 40 caractères
+- PAS de liste de chiffres dans une seule scène — UN chiffre par scène max
+- Les montants doivent être RÉALISTES (pas d'hallucination)
+- Accents français obligatoires (é, è, ê, à, ç)
+
+Réponds UNIQUEMENT en JSON valide (pas de markdown, pas de commentaires) :
 {
   "scenes": [
     { "text": "texte affiché", "duration": 3, "style": "titre|chiffres|total|cta", "searchQuery": "mot-clé pour vidéo Pexels" }
   ],
   "hook": "phrase d'accroche courte",
   "cta": "texte call-to-action",
-  "hashtags": ["#FlashVoyage", "#BudgetVoyage", "..."],
+  "hashtags": ["#FlashVoyage", "#BudgetVoyage"],
   "videoQuery": "requête Pexels pour la vidéo de fond (en anglais)"
 }`,
 };
@@ -185,7 +191,7 @@ export async function generateReelScript(article) {
 
   try {
     const response = await client.messages.create({
-      model: 'claude-3-haiku-20240307',
+      model: 'claude-haiku-4-5-20251001',
       max_tokens: 800,
       messages: [{ role: 'user', content: prompt }],
     });
@@ -239,6 +245,13 @@ export async function generateReelScript(article) {
     // Validate & sanitize
     if (!script.scenes || !Array.isArray(script.scenes) || script.scenes.length === 0) {
       throw new Error('Invalid script: no scenes');
+    }
+
+    // Enforce max text length per scene (40 chars for readability on 1080x1920)
+    for (const scene of script.scenes) {
+      if (scene.text && scene.text.length > 50) {
+        scene.text = scene.text.slice(0, 47) + '...';
+      }
     }
 
     // Ensure total duration is 15-20s

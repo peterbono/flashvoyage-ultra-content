@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* ── Dark overlay with slight blur effect on footage beneath ── */
+  .dark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(10, 14, 26, 0.88) 0%,
+      rgba(26, 26, 46, 0.88) 100%
+    );
+    z-index: 1;
+  }
+
+  /* ── Budget card: centered data card ── */
+  /* Position: vertically centered, full width with padding */
+  .budget-card {
+    position: absolute;
+    top: 240px;
+    left: 60px;
+    right: 60px;
+    bottom: 300px;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+  }
+
+  /* ── Title: destination + "BUDGET" ── */
+  .budget-title {
+    font-size: 48px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  }
+
+  /* ── Duration badge: "2 SEMAINES" gold pill ── */
+  .duration-badge {
+    align-self: center;
+    background: #FFD700;
+    color: #000000;
+    font-size: 24px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 8px 24px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ── Line items: category + price ── */
+  .line-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 20px;
+  }
+
+  .line-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  }
+  .line-item:last-child {
+    border-bottom: none;
+  }
+
+  .item-category {
+    font-size: 32px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.80);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Price pill: green rounded badge ── */
+  .price-pill {
+    background: rgba(0, 209, 126, 0.9);
+    color: #FFFFFF;
+    font-size: 36px;
+    font-weight: 800;
+    padding: 10px 24px;
+    border-radius: 16px;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 209, 126, 0.3);
+  }
+
+  /* ── Divider line before total ── */
+  .divider {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+      to right,
+      rgba(255, 215, 0, 0) 0%,
+      rgba(255, 215, 0, 0.5) 50%,
+      rgba(255, 215, 0, 0) 100%
+    );
+    margin: 16px 0;
+  }
+
+  /* ── Total row: bigger, gold ── */
+  .total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px;
+    margin-top: 8px;
+  }
+
+  .total-label {
+    font-size: 40px;
+    font-weight: 900;
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow:
+      0 0 20px rgba(255, 215, 0, 0.3);
+  }
+
+  .total-price {
+    background: #FFD700;
+    color: #000000;
+    font-size: 44px;
+    font-weight: 900;
+    padding: 12px 32px;
+    border-radius: 20px;
+    white-space: nowrap;
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+  }
+
+  /* ── Watermark: hidden on data frames, visible on CTA only ── */
+  .brand-watermark {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    opacity: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-watermark.visible {
+    opacity: 0.45;
+  }
+  .brand-watermark svg {
+    width: 40px;
+    height: 42px;
+  }
+  .brand-watermark span {
+    font-size: 14px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="dark-overlay"></div>
+  <div class="budget-card">
+    <div class="budget-title">{{BUDGET_TITLE}}</div>
+    <div class="duration-badge">{{DURATION_LABEL}}</div>
+    <div class="line-items">
+      {{LINE_ITEMS_HTML}}
+    </div>
+    <div class="divider"></div>
+    <div class="total-row">
+      <div class="total-label">TOTAL</div>
+      <div class="total-price">{{TOTAL_PRICE}}</div>
+    </div>
+  </div>
+  <div class="brand-watermark {{WATERMARK_CLASS}}">
+    <span>flashvoyage</span>
+    {{LOGO_SVG}}
+  </div>
+</div>
+</body>
+</html>

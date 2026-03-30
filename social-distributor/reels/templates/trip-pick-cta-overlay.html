@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* ── Full dark overlay ── */
+  .dark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.80);
+    z-index: 1;
+  }
+
+  /* ── Centered content ── */
+  .content-zone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 100px;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .cta-text {
+    font-size: 44px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    text-shadow:
+      2px 2px 0 rgba(0, 0, 0, 0.5),
+      0 3px 8px rgba(0, 0, 0, 0.6);
+    margin-bottom: 15px;
+  }
+
+  .gold-underline {
+    width: 300px;
+    height: 5px;
+    background: #FFD700;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    margin-bottom: 20px;
+  }
+
+  .brand-url {
+    font-size: 24px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="dark-overlay"></div>
+  <div class="content-zone">
+    <div class="cta-text">ENREGISTRE CE REEL</div>
+    <div class="gold-underline"></div>
+    <div class="brand-url">flashvoyage.com</div>
+  </div>
+</div>
+</body>
+</html>

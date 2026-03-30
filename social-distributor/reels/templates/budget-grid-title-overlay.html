@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* ── Bottom gradient: footage on top, dark bottom for hook ── */
+  .gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.15) 15%,
+      rgba(0, 0, 0, 0.50) 40%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+    z-index: 1;
+  }
+
+  /* ── Content zone: bottom half ── */
+  .content-zone {
+    position: absolute;
+    bottom: 300px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 80px;
+    z-index: 2;
+  }
+
+  /* ── Gold badge: "BUDGET VOYAGE" ── */
+  .budget-badge {
+    background: #FFD700;
+    color: #000000;
+    font-size: 28px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 10px 32px;
+    border-radius: 30px;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ── Destination name: large white text ── */
+  .destination-name {
+    font-size: 72px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    text-shadow:
+      3px 3px 0 #000,
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      0 4px 12px rgba(0, 0, 0, 0.9);
+    max-width: 920px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+    margin-bottom: 16px;
+  }
+
+  /* ── Duration subtitle ── */
+  .duration-text {
+    font-size: 32px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.80);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow:
+      2px 2px 0 rgba(0, 0, 0, 0.5),
+      0 2px 6px rgba(0, 0, 0, 0.6);
+  }
+
+  /* ── Gold accent line ── */
+  .gold-line {
+    width: 100px;
+    height: 5px;
+    background: #FFD700;
+    border-radius: 3px;
+    margin-top: 24px;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="gradient-overlay"></div>
+  <div class="content-zone">
+    <div class="budget-badge">{{BADGE_TEXT}}</div>
+    <div class="destination-name">{{DESTINATION_NAME}}</div>
+    <div class="duration-text">{{DURATION_TEXT}}</div>
+    <div class="gold-line"></div>
+  </div>
+</div>
+</body>
+</html>

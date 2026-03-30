@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* ── Gradient: clear top (photo/face visible), dark bottom for text ── */
+  .gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.15) 15%,
+      rgba(0, 0, 0, 0.50) 40%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+    z-index: 1;
+  }
+
+  /* ── Top section: meme/situation text ── */
+  /* Position: top 220px (below safe zone), centered, max-width 920px */
+  .top-text-zone {
+    position: absolute;
+    top: 220px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 80px;
+    z-index: 3;
+  }
+  .meme-text {
+    font-size: 72px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    text-shadow:
+      3px 3px 0 #000,
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      0 4px 12px rgba(0, 0, 0, 0.9);
+    max-width: 920px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+  }
+
+  /* ── Bottom section: punchline/reaction text ── */
+  /* Position: bottom 340px (above IG caption safe zone), centered */
+  .bottom-text-zone {
+    position: absolute;
+    bottom: 340px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 80px;
+    z-index: 3;
+  }
+  .punchline-text {
+    font-size: 56px;
+    font-weight: 800;
+    color: #FFD700;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    text-shadow:
+      3px 3px 0 rgba(0, 0, 0, 0.7),
+      0 0 20px rgba(255, 215, 0, 0.3);
+    max-width: 920px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+  }
+
+  /* ── Reaction emoji/face indicator ── */
+  /* Positioned bottom-left, large emoji or "reaction face" zone */
+  .reaction-zone {
+    position: absolute;
+    bottom: 480px;
+    right: 80px;
+    z-index: 4;
+  }
+  .reaction-emoji {
+    font-size: 120px;
+    line-height: 1;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+  }
+
+  /* ── NO logo/watermark on humor format (VoyagePirates approach) ── */
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="gradient-overlay"></div>
+  <div class="top-text-zone">
+    <div class="meme-text">{{MEME_TEXT}}</div>
+  </div>
+  <div class="reaction-zone">
+    <div class="reaction-emoji">{{REACTION_EMOJI}}</div>
+  </div>
+  <div class="bottom-text-zone">
+    <div class="punchline-text">{{PUNCHLINE_TEXT}}</div>
+  </div>
+</div>
+</body>
+</html>

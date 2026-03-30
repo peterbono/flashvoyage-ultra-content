@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* ── Gradient overlay: dark in text zones, let video breathe elsewhere ── */
+  .dark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+      linear-gradient(to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.65) 15%,
+        rgba(0, 0, 0, 0.7) 30%,
+        rgba(0, 0, 0, 0.65) 55%,
+        rgba(0, 0, 0, 0.3) 70%,
+        rgba(0, 0, 0, 0.15) 85%,
+        rgba(0, 0, 0, 0.4) 100%
+      );
+    z-index: 1;
+  }
+
+  /* ── Content layer ── */
+  .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  /* ── Top label: "SONDAGE VOYAGE" ── */
+  .top-label {
+    position: absolute;
+    top: 260px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  }
+
+  /* ── Question text ── */
+  .question-text {
+    position: absolute;
+    top: 314px; /* 260 + 24 + 30 gap */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    text-align: center;
+    font-size: 56px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    text-shadow:
+      3px 3px 0 #000,
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      0 4px 10px rgba(0, 0, 0, 0.8);
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+  }
+
+  /* ── Gold separator line ── */
+  .separator {
+    position: absolute;
+    /* Positioned dynamically — use CSS calc based on question height.
+       For static rendering, place after ~4 lines of question text. */
+    top: 590px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 5px;
+    background: #FFD700;
+    border-radius: 3px;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+  }
+
+  /* ── Options area ── */
+  .options-area {
+    position: absolute;
+    top: 625px; /* separator top + 5 + 30 gap */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 860px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Single option bar — semi-opaque so text is always readable */
+  .option-bar {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.55);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    border-radius: 20px;
+    padding: 18px 28px;
+    width: 860px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Number badge: gold circle */
+  .option-number {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    background: #FFD700;
+    color: #000000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 900;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+  }
+
+  /* Option text */
+  .option-text {
+    font-size: 38px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    line-height: 1.2;
+    margin-left: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+  }
+
+  /* Hide option 4 when empty */
+  .option-bar.hidden {
+    display: none;
+  }
+
+  /* ── Footer CTA ── */
+  .footer-cta {
+    position: absolute;
+    bottom: 320px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="dark-overlay"></div>
+  <div class="content">
+    <div class="top-label">SONDAGE VOYAGE</div>
+    <div class="question-text">{{QUESTION_TEXT}}</div>
+    <div class="separator"></div>
+    <div class="options-area">
+      <div class="option-bar">
+        <div class="option-number">1</div>
+        <div class="option-text">{{OPTION_1}}</div>
+      </div>
+      <div class="option-bar">
+        <div class="option-number">2</div>
+        <div class="option-text">{{OPTION_2}}</div>
+      </div>
+      <div class="option-bar">
+        <div class="option-number">3</div>
+        <div class="option-text">{{OPTION_3}}</div>
+      </div>
+      <div class="option-bar {{OPTION_4_HIDDEN}}">
+        <div class="option-number">4</div>
+        <div class="option-text">{{OPTION_4}}</div>
+      </div>
+    </div>
+    <div class="footer-cta">COMMENTE TON NUM&Eacute;RO &darr;</div>
+  </div>
+</div>
+</body>
+</html>

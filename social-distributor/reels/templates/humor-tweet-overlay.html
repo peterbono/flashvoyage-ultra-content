@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, Helvetica, sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* ── Top black zone (header + text) ── */
+  .top-zone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1080px;
+    height: 660px;
+    background: #000000;
+    z-index: 2;
+  }
+
+  /* ── Bottom black zone ── */
+  .bottom-zone {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 1080px;
+    height: 360px;
+    background: #000000;
+    z-index: 2;
+  }
+
+  /* ── Left/right black bars flanking the clip zone ── */
+  .side-bar-left {
+    position: absolute;
+    top: 660px;
+    left: 0;
+    width: 60px;
+    height: 900px;
+    background: #000000;
+    z-index: 2;
+  }
+  .side-bar-right {
+    position: absolute;
+    top: 660px;
+    right: 0;
+    width: 60px;
+    height: 900px;
+    background: #000000;
+    z-index: 2;
+  }
+
+  /* ── Tweet header zone ── */
+  .tweet-header {
+    position: absolute;
+    top: 280px;
+    left: 70px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    z-index: 3;
+  }
+  .profile-pic {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #FFD700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .profile-pic span {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    color: #000000;
+    line-height: 1;
+  }
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .profile-name {
+    font-size: 36px;
+    font-weight: 700;
+    color: #e7e9ea;
+    line-height: 1.2;
+  }
+  .profile-handle {
+    font-size: 28px;
+    font-weight: 400;
+    color: #8899a6;
+    line-height: 1.2;
+  }
+
+  /* ── Tweet text zone ── */
+  .tweet-text {
+    position: absolute;
+    top: 410px;
+    left: 70px;
+    max-width: 940px;
+    font-size: 44px;
+    font-weight: 400;
+    color: #e7e9ea;
+    line-height: 1.35;
+    z-index: 3;
+    /* Sentence case — NOT uppercase. This is the key difference from variant A. */
+    text-transform: none;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── Clip zone border frame ── */
+  .clip-frame {
+    position: absolute;
+    top: 660px;
+    left: 60px;
+    width: 960px;
+    height: 870px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    z-index: 3;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Top black zone: header + text area -->
+  <div class="top-zone"></div>
+
+  <!-- Side bars flanking the clip zone -->
+  <div class="side-bar-left"></div>
+  <div class="side-bar-right"></div>
+
+  <!-- Bottom black zone -->
+  <div class="bottom-zone"></div>
+
+  <!-- Tweet header -->
+  <div class="tweet-header">
+    <div class="profile-pic"><span>FV</span></div>
+    <div class="profile-info">
+      <div class="profile-name">Flash Voyage</div>
+      <div class="profile-handle">@flashvoyagemedia</div>
+    </div>
+  </div>
+
+  <!-- Tweet text (sentence case) -->
+  <div class="tweet-text">{{TWEET_TEXT}}</div>
+
+  <!-- Clip zone border frame (transparent center, video shows through) -->
+  <div class="clip-frame"></div>
+</div>
+</body>
+</html>

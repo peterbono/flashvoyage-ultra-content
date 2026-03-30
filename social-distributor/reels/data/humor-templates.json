@@ -1,0 +1,931 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "created": "2026-03-29",
+    "source": "Adapted from Thailuminati humor playbook analysis (14 reels, 67.4K followers)",
+    "language": "fr",
+    "target_audience": "French speakers 24-35, SE Asia travel enthusiasts",
+    "usage": "Each template has {slots} to fill. Use gold_standard entries as few-shot examples in AI prompts."
+  },
+
+  "gold_standard": [
+    {
+      "id": "gold_01",
+      "text": "Quand tu realises que le voyage en Thailande que t'as reserve il y a 3 mois c'est dans 2 semaines",
+      "source_reel": "That Feeling (600 likes)",
+      "mechanic": "shared_excitement",
+      "theme": "fomo",
+      "emoji": "🇹🇭",
+      "pexelsQuery": "person dancing happy celebration",
+      "shareability": "Envoie ca a quelqu'un qui compte les jours"
+    },
+    {
+      "id": "gold_02",
+      "text": "J'espere que la prochaine fois que t'es stresse... c'est parce que tu hesites entre Bangkok, Bali, Chiang Mai ou Da Nang. C'est le level qu'on vise.",
+      "source_reel": "Life Goal (6,843 likes)",
+      "mechanic": "subversion",
+      "theme": "destination_vs_reality",
+      "emoji": "✈️",
+      "pexelsQuery": "friends eating street food laughing",
+      "shareability": "Tag quelqu'un qui merite ce genre de stress"
+    },
+    {
+      "id": "gold_03",
+      "text": "Ton pote qui fait des cauchemars parce que tu pars en Asie sans lui",
+      "source_reel": "Bro Having Nightmares (199 likes)",
+      "mechanic": "shared_pain",
+      "theme": "fomo",
+      "emoji": "😰",
+      "pexelsQuery": "person tossing turning in bed restless",
+      "shareability": "Envoie ca a celui/celle que tu laisses derriere"
+    },
+    {
+      "id": "gold_04",
+      "text": "Les potes a 3h du mat apres avoir claque toutes leurs economies en Thailande (ca valait le coup)",
+      "source_reel": "Homies at 3am (267 likes)",
+      "mechanic": "shared_pain",
+      "theme": "broke_but_happy",
+      "emoji": "🇹🇭",
+      "pexelsQuery": "friends laughing night street food",
+      "shareability": "Tag ton squad qui a deja vecu ca"
+    },
+    {
+      "id": "gold_05",
+      "text": "Quand t'aimes pas ton taff mais t'as besoin du salaire pour le voyage en Asie",
+      "source_reel": "Need the Salary (187 likes)",
+      "mechanic": "hyperbole",
+      "theme": "broke_but_happy",
+      "emoji": "😭",
+      "pexelsQuery": "tired person going to work morning reluctant",
+      "shareability": "Si c'est toi en ce moment, envoie ca a un collegue"
+    },
+    {
+      "id": "gold_06",
+      "text": "Quand toute la bande a enfin reserve ses billets pour la Thailande",
+      "source_reel": "The Thailand Squad (177 likes)",
+      "mechanic": "hyperbole",
+      "theme": "squad",
+      "emoji": "🔥",
+      "pexelsQuery": "group friends celebrating excited jumping",
+      "shareability": "Tag toute ta squad"
+    },
+    {
+      "id": "gold_07",
+      "text": "Le retour au bureau apres 2 semaines en Asie du Sud-Est",
+      "source_reel": "What Jobs Feel Like After (153 likes)",
+      "mechanic": "shared_pain",
+      "theme": "post_trip_depression",
+      "emoji": "💀",
+      "pexelsQuery": "sad person office desk staring screen",
+      "shareability": "On est tous passes par la"
+    },
+    {
+      "id": "gold_08",
+      "text": "Moi en Thailande a 29 ans qui me demande quel metier je vais faire quand je serai grand",
+      "source_reel": "Me in Thailand at 29 (116 likes)",
+      "mechanic": "shared_pain",
+      "theme": "destination_vs_reality",
+      "emoji": "🇹🇭",
+      "pexelsQuery": "person sitting river sunset beer contemplating",
+      "shareability": "Si t'as deja eu cette reflexion, envoie ca"
+    },
+    {
+      "id": "gold_09",
+      "text": "L'amitie entre adultes c'est: 'Tu me manques. On se prend un cafe. En Thailande. En mai.'",
+      "source_reel": "Bangkok or Phuket (95 likes)",
+      "mechanic": "subversion",
+      "theme": "squad",
+      "emoji": "☕",
+      "pexelsQuery": "friends scooter tropical road chill",
+      "shareability": "Envoie ca a un pote que t'as pas vu depuis trop longtemps"
+    },
+    {
+      "id": "gold_10",
+      "text": "Quand le voyage en Asie se termine et tu realises que t'es plus aussi beau/belle qu'a Bangkok",
+      "source_reel": "Not Handsome Anymore (293 likes)",
+      "mechanic": "subversion",
+      "theme": "post_trip_depression",
+      "emoji": "🪞",
+      "pexelsQuery": "person looking in mirror disappointed",
+      "shareability": "On sait tous de quoi je parle"
+    },
+    {
+      "id": "gold_11",
+      "text": "Tu vas rencontrer plein de gens dans ta vie... Reste proche de ceux qui connaissent l'Asie du Sud-Est.",
+      "source_reel": "Stay Close to Me Bro (227 likes)",
+      "mechanic": "subversion",
+      "theme": "squad",
+      "emoji": "🛵",
+      "pexelsQuery": "motorcycle taxi bangkok traffic ride",
+      "shareability": "Tag quelqu'un avec qui tu partagerais un tuk-tuk"
+    },
+    {
+      "id": "gold_12",
+      "text": "Quand tu decouvres que le massage thai coute 7 EUR et que t'en prenais un a 80 EUR a Paris",
+      "source_reel": "adapted from budget shock theme",
+      "mechanic": "shared_pain",
+      "theme": "budget_shock",
+      "emoji": "💆",
+      "pexelsQuery": "thai massage spa relaxing",
+      "shareability": "Les Parisiens vont pleurer"
+    },
+    {
+      "id": "gold_13",
+      "text": "Mon compte en banque avant le voyage au Vietnam vs apres le voyage au Vietnam (aucun regret)",
+      "source_reel": "adapted from broke-but-happy theme",
+      "mechanic": "hyperbole",
+      "theme": "broke_but_happy",
+      "emoji": "🇻🇳",
+      "pexelsQuery": "empty wallet person smiling happy",
+      "shareability": "Envoie ca a quelqu'un qui revient de voyage"
+    },
+    {
+      "id": "gold_14",
+      "text": "Quand tu manges un pad thai a 1.50 EUR et que tu repenses a ta salade Pret a Manger a 12 EUR",
+      "source_reel": "adapted from street food theme",
+      "mechanic": "shared_pain",
+      "theme": "street_food",
+      "emoji": "🍜",
+      "pexelsQuery": "person eating street food market night happy",
+      "shareability": "Tag un pote qui mange encore des sandwiches triangle a Paris"
+    },
+    {
+      "id": "gold_15",
+      "text": "Moi qui explique a ma mere que 'vivre a Chiang Mai' c'est un plan de carriere",
+      "source_reel": "adapted from quarter-life crisis theme",
+      "mechanic": "subversion",
+      "theme": "i_live_here_now",
+      "emoji": "🇹🇭",
+      "pexelsQuery": "young person video call explaining gestures",
+      "shareability": "Si t'as deja essaye de justifier un plan comme ca"
+    }
+  ],
+
+  "templates": [
+
+    {
+      "id": "fomo_01",
+      "template": "Quand tu apprends que {ami} part a {destination} sans toi",
+      "slots": {
+        "ami": ["ton pote", "ta meilleure amie", "le groupe WhatsApp", "ta coloc", "ton ex"],
+        "destination": ["Bali", "Bangkok", "le Vietnam", "les Philippines", "la Thailande"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "fomo",
+      "emoji": "😭",
+      "pexelsQuery": "person looking at phone shocked jealous",
+      "shareability": "Envoie ca a quelqu'un que tu laisses derriere"
+    },
+    {
+      "id": "fomo_02",
+      "template": "Ton/Ta {ami} qui apprend que t'as reserve un vol pour {destination} sans {pronom}",
+      "slots": {
+        "ami": ["pote", "meilleur(e) ami(e)", "coloc", "collegue de bureau"],
+        "destination": ["Bali", "Koh Samui", "Da Nang", "Phuket"],
+        "pronom": ["lui", "elle"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "fomo",
+      "emoji": "💔",
+      "pexelsQuery": "person crying dramatic upset",
+      "shareability": "Tag la personne concernee"
+    },
+    {
+      "id": "fomo_03",
+      "template": "Le groupe WhatsApp quand {quelquun} envoie une photo de {lieu} a {heure}",
+      "slots": {
+        "quelquun": ["un pote", "ta meilleure amie", "le premier arrive"],
+        "lieu": ["la plage a Koh Phangan", "un rooftop a Bangkok", "une riziere a Bali"],
+        "heure": ["8h du mat", "minuit", "l'heure du dejeuner"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "fomo",
+      "emoji": "📱",
+      "pexelsQuery": "person staring phone envious office",
+      "shareability": "On a tous un groupe WhatsApp comme ca"
+    },
+    {
+      "id": "fomo_04",
+      "template": "Quand tu scrolles Insta et tout le monde est a {destination} sauf toi",
+      "slots": {
+        "destination": ["Bali", "en Thailande", "au Vietnam", "aux Philippines"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "fomo",
+      "emoji": "🥲",
+      "pexelsQuery": "person scrolling phone alone couch sad",
+      "shareability": "Si c'est toi en ce moment, partage ca"
+    },
+    {
+      "id": "fomo_05",
+      "template": "Moi qui regarde les stories de {ami} a {destination} depuis {lieu_triste}",
+      "slots": {
+        "ami": ["mes potes", "ma soeur", "tout le monde"],
+        "destination": ["Koh Lanta", "Ubud", "Hoi An"],
+        "lieu_triste": ["mon bureau", "le metro ligne 13", "mon canape a Lille"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "fomo",
+      "emoji": "😐",
+      "pexelsQuery": "person looking out rainy window sad",
+      "shareability": "Envoie ca a la personne qui poste des stories depuis la plage"
+    },
+
+    {
+      "id": "broke_01",
+      "template": "Mon compte en banque avant {destination} vs apres {destination} (aucun regret)",
+      "slots": {
+        "destination": ["la Thailande", "Bali", "le Vietnam", "les Philippines"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "broke_but_happy",
+      "emoji": "💸",
+      "pexelsQuery": "empty wallet person smiling carefree",
+      "shareability": "On est tous passes par la"
+    },
+    {
+      "id": "broke_02",
+      "template": "Les potes a {heure} apres avoir claque {montant} en {activite} a {destination} (ca valait le coup)",
+      "slots": {
+        "heure": ["3h du mat", "4h du mat", "2h du mat"],
+        "montant": ["tout le budget de la semaine", "le budget du mois", "leurs economies"],
+        "activite": ["full moon party", "bars sur la plage", "rooftop bars"],
+        "destination": ["Koh Phangan", "Bangkok", "Phuket"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "broke_but_happy",
+      "emoji": "🎉",
+      "pexelsQuery": "friends laughing night party exhausted happy",
+      "shareability": "Tag le pote qui a toujours le budget le plus court"
+    },
+    {
+      "id": "broke_03",
+      "template": "Quand t'aimes pas ton taff mais t'as besoin du salaire pour le voyage a {destination}",
+      "slots": {
+        "destination": ["Bali", "en Thailande", "au Vietnam", "aux Philippines"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "broke_but_happy",
+      "emoji": "😤",
+      "pexelsQuery": "tired worker going to work reluctant morning",
+      "shareability": "Si c'est toi en ce moment, envoie ca a un collegue"
+    },
+    {
+      "id": "broke_04",
+      "template": "Moi qui calcule que {duree} en {destination} coute moins cher que {comparaison}",
+      "slots": {
+        "duree": ["2 semaines", "1 mois", "3 semaines"],
+        "destination": ["Thailande", "au Vietnam", "a Bali"],
+        "comparaison": ["mon loyer a Paris", "un week-end a Mykonos", "une semaine de resto a Lyon"]
+      },
+      "mechanic": "subversion",
+      "theme": "broke_but_happy",
+      "emoji": "🧮",
+      "pexelsQuery": "person calculating phone surprised happy",
+      "shareability": "Montre ca a celui qui dit que voyager c'est trop cher"
+    },
+
+    {
+      "id": "post_trip_01",
+      "template": "Le retour au bureau apres {duree} a {destination}",
+      "slots": {
+        "duree": ["2 semaines", "3 semaines", "1 mois"],
+        "destination": ["Bali", "en Thailande", "au Vietnam", "aux Philippines"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "post_trip_depression",
+      "emoji": "💀",
+      "pexelsQuery": "sad person office desk staring lifeless",
+      "shareability": "On connait tous cette douleur"
+    },
+    {
+      "id": "post_trip_02",
+      "template": "Jour 1 au bureau apres le voyage: '{phrase_collegue}' Moi: *flashback de {souvenir}*",
+      "slots": {
+        "phrase_collegue": ["T'as passe de bonnes vacances?", "Alors c'etait bien?", "Bon retour parmi nous!"],
+        "souvenir": ["la plage a Koh Lipe", "un coucher de soleil a Uluwatu", "un pad thai a 2 EUR"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "post_trip_depression",
+      "emoji": "🫠",
+      "pexelsQuery": "person office daydreaming distant look",
+      "shareability": "Si t'as deja vecu ce moment exact"
+    },
+    {
+      "id": "post_trip_03",
+      "template": "Le reveil a 7h a {ville_france} vs le reveil a 7h a {destination}",
+      "slots": {
+        "ville_france": ["Paris", "Lyon", "Lille", "Bordeaux", "Toulouse"],
+        "destination": ["Koh Samui", "Bali", "Da Nang", "El Nido"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "post_trip_depression",
+      "emoji": "⏰",
+      "pexelsQuery": "split screen alarm clock morning tropical sunrise",
+      "shareability": "L'un de ces matins est pas comme l'autre"
+    },
+
+    {
+      "id": "squad_01",
+      "template": "Quand toute la bande a enfin reserve ses billets pour {destination}",
+      "slots": {
+        "destination": ["la Thailande", "Bali", "le Vietnam", "les Philippines"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "squad",
+      "emoji": "🔥",
+      "pexelsQuery": "group friends celebrating jumping excited",
+      "shareability": "Tag toute ta squad"
+    },
+    {
+      "id": "squad_02",
+      "template": "Le groupe WhatsApp '{nom_groupe}' quand quelqu'un envoie un lien de vol a {prix} pour {destination}",
+      "slots": {
+        "nom_groupe": ["Les boloss en voyage", "Operation Asie 2026", "Le voyage"],
+        "prix": ["350 EUR", "400 EUR", "299 EUR"],
+        "destination": ["Bangkok", "Bali", "Ho Chi Minh"]
+      },
+      "mechanic": "shared_excitement",
+      "theme": "squad",
+      "emoji": "✈️",
+      "pexelsQuery": "people phone notification excited jumping",
+      "shareability": "Envoie ca dans ton groupe de voyage"
+    },
+    {
+      "id": "squad_03",
+      "template": "L'amitie entre adultes c'est: '{phrase_1}' '{phrase_2}' '{twist}'",
+      "slots": {
+        "phrase_1": ["Tu me manques.", "Faut qu'on se voit.", "Ca fait trop longtemps."],
+        "phrase_2": ["On se prend un verre.", "On dejeune ensemble.", "On se fait un truc."],
+        "twist": ["A Bangkok. En novembre.", "A Bali. En janvier.", "Au Vietnam. Le mois prochain."]
+      },
+      "mechanic": "subversion",
+      "theme": "squad",
+      "emoji": "🍻",
+      "pexelsQuery": "friends tropical bar sunset clinking drinks",
+      "shareability": "Envoie ca a un pote que t'as pas vu depuis trop longtemps"
+    },
+
+    {
+      "id": "dest_vs_real_01",
+      "template": "Moi en {destination} a {age} ans qui me demande ce que je vais faire de ma vie",
+      "slots": {
+        "destination": ["Thailande", "Indonesie", "au Vietnam", "aux Philippines"],
+        "age": ["27", "28", "29", "30", "32"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "destination_vs_reality",
+      "emoji": "🍺",
+      "pexelsQuery": "person contemplating sunset beer tropical",
+      "shareability": "Si t'as deja eu cette reflexion en voyage"
+    },
+    {
+      "id": "dest_vs_real_02",
+      "template": "Ce que mes parents pensent que je fais en {destination} vs ce que je fais vraiment en {destination}",
+      "slots": {
+        "destination": ["Thailande", "a Bali", "au Vietnam"]
+      },
+      "mechanic": "subversion",
+      "theme": "destination_vs_reality",
+      "emoji": "👀",
+      "pexelsQuery": "person relaxing hammock tropical lazy",
+      "shareability": "Envoie ca a tes parents (ou pas)"
+    },
+    {
+      "id": "dest_vs_real_03",
+      "template": "Instagram: {version_insta}. Realite: {version_reelle}.",
+      "slots": {
+        "version_insta": ["coucher de soleil magique a Bali", "temple mystique a Chiang Mai", "plage paradisiaque a El Nido"],
+        "version_reelle": ["50 touristes qui prennent la meme photo", "3h de scooter sous la pluie pour y arriver", "meduses partout et pas de WiFi"]
+      },
+      "mechanic": "subversion",
+      "theme": "destination_vs_reality",
+      "emoji": "📸",
+      "pexelsQuery": "tourist crowd taking photos famous spot",
+      "shareability": "On sait tous que c'est ca la realite"
+    },
+
+    {
+      "id": "budget_01",
+      "template": "Quand tu decouvres que {chose} coute {prix_asie} en {destination} et que tu payais {prix_france} a {ville_france}",
+      "slots": {
+        "chose": ["le massage", "le repas", "la chambre d'hotel", "la biere", "le taxi"],
+        "prix_asie": ["7 EUR", "2 EUR", "15 EUR", "1 EUR", "3 EUR"],
+        "destination": ["Thailande", "a Bali", "au Vietnam", "au Cambodge"],
+        "prix_france": ["80 EUR", "15 EUR", "120 EUR", "8 EUR", "25 EUR"],
+        "ville_france": ["Paris", "Lyon", "Bordeaux", "Nice"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "budget_shock",
+      "emoji": "🤯",
+      "pexelsQuery": "person surprised happy shocked discovering",
+      "shareability": "Les Parisiens vont pleurer"
+    },
+    {
+      "id": "budget_02",
+      "template": "Quand tu realises que ton {depense_france} coute plus cher que {duree} en {destination}",
+      "slots": {
+        "depense_france": ["loyer a Paris", "abonnement salle de sport + Netflix + Uber Eats", "week-end a Chamonix"],
+        "duree": ["2 semaines", "10 jours", "1 semaine"],
+        "destination": ["Thailande", "au Vietnam", "au Cambodge"]
+      },
+      "mechanic": "subversion",
+      "theme": "budget_shock",
+      "emoji": "💰",
+      "pexelsQuery": "tropical beach paradise budget cheap",
+      "shareability": "Montre ca a quelqu'un qui dit que voyager c'est cher"
+    },
+    {
+      "id": "budget_03",
+      "template": "Le serveur a {destination} quand tu laisses {pourboire} de pourboire pour un repas a {prix}",
+      "slots": {
+        "destination": ["Bangkok", "Bali", "Hanoi"],
+        "pourboire": ["2 EUR", "3 EUR", "50 bahts"],
+        "prix": ["1.50 EUR", "2 EUR", "3 EUR"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "budget_shock",
+      "emoji": "🙏",
+      "pexelsQuery": "grateful surprised person thank you",
+      "shareability": "On devient tous genereux en Asie"
+    },
+
+    {
+      "id": "culture_01",
+      "template": "Moi la premiere fois que {situation_culture} en {destination}",
+      "slots": {
+        "situation_culture": ["j'ai vu un singe voler mon petit-dej", "quelqu'un m'a fait un wai", "j'ai decouvert les toilettes a la turque", "le chauffeur de tuk-tuk a negocie son propre prix a la hausse"],
+        "destination": ["Thailande", "a Bali", "au Vietnam", "au Cambodge"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "culture_shock",
+      "emoji": "😳",
+      "pexelsQuery": "person surprised confused funny reaction",
+      "shareability": "Si t'as deja vecu ca, envoie"
+    },
+    {
+      "id": "culture_02",
+      "template": "Les trucs que {situation} mais qu'on fait quand meme en {destination}",
+      "slots": {
+        "situation": ["personne t'explique", "t'apprends sur le tas", "tu comprends que 3 jours apres"],
+        "destination": ["Thailande", "Asie du Sud-Est", "a Bali"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "culture_shock",
+      "emoji": "🤷",
+      "pexelsQuery": "confused tourist lost foreign country",
+      "shareability": "On apprend tous a nos depens"
+    },
+    {
+      "id": "culture_03",
+      "template": "Mon niveau de confiance apres {duree} en {destination}: je {action_absurde}",
+      "slots": {
+        "duree": ["3 jours", "1 semaine", "2 semaines"],
+        "destination": ["Thailande", "a Bali", "au Vietnam"],
+        "action_absurde": ["commande en thai au restaurant", "negocie comme un local au marche", "conduis un scooter dans le trafic de Bangkok sans GPS"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "culture_shock",
+      "emoji": "😤",
+      "pexelsQuery": "confident person walking street proud",
+      "shareability": "Qui d'autre devient un local en 3 jours?"
+    },
+
+    {
+      "id": "airport_01",
+      "template": "L'aeroport de {aeroport} a {heure} quand {situation}",
+      "slots": {
+        "aeroport": ["CDG", "Orly", "Suvarnabhumi", "Denpasar"],
+        "heure": ["5h du mat", "3h du mat", "minuit"],
+        "situation": ["t'as pas dormi mais t'es hyper excite", "tu realises que t'as oublie ton adaptateur", "ta valise fait 3 kg de trop"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "airport_flight",
+      "emoji": "✈️",
+      "pexelsQuery": "person airport tired excited dawn",
+      "shareability": "Si t'as deja vecu le depart a 5h du mat"
+    },
+    {
+      "id": "airport_02",
+      "template": "Moi dans l'avion pour {destination} vs moi dans l'avion du retour",
+      "slots": {
+        "destination": ["Bangkok", "Bali", "Hanoi", "Manille"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "airport_flight",
+      "emoji": "😐",
+      "pexelsQuery": "happy person airplane window vs sad person airplane",
+      "shareability": "Le vol retour c'est toujours le plus dur"
+    },
+    {
+      "id": "airport_03",
+      "template": "Le vol de 12h pour {destination} quand {situation}",
+      "slots": {
+        "destination": ["Bangkok", "Bali", "Ho Chi Minh"],
+        "situation": ["t'es cote hublot et tout le monde dort sauf toi", "le bebe deux rangs devant se reveille", "tu regardes le tracker de vol toutes les 5 minutes"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "airport_flight",
+      "emoji": "😴",
+      "pexelsQuery": "person airplane long flight bored restless",
+      "shareability": "Si t'as deja vecu les 12h les plus longues de ta vie"
+    },
+
+    {
+      "id": "food_01",
+      "template": "Quand tu manges un {plat} a {prix} et que tu repenses a {comparaison}",
+      "slots": {
+        "plat": ["pad thai", "pho", "nasi goreng", "banh mi", "mango sticky rice"],
+        "prix": ["1.50 EUR", "2 EUR", "1 EUR", "0.80 EUR", "1.20 EUR"],
+        "comparaison": ["ta salade Pret a Manger a 12 EUR", "ton sandwich PAUL a 9 EUR", "ton poke bowl UberEats a 16 EUR"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "street_food",
+      "emoji": "🍜",
+      "pexelsQuery": "person eating street food market delicious",
+      "shareability": "Tag un pote qui mange encore des trucs hors de prix a Paris"
+    },
+    {
+      "id": "food_02",
+      "template": "Jour {jour} en {destination}: je mange {plat} pour le {repas}eme repas d'affilee (aucun regret)",
+      "slots": {
+        "jour": ["3", "5", "7", "10"],
+        "destination": ["Thailande", "au Vietnam", "a Bali"],
+        "plat": ["du pad thai", "du pho", "du nasi goreng", "du riz frit"],
+        "repas": ["8", "12", "15", "20"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "street_food",
+      "emoji": "🤤",
+      "pexelsQuery": "person eating multiple plates food market",
+      "shareability": "Qui d'autre a un plat qu'il mange en boucle en voyage?"
+    },
+    {
+      "id": "food_03",
+      "template": "Moi qui explique a mes potes que {plat} dans {lieu} c'est le meilleur truc que j'ai mange de ma vie",
+      "slots": {
+        "plat": ["un pad thai", "un banh mi", "un mango sticky rice", "un roti"],
+        "lieu": ["un boui-boui a Bangkok", "un stand de rue a Hanoi", "un warung a Bali", "un marche de nuit a Chiang Mai"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "street_food",
+      "emoji": "👨‍🍳",
+      "pexelsQuery": "person passionately describing food gesturing",
+      "shareability": "On a tous un boui-boui comme ca"
+    },
+
+    {
+      "id": "hostel_01",
+      "template": "La nuit en dortoir a {destination} quand {situation}",
+      "slots": {
+        "destination": ["Khao San Road", "Kuta", "Hoi An", "Phnom Penh"],
+        "situation": ["quelqu'un ronfle comme un moteur diesel", "le mec du lit du haut rentre a 4h du mat bourre", "tu te reveilles et y'a 3 personnes en plus que la veille"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "hostel",
+      "emoji": "🛏️",
+      "pexelsQuery": "hostel dormitory bunk bed backpacker",
+      "shareability": "Si t'as deja dormi en dortoir, tu connais"
+    },
+    {
+      "id": "hostel_02",
+      "template": "L'auberge a {prix}/nuit a {destination}: {description_positive}. Aussi l'auberge: {description_negative}.",
+      "slots": {
+        "prix": ["8 EUR", "5 EUR", "6 EUR"],
+        "destination": ["Bangkok", "Siem Reap", "Hanoi"],
+        "description_positive": ["piscine sur le toit, petit-dej inclus, WiFi"],
+        "description_negative": ["un gecko dans la douche, la clim qui fait le bruit d'un avion, des draps douteux"]
+      },
+      "mechanic": "subversion",
+      "theme": "hostel",
+      "emoji": "⭐",
+      "pexelsQuery": "simple hostel room budget travel",
+      "shareability": "Le rapport qualite/prix de l'Asie du Sud-Est"
+    },
+
+    {
+      "id": "scooter_01",
+      "template": "Moi sur un scooter a {destination} alors que {aveu}",
+      "slots": {
+        "destination": ["Bali", "Chiang Mai", "Koh Samui", "Da Nang"],
+        "aveu": ["j'ai meme pas le permis voiture", "j'ai pris 1 cours de conduite dans ma vie", "je sais meme pas ou est le frein"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "scooter_tuktuk",
+      "emoji": "🛵",
+      "pexelsQuery": "person riding scooter tropical road nervous",
+      "shareability": "Si t'as deja loue un scooter sans savoir conduire"
+    },
+    {
+      "id": "scooter_02",
+      "template": "Le chauffeur de tuk-tuk a {destination} quand tu lui demandes {demande} et il {reaction}",
+      "slots": {
+        "destination": ["Bangkok", "Phnom Penh", "Siem Reap"],
+        "demande": ["combien pour aller au temple", "s'il peut baisser le prix", "si c'est loin"],
+        "reaction": ["triple le prix", "rigole et dit 'special price for you'", "dit 5 minutes (c'est 30 minutes)"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "scooter_tuktuk",
+      "emoji": "🛺",
+      "pexelsQuery": "tuk tuk driver smiling tourist ride",
+      "shareability": "On s'est tous fait avoir au moins une fois"
+    },
+    {
+      "id": "scooter_03",
+      "template": "Le trafic a {destination} quand t'es sur un scooter pour la premiere fois de ta vie",
+      "slots": {
+        "destination": ["Ho Chi Minh", "Bangkok", "Bali", "Hanoi"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "scooter_tuktuk",
+      "emoji": "😱",
+      "pexelsQuery": "chaotic motorcycle traffic asian city",
+      "shareability": "RIP a tous les touristes a Hanoi"
+    },
+
+    {
+      "id": "negotiate_01",
+      "template": "Moi qui negocie {objet} de {prix_initial} a {prix_final} a {lieu} comme si c'etait une question de vie ou de mort",
+      "slots": {
+        "objet": ["un pantalon elephant", "un aimant de frigo", "une coque de telephone", "un bracelet"],
+        "prix_initial": ["5 EUR", "3 EUR", "8 EUR"],
+        "prix_final": ["2 EUR", "1.50 EUR", "4 EUR"],
+        "lieu": ["Chatuchak", "au marche de nuit de Chiang Mai", "a Ubud"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "negotiating",
+      "emoji": "🤝",
+      "pexelsQuery": "person negotiating market vendor haggling",
+      "shareability": "On est tous devenus des negociateurs en Asie"
+    },
+    {
+      "id": "negotiate_02",
+      "template": "Le vendeur au marche de {destination} quand tu dis '{phrase_nego}' et que tu commences a partir",
+      "slots": {
+        "destination": ["Bangkok", "Bali", "Hanoi", "Siem Reap"],
+        "phrase_nego": ["OK c'est trop cher merci", "Je vais reflechir", "Mon ami l'a eu moins cher"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "negotiating",
+      "emoji": "😂",
+      "pexelsQuery": "market vendor calling back customer waving",
+      "shareability": "La technique qui marche a tous les coups"
+    },
+
+    {
+      "id": "live_here_01",
+      "template": "Moi apres {duree} en {destination}: '{declaration}' (j'ai meme pas de visa)",
+      "slots": {
+        "duree": ["3 jours", "1 semaine", "5 jours"],
+        "destination": ["Thailande", "a Bali", "au Vietnam"],
+        "declaration": ["je vis ici maintenant", "je rentre plus", "je cherche un appart", "je me reconvertis"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "i_live_here_now",
+      "emoji": "🏠",
+      "pexelsQuery": "person relaxing tropical cafe laptop daydreaming",
+      "shareability": "Qui a deja dit ca apres 3 jours de vacances?"
+    },
+    {
+      "id": "live_here_02",
+      "template": "Moi qui regarde les apparts a {destination} sur mon telephone alors que {realite}",
+      "slots": {
+        "destination": ["Chiang Mai", "Bali", "Bangkok", "Da Nang"],
+        "realite": ["mon vol retour c'est dans 2 jours", "j'ai un CDI a Paris", "je parle pas un mot de thai", "j'ai signe un bail de 3 ans"]
+      },
+      "mechanic": "subversion",
+      "theme": "i_live_here_now",
+      "emoji": "🔍",
+      "pexelsQuery": "person phone searching apartments tropical cafe",
+      "shareability": "On l'a tous fait et on le sait"
+    },
+    {
+      "id": "live_here_03",
+      "template": "Etape 1: {etape_1}. Etape 2: {etape_2}. Etape 3: {etape_3}.",
+      "slots": {
+        "etape_1": ["Vacances de 2 semaines en Thailande", "Premier voyage a Bali", "Road trip au Vietnam"],
+        "etape_2": ["Chercher des coworkings sur Google", "Calculer le cout de la vie vs Paris", "Se dire 'juste un mois de plus'"],
+        "etape_3": ["Demission par mail depuis un hamac a Koh Lanta", "Appart a Canggu signe depuis la plage", "Visa digital nomad en cours"]
+      },
+      "mechanic": "subversion",
+      "theme": "i_live_here_now",
+      "emoji": "📈",
+      "pexelsQuery": "person hammock laptop tropical working",
+      "shareability": "On connait tous quelqu'un qui a fait exactement ca"
+    },
+
+    {
+      "id": "return_work_01",
+      "template": "Semaine 1 au bureau apres {destination}. Le collegue: '{question}'. Moi: *fixe le mur pendant {duree}*",
+      "slots": {
+        "destination": ["la Thailande", "Bali", "le Vietnam"],
+        "question": ["Alors ces vacances?", "T'as bonne mine!", "C'etait bien?"],
+        "duree": ["45 secondes", "1 minute", "une eternite"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "return_to_work",
+      "emoji": "🫥",
+      "pexelsQuery": "person staring blankly office vacant expression",
+      "shareability": "Si t'as deja eu ce moment de vide au bureau"
+    },
+    {
+      "id": "return_work_02",
+      "template": "Moi qui essaie de me concentrer au travail alors que {pensee}",
+      "slots": {
+        "pensee": ["y'a un vol pour Bangkok a 350 EUR sur mon deuxieme ecran", "je repense au pad thai de la rue de Khao San", "je calcule mes jours de conge restants", "mon fond d'ecran c'est encore la plage de Koh Lipe"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "return_to_work",
+      "emoji": "💭",
+      "pexelsQuery": "person office distracted looking out window",
+      "shareability": "Envoie ca a un collegue qui revient de vacances"
+    },
+    {
+      "id": "return_work_03",
+      "template": "Mon boss: '{demande_boss}'. Mon cerveau: *{flashback}*",
+      "slots": {
+        "demande_boss": ["Tu peux finir ce rapport pour 17h?", "On fait le point sur le projet?", "T'es dispo pour une reunion?"],
+        "flashback": ["coucher de soleil sur les rizieres de Bali", "scooter a toute vitesse a Koh Samui", "3eme mojito bucket a la full moon party"]
+      },
+      "mechanic": "subversion",
+      "theme": "return_to_work",
+      "emoji": "🌅",
+      "pexelsQuery": "person meeting room absent minded daydream",
+      "shareability": "Le decalage entre la vraie vie et la vie de vacances"
+    },
+
+    {
+      "id": "fomo_extra_01",
+      "template": "Nombre de fois ou j'ai dit '{phrase}' cette semaine: {nombre}",
+      "slots": {
+        "phrase": ["Il faut que je retourne en Asie", "Tu sais la-bas ca coute rien", "Non mais en Thailande c'etait pas comme ca"],
+        "nombre": ["47", "83", "plus que mes mails pro"]
+      },
+      "mechanic": "hyperbole",
+      "theme": "fomo",
+      "emoji": "🔁",
+      "pexelsQuery": "person talking passionately friends cafe gesturing",
+      "shareability": "Si t'as un pote qui parle que de son voyage"
+    },
+    {
+      "id": "squad_extra_01",
+      "template": "Le planning du voyage en {destination}: {plan_initial}. La realite: {realite}.",
+      "slots": {
+        "destination": ["Thailande", "au Vietnam", "a Bali"],
+        "plan_initial": ["temples, culture, randonnees", "itineraire sur 3 pages, visites culturelles", "yoga, meditation, detox"],
+        "realite": ["plage, biere, pad thai, repeat", "on est restes 5 jours au meme bar", "full moon party, brunch a 15h, scooter sans casque"]
+      },
+      "mechanic": "subversion",
+      "theme": "squad",
+      "emoji": "📋",
+      "pexelsQuery": "friends beach bar drinking laughing tropical",
+      "shareability": "Le plan vs la realite c'est jamais pareil"
+    },
+    {
+      "id": "dest_vs_real_extra_01",
+      "template": "Moi qui dis '{promesse}' avant le voyage. Moi a {destination}: {realite}.",
+      "slots": {
+        "promesse": ["je vais faire du sport tous les jours", "je vais lire 5 livres", "je vais me coucher tot", "cette fois je depense pas trop"],
+        "destination": ["Bali", "Koh Phangan", "Bangkok", "Phuket"],
+        "realite": ["3eme biere a midi sur la plage", "je me suis couche a 5h tous les soirs", "j'ai achete un pantalon elephant", "j'ai depense le double"]
+      },
+      "mechanic": "subversion",
+      "theme": "destination_vs_reality",
+      "emoji": "🫣",
+      "pexelsQuery": "person guilty smile caught tropical relaxing",
+      "shareability": "Les promesses de voyage qu'on tient jamais"
+    },
+    {
+      "id": "budget_extra_01",
+      "template": "Le budget du voyage: {poste_1} {montant_1}, {poste_2} {montant_2}, {poste_surprise} {montant_surprise}",
+      "slots": {
+        "poste_1": ["Vol", "Logement", "Assurance"],
+        "montant_1": ["350 EUR", "200 EUR", "45 EUR"],
+        "poste_2": ["Nourriture (prevue)", "Budget activites", "Transport sur place"],
+        "montant_2": ["150 EUR", "100 EUR", "80 EUR"],
+        "poste_surprise": ["Trucs achetes au marche de nuit a 2h du mat", "Full moon party 'budget raisonnable'", "Scooter raye qu'il a fallu payer"],
+        "montant_surprise": ["??????", "on en parle pas", "le double du reste"]
+      },
+      "mechanic": "subversion",
+      "theme": "budget_shock",
+      "emoji": "📊",
+      "pexelsQuery": "person calculating expenses worried surprised",
+      "shareability": "Y'a toujours un budget surprise"
+    },
+    {
+      "id": "culture_extra_01",
+      "template": "Choses que je pensais impossibles avant {destination}: {liste}",
+      "slots": {
+        "destination": ["la Thailande", "Bali", "le Vietnam"],
+        "liste": ["manger du riz au petit-dej, conduire a gauche, transpirer 24h/24 et kiffer quand meme", "4 personnes sur un scooter, un repas a 0.80 EUR, negocier pour 0.50 EUR", "traverser la route a Hanoi les yeux fermes, manger un truc sans savoir ce que c'est, dormir dans un bus de nuit"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "culture_shock",
+      "emoji": "🌏",
+      "pexelsQuery": "tourist trying local food market adventurous",
+      "shareability": "On decouvre des talents caches en Asie"
+    },
+    {
+      "id": "food_extra_01",
+      "template": "Le moment ou tu comprends pourquoi les expats restent en {destination}: *{moment}*",
+      "slots": {
+        "destination": ["Thailande", "au Vietnam", "a Bali"],
+        "moment": ["premier bouchee de mango sticky rice", "pad thai dans la rue a 23h pour 1 EUR", "cafe vietnamien glace a 0.50 EUR avec vue sur la baie"]
+      },
+      "mechanic": "subversion",
+      "theme": "street_food",
+      "emoji": "🤯",
+      "pexelsQuery": "person tasting food eyes closed bliss",
+      "shareability": "Le moment exact ou tout a bascule"
+    },
+    {
+      "id": "airport_extra_01",
+      "template": "L'escale de {duree} a {aeroport}: {attente}. Realite: {realite}.",
+      "slots": {
+        "duree": ["6h", "8h", "4h", "10h"],
+        "aeroport": ["Doha", "Dubai", "Singapour", "Kuala Lumpur"],
+        "attente": ["'ca va passer vite'", "'je vais dormir'", "'je vais en profiter pour bosser'"],
+        "realite": ["j'ai erre comme un zombie dans le duty free", "j'ai mange 3 fois et j'ai quand meme faim", "j'ai regarde 2 films assis par terre branche a une prise"]
+      },
+      "mechanic": "subversion",
+      "theme": "airport_flight",
+      "emoji": "🛬",
+      "pexelsQuery": "person sleeping airport terminal floor tired",
+      "shareability": "Les escales longues c'est un sport"
+    },
+    {
+      "id": "hostel_extra_01",
+      "template": "Les gens que tu rencontres en auberge en {destination}: {personnage_1}, {personnage_2}, et {personnage_3}",
+      "slots": {
+        "destination": ["Asie du Sud-Est", "Thailande", "au Vietnam"],
+        "personnage_1": ["l'Australien qui voyage depuis 8 mois", "le couple qui fait le tour du monde", "le mec qui a 'tout plaque'"],
+        "personnage_2": ["la fille qui connait tous les bons plans", "le gars qui negocie tout a -50%", "le backpacker qui a un budget de 10 EUR/jour"],
+        "personnage_3": ["toi qui es la pour 2 semaines et qui te sens amateur", "le mec qui parle de crypto au petit-dej", "la personne qui est arrivee 'pour 1 mois' il y a 6 mois"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "hostel",
+      "emoji": "🎒",
+      "pexelsQuery": "backpackers hostel socializing diverse group",
+      "shareability": "On a tous croise ces profils"
+    },
+    {
+      "id": "live_here_extra_01",
+      "template": "Google searches en {destination}: jour 1: '{search_1}'. Jour 3: '{search_2}'. Jour 7: '{search_3}'.",
+      "slots": {
+        "destination": ["Thailande", "a Bali", "au Vietnam"],
+        "search_1": ["best temples Chiang Mai", "things to do Bali first time", "hanoi street food guide"],
+        "search_2": ["cost of living Chiang Mai per month", "coworking space Canggu", "vietnam digital nomad visa"],
+        "search_3": ["how to move to Thailand permanently", "bali apartment long term rent cheap", "comment demissionner par mail depuis l'etranger"]
+      },
+      "mechanic": "subversion",
+      "theme": "i_live_here_now",
+      "emoji": "🔎",
+      "pexelsQuery": "person searching laptop cafe tropical serious",
+      "shareability": "L'evolution naturelle de tout voyageur en Asie"
+    },
+    {
+      "id": "return_extra_01",
+      "template": "Le premier {repas} en France apres {destination}: {prix}. Moi: {reaction}.",
+      "slots": {
+        "repas": ["cafe", "dejeuner", "biere", "sandwich"],
+        "destination": ["la Thailande", "le Vietnam", "Bali"],
+        "prix": ["4.50 EUR", "15 EUR", "8 EUR", "7 EUR"],
+        "reaction": ["j'ai failli appeler la police", "j'ai regarde la carte 3 fois", "j'ai demande si c'etait le prix pour 2", "j'ai ferme l'appli UberEats et j'ai pleure"]
+      },
+      "mechanic": "shared_pain",
+      "theme": "return_to_work",
+      "emoji": "😨",
+      "pexelsQuery": "person shocked looking at restaurant bill",
+      "shareability": "Le choc du retour c'est les prix"
+    },
+    {
+      "id": "negotiate_extra_01",
+      "template": "Moi en France: {comportement_france}. Moi en {destination}: {comportement_asie}.",
+      "slots": {
+        "comportement_france": ["je paie le prix affiche sans discuter", "je laisse 10% de pourboire", "je prends un taxi sans regarder le compteur"],
+        "destination": ["Thailande", "a Bali", "au Vietnam"],
+        "comportement_asie": ["je negocie 20 minutes pour economiser 0.30 EUR", "je compare 4 stands pour la meme mangue", "je refuse un tuk-tuk parce que c'est 0.50 EUR trop cher"]
+      },
+      "mechanic": "subversion",
+      "theme": "negotiating",
+      "emoji": "💪",
+      "pexelsQuery": "person negotiating pointing market stall",
+      "shareability": "L'Asie transforme tout le monde en negociateur"
+    },
+    {
+      "id": "scooter_extra_01",
+      "template": "Etapes du scooter en {destination}: {etape_1} → {etape_2} → {etape_3}",
+      "slots": {
+        "destination": ["Bali", "Thailande", "au Vietnam"],
+        "etape_1": ["'jamais de la vie je monte la-dessus'", "'non merci j'ai peur'", "'c'est trop dangereux'"],
+        "etape_2": ["'bon ok juste pour aller au temple'", "'juste pour la journee'", "'que sur les petites routes'"],
+        "etape_3": ["*conduit a 80 km/h avec 2 sacs de courses et pas de casque*", "*slalome entre les camions sur une nationale*", "*fait le tour de l'ile en une journee*"]
+      },
+      "mechanic": "subversion",
+      "theme": "scooter_tuktuk",
+      "emoji": "🛵",
+      "pexelsQuery": "person riding scooter fast tropical road confident",
+      "shareability": "L'evolution de tout touriste en Asie du Sud-Est"
+    }
+  ]
+}

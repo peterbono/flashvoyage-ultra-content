@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* ── Heavy gradient for hook readability ── */
+  .gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.20) 15%,
+      rgba(0, 0, 0, 0.55) 40%,
+      rgba(0, 0, 0, 0.90) 100%
+    );
+    z-index: 1;
+  }
+
+  /* ── Top: series identifier ── */
+  .series-tag {
+    position: absolute;
+    top: 220px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 3;
+  }
+  .series-tag-text {
+    display: inline-block;
+    background: #FFD700;
+    color: #000000;
+    font-size: 28px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 10px 32px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ── Center: main hook text ── */
+  .hook-zone {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 70px;
+    text-align: center;
+    z-index: 3;
+  }
+
+  .hook-text {
+    font-size: 80px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    text-shadow:
+      3px 3px 0 #000,
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      0 4px 12px rgba(0, 0, 0, 0.9);
+    max-width: 940px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+  }
+
+  /* ── Gold accent line ── */
+  .gold-line {
+    width: 120px;
+    height: 6px;
+    background: #FFD700;
+    border-radius: 3px;
+    margin-top: 28px;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+  }
+
+  /* ── Bottom: swipe/continue indicator ── */
+  .continue-indicator {
+    position: absolute;
+    bottom: 320px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 3;
+  }
+  .continue-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.60);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="gradient-overlay"></div>
+  <div class="series-tag">
+    <span class="series-tag-text">{{SERIES_TAG}}</span>
+  </div>
+  <div class="hook-zone">
+    <div class="hook-text">{{HOOK_TEXT}}</div>
+    <div class="gold-line"></div>
+  </div>
+  <div class="continue-indicator">
+    <div class="continue-text">{{CONTINUE_TEXT}}</div>
+  </div>
+</div>
+</body>
+</html>

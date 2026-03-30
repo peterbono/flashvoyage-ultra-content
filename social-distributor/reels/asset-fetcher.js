@@ -50,18 +50,28 @@ export async function fetchPexelsVideo(query, orientation = 'portrait') {
       return null;
     }
 
-    // Pick the first video, find HD quality file
+    // Pick the best video — minimum 720p height, prefer portrait HD
     for (const video of data.videos) {
       const files = video.video_files || [];
-      // Prefer HD portrait-friendly files
-      const hd = files.find(f => f.quality === 'hd' && f.width && f.height && f.height >= f.width)
-        || files.find(f => f.quality === 'hd')
-        || files.find(f => f.quality === 'sd' && f.width && f.height && f.height >= f.width)
-        || files[0];
+      // Filter: min 720p and prefer portrait (height >= width)
+      const hdPortrait = files.find(f => f.quality === 'hd' && f.height >= 720 && f.height >= f.width);
+      const hdAny = files.find(f => f.quality === 'hd' && f.height >= 720);
+      const sdPortrait = files.find(f => f.height >= 720 && f.height >= f.width);
+      const hd = hdPortrait || hdAny || sdPortrait;
 
       if (hd && hd.link) {
         console.log(`[REEL/ASSET] Found Pexels video: ${video.id} (${hd.width}x${hd.height}, ${hd.quality})`);
         return hd.link;
+      }
+    }
+
+    // Second pass: accept lower res if nothing >= 720p found
+    for (const video of data.videos) {
+      const files = video.video_files || [];
+      const best = files.find(f => f.quality === 'hd') || files.find(f => f.height >= f.width) || files[0];
+      if (best && best.link) {
+        console.warn(`[REEL/ASSET] Low-res fallback: ${video.id} (${best.width}x${best.height})`);
+        return best.link;
       }
     }
 
@@ -116,7 +126,20 @@ export function downloadVideo(videoUrl, outputPath) {
 
 // ── Music Pool ───────────────────────────────────────────────────────────────
 
-// Mood-to-filename mapping for the local audio pool
+const MUSIC_DIR = join(__dirname, 'music');
+
+// Mood → music/ subdirectory mapping
+const MOOD_TO_GENRE = {
+  chill: 'chill',
+  ambient: 'chill',
+  tropical: 'upbeat',
+  upbeat: 'upbeat',
+  cinematic: 'cinematic',
+  dramatic: 'cinematic',
+  lofi: 'lofi',
+};
+
+// Legacy mood-to-filename keywords for audio/ dir fallback
 const MOOD_MAP = {
   chill: ['chill', 'lofi', 'relax', 'ambient', 'soft'],
   upbeat: ['upbeat', 'happy', 'energy', 'fun', 'travel'],
@@ -124,22 +147,51 @@ const MOOD_MAP = {
   tropical: ['tropical', 'beach', 'summer', 'island'],
 };
 
+// Track recently used music to avoid repeats
+const _recentlyUsed = [];
+const MAX_RECENT = 8; // Don't repeat within last 8 picks
+
 /**
- * Pick a royalty-free music track from the local audio pool.
+ * Pick a royalty-free music track with dedup.
+ * Avoids repeating the same track within the last 8 picks.
+ * First checks music/{genre}/ directory, then falls back to audio/.
  *
- * @param {string} mood - Desired mood: 'chill', 'upbeat', 'dramatic', 'tropical'
+ * @param {string} mood - Desired mood: 'chill', 'upbeat', 'tropical', 'cinematic', 'lofi', 'asmr'
  * @returns {string|null} Path to audio file or null if none available
  */
 export function pickMusicTrack(mood = 'chill') {
+  // ── Try music/{genre}/ first ──
+  const genre = MOOD_TO_GENRE[mood] || mood; // 'asmr' passes through as-is
+  const genreDir = join(MUSIC_DIR, genre);
+
+  if (existsSync(genreDir)) {
+    const genreFiles = readdirSync(genreDir).filter(f => f.endsWith('.mp3'));
+    if (genreFiles.length > 0) {
+      // Filter out recently used tracks
+      const available = genreFiles.filter(f => !_recentlyUsed.includes(f));
+      // If all have been used recently, reset and use all
+      const pool = available.length > 0 ? available : genreFiles;
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+
+      // Track usage
+      _recentlyUsed.push(pick);
+      if (_recentlyUsed.length > MAX_RECENT) _recentlyUsed.shift();
+
+      console.log(`[REEL/ASSET] Picked music (${mood}→${genre}): ${pick} [${_recentlyUsed.length} in history]`);
+      return join(genreDir, pick);
+    }
+  }
+
+  // ── Fallback to audio/ dir (legacy 3 tracks) ──
   if (!existsSync(AUDIO_DIR)) {
-    console.warn(`[REEL/ASSET] Audio directory not found: ${AUDIO_DIR}`);
+    console.warn(`[REEL/ASSET] No audio directories found`);
     return null;
   }
 
   const files = readdirSync(AUDIO_DIR).filter(f => f.endsWith('.mp3') || f.endsWith('.wav') || f.endsWith('.m4a'));
 
   if (files.length === 0) {
-    console.warn(`[REEL/ASSET] No audio files found in ${AUDIO_DIR}`);
+    console.warn(`[REEL/ASSET] No audio files found`);
     return null;
   }
 

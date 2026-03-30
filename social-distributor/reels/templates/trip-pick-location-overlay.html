@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* ── Bottom gradient: bottom 45% → heavy dark for text readability ── */
+  .bottom-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 45%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.25) 20%,
+      rgba(0, 0, 0, 0.65) 50%,
+      rgba(0, 0, 0, 0.90) 100%
+    );
+    z-index: 1;
+  }
+
+  /* ── Rank badge: top-right ── */
+  .rank-badge {
+    position: absolute;
+    top: 230px;
+    right: 60px;
+    z-index: 3;
+  }
+  .rank-number {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 140px;
+    font-weight: 900;
+    color: #FFD700;
+    line-height: 1;
+    text-shadow:
+      5px 5px 0 rgba(0, 0, 0, 0.8),
+      0 0 30px rgba(255, 215, 0, 0.5),
+      0 0 60px rgba(255, 215, 0, 0.25);
+  }
+
+  /* ── Location info: bottom area ── */
+  .location-zone {
+    position: absolute;
+    bottom: 380px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 60px;
+    z-index: 3;
+    text-align: center;
+  }
+
+  /* ── Pin centered above name ── */
+  .location-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 10px;
+    max-width: 900px;
+  }
+
+  .map-pin {
+    flex-shrink: 0;
+  }
+
+  .location-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    line-height: 1.1;
+    text-shadow:
+      3px 3px 0 #000,
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      0 4px 12px rgba(0, 0, 0, 0.9);
+    max-width: 900px;
+    word-break: break-word;
+  }
+
+  .map-pin svg {
+    width: 44px;
+    height: 60px;
+  }
+
+  /* ── Location detail ── */
+  .location-detail {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.80);
+    text-shadow:
+      2px 2px 0 rgba(0, 0, 0, 0.6),
+      0 3px 10px rgba(0, 0, 0, 0.7);
+    max-width: 900px;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="bottom-gradient"></div>
+  <div class="rank-badge">
+    <div class="rank-number">{{RANK_NUMBER}}</div>
+  </div>
+  <div class="location-zone">
+    <div class="location-row">
+      <div class="map-pin">
+        <svg width="24" height="32" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 20 12 20s12-11 12-20C24 5.373 18.627 0 12 0zm0 16.5a4.5 4.5 0 110-9 4.5 4.5 0 010 9z" fill="#FF3B30"/>
+        </svg>
+      </div>
+      <div class="location-name">{{LOCATION_NAME}}</div>
+    </div>
+    <div class="location-detail">{{LOCATION_DETAIL}}</div>
+  </div>
+</div>
+</body>
+</html>
