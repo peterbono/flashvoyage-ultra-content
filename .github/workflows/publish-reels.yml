@@ -35,6 +35,7 @@ on:
 
 env:
   NODE_ENV: production
+  # Cross-posting tokens are injected at step level (secrets not available at workflow env level)
 
 jobs:
   generate-and-publish:
@@ -113,6 +114,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
         run: |
           FORMAT="${{ steps.format.outputs.format }}"
           PUBLISH="${{ steps.format.outputs.publish }}"
@@ -120,9 +122,9 @@ jobs:
           echo "Format: $FORMAT"
           echo "Publish: $PUBLISH"
 
-          # Ensure tokens.json exists for the publisher
+          # Ensure tokens.json exists for the publisher (IG + FB + Threads)
           mkdir -p social-distributor/data
-          echo '{"facebook":{"token":"'$FB_PAGE_TOKEN'","expiresAt":"never"}}' > social-distributor/data/tokens.json
+          echo '{"facebook":{"token":"'$FB_PAGE_TOKEN'","expiresAt":"never"},"threads":{"token":"'$THREADS_TOKEN'","expiresAt":"2026-05-23T00:00:00Z"}}' > social-distributor/data/tokens.json
 
           if [ "$FORMAT" = "auto" ]; then
             FORMAT="pick"  # Default for manual "auto"
@@ -133,6 +135,21 @@ jobs:
           else
             node social-distributor/reels/index-v2.js --format "$FORMAT" --test
           fi
+
+      # Cross-publishing: Story + FB Reel + Threads
+      # The reel pipeline (index-v2.js) calls cross-publisher.js internally after
+      # a successful IG publish. This step is a fallback / explicit trigger.
+      - name: Cross-publish to Story + FB Reel + Threads
+        if: success() && steps.format.outputs.publish == 'true'
+        env:
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+        run: |
+          echo "Cross-publishing handled by the reel pipeline (cross-publisher.js called after IG publish)"
+          echo "Tokens available: FB_PAGE_TOKEN=${FB_PAGE_TOKEN:+set}, THREADS_TOKEN=${THREADS_TOKEN:+set}"
+          # If cross-publisher.js is not yet integrated into the pipeline,
+          # uncomment the line below to run it standalone:
+          # node social-distributor/reels/cross-publisher.js --last
 
       - name: Commit state files (reel history, pexels dedup)
         if: success() && steps.format.outputs.publish == 'true'

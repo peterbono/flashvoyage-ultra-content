@@ -187,19 +187,23 @@ export async function publishPost({ imageBuffer, caption, pageToken }) {
  * Create an Instagram STORY media container (media_type=STORIES)
  * @param {string} imageUrl - Public URL of the image (1080x1920)
  * @param {string} pageToken - Facebook Page access token (used for IG API)
+ * @param {string|null} [link=null] - Optional clickable link sticker URL
  * @returns {Promise<string>} creation_id
  */
-async function createStoryContainer(imageUrl, pageToken) {
+async function createStoryContainer(imageUrl, pageToken, link = null) {
   const url = `${GRAPH_API}/${IG_ID}/media`;
+
+  const body = {
+    image_url: imageUrl,
+    media_type: 'STORIES',
+    access_token: pageToken,
+  };
+  if (link) body.link = link;  // Clickable link sticker
 
   const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      image_url: imageUrl,
-      media_type: 'STORIES',
-      access_token: pageToken,
-    }),
+    body: JSON.stringify(body),
   });
 
   const data = await response.json();
@@ -208,7 +212,7 @@ async function createStoryContainer(imageUrl, pageToken) {
     throw new Error(`IG createStoryContainer failed: ${data.error.message} (code ${data.error.code})`);
   }
 
-  console.log(`[IG] Story container created: ${data.id}`);
+  console.log(`[IG] Story container created: ${data.id}${link ? ` (link: ${link})` : ''}`);
   return data.id;
 }
 
@@ -219,9 +223,10 @@ async function createStoryContainer(imageUrl, pageToken) {
  * @param {Object} params
  * @param {Buffer} params.imageBuffer - Raw image data (1080x1920 PNG)
  * @param {string} params.pageToken - Facebook Page access token
+ * @param {string} [params.link] - Optional clickable link sticker URL (e.g. article URL)
  * @returns {Promise<{mediaId: string}>}
  */
-export async function publishStory({ imageBuffer, pageToken }) {
+export async function publishStory({ imageBuffer, pageToken, link = null }) {
   let wpMediaId = null;
 
   try {
@@ -229,8 +234,8 @@ export async function publishStory({ imageBuffer, pageToken }) {
     const wp = await uploadToWordPress(imageBuffer, `fv-story-${Date.now()}.jpg`);
     wpMediaId = wp.wpMediaId;
 
-    // 2. Create IG story container with media_type=STORIES
-    const creationId = await createStoryContainer(wp.publicUrl, pageToken);
+    // 2. Create IG story container with media_type=STORIES (+ optional link sticker)
+    const creationId = await createStoryContainer(wp.publicUrl, pageToken, link);
 
     // 3. Wait for IG to process the image (5 seconds baseline)
     await delay(5000);
