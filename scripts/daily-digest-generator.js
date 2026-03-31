@@ -190,15 +190,44 @@ function collectIntelligenceData() {
 function collectCostData() {
   const costPath = join(DATA_DIR, 'cost-history.jsonl');
   const allCosts = loadJSONL(costPath);
-  const last24h = allCosts.filter(c => isLast24h(c.timestamp || c.date));
 
-  const totalCostToday = last24h.reduce((sum, c) => sum + (c.totalCost || c.costUSD || 0), 0);
-  const totalTokensToday = last24h.reduce((sum, c) => sum + (c.totalTokens || 0), 0);
+  const now = Date.now();
+  const DAY = 86400000;
+  const last24h = allCosts.filter(c => {
+    const t = new Date(c.timestamp || c.date).getTime();
+    return now - t < DAY;
+  });
+  const last7d = allCosts.filter(c => {
+    const t = new Date(c.timestamp || c.date).getTime();
+    return now - t < 7 * DAY;
+  });
+  const last30d = allCosts.filter(c => {
+    const t = new Date(c.timestamp || c.date).getTime();
+    return now - t < 30 * DAY;
+  });
+
+  const sumCost = (arr) => arr.reduce((sum, c) => sum + (c.totalCost || c.costUSD || 0), 0);
+  const sumTokens = (arr) => arr.reduce((sum, c) => sum + (c.totalTokens || 0), 0);
+
+  // Breakdown by provider (haiku vs gpt)
+  const byProvider = {};
+  for (const c of last30d) {
+    const provider = c.model?.includes('haiku') || c.model?.includes('claude') ? 'haiku' :
+                     c.model?.includes('gpt') ? 'gpt4o' : 'other';
+    byProvider[provider] = (byProvider[provider] || 0) + (c.totalCost || c.costUSD || 0);
+  }
 
   return {
-    totalCostToday,
-    totalTokensToday,
+    totalCostToday: sumCost(last24h),
+    totalCostWeek: sumCost(last7d),
+    totalCostMonth: sumCost(last30d),
+    totalTokensToday: sumTokens(last24h),
+    totalTokensWeek: sumTokens(last7d),
+    totalTokensMonth: sumTokens(last30d),
     callsToday: last24h.length,
+    callsWeek: last7d.length,
+    callsMonth: last30d.length,
+    byProvider,
     allTimeEntries: allCosts.length,
   };
 }
@@ -526,23 +555,38 @@ function generateDigestHTML(data) {
   // SECTION 4: COSTS
   // ═══════════════════════════════════════════════════════════════════════════
 
+  const fmtTokens = (n) => n > 1000000 ? `${(n/1000000).toFixed(1)}M` : n > 1000 ? `${(n/1000).toFixed(1)}k` : String(n);
+  const providerBreakdown = Object.entries(costs.byProvider || {}).map(([k, v]) =>
+    `<span style="font-size:11px; color:#666">${k}: ${formatUSD(v)}</span>`
+  ).join(' &middot; ') || '<span style="font-size:11px; color:#999">aucun appel</span>';
+
   let costsHTML = `
-    <div style="display:flex; gap:12px; flex-wrap:wrap">
-      <div style="flex:1; min-width:120px; background:#f8f9fa; border-radius:8px; padding:10px; text-align:center">
-        <div style="font-size:11px; color:#666; text-transform:uppercase">LLM (24h)</div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px">
+      <div style="flex:1; min-width:90px; background:#f8f9fa; border-radius:8px; padding:10px; text-align:center">
+        <div style="font-size:10px; color:#666; text-transform:uppercase">24h</div>
         <div style="font-size:20px; font-weight:700; color:#333">${formatUSD(costs.totalCostToday)}</div>
-        <div style="font-size:10px; color:#888">${costs.callsToday} appels API</div>
+        <div style="font-size:10px; color:#888">${costs.callsToday} appels</div>
       </div>
-      <div style="flex:1; min-width:120px; background:#f8f9fa; border-radius:8px; padding:10px; text-align:center">
-        <div style="font-size:11px; color:#666; text-transform:uppercase">Tokens (24h)</div>
-        <div style="font-size:20px; font-weight:700; color:#333">${costs.totalTokensToday > 1000 ? `${(costs.totalTokensToday / 1000).toFixed(1)}k` : costs.totalTokensToday}</div>
-        <div style="font-size:10px; color:#888">prompt + completion</div>
+      <div style="flex:1; min-width:90px; background:#f8f9fa; border-radius:8px; padding:10px; text-align:center">
+        <div style="font-size:10px; color:#666; text-transform:uppercase">7 jours</div>
+        <div style="font-size:20px; font-weight:700; color:#333">${formatUSD(costs.totalCostWeek)}</div>
+        <div style="font-size:10px; color:#888">${costs.callsWeek} appels</div>
       </div>
-    </div>`;
+      <div style="flex:1; min-width:90px; background:#f8f9fa; border-radius:8px; padding:10px; text-align:center">
+        <div style="font-size:10px; color:#666; text-transform:uppercase">30 jours</div>
+        <div style="font-size:20px; font-weight:700; color:#333">${formatUSD(costs.totalCostMonth)}</div>
+        <div style="font-size:10px; color:#888">${costs.callsMonth} appels</div>
+      </div>
+    </div>
+    <div style="background:#f0f4f8; border-radius:6px; padding:8px 10px; margin-bottom:6px">
+      <div style="font-size:11px; font-weight:600; color:#555; margin-bottom:4px">Repartition par provider (30j)</div>
+      <div>${providerBreakdown}</div>
+    </div>
+    <div style="font-size:11px; color:#888">Tokens 24h: ${fmtTokens(costs.totalTokensToday)} &middot; 7j: ${fmtTokens(costs.totalTokensWeek)} &middot; 30j: ${fmtTokens(costs.totalTokensMonth)}</div>`;
 
   sections.push({
     icon: '&#128184;',
-    title: 'Couts (24h)',
+    title: 'Couts LLM (Haiku + GPT)',
     content: costsHTML,
   });
 
@@ -808,7 +852,41 @@ function collectAllData() {
   return { reels, articles, ga, revenue, intel, costs, tokens, abTests, errors };
 }
 
-// CLI interface
+// ── Email Sender ───────────────────────────────────────────────────────────
+
+async function sendDigestEmail(html, subject) {
+  const nodemailer = (await import('nodemailer')).default;
+
+  const user = process.env.GMAIL_USER || 'florian.gouloubi@gmail.com';
+  const pass = process.env.GMAIL_APP_PASSWORD;
+
+  if (!pass) {
+    console.error('[DIGEST] GMAIL_APP_PASSWORD not set. Cannot send email.');
+    return false;
+  }
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: { user, pass },
+  });
+
+  try {
+    const info = await transporter.sendMail({
+      from: `"FlashVoyage Bot" <${user}>`,
+      to: user,
+      subject,
+      html,
+    });
+    log(`Email sent: ${info.messageId}`);
+    return true;
+  } catch (err) {
+    console.error(`[DIGEST] Email send failed: ${err.message}`);
+    return false;
+  }
+}
+
+// ── CLI Interface ──────────────────────────────────────────────────────────
+
 const args = process.argv.slice(2);
 const mode = args[0] || '--stdout';
 
@@ -825,8 +903,18 @@ if (mode === '--json') {
   console.log(outPath);
 } else if (mode === '--subject') {
   console.log(generateSubject(data));
+} else if (mode === '--send') {
+  const html = generateDigestHTML(data);
+  const subject = generateSubject(data);
+  log(`Sending digest: ${subject}`);
+  const sent = await sendDigestEmail(html, subject);
+  if (!sent) {
+    // Fallback: write to file
+    const outPath = join(DATA_DIR, 'daily-digest.html');
+    writeFileSync(outPath, html, 'utf-8');
+    log(`Fallback: digest written to ${outPath}`);
+  }
 } else {
-  // Default: output full HTML to stdout
   const html = generateDigestHTML(data);
   console.log(html);
 }

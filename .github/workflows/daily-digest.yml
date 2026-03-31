@@ -3,20 +3,9 @@ name: Daily Founder Digest Email
 on:
   schedule:
     # 1h15 UTC = 8h15 Bangkok (founder reads at 8-9am GMT+7)
-    # Runs AFTER all overnight jobs are done:
-    #   - Content Intelligence: 3h00 UTC
-    #   - Daily Analytics: 4h00 UTC
-    #   - Reel #1: 5h00 UTC
-    #   - This digest: 1h15 UTC (next day) → captures full previous day
     - cron: '15 1 * * *'
 
   workflow_dispatch:
-    inputs:
-      send_email:
-        description: 'Actually send the email (false = just generate HTML)'
-        required: false
-        default: 'true'
-        type: boolean
 
 env:
   NODE_ENV: production
@@ -39,94 +28,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Generate digest HTML
-        id: generate
-        run: |
-          echo "[DIGEST] Generating daily digest..."
-
-          # Generate HTML file
-          DIGEST_PATH=$(node scripts/daily-digest-generator.js --file 2>/dev/null)
-          echo "digest_path=${DIGEST_PATH}" >> $GITHUB_OUTPUT
-
-          # Generate subject line
-          SUBJECT=$(node scripts/daily-digest-generator.js --subject 2>/dev/null)
-          echo "subject=${SUBJECT}" >> $GITHUB_OUTPUT
-
-          echo "[DIGEST] Subject: ${SUBJECT}"
-          echo "[DIGEST] HTML: ${DIGEST_PATH}"
-
-      - name: Send email via Gmail API
-        if: ${{ github.event.inputs.send_email != 'false' }}
+      - name: Generate and send digest email
         env:
-          GMAIL_SERVICE_ACCOUNT: ${{ secrets.GMAIL_SERVICE_ACCOUNT }}
-          FOUNDER_EMAIL: ${{ secrets.FOUNDER_EMAIL }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GMAIL_USER: florian.gouloubi@gmail.com
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
         run: |
-          SUBJECT="${{ steps.generate.outputs.subject }}"
-          DIGEST_PATH="${{ steps.generate.outputs.digest_path }}"
+          # Setup tokens for data collection
+          mkdir -p social-distributor/data
+          echo '{"facebook":{"token":"'$FB_PAGE_TOKEN'","expiresAt":"never"},"threads":{"token":"'$THREADS_TOKEN'","expiresAt":"2026-05-23T00:00:00Z"}}' > social-distributor/data/tokens.json
 
-          if [ -z "$GMAIL_SERVICE_ACCOUNT" ]; then
-            echo "[DIGEST] WARN: No GMAIL_SERVICE_ACCOUNT secret — using fallback: log digest to stdout"
-            cat "$DIGEST_PATH" | head -20
-            echo "..."
-            echo "[DIGEST] Full digest saved as artifact. Set GMAIL_SERVICE_ACCOUNT to enable email delivery."
-            exit 0
-          fi
+          echo "[DIGEST] Generating + sending daily digest..."
+          node scripts/daily-digest-generator.js --send
 
-          # Write service account key
-          echo "$GMAIL_SERVICE_ACCOUNT" > gmail-sa.json
-
-          # Send via Node.js script
-          node --input-type=module -e "
-            import { google } from 'googleapis';
-            import { readFileSync } from 'fs';
-
-            const auth = new google.auth.GoogleAuth({
-              keyFile: 'gmail-sa.json',
-              scopes: ['https://www.googleapis.com/auth/gmail.send'],
-              clientOptions: {
-                subject: process.env.FOUNDER_EMAIL || 'florian.gouloubi@gmail.com',
-              },
-            });
-
-            const gmail = google.gmail({ version: 'v1', auth });
-            const html = readFileSync('${DIGEST_PATH}', 'utf-8');
-            const subject = '${SUBJECT}'.replace(/'/g, \"'\");
-            const to = process.env.FOUNDER_EMAIL || 'florian.gouloubi@gmail.com';
-
-            const message = [
-              'Content-Type: text/html; charset=utf-8',
-              'MIME-Version: 1.0',
-              'To: ' + to,
-              'Subject: ' + subject,
-              '',
-              html,
-            ].join('\\r\\n');
-
-            const encodedMessage = Buffer.from(message)
-              .toString('base64')
-              .replace(/\\+/g, '-')
-              .replace(/\\//g, '_')
-              .replace(/=+$/, '');
-
-            try {
-              const res = await gmail.users.messages.send({
-                userId: 'me',
-                requestBody: { raw: encodedMessage },
-              });
-              console.log('[DIGEST] Email sent! Message ID:', res.data.id);
-            } catch (err) {
-              console.error('[DIGEST] Gmail send failed:', err.message);
-              console.error('[DIGEST] Digest HTML saved as artifact (see below)');
-              process.exit(1);
-            }
-          " 2>&1 || {
-            echo "[DIGEST] WARN: Email delivery failed. Digest saved as artifact."
-          }
-
-          # Cleanup credentials
-          rm -f gmail-sa.json
-
-      - name: Upload digest as artifact
+      - name: Upload digest as artifact (backup)
         if: always()
         uses: actions/upload-artifact@v4
         with:
