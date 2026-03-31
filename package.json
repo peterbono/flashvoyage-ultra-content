@@ -32,7 +32,11 @@
     "intelligence:fruit": "node social-distributor/analytics/search-console-fetcher.js fruit",
     "intelligence:revenue": "node social-distributor/analytics/revenue-tracker.js report",
     "intelligence:refresh": "node social-distributor/analytics/content-refresh-engine.js detect",
-    "intelligence:reel-route": "node social-distributor/analytics/article-reel-router.js test-all"
+    "intelligence:reel-route": "node social-distributor/analytics/article-reel-router.js test-all",
+    "digest": "node scripts/daily-digest-generator.js --stdout",
+    "digest:file": "node scripts/daily-digest-generator.js --file",
+    "digest:json": "node scripts/daily-digest-generator.js --json",
+    "digest:subject": "node scripts/daily-digest-generator.js --subject"
   },
   "keywords": [
     "flashvoyage",
