@@ -40,7 +40,7 @@ env:
 jobs:
   generate-and-publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4
@@ -95,18 +95,33 @@ jobs:
             echo "is_breaking=$IS_BREAKING" >> $GITHUB_OUTPUT
             echo "publish=${{ github.event.inputs.test_only == 'true' && 'false' || 'true' }}" >> $GITHUB_OUTPUT
           else
-            # Cron trigger — smart scheduler decides based on trends + analytics + news + calendar
+            # Cron trigger — try smart scheduler, fallback to static calendar
             echo "[SCHEDULER] Cron trigger — running smart scheduler..."
-            RESULT=$(node --input-type=module -e "
+            RESULT=$(timeout 30 node --input-type=module -e "
               import { decideContent } from './social-distributor/reels/smart-scheduler.js';
               const decision = await decideContent();
               console.log(JSON.stringify(decision));
-            " 2>/dev/null | tail -1)
+            " 2>/dev/null | tail -1) || true
 
-            FORMAT=$(echo "$RESULT" | jq -r '.format // "pick"')
-            REASON=$(echo "$RESULT" | jq -r '.reason // "fallback"')
-            ARTICLE_ID=$(echo "$RESULT" | jq -r '.articleId // empty')
-            IS_BREAKING=$(echo "$RESULT" | jq -r '.isBreakingNews // false')
+            if [ -z "$RESULT" ] || ! echo "$RESULT" | jq -e '.format' >/dev/null 2>&1; then
+              echo "[SCHEDULER] Smart scheduler failed or timed out — using static calendar fallback"
+              HOUR=$(date -u +%H)
+              DOW=$(date -u +%u)
+              case "$HOUR" in
+                05) case $DOW in 1|3|5) FORMAT="pick";; 2|6) FORMAT="budget";; 4) FORMAT="pick";; 7) FORMAT="avantapres";; esac;;
+                10) case $DOW in 1|3|5|7) FORMAT="versus";; 4|6) FORMAT="pick";; *) FORMAT="pick";; esac;;
+                16) if [ $(($(date -u +%d) % 2)) -eq 0 ]; then FORMAT="humor"; else FORMAT="humor-tweet"; fi;;
+                *) FORMAT="pick";;
+              esac
+              REASON="static calendar fallback (scheduler failed)"
+              ARTICLE_ID=""
+              IS_BREAKING="false"
+            else
+              FORMAT=$(echo "$RESULT" | jq -r '.format // "pick"')
+              REASON=$(echo "$RESULT" | jq -r '.reason // "fallback"')
+              ARTICLE_ID=$(echo "$RESULT" | jq -r '.articleId // empty')
+              IS_BREAKING=$(echo "$RESULT" | jq -r '.isBreakingNews // false')
+            fi
 
             echo "[SCHEDULER] Decision: format=$FORMAT"
             echo "[SCHEDULER] Reason: $REASON"
