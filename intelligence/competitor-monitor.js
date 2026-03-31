@@ -59,34 +59,23 @@ const COMPETITORS = [
 // ── Destination Keywords ──────────────────────────────────────────────────
 // Used to extract destination from URL slugs
 
+// ONLY SE Asia + adjacent Asia destinations (our niche)
 const DESTINATION_KEYWORDS = [
-  // Southeast Asia
+  // Southeast Asia (core niche)
   'thailande', 'bali', 'vietnam', 'cambodge', 'laos', 'myanmar', 'birmanie',
   'philippines', 'indonesie', 'malaisie', 'singapour', 'brunei', 'timor',
-  // East Asia
-  'japon', 'coree', 'chine', 'taiwan', 'hong-kong', 'mongolie',
-  // South Asia
-  'inde', 'sri-lanka', 'nepal', 'maldives', 'bangladesh', 'pakistan',
-  // Middle East
-  'dubai', 'oman', 'jordanie', 'israel', 'turquie', 'liban', 'egypte',
-  // Europe
-  'grece', 'italie', 'espagne', 'portugal', 'croatie', 'islande', 'norvege',
-  'suede', 'finlande', 'danemark', 'pologne', 'roumanie', 'hongrie',
-  'republique-tcheque', 'prague', 'autriche', 'suisse', 'allemagne',
-  'pays-bas', 'belgique', 'angleterre', 'ecosse', 'irlande', 'malte',
-  'chypre', 'montenegro', 'albanie', 'serbie', 'bosnie',
-  // Americas
-  'mexique', 'cuba', 'costa-rica', 'colombie', 'perou', 'bresil', 'argentine',
-  'chili', 'bolivie', 'equateur', 'guatemala', 'panama', 'republique-dominicaine',
-  'porto-rico', 'usa', 'etats-unis', 'canada', 'new-york', 'californie',
-  // Africa
-  'maroc', 'tunisie', 'senegal', 'madagascar', 'maurice', 'reunion',
-  'afrique-du-sud', 'kenya', 'tanzanie', 'zanzibar', 'cap-vert',
-  // Oceania
-  'australie', 'nouvelle-zelande', 'fidji', 'polynesie', 'tahiti',
-  // Cities
-  'bangkok', 'tokyo', 'paris', 'rome', 'barcelone', 'lisbonne', 'amsterdam',
-  'londres', 'berlin', 'vienne', 'budapest', 'dubrovnik', 'marrakech',
+  // East Asia (secondary)
+  'japon', 'coree', 'taiwan',
+  // South Asia (secondary)
+  'inde', 'sri-lanka', 'nepal', 'maldives',
+  // SE Asia cities
+  'bangkok', 'chiang-mai', 'phuket', 'koh-samui', 'koh-phangan', 'krabi',
+  'hanoi', 'ho-chi-minh', 'da-nang', 'hoi-an', 'sapa', 'nha-trang',
+  'siem-reap', 'phnom-penh', 'luang-prabang', 'vientiane',
+  'ubud', 'seminyak', 'lombok', 'gili', 'nusa', 'yogyakarta', 'jakarta',
+  'el-nido', 'siargao', 'cebu', 'boracay', 'manille', 'palawan',
+  'kuala-lumpur', 'langkawi', 'penang', 'perhentian', 'tioman',
+  'tokyo', 'kyoto', 'osaka',
   'hanoi', 'ho-chi-minh', 'kuala-lumpur', 'siem-reap', 'luang-prabang',
 ];
 
@@ -415,6 +404,10 @@ export async function monitorCompetitors() {
           ourArticleIndex,
           articleScores,
         });
+
+        // Only track articles about our niche (SE Asia + adjacent)
+        // Skip articles with no detected Asia destination
+        if (!destination) continue;
 
         newArticles.push({
           competitor: competitor.id,
