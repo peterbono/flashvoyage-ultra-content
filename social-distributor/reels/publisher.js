@@ -158,22 +158,32 @@ export async function publishReel(videoBuffer, caption, hashtags, pageToken) {
 
     // 3. Wait for IG to process the video (longer for video than images)
     console.log(`[REEL/PUB] Waiting for IG to process video...`);
-    await delay(10_000);
+    await delay(15_000);
 
-    // 4. Poll container status — up to 60s
+    // 4. Poll container status — up to 2 minutes (IG can be slow)
     let attempts = 0;
-    const maxAttempts = 10;
+    const maxAttempts = 20;
+    let containerReady = false;
     while (attempts < maxAttempts) {
       const status = await checkContainerStatus(containerId, token);
       console.log(`[REEL/PUB] Container status: ${status.statusCode} (attempt ${attempts + 1}/${maxAttempts})`);
 
-      if (status.statusCode === 'FINISHED') break;
+      if (status.statusCode === 'FINISHED') { containerReady = true; break; }
       if (status.statusCode === 'ERROR') {
         throw new Error(`IG reel processing failed: ${status.status}`);
       }
 
       attempts++;
-      await delay(5_000);
+      await delay(6_000);
+    }
+
+    if (!containerReady) {
+      console.warn(`[REEL/PUB] Container still processing after ${maxAttempts} attempts. Retrying one last time after 30s...`);
+      await delay(30_000);
+      const finalStatus = await checkContainerStatus(containerId, token);
+      if (finalStatus.statusCode !== 'FINISHED') {
+        throw new Error(`IG reel processing timed out after ${maxAttempts} attempts + 30s retry (status: ${finalStatus.statusCode})`);
+      }
     }
 
     // 5. Publish
