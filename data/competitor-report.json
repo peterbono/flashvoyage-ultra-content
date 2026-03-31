@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-03-31T12:30:23.739Z",
+  "competitors": [
+    {
+      "id": "voyagespirates",
+      "name": "VoyagesPirates",
+      "totalUrls": 0,
+      "newUrls": 0
+    },
+    {
+      "id": "noobvoyage",
+      "name": "Noobvoyage",
+      "totalUrls": 126,
+      "newUrls": 0
+    },
+    {
+      "id": "generationvoyage",
+      "name": "Generation Voyage",
+      "totalUrls": 9369,
+      "newUrls": 4
+    }
+  ],
+  "newArticles": [],
+  "summary": {
+    "totalNew": 0,
+    "contentGaps": 0,
+    "staleRefreshes": 0,
+    "monitoring": 0
+  }
+}

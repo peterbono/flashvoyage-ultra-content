@@ -1,0 +1,224 @@
+{
+  "timestamp": "2026-03-31T12:28:48.767Z",
+  "queueSize": 13,
+  "queue": [
+    {
+      "rank": 1,
+      "action": "standard",
+      "priority": "P3",
+      "priorityScore": 40,
+      "topic": "[Calendar rotation: news article]",
+      "articleType": "news",
+      "context": {
+        "cyclePosition": 4,
+        "reason": "Standard editorial calendar rotation (position 5/5)"
+      }
+    },
+    {
+      "rank": 2,
+      "action": "standard",
+      "priority": "P3",
+      "priorityScore": 39,
+      "topic": "[Calendar rotation: pillar article]",
+      "articleType": "pillar",
+      "context": {
+        "cyclePosition": 0,
+        "reason": "Standard editorial calendar rotation (position 1/5)"
+      }
+    },
+    {
+      "rank": 3,
+      "action": "standard",
+      "priority": "P3",
+      "priorityScore": 38,
+      "topic": "[Calendar rotation: support article]",
+      "articleType": "support",
+      "context": {
+        "cyclePosition": 1,
+        "reason": "Standard editorial calendar rotation (position 2/5)"
+      }
+    },
+    {
+      "rank": 4,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "articleType": "support",
+      "context": {
+        "wpId": 4125,
+        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 4030,
+        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
+      "articleType": "support",
+      "context": {
+        "wpId": 3546,
+        "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "3 jours à Singapour : optimiser son itinéraire sans sacrifier les expériences essentielles",
+      "articleType": "support",
+      "context": {
+        "wpId": 3222,
+        "slug": "3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
+      "articleType": "support",
+      "context": {
+        "wpId": 3065,
+        "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
+      "articleType": "support",
+      "context": {
+        "wpId": 3056,
+        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
+      "articleType": "support",
+      "context": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Choisir Entre Taipei et Kuala Lumpur : Un Itinéraire de 4 Jours Qui Compte",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 15,
+        "freshness": 0.98,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Voyager au Japon : Quand voir les cerisiers sans la foule",
+      "articleType": "support",
+      "context": {
+        "wpId": 2857,
+        "slug": "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2",
+        "compositeScore": 15,
+        "freshness": 0.97,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    }
+  ],
+  "summary": {
+    "write_new": 0,
+    "update": 0,
+    "enrich": 0,
+    "standard": 3,
+    "review": 10
+  },
+  "thresholds": {
+    "staleFreshnessThreshold": 0.3,
+    "minTrafficForUpdate": 0.1,
+    "minTrafficForEnrich": 0.15,
+    "minGapScoreForNew": 40,
+    "reviewScoreThreshold": 15,
+    "revenueProtectionMaxPriority": "P2",
+    "maxPerPriority": {
+      "update": 5,
+      "enrich": 5,
+      "write_new": 5,
+      "standard": 3,
+      "review": 10
+    }
+  }
+}

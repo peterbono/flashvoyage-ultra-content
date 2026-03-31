@@ -10,11 +10,14 @@ on:
   workflow_dispatch:
     inputs:
       modules:
-        description: 'Which modules to run (all, score, gaps, link, queue)'
+        description: 'Which modules to run'
         required: false
         default: 'all'
         type: choice
-        options: ['all', 'score', 'gaps', 'link', 'queue']
+        options: ['all', 'score', 'gaps', 'link', 'queue', 'recommend', 'budget', 'competitor', 'lifecycle', 'seasonal']
+
+permissions:
+  contents: write
 
 env:
   NODE_ENV: production
@@ -22,12 +25,13 @@ env:
 jobs:
   intelligence:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-node@v4
         with:
@@ -97,6 +101,54 @@ jobs:
             echo "[INTELLIGENCE] WARN: Prioritization failed (non-fatal)"
           }
 
+      # --- Step 5: Article recommendations ---
+      - name: Generate article recommendations
+        if: ${{ github.event.inputs.modules == 'all' || github.event.inputs.modules == 'recommend' || github.event_name == 'schedule' }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: ./ga4-service-account.json
+        run: |
+          echo "[INTELLIGENCE] Step 5/9: Article recommendations..."
+          node intelligence/run-intelligence.js --recommend 2>&1 || {
+            echo "[INTELLIGENCE] WARN: Recommendations failed (non-fatal)"
+          }
+
+      # --- Step 6: ROI budget allocation ---
+      - name: ROI budget allocation
+        if: ${{ github.event.inputs.modules == 'all' || github.event.inputs.modules == 'budget' || github.event_name == 'schedule' }}
+        run: |
+          echo "[INTELLIGENCE] Step 6/9: ROI budget allocation..."
+          node intelligence/run-intelligence.js --budget 2>&1 || {
+            echo "[INTELLIGENCE] WARN: Budget allocation failed (non-fatal)"
+          }
+
+      # --- Step 7: Competitor monitoring ---
+      - name: Monitor competitors
+        if: ${{ github.event.inputs.modules == 'all' || github.event.inputs.modules == 'competitor' || github.event_name == 'schedule' }}
+        run: |
+          echo "[INTELLIGENCE] Step 7/9: Competitor monitoring..."
+          node intelligence/run-intelligence.js --competitor 2>&1 || {
+            echo "[INTELLIGENCE] WARN: Competitor monitoring failed (non-fatal)"
+          }
+
+      # --- Step 8: Lifecycle state machine ---
+      - name: Content lifecycle management
+        if: ${{ github.event.inputs.modules == 'all' || github.event.inputs.modules == 'lifecycle' || github.event_name == 'schedule' }}
+        run: |
+          echo "[INTELLIGENCE] Step 8/9: Lifecycle management..."
+          node intelligence/run-intelligence.js --lifecycle 2>&1 || {
+            echo "[INTELLIGENCE] WARN: Lifecycle management failed (non-fatal)"
+          }
+
+      # --- Step 9: Seasonal predictor ---
+      - name: Seasonal trend prediction
+        if: ${{ github.event.inputs.modules == 'all' || github.event.inputs.modules == 'seasonal' || github.event_name == 'schedule' }}
+        run: |
+          echo "[INTELLIGENCE] Step 9/9: Seasonal prediction..."
+          node intelligence/run-intelligence.js --seasonal 2>&1 || {
+            echo "[INTELLIGENCE] WARN: Seasonal prediction failed (non-fatal)"
+          }
+
       # --- Cleanup credentials ---
       - name: Cleanup credentials
         if: always()
@@ -108,11 +160,19 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Stage intelligence output files
+          # Stage ALL intelligence output files
           git add data/article-scores.json 2>/dev/null || true
           git add data/content-gaps.json 2>/dev/null || true
           git add data/article-reel-map.json 2>/dev/null || true
           git add data/next-articles-queue.json 2>/dev/null || true
+          git add data/article-recommendations.json 2>/dev/null || true
+          git add data/roi-optimized-queue.json 2>/dev/null || true
+          git add data/competitor-report.json 2>/dev/null || true
+          git add data/competitor-state.json 2>/dev/null || true
+          git add data/lifecycle-states.json 2>/dev/null || true
+          git add data/seasonal-forecast.json 2>/dev/null || true
+          git add data/score-history/ 2>/dev/null || true
+          git add data/auto-executor-log.json 2>/dev/null || true
 
           # Only commit if there are staged changes
           git diff --cached --quiet || {

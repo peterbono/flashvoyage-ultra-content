@@ -1,0 +1,17 @@
+{
+  "summary": {
+    "generatedAt": "2026-03-31T12:29:03.874Z",
+    "elapsedSeconds": 15,
+    "totalArticles": 0,
+    "articlesWithRecommendations": 0,
+    "totalRecommendations": 0,
+    "byPriority": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 0
+    },
+    "byType": {},
+    "topActions": []
+  },
+  "articles": []
+}
