@@ -11,7 +11,7 @@
  */
 
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -284,6 +284,206 @@ export async function fetchSiteSummary(days = 7) {
   };
 }
 
+// ── Audience Segments ──────────────────────────────────────────────────────
+
+/**
+ * Fetch audience segment data from GA4.
+ * Runs 6 GA4 Data API queries in parallel to build a complete audience profile.
+ *
+ * The day/hour breakdown is critical for the smart-scheduler: it tells us
+ * when OUR specific audience is active, replacing generic Paris-timezone defaults.
+ *
+ * @param {number} days - Lookback window (default 30)
+ * @returns {Promise<{
+ *   byCountry: Array<{country: string, sessions: number, percentage: number}>,
+ *   byDevice: Array<{device: string, sessions: number, percentage: number}>,
+ *   byChannel: Array<{channel: string, sessions: number, engagedRate: number}>,
+ *   newVsReturning: {new: number, returning: number, returningRate: number},
+ *   byDayOfWeek: Array<{day: string, sessions: number}>,
+ *   byHour: Array<{hour: string, sessions: number}>
+ * }>}
+ */
+export async function fetchAudienceSegments(days = 30) {
+  const client = createClient();
+  const dateRange = {
+    startDate: daysAgoStr(days),
+    endDate: 'today',
+  };
+
+  log(`Fetching audience segments for the last ${days} days...`);
+
+  // Run all 6 queries in parallel for speed
+  const [
+    countryRes,
+    deviceRes,
+    channelRes,
+    newRetRes,
+    dayRes,
+    hourRes,
+  ] = await Promise.all([
+    // 1. By country
+    client.runReport({
+      property: `properties/${GA4_PROPERTY}`,
+      dateRanges: [dateRange],
+      dimensions: [{ name: 'country' }],
+      metrics: [
+        { name: 'sessions' },
+        { name: 'engagedSessions' },
+      ],
+      orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+      limit: 20,
+    }),
+    // 2. By device category
+    client.runReport({
+      property: `properties/${GA4_PROPERTY}`,
+      dateRanges: [dateRange],
+      dimensions: [{ name: 'deviceCategory' }],
+      metrics: [{ name: 'sessions' }],
+      orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+    }),
+    // 3. By channel group
+    client.runReport({
+      property: `properties/${GA4_PROPERTY}`,
+      dateRanges: [dateRange],
+      dimensions: [{ name: 'sessionDefaultChannelGroup' }],
+      metrics: [
+        { name: 'sessions' },
+        { name: 'engagedSessions' },
+      ],
+      orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+    }),
+    // 4. New vs returning users
+    client.runReport({
+      property: `properties/${GA4_PROPERTY}`,
+      dateRanges: [dateRange],
+      dimensions: [{ name: 'newVsReturning' }],
+      metrics: [{ name: 'sessions' }],
+    }),
+    // 5. By day of week (0=Sunday, 6=Saturday in GA4)
+    client.runReport({
+      property: `properties/${GA4_PROPERTY}`,
+      dateRanges: [dateRange],
+      dimensions: [{ name: 'dayOfWeek' }],
+      metrics: [{ name: 'sessions' }],
+      orderBys: [{ dimension: { dimensionName: 'dayOfWeek' } }],
+    }),
+    // 6. By hour of day (00-23)
+    client.runReport({
+      property: `properties/${GA4_PROPERTY}`,
+      dateRanges: [dateRange],
+      dimensions: [{ name: 'hour' }],
+      metrics: [{ name: 'sessions' }],
+      orderBys: [{ dimension: { dimensionName: 'hour' } }],
+    }),
+  ]);
+
+  // ── Parse results ──
+
+  // Country
+  const countryRows = countryRes[0].rows ?? [];
+  const countryTotalSessions = countryRows.reduce((s, r) => s + (parseInt(r.metricValues[0].value, 10) || 0), 0);
+  const byCountry = countryRows.map(row => {
+    const sessions = parseInt(row.metricValues[0].value, 10) || 0;
+    return {
+      country: row.dimensionValues[0].value,
+      sessions,
+      percentage: countryTotalSessions > 0
+        ? Math.round((sessions / countryTotalSessions) * 10000) / 100
+        : 0,
+    };
+  });
+
+  // Device
+  const deviceRows = deviceRes[0].rows ?? [];
+  const deviceTotalSessions = deviceRows.reduce((s, r) => s + (parseInt(r.metricValues[0].value, 10) || 0), 0);
+  const byDevice = deviceRows.map(row => {
+    const sessions = parseInt(row.metricValues[0].value, 10) || 0;
+    return {
+      device: row.dimensionValues[0].value,
+      sessions,
+      percentage: deviceTotalSessions > 0
+        ? Math.round((sessions / deviceTotalSessions) * 10000) / 100
+        : 0,
+    };
+  });
+
+  // Channel
+  const channelRows = channelRes[0].rows ?? [];
+  const byChannel = channelRows.map(row => {
+    const sessions = parseInt(row.metricValues[0].value, 10) || 0;
+    const engaged = parseInt(row.metricValues[1].value, 10) || 0;
+    return {
+      channel: row.dimensionValues[0].value,
+      sessions,
+      engagedRate: sessions > 0
+        ? Math.round((engaged / sessions) * 10000) / 100
+        : 0,
+    };
+  });
+
+  // New vs Returning
+  const nrRows = newRetRes[0].rows ?? [];
+  let newSessions = 0;
+  let returningSessions = 0;
+  for (const row of nrRows) {
+    const val = parseInt(row.metricValues[0].value, 10) || 0;
+    const type = row.dimensionValues[0].value.toLowerCase();
+    if (type === 'new') newSessions = val;
+    else if (type === 'returning') returningSessions = val;
+  }
+  const totalNR = newSessions + returningSessions;
+  const newVsReturning = {
+    new: newSessions,
+    returning: returningSessions,
+    returningRate: totalNR > 0
+      ? Math.round((returningSessions / totalNR) * 10000) / 100
+      : 0,
+  };
+
+  // Day of week — GA4 uses 0=Sunday through 6=Saturday
+  const DAY_NAMES = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+  const dayRows = dayRes[0].rows ?? [];
+  const byDayOfWeek = dayRows.map(row => ({
+    day: DAY_NAMES[parseInt(row.dimensionValues[0].value, 10)] || row.dimensionValues[0].value,
+    sessions: parseInt(row.metricValues[0].value, 10) || 0,
+  }));
+
+  // Hour
+  const hourRows = hourRes[0].rows ?? [];
+  const byHour = hourRows.map(row => ({
+    hour: row.dimensionValues[0].value.padStart(2, '0'),
+    sessions: parseInt(row.metricValues[0].value, 10) || 0,
+  }));
+
+  const result = {
+    fetchedAt: new Date().toISOString(),
+    days,
+    byCountry,
+    byDevice,
+    byChannel,
+    newVsReturning,
+    byDayOfWeek,
+    byHour,
+  };
+
+  log(`Audience segments: ${byCountry.length} countries, ${byDevice.length} devices, ${byChannel.length} channels`);
+  log(`Top country: ${byCountry[0]?.country || 'N/A'} (${byCountry[0]?.percentage || 0}%)`);
+  log(`New: ${newSessions}, Returning: ${returningSessions} (${newVsReturning.returningRate}%)`);
+
+  // Write output to data/audience-segments.json
+  const dataDir = join(__dirname, '..', 'data');
+  const outputPath = join(dataDir, 'audience-segments.json');
+  try {
+    if (!existsSync(dataDir)) mkdirSync(dataDir, { recursive: true });
+    writeFileSync(outputPath, JSON.stringify(result, null, 2), 'utf-8');
+    log(`Audience segments written to ${outputPath}`);
+  } catch (writeErr) {
+    logError(`Failed to write audience segments: ${writeErr.message}`);
+  }
+
+  return result;
+}
+
 // ── CLI mode ────────────────────────────────────────────────────────────────
 
 if (process.argv[1] && process.argv[1].includes('ga4-fetcher')) {
@@ -310,8 +510,13 @@ if (process.argv[1] && process.argv[1].includes('ga4-fetcher')) {
           console.log(JSON.stringify(summary, null, 2));
           break;
         }
+        case 'audience': {
+          const segments = await fetchAudienceSegments(days);
+          console.log(JSON.stringify(segments, null, 2));
+          break;
+        }
         default:
-          console.log('Usage: node ga4-fetcher.js [top|sources|summary] [days]');
+          console.log('Usage: node ga4-fetcher.js [top|sources|summary|audience] [days]');
       }
     } catch (err) {
       logError(err.message);
