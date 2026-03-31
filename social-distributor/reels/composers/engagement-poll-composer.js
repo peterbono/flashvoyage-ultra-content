@@ -16,6 +16,7 @@ import { renderTemplate } from '../core/overlay-renderer.js';
 import { prepareClip, loopClip } from '../core/clip-preparer.js';
 import { fetchPexelsVideo, downloadVideo, pickMusicTrack } from '../asset-fetcher.js';
 import { generatePollScript } from '../data/generators/engagement-poll.js';
+import { flushCosts } from '../cost-tracker.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TMP_DIR = join(__dirname, '..', 'tmp');
@@ -216,6 +217,8 @@ export async function generatePollReelFromArticle(article, opts = {}) {
 
   const videoPath = await composePollReel(script, opts);
   console.log(`[REEL/POLL] Poll reel complete: ${videoPath}`);
+
+  flushCosts({ format: 'engagement-poll', destination: script.question || 'unknown' });
 
   return { videoPath, script };
 }

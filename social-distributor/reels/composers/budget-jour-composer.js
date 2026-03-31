@@ -17,6 +17,7 @@ import { renderTemplate } from '../core/overlay-renderer.js';
 import { prepareClip, concatClips } from '../core/clip-preparer.js';
 import { fetchPexelsVideo, downloadVideo, pickMusicTrack } from '../asset-fetcher.js';
 import { generateBudgetJourScript } from '../data/generators/budget-jour.js';
+import { flushCosts } from '../cost-tracker.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TMP_DIR = join(__dirname, '..', 'tmp');
@@ -387,5 +388,8 @@ export async function generateBudgetJourReelFromArticle(article, opts = {}) {
   const videoPath = await composeBudgetJourReel(script, opts);
 
   console.log(`[REEL/BUDGET] Budget Jour reel generated: ${videoPath}`);
+
+  flushCosts({ format: 'budget-jour', destination: script.destination || 'unknown' });
+
   return { videoPath, script };
 }

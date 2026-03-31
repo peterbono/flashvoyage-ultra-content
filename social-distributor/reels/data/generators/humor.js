@@ -12,7 +12,7 @@
  *       ~$0.008 per joke (creative path = 2 Haiku calls)
  */
 
-import Anthropic from '@anthropic-ai/sdk';
+import { createTrackedClient } from '../../tracked-anthropic.js';
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -25,7 +25,7 @@ let _client = null;
 function getClient() {
   if (_client) return _client;
   if (!process.env.ANTHROPIC_API_KEY) return null;
-  _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  _client = createTrackedClient('humor-generator');
   return _client;
 }
 

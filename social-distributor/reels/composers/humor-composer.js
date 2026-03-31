@@ -13,6 +13,7 @@ import { renderTemplate } from '../core/overlay-renderer.js';
 import { prepareClip, loopClip } from '../core/clip-preparer.js';
 import { fetchPexelsVideo, downloadVideo, pickMusicTrack } from '../asset-fetcher.js';
 import { generateHumorScript } from '../data/generators/humor.js';
+import { flushCosts } from '../cost-tracker.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TMP_DIR = join(__dirname, '..', 'tmp');
@@ -152,6 +153,8 @@ export async function generateHumorReelFromArticle(article, opts = {}) {
   // Step 2: Compose the reel
   const videoPath = await composeHumorReel(script, opts);
   console.log(`[REEL/HUMOR] Humor reel complete: ${videoPath}`);
+
+  flushCosts({ format: 'humor', destination: script.situation || 'unknown' });
 
   return { videoPath, script };
 }

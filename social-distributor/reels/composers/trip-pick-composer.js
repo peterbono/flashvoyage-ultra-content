@@ -18,6 +18,7 @@ import { prepareClip, concatClips } from '../core/clip-preparer.js';
 import { fetchPexelsVideoBatch } from '../listicle-asset-fetcher.js';
 import { pickMusicTrack } from '../asset-fetcher.js';
 import { generateTripPickScript } from '../data/generators/trip-pick.js';
+import { flushCosts } from '../cost-tracker.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TMP_DIR = join(__dirname, '..', 'tmp');
@@ -323,5 +324,8 @@ export async function generateTripPickReelFromArticle(article, opts = {}) {
   const videoPath = await composeTripPickReel(script, opts);
 
   console.log(`[REEL/PICK] Trip Pick reel generated: ${videoPath}`);
+
+  flushCosts({ format: 'trip-pick', destination: script.country || 'unknown' });
+
   return { videoPath, script };
 }

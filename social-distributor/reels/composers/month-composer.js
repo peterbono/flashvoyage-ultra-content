@@ -20,6 +20,7 @@ import { prepareClip, concatClips } from '../core/clip-preparer.js';
 import { fetchPexelsVideoBatch } from '../listicle-asset-fetcher.js';
 import { pickMusicTrack } from '../asset-fetcher.js';
 import { generateMonthScript } from '../data/generators/month-destinations.js';
+import { flushCosts } from '../cost-tracker.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TMP_DIR = join(__dirname, '..', 'tmp');
@@ -420,5 +421,8 @@ export async function generateMonthReelFromArticle(article, opts = {}) {
   const videoPath = await composeMonthReel(script, opts);
 
   console.log(`[REEL/MONTH] Month reel generated: ${videoPath}`);
+
+  flushCosts({ format: 'month-destinations', destination: script.month || 'unknown' });
+
   return { videoPath, script };
 }

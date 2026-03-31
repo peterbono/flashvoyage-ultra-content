@@ -22,6 +22,7 @@ import { renderTemplate } from '../core/overlay-renderer.js';
 import { prepareClip, loopClip } from '../core/clip-preparer.js';
 import { fetchPexelsVideo, downloadVideo, pickMusicTrack } from '../asset-fetcher.js';
 import { generateHumorScript } from '../data/generators/humor.js';
+import { flushCosts } from '../cost-tracker.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TMP_DIR = join(__dirname, '..', 'tmp');
@@ -232,6 +233,8 @@ export async function generateTweetHumorReelFromArticle(article, opts = {}) {
   // Step 2: Compose the reel with tweet-style layout
   const videoPath = await composeTweetHumorReel(script, opts);
   console.log(`[REEL/HUMOR-TWEET] Tweet-style humor reel complete: ${videoPath}`);
+
+  flushCosts({ format: 'humor-tweet', destination: script.situation || 'unknown' });
 
   return { videoPath, script };
 }

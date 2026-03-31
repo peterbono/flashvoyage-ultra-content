@@ -20,6 +20,7 @@ import { renderTemplate } from '../core/overlay-renderer.js';
 import { prepareClip, loopClip, concatClips } from '../core/clip-preparer.js';
 import { fetchPexelsVideo, downloadVideo, pickMusicTrack } from '../asset-fetcher.js';
 import { generateVersusScript } from '../data/generators/versus.js';
+import { flushCosts } from '../cost-tracker.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TMP_DIR = join(__dirname, '..', 'tmp');
@@ -417,5 +418,8 @@ export async function generateVersusReelFromArticle(article, opts = {}) {
   const videoPath = await composeVersusReel(script, opts);
 
   console.log(`[REEL/VERSUS] Versus reel generated: ${videoPath}`);
+
+  flushCosts({ format: 'versus', destination: `${script.destA?.name || 'unknown'} vs ${script.destB?.name || 'unknown'}` });
+
   return { videoPath, script };
 }

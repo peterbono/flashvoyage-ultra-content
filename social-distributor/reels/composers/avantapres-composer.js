@@ -18,6 +18,7 @@ import { renderTemplate } from '../core/overlay-renderer.js';
 import { prepareClip, concatClips } from '../core/clip-preparer.js';
 import { fetchPexelsVideo, downloadVideo, pickMusicTrack } from '../asset-fetcher.js';
 import { generateAvantApresScript } from '../data/generators/avantapres.js';
+import { flushCosts } from '../cost-tracker.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TMP_DIR = join(__dirname, '..', 'tmp');
@@ -294,5 +295,8 @@ export async function generateAvantApresReelFromArticle(article, opts = {}) {
   const videoPath = await composeAvantApresReel(script, opts);
 
   console.log(`[REEL/AVANTAPRES] Avant/Apres reel generated: ${videoPath}`);
+
+  flushCosts({ format: 'avantapres', destination: script.destination || 'unknown' });
+
   return { videoPath, script };
 }

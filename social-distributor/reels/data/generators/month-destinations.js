@@ -19,7 +19,7 @@
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import Anthropic from '@anthropic-ai/sdk';
+import { createTrackedClient } from '../../tracked-anthropic.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_PATH = join(__dirname, '..', 'month-destinations.json');
@@ -30,7 +30,7 @@ let _client = null;
 function getClient() {
   if (_client) return _client;
   if (!process.env.ANTHROPIC_API_KEY) return null;
-  _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  _client = createTrackedClient('month-generator');
   return _client;
 }
 

@@ -15,7 +15,7 @@
  * }
  */
 
-import Anthropic from '@anthropic-ai/sdk';
+import { createTrackedClient } from '../../tracked-anthropic.js';
 
 // ── Lazy Anthropic client ───────────────────────────────────────────────────
 
@@ -23,7 +23,7 @@ let _client = null;
 function getClient() {
   if (_client) return _client;
   if (!process.env.ANTHROPIC_API_KEY) return null;
-  _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  _client = createTrackedClient('versus-generator');
   return _client;
 }
 
