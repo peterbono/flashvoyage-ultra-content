@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-31T12:28:28.105Z",
+  "timestamp": "2026-03-31T12:35:28.158Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -30,31 +30,14 @@
       "wordCount": 2099
     },
     {
-      "wpId": 4254,
-      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
-      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
-      "compositeScore": 40,
-      "signals": {
-        "traffic": 0.22,
-        "sessionQuality": 0.03,
-        "trendAlignment": 0.41,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 1
-      },
-      "flags": [],
-      "date": "2026-03-23T12:02:05",
-      "wordCount": 4065
-    },
-    {
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
-      "compositeScore": 40,
+      "compositeScore": 41,
       "signals": {
         "traffic": 0.22,
         "sessionQuality": 0.03,
-        "trendAlignment": 0.41,
+        "trendAlignment": 0.47,
         "reelAmplification": 0,
         "freshness": 1,
         "monetization": 1
@@ -98,21 +81,21 @@
       "wordCount": 2231
     },
     {
-      "wpId": 3410,
-      "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
-      "title": "Laos solo : 2 risques que les blogs voyage cachent aux femmes seules",
+      "wpId": 4254,
+      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
       "compositeScore": 39,
       "signals": {
         "traffic": 0.22,
-        "sessionQuality": 1,
+        "sessionQuality": 0.03,
         "trendAlignment": 0.35,
         "reelAmplification": 0,
         "freshness": 1,
-        "monetization": 0
+        "monetization": 1
       },
       "flags": [],
-      "date": "2026-03-14T19:48:33",
-      "wordCount": 4112
+      "date": "2026-03-23T12:02:05",
+      "wordCount": 4065
     },
     {
       "wpId": 4373,
@@ -130,6 +113,23 @@
       "flags": [],
       "date": "2026-03-23T13:20:52",
       "wordCount": 4139
+    },
+    {
+      "wpId": 3410,
+      "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
+      "title": "Laos solo : 2 risques que les blogs voyage cachent aux femmes seules",
+      "compositeScore": 36,
+      "signals": {
+        "traffic": 0.22,
+        "sessionQuality": 1,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0
+      },
+      "flags": [],
+      "date": "2026-03-14T19:48:33",
+      "wordCount": 4112
     },
     {
       "wpId": 4371,
@@ -183,25 +183,6 @@
       "wordCount": 2846
     },
     {
-      "wpId": 4087,
-      "slug": "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas",
-      "title": "Thaïlande : 2 pièges cachés que les blogs voyage ne te disent pas",
-      "compositeScore": 24,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.47,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-03-18T11:08:26",
-      "wordCount": 4674
-    },
-    {
       "wpId": 4105,
       "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
       "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
@@ -253,6 +234,25 @@
       "wordCount": 5071
     },
     {
+      "wpId": 4087,
+      "slug": "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas",
+      "title": "Thaïlande : 2 pièges cachés que les blogs voyage ne te disent pas",
+      "compositeScore": 22,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.35,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-18T11:08:26",
+      "wordCount": 4674
+    },
+    {
       "wpId": 3107,
       "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
       "title": "Optimiser son Visa de Nomade Digital en Asie du Sud-Est : Stratégies et Écueils",
@@ -268,25 +268,6 @@
       "flags": [],
       "date": "2026-03-04T19:51:24",
       "wordCount": 1440
-    },
-    {
-      "wpId": 3501,
-      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
-      "title": "Ce que Thaïlande m&rsquo;a coûté (et que les blogs ne montrent pas)",
-      "compositeScore": 21,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.31,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-03-15T16:05:18",
-      "wordCount": 5576
     },
     {
       "wpId": 4121,
@@ -346,6 +327,25 @@
       "wordCount": 3721
     },
     {
+      "wpId": 3501,
+      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "title": "Ce que Thaïlande m&rsquo;a coûté (et que les blogs ne montrent pas)",
+      "compositeScore": 19,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.18,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-15T16:05:18",
+      "wordCount": 5576
+    },
+    {
       "wpId": 3425,
       "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
       "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
@@ -361,6 +361,25 @@
       "flags": [],
       "date": "2026-03-14T20:55:07",
       "wordCount": 4928
+    },
+    {
+      "wpId": 3254,
+      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
+      "compositeScore": 19,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.18,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-11T20:13:21",
+      "wordCount": 3486
     },
     {
       "wpId": 3198,
@@ -389,7 +408,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.98,
         "monetization": 0
       },
       "flags": [],
@@ -452,25 +471,6 @@
       ],
       "date": "2026-03-15T17:06:07",
       "wordCount": 4396
-    },
-    {
-      "wpId": 3254,
-      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
-      "compositeScore": 15,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-03-11T20:13:21",
-      "wordCount": 3486
     },
     {
       "wpId": 3222,
