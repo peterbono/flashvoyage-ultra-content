@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-31T12:28:48.767Z",
+  "timestamp": "2026-04-01T05:29:58.144Z",
   "queueSize": 13,
   "queue": [
     {
@@ -59,6 +59,86 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
+      "topic": "Japon solo à 27 ans : les 2 pièges que les guides cachent sur les singletrip",
+      "articleType": "support",
+      "context": {
+        "wpId": 4117,
+        "slug": "japon-solo-a-27-ans-les-2-pieges-que-les-guides-cachent-sur-les-singletrip",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Thaïlande : 6 pièges financiers que les blogs cachent aux voyageurs",
+      "articleType": "support",
+      "context": {
+        "wpId": 4081,
+        "slug": "thailande-6-pieges-financiers-que-les-blogs-cachent-aux-voyageurs",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Thaïlande mai : 2 pièges que les blogs cachent aux voyageurs solo",
+      "articleType": "support",
+      "context": {
+        "wpId": 4066,
+        "slug": "thailande-mai-2-pieges-que-les-blogs-cachent-aux-voyageurs-solo",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
+      "articleType": "support",
+      "context": {
+        "wpId": 4058,
+        "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Japon en solo : 3 pièges que les blogs cachent (et comment les éviter)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4037,
+        "slug": "japon-en-solo-3-pieges-que-les-blogs-cachent-et-comment-les-eviter",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
       "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
@@ -71,95 +151,15 @@
       }
     },
     {
-      "rank": 6,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
-      "articleType": "support",
-      "context": {
-        "wpId": 3546,
-        "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
-        "compositeScore": 15,
-        "freshness": 1,
-        "traffic": 0,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 7,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 15,
-        "freshness": 1,
-        "traffic": 0,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 8,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "3 jours à Singapour : optimiser son itinéraire sans sacrifier les expériences essentielles",
-      "articleType": "support",
-      "context": {
-        "wpId": 3222,
-        "slug": "3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles",
-        "compositeScore": 15,
-        "freshness": 1,
-        "traffic": 0,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
-      "articleType": "support",
-      "context": {
-        "wpId": 3065,
-        "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
-        "compositeScore": 15,
-        "freshness": 1,
-        "traffic": 0,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
-      "articleType": "support",
-      "context": {
-        "wpId": 3056,
-        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
-        "compositeScore": 15,
-        "freshness": 1,
-        "traffic": 0,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      }
-    },
-    {
       "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
+      "topic": "Japon en lune de miel : pourquoi votre itinéraire classique vous fera rater l&rsquo;essentiel",
       "articleType": "support",
       "context": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "wpId": 4019,
+        "slug": "japon-en-lune-de-miel-pourquoi-votre-itineraire-classique-vous-fera-rater-lessentiel",
         "compositeScore": 15,
         "freshness": 1,
         "traffic": 0,
@@ -171,13 +171,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "Choisir Entre Taipei et Kuala Lumpur : Un Itinéraire de 4 Jours Qui Compte",
+      "topic": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver (mars 2026)",
       "articleType": "support",
       "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "wpId": 4013,
+        "slug": "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver-mars-2026",
         "compositeScore": 15,
-        "freshness": 0.98,
+        "freshness": 1,
         "traffic": 0,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
@@ -187,13 +187,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "Voyager au Japon : Quand voir les cerisiers sans la foule",
+      "topic": "Japon 14 jours : les 10 frais cachés qui explosent ton budget",
       "articleType": "support",
       "context": {
-        "wpId": 2857,
-        "slug": "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2",
+        "wpId": 4004,
+        "slug": "japon-14-jours-les-10-frais-caches-qui-explosent-ton-budget",
         "compositeScore": 15,
-        "freshness": 0.97,
+        "freshness": 1,
         "traffic": 0,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }

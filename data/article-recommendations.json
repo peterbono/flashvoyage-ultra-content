@@ -1,17 +1,3360 @@
 {
   "summary": {
-    "generatedAt": "2026-03-31T12:29:03.874Z",
-    "elapsedSeconds": 15,
-    "totalArticles": 0,
-    "articlesWithRecommendations": 0,
-    "totalRecommendations": 0,
+    "generatedAt": "2026-04-01T05:30:10.232Z",
+    "elapsedSeconds": 11,
+    "totalArticles": 114,
+    "articlesWithRecommendations": 7,
+    "totalRecommendations": 7,
     "byPriority": {
       "P0": 0,
       "P1": 0,
-      "P2": 0
+      "P2": 7
     },
-    "byType": {},
-    "topActions": []
+    "byType": {
+      "seo": 7
+    },
+    "topActions": [
+      {
+        "action": "ADD_FAQ_SCHEMA",
+        "count": 7
+      }
+    ]
   },
-  "articles": []
+  "articles": [
+    {
+      "wpId": 4372,
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines : Globe vs Smart, le comparatif que personne ne fait en français",
+      "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
+      "wordCount": 2252,
+      "widgetCount": 3,
+      "internalLinks": 38,
+      "lastModified": "2026-03-31T18:06:24",
+      "ga4": {
+        "pageviews": 11,
+        "sessions": 8,
+        "avgDuration": 304
+      },
+      "gsc": {
+        "impressions": 12,
+        "clicks": 1,
+        "position": 5.9,
+        "topQueries": [
+          {
+            "query": "philippines globe",
+            "position": 7,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"philippines globe\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"philippines globe\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4250,
+      "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
+      "title": "eSIM Vietnam : le comparatif que les blogs ne font jamais (et les frais cachés)",
+      "url": "https://flashvoyage.com/esim-vietnam-comparatif-forfait-2026-frais-caches/",
+      "wordCount": 3327,
+      "widgetCount": 3,
+      "internalLinks": 38,
+      "lastModified": "2026-03-31T18:06:52",
+      "ga4": {
+        "pageviews": 10,
+        "sessions": 10,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4373,
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
+      "wordCount": 4299,
+      "widgetCount": 2,
+      "internalLinks": 41,
+      "lastModified": "2026-03-31T18:35:03",
+      "ga4": {
+        "pageviews": 7,
+        "sessions": 7,
+        "avgDuration": 9
+      },
+      "gsc": {
+        "impressions": 4,
+        "clicks": 0,
+        "position": 6,
+        "topQueries": [
+          {
+            "query": "\"tokyo tokyo\" \"gyudon\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
+            "position": 10,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"\"tokyo tokyo\" \"gyudon\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"\"tokyo tokyo\" \"gyudon\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4370,
+      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+      "title": "Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent",
+      "url": "https://flashvoyage.com/bali-lombok-gili-10-jours-itineraire-budget-2026/",
+      "wordCount": 3521,
+      "widgetCount": 3,
+      "internalLinks": 40,
+      "lastModified": "2026-03-31T18:35:07",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 4,
+        "avgDuration": 19
+      },
+      "gsc": {
+        "impressions": 10,
+        "clicks": 1,
+        "position": 6,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3182,
+      "slug": "vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser",
+      "title": "Vaccin contre la rage pour un périple en Asie du Sud-Est : Faut-il vraiment dépenser ?",
+      "url": "https://flashvoyage.com/vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser/",
+      "wordCount": 2379,
+      "widgetCount": 0,
+      "internalLinks": 27,
+      "lastModified": "2026-03-31T17:40:15",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 3,
+        "avgDuration": 260
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4369,
+      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "url": "https://flashvoyage.com/visa-cambodge-francais-2026-evisa-prix-pieges/",
+      "wordCount": 2366,
+      "widgetCount": 3,
+      "internalLinks": 43,
+      "lastModified": "2026-03-31T18:06:34",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 11
+      },
+      "gsc": {
+        "impressions": 16,
+        "clicks": 0,
+        "position": 5.9,
+        "topQueries": [
+          {
+            "query": "prix visa cambodge 2026",
+            "position": 4.5,
+            "impressions": 2,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"prix visa cambodge 2026\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"prix visa cambodge 2026\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4253,
+      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "url": "https://flashvoyage.com/esim-thailande-comparatif-ais-dtac-true-2026/",
+      "wordCount": 3382,
+      "widgetCount": 3,
+      "internalLinks": 38,
+      "lastModified": "2026-03-31T18:06:42",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 2
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2223,
+      "widgetCount": 4,
+      "internalLinks": 35,
+      "lastModified": "2026-03-31T18:09:19",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 1,
+        "avgDuration": 166
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4371,
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
+      "wordCount": 3280,
+      "widgetCount": 3,
+      "internalLinks": 39,
+      "lastModified": "2026-03-31T18:06:29",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 3,
+        "clicks": 0,
+        "position": 6,
+        "topQueries": [
+          {
+            "query": "10 jours aux philippines",
+            "position": 4,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"10 jours aux philippines\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"10 jours aux philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4255,
+      "slug": "cambodge-ou-laos-lequel-choisir-2-semaines-budget",
+      "title": "Cambodge ou Laos : le choix que tu dois faire (et ce que chaque option te coûte vraiment)",
+      "url": "https://flashvoyage.com/cambodge-ou-laos-lequel-choisir-2-semaines-budget/",
+      "wordCount": 3675,
+      "widgetCount": 3,
+      "internalLinks": 39,
+      "lastModified": "2026-03-31T18:06:38",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 32
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4254,
+      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
+      "url": "https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/",
+      "wordCount": 4229,
+      "widgetCount": 3,
+      "internalLinks": 36,
+      "lastModified": "2026-03-31T18:35:09",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 18
+      },
+      "gsc": {
+        "impressions": 26,
+        "clicks": 1,
+        "position": 7,
+        "topQueries": [
+          {
+            "query": "bali c'est en thailande",
+            "position": 9.5,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "\"bali belly\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
+            "position": 1,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "bali thailande",
+            "position": 10,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"bali c'est en thailande\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali c'est en thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4252,
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
+      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
+      "wordCount": 4306,
+      "widgetCount": 3,
+      "internalLinks": 46,
+      "lastModified": "2026-03-31T18:35:12",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 21
+      },
+      "gsc": {
+        "impressions": 53,
+        "clicks": 0,
+        "position": 16.5,
+        "topQueries": [
+          {
+            "query": "assurance voyage vietnam",
+            "position": 48.2,
+            "impressions": 6,
+            "ctr": 0
+          },
+          {
+            "query": "attestation assurance vietnam",
+            "position": 69.7,
+            "impressions": 3,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3550,
+      "slug": "japon-les-2-pieges-que-les-guides-cachent-aux-backpackers",
+      "title": "Japon : les 2 pièges que les guides cachent aux backpackers",
+      "url": "https://flashvoyage.com/japon-les-2-pieges-que-les-guides-cachent-aux-backpackers/",
+      "wordCount": 2721,
+      "widgetCount": 0,
+      "internalLinks": 30,
+      "lastModified": "2026-03-31T17:38:57",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 78
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3546,
+      "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
+      "url": "https://flashvoyage.com/indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient/",
+      "wordCount": 4459,
+      "widgetCount": 0,
+      "internalLinks": 28,
+      "lastModified": "2026-03-31T18:35:38",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 1,
+        "avgDuration": 2387
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3410,
+      "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
+      "title": "Laos solo : 2 risques que les blogs voyage cachent aux femmes seules",
+      "url": "https://flashvoyage.com/laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules/",
+      "wordCount": 4173,
+      "widgetCount": 0,
+      "internalLinks": 38,
+      "lastModified": "2026-03-31T17:39:37",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 1,
+        "avgDuration": 719
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3264,
+      "slug": "voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite",
+      "title": "Voyager 2 semaines en Thaïlande : arbitrer entre Bangkok, Chiang Mai et Krabi sans sacrifier l&rsquo;authenticité",
+      "url": "https://flashvoyage.com/voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite/",
+      "wordCount": 3457,
+      "widgetCount": 0,
+      "internalLinks": 40,
+      "lastModified": "2026-03-31T17:46:03",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 3,
+        "avgDuration": 11
+      },
+      "gsc": {
+        "impressions": 3,
+        "clicks": 0,
+        "position": 5.3,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3259,
+      "slug": "budget-2-200-e-en-thailande-5-arbitrages-caches-qui-peuvent-te-ruiner",
+      "title": "Budget 2 200 € en Thaïlande : 5 arbitrages cachés qui peuvent te ruiner",
+      "url": "https://flashvoyage.com/budget-2-200-e-en-thailande-5-arbitrages-caches-qui-peuvent-te-ruiner/",
+      "wordCount": 3214,
+      "widgetCount": 0,
+      "internalLinks": 34,
+      "lastModified": "2026-03-31T18:09:25",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 34
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3122,
+      "slug": "budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations",
+      "title": "Budget Réel pour Vivre à Koh Lanta : Dépenses et Optimisations",
+      "url": "https://flashvoyage.com/budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations/",
+      "wordCount": 1062,
+      "widgetCount": 0,
+      "internalLinks": 26,
+      "lastModified": "2026-03-31T17:40:31",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3107,
+      "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+      "title": "Optimiser son Visa de Nomade Digital en Asie du Sud-Est : Stratégies et Écueils",
+      "url": "https://flashvoyage.com/optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils/",
+      "wordCount": 1541,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-03-31T17:40:37",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 1,
+        "avgDuration": 17
+      },
+      "gsc": {
+        "impressions": 7,
+        "clicks": 0,
+        "position": 6.7,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3040,
+      "slug": "planifier-un-voyage-au-japon-comment-optimiser-chaque-journee",
+      "title": "Planifier un voyage au Japon : Comment optimiser chaque journée",
+      "url": "https://flashvoyage.com/planifier-un-voyage-au-japon-comment-optimiser-chaque-journee/",
+      "wordCount": 1081,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-03-31T17:40:59",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 7
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3032,
+      "slug": "japon-comment-arbitrer-entre-experiences-incontournables-et-logistique",
+      "title": "Japon : Comment Arbitrer Entre Expériences Incontournables et Logistique",
+      "url": "https://flashvoyage.com/japon-comment-arbitrer-entre-experiences-incontournables-et-logistique/",
+      "wordCount": 1010,
+      "widgetCount": 0,
+      "internalLinks": 13,
+      "lastModified": "2026-03-31T17:48:20",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 5
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3015,
+      "slug": "itineraire-vers-lindonesie-comment-bien-choisir-entre-valise-et-sac-a-dos",
+      "title": "Itinéraire vers l&rsquo;Indonésie : Comment Bien Choisir Entre Valise et Sac à Dos",
+      "url": "https://flashvoyage.com/itineraire-vers-lindonesie-comment-bien-choisir-entre-valise-et-sac-a-dos/",
+      "wordCount": 2872,
+      "widgetCount": 0,
+      "internalLinks": 26,
+      "lastModified": "2026-03-31T17:41:04",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 5
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2931,
+      "slug": "voyager-au-japon-comment-bien-choisir-son-itineraire-sans-regret",
+      "title": "Voyager au Japon : Comment bien choisir son itinéraire sans regret",
+      "url": "https://flashvoyage.com/voyager-au-japon-comment-bien-choisir-son-itineraire-sans-regret/",
+      "wordCount": 2380,
+      "widgetCount": 0,
+      "internalLinks": 15,
+      "lastModified": "2026-03-31T17:47:25",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 8
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2847,
+      "slug": "voyager-au-japon-comment-eviter-les-foule-et-voir-les-cerisiers",
+      "title": "Voyager au Japon : Comment Éviter les Foule et Voir les Cerisiers",
+      "url": "https://flashvoyage.com/voyager-au-japon-comment-eviter-les-foule-et-voir-les-cerisiers/",
+      "wordCount": 3043,
+      "widgetCount": 0,
+      "internalLinks": 14,
+      "lastModified": "2026-03-31T17:47:44",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2837,
+      "slug": "voyager-au-vietnam-avec-500-e-comment-optimiser-chaque-depense-2",
+      "title": "Voyager au Vietnam avec 500 € : Comment optimiser chaque dépense",
+      "url": "https://flashvoyage.com/voyager-au-vietnam-avec-500-e-comment-optimiser-chaque-depense-2/",
+      "wordCount": 1579,
+      "widgetCount": 0,
+      "internalLinks": 15,
+      "lastModified": "2026-03-31T17:47:47",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4138,
+      "slug": "thailande-choisir-entre-koh-samui-koh-chang-et-koh-lanta-cest-renoncer-a-quoi",
+      "title": "Thaïlande : choisir entre Koh Samui, Koh Chang et Koh Lanta, c&rsquo;est renoncer à quoi ?",
+      "url": "https://flashvoyage.com/thailande-choisir-entre-koh-samui-koh-chang-et-koh-lanta-cest-renoncer-a-quoi/",
+      "wordCount": 3775,
+      "widgetCount": 0,
+      "internalLinks": 35,
+      "lastModified": "2026-03-31T17:36:59",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 97
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4132,
+      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
+      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
+      "url": "https://flashvoyage.com/japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais/",
+      "wordCount": 5121,
+      "widgetCount": 0,
+      "internalLinks": 38,
+      "lastModified": "2026-03-31T18:35:15",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4105,
+      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "url": "https://flashvoyage.com/vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher/",
+      "wordCount": 4758,
+      "widgetCount": 0,
+      "internalLinks": 42,
+      "lastModified": "2026-03-31T18:35:24",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 4
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4095,
+      "slug": "vietnam-4-pieges-que-les-blogs-voyage-cachent-et-que-les-voyageurs-decouvrent-trop-tard",
+      "title": "Vietnam : 4 pièges que les blogs voyage cachent (et que les voyageurs découvrent trop tard)",
+      "url": "https://flashvoyage.com/vietnam-4-pieges-que-les-blogs-voyage-cachent-et-que-les-voyageurs-decouvrent-trop-tard/",
+      "wordCount": 2847,
+      "widgetCount": 0,
+      "internalLinks": 29,
+      "lastModified": "2026-03-31T18:35:27",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4010,
+      "slug": "pourquoi-personne-ne-te-previent-vraiment-sur-japon-guide-mars-2026",
+      "title": "Pourquoi personne ne te prévient vraiment sur Japon — Guide mars 2026",
+      "url": "https://flashvoyage.com/pourquoi-personne-ne-te-previent-vraiment-sur-japon-guide-mars-2026/",
+      "wordCount": 4181,
+      "widgetCount": 0,
+      "internalLinks": 41,
+      "lastModified": "2026-03-31T18:35:33",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 7
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3930,
+      "slug": "japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs-mars-2026",
+      "title": "Japon : la vérité que tu ne liras nulle part ailleurs (mars 2026)",
+      "url": "https://flashvoyage.com/japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs-mars-2026/",
+      "wordCount": 2638,
+      "widgetCount": 0,
+      "internalLinks": 24,
+      "lastModified": "2026-03-31T17:47:11",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 350
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3918,
+      "slug": "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas-mars-2026",
+      "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas) (mars 2026)",
+      "url": "https://flashvoyage.com/ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas-mars-2026/",
+      "wordCount": 2564,
+      "widgetCount": 0,
+      "internalLinks": 26,
+      "lastModified": "2026-03-31T17:38:31",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 2
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3504,
+      "slug": "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver",
+      "title": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver",
+      "url": "https://flashvoyage.com/thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver/",
+      "wordCount": 4266,
+      "widgetCount": 0,
+      "internalLinks": 29,
+      "lastModified": "2026-03-31T17:39:10",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 11
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3425,
+      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "url": "https://flashvoyage.com/coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis/",
+      "wordCount": 4983,
+      "widgetCount": 0,
+      "internalLinks": 49,
+      "lastModified": "2026-03-31T17:45:59",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 21
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3239,
+      "slug": "itineraire-en-indonesie-arbitrer-entre-ubud-nusa-penida-et-les-iles-gili-sans-sacrifier-ton-experience",
+      "title": "Itinéraire en Indonésie : arbitrer entre Ubud, Nusa Penida et les îles Gili sans sacrifier ton expérience",
+      "url": "https://flashvoyage.com/itineraire-en-indonesie-arbitrer-entre-ubud-nusa-penida-et-les-iles-gili-sans-sacrifier-ton-experience/",
+      "wordCount": 2846,
+      "widgetCount": 0,
+      "internalLinks": 36,
+      "lastModified": "2026-03-31T17:39:59",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 2,
+        "avgDuration": 38
+      },
+      "gsc": {
+        "impressions": 12,
+        "clicks": 0,
+        "position": 8.7,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3198,
+      "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+      "title": "Maratua vs Maldives pour une lune de miel : arbitrer entre authenticité et logistique",
+      "url": "https://flashvoyage.com/maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique/",
+      "wordCount": 3231,
+      "widgetCount": 0,
+      "internalLinks": 38,
+      "lastModified": "2026-03-31T17:40:12",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 2,
+        "avgDuration": 25
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3174,
+      "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
+      "title": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
+      "url": "https://flashvoyage.com/choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades/",
+      "wordCount": 1185,
+      "widgetCount": 0,
+      "internalLinks": 26,
+      "lastModified": "2026-03-31T17:40:17",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 33
+      },
+      "gsc": {
+        "impressions": 12,
+        "clicks": 0,
+        "position": 5.9,
+        "topQueries": [
+          {
+            "query": "bangkok ou chiang mai",
+            "position": 7,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "chiang mai ou bangkok",
+            "position": 6,
+            "impressions": 2,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"bangkok ou chiang mai\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bangkok ou chiang mai\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3159,
+      "slug": "vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques",
+      "title": "Vivre en Asie du Sud-Est avec 10 000 $ : Frais cachés et choix stratégiques",
+      "url": "https://flashvoyage.com/vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques/",
+      "wordCount": 1350,
+      "widgetCount": 0,
+      "internalLinks": 28,
+      "lastModified": "2026-03-31T17:40:23",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 2,
+        "avgDuration": 3
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3099,
+      "slug": "indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques",
+      "title": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques",
+      "url": "https://flashvoyage.com/indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques/",
+      "wordCount": 1954,
+      "widgetCount": 0,
+      "internalLinks": 27,
+      "lastModified": "2026-03-31T17:40:40",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 2,
+        "avgDuration": 3
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3090,
+      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
+      "wordCount": 1730,
+      "widgetCount": 0,
+      "internalLinks": 23,
+      "lastModified": "2026-03-31T18:35:46",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3024,
+      "slug": "visa-vietnam-lerreur-qui-ma-coute-cher-et-comment-leviter",
+      "title": "Visa Vietnam : L&rsquo;Erreur qui M&rsquo;a Coûté Cher et Comment L&rsquo;Éviter",
+      "url": "https://flashvoyage.com/visa-vietnam-lerreur-qui-ma-coute-cher-et-comment-leviter/",
+      "wordCount": 1206,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-03-31T17:41:01",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 2,
+        "avgDuration": 5
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2989,
+      "slug": "comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes",
+      "title": "Comment découvrir l&rsquo;Indonésie authentique : itinéraire, choix et découvertes",
+      "url": "https://flashvoyage.com/comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes/",
+      "wordCount": 2486,
+      "widgetCount": 0,
+      "internalLinks": 29,
+      "lastModified": "2026-03-31T17:41:07",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 25
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2924,
+      "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+      "title": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "url": "https://flashvoyage.com/malaisie-les-11-frais-caches-qui-font-exploser-ton-budget/",
+      "wordCount": 3062,
+      "widgetCount": 0,
+      "internalLinks": 26,
+      "lastModified": "2026-03-31T17:41:29",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4129,
+      "slug": "japon-5-risques-que-les-blogs-voyage-oublient-de-mentionner",
+      "title": "Japon : 5 risques que les blogs voyage oublient de mentionner",
+      "url": "https://flashvoyage.com/japon-5-risques-que-les-blogs-voyage-oublient-de-mentionner/",
+      "wordCount": 4725,
+      "widgetCount": 0,
+      "internalLinks": 37,
+      "lastModified": "2026-03-31T18:35:19",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4125,
+      "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
+      "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "url": "https://flashvoyage.com/hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe/",
+      "wordCount": 3370,
+      "widgetCount": 0,
+      "internalLinks": 29,
+      "lastModified": "2026-03-31T17:37:09",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4121,
+      "slug": "temoignage-voyage-retours-et-lecons-mars-2026",
+      "title": "Témoignage voyage: retours et leçons (mars 2026)",
+      "url": "https://flashvoyage.com/temoignage-voyage-retours-et-lecons-mars-2026/",
+      "wordCount": 1478,
+      "widgetCount": 0,
+      "internalLinks": 24,
+      "lastModified": "2026-03-31T17:37:12",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4117,
+      "slug": "japon-solo-a-27-ans-les-2-pieges-que-les-guides-cachent-sur-les-singletrip",
+      "title": "Japon solo à 27 ans : les 2 pièges que les guides cachent sur les singletrip",
+      "url": "https://flashvoyage.com/japon-solo-a-27-ans-les-2-pieges-que-les-guides-cachent-sur-les-singletrip/",
+      "wordCount": 3644,
+      "widgetCount": 0,
+      "internalLinks": 29,
+      "lastModified": "2026-03-31T18:35:22",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4110,
+      "slug": "vivre-en-couple-a-letranger-4-pieges-que-les-blogs-voyage-cachent",
+      "title": "Vivre en couple à l&rsquo;étranger : 4 pièges que les blogs voyage cachent",
+      "url": "https://flashvoyage.com/vivre-en-couple-a-letranger-4-pieges-que-les-blogs-voyage-cachent/",
+      "wordCount": 4484,
+      "widgetCount": 0,
+      "internalLinks": 41,
+      "lastModified": "2026-03-31T17:37:19",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4100,
+      "slug": "vietnam-en-12-jours-les-arbitrages-que-tu-dois-faire-avant-de-partir",
+      "title": "Vietnam en 12 jours : les arbitrages que tu dois faire avant de partir",
+      "url": "https://flashvoyage.com/vietnam-en-12-jours-les-arbitrages-que-tu-dois-faire-avant-de-partir/",
+      "wordCount": 4276,
+      "widgetCount": 0,
+      "internalLinks": 37,
+      "lastModified": "2026-03-31T17:37:25",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4090,
+      "slug": "vietnam-en-moto-solo-2-risques-que-les-blogs-oublient-de-mentionner",
+      "title": "Vietnam en moto solo : 2 risques que les blogs oublient de mentionner",
+      "url": "https://flashvoyage.com/vietnam-en-moto-solo-2-risques-que-les-blogs-oublient-de-mentionner/",
+      "wordCount": 4295,
+      "widgetCount": 0,
+      "internalLinks": 37,
+      "lastModified": "2026-03-31T17:37:32",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4087,
+      "slug": "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas",
+      "title": "Thaïlande : 2 pièges cachés que les blogs voyage ne te disent pas",
+      "url": "https://flashvoyage.com/thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas/",
+      "wordCount": 4707,
+      "widgetCount": 0,
+      "internalLinks": 36,
+      "lastModified": "2026-03-31T18:35:30",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4081,
+      "slug": "thailande-6-pieges-financiers-que-les-blogs-cachent-aux-voyageurs",
+      "title": "Thaïlande : 6 pièges financiers que les blogs cachent aux voyageurs",
+      "url": "https://flashvoyage.com/thailande-6-pieges-financiers-que-les-blogs-cachent-aux-voyageurs/",
+      "wordCount": 4153,
+      "widgetCount": 0,
+      "internalLinks": 46,
+      "lastModified": "2026-03-31T17:37:38",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4076,
+      "slug": "thailande-8-realites-que-les-blogs-voyage-cachent-aux-expatries",
+      "title": "Thaïlande : 8 réalités que les blogs voyage cachent aux expatriés",
+      "url": "https://flashvoyage.com/thailande-8-realites-que-les-blogs-voyage-cachent-aux-expatries/",
+      "wordCount": 3902,
+      "widgetCount": 0,
+      "internalLinks": 44,
+      "lastModified": "2026-03-31T17:37:42",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4071,
+      "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
+      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "url": "https://flashvoyage.com/budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides/",
+      "wordCount": 3786,
+      "widgetCount": 0,
+      "internalLinks": 34,
+      "lastModified": "2026-03-31T17:37:45",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4066,
+      "slug": "thailande-mai-2-pieges-que-les-blogs-cachent-aux-voyageurs-solo",
+      "title": "Thaïlande mai : 2 pièges que les blogs cachent aux voyageurs solo",
+      "url": "https://flashvoyage.com/thailande-mai-2-pieges-que-les-blogs-cachent-aux-voyageurs-solo/",
+      "wordCount": 3158,
+      "widgetCount": 0,
+      "internalLinks": 29,
+      "lastModified": "2026-03-31T17:37:48",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4062,
+      "slug": "philippines-les-5-frais-caches-qui-explosent-ton-budget-de-voyage",
+      "title": "Philippines : les 5 frais cachés qui explosent ton budget de voyage",
+      "url": "https://flashvoyage.com/philippines-les-5-frais-caches-qui-explosent-ton-budget-de-voyage/",
+      "wordCount": 3633,
+      "widgetCount": 0,
+      "internalLinks": 35,
+      "lastModified": "2026-03-31T17:37:51",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4058,
+      "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
+      "title": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
+      "url": "https://flashvoyage.com/philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire/",
+      "wordCount": 3631,
+      "widgetCount": 0,
+      "internalLinks": 39,
+      "lastModified": "2026-03-31T17:37:54",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4054,
+      "slug": "vietnam-les-12-frais-caches-qui-explosent-ton-budget-de-1200-e-mois",
+      "title": "Vietnam : les 12 frais cachés qui explosent ton budget de 1200 €/mois",
+      "url": "https://flashvoyage.com/vietnam-les-12-frais-caches-qui-explosent-ton-budget-de-1200-e-mois/",
+      "wordCount": 2916,
+      "widgetCount": 0,
+      "internalLinks": 44,
+      "lastModified": "2026-03-31T17:37:57",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4037,
+      "slug": "japon-en-solo-3-pieges-que-les-blogs-cachent-et-comment-les-eviter",
+      "title": "Japon en solo : 3 pièges que les blogs cachent (et comment les éviter)",
+      "url": "https://flashvoyage.com/japon-en-solo-3-pieges-que-les-blogs-cachent-et-comment-les-eviter/",
+      "wordCount": 3618,
+      "widgetCount": 0,
+      "internalLinks": 31,
+      "lastModified": "2026-03-31T17:38:00",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4030,
+      "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "url": "https://flashvoyage.com/coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget/",
+      "wordCount": 4198,
+      "widgetCount": 0,
+      "internalLinks": 38,
+      "lastModified": "2026-03-31T17:38:04",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4022,
+      "slug": "vietnam-en-moto-2-risques-que-les-blogs-oublient-de-mentionner",
+      "title": "Vietnam en moto : 2 risques que les blogs oublient de mentionner",
+      "url": "https://flashvoyage.com/vietnam-en-moto-2-risques-que-les-blogs-oublient-de-mentionner/",
+      "wordCount": 3474,
+      "widgetCount": 0,
+      "internalLinks": 40,
+      "lastModified": "2026-03-31T17:38:07",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4019,
+      "slug": "japon-en-lune-de-miel-pourquoi-votre-itineraire-classique-vous-fera-rater-lessentiel",
+      "title": "Japon en lune de miel : pourquoi votre itinéraire classique vous fera rater l&rsquo;essentiel",
+      "url": "https://flashvoyage.com/japon-en-lune-de-miel-pourquoi-votre-itineraire-classique-vous-fera-rater-lessentiel/",
+      "wordCount": 3580,
+      "widgetCount": 0,
+      "internalLinks": 41,
+      "lastModified": "2026-03-31T17:38:10",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4013,
+      "slug": "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver-mars-2026",
+      "title": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver (mars 2026)",
+      "url": "https://flashvoyage.com/thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver-mars-2026/",
+      "wordCount": 4814,
+      "widgetCount": 0,
+      "internalLinks": 32,
+      "lastModified": "2026-03-31T17:38:13",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4004,
+      "slug": "japon-14-jours-les-10-frais-caches-qui-explosent-ton-budget",
+      "title": "Japon 14 jours : les 10 frais cachés qui explosent ton budget",
+      "url": "https://flashvoyage.com/japon-14-jours-les-10-frais-caches-qui-explosent-ton-budget/",
+      "wordCount": 3029,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-03-31T17:38:20",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3936,
+      "slug": "vietnam-ce-que-jaurais-voulu-savoir-avant-de-reserver",
+      "title": "Vietnam : ce que j&rsquo;aurais voulu savoir avant de réserver",
+      "url": "https://flashvoyage.com/vietnam-ce-que-jaurais-voulu-savoir-avant-de-reserver/",
+      "wordCount": 2897,
+      "widgetCount": 0,
+      "internalLinks": 27,
+      "lastModified": "2026-03-31T17:38:22",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3923,
+      "slug": "vietnam-2027-ha-giang-ou-nord-ouest-le-choix-que-tu-dois-faire-maintenant",
+      "title": "Vietnam 2027 : Ha Giang ou Nord-Ouest ? Le choix que tu dois faire maintenant",
+      "url": "https://flashvoyage.com/vietnam-2027-ha-giang-ou-nord-ouest-le-choix-que-tu-dois-faire-maintenant/",
+      "wordCount": 3579,
+      "widgetCount": 0,
+      "internalLinks": 35,
+      "lastModified": "2026-03-31T17:38:28",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3892,
+      "slug": "japon-2-semaines-pourquoi-ton-itineraire-classique-te-fera-rater-lessentiel",
+      "title": "Japon 2 semaines : pourquoi ton itinéraire classique te fera rater l&rsquo;essentiel",
+      "url": "https://flashvoyage.com/japon-2-semaines-pourquoi-ton-itineraire-classique-te-fera-rater-lessentiel/",
+      "wordCount": 3482,
+      "widgetCount": 0,
+      "internalLinks": 28,
+      "lastModified": "2026-03-31T17:38:35",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3888,
+      "slug": "temoignage-voyage-retours-et-lecons",
+      "title": "Témoignage voyage: retours et leçons",
+      "url": "https://flashvoyage.com/temoignage-voyage-retours-et-lecons/",
+      "wordCount": 1074,
+      "widgetCount": 0,
+      "internalLinks": 21,
+      "lastModified": "2026-03-31T17:38:38",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3885,
+      "slug": "japon-ce-que-jaurais-voulu-savoir-avant-de-reserver-2",
+      "title": "Japon : comment éviter les erreurs de réservation coûteuses",
+      "url": "https://flashvoyage.com/japon-ce-que-jaurais-voulu-savoir-avant-de-reserver-2/",
+      "wordCount": 3652,
+      "widgetCount": 0,
+      "internalLinks": 35,
+      "lastModified": "2026-03-31T17:38:40",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3881,
+      "slug": "japon-en-famille-3-semaines-en-voiture-pourquoi-ton-itineraire-va-echouer",
+      "title": "Japon en famille : 3 semaines en voiture, pourquoi ton itinéraire va échouer",
+      "url": "https://flashvoyage.com/japon-en-famille-3-semaines-en-voiture-pourquoi-ton-itineraire-va-echouer/",
+      "wordCount": 2827,
+      "widgetCount": 0,
+      "internalLinks": 24,
+      "lastModified": "2026-03-31T17:38:43",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3878,
+      "slug": "pourquoi-personne-ne-te-previent-vraiment-sur-japon",
+      "title": "Pourquoi personne ne te prévient vraiment sur le Japon",
+      "url": "https://flashvoyage.com/pourquoi-personne-ne-te-previent-vraiment-sur-japon/",
+      "wordCount": 2501,
+      "widgetCount": 0,
+      "internalLinks": 21,
+      "lastModified": "2026-03-31T17:38:46",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3875,
+      "slug": "japon-ce-que-jaurais-voulu-savoir-avant-de-reserver",
+      "title": "Japon : ce que j&rsquo;aurais voulu savoir avant de réserver",
+      "url": "https://flashvoyage.com/japon-ce-que-jaurais-voulu-savoir-avant-de-reserver/",
+      "wordCount": 2592,
+      "widgetCount": 0,
+      "internalLinks": 26,
+      "lastModified": "2026-03-31T17:38:49",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3872,
+      "slug": "ce-que-japon-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "title": "Ce que Japon m&rsquo;a coûté (et que les blogs ne montrent pas)",
+      "url": "https://flashvoyage.com/ce-que-japon-ma-coute-et-que-les-blogs-ne-montrent-pas/",
+      "wordCount": 3404,
+      "widgetCount": 0,
+      "internalLinks": 26,
+      "lastModified": "2026-03-31T18:35:35",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3869,
+      "slug": "pourquoi-personne-ne-te-previent-vraiment-sur-thailande",
+      "title": "Pourquoi personne ne te prévient vraiment sur la Thaïlande",
+      "url": "https://flashvoyage.com/pourquoi-personne-ne-te-previent-vraiment-sur-thailande/",
+      "wordCount": 2366,
+      "widgetCount": 0,
+      "internalLinks": 23,
+      "lastModified": "2026-03-31T17:38:54",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3549,
+      "slug": "japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs",
+      "title": "Japon : la vérité que tu ne liras nulle part ailleurs",
+      "url": "https://flashvoyage.com/japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs/",
+      "wordCount": 3803,
+      "widgetCount": 0,
+      "internalLinks": 33,
+      "lastModified": "2026-03-31T17:39:01",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3517,
+      "slug": "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas)",
+      "url": "https://flashvoyage.com/ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas/",
+      "wordCount": 4473,
+      "widgetCount": 0,
+      "internalLinks": 31,
+      "lastModified": "2026-03-31T17:39:07",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3501,
+      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "title": "Ce que Thaïlande m&rsquo;a coûté (et que les blogs ne montrent pas)",
+      "url": "https://flashvoyage.com/ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas/",
+      "wordCount": 5585,
+      "widgetCount": 0,
+      "internalLinks": 44,
+      "lastModified": "2026-03-31T17:39:14",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3497,
+      "slug": "vietnam-6-semaines-litineraire-que-tu-dois-abandonner-pour-reussir",
+      "title": "Vietnam 6 semaines : l&rsquo;itinéraire que tu dois abandonner pour réussir",
+      "url": "https://flashvoyage.com/vietnam-6-semaines-litineraire-que-tu-dois-abandonner-pour-reussir/",
+      "wordCount": 3614,
+      "widgetCount": 0,
+      "internalLinks": 36,
+      "lastModified": "2026-03-31T17:39:18",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3494,
+      "slug": "thailande-les-vrais-arbitrages-budgetaires-que-personne-ne-te-montre",
+      "title": "Thaïlande : les vrais arbitrages budgétaires que personne ne te montre",
+      "url": "https://flashvoyage.com/thailande-les-vrais-arbitrages-budgetaires-que-personne-ne-te-montre/",
+      "wordCount": 3007,
+      "widgetCount": 0,
+      "internalLinks": 30,
+      "lastModified": "2026-03-31T17:39:21",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3490,
+      "slug": "japon-en-solo-a-23-ans-pourquoi-18-jours-cest-trop-ou-pas-assez",
+      "title": "Japon en solo à 23 ans : pourquoi 18 jours c&rsquo;est trop (ou pas assez)",
+      "url": "https://flashvoyage.com/japon-en-solo-a-23-ans-pourquoi-18-jours-cest-trop-ou-pas-assez/",
+      "wordCount": 4027,
+      "widgetCount": 0,
+      "internalLinks": 31,
+      "lastModified": "2026-03-31T17:39:24",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3487,
+      "slug": "japon-seul-a-19-ans-4-pieges-que-les-blogs-voyage-cachent",
+      "title": "Japon seul à 19 ans : 4 pièges que les blogs voyage cachent",
+      "url": "https://flashvoyage.com/japon-seul-a-19-ans-4-pieges-que-les-blogs-voyage-cachent/",
+      "wordCount": 3989,
+      "widgetCount": 0,
+      "internalLinks": 35,
+      "lastModified": "2026-03-31T17:39:27",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3484,
+      "slug": "thailande-3-risques-caches-que-les-blogs-voyage-oublient-de-mentionner",
+      "title": "Thaïlande : 3 risques cachés que les blogs voyage oublient de mentionner",
+      "url": "https://flashvoyage.com/thailande-3-risques-caches-que-les-blogs-voyage-oublient-de-mentionner/",
+      "wordCount": 4131,
+      "widgetCount": 0,
+      "internalLinks": 31,
+      "lastModified": "2026-03-31T17:39:30",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3254,
+      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
+      "url": "https://flashvoyage.com/chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget/",
+      "wordCount": 3538,
+      "widgetCount": 0,
+      "internalLinks": 41,
+      "lastModified": "2026-03-31T18:35:40",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 2,
+        "clicks": 0,
+        "position": 2,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3251,
+      "slug": "vivre-a-lombok-en-tant-que-nomade-numerique-les-10-couts-caches-qui-devorent-ton-budget",
+      "title": "Vivre à Lombok en tant que nomade numérique : les 10 coûts cachés qui dévorent ton budget",
+      "url": "https://flashvoyage.com/vivre-a-lombok-en-tant-que-nomade-numerique-les-10-couts-caches-qui-devorent-ton-budget/",
+      "wordCount": 3552,
+      "widgetCount": 0,
+      "internalLinks": 40,
+      "lastModified": "2026-03-31T17:39:50",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3246,
+      "slug": "voyage-au-japon-et-en-asie-du-sud-est-avec-2500-usd-les-arbitrages-caches-qui-vont-decider-de-ton-itineraire",
+      "title": "Voyage au Japon et en Asie du Sud-Est avec 2500 USD : les arbitrages cachés qui vont décider de ton itinéraire",
+      "url": "https://flashvoyage.com/voyage-au-japon-et-en-asie-du-sud-est-avec-2500-usd-les-arbitrages-caches-qui-vont-decider-de-ton-itineraire/",
+      "wordCount": 3403,
+      "widgetCount": 0,
+      "internalLinks": 37,
+      "lastModified": "2026-03-31T17:39:53",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3243,
+      "slug": "voyage-en-coree-du-sud-en-avril-la-pollution-de-lair-compromet-elle-vraiment-ton-itineraire",
+      "title": "Voyage en Corée du Sud en avril : la pollution de l&rsquo;air compromet-elle vraiment ton itinéraire ?",
+      "url": "https://flashvoyage.com/voyage-en-coree-du-sud-en-avril-la-pollution-de-lair-compromet-elle-vraiment-ton-itineraire/",
+      "wordCount": 2587,
+      "widgetCount": 0,
+      "internalLinks": 35,
+      "lastModified": "2026-03-31T17:39:56",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3234,
+      "slug": "arbitrer-son-itineraire-japon-chine-mongolie-en-15-20-jours-les-vrais-dilemmes-logistiques",
+      "title": "Arbitrer son itinéraire Japon-Chine-Mongolie en 15-20 jours : les vrais dilemmes logistiques",
+      "url": "https://flashvoyage.com/arbitrer-son-itineraire-japon-chine-mongolie-en-15-20-jours-les-vrais-dilemmes-logistiques/",
+      "wordCount": 2838,
+      "widgetCount": 0,
+      "internalLinks": 37,
+      "lastModified": "2026-03-31T17:40:02",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3222,
+      "slug": "3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles",
+      "title": "3 jours à Singapour : optimiser son itinéraire sans sacrifier les expériences essentielles",
+      "url": "https://flashvoyage.com/3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles/",
+      "wordCount": 4824,
+      "widgetCount": 0,
+      "internalLinks": 36,
+      "lastModified": "2026-03-31T18:35:43",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3207,
+      "slug": "3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier",
+      "title": "3 jours à Singapour : l&rsquo;itinéraire que tu dois affiner (pas copier)",
+      "url": "https://flashvoyage.com/3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier/",
+      "wordCount": 3455,
+      "widgetCount": 0,
+      "internalLinks": 35,
+      "lastModified": "2026-03-31T18:09:33",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3167,
+      "slug": "vivre-en-thailande-avec-500-usd-realite-ou-illusion",
+      "title": "Vivre en Thaïlande avec 500 USD : Réalité ou Illusion ?",
+      "url": "https://flashvoyage.com/vivre-en-thailande-avec-500-usd-realite-ou-illusion/",
+      "wordCount": 1688,
+      "widgetCount": 0,
+      "internalLinks": 28,
+      "lastModified": "2026-03-31T17:40:20",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3150,
+      "slug": "travailler-en-thailande-les-dilemmes-fiscaux-des-travailleurs-a-distance",
+      "title": "Travailler en Thaïlande : Les Dilemmes Fiscaux des Travailleurs à Distance",
+      "url": "https://flashvoyage.com/travailler-en-thailande-les-dilemmes-fiscaux-des-travailleurs-a-distance/",
+      "wordCount": 1141,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-03-31T17:40:26",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3131,
+      "slug": "decider-de-son-itineraire-au-japon-entre-confort-et-choix-logistiques",
+      "title": "Décider de son itinéraire au Japon : entre confort et choix logistiques",
+      "url": "https://flashvoyage.com/decider-de-son-itineraire-au-japon-entre-confort-et-choix-logistiques/",
+      "wordCount": 1411,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-03-31T17:40:28",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3115,
+      "slug": "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable",
+      "title": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
+      "url": "https://flashvoyage.com/bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable/",
+      "wordCount": 994,
+      "widgetCount": 0,
+      "internalLinks": 20,
+      "lastModified": "2026-03-31T17:40:34",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3082,
+      "slug": "choisir-ou-sejourner-a-bali-dilemmes-et-decisions-cruciales",
+      "title": "Choisir où séjourner à Bali : dilemmes et décisions cruciales",
+      "url": "https://flashvoyage.com/choisir-ou-sejourner-a-bali-dilemmes-et-decisions-cruciales/",
+      "wordCount": 1086,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-03-31T17:40:46",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3074,
+      "slug": "organiser-son-voyage-en-indonesie-dilemmes-logistiques-et-couts-caches",
+      "title": "Organiser son voyage en Indonésie : dilemmes logistiques et coûts cachés",
+      "url": "https://flashvoyage.com/organiser-son-voyage-en-indonesie-dilemmes-logistiques-et-couts-caches/",
+      "wordCount": 908,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-03-31T17:40:48",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3065,
+      "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
+      "title": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
+      "url": "https://flashvoyage.com/itineraire-en-irlande-comment-choisir-entre-nord-et-sud/",
+      "wordCount": 1053,
+      "widgetCount": 0,
+      "internalLinks": 18,
+      "lastModified": "2026-03-31T17:40:51",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3056,
+      "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
+      "title": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
+      "url": "https://flashvoyage.com/voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises/",
+      "wordCount": 2139,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-03-31T17:40:54",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3048,
+      "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+      "title": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
+      "url": "https://flashvoyage.com/entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait/",
+      "wordCount": 968,
+      "widgetCount": 0,
+      "internalLinks": 16,
+      "lastModified": "2026-03-31T17:40:56",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3005,
+      "slug": "arbitrer-son-itineraire-au-vietnam-decisions-cruciales-en-saison-des-pluies",
+      "title": "Arbitrer son Itinéraire au Vietnam : Décisions Cruciales en Saison des Pluies",
+      "url": "https://flashvoyage.com/arbitrer-son-itineraire-au-vietnam-decisions-cruciales-en-saison-des-pluies/",
+      "wordCount": 2471,
+      "widgetCount": 0,
+      "internalLinks": 25,
+      "lastModified": "2026-03-31T17:48:23",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2997,
+      "slug": "choisir-son-itineraire-au-vietnam-lart-de-larbitrage-logistique",
+      "title": "Choisir son itinéraire au Vietnam : l&rsquo;art de l&rsquo;arbitrage logistique",
+      "url": "https://flashvoyage.com/choisir-son-itineraire-au-vietnam-lart-de-larbitrage-logistique/",
+      "wordCount": 2846,
+      "widgetCount": 0,
+      "internalLinks": 27,
+      "lastModified": "2026-03-31T17:47:18",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2980,
+      "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+      "title": "Choisir Entre Taipei et Kuala Lumpur : Un Itinéraire de 4 Jours Qui Compte",
+      "url": "https://flashvoyage.com/choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte/",
+      "wordCount": 3177,
+      "widgetCount": 0,
+      "internalLinks": 23,
+      "lastModified": "2026-03-31T17:41:09",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2967,
+      "slug": "les-6-couts-caches-dun-voyage-au-japon-optimiser-chaque-yen",
+      "title": "Les 6 Coûts Cachés d&rsquo;un Voyage au Japon : Optimiser chaque Yen",
+      "url": "https://flashvoyage.com/les-6-couts-caches-dun-voyage-au-japon-optimiser-chaque-yen/",
+      "wordCount": 3072,
+      "widgetCount": 0,
+      "internalLinks": 25,
+      "lastModified": "2026-03-31T17:41:12",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2959,
+      "slug": "vietnam-choisir-les-experiences-inoubliables-sans-rater-lessentiel",
+      "title": "Vietnam : Choisir les Expériences Inoubliables Sans Rater l&rsquo;Essentiel",
+      "url": "https://flashvoyage.com/vietnam-choisir-les-experiences-inoubliables-sans-rater-lessentiel/",
+      "wordCount": 1469,
+      "widgetCount": 0,
+      "internalLinks": 23,
+      "lastModified": "2026-03-31T17:41:15",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2952,
+      "slug": "indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme",
+      "title": "Indonésie : Quand chaque choix d&rsquo;itinéraire devient un dilemme",
+      "url": "https://flashvoyage.com/indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme/",
+      "wordCount": 2804,
+      "widgetCount": 0,
+      "internalLinks": 27,
+      "lastModified": "2026-03-31T17:41:18",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2945,
+      "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
+      "title": "Voyager en Asie du Sud-Est : Itinéraire et Coûts Réels à Prévoir",
+      "url": "https://flashvoyage.com/voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir/",
+      "wordCount": 2622,
+      "widgetCount": 0,
+      "internalLinks": 23,
+      "lastModified": "2026-03-31T17:47:20",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 1,
+        "clicks": 0,
+        "position": 6,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2938,
+      "slug": "indonesie-en-14-jours-decisions-cruciales-pour-un-itineraire-parfait",
+      "title": "Indonésie en 14 jours : Décisions cruciales pour un itinéraire parfait",
+      "url": "https://flashvoyage.com/indonesie-en-14-jours-decisions-cruciales-pour-un-itineraire-parfait/",
+      "wordCount": 3161,
+      "widgetCount": 0,
+      "internalLinks": 21,
+      "lastModified": "2026-03-31T17:48:26",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2916,
+      "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
+      "title": "Voyager au Japon : eSIM et frais cachés à connaître",
+      "url": "https://flashvoyage.com/voyager-au-japon-esim-et-frais-caches-a-connaitre/",
+      "wordCount": 2410,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-03-31T17:47:27",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2910,
+      "slug": "les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city",
+      "title": "Les 3 coûts cachés des espaces de coworking à Ho Chi Minh City",
+      "url": "https://flashvoyage.com/les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city/",
+      "wordCount": 2755,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-03-31T17:47:30",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2904,
+      "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
+      "title": "Voyager en Asie du Sud-Est : les frais cachés qui gonflent ton budget",
+      "url": "https://flashvoyage.com/voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget/",
+      "wordCount": 3273,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-03-31T17:47:33",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2898,
+      "slug": "vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital",
+      "title": "Vivre à Chiang Mai : le vrai coût d&rsquo;un rêve de nomade digital",
+      "url": "https://flashvoyage.com/vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital/",
+      "wordCount": 3017,
+      "widgetCount": 0,
+      "internalLinks": 21,
+      "lastModified": "2026-03-31T17:42:31",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2888,
+      "slug": "48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget",
+      "title": "48 Heures à Singapour : Optimisez Chaque Centime de Votre Budget",
+      "url": "https://flashvoyage.com/48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget/",
+      "wordCount": 2896,
+      "widgetCount": 0,
+      "internalLinks": 18,
+      "lastModified": "2026-03-31T17:47:36",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2878,
+      "slug": "vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre",
+      "title": "Vivre en Indonésie avec 1000 € : les frais cachés à connaître",
+      "url": "https://flashvoyage.com/vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre/",
+      "wordCount": 2669,
+      "widgetCount": 0,
+      "internalLinks": 16,
+      "lastModified": "2026-03-31T17:47:39",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2867,
+      "slug": "visa-run-en-thailande-secrets-caches-et-arbitrages-financiers",
+      "title": "Visa Run en Thaïlande : Secrets Cachés et Arbitrages Financiers",
+      "url": "https://flashvoyage.com/visa-run-en-thailande-secrets-caches-et-arbitrages-financiers/",
+      "wordCount": 3150,
+      "widgetCount": 0,
+      "internalLinks": 16,
+      "lastModified": "2026-03-31T17:47:42",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2857,
+      "slug": "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2",
+      "title": "Voyager au Japon : Quand voir les cerisiers sans la foule",
+      "url": "https://flashvoyage.com/voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2/",
+      "wordCount": 1541,
+      "widgetCount": 0,
+      "internalLinks": 21,
+      "lastModified": "2026-03-31T17:41:54",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    }
+  ]
 }
