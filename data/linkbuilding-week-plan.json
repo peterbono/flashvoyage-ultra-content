@@ -1,0 +1,130 @@
+{
+  "week": "2026-04-01 to 2026-04-06",
+  "strategy": "12 posts, 3 links max, CEO+Growth validated",
+  "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
+  "status": {
+    "voyage_forum": {
+      "posted": 1,
+      "target": 6,
+      "limit": "1 post/24h (new account)",
+      "account": "FloAsie",
+      "posts_done": [
+        {
+          "date": "2026-04-01T10:14:05Z",
+          "thread": "visite-2-jours-bangkok-d11465951",
+          "section": "Thaïlande",
+          "hasLink": false,
+          "status": "published"
+        }
+      ],
+      "posts_queued": [
+        {
+          "day": "2026-04-02",
+          "thread": "thailande-tdac-comment-ca-marche-d10775002",
+          "section": "Thaïlande",
+          "hasLink": false,
+          "topic": "TDAC formulaire arrivée"
+        },
+        {
+          "day": "2026-04-03",
+          "thread": "quelle-situation-ambiance-suite-guerre-moyen-orient-d11466122",
+          "section": "Thaïlande",
+          "hasLink": false,
+          "topic": "Sécurité voyage Asie"
+        },
+        {
+          "day": "2026-04-04",
+          "thread": "demande-conseils-projet-itineraire-thailande-laos-cambodge-d10779659",
+          "section": "Thaïlande",
+          "hasLink": false,
+          "topic": "Itinéraire Thai-Laos-Cambodge"
+        },
+        {
+          "day": "2026-04-05",
+          "section": "Vietnam",
+          "hasLink": true,
+          "topic": "Budget Vietnam backpacker",
+          "link": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/?utm_source=voyageforum&utm_medium=community&utm_campaign=s1",
+          "candidates": [
+            "vietnam-vous-en-gardez-quoi-fond-d11465015",
+            "questions-voyage-vietnam-sans-tourisme-masse-apres-30-ans-d11140357"
+          ]
+        },
+        {
+          "day": "2026-04-06",
+          "section": "Indonésie",
+          "hasLink": true,
+          "topic": "Bali vs Thaïlande comparatif",
+          "link": "https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/?utm_source=voyageforum&utm_medium=community&utm_campaign=s1"
+        }
+      ]
+    },
+    "quora_fr": {
+      "posted": 1,
+      "target": 4,
+      "blocker": "Cloudflare anti-bot — needs real Chrome",
+      "account": "Florian Gouloubi (Gmail)",
+      "posts_queued": [
+        {
+          "day": "2026-04-01",
+          "query": "Combien coûte un voyage en Thaïlande",
+          "hasLink": false,
+          "topic": "Budget Thaïlande détaillé"
+        },
+        {
+          "day": "2026-04-02",
+          "query": "Bali ou Thaïlande premier voyage",
+          "hasLink": false,
+          "topic": "Comparatif Bali vs Thai"
+        },
+        {
+          "day": "2026-04-04",
+          "query": "Quel itinéraire Vietnam 2 semaines",
+          "hasLink": true,
+          "link": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/?utm_source=quora&utm_medium=community&utm_campaign=s1"
+        },
+        {
+          "day": "2026-04-05",
+          "query": "Comment voyager pas cher en Asie",
+          "hasLink": true,
+          "link": "https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/?utm_source=quora&utm_medium=community&utm_campaign=s1"
+        }
+      ],
+      "posts_done": [
+        {
+          "date": "2026-04-01T20:41:00+07:00",
+          "platform": "quora_fr",
+          "query": "Combien coûte un voyage en Thaïlande",
+          "topic": "Budget Thaïlande détaillé",
+          "hasLink": false,
+          "url": "https://fr.quora.com/Combien-coûte-un-voyage-en-Thaïlande-pour-un-an/answer/Florian-Gouloubi",
+          "status": "published"
+        }
+      ]
+    },
+    "reddit": {
+      "posted": 0,
+      "target": 2,
+      "blocker": "Anti-bot — needs real Chrome",
+      "posts_queued": [
+        {
+          "day": "2026-04-03",
+          "sub": "r/solotravel",
+          "lang": "EN",
+          "hasLink": false,
+          "topic": "SE Asia first-timer advice"
+        },
+        {
+          "day": "2026-04-05",
+          "sub": "r/solotravel",
+          "lang": "EN",
+          "hasLink": false,
+          "topic": "3 months SE Asia budget"
+        }
+      ]
+    }
+  },
+  "total_posted": 1,
+  "total_target": 12,
+  "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
+}

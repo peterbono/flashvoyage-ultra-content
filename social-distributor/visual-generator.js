@@ -3,7 +3,7 @@ import { readFileSync, existsSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
-import { extractBudgetWithAI } from './extractor.js';
+import { extractBudgetWithAI, extractProductComparisonWithAI } from './extractor.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -565,23 +565,24 @@ export async function generateVPCompare({
  * @param {string} params.period    - Period text (e.g. "par jour")
  * @returns {Promise<Buffer>} PNG image buffer (1080x1350)
  */
+const BUDGET_EMOJIS = { 'Hébergement': '🏨', 'Nourriture': '🍜', 'Transport': '🚗', 'Activités': '🎟️', 'eSIM': '📱' };
+
 export async function generateVPBudget({ imageUrl, title, subtitle, bars, total, period }) {
+  // Generate bar rows HTML dynamically — only render bars that have data
+  const barsHtml = bars.map(bar => `
+      <div class="bar-row">
+        <div class="bar-label"><span class="bar-emoji">${BUDGET_EMOJIS[bar.label] || '💰'}</span><span class="bar-name">${bar.label}</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${bar.pct}%;background:${bar.color || '#FFD700'}"><span class="bar-amount">${bar.val}</span></div></div>
+      </div>`).join('\n');
+
   const vars = {
     IMAGE_URL: imageUrl,
     TITLE: title,
     SUBTITLE: subtitle || '',
+    BARS_HTML: barsHtml,
     TOTAL: total,
     PERIOD: period || '',
   };
-
-  // Map bars to BAR1..BAR5 template variables
-  for (let i = 0; i < Math.min(bars.length, 5); i++) {
-    const bar = bars[i];
-    const n = i + 1;
-    vars[`BAR${n}_PCT`] = String(bar.pct);
-    vars[`BAR${n}_COLOR`] = bar.color || '#FFD700';
-    vars[`BAR${n}_VAL`] = bar.val;
-  }
 
   const html = renderTemplate('ig-carousel-budget-vp.html', vars);
   return nodeHtmlToImage({ html, ...IMAGE_OPTIONS });
@@ -609,6 +610,30 @@ export async function generateVPCTA({
     VALUE_PROP: valueProp,
     CTA_TEXT: ctaText,
     SAVE_TEXT: saveText,
+  });
+
+  return nodeHtmlToImage({ html, ...IMAGE_OPTIONS });
+}
+
+/**
+ * Generate a product comparison slide (e.g. "Globe vs Smart eSIM").
+ * Dynamic rows from AI extraction.
+ */
+export async function generateVPProductCompare({ imageUrl, title, productA, productB, rows, verdict }) {
+  const rowsHtml = rows.map(r => `
+      <div class="row">
+        <div class="row-label">${r.label}</div>
+        <span class="row-value val-a">${r.valA}</span>
+        <span class="row-value val-b">${r.valB}</span>
+      </div>`).join('\n');
+
+  const html = renderTemplate('ig-carousel-compare-product.html', {
+    IMAGE_URL: imageUrl,
+    TITLE: title,
+    PRODUCT_A: productA,
+    PRODUCT_B: productB,
+    ROWS_HTML: rowsHtml,
+    VERDICT: verdict,
   });
 
   return nodeHtmlToImage({ html, ...IMAGE_OPTIONS });
@@ -849,14 +874,31 @@ export async function generateVPCarousel({ article }) {
     }
   }
 
-  // comparatif_produit → hook + CTA only (2 slides, NO compare template)
-  // (no middle slide added)
+  // comparatif_produit → hook + product comparison + CTA (3+ slides)
+  if ((type === 'comparatif' || type === 'comparatif_produit') && !slideTypes.includes('compare')) {
+    const rawText = article.rawText || '';
+    const comparison = await extractProductComparisonWithAI(rawText, title);
+
+    if (comparison && comparison.rows?.length >= 2) {
+      buffers.push(await generateVPProductCompare({
+        imageUrl: bgImage,
+        title: 'COMPARATIF',
+        productA: comparison.productA,
+        productB: comparison.productB,
+        rows: comparison.rows.slice(0, 5),
+        verdict: comparison.verdict || `Notre choix : ${comparison.productA}`,
+      }));
+      slideTypes.push('compare_product');
+    } else {
+      console.warn(`[visual] No AI comparison data for "${title}" — comparatif slide skipped`);
+    }
+  }
 
   // budget → hook + budget + CTA (3 slides) — ONLY if real € amounts found
   if (type === 'budget') {
-    // Try AI extraction first (returns structured budget with real amounts)
+    // Reuse AI budget from article if already extracted (by index.js for caption), otherwise extract now
     const rawText = article.rawText || '';
-    const aiBudget = await extractBudgetWithAI(rawText, destination);
+    const aiBudget = article.aiBudget || await extractBudgetWithAI(rawText, destination);
 
     let bars;
     let totalStr;
@@ -871,32 +913,40 @@ export async function generateVPCarousel({ article }) {
         { label: 'eSIM', key: 'esim' },
       ];
 
-      const aiBars = aiCategories.map((cat, i) => {
-        const val = aiBudget[cat.key];
-        const displayVal = val === null || val === undefined ? '–' : val;
-        const rawVal = parseAmount(displayVal);
-        return { label: cat.label, val: displayVal, rawVal, color: BUDGET_COLORS[i] };
-      });
+      // Filter out null categories — only show bars with real amounts
+      const aiBars = aiCategories
+        .filter(cat => aiBudget[cat.key] != null)
+        .map((cat, i) => {
+          const val = aiBudget[cat.key];
+          const rawVal = parseAmount(val);
+          return { label: cat.label, val, rawVal, color: BUDGET_COLORS[i] };
+        });
 
-      const rawValues = aiBars.map(b => b.rawVal);
-      const pcts = computeBarPcts(rawValues);
-      bars = aiBars.map((b, i) => ({
-        pct: pcts[i] || 10,
-        color: b.color,
-        val: b.val,
-      }));
+      if (aiBars.length === 0) {
+        console.warn(`[visual] AI returned all null budget for ${destination} — skipping budget slide`);
+        bars = null;
+      } else {
+        const rawValues = aiBars.map(b => b.rawVal);
+        const pcts = computeBarPcts(rawValues);
+        bars = aiBars.map((b, i) => ({
+          label: b.label,
+          pct: pcts[i] || 10,
+          color: b.color,
+          val: b.val,
+        }));
 
-      // Use AI total if available
-      const sumRaw = rawValues.reduce((a, b) => a + b, 0);
-      totalStr = aiBudget.total_jour || aiBudget.total_sejour || (sumRaw > 0 ? `${Math.round(sumRaw)} \u20ac` : '\u2013 \u20ac');
+        // Use AI total if available, otherwise sum the bars
+        const sumRaw = rawValues.reduce((a, b) => a + b, 0);
+        totalStr = aiBudget.total_jour || aiBudget.total_sejour || (sumRaw > 0 ? `${Math.round(sumRaw)} \u20ac` : '\u2013 \u20ac');
+      }
     } else {
-      // Fallback: regex-based extraction
-      bars = buildBudgetBars(keyStats);
-      const totalAmount = bars.reduce((sum, b) => sum + parseAmount(b.val), 0);
-      const firstStatValue = keyStats[0] ? (typeof keyStats[0] === 'object' ? keyStats[0].value : keyStats[0]) : '\u2013 \u20ac';
-      totalStr = totalAmount > 0 ? `${Math.round(totalAmount)} \u20ac` : firstStatValue;
+      // No AI extraction available — skip budget slide entirely
+      // Regex fallback produces unreliable numbers, better to omit than hallucinate
+      console.warn(`[visual] No AI budget data for ${destination} — skipping budget slide`);
+      bars = null;
     }
 
+    if (bars) {
     buffers.push(await generateVPBudget({
       imageUrl: bgImage,
       title: `BUDGET ${destination.toUpperCase()}`,
@@ -906,6 +956,7 @@ export async function generateVPCarousel({ article }) {
       period: 'par jour',
     }));
     slideTypes.push('budget');
+    } // end if (bars)
   }
 
   // ── Last Slide: CTA (always) ──

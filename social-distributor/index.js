@@ -16,6 +16,7 @@
  *   await distributeArticle(wpPostId);
  */
 
+import 'dotenv/config';
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -231,22 +232,24 @@ function buildVPCarouselQueueEntries(caption, carouselBuffers, articleSlug, post
   const hashtagStr = caption.hashtags.join(' ');
   const fullCaption = `${caption.text}\n\n${hashtagStr}`;
 
-  // Instagram: carousel of all slides
+  // Instagram: carousel of all slides + link in first comment
   entries.push({
     platform: 'instagram',
     imageBuffers: carouselBuffers, // array of PNGs for carousel
     imageBuffer: carouselBuffers[0], // fallback: first slide if carousel not supported
     message: fullCaption.slice(0, 2200),
+    linkComment: caption.linkComment || null, // article link posted as first comment
     meta: { postId, type, slug: articleSlug, title, vpCarousel: true, slideCount: carouselBuffers.length },
   });
 
-  // Facebook: first slide as hero image
+  // Facebook: multi-photo carousel of all slides + link in first comment
   entries.push({
     platform: 'facebook',
-    imageBuffer: carouselBuffers[0],
+    imageBuffers: carouselBuffers, // array of PNGs for multi-photo
+    imageBuffer: carouselBuffers[0], // fallback if multi-photo fails
     message: fullCaption,
     linkComment: caption.linkComment,
-    meta: { postId, type, slug: articleSlug, title, vpCarousel: true },
+    meta: { postId, type, slug: articleSlug, title, vpCarousel: true, slideCount: carouselBuffers.length },
   });
 
   // Threads: first slide as image
@@ -291,6 +294,15 @@ async function modeRecycle(postId, dryRun = false) {
     try {
       // Extract data for this article
       const extracted = await extractFromId(variant.postId);
+
+      // Pre-extract AI budget so caption builder can use real amounts
+      if (variant.type === 'budget') {
+        const { extractBudgetWithAI } = await import('./extractor.js');
+        const rawText = extracted.rawText || '';
+        const destination = extracted.category || 'Voyage';
+        extracted.aiBudget = await extractBudgetWithAI(rawText, destination);
+      }
+
       const caption = buildCaption(extracted, variant.type, 'facebook');
 
       // Generate VP carousel (3-4 slides)

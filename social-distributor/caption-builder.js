@@ -10,7 +10,7 @@
  */
 
 // ── Constants ───────────────────────────────────────────────────────────────
-const MAX_TEXT_LENGTH = 300; // Facebook optimal
+const MAX_TEXT_LENGTH = 500; // Room for CTA — IG supports 2200, FB handles 500+ fine
 
 const CONTENT_TYPES = ['news', 'insolite', 'budget', 'comparatif', 'question', 'storytelling'];
 
@@ -162,22 +162,37 @@ function templateInsolite(extracted) {
 
 function templateBudget(extracted) {
   const dest = guessDestination(extracted);
+
+  // Use AI budget data if available (set by carousel generator), otherwise fall back to regex stats
+  const aiBudget = extracted.aiBudget;
+
+  if (aiBudget) {
+    // Build caption from real AI-extracted amounts
+    const lines = [];
+    if (aiBudget.hebergement) lines.push(`\u{1F3E0} Hébergement : ${aiBudget.hebergement}`);
+    if (aiBudget.nourriture) lines.push(`\u{1F35C} Nourriture : ${aiBudget.nourriture}`);
+    if (aiBudget.transport) lines.push(`\u{1F6F5} Transport : ${aiBudget.transport}`);
+    if (aiBudget.activites) lines.push(`\u{1F3AF} Activités : ${aiBudget.activites}`);
+    if (aiBudget.esim) lines.push(`\u{1F4F1} eSIM : ${aiBudget.esim}`);
+
+    const totalLine = aiBudget.total_jour || aiBudget.total_sejour || null;
+    const headline = totalLine
+      ? `\u{1F4B0} ${dest} : ${totalLine}`
+      : `\u{1F4B0} Budget ${dest}`;
+
+    let text = `${headline}\n\n${lines.join('\n')}`;
+    if (totalLine) text += `\n\u{1F4B0} Total : ${totalLine}`;
+    return truncate(text);
+  }
+
+  // Fallback: regex-based stats (less reliable)
   const rawStats = extracted.keyStats;
-
-  // Normalize stats to strings (handles both old string[] and new {label, value, amount}[] format)
   const stats = rawStats.map(s => typeof s === 'object' && s !== null ? s.value : s);
-
-  // Prefer a currency stat as the headline number
   const currencyStat = stats.find(s => /€|EUR|USD|\$/i.test(s));
   const mainStat = currencyStat || stats[0] || 'petit budget';
-
-  // Duration is no longer extracted in keyStats (monetary only), use a generic fallback
-  const duration = 'un séjour';
-
-  // Pick bullet stats excluding the one already used as headline
   const bulletStats = stats.filter(s => s !== mainStat).slice(0, 4);
 
-  let text = `\u{1F4B0} ${mainStat} pour ${duration} à ${dest}\n\nVoici le détail :\n${formatStatsBullets(bulletStats)}\n\n\u{1F4CA} Le budget complet en commentaire \u{1F447}`;
+  let text = `\u{1F4B0} ${mainStat} pour un séjour à ${dest}\n\nVoici le détail :\n${formatStatsBullets(bulletStats)}`;
   return truncate(text);
 }
 

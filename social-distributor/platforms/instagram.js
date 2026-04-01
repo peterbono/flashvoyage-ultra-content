@@ -14,18 +14,26 @@
  */
 
 const IG_ID = '17841442283434789';
+const PAGE_ID = '1068729919650308';
 const GRAPH_API = 'https://graph.facebook.com/v21.0';
 const WP_API = 'https://flashvoyage.com/wp-json/wp/v2';
 const WP_AUTH = 'Basic ' + Buffer.from('admin7817:GjLl 9W0k lKwf LSOT PXur RYGR').toString('base64');
 
 /**
- * Upload an image buffer to WordPress media library
+ * Upload an image buffer and get a public URL accessible by Meta's IG servers.
+ *
+ * Strategy: WP upload → FB unpublished photo → FB CDN URL.
+ * Meta's IG API can't always reach OVH-hosted WP URLs directly,
+ * but FB CDN URLs (fbcdn.net) are always reachable by IG servers.
+ *
  * @param {Buffer} imageBuffer - Raw image data
- * @param {string} filename - Filename for the upload
- * @returns {Promise<{wpMediaId: number, publicUrl: string}>}
+ * @param {string} filename - Filename for the WP upload
+ * @param {string} pageToken - Facebook Page access token (needed for FB CDN relay)
+ * @returns {Promise<{wpMediaId: number, fbPhotoId: string, publicUrl: string}>}
  */
-async function uploadToWordPress(imageBuffer, filename = 'social-temp.jpg') {
-  const response = await fetch(`${WP_API}/media`, {
+async function uploadForIG(imageBuffer, filename = 'social-temp.jpg', pageToken) {
+  // Step 1: Upload to WP to get a public URL (needed as source for FB)
+  const wpRes = await fetch(`${WP_API}/media`, {
     method: 'POST',
     headers: {
       'Authorization': WP_AUTH,
@@ -34,31 +42,64 @@ async function uploadToWordPress(imageBuffer, filename = 'social-temp.jpg') {
     },
     body: imageBuffer,
   });
+  const wpData = await wpRes.json();
+  if (wpData.code || !wpData.id) {
+    throw new Error(`WP upload failed: ${wpData.message || JSON.stringify(wpData)}`);
+  }
+  console.log(`[IG/WP] Uploaded temp media: id=${wpData.id}, url=${wpData.source_url}`);
 
-  const data = await response.json();
-
-  if (data.code || !data.id) {
-    throw new Error(`WP upload failed: ${data.message || JSON.stringify(data)}`);
+  // Step 2: Upload as unpublished FB photo to get FB CDN URL
+  const fbRes = await fetch(`${GRAPH_API}/${PAGE_ID}/photos`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url: wpData.source_url, published: false, access_token: pageToken }),
+  });
+  const fbData = await fbRes.json();
+  if (fbData.error || !fbData.id) {
+    // Fallback: return WP URL directly (might work in some cases)
+    console.warn(`[IG/FB-CDN] FB relay failed, falling back to WP URL: ${fbData.error?.message || 'unknown'}`);
+    return { wpMediaId: wpData.id, fbPhotoId: null, publicUrl: wpData.source_url };
   }
 
-  console.log(`[IG/WP] Uploaded temp media: id=${data.id}, url=${data.source_url}`);
-  return { wpMediaId: data.id, publicUrl: data.source_url };
+  // Step 3: Get FB CDN URL from the photo object
+  const photoRes = await fetch(`${GRAPH_API}/${fbData.id}?fields=images&access_token=${pageToken}`);
+  const photoData = await photoRes.json();
+  const cdnUrl = photoData.images?.[0]?.source;
+
+  if (!cdnUrl) {
+    console.warn(`[IG/FB-CDN] No CDN URL returned, falling back to WP URL`);
+    return { wpMediaId: wpData.id, fbPhotoId: fbData.id, publicUrl: wpData.source_url };
+  }
+
+  console.log(`[IG/FB-CDN] Relay OK: ${cdnUrl.slice(0, 80)}...`);
+  return { wpMediaId: wpData.id, fbPhotoId: fbData.id, publicUrl: cdnUrl };
 }
 
 /**
- * Delete a temporary media from WordPress
- * @param {number} wpMediaId - WordPress media ID to delete
+ * Clean up temporary media (WP + optional FB unpublished photo)
+ * @param {number|null} wpMediaId - WordPress media ID to delete
+ * @param {string|null} fbPhotoId - FB unpublished photo ID to delete
+ * @param {string} [pageToken] - FB page token (needed to delete FB photo)
  */
-async function deleteFromWordPress(wpMediaId) {
-  try {
-    await fetch(`${WP_API}/media/${wpMediaId}?force=true`, {
-      method: 'DELETE',
-      headers: { 'Authorization': WP_AUTH },
-    });
-    console.log(`[IG/WP] Cleaned up temp media: id=${wpMediaId}`);
-  } catch (err) {
-    // Non-fatal: just log, don't block the publish flow
-    console.warn(`[IG/WP] Failed to clean up temp media ${wpMediaId}: ${err.message}`);
+async function cleanupTempMedia(wpMediaId, fbPhotoId, pageToken) {
+  if (wpMediaId) {
+    try {
+      await fetch(`${WP_API}/media/${wpMediaId}?force=true`, {
+        method: 'DELETE',
+        headers: { 'Authorization': WP_AUTH },
+      });
+      console.log(`[IG/WP] Cleaned up temp media: id=${wpMediaId}`);
+    } catch (err) {
+      console.warn(`[IG/WP] Failed to clean up temp media ${wpMediaId}: ${err.message}`);
+    }
+  }
+  if (fbPhotoId && pageToken) {
+    try {
+      await fetch(`${GRAPH_API}/${fbPhotoId}?access_token=${pageToken}`, { method: 'DELETE' });
+      console.log(`[IG/FB-CDN] Cleaned up temp photo: ${fbPhotoId}`);
+    } catch (err) {
+      console.warn(`[IG/FB-CDN] Failed to clean up temp photo ${fbPhotoId}: ${err.message}`);
+    }
   }
 }
 
@@ -145,14 +186,16 @@ async function checkContainerStatus(creationId, pageToken) {
  */
 export async function publishPost({ imageBuffer, caption, pageToken }) {
   let wpMediaId = null;
+  let fbPhotoId = null;
 
   try {
-    // 1. Upload image to WP to get a public URL
-    const wp = await uploadToWordPress(imageBuffer, `fv-social-${Date.now()}.jpg`);
-    wpMediaId = wp.wpMediaId;
+    // 1. Upload image via FB CDN relay
+    const upload = await uploadForIG(imageBuffer, `fv-social-${Date.now()}.jpg`, pageToken);
+    wpMediaId = upload.wpMediaId;
+    fbPhotoId = upload.fbPhotoId;
 
     // 2. Create IG media container
-    const creationId = await createMediaContainer(wp.publicUrl, caption, pageToken);
+    const creationId = await createMediaContainer(upload.publicUrl, caption, pageToken);
 
     // 3. Wait for IG to process the image (5 seconds baseline)
     await delay(5000);
@@ -176,10 +219,7 @@ export async function publishPost({ imageBuffer, caption, pageToken }) {
     console.log(`[IG] Complete: mediaId=${mediaId}`);
     return { mediaId };
   } finally {
-    // 6. Always clean up the temp WP media
-    if (wpMediaId) {
-      await deleteFromWordPress(wpMediaId);
-    }
+    await cleanupTempMedia(wpMediaId, fbPhotoId, pageToken);
   }
 }
 
@@ -193,17 +233,16 @@ export async function publishPost({ imageBuffer, caption, pageToken }) {
 async function createStoryContainer(imageUrl, pageToken, link = null) {
   const url = `${GRAPH_API}/${IG_ID}/media`;
 
-  const body = {
+  const params = new URLSearchParams({
     image_url: imageUrl,
     media_type: 'STORIES',
     access_token: pageToken,
-  };
-  if (link) body.link = link;  // Clickable link sticker
+  });
+  if (link) params.set('link', link);  // Clickable link sticker
 
   const response = await fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
+    body: params,
   });
 
   const data = await response.json();
@@ -228,14 +267,16 @@ async function createStoryContainer(imageUrl, pageToken, link = null) {
  */
 export async function publishStory({ imageBuffer, pageToken, link = null }) {
   let wpMediaId = null;
+  let fbPhotoId = null;
 
   try {
-    // 1. Upload image to WP to get a public URL
-    const wp = await uploadToWordPress(imageBuffer, `fv-story-${Date.now()}.jpg`);
-    wpMediaId = wp.wpMediaId;
+    // 1. Upload image via FB CDN relay
+    const upload = await uploadForIG(imageBuffer, `fv-story-${Date.now()}.jpg`, pageToken);
+    wpMediaId = upload.wpMediaId;
+    fbPhotoId = upload.fbPhotoId;
 
     // 2. Create IG story container with media_type=STORIES (+ optional link sticker)
-    const creationId = await createStoryContainer(wp.publicUrl, pageToken, link);
+    const creationId = await createStoryContainer(upload.publicUrl, pageToken, link);
 
     // 3. Wait for IG to process the image (5 seconds baseline)
     await delay(5000);
@@ -259,11 +300,155 @@ export async function publishStory({ imageBuffer, pageToken, link = null }) {
     console.log(`[IG] Story published: mediaId=${mediaId}`);
     return { mediaId };
   } finally {
-    // 6. Always clean up the temp WP media
-    if (wpMediaId) {
-      await deleteFromWordPress(wpMediaId);
+    await cleanupTempMedia(wpMediaId, fbPhotoId, pageToken);
+  }
+}
+
+/**
+ * Publish an Instagram CAROUSEL (multi-image) post.
+ *
+ * IG Graph API carousel flow:
+ * 1. Upload each image to WP for public URLs
+ * 2. Create individual item containers (is_carousel_item=true)
+ * 3. Create a carousel container with children IDs
+ * 4. Wait for processing
+ * 5. Publish the carousel container
+ * 6. Clean up WP temp media
+ *
+ * @param {Object} params
+ * @param {Buffer[]} params.imageBuffers - Array of raw image data (2-20 items)
+ * @param {string} params.caption - Post caption (max 2200 chars)
+ * @param {string} params.pageToken - Facebook Page access token
+ * @returns {Promise<{mediaId: string}>}
+ */
+export async function publishCarousel({ imageBuffers, caption, pageToken }) {
+  if (!imageBuffers || imageBuffers.length < 2) {
+    throw new Error(`IG carousel requires at least 2 images, got ${imageBuffers?.length || 0}`);
+  }
+  if (imageBuffers.length > 20) {
+    throw new Error(`IG carousel max 20 images, got ${imageBuffers.length}`);
+  }
+
+  const uploads = []; // { wpMediaId, fbPhotoId }
+
+  try {
+    // 1. Upload all images via FB CDN relay
+    console.log(`[IG] Uploading ${imageBuffers.length} carousel slides via FB CDN relay...`);
+    const cdnUrls = [];
+    for (let i = 0; i < imageBuffers.length; i++) {
+      const upload = await uploadForIG(imageBuffers[i], `fv-carousel-${Date.now()}-${i}.jpg`, pageToken);
+      uploads.push({ wpMediaId: upload.wpMediaId, fbPhotoId: upload.fbPhotoId });
+      cdnUrls.push(upload.publicUrl);
+    }
+
+    // 2. Create individual carousel item containers (with retry per item)
+    console.log(`[IG] Creating ${cdnUrls.length} carousel item containers...`);
+    const childIds = [];
+    for (const cdnUrl of cdnUrls) {
+      if (childIds.length > 0) await delay(3000);
+
+      let itemData;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const url = `${GRAPH_API}/${IG_ID}/media`;
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            image_url: cdnUrl,
+            is_carousel_item: true,
+            access_token: pageToken,
+          }),
+        });
+        itemData = await response.json();
+        if (!itemData.error) break;
+        if (itemData.error.code === 2 && attempt < 2) {
+          console.warn(`[IG] Carousel item transient error, retry ${attempt + 1}/3 in 5s...`);
+          await delay(5000);
+        }
+      }
+      if (itemData.error) {
+        throw new Error(`IG carousel item failed: ${itemData.error.message} (code ${itemData.error.code})`);
+      }
+      childIds.push(itemData.id);
+      console.log(`[IG] Carousel item created: ${itemData.id}`);
+    }
+
+    // 3. Create the carousel container with all children
+    console.log(`[IG] Creating carousel container with ${childIds.length} children...`);
+    const carouselUrl = `${GRAPH_API}/${IG_ID}/media`;
+    const carouselResponse = await fetch(carouselUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        media_type: 'CAROUSEL',
+        caption,
+        children: childIds.join(','),
+        access_token: pageToken,
+      }),
+    });
+    const carouselData = await carouselResponse.json();
+    if (carouselData.error) {
+      throw new Error(`IG carousel container failed: ${carouselData.error.message} (code ${carouselData.error.code})`);
+    }
+    const carouselId = carouselData.id;
+    console.log(`[IG] Carousel container created: ${carouselId}`);
+
+    // 4. Wait for IG to process
+    await delay(5000);
+
+    let attempts = 0;
+    while (attempts < 5) {
+      const status = await checkContainerStatus(carouselId, pageToken);
+      if (status.statusCode === 'FINISHED') break;
+      if (status.statusCode === 'ERROR') {
+        throw new Error(`IG carousel processing failed: ${status.status}`);
+      }
+      attempts++;
+      console.log(`[IG] Carousel still processing (${status.statusCode}), waiting...`);
+      await delay(3000);
+    }
+
+    // 5. Publish
+    const mediaId = await publishMediaContainer(carouselId, pageToken);
+    console.log(`[IG] Carousel published: mediaId=${mediaId} (${childIds.length} slides)`);
+    return { mediaId };
+
+  } finally {
+    // 6. Clean up all temp media (WP + FB)
+    for (const u of uploads) {
+      await cleanupTempMedia(u.wpMediaId, u.fbPhotoId, pageToken);
     }
   }
+}
+
+/**
+ * Add a comment to an existing IG media (used for link-in-first-comment)
+ * @param {Object} params
+ * @param {string} params.mediaId - Instagram media ID
+ * @param {string} params.message - Comment text (typically the article URL)
+ * @param {string} params.pageToken - Facebook Page access token (used for IG API)
+ * @returns {Promise<{commentId: string}>}
+ */
+export async function addComment({ mediaId, message, pageToken }) {
+  const url = `${GRAPH_API}/${mediaId}/comments`;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message,
+      access_token: pageToken,
+    }),
+  });
+
+  const data = await response.json();
+
+  if (data.error) {
+    throw new Error(`IG addComment failed: ${data.error.message} (code ${data.error.code})`);
+  }
+
+  console.log(`[IG] Comment added: ${data.id}`);
+  return { commentId: data.id };
 }
 
 // --- Helpers ---

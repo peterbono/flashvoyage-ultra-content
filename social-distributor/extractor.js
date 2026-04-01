@@ -258,10 +258,21 @@ export async function extractBudgetWithAI(articleText, destination) {
     return null;
   }
 
-  const systemPrompt = `Tu es un extracteur de données budget voyage. Extrais les 5 postes de budget principaux de cet article.
+  const systemPrompt = `Tu es un expert budget voyage. Extrais les 5 postes de budget principaux pour cette destination.
 Retourne UNIQUEMENT un JSON valide, rien d'autre:
 {"hebergement": "XX €/nuit", "nourriture": "XX €/jour", "transport": "XX €/jour", "activites": "XX €/jour", "esim": "XX €", "total_jour": "XX €/jour", "total_sejour": "XX €"}
-Si un poste n'est pas mentionné, mets null. Utilise les prix du profil le plus courant (backpacker/confort moyen).`;
+Règles:
+- Extrais les montants de l'article en priorité
+- Si un poste N'EST PAS mentionné dans l'article, ESTIME un prix réaliste pour la destination basé sur tes connaissances (profil backpacker/budget)
+- Ne retourne JAMAIS null — chaque champ doit avoir une valeur
+- Si l'article donne une fourchette, prends le milieu
+- Profil budget/backpacker (notre audience est jeune, petit budget)
+- CALCUL DU TOTAL : attention aux coûts one-shot vs récurrents !
+  - hébergement, nourriture, transport, activités = coûts JOURNALIERS (€/jour ou €/nuit)
+  - esim = coût ONE-SHOT pour tout le séjour (pas par jour)
+  - total_jour = hébergement + nourriture + transport + activités (PAS l'eSIM)
+  - total_sejour = (total_jour × nombre de jours) + esim
+  - Nombre de jours = celui mentionné dans l'article, ou 10 jours par défaut`;
 
   try {
     const truncatedText = articleText.slice(0, 6000); // keep within token limits
@@ -283,6 +294,65 @@ Si un poste n'est pas mentionné, mets null. Utilise les prix du profil le plus 
     return budget;
   } catch (err) {
     console.error(`[extractor] AI budget extraction failed: ${err.message}`);
+    return null;
+  }
+}
+
+/**
+ * Extract structured product comparison data using Claude Haiku.
+ * Used for comparatif_produit carousels (e.g. "Globe vs Smart eSIM").
+ *
+ * @param {string} articleText - Raw article text
+ * @param {string} title - Article title (to identify the two products)
+ * @returns {Promise<Object|null>} { productA, productB, rows: [{label, emojiA, valA, emojiB, valB}], verdict }
+ */
+export async function extractProductComparisonWithAI(articleText, title) {
+  const client = getAnthropicClient();
+  if (!client) {
+    console.warn('[extractor] ANTHROPIC_API_KEY not set — skipping AI product comparison');
+    return null;
+  }
+
+  const systemPrompt = `Tu es un extracteur de données pour infographies de comparatif produit voyage.
+À partir de cet article, extrais un comparatif structuré entre les deux produits/options mentionnés dans le titre.
+
+Retourne UNIQUEMENT un JSON valide:
+{
+  "productA": "Nom court produit A",
+  "productB": "Nom court produit B",
+  "rows": [
+    {"label": "Critère", "valA": "Valeur concise A", "valB": "Valeur concise B"},
+    ...
+  ],
+  "verdict": "Phrase courte verdict (max 40 chars)"
+}
+
+Règles:
+- 4 à 5 lignes de comparaison maximum
+- Valeurs COURTES (max 15 chars chacune) — chiffres ou mots-clés, pas de phrases
+- Labels courts (max 15 chars)
+- Extrais UNIQUEMENT les données de l'article, n'invente rien
+- Verdict: phrase percutante, max 40 caractères`;
+
+  try {
+    const truncatedText = articleText.slice(0, 6000);
+    const response = await client.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 500,
+      messages: [
+        { role: 'user', content: `${systemPrompt}\n\nTitre: ${title}\n\nArticle:\n${truncatedText}` }
+      ],
+    });
+
+    const text = response.content[0]?.text?.trim();
+    if (!text) throw new Error('Empty response from Haiku');
+
+    const jsonStr = text.replace(/^```json?\s*/i, '').replace(/\s*```$/, '').trim();
+    const comparison = JSON.parse(jsonStr);
+    console.log(`[extractor] AI product comparison OK: ${comparison.productA} vs ${comparison.productB} (${comparison.rows?.length} rows)`);
+    return comparison;
+  } catch (err) {
+    console.error(`[extractor] AI product comparison failed: ${err.message}`);
     return null;
   }
 }

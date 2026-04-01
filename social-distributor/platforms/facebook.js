@@ -97,6 +97,74 @@ export async function publishPhotoWithLink({ imageUrl, message, linkComment, pag
 }
 
 /**
+ * Publish multiple photos as a Facebook multi-photo post (carousel-like).
+ *
+ * FB Graph API multi-photo flow:
+ * 1. Upload each photo as unpublished (published=false)
+ * 2. Create a feed post with attached_media referencing all photo IDs
+ *
+ * @param {Object} params
+ * @param {string[]} params.imageUrls - Array of public image URLs (2-10)
+ * @param {string} params.message - Post caption
+ * @param {string} params.pageToken - Facebook Page access token
+ * @returns {Promise<{postId: string}>}
+ */
+export async function publishMultiPhoto({ imageUrls, message, pageToken }) {
+  if (!imageUrls || imageUrls.length < 2) {
+    throw new Error(`FB multi-photo requires at least 2 images, got ${imageUrls?.length || 0}`);
+  }
+
+  // 1. Upload each photo as unpublished to get media_fbid
+  console.log(`[FB] Uploading ${imageUrls.length} photos (unpublished)...`);
+  const photoIds = [];
+  for (const imgUrl of imageUrls) {
+    const uploadUrl = `${GRAPH_API}/${PAGE_ID}/photos`;
+    const response = await fetch(uploadUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        url: imgUrl,
+        published: false,
+        access_token: pageToken,
+      }),
+    });
+    const data = await response.json();
+    if (data.error) {
+      throw new Error(`FB unpublished photo upload failed: ${data.error.message} (code ${data.error.code})`);
+    }
+    photoIds.push(data.id);
+    console.log(`[FB] Unpublished photo: ${data.id}`);
+  }
+
+  // 2. Create the multi-photo post via /feed with attached_media
+  console.log(`[FB] Creating multi-photo post with ${photoIds.length} photos...`);
+  const feedUrl = `${GRAPH_API}/${PAGE_ID}/feed`;
+
+  const body = {
+    message,
+    access_token: pageToken,
+  };
+  // attached_media must be indexed: attached_media[0], attached_media[1], etc.
+  photoIds.forEach((id, i) => {
+    body[`attached_media[${i}]`] = JSON.stringify({ media_fbid: id });
+  });
+
+  const response = await fetch(feedUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(body).toString(),
+  });
+
+  const data = await response.json();
+  if (data.error) {
+    throw new Error(`FB multi-photo post failed: ${data.error.message} (code ${data.error.code})`);
+  }
+
+  console.log(`[FB] Multi-photo post published: ${data.id} (${photoIds.length} photos)`);
+  return { postId: data.id };
+}
+
+/**
  * Publish a photo as a Facebook Page Story
  * Uses the /{PAGE_ID}/photo_stories endpoint
  *

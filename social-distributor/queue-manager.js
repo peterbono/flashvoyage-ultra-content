@@ -18,8 +18,8 @@ import { readFileSync, writeFileSync, appendFileSync, existsSync, mkdirSync } fr
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-import { publishPhotoWithLink, publishStory as publishFBStory } from './platforms/facebook.js';
-import { publishPost as publishInstagram, publishStory as publishIGStory } from './platforms/instagram.js';
+import { publishPhotoWithLink, publishMultiPhoto, publishStory as publishFBStory } from './platforms/facebook.js';
+import { publishPost as publishInstagram, publishCarousel as publishIGCarousel, publishStory as publishIGStory, addComment as addIGComment } from './platforms/instagram.js';
 import { publishPost as publishThreads } from './platforms/threads.js';
 import { savePostMapping } from './webhooks/post-article-map.js';
 
@@ -188,6 +188,10 @@ export async function addToQueue(posts) {
       action: post.action || 'post', // 'post' or 'story'
       imageUrl: post.imageUrl || null,
       imageBuffer: post.imageBuffer ? post.imageBuffer.toString('base64') : null,
+      // Carousel support: store array of base64 image buffers
+      imageBuffers: post.imageBuffers
+        ? post.imageBuffers.map(buf => buf.toString('base64'))
+        : null,
       message: post.message || '',
       linkComment: post.linkComment || null,
       scheduledTime: post.scheduledTime || null,
@@ -252,60 +256,102 @@ export async function processQueue(tokens) {
       let result;
       const action = item.action || 'post';
 
-      // Reconstruct imageBuffer from base64 if stored
+      // Reconstruct imageBuffer(s) from base64 if stored
       const imageBuffer = item.imageBuffer
         ? Buffer.from(item.imageBuffer, 'base64')
         : null;
+      const imageBuffers = item.imageBuffers
+        ? item.imageBuffers.map(b64 => Buffer.from(b64, 'base64'))
+        : null;
+      const isCarousel = imageBuffers && imageBuffers.length >= 2;
 
       switch (item.platform) {
         case 'facebook': {
-          // FB needs a public imageUrl — upload to WP if we only have a buffer
-          let fbImageUrl = item.imageUrl;
-          let fbWpMediaId = null;
-
-          if (!fbImageUrl && imageBuffer) {
-            const wp = await uploadToWP(imageBuffer, `fv-fb-${Date.now()}.jpg`);
-            fbImageUrl = wp.publicUrl;
-            fbWpMediaId = wp.wpMediaId;
-            console.log(`[QUEUE] Uploaded FB image to WP: ${fbImageUrl}`);
-          }
-
-          if (!fbImageUrl) {
-            throw new Error('Facebook requires an image (imageUrl or imageBuffer)');
-          }
-
           if (action === 'story') {
-            result = await publishFBStory({
-              imageUrl: fbImageUrl,
+            // FB Story needs a public imageUrl
+            let fbImageUrl = item.imageUrl;
+            let fbWpMediaId = null;
+            if (!fbImageUrl && imageBuffer) {
+              const wp = await uploadToWP(imageBuffer, `fv-fb-story-${Date.now()}.jpg`);
+              fbImageUrl = wp.publicUrl;
+              fbWpMediaId = wp.wpMediaId;
+            }
+            if (!fbImageUrl) throw new Error('Facebook Story requires an image');
+            result = await publishFBStory({ imageUrl: fbImageUrl, pageToken: token });
+            if (fbWpMediaId) await deleteFromWP(fbWpMediaId);
+
+          } else if (isCarousel) {
+            // FB multi-photo carousel: upload all buffers to WP, then publish
+            console.log(`[QUEUE] FB carousel: uploading ${imageBuffers.length} slides...`);
+            const wpUploads = [];
+            for (let i = 0; i < imageBuffers.length; i++) {
+              const wp = await uploadToWP(imageBuffers[i], `fv-fb-carousel-${Date.now()}-${i}.jpg`);
+              wpUploads.push(wp);
+            }
+            const imageUrls = wpUploads.map(wp => wp.publicUrl);
+
+            result = await publishMultiPhoto({
+              imageUrls,
+              message: item.message,
               pageToken: token,
             });
+
+            // Add link as first comment if available
+            if (item.linkComment && result.postId) {
+              const { addComment: fbAddComment } = await import('./platforms/facebook.js');
+              await delay(2000);
+              await fbAddComment({ postId: result.postId, message: item.linkComment, pageToken: token });
+            }
+
+            // Clean up all temp WP media
+            for (const wp of wpUploads) {
+              await deleteFromWP(wp.wpMediaId);
+            }
+
           } else {
+            // Single image FB post
+            let fbImageUrl = item.imageUrl;
+            let fbWpMediaId = null;
+            if (!fbImageUrl && imageBuffer) {
+              const wp = await uploadToWP(imageBuffer, `fv-fb-${Date.now()}.jpg`);
+              fbImageUrl = wp.publicUrl;
+              fbWpMediaId = wp.wpMediaId;
+              console.log(`[QUEUE] Uploaded FB image to WP: ${fbImageUrl}`);
+            }
+            if (!fbImageUrl) throw new Error('Facebook requires an image (imageUrl or imageBuffer)');
+
             result = await publishPhotoWithLink({
               imageUrl: fbImageUrl,
               message: item.message,
               linkComment: item.linkComment || '',
               pageToken: token,
             });
-          }
-
-          // Clean up temp WP media if we uploaded one
-          if (fbWpMediaId) {
-            await deleteFromWP(fbWpMediaId);
+            if (fbWpMediaId) await deleteFromWP(fbWpMediaId);
           }
           break;
         }
 
         case 'instagram': {
-          if (!imageBuffer) {
-            throw new Error('Instagram requires imageBuffer (not imageUrl)');
-          }
-
           if (action === 'story') {
+            if (!imageBuffer) throw new Error('Instagram Story requires imageBuffer');
             result = await publishIGStory({
               imageBuffer,
               pageToken: token,
+              link: item.linkComment || item.meta?.slug || null,
             });
+
+          } else if (isCarousel) {
+            // IG Carousel: use the proper Graph API carousel flow
+            console.log(`[QUEUE] IG carousel: ${imageBuffers.length} slides`);
+            result = await publishIGCarousel({
+              imageBuffers,
+              caption: item.message,
+              pageToken: token,
+            });
+
           } else {
+            // Single image IG post
+            if (!imageBuffer) throw new Error('Instagram requires imageBuffer (not imageUrl)');
             result = await publishInstagram({
               imageBuffer,
               caption: item.message,
@@ -339,8 +385,9 @@ export async function processQueue(tokens) {
         meta: item.meta,
       });
 
-      // Save post-article mapping for IG posts (for "Commente INFO" webhook)
+      // IG post: save post-article mapping (NO link comment — IG comments aren't clickable)
       if (item.platform === 'instagram' && (item.action || 'post') === 'post' && result?.mediaId) {
+        // Save post-article mapping (for "Commente INFO" webhook)
         const articleUrl = item.meta?.slug || '';
         const title = item.meta?.title || '';
         if (articleUrl) {

@@ -21,7 +21,7 @@
  * - All logs use the [CROSS-PUB] prefix for easy filtering
  */
 
-import { publishStory as publishIGStory } from './platforms/instagram.js';
+import { publishStory as publishIGStory, addComment as addIGComment } from './platforms/instagram.js';
 import { publishPhoto, addComment } from './platforms/facebook.js';
 import { publishPost as publishThreadsPost } from './platforms/threads.js';
 import { readFileSync } from 'fs';

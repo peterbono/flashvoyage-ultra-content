@@ -1,0 +1,50 @@
+name: Linkbuilding — Quora FR Daily Answer
+
+on:
+  schedule:
+    # 08:00 UTC = 15:00 Bangkok = 10:00 Paris (good time for French Quora activity)
+    - cron: '0 8 * * *'
+
+  workflow_dispatch:
+
+env:
+  NODE_ENV: production
+
+jobs:
+  post-answer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm install playwright-extra puppeteer-extra-plugin-stealth
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Post Quora answer
+        env:
+          QUORA_EMAIL: ${{ secrets.QUORA_EMAIL }}
+          QUORA_PASSWORD: ${{ secrets.QUORA_PASSWORD }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/linkbuilding/quora-daily-cron.js
+
+      - name: Commit state changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/linkbuilding-week-plan.json data/linkbuilding-log.jsonl
+          git diff --staged --quiet || git commit -m "chore: quora daily post $(date +%Y-%m-%d)"
+          git push
