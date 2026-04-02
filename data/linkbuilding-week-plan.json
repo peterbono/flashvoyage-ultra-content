@@ -60,7 +60,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 1,
+      "posted": 2,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -99,6 +99,13 @@
           "hasLink": false,
           "url": "https://fr.quora.com/Combien-coûte-un-voyage-en-Thaïlande-pour-un-an/answer/Florian-Gouloubi",
           "status": "published"
+        },
+        {
+          "date": "2026-04-02T08:00:38.036Z",
+          "id": "quora-1",
+          "search": "budget voyage thailande",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     },
@@ -124,7 +131,7 @@
       ]
     }
   },
-  "total_posted": 1,
+  "total_posted": 2,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
