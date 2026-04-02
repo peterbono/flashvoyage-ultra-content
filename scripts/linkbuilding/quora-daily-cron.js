@@ -8,14 +8,16 @@
  *   QUORA_EMAIL    — Quora account email (Gmail)
  *   QUORA_PASSWORD — Quora account password
  */
-import { chromium } from 'playwright-extra';
-import stealth from 'puppeteer-extra-plugin-stealth';
+import { chromium as playwrightChromium } from 'playwright';
+import playwright from 'playwright-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+
+const chromium = playwright.chromium || playwrightChromium;
+try { chromium.use(StealthPlugin()); } catch { /* stealth not available, continue without */ }
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Stealth plugin to bypass Cloudflare
-chromium.use(stealth());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
