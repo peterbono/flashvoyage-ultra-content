@@ -179,17 +179,41 @@ export async function publishReel(videoBuffer, caption, hashtags, pageToken) {
   }
 
   const fullCaption = `${caption}\n\n${hashtags.join(' ')}`.slice(0, 2200);
-  let wpMediaId = null;
-  let fbVideoId = null;
-
   try {
-    // 1. Upload video via FB CDN relay
-    const upload = await uploadVideoForIG(videoBuffer, `fv-reel-${Date.now()}.mp4`, token);
-    wpMediaId = upload.wpMediaId;
-    fbVideoId = upload.fbVideoId;
+    // 1. Create IG REELS container with resumable upload (no URL needed)
+    console.log(`[REEL/PUB] Starting resumable upload (${videoBuffer.length} bytes)...`);
 
-    // 2. Create IG REELS container
-    const containerId = await createReelContainer(upload.publicUrl, fullCaption, token);
+    // Step 1a: Initialize upload session
+    const initRes = await fetch(`${GRAPH_API}/${IG_ID}/media`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        media_type: 'REELS',
+        upload_type: 'resumable',
+        caption: fullCaption,
+        share_to_feed: true,
+        access_token: token,
+      }),
+    });
+    const initData = await initRes.json();
+    if (initData.error) throw new Error(`IG init failed: ${initData.error.message}`);
+    const containerId = initData.id;
+    const uploadUri = initData.uri;
+    console.log(`[REEL/PUB] Container: ${containerId}`);
+
+    // Step 1b: Upload video bytes directly to IG
+    const uploadRes = await fetch(uploadUri, {
+      method: 'POST',
+      headers: {
+        'Authorization': `OAuth ${token}`,
+        'offset': '0',
+        'file_size': String(videoBuffer.length),
+        'Content-Type': 'video/mp4',
+      },
+      body: videoBuffer,
+    });
+    const uploadData = await uploadRes.json();
+    console.log(`[REEL/PUB] Upload complete:`, uploadData.success ? 'OK' : JSON.stringify(uploadData));
 
     // 3. Wait for IG to process the video (longer for video than images)
     console.log(`[REEL/PUB] Waiting for IG to process video...`);
@@ -234,7 +258,7 @@ export async function publishReel(videoBuffer, caption, hashtags, pageToken) {
     } catch { /* non-fatal */ }
 
     return { reelId, permalink };
-  } finally {
-    await cleanupMedia(wpMediaId, fbVideoId, token);
+  } catch (err) {
+    throw err;
   }
 }
