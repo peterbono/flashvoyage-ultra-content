@@ -48,7 +48,7 @@ export async function prepareClip(inputPath, outputPath, { duration, width = 108
 
   await ffmpeg([
     '-i', inputPath,
-    '-vf', `crop=ih*${width}/${height}:ih,scale=${width}:${height}`,
+    '-vf', `scale=${width}:${height}:force_original_aspect_ratio=increase,crop=${width}:${height}`,
     '-t', String(useDuration),
     '-r', '30',
     '-c:v', 'libx264',
