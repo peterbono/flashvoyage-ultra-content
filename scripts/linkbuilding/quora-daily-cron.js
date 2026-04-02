@@ -47,14 +47,14 @@ async function loginQuora(context, page) {
   }
 
   console.log('[QUORA] Navigating to Quora...');
-  await page.goto('https://fr.quora.com/', { waitUntil: 'domcontentloaded', timeout: 45000 });
+  await page.goto('https://fr.quora.com/', { timeout: 60000 }).catch(() => {});
 
-  // Wait for Cloudflare challenge to resolve (up to 30s)
-  for (let i = 0; i < 6; i++) {
-    const title = await page.title();
-    if (!title.includes('instant') && !title.includes('Cloudflare') && !title.includes('Vérification')) break;
-    console.log(`[QUORA] Cloudflare challenge... (${i + 1}/6)`);
+  // Wait for Cloudflare challenge to resolve (up to 60s)
+  for (let i = 0; i < 12; i++) {
     await page.waitForTimeout(5000);
+    const title = await page.title();
+    console.log(`[QUORA] Page title: "${title}" (${i + 1}/12)`);
+    if (!title.includes('instant') && !title.includes('Cloudflare') && !title.includes('Vérification')) break;
   }
 
   // Check if logged in

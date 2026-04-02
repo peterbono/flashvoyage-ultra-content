@@ -38,6 +38,7 @@ jobs:
       - name: Run Voyage Forum daily post
         env:
           VF_PASSWORD: ${{ secrets.VF_PASSWORD }}
+          VF_SESSION: ${{ secrets.VF_SESSION }}
         run: node scripts/linkbuilding/vf-daily-cron.js
 
       - name: Commit state changes back to repo
