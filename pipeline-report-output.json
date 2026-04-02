@@ -1,43 +1,46 @@
 {
-  "title": "Japon en solo : 4 pièges que les blogs cachent (et comment les éviter)",
-  "weightedScore": 68.2,
-  "approved": true,
+  "title": "Singapour en solo : pourquoi les guides te mentent sur le budget",
+  "weightedScore": 87.9,
+  "approved": false,
   "iterations": 2,
-  "duration": "6.3",
+  "duration": "7.7",
   "editorialMode": "evergreen",
   "targetScore": null,
   "scoreStages": [],
   "agentScores": {
     "seo-expert": {
-      "score": 72
+      "score": 94,
+      "verdict": "PASS"
     },
     "affiliation-expert": {
-      "score": 72
+      "score": 92,
+      "verdict": "PASS"
     },
     "editorial-expert": {
-      "score": 62
+      "score": 77,
+      "verdict": "FAIL"
     },
     "ux-bugs-expert": {
-      "score": 72
+      "score": 96,
+      "verdict": "PASS"
     },
     "integrity-expert": {
-      "score": 62
+      "score": 82,
+      "verdict": "FAIL"
     }
   },
-  "dryRun": false,
+  "dryRun": true,
   "criticalByGate": {},
   "iterationTelemetry": [
     {
       "iteration": 1,
       "stageTarget": null,
       "validation": {
-        "criticalByGate": {
-          "internal-links": 1
-        }
+        "criticalByGate": {}
       },
       "panel": {
-        "weightedScore": 68.2,
-        "criticalIssues": 0
+        "weightedScore": 88.2,
+        "criticalIssues": 3
       },
       "rewrite": {
         "requestedFixes": 0,
@@ -52,8 +55,8 @@
         "criticalByGate": {}
       },
       "panel": {
-        "weightedScore": 68.2,
-        "criticalIssues": 0
+        "weightedScore": 87.9,
+        "criticalIssues": 3
       },
       "rewrite": {
         "requestedFixes": 0,
@@ -62,6 +65,39 @@
       }
     }
   ],
-  "topRecurringIssues": [],
-  "timestamp": "2026-03-15T17:14:03.387Z"
+  "topRecurringIssues": [
+    {
+      "issueKey": "claim-diversity-low|thème \"coût\" apparaît dans 2+ h2 : \"pourquoi singapour coûte 23 à 31 % plus cher que prévu, et pourquoi les blogs de backpacking te le cache",
+      "count": 4
+    },
+    {
+      "issueKey": "missing-verdict-fv|verdict flash voyage absent — bloc \"si tu es [profil] → [action]\" manquant",
+      "count": 2
+    },
+    {
+      "issueKey": "missing-checklist-fv|checklist flash voyage absente — structure avant/sur place/à éviter manquante",
+      "count": 2
+    },
+    {
+      "issueKey": "low-persona-fv|seulement 0/3 tics de langage fv détectés",
+      "count": 2
+    },
+    {
+      "issueKey": "vocabulary-repetition|mots surreprésentés : \"piège\" x6 — pénalité searchllm \"redundant repetition\"",
+      "count": 2
+    },
+    {
+      "issueKey": "claim-diversity-low|thème \"nourriture\" apparaît dans 2+ h2 : \"ce que révèle ce témoignage à singapour\" et \"les coûts réels que personne ne mentionne, comparaiso",
+      "count": 2
+    },
+    {
+      "issueKey": "word-count-excess|4285 mots — dépasse le maximum de 2500. conciseness = signal seo fort (searchllm).",
+      "count": 2
+    },
+    {
+      "issueKey": "budget-contradictoire|incohérence budget: 5€/nuit vs 50€/jour",
+      "count": 2
+    }
+  ],
+  "timestamp": "2026-03-23T11:56:50.898Z"
 }

@@ -368,12 +368,24 @@ if (process.argv[1] && process.argv[1].includes('article-reel-router')) {
           break;
         }
         case 'test-all': {
-          // Route all existing articles
-          const resp = await fetch(
-            'https://flashvoyage.com/wp-json/wp/v2/posts?per_page=100&_fields=id,title,slug,excerpt',
-            { signal: AbortSignal.timeout(10000) }
-          );
-          const posts = await resp.json();
+          // Route all existing articles (paginated)
+          const allPosts = [];
+          let routePage = 1;
+          let routeTotalPages = 1;
+          while (routePage <= routeTotalPages) {
+            const resp = await fetch(
+              `https://flashvoyage.com/wp-json/wp/v2/posts?per_page=100&page=${routePage}&_fields=id,title,slug,excerpt&status=publish`,
+              { signal: AbortSignal.timeout(10000) }
+            );
+            if (!resp.ok) break;
+            const batch = await resp.json();
+            allPosts.push(...batch);
+            if (routePage === 1) {
+              routeTotalPages = parseInt(resp.headers.get('x-wp-totalpages') || '1');
+            }
+            routePage++;
+          }
+          const posts = allPosts;
           const results = posts.map(p => ({
             title: p.title?.rendered || '',
             ...routeArticleToReel({

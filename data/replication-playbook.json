@@ -1,0 +1,872 @@
+{
+  "meta": {
+    "generated": "2026-04-01T02:23:48.819583",
+    "purpose": "Replication playbook based on analysis of FlashVoyage's 4 Google top-10 ranking pages",
+    "methodology": "Full content extraction from WP REST API, structural analysis, SEO metadata extraction, pattern comparison with low-ranking pages"
+  },
+  "analysis": {
+    "top_ranking_pages": [
+      {
+        "url": "/calculateur-budget-voyage-asie/",
+        "position": 4.9,
+        "impressions": 11,
+        "clicks": 0,
+        "title_tag": "Calculateur Budget Voyage Asie 2026 — Estimez Vos Dépenses en 2 Minutes",
+        "title_tag_chars": 71,
+        "meta_description": "Calculez votre budget voyage en Asie gratuitement : vols, hébergement, nourriture, transports. Outil interactif basé sur des prix réels 2026. Testez maintenant.",
+        "meta_desc_chars": 160,
+        "content_type": "INTERACTIVE TOOL",
+        "search_intent": "TRANSACTIONAL",
+        "wp_type": "page",
+        "word_count": 177,
+        "h2_count": 0,
+        "h3_count": 0,
+        "images": 0,
+        "internal_links": 0,
+        "external_links": 6,
+        "tables": 0,
+        "has_toc": false,
+        "has_faq": false,
+        "has_comparison_tables": false,
+        "has_price_data": false,
+        "has_interactive_elements": true,
+        "has_calculator": true,
+        "affiliate_boxes": 0,
+        "travelpayouts_widgets": false,
+        "published": "2026-03-14",
+        "modified": "2026-03-31",
+        "slug_words": 5,
+        "slug_pattern": "[tool]-[topic]-[region]",
+        "unique_value": "Interactive JavaScript calculator tool — zero competition in French for this format. Google rewards tools with high engagement metrics (time on page, interaction rate). Only 177 words of text but the interactive elements make it a 'rich result' candidate.",
+        "content_structure": [
+          "Calculator interface with country/city selector",
+          "Duration slider (1-90 days)",
+          "Travel style selector (backpacker/comfort/luxury)",
+          "Real-time budget calculation",
+          "Breakdown by category (flights, accommodation, food, transport, activities)"
+        ]
+      },
+      {
+        "url": "/choisir-entre-bangkok-et-chiang-mai/",
+        "actual_url": "/chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget/",
+        "note": "Original URL redirects (301) to the actual article slug",
+        "position": 5.9,
+        "impressions": 12,
+        "clicks": 0,
+        "title_tag": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget - Flash Voyage",
+        "title_tag_chars": 107,
+        "meta_description": "Voyage chiang mai : chiffres réels, astuces d'économies et retour d'expérience pour bien gérer vos dépenses.",
+        "meta_desc_chars": 118,
+        "content_type": "COMPARISON + NICHE GUIDE",
+        "search_intent": "COMMERCIAL INVESTIGATION",
+        "wp_type": "post",
+        "word_count": 3544,
+        "h2_count": 14,
+        "h3_count": 9,
+        "images": 4,
+        "internal_links": 41,
+        "external_links": 6,
+        "tables": 1,
+        "has_toc": true,
+        "has_faq": false,
+        "has_comparison_tables": true,
+        "has_price_data": true,
+        "has_interactive_elements": false,
+        "affiliate_boxes": 8,
+        "travelpayouts_widgets": true,
+        "euro_price_mentions": 11,
+        "bold_claims": 30,
+        "tutoring_tone_instances": 153,
+        "published": "2026-03-11",
+        "modified": "2026-03-31",
+        "slug_words": 16,
+        "unique_value": "Hyper-specific niche (digital nomad + Muay Thai + budget). Targets a real Reddit community discussion. The 'tu' tone creates parasocial trust. Reddit source citation adds E-E-A-T credibility.",
+        "content_structure": [
+          "Reddit source byline (E-E-A-T signal)",
+          "Narrative hook: arriving at Bangkok airport with a plan",
+          "City-by-city deep comparison with real costs",
+          "Coworking vs cafe cost analysis",
+          "Muay Thai scene comparison",
+          "Budget comparison table",
+          "Visa duration analysis",
+          "Recommendations by profile",
+          "Summary/takeaway"
+        ]
+      },
+      {
+        "url": "/bali-lombok-gili-10-jours-itineraire-budget-2026/",
+        "position": 6.0,
+        "impressions": 10,
+        "clicks": 1,
+        "title_tag": "Bali + Lombok + Gili en 10 Jours : Itinéraire et Budget 2026 (Testé sur Place)",
+        "title_tag_chars": 78,
+        "meta_description": "Itinéraire Bali, Lombok et îles Gili en 10 jours avec budget détaillé 2026. Ferries, hébergements, spots secrets. Planifié et testé par un voyageur solo.",
+        "meta_desc_chars": 153,
+        "content_type": "ITINERARY + BUDGET GUIDE",
+        "search_intent": "INFORMATIONAL / PLANNING",
+        "wp_type": "post",
+        "word_count": 3534,
+        "h2_count": 11,
+        "h3_count": 15,
+        "images": 5,
+        "internal_links": 40,
+        "external_links": 3,
+        "tables": 3,
+        "has_toc": true,
+        "has_faq": true,
+        "has_comparison_tables": true,
+        "has_price_data": true,
+        "has_interactive_elements": false,
+        "affiliate_boxes": 6,
+        "travelpayouts_widgets": true,
+        "euro_price_mentions": 42,
+        "bold_claims": 54,
+        "tutoring_tone_instances": 68,
+        "published": "2026-03-23",
+        "modified": "2026-03-31",
+        "slug_words": 8,
+        "slug_pattern": "[destination]-[duration]-[type]-[topic]-[year]",
+        "unique_value": "Multi-island itinerary with exact daily breakdown, real ferry prices, scam warnings, hidden fees. The 'jour par jour' structure matches Google's preference for structured planning content. Year (2026) in slug signals freshness.",
+        "content_structure": [
+          "Provocative hook: 'Tous les blogs te vendent Bali comme complète. Ils ont tort.'",
+          "Day-by-day itinerary (Jour 1-10)",
+          "Inter-island transport with real prices",
+          "Detailed budget breakdown table",
+          "Hidden fees section",
+          "Comparison: Bali solo vs combo",
+          "FAQ section (5 questions)",
+          "Verdict FlashVoyage",
+          "Affiliate flight/hotel/eSIM widgets"
+        ]
+      },
+      {
+        "url": "/bali-vs-thailande-premier-voyage-asie-comparatif/",
+        "position": 7.1,
+        "impressions": 25,
+        "clicks": 1,
+        "title_tag": "Bali ou Thaïlande en 2026 : Le Comparatif Brutal d'un Expat (Prix, Visas, Galères)",
+        "title_tag_chars": 87,
+        "meta_description": "Bali ou Thaïlande pour un premier voyage en Asie ? Comparatif honnête : budget réel, visas, arnaques, plages et culture. Le verdict d'un expat basé en Asie.",
+        "meta_desc_chars": 161,
+        "content_type": "COMPARISON / VS",
+        "search_intent": "COMMERCIAL INVESTIGATION",
+        "wp_type": "post",
+        "word_count": 4238,
+        "h2_count": 14,
+        "h3_count": 13,
+        "images": 5,
+        "internal_links": 36,
+        "external_links": 0,
+        "tables": 1,
+        "has_toc": true,
+        "has_faq": true,
+        "has_comparison_tables": true,
+        "has_price_data": true,
+        "has_interactive_elements": false,
+        "affiliate_boxes": 3,
+        "travelpayouts_widgets": true,
+        "euro_price_mentions": 46,
+        "bold_claims": 110,
+        "tutoring_tone_instances": 75,
+        "published": "2026-03-23",
+        "modified": "2026-03-31",
+        "slug_words": 7,
+        "slug_pattern": "[dest1]-vs-[dest2]-[qualifier]-[topic]-[type]",
+        "unique_value": "Head-to-head destination comparison for primo-voyageurs (first-timers). Massive impression count (25) shows high search volume. 'Comparatif brutal' and 'expat' in title signal authentic experience over generic guides. Most euro price mentions (46) = data-rich content Google loves.",
+        "content_structure": [
+          "ToC (Sommaire)",
+          "Frame: 'Le faux dilemme que 90% des primo-voyageurs se posent'",
+          "Bali in 30 seconds (reality vs Instagram)",
+          "Thaïlande in 30 seconds (3 trips in 1)",
+          "Budget comparison 2026 (flights, accommodation, food, transport, activities)",
+          "Logistics comparison (visa, transport, language, health)",
+          "Experience comparison (beaches, culture, food, nightlife, nature)",
+          "Trap warnings per destination",
+          "Combined itinerary option (3 weeks)",
+          "FAQ",
+          "Verdict: 'Bali si..., Thaïlande si..., les deux si...'"
+        ]
+      }
+    ],
+    "low_ranking_page": {
+      "url": "/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
+      "position": 17.8,
+      "title_tag": "Assurance Voyage Vietnam 2026 : 3 Frais Cachés Qui Ruinent Votre Séjour (et Comment les Éviter)",
+      "title_tag_chars": 95,
+      "meta_description": "Assurance voyage Vietnam : rapatriement, franchises cachées, attestation consulaire. Ce que votre assureur ne dit pas. Guide complet pour partir couvert en 2026.",
+      "meta_desc_chars": 161,
+      "content_type": "INFORMATIONAL GUIDE",
+      "search_intent": "INFORMATIONAL",
+      "word_count": 4335,
+      "h2_count": 14,
+      "h3_count": 19,
+      "tables": 2,
+      "images": 5,
+      "internal_links": 46,
+      "euro_price_mentions": 113,
+      "why_it_underperforms": [
+        "YMYL topic (Your Money Your Life) — insurance = extremely high competition from authoritative financial sites",
+        "No unique data advantage — generic insurance comparisons are dominated by comparison sites (LeLynx, Chapka, ACS)",
+        "No interactive tool — a calculator/comparator would differentiate",
+        "Too many price mentions (113) without clear structure — feels overwhelming vs a clean comparison table",
+        "Generic topic — not niche enough. 'assurance voyage vietnam' is a head term competed by specialized insurance sites",
+        "No E-E-A-T signal — no expert byline, no personal experience claim, no credentials",
+        "Slug too long (8 words) with redundant terms"
+      ]
+    },
+    "additional_low_ranking": {
+      "url": "/thailande-6-pieges-financiers-que-les-blogs-cachent-aux-voyageurs/",
+      "content_type": "LISTICLE / WARNING",
+      "word_count": 4197,
+      "tables": 0,
+      "why_it_underperforms": [
+        "Clickbait format ('pièges que les blogs cachent') — oversaturated pattern",
+        "No comparison tables despite being about financial decisions",
+        "Slug is 11 words — too long for SEO",
+        "Generic topic not targeting a specific search query",
+        "No year in slug — doesn't signal freshness",
+        "Content focuses on fear rather than actionable planning"
+      ]
+    }
+  },
+  "winning_patterns": {
+    "summary": "The 4 ranking pages share 3 dominant content archetypes that work: (1) Interactive tools, (2) Head-to-head destination comparisons with 'vs' framing, (3) Multi-destination itineraries with exact budgets. They all satisfy DECISION-MAKING intent, not just informational browsing.",
+    "content_archetypes": {
+      "archetype_1_interactive_tool": {
+        "description": "JavaScript-based calculators/simulators embedded in WordPress pages",
+        "why_it_works": [
+          "Zero competition in French travel niche for interactive tools",
+          "High engagement metrics (time on page, interactions) signal quality to Google",
+          "Satisfies transactional intent directly — user gets an answer without leaving",
+          "Natural link magnet — other blogs reference tools",
+          "Low word count needed — the tool IS the content"
+        ],
+        "existing_examples": [
+          "/calculateur-budget-voyage-asie/ (pos 4.9)",
+          "/comparateur-cout-vie-nomade-asie/ (not yet ranking)",
+          "/simulateur-pouvoir-achat-asie/ (not yet ranking)"
+        ],
+        "replication_template": {
+          "title_format": "[Tool Name] [Topic] [Region/Country] [Year] — [Benefit in <8 words]",
+          "title_chars": "60-75",
+          "meta_desc_format": "[Action verb] votre [topic] en [region] gratuitement : [3 features]. Outil interactif basé sur des prix réels [year]. [CTA].",
+          "meta_desc_chars": "150-160",
+          "slug_format": "[tool-type]-[topic]-[region]",
+          "slug_words": "4-6",
+          "wp_type": "page (not post)",
+          "must_have": [
+            "JavaScript interactive calculator/selector",
+            "Real price data from reliable sources",
+            "Mobile-responsive design",
+            "Instant results (no form submission)",
+            "Clear CTA to explore articles",
+            "Year in title for freshness signal"
+          ]
+        }
+      },
+      "archetype_2_destination_comparison": {
+        "description": "Head-to-head 'X vs Y' destination comparisons targeting decision-making queries",
+        "why_it_works": [
+          "'vs' and 'ou' queries have high commercial investigation intent",
+          "Users searching these are close to booking — high conversion potential",
+          "Structured comparison tables are featured snippet magnets",
+          "The 'brutal/honest' framing differentiates from generic listicles",
+          "25 impressions on Bali vs Thai shows high search volume for these queries"
+        ],
+        "replication_template": {
+          "title_format": "[Dest1] ou [Dest2] [qualifier] : le comparatif [adjective] [credibility signal]",
+          "title_chars": "70-90",
+          "meta_desc_format": "[Dest1] ou [Dest2] pour [use case] ? Comparatif honnête : [3-4 comparison axes]. [Credibility claim].",
+          "meta_desc_chars": "150-165",
+          "slug_format": "[dest1]-vs-[dest2]-[qualifier]-comparatif",
+          "slug_words": "5-8",
+          "must_have": [
+            "Table of Contents (Sommaire)",
+            "At least 1 comparison table with real prices",
+            "Budget comparison section with euro amounts",
+            "Logistics comparison (visa, transport, language)",
+            "Experience comparison (beaches, culture, food)",
+            "Trap/scam warnings per destination",
+            "FAQ section (5-8 questions)",
+            "Verdict section: 'X si..., Y si..., les deux si...'",
+            "3+ Travelpayouts affiliate widgets (flights, hotels, eSIM)",
+            "3-5 images (1 per destination + comparison infographic)",
+            "30+ internal links to related articles",
+            "Year (2026) in title or slug for freshness"
+          ],
+          "h2_structure": [
+            "Le [framing] que [audience] se pose",
+            "[Dest1] en bref : ce que c'est VRAIMENT",
+            "[Dest2] en bref : [unique angle]",
+            "Comparatif budget [year] : vol, hébergement, food, transport",
+            "Facilité logistique : visa, transport, langue, santé",
+            "Le facteur expérience : plages, culture, gastronomie, nature",
+            "Les pièges de chaque destination",
+            "Peut-on combiner les deux ? Itinéraire [duration]",
+            "FAQ : [topic]",
+            "Verdict : [Dest1] si..., [Dest2] si..."
+          ],
+          "word_count_target": "3500-4500"
+        }
+      },
+      "archetype_3_itinerary_budget": {
+        "description": "Multi-destination itineraries with exact day-by-day breakdown and real budget figures",
+        "why_it_works": [
+          "Combines informational + planning intent — user wants a complete plan",
+          "Day-by-day structure matches how people actually search ('Bali 10 jours')",
+          "Exact prices in euros build trust and differentiate from vague guides",
+          "Multi-destination angle ('Bali + Lombok + Gili') captures compound queries",
+          "Hidden fees section is a trust builder — shows author honesty"
+        ],
+        "replication_template": {
+          "title_format": "[Dest1] + [Dest2] + [Dest3] en [N] jours : [type] [year] ([credibility])",
+          "title_chars": "70-85",
+          "meta_desc_format": "Itinéraire [destinations] en [N] jours avec budget détaillé [year]. [Transport type], hébergements, spots secrets. [Credibility claim].",
+          "meta_desc_chars": "150-160",
+          "slug_format": "[dest1]-[dest2]-[dest3]-[N]-jours-itineraire-budget-[year]",
+          "slug_words": "7-10",
+          "must_have": [
+            "Table of Contents",
+            "Day-by-day itinerary (Jour 1, Jour 2...)",
+            "Inter-destination transport details with prices",
+            "Budget breakdown table (total + per category)",
+            "Hidden fees section",
+            "Comparison: single-dest vs multi-dest",
+            "FAQ section (5 questions)",
+            "Verdict section",
+            "40+ euro price mentions",
+            "3+ comparison tables",
+            "5 images",
+            "35+ internal links",
+            "Affiliate widgets (flights, hotels, eSIM)"
+          ],
+          "h2_structure": [
+            "Jour par jour : l'itinéraire optimisé [destinations] en [N] jours",
+            "Transport inter-[destinations] : prix réels, arnaques, et astuces",
+            "Budget détaillé : combien coûte vraiment [trip] en [N] jours ?",
+            "Les frais cachés que personne ne mentionne",
+            "[Single dest] seul vs combo [multi-dest] : le comparatif honnête",
+            "FAQ : tes [N] questions sur l'itinéraire [destinations]",
+            "Verdict FlashVoyage"
+          ],
+          "word_count_target": "3000-4000"
+        }
+      }
+    },
+    "universal_seo_rules": {
+      "title_tag": {
+        "chars": "70-90 max",
+        "must_include": [
+          "year (2026)",
+          "primary keyword",
+          "credibility signal (Testé, Expat, Brutal, Honnête)"
+        ],
+        "avoid": [
+          "generic titles",
+          "clickbait without substance",
+          "exceeding 90 chars"
+        ]
+      },
+      "meta_description": {
+        "chars": "150-165",
+        "must_include": [
+          "primary keyword",
+          "3-4 specific value propositions",
+          "CTA or credibility claim"
+        ],
+        "formula": "[Keyword query answer]. [3 specific things covered]. [Credibility/CTA]."
+      },
+      "slug": {
+        "words": "5-8 optimal",
+        "must_include": [
+          "primary keyword",
+          "year if relevant"
+        ],
+        "avoid": [
+          "articles (le, la, les, de, du)",
+          "filler words",
+          "exceeding 10 words"
+        ]
+      },
+      "content": {
+        "word_count": "3000-4500 for articles, <500 for tools",
+        "h2_count": "10-14",
+        "h3_count": "8-15",
+        "images": "4-5",
+        "internal_links": "35-45",
+        "tables": "1-3 minimum",
+        "euro_price_mentions": "30+ for budget content",
+        "tutoring_tone": "Use 'tu/ton/tes' extensively (60+ instances)"
+      },
+      "required_sections": [
+        "Table of Contents (Sommaire via EZ-TOC)",
+        "FAQ section (5-8 questions)",
+        "Verdict/Conclusion with clear recommendation",
+        "At least 1 comparison table",
+        "Travelpayouts affiliate widgets (flights, hotels, eSIM)"
+      ]
+    },
+    "what_to_avoid": {
+      "from_low_ranking_analysis": [
+        {
+          "pattern": "YMYL topics (insurance, health, finance)",
+          "why": "Dominated by authoritative financial sites. FlashVoyage has no E-E-A-T advantage here.",
+          "examples": [
+            "/assurance-voyage-vietnam/ (pos 17.8)"
+          ]
+        },
+        {
+          "pattern": "Generic clickbait listicles ('N pièges que les blogs cachent')",
+          "why": "Oversaturated format. No specific search query target. Doesn't match decision-making intent.",
+          "examples": [
+            "/thailande-6-pieges-financiers-que-les-blogs-cachent-aux-voyageurs/"
+          ]
+        },
+        {
+          "pattern": "Slugs longer than 10 words",
+          "why": "Dilutes keyword density, harder to share, looks spammy in SERPs.",
+          "examples": [
+            "/chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget/"
+          ]
+        },
+        {
+          "pattern": "No comparison tables in comparison content",
+          "why": "Tables are featured snippet magnets. Without them, Google has no structured data to extract."
+        },
+        {
+          "pattern": "Fear-based content without actionable planning",
+          "why": "Scares readers away. Budget/itinerary content converts because it HELPS plan."
+        },
+        {
+          "pattern": "Single-destination generic guides",
+          "why": "Head terms like 'voyage Vietnam' are owned by big sites. Multi-destination or specific combos are less competitive."
+        },
+        {
+          "pattern": "No year in slug or title",
+          "why": "Google deprioritizes undated content for travel queries. '2026' signals freshness."
+        },
+        {
+          "pattern": "Vouvoyement (vous) instead of tutoiement (tu)",
+          "why": "The ranking pages all use 'tu'. It creates conversational trust and matches how younger travelers search."
+        }
+      ]
+    }
+  },
+  "replication_topics": [
+    {
+      "id": 1,
+      "archetype": "COMPARISON",
+      "target_keyword": "vietnam ou cambodge premier voyage",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "50-150",
+      "suggested_title": "Vietnam ou Cambodge en 2026 : Le Comparatif Honnête d'un Voyageur Terrain",
+      "suggested_slug": "vietnam-vs-cambodge-premier-voyage-comparatif-2026",
+      "h2_structure": [
+        "Le vrai dilemme : Vietnam ou Cambodge pour un premier séjour en Asie du Sud-Est",
+        "Vietnam en 30 secondes : ce que c'est vraiment (pas la version TikTok)",
+        "Cambodge en 30 secondes : plus qu'Angkor Wat",
+        "Comparatif budget 2026 : vol, hébergement, food, transport",
+        "Facilité logistique : visa, transport, langue, sécurité",
+        "Le facteur expérience : plages, culture, gastronomie, nature",
+        "Les pièges de chaque destination",
+        "Combiner les deux ? Itinéraire Vietnam + Cambodge en 3 semaines",
+        "FAQ : Vietnam vs Cambodge",
+        "Verdict : Vietnam si..., Cambodge si..."
+      ]
+    },
+    {
+      "id": 2,
+      "archetype": "COMPARISON",
+      "target_keyword": "koh samui ou koh lanta",
+      "estimated_difficulty": "LOW-MEDIUM",
+      "estimated_monthly_searches": "100-300",
+      "suggested_title": "Koh Samui ou Koh Lanta en 2026 : Le Comparatif Brutal (Prix, Plages, Ambiance)",
+      "suggested_slug": "koh-samui-vs-koh-lanta-comparatif-2026",
+      "h2_structure": [
+        "Le choix que tout voyageur en Thaïlande doit faire",
+        "Koh Samui en bref : luxe accessible ou piège à touristes ?",
+        "Koh Lanta en bref : paradis zen ou trop calme ?",
+        "Comparatif budget 2026 : hébergement, food, transport, activités",
+        "Plages : le classement honnête",
+        "Vie nocturne, restaurants, ambiance",
+        "Facilité d'accès depuis Bangkok",
+        "FAQ : Koh Samui vs Koh Lanta",
+        "Verdict : Samui si..., Lanta si..."
+      ]
+    },
+    {
+      "id": 3,
+      "archetype": "ITINERARY_BUDGET",
+      "target_keyword": "thailande nord 10 jours itineraire",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "80-200",
+      "suggested_title": "Nord Thaïlande en 10 Jours : Itinéraire + Budget 2026 (Chiang Mai, Chiang Rai, Pai)",
+      "suggested_slug": "nord-thailande-10-jours-itineraire-budget-2026",
+      "h2_structure": [
+        "Jour par jour : l'itinéraire nord Thaïlande en 10 jours",
+        "Transport entre Chiang Mai, Chiang Rai et Pai : prix réels",
+        "Budget détaillé : combien coûte le nord de la Thaïlande en 10 jours",
+        "Les frais cachés que personne ne mentionne",
+        "Nord seul vs nord + Bangkok + îles : le comparatif honnête",
+        "Meilleure saison pour le nord de la Thaïlande",
+        "FAQ : itinéraire nord Thaïlande",
+        "Verdict FlashVoyage"
+      ]
+    },
+    {
+      "id": 4,
+      "archetype": "COMPARISON",
+      "target_keyword": "ubud ou canggu bali",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "100-250",
+      "suggested_title": "Ubud ou Canggu en 2026 : Où Poser Tes Valises à Bali (Le Comparatif Terrain)",
+      "suggested_slug": "ubud-vs-canggu-bali-comparatif-2026",
+      "h2_structure": [
+        "Le dilemme que tout voyageur à Bali se pose",
+        "Ubud en bref : rizières, yoga et ce qu'on ne te dit pas",
+        "Canggu en bref : surf, cafés et gentrification",
+        "Comparatif budget 2026 : hébergement, food, transport",
+        "Le facteur lifestyle : pour qui ?",
+        "Les pièges de chaque zone",
+        "FAQ : Ubud vs Canggu",
+        "Verdict : Ubud si..., Canggu si..."
+      ]
+    },
+    {
+      "id": 5,
+      "archetype": "INTERACTIVE_TOOL",
+      "target_keyword": "comparateur visa asie",
+      "estimated_difficulty": "VERY LOW",
+      "estimated_monthly_searches": "30-100",
+      "suggested_title": "Comparateur Visa Asie 2026 — Trouvez Votre Visa en 30 Secondes",
+      "suggested_slug": "comparateur-visa-asie-2026",
+      "tool_description": "Interactive tool: select nationality + destination + duration -> instant visa requirements, costs, processing time",
+      "h2_structure": [
+        "N/A — tool page, minimal text"
+      ]
+    },
+    {
+      "id": 6,
+      "archetype": "ITINERARY_BUDGET",
+      "target_keyword": "vietnam 15 jours itineraire budget",
+      "estimated_difficulty": "MEDIUM",
+      "estimated_monthly_searches": "150-400",
+      "suggested_title": "Vietnam en 15 Jours : Itinéraire Nord-Sud + Budget 2026 (Testé sur Place)",
+      "suggested_slug": "vietnam-15-jours-itineraire-nord-sud-budget-2026",
+      "h2_structure": [
+        "Jour par jour : l'itinéraire Vietnam nord-sud en 15 jours",
+        "Transport Hanoi-Hué-Hoi An-HCMV : train, bus, avion — le vrai calcul",
+        "Budget détaillé : combien coûte le Vietnam en 15 jours",
+        "Les frais cachés qui explosent ton budget",
+        "Vietnam nord seul vs nord-sud combo : le comparatif",
+        "FAQ : itinéraire Vietnam 15 jours",
+        "Verdict FlashVoyage"
+      ]
+    },
+    {
+      "id": 7,
+      "archetype": "COMPARISON",
+      "target_keyword": "japon ou coree du sud premier voyage",
+      "estimated_difficulty": "LOW-MEDIUM",
+      "estimated_monthly_searches": "80-200",
+      "suggested_title": "Japon ou Corée du Sud en 2026 : Le Comparatif Budget d'un Voyageur en Asie",
+      "suggested_slug": "japon-vs-coree-du-sud-comparatif-2026",
+      "h2_structure": [
+        "Le dilemme culture pop : Japon ou Corée du Sud ?",
+        "Japon en bref : tradition, technologie et le choc des prix",
+        "Corée du Sud en bref : K-culture, street food et modernité",
+        "Comparatif budget 2026 : vol, hébergement, food, transport",
+        "Facilité logistique : visa, transport, langue",
+        "Le facteur expérience : temples, gastronomie, pop culture",
+        "Les pièges de chaque destination",
+        "FAQ : Japon vs Corée du Sud",
+        "Verdict : Japon si..., Corée si..."
+      ]
+    },
+    {
+      "id": 8,
+      "archetype": "INTERACTIVE_TOOL",
+      "target_keyword": "calculateur cout vie nomade digital",
+      "estimated_difficulty": "VERY LOW",
+      "estimated_monthly_searches": "30-80",
+      "suggested_title": "Calculateur Coût de Vie Nomade Digital 2026 — Estimez Votre Budget Mensuel",
+      "suggested_slug": "calculateur-cout-vie-nomade-digital-2026",
+      "tool_description": "Interactive tool: select city + lifestyle + coworking needs -> monthly budget with breakdown (logement, food, coworking, transport, loisirs, visa)",
+      "h2_structure": [
+        "N/A — tool page"
+      ]
+    },
+    {
+      "id": 9,
+      "archetype": "ITINERARY_BUDGET",
+      "target_keyword": "sri lanka 2 semaines itineraire budget",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "80-200",
+      "suggested_title": "Sri Lanka en 2 Semaines : Itinéraire + Budget 2026 (Train, Temples, Plages)",
+      "suggested_slug": "sri-lanka-2-semaines-itineraire-budget-2026",
+      "h2_structure": [
+        "Jour par jour : l'itinéraire Sri Lanka en 14 jours",
+        "Le train panoramique Kandy-Ella : réservation, prix, astuces",
+        "Budget détaillé : combien coûte le Sri Lanka en 2 semaines",
+        "Les frais cachés au Sri Lanka",
+        "Circuit classique vs hors sentiers : le comparatif",
+        "Meilleure période et mousson : quand partir",
+        "FAQ : itinéraire Sri Lanka",
+        "Verdict FlashVoyage"
+      ]
+    },
+    {
+      "id": 10,
+      "archetype": "COMPARISON",
+      "target_keyword": "philippines ou indonesie plages",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "60-150",
+      "suggested_title": "Philippines ou Indonésie en 2026 : Le Comparatif Plages, Budget et Galères",
+      "suggested_slug": "philippines-vs-indonesie-plages-comparatif-2026",
+      "h2_structure": [
+        "Le choix plages que personne ne t'aide vraiment à faire",
+        "Philippines en bref : 7 641 îles et le chaos logistique",
+        "Indonésie en bref : Bali, Java, Komodo et au-delà",
+        "Comparatif budget 2026 : vol, hébergement, food, transport",
+        "Comparatif plages : top 5 de chaque pays",
+        "Logistique : visa, transport inter-îles, sécurité",
+        "Les pièges de chaque archipel",
+        "FAQ : Philippines vs Indonésie",
+        "Verdict : Philippines si..., Indonésie si..."
+      ]
+    },
+    {
+      "id": 11,
+      "archetype": "ITINERARY_BUDGET",
+      "target_keyword": "japon 10 jours itineraire budget",
+      "estimated_difficulty": "MEDIUM",
+      "estimated_monthly_searches": "200-500",
+      "suggested_title": "Japon en 10 Jours : Itinéraire Tokyo-Kyoto-Osaka + Budget 2026",
+      "suggested_slug": "japon-10-jours-itineraire-budget-2026",
+      "h2_structure": [
+        "Jour par jour : l'itinéraire Japon classique en 10 jours",
+        "JR Pass 2026 : le calcul que personne ne fait correctement",
+        "Budget détaillé : combien coûte le Japon en 10 jours",
+        "Les frais cachés au Japon (IC card, temples, konbini)",
+        "Tokyo seul vs trio Tokyo-Kyoto-Osaka : le comparatif",
+        "FAQ : itinéraire Japon 10 jours",
+        "Verdict FlashVoyage"
+      ]
+    },
+    {
+      "id": 12,
+      "archetype": "COMPARISON",
+      "target_keyword": "bangkok ou ho chi minh ville",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "50-120",
+      "suggested_title": "Bangkok ou Hô Chi Minh-Ville en 2026 : Le Comparatif Street Food, Budget et Chaos",
+      "suggested_slug": "bangkok-vs-ho-chi-minh-ville-comparatif-2026",
+      "h2_structure": [
+        "Deux mégapoles, deux visions de l'Asie du Sud-Est",
+        "Bangkok en bref : temples, street food et BTS",
+        "HCMV en bref : scooters, phở et District 1",
+        "Comparatif budget 2026",
+        "Facilité logistique : visa, transport, sécurité",
+        "Le facteur expérience : gastronomie, culture, vie nocturne",
+        "Les pièges de chaque ville",
+        "FAQ",
+        "Verdict"
+      ]
+    },
+    {
+      "id": 13,
+      "archetype": "INTERACTIVE_TOOL",
+      "target_keyword": "simulateur itineraire asie",
+      "estimated_difficulty": "VERY LOW",
+      "estimated_monthly_searches": "20-60",
+      "suggested_title": "Simulateur Itinéraire Asie 2026 — Planifiez Votre Circuit en 2 Minutes",
+      "suggested_slug": "simulateur-itineraire-asie-2026",
+      "tool_description": "Interactive tool: select countries + duration + budget level -> suggested itinerary with route, transport options, estimated costs per segment",
+      "h2_structure": [
+        "N/A — tool page"
+      ]
+    },
+    {
+      "id": 14,
+      "archetype": "ITINERARY_BUDGET",
+      "target_keyword": "cambodge 10 jours itineraire budget",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "60-150",
+      "suggested_title": "Cambodge en 10 Jours : Itinéraire Angkor-Phnom Penh-Côte + Budget 2026",
+      "suggested_slug": "cambodge-10-jours-itineraire-budget-2026",
+      "h2_structure": [
+        "Jour par jour : l'itinéraire Cambodge en 10 jours",
+        "Transport Siem Reap-Phnom Penh-Sihanoukville : prix réels",
+        "Budget détaillé : combien coûte le Cambodge en 10 jours",
+        "Les frais cachés au Cambodge",
+        "Angkor seul (3j) vs circuit complet : le comparatif",
+        "FAQ : itinéraire Cambodge",
+        "Verdict FlashVoyage"
+      ]
+    },
+    {
+      "id": 15,
+      "archetype": "COMPARISON",
+      "target_keyword": "chiang mai ou pai thailande",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "60-150",
+      "suggested_title": "Chiang Mai ou Pai en 2026 : Le Comparatif Backpacker (Budget, Ambiance, Nature)",
+      "suggested_slug": "chiang-mai-vs-pai-comparatif-2026",
+      "h2_structure": [
+        "Le choix nord Thaïlande que tout backpacker se pose",
+        "Chiang Mai en bref : ville, temples, marchés de nuit",
+        "Pai en bref : hippie, cascades et rizières",
+        "Comparatif budget 2026",
+        "Comment s'y rendre (le bus de la mort)",
+        "Le facteur ambiance : pour quel profil ?",
+        "FAQ",
+        "Verdict : Chiang Mai si..., Pai si..."
+      ]
+    },
+    {
+      "id": 16,
+      "archetype": "ITINERARY_BUDGET",
+      "target_keyword": "malaisie 10 jours itineraire budget",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "50-120",
+      "suggested_title": "Malaisie en 10 Jours : Itinéraire KL-Langkawi-Penang + Budget 2026",
+      "suggested_slug": "malaisie-10-jours-itineraire-budget-2026",
+      "h2_structure": [
+        "Jour par jour : l'itinéraire Malaisie en 10 jours",
+        "Vols intérieurs AirAsia : prix réels et astuces",
+        "Budget détaillé : combien coûte la Malaisie en 10 jours",
+        "Les frais cachés en Malaisie",
+        "KL seul vs circuit KL-îles : le comparatif",
+        "FAQ : itinéraire Malaisie",
+        "Verdict FlashVoyage"
+      ]
+    },
+    {
+      "id": 17,
+      "archetype": "COMPARISON",
+      "target_keyword": "bali ou sri lanka",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "60-150",
+      "suggested_title": "Bali ou Sri Lanka en 2026 : Le Comparatif Nature, Budget et Authenticité",
+      "suggested_slug": "bali-vs-sri-lanka-comparatif-2026",
+      "h2_structure": [
+        "Deux îles, deux philosophies de voyage",
+        "Bali en bref : temples, rizières et le tourisme de masse",
+        "Sri Lanka en bref : trains, thé et éléphants",
+        "Comparatif budget 2026",
+        "Logistique : visa, transport, santé",
+        "Le facteur expérience",
+        "Les pièges de chaque destination",
+        "FAQ",
+        "Verdict"
+      ]
+    },
+    {
+      "id": 18,
+      "archetype": "INTERACTIVE_TOOL",
+      "target_keyword": "quand partir asie meilleure periode",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "100-300",
+      "suggested_title": "Quand Partir en Asie 2026 — Carte Interactive Météo + Mousson par Pays",
+      "suggested_slug": "quand-partir-asie-carte-interactive-2026",
+      "tool_description": "Interactive map: click country -> monthly weather, monsoon periods, best/worst months, crowd levels, price index. Visual calendar format.",
+      "h2_structure": [
+        "N/A — tool page"
+      ]
+    },
+    {
+      "id": 19,
+      "archetype": "ITINERARY_BUDGET",
+      "target_keyword": "thailande sud iles 2 semaines itineraire",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "80-200",
+      "suggested_title": "Îles du Sud Thaïlande en 2 Semaines : Itinéraire + Budget 2026 (Koh Samui, Koh Phangan, Koh Tao)",
+      "suggested_slug": "iles-sud-thailande-2-semaines-itineraire-budget-2026",
+      "h2_structure": [
+        "Jour par jour : l'itinéraire îles du sud en 14 jours",
+        "Ferries inter-îles : prix réels, horaires, arnaques",
+        "Budget détaillé : combien coûtent les îles du sud en 2 semaines",
+        "Les frais cachés dans les îles",
+        "1 île vs circuit 3 îles : le comparatif honnête",
+        "Pleine lune party : le vrai calcul",
+        "FAQ : itinéraire îles Thaïlande",
+        "Verdict FlashVoyage"
+      ]
+    },
+    {
+      "id": 20,
+      "archetype": "COMPARISON",
+      "target_keyword": "singapour ou hong kong escale",
+      "estimated_difficulty": "LOW",
+      "estimated_monthly_searches": "40-100",
+      "suggested_title": "Singapour ou Hong Kong pour une Escale en 2026 : Le Comparatif 48h",
+      "suggested_slug": "singapour-vs-hong-kong-escale-comparatif-2026",
+      "h2_structure": [
+        "L'escale stratégique : Singapour ou Hong Kong ?",
+        "Singapour en 48h : ce qui vaut le coup",
+        "Hong Kong en 48h : ce qui vaut le coup",
+        "Comparatif budget 48h",
+        "Facilité transit : visa, transport aéroport-centre",
+        "Gastronomie : le match",
+        "FAQ",
+        "Verdict"
+      ]
+    }
+  ],
+  "priority_execution_order": {
+    "phase_1_quick_wins": {
+      "description": "Comparison articles targeting low-competition 'vs' queries — fastest path to more top-10 rankings",
+      "topics": [
+        1,
+        2,
+        4,
+        15
+      ],
+      "rationale": "Bali vs Thailande already ranks at 7.1 with 25 impressions. Replicating this 'vs' format for other destination pairs should yield similar results within 2-4 weeks."
+    },
+    "phase_2_itinerary_expansion": {
+      "description": "Multi-destination itineraries with budget — proven format from Bali+Lombok+Gili",
+      "topics": [
+        3,
+        6,
+        9,
+        11
+      ],
+      "rationale": "Day-by-day itineraries with exact budgets are the most defensible content type. Hard for competitors to replicate without real data."
+    },
+    "phase_3_tool_moat": {
+      "description": "Interactive tools that build permanent competitive advantage",
+      "topics": [
+        5,
+        8,
+        13,
+        18
+      ],
+      "rationale": "Calculateur ranks at 4.9 with almost zero content. Tools are the highest-ROI content type — build once, rank forever."
+    },
+    "phase_4_fill_gaps": {
+      "description": "Remaining comparison and itinerary articles",
+      "topics": [
+        7,
+        10,
+        12,
+        14,
+        16,
+        17,
+        19,
+        20
+      ],
+      "rationale": "Fill out the content matrix to establish topical authority across all major Asian destinations."
+    }
+  },
+  "key_insights": {
+    "insight_1": "TOOLS RANK DISPROPORTIONATELY WELL — The calculateur page (177 words, no H2s, no images) ranks at position 4.9. This is because interactive tools have zero French-language competition and Google rewards engagement signals. Build more tools.",
+    "insight_2": "VS/COMPARISON FORMAT IS THE SWEET SPOT — 'Bali vs Thailande' has 25 impressions (highest among all 4). Comparison queries target users in the decision phase. The structured format (side-by-side tables, verdicts) maps perfectly to featured snippets.",
+    "insight_3": "ITINERARY + BUDGET = COMPOUND QUERIES — 'Bali Lombok Gili 10 jours' captures multiple long-tail queries simultaneously: 'bali 10 jours', 'lombok itineraire', 'gili budget', etc. Multi-destination slugs are keyword multipliers.",
+    "insight_4": "THE LOW-RANKING PAGES FAIL ON TOPIC SELECTION, NOT EXECUTION — Assurance Vietnam (pos 17.8) has similar structural quality (4335 words, FAQ, tables, ToC) but competes against YMYL-optimized insurance comparison sites. The content execution is fine; the topic choice is wrong.",
+    "insight_5": "YEAR IN SLUG/TITLE IS A RANKING SIGNAL — All 3 ranking articles have '2026' visible in the title tag. This signals freshness for travel queries where prices and visa rules change annually.",
+    "insight_6": "TU > VOUS — All ranking pages use the informal 'tu' tone (68-153 instances). This matches the search behavior of the target audience (25-40 year old French travelers) and creates conversational authority.",
+    "insight_7": "35+ INTERNAL LINKS IS THE BASELINE — All ranking articles have 36-41 internal links. This creates topical clusters that Google rewards. The low-ranking page actually has MORE (46) — proving links alone don't save a bad topic.",
+    "insight_8": "AFFILIATE INTEGRATION DOESN'T HURT RANKINGS — Pages with 3-8 affiliate boxes rank fine. The key is making widgets contextually relevant (flight widget after discussing flights, hotel widget after accommodation section)."
+  }
+}

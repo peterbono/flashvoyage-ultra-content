@@ -411,12 +411,24 @@ if (process.argv[1] && process.argv[1].includes('content-refresh-engine')) {
       switch (command) {
         case 'detect': {
           // Detect outdated articles (WP data only, no external APIs needed)
-          const resp = await fetch(
-            'https://flashvoyage.com/wp-json/wp/v2/posts?per_page=100&_fields=id,title,slug,content,modified',
-            { signal: AbortSignal.timeout(15000) }
-          );
-          const articles = await resp.json();
-          log(`Fetched ${articles.length} articles from WP`);
+          // Paginated fetch to get ALL published articles
+          const articles = [];
+          let detectPage = 1;
+          let detectTotalPages = 1;
+          while (detectPage <= detectTotalPages) {
+            const resp = await fetch(
+              `https://flashvoyage.com/wp-json/wp/v2/posts?per_page=100&page=${detectPage}&_fields=id,title,slug,content,modified&status=publish`,
+              { signal: AbortSignal.timeout(15000) }
+            );
+            if (!resp.ok) break;
+            const batch = await resp.json();
+            articles.push(...batch);
+            if (detectPage === 1) {
+              detectTotalPages = parseInt(resp.headers.get('x-wp-totalpages') || '1');
+            }
+            detectPage++;
+          }
+          log(`Fetched ${articles.length} articles from WP (${detectTotalPages} pages)`);
 
           const outdated = detectOutdatedPracticalInfo(articles);
           console.log(`\n=== OUTDATED PRACTICAL INFO (${outdated.length} articles) ===\n`);
@@ -430,11 +442,24 @@ if (process.argv[1] && process.argv[1].includes('content-refresh-engine')) {
           break;
         }
         case 'widgets': {
-          const resp = await fetch(
-            'https://flashvoyage.com/wp-json/wp/v2/posts?per_page=100&_fields=id,title,slug,content',
-            { signal: AbortSignal.timeout(15000) }
-          );
-          const articles = await resp.json();
+          // Paginated fetch to get ALL published articles
+          const widgetArticles = [];
+          let widgetPage = 1;
+          let widgetTotalPages = 1;
+          while (widgetPage <= widgetTotalPages) {
+            const resp = await fetch(
+              `https://flashvoyage.com/wp-json/wp/v2/posts?per_page=100&page=${widgetPage}&_fields=id,title,slug,content&status=publish`,
+              { signal: AbortSignal.timeout(15000) }
+            );
+            if (!resp.ok) break;
+            const batch = await resp.json();
+            widgetArticles.push(...batch);
+            if (widgetPage === 1) {
+              widgetTotalPages = parseInt(resp.headers.get('x-wp-totalpages') || '1');
+            }
+            widgetPage++;
+          }
+          const articles = widgetArticles;
           const missing = detectMissingWidgets(articles);
           console.log(`\n=== MISSING WIDGETS (${missing.length} articles) ===\n`);
           for (const c of missing.slice(0, 20)) {

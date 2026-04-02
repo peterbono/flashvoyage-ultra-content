@@ -522,6 +522,19 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // PHASE 1.5: Calendrier editorial — decide le type d'article et le cluster
       const calendar = new EditorialCalendar();
       const directive = calendar.getNextDirective();
+
+      // ARTICLE_HINT override — injecté par publication-queue.json via GitHub Actions
+      // Remplace le premier searchHint du calendrier éditorial sans casser le reste du cycle
+      const { ARTICLE_HINT: _articleHint, ARTICLE_TYPE_OVERRIDE: _articleTypeOverride } = await import('./config.js');
+      if (_articleHint) {
+        directive.searchHints = [_articleHint, ...directive.searchHints.slice(1)];
+        console.log(`[QUEUE] ARTICLE_HINT override: "${_articleHint}"`);
+      }
+      if (_articleTypeOverride && ['comparison', 'itinerary', 'pillar', 'support', 'news'].includes(_articleTypeOverride)) {
+        directive.articleType = _articleTypeOverride === 'comparison' ? 'pillar' : _articleTypeOverride === 'itinerary' ? 'pillar' : _articleTypeOverride;
+        console.log(`[QUEUE] ARTICLE_TYPE_OVERRIDE: "${_articleTypeOverride}" → articleType="${directive.articleType}"`);
+      }
+
       console.log(`📅 CALENDRIER EDITORIAL:`);
       console.log(`   Type: ${directive.articleType} | Cluster: ${directive.cluster.label}`);
       console.log(`   Position cycle: ${directive.cyclePosition + 1}/5 | Total publie: ${directive.totalPublished}`);

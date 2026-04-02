@@ -101,7 +101,7 @@
           "status": "published"
         },
         {
-          "date": "2026-04-02T08:00:38.036Z",
+          "date": "2026-04-02T08:02:08.336Z",
           "id": "quora-1",
           "search": "budget voyage thailande",
           "hasLink": false,
@@ -131,7 +131,7 @@
       ]
     }
   },
-  "total_posted": 2,
+  "total_posted": 3,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }

@@ -124,5 +124,1713 @@
         "detail": "Published as draft, ID: null"
       }
     ]
+  },
+  {
+    "id": "run-1773676663776",
+    "article": "Is Hoi An worth visiting for just a 1-day trip from Da Nang?",
+    "destination": "",
+    "timestamp": "2026-03-16T15:57:43.776Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 681,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 78409,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 13514,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "extractor",
+        "duration_ms": 681,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 78409,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 13514,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 90.5/100",
+        "score": 91
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published as draft, ID: null"
+      }
+    ]
+  },
+  {
+    "id": "run-1773677106070",
+    "article": "Best Dish You Ever Had in Vietnam?",
+    "destination": "vietnam",
+    "timestamp": "2026-03-16T16:05:06.070Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 922,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 90546,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 19845,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "extractor",
+        "duration_ms": 922,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 90546,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 19845,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 96.7/100",
+        "score": 97
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published as draft, ID: null"
+      }
+    ]
+  },
+  {
+    "id": "run-1773677534333",
+    "article": "What did you wish a local just told you about Vietnam?",
+    "destination": "vietnam",
+    "timestamp": "2026-03-16T16:12:14.333Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 1630,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 92730,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 12632,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "extractor",
+        "duration_ms": 1630,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 92730,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 12632,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 82.8/100",
+        "score": 83
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published as draft, ID: null"
+      }
+    ]
+  },
+  {
+    "id": "run-1773678255517",
+    "article": "Why do hotels in Vietnam ban durian in rooms?",
+    "destination": "vietnam",
+    "timestamp": "2026-03-16T16:24:15.517Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 577,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 74124,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 4867,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "extractor",
+        "duration_ms": 577,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 74124,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 4867,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 82.7/100",
+        "score": 83
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published as draft, ID: null"
+      }
+    ]
+  },
+  {
+    "id": "run-1773678878059",
+    "article": "Sri Lanka vs Philippines",
+    "destination": "",
+    "timestamp": "2026-03-16T16:34:38.059Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 233,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 65925,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 6473,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "extractor",
+        "duration_ms": 233,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 65925,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 6473,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 90/100",
+        "score": 90
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published as draft, ID: null"
+      }
+    ]
+  },
+  {
+    "id": "run-1773681312942",
+    "article": "Vietnam e-visa has wrong passport number, flight tonight, what can I do?",
+    "destination": "vietnam",
+    "timestamp": "2026-03-16T17:15:12.942Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 543,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 81070,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 7359,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "extractor",
+        "duration_ms": 543,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 81070,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 7359,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 96.5/100",
+        "score": 97
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published as draft, ID: null"
+      }
+    ]
+  },
+  {
+    "id": "run-1773682717675",
+    "article": "Is Vietnam considered part of the Chinese cultural sphere because it was ruled by China for 1000 years?",
+    "destination": "vietnam",
+    "timestamp": "2026-03-16T17:38:37.675Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 919,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 73506,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 9046,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "extractor",
+        "duration_ms": 919,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 73506,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 9046,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 80.8/100",
+        "score": 81
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published as draft, ID: null"
+      }
+    ]
+  },
+  {
+    "id": "run-1773684844097",
+    "article": "What cultural habits in Vietnam might surprise foreigners?",
+    "destination": "vietnam",
+    "timestamp": "2026-03-16T18:14:04.097Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 867,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 69492,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 14186,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "extractor",
+        "duration_ms": 867,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 69492,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 14186,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 90.1/100",
+        "score": 90
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published as draft, ID: null"
+      }
+    ]
+  },
+  {
+    "id": "run-1773686256830",
+    "article": "I ranked 300+ cities by safety score. Here are the 15 safest in the world, 4 of them are in Japan.",
+    "destination": "",
+    "timestamp": "2026-03-16T18:37:36.830Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 277,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 108640,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 16632,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "warning",
+        "detail": "Score: 67.8/100 (2 iterations)",
+        "score": 68
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "skipped",
+        "detail": "Rejected - not published"
+      }
+    ]
+  },
+  {
+    "id": "run-1773687110126",
+    "article": "Itinerary check: 12-night honeymoon, late May – early June. Tokyo → Hakone → Kyoto → Osaka. First-timers looking for feedback!",
+    "destination": "",
+    "timestamp": "2026-03-16T18:51:50.126Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 576,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 33633,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 5031,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "warning",
+        "detail": "Score: 64.0/100 (2 iterations)",
+        "score": 64
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "skipped",
+        "detail": "Rejected - not published"
+      }
+    ]
+  },
+  {
+    "id": "run-1773688223814",
+    "article": "12-day winter Kansai, Shimanami Kaido, and Shikoku road-trip",
+    "destination": "",
+    "timestamp": "2026-03-16T19:10:23.814Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 342,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 104919,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 23337,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 342,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "warning",
+        "detail": "Score: 76.8/100 (2 iterations)",
+        "score": 77
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "skipped",
+        "detail": "Rejected - not published"
+      }
+    ]
+  },
+  {
+    "id": "run-1773689127374",
+    "article": "Back from Japan: January Favorites & Recommendations",
+    "destination": "japan",
+    "timestamp": "2026-03-16T19:25:27.374Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 881,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 115371,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 8387,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 881,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "warning",
+        "detail": "Score: 75.8/100 (2 iterations)",
+        "score": 76
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "skipped",
+        "detail": "Rejected - not published"
+      }
+    ]
+  },
+  {
+    "id": "run-1773689680041",
+    "article": "Japan 14-day trip report with a logistical focus",
+    "destination": "japan",
+    "timestamp": "2026-03-16T19:34:40.041Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 771,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 93330,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 22304,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 771,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "warning",
+        "detail": "Score: 77.7/100 (2 iterations)",
+        "score": 78
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "skipped",
+        "detail": "Rejected - not published"
+      }
+    ]
+  },
+  {
+    "id": "run-1773690190438",
+    "article": "South Thailand (Krabi) Trip Report",
+    "destination": "",
+    "timestamp": "2026-03-16T19:43:10.438Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 634,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 97314,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 12266,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 634,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "warning",
+        "detail": "Score: 75.3/100 (2 iterations)",
+        "score": 75
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "skipped",
+        "detail": "Rejected - not published"
+      }
+    ]
+  },
+  {
+    "id": "run-1773690869983",
+    "article": "Trip Report: 23rd March - 9th April",
+    "destination": "",
+    "timestamp": "2026-03-16T19:54:29.984Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 353,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 103482,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 20291,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 353,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 87.7/100 (2 iterations)",
+        "score": 88
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: draft"
+      }
+    ]
+  },
+  {
+    "id": "run-1773691371157",
+    "article": "You should visit Ehime and Kochi!",
+    "destination": "",
+    "timestamp": "2026-03-16T20:02:51.157Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 809,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 127905,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 19073,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 809,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 89.2/100 (2 iterations)",
+        "score": 89
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: draft"
+      }
+    ]
+  },
+  {
+    "id": "run-1773692025408",
+    "article": "Itinerary Check: 14 days - Yamaguchi (8D) and Kyushu(6D) - Spring, March-April",
+    "destination": "",
+    "timestamp": "2026-03-16T20:13:45.408Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 309,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 97117,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 14904,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 309,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 88.7/100 (2 iterations)",
+        "score": 89
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: draft"
+      }
+    ]
+  },
+  {
+    "id": "run-1773732011966",
+    "article": "Single Certificate from Vietnam for same sex marriage in Thailand",
+    "destination": "thailand",
+    "timestamp": "2026-03-17T07:20:11.966Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 234,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 60155,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 9558,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 234,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 94.6/100 (2 iterations)",
+        "score": 95
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 3869"
+      }
+    ]
+  },
+  {
+    "id": "run-1773732292506",
+    "article": "Itinerary Check for Japan Trip in April 3rd - April 21st in Kansai Area please. Some follow up quesitons as well. Thanks very much.",
+    "destination": "japan",
+    "timestamp": "2026-03-17T07:24:52.506Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 596,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 89790,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 4400,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 596,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 94.8/100 (2 iterations)",
+        "score": 95
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 3872"
+      }
+    ]
+  },
+  {
+    "id": "run-1773732671360",
+    "article": "First Time Japan Trip Itinerary Check",
+    "destination": "japan",
+    "timestamp": "2026-03-17T07:31:11.360Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 178,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 61457,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 13109,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 178,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 94.8/100 (2 iterations)",
+        "score": 95
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 3875"
+      }
+    ]
+  },
+  {
+    "id": "run-1773732955490",
+    "article": "First trip to Japan for 3 weeks - itinerary check",
+    "destination": "japan",
+    "timestamp": "2026-03-17T07:35:55.490Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 441,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 86273,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 7309,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 441,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 94.6/100 (2 iterations)",
+        "score": 95
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 3878"
+      }
+    ]
+  },
+  {
+    "id": "run-1773733260890",
+    "article": "Thoughts on this 3-week Family Road Trip Itinerary?",
+    "destination": "",
+    "timestamp": "2026-03-17T07:41:00.890Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 482,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 83136,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 6897,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 482,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 93.3/100 (2 iterations)",
+        "score": 93
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 3881"
+      }
+    ]
+  },
+  {
+    "id": "run-1773733582014",
+    "article": "3-week Japan itinerary (Kyushu + Kansai + Tokyo, Sept 2026)",
+    "destination": "japan",
+    "timestamp": "2026-03-17T07:46:22.014Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 541,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 122115,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 8144,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 541,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 95.1/100 (1 iterations)",
+        "score": 95
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 3885"
+      }
+    ]
+  },
+  {
+    "id": "run-1773734029094",
+    "article": "Itinerary Feedback for March 4-16 Golden Route Trip",
+    "destination": "",
+    "timestamp": "2026-03-17T07:53:49.094Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 337,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 35193,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 10913,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 337,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 90.0/100 (2 iterations)",
+        "score": 90
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 3888"
+      }
+    ]
+  },
+  {
+    "id": "run-1773734397389",
+    "article": "2 weeks of Japan in June tips? (Tokyo -> Hakone -> Shimoda -> Osaka -> Kyoto)",
+    "destination": "japan",
+    "timestamp": "2026-03-17T07:59:57.390Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 410,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 116170,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 3736,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 410,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 95.1/100 (1 iterations)",
+        "score": 95
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 3892"
+      }
+    ]
+  },
+  {
+    "id": "run-1773765247862",
+    "editorialMode": "evergreen",
+    "article": "Corée du Sud en solo : 2 erreurs d'itinéraire qui coûtent cher (et comment les éviter)",
+    "destination": "shanghai",
+    "timestamp": "2026-03-17T16:34:07.862Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 96.0/100 (1 iterations)",
+        "score": 96
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: draft"
+      }
+    ]
+  },
+  {
+    "id": "run-1773765604811",
+    "editorialMode": "evergreen",
+    "article": "Japon : les 2 frais cachés qui explosent ton budget de voyage",
+    "destination": "japan",
+    "timestamp": "2026-03-17T16:40:04.811Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 95.3/100 (1 iterations)",
+        "score": 95
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: draft"
+      }
+    ]
+  },
+  {
+    "id": "run-1773766118994",
+    "editorialMode": "evergreen",
+    "article": "Vietnam en moto : les 2 pièges que les blogs cachent aux voyageurs",
+    "destination": "vietnam",
+    "timestamp": "2026-03-17T16:48:38.994Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 94.6/100 (1 iterations)",
+        "score": 95
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: draft"
+      }
+    ]
+  },
+  {
+    "id": "run-1773766540607",
+    "editorialMode": "evergreen",
+    "article": "Thaïlande : les pièges cachés de l'immigration que les guides ignorent",
+    "destination": "thailand",
+    "timestamp": "2026-03-17T16:55:40.607Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 96.5/100 (1 iterations)",
+        "score": 97
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: draft"
+      }
+    ]
+  },
+  {
+    "id": "run-1773768278566",
+    "editorialMode": "news",
+    "article": "Vietnam en moto : 3 risques que les blogs voyage cachent",
+    "destination": "vietnam",
+    "timestamp": "2026-03-17T17:24:38.566Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 93.5/100 (2 iterations)",
+        "score": 94
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 3918"
+      }
+    ]
+  },
+  {
+    "id": "run-1773768699393",
+    "editorialMode": "evergreen",
+    "article": "Vietnam 2027 : Ha Giang ou Nord-Ouest ? Le choix que tu dois faire maintenant",
+    "destination": "vietnam",
+    "timestamp": "2026-03-17T17:31:39.393Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 95.7/100 (1 iterations)",
+        "score": 96
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 3923"
+      }
+    ]
+  },
+  {
+    "id": "run-1773769934911",
+    "editorialMode": "evergreen",
+    "article": "Vietnam : l'itinéraire gastronomique que tu dois choisir (et celui que tu sacrifies)",
+    "destination": "vietnam",
+    "timestamp": "2026-03-17T17:52:14.911Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 95.1/100 (1 iterations)",
+        "score": 95
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: draft"
+      }
+    ]
+  },
+  {
+    "id": "run-1773771120648",
+    "editorialMode": "news",
+    "article": "Japon seul : 2 pièges que les blogs cachent (isolement social réel)",
+    "destination": "japan",
+    "timestamp": "2026-03-17T18:12:00.648Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 93.8/100 (2 iterations)",
+        "score": 94
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 3930"
+      }
+    ]
+  },
+  {
+    "id": "run-1773771446041",
+    "editorialMode": "evergreen",
+    "article": "Vietnam : les 3 vrais pièges que les blogs voyage cachent aux touristes",
+    "destination": "vietnam",
+    "timestamp": "2026-03-17T18:17:26.041Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 95.8/100 (1 iterations)",
+        "score": 96
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 3936"
+      }
+    ]
+  },
+  {
+    "id": "run-1773774492255",
+    "editorialMode": "news",
+    "article": "Japon 14 jours : les 10 frais cachés qui explosent ton budget",
+    "destination": "japan",
+    "timestamp": "2026-03-17T19:08:12.255Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 94.0/100 (2 iterations)",
+        "score": 94
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 4004"
+      }
+    ]
+  },
+  {
+    "id": "run-1773775031305",
+    "editorialMode": "evergreen",
+    "article": "Japon en avril-mai : 2 pièges que les blogs oublient de mentionner",
+    "destination": "japan",
+    "timestamp": "2026-03-17T19:17:11.305Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 95.4/100 (1 iterations)",
+        "score": 95
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 4010"
+      }
+    ]
+  },
+  {
+    "id": "run-1773817471258",
+    "editorialMode": "evergreen",
+    "article": "Japon en solo : 3 pièges que les blogs cachent (et comment les éviter)",
+    "destination": "japan",
+    "timestamp": "2026-03-18T07:04:31.258Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Score: 93.4/100 (2 iterations)",
+        "score": 93
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published: 4037"
+      }
+    ]
+  },
+  {
+    "id": "run-1774266966378",
+    "editorialMode": "evergreen",
+    "article": "Singapour en solo : pourquoi les guides te mentent sur le budget",
+    "destination": "singapore",
+    "timestamp": "2026-03-23T11:56:06.378Z",
+    "stages": [
+      {
+        "agent": "marie",
+        "duration_ms": 0,
+        "status": "warning",
+        "detail": "Score: 87.9/100 (2 iterations)",
+        "score": 88
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "skipped",
+        "detail": "Rejected - not published"
+      }
+    ]
+  },
+  {
+    "id": "run-1774273849473",
+    "editorialMode": "evergreen",
+    "article": "Solotravel, 23F, July - Interest in SEA?",
+    "destination": "",
+    "timestamp": "2026-03-23T13:50:49.474Z",
+    "stages": [
+      {
+        "agent": "extractor",
+        "duration_ms": 271,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 115660,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 8155,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "scout",
+        "duration_ms": 271,
+        "status": "success",
+        "detail": "Scout phase completed"
+      },
+      {
+        "agent": "extractor",
+        "duration_ms": 271,
+        "status": "pass",
+        "detail": "Completed: extractor"
+      },
+      {
+        "agent": "generator",
+        "duration_ms": 115660,
+        "status": "pass",
+        "detail": "Completed: generator"
+      },
+      {
+        "agent": "finalizer",
+        "duration_ms": 8155,
+        "status": "pass",
+        "detail": "Completed: finalizer"
+      },
+      {
+        "agent": "post-processing",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Post-processing fixers applied"
+      },
+      {
+        "agent": "publisher",
+        "duration_ms": 0,
+        "status": "success",
+        "detail": "Published as draft, ID: null"
+      }
+    ]
   }
 ]

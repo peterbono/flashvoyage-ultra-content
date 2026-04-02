@@ -308,17 +308,28 @@ async function collectTrendingSignals() {
  */
 async function findExistingArticle(topicText) {
   try {
-    const response = await fetch(
-      'https://flashvoyage.com/wp-json/wp/v2/posts?per_page=100&_fields=slug,title&status=publish',
-      { signal: AbortSignal.timeout(10000) }
-    );
-    if (!response.ok) return null;
+    // Paginated fetch to search ALL published articles
+    const allPosts = [];
+    let page = 1;
+    let totalPages = 1;
+    while (page <= totalPages) {
+      const response = await fetch(
+        `https://flashvoyage.com/wp-json/wp/v2/posts?per_page=100&page=${page}&_fields=slug,title&status=publish`,
+        { signal: AbortSignal.timeout(10000) }
+      );
+      if (!response.ok) break;
+      const batch = await response.json();
+      allPosts.push(...batch);
+      if (page === 1) {
+        totalPages = parseInt(response.headers.get('x-wp-totalpages') || '1');
+      }
+      page++;
+    }
 
-    const posts = await response.json();
     const topicLower = topicText.toLowerCase();
     const topicWords = topicLower.split(/\s+/).filter(w => w.length > 3);
 
-    for (const post of posts) {
+    for (const post of allPosts) {
       const title = (post.title?.rendered || '').toLowerCase();
       const slug = (post.slug || '').toLowerCase().replace(/-/g, ' ');
       const combined = `${title} ${slug}`;

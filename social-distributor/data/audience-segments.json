@@ -1,0 +1,231 @@
+{
+  "fetchedAt": "2026-04-01T06:29:00.768Z",
+  "days": 30,
+  "byCountry": [
+    {
+      "country": "Thailand",
+      "sessions": 51,
+      "percentage": 50.5
+    },
+    {
+      "country": "United States",
+      "sessions": 25,
+      "percentage": 24.75
+    },
+    {
+      "country": "Sweden",
+      "sessions": 6,
+      "percentage": 5.94
+    },
+    {
+      "country": "Ireland",
+      "sessions": 5,
+      "percentage": 4.95
+    },
+    {
+      "country": "Germany",
+      "sessions": 3,
+      "percentage": 2.97
+    },
+    {
+      "country": "Macao",
+      "sessions": 3,
+      "percentage": 2.97
+    },
+    {
+      "country": "China",
+      "sessions": 2,
+      "percentage": 1.98
+    },
+    {
+      "country": "French Polynesia",
+      "sessions": 1,
+      "percentage": 0.99
+    },
+    {
+      "country": "Kyrgyzstan",
+      "sessions": 1,
+      "percentage": 0.99
+    },
+    {
+      "country": "Luxembourg",
+      "sessions": 1,
+      "percentage": 0.99
+    },
+    {
+      "country": "Netherlands",
+      "sessions": 1,
+      "percentage": 0.99
+    },
+    {
+      "country": "Norway",
+      "sessions": 1,
+      "percentage": 0.99
+    },
+    {
+      "country": "Switzerland",
+      "sessions": 1,
+      "percentage": 0.99
+    }
+  ],
+  "byDevice": [
+    {
+      "device": "desktop",
+      "sessions": 55,
+      "percentage": 55.56
+    },
+    {
+      "device": "mobile",
+      "sessions": 44,
+      "percentage": 44.44
+    }
+  ],
+  "byChannel": [
+    {
+      "channel": "Direct",
+      "sessions": 39,
+      "engagedRate": 74.36
+    },
+    {
+      "channel": "Organic Social",
+      "sessions": 34,
+      "engagedRate": 23.53
+    },
+    {
+      "channel": "Referral",
+      "sessions": 13,
+      "engagedRate": 69.23
+    },
+    {
+      "channel": "Unassigned",
+      "sessions": 6,
+      "engagedRate": 0
+    },
+    {
+      "channel": "Organic Search",
+      "sessions": 5,
+      "engagedRate": 60
+    }
+  ],
+  "newVsReturning": {
+    "new": 55,
+    "returning": 37,
+    "returningRate": 40.22
+  },
+  "byDayOfWeek": [
+    {
+      "day": "Dimanche",
+      "sessions": 8
+    },
+    {
+      "day": "Lundi",
+      "sessions": 37
+    },
+    {
+      "day": "Mardi",
+      "sessions": 14
+    },
+    {
+      "day": "Mercredi",
+      "sessions": 10
+    },
+    {
+      "day": "Jeudi",
+      "sessions": 8
+    },
+    {
+      "day": "Vendredi",
+      "sessions": 7
+    },
+    {
+      "day": "Samedi",
+      "sessions": 11
+    }
+  ],
+  "byHour": [
+    {
+      "hour": "00",
+      "sessions": 1
+    },
+    {
+      "hour": "01",
+      "sessions": 1
+    },
+    {
+      "hour": "10",
+      "sessions": 3
+    },
+    {
+      "hour": "11",
+      "sessions": 1
+    },
+    {
+      "hour": "12",
+      "sessions": 2
+    },
+    {
+      "hour": "13",
+      "sessions": 1
+    },
+    {
+      "hour": "14",
+      "sessions": 2
+    },
+    {
+      "hour": "15",
+      "sessions": 6
+    },
+    {
+      "hour": "16",
+      "sessions": 2
+    },
+    {
+      "hour": "17",
+      "sessions": 13
+    },
+    {
+      "hour": "18",
+      "sessions": 21
+    },
+    {
+      "hour": "19",
+      "sessions": 8
+    },
+    {
+      "hour": "20",
+      "sessions": 6
+    },
+    {
+      "hour": "21",
+      "sessions": 4
+    },
+    {
+      "hour": "22",
+      "sessions": 7
+    },
+    {
+      "hour": "23",
+      "sessions": 2
+    },
+    {
+      "hour": "04",
+      "sessions": 5
+    },
+    {
+      "hour": "05",
+      "sessions": 2
+    },
+    {
+      "hour": "06",
+      "sessions": 3
+    },
+    {
+      "hour": "08",
+      "sessions": 6
+    },
+    {
+      "hour": "09",
+      "sessions": 4
+    }
+  ]
+}

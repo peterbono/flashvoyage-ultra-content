@@ -45,6 +45,14 @@ export const FORCE_OFFLINE = parseBool(process.env.FORCE_OFFLINE);
 export const LLM_PROVIDER = process.env.LLM_PROVIDER || 'anthropic';
 export const LLM_MODEL = process.env.LLM_MODEL || (LLM_PROVIDER === 'anthropic' ? 'claude-haiku-4-5-20251001' : 'gpt-4o');
 
+/**
+ * Publication queue overrides — injectés par publish-article.yml depuis publication-queue.json
+ * ARTICLE_HINT: mot-clé de recherche Reddit pour orienter le sujet (ex: "vietnam vs thailand 2026")
+ * ARTICLE_TYPE_OVERRIDE: 'comparison' | 'itinerary' | null (si null, le calendrier editorial décide)
+ */
+export const ARTICLE_HINT = process.env.ARTICLE_HINT || null;
+export const ARTICLE_TYPE_OVERRIDE = process.env.ARTICLE_TYPE_OVERRIDE || null;
+
 export const ENABLE_AFFILIATE_INJECTOR = parseBool(process.env.ENABLE_AFFILIATE_INJECTOR ?? '1'); // Activé par défaut
 export const ENABLE_ANTI_HALLUCINATION_BLOCKING = parseBool(process.env.ENABLE_ANTI_HALLUCINATION_BLOCKING ?? '1'); // Activé par défaut
 export const ENABLE_PIPELINE_BLOCKING = parseBool(process.env.ENABLE_PIPELINE_BLOCKING ?? '1'); // Activé par défaut

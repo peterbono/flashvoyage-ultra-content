@@ -9,10 +9,17 @@ on:
         default: '0'
         type: choice
         options: ['0', '1']
+      article_id:
+        description: 'ID article dans publication-queue.json (laisser vide = auto depuis queue)'
+        required: false
+        default: ''
 
-  # CRON DESACTIVE — decommenter quand le generateur est pret pour la prod
-  # schedule:
-  #   - cron: '0 9 * * *'  # Tous les jours a 9h UTC
+  # CRON ACTIF — 2 articles/jour, stagger par rapport aux reels (05h00/10h30/16h00 UTC)
+  # Slot 1: 03h00 UTC = 10h Paris / 10h Bangkok
+  # Slot 2: 08h00 UTC = 15h Paris / 15h Bangkok
+  schedule:
+    - cron: '0 3 * * *'
+    - cron: '0 8 * * *'
 
 jobs:
   publish:
@@ -31,7 +38,56 @@ jobs:
 
       - run: npm ci
 
+      - name: Lire la queue de publication et choisir l'article suivant
+        id: queue
+        run: |
+          QUEUE_FILE="data/publication-queue.json"
+          INPUT_ID="${{ github.event.inputs.article_id }}"
+          HOUR=$(date -u +%H)
+
+          # Déterminer le slot (morning = cron 03h, afternoon = cron 08h)
+          if [ "$HOUR" -ge 2 ] && [ "$HOUR" -lt 6 ]; then
+            SLOT="morning"
+          elif [ "$HOUR" -ge 7 ] && [ "$HOUR" -lt 11 ]; then
+            SLOT="afternoon"
+          else
+            SLOT="morning"
+          fi
+
+          if [ -n "$INPUT_ID" ]; then
+            # Force un article spécifique via workflow_dispatch
+            HINT=$(jq -r --argjson id "$INPUT_ID" '.queue[] | select(.id == $id) | .article_hint' "$QUEUE_FILE")
+            ARTICLE_TYPE=$(jq -r --argjson id "$INPUT_ID" '.queue[] | select(.id == $id) | .type' "$QUEUE_FILE")
+            TITLE=$(jq -r --argjson id "$INPUT_ID" '.queue[] | select(.id == $id) | .title_target' "$QUEUE_FILE")
+          else
+            # Auto: premier article pending dont la date <= aujourd'hui ET le slot correspond
+            TODAY=$(date -u +%Y-%m-%d)
+            HINT=$(jq -r --arg today "$TODAY" --arg slot "$SLOT" \
+              '.queue[] | select(.status == "pending" and .publish_date <= $today and .slot == $slot) | .article_hint' \
+              "$QUEUE_FILE" | head -1)
+            ARTICLE_TYPE=$(jq -r --arg today "$TODAY" --arg slot "$SLOT" \
+              '.queue[] | select(.status == "pending" and .publish_date <= $today and .slot == $slot) | .type' \
+              "$QUEUE_FILE" | head -1)
+            TITLE=$(jq -r --arg today "$TODAY" --arg slot "$SLOT" \
+              '.queue[] | select(.status == "pending" and .publish_date <= $today and .slot == $slot) | .title_target' \
+              "$QUEUE_FILE" | head -1)
+          fi
+
+          if [ -z "$HINT" ]; then
+            echo "[QUEUE] Aucun article en attente pour aujourd'hui ($TODAY, slot=$SLOT) — skip."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "[QUEUE] Prochain article: $TITLE"
+            echo "[QUEUE] Hint: $HINT"
+            echo "[QUEUE] Type: $ARTICLE_TYPE"
+            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "article_hint=$HINT" >> $GITHUB_OUTPUT
+            echo "article_type=$ARTICLE_TYPE" >> $GITHUB_OUTPUT
+            echo "title_target=$TITLE" >> $GITHUB_OUTPUT
+          fi
+
       - name: Generer et publier un article
+        if: steps.queue.outputs.skip == 'false'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
@@ -44,10 +100,34 @@ jobs:
           JIRA_API_KEY: ${{ secrets.JIRA_API_KEY }}
           JIRA_DOMAIN: ${{ secrets.JIRA_DOMAIN }}
           FLASHVOYAGE_DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
+          # Hint transmis au générateur pour orienter la recherche Reddit
+          ARTICLE_HINT: ${{ steps.queue.outputs.article_hint }}
+          ARTICLE_TYPE_OVERRIDE: ${{ steps.queue.outputs.article_type }}
         run: npm run publish:article
 
+      - name: Marquer l'article comme publié dans la queue
+        if: success() && steps.queue.outputs.skip == 'false' && github.event.inputs.dry_run != '1'
+        run: |
+          HINT="${{ steps.queue.outputs.article_hint }}"
+          QUEUE_FILE="data/publication-queue.json"
+          # Met à jour le statut du premier article pending qui correspond au hint
+          node --input-type=module -e "
+            import fs from 'fs';
+            const queue = JSON.parse(fs.readFileSync('$QUEUE_FILE', 'utf-8'));
+            const hint = process.env.HINT;
+            const idx = queue.queue.findIndex(a => a.article_hint === hint && a.status === 'pending');
+            if (idx !== -1) {
+              queue.queue[idx].status = 'published';
+              queue.queue[idx].published_at = new Date().toISOString();
+              fs.writeFileSync('$QUEUE_FILE', JSON.stringify(queue, null, 2));
+              console.log('[QUEUE] Marked as published:', queue.queue[idx].title_target);
+            } else {
+              console.warn('[QUEUE] Could not find pending article with hint:', hint);
+            }
+          " HINT="$HINT"
+
       - name: Mettre a jour le dashboard couts
-        if: success()
+        if: success() && steps.queue.outputs.skip == 'false'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
@@ -56,7 +136,7 @@ jobs:
         run: node scripts/publish-cost-dashboard.js
 
       - name: Commit state files
-        if: success()
+        if: success() && steps.queue.outputs.skip == 'false'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
