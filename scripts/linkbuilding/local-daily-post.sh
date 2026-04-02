@@ -22,9 +22,9 @@ echo "$(date): Starting local linkbuilding run" >> "$LOG"
 
 cd "$REPO_DIR" || exit 1
 
-# Run Quora
-echo "$(date): Running Quora..." >> "$LOG"
-node scripts/linkbuilding/quora-local.js >> "$LOG" 2>&1
+# Run Quora (dynamic AI-generated answers, multiple per day)
+echo "$(date): Running Quora dynamic..." >> "$LOG"
+node scripts/linkbuilding/quora-dynamic.js >> "$LOG" 2>&1
 echo "$(date): Quora done (exit $?)" >> "$LOG"
 
 # Run Voyage Forum
