@@ -49,12 +49,14 @@ export async function prepareClip(inputPath, outputPath, { duration, width = 108
   await ffmpeg([
     '-i', inputPath,
     '-vf', `scale=${width}:${height}:force_original_aspect_ratio=increase,crop=${width}:${height}`,
+    '-f', 'lavfi', '-i', 'anullsrc=r=44100:cl=stereo',  // silent audio (IG requires audio track)
     '-t', String(useDuration),
     '-r', '30',
     '-c:v', 'libx264',
     '-preset', 'fast',
     '-crf', '23',
-    '-an',
+    '-c:a', 'aac', '-b:a', '128k',
+    '-shortest',
     '-y',
     outputPath,
   ]);
