@@ -28,43 +28,60 @@ const LOG_PATH = path.join(REPO_ROOT, 'data/linkbuilding-log.jsonl');
 
 const QUORA_EMAIL = process.env.QUORA_EMAIL || '';
 const QUORA_PASSWORD = process.env.QUORA_PASSWORD || '';
+const QUORA_SESSION = process.env.QUORA_SESSION || ''; // m-b cookie value
 const DRY_RUN = process.argv.includes('--dry-run');
 
 function log(entry) {
   fs.appendFileSync(LOG_PATH, JSON.stringify(entry) + '\n');
 }
 
-async function loginQuora(page) {
-  console.log('[QUORA] Navigating to login...');
-  await page.goto('https://fr.quora.com/', { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await page.waitForTimeout(3000);
-
-  // Check if already logged in
-  const profileBtn = await page.$('[class*="profile"], [aria-label*="Profil"], a[href*="/profile/"]');
-  if (profileBtn) {
-    console.log('[QUORA] Already logged in');
-    return true;
+async function loginQuora(context, page) {
+  // Inject session cookie if available (bypasses login + Cloudflare)
+  if (QUORA_SESSION) {
+    console.log('[QUORA] Injecting session cookie...');
+    await context.addCookies([
+      { name: 'm-b', value: QUORA_SESSION, domain: '.quora.com', path: '/', httpOnly: true, secure: true, sameSite: 'None' },
+      { name: 'm-b_lax', value: QUORA_SESSION, domain: '.quora.com', path: '/', httpOnly: true, secure: true, sameSite: 'Lax' },
+      { name: 'm-b_strict', value: QUORA_SESSION, domain: '.quora.com', path: '/', httpOnly: true, secure: true, sameSite: 'Strict' },
+    ]);
   }
 
-  // Click email login
-  console.log('[QUORA] Logging in with email...');
-  const emailBtn = await page.$('text=E-mail') || await page.$('text=Adresse e-mail');
-  if (emailBtn) await emailBtn.click();
-  await page.waitForTimeout(1000);
+  console.log('[QUORA] Navigating to Quora...');
+  await page.goto('https://fr.quora.com/', { waitUntil: 'domcontentloaded', timeout: 45000 });
 
-  await page.fill('input[name="email"], input[type="email"]', QUORA_EMAIL);
-  await page.fill('input[name="password"], input[type="password"]', QUORA_PASSWORD);
-  await page.waitForTimeout(500);
+  // Wait for Cloudflare challenge to resolve (up to 30s)
+  for (let i = 0; i < 6; i++) {
+    const title = await page.title();
+    if (!title.includes('instant') && !title.includes('Cloudflare') && !title.includes('Vérification')) break;
+    console.log(`[QUORA] Cloudflare challenge... (${i + 1}/6)`);
+    await page.waitForTimeout(5000);
+  }
 
-  // Submit
-  const loginBtn = await page.$('button:has-text("Connexion")') || await page.$('button[type="submit"]');
-  if (loginBtn) await loginBtn.click();
-  await page.waitForTimeout(5000);
+  // Check if logged in
+  const pageText = await page.textContent('body').catch(() => '');
+  const isLoggedIn = pageText.includes('Florian') || pageText.includes('Ajouter une question');
+  console.log(`[QUORA] ${isLoggedIn ? 'Logged in' : 'Not logged in'} (title: ${await page.title()})`);
 
-  // Verify login
-  const url = page.url();
-  const isLoggedIn = !url.includes('login') && !url.includes('auth');
-  console.log(`[QUORA] Login ${isLoggedIn ? 'OK' : 'FAILED'} (url: ${url})`);
+  // Fallback: email/password login if session cookie didn't work
+  if (!isLoggedIn && QUORA_EMAIL && QUORA_PASSWORD) {
+    console.log('[QUORA] Trying email/password login...');
+    const emailBtn = await page.$('text=E-mail');
+    if (emailBtn) await emailBtn.click();
+    await page.waitForTimeout(1000);
+
+    const emailInput = await page.$('input[type="email"], input[name="email"]');
+    if (emailInput) {
+      await emailInput.fill(QUORA_EMAIL);
+      const pwInput = await page.$('input[type="password"]');
+      if (pwInput) await pwInput.fill(QUORA_PASSWORD);
+      const btn = await page.$('button[type="submit"], button:has-text("Connexion")');
+      if (btn) await btn.click();
+      await page.waitForTimeout(8000);
+      const url = page.url();
+      return !url.includes('login');
+    }
+  }
+
   return isLoggedIn;
 }
 
@@ -209,7 +226,7 @@ async function main() {
   const page = await context.newPage();
 
   try {
-    if (!(await loginQuora(page))) {
+    if (!(await loginQuora(context, page))) {
       log({ date: new Date().toISOString(), platform: 'quora_fr', id: next.id, status: 'login_failed' });
       process.exit(1);
     }

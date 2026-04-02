@@ -38,6 +38,7 @@ jobs:
         env:
           QUORA_EMAIL: ${{ secrets.QUORA_EMAIL }}
           QUORA_PASSWORD: ${{ secrets.QUORA_PASSWORD }}
+          QUORA_SESSION: ${{ secrets.QUORA_SESSION }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: node scripts/linkbuilding/quora-daily-cron.js
 
