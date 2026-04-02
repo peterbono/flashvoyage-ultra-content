@@ -17,14 +17,18 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const IG_ID = '17841442283434789';
+const PAGE_ID = '1068729919650308';
 const GRAPH_API = 'https://graph.facebook.com/v21.0';
 const WP_API = 'https://flashvoyage.com/wp-json/wp/v2';
 const WP_AUTH = 'Basic ' + Buffer.from('admin7817:GjLl 9W0k lKwf LSOT PXur RYGR').toString('base64');
 
-// ── WP Media helpers ─────────────────────────────────────────────────────────
+// ── Video upload via FB CDN relay ───────────────────────────────────────────
+// Meta's IG API can't reach OVH-hosted WP URLs.
+// Solution: WP upload → FB unpublished video → FB CDN URL → IG API
 
-async function uploadVideoToWP(videoBuffer, filename = 'reel-temp.mp4') {
-  const response = await fetch(`${WP_API}/media`, {
+async function uploadVideoForIG(videoBuffer, filename, pageToken) {
+  // Step 1: Upload to WP to get a public URL
+  const wpRes = await fetch(`${WP_API}/media`, {
     method: 'POST',
     headers: {
       'Authorization': WP_AUTH,
@@ -33,26 +37,55 @@ async function uploadVideoToWP(videoBuffer, filename = 'reel-temp.mp4') {
     },
     body: videoBuffer,
   });
+  const wpData = await wpRes.json();
+  if (wpData.code || !wpData.id) throw new Error(`WP upload failed: ${wpData.message || JSON.stringify(wpData)}`);
+  console.log(`[REEL/PUB] WP upload: id=${wpData.id}, url=${wpData.source_url}`);
 
-  const data = await response.json();
+  // Step 2: Upload as unpublished FB video to get CDN URL
+  const fbRes = await fetch(`${GRAPH_API}/${PAGE_ID}/videos`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      file_url: wpData.source_url,
+      published: false,
+      access_token: pageToken,
+    }),
+  });
+  const fbData = await fbRes.json();
 
-  if (data.code || !data.id) {
-    throw new Error(`WP video upload failed: ${data.message || JSON.stringify(data)}`);
+  if (fbData.error || !fbData.id) {
+    console.warn(`[REEL/PUB] FB video relay failed: ${fbData.error?.message || 'unknown'}, falling back to WP URL`);
+    return { wpMediaId: wpData.id, fbVideoId: null, publicUrl: wpData.source_url };
   }
 
-  console.log(`[REEL/PUB] Uploaded video to WP: id=${data.id}, url=${data.source_url}`);
-  return { wpMediaId: data.id, publicUrl: data.source_url };
+  // Step 3: Get FB CDN URL from the video
+  // Wait for FB to process the video
+  await delay(5000);
+  const videoRes = await fetch(`${GRAPH_API}/${fbData.id}?fields=source&access_token=${pageToken}`);
+  const videoData = await videoRes.json();
+  const cdnUrl = videoData.source;
+
+  if (!cdnUrl) {
+    console.warn(`[REEL/PUB] No CDN URL for FB video, falling back to WP URL`);
+    return { wpMediaId: wpData.id, fbVideoId: fbData.id, publicUrl: wpData.source_url };
+  }
+
+  console.log(`[REEL/PUB] FB CDN relay OK: ${cdnUrl.slice(0, 80)}...`);
+  return { wpMediaId: wpData.id, fbVideoId: fbData.id, publicUrl: cdnUrl };
 }
 
-async function deleteFromWP(wpMediaId) {
-  try {
-    await fetch(`${WP_API}/media/${wpMediaId}?force=true`, {
-      method: 'DELETE',
-      headers: { 'Authorization': WP_AUTH },
-    });
-    console.log(`[REEL/PUB] Cleaned up WP media: id=${wpMediaId}`);
-  } catch (err) {
-    console.warn(`[REEL/PUB] Failed to clean up WP media ${wpMediaId}: ${err.message}`);
+async function cleanupMedia(wpMediaId, fbVideoId, pageToken) {
+  if (wpMediaId) {
+    try {
+      await fetch(`${WP_API}/media/${wpMediaId}?force=true`, { method: 'DELETE', headers: { 'Authorization': WP_AUTH } });
+      console.log(`[REEL/PUB] Cleaned up WP media: ${wpMediaId}`);
+    } catch (err) { console.warn(`[REEL/PUB] WP cleanup failed: ${err.message}`); }
+  }
+  if (fbVideoId && pageToken) {
+    try {
+      await fetch(`${GRAPH_API}/${fbVideoId}?access_token=${pageToken}`, { method: 'DELETE' });
+      console.log(`[REEL/PUB] Cleaned up FB video: ${fbVideoId}`);
+    } catch (err) { console.warn(`[REEL/PUB] FB cleanup failed: ${err.message}`); }
   }
 }
 
@@ -147,14 +180,16 @@ export async function publishReel(videoBuffer, caption, hashtags, pageToken) {
 
   const fullCaption = `${caption}\n\n${hashtags.join(' ')}`.slice(0, 2200);
   let wpMediaId = null;
+  let fbVideoId = null;
 
   try {
-    // 1. Upload video to WP for public URL
-    const wp = await uploadVideoToWP(videoBuffer, `fv-reel-${Date.now()}.mp4`);
-    wpMediaId = wp.wpMediaId;
+    // 1. Upload video via FB CDN relay
+    const upload = await uploadVideoForIG(videoBuffer, `fv-reel-${Date.now()}.mp4`, token);
+    wpMediaId = upload.wpMediaId;
+    fbVideoId = upload.fbVideoId;
 
     // 2. Create IG REELS container
-    const containerId = await createReelContainer(wp.publicUrl, fullCaption, token);
+    const containerId = await createReelContainer(upload.publicUrl, fullCaption, token);
 
     // 3. Wait for IG to process the video (longer for video than images)
     console.log(`[REEL/PUB] Waiting for IG to process video...`);
@@ -200,9 +235,6 @@ export async function publishReel(videoBuffer, caption, hashtags, pageToken) {
 
     return { reelId, permalink };
   } finally {
-    // 6. Always clean up WP media
-    if (wpMediaId) {
-      await deleteFromWP(wpMediaId);
-    }
+    await cleanupMedia(wpMediaId, fbVideoId, token);
   }
 }
