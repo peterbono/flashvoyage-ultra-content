@@ -67,37 +67,36 @@ async function main() {
     console.log('[QUORA] Navigating...');
     await page.goto('https://fr.quora.com/', { waitUntil: 'domcontentloaded', timeout: 45000 });
 
+    // Fill login fields IMMEDIATELY (before React SPA replaces the static HTML)
+    if (QUORA_EMAIL) {
+      console.log('[QUORA] Attempting immediate login...');
+      await page.evaluate((email, password) => {
+        const emailInput = document.querySelector('input[name="email"], input[type="email"]');
+        const pwInput = document.querySelector('input[name="password"], input[type="password"]');
+        if (emailInput) emailInput.value = email;
+        if (pwInput) pwInput.value = password;
+
+        // Submit the form
+        const form = emailInput?.closest('form');
+        if (form) form.submit();
+        else {
+          // Click Se connecter button
+          for (const b of document.querySelectorAll('button')) {
+            if (b.textContent.includes('connecter')) { b.click(); break; }
+          }
+        }
+      }, QUORA_EMAIL, QUORA_PASSWORD);
+
+      await page.waitForTimeout(10000);
+      console.log(`[QUORA] After login: "${await page.title()}"`);
+    }
+
     // Wait for Cloudflare if needed
     for (let i = 0; i < 10; i++) {
       const title = await page.title();
       if (!title.includes('instant') && !title.includes('Cloudflare') && !title.includes('Vérification')) break;
       console.log(`[QUORA] CF... (${i + 1}/10)`);
       await page.waitForTimeout(5000);
-    }
-    console.log(`[QUORA] Title: "${await page.title()}"`);
-
-    // 2. Login — fields are directly in the HTML (no tab switch needed)
-    const emailInput = await page.$('input[name="email"], input[type="email"]');
-    if (emailInput && QUORA_EMAIL) {
-      console.log('[QUORA] Login fields found, filling...');
-      await emailInput.fill(QUORA_EMAIL);
-      await page.waitForTimeout(500);
-      const pwInput = await page.$('input[name="password"], input[type="password"]');
-      if (pwInput) await pwInput.fill(QUORA_PASSWORD);
-      await page.waitForTimeout(500);
-
-      // Click "Se connecter" button
-      const loginBtn = await page.evaluate(() => {
-        for (const b of document.querySelectorAll('button')) {
-          if (b.textContent.includes('connecter') || b.textContent.includes('Connexion')) { b.click(); return true; }
-        }
-        return false;
-      });
-      console.log(`[QUORA] Login submitted: ${loginBtn}`);
-      await page.waitForTimeout(8000);
-      console.log(`[QUORA] After login: "${await page.title()}"`);
-    } else {
-      console.log('[QUORA] No login fields found or already logged in');
     }
 
     // 3. Search
