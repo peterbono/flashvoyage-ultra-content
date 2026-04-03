@@ -1,16 +1,11 @@
 #!/bin/bash
-# FlashVoyage — Local daily linkbuilding poster (Quora + Voyage Forum)
-# Runs via macOS launchd cron, uses real Chrome cookies to bypass Cloudflare
+# FlashVoyage — Local daily linkbuilding (Quora + VF)
+# Runs via macOS launchd, controls real Chrome via AppleScript.
+# Requirements: Chrome open on profile "Florian", logged into Quora + VF.
 
 source "$HOME/.nvm/nvm.sh"
 nvm use 20 > /dev/null 2>&1
 
-# Ensure Chrome is running
-if ! pgrep -f "Google Chrome" > /dev/null 2>&1; then
-  echo "$(date): Chrome not running, opening..." >> "$LOG"
-  open -a "Google Chrome"
-  sleep 5
-fi
 # Load API key from zshrc (already set there)
 export ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-$(grep ANTHROPIC_API_KEY ~/.zshrc 2>/dev/null | head -1 | cut -d= -f2)}"
 
@@ -18,23 +13,58 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 LOG="$REPO_DIR/data/linkbuilding-local.log"
 
-echo "$(date): Starting local linkbuilding run" >> "$LOG"
+echo "$(date): === Starting daily linkbuilding ===" >> "$LOG"
+
+# Check Chrome is running with a window
+CHROME_WINDOWS=$(osascript -e 'tell application "Google Chrome" to count of windows' 2>/dev/null || echo "0")
+if [ "$CHROME_WINDOWS" = "0" ] || [ "$CHROME_WINDOWS" = "" ]; then
+  echo "$(date): ERROR — Chrome not running or no windows open. Skipping." >> "$LOG"
+  # Send notification
+  osascript -e 'display notification "Chrome non ouvert — linkbuilding skippé" with title "FlashVoyage" sound name "Basso"' 2>/dev/null
+  exit 1
+fi
+echo "$(date): Chrome OK ($CHROME_WINDOWS windows)" >> "$LOG"
 
 cd "$REPO_DIR" || exit 1
 
-# Run Quora (dynamic AI-generated answers, multiple per day)
-echo "$(date): Running Quora dynamic..." >> "$LOG"
-node scripts/linkbuilding/quora-dynamic.js >> "$LOG" 2>&1
-echo "$(date): Quora done (exit $?)" >> "$LOG"
+# Pull latest code
+git pull --quiet 2>/dev/null || true
 
-# Run Voyage Forum
+# Run Quora (with retry)
+echo "$(date): Running Quora..." >> "$LOG"
+node scripts/linkbuilding/quora-local.js >> "$LOG" 2>&1
+QUORA_EXIT=$?
+if [ $QUORA_EXIT -ne 0 ]; then
+  echo "$(date): Quora failed (exit $QUORA_EXIT), retrying in 30s..." >> "$LOG"
+  sleep 30
+  node scripts/linkbuilding/quora-local.js >> "$LOG" 2>&1
+  QUORA_EXIT=$?
+fi
+echo "$(date): Quora done (exit $QUORA_EXIT)" >> "$LOG"
+
+# Wait between posts (look more human)
+sleep 60
+
+# Run VF (with retry)
 echo "$(date): Running VF..." >> "$LOG"
 node scripts/linkbuilding/vf-local.js >> "$LOG" 2>&1
-echo "$(date): VF done (exit $?)" >> "$LOG"
+VF_EXIT=$?
+if [ $VF_EXIT -ne 0 ]; then
+  echo "$(date): VF failed (exit $VF_EXIT), retrying in 30s..." >> "$LOG"
+  sleep 30
+  node scripts/linkbuilding/vf-local.js >> "$LOG" 2>&1
+  VF_EXIT=$?
+fi
+echo "$(date): VF done (exit $VF_EXIT)" >> "$LOG"
 
 # Push state changes
 cd "$REPO_DIR"
 git add data/linkbuilding-week-plan.json data/linkbuilding-log.jsonl 2>/dev/null
 git diff --staged --quiet || git commit -m "chore: local linkbuilding $(date +%Y-%m-%d)" && git push 2>/dev/null
 
-echo "$(date): Done" >> "$LOG"
+# Summary notification
+SUMMARY="Quora: $([ $QUORA_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | VF: $([ $VF_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL')"
+echo "$(date): $SUMMARY" >> "$LOG"
+osascript -e "display notification \"$SUMMARY\" with title \"FlashVoyage Linkbuilding\"" 2>/dev/null
+
+echo "$(date): === Done ===" >> "$LOG"

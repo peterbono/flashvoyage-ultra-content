@@ -1,9 +1,9 @@
 name: Linkbuilding — Voyage Forum Daily Post
 
 on:
-  schedule:
-    - cron: '0 6 * * *'
-
+  # DISABLED: VF blocks datacenter IPs. Use local Mac cron.
+  # schedule:
+  #   - cron: '0 6 * * *'
   workflow_dispatch:
 
 env:

@@ -1,9 +1,9 @@
 name: Linkbuilding — Quora FR Daily Answer
 
 on:
-  schedule:
-    - cron: '0 8 * * *'
-
+  # DISABLED: Quora Cloudflare blocks all datacenter IPs. Use local Mac cron.
+  # schedule:
+  #   - cron: '0 8 * * *'
   workflow_dispatch:
 
 env:
