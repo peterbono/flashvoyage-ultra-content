@@ -64,45 +64,45 @@ async function main() {
 
   try {
     // 1. Navigate to Quora
+    // Navigate to Quora and wait for full page load
     console.log('[QUORA] Navigating...');
-    await page.goto('https://fr.quora.com/', { waitUntil: 'domcontentloaded', timeout: 45000 });
+    await page.goto('https://fr.quora.com/', { timeout: 60000 }).catch(() => {});
+    await page.waitForTimeout(8000);
 
-    // Fill login fields IMMEDIATELY (before React SPA replaces the static HTML)
-    if (QUORA_EMAIL) {
-      console.log('[QUORA] Attempting immediate login...');
-      // Use nativeInputValueSetter to trigger React state updates
-      await page.evaluate(({ email, password }) => {
-        function setReactValue(input, value) {
-          const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
-          setter.call(input, value);
-          input.dispatchEvent(new Event('input', { bubbles: true }));
-          input.dispatchEvent(new Event('change', { bubbles: true }));
-        }
-        const emailInput = document.querySelector('input[name="email"], input[type="email"]');
-        const pwInput = document.querySelector('input[name="password"], input[type="password"]');
-        if (emailInput) setReactValue(emailInput, email);
-        if (pwInput) setReactValue(pwInput, password);
-      }, { email: QUORA_EMAIL, password: QUORA_PASSWORD });
-
-      await page.waitForTimeout(500);
-
-      // Click "Se connecter"
-      await page.evaluate(() => {
-        for (const b of document.querySelectorAll('button')) {
-          if (b.textContent.includes('connecter')) { b.click(); return; }
-        }
-      });
-
-      await page.waitForTimeout(10000);
-      console.log(`[QUORA] After login: "${await page.title()}"`);
-    }
-
-    // Wait for Cloudflare if needed
-    for (let i = 0; i < 10; i++) {
+    // Wait for Cloudflare
+    for (let i = 0; i < 6; i++) {
       const title = await page.title();
-      if (!title.includes('instant') && !title.includes('Cloudflare') && !title.includes('Vérification')) break;
-      console.log(`[QUORA] CF... (${i + 1}/10)`);
+      if (!title.includes('instant') && !title.includes('Cloudflare')) break;
+      console.log(`[QUORA] CF... (${i + 1}/6)`);
       await page.waitForTimeout(5000);
+    }
+    console.log(`[QUORA] Title: "${await page.title()}"`);
+
+    // Login with Playwright's fill (simulates real keyboard input)
+    if (QUORA_EMAIL) {
+      const emailField = await page.$('input[name="email"], input[type="email"]');
+      if (emailField) {
+        console.log('[QUORA] Login fields found, typing...');
+        await emailField.click();
+        await page.keyboard.type(QUORA_EMAIL, { delay: 50 });
+        await page.waitForTimeout(300);
+
+        const pwField = await page.$('input[name="password"], input[type="password"]');
+        if (pwField) {
+          await pwField.click();
+          await page.keyboard.type(QUORA_PASSWORD, { delay: 50 });
+        }
+        await page.waitForTimeout(300);
+
+        // Click login button
+        const loginBtn = await page.$('button:has-text("connecter")') || await page.$('button:has-text("Connexion")');
+        if (loginBtn) await loginBtn.click();
+
+        await page.waitForTimeout(10000);
+        console.log(`[QUORA] After login: "${await page.title()}"`);
+      } else {
+        console.log('[QUORA] No email field — SPA may not have loaded');
+      }
     }
 
     // 3. Search
