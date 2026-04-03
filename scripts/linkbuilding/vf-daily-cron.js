@@ -26,6 +26,7 @@ const ACCOUNT = {
   password: process.env.VF_PASSWORD || '',
 };
 const SBR_AUTH = process.env.BRIGHTDATA_SBR_AUTH || '';
+const VF_SESSION = process.env.VF_SESSION || '';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
@@ -42,7 +43,25 @@ const CONTENT_MAP = {
   'bali-indonesie-comparatif': `<b>Bali vs Tha\u00eflande, mon verdict honn\u00eate</b><br><br>Apr\u00e8s avoir fait les deux plusieurs fois, voil\u00e0 mon avis sans langue de bois :<br><br>Plages : Tha\u00eflande gagne (les \u00eeles du Sud sont incomparables, Koh Lipe, Koh Phi Phi).<br>Bouffe : Tha\u00eflande gagne (street food incroyable, vari\u00e9, 1-2 euros le plat).<br>Culture : Bali gagne (les temples, les rizi\u00e8res de Tegallalang, les c\u00e9r\u00e9monies).<br>Budget : Tha\u00eflande un peu moins cher (25 vs 30 euros/jour en backpacker).<br>Libert\u00e9 : Bali gagne (scooter = la vraie libert\u00e9, tout est accessible).<br><br>Mon conseil pour un premier voyage : commencez par la Tha\u00eflande. L'infrastructure est plus facile, il y a plus de voyageurs solo, et le budget est plus pr\u00e9visible.<br><br>Bali c'est g\u00e9nial mais il faut un scooter et \u00eatre plus d\u00e9brouillard. Et honn\u00eatement, \u00e9vitez Kuta et Seminyak si vous cherchez l'authenticit\u00e9. Ubud + Amed + Nusa Penida, c'est le vrai Bali.<br><br>J'avais trouv\u00e9 un comparatif assez d\u00e9taill\u00e9 ici si \u00e7a int\u00e9resse quelqu'un : https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/?utm_source=voyageforum&utm_medium=community&utm_campaign=s1`,
 };
 
-async function login(page) {
+async function login(context, page) {
+  // Try session cookie first (works with Bright Data, no password typing needed)
+  if (VF_SESSION) {
+    console.log('[VF] Injecting session cookie...');
+    await context.addCookies([
+      { name: 'PHPSESSID', value: VF_SESSION, domain: 'voyageforum.com', path: '/' },
+      { name: 'vf_session', value: VF_SESSION, domain: 'voyageforum.com', path: '/' },
+      { name: 'vf_session', value: VF_SESSION, domain: '.voyageforum.com', path: '/' },
+    ]);
+    await page.goto('https://voyageforum.com/', { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await new Promise(r => setTimeout(r, 3000));
+    const body = await page.textContent('body').catch(() => '');
+    if (body.includes('FloAsie') || body.includes('Mon profil')) {
+      console.log('[VF] Logged in via session cookie');
+      return true;
+    }
+    console.log('[VF] Session cookie expired, trying password...');
+  }
+
   await page.goto('https://voyageforum.com/v.f?do=me_connecter;', { waitUntil: 'networkidle', timeout: 30000 }).catch(() => {});
   await new Promise(r => setTimeout(r, 5000));
 
@@ -175,7 +194,7 @@ async function main() {
   const page = await context.newPage();
 
   try {
-    if (!(await login(page))) {
+    if (!(await login(context, page))) {
       console.log('[CRON] Login failed');
       log({ date: today, status: 'login_failed', thread: threadSlug });
       process.exit(1);

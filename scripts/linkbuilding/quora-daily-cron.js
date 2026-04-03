@@ -15,14 +15,14 @@ const CONTENT_PATH = path.join(REPO_ROOT, 'data/linkbuilding-content-ready.json'
 const LOG_PATH = path.join(REPO_ROOT, 'data/linkbuilding-log.jsonl');
 
 const SBR_AUTH = process.env.BRIGHTDATA_SBR_AUTH || '';
-const QUORA_EMAIL = process.env.QUORA_EMAIL || '';
-const QUORA_PASSWORD = process.env.QUORA_PASSWORD || '';
+const QUORA_SESSION = process.env.QUORA_SESSION || ''; // m-b cookie
 const DRY_RUN = process.argv.includes('--dry-run');
 
 function log(entry) { fs.appendFileSync(LOG_PATH, JSON.stringify(entry) + '\n'); }
 
 async function main() {
   if (!SBR_AUTH) { console.error('[QUORA] BRIGHTDATA_SBR_AUTH required'); process.exit(1); }
+  if (!QUORA_SESSION) { console.error('[QUORA] QUORA_SESSION (m-b cookie) required'); process.exit(1); }
 
   const content = JSON.parse(fs.readFileSync(CONTENT_PATH, 'utf8'));
   const plan = JSON.parse(fs.readFileSync(PLAN_PATH, 'utf8'));
@@ -42,43 +42,18 @@ async function main() {
   const page = await context.newPage();
 
   try {
-    // 1. Go to Quora and login
+    // 1. Inject session cookie and navigate
+    console.log('[QUORA] Injecting session cookie...');
+    await context.addCookies([
+      { name: 'm-b', value: QUORA_SESSION, domain: '.quora.com', path: '/', secure: true, httpOnly: true, sameSite: 'None' },
+      { name: 'm-b_lax', value: QUORA_SESSION, domain: '.quora.com', path: '/', secure: true, httpOnly: true, sameSite: 'Lax' },
+      { name: 'm-b_strict', value: QUORA_SESSION, domain: '.quora.com', path: '/', secure: true, httpOnly: true, sameSite: 'Strict' },
+    ]);
+
     console.log('[QUORA] Navigating to Quora...');
     await page.goto('https://fr.quora.com/', { waitUntil: 'domcontentloaded', timeout: 45000 });
     await page.waitForTimeout(5000);
     console.log(`[QUORA] Title: "${await page.title()}"`);
-
-    // Check if login needed
-    const needsLogin = await page.evaluate(() => !document.body.textContent.includes('Ajouter une question'));
-    if (needsLogin && QUORA_EMAIL) {
-      console.log('[QUORA] Logging in...');
-
-      // Click "E-mail" tab if present
-      const emailBtn = await page.$('text=E-mail') || await page.$('text=Adresse e-mail');
-      if (emailBtn) { await emailBtn.click(); await page.waitForTimeout(2000); }
-
-      // Wait for and fill email
-      try {
-        await page.waitForSelector('input[type="email"], input[name="email"]', { timeout: 10000 });
-        await page.fill('input[type="email"], input[name="email"]', QUORA_EMAIL);
-        await page.waitForTimeout(500);
-
-        // Fill password
-        const pwInput = await page.$('input[type="password"]');
-        if (pwInput) {
-          await pwInput.fill(QUORA_PASSWORD);
-          await page.waitForTimeout(500);
-        }
-
-        // Submit
-        const btn = await page.$('button[type="submit"]') || await page.$('button:has-text("Connexion")');
-        if (btn) await btn.click();
-        await page.waitForTimeout(8000);
-      } catch (loginErr) {
-        console.log(`[QUORA] Login form issue: ${loginErr.message.split('\n')[0]}`);
-      }
-      console.log(`[QUORA] After login: "${await page.title()}"`);
-    }
 
     // 2. Search for question
     console.log(`[QUORA] Searching: "${next.search_query}"`);
