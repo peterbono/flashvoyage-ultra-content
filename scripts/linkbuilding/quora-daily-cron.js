@@ -42,16 +42,19 @@ async function main() {
   const page = await context.newPage();
 
   try {
-    // 1. Inject session cookie and navigate
-    console.log('[QUORA] Injecting session cookie...');
-    await context.addCookies([
-      { name: 'm-b', value: QUORA_SESSION, domain: '.quora.com', path: '/', secure: true, httpOnly: true, sameSite: 'None' },
-      { name: 'm-b_lax', value: QUORA_SESSION, domain: '.quora.com', path: '/', secure: true, httpOnly: true, sameSite: 'Lax' },
-      { name: 'm-b_strict', value: QUORA_SESSION, domain: '.quora.com', path: '/', secure: true, httpOnly: true, sameSite: 'Strict' },
-    ]);
-
+    // 1. Navigate first, then inject session cookie via JS
     console.log('[QUORA] Navigating to Quora...');
     await page.goto('https://fr.quora.com/', { waitUntil: 'domcontentloaded', timeout: 45000 });
+    await page.waitForTimeout(3000);
+
+    console.log('[QUORA] Injecting session cookie via JS...');
+    await page.evaluate((session) => {
+      document.cookie = `m-b=${session}; domain=.quora.com; path=/; secure; max-age=31536000`;
+      document.cookie = `m-b_lax=${session}; domain=.quora.com; path=/; secure; samesite=lax; max-age=31536000`;
+    }, QUORA_SESSION);
+
+    // Reload to apply cookie
+    await page.reload({ waitUntil: 'domcontentloaded', timeout: 30000 });
     await page.waitForTimeout(5000);
     console.log(`[QUORA] Title: "${await page.title()}"`);
 

@@ -46,13 +46,14 @@ const CONTENT_MAP = {
 async function login(context, page) {
   // Try session cookie first (works with Bright Data, no password typing needed)
   if (VF_SESSION) {
-    console.log('[VF] Injecting session cookie...');
-    await context.addCookies([
-      { name: 'PHPSESSID', value: VF_SESSION, domain: 'voyageforum.com', path: '/' },
-      { name: 'vf_session', value: VF_SESSION, domain: 'voyageforum.com', path: '/' },
-      { name: 'vf_session', value: VF_SESSION, domain: '.voyageforum.com', path: '/' },
-    ]);
+    console.log('[VF] Injecting session cookie via JS...');
     await page.goto('https://voyageforum.com/', { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await new Promise(r => setTimeout(r, 2000));
+    await page.evaluate((session) => {
+      document.cookie = `PHPSESSID=${session}; path=/`;
+      document.cookie = `vf_session=${session}; path=/`;
+    }, VF_SESSION);
+    await page.reload({ waitUntil: 'domcontentloaded', timeout: 30000 });
     await new Promise(r => setTimeout(r, 3000));
     const body = await page.textContent('body').catch(() => '');
     if (body.includes('FloAsie') || body.includes('Mon profil')) {
