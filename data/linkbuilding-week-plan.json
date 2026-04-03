@@ -60,7 +60,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 2,
+      "posted": 3,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -106,6 +106,13 @@
           "search": "budget voyage thailande",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-03T18:20:43.928Z",
+          "id": "quora-2",
+          "search": "bali ou thailande premier voyage asie",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     },
@@ -131,7 +138,7 @@
       ]
     }
   },
-  "total_posted": 3,
+  "total_posted": 4,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
