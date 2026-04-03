@@ -81,6 +81,89 @@ function logReelPublished(reelId, postId, format) {
   appendFileSync(REEL_LOG_PATH, JSON.stringify(entry) + '\n');
 }
 
+// ── City-level variety (30% of reels) ────────────────────────────────────────
+
+/**
+ * Call Haiku to extract the most interesting city from an article.
+ * Returns the city name (e.g. "Bangkok", "Ubud") or null if none found.
+ *
+ * @param {string} rawText - Article plain text (truncated to 3000 chars)
+ * @param {string} title - Article title
+ * @returns {Promise<string|null>}
+ */
+async function extractCityFocus(rawText, title) {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    log('ANTHROPIC_API_KEY not set — skipping city extraction');
+    return null;
+  }
+
+  const text = (rawText || '').slice(0, 3000);
+  if (text.length < 200) return null; // too short to extract anything meaningful
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 60,
+        messages: [{
+          role: 'user',
+          content: `From this travel article, extract the single most interesting/specific CITY or TOWN mentioned (not the country).
+Return ONLY the city name in French (with accents), nothing else. If no specific city is mentioned, return "NONE".
+
+TITLE: ${title}
+TEXT: ${text}`,
+        }],
+      }),
+    });
+
+    if (!response.ok) {
+      log(`City extraction API error: ${response.status}`);
+      return null;
+    }
+
+    const data = await response.json();
+    const city = (data.content?.[0]?.text || '').trim();
+
+    if (!city || city === 'NONE' || city.length > 40) return null;
+
+    log(`City focus extracted: "${city}" (from: "${(title || '').slice(0, 50)}")`);
+    return city;
+  } catch (err) {
+    log(`City extraction failed: ${err.message}`);
+    return null;
+  }
+}
+
+/**
+ * Optionally enrich an article with a city focus (30% probability).
+ * When triggered, calls Haiku to extract a city and sets article.cityFocus.
+ * Also prepends a city hint to the title so downstream generators pick it up.
+ */
+async function maybeAddCityFocus(article) {
+  // 30% chance of city-level reel
+  if (Math.random() > 0.30) {
+    log('City focus: skipped (country-level reel)');
+    return article;
+  }
+
+  const city = await extractCityFocus(article.rawText, article.title);
+  if (!city) return article;
+
+  article.cityFocus = city;
+  // Prepend city hint so generators (which read article.title) focus on it
+  article.originalTitle = article.title;
+  article.title = `${city} — ${article.title}`;
+  log(`Article enriched with city focus: "${city}"`);
+  return article;
+}
+
 // ── Article fetching ─────────────────────────────────────────────────────────
 
 async function fetchArticle(postId = null) {
@@ -88,7 +171,8 @@ async function fetchArticle(postId = null) {
 
   if (postId) {
     log(`Fetching article #${postId}...`);
-    return extractFromId(parseInt(postId, 10));
+    const article = await extractFromId(parseInt(postId, 10));
+    return maybeAddCityFocus(article);
   }
 
   // Pick a random article (diversify destinations instead of always using latest)
@@ -120,7 +204,8 @@ async function fetchArticle(postId = null) {
   const pool = available.length > 0 ? available : posts;
   const picked = pool[Math.floor(Math.random() * pool.length)];
   log(`Random article #${picked.id}: ${(picked.title?.rendered || '').slice(0, 60)} (pool: ${pool.length}/${posts.length})`);
-  return extractFromId(picked.id);
+  const article = await extractFromId(picked.id);
+  return maybeAddCityFocus(article);
 }
 
 // ── v2 Format Router ─────────────────────────────────────────────────────────
@@ -517,4 +602,4 @@ if (isDirectRun) {
 
 // ── Programmatic API ─────────────────────────────────────────────────────────
 
-export { routeToComposer, fetchArticle, publishIfRequested, modeFormatTest, modeFormatPublish };
+export { routeToComposer, fetchArticle, publishIfRequested, modeFormatTest, modeFormatPublish, extractCityFocus };

@@ -153,12 +153,51 @@ async function main() {
     if (!used) { console.log('[VF] Editor not loaded'); return; }
     console.log(`[VF] Content set via ${used}`);
 
-    // 5. Submit
-    chromeJS('(function(){ var b = document.querySelector("#sentButton"); if (b) b.click(); })()');
-    sleep(5000);
+    // 5. Submit — set hidden field + jQuery trigger or direct form.submit()
+    const submitResult = chromeJS(`
+(function() {
+  var form = document.getElementById('post_write_form');
+  if (!form) return 'NO_FORM';
+
+  // Ensure the hidden "do" field is set (VF requires this for reply processing)
+  var doField = form.querySelector('input[name="do"]');
+  if (!doField) {
+    doField = document.createElement('input');
+    doField.type = 'hidden';
+    doField.name = 'do';
+    form.appendChild(doField);
+  }
+  doField.value = 'post_reply_post';
+
+  // Also sync iframe/ae content back to the hidden textarea if ae exists
+  if (typeof ae !== 'undefined' && ae && ae.getContent) {
+    var ta = form.querySelector('textarea[name="message"]') || form.querySelector('textarea');
+    if (ta) ta.value = ae.getContent();
+  }
+
+  // Try jQuery trigger first (VF binds handlers via jQuery)
+  if (typeof jQuery !== 'undefined') {
+    try { jQuery('#sentButton').trigger('click'); return 'jquery_click'; } catch(e) {}
+  }
+
+  // Fallback: direct form.submit() bypasses jQuery handlers but still POSTs
+  try { form.submit(); return 'form_submit'; } catch(e) { return 'SUBMIT_ERR:' + e.message; }
+})()
+`);
+    console.log(`[VF] Submit method: ${submitResult}`);
+    sleep(8000);
 
     const title = chromeTitle();
-    const success = title.includes('envoyée') || title.includes('Votre réponse') || title.includes('Message posté');
+    const titleLower = title.toLowerCase();
+    // Success = page navigated away from the reply form (title no longer contains "répondre"/"repondre")
+    // OR page title contains a known success indicator
+    const hasSuccessKeyword = titleLower.includes('envoyée') || titleLower.includes('envoyee')
+      || titleLower.includes('votre réponse') || titleLower.includes('votre reponse')
+      || titleLower.includes('message posté') || titleLower.includes('message poste')
+      || titleLower.includes('forum/');
+    const stillOnReplyForm = titleLower.includes('répondre') || titleLower.includes('repondre')
+      || titleLower.includes('post_reply_write');
+    const success = hasSuccessKeyword || !stillOnReplyForm;
     console.log(`[VF] ${success ? 'SUCCESS' : 'FAILED'} (title: ${title})`);
 
     log({ date: new Date().toISOString(), platform: 'voyageforum', thread: threadSlug, topic: todayPost.topic, hasLink: todayPost.hasLink, success });
