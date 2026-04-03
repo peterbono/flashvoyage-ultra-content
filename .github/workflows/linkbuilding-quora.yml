@@ -1,9 +1,9 @@
 name: Linkbuilding — Quora FR Daily Answer
 
 on:
-  schedule:
-    # 08:00 UTC = 15:00 Bangkok = 10:00 Paris (good time for French Quora activity)
-    - cron: '0 8 * * *'
+  # DISABLED: Cloudflare blocks GitHub Actions IPs. Use local cron instead.
+  # schedule:
+  #   - cron: '0 8 * * *'
 
   workflow_dispatch:
 

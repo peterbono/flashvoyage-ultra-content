@@ -1,9 +1,9 @@
 name: Linkbuilding — Voyage Forum Daily Post
 
 on:
-  schedule:
-    # 06:00 UTC = 13:00 Bangkok (good time for French travel forum activity)
-    - cron: '0 6 * * *'
+  # DISABLED: VF login requires real browser session. Use local cron instead.
+  # schedule:
+  #   - cron: '0 6 * * *'
 
   workflow_dispatch:
 
