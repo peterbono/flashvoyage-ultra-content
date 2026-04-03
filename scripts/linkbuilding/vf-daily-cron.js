@@ -63,13 +63,19 @@ async function login(context, page) {
     console.log('[VF] Session cookie expired, trying password...');
   }
 
-  await page.goto('https://voyageforum.com/v.f?do=me_connecter;', { waitUntil: 'networkidle', timeout: 30000 }).catch(() => {});
-  await new Promise(r => setTimeout(r, 5000));
+  await page.goto('https://voyageforum.com/v.f?do=me_connecter;', { timeout: 30000 }).catch(() => {});
+  await new Promise(r => setTimeout(r, 8000));
+
+  const loginTitle = await page.title();
+  console.log(`[VF] Login page title: "${loginTitle}"`);
+  console.log(`[VF] Login page URL: ${page.url()}`);
 
   // Try multiple selectors for username field
   const usernameField = await page.$('#username') || await page.$('input[name="username"]') || await page.$('input[name="pseudo"]') || await page.$('input[type="text"]');
   if (!usernameField) {
-    console.log('[VF] Login form not found. Page title:', await page.title());
+    // Debug: what's on the page?
+    const bodyLen = await page.evaluate(() => document.body?.textContent?.length || 0);
+    console.log(`[VF] Login form not found. Body length: ${bodyLen}`);
     return false;
   }
 
