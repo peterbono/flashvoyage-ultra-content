@@ -70,22 +70,20 @@ async function main() {
     // Fill login fields IMMEDIATELY (before React SPA replaces the static HTML)
     if (QUORA_EMAIL) {
       console.log('[QUORA] Attempting immediate login...');
-      await page.evaluate((email, password) => {
+      await page.evaluate(({ email, password }) => {
         const emailInput = document.querySelector('input[name="email"], input[type="email"]');
         const pwInput = document.querySelector('input[name="password"], input[type="password"]');
         if (emailInput) emailInput.value = email;
         if (pwInput) pwInput.value = password;
 
-        // Submit the form
         const form = emailInput?.closest('form');
         if (form) form.submit();
         else {
-          // Click Se connecter button
           for (const b of document.querySelectorAll('button')) {
             if (b.textContent.includes('connecter')) { b.click(); break; }
           }
         }
-      }, QUORA_EMAIL, QUORA_PASSWORD);
+      }, { email: QUORA_EMAIL, password: QUORA_PASSWORD });
 
       await page.waitForTimeout(10000);
       console.log(`[QUORA] After login: "${await page.title()}"`);
