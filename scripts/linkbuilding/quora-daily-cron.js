@@ -45,7 +45,7 @@ async function main() {
     const [user, pass] = PROXY_AUTH.split(':');
     launchOptions.proxy = {
       server: 'http://brd.superproxy.io:22225',
-      username: user,
+      username: user + '-country-fr',
       password: pass,
     };
     console.log('[QUORA] Using Bright Data residential proxy');
@@ -78,31 +78,41 @@ async function main() {
     }
     console.log(`[QUORA] Title: "${await page.title()}"`);
 
-    // Login with Playwright's fill (simulates real keyboard input)
+    // Login entirely via DOM manipulation (React-safe with event dispatch)
     if (QUORA_EMAIL) {
-      const emailField = await page.$('input[name="email"], input[type="email"]');
-      if (emailField) {
-        console.log('[QUORA] Login fields found, typing...');
-        await emailField.click();
-        await page.keyboard.type(QUORA_EMAIL, { delay: 50 });
-        await page.waitForTimeout(300);
+      const loginResult = await page.evaluate(({ email, password }) => {
+        const emailEl = document.querySelector('input[name="email"], input[type="email"]');
+        const pwEl = document.querySelector('input[name="password"], input[type="password"]');
+        if (!emailEl) return 'no-email-field';
 
-        const pwField = await page.$('input[name="password"], input[type="password"]');
-        if (pwField) {
-          await pwField.click();
-          await page.keyboard.type(QUORA_PASSWORD, { delay: 50 });
+        // React-compatible value setter
+        const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+        setter.call(emailEl, email);
+        emailEl.dispatchEvent(new Event('input', { bubbles: true }));
+        emailEl.dispatchEvent(new Event('change', { bubbles: true }));
+
+        if (pwEl) {
+          setter.call(pwEl, password);
+          pwEl.dispatchEvent(new Event('input', { bubbles: true }));
+          pwEl.dispatchEvent(new Event('change', { bubbles: true }));
         }
-        await page.waitForTimeout(300);
 
         // Click login button
-        const loginBtn = await page.$('button:has-text("connecter")') || await page.$('button:has-text("Connexion")');
-        if (loginBtn) await loginBtn.click();
+        for (const b of document.querySelectorAll('button')) {
+          if (b.textContent.includes('connecter') || b.textContent.includes('Connexion')) {
+            b.click();
+            return 'clicked';
+          }
+        }
+        // Try form submit
+        const form = emailEl.closest('form');
+        if (form) { form.submit(); return 'submitted'; }
+        return 'no-button';
+      }, { email: QUORA_EMAIL, password: QUORA_PASSWORD });
 
-        await page.waitForTimeout(10000);
-        console.log(`[QUORA] After login: "${await page.title()}"`);
-      } else {
-        console.log('[QUORA] No email field — SPA may not have loaded');
-      }
+      console.log(`[QUORA] Login: ${loginResult}`);
+      await page.waitForTimeout(10000);
+      console.log(`[QUORA] After login: "${await page.title()}"`);
     }
 
     // 3. Search
