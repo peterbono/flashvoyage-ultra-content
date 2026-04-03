@@ -119,17 +119,37 @@ function formatUSD(amount) {
 
 // ── Data Collection ──────────────────────────────────────────────────────────
 
-function collectReelData() {
+async function collectReelData() {
   const historyPath = join(SD_DATA, 'reel-history.jsonl');
   const allReels = loadJSONL(historyPath);
   const last24h = allReels.filter(r => isLast24h(r.date));
   const contentHistory = loadJSON(join(REELS_DATA, 'content-history.json')) || {};
 
+  // Also fetch from IG API (reel-history.jsonl might be stale)
+  let igReels = [];
+  try {
+    const tokens = loadJSON(join(SD_DATA, 'tokens.json'));
+    if (tokens?.facebook?.token) {
+      const res = await fetch(`https://graph.facebook.com/v21.0/17841442283434789/media?fields=media_type,timestamp,caption,permalink&limit=10&access_token=${tokens.facebook.token}`);
+      const data = await res.json();
+      igReels = (data.data || []).filter(m => m.media_type === 'VIDEO' && isLast24h(m.timestamp)).map(m => ({
+        date: m.timestamp,
+        type: 'reel',
+        destination: (m.caption || '').split('\n')[0].slice(0, 50),
+        permalink: m.permalink,
+      }));
+    }
+  } catch {}
+
+  // Merge: use IG API data if local history is stale
+  const mergedLast24h = last24h.length >= igReels.length ? last24h : igReels;
+  const totalPublished = mergedLast24h.length;
+
   return {
     total: allReels.length,
-    last24h,
-    publishedToday: last24h.length,
-    formats: last24h.map(r => r.type || 'unknown'),
+    last24h: mergedLast24h,
+    publishedToday: totalPublished,
+    formats: mergedLast24h.map(r => r.type || r.format || 'reel'),
     contentHistory,
   };
 }
@@ -161,15 +181,120 @@ function collectArticleData() {
 }
 
 function collectGAData() {
-  // Try to find the latest GA4 report
-  const reportDir = join(ROOT, 'social-distributor', 'analytics', 'reports');
   const audiencePath = join(SD_DATA, 'audience-segments.json');
   const audience = loadJSON(audiencePath);
+  return { audience, available: !!audience };
+}
+
+function collectLinkbuildingData() {
+  const logPath = join(DATA_DIR, 'linkbuilding-log.jsonl');
+  const planPath = join(DATA_DIR, 'linkbuilding-week-plan.json');
+  const allEntries = loadJSONL(logPath);
+  const plan = loadJSON(planPath);
+
+  const last24h = allEntries.filter(e => isLast24h(e.date));
+  const quoraPosts = allEntries.filter(e => e.platform === 'quora_fr' && e.success);
+  const vfPosts = allEntries.filter(e => e.platform === 'voyageforum' && e.success);
 
   return {
-    audience,
-    available: !!audience,
+    today: last24h,
+    quoraTotal: quoraPosts.length,
+    vfTotal: vfPosts.length,
+    totalPosted: plan?.total_posted || 0,
+    quoraWithLink: quoraPosts.filter(e => e.hasLink).length,
   };
+}
+
+async function fetchLiveGA4() {
+  // Fetch live GA4 data for the digest (last 3 days)
+  try {
+    const saKeyPath = join(ROOT, '..', 'clodoproject', 'ga4-service-account.json');
+    if (!existsSync(saKeyPath)) {
+      // Try env var
+      const saJson = process.env.GA4_SERVICE_ACCOUNT;
+      if (!saJson) return null;
+    }
+    const { GoogleAuth } = await import('google-auth-library');
+    const saKey = loadJSON(saKeyPath) || JSON.parse(process.env.GA4_SERVICE_ACCOUNT || '{}');
+    const auth = new GoogleAuth({ credentials: saKey, scopes: ['https://www.googleapis.com/auth/analytics.readonly'] });
+    const client = await auth.getClient();
+
+    const today = new Date().toISOString().slice(0, 10);
+    const threeDaysAgo = new Date(Date.now() - 3 * 86400000).toISOString().slice(0, 10);
+
+    const [dailyRes, sourceRes] = await Promise.all([
+      client.request({
+        url: 'https://analyticsdata.googleapis.com/v1beta/properties/505793742:runReport',
+        method: 'POST',
+        data: { dateRanges: [{ startDate: threeDaysAgo, endDate: today }], dimensions: [{ name: 'date' }], metrics: [{ name: 'sessions' }, { name: 'activeUsers' }, { name: 'screenPageViews' }] },
+      }),
+      client.request({
+        url: 'https://analyticsdata.googleapis.com/v1beta/properties/505793742:runReport',
+        method: 'POST',
+        data: { dateRanges: [{ startDate: threeDaysAgo, endDate: today }], dimensions: [{ name: 'sessionSource' }], metrics: [{ name: 'sessions' }], orderBys: [{ metric: { metricName: 'sessions' }, desc: true }], limit: 5 },
+      }),
+    ]);
+
+    const daily = dailyRes.data.rows?.map(r => ({
+      date: r.dimensionValues[0].value,
+      sessions: parseInt(r.metricValues[0].value),
+      users: parseInt(r.metricValues[1].value),
+      pageviews: parseInt(r.metricValues[2].value),
+    })) || [];
+
+    const sources = sourceRes.data.rows?.map(r => ({
+      source: r.dimensionValues[0].value,
+      sessions: parseInt(r.metricValues[0].value),
+    })) || [];
+
+    const todayData = daily.find(d => d.date === today.replace(/-/g, ''));
+    const yesterdayDate = new Date(Date.now() - 86400000).toISOString().slice(0, 10).replace(/-/g, '');
+    const yesterdayData = daily.find(d => d.date === yesterdayDate);
+
+    return { daily, sources, today: todayData, yesterday: yesterdayData };
+  } catch (err) {
+    log(`GA4 fetch failed: ${err.message}`);
+    return null;
+  }
+}
+
+async function generateAIBrief(data) {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) return null;
+
+  const summary = {
+    reels: `${data.reels.publishedToday} reels publiés (total: ${data.reels.total})`,
+    linkbuilding: `Quora: ${data.linkbuilding.quoraTotal} posts, VF: ${data.linkbuilding.vfTotal} posts`,
+    ga4: data.ga4Live ? `Sessions hier: ${data.ga4Live.yesterday?.sessions || 0}, Sources: ${data.ga4Live.sources?.map(s => s.source + ':' + s.sessions).join(', ')}` : 'GA4 indisponible',
+    costs: `LLM 24h: $${data.costs.totalCostToday.toFixed(4)}, 30j: $${data.costs.totalCostMonth.toFixed(4)}`,
+    tokenWarnings: data.tokens.warnings.map(w => `${w.platform}: expire dans ${w.daysLeft}j`).join(', ') || 'aucun',
+    errors: data.errors.map(e => `${e.module}: stale ${e.daysStale}j`).join(', ') || 'aucun',
+  };
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 400,
+        messages: [{ role: 'user', content: `Tu es le CEO advisor de FlashVoyage, un media voyage français. Voici les données du jour:
+
+${JSON.stringify(summary, null, 2)}
+
+Génère un brief matinal en français (5-8 lignes max):
+1. Un résumé de la situation en 2 phrases
+2. Les 3 actions prioritaires du jour (numérotées, concrètes, actionnables)
+3. Un warning UNIQUEMENT si un token expire bientôt ou si un workflow est cassé
+
+Contexte: FlashVoyage est un nouveau site (lancé mars 2026). Le trafic est faible mais en croissance. Les sources GA4 comme "(not set)", "(direct)", "chatgpt.com", "google" sont NORMALES et POSITIVES — ne les flag pas comme suspectes.
+Focus sur: croissance du trafic, performances des reels IG, progression du linkbuilding Quora/VF.
+Ton: direct, concis, pas de blabla. Comme un Slack du CTO.` }],
+      }),
+    });
+    const result = await res.json();
+    return result.content?.[0]?.text || null;
+  } catch { return null; }
 }
 
 function collectRevenueData() {
@@ -307,7 +432,7 @@ function generateDigestHTML(data) {
     day: 'numeric',
   });
 
-  const { reels, articles, ga, revenue, intel, costs, tokens, abTests, errors } = data;
+  const { reels, articles, ga, revenue, intel, costs, tokens, abTests, errors, linkbuilding, ga4Live, aiBrief } = data;
 
   // Build sections
   const sections = [];
@@ -384,6 +509,66 @@ function generateDigestHTML(data) {
     title: 'Operations de la nuit',
     content: overnightHTML || '<div style="font-size:13px; color:#999">Aucune activite detectee</div>',
   });
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // AI BRIEF (CEO morning briefing)
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (aiBrief) {
+    sections.unshift({
+      icon: '&#129302;',
+      title: 'Brief CEO du jour',
+      content: `<div style="background:#FFFBEB; border-left:4px solid #FFD700; padding:12px 16px; border-radius:0 8px 8px 0; font-size:13px; line-height:1.6; white-space:pre-line">${aiBrief}</div>`,
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // GA4 LIVE TRAFFIC
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (ga4Live) {
+    const dailyRows = (ga4Live.daily || []).map(d =>
+      `<tr><td style="padding:3px 8px;font-size:12px">${d.date}</td><td style="padding:3px 8px;font-size:12px;font-weight:700">${d.sessions}</td><td style="padding:3px 8px;font-size:12px">${d.users}</td><td style="padding:3px 8px;font-size:12px">${d.pageviews}</td></tr>`
+    ).join('');
+    const sourceRows = (ga4Live.sources || []).map(s =>
+      `<span style="background:#f0f4f8;padding:2px 8px;border-radius:4px;font-size:11px;margin:2px">${s.source}: <b>${s.sessions}</b></span>`
+    ).join(' ');
+
+    sections.push({
+      icon: '&#128200;',
+      title: 'Traffic GA4 (3 derniers jours)',
+      content: `
+        <table style="width:100%;border-collapse:collapse;font-family:monospace;margin-bottom:8px">
+          <tr style="background:#f8f9fa"><th style="text-align:left;padding:4px 8px;font-size:10px">DATE</th><th style="text-align:left;padding:4px 8px;font-size:10px">SESSIONS</th><th style="text-align:left;padding:4px 8px;font-size:10px">USERS</th><th style="text-align:left;padding:4px 8px;font-size:10px">PV</th></tr>
+          ${dailyRows}
+        </table>
+        <div style="font-size:11px;color:#666;margin-top:4px"><b>Sources:</b> ${sourceRows}</div>`,
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LINKBUILDING
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (linkbuilding) {
+    const todayPosts = linkbuilding.today || [];
+    const todayDetail = todayPosts.length > 0
+      ? todayPosts.map(p => `<div style="font-size:12px;padding:2px 0">• ${p.platform} ${p.success ? '✅' : '❌'} ${p.search || p.thread || ''}</div>`).join('')
+      : '<div style="font-size:12px;color:#999">Aucun post aujourd\'hui</div>';
+
+    sections.push({
+      icon: '&#128279;',
+      title: 'Linkbuilding',
+      content: `
+        <div style="display:flex;gap:16px;margin-bottom:8px">
+          <div><span style="font-size:20px;font-weight:700;color:#333">${linkbuilding.quoraTotal}</span> <span style="font-size:11px;color:#888">Quora</span></div>
+          <div><span style="font-size:20px;font-weight:700;color:#333">${linkbuilding.vfTotal}</span> <span style="font-size:11px;color:#888">VF</span></div>
+          <div><span style="font-size:20px;font-weight:700;color:#FFD700">${linkbuilding.quoraWithLink}</span> <span style="font-size:11px;color:#888">avec lien</span></div>
+        </div>
+        <div style="font-size:11px;font-weight:600;margin-bottom:4px">Aujourd'hui :</div>
+        ${todayDetail}`,
+    });
+  }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // SECTION 2: PERFORMANCE SNAPSHOT
@@ -508,8 +693,8 @@ function generateDigestHTML(data) {
     }
   }
 
-  // Declining articles
-  if (articles.declining.length > 0) {
+  // Declining articles (skip if no article data yet)
+  if (articles.declining.length > 0 && articles.total > 10) {
     intelHTML += `
       <div style="margin-bottom:12px">
         <div style="font-size:13px; font-weight:600; margin-bottom:4px">
@@ -584,11 +769,14 @@ function generateDigestHTML(data) {
     </div>
     <div style="font-size:11px; color:#888">Tokens 24h: ${fmtTokens(costs.totalTokensToday)} &middot; 7j: ${fmtTokens(costs.totalTokensWeek)} &middot; 30j: ${fmtTokens(costs.totalTokensMonth)}</div>`;
 
-  sections.push({
-    icon: '&#128184;',
-    title: 'Couts LLM (Haiku + GPT)',
-    content: costsHTML,
-  });
+  // Only show costs if data is meaningful (non-zero)
+  if (costs.totalCostMonth > 0.01) {
+    sections.push({
+      icon: '&#128184;',
+      title: 'Couts LLM (Haiku + GPT)',
+      content: costsHTML,
+    });
+  }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // SECTION 5: ACTION ITEMS
@@ -838,8 +1026,8 @@ function generateSubject(data) {
 
 // ── Main Entry ───────────────────────────────────────────────────────────────
 
-function collectAllData() {
-  const reels = collectReelData();
+async function collectAllData() {
+  const reels = await collectReelData();
   const articles = collectArticleData();
   const ga = collectGAData();
   const revenue = collectRevenueData();
@@ -848,8 +1036,13 @@ function collectAllData() {
   const tokens = collectTokenData();
   const abTests = collectABTestData();
   const errors = collectWorkflowErrors();
+  const linkbuilding = collectLinkbuildingData();
+  const ga4Live = await fetchLiveGA4().catch(() => null);
 
-  return { reels, articles, ga, revenue, intel, costs, tokens, abTests, errors };
+  const allData = { reels, articles, ga, revenue, intel, costs, tokens, abTests, errors, linkbuilding, ga4Live };
+  allData.aiBrief = await generateAIBrief(allData).catch(() => null);
+
+  return allData;
 }
 
 // ── Email Sender ───────────────────────────────────────────────────────────
@@ -890,7 +1083,7 @@ async function sendDigestEmail(html, subject) {
 const args = process.argv.slice(2);
 const mode = args[0] || '--stdout';
 
-const data = collectAllData();
+const data = await collectAllData();
 
 if (mode === '--json') {
   console.log(JSON.stringify(data, null, 2));
