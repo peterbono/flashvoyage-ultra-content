@@ -25,7 +25,7 @@ const ACCOUNT = {
   username: 'FloAsie',
   password: process.env.VF_PASSWORD || '',
 };
-const VF_SESSION = process.env.VF_SESSION || '';
+const SBR_AUTH = process.env.BRIGHTDATA_SBR_AUTH || '';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
@@ -42,30 +42,12 @@ const CONTENT_MAP = {
   'bali-indonesie-comparatif': `<b>Bali vs Tha\u00eflande, mon verdict honn\u00eate</b><br><br>Apr\u00e8s avoir fait les deux plusieurs fois, voil\u00e0 mon avis sans langue de bois :<br><br>Plages : Tha\u00eflande gagne (les \u00eeles du Sud sont incomparables, Koh Lipe, Koh Phi Phi).<br>Bouffe : Tha\u00eflande gagne (street food incroyable, vari\u00e9, 1-2 euros le plat).<br>Culture : Bali gagne (les temples, les rizi\u00e8res de Tegallalang, les c\u00e9r\u00e9monies).<br>Budget : Tha\u00eflande un peu moins cher (25 vs 30 euros/jour en backpacker).<br>Libert\u00e9 : Bali gagne (scooter = la vraie libert\u00e9, tout est accessible).<br><br>Mon conseil pour un premier voyage : commencez par la Tha\u00eflande. L'infrastructure est plus facile, il y a plus de voyageurs solo, et le budget est plus pr\u00e9visible.<br><br>Bali c'est g\u00e9nial mais il faut un scooter et \u00eatre plus d\u00e9brouillard. Et honn\u00eatement, \u00e9vitez Kuta et Seminyak si vous cherchez l'authenticit\u00e9. Ubud + Amed + Nusa Penida, c'est le vrai Bali.<br><br>J'avais trouv\u00e9 un comparatif assez d\u00e9taill\u00e9 ici si \u00e7a int\u00e9resse quelqu'un : https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/?utm_source=voyageforum&utm_medium=community&utm_campaign=s1`,
 };
 
-async function login(context, page) {
-  // Try session cookie first
-  if (VF_SESSION) {
-    console.log('[VF] Injecting session cookie...');
-    await context.addCookies([
-      { name: 'vf_session', value: VF_SESSION, domain: '.voyageforum.com', path: '/' },
-      { name: 'PHPSESSID', value: VF_SESSION, domain: '.voyageforum.com', path: '/' },
-    ]);
-    await page.goto('https://voyageforum.com/', { waitUntil: 'domcontentloaded' });
-    await new Promise(r => setTimeout(r, 2000));
-    const text = await page.textContent('body');
-    if (text.includes('FloAsie') || text.includes('Mon profil') || text.includes('déconnecter')) {
-      console.log('[VF] Logged in via session cookie');
-      return true;
-    }
-    console.log('[VF] Session cookie expired, trying password...');
-  }
-
-  // Fallback: username/password login
-  await page.goto('https://voyageforum.com/v.f?do=me_connecter;', { waitUntil: 'domcontentloaded' });
+async function login(page) {
+  await page.goto('https://voyageforum.com/v.f?do=me_connecter;', { waitUntil: 'domcontentloaded', timeout: 30000 });
   await new Promise(r => setTimeout(r, 3000));
 
   // Try multiple selectors for username field
-  const usernameField = await page.$('#username') || await page.$('input[name="username"]') || await page.$('input[name="pseudo"]');
+  const usernameField = await page.$('#username') || await page.$('input[name="username"]') || await page.$('input[name="pseudo"]') || await page.$('input[type="text"]');
   if (!usernameField) {
     console.log('[VF] Login form not found');
     return false;
@@ -75,12 +57,18 @@ async function login(context, page) {
   const pwField = await page.$('#password') || await page.$('input[name="password"]') || await page.$('input[type="password"]');
   if (pwField) await pwField.fill(ACCOUNT.password);
 
+  // Submit
   await page.evaluate(() => {
-    const form = document.querySelector('#username, input[name="username"], input[name="pseudo"]')?.closest('form');
+    const form = document.querySelector('input[type="text"], #username')?.closest('form');
     if (form) form.submit();
   });
-  await new Promise(r => setTimeout(r, 3000));
-  return !(await page.title()).toLowerCase().includes('connecter');
+  await new Promise(r => setTimeout(r, 4000));
+
+  const title = await page.title();
+  const body = await page.textContent('body');
+  const loggedIn = body.includes('FloAsie') || !title.toLowerCase().includes('connecter');
+  console.log(`[VF] Login: ${loggedIn ? 'OK' : 'FAILED'} (title: ${title.slice(0, 40)})`);
+  return loggedIn;
 }
 
 async function findReplyUrl(page, threadUrl) {
@@ -170,15 +158,20 @@ async function main() {
     process.exit(0);
   }
 
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({
+  // Use Bright Data Scraping Browser if available (GitHub Actions), otherwise local
+  const browser = SBR_AUTH
+    ? await chromium.connectOverCDP(`wss://${SBR_AUTH}@brd.superproxy.io:9222`)
+    : await chromium.launch({ headless: true });
+
+  console.log(`[CRON] Browser: ${SBR_AUTH ? 'Bright Data' : 'local'}`);
+  const context = SBR_AUTH ? browser.contexts()[0] : await browser.newContext({
     userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
     locale: 'fr-FR',
   });
   const page = await context.newPage();
 
   try {
-    if (!(await login(context, page))) {
+    if (!(await login(page))) {
       console.log('[CRON] Login failed');
       log({ date: today, status: 'login_failed', thread: threadSlug });
       process.exit(1);

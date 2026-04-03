@@ -1,9 +1,8 @@
 name: Linkbuilding — Voyage Forum Daily Post
 
 on:
-  # DISABLED: VF login requires real browser session. Use local cron instead.
-  # schedule:
-  #   - cron: '0 6 * * *'
+  schedule:
+    - cron: '0 6 * * *'
 
   workflow_dispatch:
 
@@ -38,7 +37,7 @@ jobs:
       - name: Run Voyage Forum daily post
         env:
           VF_PASSWORD: ${{ secrets.VF_PASSWORD }}
-          VF_SESSION: ${{ secrets.VF_SESSION }}
+          BRIGHTDATA_SBR_AUTH: ${{ secrets.BRIGHTDATA_SBR_AUTH }}
         run: node scripts/linkbuilding/vf-daily-cron.js
 
       - name: Commit state changes back to repo

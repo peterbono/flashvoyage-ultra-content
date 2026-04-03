@@ -1,9 +1,8 @@
 name: Linkbuilding — Quora FR Daily Answer
 
 on:
-  # DISABLED: Cloudflare blocks GitHub Actions IPs. Use local cron instead.
-  # schedule:
-  #   - cron: '0 8 * * *'
+  schedule:
+    - cron: '0 8 * * *'
 
   workflow_dispatch:
 
@@ -27,18 +26,13 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          npm ci
-          npm install playwright playwright-extra puppeteer-extra-plugin-stealth
-
-      - name: Install Playwright Chromium
-        run: npx playwright install chromium --with-deps
+        run: npm ci
 
       - name: Post Quora answer
         env:
+          BRIGHTDATA_SBR_AUTH: ${{ secrets.BRIGHTDATA_SBR_AUTH }}
           QUORA_EMAIL: ${{ secrets.QUORA_EMAIL }}
           QUORA_PASSWORD: ${{ secrets.QUORA_PASSWORD }}
-          QUORA_SESSION: ${{ secrets.QUORA_SESSION }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: node scripts/linkbuilding/quora-daily-cron.js
 
