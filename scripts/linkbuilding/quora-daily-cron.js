@@ -76,27 +76,28 @@ async function main() {
     }
     console.log(`[QUORA] Title: "${await page.title()}"`);
 
-    // 2. Login
-    const needsLogin = await page.evaluate(() => !document.body.textContent.includes('Ajouter une question'));
-    if (needsLogin && QUORA_EMAIL) {
-      console.log('[QUORA] Logging in...');
-      const emailBtn = await page.$('text=E-mail') || await page.$('text=Adresse e-mail');
-      if (emailBtn) { await emailBtn.click(); await page.waitForTimeout(2000); }
+    // 2. Login — fields are directly in the HTML (no tab switch needed)
+    const emailInput = await page.$('input[name="email"], input[type="email"]');
+    if (emailInput && QUORA_EMAIL) {
+      console.log('[QUORA] Login fields found, filling...');
+      await emailInput.fill(QUORA_EMAIL);
+      await page.waitForTimeout(500);
+      const pwInput = await page.$('input[name="password"], input[type="password"]');
+      if (pwInput) await pwInput.fill(QUORA_PASSWORD);
+      await page.waitForTimeout(500);
 
-      try {
-        await page.waitForSelector('input[type="email"], input[name="email"]', { timeout: 10000 });
-        await page.fill('input[type="email"], input[name="email"]', QUORA_EMAIL);
-        await page.waitForTimeout(500);
-        await page.fill('input[type="password"]', QUORA_PASSWORD);
-        await page.waitForTimeout(500);
-
-        const btn = await page.$('button[type="submit"]') || await page.$('button:has-text("Connexion")');
-        if (btn) await btn.click();
-        await page.waitForTimeout(8000);
-      } catch (e) {
-        console.log(`[QUORA] Login issue: ${e.message.split('\n')[0]}`);
-      }
+      // Click "Se connecter" button
+      const loginBtn = await page.evaluate(() => {
+        for (const b of document.querySelectorAll('button')) {
+          if (b.textContent.includes('connecter') || b.textContent.includes('Connexion')) { b.click(); return true; }
+        }
+        return false;
+      });
+      console.log(`[QUORA] Login submitted: ${loginBtn}`);
+      await page.waitForTimeout(8000);
       console.log(`[QUORA] After login: "${await page.title()}"`);
+    } else {
+      console.log('[QUORA] No login fields found or already logged in');
     }
 
     // 3. Search
