@@ -30,8 +30,9 @@ jobs:
 
       - name: Post Quora answer
         env:
-          BRIGHTDATA_SBR_AUTH: ${{ secrets.BRIGHTDATA_SBR_AUTH }}
-          QUORA_SESSION: ${{ secrets.QUORA_SESSION }}
+          BRIGHTDATA_RESIDENTIAL_AUTH: ${{ secrets.BRIGHTDATA_RESIDENTIAL_AUTH }}
+          QUORA_EMAIL: ${{ secrets.QUORA_EMAIL }}
+          QUORA_PASSWORD: ${{ secrets.QUORA_PASSWORD }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: node scripts/linkbuilding/quora-daily-cron.js
 

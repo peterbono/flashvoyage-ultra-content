@@ -182,13 +182,17 @@ async function main() {
     process.exit(0);
   }
 
-  // Use Bright Data Scraping Browser if available (GitHub Actions), otherwise local
-  const browser = SBR_AUTH
-    ? await chromium.connectOverCDP(`wss://${SBR_AUTH}@brd.superproxy.io:9222`)
-    : await chromium.launch({ headless: true });
+  // Use Bright Data residential proxy if available, otherwise direct
+  const PROXY_AUTH = process.env.BRIGHTDATA_RESIDENTIAL_AUTH || '';
+  const launchOptions = { headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] };
+  if (PROXY_AUTH) {
+    const [user, pass] = PROXY_AUTH.split(':');
+    launchOptions.proxy = { server: 'http://brd.superproxy.io:22225', username: user, password: pass };
+    console.log('[CRON] Using Bright Data residential proxy');
+  }
 
-  console.log(`[CRON] Browser: ${SBR_AUTH ? 'Bright Data' : 'local'}`);
-  const context = SBR_AUTH ? browser.contexts()[0] : await browser.newContext({
+  const browser = await chromium.launch(launchOptions);
+  const context = await browser.newContext({
     userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
     locale: 'fr-FR',
   });

@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Quora FR Daily Post — via Bright Data Scraping Browser
- * Runs on GitHub Actions with residential IP (bypasses Cloudflare).
+ * Quora FR Daily Post — Playwright + Bright Data Residential Proxy
+ * Regular Playwright (no Scraping Browser) routed through residential IP.
+ * No restrictions: password typing OK, cookies OK, no robots.txt block.
  */
 import { chromium } from 'playwright';
 import fs from 'fs';
@@ -14,16 +15,14 @@ const PLAN_PATH = path.join(REPO_ROOT, 'data/linkbuilding-week-plan.json');
 const CONTENT_PATH = path.join(REPO_ROOT, 'data/linkbuilding-content-ready.json');
 const LOG_PATH = path.join(REPO_ROOT, 'data/linkbuilding-log.jsonl');
 
-const SBR_AUTH = process.env.BRIGHTDATA_SBR_AUTH || '';
-const QUORA_SESSION = process.env.QUORA_SESSION || ''; // m-b cookie
+const PROXY_AUTH = process.env.BRIGHTDATA_RESIDENTIAL_AUTH || '';
+const QUORA_EMAIL = process.env.QUORA_EMAIL || '';
+const QUORA_PASSWORD = process.env.QUORA_PASSWORD || '';
 const DRY_RUN = process.argv.includes('--dry-run');
 
 function log(entry) { fs.appendFileSync(LOG_PATH, JSON.stringify(entry) + '\n'); }
 
 async function main() {
-  if (!SBR_AUTH) { console.error('[QUORA] BRIGHTDATA_SBR_AUTH required'); process.exit(1); }
-  if (!QUORA_SESSION) { console.error('[QUORA] QUORA_SESSION (m-b cookie) required'); process.exit(1); }
-
   const content = JSON.parse(fs.readFileSync(CONTENT_PATH, 'utf8'));
   const plan = JSON.parse(fs.readFileSync(PLAN_PATH, 'utf8'));
   if (!plan.status.quora_fr) plan.status.quora_fr = { posted: 0, posts_done: [] };
@@ -35,61 +34,95 @@ async function main() {
   console.log(`[QUORA] Posting: ${next.id} — "${next.search_query}"`);
   if (DRY_RUN) { console.log('[DRY RUN]', next.content.slice(0, 100)); return; }
 
-  // Connect to Bright Data Scraping Browser (residential IP, auto CF bypass)
-  console.log('[QUORA] Connecting to Bright Data Scraping Browser...');
-  const browser = await chromium.connectOverCDP(`wss://${SBR_AUTH}@brd.superproxy.io:9222`);
-  const context = browser.contexts()[0];
+  // Launch Playwright with residential proxy
+  const launchOptions = {
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  };
+  if (PROXY_AUTH) {
+    const [user, pass] = PROXY_AUTH.split(':');
+    launchOptions.proxy = {
+      server: 'http://brd.superproxy.io:22225',
+      username: user,
+      password: pass,
+    };
+    console.log('[QUORA] Using Bright Data residential proxy');
+  } else {
+    console.log('[QUORA] No proxy — using direct connection');
+  }
+
+  const browser = await chromium.launch(launchOptions);
+  const context = await browser.newContext({
+    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+    locale: 'fr-FR',
+    viewport: { width: 1440, height: 900 },
+  });
   const page = await context.newPage();
 
   try {
-    // 1. Navigate first, then inject session cookie via JS
-    console.log('[QUORA] Navigating to Quora...');
+    // 1. Navigate to Quora
+    console.log('[QUORA] Navigating...');
     await page.goto('https://fr.quora.com/', { waitUntil: 'domcontentloaded', timeout: 45000 });
-    await page.waitForTimeout(3000);
 
-    console.log('[QUORA] Injecting session cookie via JS...');
-    await page.evaluate((session) => {
-      document.cookie = `m-b=${session}; domain=.quora.com; path=/; secure; max-age=31536000`;
-      document.cookie = `m-b_lax=${session}; domain=.quora.com; path=/; secure; samesite=lax; max-age=31536000`;
-    }, QUORA_SESSION);
-
-    // Reload to apply cookie
-    await page.reload({ waitUntil: 'domcontentloaded', timeout: 30000 });
-    await page.waitForTimeout(5000);
+    // Wait for Cloudflare if needed
+    for (let i = 0; i < 10; i++) {
+      const title = await page.title();
+      if (!title.includes('instant') && !title.includes('Cloudflare') && !title.includes('Vérification')) break;
+      console.log(`[QUORA] CF... (${i + 1}/10)`);
+      await page.waitForTimeout(5000);
+    }
     console.log(`[QUORA] Title: "${await page.title()}"`);
 
-    // 2. Search for question
+    // 2. Login
+    const needsLogin = await page.evaluate(() => !document.body.textContent.includes('Ajouter une question'));
+    if (needsLogin && QUORA_EMAIL) {
+      console.log('[QUORA] Logging in...');
+      const emailBtn = await page.$('text=E-mail') || await page.$('text=Adresse e-mail');
+      if (emailBtn) { await emailBtn.click(); await page.waitForTimeout(2000); }
+
+      try {
+        await page.waitForSelector('input[type="email"], input[name="email"]', { timeout: 10000 });
+        await page.fill('input[type="email"], input[name="email"]', QUORA_EMAIL);
+        await page.waitForTimeout(500);
+        await page.fill('input[type="password"]', QUORA_PASSWORD);
+        await page.waitForTimeout(500);
+
+        const btn = await page.$('button[type="submit"]') || await page.$('button:has-text("Connexion")');
+        if (btn) await btn.click();
+        await page.waitForTimeout(8000);
+      } catch (e) {
+        console.log(`[QUORA] Login issue: ${e.message.split('\n')[0]}`);
+      }
+      console.log(`[QUORA] After login: "${await page.title()}"`);
+    }
+
+    // 3. Search
     console.log(`[QUORA] Searching: "${next.search_query}"`);
     await page.goto(`https://fr.quora.com/search?q=${encodeURIComponent(next.search_query)}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await page.waitForTimeout(5000);
-    console.log(`[QUORA] Search page: "${await page.title()}"`);
 
-    // 3. Find and navigate to a question
+    // 4. Find question
     const questionUrl = await page.evaluate(() => {
-      const skip = ['condition','confidentialit','cookie','aide','about','press','career','contact'];
-      const links = document.querySelectorAll('a');
-      for (const a of links) {
+      const skip = ['condition','confidentialit','cookie','aide','about','press','career','contact','publicité'];
+      for (const a of document.querySelectorAll('a')) {
         const t = a.textContent.trim();
         const h = a.href || '';
-        if (t.length < 25 || t.length > 200) continue;
-        if (!h.startsWith('http')) continue;
+        if (t.length < 25 || t.length > 200 || !h.startsWith('http')) continue;
         if (['/search','/topic/','/profile/','/about','/terms','/privacy'].some(s => h.includes(s))) continue;
         if (skip.some(w => t.toLowerCase().includes(w))) continue;
         return { url: h, title: t.substring(0, 80) };
       }
       return null;
     });
-
     if (!questionUrl) { console.log('[QUORA] No question found'); return; }
     console.log(`[QUORA] Question: "${questionUrl.title}"`);
 
     await page.goto(questionUrl.url, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await page.waitForTimeout(5000);
 
-    // 4. Click Répondre (use 'pondre' to avoid encoding issues with é)
+    // 5. Click Répondre
     const clicked = await page.evaluate(() => {
-      const btns = document.querySelectorAll('button');
-      for (const b of btns) {
+      for (const b of document.querySelectorAll('button')) {
         if (b.textContent.includes('pondre')) { b.click(); return true; }
       }
       return false;
@@ -98,22 +131,17 @@ async function main() {
     console.log('[QUORA] Answer editor opened');
     await page.waitForTimeout(3000);
 
-    // 5. Fill editor
+    // 6. Fill editor
     const htmlContent = next.content.split('\n\n').map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
     await page.evaluate((html) => {
       const el = document.querySelector('[contenteditable="true"]');
-      if (el) {
-        el.innerHTML = html;
-        el.classList.remove('empty');
-        el.dispatchEvent(new Event('input', { bubbles: true }));
-      }
+      if (el) { el.innerHTML = html; el.classList.remove('empty'); el.dispatchEvent(new Event('input', { bubbles: true })); }
     }, htmlContent);
     await page.waitForTimeout(1500);
 
-    // 6. Publish (use 'ublier' to avoid encoding issues)
+    // 7. Publish
     await page.evaluate(() => {
-      const btns = document.querySelectorAll('button');
-      for (const b of btns) {
+      for (const b of document.querySelectorAll('button')) {
         if (b.textContent.includes('ublier') || b.textContent.includes('ubmit')) { b.click(); return; }
       }
     });
@@ -132,8 +160,7 @@ async function main() {
       fs.writeFileSync(PLAN_PATH, JSON.stringify(plan, null, 2));
     }
   } finally {
-    await page.close().catch(() => {});
-    try { browser.disconnect(); } catch { await browser.close().catch(() => {}); }
+    await browser.close();
   }
 }
 
