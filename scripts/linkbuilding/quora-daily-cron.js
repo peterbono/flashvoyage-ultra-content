@@ -35,9 +35,11 @@ async function main() {
   if (DRY_RUN) { console.log('[DRY RUN]', next.content.slice(0, 100)); return; }
 
   // Launch Playwright with residential proxy
+  // Use headful mode when DISPLAY is set (XVFB on VPS) — better anti-bot bypass
+  const hasDisplay = !!process.env.DISPLAY;
   const launchOptions = {
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    headless: !hasDisplay,
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-blink-features=AutomationControlled'],
   };
   if (PROXY_AUTH) {
     const [user, pass] = PROXY_AUTH.split(':');

@@ -190,7 +190,8 @@ async function main() {
 
   // Use Bright Data residential proxy if available, otherwise direct
   const PROXY_AUTH = process.env.BRIGHTDATA_RESIDENTIAL_AUTH || '';
-  const launchOptions = { headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] };
+  const hasDisplay = !!process.env.DISPLAY;
+  const launchOptions = { headless: !hasDisplay, args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-blink-features=AutomationControlled'] };
   if (PROXY_AUTH) {
     const [user, pass] = PROXY_AUTH.split(':');
     launchOptions.proxy = { server: 'http://brd.superproxy.io:22225', username: user, password: pass };
