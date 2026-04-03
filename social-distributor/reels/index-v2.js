@@ -91,14 +91,36 @@ async function fetchArticle(postId = null) {
     return extractFromId(parseInt(postId, 10));
   }
 
-  // Default: grab the most recent article
+  // Pick a random article (diversify destinations instead of always using latest)
   const posts = await fetchAllPosts();
   if (posts.length === 0) {
     throw new Error('No articles found in WordPress');
   }
-  const firstPost = posts[0];
-  log(`Using latest article #${firstPost.id}: ${(firstPost.title?.rendered || '').slice(0, 60)}`);
-  return extractFromId(firstPost.id);
+
+  // Check reel history to avoid repeating same article within 7 days
+  let recentArticleIds = new Set();
+  try {
+    const historyPath = join(__dirname, 'data', 'reel-history.jsonl');
+    const { readFileSync, existsSync } = await import('fs');
+    if (existsSync(historyPath)) {
+      const sevenDaysAgo = Date.now() - 7 * 86400000;
+      readFileSync(historyPath, 'utf-8').split('\n').filter(Boolean).forEach(line => {
+        try {
+          const entry = JSON.parse(line);
+          if (new Date(entry.date).getTime() > sevenDaysAgo && entry.postId) {
+            recentArticleIds.add(entry.postId);
+          }
+        } catch {}
+      });
+    }
+  } catch {}
+
+  // Filter out recently used articles, then pick random
+  const available = posts.filter(p => !recentArticleIds.has(p.id));
+  const pool = available.length > 0 ? available : posts;
+  const picked = pool[Math.floor(Math.random() * pool.length)];
+  log(`Random article #${picked.id}: ${(picked.title?.rendered || '').slice(0, 60)} (pool: ${pool.length}/${posts.length})`);
+  return extractFromId(picked.id);
 }
 
 // ── v2 Format Router ─────────────────────────────────────────────────────────

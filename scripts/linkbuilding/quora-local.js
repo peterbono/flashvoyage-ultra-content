@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Quora FR Local Poster — Controls real Chrome via AppleScript
- * Uses a dedicated tab (last tab of last window) to avoid conflicts.
+ * Uses a dedicated tab (last tab of front window) to avoid conflicts.
  */
 import { execSync } from 'child_process';
 import fs from 'fs';
@@ -28,7 +28,7 @@ function chromeJS(js) {
   fs.writeFileSync('/tmp/fv-js.js', js);
   return osa(`set jsCode to read POSIX file "/tmp/fv-js.js"
 tell application "Google Chrome"
-  set w to last window
+  set w to front window
   set t to last tab of w
   execute t javascript jsCode
 end tell`);
@@ -39,7 +39,7 @@ function chromeNav(url) {
   fs.writeFileSync('/tmp/fv-url.txt', url);
   return osa(`set targetURL to read POSIX file "/tmp/fv-url.txt"
 tell application "Google Chrome"
-  set w to last window
+  set w to front window
   set t to last tab of w
   set URL of t to targetURL
 end tell`);
@@ -47,7 +47,7 @@ end tell`);
 
 function chromeTitle() {
   return osa(`tell application "Google Chrome"
-  set w to last window
+  set w to front window
   set t to last tab of w
   get title of t
 end tell`);
@@ -55,14 +55,14 @@ end tell`);
 
 function chromeNewTab() {
   return osa(`tell application "Google Chrome"
-  set w to last window
+  set w to front window
   make new tab at end of tabs of w with properties {URL:"about:blank"}
 end tell`);
 }
 
 function chromeCloseLastTab() {
   osa(`tell application "Google Chrome"
-  set w to last window
+  set w to front window
   set t to last tab of w
   close t
 end tell`);

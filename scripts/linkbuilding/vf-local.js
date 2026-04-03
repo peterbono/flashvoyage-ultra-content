@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Voyage Forum Local Poster — Controls real Chrome via AppleScript
- * Uses a dedicated tab (last tab of last window).
+ * Uses a dedicated tab (last tab of front window).
  */
 import { execSync } from 'child_process';
 import fs from 'fs';
@@ -33,7 +33,7 @@ function chromeJS(js) {
   fs.writeFileSync('/tmp/fv-js.js', js);
   return osa(`set jsCode to read POSIX file "/tmp/fv-js.js"
 tell application "Google Chrome"
-  set w to last window
+  set w to front window
   set t to last tab of w
   execute t javascript jsCode
 end tell`);
@@ -43,7 +43,7 @@ function chromeNav(url) {
   fs.writeFileSync('/tmp/fv-url.txt', url);
   return osa(`set targetURL to read POSIX file "/tmp/fv-url.txt"
 tell application "Google Chrome"
-  set w to last window
+  set w to front window
   set t to last tab of w
   set URL of t to targetURL
 end tell`);
@@ -51,7 +51,7 @@ end tell`);
 
 function chromeTitle() {
   return osa(`tell application "Google Chrome"
-  set w to last window
+  set w to front window
   set t to last tab of w
   get title of t
 end tell`);
@@ -59,14 +59,14 @@ end tell`);
 
 function chromeNewTab() {
   return osa(`tell application "Google Chrome"
-  set w to last window
+  set w to front window
   make new tab at end of tabs of w with properties {URL:"about:blank"}
 end tell`);
 }
 
 function chromeCloseLastTab() {
   osa(`tell application "Google Chrome"
-  set w to last window
+  set w to front window
   set t to last tab of w
   close t
 end tell`);
@@ -116,9 +116,9 @@ async function main() {
     }
     console.log(`[VF] Reply: ${replyUrl}`);
 
-    // 3. Navigate to reply form
+    // 3. Navigate to reply form (needs extra time for WYSIWYG editor JS to load)
     chromeNav(replyUrl);
-    sleep(6000);
+    sleep(10000);
     console.log(`[VF] Reply page: "${chromeTitle()}"`);
 
     // 4. Inject content via encodeURIComponent
@@ -147,7 +147,7 @@ async function main() {
       if (!used || used === 'missing value') {
         used = null;
         console.log(`[VF] Editor not ready (${attempt + 1}/4)...`);
-        sleep(3000);
+        sleep(5000);
       }
     }
     if (!used) { console.log('[VF] Editor not loaded'); return; }
