@@ -201,6 +201,8 @@ function findQuestion() {
     if (t.length < 25 || t.length > 200) continue;
     if (!h.startsWith('http')) continue;
     if (h.includes('/search') || h.includes('/topic/') || h.includes('/profile/') || h.includes('/about') || h.includes('/terms') || h.includes('/privacy') || h.includes('/settings')) continue;
+    // Skip Quora Spaces (subdomain URLs like experiencevoyage.quora.com)
+    if (h.match(/https?:\/\/[^/]*[a-z]\.quora\.com/) && !h.includes('fr.quora.com')) continue;
     var bad = false;
     for (var j = 0; j < skip.length; j++) { if (t.toLowerCase().indexOf(skip[j]) >= 0) { bad = true; break; } }
     if (bad) continue;
