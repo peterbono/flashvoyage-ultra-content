@@ -70,20 +70,28 @@ async function main() {
     // Fill login fields IMMEDIATELY (before React SPA replaces the static HTML)
     if (QUORA_EMAIL) {
       console.log('[QUORA] Attempting immediate login...');
+      // Use nativeInputValueSetter to trigger React state updates
       await page.evaluate(({ email, password }) => {
+        function setReactValue(input, value) {
+          const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+          setter.call(input, value);
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
         const emailInput = document.querySelector('input[name="email"], input[type="email"]');
         const pwInput = document.querySelector('input[name="password"], input[type="password"]');
-        if (emailInput) emailInput.value = email;
-        if (pwInput) pwInput.value = password;
-
-        const form = emailInput?.closest('form');
-        if (form) form.submit();
-        else {
-          for (const b of document.querySelectorAll('button')) {
-            if (b.textContent.includes('connecter')) { b.click(); break; }
-          }
-        }
+        if (emailInput) setReactValue(emailInput, email);
+        if (pwInput) setReactValue(pwInput, password);
       }, { email: QUORA_EMAIL, password: QUORA_PASSWORD });
+
+      await page.waitForTimeout(500);
+
+      // Click "Se connecter"
+      await page.evaluate(() => {
+        for (const b of document.querySelectorAll('button')) {
+          if (b.textContent.includes('connecter')) { b.click(); return; }
+        }
+      });
 
       await page.waitForTimeout(10000);
       console.log(`[QUORA] After login: "${await page.title()}"`);
