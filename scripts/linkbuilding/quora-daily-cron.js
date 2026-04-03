@@ -52,17 +52,30 @@ async function main() {
     const needsLogin = await page.evaluate(() => !document.body.textContent.includes('Ajouter une question'));
     if (needsLogin && QUORA_EMAIL) {
       console.log('[QUORA] Logging in...');
-      const emailBtn = await page.$('text=E-mail');
-      if (emailBtn) { await emailBtn.click(); await page.waitForTimeout(1000); }
 
-      const emailInput = await page.$('input[type="email"], input[name="email"]');
-      if (emailInput) {
-        await emailInput.fill(QUORA_EMAIL);
+      // Click "E-mail" tab if present
+      const emailBtn = await page.$('text=E-mail') || await page.$('text=Adresse e-mail');
+      if (emailBtn) { await emailBtn.click(); await page.waitForTimeout(2000); }
+
+      // Wait for and fill email
+      try {
+        await page.waitForSelector('input[type="email"], input[name="email"]', { timeout: 10000 });
+        await page.fill('input[type="email"], input[name="email"]', QUORA_EMAIL);
+        await page.waitForTimeout(500);
+
+        // Fill password
         const pwInput = await page.$('input[type="password"]');
-        if (pwInput) await pwInput.fill(QUORA_PASSWORD);
-        const btn = await page.$('button[type="submit"], button:has-text("Connexion")');
+        if (pwInput) {
+          await pwInput.fill(QUORA_PASSWORD);
+          await page.waitForTimeout(500);
+        }
+
+        // Submit
+        const btn = await page.$('button[type="submit"]') || await page.$('button:has-text("Connexion")');
         if (btn) await btn.click();
-        await page.waitForTimeout(5000);
+        await page.waitForTimeout(8000);
+      } catch (loginErr) {
+        console.log(`[QUORA] Login form issue: ${loginErr.message.split('\n')[0]}`);
       }
       console.log(`[QUORA] After login: "${await page.title()}"`);
     }
@@ -141,8 +154,8 @@ async function main() {
       fs.writeFileSync(PLAN_PATH, JSON.stringify(plan, null, 2));
     }
   } finally {
-    await page.close();
-    browser.disconnect();
+    await page.close().catch(() => {});
+    try { browser.disconnect(); } catch { await browser.close().catch(() => {}); }
   }
 }
 

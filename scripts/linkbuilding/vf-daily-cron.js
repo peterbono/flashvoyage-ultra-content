@@ -43,19 +43,23 @@ const CONTENT_MAP = {
 };
 
 async function login(page) {
-  await page.goto('https://voyageforum.com/v.f?do=me_connecter;', { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await new Promise(r => setTimeout(r, 3000));
+  await page.goto('https://voyageforum.com/v.f?do=me_connecter;', { waitUntil: 'networkidle', timeout: 30000 }).catch(() => {});
+  await new Promise(r => setTimeout(r, 5000));
 
   // Try multiple selectors for username field
   const usernameField = await page.$('#username') || await page.$('input[name="username"]') || await page.$('input[name="pseudo"]') || await page.$('input[type="text"]');
   if (!usernameField) {
-    console.log('[VF] Login form not found');
+    console.log('[VF] Login form not found. Page title:', await page.title());
     return false;
   }
 
   await usernameField.fill(ACCOUNT.username);
+  await new Promise(r => setTimeout(r, 500));
   const pwField = await page.$('#password') || await page.$('input[name="password"]') || await page.$('input[type="password"]');
-  if (pwField) await pwField.fill(ACCOUNT.password);
+  if (pwField) {
+    await pwField.waitForElementState('editable', { timeout: 5000 }).catch(() => {});
+    await pwField.fill(ACCOUNT.password);
+  }
 
   // Submit
   await page.evaluate(() => {
