@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-04-02T05:08:48.619Z",
+    "generatedAt": "2026-04-03T05:11:05.698Z",
     "elapsedSeconds": 11,
     "totalArticles": 114,
     "articlesWithRecommendations": 7,
@@ -36,9 +36,9 @@
         "avgDuration": 304
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 19,
         "clicks": 1,
-        "position": 6.1,
+        "position": 5.8,
         "topQueries": [
           {
             "query": "philippines globe",
@@ -154,9 +154,9 @@
         "avgDuration": 19
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 12,
         "clicks": 1,
-        "position": 6,
+        "position": 6.3,
         "topQueries": []
       },
       "reels": {
@@ -207,7 +207,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 420
+        "avgDuration": 114
       },
       "gsc": {
         "impressions": 0,
@@ -675,6 +675,34 @@
         "impressions": 7,
         "clicks": 0,
         "position": 6.7,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3090,
+      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
+      "wordCount": 1730,
+      "widgetCount": 0,
+      "internalLinks": 23,
+      "lastModified": "2026-03-31T18:35:46",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 239
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -1253,34 +1281,6 @@
         "pageviews": 1,
         "sessions": 2,
         "avgDuration": 3
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3090,
-      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
-      "wordCount": 1730,
-      "widgetCount": 0,
-      "internalLinks": 23,
-      "lastModified": "2026-03-31T18:35:46",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 6
       },
       "gsc": {
         "impressions": 0,
@@ -3103,9 +3103,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 7,
         "clicks": 0,
-        "position": 3,
+        "position": 5.3,
         "topQueries": []
       },
       "reels": {

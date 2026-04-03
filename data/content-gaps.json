@@ -1,32 +1,10 @@
 {
-  "timestamp": "2026-04-02T05:08:34.565Z",
-  "gapCount": 1,
-  "gaps": [
-    {
-      "topic": "prix carburant",
-      "source": "trends",
-      "gapScore": 40,
-      "signals": {
-        "searchVolume": 0.29,
-        "trendGrowth": 0.29,
-        "monetization": 0.6,
-        "competition": 0.6
-      },
-      "destination": null,
-      "category": "budget",
-      "suggestedTitle": "Prix carburant : Le Guide Budget Complet",
-      "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
-      "articleType": "support",
-      "priority": "medium"
-    }
-  ],
+  "timestamp": "2026-04-03T05:10:52.168Z",
+  "gapCount": 0,
+  "gaps": [],
   "summary": {
-    "byPriority": {
-      "medium": 1
-    },
-    "byCategory": {
-      "budget": 1
-    },
+    "byPriority": {},
+    "byCategory": {},
     "byDestination": {},
     "topDestinationGaps": []
   }

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-02T05:08:35.506Z",
+  "timestamp": "2026-04-03T05:10:52.982Z",
   "articleMap": {
     "esim-philippines-globe-smart-comparatif-2026": {
       "wpId": 4372,
@@ -61,9 +61,9 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
-      "wpId": 4252,
-      "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
+    "bali-vs-thailande-premier-voyage-asie-comparatif": {
+      "wpId": 4254,
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -73,9 +73,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "bali-vs-thailande-premier-voyage-asie-comparatif": {
-      "wpId": 4254,
-      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
+    "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
+      "wpId": 4252,
+      "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -169,6 +169,18 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
+    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
+      "wpId": 3090,
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
     "vietnam-4-pieges-que-les-blogs-voyage-cachent-et-que-les-voyageurs-decouvrent-trop-tard": {
       "wpId": 4095,
       "title": "Vietnam : 4 pièges que les blogs voyage cachent (et que les voyageurs découvrent trop tard)",
@@ -217,42 +229,6 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas": {
-      "wpId": 4087,
-      "title": "Thaïlande : 2 pièges cachés que les blogs voyage ne te disent pas",
-      "reels": [],
-      "suggestedFormats": [
-        "humor",
-        "poll",
-        "avantapres"
-      ],
-      "category": "securite",
-      "igReferralTraffic": null
-    },
-    "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas-mars-2026": {
-      "wpId": 3918,
-      "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas) (mars 2026)",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "visa-vietnam-lerreur-qui-ma-coute-cher-et-comment-leviter": {
-      "wpId": 3024,
-      "title": "Visa Vietnam : L&rsquo;Erreur qui M&rsquo;a Coûté Cher et Comment L&rsquo;Éviter",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
     "voyager-au-vietnam-avec-500-e-comment-optimiser-chaque-depense-2": {
       "wpId": 2837,
       "title": "Voyager au Vietnam avec 500 € : Comment optimiser chaque dépense",
@@ -275,6 +251,18 @@
         "humor"
       ],
       "category": "default",
+      "igReferralTraffic": null
+    },
+    "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas": {
+      "wpId": 4087,
+      "title": "Thaïlande : 2 pièges cachés que les blogs voyage ne te disent pas",
+      "reels": [],
+      "suggestedFormats": [
+        "humor",
+        "poll",
+        "avantapres"
+      ],
+      "category": "securite",
       "igReferralTraffic": null
     },
     "thailande-8-realites-que-les-blogs-voyage-cachent-aux-expatries": {
@@ -337,6 +325,18 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
+    "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas-mars-2026": {
+      "wpId": 3918,
+      "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas) (mars 2026)",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "japon-les-2-pieges-que-les-guides-cachent-aux-backpackers": {
       "wpId": 3550,
       "title": "Japon : les 2 pièges que les guides cachent aux backpackers",
@@ -361,33 +361,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
-      "wpId": 3090,
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas": {
-      "wpId": 3517,
-      "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas)",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas": {
-      "wpId": 3501,
-      "title": "Ce que Thaïlande m&rsquo;a coûté (et que les blogs ne montrent pas)",
+    "visa-vietnam-lerreur-qui-ma-coute-cher-et-comment-leviter": {
+      "wpId": 3024,
+      "title": "Visa Vietnam : L&rsquo;Erreur qui M&rsquo;a Coûté Cher et Comment L&rsquo;Éviter",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -659,6 +635,30 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas": {
+      "wpId": 3517,
+      "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas)",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas": {
+      "wpId": 3501,
+      "title": "Ce que Thaïlande m&rsquo;a coûté (et que les blogs ne montrent pas)",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "vietnam-6-semaines-litineraire-que-tu-dois-abandonner-pour-reussir": {
       "wpId": 3497,
       "title": "Vietnam 6 semaines : l&rsquo;itinéraire que tu dois abandonner pour réussir",
@@ -746,30 +746,6 @@
     "travailler-en-thailande-les-dilemmes-fiscaux-des-travailleurs-a-distance": {
       "wpId": 3150,
       "title": "Travailler en Thaïlande : Les Dilemmes Fiscaux des Travailleurs à Distance",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable": {
-      "wpId": 3115,
-      "title": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "choisir-ou-sejourner-a-bali-dilemmes-et-decisions-cruciales": {
-      "wpId": 3082,
-      "title": "Choisir où séjourner à Bali : dilemmes et décisions cruciales",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -958,6 +934,18 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable": {
+      "wpId": 3115,
+      "title": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques": {
       "wpId": 3099,
       "title": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques",
@@ -968,6 +956,18 @@
         "avantapres"
       ],
       "category": "securite",
+      "igReferralTraffic": null
+    },
+    "choisir-ou-sejourner-a-bali-dilemmes-et-decisions-cruciales": {
+      "wpId": 3082,
+      "title": "Choisir où séjourner à Bali : dilemmes et décisions cruciales",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
       "igReferralTraffic": null
     },
     "comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes": {
