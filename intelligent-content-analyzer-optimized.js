@@ -284,11 +284,22 @@ async function callOpenAIWithRetry(config, retries = 3) {
       console.warn(`⚠️ ANTHROPIC_FALLBACK: ${error.message} — tentative OpenAI...`);
     }
   }
-  
+
+  // Fix model name for OpenAI fallback: Anthropic model names cause 404 on OpenAI
+  const openaiBody = { ...config.body };
+  if (openaiBody.model && !openaiBody.model.startsWith('gpt-') && !openaiBody.model.startsWith('o1') && !openaiBody.model.startsWith('o3') && !openaiBody.model.startsWith('o4')) {
+    console.warn(`⚠️ OPENAI_MODEL_FIX: Replacing "${openaiBody.model}" with "gpt-4o" for OpenAI fallback`);
+    openaiBody.model = 'gpt-4o';
+    // OpenAI supports json_object response format
+    if (!openaiBody.response_format) {
+      openaiBody.response_format = { type: "json_object" };
+    }
+  }
+
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const t0 = Date.now();
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', config.body, {
+      const response = await axios.post('https://api.openai.com/v1/chat/completions', openaiBody, {
         headers: {
           'Authorization': `Bearer ${config.apiKey}`,
           'Content-Type': 'application/json'
@@ -300,7 +311,7 @@ async function callOpenAIWithRetry(config, retries = 3) {
       // Cost tracking
       if (response.data?.usage) {
         const step = config._trackingStep || 'unknown';
-        const model = config.body?.model || 'unknown';
+        const model = openaiBody.model || 'unknown';
         tracker.recordFromUsage(step, model, response.data.usage, durationMs);
       }
       
@@ -1376,7 +1387,7 @@ IMPORTANT: Le champ "type" doit prendre la même valeur que "type_contenu". Pour
       }
       
       // ONLINE: si LLM fail → throw (retry géré par l'appelant)
-      throw new Error(`ERREUR TECHNIQUE: Impossible de générer le contenu pour "${extracted.title}". Refus de publier du contenu générique.`);
+      throw new Error(`ERREUR TECHNIQUE: Impossible de générer le contenu pour "${extracted.source?.title || extracted.title || 'unknown'}". Refus de publier du contenu générique.`);
     }
   }
 
@@ -1399,7 +1410,7 @@ Extrait les éléments clés selon la structure SUCCESS_STORY:
          
          Réponds UNIQUEMENT en JSON avec ces clés: citations, donnees_cles, structure, enseignements, defis, strategies, resultats, couts, erreurs, specificites, comparaisons, conseils.`;
 
-    const userMessage = `TITRE: ${extracted.title}
+    const userMessage = `TITRE: ${extracted.source?.title || extracted.title || ''}
 CONTENU: ${fullContent.substring(0, 6000)}`;
 
     console.log(`📏 Taille system: ${systemMessage.length} caractères`);
@@ -1998,7 +2009,7 @@ SANS CE BLOC, L'ARTICLE EST AUTOMATIQUEMENT REJETÉ PAR LE PANEL DE REVIEW.
 📝 FORMAT CITATIONS — GUILLEMETS FRANÇAIS INLINE UNIQUEMENT :
 - ✅ Utilise des guillemets français inline « ... » pour toutes les citations. Le système ajoutera les <blockquote> en post-traitement. Exemple : Un voyageur résume : « le budget a explosé dès le premier jour ».
 - Citations courtes UNIQUEMENT entre guillemets français inline : « ... »
-- Attribution : « ... » — ${extracted.author || 'auteur Reddit'}
+- Attribution : « ... » — ${extracted.source?.author || extracted.author || 'auteur Reddit'}
 - OBLIGATOIRE : 2-5 citations inline depuis story.evidence.source_snippets
 
 ⚠️ RÈGLE ABSOLUE — H2 SPÉCIFIQUES (blacklist étendue) :
@@ -2366,7 +2377,7 @@ Si tu omets ces 3 sections, l'article sera REJETÉ par le quality gate.`;
     let destinationDirective = '';
     // Détecter si le post Reddit est multi-pays / régional
     // Chercher le titre du post Reddit dans plusieurs sources possibles
-    const redditTitle = options.reddit_title || extracted.title || extracted.post?.title || story?.story?.title || extraction?.title || '';
+    const redditTitle = options.reddit_title || extracted.source?.title || extracted.title || extracted.post?.title || story?.story?.title || extraction?.title || '';
     const titleLowerForRegion = redditTitle.toLowerCase();
     const isRegionalTopic = /southeast asia|south.?east asia|asie du sud|multiple countr|several countr/i.test(titleLowerForRegion) ||
       (redditTitle.match(/\b(thailand|vietnam|indonesia|singapore|philippines|cambodia|malaysia|laos)\b/gi) || []).length >= 2;
@@ -2391,8 +2402,8 @@ L'article ENTIER doit parler de cette destination. Le titre, les H2, le contenu,
     }
 
     const redditSourceUrl = options.reddit_source_url || extracted?.meta?.url || options.article?.link || '';
-    const userMessage = `TITRE: ${extracted.title || 'Témoignage Reddit'}
-AUTEUR: ${extracted.author || 'auteur Reddit'}
+    const userMessage = `TITRE: ${extracted.source?.title || extracted.title || 'Témoignage Reddit'}
+AUTEUR: ${extracted.source?.author || extracted.author || 'auteur Reddit'}
 🔗 URL SOURCE REDDIT: ${redditSourceUrl || 'Non disponible'}
 ${destinationDirective}
 📊 PATTERN DÉTECTÉ:
@@ -3499,7 +3510,7 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
   async generateSEOTitle(extracted, story, options = {}) {
     const mainDestination = options.main_destination || null;
     const mainDestFR = mainDestination ? (COUNTRY_DISPLAY_NAMES[mainDestination.toLowerCase()] || mainDestination) : '';
-    const redditTitle = extracted.title || '';
+    const redditTitle = extracted.source?.title || extracted.title || '';
     const angle = options.angle?.primary_angle?.tension || '';
 
     const systemPrompt = `Tu es un expert SEO voyage pour FlashVoyages. Génère un titre H1 et un title_tag SEO pour un article basé sur un témoignage Reddit.
@@ -3667,8 +3678,8 @@ EXEMPLE DE QUALITÉ ATTENDUE:
 ${selectedExample}
 \`\`\``;
 
-    const userPrompt = `TITRE: ${extracted.title || 'Témoignage Reddit'}
-AUTEUR: ${extracted.author || 'auteur Reddit'}
+    const userPrompt = `TITRE: ${extracted.source?.title || extracted.title || 'Témoignage Reddit'}
+AUTEUR: ${extracted.source?.author || extracted.author || 'auteur Reddit'}
 ${mainDestFR ? 'DESTINATION PRINCIPALE: ' + mainDestFR : ''}
 ${options.angle ? 'TENSION ÉDITORIALE: ' + options.angle.primary_angle?.tension : ''}
 ${options.angle ? 'HOOK STRATÉGIQUE: ' + options.angle.primary_angle?.hook : ''}
@@ -3882,7 +3893,7 @@ TRANSITIONS ENTRE SECTIONS :
 - Utilise des transitions conversationnelles : "Bon, le logement c'est réglé. Parlons bouffe.", "Tu crois avoir tout compris ? Attends de voir les transports.", "Et le pire dans tout ça ?"
 - Chaque transition doit donner ENVIE de lire la suite (teaser, question, promesse de revelation).`;
 
-    const userPrompt = `TITRE: ${extracted.title || 'Témoignage Reddit'}
+    const userPrompt = `TITRE: ${extracted.source?.title || extracted.title || 'Témoignage Reddit'}
 ${mainDestFR ? 'DESTINATION: ' + mainDestFR : ''}
 ${options.angle ? 'TENSION CENTRALE: ' + options.angle.primary_angle?.tension : ''}
 ${options.angle ? 'ENJEU LECTEUR: ' + options.angle.primary_angle?.stake : ''}
@@ -4067,7 +4078,7 @@ ${isNews ? `{
   "articles_connexes": []
 }`}`;
 
-    const userPrompt = `TITRE: ${extracted.title || 'Témoignage Reddit'}
+    const userPrompt = `TITRE: ${extracted.source?.title || extracted.title || 'Témoignage Reddit'}
 ${mainDestFR ? 'DESTINATION: ' + mainDestFR : ''}
 
 INTRO (déjà générée, pour continuité) :
@@ -4125,7 +4136,7 @@ Génère UNIQUEMENT le JSON de conclusion.`;
     const developpement = introHtml + '\n\n' + bodyHtml;
 
     // Build title — prefer LLM-generated SEO title, fallback to extracted
-    const titre = options._seoTitle || extracted.title || 'Témoignage Reddit décrypté par FlashVoyages';
+    const titre = options._seoTitle || extracted.source?.title || extracted.title || 'Témoignage Reddit décrypté par FlashVoyages';
     const title_tag = (options._seoTitleTag || titre).substring(0, 60);
 
     // Assemble the article JSON
@@ -5344,8 +5355,12 @@ RÉPONDRE UNIQUEMENT EN JSON VALIDE:`;
         return article.source_text;
       }
       
-      if (!article.link || article.link.includes('news.google.com')) {
-        console.log('⚠️ Lien Google News - Utilisation du contenu disponible');
+      if (!article.link) {
+        console.log('⚠️ Pas de lien source (evergreen ou fixture) — utilisation du contenu disponible');
+        return article.content || article.source_text || 'Contenu non disponible';
+      }
+      if (article.link.includes('news.google.com')) {
+        console.log('⚠️ Lien Google News — utilisation du contenu disponible');
         return article.content || article.source_text || 'Contenu non disponible';
       }
 
