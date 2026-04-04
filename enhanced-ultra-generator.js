@@ -643,8 +643,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           }
           selectedArticle = relaxedSources[0];
         } else {
-          console.log('   ❌ Aucun article même avec filtre relâché - skip silencieux');
-          return null;
+          console.log('   ❌ Aucun article même avec filtre relâché');
         }
       }
 
