@@ -295,6 +295,17 @@ async function publishIfRequested(result, article, format, shouldPublish) {
   logReelPublished(reelId, article.postId, format);
   log(`Published! reelId=${reelId}, permalink=${permalink}`);
 
+  // Record publication in smart scheduler (destination tracking for dedup)
+  try {
+    const { recordPublication } = await import('./smart-scheduler.js');
+    const destination = result.script?.country || result.script?.destination || null;
+    const subtopic = result.script?.subtopic || null;
+    recordPublication({ format, articleId: article.postId, destination });
+    if (destination) log(`Recorded destination: ${destination}${subtopic ? ` (${subtopic})` : ''}`);
+  } catch (e) {
+    log(`WARN: Failed to record publication: ${e.message}`);
+  }
+
   return { ...result, reelId, permalink };
 }
 

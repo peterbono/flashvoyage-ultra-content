@@ -14,6 +14,7 @@
  * }
  */
 
+import fs from 'fs';
 import { createTrackedClient } from '../../tracked-anthropic.js';
 
 // ── Lazy Anthropic client ───────────────────────────────────────────────────
@@ -78,16 +79,55 @@ function getFlag(destination) {
 
 // ── Haiku prompt ────────────────────────────────────────────────────────────
 
-const SYSTEM_PROMPT = `Tu es un créateur de Reels voyage pour le média FlashVoyage (Instagram).
-Tu génères du contenu "TRIP PICK" : 5 spots incontournables dans un pays ou une région.
-Ton style est éditorial, factuel, concis. Accents français obligatoires (é, è, ê, à, ç, ù).`;
+const SYSTEM_PROMPT = `Tu es un créateur de Reels voyage viral pour le média FlashVoyage (Instagram).
+Tu génères du contenu listicle varié : spots, astuces budget, street food, arnaques, comparatifs, etc.
+Ton style est éditorial, factuel, concis, punchy. Accents français obligatoires (é, è, ê, à, ç, ù).
+JAMAIS générique — chaque item doit contenir un détail concret (prix, nom de rue, quartier, plat précis).`;
 
-function buildUserPrompt(article) {
+// ── Sub-format rotation system ─────────────────────────────────────────────
+// Prevents repetitive "Top 5 spots" by varying the angle
+
+const SUB_FORMATS = [
+  { id: 'spots', count: 5, prompt: 'les 5 spots/lieux incontournables', caption: '5 spots à ne pas rater' },
+  { id: 'budget', count: 5, prompt: '5 astuces budget pour voyager pas cher', caption: '5 astuces pour voyager pas cher' },
+  { id: 'food', count: 5, prompt: '5 plats de street food à goûter absolument', caption: '5 plats de street food à goûter' },
+  { id: 'traps', count: 5, prompt: '5 arnaques ou pièges à touristes à éviter', caption: '5 pièges à touristes à éviter' },
+  { id: 'hidden', count: 5, prompt: '5 endroits secrets que les touristes ne connaissent pas', caption: '5 endroits secrets' },
+  { id: 'tips', count: 7, prompt: '7 choses à savoir avant de partir', caption: '7 choses à savoir avant de partir' },
+  { id: 'photos', count: 5, prompt: '5 spots photo Instagram les plus spectaculaires', caption: '5 spots photo Instagram' },
+  { id: 'transport', count: 5, prompt: '5 astuces transport que les locaux utilisent', caption: '5 astuces transport locales' },
+  { id: 'free', count: 5, prompt: '5 activités gratuites à faire', caption: '5 activités gratuites' },
+  { id: 'nightlife', count: 5, prompt: '5 marchés de nuit ou bars incontournables', caption: '5 spots de soirée' },
+  { id: 'luxury', count: 5, prompt: '5 expériences luxe à petit prix (moins de 50€)', caption: '5 expériences luxe à petit prix' },
+  { id: 'mistakes', count: 5, prompt: '5 erreurs que font tous les Français', caption: '5 erreurs à ne pas faire' },
+];
+
+function pickSubFormat(contentHistory) {
+  // Read recent sub-formats from content history to avoid repeats
+  const recentSubs = (contentHistory?.recentSubtopics || [])
+    .filter(s => {
+      const d = new Date(s.date);
+      return (Date.now() - d.getTime()) < 7 * 24 * 60 * 60 * 1000; // last 7 days
+    })
+    .map(s => s.id);
+
+  // Filter out recently used sub-formats
+  const available = SUB_FORMATS.filter(sf => !recentSubs.includes(sf.id));
+  const pool = available.length > 0 ? available : SUB_FORMATS;
+
+  // Random pick from available
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function buildUserPrompt(article, subFormat) {
   const title = article.title || '';
   const rawText = (article.rawText || '').slice(0, 4000);
   const hook = article.hook || '';
+  const count = subFormat?.count || 5;
+  const angle = subFormat?.prompt || 'les 5 spots/lieux incontournables';
+  const captionTemplate = subFormat?.caption || '5 spots à ne pas rater';
 
-  return `Depuis cet article, extrais les 5 spots/lieux incontournables.
+  return `Depuis cet article, extrais ${angle}.
 
 ARTICLE : ${title}
 ACCROCHE : ${hook}
@@ -96,24 +136,26 @@ TEXTE : ${rawText}
 Réponds UNIQUEMENT en JSON valide (pas de markdown, pas de texte avant/après) :
 {
   "country": "Nom du pays ou de la région (en français, avec accents)",
+  "subtopic": "${subFormat?.id || 'spots'}",
   "spots": [
     {
-      "name": "NOM DU SPOT EN MAJUSCULES (max 25 caractères)",
-      "detail": "Description courte (max 30 caractères, ex: Temple historique)",
-      "pexelsQuery": "english pexels search query for this specific spot"
+      "name": "NOM EN MAJUSCULES (max 25 caractères, SPÉCIFIQUE : nom de lieu, plat, rue, astuce)",
+      "detail": "Description courte (max 30 caractères, avec un détail concret : prix, quartier)",
+      "pexelsQuery": "english pexels search query for this specific item"
     }
   ],
-  "caption": "5 spots à ne pas rater à [DESTINATION] [EMOJI_DRAPEAU]\\n\\nLequel tu visites en premier ? 👇",
+  "caption": "${captionTemplate} à [DESTINATION] [EMOJI_DRAPEAU]\\n\\nLequel tu choisis ? 👇",
   "hashtags": ["#FlashVoyage", "#TripPick", "#Voyage", "...4-5 hashtags pertinents"]
 }
 
 RÈGLES :
-- Exactement 5 spots, le plus spectaculaire EN PREMIER
-- "name" : EN MAJUSCULES, max 25 caractères, spécifique (pas générique)
-- "detail" : première lettre majuscule, max 30 caractères, en français avec accents
-- "pexelsQuery" : en anglais, spécifique au spot (ex: "angkor wat temple sunrise")
+- Exactement ${count} items, le plus impactant EN PREMIER
+- "name" : EN MAJUSCULES, max 25 caractères, ULTRA SPÉCIFIQUE (pas "TEMPLE" mais "WAT ARUN AU LEVER")
+- "detail" : première lettre majuscule, max 30 chars, inclure un chiffre ou prix si possible
+- "pexelsQuery" : en anglais, très spécifique (pas "thailand food" mais "pad thai street stall bangkok")
 - "caption" : inclure le drapeau emoji du pays et un appel à l'action
-- "hashtags" : 6-7 hashtags dont #FlashVoyage et #TripPick en premier`;
+- "hashtags" : 6-7 hashtags dont #FlashVoyage en premier
+- INTERDICTION d'être générique. Chaque item = un détail CONCRET.`;
 }
 
 // ── Main generation function ────────────────────────────────────────────────
@@ -133,12 +175,21 @@ export async function generateTripPickScript(article) {
     return getFallbackScript(article);
   }
 
+  // Pick a sub-format to vary content (not always "top 5 spots")
+  let contentHistory = {};
+  try {
+    const histPath = new URL('../data/content-history.json', import.meta.url).pathname;
+    contentHistory = JSON.parse(fs.readFileSync(histPath, 'utf8'));
+  } catch { /* empty or missing */ }
+  const subFormat = pickSubFormat(contentHistory);
+  console.log(`[REEL/TRIP-PICK] Sub-format: ${subFormat.id} ("${subFormat.prompt}")`);
+
   try {
     const response = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 800,
       system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: buildUserPrompt(article) }],
+      messages: [{ role: 'user', content: buildUserPrompt(article, subFormat) }],
     });
 
     const text = response.content[0]?.text?.trim();
@@ -168,14 +219,15 @@ export async function generateTripPickScript(article) {
       throw new Error('Invalid script: missing country or spots');
     }
 
-    // Enforce exactly 5 spots
-    if (script.spots.length > 5) {
-      script.spots = script.spots.slice(0, 5);
+    // Enforce correct item count based on sub-format
+    const targetCount = subFormat.count || 5;
+    if (script.spots.length > targetCount) {
+      script.spots = script.spots.slice(0, targetCount);
     }
-    while (script.spots.length < 5) {
+    while (script.spots.length < targetCount) {
       script.spots.push({
         name: `SPOT ${script.spots.length + 1}`,
-        detail: 'Lieu à découvrir',
+        detail: 'À découvrir',
         pexelsQuery: `${script.country} tourism landmark`,
       });
     }
@@ -199,10 +251,21 @@ export async function generateTripPickScript(article) {
       script.caption = `5 spots à ne pas rater à ${script.country} ${flag}\n\nLequel tu visites en premier ? 👇`;
     }
 
+    // Record subtopic in content history for dedup
+    try {
+      const histPath = new URL('../data/content-history.json', import.meta.url).pathname;
+      if (!contentHistory.recentSubtopics) contentHistory.recentSubtopics = [];
+      contentHistory.recentSubtopics.push({ id: subFormat.id, date: new Date().toISOString() });
+      // Keep last 20 entries
+      if (contentHistory.recentSubtopics.length > 20) contentHistory.recentSubtopics = contentHistory.recentSubtopics.slice(-20);
+      fs.writeFileSync(histPath, JSON.stringify(contentHistory, null, 2));
+    } catch (e) { console.warn('[REEL/TRIP-PICK] Failed to save subtopic history:', e.message); }
+
     // Final structure
     const result = {
       type: 'trip_pick',
       country: script.country,
+      subtopic: subFormat.id,
       spots: script.spots,
       caption: script.caption,
       hashtags: script.hashtags,
