@@ -847,7 +847,7 @@ export function checkInventionGuard(html, pipelineContext, report) {
   const whitelistTokens = new Set();
   
   // Ajouter tokens depuis extracted.title + extracted.selftext + extracted.post.clean_text (si disponible)
-  const extractedText = `${extracted.title || ''} ${extracted.selftext || ''} ${extracted.post?.clean_text || ''}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const extractedText = `${extracted.source?.title || extracted.title || ''} ${extracted.selftext || ''} ${extracted.post?.clean_text || ''}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const extractedTokens = this.extractTokens(extractedText);
   extractedTokens.forEach(t => whitelistTokens.add(t));
   

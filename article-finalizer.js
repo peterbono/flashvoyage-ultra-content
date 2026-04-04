@@ -3164,7 +3164,7 @@ class ArticleFinalizer {
     const whitelistTokens = new Set();
     
     // Ajouter tokens depuis extracted.title + extracted.selftext + extracted.post.clean_text (si disponible)
-    const extractedText = `${extracted.title || ''} ${extracted.selftext || ''} ${extracted.post?.clean_text || ''}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const extractedText = `${extracted.source?.title || extracted.title || ''} ${extracted.selftext || ''} ${extracted.post?.clean_text || ''}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     const extractedTokens = this.extractTokens(extractedText);
     extractedTokens.forEach(t => whitelistTokens.add(t));
     
@@ -9698,16 +9698,32 @@ class ArticleFinalizer {
     );
 
     // 3) Disclosure affiliation visible mais non intrusif (conformité)
+    // Only add disclosure if actual affiliate widgets/links are present in the content
+    const hasAffiliateContent = /trpwdg\.com|travelpayouts|affiliate-module|fv-partner|fv-cta|fv-affiliate|fv-widget|data-tp-widget/i.test(out);
     const disclosure = 'Liens partenaires: une commission peut être perçue, sans surcoût pour toi.';
-    out = out
-      .replace(
-        /<p[^>]*class="[^"]*(?:widget-disclaimer|affiliate-module-disclaimer)[^"]*"[^>]*>[\s\S]*?<\/p>/gi,
-        `<p class="affiliate-module-disclaimer"><small>${disclosure}</small></p>`
-      )
-      .replace(
-        /<small>\s*Lien partenaire\s*<\/small>/gi,
-        `<small>${disclosure}</small>`
-      );
+
+    if (hasAffiliateContent) {
+      out = out
+        .replace(
+          /<p[^>]*class="[^"]*(?:widget-disclaimer|affiliate-module-disclaimer)[^"]*"[^>]*>[\s\S]*?<\/p>/gi,
+          `<p class="affiliate-module-disclaimer"><small>${disclosure}</small></p>`
+        )
+        .replace(
+          /<small>\s*Lien partenaire\s*<\/small>/gi,
+          `<small>${disclosure}</small>`
+        );
+    } else {
+      // No affiliate content: remove any stale disclaimers
+      out = out
+        .replace(
+          /<p[^>]*class="[^"]*(?:widget-disclaimer|affiliate-module-disclaimer)[^"]*"[^>]*>[\s\S]*?<\/p>/gi,
+          ''
+        )
+        .replace(
+          /<small>\s*Lien partenaire\s*<\/small>/gi,
+          ''
+        );
+    }
 
     // 4) 1 CTA max en NEWS: garder le premier module affiliate
     let affiliateSeen = false;

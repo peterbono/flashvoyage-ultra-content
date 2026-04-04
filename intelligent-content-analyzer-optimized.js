@@ -1620,7 +1620,8 @@ CONTENU: ${fullContent.substring(0, 6000)}`;
     const originalDestination = options.original_destination || null;
     const pivotReason = options.pivot_reason || null;
     const editorialMode = options.editorial_mode || 'evergreen';
-    console.log(`📰 EDITORIAL MODE pour génération: ${editorialMode.toUpperCase()}`);
+    const isEvergreenHint = (extracted?.meta?.source === 'evergreen-hint') || (!options.reddit_source_url && !extracted?.meta?.url);
+    console.log(`📰 EDITORIAL MODE pour génération: ${editorialMode.toUpperCase()}${isEvergreenHint ? ' (evergreen-hint)' : ''}`);
     // Construire la section marketing d'affiliation pour les témoignages
     const isTemoignage = analysis.type_contenu && analysis.type_contenu.startsWith('TEMOIGNAGE_');
     const marketingSection = isTemoignage ? `
@@ -2202,14 +2203,18 @@ Ces H2 "curation" renforcent la proposition de valeur unique de FlashVoyage. En 
 ✅ En transition : "Et ce n'est pas un cas isolé.", "On retrouve le même retour chez des voyageurs à [destination]."
 ❌ Le sourcing doit vivre DANS le texte, pas seulement dans le byline que personne ne lit.
 
-📊 ENCARTS DE CRÉDIBILITÉ VISUELS (1-2 par article, OBLIGATOIRE) :
+${isEvergreenHint ? `📊 ENCARTS DE CRÉDIBILITÉ VISUELS (1 par article, OBLIGATOIRE pour evergreen-hint) :
+Insère 1 encart de crédibilité après l'intro (avant le premier H2).
+- Format HTML OBLIGATOIRE :
+<div class='fv-source-anchor' style='margin:1.5rem 0;padding:0.8rem 1rem;background:#f0f7ff;border-left:3px solid #2563eb;border-radius:4px;font-size:0.88rem;color:#4b5563;'>📊 <strong>Guide terrain</strong> — recherches approfondies et données voyage 2026 | Sources : données officielles, retours de voyageurs et prix temps réel</div>
+- NE PAS mentionner "témoignages" ni un nombre de témoignages — cet article est basé sur des recherches, pas sur des posts Reddit.` : `📊 ENCARTS DE CRÉDIBILITÉ VISUELS (1-2 par article, OBLIGATOIRE) :
 Insère 1 à 2 encarts de crédibilité dans le CORPS de l'article (pas juste le byline).
 - Le PREMIER encart se place après l'intro (avant le premier H2).
 - Un SECOND encart optionnel peut être placé mi-article (après 40-60% du contenu).
 - Format HTML OBLIGATOIRE :
 <div class='fv-source-anchor' style='margin:1.5rem 0;padding:0.8rem 1rem;background:#f0f7ff;border-left:3px solid #2563eb;border-radius:4px;font-size:0.88rem;color:#4b5563;'>📊 <strong>Synthèse de [N] témoignages</strong> de voyageurs et expatriés | [X] risques identifiés | Sources : forums de voyageurs francophones et internationaux</div>
 - Remplace [N] par le nombre réel de témoignages dans les données. Remplace [X] par le nombre de risques/problèmes identifiés dans l'analyse.
-- Cet encart sert d'ancre visuelle pour le lecteur qui scanne : il voit immédiatement que l'article est basé sur des données réelles.
+- Cet encart sert d'ancre visuelle pour le lecteur qui scanne : il voit immédiatement que l'article est basé sur des données réelles.`}
 
 8. SÉLECTION DES CITATIONS (RÈGLE ÉDITORIALE SENIOR) :
 - La bonne citation = la phrase où le voyageur RESSENT quelque chose, pas celle où il décrit son itinéraire.

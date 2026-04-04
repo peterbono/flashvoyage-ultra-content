@@ -107,7 +107,7 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
 
   // Construire le texte complet pour recherche de keywords
   const fullText = [
-    extracted.title || '',
+    extracted.source?.title || extracted.title || '',
     extracted.selftext || '',
     ...(story?.evidence?.source_snippets || []).map(s => s.snippet || '').filter(Boolean)
   ].join(' ').toLowerCase();
@@ -447,12 +447,23 @@ export function decideAffiliatePlacements({ extracted, pattern, story, geo_defau
     }
   }
 
+  // Filter out low-confidence placements (confidence < 50 = not worth a widget)
+  const MIN_CONFIDENCE = 50;
+  const confidentPlacements = uniquePlacements.filter(p => {
+    if (p.confidence < MIN_CONFIDENCE) {
+      debug.skipped[`${p.id}_low_confidence`] = `confidence=${p.confidence} < ${MIN_CONFIDENCE}`;
+      console.log(`   ⚠️ AFFILIATE_LOW_CONFIDENCE: skipping ${p.id} (confidence=${p.confidence} < ${MIN_CONFIDENCE})`);
+      return false;
+    }
+    return true;
+  });
+
   // Trier par priority (1 = plus important)
-  uniquePlacements.sort((a, b) => a.priority - b.priority);
+  confidentPlacements.sort((a, b) => a.priority - b.priority);
 
   // Cap max placements
   const maxPlacements = pattern?.story_type === 'guide' ? 3 : 2;
-  const finalPlacements = uniquePlacements.slice(0, maxPlacements);
+  const finalPlacements = confidentPlacements.slice(0, maxPlacements);
 
   // Mettre à jour debug avec les placements finaux
   debug.final_count = finalPlacements.length;

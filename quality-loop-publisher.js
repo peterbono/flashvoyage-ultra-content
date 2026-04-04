@@ -907,8 +907,27 @@ async function publishArticle(article) {
 
   // Fix checklist items: each ✔️/❌ must be on its own line (<p>)
   finalContent = finalContent.replace(/(<div[^>]*class="fv-checklist"[^>]*>)([\s\S]*?)(<\/div>)/gi, (match, open, inner, close) => {
-    // Split on ✔️ or ❌ that are NOT at the start of a <p>
-    let fixed = inner.replace(/([^>\n])(✔️|❌)/g, '$1</p>\n<p>$2');
+    let fixed = inner;
+
+    // Step 1: Normalize — strip existing <p> wrappers to get raw text lines
+    // Then re-split on each ✔️/❌ occurrence and re-wrap each in <p>
+    // Process each <p> block that contains multiple ✔️/❌ icons
+    fixed = fixed.replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, (pMatch, pContent) => {
+      // Count checklist icons in this <p>
+      const iconCount = (pContent.match(/[✔️❌]/g) || []).length;
+      if (iconCount <= 1) return pMatch; // Already single-item, leave alone
+
+      // Multiple items in one <p> — split them
+      const items = pContent.split(/(?=✔️|❌)/).filter(s => s.trim());
+      return items.map(item => `<p>${item.trim()}</p>`).join('\n');
+    });
+
+    // Step 2: Handle bare ✔️/❌ not inside <p> tags (e.g., after </h4>)
+    fixed = fixed.replace(/(?<=>)\s*((?:✔️|❌)[^<]+?)(?=\s*(?:✔️|❌|<h[34]|<\/div))/gi, '<p>$1</p>\n');
+
+    // Step 3: Catch any remaining ✔️/❌ text not wrapped in <p>
+    fixed = fixed.replace(/(?<!<p[^>]*>)\s*((?:✔️|❌)[^<\n]+)/g, '\n<p>$1</p>');
+
     return open + fixed + close;
   });
 

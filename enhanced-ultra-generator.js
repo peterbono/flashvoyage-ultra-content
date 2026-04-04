@@ -924,21 +924,34 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       }
 
       // Byline en haut d'article : transparent sur la source
+      const isEvergreenHint = selectedArticle.source === 'evergreen-hint' || !articleLink || articleLink === '#' || articleLink === '';
       const testimonialCount = srcComments > 0 ? Math.max(srcComments, 8) : 15;
       const contributionText = `${testimonialCount} témoignages de voyageurs`;
 
-      const bylineHtml = `<!-- wp:html -->\n<div class="fv-byline" style="margin-bottom:1.5rem;padding:1rem 1.2rem;background:#f8f9fa;border-left:4px solid #2563eb;border-radius:4px;font-size:0.92rem;line-height:1.5;color:#374151;">
+      let bylineHtml;
+      if (isEvergreenHint) {
+        // Evergreen-hint: no Reddit source, use research-based byline
+        bylineHtml = `<!-- wp:html -->\n<div class="fv-byline" style="margin-bottom:1.5rem;padding:1rem 1.2rem;background:#f8f9fa;border-left:4px solid #2563eb;border-radius:4px;font-size:0.92rem;line-height:1.5;color:#374151;">
+<strong>${selectedAuthor.name}</strong> · Flash Voyage<br>
+Guide complet basé sur nos recherches terrain et données voyage 2026. Sources vérifiées, enrichies par nos données temps réel.
+</div>\n<!-- /wp:html -->\n\n`;
+      } else {
+        bylineHtml = `<!-- wp:html -->\n<div class="fv-byline" style="margin-bottom:1.5rem;padding:1rem 1.2rem;background:#f8f9fa;border-left:4px solid #2563eb;border-radius:4px;font-size:0.92rem;line-height:1.5;color:#374151;">
 <strong>${selectedAuthor.name}</strong> · Flash Voyage<br>
 Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage réel</a> et les retours de <strong>${contributionText}</strong>. Les prénoms ont été modifiés. Sources vérifiées, enrichies par nos données temps réel.
 </div>\n<!-- /wp:html -->\n\n`;
+      }
 
       finalArticle.content = bylineHtml + finalArticle.content;
 
       // Bloc méthode en fin d'article : crédibilité E-E-A-T (author box handled by WP theme)
+      const sourceLink = isEvergreenHint
+        ? `<a href="/notre-methode/">Notre méthode</a>`
+        : `<a href="${articleLink}" target="_blank" rel="noopener">Voir la source originale</a> · <a href="/notre-methode/">Notre méthode</a>`;
       const authorBoxHtml = `\n\n<!-- wp:html -->\n<style>div.fv-author-box{margin:16px 0 !important;padding:16px 16px !important;}</style>\n<div class="fv-author-box" style="margin:16px 0;padding:16px 16px;background:#f0f4ff;border:1px solid #dbeafe;border-radius:8px;font-size:0.93rem;line-height:1.6;color:#1e293b;">
 <p style="margin:0 0 0.5rem;">Cet article est produit par la <strong>rédaction Flash Voyage</strong>. Notre méthode : nous analysons les retours de voyageurs francophones et internationaux, vérifions les informations, puis les enrichissons avec des données temps réel (prix des vols, coût de la vie, conditions de sécurité).</p>
-<p style="margin:0 0 0.5rem;">Pourquoi cette approche ? Un article de blog classique reflète <em>une</em> expérience. Nos articles croisent les retours de <strong>dizaines de voyageurs</strong> qui ont vécu la même situation — c'est plus fiable qu'un avis isolé. Les prénoms utilisés dans cet article ont été modifiés pour préserver l'anonymat des témoignants.</p>
-<p style="margin:0;"><a href="${articleLink}" target="_blank" rel="noopener">Voir la source originale</a> · <a href="/notre-methode/">Notre méthode</a></p>
+<p style="margin:0 0 0.5rem;">Pourquoi cette approche ? Un article de blog classique reflète <em>une</em> expérience. Nos articles croisent les retours de <strong>dizaines de voyageurs</strong> qui ont vécu la même situation — c'est plus fiable qu'un avis isolé.</p>
+<p style="margin:0;">${sourceLink}</p>
 </div>\n<!-- /wp:html -->`;
 
       finalArticle.content = finalArticle.content + authorBoxHtml;

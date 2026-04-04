@@ -1619,11 +1619,15 @@ export function deduplicateParagraphs(html) {
 
 // ─── SOURCE BANNER INJECTION ───────────────────────────────
 // Inserts a credibility banner after the byline div and before the first H2
+// Skipped for evergreen-hint articles (no Reddit témoignages to synthesize)
 export function injectSourceBanner(html) {
   let out = html;
 
   // Don't inject if already present
   if (out.includes("fv-source-anchor")) return out;
+
+  // Skip for evergreen-hint articles: byline says "recherches terrain" instead of "témoignage"
+  if (out.includes("recherches terrain") && !out.includes("témoignage")) return out;
 
   // Extract N from byline text ("retours de X témoignages" or "X contributions")
   const bylineMatch = out.match(/retours?\s+de\s+(?:<[^>]+>)*(\d+)\s*(?:témoignages?|contributions?)/i)
