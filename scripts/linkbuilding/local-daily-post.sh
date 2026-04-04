@@ -15,13 +15,28 @@ LOG="$REPO_DIR/data/linkbuilding-local.log"
 
 echo "$(date): === Starting daily linkbuilding ===" >> "$LOG"
 
-# Check Chrome is running with a window
+# Ensure Chrome is running with a window
 CHROME_WINDOWS=$(osascript -e 'tell application "Google Chrome" to count of windows' 2>/dev/null || echo "0")
 if [ "$CHROME_WINDOWS" = "0" ] || [ "$CHROME_WINDOWS" = "" ]; then
-  echo "$(date): ERROR — Chrome not running or no windows open. Skipping." >> "$LOG"
-  # Send notification
-  osascript -e 'display notification "Chrome non ouvert — linkbuilding skippé" with title "FlashVoyage" sound name "Basso"' 2>/dev/null
-  exit 1
+  echo "$(date): Chrome not open. Starting Chrome..." >> "$LOG"
+  open -a "Google Chrome"
+  # Wait for Chrome to fully launch
+  for i in $(seq 1 30); do
+    sleep 2
+    CHROME_WINDOWS=$(osascript -e 'tell application "Google Chrome" to count of windows' 2>/dev/null || echo "0")
+    if [ "$CHROME_WINDOWS" != "0" ] && [ "$CHROME_WINDOWS" != "" ]; then
+      echo "$(date): Chrome started ($CHROME_WINDOWS windows)" >> "$LOG"
+      break
+    fi
+    if [ $i -eq 30 ]; then
+      echo "$(date): ERROR — Chrome failed to start after 60s. Skipping." >> "$LOG"
+      osascript -e 'display notification "Chrome ne démarre pas — linkbuilding skippé" with title "FlashVoyage" sound name "Basso"' 2>/dev/null
+      exit 1
+    fi
+  done
+  # Extra wait for Chrome to load saved tabs and login sessions
+  sleep 15
+  echo "$(date): Chrome ready after startup wait" >> "$LOG"
 fi
 echo "$(date): Chrome OK ($CHROME_WINDOWS windows)" >> "$LOG"
 

@@ -21,6 +21,7 @@ const LOG_PATH = path.join(REPO_ROOT, 'data/linkbuilding-log.jsonl');
 const WP_API = 'https://flashvoyage.com/wp-json/wp/v2';
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || '';
 const LINK_RATIO = 0.3;
+let TAB_INDEX = null;
 
 const TONE_RULES = `
 RÈGLES DE TON (OBLIGATOIRE — ton de voyageur français, PAS de ton IA) :
@@ -48,15 +49,16 @@ function sleep(ms) { execSync(`sleep ${ms / 1000}`); }
 function osa(script) {
   fs.writeFileSync('/tmp/fv-osa.scpt', script);
   try { return execSync('osascript /tmp/fv-osa.scpt', { timeout: 20000 }).toString().trim(); }
-  catch { return 'ERROR'; }
+  catch(e) { console.log('[OSA ERROR]', e.message); return 'ERROR'; }
 }
 
 function chromeJS(js) {
   fs.writeFileSync('/tmp/fv-js.js', js);
+  const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   return osa(`set jsCode to read POSIX file "/tmp/fv-js.js"
 tell application "Google Chrome"
   set w to front window
-  set t to last tab of w
+  set t to ${tabRef}
   execute t javascript jsCode
 end tell`);
 }
@@ -64,35 +66,43 @@ end tell`);
 function chromeNav(url) {
   // Write URL to file to avoid any escaping
   fs.writeFileSync('/tmp/fv-url.txt', url);
+  const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   return osa(`set targetURL to read POSIX file "/tmp/fv-url.txt"
 tell application "Google Chrome"
   set w to front window
-  set t to last tab of w
+  set t to ${tabRef}
   set URL of t to targetURL
 end tell`);
 }
 
 function chromeTitle() {
+  const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   return osa(`tell application "Google Chrome"
   set w to front window
-  set t to last tab of w
+  set t to ${tabRef}
   get title of t
 end tell`);
 }
 
 function chromeNewTab() {
-  return osa(`tell application "Google Chrome"
+  const result = osa(`tell application "Google Chrome"
   set w to front window
   make new tab at end of tabs of w with properties {URL:"about:blank"}
+  set tabCount to count of tabs of w
+  return tabCount as text
 end tell`);
+  TAB_INDEX = parseInt(result) || null;
+  return result;
 }
 
 function chromeCloseLastTab() {
+  const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   osa(`tell application "Google Chrome"
   set w to front window
-  set t to last tab of w
+  set t to ${tabRef}
   close t
 end tell`);
+  TAB_INDEX = null;
 }
 
 // ── WP Article Fetching ──
@@ -201,8 +211,8 @@ function findQuestion() {
     if (t.length < 25 || t.length > 200) continue;
     if (!h.startsWith('http')) continue;
     if (h.includes('/search') || h.includes('/topic/') || h.includes('/profile/') || h.includes('/about') || h.includes('/terms') || h.includes('/privacy') || h.includes('/settings')) continue;
-    // Skip Quora Spaces (subdomain URLs like experiencevoyage.quora.com)
-    if (h.match(/https?:\/\/[^/]*[a-z]\.quora\.com/) && !h.includes('fr.quora.com')) continue;
+    // Only accept fr.quora.com questions (skip Spaces, profiles, topics)
+    if (!h.startsWith('https://fr.quora.com/')) continue;
     var bad = false;
     for (var j = 0; j < skip.length; j++) { if (t.toLowerCase().indexOf(skip[j]) >= 0) { bad = true; break; } }
     if (bad) continue;
@@ -211,8 +221,9 @@ function findQuestion() {
   return 'NONE';
 })()
 `);
-  if (!questionUrl || questionUrl === 'NONE' || questionUrl === 'ERROR') return null;
+  if (!questionUrl || questionUrl === 'NONE' || questionUrl === 'ERROR' || questionUrl === 'missing value' || !questionUrl.includes('|||')) return null;
   const [qUrl, qTitle] = questionUrl.split('|||');
+  if (!qUrl || !qUrl.startsWith('https://fr.quora.com/') || qUrl.includes('/search') || qUrl.includes('/profile/')) return null;
   return { url: qUrl, title: qTitle };
 }
 

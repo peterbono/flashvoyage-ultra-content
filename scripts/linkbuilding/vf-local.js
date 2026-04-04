@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Voyage Forum Local Poster — Controls real Chrome via AppleScript
- * Uses a dedicated tab (last tab of front window).
+ * Tracks the opened tab by index to avoid hitting the Claude extension tab.
  */
 import { execSync } from 'child_process';
 import fs from 'fs';
@@ -29,47 +29,58 @@ function osa(script) {
   catch { return 'ERROR'; }
 }
 
+let TAB_INDEX = null;
+
+function chromeNewTab() {
+  const result = osa(`tell application "Google Chrome"
+  set w to front window
+  make new tab at end of tabs of w with properties {URL:"about:blank"}
+  set tabCount to count of tabs of w
+  return tabCount as text
+end tell`);
+  TAB_INDEX = parseInt(result) || null;
+  return result;
+}
+
 function chromeJS(js) {
   fs.writeFileSync('/tmp/fv-js.js', js);
+  const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   return osa(`set jsCode to read POSIX file "/tmp/fv-js.js"
 tell application "Google Chrome"
   set w to front window
-  set t to last tab of w
+  set t to ${tabRef}
   execute t javascript jsCode
 end tell`);
 }
 
 function chromeNav(url) {
   fs.writeFileSync('/tmp/fv-url.txt', url);
+  const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   return osa(`set targetURL to read POSIX file "/tmp/fv-url.txt"
 tell application "Google Chrome"
   set w to front window
-  set t to last tab of w
+  set t to ${tabRef}
   set URL of t to targetURL
 end tell`);
 }
 
 function chromeTitle() {
+  const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   return osa(`tell application "Google Chrome"
   set w to front window
-  set t to last tab of w
+  set t to ${tabRef}
   get title of t
 end tell`);
 }
 
-function chromeNewTab() {
-  return osa(`tell application "Google Chrome"
-  set w to front window
-  make new tab at end of tabs of w with properties {URL:"about:blank"}
-end tell`);
-}
-
 function chromeCloseLastTab() {
+  const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   osa(`tell application "Google Chrome"
   set w to front window
-  set t to last tab of w
+  set t to ${tabRef}
   close t
 end tell`);
+  TAB_INDEX = null;
 }
 
 async function main() {
@@ -103,7 +114,8 @@ async function main() {
     // Check login
     const loggedIn = chromeJS('(document.body.textContent.includes("FloAsie") || document.body.textContent.includes("Mon profil")) ? "yes" : "no"');
     if (loggedIn !== 'yes') {
-      console.log('[VF] Not logged in!');
+      console.log('[VF] Not logged in — check Chrome session');
+      log({ date: new Date().toISOString(), platform: 'voyageforum', thread: threadSlug, status: 'login_failed' });
       return;
     }
     console.log('[VF] Logged in as FloAsie');
@@ -125,7 +137,7 @@ async function main() {
     const encoded = encodeURIComponent(content);
 
     let used = null;
-    for (let attempt = 0; attempt < 4 && !used; attempt++) {
+    for (let attempt = 0; attempt < 6 && !used; attempt++) {
       // First set the content as a global var
       chromeJS(`window.__fvContent = decodeURIComponent("${encoded}")`);
       sleep(500);
@@ -146,8 +158,8 @@ async function main() {
 `);
       if (!used || used === 'missing value') {
         used = null;
-        console.log(`[VF] Editor not ready (${attempt + 1}/4)...`);
-        sleep(5000);
+        console.log(`[VF] Editor not ready (${attempt + 1}/6)...`);
+        sleep(6000);
       }
     }
     if (!used) { console.log('[VF] Editor not loaded'); return; }
