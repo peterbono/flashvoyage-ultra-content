@@ -876,16 +876,18 @@ function generateDigestHTML(data) {
       </div>`).join('');
   }
 
-  // Top article performance highlight
-  if (articles.topPerformers.length > 0) {
-    const top = articles.topPerformers[0];
-    funHTML += `
-      <div style="background:#f0fdf4; border-radius:8px; padding:10px 12px; text-align:center">
-        <div style="font-size:11px; color:#16a34a; text-transform:uppercase; letter-spacing:0.5px">Meilleur article</div>
-        <div style="font-size:14px; font-weight:600; color:#333; margin-top:4px">${top.title || top.slug}</div>
-        <div style="font-size:12px; color:#16a34a; margin-top:2px">Score: ${(top.compositeScore || 0).toFixed(1)}/100</div>
-      </div>`;
-  }
+  // Growth metrics that matter now (not article scores — useless with low traffic)
+  const totalReels = reels.total + reels.publishedToday;
+  const totalBacklinks = (linkbuilding?.quoraWithLink || 0) + (linkbuilding?.vfTotal || 0);
+  funHTML += `
+    <div style="background:#f0fdf4; border-radius:8px; padding:10px 12px; text-align:center">
+      <div style="font-size:11px; color:#16a34a; text-transform:uppercase; letter-spacing:0.5px">Distribution cette semaine</div>
+      <div style="display:flex; justify-content:space-around; margin-top:8px">
+        <div><span style="font-size:20px; font-weight:700">${totalReels}</span><br><span style="font-size:10px; color:#888">Reels IG</span></div>
+        <div><span style="font-size:20px; font-weight:700">${linkbuilding?.quoraTotal || 0}</span><br><span style="font-size:10px; color:#888">Posts Quora</span></div>
+        <div><span style="font-size:20px; font-weight:700">${totalBacklinks}</span><br><span style="font-size:10px; color:#888">Backlinks</span></div>
+      </div>
+    </div>`;
 
   if (!funHTML) {
     // Motivational quote rotation
