@@ -257,8 +257,34 @@ export async function publishReel(videoBuffer, caption, hashtags, pageToken) {
       permalink = mediaData.permalink || null;
     } catch { /* non-fatal */ }
 
+    // 6. Send to Telegram for manual TikTok repost
+    await sendToTelegram(videoBuffer, fullCaption, permalink).catch(err =>
+      console.warn(`[REEL/PUB] Telegram send failed (non-fatal): ${err.message}`)
+    );
+
     return { reelId, permalink };
   } catch (err) {
     throw err;
   }
+}
+
+/**
+ * Send reel video + caption to Telegram bot for manual TikTok repost.
+ */
+async function sendToTelegram(videoBuffer, caption, permalink) {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!botToken || !chatId) return;
+
+  const tgCaption = `${caption}\n\n${permalink ? '📱 IG: ' + permalink : ''}`.slice(0, 1024);
+
+  const form = new FormData();
+  form.append('chat_id', chatId);
+  form.append('video', new Blob([videoBuffer], { type: 'video/mp4' }), 'reel.mp4');
+  form.append('caption', tgCaption);
+
+  const res = await fetch(`https://api.telegram.org/bot${botToken}/sendVideo`, { method: 'POST', body: form });
+  const data = await res.json();
+  if (data.ok) console.log(`[REEL/PUB] Telegram: video sent to chat ${chatId}`);
+  else throw new Error(data.description || 'Telegram API error');
 }
