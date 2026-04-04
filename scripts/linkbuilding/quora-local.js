@@ -52,33 +52,41 @@ function osa(script) {
   catch(e) { console.log('[OSA ERROR]', e.message); return 'ERROR'; }
 }
 
+let WIN_ID = null;
+
+function getWinRef() {
+  return WIN_ID ? `window id ${WIN_ID}` : 'front window';
+}
+
 function chromeJS(js) {
   fs.writeFileSync('/tmp/fv-js.js', js);
+  const winRef = getWinRef();
   const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   return osa(`set jsCode to read POSIX file "/tmp/fv-js.js"
 tell application "Google Chrome"
-  set w to front window
+  set w to ${winRef}
   set t to ${tabRef}
   execute t javascript jsCode
 end tell`);
 }
 
 function chromeNav(url) {
-  // Write URL to file to avoid any escaping
   fs.writeFileSync('/tmp/fv-url.txt', url);
+  const winRef = getWinRef();
   const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   return osa(`set targetURL to read POSIX file "/tmp/fv-url.txt"
 tell application "Google Chrome"
-  set w to front window
+  set w to ${winRef}
   set t to ${tabRef}
   set URL of t to targetURL
 end tell`);
 }
 
 function chromeTitle() {
+  const winRef = getWinRef();
   const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   return osa(`tell application "Google Chrome"
-  set w to front window
+  set w to ${winRef}
   set t to ${tabRef}
   get title of t
 end tell`);
@@ -87,22 +95,28 @@ end tell`);
 function chromeNewTab() {
   const result = osa(`tell application "Google Chrome"
   set w to front window
+  set wId to id of w
   make new tab at end of tabs of w with properties {URL:"about:blank"}
   set tabCount to count of tabs of w
-  return tabCount as text
+  return (wId as text) & "|" & (tabCount as text)
 end tell`);
-  TAB_INDEX = parseInt(result) || null;
+  const parts = result.split('|');
+  WIN_ID = parseInt(parts[0]) || null;
+  TAB_INDEX = parseInt(parts[1]) || null;
+  console.log(`[QUORA] Tab created: window=${WIN_ID} tab=${TAB_INDEX}`);
   return result;
 }
 
 function chromeCloseLastTab() {
+  const winRef = getWinRef();
   const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   osa(`tell application "Google Chrome"
-  set w to front window
+  set w to ${winRef}
   set t to ${tabRef}
   close t
 end tell`);
   TAB_INDEX = null;
+  WIN_ID = null;
 }
 
 // ── WP Article Fetching ──

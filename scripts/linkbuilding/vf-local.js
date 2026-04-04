@@ -30,24 +30,34 @@ function osa(script) {
 }
 
 let TAB_INDEX = null;
+let WIN_ID = null;
+
+function getWinRef() {
+  return WIN_ID ? `window id ${WIN_ID}` : 'front window';
+}
 
 function chromeNewTab() {
   const result = osa(`tell application "Google Chrome"
   set w to front window
+  set wId to id of w
   make new tab at end of tabs of w with properties {URL:"about:blank"}
   set tabCount to count of tabs of w
-  return tabCount as text
+  return (wId as text) & "|" & (tabCount as text)
 end tell`);
-  TAB_INDEX = parseInt(result) || null;
+  const parts = result.split('|');
+  WIN_ID = parseInt(parts[0]) || null;
+  TAB_INDEX = parseInt(parts[1]) || null;
+  console.log(`[VF] Tab created: window=${WIN_ID} tab=${TAB_INDEX}`);
   return result;
 }
 
 function chromeJS(js) {
   fs.writeFileSync('/tmp/fv-js.js', js);
+  const winRef = getWinRef();
   const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   return osa(`set jsCode to read POSIX file "/tmp/fv-js.js"
 tell application "Google Chrome"
-  set w to front window
+  set w to ${winRef}
   set t to ${tabRef}
   execute t javascript jsCode
 end tell`);
@@ -55,32 +65,36 @@ end tell`);
 
 function chromeNav(url) {
   fs.writeFileSync('/tmp/fv-url.txt', url);
+  const winRef = getWinRef();
   const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   return osa(`set targetURL to read POSIX file "/tmp/fv-url.txt"
 tell application "Google Chrome"
-  set w to front window
+  set w to ${winRef}
   set t to ${tabRef}
   set URL of t to targetURL
 end tell`);
 }
 
 function chromeTitle() {
+  const winRef = getWinRef();
   const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   return osa(`tell application "Google Chrome"
-  set w to front window
+  set w to ${winRef}
   set t to ${tabRef}
   get title of t
 end tell`);
 }
 
 function chromeCloseLastTab() {
+  const winRef = getWinRef();
   const tabRef = TAB_INDEX ? `tab ${TAB_INDEX} of w` : 'last tab of w';
   osa(`tell application "Google Chrome"
-  set w to front window
+  set w to ${winRef}
   set t to ${tabRef}
   close t
 end tell`);
   TAB_INDEX = null;
+  WIN_ID = null;
 }
 
 async function main() {
@@ -165,14 +179,46 @@ async function main() {
     if (!used) { console.log('[VF] Editor not loaded'); return; }
     console.log(`[VF] Content set via ${used}`);
 
-    // 5. Submit — set hidden field + jQuery trigger or direct form.submit()
+    // 5. Sync content to hidden field + submit form
     const submitResult = chromeJS(`
 (function() {
   var form = document.getElementById('post_write_form');
   if (!form) return 'NO_FORM';
 
-  // Ensure the hidden "do" field is set (VF requires this for reply processing)
-  var doField = form.querySelector('input[name="do"]');
+  // VF stores message in input[name="post_message"] (hidden), not a textarea
+  var msgField = form.querySelector('input[name="post_message"]');
+  if (!msgField) {
+    // Fallback: create it
+    msgField = document.createElement('input');
+    msgField.type = 'hidden';
+    msgField.name = 'post_message';
+    form.appendChild(msgField);
+  }
+
+  // Get content from editor (ae > iframe > contenteditable > stored)
+  var html = '';
+  if (typeof ae !== 'undefined' && ae && ae.getContent) {
+    html = ae.getContent();
+  } else {
+    var iframe = document.querySelector('iframe');
+    if (iframe && iframe.contentDocument && iframe.contentDocument.body) {
+      html = iframe.contentDocument.body.innerHTML;
+    }
+    if (!html || html === '<br>' || html.length < 10) {
+      var ce = document.querySelector('[contenteditable="true"]');
+      if (ce) html = ce.innerHTML;
+    }
+    if (!html || html.length < 10) html = window.__fvContent || '';
+  }
+  msgField.value = html;
+
+  // Change form action to post (VF uses "do" param to switch between write/post)
+  // Remove existing submit button named "do" to avoid conflict, add hidden field
+  var existingDo = form.querySelector('input[type="submit"]');
+  if (existingDo && existingDo.name && existingDo.name.indexOf('do') === 0) {
+    existingDo.disabled = true;
+  }
+  var doField = form.querySelector('input[type="hidden"][name="do"]');
   if (!doField) {
     doField = document.createElement('input');
     doField.type = 'hidden';
@@ -181,19 +227,9 @@ async function main() {
   }
   doField.value = 'post_reply_post';
 
-  // Also sync iframe/ae content back to the hidden textarea if ae exists
-  if (typeof ae !== 'undefined' && ae && ae.getContent) {
-    var ta = form.querySelector('textarea[name="message"]') || form.querySelector('textarea');
-    if (ta) ta.value = ae.getContent();
-  }
-
-  // Try jQuery trigger first (VF binds handlers via jQuery)
-  if (typeof jQuery !== 'undefined') {
-    try { jQuery('#sentButton').trigger('click'); return 'jquery_click'; } catch(e) {}
-  }
-
-  // Fallback: direct form.submit() bypasses jQuery handlers but still POSTs
-  try { form.submit(); return 'form_submit'; } catch(e) { return 'SUBMIT_ERR:' + e.message; }
+  // Submit
+  try { form.submit(); return 'form_submit|msg=' + html.length + 'chars'; }
+  catch(e) { return 'SUBMIT_ERR:' + e.message; }
 })()
 `);
     console.log(`[VF] Submit method: ${submitResult}`);
