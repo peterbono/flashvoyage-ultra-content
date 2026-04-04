@@ -648,6 +648,26 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         }
       }
 
+      // EVERGREEN FALLBACK: if no source found for pillar/comparison/itinerary,
+      // generate directly from the hint — no external source needed
+      if (!selectedArticle && directive.articleType !== 'news') {
+        const hint = String(process.env.ARTICLE_HINT || directive.searchHints?.[0] || '').trim();
+        if (hint) {
+          console.log(`\n🌿 EVERGREEN FALLBACK: no source found for "${directive.articleType}" article — generating from hint`);
+          console.log(`   Hint: "${hint}"`);
+          selectedArticle = {
+            title: hint,
+            source_text: `Sujet: ${hint}. Cet article est un contenu evergreen généré à partir du hint éditorial. Utilise tes connaissances pour produire un guide complet, précis et utile sur ce sujet voyage en Asie du Sud-Est. Inclus des budgets réels en euros, des conseils pratiques, et des comparatifs honnêtes.`,
+            link: '',
+            author: 'FlashVoyage Editorial',
+            source: 'evergreen-hint',
+            source_reliability: 8,
+            type: directive.articleType || 'pillar',
+          };
+          console.log(`   ✅ Synthetic source créée — le LLM génèrera le contenu depuis ses connaissances\n`);
+        }
+      }
+
       if (!selectedArticle) {
         const forceFixtures = process.env.FLASHVOYAGE_FORCE_FIXTURES === '1';
         if (forceFixtures || DRY_RUN) {
