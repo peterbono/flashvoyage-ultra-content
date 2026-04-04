@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 1,
+      "posted": 2,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -12,6 +12,13 @@
         {
           "date": "2026-04-01T10:14:05Z",
           "thread": "visite-2-jours-bangkok-d11465951",
+          "section": "Thaïlande",
+          "hasLink": false,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-04T13:13:39.805Z",
+          "thread": "demande-conseils-projet-itineraire-thailande-laos-cambodge-d10779659",
           "section": "Thaïlande",
           "hasLink": false,
           "status": "published"
@@ -60,7 +67,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 3,
+      "posted": 4,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -113,11 +120,19 @@
           "search": "bali ou thailande premier voyage asie",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-04T13:08:03.605Z",
+          "id": "quora-3",
+          "search": "itineraire vietnam 2 semaines",
+          "hasLink": true,
+          "status": "published",
+          "generated": false
         }
       ]
     },
     "reddit": {
-      "posted": 0,
+      "posted": 1,
       "target": 2,
       "blocker": "Anti-bot — needs real Chrome",
       "posts_queued": [
@@ -135,10 +150,20 @@
           "hasLink": false,
           "topic": "3 months SE Asia budget"
         }
+      ],
+      "posts_done": [
+        {
+          "date": "2026-04-04T13:20:56.316Z",
+          "id": "reddit-1",
+          "sub": "r/solotravel",
+          "search": "southeast asia first time",
+          "hasLink": false,
+          "status": "published"
+        }
       ]
     }
   },
-  "total_posted": 4,
+  "total_posted": 7,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
