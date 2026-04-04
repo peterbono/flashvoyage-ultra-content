@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-03T05:11:06.514Z",
+  "timestamp": "2026-04-04T04:56:38.686Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -20,7 +20,7 @@
     "medianMonthlyPV": 180,
     "medianTrafficSignal": "0.180",
     "avgRpm": 2,
-    "articlesAnalyzed": 43
+    "articlesAnalyzed": 39
   },
   "queue": [
     {
@@ -91,6 +91,81 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
+      "topic": "Voyager en Asie du Sud-Est : Itinéraire et Coûts Réels à Prévoir",
+      "articleType": "support",
+      "context": {
+        "wpId": 2945,
+        "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
+        "compositeScore": 14,
+        "freshness": 0.96,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Indonésie en 14 jours : Décisions cruciales pour un itinéraire parfait",
+      "articleType": "support",
+      "context": {
+        "wpId": 2938,
+        "slug": "indonesie-en-14-jours-decisions-cruciales-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.96,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Voyager au Japon : eSIM et frais cachés à connaître",
+      "articleType": "support",
+      "context": {
+        "wpId": 2916,
+        "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
+        "compositeScore": 14,
+        "freshness": 0.96,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
       "topic": "Les 3 coûts cachés des espaces de coworking à Ho Chi Minh City",
       "articleType": "support",
       "context": {
@@ -112,7 +187,7 @@
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -137,7 +212,7 @@
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -162,7 +237,7 @@
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -187,7 +262,7 @@
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -212,7 +287,7 @@
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -237,90 +312,15 @@
       "withinBudget": true
     },
     {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
-      "articleType": "support",
-      "context": {
-        "wpId": 4125,
-        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
-        "compositeScore": 15,
-        "freshness": 1,
-        "traffic": 0,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Japon solo à 27 ans : les 2 pièges que les guides cachent sur les singletrip",
-      "articleType": "support",
-      "context": {
-        "wpId": 4117,
-        "slug": "japon-solo-a-27-ans-les-2-pieges-que-les-guides-cachent-sur-les-singletrip",
-        "compositeScore": 15,
-        "freshness": 1,
-        "traffic": 0,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
-      "articleType": "support",
-      "context": {
-        "wpId": 4058,
-        "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
-        "compositeScore": 15,
-        "freshness": 1,
-        "traffic": 0,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
       "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "Japon en solo : 3 pièges que les blogs cachent (et comment les éviter)",
+      "topic": "TikTok Verification",
       "articleType": "support",
       "context": {
-        "wpId": 4037,
-        "slug": "japon-en-solo-3-pieges-que-les-blogs-cachent-et-comment-les-eviter",
+        "wpId": 5016,
+        "slug": "tiktokd9gjkhyyhpqp84w5zbtezxejkywwdu7x-txt",
         "compositeScore": 15,
         "freshness": 1,
         "traffic": 0,

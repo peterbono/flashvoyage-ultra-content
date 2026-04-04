@@ -1,22 +1,26 @@
 {
   "summary": {
-    "generatedAt": "2026-04-03T05:11:05.698Z",
-    "elapsedSeconds": 11,
-    "totalArticles": 114,
-    "articlesWithRecommendations": 7,
-    "totalRecommendations": 7,
+    "generatedAt": "2026-04-04T04:56:37.735Z",
+    "elapsedSeconds": 10,
+    "totalArticles": 115,
+    "articlesWithRecommendations": 8,
+    "totalRecommendations": 8,
     "byPriority": {
       "P0": 0,
       "P1": 0,
-      "P2": 7
+      "P2": 8
     },
     "byType": {
-      "seo": 7
+      "seo": 8
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
         "count": 7
+      },
+      {
+        "action": "ADD_INTERNAL_LINKS",
+        "count": 1
       }
     ]
   },
@@ -109,9 +113,9 @@
         "avgDuration": 25
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 6,
         "clicks": 0,
-        "position": 6,
+        "position": 6.7,
         "topQueries": [
           {
             "query": "\"tokyo tokyo\" \"gyudon\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
@@ -168,34 +172,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 3182,
-      "slug": "vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser",
-      "title": "Vaccin contre la rage pour un périple en Asie du Sud-Est : Faut-il vraiment dépenser ?",
-      "url": "https://flashvoyage.com/vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser/",
-      "wordCount": 2379,
-      "widgetCount": 0,
-      "internalLinks": 27,
-      "lastModified": "2026-03-31T17:40:15",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 3,
-        "avgDuration": 260
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4487,
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
@@ -238,9 +214,9 @@
         "avgDuration": 11
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 20,
         "clicks": 0,
-        "position": 11,
+        "position": 10.8,
         "topQueries": [
           {
             "query": "prix visa cambodge 2026",
@@ -317,9 +293,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 7,
         "clicks": 0,
-        "position": 6,
+        "position": 5.7,
         "topQueries": [
           {
             "query": "10 jours aux philippines",
@@ -439,57 +415,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4252,
-      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-      "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
-      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
-      "wordCount": 4306,
-      "widgetCount": 3,
-      "internalLinks": 46,
-      "lastModified": "2026-03-31T18:35:12",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 21
-      },
-      "gsc": {
-        "impressions": 56,
-        "clicks": 0,
-        "position": 16.1,
-        "topQueries": [
-          {
-            "query": "assurance voyage vietnam",
-            "position": 48.2,
-            "impressions": 6,
-            "ctr": 0
-          },
-          {
-            "query": "attestation assurance vietnam",
-            "position": 69.7,
-            "impressions": 3,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
       "wpId": 3550,
       "slug": "japon-les-2-pieges-que-les-guides-cachent-aux-backpackers",
       "title": "Japon : les 2 pièges que les guides cachent aux backpackers",
@@ -588,9 +513,9 @@
         "avgDuration": 11
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 4,
         "clicks": 0,
-        "position": 5.3,
+        "position": 8.3,
         "topQueries": []
       },
       "reels": {
@@ -630,18 +555,18 @@
       "p0Count": 0
     },
     {
-      "wpId": 3122,
-      "slug": "budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations",
-      "title": "Budget Réel pour Vivre à Koh Lanta : Dépenses et Optimisations",
-      "url": "https://flashvoyage.com/budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations/",
-      "wordCount": 1062,
+      "wpId": 3182,
+      "slug": "vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser",
+      "title": "Vaccin contre la rage pour un périple en Asie du Sud-Est : Faut-il vraiment dépenser ?",
+      "url": "https://flashvoyage.com/vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser/",
+      "wordCount": 2379,
       "widgetCount": 0,
-      "internalLinks": 26,
-      "lastModified": "2026-03-31T17:40:31",
+      "internalLinks": 27,
+      "lastModified": "2026-03-31T17:40:15",
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 6
+        "avgDuration": 377
       },
       "gsc": {
         "impressions": 0,
@@ -700,9 +625,9 @@
         "avgDuration": 239
       },
       "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
+        "impressions": 1,
+        "clicks": 1,
+        "position": 4,
         "topQueries": []
       },
       "reels": {
@@ -754,6 +679,34 @@
         "pageviews": 2,
         "sessions": 2,
         "avgDuration": 5
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3024,
+      "slug": "visa-vietnam-lerreur-qui-ma-coute-cher-et-comment-leviter",
+      "title": "Visa Vietnam : L&rsquo;Erreur qui M&rsquo;a Coûté Cher et Comment L&rsquo;Éviter",
+      "url": "https://flashvoyage.com/visa-vietnam-lerreur-qui-ma-coute-cher-et-comment-leviter/",
+      "wordCount": 1206,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-03-31T17:41:01",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 13
       },
       "gsc": {
         "impressions": 0,
@@ -879,6 +832,57 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4252,
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
+      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
+      "wordCount": 4306,
+      "widgetCount": 3,
+      "internalLinks": 46,
+      "lastModified": "2026-03-31T18:35:12",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 61,
+        "clicks": 0,
+        "position": 17.7,
+        "topQueries": [
+          {
+            "query": "assurance voyage vietnam",
+            "position": 55,
+            "impressions": 8,
+            "ctr": 0
+          },
+          {
+            "query": "attestation assurance vietnam",
+            "position": 69.7,
+            "impressions": 3,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -1190,141 +1194,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 3174,
-      "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-      "title": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
-      "url": "https://flashvoyage.com/choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades/",
-      "wordCount": 1185,
-      "widgetCount": 0,
-      "internalLinks": 26,
-      "lastModified": "2026-03-31T17:40:17",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 33
-      },
-      "gsc": {
-        "impressions": 12,
-        "clicks": 0,
-        "position": 5.9,
-        "topQueries": [
-          {
-            "query": "bangkok ou chiang mai",
-            "position": 7,
-            "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "chiang mai ou bangkok",
-            "position": 6,
-            "impressions": 2,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"bangkok ou chiang mai\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bangkok ou chiang mai\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3159,
-      "slug": "vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques",
-      "title": "Vivre en Asie du Sud-Est avec 10 000 $ : Frais cachés et choix stratégiques",
-      "url": "https://flashvoyage.com/vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques/",
-      "wordCount": 1350,
-      "widgetCount": 0,
-      "internalLinks": 28,
-      "lastModified": "2026-03-31T17:40:23",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 2,
-        "avgDuration": 3
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3099,
-      "slug": "indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques",
-      "title": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques",
-      "url": "https://flashvoyage.com/indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques/",
-      "wordCount": 1954,
-      "widgetCount": 0,
-      "internalLinks": 27,
-      "lastModified": "2026-03-31T17:40:40",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 2,
-        "avgDuration": 3
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3024,
-      "slug": "visa-vietnam-lerreur-qui-ma-coute-cher-et-comment-leviter",
-      "title": "Visa Vietnam : L&rsquo;Erreur qui M&rsquo;a Coûté Cher et Comment L&rsquo;Éviter",
-      "url": "https://flashvoyage.com/visa-vietnam-lerreur-qui-ma-coute-cher-et-comment-leviter/",
-      "wordCount": 1206,
-      "widgetCount": 0,
-      "internalLinks": 19,
-      "lastModified": "2026-03-31T17:41:01",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 2,
-        "avgDuration": 5
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 2989,
       "slug": "comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes",
       "title": "Comment découvrir l&rsquo;Indonésie authentique : itinéraire, choix et découvertes",
@@ -1378,6 +1247,44 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5016,
+      "slug": "tiktokd9gjkhyyhpqp84w5zbtezxejkywwdu7x-txt",
+      "title": "TikTok Verification",
+      "url": "https://flashvoyage.com/tiktokd9gjkhyyhpqp84w5zbtezxejkywwdu7x-txt/",
+      "wordCount": 1,
+      "widgetCount": 0,
+      "internalLinks": 0,
+      "lastModified": "2026-04-03T19:27:10",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Seulement 0 lien(s) interne(s) (minimum recommande: 5)",
+          "action": "ADD_INTERNAL_LINKS",
+          "details": "Le maillage interne est insuffisant. Google utilise les liens internes pour comprendre la structure du site et distribuer le PageRank. Actions : 1) Ajouter 3-5 liens vers des articles FlashVoyage connexes (meme destination ou theme). 2) Prioriser les liens vers les articles du top 20% du scoring. 3) Utiliser des ancres descriptives (pas \"cliquez ici\" mais \"decouvrez notre guide complet de Bali\"). 4) Ajouter un bloc \"Articles lies\" en fin d'article si absent. 5) Verifier que les articles les plus populaires linkent vers celui-ci.",
+          "effort": "10min",
+          "expectedImpact": "Amelioration du crawl Google + distribution de PageRank = meilleur positionnement"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -2669,6 +2576,57 @@
       "p0Count": 0
     },
     {
+      "wpId": 3174,
+      "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
+      "title": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
+      "url": "https://flashvoyage.com/choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades/",
+      "wordCount": 1185,
+      "widgetCount": 0,
+      "internalLinks": 26,
+      "lastModified": "2026-03-31T17:40:17",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 12,
+        "clicks": 0,
+        "position": 5.9,
+        "topQueries": [
+          {
+            "query": "bangkok ou chiang mai",
+            "position": 7,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "chiang mai ou bangkok",
+            "position": 6,
+            "impressions": 2,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"bangkok ou chiang mai\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bangkok ou chiang mai\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 3167,
       "slug": "vivre-en-thailande-avec-500-usd-realite-ou-illusion",
       "title": "Vivre en Thaïlande avec 500 USD : Réalité ou Illusion ?",
@@ -2677,6 +2635,34 @@
       "widgetCount": 0,
       "internalLinks": 28,
       "lastModified": "2026-03-31T17:40:20",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3159,
+      "slug": "vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques",
+      "title": "Vivre en Asie du Sud-Est avec 10 000 $ : Frais cachés et choix stratégiques",
+      "url": "https://flashvoyage.com/vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques/",
+      "wordCount": 1350,
+      "widgetCount": 0,
+      "internalLinks": 28,
+      "lastModified": "2026-03-31T17:40:23",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2753,6 +2739,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 3122,
+      "slug": "budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations",
+      "title": "Budget Réel pour Vivre à Koh Lanta : Dépenses et Optimisations",
+      "url": "https://flashvoyage.com/budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations/",
+      "wordCount": 1062,
+      "widgetCount": 0,
+      "internalLinks": 26,
+      "lastModified": "2026-03-31T17:40:31",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 3115,
       "slug": "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable",
       "title": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
@@ -2761,6 +2775,34 @@
       "widgetCount": 0,
       "internalLinks": 20,
       "lastModified": "2026-03-31T17:40:34",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3099,
+      "slug": "indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques",
+      "title": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques",
+      "url": "https://flashvoyage.com/indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques/",
+      "wordCount": 1954,
+      "widgetCount": 0,
+      "internalLinks": 27,
+      "lastModified": "2026-03-31T17:40:40",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3103,9 +3145,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 8,
         "clicks": 0,
-        "position": 5.3,
+        "position": 4.8,
         "topQueries": []
       },
       "reels": {
