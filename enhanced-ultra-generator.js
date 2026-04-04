@@ -645,6 +645,11 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
         } else {
           console.log('   ❌ Aucun article même avec filtre relâché');
         }
+        // If relaxed filter selected an article but source_text is too short, discard it
+        if (selectedArticle && (selectedArticle.source_text || '').length < 200) {
+          console.log(`   ⚠️ Source trop courte (${(selectedArticle.source_text || '').length} chars) — discarding for evergreen fallback`);
+          selectedArticle = null;
+        }
       }
 
       // EVERGREEN FALLBACK: if no source found for pillar/comparison/itinerary,
