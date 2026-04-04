@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 2,
+      "posted": 4,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -21,6 +21,22 @@
           "thread": "demande-conseils-projet-itineraire-thailande-laos-cambodge-d10779659",
           "section": "Thaïlande",
           "hasLink": false,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-04T13:41:04.098Z",
+          "thread": "vietnam-vous-en-gardez-quoi-fond-d11465015",
+          "title": "Vietnam… vous en gardez quoi au fond?",
+          "hasLink": false,
+          "generated": false,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-04T13:41:53.631Z",
+          "thread": "vehicule-avec-sans-chauffeur-3-semaines-vietnam-nord-sud-hanoi-ho-chi-minh-d11465008",
+          "title": "Véhicule avec ou sans chauffeur pour 3 semaines au Vietnam du Nord au Sud (Hanoi - Ho Chi Minh)",
+          "hasLink": false,
+          "generated": true,
           "status": "published"
         }
       ],
@@ -163,7 +179,7 @@
       ]
     }
   },
-  "total_posted": 7,
+  "total_posted": 9,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }

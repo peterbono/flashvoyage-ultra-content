@@ -6,8 +6,15 @@
 source "$HOME/.nvm/nvm.sh"
 nvm use 20 > /dev/null 2>&1
 
-# Load API key from zshrc (already set there)
-export ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-$(grep ANTHROPIC_API_KEY ~/.zshrc 2>/dev/null | head -1 | cut -d= -f2)}"
+# Load API key from .env files
+if [ -z "$ANTHROPIC_API_KEY" ]; then
+  for envfile in "$HOME/flashvoyage-content/.env" "$HOME/clodoproject/.env" "$HOME/.env"; do
+    if [ -f "$envfile" ]; then
+      val=$(grep '^ANTHROPIC_API_KEY=' "$envfile" | head -1 | cut -d= -f2)
+      if [ -n "$val" ]; then export ANTHROPIC_API_KEY="$val"; break; fi
+    fi
+  done
+fi
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
