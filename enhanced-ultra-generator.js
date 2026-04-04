@@ -692,7 +692,12 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
       // ============================================================
       let redditComments = [];
       const redditUrl = selectedArticle.link || selectedArticle.url || '';
-      
+
+      // Skip Reddit comment fetch for evergreen-hint sources (no URL to fetch from)
+      if (selectedArticle.source === 'evergreen-hint') {
+        console.log('🌿 Evergreen source — skipping Reddit comments fetch');
+        redditComments = [];
+      }
       // En mode offline, utiliser les commentaires du fixture (source_text ou comments_snippets)
       // Sinon, récupérer les commentaires via l'API Reddit
       if (FORCE_OFFLINE && selectedArticle.source_text) {
@@ -720,7 +725,7 @@ class EnhancedUltraGenerator extends UltraStrategicGenerator {
           }));
           console.log(`✅ ${redditComments.length} commentaires depuis comments_snippets`);
         }
-      } else if (redditUrl && redditUrl.includes('reddit.com')) {
+      } else if (selectedArticle.source !== 'evergreen-hint' && redditUrl && redditUrl.includes('reddit.com')) {
         try {
           console.log('💬 Récupération des commentaires Reddit via API...');
           redditComments = await this.fetchRedditComments(redditUrl);
