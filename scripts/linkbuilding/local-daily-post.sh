@@ -82,17 +82,17 @@ echo "$(date): VF done (exit $VF_EXIT)" >> "$LOG"
 # Wait between posts
 sleep 60
 
-# Run Reddit (with retry)
-echo "$(date): Running Reddit..." >> "$LOG"
-node scripts/linkbuilding/reddit-local.js >> "$LOG" 2>&1
-REDDIT_EXIT=$?
-if [ $REDDIT_EXIT -ne 0 ]; then
-  echo "$(date): Reddit failed (exit $REDDIT_EXIT), retrying in 30s..." >> "$LOG"
+# Run Routard (with retry)
+echo "$(date): Running Routard..." >> "$LOG"
+node scripts/linkbuilding/routard-local.js >> "$LOG" 2>&1
+ROUTARD_EXIT=$?
+if [ $ROUTARD_EXIT -ne 0 ]; then
+  echo "$(date): Routard failed (exit $ROUTARD_EXIT), retrying in 30s..." >> "$LOG"
   sleep 30
-  node scripts/linkbuilding/reddit-local.js >> "$LOG" 2>&1
-  REDDIT_EXIT=$?
+  node scripts/linkbuilding/routard-local.js >> "$LOG" 2>&1
+  ROUTARD_EXIT=$?
 fi
-echo "$(date): Reddit done (exit $REDDIT_EXIT)" >> "$LOG"
+echo "$(date): Routard done (exit $ROUTARD_EXIT)" >> "$LOG"
 
 # Push state changes
 cd "$REPO_DIR"
@@ -100,7 +100,7 @@ git add data/linkbuilding-week-plan.json data/linkbuilding-log.jsonl 2>/dev/null
 git diff --staged --quiet || git commit -m "chore: local linkbuilding $(date +%Y-%m-%d)" && git push 2>/dev/null
 
 # Summary notification
-SUMMARY="Quora: $([ $QUORA_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | VF: $([ $VF_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | Reddit: $([ $REDDIT_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL')"
+SUMMARY="Quora: $([ $QUORA_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | VF: $([ $VF_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | Routard: $([ $ROUTARD_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL')"
 echo "$(date): $SUMMARY" >> "$LOG"
 osascript -e "display notification \"$SUMMARY\" with title \"FlashVoyage Linkbuilding\"" 2>/dev/null
 

@@ -149,22 +149,42 @@
     },
     "reddit": {
       "posted": 1,
-      "target": 2,
-      "blocker": "Anti-bot — needs real Chrome",
+      "target": 6,
       "posts_queued": [
-        {
-          "day": "2026-04-03",
-          "sub": "r/solotravel",
-          "lang": "EN",
-          "hasLink": false,
-          "topic": "SE Asia first-timer advice"
-        },
         {
           "day": "2026-04-05",
           "sub": "r/solotravel",
           "lang": "EN",
           "hasLink": false,
           "topic": "3 months SE Asia budget"
+        },
+        {
+          "day": "2026-04-05",
+          "sub": "r/ThailandTourism",
+          "lang": "EN",
+          "hasLink": false,
+          "topic": "Budget Thailand 2 weeks"
+        },
+        {
+          "day": "2026-04-06",
+          "sub": "r/VietnamTravel",
+          "lang": "EN",
+          "hasLink": false,
+          "topic": "Vietnam itinerary north-south"
+        },
+        {
+          "day": "2026-04-06",
+          "sub": "r/bali",
+          "lang": "EN",
+          "hasLink": false,
+          "topic": "Bali first-timer tips"
+        },
+        {
+          "day": "2026-04-07",
+          "sub": "r/digitalnomad",
+          "lang": "EN",
+          "hasLink": false,
+          "topic": "Best base in SE Asia"
         }
       ],
       "posts_done": [

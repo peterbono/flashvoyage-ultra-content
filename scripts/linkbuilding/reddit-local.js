@@ -111,7 +111,7 @@ async function main() {
 
   try {
     // 1. Navigate to old.reddit.com search within the subreddit
-    const searchUrl = `https://old.reddit.com/${next.sub}/search?q=${encodeURIComponent(next.search)}&restrict_sr=on&sort=relevance&t=year`;
+    const searchUrl = `https://old.reddit.com/${next.sub}/search?q=${encodeURIComponent(next.search)}&restrict_sr=on&sort=new&t=month`;
     chromeNav(searchUrl);
     sleep(8000);
 
@@ -191,11 +191,32 @@ async function main() {
     // 5. Find and fill comment box
     // old.reddit.com uses a textarea in the comment form
     const encoded = encodeURIComponent(next.content);
+
+    // First check if the post is locked
+    const isLocked = chromeJS(`
+(function() {
+  if (document.querySelector('.locked-tagline, .archived-tagline')) return 'locked';
+  if (document.body.textContent.includes('comments are locked') || document.body.textContent.includes('archived')) return 'locked';
+  var forms = document.querySelectorAll('form.usertext');
+  if (forms.length === 0) return 'no_form';
+  return 'open';
+})()
+`);
+    if (isLocked === 'locked' || isLocked === 'no_form') {
+      console.log(`[REDDIT] Post is locked/archived (${isLocked}), skipping`);
+      return;
+    }
+
     const fillResult = chromeJS(`
 (function() {
   window.__redditContent = decodeURIComponent("${encoded}");
-  // old.reddit: textarea in .usertext-edit
-  var ta = document.querySelector('.usertext-edit textarea, textarea[name="text"], #comment textarea');
+  // old.reddit: find the TOP-LEVEL comment form (not reply forms)
+  var forms = document.querySelectorAll('form.usertext.cloneable');
+  var ta = null;
+  if (forms.length > 0) {
+    ta = forms[0].querySelector('textarea');
+  }
+  if (!ta) ta = document.querySelector('.usertext-edit textarea, textarea[name="text"]');
   if (ta) {
     ta.value = window.__redditContent;
     ta.focus();
