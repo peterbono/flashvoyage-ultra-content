@@ -31,7 +31,7 @@ const WP_AUTH = 'Basic ' + Buffer.from('admin7817:GjLl 9W0k lKwf LSOT PXur RYGR'
  * @param {string} pageToken - Facebook Page access token (needed for FB CDN relay)
  * @returns {Promise<{wpMediaId: number, fbPhotoId: string, publicUrl: string}>}
  */
-async function uploadForIG(imageBuffer, filename = 'social-temp.jpg', pageToken) {
+export async function uploadForIG(imageBuffer, filename = 'social-temp.jpg', pageToken) {
   // Step 1: Upload to WP to get a public URL (needed as source for FB)
   const wpRes = await fetch(`${WP_API}/media`, {
     method: 'POST',
@@ -81,7 +81,7 @@ async function uploadForIG(imageBuffer, filename = 'social-temp.jpg', pageToken)
  * @param {string|null} fbPhotoId - FB unpublished photo ID to delete
  * @param {string} [pageToken] - FB page token (needed to delete FB photo)
  */
-async function cleanupTempMedia(wpMediaId, fbPhotoId, pageToken) {
+export async function cleanupTempMedia(wpMediaId, fbPhotoId, pageToken) {
   if (wpMediaId) {
     try {
       await fetch(`${WP_API}/media/${wpMediaId}?force=true`, {

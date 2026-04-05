@@ -21,7 +21,12 @@
  * - All logs use the [CROSS-PUB] prefix for easy filtering
  */
 
-import { publishStory as publishIGStory, addComment as addIGComment } from './platforms/instagram.js';
+import {
+  publishStory as publishIGStory,
+  addComment as addIGComment,
+  uploadForIG,
+  cleanupTempMedia as cleanupIGTempMedia,
+} from './platforms/instagram.js';
 import { publishPhoto, addComment } from './platforms/facebook.js';
 import { publishPost as publishThreadsPost } from './platforms/threads.js';
 import { readFileSync } from 'fs';
@@ -126,35 +131,59 @@ async function deleteFromWP(wpMediaId) {
 
 /**
  * Publish a video as a Facebook Reel via the /{PAGE_ID}/video_reels endpoint.
- * This is distinct from regular FB photo/video posts.
+ * Uses Meta's 3-phase upload flow (start → transfer → finish).
  *
  * @param {Object} params
- * @param {string} params.videoUrl - Public URL of the video file
+ * @param {string} params.videoUrl - Public URL of the video file (Meta fetches it)
  * @param {string} params.description - Reel caption
  * @param {string} params.pageToken - Facebook Page access token
  * @returns {Promise<{ reelId: string }>}
  */
 async function publishFBReel({ videoUrl, description, pageToken }) {
-  const url = `${GRAPH_API}/${PAGE_ID}/video_reels`;
+  const base = `${GRAPH_API}/${PAGE_ID}/video_reels`;
 
-  const response = await fetch(url, {
+  // Phase 1: start — get upload session + video_id
+  const startRes = await fetch(`${base}?upload_phase=start&access_token=${pageToken}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      video_url: videoUrl,
-      description,
-      access_token: pageToken,
-    }),
   });
+  const startData = await startRes.json();
+  if (startData.error || !startData.video_id) {
+    throw new Error(`FB video_reels start failed: ${startData.error?.message || 'no video_id'} (code ${startData.error?.code || 'n/a'})`);
+  }
+  const videoId = startData.video_id;
+  const uploadUrl = startData.upload_url;
+  console.log(`[CROSS-PUB] FB Reel start: video_id=${videoId}`);
 
-  const data = await response.json();
+  // Phase 2: transfer — tell Meta to fetch the hosted video via file_url header
+  const transferRes = await fetch(uploadUrl, {
+    method: 'POST',
+    headers: {
+      'Authorization': `OAuth ${pageToken}`,
+      'file_url': videoUrl,
+    },
+  });
+  const transferData = await transferRes.json();
+  if (transferData.error || transferData.success === false) {
+    throw new Error(`FB video_reels transfer failed: ${transferData.error?.message || JSON.stringify(transferData)}`);
+  }
+  console.log(`[CROSS-PUB] FB Reel transfer OK`);
 
-  if (data.error) {
-    throw new Error(`FB video_reels failed: ${data.error.message} (code ${data.error.code})`);
+  // Phase 3: finish — publish
+  const finishParams = new URLSearchParams({
+    upload_phase: 'finish',
+    video_id: videoId,
+    video_state: 'PUBLISHED',
+    description: description || '',
+    access_token: pageToken,
+  });
+  const finishRes = await fetch(`${base}?${finishParams}`, { method: 'POST' });
+  const finishData = await finishRes.json();
+  if (finishData.error || finishData.success === false) {
+    throw new Error(`FB video_reels finish failed: ${finishData.error?.message || JSON.stringify(finishData)} (code ${finishData.error?.code || 'n/a'})`);
   }
 
-  console.log(`[CROSS-PUB] FB Reel published: ${data.id}`);
-  return { reelId: data.id };
+  console.log(`[CROSS-PUB] FB Reel published: ${videoId}`);
+  return { reelId: videoId };
 }
 
 // ── Helper: safe execution wrapper ──────────────────────────────────────────
@@ -252,19 +281,21 @@ export async function crossPublishReel(params) {
   console.log(`[CROSS-PUB]   video: ${videoPublicUrl}`);
   console.log(`[CROSS-PUB]   article: ${articleUrl || '(none)'}`);
 
-  // We may need to upload the thumbnail to WP for IG Story + Threads
-  // Track any temp WP media IDs for cleanup
+  // Upload the thumbnail via the FB CDN relay (WP → FB unpublished photo →
+  // fbcdn.net URL). Meta blocks direct fetch of OVH-hosted WP URLs from its
+  // image fetchers (Threads, IG feed), so we MUST relay through fbcdn.net.
+  // Track both WP and FB photo IDs for cleanup.
   let storyWpMediaId = null;
+  let storyFbPhotoId = null;
   let threadsImageUrl = thumbnailPublicUrl || null;
 
-  // If we have a thumbnail buffer but no public URL, upload it to WP once
-  // and reuse the URL for both Story and Threads
   if (thumbnailBuffer && !thumbnailPublicUrl) {
     try {
-      const wp = await uploadImageToWP(thumbnailBuffer, `fv-cross-thumb-${Date.now()}.jpg`);
-      storyWpMediaId = wp.wpMediaId;
-      threadsImageUrl = wp.publicUrl;
-      console.log(`[CROSS-PUB] Thumbnail uploaded to WP for reuse: ${wp.publicUrl}`);
+      const upload = await uploadForIG(thumbnailBuffer, `fv-cross-thumb-${Date.now()}.jpg`, pageToken);
+      storyWpMediaId = upload.wpMediaId;
+      storyFbPhotoId = upload.fbPhotoId;
+      threadsImageUrl = upload.publicUrl; // fbcdn.net (or WP URL as fallback)
+      console.log(`[CROSS-PUB] Thumbnail ready for reuse: ${threadsImageUrl.slice(0, 80)}...`);
     } catch (err) {
       console.warn(`[CROSS-PUB] Thumbnail upload failed, Story + Threads image will be skipped: ${err.message}`);
     }
@@ -314,10 +345,9 @@ export async function crossPublishReel(params) {
     }),
   ]);
 
-  // Cleanup: delete temp WP thumbnail if we uploaded one
-  // (Note: the IG Story's publishStory also does its own WP upload/cleanup internally)
-  if (storyWpMediaId) {
-    await deleteFromWP(storyWpMediaId);
+  // Cleanup: delete the temp thumbnail from both WP and FB (unpublished photo)
+  if (storyWpMediaId || storyFbPhotoId) {
+    await cleanupIGTempMedia(storyWpMediaId, storyFbPhotoId, pageToken);
   }
 
   const results = {
