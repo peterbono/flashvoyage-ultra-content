@@ -382,6 +382,97 @@ async function publishIfRequested(result, article, format, shouldPublish) {
 
 // ── v2 Mode: Format Test ─────────────────────────────────────────────────────
 
+/**
+ * Build a short human-readable Telegram caption describing the test reel
+ * so Florian can eyeball what was generated without opening the logs.
+ * Returns at most 1024 chars (Telegram caption limit).
+ */
+function buildTelegramTestCaption(format, article, script) {
+  const lines = [
+    `🧪 TEST REEL (test_only=true, NOT published)`,
+    `Format: ${format}`,
+    `Article: #${article?.postId || '?'} — ${(article?.title || '').slice(0, 80)}`,
+  ];
+
+  if (!script) {
+    return lines.join('\n').slice(0, 1024);
+  }
+
+  // Format-specific summaries
+  if (script.type === 'cost-vs' && script.totals) {
+    lines.push('');
+    lines.push(`💰 ${script.destination.displayName} ${script.destination.flag} vs France 🇫🇷`);
+    lines.push(`Total/mois: ${script.totals.destFormatted} vs ${script.totals.franceFormatted}`);
+    const diff = script.totals.france - script.totals.dest;
+    const sign = diff >= 0 ? '-' : '+';
+    lines.push(`Écart: ${sign}${Math.abs(diff).toLocaleString('fr-FR')} €`);
+  } else if (script.type === 'leaderboard' && Array.isArray(script.items)) {
+    lines.push('');
+    lines.push(`📊 ${script.configId}`);
+    lines.push(script.title.replace('\n', ' '));
+    script.items.slice(0, 5).forEach((it) => {
+      lines.push(`  #${it.rank} ${it.flag} ${it.displayName} — ${it.display}`);
+    });
+    if (script.items.length > 5) lines.push(`  … +${script.items.length - 5} more`);
+  } else if (script.type === 'best-time' && Array.isArray(script.items)) {
+    lines.push('');
+    lines.push(`📅 Region: ${script.regionId}`);
+    lines.push(script.title.replace('\n', ' '));
+    script.items.forEach((it) => {
+      const avoid = it.avoid_period ? ` | ⚠${it.avoid_period}` : '';
+      lines.push(`  ${it.flag} ${it.displayName}: ${it.best_period}${avoid}`);
+    });
+  } else if (script.type === 'versus' && script.destA && script.destB) {
+    lines.push('');
+    lines.push(`⚔️ ${script.destA.name} ${script.destA.flag} vs ${script.destB.flag} ${script.destB.name}`);
+    if (script.rows) script.rows.forEach((r) => lines.push(`  ${r.label}: ${r.left} | ${r.right}`));
+  } else {
+    // Generic fallback (poll, pick, humor, budget, avantapres, month, ...)
+    if (script.question) lines.push(`Question: ${script.question}`);
+    if (script.hook?.text) lines.push(`Hook: ${script.hook.text}`);
+    if (script.caption) lines.push(`Caption: ${script.caption.slice(0, 100)}`);
+  }
+
+  return lines.join('\n').slice(0, 1024);
+}
+
+/**
+ * Send a composed test reel to Telegram for visual preview.
+ * Non-fatal: logs warning and returns if tokens missing or send fails.
+ */
+async function sendTestReelToTelegram(videoPath, caption) {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!botToken || !chatId) {
+    log('Telegram: tokens not set, skipping preview send');
+    return;
+  }
+  if (!existsSync(videoPath)) {
+    log(`Telegram: video file not found at ${videoPath}, skipping`);
+    return;
+  }
+
+  try {
+    const buffer = readFileSync(videoPath);
+    const form = new FormData();
+    form.append('chat_id', chatId);
+    form.append('video', new Blob([buffer], { type: 'video/mp4' }), 'test-reel.mp4');
+    form.append('caption', caption);
+    const res = await fetch(`https://api.telegram.org/bot${botToken}/sendVideo`, {
+      method: 'POST',
+      body: form,
+    });
+    const data = await res.json();
+    if (data.ok) {
+      log(`Telegram: test reel sent to chat ${chatId} (${(buffer.length / 1024 / 1024).toFixed(1)} MB)`);
+    } else {
+      log(`Telegram: send failed — ${data.description || 'unknown error'}`);
+    }
+  } catch (err) {
+    log(`Telegram: send error — ${err.message}`);
+  }
+}
+
 async function modeFormatTest(format, postId = null) {
   log(`--- v2 TEST: format=${format} ---`);
 
@@ -409,6 +500,14 @@ async function modeFormatTest(format, postId = null) {
     }
     if (s.caption) log(`Caption: "${s.caption.slice(0, 80)}..."`);
     if (s.hashtags) log(`Hashtags: ${s.hashtags.join(' ')}`);
+  }
+
+  // Send the test reel to Telegram for visual preview (non-fatal)
+  try {
+    const tgCaption = buildTelegramTestCaption(format, article, result.script);
+    await sendTestReelToTelegram(result.videoPath, tgCaption);
+  } catch (err) {
+    log(`Telegram preview failed (non-fatal): ${err.message}`);
   }
 
   return result;
