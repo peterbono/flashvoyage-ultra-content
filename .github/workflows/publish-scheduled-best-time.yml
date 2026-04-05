@@ -1,0 +1,45 @@
+name: Publier best-time reel planifié (one-off)
+
+# One-off scheduled trigger to publish the best-time format reel tomorrow.
+# Guarded by a year check so it doesn't re-fire every year on the same date.
+#
+# After it fires once, delete this file OR leave it (the year guard will
+# make it a no-op in 2027+).
+
+on:
+  schedule:
+    # Lundi 2026-04-06 à 10:30 UTC = 12:30 Paris = 17:30 Bangkok
+    - cron: '30 10 6 4 *'
+  # Manual fallback in case scheduled trigger is delayed
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Guard — only fire in 2026
+        id: guard
+        run: |
+          YEAR=$(date -u +%Y)
+          if [ "$YEAR" != "2026" ]; then
+            echo "Year is $YEAR, not 2026. Skipping scheduled dispatch."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Dispatch publish-reels with format=best-time
+        if: steps.guard.outputs.skip == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run publish-reels.yml \
+            --repo ${{ github.repository }} \
+            -f format=best-time \
+            -f test_only=false
+          echo "✓ Dispatched publish-reels.yml with format=best-time, test_only=false"
