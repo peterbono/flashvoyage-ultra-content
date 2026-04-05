@@ -1,15 +1,14 @@
 /**
  * Leaderboard Composer — FlashVoyage Reels v2
  *
- * Generates a 9s reel showing a top-10 country ranking.
- *
- *   - Scene 1 (1.5s): Hook text only, no list
- *   - Scene 2 (5s):   Full top-10 list visible (static)
- *   - Scene 3 (2.5s): Same list BUT #1 highlighted with yellow band (brand signature)
+ * Generates a 9s FULLY STATIC reel showing a top-10 country ranking.
+ * Everything is visible from frame 1: title + 10 ranked rows + yellow
+ * highlighted #1 + source credit. No hook scene, no reveal animation.
  *
  * Data layout on screen:
- *   - Top: hook text (scene 1) → title (scene 2/3)
- *   - Middle: 10 rows of (rank, flag, country name, metric value)
+ *   - Top: title (2 lines)
+ *   - Middle: 10 rows of (rank, flag, country name, metric value) — #1
+ *     permanently highlighted on a yellow band (brand signature)
  *   - Bottom: source credit "Data FlashVoyage 2026"
  */
 
@@ -26,7 +25,7 @@ import { flushCosts } from '../cost-tracker.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TMP_DIR = join(__dirname, '..', 'tmp');
 
-const SCENE_DURATIONS = [1.5, 5, 2.5];
+const SCENE_DURATIONS = [9]; // 1 static scene, everything visible from frame 1
 const TOTAL_DURATION = SCENE_DURATIONS.reduce((a, b) => a + b, 0);
 const WIDTH = 1080;
 const HEIGHT = 1920;
@@ -96,17 +95,14 @@ async function addAudioTrack(videoPath, outputPath, duration) {
   return outputPath;
 }
 
-function buildOverlayReplacements(script, mode) {
-  // mode: 'hook' (scene 1), 'list' (scene 2), 'highlight' (scene 3)
-
+function buildOverlayReplacements(script) {
+  // Fully static layout: #1 is permanently highlighted via is-highlighted
+  // class. No hook scene, no reveal animation.
   const replacements = {
-    '{{HOOK_TEXT}}': script.hook || '',
     '{{TITLE_LINE_1}}': (script.title || '').split('\n')[0] || '',
     '{{TITLE_LINE_2}}': (script.title || '').split('\n')[1] || '',
     '{{METRIC_LABEL}}': script.metricLabel || '',
-    '{{HOOK_STYLE}}': mode === 'hook' ? '' : 'display:none',
-    '{{LIST_STYLE}}': mode === 'hook' ? 'display:none' : '',
-    '{{HIGHLIGHT_CLASS}}': mode === 'highlight' ? 'is-highlighted' : '',
+    '{{HIGHLIGHT_CLASS}}': 'is-highlighted', // permanent yellow band on #1
   };
 
   for (let i = 0; i < 10; i++) {
@@ -153,17 +149,13 @@ export async function composeLeaderboardReel(script, opts = {}) {
     await loopClip(preparedPath, loopedPath, TOTAL_DURATION);
     tempFiles.push(loopedPath);
 
-    // Render 3 overlays
-    const overlayPaths = [];
-    const sceneModes = ['hook', 'list', 'highlight'];
-    for (let i = 0; i < sceneModes.length; i++) {
-      const overlayPath = join(TMP_DIR, `leaderboard-overlay-${i}-${ts}.png`);
-      const replacements = buildOverlayReplacements(script, sceneModes[i]);
-      await renderTemplate('leaderboard-overlay.html', replacements, overlayPath);
-      overlayPaths.push(overlayPath);
-      tempFiles.push(overlayPath);
-    }
-    console.log(`[REEL/LEADERBOARD] ${overlayPaths.length} overlays rendered`);
+    // Render 1 static overlay — everything visible from frame 1
+    const overlayPath = join(TMP_DIR, `leaderboard-overlay-${ts}.png`);
+    const replacements = buildOverlayReplacements(script);
+    await renderTemplate('leaderboard-overlay.html', replacements, overlayPath);
+    const overlayPaths = [overlayPath];
+    tempFiles.push(overlayPath);
+    console.log(`[REEL/LEADERBOARD] 1 overlay rendered (static, #1 permanently highlighted)`);
 
     // Extract + overlay per scene
     const composedScenes = [];
@@ -182,10 +174,10 @@ export async function composeLeaderboardReel(script, opts = {}) {
       tempFiles.push(segmentPath);
 
       const composedPath = join(TMP_DIR, `leaderboard-comp-${i}-${ts}.mp4`);
-      await overlayPngOnClip(segmentPath, overlayPaths[i], sceneDuration, composedPath);
+      await overlayPngOnClip(segmentPath, overlayPaths[0], sceneDuration, composedPath);
       tempFiles.push(composedPath);
       composedScenes.push(composedPath);
-      console.log(`[REEL/LEADERBOARD] Scene ${i + 1}/${sceneModes.length} composed (${sceneDuration}s, ${sceneModes[i]})`);
+      console.log(`[REEL/LEADERBOARD] Scene ${i + 1}/${SCENE_DURATIONS.length} composed (${sceneDuration}s, static)`);
       timeOffset += sceneDuration;
     }
 

@@ -19,146 +19,206 @@
     top: 0; left: 0;
     width: 1080px; height: 1920px;
     background:
-      linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.45) 18%, rgba(0,0,0,0.45) 82%, rgba(0,0,0,0.85) 100%);
+      linear-gradient(180deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 15%, rgba(0,0,0,0.55) 85%, rgba(0,0,0,0.88) 100%);
     z-index: 2;
   }
 
-  /* ── Hook (scene 1) ── */
-  .hook-zone {
-    position: absolute;
-    top: 780px;
-    left: 60px;
-    width: 960px;
-    text-align: center;
-    z-index: 10;
-  }
-
-  .hook-text {
-    display: inline-block;
-    font-size: 70px;
-    font-weight: 900;
-    color: #FFFFFF;
-    text-transform: uppercase;
-    line-height: 1.15;
-    letter-spacing: 1px;
-    text-shadow:
-      0 0 30px rgba(0, 0, 0, 0.95),
-      0 6px 20px rgba(0, 0, 0, 0.8);
-    background: rgba(0, 0, 0, 0.78);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 32px 44px;
-    border-radius: 28px;
-    border: 4px solid #FFD700;
-  }
-
-  /* ── Title (scene 2) ── */
+  /* ── Title ── */
   .title-zone {
     position: absolute;
-    top: 120px;
+    top: 110px;
     left: 50%;
     transform: translateX(-50%);
-    width: 980px;
+    width: 1000px;
     text-align: center;
     z-index: 10;
   }
 
   .title-text {
-    font-size: 56px;
+    font-size: 60px;
     font-weight: 900;
     color: #FFFFFF;
     text-transform: uppercase;
-    line-height: 1.15;
+    line-height: 1.1;
     letter-spacing: 1px;
     text-shadow:
       0 4px 16px rgba(0, 0, 0, 0.95),
-      0 0 28px rgba(0, 0, 0, 0.7);
+      0 0 30px rgba(0, 0, 0, 0.7);
   }
 
-  /* ── Grid 2×3 ── */
-  .grid-zone {
+  /* ── Calendar grid ── */
+  /* Layout: 1080 canvas − 40 left margin − 40 right margin = 1000 content width
+     - label col (country flag + name): 220px
+     - 12 month columns: (1000 − 220) / 12 = 65px each
+  */
+  .calendar {
     position: absolute;
     top: 360px;
     left: 40px;
     width: 1000px;
     z-index: 10;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 22px 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .month-header-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
+    grid-template-columns: 210px repeat(12, 1fr);
+    gap: 3px;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.25);
   }
 
-  .country-card {
-    background: rgba(255, 255, 255, 0.96);
-    border-radius: 22px;
-    padding: 22px 24px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-height: 340px;
+  .month-header-spacer {
+    /* empty — just reserves the country label column */
   }
 
-  .country-header {
+  .month-header-cell {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1;
+  }
+
+  /* Country row */
+  .country-row {
+    display: grid;
+    grid-template-columns: 210px repeat(12, 1fr);
+    gap: 3px;
+    margin-bottom: 12px;
+    align-items: center;
+  }
+
+  .country-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .country-label {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding-bottom: 10px;
-    border-bottom: 3px solid #0a0e1a;
+    gap: 10px;
+    padding-right: 12px;
+    min-height: 72px;
   }
 
-  .country-flag {
-    font-size: 44px;
+  .country-label .flag {
+    font-size: 46px;
     line-height: 1;
     flex-shrink: 0;
   }
 
-  .country-name {
-    font-size: 34px;
+  .country-label .name {
+    font-size: 26px;
     font-weight: 900;
-    color: #0a0e1a;
+    color: #FFFFFF;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    line-height: 1.1;
+    line-height: 1.05;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .period-line {
-    font-size: 28px;
-    font-weight: 700;
-    line-height: 1.2;
+  /* Month cells — color-coded per status */
+  .month-cell {
+    height: 72px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
   }
 
-  .period-best {
-    color: #0a0e1a;
+  .month-cell.ok {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .month-cell.best {
     background: #FFD700;
-    padding: 6px 12px;
-    border-radius: 10px;
-    display: inline-block;
-    font-weight: 900;
-    margin-top: 2px;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.35);
   }
 
-  .period-avoid {
-    color: #FF3B30;
-    font-weight: 900;
+  .month-cell.sweet {
+    background: #FFD700;
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.7);
+    border: 2px solid #FFFFFF;
+  }
+
+  .month-cell.sweet::before {
+    content: '⭐';
+    font-size: 22px;
+  }
+
+  .month-cell.avoid {
+    background: #FF3B30;
+    box-shadow: 0 0 10px rgba(255, 59, 48, 0.45);
+  }
+
+  .month-cell.avoid::before {
+    content: '✕';
     font-size: 24px;
-    margin-top: 2px;
+    font-weight: 900;
+    color: #FFFFFF;
   }
 
-  .period-sweet {
-    color: #0a0e1a;
-    font-weight: 700;
+  /* Connect adjacent same-color cells visually for the "activity bar" feel:
+     left/right border radius collapse between consecutive same-status cells.
+     Achieved via inline helper classes added by the JS composer if we ever
+     want finer control. For MVP, the 3px gap + rounded corners give enough
+     visual continuity. */
+
+  /* ── Legend ── */
+  .legend {
+    position: absolute;
+    top: 1520px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1000px;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
     font-size: 24px;
-    margin-top: 2px;
-    opacity: 0.85;
+    font-weight: 800;
+    color: #FFFFFF;
   }
 
-  /* ── CTA pill bottom ── */
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.72);
+    padding: 12px 20px;
+    border-radius: 14px;
+  }
+
+  .legend-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .legend-dot.best { background: #FFD700; }
+  .legend-dot.avoid { background: #FF3B30; }
+  .legend-dot.sweet {
+    background: #FFD700;
+    border: 2px solid #FFFFFF;
+    position: relative;
+  }
+
+  /* ── CTA ── */
   .cta-zone {
     position: absolute;
-    bottom: 110px;
+    bottom: 120px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -166,15 +226,15 @@
 
   .cta-text {
     display: inline-block;
-    font-size: 36px;
+    font-size: 38px;
     font-weight: 900;
     color: #0a0e1a;
     background: #FFD700;
-    padding: 20px 40px;
-    border-radius: 20px;
+    padding: 22px 44px;
+    border-radius: 22px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    box-shadow: 0 6px 22px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 8px 26px rgba(255, 215, 0, 0.55);
   }
 </style>
 </head>
@@ -182,74 +242,139 @@
 
   <div class="vignette"></div>
 
-  <!-- Scene 1: Hook -->
-  <div class="hook-zone" style="{{HOOK_STYLE}}">
-    <div class="hook-text">{{HOOK_TEXT}}</div>
-  </div>
-
-  <!-- Scene 2: Title + 6-country grid + CTA -->
-  <div class="title-zone" style="{{GRID_STYLE}}">
+  <!-- Title -->
+  <div class="title-zone">
     <div class="title-text">{{TITLE_LINE_1}}<br>{{TITLE_LINE_2}}</div>
   </div>
 
-  <div class="grid-zone" style="{{GRID_STYLE}}">
-    <div class="country-card">
-      <div class="country-header">
-        <div class="country-flag">{{C1_FLAG}}</div>
-        <div class="country-name">{{C1_NAME}}</div>
-      </div>
-      <div class="period-line"><span class="period-best">{{C1_BEST}}</span></div>
-      <div class="period-line period-avoid">{{C1_AVOID}}</div>
-      <div class="period-line period-sweet">{{C1_SWEET}}</div>
+  <!-- Calendar: month header + 6 country rows -->
+  <div class="calendar">
+
+    <!-- Month header row -->
+    <div class="month-header-row">
+      <div class="month-header-spacer"></div>
+      <div class="month-header-cell">J</div>
+      <div class="month-header-cell">F</div>
+      <div class="month-header-cell">M</div>
+      <div class="month-header-cell">A</div>
+      <div class="month-header-cell">M</div>
+      <div class="month-header-cell">J</div>
+      <div class="month-header-cell">J</div>
+      <div class="month-header-cell">A</div>
+      <div class="month-header-cell">S</div>
+      <div class="month-header-cell">O</div>
+      <div class="month-header-cell">N</div>
+      <div class="month-header-cell">D</div>
     </div>
-    <div class="country-card">
-      <div class="country-header">
-        <div class="country-flag">{{C2_FLAG}}</div>
-        <div class="country-name">{{C2_NAME}}</div>
-      </div>
-      <div class="period-line"><span class="period-best">{{C2_BEST}}</span></div>
-      <div class="period-line period-avoid">{{C2_AVOID}}</div>
-      <div class="period-line period-sweet">{{C2_SWEET}}</div>
+
+    <!-- Country rows (6) -->
+    <div class="country-row">
+      <div class="country-label"><span class="flag">{{C1_FLAG}}</span><span class="name">{{C1_NAME}}</span></div>
+      <div class="month-cell {{C1_M1}}"></div>
+      <div class="month-cell {{C1_M2}}"></div>
+      <div class="month-cell {{C1_M3}}"></div>
+      <div class="month-cell {{C1_M4}}"></div>
+      <div class="month-cell {{C1_M5}}"></div>
+      <div class="month-cell {{C1_M6}}"></div>
+      <div class="month-cell {{C1_M7}}"></div>
+      <div class="month-cell {{C1_M8}}"></div>
+      <div class="month-cell {{C1_M9}}"></div>
+      <div class="month-cell {{C1_M10}}"></div>
+      <div class="month-cell {{C1_M11}}"></div>
+      <div class="month-cell {{C1_M12}}"></div>
     </div>
-    <div class="country-card">
-      <div class="country-header">
-        <div class="country-flag">{{C3_FLAG}}</div>
-        <div class="country-name">{{C3_NAME}}</div>
-      </div>
-      <div class="period-line"><span class="period-best">{{C3_BEST}}</span></div>
-      <div class="period-line period-avoid">{{C3_AVOID}}</div>
-      <div class="period-line period-sweet">{{C3_SWEET}}</div>
+
+    <div class="country-row">
+      <div class="country-label"><span class="flag">{{C2_FLAG}}</span><span class="name">{{C2_NAME}}</span></div>
+      <div class="month-cell {{C2_M1}}"></div>
+      <div class="month-cell {{C2_M2}}"></div>
+      <div class="month-cell {{C2_M3}}"></div>
+      <div class="month-cell {{C2_M4}}"></div>
+      <div class="month-cell {{C2_M5}}"></div>
+      <div class="month-cell {{C2_M6}}"></div>
+      <div class="month-cell {{C2_M7}}"></div>
+      <div class="month-cell {{C2_M8}}"></div>
+      <div class="month-cell {{C2_M9}}"></div>
+      <div class="month-cell {{C2_M10}}"></div>
+      <div class="month-cell {{C2_M11}}"></div>
+      <div class="month-cell {{C2_M12}}"></div>
     </div>
-    <div class="country-card">
-      <div class="country-header">
-        <div class="country-flag">{{C4_FLAG}}</div>
-        <div class="country-name">{{C4_NAME}}</div>
-      </div>
-      <div class="period-line"><span class="period-best">{{C4_BEST}}</span></div>
-      <div class="period-line period-avoid">{{C4_AVOID}}</div>
-      <div class="period-line period-sweet">{{C4_SWEET}}</div>
+
+    <div class="country-row">
+      <div class="country-label"><span class="flag">{{C3_FLAG}}</span><span class="name">{{C3_NAME}}</span></div>
+      <div class="month-cell {{C3_M1}}"></div>
+      <div class="month-cell {{C3_M2}}"></div>
+      <div class="month-cell {{C3_M3}}"></div>
+      <div class="month-cell {{C3_M4}}"></div>
+      <div class="month-cell {{C3_M5}}"></div>
+      <div class="month-cell {{C3_M6}}"></div>
+      <div class="month-cell {{C3_M7}}"></div>
+      <div class="month-cell {{C3_M8}}"></div>
+      <div class="month-cell {{C3_M9}}"></div>
+      <div class="month-cell {{C3_M10}}"></div>
+      <div class="month-cell {{C3_M11}}"></div>
+      <div class="month-cell {{C3_M12}}"></div>
     </div>
-    <div class="country-card">
-      <div class="country-header">
-        <div class="country-flag">{{C5_FLAG}}</div>
-        <div class="country-name">{{C5_NAME}}</div>
-      </div>
-      <div class="period-line"><span class="period-best">{{C5_BEST}}</span></div>
-      <div class="period-line period-avoid">{{C5_AVOID}}</div>
-      <div class="period-line period-sweet">{{C5_SWEET}}</div>
+
+    <div class="country-row">
+      <div class="country-label"><span class="flag">{{C4_FLAG}}</span><span class="name">{{C4_NAME}}</span></div>
+      <div class="month-cell {{C4_M1}}"></div>
+      <div class="month-cell {{C4_M2}}"></div>
+      <div class="month-cell {{C4_M3}}"></div>
+      <div class="month-cell {{C4_M4}}"></div>
+      <div class="month-cell {{C4_M5}}"></div>
+      <div class="month-cell {{C4_M6}}"></div>
+      <div class="month-cell {{C4_M7}}"></div>
+      <div class="month-cell {{C4_M8}}"></div>
+      <div class="month-cell {{C4_M9}}"></div>
+      <div class="month-cell {{C4_M10}}"></div>
+      <div class="month-cell {{C4_M11}}"></div>
+      <div class="month-cell {{C4_M12}}"></div>
     </div>
-    <div class="country-card">
-      <div class="country-header">
-        <div class="country-flag">{{C6_FLAG}}</div>
-        <div class="country-name">{{C6_NAME}}</div>
-      </div>
-      <div class="period-line"><span class="period-best">{{C6_BEST}}</span></div>
-      <div class="period-line period-avoid">{{C6_AVOID}}</div>
-      <div class="period-line period-sweet">{{C6_SWEET}}</div>
+
+    <div class="country-row">
+      <div class="country-label"><span class="flag">{{C5_FLAG}}</span><span class="name">{{C5_NAME}}</span></div>
+      <div class="month-cell {{C5_M1}}"></div>
+      <div class="month-cell {{C5_M2}}"></div>
+      <div class="month-cell {{C5_M3}}"></div>
+      <div class="month-cell {{C5_M4}}"></div>
+      <div class="month-cell {{C5_M5}}"></div>
+      <div class="month-cell {{C5_M6}}"></div>
+      <div class="month-cell {{C5_M7}}"></div>
+      <div class="month-cell {{C5_M8}}"></div>
+      <div class="month-cell {{C5_M9}}"></div>
+      <div class="month-cell {{C5_M10}}"></div>
+      <div class="month-cell {{C5_M11}}"></div>
+      <div class="month-cell {{C5_M12}}"></div>
     </div>
+
+    <div class="country-row">
+      <div class="country-label"><span class="flag">{{C6_FLAG}}</span><span class="name">{{C6_NAME}}</span></div>
+      <div class="month-cell {{C6_M1}}"></div>
+      <div class="month-cell {{C6_M2}}"></div>
+      <div class="month-cell {{C6_M3}}"></div>
+      <div class="month-cell {{C6_M4}}"></div>
+      <div class="month-cell {{C6_M5}}"></div>
+      <div class="month-cell {{C6_M6}}"></div>
+      <div class="month-cell {{C6_M7}}"></div>
+      <div class="month-cell {{C6_M8}}"></div>
+      <div class="month-cell {{C6_M9}}"></div>
+      <div class="month-cell {{C6_M10}}"></div>
+      <div class="month-cell {{C6_M11}}"></div>
+      <div class="month-cell {{C6_M12}}"></div>
+    </div>
+
   </div>
 
-  <div class="cta-zone" style="{{GRID_STYLE}}">
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot best"></div>Idéal</div>
+    <div class="legend-item"><div class="legend-dot sweet"></div>Sweet spot</div>
+    <div class="legend-item"><div class="legend-dot avoid"></div>Éviter</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-zone">
     <div class="cta-text">Guide complet en bio</div>
   </div>
 

@@ -1,11 +1,12 @@
 /**
  * Best-time Composer — FlashVoyage Reels v2
  *
- * Generates a 10s reel showing a 2×3 grid of 6 countries with their
- * seasonal info (best period + avoid period + sweet spot).
+ * Generates a 10s reel showing a Gantt-style travel calendar: 12 month
+ * columns × 6 countries, with each cell colour-coded as best / sweet /
+ * avoid / neutral so the viewer can see when each destination is optimal
+ * as if reading an activity timeline.
  *
- *   - Scene 1 (1.5s): Hook text only
- *   - Scene 2 (8.5s): Full grid visible (static)
+ * 1 static scene (10s). All elements visible from frame 1.
  */
 
 import { existsSync, mkdirSync, unlinkSync } from 'fs';
@@ -21,7 +22,7 @@ import { flushCosts } from '../cost-tracker.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TMP_DIR = join(__dirname, '..', 'tmp');
 
-const SCENE_DURATIONS = [1.5, 8.5];
+const SCENE_DURATIONS = [10]; // 1 static scene, everything visible from frame 1
 const TOTAL_DURATION = SCENE_DURATIONS.reduce((a, b) => a + b, 0);
 const WIDTH = 1080;
 const HEIGHT = 1920;
@@ -82,24 +83,24 @@ async function addAudioTrack(videoPath, outputPath, duration) {
   return outputPath;
 }
 
-function buildOverlayReplacements(script, mode) {
-  // mode: 'hook' (scene 1), 'grid' (scene 2)
+function buildOverlayReplacements(script) {
   const replacements = {
-    '{{HOOK_TEXT}}': script.hook || '',
     '{{TITLE_LINE_1}}': (script.title || '').split('\n')[0] || '',
     '{{TITLE_LINE_2}}': (script.title || '').split('\n')[1] || '',
-    '{{HOOK_STYLE}}': mode === 'hook' ? '' : 'display:none',
-    '{{GRID_STYLE}}': mode === 'hook' ? 'display:none' : '',
   };
 
+  // Fill 6 country rows × 12 month cells + flag + name
   for (let i = 0; i < 6; i++) {
     const item = script.items[i];
     const n = i + 1;
     replacements[`{{C${n}_FLAG}}`] = item?.flag || '';
     replacements[`{{C${n}_NAME}}`] = item?.displayName || '';
-    replacements[`{{C${n}_BEST}}`] = item?.best_period || '—';
-    replacements[`{{C${n}_AVOID}}`] = item?.avoid_period ? `⚠ ${item.avoid_period}` : '';
-    replacements[`{{C${n}_SWEET}}`] = item?.sweet_spot ? `⭐ ${item.sweet_spot}` : '';
+
+    const timeline = item?.timeline || Array(12).fill('ok');
+    for (let m = 0; m < 12; m++) {
+      // Status class: 'best' | 'sweet' | 'avoid' | 'ok'
+      replacements[`{{C${n}_M${m + 1}}}`] = timeline[m] || 'ok';
+    }
   }
 
   return replacements;
@@ -134,16 +135,12 @@ export async function composeBestTimeReel(script, opts = {}) {
     await loopClip(preparedPath, loopedPath, TOTAL_DURATION);
     tempFiles.push(loopedPath);
 
-    const overlayPaths = [];
-    const sceneModes = ['hook', 'grid'];
-    for (let i = 0; i < sceneModes.length; i++) {
-      const overlayPath = join(TMP_DIR, `best-time-overlay-${i}-${ts}.png`);
-      const replacements = buildOverlayReplacements(script, sceneModes[i]);
-      await renderTemplate('best-time-overlay.html', replacements, overlayPath);
-      overlayPaths.push(overlayPath);
-      tempFiles.push(overlayPath);
-    }
-    console.log(`[REEL/BEST-TIME] ${overlayPaths.length} overlays rendered`);
+    const overlayPath = join(TMP_DIR, `best-time-overlay-${ts}.png`);
+    const replacements = buildOverlayReplacements(script);
+    await renderTemplate('best-time-overlay.html', replacements, overlayPath);
+    const overlayPaths = [overlayPath];
+    tempFiles.push(overlayPath);
+    console.log(`[REEL/BEST-TIME] 1 overlay rendered (static Gantt calendar)`);
 
     const composedScenes = [];
     let timeOffset = 0;
@@ -161,10 +158,10 @@ export async function composeBestTimeReel(script, opts = {}) {
       tempFiles.push(segmentPath);
 
       const composedPath = join(TMP_DIR, `best-time-comp-${i}-${ts}.mp4`);
-      await overlayPngOnClip(segmentPath, overlayPaths[i], sceneDuration, composedPath);
+      await overlayPngOnClip(segmentPath, overlayPaths[0], sceneDuration, composedPath);
       tempFiles.push(composedPath);
       composedScenes.push(composedPath);
-      console.log(`[REEL/BEST-TIME] Scene ${i + 1}/${sceneModes.length} composed (${sceneDuration}s, ${sceneModes[i]})`);
+      console.log(`[REEL/BEST-TIME] Scene ${i + 1}/${SCENE_DURATIONS.length} composed (${sceneDuration}s, static)`);
       timeOffset += sceneDuration;
     }
 

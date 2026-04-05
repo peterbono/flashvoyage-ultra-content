@@ -25,6 +25,7 @@ import {
   getRegion,
   getAllRegionIds,
   getSeasonalData,
+  buildMonthlyTimeline,
   SEASONAL_DATA_LAST_VERIFIED,
 } from '../seasonal-data.js';
 import { getCountryFacts } from '../country-facts.js';
@@ -130,6 +131,8 @@ export async function generateBestTimeScript(article) {
       avoid_why: seasonal.avoid_why || null,
       sweet_spot: seasonal.sweet_spot || null,
       sweet_spot_why: seasonal.sweet_spot_why || null,
+      // 12-slot timeline for the Gantt-style calendar reel
+      timeline: buildMonthlyTimeline(seasonal),
     };
   });
 
