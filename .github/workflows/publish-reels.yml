@@ -143,11 +143,16 @@ jobs:
           THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Pass step outputs via env to avoid bash injection when reason contains quotes
+          FORMAT_OUT: ${{ steps.format.outputs.format }}
+          PUBLISH_OUT: ${{ steps.format.outputs.publish }}
+          ARTICLE_ID_OUT: ${{ steps.format.outputs.article_id }}
+          REASON_OUT: ${{ steps.format.outputs.reason }}
         run: |
-          FORMAT="${{ steps.format.outputs.format }}"
-          PUBLISH="${{ steps.format.outputs.publish }}"
-          ARTICLE_ID="${{ steps.format.outputs.article_id }}"
-          REASON="${{ steps.format.outputs.reason }}"
+          FORMAT="$FORMAT_OUT"
+          PUBLISH="$PUBLISH_OUT"
+          ARTICLE_ID="$ARTICLE_ID_OUT"
+          REASON="$REASON_OUT"
 
           echo "Format: $FORMAT"
           echo "Publish: $PUBLISH"
@@ -172,18 +177,20 @@ jobs:
 
       - name: Record publication in content history
         if: success() && steps.format.outputs.publish == 'true'
+        env:
+          REC_FORMAT: ${{ steps.format.outputs.format }}
+          REC_ARTICLE_ID: ${{ steps.format.outputs.article_id }}
         run: |
-          FORMAT="${{ steps.format.outputs.format }}"
-          ARTICLE_ID="${{ steps.format.outputs.article_id }}"
           node --input-type=module -e "
             import { recordPublication } from './social-distributor/reels/smart-scheduler.js';
             recordPublication({
-              format: '${FORMAT}',
-              articleId: ${ARTICLE_ID:-null},
+              format: process.env.REC_FORMAT,
+              articleId: process.env.REC_ARTICLE_ID ? Number(process.env.REC_ARTICLE_ID) : null,
               destination: null,
             });
             console.log('[SCHEDULER] Publication recorded in content history.');
           " 2>&1 || echo "[SCHEDULER] WARN: Failed to record publication (non-fatal)"
+
 
       # Cross-publishing: Story + FB Reel + Threads
       # The reel pipeline (index-v2.js) calls cross-publisher.js internally after
