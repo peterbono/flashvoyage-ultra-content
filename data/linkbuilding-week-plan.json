@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 4,
+      "posted": 5,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -37,6 +37,14 @@
           "title": "Véhicule avec ou sans chauffeur pour 3 semaines au Vietnam du Nord au Sud (Hanoi - Ho Chi Minh)",
           "hasLink": false,
           "generated": true,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-05T03:32:15.647Z",
+          "thread": "quelle-situation-ambiance-suite-guerre-moyen-orient-d11466122",
+          "title": "Quelle situation et Ambiance suite à la guerre au moyen orient",
+          "hasLink": false,
+          "generated": false,
           "status": "published"
         }
       ],
@@ -83,7 +91,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 4,
+      "posted": 5,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -144,6 +152,14 @@
           "hasLink": true,
           "status": "published",
           "generated": false
+        },
+        {
+          "date": "2026-04-05T03:30:39.931Z",
+          "id": "quora-4",
+          "search": "voyager pas cher asie sud est",
+          "hasLink": true,
+          "status": "published",
+          "generated": false
         }
       ]
     },
@@ -197,9 +213,22 @@
           "status": "published"
         }
       ]
+    },
+    "routard": {
+      "posted": 1,
+      "posts_done": [
+        {
+          "date": "2026-04-05T03:33:42.317Z",
+          "topicId": 488558,
+          "title": "Ile du sud de la Thaïlande juillet 2026",
+          "category": "Thaïlande",
+          "hasLink": false,
+          "status": "published"
+        }
+      ]
     }
   },
-  "total_posted": 9,
+  "total_posted": 12,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
