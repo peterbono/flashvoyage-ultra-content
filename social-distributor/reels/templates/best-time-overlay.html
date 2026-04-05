@@ -146,15 +146,11 @@
     box-shadow: 0 0 12px rgba(255, 215, 0, 0.35);
   }
 
+  /* Sweet spot = shoulder season "bon plan" (distinct green so it reads
+     pre-attentively against the yellow best cells). Growth-hacker spec. */
   .month-cell.sweet {
-    background: #FFD700;
-    box-shadow: 0 0 18px rgba(255, 215, 0, 0.7);
-    border: 2px solid #FFFFFF;
-  }
-
-  .month-cell.sweet::before {
-    content: '⭐';
-    font-size: 22px;
+    background: #7FD1AE;
+    box-shadow: 0 0 14px rgba(127, 209, 174, 0.55);
   }
 
   .month-cell.avoid {
@@ -208,12 +204,8 @@
   }
 
   .legend-dot.best { background: #FFD700; }
+  .legend-dot.sweet { background: #7FD1AE; }
   .legend-dot.avoid { background: #FF3B30; }
-  .legend-dot.sweet {
-    background: #FFD700;
-    border: 2px solid #FFFFFF;
-    position: relative;
-  }
 
   /* ── CTA ── */
   .cta-zone {
@@ -369,8 +361,8 @@
   <!-- Legend -->
   <div class="legend">
     <div class="legend-item"><div class="legend-dot best"></div>Idéal</div>
-    <div class="legend-item"><div class="legend-dot sweet"></div>Sweet spot</div>
-    <div class="legend-item"><div class="legend-dot avoid"></div>Éviter</div>
+    <div class="legend-item"><div class="legend-dot sweet"></div>Bon plan</div>
+    <div class="legend-item"><div class="legend-dot avoid"></div>Évite</div>
   </div>
 
   <!-- CTA -->
