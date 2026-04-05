@@ -53,6 +53,8 @@ export async function composeHumorReel(script, opts = {}) {
   const loopedClipPath = join(TMP_DIR, `humor-looped-${ts}.mp4`);
   const overlayPath = join(TMP_DIR, `humor-overlay-${ts}.png`);
   const outputPath = opts.outputPath || join(TMP_DIR, `humor-final-${ts}.mp4`);
+  // Encode first into an intermediate file so we can append the global save CTA
+  const beforeCtaPath = join(TMP_DIR, `humor-before-cta-${ts}.mp4`);
 
   // Ensure output directory exists
   const outputDir = dirname(outputPath);
@@ -109,16 +111,22 @@ export async function composeHumorReel(script, opts = {}) {
       '-t', String(DURATION),
       '-movflags', '+faststart',
       '-y',
-      outputPath,
+      beforeCtaPath,
     ]);
 
-    console.log(`[REEL/HUMOR] Final reel encoded: ${outputPath}`);
+    console.log(`[REEL/HUMOR] Base reel encoded: ${beforeCtaPath}`);
 
-    // ── Step 5: Clean up temp files ─────────────────────────────────────────
+    // ── Step 5: Append global save CTA (+2.5s) to boost IG save rate ───────
+    const { appendSaveCtaScene } = await import('../core/save-cta.js');
+    await appendSaveCtaScene(beforeCtaPath, outputPath);
+    console.log(`[REEL/HUMOR] Final reel with save CTA: ${outputPath}`);
+
+    // ── Step 6: Clean up temp files ─────────────────────────────────────────
     safeUnlink(rawClipPath);
     safeUnlink(preparedClipPath);
     safeUnlink(loopedClipPath);
     safeUnlink(overlayPath);
+    safeUnlink(beforeCtaPath);
     console.log(`[REEL/HUMOR] Temp files cleaned up`);
 
     return outputPath;
@@ -129,6 +137,7 @@ export async function composeHumorReel(script, opts = {}) {
     safeUnlink(preparedClipPath);
     safeUnlink(loopedClipPath);
     safeUnlink(overlayPath);
+    safeUnlink(beforeCtaPath);
     console.error(`[REEL/HUMOR] Composition failed: ${err.message}`);
     throw err;
   }

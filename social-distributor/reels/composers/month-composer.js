@@ -380,9 +380,15 @@ export async function composeMonthReel(script, opts = {}) {
       ? composedScenes.length * DESTINATION_DURATION
       : TOTAL_DURATION;
 
-    await addAudioTrack(concattedPath, outputPath, actualDuration);
+    const beforeCtaPath = join(TMP_DIR, `month-before-cta-${ts}.mp4`);
+    await addAudioTrack(concattedPath, beforeCtaPath, actualDuration);
+    tempFiles.push(beforeCtaPath);
 
-    console.log(`[REEL/MONTH] Month reel complete: ${outputPath} (~${actualDuration}s, ${composedScenes.length} scenes)`);
+    // ── 7. Append global save CTA (+2.5s) to boost IG save rate ────────────
+    const { appendSaveCtaScene } = await import('../core/save-cta.js');
+    await appendSaveCtaScene(beforeCtaPath, outputPath);
+
+    console.log(`[REEL/MONTH] Month reel complete: ${outputPath} (~${actualDuration + 2.5}s, ${composedScenes.length} scenes + save CTA)`);
     return outputPath;
 
   } finally {

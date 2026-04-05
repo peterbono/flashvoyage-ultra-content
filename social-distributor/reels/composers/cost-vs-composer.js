@@ -215,9 +215,15 @@ export async function composeCostVsReel(script, opts = {}) {
     tempFiles.push(concatPath);
     console.log(`[REEL/COST-VS] ${composedScenes.length} scenes concatenated`);
 
-    // 6. Add audio
-    await addAudioTrack(concatPath, outputPath, TOTAL_DURATION);
-    console.log(`[REEL/COST-VS] Cost-vs reel complete: ${outputPath} (~${TOTAL_DURATION}s, ${composedScenes.length} scenes)`);
+    // 6. Add audio (before save CTA)
+    const beforeCtaPath = join(TMP_DIR, `cost-vs-before-cta-${ts}.mp4`);
+    await addAudioTrack(concatPath, beforeCtaPath, TOTAL_DURATION);
+    tempFiles.push(beforeCtaPath);
+
+    // 7. Append global save CTA (+2.5s) to boost IG save rate
+    const { appendSaveCtaScene } = await import('../core/save-cta.js');
+    await appendSaveCtaScene(beforeCtaPath, outputPath);
+    console.log(`[REEL/COST-VS] Cost-vs reel complete: ${outputPath} (~${TOTAL_DURATION + 2.5}s, ${composedScenes.length} scenes + save CTA)`);
 
     return outputPath;
   } finally {

@@ -255,9 +255,15 @@ export async function composeAvantApresReel(script, opts = {}) {
     console.log(`[REEL/AVANTAPRES] ${composedScenes.length} scenes concatenated`);
 
     // ── 5. Add audio track ────────────────────────────────────────────────
-    await addAudioTrack(concattedPath, outputPath, TOTAL_DURATION);
+    const beforeCtaPath = join(TMP_DIR, `avantapres-before-cta-${ts}.mp4`);
+    await addAudioTrack(concattedPath, beforeCtaPath, TOTAL_DURATION);
+    tempFiles.push(beforeCtaPath);
 
-    console.log(`[REEL/AVANTAPRES] Avant/Apres reel complete: ${outputPath} (~${TOTAL_DURATION}s, 3 scenes)`);
+    // ── 6. Append global save CTA (+2.5s) to boost IG save rate ───────────
+    const { appendSaveCtaScene } = await import('../core/save-cta.js');
+    await appendSaveCtaScene(beforeCtaPath, outputPath);
+
+    console.log(`[REEL/AVANTAPRES] Avant/Apres reel complete: ${outputPath} (~${TOTAL_DURATION + 2.5}s, 3 scenes + save CTA)`);
     return outputPath;
 
   } finally {

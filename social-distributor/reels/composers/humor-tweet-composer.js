@@ -76,6 +76,8 @@ export async function composeTweetHumorReel(script, opts = {}) {
   const baseVideoPath = join(TMP_DIR, `humor-tweet-base-${ts}.mp4`);
   const compositeClipPath = join(TMP_DIR, `humor-tweet-composite-${ts}.mp4`);
   const outputPath = opts.outputPath || join(TMP_DIR, `humor-tweet-final-${ts}.mp4`);
+  // Encode first into an intermediate file so we can append the global save CTA
+  const beforeCtaPath = join(TMP_DIR, `humor-tweet-before-cta-${ts}.mp4`);
 
   // Ensure output directory exists
   const outputDir = dirname(outputPath);
@@ -159,7 +161,7 @@ export async function composeTweetHumorReel(script, opts = {}) {
         '-t', String(DURATION),
         '-movflags', '+faststart',
         '-y',
-        outputPath,
+        beforeCtaPath,
       ]);
     } else {
       // No audio available — compose video only with silent track
@@ -184,19 +186,25 @@ export async function composeTweetHumorReel(script, opts = {}) {
         '-shortest',
         '-movflags', '+faststart',
         '-y',
-        outputPath,
+        beforeCtaPath,
       ]);
     }
 
-    console.log(`[REEL/HUMOR-TWEET] Final reel encoded: ${outputPath}`);
+    console.log(`[REEL/HUMOR-TWEET] Base reel encoded: ${beforeCtaPath}`);
 
-    // ── Step 6: Clean up temp files ─────────────────────────────────────────
+    // ── Step 6: Append global save CTA (+2.5s) to boost IG save rate ───────
+    const { appendSaveCtaScene } = await import('../core/save-cta.js');
+    await appendSaveCtaScene(beforeCtaPath, outputPath);
+    console.log(`[REEL/HUMOR-TWEET] Final reel with save CTA: ${outputPath}`);
+
+    // ── Step 7: Clean up temp files ─────────────────────────────────────────
     safeUnlink(rawClipPath);
     safeUnlink(preparedClipPath);
     safeUnlink(loopedClipPath);
     safeUnlink(overlayPath);
     safeUnlink(baseVideoPath);
     safeUnlink(compositeClipPath);
+    safeUnlink(beforeCtaPath);
     console.log(`[REEL/HUMOR-TWEET] Temp files cleaned up`);
 
     return outputPath;
@@ -209,6 +217,7 @@ export async function composeTweetHumorReel(script, opts = {}) {
     safeUnlink(overlayPath);
     safeUnlink(baseVideoPath);
     safeUnlink(compositeClipPath);
+    safeUnlink(beforeCtaPath);
     console.error(`[REEL/HUMOR-TWEET] Composition failed: ${err.message}`);
     throw err;
   }

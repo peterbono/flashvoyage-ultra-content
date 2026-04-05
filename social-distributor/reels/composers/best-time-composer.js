@@ -169,8 +169,14 @@ export async function composeBestTimeReel(script, opts = {}) {
     await concatClips(composedScenes, concatPath);
     tempFiles.push(concatPath);
 
-    await addAudioTrack(concatPath, outputPath, TOTAL_DURATION);
-    console.log(`[REEL/BEST-TIME] Best-time reel complete: ${outputPath} (~${TOTAL_DURATION}s)`);
+    const beforeCtaPath = join(TMP_DIR, `best-time-before-cta-${ts}.mp4`);
+    await addAudioTrack(concatPath, beforeCtaPath, TOTAL_DURATION);
+    tempFiles.push(beforeCtaPath);
+
+    // Append global save CTA (+2.5s) to boost IG save rate
+    const { appendSaveCtaScene } = await import('../core/save-cta.js');
+    await appendSaveCtaScene(beforeCtaPath, outputPath);
+    console.log(`[REEL/BEST-TIME] Best-time reel complete: ${outputPath} (~${TOTAL_DURATION + 2.5}s + save CTA)`);
 
     return outputPath;
   } finally {

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+  }
+  .container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+  }
+
+  /* ── Save CTA pill (centered vert + horiz) ── */
+  .save-pill {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #FFD700;
+    border: 6px solid #FFFFFF;
+    border-radius: 40px;
+    padding: 56px 84px;
+    text-align: center;
+    min-width: 820px;
+    box-shadow:
+      0 12px 48px rgba(0, 0, 0, 0.6),
+      0 0 80px rgba(255, 215, 0, 0.55),
+      0 0 140px rgba(255, 215, 0, 0.35),
+      inset 0 2px 0 rgba(255, 255, 255, 0.35);
+  }
+
+  .save-line-1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 92px;
+    font-weight: 900;
+    color: #0a0a0a;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.05;
+    text-shadow: 0 2px 0 rgba(255, 255, 255, 0.25);
+    white-space: nowrap;
+  }
+
+  .save-line-2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 58px;
+    font-weight: 800;
+    color: #0a0a0a;
+    line-height: 1.15;
+    margin-top: 18px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  /* ── Tap hint (under the pill) ── */
+  .tap-hint {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-top: 180px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-align: center;
+    letter-spacing: 1.5px;
+    text-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.9),
+      0 2px 4px rgba(0, 0, 0, 0.7);
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="save-pill">
+    <div class="save-line-1">&#128190; SAUVEGARDE</div>
+    <div class="save-line-2">tu en auras besoin</div>
+  </div>
+  <div class="tap-hint">&#128241; Tap pour sauver &darr;</div>
+</div>
+</body>
+</html>

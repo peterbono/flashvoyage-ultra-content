@@ -398,9 +398,15 @@ export async function composeVersusReel(script, opts = {}) {
     console.log(`[REEL/VERSUS] ${composedScenes.length} scenes concatenated`);
 
     // ── 7. Add audio (upbeat) + final encode ───────────────────────────────
-    await addAudioTrack(concattedPath, outputPath, TOTAL_DURATION);
+    const beforeCtaPath = join(TMP_DIR, `versus-before-cta-${ts}.mp4`);
+    await addAudioTrack(concattedPath, beforeCtaPath, TOTAL_DURATION);
+    tempFiles.push(beforeCtaPath);
 
-    console.log(`[REEL/VERSUS] Versus reel complete: ${outputPath} (~${TOTAL_DURATION}s, ${composedScenes.length} scenes)`);
+    // ── 8. Append global save CTA (+2.5s) to boost IG save rate ────────────
+    const { appendSaveCtaScene } = await import('../core/save-cta.js');
+    await appendSaveCtaScene(beforeCtaPath, outputPath);
+
+    console.log(`[REEL/VERSUS] Versus reel complete: ${outputPath} (~${TOTAL_DURATION + 2.5}s, ${composedScenes.length} scenes + save CTA)`);
     return outputPath;
 
   } finally {

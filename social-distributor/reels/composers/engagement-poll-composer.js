@@ -181,6 +181,9 @@ export async function composePollReel(script, opts = {}) {
       ? ['-i', audioPath, '-filter_complex', `[1]scale=1080:1920[ovl];[0][ovl]overlay=0:0[vid];[2:a]volume=0.18,atrim=0:${DURATION},afade=t=out:st=${DURATION - 1.5}:d=1.5,aformat=sample_fmts=fltp:sample_rates=44100:channel_layouts=stereo[aud]`, '-map', '[vid]', '-map', '[aud]']
       : ['-f', 'lavfi', '-i', 'anullsrc=r=44100:cl=stereo', '-filter_complex', '[1]scale=1080:1920[ovl];[0][ovl]overlay=0:0', '-shortest'];
 
+    const beforeCtaPath = join(TMP_DIR, `poll-before-cta-${ts}.mp4`);
+    tempFiles.push(beforeCtaPath);
+
     await ffmpeg([
       '-i', bgVideoPath,
       '-i', overlayPath,
@@ -190,10 +193,15 @@ export async function composePollReel(script, opts = {}) {
       '-t', String(DURATION),
       '-movflags', '+faststart',
       '-y',
-      outputPath,
+      beforeCtaPath,
     ]);
 
-    console.log(`[REEL/POLL] Final reel encoded: ${outputPath}`);
+    console.log(`[REEL/POLL] Base reel encoded: ${beforeCtaPath}`);
+
+    // Append global save CTA (+2.5s) to boost IG save rate
+    const { appendSaveCtaScene } = await import('../core/save-cta.js');
+    await appendSaveCtaScene(beforeCtaPath, outputPath);
+    console.log(`[REEL/POLL] Final reel with save CTA: ${outputPath}`);
     return outputPath;
 
   } finally {
