@@ -382,7 +382,7 @@ export async function composeVersusReel(script, opts = {}) {
       composedScenes.push(composedPath);
 
       const rowsShown = sceneConfigs[i].revealUpTo;
-      console.log(`[REEL/VERSUS] Scene ${i + 1}/6 composed (${sceneDuration}s, ${rowsShown} rows${sceneConfigs[i].showCta ? ' + CTA' : ''})`);
+      console.log(`[REEL/VERSUS] Scene ${i + 1}/${sceneConfigs.length} composed (${sceneDuration}s, ${rowsShown} rows${sceneConfigs[i].showCta ? ' + CTA' : ''})`);
 
       timeOffset += sceneDuration;
     }
