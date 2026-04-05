@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1080px;
+    height: 1920px;
+    background: transparent;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .vignette {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1080px; height: 1920px;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.45) 18%, rgba(0,0,0,0.45) 82%, rgba(0,0,0,0.85) 100%);
+    z-index: 2;
+  }
+
+  /* ── Hook (scene 1) ── */
+  .hook-zone {
+    position: absolute;
+    top: 780px;
+    left: 60px;
+    width: 960px;
+    text-align: center;
+    z-index: 10;
+  }
+
+  .hook-text {
+    display: inline-block;
+    font-size: 70px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    line-height: 1.15;
+    letter-spacing: 1px;
+    text-shadow:
+      0 0 30px rgba(0, 0, 0, 0.95),
+      0 6px 20px rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 32px 44px;
+    border-radius: 28px;
+    border: 4px solid #FFD700;
+  }
+
+  /* ── Title (scene 2) ── */
+  .title-zone {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 980px;
+    text-align: center;
+    z-index: 10;
+  }
+
+  .title-text {
+    font-size: 56px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    line-height: 1.15;
+    letter-spacing: 1px;
+    text-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.95),
+      0 0 28px rgba(0, 0, 0, 0.7);
+  }
+
+  /* ── Grid 2×3 ── */
+  .grid-zone {
+    position: absolute;
+    top: 360px;
+    left: 40px;
+    width: 1000px;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .country-card {
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 22px;
+    padding: 22px 24px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 340px;
+  }
+
+  .country-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #0a0e1a;
+  }
+
+  .country-flag {
+    font-size: 44px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .country-name {
+    font-size: 34px;
+    font-weight: 900;
+    color: #0a0e1a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .period-line {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .period-best {
+    color: #0a0e1a;
+    background: #FFD700;
+    padding: 6px 12px;
+    border-radius: 10px;
+    display: inline-block;
+    font-weight: 900;
+    margin-top: 2px;
+  }
+
+  .period-avoid {
+    color: #FF3B30;
+    font-weight: 900;
+    font-size: 24px;
+    margin-top: 2px;
+  }
+
+  .period-sweet {
+    color: #0a0e1a;
+    font-weight: 700;
+    font-size: 24px;
+    margin-top: 2px;
+    opacity: 0.85;
+  }
+
+  /* ── CTA pill bottom ── */
+  .cta-zone {
+    position: absolute;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  .cta-text {
+    display: inline-block;
+    font-size: 36px;
+    font-weight: 900;
+    color: #0a0e1a;
+    background: #FFD700;
+    padding: 20px 40px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    box-shadow: 0 6px 22px rgba(255, 215, 0, 0.5);
+  }
+</style>
+</head>
+<body>
+
+  <div class="vignette"></div>
+
+  <!-- Scene 1: Hook -->
+  <div class="hook-zone" style="{{HOOK_STYLE}}">
+    <div class="hook-text">{{HOOK_TEXT}}</div>
+  </div>
+
+  <!-- Scene 2: Title + 6-country grid + CTA -->
+  <div class="title-zone" style="{{GRID_STYLE}}">
+    <div class="title-text">{{TITLE_LINE_1}}<br>{{TITLE_LINE_2}}</div>
+  </div>
+
+  <div class="grid-zone" style="{{GRID_STYLE}}">
+    <div class="country-card">
+      <div class="country-header">
+        <div class="country-flag">{{C1_FLAG}}</div>
+        <div class="country-name">{{C1_NAME}}</div>
+      </div>
+      <div class="period-line"><span class="period-best">{{C1_BEST}}</span></div>
+      <div class="period-line period-avoid">{{C1_AVOID}}</div>
+      <div class="period-line period-sweet">{{C1_SWEET}}</div>
+    </div>
+    <div class="country-card">
+      <div class="country-header">
+        <div class="country-flag">{{C2_FLAG}}</div>
+        <div class="country-name">{{C2_NAME}}</div>
+      </div>
+      <div class="period-line"><span class="period-best">{{C2_BEST}}</span></div>
+      <div class="period-line period-avoid">{{C2_AVOID}}</div>
+      <div class="period-line period-sweet">{{C2_SWEET}}</div>
+    </div>
+    <div class="country-card">
+      <div class="country-header">
+        <div class="country-flag">{{C3_FLAG}}</div>
+        <div class="country-name">{{C3_NAME}}</div>
+      </div>
+      <div class="period-line"><span class="period-best">{{C3_BEST}}</span></div>
+      <div class="period-line period-avoid">{{C3_AVOID}}</div>
+      <div class="period-line period-sweet">{{C3_SWEET}}</div>
+    </div>
+    <div class="country-card">
+      <div class="country-header">
+        <div class="country-flag">{{C4_FLAG}}</div>
+        <div class="country-name">{{C4_NAME}}</div>
+      </div>
+      <div class="period-line"><span class="period-best">{{C4_BEST}}</span></div>
+      <div class="period-line period-avoid">{{C4_AVOID}}</div>
+      <div class="period-line period-sweet">{{C4_SWEET}}</div>
+    </div>
+    <div class="country-card">
+      <div class="country-header">
+        <div class="country-flag">{{C5_FLAG}}</div>
+        <div class="country-name">{{C5_NAME}}</div>
+      </div>
+      <div class="period-line"><span class="period-best">{{C5_BEST}}</span></div>
+      <div class="period-line period-avoid">{{C5_AVOID}}</div>
+      <div class="period-line period-sweet">{{C5_SWEET}}</div>
+    </div>
+    <div class="country-card">
+      <div class="country-header">
+        <div class="country-flag">{{C6_FLAG}}</div>
+        <div class="country-name">{{C6_NAME}}</div>
+      </div>
+      <div class="period-line"><span class="period-best">{{C6_BEST}}</span></div>
+      <div class="period-line period-avoid">{{C6_AVOID}}</div>
+      <div class="period-line period-sweet">{{C6_SWEET}}</div>
+    </div>
+  </div>
+
+  <div class="cta-zone" style="{{GRID_STYLE}}">
+    <div class="cta-text">Guide complet en bio</div>
+  </div>
+
+</body>
+</html>

@@ -27,6 +27,9 @@ on:
           - versus
           - avantapres
           - month
+          - cost-vs
+          - leaderboard
+          - best-time
       article_id:
         description: 'ID WordPress (optionnel, override le choix auto)'
         required: false

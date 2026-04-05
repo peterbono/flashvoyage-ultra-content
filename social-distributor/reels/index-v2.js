@@ -260,6 +260,21 @@ async function routeToComposer(format, article, opts = {}) {
       return generateMonthReelFromArticle(article, opts);
     }
 
+    case 'cost-vs': {
+      const { generateCostVsReelFromArticle } = await import('./composers/cost-vs-composer.js');
+      return generateCostVsReelFromArticle(article, opts);
+    }
+
+    case 'leaderboard': {
+      const { generateLeaderboardReelFromArticle } = await import('./composers/leaderboard-composer.js');
+      return generateLeaderboardReelFromArticle(article, opts);
+    }
+
+    case 'best-time': {
+      const { generateBestTimeReelFromArticle } = await import('./composers/best-time-composer.js');
+      return generateBestTimeReelFromArticle(article, opts);
+    }
+
     default:
       throw new Error(
         `Unknown format "${format}". Available: ${FORMAT_NAMES.join(', ')}`

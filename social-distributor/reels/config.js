@@ -78,6 +78,30 @@ export const FORMATS = {
     audio: null,
     description: '5 destinations SE Asia pour le mois suivant',
   },
+  'cost-vs': {
+    name: 'Cost vs France',
+    tier: 'S',
+    duration: { min: 8, max: 8 },
+    scenes: 2,
+    audio: 'upbeat',
+    description: 'Comparaison de 8 items X vs France + total mensuel band jaune',
+  },
+  leaderboard: {
+    name: 'Top 10 Leaderboard',
+    tier: 'S',
+    duration: { min: 9, max: 9 },
+    scenes: 3,
+    audio: 'upbeat',
+    description: 'Top 10 countries classement avec reveal countdown',
+  },
+  'best-time': {
+    name: 'Best Time to Visit',
+    tier: 'A',
+    duration: { min: 10, max: 10 },
+    scenes: 2,
+    audio: 'upbeat',
+    description: 'Guide saisonnier grid 2×3 pays avec pill jaune mois',
+  },
 };
 
 export const FORMAT_NAMES = Object.keys(FORMATS);

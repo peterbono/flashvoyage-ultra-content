@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1080px;
+    height: 1920px;
+    background: transparent;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── Top dark band for legibility over Pexels footage ── */
+  .top-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1080px;
+    height: 360px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 70%, transparent 100%);
+    z-index: 5;
+  }
+
+  /* ── Header ── */
+  .header-zone {
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 980px;
+    text-align: center;
+    z-index: 10;
+  }
+
+  .header-line-1 {
+    font-size: 54px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.9);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .header-flags {
+    font-size: 64px;
+    line-height: 1;
+    margin-top: 6px;
+  }
+
+  /* ── Rows container ── */
+  .rows-container {
+    position: absolute;
+    top: 440px;
+    left: 40px;
+    width: 1000px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .cost-row {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 18px;
+    padding: 18px 24px;
+    min-height: 100px;
+  }
+
+  .row-emoji {
+    font-size: 52px;
+    line-height: 1;
+    width: 68px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .row-label {
+    font-size: 32px;
+    font-weight: 700;
+    color: #FFFFFF;
+    flex: 1 1 auto;
+    padding-left: 14px;
+    padding-right: 12px;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .row-price {
+    font-size: 38px;
+    font-weight: 900;
+    color: #FFFFFF;
+    width: 180px;
+    text-align: right;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .row-price.france {
+    color: #FFD700;
+    padding-left: 18px;
+  }
+
+  /* ── Total row (yellow band — brand signature) ── */
+  .total-zone {
+    position: absolute;
+    top: 1640px;
+    left: 40px;
+    width: 1000px;
+    z-index: 10;
+    background: #FFD700;
+    border-radius: 22px;
+    padding: 26px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow:
+      0 8px 32px rgba(255, 215, 0, 0.45),
+      0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .total-label {
+    font-size: 36px;
+    font-weight: 900;
+    color: #0a0e1a;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .total-values {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .total-dest {
+    font-size: 44px;
+    font-weight: 900;
+    color: #0a0e1a;
+  }
+
+  .total-sep {
+    font-size: 36px;
+    font-weight: 900;
+    color: rgba(10, 14, 26, 0.5);
+  }
+
+  .total-france {
+    font-size: 44px;
+    font-weight: 900;
+    color: #0a0e1a;
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
+    opacity: 0.75;
+  }
+</style>
+</head>
+<body>
+
+  <div class="top-gradient"></div>
+
+  <!-- Header -->
+  <div class="header-zone">
+    <div class="header-line-1">Coût en {{DEST_NAME}}<br>vs France</div>
+    <div class="header-flags">{{DEST_FLAG}} &nbsp; 🆚 &nbsp; {{FRANCE_FLAG}}</div>
+  </div>
+
+  <!-- 8 rows -->
+  <div class="rows-container">
+    <div class="cost-row">
+      <div class="row-emoji">{{ROW_1_EMOJI}}</div>
+      <div class="row-label">{{ROW_1_LABEL}}</div>
+      <div class="row-price">{{ROW_1_DEST}}</div>
+      <div class="row-price france">{{ROW_1_FRANCE}}</div>
+    </div>
+    <div class="cost-row">
+      <div class="row-emoji">{{ROW_2_EMOJI}}</div>
+      <div class="row-label">{{ROW_2_LABEL}}</div>
+      <div class="row-price">{{ROW_2_DEST}}</div>
+      <div class="row-price france">{{ROW_2_FRANCE}}</div>
+    </div>
+    <div class="cost-row">
+      <div class="row-emoji">{{ROW_3_EMOJI}}</div>
+      <div class="row-label">{{ROW_3_LABEL}}</div>
+      <div class="row-price">{{ROW_3_DEST}}</div>
+      <div class="row-price france">{{ROW_3_FRANCE}}</div>
+    </div>
+    <div class="cost-row">
+      <div class="row-emoji">{{ROW_4_EMOJI}}</div>
+      <div class="row-label">{{ROW_4_LABEL}}</div>
+      <div class="row-price">{{ROW_4_DEST}}</div>
+      <div class="row-price france">{{ROW_4_FRANCE}}</div>
+    </div>
+    <div class="cost-row">
+      <div class="row-emoji">{{ROW_5_EMOJI}}</div>
+      <div class="row-label">{{ROW_5_LABEL}}</div>
+      <div class="row-price">{{ROW_5_DEST}}</div>
+      <div class="row-price france">{{ROW_5_FRANCE}}</div>
+    </div>
+    <div class="cost-row">
+      <div class="row-emoji">{{ROW_6_EMOJI}}</div>
+      <div class="row-label">{{ROW_6_LABEL}}</div>
+      <div class="row-price">{{ROW_6_DEST}}</div>
+      <div class="row-price france">{{ROW_6_FRANCE}}</div>
+    </div>
+    <div class="cost-row">
+      <div class="row-emoji">{{ROW_7_EMOJI}}</div>
+      <div class="row-label">{{ROW_7_LABEL}}</div>
+      <div class="row-price">{{ROW_7_DEST}}</div>
+      <div class="row-price france">{{ROW_7_FRANCE}}</div>
+    </div>
+    <div class="cost-row">
+      <div class="row-emoji">{{ROW_8_EMOJI}}</div>
+      <div class="row-label">{{ROW_8_LABEL}}</div>
+      <div class="row-price">{{ROW_8_DEST}}</div>
+      <div class="row-price france">{{ROW_8_FRANCE}}</div>
+    </div>
+  </div>
+
+  <!-- Total row (yellow band — brand signature) -->
+  <div class="total-zone" style="{{TOTAL_STYLE}}">
+    <div class="total-label">Total/mois</div>
+    <div class="total-values">
+      <div class="total-dest">{{TOTAL_DEST}}</div>
+      <div class="total-sep">vs</div>
+      <div class="total-france">{{TOTAL_FRANCE}}</div>
+    </div>
+  </div>
+
+</body>
+</html>
