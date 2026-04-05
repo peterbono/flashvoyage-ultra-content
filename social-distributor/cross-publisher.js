@@ -189,22 +189,51 @@ async function publishFBReel({ videoUrl, description, pageToken }) {
 // ── Helper: safe execution wrapper ──────────────────────────────────────────
 
 /**
+ * Detect the well-known Meta transient "code 2" unexpected-error that
+ * intermittently hits createContainer/createStoryContainer calls. A brief
+ * retry usually clears it.
+ */
+function isTransientMetaError(err) {
+  const msg = err?.message || '';
+  return /\(code 2\)/.test(msg) || /unexpected error has occurred/i.test(msg);
+}
+
+/**
  * Execute a platform action safely. Returns a structured result whether it
  * succeeds or fails, so one platform crash never blocks the others.
  *
+ * Retries up to `retries` extra times ONLY on transient Meta errors
+ * (code 2 "unexpected error"). Non-transient errors fail immediately.
+ *
  * @param {string} platform - Platform name for logging
  * @param {Function} fn - Async function to execute
+ * @param {number} [retries=2] - Extra attempts on transient errors (total = retries + 1)
  * @returns {Promise<{ success: boolean, data?: any, error?: string }>}
  */
-async function safeExec(platform, fn) {
-  try {
-    const data = await fn();
-    console.log(`[CROSS-PUB] ${platform}: SUCCESS`);
-    return { success: true, data };
-  } catch (err) {
-    console.error(`[CROSS-PUB] ${platform}: FAILED — ${err.message}`);
-    return { success: false, error: err.message };
+async function safeExec(platform, fn, retries = 2) {
+  let lastErr;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const data = await fn();
+      if (attempt > 0) {
+        console.log(`[CROSS-PUB] ${platform}: SUCCESS (after ${attempt} retr${attempt > 1 ? 'ies' : 'y'})`);
+      } else {
+        console.log(`[CROSS-PUB] ${platform}: SUCCESS`);
+      }
+      return { success: true, data };
+    } catch (err) {
+      lastErr = err;
+      if (attempt < retries && isTransientMetaError(err)) {
+        const backoffMs = 3000 * (attempt + 1); // 3s, 6s
+        console.warn(`[CROSS-PUB] ${platform}: transient error, retrying in ${backoffMs}ms — ${err.message}`);
+        await delay(backoffMs);
+        continue;
+      }
+      break;
+    }
   }
+  console.error(`[CROSS-PUB] ${platform}: FAILED — ${lastErr.message}`);
+  return { success: false, error: lastErr.message };
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
