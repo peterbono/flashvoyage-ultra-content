@@ -175,17 +175,12 @@
 
   <div class="vignette"></div>
 
-  <!-- Scene 1: Hook only -->
-  <div class="hook-zone" style="{{HOOK_STYLE}}">
-    <div class="hook-text">{{HOOK_TEXT}}</div>
-  </div>
-
-  <!-- Scenes 2 + 3: Title + list (+ highlight #1 on scene 3 via HIGHLIGHT_CLASS) -->
-  <div class="title-zone" style="{{LIST_STYLE}}">
+  <!-- Static layout: title + full top-10 list + #1 permanently highlighted -->
+  <div class="title-zone">
     <div class="title-text">{{TITLE_LINE_1}}<br>{{TITLE_LINE_2}}</div>
   </div>
 
-  <div class="rows-container" style="{{LIST_STYLE}}">
+  <div class="rows-container">
     <div class="rank-row {{HIGHLIGHT_CLASS}}"><!-- becomes is-highlighted in scene 3 -->
       <div class="rank-num">#{{RANK_1}}</div>
       <div class="rank-flag">{{FLAG_1}}</div>
@@ -249,7 +244,7 @@
   </div>
 
   <!-- Source credit -->
-  <div class="source-credit" style="{{LIST_STYLE}}">Data FlashVoyage 2026</div>
+  <div class="source-credit">Data FlashVoyage 2026</div>
 
 </body>
 </html>
