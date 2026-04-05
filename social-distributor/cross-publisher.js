@@ -360,12 +360,15 @@ export async function crossPublishReel(params) {
     }),
 
     // 3. Threads post (caption + thumbnail image, UTM: threads/post)
+    // Threads hard-caps text at 500 chars. UTM URLs are ~150-200 chars once
+    // slugs + params are appended, so reserve that space dynamically instead
+    // of a fixed 50-char budget.
     safeExec('Threads', async () => {
-      // Append UTM-tagged article link to Threads text
-      const baseText = truncate(caption, threadsArticleUrl ? 450 : 500);
-      const threadsText = threadsArticleUrl
-        ? `${baseText}\n\n${threadsArticleUrl}`
-        : baseText;
+      const THREADS_MAX = 500;
+      const urlSuffix = threadsArticleUrl ? `\n\n${threadsArticleUrl}` : '';
+      const baseBudget = Math.max(100, THREADS_MAX - urlSuffix.length);
+      const baseText = truncate(caption, baseBudget);
+      const threadsText = `${baseText}${urlSuffix}`.slice(0, THREADS_MAX);
       return publishThreadsPost({
         text: threadsText,
         imageUrl: threadsImageUrl || undefined,
@@ -483,12 +486,13 @@ export async function crossPublishPost(params) {
     }),
 
     // 3. Threads post (caption + image, UTM: threads/post)
+    // Reserve dynamic space for the UTM URL (see crossPublishReel comment).
     safeExec('Threads', async () => {
-      // Append UTM-tagged article link to Threads text
-      const baseText = truncate(caption, threadsArticleUrl ? 450 : 500);
-      const threadsText = threadsArticleUrl
-        ? `${baseText}\n\n${threadsArticleUrl}`
-        : baseText;
+      const THREADS_MAX = 500;
+      const urlSuffix = threadsArticleUrl ? `\n\n${threadsArticleUrl}` : '';
+      const baseBudget = Math.max(100, THREADS_MAX - urlSuffix.length);
+      const baseText = truncate(caption, baseBudget);
+      const threadsText = `${baseText}${urlSuffix}`.slice(0, THREADS_MAX);
       return publishThreadsPost({
         text: threadsText,
         imageUrl: imagePublicUrl,
