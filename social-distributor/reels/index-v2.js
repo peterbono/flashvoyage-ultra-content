@@ -306,7 +306,63 @@ async function publishIfRequested(result, article, format, shouldPublish) {
     log(`WARN: Failed to record publication: ${e.message}`);
   }
 
-  return { ...result, reelId, permalink };
+  // Cross-publish to FB Reel + Threads + IG Story (best-effort, non-fatal).
+  // The IG Reel is already live at this point — any failure here only affects
+  // cross-distribution, never the primary publish.
+  let crossResults = null;
+  try {
+    log('Cross-publishing to FB Reel + Threads + IG Story...');
+    const { crossPublishReel } = await import('../cross-publisher.js');
+    const { uploadVideoToWP, deleteWpVideo } = await import('./publisher.js');
+
+    const wpVideo = await uploadVideoToWP(
+      videoBuffer,
+      `reel-crosspub-${format}-${Date.now()}.mp4`
+    );
+    log(`Video uploaded to WP for cross-pub: id=${wpVideo.wpMediaId}`);
+
+    // Download article featured image as thumbnail buffer for IG Story + Threads
+    let thumbnailBuffer = null;
+    if (article.imageUrl) {
+      try {
+        const imgRes = await fetch(article.imageUrl);
+        if (imgRes.ok) {
+          thumbnailBuffer = Buffer.from(await imgRes.arrayBuffer());
+        }
+      } catch (e) {
+        log(`WARN: thumbnail download failed: ${e.message}`);
+      }
+    }
+
+    const fullCaption = `${caption}\n\n${hashtags.join(' ')}`.slice(0, 2200);
+    crossResults = await crossPublishReel({
+      caption: fullCaption,
+      videoPublicUrl: wpVideo.publicUrl,
+      thumbnailBuffer,
+      articleUrl: article.articleUrl,
+      reelId,
+    });
+
+    const fb = crossResults.facebook;
+    const th = crossResults.threads;
+    const st = crossResults.story;
+    log(`Cross-pub FB Reel: ${fb.success ? 'OK id=' + fb.data?.reelId : 'FAIL — ' + fb.error}`);
+    log(`Cross-pub Threads: ${th.success ? 'OK' : 'FAIL — ' + th.error}`);
+    log(`Cross-pub IG Story: ${st.success ? 'OK' : 'FAIL — ' + st.error}`);
+
+    // Clean up the WP video (whether FB Reel succeeded or not — FB already
+    // fetched it if it was going to). Non-fatal.
+    try {
+      await deleteWpVideo(wpVideo.wpMediaId);
+      log(`Cleaned up WP video ${wpVideo.wpMediaId}`);
+    } catch (e) {
+      log(`WARN: WP video cleanup failed: ${e.message}`);
+    }
+  } catch (crossErr) {
+    log(`WARN: Cross-publish failed (non-fatal): ${crossErr.message}`);
+  }
+
+  return { ...result, reelId, permalink, crossResults };
 }
 
 // ── v2 Mode: Format Test ─────────────────────────────────────────────────────

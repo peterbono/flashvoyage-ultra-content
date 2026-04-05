@@ -196,20 +196,9 @@ jobs:
           " 2>&1 || echo "[SCHEDULER] WARN: Failed to record publication (non-fatal)"
 
 
-      # Cross-publishing: Story + FB Reel + Threads
-      # The reel pipeline (index-v2.js) calls cross-publisher.js internally after
-      # a successful IG publish. This step is a fallback / explicit trigger.
-      - name: Cross-publish to Story + FB Reel + Threads
-        if: success() && steps.format.outputs.publish == 'true'
-        env:
-          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
-          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
-        run: |
-          echo "Cross-publishing handled by the reel pipeline (cross-publisher.js called after IG publish)"
-          echo "Tokens available: FB_PAGE_TOKEN=${FB_PAGE_TOKEN:+set}, THREADS_TOKEN=${THREADS_TOKEN:+set}"
-          # If cross-publisher.js is not yet integrated into the pipeline,
-          # uncomment the line below to run it standalone:
-          # node social-distributor/reels/cross-publisher.js --last
+      # Cross-publishing (FB Reel + Threads + IG Story) is now handled inside
+      # index-v2.js → crossPublishReel() after the IG Reel is published.
+      # See social-distributor/reels/index-v2.js:publishIfRequested.
 
       - name: Commit state files (reel history, pexels dedup)
         if: success() && steps.format.outputs.publish == 'true'

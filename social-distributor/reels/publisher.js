@@ -22,9 +22,44 @@ const GRAPH_API = 'https://graph.facebook.com/v21.0';
 const WP_API = 'https://flashvoyage.com/wp-json/wp/v2';
 const WP_AUTH = 'Basic ' + Buffer.from('admin7817:GjLl 9W0k lKwf LSOT PXur RYGR').toString('base64');
 
-// ── Video upload via FB CDN relay ───────────────────────────────────────────
+// ── WP video upload (public URL for cross-publishing) ──────────────────────
+// Used by cross-publisher.js after a successful IG publish to get a public
+// URL that FB Graph's /video_reels endpoint can fetch. FB (unlike IG API)
+// CAN reach OVH-hosted WP URLs, so no CDN relay is needed for this path.
+
+export async function uploadVideoToWP(videoBuffer, filename) {
+  const res = await fetch(`${WP_API}/media`, {
+    method: 'POST',
+    headers: {
+      'Authorization': WP_AUTH,
+      'Content-Disposition': `attachment; filename="${filename}"`,
+      'Content-Type': 'video/mp4',
+    },
+    body: videoBuffer,
+  });
+  const data = await res.json();
+  if (data.code || !data.id) {
+    throw new Error(`WP upload failed: ${data.message || JSON.stringify(data)}`);
+  }
+  return { wpMediaId: data.id, publicUrl: data.source_url };
+}
+
+export async function deleteWpVideo(wpMediaId) {
+  if (!wpMediaId) return;
+  const res = await fetch(`${WP_API}/media/${wpMediaId}?force=true`, {
+    method: 'DELETE',
+    headers: { 'Authorization': WP_AUTH },
+  });
+  if (!res.ok) {
+    throw new Error(`WP delete failed: HTTP ${res.status}`);
+  }
+}
+
+// ── Video upload via FB CDN relay (legacy, kept for fallback paths) ─────────
 // Meta's IG API can't reach OVH-hosted WP URLs.
 // Solution: WP upload → FB unpublished video → FB CDN URL → IG API
+// NOTE: The current publishReel() uses resumable upload instead and does not
+// call uploadVideoForIG. Kept here for reference / manual fallback.
 
 async function uploadVideoForIG(videoBuffer, filename, pageToken) {
   // Step 1: Upload to WP to get a public URL
