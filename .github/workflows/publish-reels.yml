@@ -27,6 +27,10 @@ on:
           - versus
           - avantapres
           - month
+      article_id:
+        description: 'ID WordPress (optionnel, override le choix auto)'
+        required: false
+        type: string
       test_only:
         description: 'Test seulement (pas de publication IG)'
         required: false
@@ -86,7 +90,7 @@ jobs:
               echo "[SCHEDULER] Smart decision: $FORMAT ($REASON)"
             else
               REASON="manual dispatch"
-              ARTICLE_ID=""
+              ARTICLE_ID="${{ github.event.inputs.article_id }}"
               IS_BREAKING="false"
             fi
             echo "format=$FORMAT" >> $GITHUB_OUTPUT
