@@ -29,11 +29,52 @@ import {
 } from './platforms/instagram.js';
 import { publishPhoto, addComment } from './platforms/facebook.js';
 import { publishPost as publishThreadsPost } from './platforms/threads.js';
-import { readFileSync } from 'fs';
+import { ffmpeg } from './reels/core/ffmpeg.js';
+import { readFileSync, unlinkSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// ── Reel frame extraction (for Story promotion) ─────────────────────────────
+
+/**
+ * Extract a single PNG frame from a reel video at the given timestamp,
+ * read it as a Buffer, and clean up the temp file.
+ *
+ * Used to create an IG Story that promotes a freshly-published reel:
+ * instead of a random article photo, the Story shows an actual frame
+ * from the reel itself. Timestamp defaults to ~3s, which is past any
+ * intro hook and into the data-heavy body of our static reel formats
+ * (cost-vs table, leaderboard top-10, best-time calendar).
+ *
+ * @param {string} videoPath - Absolute path to the reel mp4
+ * @param {number} [timestampSec=3] - Seconds into the video
+ * @returns {Promise<Buffer>} PNG image buffer
+ */
+async function extractReelFrame(videoPath, timestampSec = 3) {
+  const framePath = join('/tmp', `cross-pub-reel-frame-${Date.now()}.png`);
+  try {
+    await ffmpeg([
+      '-ss', String(timestampSec),
+      '-i', videoPath,
+      '-vframes', '1',
+      '-q:v', '2',
+      '-y',
+      framePath,
+    ]);
+    if (!existsSync(framePath)) {
+      throw new Error(`ffmpeg produced no output at ${framePath}`);
+    }
+    const buffer = readFileSync(framePath);
+    try { unlinkSync(framePath); } catch {}
+    console.log(`[CROSS-PUB] Extracted reel frame @ ${timestampSec}s (${(buffer.length / 1024).toFixed(0)} KB)`);
+    return buffer;
+  } catch (err) {
+    try { if (existsSync(framePath)) unlinkSync(framePath); } catch {}
+    throw err;
+  }
+}
 
 const PAGE_ID = '1068729919650308';
 const GRAPH_API = 'https://graph.facebook.com/v21.0';
@@ -261,17 +302,27 @@ function truncate(text, max = 500) {
  * Cross-publish after a Reel is published on Instagram.
  *
  * Runs all three distribution actions in parallel:
- * 1. Auto-Story on IG with clickable link sticker to the article
+ * 1. Auto-Story on IG promoting the reel (frame of the reel + link sticker
+ *    pointing to the reel permalink itself — drives initial watch signals
+ *    to the IG algorithm, boosts reel reach)
  * 2. Cross-post as a Facebook Reel (video_reels endpoint)
- * 3. Post caption + thumbnail to Threads
+ * 3. Post caption + reel thumbnail to Threads
+ *
+ * IMPORTANT: when `reelVideoPath` is provided, the Story uses a frame
+ * extracted from the reel mp4 itself (and the link sticker points to
+ * `reelPermalink`, not the article). This is the "share your reel to
+ * your own story" growth pattern. The old thumbnailBuffer/articleUrl
+ * path is kept as a fallback for legacy callers.
  *
  * @param {Object} params
  * @param {string} params.caption - The reel caption (used for FB + Threads)
  * @param {string} params.videoPublicUrl - Public URL of the video (from WP upload)
- * @param {string} [params.articleUrl] - flashvoyage.com article URL (for Story link sticker)
- * @param {Buffer} [params.thumbnailBuffer] - A frame from the reel for Story (PNG 1080x1920)
- * @param {string} [params.thumbnailPublicUrl] - Public URL of the thumbnail (if already uploaded)
- * @param {string} [params.reelId] - Reel identifier for UTM campaign tracking
+ * @param {string} [params.reelVideoPath] - Local path to the reel mp4 (for frame extraction — enables the "share to story" behavior)
+ * @param {string} [params.reelPermalink] - IG permalink of the freshly-published reel (used as Story link sticker target)
+ * @param {string} [params.articleUrl] - flashvoyage.com article URL (used in FB Reel + Threads captions)
+ * @param {Buffer} [params.thumbnailBuffer] - LEGACY fallback: pre-extracted thumbnail (used if reelVideoPath is absent)
+ * @param {string} [params.thumbnailPublicUrl] - LEGACY fallback: already-uploaded thumbnail URL
+ * @param {string} [params.reelId] - Reel identifier for UTM campaign tracking on FB/Threads captions
  * @param {string} [params.pageToken] - FB page token (falls back to tokens.json)
  * @param {string} [params.threadsToken] - Threads token (falls back to tokens.json)
  * @returns {Promise<{ story: Object, facebook: Object, threads: Object }>}
@@ -280,17 +331,20 @@ export async function crossPublishReel(params) {
   const {
     caption,
     videoPublicUrl,
+    reelVideoPath = null,
+    reelPermalink = null,
     articleUrl = null,
-    thumbnailBuffer = null,
+    thumbnailBuffer: legacyThumbnailBuffer = null,
     thumbnailPublicUrl = null,
     reelId = null,
     pageToken: pageTokenOverride,
     threadsToken: threadsTokenOverride,
   } = params;
 
-  // Build UTM-tagged article URLs per platform
+  // Build UTM-tagged article URLs per platform (FB + Threads captions link
+  // to the article for attribution tracking; the Story links to the reel
+  // itself since its purpose is to boost the reel's reach, not article GA4)
   const campaignId = reelId || `reel_${Date.now()}`;
-  const storyArticleUrl = articleUrl ? addUTM(articleUrl, { source: 'instagram', medium: 'story', campaign: campaignId }) : null;
   const fbArticleUrl = articleUrl ? addUTM(articleUrl, { source: 'facebook', medium: 'reel', campaign: campaignId }) : null;
   const threadsArticleUrl = articleUrl ? addUTM(articleUrl, { source: 'threads', medium: 'post', campaign: campaignId }) : null;
 
@@ -308,7 +362,32 @@ export async function crossPublishReel(params) {
 
   console.log(`[CROSS-PUB] Starting cross-publish for Reel`);
   console.log(`[CROSS-PUB]   video: ${videoPublicUrl}`);
+  console.log(`[CROSS-PUB]   reel permalink: ${reelPermalink || '(none)'}`);
   console.log(`[CROSS-PUB]   article: ${articleUrl || '(none)'}`);
+
+  // Determine the Story thumbnail source.
+  //   1. If reelVideoPath is given: extract a frame from the reel mp4 itself
+  //      (new "share to story" behavior — Story shows the actual reel content)
+  //   2. Else if legacyThumbnailBuffer given: use it (backward compat)
+  //   3. Else: Story gets skipped
+  let thumbnailBuffer = null;
+  let thumbnailSource = 'none';
+  if (reelVideoPath) {
+    try {
+      thumbnailBuffer = await extractReelFrame(reelVideoPath, 3);
+      thumbnailSource = 'reel-frame';
+    } catch (err) {
+      console.warn(`[CROSS-PUB] Reel frame extraction failed: ${err.message}`);
+      if (legacyThumbnailBuffer) {
+        thumbnailBuffer = legacyThumbnailBuffer;
+        thumbnailSource = 'legacy-buffer';
+      }
+    }
+  } else if (legacyThumbnailBuffer) {
+    thumbnailBuffer = legacyThumbnailBuffer;
+    thumbnailSource = 'legacy-buffer';
+  }
+  console.log(`[CROSS-PUB] Story thumbnail source: ${thumbnailSource}`);
 
   // Upload the thumbnail via the FB CDN relay (WP → FB unpublished photo →
   // fbcdn.net URL). Meta blocks direct fetch of OVH-hosted WP URLs from its
@@ -330,16 +409,22 @@ export async function crossPublishReel(params) {
     }
   }
 
+  // The Story's link sticker target: prefer the reel permalink (drives
+  // reach to the reel), fall back to the article URL with UTM tagging.
+  const storyLink = reelPermalink
+    || (articleUrl ? addUTM(articleUrl, { source: 'instagram', medium: 'story', campaign: campaignId }) : null);
+
   // Run all three platforms in parallel
   const [storyResult, fbResult, threadsResult] = await Promise.all([
-    // 1. IG Story with link sticker (UTM: instagram/story)
+    // 1. IG Story with link sticker → reel permalink (boosts reel reach)
     (thumbnailBuffer || threadsImageUrl)
       ? safeExec('IG Story', async () => {
           if (!threadsImageUrl) throw new Error('No thumbnail available for Story');
+          if (!storyLink) throw new Error('No Story link target (need reelPermalink or articleUrl)');
           return publishIGStory({
             imageBuffer: thumbnailBuffer,
             pageToken,
-            link: storyArticleUrl,
+            link: storyLink,
           });
         })
       : safeExec('IG Story', async () => {

@@ -324,9 +324,14 @@ async function publishIfRequested(result, article, format, shouldPublish) {
   // Cross-publish to FB Reel + Threads + IG Story (best-effort, non-fatal).
   // The IG Reel is already live at this point — any failure here only affects
   // cross-distribution, never the primary publish.
+  //
+  // IG Story uses a frame extracted from the reel mp4 itself (not a random
+  // article photo), and its link sticker points to the reel permalink (not
+  // the article) — this is the "share your reel to your own story" growth
+  // pattern that boosts the reel's initial watch signals.
   let crossResults = null;
   try {
-    log('Cross-publishing to FB Reel + Threads + IG Story...');
+    log('Cross-publishing to FB Reel + Threads + IG Story (reel frame + reel link)...');
     const { crossPublishReel } = await import('../cross-publisher.js');
     const { uploadVideoToWP, deleteWpVideo } = await import('./publisher.js');
 
@@ -336,24 +341,15 @@ async function publishIfRequested(result, article, format, shouldPublish) {
     );
     log(`Video uploaded to WP for cross-pub: id=${wpVideo.wpMediaId}`);
 
-    // Download article featured image as thumbnail buffer for IG Story + Threads
-    let thumbnailBuffer = null;
-    if (article.imageUrl) {
-      try {
-        const imgRes = await fetch(article.imageUrl);
-        if (imgRes.ok) {
-          thumbnailBuffer = Buffer.from(await imgRes.arrayBuffer());
-        }
-      } catch (e) {
-        log(`WARN: thumbnail download failed: ${e.message}`);
-      }
-    }
-
     const fullCaption = `${caption}\n\n${hashtags.join(' ')}`.slice(0, 2200);
     crossResults = await crossPublishReel({
       caption: fullCaption,
       videoPublicUrl: wpVideo.publicUrl,
-      thumbnailBuffer,
+      // New: frame is extracted from the local reel mp4 inside cross-publisher
+      reelVideoPath: result.videoPath,
+      // New: Story link sticker points to the reel itself, not the article
+      reelPermalink: permalink,
+      // Still passed for FB Reel + Threads caption attribution
       articleUrl: article.articleUrl,
       reelId,
     });
