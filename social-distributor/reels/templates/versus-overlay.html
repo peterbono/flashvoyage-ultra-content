@@ -31,12 +31,16 @@
   }
 
   /* ── VS Title zone (top, centered) ── */
+  /* Width widened to 1040px (was 1020) + dest names sized dynamically from
+     JS via {{TITLE_FONT_SIZE}} etc. to avoid truncation on long country
+     names (e.g. "Nouvelle-Zélande" = 16 chars). flex: 0 1 auto lets each
+     side shrink to its natural width instead of forcing 50/50. */
   .vs-title-zone {
     position: absolute;
     top: 160px;
     left: 50%;
     transform: translateX(-50%);
-    width: 1020px;
+    width: 1040px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,7 +55,7 @@
 
   .dest-name {
     font-family: 'Montserrat', sans-serif;
-    font-size: 64px;
+    font-size: {{TITLE_FONT_SIZE}}px;
     font-weight: 900;
     color: #FFFFFF;
     text-transform: uppercase;
@@ -64,25 +68,25 @@
 
   .dest-left {
     text-align: right;
-    flex: 1;
+    flex: 0 1 auto;
     padding-right: 8px;
   }
 
   .dest-right {
     text-align: left;
-    flex: 1;
+    flex: 0 1 auto;
     padding-left: 8px;
   }
 
   .flag {
-    font-size: 56px;
+    font-size: {{FLAG_FONT_SIZE}}px;
     vertical-align: middle;
     margin: 0 4px;
   }
 
   .vs-label {
     font-family: 'Montserrat', sans-serif;
-    font-size: 76px;
+    font-size: {{VS_FONT_SIZE}}px;
     font-weight: 900;
     font-style: italic;
     color: #FFD700;

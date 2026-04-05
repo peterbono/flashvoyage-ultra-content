@@ -27,9 +27,31 @@ const TMP_DIR = join(__dirname, '..', 'tmp');
 
 // ── Constants ───────────────────────────────────────────────────────────────
 
-const SCENE_DURATIONS = [1.2, 1, 1, 1, 1, 1.8]; // 6 scenes = 7s total (rapid fire)
+// 2 static scenes = 7s total. All 5 comparison rows are visible from
+// frame 1 (no progressive reveal — viewers can read everything at once).
+// The CTA pops in only for the last 1.8s.
+const SCENE_DURATIONS = [5.2, 1.8];
 const TOTAL_DURATION = SCENE_DURATIONS.reduce((a, b) => a + b, 0); // 7s
 const ROW_COUNT = 5;
+
+/**
+ * Compute dynamic title sizes so the destination names never overflow the
+ * 1040px-wide vs-title-zone. Scales font / flag / VS label proportionally
+ * based on the longest destination name.
+ *
+ * Longest supported names in country-facts (uppercase char count):
+ *   - "Nouvelle-Zélande" = 16
+ *   - "Corée du Sud" = 12
+ *   - "Philippines" = 11
+ *   - most SEA destinations = 7-9
+ */
+function computeTitleSizes(destAName, destBName) {
+  const maxLen = Math.max(destAName.length, destBName.length);
+  if (maxLen <= 8)  return { dest: 64, flag: 56, vs: 76 };
+  if (maxLen <= 10) return { dest: 56, flag: 48, vs: 68 };
+  if (maxLen <= 13) return { dest: 48, flag: 40, vs: 58 };
+  return              { dest: 40, flag: 34, vs: 52 };
+}
 
 const WIDTH = 1080;
 const HEIGHT = 1920;
@@ -184,12 +206,18 @@ function buildOverlayReplacements(script, revealUpTo, showCta = false) {
   const HIDDEN = 'display:none';
   const VISIBLE = '';
 
+  const sizes = computeTitleSizes(script.destA.name, script.destB.name);
+
   const replacements = {
     '{{DEST_A}}': script.destA.name,
     '{{DEST_B}}': script.destB.name,
     '{{FLAG_A}}': script.destA.flag,
     '{{FLAG_B}}': script.destB.flag,
     '{{CTA_TEXT}}': showCta ? 'COMMENTE TON CHOIX' : '',
+    // Dynamic title sizing to prevent overflow on long country names
+    '{{TITLE_FONT_SIZE}}': String(sizes.dest),
+    '{{FLAG_FONT_SIZE}}': String(sizes.flag),
+    '{{VS_FONT_SIZE}}': String(sizes.vs),
   };
 
   // CTA zone visibility
@@ -303,21 +331,13 @@ export async function composeVersusReel(script, opts = {}) {
     tempFiles.push(splitScreenPath);
     console.log(`[REEL/VERSUS] Split-screen base composed (${TOTAL_DURATION}s)`);
 
-    // ── 4. Render 6 progressive overlay PNGs ───────────────────────────────
+    // ── 4. Render 2 static overlay PNGs ────────────────────────────────────
     const overlayPaths = [];
 
-    // Scene 1: title only (0 rows visible)
-    // Scene 2: + row 1
-    // Scene 3: + rows 1-2
-    // Scene 4: + rows 1-3
-    // Scene 5: + rows 1-4
-    // Scene 6: + all 5 rows + CTA
+    // Scene 1 (5.2s): all 5 rows visible from frame 1, no CTA
+    // Scene 2 (1.8s): all 5 rows visible + CTA pops in at the end
     const sceneConfigs = [
-      { revealUpTo: 0, showCta: false },
-      { revealUpTo: 1, showCta: false },
-      { revealUpTo: 2, showCta: false },
-      { revealUpTo: 3, showCta: false },
-      { revealUpTo: 4, showCta: false },
+      { revealUpTo: 5, showCta: false },
       { revealUpTo: 5, showCta: true },
     ];
 
