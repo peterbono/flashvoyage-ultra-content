@@ -1,26 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-04-04T04:56:37.735Z",
-    "elapsedSeconds": 10,
+    "generatedAt": "2026-04-05T05:19:39.373Z",
+    "elapsedSeconds": 13,
     "totalArticles": 115,
-    "articlesWithRecommendations": 8,
-    "totalRecommendations": 8,
+    "articlesWithRecommendations": 7,
+    "totalRecommendations": 7,
     "byPriority": {
       "P0": 0,
       "P1": 0,
-      "P2": 8
+      "P2": 7
     },
     "byType": {
-      "seo": 8
+      "seo": 7
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
         "count": 7
-      },
-      {
-        "action": "ADD_INTERNAL_LINKS",
-        "count": 1
       }
     ]
   },
@@ -113,9 +109,9 @@
         "avgDuration": 25
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 8,
         "clicks": 0,
-        "position": 6.7,
+        "position": 6.8,
         "topQueries": [
           {
             "query": "\"tokyo tokyo\" \"gyudon\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
@@ -144,6 +140,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2223,
+      "widgetCount": 4,
+      "internalLinks": 35,
+      "lastModified": "2026-03-31T18:09:19",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 4,
+        "avgDuration": 234
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4370,
       "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
       "title": "Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent",
@@ -161,34 +185,6 @@
         "impressions": 12,
         "clicks": 1,
         "position": 6.3,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2223,
-      "widgetCount": 4,
-      "internalLinks": 35,
-      "lastModified": "2026-03-31T18:09:19",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 114
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -407,6 +403,63 @@
           "metric": "Pas de schema FAQ (keyword principal: \"bali c'est en thailande\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali c'est en thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4252,
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
+      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
+      "wordCount": 4306,
+      "widgetCount": 3,
+      "internalLinks": 46,
+      "lastModified": "2026-03-31T18:35:12",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 21
+      },
+      "gsc": {
+        "impressions": 72,
+        "clicks": 0,
+        "position": 17.6,
+        "topQueries": [
+          {
+            "query": "assurance voyage vietnam",
+            "position": 57.4,
+            "impressions": 10,
+            "ctr": 0
+          },
+          {
+            "query": "attestation assurance vietnam",
+            "position": 69.7,
+            "impressions": 3,
+            "ctr": 0
+          },
+          {
+            "query": "assurance voyage vietnam obligatoire",
+            "position": 5,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -835,54 +888,31 @@
       "p0Count": 0
     },
     {
-      "wpId": 4252,
-      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-      "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
-      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
-      "wordCount": 4306,
-      "widgetCount": 3,
-      "internalLinks": 46,
-      "lastModified": "2026-03-31T18:35:12",
+      "wpId": 5053,
+      "slug": "thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage",
+      "title": "Thaïlande vs Vietnam : le dilemme caché pour un premier voyage",
+      "url": "https://flashvoyage.com/thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage/",
+      "wordCount": 1479,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-04-04T11:34:05",
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 0
+        "avgDuration": 229
       },
       "gsc": {
-        "impressions": 61,
+        "impressions": 0,
         "clicks": 0,
-        "position": 17.7,
-        "topQueries": [
-          {
-            "query": "assurance voyage vietnam",
-            "position": 55,
-            "impressions": 8,
-            "ctr": 0
-          },
-          {
-            "query": "attestation assurance vietnam",
-            "position": 69.7,
-            "impressions": 3,
-            "ctr": 0
-          }
-        ]
+        "position": 0,
+        "topQueries": []
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -1250,44 +1280,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 5016,
-      "slug": "tiktokd9gjkhyyhpqp84w5zbtezxejkywwdu7x-txt",
-      "title": "TikTok Verification",
-      "url": "https://flashvoyage.com/tiktokd9gjkhyyhpqp84w5zbtezxejkywwdu7x-txt/",
-      "wordCount": 1,
-      "widgetCount": 0,
-      "internalLinks": 0,
-      "lastModified": "2026-04-03T19:27:10",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Seulement 0 lien(s) interne(s) (minimum recommande: 5)",
-          "action": "ADD_INTERNAL_LINKS",
-          "details": "Le maillage interne est insuffisant. Google utilise les liens internes pour comprendre la structure du site et distribuer le PageRank. Actions : 1) Ajouter 3-5 liens vers des articles FlashVoyage connexes (meme destination ou theme). 2) Prioriser les liens vers les articles du top 20% du scoring. 3) Utiliser des ancres descriptives (pas \"cliquez ici\" mais \"decouvrez notre guide complet de Bali\"). 4) Ajouter un bloc \"Articles lies\" en fin d'article si absent. 5) Verifier que les articles les plus populaires linkent vers celui-ci.",
-          "effort": "10min",
-          "expectedImpact": "Amelioration du crawl Google + distribution de PageRank = meilleur positionnement"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
       "wpId": 4129,
       "slug": "japon-5-risques-que-les-blogs-voyage-oublient-de-mentionner",
       "title": "Japon : 5 risques que les blogs voyage oublient de mentionner",
@@ -1638,9 +1630,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 2,
         "clicks": 0,
-        "position": 0,
+        "position": 1,
         "topQueries": []
       },
       "reels": {
@@ -3145,9 +3137,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 11,
         "clicks": 0,
-        "position": 4.8,
+        "position": 4.5,
         "topQueries": []
       },
       "reels": {

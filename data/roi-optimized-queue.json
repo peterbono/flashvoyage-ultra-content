@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-04T04:56:38.686Z",
+  "timestamp": "2026-04-05T05:19:40.314Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -20,7 +20,7 @@
     "medianMonthlyPV": 180,
     "medianTrafficSignal": "0.180",
     "avgRpm": 2,
-    "articlesAnalyzed": 39
+    "articlesAnalyzed": 40
   },
   "queue": [
     {
@@ -172,7 +172,7 @@
         "wpId": 2910,
         "slug": "les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -197,7 +197,7 @@
         "wpId": 2904,
         "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -222,7 +222,7 @@
         "wpId": 2898,
         "slug": "vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -247,7 +247,7 @@
         "wpId": 2888,
         "slug": "48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -272,7 +272,7 @@
         "wpId": 2878,
         "slug": "vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -297,7 +297,7 @@
         "wpId": 2857,
         "slug": "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -316,11 +316,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "TikTok Verification",
+      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
       "articleType": "support",
       "context": {
-        "wpId": 5016,
-        "slug": "tiktokd9gjkhyyhpqp84w5zbtezxejkywwdu7x-txt",
+        "wpId": 4125,
+        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 15,
         "freshness": 1,
         "traffic": 0,
