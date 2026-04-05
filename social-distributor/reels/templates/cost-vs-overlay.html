@@ -36,33 +36,54 @@
     z-index: 10;
   }
 
-  .header-line-1 {
-    font-size: 54px;
+  .header-title {
+    font-size: 56px;
     font-weight: 900;
     color: #FFFFFF;
     text-transform: uppercase;
     letter-spacing: 1px;
     text-shadow: 0 4px 16px rgba(0, 0, 0, 0.9);
     line-height: 1.1;
-    margin-bottom: 8px;
   }
 
-  .header-flags {
-    font-size: 64px;
+  /* ── Column headers row (flags above the price columns) ── */
+  .col-headers {
+    position: absolute;
+    top: 370px;
+    left: 40px;
+    width: 1000px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+  }
+
+  .col-header-spacer {
+    flex: 1 1 auto;
+  }
+
+  .col-header-flag {
+    width: 180px;
+    text-align: center;
+    font-size: 68px;
     line-height: 1;
-    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .col-header-flag.france {
+    padding-left: 18px;
   }
 
   /* ── Rows container ── */
   .rows-container {
     position: absolute;
-    top: 440px;
+    top: 490px;
     left: 40px;
     width: 1000px;
     z-index: 10;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 14px;
   }
 
   .cost-row {
@@ -72,24 +93,24 @@
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     border-radius: 18px;
-    padding: 18px 24px;
-    min-height: 100px;
+    padding: 16px 24px;
+    min-height: 92px;
   }
 
   .row-emoji {
-    font-size: 52px;
+    font-size: 48px;
     line-height: 1;
-    width: 68px;
+    width: 64px;
     text-align: center;
     flex-shrink: 0;
   }
 
   .row-label {
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 700;
     color: #FFFFFF;
     flex: 1 1 auto;
-    padding-left: 14px;
+    padding-left: 12px;
     padding-right: 12px;
     line-height: 1.15;
     white-space: nowrap;
@@ -97,19 +118,31 @@
     text-overflow: ellipsis;
   }
 
-  .row-price {
+  /* Destination price = YELLOW (brand signature, the "win" value) */
+  .row-price.dest {
     font-size: 38px;
     font-weight: 900;
-    color: #FFFFFF;
+    color: #FFD700;
     width: 180px;
-    text-align: right;
+    text-align: center;
     flex-shrink: 0;
     line-height: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   }
 
+  /* France price = white, muted, line-through to visualise the "expensive" side */
   .row-price.france {
-    color: #FFD700;
+    font-size: 34px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.82);
+    width: 180px;
+    text-align: center;
+    flex-shrink: 0;
+    line-height: 1;
     padding-left: 18px;
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
+    text-decoration-color: rgba(255, 80, 80, 0.7);
   }
 
   /* ── Total row (yellow band — brand signature) ── */
@@ -172,64 +205,70 @@
 
   <!-- Header -->
   <div class="header-zone">
-    <div class="header-line-1">Coût en {{DEST_NAME}}<br>vs France</div>
-    <div class="header-flags">{{DEST_FLAG}} &nbsp; 🆚 &nbsp; {{FRANCE_FLAG}}</div>
+    <div class="header-title">Coût en {{DEST_NAME}}<br>vs France</div>
   </div>
 
-  <!-- 8 rows -->
+  <!-- Column headers: flags above each price column -->
+  <div class="col-headers">
+    <div class="col-header-spacer"></div>
+    <div class="col-header-flag">{{DEST_FLAG}}</div>
+    <div class="col-header-flag france">{{FRANCE_FLAG}}</div>
+  </div>
+
+  <!-- 8 rows: emoji | label | DEST price (yellow) | FRANCE price (white, line-through) -->
   <div class="rows-container">
     <div class="cost-row">
       <div class="row-emoji">{{ROW_1_EMOJI}}</div>
       <div class="row-label">{{ROW_1_LABEL}}</div>
-      <div class="row-price">{{ROW_1_DEST}}</div>
+      <div class="row-price dest">{{ROW_1_DEST}}</div>
       <div class="row-price france">{{ROW_1_FRANCE}}</div>
     </div>
     <div class="cost-row">
       <div class="row-emoji">{{ROW_2_EMOJI}}</div>
       <div class="row-label">{{ROW_2_LABEL}}</div>
-      <div class="row-price">{{ROW_2_DEST}}</div>
+      <div class="row-price dest">{{ROW_2_DEST}}</div>
       <div class="row-price france">{{ROW_2_FRANCE}}</div>
     </div>
     <div class="cost-row">
       <div class="row-emoji">{{ROW_3_EMOJI}}</div>
       <div class="row-label">{{ROW_3_LABEL}}</div>
-      <div class="row-price">{{ROW_3_DEST}}</div>
+      <div class="row-price dest">{{ROW_3_DEST}}</div>
       <div class="row-price france">{{ROW_3_FRANCE}}</div>
     </div>
     <div class="cost-row">
       <div class="row-emoji">{{ROW_4_EMOJI}}</div>
       <div class="row-label">{{ROW_4_LABEL}}</div>
-      <div class="row-price">{{ROW_4_DEST}}</div>
+      <div class="row-price dest">{{ROW_4_DEST}}</div>
       <div class="row-price france">{{ROW_4_FRANCE}}</div>
     </div>
     <div class="cost-row">
       <div class="row-emoji">{{ROW_5_EMOJI}}</div>
       <div class="row-label">{{ROW_5_LABEL}}</div>
-      <div class="row-price">{{ROW_5_DEST}}</div>
+      <div class="row-price dest">{{ROW_5_DEST}}</div>
       <div class="row-price france">{{ROW_5_FRANCE}}</div>
     </div>
     <div class="cost-row">
       <div class="row-emoji">{{ROW_6_EMOJI}}</div>
       <div class="row-label">{{ROW_6_LABEL}}</div>
-      <div class="row-price">{{ROW_6_DEST}}</div>
+      <div class="row-price dest">{{ROW_6_DEST}}</div>
       <div class="row-price france">{{ROW_6_FRANCE}}</div>
     </div>
     <div class="cost-row">
       <div class="row-emoji">{{ROW_7_EMOJI}}</div>
       <div class="row-label">{{ROW_7_LABEL}}</div>
-      <div class="row-price">{{ROW_7_DEST}}</div>
+      <div class="row-price dest">{{ROW_7_DEST}}</div>
       <div class="row-price france">{{ROW_7_FRANCE}}</div>
     </div>
     <div class="cost-row">
       <div class="row-emoji">{{ROW_8_EMOJI}}</div>
       <div class="row-label">{{ROW_8_LABEL}}</div>
-      <div class="row-price">{{ROW_8_DEST}}</div>
+      <div class="row-price dest">{{ROW_8_DEST}}</div>
       <div class="row-price france">{{ROW_8_FRANCE}}</div>
     </div>
   </div>
 
-  <!-- Total row (yellow band — brand signature) -->
-  <div class="total-zone" style="{{TOTAL_STYLE}}">
+  <!-- Total row (yellow band — brand signature, always visible) -->
+  <div class="total-zone">
     <div class="total-label">Total/mois</div>
     <div class="total-values">
       <div class="total-dest">{{TOTAL_DEST}}</div>

@@ -1,16 +1,17 @@
 /**
  * Cost-vs Composer — FlashVoyage Reels v2
  *
- * Generates an 8s reel comparing the cost of 8 items in a destination
- * vs France, with a final monthly total in a yellow band (brand signature).
+ * Generates an 8s fully-static reel comparing the cost of 8 items in a
+ * destination vs France, with a yellow monthly-total band visible from
+ * frame 1.
  *
- *   - Scene 1 (6s): all 8 rows visible from frame 1, no total (static)
- *   - Scene 2 (2s): total row in yellow band pops in
+ *   - 1 scene (8s) : all 8 rows + yellow total band visible the whole time
  *
  * Data layout on screen:
- *   - Header: "Coût en [X] vs France" + flags
- *   - 8 rows: emoji + item label + [dest price] | [france price]
- *   - Total row (scene 2 only): "Total / mois" + [dest total] | [france total] on yellow band
+ *   - Header title: "Coût en [X] vs France"
+ *   - Column flag headers: [DEST flag] [FRANCE flag]
+ *   - 8 rows: emoji + item label + [dest price, YELLOW] | [france price, white line-through red]
+ *   - Total row (yellow band): "Total/mois" + [dest total] vs [france total, line-through]
  */
 
 import { existsSync, mkdirSync, unlinkSync } from 'fs';
@@ -28,7 +29,7 @@ const TMP_DIR = join(__dirname, '..', 'tmp');
 
 // ── Constants ───────────────────────────────────────────────────────────────
 
-const SCENE_DURATIONS = [6, 2]; // 2 scenes = 8s total
+const SCENE_DURATIONS = [8]; // 1 static scene, all elements visible from frame 1
 const TOTAL_DURATION = SCENE_DURATIONS.reduce((a, b) => a + b, 0);
 
 const WIDTH = 1080;
@@ -107,9 +108,8 @@ async function addAudioTrack(videoPath, outputPath, duration) {
  * Build the overlay replacements map.
  *
  * @param {Object} script - cost-vs script from generator
- * @param {boolean} showTotal - whether the yellow total row is visible
  */
-function buildOverlayReplacements(script, showTotal) {
+function buildOverlayReplacements(script) {
   const { destination, rows, totals } = script;
 
   const replacements = {
@@ -118,7 +118,6 @@ function buildOverlayReplacements(script, showTotal) {
     '{{FRANCE_FLAG}}': '🇫🇷',
     '{{TOTAL_DEST}}': totals.destFormatted,
     '{{TOTAL_FRANCE}}': totals.franceFormatted,
-    '{{TOTAL_STYLE}}': showTotal ? '' : 'opacity:0',
   };
 
   // Fill 8 rows (or pad to 8 if fewer)
@@ -172,20 +171,13 @@ export async function composeCostVsReel(script, opts = {}) {
     tempFiles.push(loopedPath);
     console.log(`[REEL/COST-VS] Base clip prepared (${TOTAL_DURATION}s)`);
 
-    // 3. Render 2 overlay PNGs (with/without total)
-    const overlayPaths = [];
-    const sceneConfigs = [
-      { showTotal: false },
-      { showTotal: true },
-    ];
-    for (let i = 0; i < sceneConfigs.length; i++) {
-      const overlayPath = join(TMP_DIR, `cost-vs-overlay-${i}-${ts}.png`);
-      const replacements = buildOverlayReplacements(script, sceneConfigs[i].showTotal);
-      await renderTemplate('cost-vs-overlay.html', replacements, overlayPath);
-      overlayPaths.push(overlayPath);
-      tempFiles.push(overlayPath);
-    }
-    console.log(`[REEL/COST-VS] ${overlayPaths.length} overlays rendered`);
+    // 3. Render 1 overlay PNG — static, everything visible
+    const overlayPath = join(TMP_DIR, `cost-vs-overlay-${ts}.png`);
+    const replacements = buildOverlayReplacements(script);
+    await renderTemplate('cost-vs-overlay.html', replacements, overlayPath);
+    const overlayPaths = [overlayPath];
+    tempFiles.push(overlayPath);
+    console.log(`[REEL/COST-VS] 1 overlay rendered (static)`);
 
     // 4. For each scene, extract segment + overlay
     const composedScenes = [];
@@ -209,10 +201,11 @@ export async function composeCostVsReel(script, opts = {}) {
       tempFiles.push(segmentPath);
 
       const composedPath = join(TMP_DIR, `cost-vs-comp-${i}-${ts}.mp4`);
-      await overlayPngOnClip(segmentPath, overlayPaths[i], sceneDuration, composedPath);
+      // Single static overlay reused across all scenes (currently only 1 scene)
+      await overlayPngOnClip(segmentPath, overlayPaths[0], sceneDuration, composedPath);
       tempFiles.push(composedPath);
       composedScenes.push(composedPath);
-      console.log(`[REEL/COST-VS] Scene ${i + 1}/${sceneConfigs.length} composed (${sceneDuration}s, total: ${sceneConfigs[i].showTotal ? 'YES' : 'no'})`);
+      console.log(`[REEL/COST-VS] Scene ${i + 1}/${SCENE_DURATIONS.length} composed (${sceneDuration}s, static)`);
       timeOffset += sceneDuration;
     }
 
