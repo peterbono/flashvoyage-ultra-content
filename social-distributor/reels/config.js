@@ -32,10 +32,11 @@ export const SAFE_ZONES = {
 export const FORMATS = {
   poll: {
     name: 'Engagement Poll',
-    tier: 'S',
+    tier: 'KILLED',
+    enabled: false, // KILLED: worst watch time (1.1s), zero engagement — CEO decision 2026-04-05
     duration: { min: 5, max: 7 },
     scenes: 1,
-    audio: null, // silent by default (Growth Hacker reco)
+    audio: null,
     description: 'Question polarisante + options numerotees, optimise commentaires',
   },
   pick: {
@@ -64,11 +65,11 @@ export const FORMATS = {
   },
   avantapres: {
     name: 'Avant/Apres',
-    tier: 'A',
+    tier: 'S+',
     duration: { min: 8, max: 12 },
     scenes: 3,
     audio: null,
-    description: 'Expectation vs reality',
+    description: 'Expectation vs reality — STAR FORMAT: only format with saves (0.50%), 1.00% engagement',
   },
   month: {
     name: 'Ou Partir en [Mois]',
@@ -80,11 +81,11 @@ export const FORMATS = {
   },
   'cost-vs': {
     name: 'Cost vs France',
-    tier: 'S',
+    tier: 'S+',
     duration: { min: 8, max: 8 },
     scenes: 2,
     audio: 'upbeat',
-    description: 'Comparaison de 8 items X vs France + total mensuel band jaune',
+    description: 'Comparaison de 8 items X vs France + total mensuel band jaune — STAR FORMAT: 1.01% engagement, strong watch time',
   },
   leaderboard: {
     name: 'Top 10 Leaderboard',

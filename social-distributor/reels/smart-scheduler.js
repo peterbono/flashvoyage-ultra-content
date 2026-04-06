@@ -47,40 +47,70 @@ function logError(msg) {
 // 10 UTC = 12h00 Paris (the cron is at 10:30 but we round to 10)
 // 16 UTC = 18h00 Paris
 
+// Strategy (CEO + Growth Hacker, 2026-04-05):
+// avantapres: 2/day (morning + midday)  | cost-vs: 1/day (morning or midday)
+// leaderboard: 1 every 2 days           | best-time: 1 every 2 days
+// pick: 1/day max                       | budget: 1 every 2 days
+// humor/humor-tweet: 1 every 3 days     | month: 1 every 3 days (first Tue only)
+// poll: KILLED                          | versus: KILLED
+
 const BASE_CALENDAR = {
   '05': {
-    1: 'pick',       // Mon morning: Trip Pick
-    2: 'budget',     // Tue morning: Budget Jour
-    3: 'pick',       // Wed morning: Trip Pick
-    4: 'pick',       // Thu morning: Trip Pick
-    5: 'pick',       // Fri morning: Trip Pick
-    6: 'budget',     // Sat morning: Budget Jour
-    7: 'avantapres', // Sun morning: Avant/Apres
+    1: 'avantapres',   // Mon morning: Avant/Apres (star format)
+    2: 'cost-vs',      // Tue morning: Cost vs France (star format)
+    3: 'avantapres',   // Wed morning: Avant/Apres
+    4: 'cost-vs',      // Thu morning: Cost vs France
+    5: 'avantapres',   // Fri morning: Avant/Apres
+    6: 'cost-vs',      // Sat morning: Cost vs France
+    7: 'avantapres',   // Sun morning: Avant/Apres
   },
   '10': {
-    1: 'versus',     // Mon midday: Versus
-    2: 'month',      // Tue midday: Ou Partir En (1st Tue only, else pick)
-    3: 'versus',     // Wed midday: Versus
-    4: 'pick',       // Thu midday: Trip Pick
-    5: 'versus',     // Fri midday: Versus
-    6: 'pick',       // Sat midday: Trip Pick
-    7: 'versus',     // Sun midday: Versus
+    1: 'avantapres',   // Mon midday: Avant/Apres (2nd daily slot)
+    2: 'avantapres',   // Tue midday: Avant/Apres (2nd daily slot)
+    3: 'avantapres',   // Wed midday: Avant/Apres (2nd daily slot)
+    4: 'avantapres',   // Thu midday: Avant/Apres (2nd daily slot)
+    5: 'avantapres',   // Fri midday: Avant/Apres (2nd daily slot)
+    6: 'avantapres',   // Sat midday: Avant/Apres (2nd daily slot)
+    7: 'avantapres',   // Sun midday: Avant/Apres (2nd daily slot)
   },
   '16': {
-    1: 'humor',        // Mon evening: Humor
-    2: 'humor-tweet',  // Tue evening: Humor Tweet
+    1: 'pick',         // Mon evening: Trip Pick
+    2: 'leaderboard',  // Tue evening: Top 10 Leaderboard
     3: 'humor',        // Wed evening: Humor
-    4: 'humor-tweet',  // Thu evening: Humor Tweet
-    5: 'humor',        // Fri evening: Humor
+    4: 'budget',       // Thu evening: Budget Jour
+    5: 'best-time',    // Fri evening: Best Time to Visit
     6: 'humor-tweet',  // Sat evening: Humor Tweet
-    7: 'humor',        // Sun evening: Humor
+    7: 'month',        // Sun evening: Ou Partir En (guarded: 1st Tue only)
   },
 };
 
 // All valid format names for sanity checks
 const VALID_FORMATS = new Set([
   'poll', 'pick', 'humor', 'humor-tweet', 'budget', 'versus', 'avantapres', 'month',
+  'cost-vs', 'leaderboard', 'best-time',
 ]);
+
+// ── Killed Formats ─────────────────────────────────────────────────────────
+// Formats that are permanently disabled based on CEO + Growth Hacker analysis.
+// These are NEVER scheduled, even if they appear in the base calendar.
+// The set is loaded from performance-weights.json (killedFormats array) at init,
+// with a hardcoded fallback so the blacklist survives even if the JSON is missing.
+
+const KILLED_FORMATS_HARDCODED = new Set(['poll', 'versus']);
+
+function loadKilledFormats() {
+  try {
+    if (existsSync(PERF_PATH)) {
+      const data = JSON.parse(readFileSync(PERF_PATH, 'utf-8'));
+      if (Array.isArray(data.killedFormats) && data.killedFormats.length > 0) {
+        return new Set(data.killedFormats);
+      }
+    }
+  } catch { /* fall through to hardcoded */ }
+  return KILLED_FORMATS_HARDCODED;
+}
+
+const KILLED_FORMATS = loadKilledFormats();
 
 // ── Dedup Constraints ───────────────────────────────────────────────────────
 
@@ -261,42 +291,64 @@ function loadPerformanceWeights() {
 /**
  * Apply performance-based format adjustment.
  *
- * If a format's engagement score is >20% above the average of all formats,
- * it can "steal" a slot from an underperformer (a format scoring >20% below avg).
+ * 1. If the base format is KILLED, replace it with the best alive performer.
+ * 2. If a format's engagement score is >20% above the average of all formats,
+ *    it can "steal" a slot from an underperformer (a format scoring >20% below avg).
  *
  * Returns the adjusted format (may be different from baseFormat).
+ * Guaranteed: never returns a killed format.
  */
 function applyPerformanceBoost(baseFormat, hourSlot, history) {
   const weights = loadPerformanceWeights();
   const formatNames = Object.keys(weights);
 
-  if (formatNames.length < 3) {
+  // ── Hard block: never return a killed format ──────────────────────────────
+  const isBaseKilled = KILLED_FORMATS.has(baseFormat);
+
+  if (isBaseKilled) {
+    log(`Format "${baseFormat}" is KILLED — finding replacement`);
+  }
+
+  if (formatNames.length < 3 && !isBaseKilled) {
     // Not enough data to make meaningful adjustments
     return baseFormat;
   }
 
-  const scores = formatNames.map(f => weights[f]);
-  const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+  // Filter out killed formats from the scoring pool
+  const aliveFormats = formatNames.filter(f => !KILLED_FORMATS.has(f));
+  const scores = aliveFormats.map(f => weights[f]);
+  const avg = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 1;
 
-  if (avg === 0) return baseFormat;
+  if (avg === 0 && !isBaseKilled) return baseFormat;
 
-  const baseScore = weights[baseFormat] || avg;
-  const baseRatio = baseScore / avg;
+  const baseScore = isBaseKilled ? 0 : (weights[baseFormat] || avg);
+  const baseRatio = avg > 0 ? baseScore / avg : 0;
 
-  // If the base format is underperforming (>20% below average)
-  if (baseRatio < 0.8) {
-    // Find the best-performing format that fits this slot
-    const candidates = formatNames
+  // If the base format is killed OR underperforming (>20% below average)
+  if (isBaseKilled || baseRatio < 0.8) {
+    // Find the best-performing alive format that fits this slot
+    const candidates = aliveFormats
       .filter(f => f !== baseFormat)
       .filter(f => VALID_FORMATS.has(f))
-      .filter(f => (weights[f] / avg) > 1.2) // Only promote top performers
+      .filter(f => !isBaseKilled ? (weights[f] / avg) > 1.2 : true) // For killed: any alive format is a candidate
       .filter(f => !wasFormatInSameSlotYesterday(f, hourSlot, history))
       .sort((a, b) => weights[b] - weights[a]);
 
     if (candidates.length > 0) {
       const replacement = candidates[0];
-      log(`Performance boost: replacing underperforming "${baseFormat}" (${(baseRatio * 100).toFixed(0)}% of avg) with "${replacement}" (${((weights[replacement] / avg) * 100).toFixed(0)}% of avg)`);
+      if (isBaseKilled) {
+        log(`Killed format "${baseFormat}" replaced by top performer "${replacement}" (score: ${weights[replacement]})`);
+      } else {
+        log(`Performance boost: replacing underperforming "${baseFormat}" (${(baseRatio * 100).toFixed(0)}% of avg) with "${replacement}" (${((weights[replacement] / avg) * 100).toFixed(0)}% of avg)`);
+      }
       return replacement;
+    }
+
+    // Even without dedup-free candidates, still replace killed formats
+    if (isBaseKilled && aliveFormats.length > 0) {
+      const fallback = aliveFormats.sort((a, b) => (weights[b] || 0) - (weights[a] || 0))[0];
+      log(`Killed format "${baseFormat}" replaced by fallback "${fallback}" (no dedup-free candidates)`);
+      return fallback;
     }
   }
 
@@ -569,6 +621,7 @@ export async function decideContent(options = {}) {
     const slotFormats = BASE_CALENDAR[hour] || {};
     const alternatives = Object.values(slotFormats)
       .filter(f => f !== finalFormat && VALID_FORMATS.has(f))
+      .filter(f => !KILLED_FORMATS.has(f))
       .filter(f => !wasFormatInSameSlotYesterday(f, hour, history));
 
     if (alternatives.length > 0) {
@@ -578,6 +631,15 @@ export async function decideContent(options = {}) {
     } else {
       log(`Dedup guard: "${finalFormat}" repeated but no alternatives available, keeping it`);
     }
+  }
+
+  // ── 4b. Final killed-format safety net ─────────────────────────────────────
+  // This should never trigger (applyPerformanceBoost already handles it),
+  // but serves as a last-resort guard to guarantee killed formats never publish.
+  if (KILLED_FORMATS.has(finalFormat)) {
+    const safeDefault = 'avantapres';
+    log(`SAFETY NET: "${finalFormat}" is killed, forcing fallback to "${safeDefault}"`);
+    finalFormat = safeDefault;
   }
 
   log(`Final format after adjustments: ${finalFormat}`);
@@ -659,6 +721,7 @@ if (isDirectRun) {
 export {
   BASE_CALENDAR,
   VALID_FORMATS,
+  KILLED_FORMATS,
   loadHistory,
   saveHistory,
   isDestinationRecent,
