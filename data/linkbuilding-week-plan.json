@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 6,
+      "posted": 7,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -51,6 +51,14 @@
           "date": "2026-04-05T08:02:07.133Z",
           "thread": "consignes-bagages-gare-krung-thep-aphiwat-bangkok-d11462201",
           "title": "Consignes bagages à la gare Krung Thep Aphiwat Bangkok",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-06T03:32:07.904Z",
+          "thread": "bus-aeroport-hanoi-cao-bang-d11462555",
+          "title": "Bus de aéroport de Hanoï à Cao Bang",
           "hasLink": false,
           "generated": true,
           "status": "published"
@@ -223,7 +231,7 @@
       ]
     },
     "routard": {
-      "posted": 2,
+      "posted": 3,
       "posts_done": [
         {
           "date": "2026-04-05T03:33:42.317Z",
@@ -240,11 +248,19 @@
           "category": "Thaïlande",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-06T03:33:34.606Z",
+          "topicId": 488678,
+          "title": "Retours d'expériences agence Hanoi Voyage",
+          "category": "Vietnam",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 14,
+  "total_posted": 16,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
