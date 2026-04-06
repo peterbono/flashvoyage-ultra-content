@@ -444,22 +444,27 @@ export async function crossPublishReel(params) {
       });
     }),
 
-    // 3. Threads post (caption + thumbnail image, UTM: threads/post)
-    // Threads hard-caps text at 500 chars. UTM URLs are ~150-200 chars once
-    // slugs + params are appended, so reserve that space dynamically instead
-    // of a fixed 50-char budget.
-    safeExec('Threads', async () => {
-      const THREADS_MAX = 500;
-      const urlSuffix = threadsArticleUrl ? `\n\n${threadsArticleUrl}` : '';
-      const baseBudget = Math.max(100, THREADS_MAX - urlSuffix.length);
-      const baseText = truncate(caption, baseBudget);
-      const threadsText = `${baseText}${urlSuffix}`.slice(0, THREADS_MAX);
-      return publishThreadsPost({
-        text: threadsText,
-        imageUrl: threadsImageUrl || undefined,
-        threadsToken,
-      });
-    }),
+    // 3. Threads post (gated: DISABLE_THREADS env var skips this entirely)
+    // Growth Hacker reco: publishing Threads without insights scope =
+    // publishing blind, burns content for zero learning signal. Re-enable
+    // by clearing DISABLE_THREADS once a new Threads token with
+    // threads_manage_insights scope is generated.
+    process.env.DISABLE_THREADS === '1'
+      ? safeExec('Threads', async () => {
+          throw new Error('disabled: DISABLE_THREADS=1 (missing insights scope)');
+        }, 0)
+      : safeExec('Threads', async () => {
+          const THREADS_MAX = 500;
+          const urlSuffix = threadsArticleUrl ? `\n\n${threadsArticleUrl}` : '';
+          const baseBudget = Math.max(100, THREADS_MAX - urlSuffix.length);
+          const baseText = truncate(caption, baseBudget);
+          const threadsText = `${baseText}${urlSuffix}`.slice(0, THREADS_MAX);
+          return publishThreadsPost({
+            text: threadsText,
+            imageUrl: threadsImageUrl || undefined,
+            threadsToken,
+          });
+        }),
   ]);
 
   // Cleanup: delete the temp thumbnail from both WP and FB (unpublished photo)

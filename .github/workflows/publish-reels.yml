@@ -1,14 +1,15 @@
 name: Publier des Reels Instagram
 
 on:
-  # 3 publications par jour (heures UTC = Paris - 2h en ete)
+  # 3 publications par jour — FR prime time (Growth Hacker reco: 19h-22h CET)
+  # CEST = UTC+2 en avril-octobre → heures UTC = heure Paris - 2
   schedule:
-    # 7h00 Paris = 5h00 UTC (Trip Pick, Budget Jour, Avant/Apres)
-    - cron: '0 5 * * *'
-    # 12h30 Paris = 10h30 UTC (Versus, Trip Pick)
-    - cron: '30 10 * * *'
-    # 18h00 Paris = 16h00 UTC (Humor)
-    - cron: '0 16 * * *'
+    # 19h00 Paris = 17h00 UTC (prime time start, scroll après dîner)
+    - cron: '0 17 * * *'
+    # 21h00 Paris = 19h00 UTC (prime time peak mobile)
+    - cron: '0 19 * * *'
+    # 22h30 Paris = 20h30 UTC (fin de prime time, dernière chance scroll)
+    - cron: '30 20 * * *'
 
   # Manuel pour tester
   workflow_dispatch:
@@ -150,6 +151,7 @@ jobs:
           THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DISABLE_THREADS: ${{ secrets.DISABLE_THREADS }}
           # Pass step outputs via env to avoid bash injection when reason contains quotes
           FORMAT_OUT: ${{ steps.format.outputs.format }}
           PUBLISH_OUT: ${{ steps.format.outputs.publish }}

@@ -303,7 +303,12 @@ async function modeRecycle(postId, dryRun = false) {
         extracted.aiBudget = await extractBudgetWithAI(rawText, destination);
       }
 
-      const caption = buildCaption(extracted, variant.type, 'facebook');
+      // Primary destination is IG carousel; cross-publisher assigns platform-
+      // specific UTMs for FB + Threads separately. Pass 'instagram' so the
+      // caption's link carries utm_source=instagram (was hardcoded 'facebook'
+      // which caused GA4 to classify this traffic as Unassigned — Agent A
+      // investigation, ~41% of Unassigned sessions).
+      const caption = buildCaption(extracted, variant.type, 'instagram');
 
       // Generate VP carousel (3-4 slides)
       log(`Generating VP carousel for post #${variant.postId} (type: ${variant.type})...`);
@@ -600,7 +605,8 @@ export async function distributeArticle(postId) {
   const types = detectTypes(extracted.title, extracted.category);
   const type = types[0] || 'question';
 
-  const caption = buildCaption(extracted, type, 'facebook');
+  // Same fix as above: IG is the primary destination, use utm_source=instagram
+  const caption = buildCaption(extracted, type, 'instagram');
 
   // Generate VP carousel (3-4 slides)
   log(`Generating VP carousel for post #${postId} (type: ${type})...`);

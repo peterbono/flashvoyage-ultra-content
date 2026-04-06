@@ -217,7 +217,7 @@ export async function generateBudgetJourScript(article) {
     }
 
     // Ensure hashtags
-    const defaultTags = ['#FlashVoyage', '#BudgetVoyage', '#Voyage', '#BudgetTravel'];
+    const defaultTags = ['#FlashVoyage', '#BudgetVoyage', '#Voyage', '#VoyageFR'];
     script.hashtags = Array.isArray(script.hashtags) && script.hashtags.length >= 3
       ? script.hashtags
       : defaultTags;
@@ -312,6 +312,6 @@ function getFallbackScript(article) {
     totalPrice: '38 €/jour',
     pexelsQuery: `${destination} aerial drone landscape`,
     caption: `Budget journalier 🌍\n\n🏠 Hébergement : 15 €\n🍜 Nourriture : 10 €\n🛵 Transport : 5 €\n🎯 Activités : 8 €\n💰 Total : 38 €/jour\n\nEnregistre ce Reel pour ton voyage 💰`,
-    hashtags: ['#FlashVoyage', '#BudgetVoyage', '#Voyage', '#BudgetTravel', '#VoyagePasCher'],
+    hashtags: ['#FlashVoyage', '#BudgetVoyage', '#Voyage', '#VoyageFR', '#VoyagePasCher'],
   };
 }

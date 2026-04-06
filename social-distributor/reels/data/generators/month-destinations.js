@@ -210,7 +210,7 @@ export async function generateMonthScript(monthName = null) {
     `#OuPartirEn${monthTag}`,
     '#VoyageAsie',
     '#DestinationAsie',
-    '#Travel',
+    '#VoyageFR',
     '#SoutheastAsia',
   ];
 

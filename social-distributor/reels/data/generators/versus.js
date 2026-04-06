@@ -282,7 +282,7 @@ function getFallbackScript(article) {
     },
     rows,
     caption: `${factsA.displayName} vs ${factsB.displayName} : tu choisis quoi ? 👇\n\nCommente ton choix !`,
-    hashtags: ['#FlashVoyage', '#VsVoyage', '#Voyage', '#ComparaisonVoyage', '#TravelVs'],
+    hashtags: ['#FlashVoyage', '#VsVoyage', '#Voyage', '#ComparaisonVoyage', '#VoyageFR'],
   };
 }
 

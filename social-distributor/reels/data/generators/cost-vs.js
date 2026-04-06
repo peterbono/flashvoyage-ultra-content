@@ -75,7 +75,7 @@ Réponds UNIQUEMENT en JSON valide :
 {
   "destination": "Nom exact depuis la liste",
   "caption": "Une phrase accroche courte pour le reel, ton FlashVoyage (direct, anti-bullshit), mentionnant le pays choisi et la France",
-  "hashtags": ["#FlashVoyage", "#CostOfLiving", "#Voyage", "..."]
+  "hashtags": ["#FlashVoyage", "#PrixVoyage", "#Voyage", "..."]
 }
 
 RÈGLES :
@@ -83,7 +83,7 @@ RÈGLES :
 - Si l'article ne mentionne aucun pays de la liste, choisis la destination SEA la plus proche du sujet (Thaïlande par défaut)
 - Si l'article est explicitement sur la France ou sur l'Europe, choisis la destination SEA la plus contrastée
 - "caption" : format court (140 chars max), ton direct, mentionne la différence de prix visible en France/[pays]
-- "hashtags" : 6-7, #FlashVoyage et #CostOfLiving en premier`;
+- "hashtags" : 6-7, #FlashVoyage et #PrixVoyage en premier`;
 }
 
 // ── Row assembly (prices ALWAYS come from item-prices.js) ──────────────────
@@ -182,7 +182,7 @@ export async function generateCostVsScript(article) {
   }
 
   if (!hashtags || !Array.isArray(hashtags) || hashtags.length < 3) {
-    hashtags = ['#FlashVoyage', '#CostOfLiving', '#Voyage', '#VieAlEtranger', '#BudgetVoyage'];
+    hashtags = ['#FlashVoyage', '#PrixVoyage', '#Voyage', '#VieAlEtranger', '#BudgetVoyage'];
   }
 
   console.log(

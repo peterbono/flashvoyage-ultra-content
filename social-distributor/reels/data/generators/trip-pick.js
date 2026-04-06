@@ -334,6 +334,6 @@ function getFallbackScript(article) {
       { name: 'VUE PANORAMIQUE', detail: 'Point de vue', pexelsQuery: `${country} viewpoint` },
     ],
     caption: `5 spots à ne pas rater 🌍\n\nLequel tu visites en premier ? 👇`,
-    hashtags: ['#FlashVoyage', '#TripPick', '#Voyage', '#Travel', '#SpotsVoyage'],
+    hashtags: ['#FlashVoyage', '#TripPick', '#Voyage', '#VoyageFR', '#SpotsVoyage'],
   };
 }

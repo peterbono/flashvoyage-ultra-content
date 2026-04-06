@@ -62,14 +62,14 @@ Réponds UNIQUEMENT en JSON valide :
 {
   "regionId": "un id exact de la liste",
   "caption": "Caption Instagram courte (140 chars max), ton FlashVoyage direct, mentionne la zone",
-  "hashtags": ["#FlashVoyage", "#BestTime", "#Voyage", "..."]
+  "hashtags": ["#FlashVoyage", "#QuandPartir", "#Voyage", "..."]
 }
 
 RÈGLES :
 - "regionId" DOIT être un id exact de la liste
 - Si pas de match clair, choisis "sea" par défaut (Asie du Sud-Est)
 - "caption" : direct, anti-bullshit, max 140 chars
-- "hashtags" : 6-7, #FlashVoyage et #BestTime en premier`;
+- "hashtags" : 6-7, #FlashVoyage et #QuandPartir en premier`;
 }
 
 export async function generateBestTimeScript(article) {
@@ -140,7 +140,7 @@ export async function generateBestTimeScript(article) {
     caption = `${region.title.replace('\n', ' ')} — le vrai calendrier, sans bullshit. 👇`;
   }
   if (!hashtags || !Array.isArray(hashtags) || hashtags.length < 3) {
-    hashtags = ['#FlashVoyage', '#BestTime', '#Voyage', '#AsieDuSudEst', '#GuideVoyage'];
+    hashtags = ['#FlashVoyage', '#QuandPartir', '#Voyage', '#AsieDuSudEst', '#GuideVoyage'];
   }
 
   console.log(
