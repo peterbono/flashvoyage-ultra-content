@@ -94,13 +94,22 @@ if [ $ROUTARD_EXIT -ne 0 ]; then
 fi
 echo "$(date): Routard done (exit $ROUTARD_EXIT)" >> "$LOG"
 
+# Wait between posts
+sleep 60
+
+# Run IG Engagement (comment on FR voyage accounts to break cold start)
+echo "$(date): Running IG Engagement..." >> "$LOG"
+node scripts/linkbuilding/ig-engagement-local.js >> "$LOG" 2>&1
+IG_EXIT=$?
+echo "$(date): IG Engagement done (exit $IG_EXIT)" >> "$LOG"
+
 # Push state changes
 cd "$REPO_DIR"
-git add data/linkbuilding-week-plan.json data/linkbuilding-log.jsonl 2>/dev/null
+git add data/linkbuilding-week-plan.json data/linkbuilding-log.jsonl data/engagement-log.jsonl 2>/dev/null
 git diff --staged --quiet || git commit -m "chore: local linkbuilding $(date +%Y-%m-%d)" && git push 2>/dev/null
 
 # Summary notification
-SUMMARY="Quora: $([ $QUORA_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | VF: $([ $VF_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | Routard: $([ $ROUTARD_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL')"
+SUMMARY="Quora: $([ $QUORA_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | VF: $([ $VF_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | Routard: $([ $ROUTARD_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | IG: $([ $IG_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL')"
 echo "$(date): $SUMMARY" >> "$LOG"
 osascript -e "display notification \"$SUMMARY\" with title \"FlashVoyage Linkbuilding\"" 2>/dev/null
 
