@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-05T05:19:25.890Z",
+  "timestamp": "2026-04-06T05:31:14.670Z",
   "queueSize": 13,
   "queue": [
     {
@@ -43,6 +43,38 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
+      "topic": "Choisir Entre Taipei et Kuala Lumpur : Un Itinéraire de 4 Jours Qui Compte",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 14,
+        "freshness": 0.96,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Indonésie : Quand chaque choix d&rsquo;itinéraire devient un dilemme",
+      "articleType": "support",
+      "context": {
+        "wpId": 2952,
+        "slug": "indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme",
+        "compositeScore": 14,
+        "freshness": 0.96,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
       "topic": "Voyager en Asie du Sud-Est : Itinéraire et Coûts Réels à Prévoir",
       "articleType": "support",
       "context": {
@@ -55,7 +87,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -71,7 +103,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -87,7 +119,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -103,7 +135,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -119,7 +151,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -135,7 +167,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -151,7 +183,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -164,38 +196,6 @@
         "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Voyager au Japon : Quand voir les cerisiers sans la foule",
-      "articleType": "support",
-      "context": {
-        "wpId": 2857,
-        "slug": "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2",
-        "compositeScore": 14,
-        "freshness": 0.95,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
-      "articleType": "support",
-      "context": {
-        "wpId": 4125,
-        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
-        "compositeScore": 15,
-        "freshness": 1,
-        "traffic": 0,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     }
   ],
