@@ -123,6 +123,7 @@ function buildUserPrompt(article, subFormat) {
   const title = article.title || '';
   const rawText = (article.rawText || '').slice(0, 4000);
   const hook = article.hook || '';
+  const cityFocus = article.cityFocus || '';
   const count = subFormat?.count || 5;
   const angle = subFormat?.prompt || 'les 5 spots/lieux incontournables';
   const captionTemplate = subFormat?.caption || '5 spots à ne pas rater';
@@ -131,11 +132,12 @@ function buildUserPrompt(article, subFormat) {
 
 ARTICLE : ${title}
 ACCROCHE : ${hook}
+${cityFocus ? `DESTINATION PRÉCISE DÉTECTÉE : ${cityFocus}` : ''}
 TEXTE : ${rawText}
 
 Réponds UNIQUEMENT en JSON valide (pas de markdown, pas de texte avant/après) :
 {
-  "country": "Nom du pays ou de la région (en français, avec accents)",
+  "country": "Destination la plus SPÉCIFIQUE possible : ville > île > région > pays",
   "subtopic": "${subFormat?.id || 'spots'}",
   "spots": [
     {
@@ -155,7 +157,8 @@ RÈGLES :
 - "pexelsQuery" : en anglais, très spécifique (pas "thailand food" mais "pad thai street stall bangkok")
 - "caption" : inclure le drapeau emoji du pays et un appel à l'action
 - "hashtags" : 6-7 hashtags dont #FlashVoyage en premier
-- INTERDICTION d'être générique. Chaque item = un détail CONCRET.`;
+- INTERDICTION d'être générique. Chaque item = un détail CONCRET.
+- "country" : sois le plus SPÉCIFIQUE possible. Si l'article parle de Bangkok, écris "Bangkok" pas "Thaïlande". Si c'est Bali, écris "Bali" pas "Indonésie". Si c'est Kyoto, écris "Kyoto" pas "Japon".${cityFocus ? ` L'article est centré sur "${cityFocus}", utilise ce nom.` : ''}`;
 }
 
 // ── Main generation function ────────────────────────────────────────────────
