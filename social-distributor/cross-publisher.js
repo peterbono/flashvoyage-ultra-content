@@ -416,20 +416,13 @@ export async function crossPublishReel(params) {
 
   // Run all three platforms in parallel
   const [storyResult, fbResult, threadsResult] = await Promise.all([
-    // 1. IG Story with link sticker → reel permalink (boosts reel reach)
-    (thumbnailBuffer || threadsImageUrl)
-      ? safeExec('IG Story', async () => {
-          if (!threadsImageUrl) throw new Error('No thumbnail available for Story');
-          if (!storyLink) throw new Error('No Story link target (need reelPermalink or articleUrl)');
-          return publishIGStory({
-            imageBuffer: thumbnailBuffer,
-            pageToken,
-            link: storyLink,
-          });
-        })
-      : safeExec('IG Story', async () => {
-          throw new Error('No thumbnail provided — Story skipped');
-        }),
+    // 1. IG Story — DISABLED (API Graph only supports image stories, not video;
+    //    result was a static frame which looks weird vs native "share to story"
+    //    which shows the reel video. Founder will share reels to story manually
+    //    from the IG mobile app each morning — 3 taps, 5 seconds, much better UX).
+    safeExec('IG Story', async () => {
+      throw new Error('disabled: manual share-to-story preferred over API image story');
+    }, 0),
 
     // 2. Facebook Reel (caption includes UTM link if article URL provided)
     safeExec('FB Reel', async () => {
