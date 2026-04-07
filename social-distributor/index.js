@@ -358,23 +358,22 @@ async function modeRecycle(postId, dryRun = false) {
 
       await addToQueue([...entries, ...storyEntries]);
       results.queued += entries.length + storyEntries.length;
+
+      // Process + purge immediately to avoid queue bloat (base64 images in JSON)
+      const tokens = getAllTokens();
+      const queueResult = await processQueue(tokens);
+      results.published += queueResult.published.length;
+      results.failed += queueResult.failed.length;
+
+      for (const item of queueResult.published) {
+        if (results.platforms[item.platform] !== undefined) {
+          results.platforms[item.platform]++;
+        }
+      }
+      log(`Post #${variant.postId} processed: ${queueResult.published.length} published, ${queueResult.failed.length} failed`);
     } catch (err) {
       logError(`Failed to process VP carousel (post ${variant.postId}, type ${variant.type}): ${err.message}`);
       results.failed++;
-    }
-  }
-
-  // Process queue (unless dry run)
-  if (!dryRun) {
-    const tokens = getAllTokens();
-    const queueResult = await processQueue(tokens);
-    results.published = queueResult.published.length;
-    results.failed += queueResult.failed.length;
-
-    for (const item of queueResult.published) {
-      if (results.platforms[item.platform] !== undefined) {
-        results.platforms[item.platform]++;
-      }
     }
   }
 
@@ -494,23 +493,22 @@ async function modeNews(dryRun = false) {
 
       await addToQueue([...entries, ...storyEntries]);
       results.queued += entries.length + storyEntries.length;
+
+      // Process + purge immediately to avoid queue bloat (base64 images in JSON)
+      const tokens = getAllTokens();
+      const queueResult = await processQueue(tokens);
+      results.published += queueResult.published.length;
+      results.failed += queueResult.failed.length;
+
+      for (const pub of queueResult.published) {
+        if (results.platforms[pub.platform] !== undefined) {
+          results.platforms[pub.platform]++;
+        }
+      }
+      log(`News item processed: ${queueResult.published.length} published, ${queueResult.failed.length} failed`);
     } catch (err) {
       logError(`Failed to process news item "${(item.headline1 || item.originalTitle || '').slice(0, 50)}": ${err.message}`);
       results.failed++;
-    }
-  }
-
-  // Process queue (unless dry run)
-  if (!dryRun) {
-    const tokens = getAllTokens();
-    const queueResult = await processQueue(tokens);
-    results.published = queueResult.published.length;
-    results.failed += queueResult.failed.length;
-
-    for (const item of queueResult.published) {
-      if (results.platforms[item.platform] !== undefined) {
-        results.platforms[item.platform]++;
-      }
     }
   }
 

@@ -69,7 +69,7 @@ function safeUnlink(path) {
  * @param {number} duration - Scene duration in seconds
  * @returns {Promise<{scenePath: string, overlayPath: string, bgPath: string}>}
  */
-async function buildSaveCtaScene(outputPath, duration) {
+async function buildSaveCtaScene(outputPath, duration, opts = {}) {
   ensureTmpDir();
   const ts = Date.now();
 
@@ -163,7 +163,7 @@ export async function appendSaveCtaScene(inputVideoPath, outputPath, opts = {}) 
     console.log(`[REEL/SAVE-CTA] Building ${duration}s save CTA scene...`);
 
     // 1. Build the CTA scene
-    const built = await buildSaveCtaScene(ctaScenePath, duration);
+    const built = await buildSaveCtaScene(ctaScenePath, duration, opts);
     overlayPath = built.overlayPath;
     bgPath = built.bgPath;
 
