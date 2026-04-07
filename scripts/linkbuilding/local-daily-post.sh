@@ -97,6 +97,45 @@ echo "$(date): Routard done (exit $ROUTARD_EXIT)" >> "$LOG"
 # Wait between posts
 sleep 60
 
+# Run Reddit FR (dynamic — r/voyage, r/france, r/expatries)
+echo "$(date): Running Reddit FR..." >> "$LOG"
+node scripts/linkbuilding/reddit-fr-local.js >> "$LOG" 2>&1
+REDDIT_EXIT=$?
+if [ $REDDIT_EXIT -ne 0 ]; then
+  echo "$(date): Reddit FR failed (exit $REDDIT_EXIT), retrying in 30s..." >> "$LOG"
+  sleep 30
+  node scripts/linkbuilding/reddit-fr-local.js >> "$LOG" 2>&1
+  REDDIT_EXIT=$?
+fi
+echo "$(date): Reddit FR done (exit $REDDIT_EXIT)" >> "$LOG"
+
+# Wait between posts
+sleep 60
+
+# Run TripAdvisor FR (forum replies — SEA sections)
+echo "$(date): Running TripAdvisor..." >> "$LOG"
+node scripts/linkbuilding/tripadvisor-local.js >> "$LOG" 2>&1
+TA_EXIT=$?
+if [ $TA_EXIT -ne 0 ]; then
+  echo "$(date): TripAdvisor failed (exit $TA_EXIT), retrying in 30s..." >> "$LOG"
+  sleep 30
+  node scripts/linkbuilding/tripadvisor-local.js >> "$LOG" 2>&1
+  TA_EXIT=$?
+fi
+echo "$(date): TripAdvisor done (exit $TA_EXIT)" >> "$LOG"
+
+# Wait between posts
+sleep 60
+
+# Run FB Groups (1 group per run, human-like delay built-in)
+echo "$(date): Running FB Groups..." >> "$LOG"
+node scripts/linkbuilding/fb-groups-local.js >> "$LOG" 2>&1
+FBG_EXIT=$?
+echo "$(date): FB Groups done (exit $FBG_EXIT)" >> "$LOG"
+
+# Wait between posts
+sleep 60
+
 # Run IG Engagement (comment on FR voyage accounts to break cold start)
 echo "$(date): Running IG Engagement..." >> "$LOG"
 node scripts/linkbuilding/ig-engagement-local.js >> "$LOG" 2>&1
@@ -109,7 +148,7 @@ git add data/linkbuilding-week-plan.json data/linkbuilding-log.jsonl data/engage
 git diff --staged --quiet || git commit -m "chore: local linkbuilding $(date +%Y-%m-%d)" && git push 2>/dev/null
 
 # Summary notification
-SUMMARY="Quora: $([ $QUORA_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | VF: $([ $VF_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | Routard: $([ $ROUTARD_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | IG: $([ $IG_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL')"
+SUMMARY="Quora: $([ $QUORA_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | VF: $([ $VF_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | Routard: $([ $ROUTARD_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | Reddit: $([ $REDDIT_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | TA: $([ $TA_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | FBG: $([ $FBG_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL') | IG: $([ $IG_EXIT -eq 0 ] && echo 'OK' || echo 'FAIL')"
 echo "$(date): $SUMMARY" >> "$LOG"
 osascript -e "display notification \"$SUMMARY\" with title \"FlashVoyage Linkbuilding\"" 2>/dev/null
 
