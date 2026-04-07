@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-06T05:31:14.670Z",
+  "timestamp": "2026-04-07T05:15:40.330Z",
   "queueSize": 13,
   "queue": [
     {
@@ -113,7 +113,7 @@
         "wpId": 2916,
         "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }

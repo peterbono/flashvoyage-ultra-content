@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-06T05:31:26.683Z",
+  "timestamp": "2026-04-07T05:15:53.211Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,10 +17,10 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 170,
-    "medianTrafficSignal": "0.170",
+    "medianMonthlyPV": 180,
+    "medianTrafficSignal": "0.180",
     "avgRpm": 2,
-    "articlesAnalyzed": 44
+    "articlesAnalyzed": 45
   },
   "queue": [
     {
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 4.53,
-        "projectedMonthlyTraffic": 170,
-        "projectedMonthlyRevenue": 0.34,
+        "expectedRoi": 4.8,
+        "projectedMonthlyTraffic": 180,
+        "projectedMonthlyRevenue": 0.36,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (180 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 4.53,
-        "projectedMonthlyTraffic": 170,
-        "projectedMonthlyRevenue": 0.34,
+        "expectedRoi": 4.8,
+        "projectedMonthlyTraffic": 180,
+        "projectedMonthlyRevenue": 0.36,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (180 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,11 +77,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 4.53,
-        "projectedMonthlyTraffic": 170,
-        "projectedMonthlyRevenue": 0.34,
+        "expectedRoi": 4.8,
+        "projectedMonthlyTraffic": 180,
+        "projectedMonthlyRevenue": 0.36,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (180 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -197,7 +197,7 @@
         "wpId": 2916,
         "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -342,8 +342,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.034,
-    "expectedDailyRoi": 0.15
+    "expectedDailyRevenue": 0.036,
+    "expectedDailyRoi": 0.16
   },
   "summary": {
     "write_new": 0,
