@@ -247,6 +247,17 @@ function clickComposerTrigger() {
   // Strategy 1: Look for the "Write something" / "Quoi de neuf" button
   // This is typically a div[role="button"] near the top of the group feed
   var buttons = document.querySelectorAll('div[role="button"], span[role="button"]');
+  // Strategy 0: FB groups now use "Nouvelle publication" as a link/button
+  // This is the current (April 2026) layout — an <a role="link"> or nearby div
+  var allEls = document.querySelectorAll('a[role="link"], div[role="button"], span');
+  for (var n = 0; n < allEls.length; n++) {
+    var ntxt = (allEls[n].textContent || '').trim().toLowerCase();
+    if (ntxt.indexOf('nouvelle publication') >= 0 && ntxt.length < 40) {
+      allEls[n].click();
+      return 'clicked_nouvelle_publication';
+    }
+  }
+
   var triggers = [
     'quoi de neuf', 'write something', 'ecrivez quelque chose',
     'exprimez-vous', 'what\\'s on your mind', 'create a post',
@@ -266,21 +277,19 @@ function clickComposerTrigger() {
   var ariaEls = document.querySelectorAll('[aria-label*="publication"], [aria-label*="post"], [aria-label*="Write"]');
   for (var k = 0; k < ariaEls.length; k++) {
     var el = ariaEls[k];
-    if (el.getAttribute('role') === 'button' || el.getAttribute('tabindex') !== null) {
+    if (el.getAttribute('role') === 'button' || el.getAttribute('role') === 'link' || el.getAttribute('tabindex') !== null) {
       el.click();
       return 'clicked_aria';
     }
   }
 
   // Strategy 3: Look for placeholder spans that FB uses
-  // FB renders a gray placeholder text inside a clickable area
   var spans = document.querySelectorAll('span');
   for (var s = 0; s < spans.length; s++) {
     var st = (spans[s].textContent || '').toLowerCase();
     for (var t = 0; t < triggers.length; t++) {
       if (st === triggers[t]) {
-        // Click the closest parent that looks clickable
-        var parent = spans[s].closest('div[role="button"]') || spans[s].parentElement;
+        var parent = spans[s].closest('div[role="button"]') || spans[s].closest('a[role="link"]') || spans[s].parentElement;
         if (parent) { parent.click(); return 'clicked_span_parent'; }
       }
     }
@@ -609,7 +618,19 @@ async function main() {
 
   try {
     chromeNav(group.url);
-    sleep(8000); // FB pages are heavy, give them time
+    sleep(10000); // FB pages are heavy, give them time
+
+    // Close any overlay panels (notifications, messenger) and scroll to top
+    chromeJS(`
+(function() {
+  // Click body to dismiss notification/messenger overlays
+  document.body.click();
+  // Press Escape to close any modal
+  document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', code: 'Escape', bubbles: true}));
+  window.scrollTo(0, 0);
+})()
+`);
+    sleep(3000);
 
     // ── Verify we're on the group page ──
     const pageStatus = verifyGroupPage();

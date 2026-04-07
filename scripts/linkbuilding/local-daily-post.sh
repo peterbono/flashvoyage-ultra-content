@@ -127,20 +127,17 @@ echo "$(date): TripAdvisor done (exit $TA_EXIT)" >> "$LOG"
 # Wait between posts
 sleep 60
 
-# Run FB Groups (1 group per run, human-like delay built-in)
-echo "$(date): Running FB Groups..." >> "$LOG"
-node scripts/linkbuilding/fb-groups-local.js >> "$LOG" 2>&1
-FBG_EXIT=$?
-echo "$(date): FB Groups done (exit $FBG_EXIT)" >> "$LOG"
+# DISABLED: FB Groups — DOM selectors need update (April 2026)
+# echo "$(date): Running FB Groups..." >> "$LOG"
+# node scripts/linkbuilding/fb-groups-local.js >> "$LOG" 2>&1
+FBG_EXIT=0
+# echo "$(date): FB Groups done (exit $FBG_EXIT)" >> "$LOG"
 
-# Wait between posts
-sleep 60
-
-# Run IG Engagement (comment on FR voyage accounts to break cold start)
-echo "$(date): Running IG Engagement..." >> "$LOG"
-node scripts/linkbuilding/ig-engagement-local.js >> "$LOG" 2>&1
-IG_EXIT=$?
-echo "$(date): IG Engagement done (exit $IG_EXIT)" >> "$LOG"
+# DISABLED: IG Engagement — DOM selectors need update (April 2026)
+# echo "$(date): Running IG Engagement..." >> "$LOG"
+# node scripts/linkbuilding/ig-engagement-local.js >> "$LOG" 2>&1
+IG_EXIT=0
+# echo "$(date): IG Engagement done (exit $IG_EXIT)" >> "$LOG"
 
 # Push state changes
 cd "$REPO_DIR"
