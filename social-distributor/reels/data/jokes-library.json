@@ -1,0 +1,396 @@
+{
+  "lastUpdated": "2026-04-07",
+  "meta": {
+    "totalJokes": 47,
+    "sources": {
+      "curated": 10,
+      "dusoleil": 12,
+      "wokewaves": 12,
+      "brokebackpacker": 13
+    },
+    "tags": [
+      "backpacker", "sea", "budget", "food", "hostel", "digital-nomad",
+      "wifi", "bali", "thailand", "vietnam", "airport", "transport",
+      "culture-shock", "street-food", "massage", "visa", "expat",
+      "scooter", "language", "weather"
+    ]
+  },
+  "jokes": [
+    {
+      "id": "curated-001",
+      "setup_fr": "Moi qui dis '2 semaines max en Asie'",
+      "punchline_fr": "6 mois plus tard avec un bail a Chiang Mai",
+      "tags": ["backpacker", "sea", "thailand", "expat"],
+      "source": "curated",
+      "emoji": "😅"
+    },
+    {
+      "id": "curated-002",
+      "setup_fr": "Premiere question du digital nomad",
+      "punchline_fr": "C'est quoi le wifi ? ...pas 'c'est beau ici'",
+      "tags": ["digital-nomad", "wifi"],
+      "source": "curated",
+      "emoji": "💀"
+    },
+    {
+      "id": "curated-003",
+      "setup_fr": "Moi qui negocie 50 centimes sur un tuk-tuk",
+      "punchline_fr": "Puis je commande un cocktail a 8EUR sans broncher",
+      "tags": ["backpacker", "budget", "transport"],
+      "source": "curated",
+      "emoji": "🤡"
+    },
+    {
+      "id": "curated-004",
+      "setup_fr": "Je voyage pour decouvrir de nouvelles cultures",
+      "punchline_fr": "Mon historique : McDo Bangkok, McDo Bali, McDo Hanoi",
+      "tags": ["food", "culture-shock", "thailand", "bali", "vietnam"],
+      "source": "curated",
+      "emoji": "🤣"
+    },
+    {
+      "id": "curated-005",
+      "setup_fr": "J'ai appris plein de choses en voyage",
+      "punchline_fr": "Comme dire 'une biere svp' dans 12 langues",
+      "tags": ["backpacker", "language", "food"],
+      "source": "curated",
+      "emoji": "😂"
+    },
+    {
+      "id": "curated-006",
+      "setup_fr": "Physiquement je suis au bureau",
+      "punchline_fr": "Mentalement dans une piscine a Bali, 3e mojito",
+      "tags": ["bali", "digital-nomad", "expat"],
+      "source": "curated",
+      "emoji": "🫠"
+    },
+    {
+      "id": "curated-007",
+      "setup_fr": "'Je fais du slow travel, je m'immerge'",
+      "punchline_fr": "Le wifi du cafe est trop bon pour partir",
+      "tags": ["digital-nomad", "wifi", "backpacker"],
+      "source": "curated",
+      "emoji": "😐"
+    },
+    {
+      "id": "curated-008",
+      "setup_fr": "L'alarme du dortoir sonne a 5h",
+      "punchline_fr": "Elle reveille tout le monde sauf celui qui devait se lever",
+      "tags": ["hostel", "backpacker"],
+      "source": "curated",
+      "emoji": "😤"
+    },
+    {
+      "id": "curated-009",
+      "setup_fr": "Moi : je dois economiser cette annee",
+      "punchline_fr": "*reserve un vol a 3h du mat sur Google Flights*",
+      "tags": ["budget", "airport", "backpacker"],
+      "source": "curated",
+      "emoji": "🥲"
+    },
+    {
+      "id": "curated-010",
+      "setup_fr": "Tu sais que t'es backpacker quand",
+      "punchline_fr": "Tu discutes de ta digestion avec des inconnus, normal",
+      "tags": ["backpacker", "hostel", "culture-shock"],
+      "source": "curated",
+      "emoji": "💀"
+    },
+    {
+      "id": "dusoleil-001",
+      "setup_fr": "Tu sors de l'aeroport dans un nouveau pays",
+      "punchline_fr": "Tu fais ce sourire niais comme si l'air etait different",
+      "tags": ["backpacker", "airport"],
+      "source": "dusoleil",
+      "emoji": "😅"
+    },
+    {
+      "id": "dusoleil-002",
+      "setup_fr": "Tu sais que t'es backpacker quand",
+      "punchline_fr": "T'es meilleur en maths grace aux conversions de devises",
+      "tags": ["backpacker", "budget"],
+      "source": "dusoleil",
+      "emoji": "🤓"
+    },
+    {
+      "id": "dusoleil-003",
+      "setup_fr": "La station-service en Asie du Sud-Est",
+      "punchline_fr": "Un jus jaune fluo dans une bouteille de vodka, et ca roule",
+      "tags": ["scooter", "sea", "culture-shock"],
+      "source": "dusoleil",
+      "emoji": "😂"
+    },
+    {
+      "id": "dusoleil-004",
+      "setup_fr": "Comment tu conduis un scooter en Asie ?",
+      "punchline_fr": "Balancement de bras + klaxon a gogo = code de la route",
+      "tags": ["scooter", "sea", "transport"],
+      "source": "dusoleil",
+      "emoji": "🛵"
+    },
+    {
+      "id": "dusoleil-005",
+      "setup_fr": "Tu voyages en bus de nuit",
+      "punchline_fr": "Pour economiser une nuit d'hotel, genie",
+      "tags": ["backpacker", "budget", "transport"],
+      "source": "dusoleil",
+      "emoji": "🫠"
+    },
+    {
+      "id": "dusoleil-006",
+      "setup_fr": "T'as negocie sec 50 cts sur un tuk-tuk d'1h",
+      "punchline_fr": "Mais 17h de bus local pour eviter 20EUR d'avion",
+      "tags": ["backpacker", "budget", "transport"],
+      "source": "dusoleil",
+      "emoji": "💀"
+    },
+    {
+      "id": "dusoleil-007",
+      "setup_fr": "Tu preferes ne pas savoir ce qu'il y a dans ton assiette",
+      "punchline_fr": "Et en vrai c'est la meilleure chose que t'as mangee",
+      "tags": ["street-food", "food", "culture-shock"],
+      "source": "dusoleil",
+      "emoji": "🍜"
+    },
+    {
+      "id": "dusoleil-008",
+      "setup_fr": "Apporter du papier toilette partout ou tu vas",
+      "punchline_fr": "C'est devenu un reflexe de survie, pas un choix",
+      "tags": ["backpacker", "culture-shock", "sea"],
+      "source": "dusoleil",
+      "emoji": "🧻"
+    },
+    {
+      "id": "dusoleil-009",
+      "setup_fr": "Tu sais dire bonjour et merci dans 10 langues",
+      "punchline_fr": "Mais tu parles surtout le langage des signes approximatif",
+      "tags": ["backpacker", "language"],
+      "source": "dusoleil",
+      "emoji": "🤌"
+    },
+    {
+      "id": "dusoleil-010",
+      "setup_fr": "Tu commences a planifier le prochain voyage",
+      "punchline_fr": "Des que tu franchis la porte de chez toi au retour",
+      "tags": ["backpacker", "airport"],
+      "source": "dusoleil",
+      "emoji": "😅"
+    },
+    {
+      "id": "dusoleil-011",
+      "setup_fr": "La deco de ton appart",
+      "punchline_fr": "100% mappemonde, globe et photos de couchers de soleil",
+      "tags": ["backpacker", "expat"],
+      "source": "dusoleil",
+      "emoji": "🌍"
+    },
+    {
+      "id": "dusoleil-012",
+      "setup_fr": "Tu rayes tout de ta bucket list",
+      "punchline_fr": "Mais elle s'allonge plus vite que tu la reduis",
+      "tags": ["backpacker", "sea"],
+      "source": "dusoleil",
+      "emoji": "📝"
+    },
+    {
+      "id": "wokewaves-001",
+      "setup_fr": "Regle n°1 du digital nomad",
+      "punchline_fr": "Le meilleur wifi est toujours au cafe le plus cher",
+      "tags": ["digital-nomad", "wifi", "budget"],
+      "source": "wokewaves",
+      "emoji": "💸"
+    },
+    {
+      "id": "wokewaves-002",
+      "setup_fr": "'Je peux bosser de n'importe ou'",
+      "punchline_fr": "Traduction : je passe ma vie a chercher du wifi gratuit",
+      "tags": ["digital-nomad", "wifi"],
+      "source": "wokewaves",
+      "emoji": "📡"
+    },
+    {
+      "id": "wokewaves-003",
+      "setup_fr": "'Bosser de la plage' ca sonne glamour",
+      "punchline_fr": "Jusqu'a ce que le sable rentre dans ton clavier",
+      "tags": ["digital-nomad", "bali"],
+      "source": "wokewaves",
+      "emoji": "🏖️"
+    },
+    {
+      "id": "wokewaves-004",
+      "setup_fr": "Le coworking c'est genial",
+      "punchline_fr": "Jusqu'au mec qui mange des chips en call Zoom a cote",
+      "tags": ["digital-nomad", "wifi"],
+      "source": "wokewaves",
+      "emoji": "😤"
+    },
+    {
+      "id": "wokewaves-005",
+      "setup_fr": "Bali c'est pas une destination",
+      "punchline_fr": "C'est un passage oblige du starter pack digital nomad",
+      "tags": ["digital-nomad", "bali"],
+      "source": "wokewaves",
+      "emoji": "🤡"
+    },
+    {
+      "id": "wokewaves-006",
+      "setup_fr": "'Je suis super productif en voyage'",
+      "punchline_fr": "Prend 42 photos de son laptop avec un cafe",
+      "tags": ["digital-nomad", "bali"],
+      "source": "wokewaves",
+      "emoji": "📸"
+    },
+    {
+      "id": "wokewaves-007",
+      "setup_fr": "'Je voyage pour la culture locale'",
+      "punchline_fr": "Mange une pizza dans chaque pays",
+      "tags": ["digital-nomad", "food", "culture-shock"],
+      "source": "wokewaves",
+      "emoji": "🍕"
+    },
+    {
+      "id": "wokewaves-008",
+      "setup_fr": "'Quelle chance de bosser de partout'",
+      "punchline_fr": "Repond a ses mails a minuit a cause des fuseaux",
+      "tags": ["digital-nomad", "wifi"],
+      "source": "wokewaves",
+      "emoji": "🕐"
+    },
+    {
+      "id": "wokewaves-009",
+      "setup_fr": "Chaque call Zoom de digital nomad commence par",
+      "punchline_fr": "'Desole, mon wifi est un peu instable'",
+      "tags": ["digital-nomad", "wifi"],
+      "source": "wokewaves",
+      "emoji": "😬"
+    },
+    {
+      "id": "wokewaves-010",
+      "setup_fr": "Le reve du nomad : un Airbnb chic",
+      "punchline_fr": "La realite : un lit superpose en auberge pres des machines",
+      "tags": ["digital-nomad", "hostel", "budget"],
+      "source": "wokewaves",
+      "emoji": "🫠"
+    },
+    {
+      "id": "wokewaves-011",
+      "setup_fr": "'J'ai pas de chez-moi fixe'",
+      "punchline_fr": "Dit ca comme si c'etait un trait de personnalite",
+      "tags": ["digital-nomad", "expat"],
+      "source": "wokewaves",
+      "emoji": "🤡"
+    },
+    {
+      "id": "wokewaves-012",
+      "setup_fr": "Le vrai danger du digital nomad",
+      "punchline_fr": "Confondre les devises et payer 20EUR un cafe",
+      "tags": ["digital-nomad", "budget", "culture-shock"],
+      "source": "wokewaves",
+      "emoji": "💀"
+    },
+    {
+      "id": "brokebackpacker-001",
+      "setup_fr": "Conseil boulot : leve-toi, etire-toi, marche un peu",
+      "punchline_fr": "Va a l'aeroport. Prends un avion. Ne reviens jamais",
+      "tags": ["airport", "backpacker"],
+      "source": "brokebackpacker",
+      "emoji": "✈️"
+    },
+    {
+      "id": "brokebackpacker-002",
+      "setup_fr": "'On peut pas acheter le bonheur'",
+      "punchline_fr": "Ah bon ? Explique-moi les billets d'avion alors",
+      "tags": ["airport", "budget", "backpacker"],
+      "source": "brokebackpacker",
+      "emoji": "😏"
+    },
+    {
+      "id": "brokebackpacker-003",
+      "setup_fr": "J'ai google mes symptomes",
+      "punchline_fr": "En fait j'avais juste besoin de vacances",
+      "tags": ["backpacker", "budget"],
+      "source": "brokebackpacker",
+      "emoji": "🤒"
+    },
+    {
+      "id": "brokebackpacker-004",
+      "setup_fr": "Bloque entre 'faut que j'economise'",
+      "punchline_fr": "Et 'on vit qu'une fois, book le vol'",
+      "tags": ["budget", "airport", "backpacker"],
+      "source": "brokebackpacker",
+      "emoji": "🥲"
+    },
+    {
+      "id": "brokebackpacker-005",
+      "setup_fr": "J'ai besoin de 6 mois de vacances",
+      "punchline_fr": "Deux fois par an",
+      "tags": ["backpacker", "budget"],
+      "source": "brokebackpacker",
+      "emoji": "😭"
+    },
+    {
+      "id": "brokebackpacker-006",
+      "setup_fr": "Moi : 'Je veux voyager plus'",
+      "punchline_fr": "Mon compte en banque : 'Genre, au parc ?'",
+      "tags": ["budget", "backpacker"],
+      "source": "brokebackpacker",
+      "emoji": "💀"
+    },
+    {
+      "id": "brokebackpacker-007",
+      "setup_fr": "Je pensais vouloir une carriere",
+      "punchline_fr": "En fait je voulais juste un salaire pour les billets d'avion",
+      "tags": ["airport", "budget", "backpacker"],
+      "source": "brokebackpacker",
+      "emoji": "😅"
+    },
+    {
+      "id": "brokebackpacker-008",
+      "setup_fr": "L'aeroport c'est un lieu sans loi",
+      "punchline_fr": "7h du mat ? Bois une biere. Fatigue ? Dors par terre",
+      "tags": ["airport", "backpacker"],
+      "source": "brokebackpacker",
+      "emoji": "🍺"
+    },
+    {
+      "id": "brokebackpacker-009",
+      "setup_fr": "Faire sa valise : verifie 3 fois la liste",
+      "punchline_fr": "Oublie quand meme ses sous-vetements et sa brosse a dents",
+      "tags": ["backpacker", "airport"],
+      "source": "brokebackpacker",
+      "emoji": "🤦"
+    },
+    {
+      "id": "brokebackpacker-010",
+      "setup_fr": "Vie normale : le meme t-shirt toute la semaine",
+      "punchline_fr": "Valise 3 jours : 21 hauts, on sait jamais",
+      "tags": ["backpacker", "airport"],
+      "source": "brokebackpacker",
+      "emoji": "🧳"
+    },
+    {
+      "id": "brokebackpacker-011",
+      "setup_fr": "Courir jusqu'a la porte d'embarquement",
+      "punchline_fr": "Mon seul cardio de l'annee",
+      "tags": ["airport", "backpacker"],
+      "source": "brokebackpacker",
+      "emoji": "🏃"
+    },
+    {
+      "id": "brokebackpacker-012",
+      "setup_fr": "Si tu ressembles a ta photo de passeport",
+      "punchline_fr": "T'as probablement besoin de vacances",
+      "tags": ["airport", "backpacker"],
+      "source": "brokebackpacker",
+      "emoji": "😂"
+    },
+    {
+      "id": "brokebackpacker-013",
+      "setup_fr": "Quand on te demande ou t'as achete un truc",
+      "punchline_fr": "Tu reponds le nom du pays, pas le nom du magasin",
+      "tags": ["backpacker", "culture-shock", "sea"],
+      "source": "brokebackpacker",
+      "emoji": "😎"
+    }
+  ]
+}

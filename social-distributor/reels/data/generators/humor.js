@@ -1,18 +1,19 @@
 /**
- * Humor Generator v5 — Setup + Punchline Architecture
+ * Humor Generator v6 — Library-First + Setup/Punchline Architecture
  *
- * BREAKING CHANGE from v4: output now includes `setup` and `punchline` as
- * separate fields (in addition to legacy `situation` for backward compat).
+ * CHANGE from v5: jokes are now sourced from a curated library FIRST (80%),
+ * with Haiku creative path as fallback (20%). Library jokes are tag-matched
+ * to article topic for relevance. Zero Haiku calls on library path = $0 cost.
  *
  * Strategy:
- *   80% → Template path: pick a proven template, fill slots, split into setup/punchline
+ *   80% → Library path: pick a tag-matched joke from jokes-library.json (FREE)
  *   20% → Haiku creative path: generate 5 setup+punchline pairs, score, pick best
  *
  * Output interface:
  *   { setup, punchline, situation, reactionEmoji, setupFontSize, punchlineFontSize,
  *     pexelsQuery, caption, hashtags, _meta }
  *
- * Cost: ~$0.003 per joke (template path = 1 Haiku call)
+ * Cost: ~$0.000 per joke (library path = 0 Haiku calls)
  *       ~$0.008 per joke (creative path = 2 Haiku calls)
  */
 
@@ -43,11 +44,113 @@ function getHumorDB() {
   return _humorDB;
 }
 
+// ── Load curated jokes library ──────────────────────────────────────────
+
+let _jokesLibrary = null;
+function getJokesLibrary() {
+  if (_jokesLibrary) return _jokesLibrary;
+  const path = join(__dirname, '..', 'jokes-library.json');
+  try {
+    _jokesLibrary = JSON.parse(readFileSync(path, 'utf-8'));
+    console.log(`[HUMOR-V6] Loaded ${_jokesLibrary.jokes.length} jokes from library`);
+  } catch (err) {
+    console.warn(`[HUMOR-V6] Could not load jokes library: ${err.message}`);
+    _jokesLibrary = { jokes: [] };
+  }
+  return _jokesLibrary;
+}
+
+/**
+ * Map article content to relevant joke tags for matching.
+ * Returns an array of tags sorted by relevance.
+ */
+function extractArticleTags(article) {
+  const text = `${article.title || ''} ${article.hook || ''} ${article.slug || ''}`.toLowerCase();
+  const tagMap = {
+    'backpacker': ['backpack', 'sac a dos', 'routard', 'backpacker'],
+    'sea': ['asie', 'sud-est', 'southeast', 'sea'],
+    'budget': ['budget', 'pas cher', 'economis', 'cheap', 'prix', 'cout', 'argent'],
+    'food': ['manger', 'cuisine', 'food', 'restaurant', 'gastronomie', 'plat'],
+    'hostel': ['auberge', 'hostel', 'dortoir', 'hostelling'],
+    'digital-nomad': ['digital nomad', 'nomade', 'remote', 'teletravail', 'freelance'],
+    'wifi': ['wifi', 'internet', 'connexion'],
+    'bali': ['bali', 'ubud', 'canggu', 'seminyak', 'indonesi'],
+    'thailand': ['thailande', 'thaïlande', 'bangkok', 'chiang mai', 'phuket', 'koh samui', 'koh phangan'],
+    'vietnam': ['vietnam', 'hanoi', 'ho chi minh', 'saigon', 'da nang', 'hoi an'],
+    'airport': ['aeroport', 'airport', 'vol', 'avion', 'flight', 'embarqu'],
+    'transport': ['transport', 'bus', 'tuk-tuk', 'tuktuk', 'train', 'scooter', 'moto'],
+    'culture-shock': ['culture', 'choc', 'decouvrir', 'tradition', 'local'],
+    'street-food': ['street food', 'marche', 'stand', 'night market', 'street'],
+    'massage': ['massage', 'spa', 'bien-etre', 'detente'],
+    'visa': ['visa', 'passeport', 'immigration', 'douane', 'frontiere'],
+    'expat': ['expat', 'expatri', 'vivre a', 's\'installer', 'bail'],
+    'scooter': ['scooter', 'moto', 'deux roues', 'conduire'],
+    'language': ['langue', 'parler', 'communiqu', 'language', 'mot'],
+    'weather': ['meteo', 'saison', 'pluie', 'mousson', 'chaleur', 'climat'],
+  };
+
+  const matched = [];
+  for (const [tag, keywords] of Object.entries(tagMap)) {
+    if (keywords.some(kw => text.includes(kw))) {
+      matched.push(tag);
+    }
+  }
+  return matched;
+}
+
+/**
+ * Pick a joke from the library, preferring tag-matched jokes.
+ * Falls back to a random joke if no tags match.
+ * Tracks recently used joke IDs to avoid repeats within a session.
+ */
+const _usedJokeIds = new Set();
+
+function pickJokeFromLibrary(article) {
+  const library = getJokesLibrary();
+  if (!library.jokes || library.jokes.length === 0) return null;
+
+  const articleTags = extractArticleTags(article);
+  console.log(`[HUMOR-V6] Article tags: [${articleTags.join(', ')}]`);
+
+  // Score each joke by tag overlap
+  const scored = library.jokes
+    .filter(j => !_usedJokeIds.has(j.id))
+    .map(joke => {
+      const overlap = joke.tags.filter(t => articleTags.includes(t)).length;
+      return { joke, score: overlap };
+    });
+
+  // If all jokes used, reset tracker
+  if (scored.length === 0) {
+    _usedJokeIds.clear();
+    return pickJokeFromLibrary(article);
+  }
+
+  // Sort by score descending, then shuffle within same score for variety
+  scored.sort((a, b) => b.score - a.score);
+  const maxScore = scored[0].score;
+
+  let candidates;
+  if (maxScore > 0) {
+    // Pick from top-scored jokes (at least 1 tag match)
+    candidates = scored.filter(s => s.score >= Math.max(1, maxScore - 1));
+  } else {
+    // No tag matches — pick from all available
+    candidates = scored;
+  }
+
+  const pick = candidates[Math.floor(Math.random() * candidates.length)];
+  _usedJokeIds.add(pick.joke.id);
+
+  console.log(`[HUMOR-V6] Library pick: "${pick.joke.id}" (score: ${pick.score}, tags: [${pick.joke.tags.join(', ')}])`);
+  return pick.joke;
+}
+
 // ── Constants ────────────────────────────────────────────────────────────
 
 const MODEL = 'claude-haiku-4-5-20251001';
 const REACTION_EMOJIS = ['😱', '🤣', '😭', '💀', '🫠', '😅', '🥲', '😤', '🤡', '😎'];
-const TEMPLATE_PROBABILITY = 0.8; // 80% template, 20% creative
+const LIBRARY_PROBABILITY = 0.8; // 80% library, 20% creative
 
 // ── Utils ────────────────────────────────────────────────────────────────
 
@@ -185,11 +288,39 @@ const JOKE_EXAMPLES = [
   },
 ];
 
-// ── PATH A: Template Mad-Libs (80%) ─────────────────────────────────────
+// ── PATH A: Library (80%) ───────────────────────────────────────────────
+
+/**
+ * Pick a curated joke from jokes-library.json, tag-matched to article.
+ * Zero Haiku calls — instant, free, and guaranteed quality.
+ */
+function generateFromLibrary(article) {
+  const joke = pickJokeFromLibrary(article);
+
+  if (!joke) {
+    console.warn(`[HUMOR-V6] Library empty or exhausted, falling back to template`);
+    return generateFromTemplate(article);
+  }
+
+  const destination = extractDestination(article);
+
+  console.log(`[HUMOR-V6] Library path: "${joke.setup_fr}" → "${joke.punchline_fr}" (${joke.source})`);
+
+  return buildOutput(joke.setup_fr, joke.punchline_fr, {
+    emoji: joke.emoji || pickRandom(REACTION_EMOJIS),
+    pexelsQuery: `${destination.toLowerCase()} travel funny`,
+    shareability: 'Envoie ca a un pote qui comprend 😂',
+    hashtags: ['#FlashVoyage', '#VoyageMeme', '#VoyageHumour', '#AsieDuSudEst', '#BackpackerLife'],
+    meta: { path: 'library', jokeId: joke.id, source: joke.source, tags: joke.tags, haikuCalls: 0 },
+  });
+}
+
+// ── PATH A-FALLBACK: Template Mad-Libs ──────────────────────────────────
 
 /**
  * Pick a template from humor-templates.json, fill slots, then use Haiku
  * to split the result into setup + punchline.
+ * Used as fallback when library is empty or unavailable.
  */
 async function generateFromTemplate(article) {
   const db = getHumorDB();
@@ -253,11 +384,11 @@ PUNCHLINE: [la chute]`
   const parsed = parseSetupPunchline(text);
 
   if (!parsed) {
-    console.warn(`[HUMOR-V5] Failed to parse template response, random fill fallback`);
+    console.warn(`[HUMOR-V6] Failed to parse template response, random fill fallback`);
     return fillSlotsRandom(template, destination, duration, db);
   }
 
-  console.log(`[HUMOR-V5] Template path: "${parsed.setup}" → "${parsed.punchline}" (${template.mechanic})`);
+  console.log(`[HUMOR-V6] Template path: "${parsed.setup}" → "${parsed.punchline}" (${template.mechanic})`);
 
   return buildOutput(parsed.setup, parsed.punchline, {
     emoji: template.emoji || pickRandom(REACTION_EMOJIS),
@@ -291,7 +422,7 @@ function fillSlotsRandom(template, destination, duration, db) {
   // Try to split at natural break points
   const { setup, punchline } = splitJokeText(joke);
 
-  console.log(`[HUMOR-V5] Random fill: "${setup}" → "${punchline}"`);
+  console.log(`[HUMOR-V6] Random fill: "${setup}" → "${punchline}"`);
 
   return buildOutput(setup, punchline, {
     emoji: template.emoji || pickRandom(REACTION_EMOJIS),
@@ -321,7 +452,7 @@ async function generateCreative(article) {
   if (!client) throw new Error('ANTHROPIC_API_KEY not set');
 
   // ── Call 1: Generate 5 setup+punchline pairs ──────────────────────────
-  console.log(`[HUMOR-V5] Creative path: generating 5 setup+punchline pairs...`);
+  console.log(`[HUMOR-V6] Creative path: generating 5 setup+punchline pairs...`);
 
   const genResponse = await client.messages.create({
     model: MODEL,
@@ -377,15 +508,15 @@ RIEN d'autre.`
   const candidates = parseCreativeCandidates(genText);
 
   if (candidates.length === 0) {
-    console.warn(`[HUMOR-V5] No candidates generated, falling back to template`);
+    console.warn(`[HUMOR-V6] No candidates generated, falling back to template`);
     return generateFromTemplate(article);
   }
 
-  console.log(`[HUMOR-V5] Got ${candidates.length} candidates:`);
+  console.log(`[HUMOR-V6] Got ${candidates.length} candidates:`);
   candidates.forEach((c, i) => console.log(`  ${i + 1}. "${c.setup}" → "${c.punchline}"`));
 
   // ── Call 2: Score all candidates ──────────────────────────────────────
-  console.log(`[HUMOR-V5] Scoring candidates...`);
+  console.log(`[HUMOR-V6] Scoring candidates...`);
 
   const candidatesForScoring = candidates.map((c, i) =>
     `${i + 1}. SETUP: "${c.setup}" → PUNCHLINE: "${c.punchline}"`
@@ -426,10 +557,10 @@ Reponds avec JUSTE les numeros et scores : "1:7 2:5 3:8 4:4 5:6". RIEN d'autre.`
   });
 
   const best = candidates[bestIdx] || candidates[0];
-  console.log(`[HUMOR-V5] Winner: #${bestIdx + 1} "${best.setup}" → "${best.punchline}" (score: ${bestScore}/10)`);
+  console.log(`[HUMOR-V6] Winner: #${bestIdx + 1} "${best.setup}" → "${best.punchline}" (score: ${bestScore}/10)`);
 
   if (bestScore < 6) {
-    console.log(`[HUMOR-V5] Score too low (${bestScore}), falling back to template`);
+    console.log(`[HUMOR-V6] Score too low (${bestScore}), falling back to template`);
     return generateFromTemplate(article);
   }
 
@@ -573,18 +704,21 @@ function splitJokeText(text) {
  * @returns {Promise<{ setup, punchline, situation, reactionEmoji, setupFontSize, punchlineFontSize, fontSize, pexelsQuery, caption, hashtags, _meta }>}
  */
 export async function generateHumorScript(article) {
-  const useTemplate = Math.random() < TEMPLATE_PROBABILITY;
+  const useLibrary = Math.random() < LIBRARY_PROBABILITY;
 
-  console.log(`[HUMOR-V5] Path: ${useTemplate ? 'TEMPLATE (80%)' : 'CREATIVE (20%)'}`);
+  console.log(`[HUMOR-V6] Path: ${useLibrary ? 'LIBRARY (80%)' : 'CREATIVE (20%)'}`);
 
   try {
-    if (useTemplate) {
-      return await generateFromTemplate(article);
-    } else {
-      return await generateCreative(article);
+    if (useLibrary) {
+      // Library path is synchronous — no Haiku calls needed
+      const result = generateFromLibrary(article);
+      if (result) return result;
+      // If library failed, fall through to creative
+      console.log(`[HUMOR-V6] Library fallback failed, trying creative path`);
     }
+    return await generateCreative(article);
   } catch (err) {
-    console.error(`[HUMOR-V5] Error: ${err.message}, using gold standard fallback`);
+    console.error(`[HUMOR-V6] Error: ${err.message}, using gold standard fallback`);
     return goldStandardFallback(article);
   }
 }
