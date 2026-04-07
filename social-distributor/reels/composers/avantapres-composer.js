@@ -261,7 +261,7 @@ export async function composeAvantApresReel(script, opts = {}) {
 
     // ── 6. Append global save CTA (+2.5s) to boost IG save rate ───────────
     const { appendSaveCtaScene } = await import('../core/save-cta.js');
-    await appendSaveCtaScene(beforeCtaPath, outputPath);
+    await appendSaveCtaScene(beforeCtaPath, outputPath, { variant: 'share' });
 
     console.log(`[REEL/AVANTAPRES] Avant/Apres reel complete: ${outputPath} (~${TOTAL_DURATION + 2.5}s, 3 scenes + save CTA)`);
     return outputPath;

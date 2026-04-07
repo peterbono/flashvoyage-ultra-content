@@ -31,6 +31,25 @@ const HEIGHT = 1920;
 const DEFAULT_DURATION = 2.5;
 const BG_COLOR = '0x0a0e1a';
 
+/**
+ * CTA variants: 'save' for utility formats, 'share' for fun/social formats.
+ *
+ *   - save  → cost-vs, leaderboard, best-time, budget, month
+ *   - share → humor, humor-tweet, avantapres, pick
+ */
+const CTA_VARIANTS = {
+  save: {
+    line1: '\u{1F4BE} SAUVEGARDE',
+    line2: 'tu en auras besoin',
+    hint: '\u{1F4F1} Tap pour sauver \u2193',
+  },
+  share: {
+    line1: '\u{1F4E9} TAG UN POTE',
+    line2: 'envoie-lui ce reel',
+    hint: '\u{1F4F1} Tap pour partager \u2193',
+  },
+};
+
 function ensureTmpDir() {
   if (!existsSync(TMP_DIR)) mkdirSync(TMP_DIR, { recursive: true });
 }
@@ -54,9 +73,15 @@ async function buildSaveCtaScene(outputPath, duration) {
   ensureTmpDir();
   const ts = Date.now();
 
-  // 1. Render the static overlay PNG
+  // 1. Render the overlay PNG with variant-specific text
+  const variant = opts.variant || 'save';
+  const texts = CTA_VARIANTS[variant] || CTA_VARIANTS.save;
   const overlayPath = join(TMP_DIR, `save-cta-overlay-${ts}.png`);
-  await renderTemplate('save-cta-overlay.html', {}, overlayPath);
+  await renderTemplate('save-cta-overlay.html', {
+    '{{CTA_LINE_1}}': texts.line1,
+    '{{CTA_LINE_2}}': texts.line2,
+    '{{CTA_HINT}}': texts.hint,
+  }, overlayPath);
 
   // 2. Generate a dark background video (silent audio for concat compatibility)
   const bgPath = join(TMP_DIR, `save-cta-bg-${ts}.mp4`);

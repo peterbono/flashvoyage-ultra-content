@@ -123,7 +123,7 @@ export async function composeHumorReel(script, opts = {}) {
 
     // ── Step 5: Append global save CTA (+2.5s) to boost IG save rate ───────
     const { appendSaveCtaScene } = await import('../core/save-cta.js');
-    await appendSaveCtaScene(beforeCtaPath, outputPath);
+    await appendSaveCtaScene(beforeCtaPath, outputPath, { variant: 'share' });
     console.log(`[REEL/HUMOR] Final reel with save CTA: ${outputPath}`);
 
     // ── Step 6: Clean up temp files ─────────────────────────────────────────

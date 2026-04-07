@@ -200,7 +200,7 @@ export async function composePollReel(script, opts = {}) {
 
     // Append global save CTA (+2.5s) to boost IG save rate
     const { appendSaveCtaScene } = await import('../core/save-cta.js');
-    await appendSaveCtaScene(beforeCtaPath, outputPath);
+    await appendSaveCtaScene(beforeCtaPath, outputPath, { variant: 'share' });
     console.log(`[REEL/POLL] Final reel with save CTA: ${outputPath}`);
     return outputPath;
 

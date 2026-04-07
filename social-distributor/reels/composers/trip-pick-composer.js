@@ -290,7 +290,7 @@ export async function composeTripPickReel(script, opts = {}) {
 
     // ── 7. Append global save CTA (+2.5s) to boost IG save rate ────────────
     const { appendSaveCtaScene } = await import('../core/save-cta.js');
-    await appendSaveCtaScene(beforeCtaPath, outputPath);
+    await appendSaveCtaScene(beforeCtaPath, outputPath, { variant: 'share' });
 
     console.log(`[REEL/PICK] Trip Pick reel complete: ${outputPath} (~${actualDuration + 2.5}s, ${composedScenes.length} scenes + save CTA)`);
     return outputPath;
