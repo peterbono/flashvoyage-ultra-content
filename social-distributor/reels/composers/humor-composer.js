@@ -84,9 +84,14 @@ export async function composeHumorReel(script, opts = {}) {
     console.log(`[REEL/HUMOR] Clip prepared and looped to ${DURATION}s`);
 
     // ── Step 3: Render the humor overlay HTML → PNG ─────────────────────────
+    // v5: setup + punchline as separate fields for split display
+    const setup = script.setup || script.situation || 'QUAND TU VOYAGES EN ASIE';
+    const punchline = script.punchline || '...';
     const replacements = {
-      '{{SITUATION_TEXT}}': script.situation || 'QUAND TU VOYAGES EN ASIE',
-      '{{FONT_SIZE}}': String(script.fontSize || 62),
+      '{{SETUP_TEXT}}': setup,
+      '{{PUNCHLINE_TEXT}}': punchline,
+      '{{SETUP_FONT_SIZE}}': String(script.setupFontSize || script.fontSize || 52),
+      '{{PUNCHLINE_FONT_SIZE}}': String(script.punchlineFontSize || script.fontSize || 56),
       '{{REACTION_EMOJI}}': script.reactionEmoji || '😂',
     };
 
@@ -157,7 +162,7 @@ export async function generateHumorReelFromArticle(article, opts = {}) {
 
   // Step 1: Generate the humor script from the article
   const script = await generateHumorScript(article);
-  console.log(`[REEL/HUMOR] Script generated: "${script.situation}" ${script.reactionEmoji} (${script.fontSize}px)`);
+  console.log(`[REEL/HUMOR] Script generated: "${script.setup || script.situation}" → "${script.punchline || '...'}" ${script.reactionEmoji}`);
 
   // Step 2: Compose the reel
   const videoPath = await composeHumorReel(script, opts);

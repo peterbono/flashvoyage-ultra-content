@@ -1,14 +1,18 @@
 /**
- * Humor Generator v4 — Hybrid Template Mad-Libs + Haiku Boosted
+ * Humor Generator v5 — Setup + Punchline Architecture
+ *
+ * BREAKING CHANGE from v4: output now includes `setup` and `punchline` as
+ * separate fields (in addition to legacy `situation` for backward compat).
  *
  * Strategy:
- *   80% → Template path: pick a proven template, fill slots from article context
- *   20% → Haiku creative path: temp 0.5, Benign Violation Theory, 5 candidates → critic
+ *   80% → Template path: pick a proven template, fill slots, split into setup/punchline
+ *   20% → Haiku creative path: generate 5 setup+punchline pairs, score, pick best
  *
- * Both paths produce the same output interface:
- *   { situation, reactionEmoji, fontSize, pexelsQuery, caption, hashtags, _meta }
+ * Output interface:
+ *   { setup, punchline, situation, reactionEmoji, setupFontSize, punchlineFontSize,
+ *     pexelsQuery, caption, hashtags, _meta }
  *
- * Cost: ~$0.003 per joke (template path = 1 Haiku call for slot-filling)
+ * Cost: ~$0.003 per joke (template path = 1 Haiku call)
  *       ~$0.008 per joke (creative path = 2 Haiku calls)
  */
 
@@ -47,12 +51,26 @@ const TEMPLATE_PROBABILITY = 0.8; // 80% template, 20% creative
 
 // ── Utils ────────────────────────────────────────────────────────────────
 
-function computeFontSize(text) {
+/**
+ * Compute font size based on text length.
+ * Adjusted for the split layout — each part has less space.
+ */
+function computeSetupFontSize(text) {
   const len = text.length;
-  if (len < 30) return 80;
-  if (len <= 50) return 68;
-  if (len <= 70) return 58;
-  return 50;
+  if (len < 25) return 64;
+  if (len <= 40) return 56;
+  if (len <= 60) return 48;
+  if (len <= 80) return 42;
+  return 38;
+}
+
+function computePunchlineFontSize(text) {
+  const len = text.length;
+  if (len < 20) return 68;
+  if (len <= 35) return 58;
+  if (len <= 50) return 50;
+  if (len <= 70) return 44;
+  return 38;
 }
 
 function pickRandom(arr) {
@@ -85,11 +103,93 @@ function extractDuration(article) {
   return '2 semaines';
 }
 
+/**
+ * Truncate text to maxLen characters, adding "..." if needed.
+ */
+function truncate(text, maxLen) {
+  if (!text) return '';
+  text = text.trim();
+  if (text.length <= maxLen) return text;
+  return text.slice(0, maxLen - 3).trim() + '...';
+}
+
+/**
+ * Build the standardized output object from setup + punchline.
+ */
+function buildOutput(setup, punchline, { emoji, pexelsQuery, caption, hashtags, shareability, meta }) {
+  // Enforce max lengths for safe zone display
+  setup = truncate(setup, 80);
+  punchline = truncate(punchline, 60);
+
+  // Legacy `situation` field = full joke for caption/backward compat
+  const situation = `${setup} ... ${punchline}`;
+
+  return {
+    setup: setup.toUpperCase(),
+    punchline: punchline.toUpperCase(),
+    situation: situation.toUpperCase(),
+    reactionEmoji: emoji || pickRandom(REACTION_EMOJIS),
+    setupFontSize: computeSetupFontSize(setup),
+    punchlineFontSize: computePunchlineFontSize(punchline),
+    // Legacy field kept for backward compat
+    fontSize: computeSetupFontSize(setup),
+    pexelsQuery: pexelsQuery || 'travel funny reaction',
+    caption: caption || `${setup}\n...\n${punchline}\n\n${shareability || 'Envoie ca a un pote qui comprend 😂'}\n\n#FlashVoyage #VoyageMeme #VoyageHumour`,
+    hashtags: hashtags || ['#FlashVoyage', '#VoyageMeme', '#VoyageHumour', '#AsieDuSudEst', '#BackpackerLife'],
+    _meta: meta || {},
+  };
+}
+
+// ── Setup + Punchline examples for few-shot ─────────────────────────────
+
+const JOKE_EXAMPLES = [
+  {
+    setup: "Quand tu dis '2 semaines en Thailande'",
+    punchline: "6 mois plus tard t'es toujours la",
+    emoji: '🇹🇭',
+  },
+  {
+    setup: "Le niveau de confiance quand tu traverses la rue a Hanoi",
+    punchline: "vs quand tu traverses a Paris",
+    emoji: '🛵',
+  },
+  {
+    setup: "Booker un hotel a 8 EUR la nuit",
+    punchline: "et s'attendre au Ritz",
+    emoji: '🏨',
+  },
+  {
+    setup: "Dire 'je pars 2 semaines'",
+    punchline: "Vendre son appart, devenir prof de yoga a Bali",
+    emoji: '🧘',
+  },
+  {
+    setup: "Moi qui explique a ma mere que vivre a Chiang Mai",
+    punchline: "c'est un plan de carriere",
+    emoji: '💀',
+  },
+  {
+    setup: "Le retour au bureau apres 2 semaines en Asie",
+    punchline: "Chaque email est une attaque personnelle",
+    emoji: '😤',
+  },
+  {
+    setup: "Mon compte en banque avant le Vietnam",
+    punchline: "vs apres le Vietnam (aucun regret)",
+    emoji: '🥲',
+  },
+  {
+    setup: "Manger un pad thai a 1.50 EUR en Thailande",
+    punchline: "Repenser a ta salade Pret a Manger a 12 EUR",
+    emoji: '🍜',
+  },
+];
+
 // ── PATH A: Template Mad-Libs (80%) ─────────────────────────────────────
 
 /**
- * Pick a template from humor-templates.json and fill slots with article context.
- * Uses 1 Haiku call to fill slots intelligently (not random picks).
+ * Pick a template from humor-templates.json, fill slots, then use Haiku
+ * to split the result into setup + punchline.
  */
 async function generateFromTemplate(article) {
   const db = getHumorDB();
@@ -99,12 +199,12 @@ async function generateFromTemplate(article) {
   // Pick a random template
   const template = pickRandom(db.templates);
 
-  // Pick 3 gold standard examples for few-shot
-  const shuffledGold = [...db.gold_standard].sort(() => Math.random() - 0.5);
-  const examples = shuffledGold.slice(0, 3);
+  // Pick 3 setup/punchline examples for few-shot
+  const shuffledExamples = [...JOKE_EXAMPLES].sort(() => Math.random() - 0.5);
+  const examples = shuffledExamples.slice(0, 4);
 
-  const examplesText = examples.map((g, i) =>
-    `${i + 1}. "${g.text}" (${g.mechanic}, ${g.emoji})`
+  const examplesText = examples.map((e, i) =>
+    `${i + 1}. SETUP: "${e.setup}" → PUNCHLINE: "${e.punchline}" ${e.emoji}`
   ).join('\n');
 
   // Build slot options string
@@ -114,7 +214,6 @@ async function generateFromTemplate(article) {
 
   const client = getClient();
   if (!client) {
-    // Fallback: random slot filling without Haiku
     return fillSlotsRandom(template, destination, duration, db);
   }
 
@@ -122,60 +221,59 @@ async function generateFromTemplate(article) {
     model: MODEL,
     max_tokens: 300,
     temperature: 0.5,
-    system: `Tu remplis les slots d'un template de blague voyage. Choisis les options les plus DROLES pour le contexte donne. Reponds UNIQUEMENT avec la blague finale (pas de JSON, pas d'explication).`,
+    system: `Tu es un humoriste viral voyage. Tu ecris des blagues en 2 parties : SETUP (la situation) et PUNCHLINE (la chute surprenante). La punchline doit creer un CONTRASTE, une SURPRISE, ou un TWIST inattendu. JAMAIS une observation plate.`,
     messages: [{
       role: 'user',
       content: `CONTEXTE : Article sur ${destination}, ${duration}
 
-TEMPLATE : "${template.template}"
-SLOTS DISPONIBLES :
+TEMPLATE DE BASE : "${template.template}"
+SLOTS :
 ${slotsInfo}
 
 REMPLACE {destination} par "${destination}" si le slot existe.
 REMPLACE {durée} par "${duration}" si le slot existe.
 
-EXEMPLES DE BLAGUES QUI MARCHENT :
+EXEMPLES DE BONNES BLAGUES (setup → punchline) :
 ${examplesText}
 
-Ecris JUSTE la blague finale, rien d'autre. Max 70 caractères. Accents français obligatoires.`
+CONSIGNES :
+- Ecris la blague en 2 parties SEPAREES
+- Le SETUP pose la situation (max 60 chars)
+- La PUNCHLINE est le twist/chute (max 45 chars)
+- La punchline doit SURPRENDRE — pas juste continuer le setup
+- Accents francais obligatoires
+
+REPONDS EXACTEMENT dans ce format, rien d'autre :
+SETUP: [le setup]
+PUNCHLINE: [la chute]`
     }],
   });
 
-  let joke = response.content[0]?.text?.trim() || '';
+  const text = response.content[0]?.text?.trim() || '';
+  const parsed = parseSetupPunchline(text);
 
-  // Clean up: remove quotes, trim
-  joke = joke.replace(/^["«»]|["«»]$/g, '').trim();
-
-  // Truncate if needed
-  if (joke.length > 80) {
-    joke = joke.slice(0, 77) + '...';
-  }
-
-  // If Haiku returned garbage, use random fill
-  if (joke.length < 10) {
+  if (!parsed) {
+    console.warn(`[HUMOR-V5] Failed to parse template response, random fill fallback`);
     return fillSlotsRandom(template, destination, duration, db);
   }
 
-  console.log(`[HUMOR-V4] Template path: "${joke}" (${template.mechanic})`);
+  console.log(`[HUMOR-V5] Template path: "${parsed.setup}" → "${parsed.punchline}" (${template.mechanic})`);
 
-  return {
-    situation: joke.toUpperCase(),
-    reactionEmoji: template.emoji || pickRandom(REACTION_EMOJIS),
-    fontSize: computeFontSize(joke),
+  return buildOutput(parsed.setup, parsed.punchline, {
+    emoji: template.emoji || pickRandom(REACTION_EMOJIS),
     pexelsQuery: template.pexelsQuery || 'travel funny reaction',
-    caption: `${joke}\n\n${template.shareability || 'Envoie ça à un pote qui comprend 😂'}\n\n#FlashVoyage #VoyageMeme #VoyageHumour`,
-    hashtags: ['#FlashVoyage', '#VoyageMeme', '#VoyageHumour', '#AsieDuSudEst', '#BackpackerLife'],
-    _meta: { path: 'template', templateId: template.id, mechanic: template.mechanic, haikuCalls: 1 },
-  };
+    shareability: template.shareability || 'Envoie ca a un pote qui comprend 😂',
+    meta: { path: 'template', templateId: template.id, mechanic: template.mechanic, haikuCalls: 1 },
+  });
 }
 
 /**
  * Random slot filling fallback (no Haiku needed).
+ * Splits the filled template at a natural break point.
  */
 function fillSlotsRandom(template, destination, duration, db) {
   let joke = template.template;
 
-  // Replace known slots
   for (const [key, options] of Object.entries(template.slots)) {
     const placeholder = `{${key}}`;
     if (key === 'destination' || key.includes('destination')) {
@@ -187,27 +285,26 @@ function fillSlotsRandom(template, destination, duration, db) {
     }
   }
 
-  // Replace any remaining {destination} or {durée}
   joke = joke.replace(/\{destination\}/gi, destination);
   joke = joke.replace(/\{dur[ée]+\}/gi, duration);
 
-  console.log(`[HUMOR-V4] Random fill fallback: "${joke}"`);
+  // Try to split at natural break points
+  const { setup, punchline } = splitJokeText(joke);
 
-  return {
-    situation: joke.toUpperCase(),
-    reactionEmoji: template.emoji || pickRandom(REACTION_EMOJIS),
-    fontSize: computeFontSize(joke),
+  console.log(`[HUMOR-V5] Random fill: "${setup}" → "${punchline}"`);
+
+  return buildOutput(setup, punchline, {
+    emoji: template.emoji || pickRandom(REACTION_EMOJIS),
     pexelsQuery: template.pexelsQuery || 'travel adventure',
-    caption: `${joke}\n\nEnvoie ça à un pote 😂\n\n#FlashVoyage #VoyageMeme`,
-    hashtags: ['#FlashVoyage', '#VoyageMeme', '#VoyageHumour'],
-    _meta: { path: 'random_fill', templateId: template.id },
-  };
+    shareability: 'Envoie ca a un pote 😂',
+    meta: { path: 'random_fill', templateId: template.id },
+  });
 }
 
 // ── PATH B: Haiku Creative (20%) ────────────────────────────────────────
 
 /**
- * Let Haiku generate an original joke using Benign Violation Theory.
+ * Let Haiku generate original setup+punchline jokes.
  * Generate 5 candidates, score them, pick the best.
  */
 async function generateCreative(article) {
@@ -215,139 +312,205 @@ async function generateCreative(article) {
   const destination = extractDestination(article);
   const duration = extractDuration(article);
 
-  // Pick 5 gold examples for few-shot
-  const shuffledGold = [...db.gold_standard].sort(() => Math.random() - 0.5);
-  const examples = shuffledGold.slice(0, 5).map((g, i) =>
-    `${i + 1}. "${g.text}"`
+  const shuffledExamples = [...JOKE_EXAMPLES].sort(() => Math.random() - 0.5);
+  const examples = shuffledExamples.slice(0, 5).map((e, i) =>
+    `${i + 1}. SETUP: "${e.setup}" → PUNCHLINE: "${e.punchline}"`
   ).join('\n');
 
   const client = getClient();
   if (!client) throw new Error('ANTHROPIC_API_KEY not set');
 
-  // ── Call 1: Generate 5 candidates ───────────────────────────────────
-  console.log(`[HUMOR-V4] Creative path: generating 5 candidates...`);
+  // ── Call 1: Generate 5 setup+punchline pairs ──────────────────────────
+  console.log(`[HUMOR-V5] Creative path: generating 5 setup+punchline pairs...`);
 
   const genResponse = await client.messages.create({
     model: MODEL,
-    max_tokens: 500,
+    max_tokens: 600,
     temperature: 0.5,
     system: `Tu es un HUMORISTE viral francophone specialise voyage Asie du Sud-Est.
 
-THÉORIE : L'humour = VIOLATION BÉNIGNE. Trouve un aspect du voyage qui est "wrong" (galère, absurde, injuste) mais inoffensif et relatable. La blague doit provoquer un "j'envoie ça à mon pote".
+REGLE D'OR : Chaque blague a 2 parties.
+- SETUP = la situation relatable (ce que tout le monde connait)
+- PUNCHLINE = le twist, la chute, le contraste inattendu
 
-ANTI-PATTERNS (ne fais JAMAIS ça) :
-- Observations plates sans twist ("le pad thai coûte pas cher")
-- Prix comme punchline sans contexte émotionnel
-- Blagues qui nécessitent de connaître l'article
+THÉORIE : L'humour = VIOLATION BÉNIGNE. Le setup est "normal", la punchline revele quelque chose de "wrong" mais inoffensif.
+
+ANTI-PATTERNS (INTERDIT) :
+- Observations plates sans twist ("le pad thai c'est bon")
+- Punchline qui repete le setup en d'autres mots
+- Blagues qui necessitent contexte specifique
 - Expliquer la blague
-- Être wholesome ou inspirant
+- Etre wholesome ou inspirant
+- Punchline = juste un prix ou un fait
 
-FORMATS QUI MARCHENT :
-- "Quand tu [situation universelle]" + twist inattendu
-- "Moi qui [setup normal] alors que [réalité absurde]"
-- "Les potes à [heure] après [galère commune]"
-- "Le premier [moment] après [le voyage]"
-- "Regarder [chose normale] après [expérience voyage]"
-- "[Sujet sérieux]... c'est parce que tu [twist voyage]"`,
+MECANIQUES QUI MARCHENT :
+- Contraste avant/apres ("avant: X, apres: Y completement different")
+- Escalade absurde ("2 semaines" → "6 mois" → "prof de yoga a Bali")
+- Subversion d'attente (le setup promet une chose, la punchline livre l'oppose)
+- Hyperbole relatable (exagerer un vecu universel)
+- Comparaison injuste (prix Asie vs prix France = douleur)`,
     messages: [{
       role: 'user',
       content: `DESTINATION : ${destination}
 DURÉE : ${duration}
 ARTICLE : ${article.title || 'Voyage en Asie'}
 
-EXEMPLES DE BLAGUES VIRALES (score 8+/10) :
+EXEMPLES VIRAUX (setup → punchline) :
 ${examples}
 
-Génère 5 blagues DIFFÉRENTES sur ${destination}. Chaque blague doit :
-- Être une situation UNIVERSELLE que tout voyageur connaît
-- Avoir un TWIST ou CONTRASTE (pas une observation plate)
-- Faire max 60 caractères
-- Être en français casual avec accents
-- Finir par un kicker entre parenthèses si ça aide : (aucun regret), (help), (ça valait le coup), (lol), (surtout pas à elle/lui)
+Genere 5 blagues DIFFERENTES sur ${destination}. Chaque blague DOIT avoir :
+- Un SETUP (situation relatable, max 60 chars)
+- Une PUNCHLINE (twist/chute, max 45 chars)
+- La punchline SURPREND — elle n'est pas la suite logique du setup
+- Francais casual avec accents
 
-UNE blague par ligne, numérotées 1-5. RIEN d'autre.`
+FORMAT EXACT (une blague par bloc, numerotees 1-5) :
+1. SETUP: [texte] | PUNCHLINE: [texte]
+2. SETUP: [texte] | PUNCHLINE: [texte]
+...
+
+RIEN d'autre.`
     }],
   });
 
   const genText = genResponse.content[0]?.text?.trim() || '';
-  const candidates = parseCandidates(genText);
+  const candidates = parseCreativeCandidates(genText);
 
   if (candidates.length === 0) {
-    console.warn(`[HUMOR-V4] No candidates generated, falling back to template`);
+    console.warn(`[HUMOR-V5] No candidates generated, falling back to template`);
     return generateFromTemplate(article);
   }
 
-  console.log(`[HUMOR-V4] Got ${candidates.length} candidates:`);
-  candidates.forEach((c, i) => console.log(`  ${i + 1}. "${c}"`));
+  console.log(`[HUMOR-V5] Got ${candidates.length} candidates:`);
+  candidates.forEach((c, i) => console.log(`  ${i + 1}. "${c.setup}" → "${c.punchline}"`));
 
-  // ── Call 2: Score all candidates ────────────────────────────────────
-  console.log(`[HUMOR-V4] Scoring candidates...`);
+  // ── Call 2: Score all candidates ──────────────────────────────────────
+  console.log(`[HUMOR-V5] Scoring candidates...`);
+
+  const candidatesForScoring = candidates.map((c, i) =>
+    `${i + 1}. SETUP: "${c.setup}" → PUNCHLINE: "${c.punchline}"`
+  ).join('\n');
 
   const scoreResponse = await client.messages.create({
     model: MODEL,
     max_tokens: 300,
     temperature: 0,
-    system: `Tu es un CRITIQUE D'HUMOUR sévère. Tu notes des blagues voyage.
-Un 7/10 = la personne sourit. Un 8/10 = elle envoie à un ami. Un 9/10 = elle la partage en story. Un 10/10 = virale.
-Sois SÉVÈRE. La plupart des blagues méritent 4-6/10.`,
+    system: `Tu es un CRITIQUE D'HUMOUR severe. Tu notes des blagues voyage sur la QUALITE DE LA PUNCHLINE.
+Un 5/10 = sourire poli. Un 7/10 = la personne sourit. Un 8/10 = elle envoie a un ami. Un 9/10 = partagee en story. Un 10/10 = virale.
+
+CRITERES :
+- La punchline SURPREND-elle ? (twist inattendu = +2 points)
+- Le contraste setup/punchline est-il fort ? (+2 points)
+- C'est relatable pour un voyageur francais ? (+1 point)
+- Ca tient en 3 secondes de lecture ? (+1 point)
+- C'est juste une observation plate sans chute ? (-3 points)
+
+Sois SEVERE. La plupart des blagues meritent 4-6/10.`,
     messages: [{
       role: 'user',
-      content: `Note chaque blague de 1 à 10. Test : "Est-ce que j'enverrais ça à un ami ?"
+      content: `Note chaque blague. Test : "Est-ce que la PUNCHLINE me surprend ?"
 
-${candidates.map((c, i) => `${i + 1}. "${c}"`).join('\n')}
+${candidatesForScoring}
 
-Réponds avec JUSTE les numéros et scores, format "1:7 2:5 3:8 4:4 5:6". RIEN d'autre.`
+Reponds avec JUSTE les numeros et scores : "1:7 2:5 3:8 4:4 5:6". RIEN d'autre.`
     }],
   });
 
   const scoreText = scoreResponse.content[0]?.text?.trim() || '';
   const scores = parseScores(scoreText, candidates.length);
 
-  // Find best candidate
   let bestIdx = 0;
   let bestScore = 0;
   scores.forEach((score, idx) => {
     if (score > bestScore) { bestScore = score; bestIdx = idx; }
   });
 
-  const bestJoke = candidates[bestIdx] || candidates[0];
-  console.log(`[HUMOR-V4] Winner: #${bestIdx + 1} "${bestJoke}" (score: ${bestScore}/10)`);
+  const best = candidates[bestIdx] || candidates[0];
+  console.log(`[HUMOR-V5] Winner: #${bestIdx + 1} "${best.setup}" → "${best.punchline}" (score: ${bestScore}/10)`);
 
-  // If best score < 6, fall back to template
   if (bestScore < 6) {
-    console.log(`[HUMOR-V4] Score too low (${bestScore}), falling back to template`);
+    console.log(`[HUMOR-V5] Score too low (${bestScore}), falling back to template`);
     return generateFromTemplate(article);
   }
 
-  return {
-    situation: bestJoke.toUpperCase(),
-    reactionEmoji: pickRandom(REACTION_EMOJIS),
-    fontSize: computeFontSize(bestJoke),
+  return buildOutput(best.setup, best.punchline, {
+    emoji: pickRandom(REACTION_EMOJIS),
     pexelsQuery: `${destination.toLowerCase()} travel funny`,
-    caption: `${bestJoke}\n\nEnvoie ça à quelqu'un qui comprend 😂\n\n#FlashVoyage #VoyageMeme #VoyageHumour`,
+    shareability: 'Envoie ca a quelqu\'un qui comprend 😂',
     hashtags: ['#FlashVoyage', '#VoyageMeme', '#VoyageHumour', '#AsieDuSudEst', '#BackpackerLife', `#${destination.replace(/\s/g, '')}`],
-    _meta: { path: 'creative', score: bestScore, candidateCount: candidates.length, haikuCalls: 2 },
-  };
+    meta: { path: 'creative', score: bestScore, candidateCount: candidates.length, haikuCalls: 2 },
+  });
 }
 
 // ── Parsers ──────────────────────────────────────────────────────────────
 
-function parseCandidates(text) {
+/**
+ * Parse "SETUP: ... PUNCHLINE: ..." format from template path.
+ */
+function parseSetupPunchline(text) {
+  const setupMatch = text.match(/SETUP\s*:\s*(.+)/i);
+  const punchlineMatch = text.match(/PUNCHLINE\s*:\s*(.+)/i);
+
+  if (setupMatch && punchlineMatch) {
+    return {
+      setup: setupMatch[1].replace(/^["«»]|["«»]$/g, '').trim(),
+      punchline: punchlineMatch[1].replace(/^["«»]|["«»]$/g, '').trim(),
+    };
+  }
+
+  // Fallback: try splitting on common delimiters
+  const parts = text.split(/\s*[→\|]\s*/);
+  if (parts.length >= 2) {
+    return {
+      setup: parts[0].replace(/^["«»\d.)\s]+|["«»]$/g, '').trim(),
+      punchline: parts.slice(1).join(' ').replace(/^["«»]|["«»]$/g, '').trim(),
+    };
+  }
+
+  return null;
+}
+
+/**
+ * Parse creative candidates from "1. SETUP: ... | PUNCHLINE: ..." format.
+ */
+function parseCreativeCandidates(text) {
   const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
   const results = [];
+
   for (const line of lines) {
-    const match = line.match(/^[1-9][.)]\s*(.+)/);
+    // Try "N. SETUP: ... | PUNCHLINE: ..."
+    const match = line.match(/^\d[.)]\s*SETUP\s*:\s*(.+?)\s*[\|→]\s*PUNCHLINE\s*:\s*(.+)/i);
     if (match) {
-      let joke = match[1].trim().replace(/^["«»]|["«»]$/g, '').trim();
-      if (joke.length > 10 && joke.length <= 80) results.push(joke);
+      const setup = match[1].replace(/^["«»]|["«»]$/g, '').trim();
+      const punchline = match[2].replace(/^["«»]|["«»]$/g, '').trim();
+      if (setup.length >= 8 && punchline.length >= 5) {
+        results.push({ setup, punchline });
+      }
+      continue;
+    }
+
+    // Try "N. SETUP: ..." followed by next line "PUNCHLINE: ..."
+    const setupOnly = line.match(/^\d[.)]\s*SETUP\s*:\s*(.+)/i);
+    if (setupOnly) {
+      const nextLine = lines[lines.indexOf(line) + 1];
+      if (nextLine) {
+        const punchMatch = nextLine.match(/PUNCHLINE\s*:\s*(.+)/i);
+        if (punchMatch) {
+          const setup = setupOnly[1].replace(/^["«»]|["«»]$/g, '').trim();
+          const punchline = punchMatch[1].replace(/^["«»]|["«»]$/g, '').trim();
+          if (setup.length >= 8 && punchline.length >= 5) {
+            results.push({ setup, punchline });
+          }
+        }
+      }
     }
   }
+
   return results;
 }
 
 function parseScores(text, count) {
-  const scores = new Array(count).fill(5); // default 5
-  // Try "1:7 2:5 3:8" format
+  const scores = new Array(count).fill(5);
   const matches = [...text.matchAll(/(\d+)\s*[:\-=]\s*(\d+)/g)];
   for (const m of matches) {
     const idx = parseInt(m[1]) - 1;
@@ -359,19 +522,60 @@ function parseScores(text, count) {
   return scores;
 }
 
+/**
+ * Split a single joke text into setup + punchline at natural break points.
+ * Used as fallback when Haiku is not available.
+ */
+function splitJokeText(text) {
+  // Try splitting on common patterns
+  const patterns = [
+    /(.+?)\s*\.\.\.\s*(.+)/,           // "X ... Y"
+    /(.+?)\s*—\s*(.+)/,                // "X — Y"
+    /(.+?)\s+alors que\s+(.+)/i,       // "X alors que Y"
+    /(.+?)\s+mais\s+(.+)/i,            // "X mais Y"
+    /(.+?)\s+vs\.?\s+(.+)/i,           // "X vs Y"
+    /(.+?)\s+et\s+(en fait|en vrai)\s+(.+)/i,  // "X et en fait Y"
+    /(.+?)\s*\((.+)\)\s*$/,            // "X (Y)"
+  ];
+
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match) {
+      const setup = match[1].trim();
+      const punchline = (match[3] || match[2]).trim();
+      if (setup.length >= 8 && punchline.length >= 5) {
+        return { setup, punchline };
+      }
+    }
+  }
+
+  // Last resort: split roughly in half at a word boundary
+  const mid = Math.floor(text.length * 0.55);
+  const spaceIdx = text.indexOf(' ', mid);
+  if (spaceIdx > 0) {
+    return {
+      setup: text.slice(0, spaceIdx).trim(),
+      punchline: text.slice(spaceIdx).trim(),
+    };
+  }
+
+  return { setup: text, punchline: '...' };
+}
+
 // ── Main export ──────────────────────────────────────────────────────────
 
 /**
  * Generate a humor script for a reel.
- * 80% of the time uses template mad-libs, 20% lets Haiku be creative.
+ * 80% template mad-libs, 20% Haiku creative.
+ * Always returns setup + punchline as separate fields.
  *
  * @param {Object} article - { title, hook, keyStats, ... }
- * @returns {Promise<{ situation, reactionEmoji, fontSize, pexelsQuery, caption, hashtags, _meta }>}
+ * @returns {Promise<{ setup, punchline, situation, reactionEmoji, setupFontSize, punchlineFontSize, fontSize, pexelsQuery, caption, hashtags, _meta }>}
  */
 export async function generateHumorScript(article) {
   const useTemplate = Math.random() < TEMPLATE_PROBABILITY;
 
-  console.log(`[HUMOR-V4] Path: ${useTemplate ? 'TEMPLATE (80%)' : 'CREATIVE (20%)'}`);
+  console.log(`[HUMOR-V5] Path: ${useTemplate ? 'TEMPLATE (80%)' : 'CREATIVE (20%)'}`);
 
   try {
     if (useTemplate) {
@@ -380,32 +584,32 @@ export async function generateHumorScript(article) {
       return await generateCreative(article);
     }
   } catch (err) {
-    console.error(`[HUMOR-V4] Error: ${err.message}, using gold standard fallback`);
+    console.error(`[HUMOR-V5] Error: ${err.message}, using gold standard fallback`);
     return goldStandardFallback(article);
   }
 }
 
 /**
- * Emergency fallback: pick a gold standard joke and swap in the destination.
+ * Emergency fallback: pick a JOKE_EXAMPLES entry and swap in the destination.
  */
 function goldStandardFallback(article) {
-  const db = getHumorDB();
   const destination = extractDestination(article);
-  const gold = pickRandom(db.gold_standard);
-  let joke = gold.text;
+  const example = pickRandom(JOKE_EXAMPLES);
+
+  let setup = example.setup;
+  let punchline = example.punchline;
 
   // Swap destination references
-  joke = joke.replace(/Thailande|Thaïlande/gi, destination);
-  joke = joke.replace(/Asie du Sud-Est/gi, destination);
-  joke = joke.replace(/Bangkok|Phuket|Chiang Mai/gi, destination);
+  setup = setup.replace(/Thailande|Thaïlande/gi, destination);
+  setup = setup.replace(/Asie du Sud-Est/gi, destination);
+  setup = setup.replace(/Bangkok|Phuket|Chiang Mai|Hanoi|Bali|Vietnam/gi, destination);
+  punchline = punchline.replace(/Thailande|Thaïlande/gi, destination);
+  punchline = punchline.replace(/Bangkok|Phuket|Chiang Mai|Hanoi|Bali|Vietnam/gi, destination);
 
-  return {
-    situation: joke.toUpperCase(),
-    reactionEmoji: gold.emoji || pickRandom(REACTION_EMOJIS),
-    fontSize: computeFontSize(joke),
-    pexelsQuery: gold.pexelsQuery || 'travel funny reaction',
-    caption: `${joke}\n\n${gold.shareability || 'Envoie ça à un pote 😂'}\n\n#FlashVoyage #VoyageMeme`,
-    hashtags: ['#FlashVoyage', '#VoyageMeme', '#VoyageHumour'],
-    _meta: { path: 'gold_fallback', goldId: gold.id },
-  };
+  return buildOutput(setup, punchline, {
+    emoji: example.emoji || pickRandom(REACTION_EMOJIS),
+    pexelsQuery: 'travel funny reaction',
+    shareability: 'Envoie ca a un pote 😂',
+    meta: { path: 'gold_fallback' },
+  });
 }
