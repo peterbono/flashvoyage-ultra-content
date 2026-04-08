@@ -141,8 +141,8 @@ Réponds UNIQUEMENT en JSON valide (pas de markdown, pas de texte avant/après) 
   "subtopic": "${subFormat?.id || 'spots'}",
   "spots": [
     {
-      "name": "NOM EN MAJUSCULES (max 25 caractères, SPÉCIFIQUE : nom de lieu, plat, rue, astuce)",
-      "detail": "Description courte (max 30 caractères, avec un détail concret : prix, quartier)",
+      "name": "NOM COURT EN MAJUSCULES (STRICT MAX 20 caractères, sinon ça coupe dans la vidéo ! Ex: PAD THAI, CHATUCHAK, TEMPLE D'OR)",
+      "detail": "Ultra court (STRICT MAX 25 caractères ! Ex: Dès 40฿ à Yaowarat, Entrée gratuite)",
       "pexelsQuery": "english pexels search query for this specific item"
     }
   ],

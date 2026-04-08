@@ -93,7 +93,7 @@
 
   .country-name {
     font-family: 'Playfair Display', 'Georgia', serif;
-    font-size: 130px;
+    font-size: min(130px, 18vw);
     font-weight: 700;
     color: #FFFFFF;
     line-height: 1.05;
@@ -101,6 +101,7 @@
     max-width: 960px;
     word-break: break-word;
     margin-bottom: 25px;
+    overflow-wrap: break-word;
   }
 
   .subtitle {
@@ -112,6 +113,9 @@
     letter-spacing: 2px;
     text-shadow: 0 3px 12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.4);
     margin-bottom: 20px;
+    max-width: 960px;
+    word-break: break-word;
+    line-height: 1.2;
   }
 
   .gold-accent-line {
