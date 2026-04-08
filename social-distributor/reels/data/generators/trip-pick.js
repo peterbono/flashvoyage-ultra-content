@@ -142,7 +142,7 @@ Réponds UNIQUEMENT en JSON valide (pas de markdown, pas de texte avant/après) 
   "spots": [
     {
       "name": "2-3 MOTS MAX en majuscules. PAS de phrase. Ex: JR PASS, CAPSULE HOTEL, PAD THAI, FAUX MOINE. JAMAIS plus de 3 mots.",
-      "detail": "Max 5 mots. Chiffre + fait. Ex: Dès 40฿, Prix x2 en août, Gratuit avant 10h",
+      "detail": "STRICT MAX 50 caractères. Phrase courte avec un chiffre concret. Ex: Entrée 10$, toits dorés spectaculaires. JAMAIS dépasser 50 caractères sinon le texte sera coupé dans la vidéo.",
       "pexelsQuery": "english pexels search query for this specific item"
     }
   ],
@@ -242,8 +242,8 @@ export async function generateTripPickScript(article) {
 
     // Enforce name constraints
     script.spots = script.spots.map(spot => ({
-      name: (spot.name || 'SPOT').toUpperCase().slice(0, 25),
-      detail: (spot.detail || '').slice(0, 30),
+      name: (spot.name || 'SPOT').toUpperCase().slice(0, 30),
+      detail: (spot.detail || '').slice(0, 50),
       pexelsQuery: spot.pexelsQuery || `${script.country} travel`,
     }));
 

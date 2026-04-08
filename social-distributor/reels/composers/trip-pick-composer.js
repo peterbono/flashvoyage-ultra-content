@@ -200,7 +200,7 @@ export async function composeTripPickReel(script, opts = {}) {
 
     // 3b. Location overlays (5 spots) — hard truncate to prevent text overflow
     const MAX_NAME = 30;
-    const MAX_DETAIL = 35;
+    const MAX_DETAIL = 50;
     const DANGLING = /\s+(?:en|de|du|d|à|au|aux|le|la|les|un|une|des|pour|par|sans|sur|avec|et|ou|qui|que|ne|se|ce)\s*$/i;
     const truncate = (s, max) => {
       if (!s || s.length <= max) return s;
