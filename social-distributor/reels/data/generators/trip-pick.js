@@ -141,8 +141,8 @@ Réponds UNIQUEMENT en JSON valide (pas de markdown, pas de texte avant/après) 
   "subtopic": "${subFormat?.id || 'spots'}",
   "spots": [
     {
-      "name": "NOM COURT EN MAJUSCULES (STRICT MAX 20 caractères, sinon ça coupe dans la vidéo ! Ex: PAD THAI, CHATUCHAK, TEMPLE D'OR)",
-      "detail": "Ultra court (STRICT MAX 25 caractères ! Ex: Dès 40฿ à Yaowarat, Entrée gratuite)",
+      "name": "2-3 MOTS MAX en majuscules. PAS de phrase. Ex: JR PASS, CAPSULE HOTEL, PAD THAI, FAUX MOINE. JAMAIS plus de 3 mots.",
+      "detail": "Max 5 mots. Chiffre + fait. Ex: Dès 40฿, Prix x2 en août, Gratuit avant 10h",
       "pexelsQuery": "english pexels search query for this specific item"
     }
   ],

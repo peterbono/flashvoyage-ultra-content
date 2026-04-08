@@ -198,15 +198,21 @@ export async function composeTripPickReel(script, opts = {}) {
     tempFiles.push(titleOverlayPath);
     console.log(`[REEL/PICK] Title overlay rendered`);
 
-    // 3b. Location overlays (5 spots)
+    // 3b. Location overlays (5 spots) — hard truncate to prevent text overflow
+    const MAX_NAME = 18;
+    const MAX_DETAIL = 22;
+    const truncate = (s, max) => s && s.length > max ? s.slice(0, max).replace(/\s+\S*$/, '') : s;
+
     const locationOverlayPaths = [];
     for (let i = 0; i < LOCATION_COUNT; i++) {
       const spot = script.spots[i];
+      const name = truncate(spot.name, MAX_NAME) || spot.name.slice(0, MAX_NAME);
+      const detail = truncate(spot.detail, MAX_DETAIL) || spot.detail.slice(0, MAX_DETAIL);
       const overlayPath = join(TMP_DIR, `pick-loc-overlay-${i}-${ts}.png`);
       await renderTemplate('trip-pick-location-overlay.html', {
         '{{RANK_NUMBER}}': String(i + 1),
-        '{{LOCATION_NAME}}': spot.name,
-        '{{LOCATION_DETAIL}}': spot.detail,
+        '{{LOCATION_NAME}}': name,
+        '{{LOCATION_DETAIL}}': detail,
       }, overlayPath);
       locationOverlayPaths.push(overlayPath);
       tempFiles.push(overlayPath);
