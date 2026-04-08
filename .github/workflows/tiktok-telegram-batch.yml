@@ -39,5 +39,6 @@ jobs:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          HOURS_BACK: ${{ github.event.inputs.hours_back || '14' }}
         run: |
           node social-distributor/reels/tiktok-telegram-batch.js
