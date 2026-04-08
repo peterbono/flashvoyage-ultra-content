@@ -102,20 +102,19 @@ async function sendReelToTelegram(videoBuffer, reel, index, total) {
 
   const format = detectFormat(reel.caption);
   const hashtags = TIKTOK_HASHTAGS[format] || TIKTOK_HASHTAGS._default;
-  const firstLine = (reel.caption || 'Flash Voyage').split('\n')[0];
   const postTime = TIKTOK_SCHEDULE_BKK[index] || TIKTOK_SCHEDULE_BKK[0];
 
-  const tgCaption = [
-    `🎬 REEL ${index + 1}/${total} — ${format.toUpperCase()}`,
-    `⏰ Poster à ${postTime} (BKK)`,
-    '',
-    '📋 TIKTOK (copier-coller) :',
-    firstLine,
-    '',
-    hashtags,
-    '',
-    `📱 IG: ${reel.permalink || ''}`,
-  ].join('\n').slice(0, 1024);
+  // Strip IG hashtags — keep only the human text + CTA
+  const captionLines = (reel.caption || 'Flash Voyage').split('\n');
+  const textLines = [];
+  for (const line of captionLines) {
+    if (line.trim().startsWith('#')) break;
+    textLines.push(line);
+  }
+  const cleanCaption = textLines.join('\n').trim();
+
+  // Clean TikTok-ready text: caption + hashtags. Copy-paste as-is.
+  const tgCaption = `⏰ ${postTime}\n\n${cleanCaption}\n\n${hashtags}`.slice(0, 1024);
 
   const form = new FormData();
   form.append('chat_id', chatId);

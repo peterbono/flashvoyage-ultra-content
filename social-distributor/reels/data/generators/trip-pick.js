@@ -269,6 +269,7 @@ export async function generateTripPickScript(article) {
       type: 'trip_pick',
       country: script.country,
       subtopic: subFormat.id,
+      subtitle: subFormat.caption, // e.g. "5 astuces pour voyager pas cher" — used by composer for title overlay
       spots: script.spots,
       caption: script.caption,
       hashtags: script.hashtags,

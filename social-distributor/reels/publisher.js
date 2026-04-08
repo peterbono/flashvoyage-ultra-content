@@ -307,6 +307,7 @@ export async function publishReel(videoBuffer, caption, hashtags, pageToken, met
  * TikTok hashtag sets by format — optimized for FR travel TikTok.
  */
 const TIKTOK_HASHTAGS = {
+  // Top-level formats
   pick:        '#voyage #travel #spots #asiedusudest #pourtoi #fyp #flashvoyage',
   budget:      '#voyage #budget #budgetvoyage #coutdevie #pourtoi #fyp #flashvoyage',
   avantapres:  '#voyage #expectationvsreality #avantapres #travel #pourtoi #fyp #flashvoyage',
@@ -316,32 +317,40 @@ const TIKTOK_HASHTAGS = {
   'humor-tweet':'#voyage #humour #relatable #travel #pourtoi #fyp #flashvoyage',
   'best-time': '#voyage #quandpartir #travel #saison #pourtoi #fyp #flashvoyage',
   month:       '#voyage #oupartir #travel #destination #pourtoi #fyp #flashvoyage',
+  // Trip Pick sub-formats (subtopic values from trip-pick generator)
+  spots:       '#voyage #travel #spots #asiedusudest #pourtoi #fyp #flashvoyage',
+  photos:      '#voyage #spotphoto #instagram #travel #pourtoi #fyp #flashvoyage',
+  food:        '#voyage #streetfood #foodtravel #asiedusudest #pourtoi #fyp #flashvoyage',
+  hidden:      '#voyage #secretspot #horsdessentiersbattus #travel #pourtoi #fyp #flashvoyage',
+  culture:     '#voyage #culture #temple #tradition #pourtoi #fyp #flashvoyage',
   _default:    '#voyage #travel #asiedusudest #pourtoi #fyp #flashvoyage',
 };
 
 /**
  * Send reel video + caption to Telegram bot for manual TikTok repost.
- * Includes a TikTok-ready copy-paste caption block.
+ * Sends ONLY the TikTok-ready text (caption + hashtags) — no headers, no IG link.
+ * User copies the entire message and pastes directly into TikTok.
  */
 async function sendToTelegram(videoBuffer, caption, permalink, meta = {}) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!botToken || !chatId) return;
 
-  const format = meta.format || 'unknown';
-  const tiktokHashtags = TIKTOK_HASHTAGS[format] || TIKTOK_HASHTAGS._default;
+  // Use subtopic (budget, photos, etc.) for hashtag matching, fallback to format
+  const hashtagKey = meta.subtopic || meta.format || 'unknown';
+  const tiktokHashtags = TIKTOK_HASHTAGS[hashtagKey] || TIKTOK_HASHTAGS[meta.format] || TIKTOK_HASHTAGS._default;
 
-  // Build TikTok-ready caption: first line = hook/CTA, then hashtags
-  const tiktokCaption = `${caption.split('\n')[0]}\n\n${tiktokHashtags}`;
+  // Strip IG hashtags from caption — everything before first line starting with #
+  const captionLines = caption.split('\n');
+  const textLines = [];
+  for (const line of captionLines) {
+    if (line.trim().startsWith('#')) break; // stop at IG hashtag block
+    textLines.push(line);
+  }
+  const cleanCaption = textLines.join('\n').trim();
 
-  const tgCaption = [
-    `🎬 REEL — ${format.toUpperCase()}`,
-    '',
-    '📋 TIKTOK (copier-coller) :',
-    tiktokCaption,
-    '',
-    permalink ? `📱 IG: ${permalink}` : '',
-  ].filter(Boolean).join('\n').slice(0, 1024);
+  // TikTok caption = clean text + TikTok hashtags — ready to copy-paste as-is
+  const tgCaption = `${cleanCaption}\n\n${tiktokHashtags}`.slice(0, 1024);
 
   const form = new FormData();
   form.append('chat_id', chatId);

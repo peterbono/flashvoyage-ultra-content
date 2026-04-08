@@ -188,9 +188,12 @@ export async function composeTripPickReel(script, opts = {}) {
 
     // 3a. Title overlay
     const titleOverlayPath = join(TMP_DIR, `pick-title-overlay-${ts}.png`);
+    // Use sub-format caption for subtitle (e.g. "5 astuces budget" instead of always "5 spots à ne pas rater")
+    const subtitle = (script.subtitle || `${script.spots.length} spots à ne pas rater`).toUpperCase();
     await renderTemplate('trip-pick-title-overlay.html', {
       '{{COUNTRY_NAME}}': script.country,
       '{{COUNT}}': String(script.spots.length),
+      '{{SUBTITLE}}': subtitle,
     }, titleOverlayPath);
     tempFiles.push(titleOverlayPath);
     console.log(`[REEL/PICK] Title overlay rendered`);
