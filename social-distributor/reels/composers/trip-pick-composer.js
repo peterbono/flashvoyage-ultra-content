@@ -201,7 +201,13 @@ export async function composeTripPickReel(script, opts = {}) {
     // 3b. Location overlays (5 spots) — hard truncate to prevent text overflow
     const MAX_NAME = 18;
     const MAX_DETAIL = 22;
-    const truncate = (s, max) => s && s.length > max ? s.slice(0, max).replace(/\s+\S*$/, '') : s;
+    const DANGLING = /\s+(?:en|de|du|d|à|au|aux|le|la|les|un|une|des|pour|par|sans|sur|avec|et|ou|qui|que|ne|se|ce)\s*$/i;
+    const truncate = (s, max) => {
+      if (!s || s.length <= max) return s;
+      let t = s.slice(0, max).replace(/\s+\S*$/, ''); // cut at word boundary
+      t = t.replace(DANGLING, '');                      // drop trailing preposition/article
+      return t;
+    };
 
     const locationOverlayPaths = [];
     for (let i = 0; i < LOCATION_COUNT; i++) {

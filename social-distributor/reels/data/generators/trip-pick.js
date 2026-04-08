@@ -235,6 +235,11 @@ export async function generateTripPickScript(article) {
       });
     }
 
+    // Log raw Haiku output before any truncation
+    script.spots.forEach((s, i) => {
+      console.log(`[REEL/TRIP-PICK] Spot ${i+1} raw: "${s.name}" (${(s.name||'').length} chars) / "${s.detail}" (${(s.detail||'').length} chars)`);
+    });
+
     // Enforce name constraints
     script.spots = script.spots.map(spot => ({
       name: (spot.name || 'SPOT').toUpperCase().slice(0, 25),
