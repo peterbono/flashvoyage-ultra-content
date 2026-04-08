@@ -59,6 +59,11 @@
     margin-bottom: 20px;
     max-width: 840px;
     word-break: break-word;
+    overflow-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   /* ── Duration badge: gold pill ── */
@@ -110,6 +115,10 @@
     font-size: 36px;
     font-weight: 700;
     color: rgba(255, 255, 255, 0.80);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 480px;
   }
 
   .line-price {
@@ -122,6 +131,9 @@
     padding: 10px 26px;
     border-radius: 18px;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 320px;
   }
 
   /* ── Gold divider before total ── */
@@ -166,6 +178,9 @@
     border-radius: 22px;
     white-space: nowrap;
     box-shadow: 0 4px 16px rgba(255, 215, 0, 0.35);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 380px;
   }
 </style>
 </head>

@@ -112,8 +112,18 @@ async function addAudioTrack(videoPath, outputPath, duration) {
 function buildOverlayReplacements(script) {
   const { destination, rows, totals } = script;
 
+  // Hard truncation to prevent text overflow in overlay
+  const MAX_DEST_NAME = 25;
+  const DANGLING = /\s+(?:en|de|du|d|à|au|aux|le|la|les|un|une|des|pour|par|sans|sur|avec|et|ou|qui|que|ne|se|ce)\s*$/i;
+  const truncate = (s, max) => {
+    if (!s || s.length <= max) return s;
+    let t = s.slice(0, max).replace(/\s+\S*$/, ''); // cut at word boundary
+    t = t.replace(DANGLING, '');                      // drop trailing preposition/article
+    return t || s.slice(0, max);                      // fallback if truncation emptied it
+  };
+
   const replacements = {
-    '{{DEST_NAME}}': destination.displayName,
+    '{{DEST_NAME}}': truncate(destination.displayName, MAX_DEST_NAME),
     '{{DEST_FLAG}}': destination.flag,
     '{{FRANCE_FLAG}}': '🇫🇷',
     '{{TOTAL_DEST}}': totals.destFormatted,

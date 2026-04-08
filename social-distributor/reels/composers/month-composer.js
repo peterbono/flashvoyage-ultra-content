@@ -289,7 +289,17 @@ export async function composeMonthReel(script, opts = {}) {
     tempFiles.push(hookOverlayPath);
     console.log(`[REEL/MONTH] Hook overlay rendered`);
 
-    // 3b. Destination overlays (5)
+    // 3b. Destination overlays (5) — hard truncate to prevent text overflow
+    const MAX_LOCATION = 25;
+    const MAX_REASON = 50;
+    const DANGLING = /\s+(?:en|de|du|d|à|au|aux|le|la|les|un|une|des|pour|par|sans|sur|avec|et|ou|qui|que|ne|se|ce)\s*$/i;
+    const truncate = (s, max) => {
+      if (!s || s.length <= max) return s;
+      let t = s.slice(0, max).replace(/\s+\S*$/, ''); // cut at word boundary
+      t = t.replace(DANGLING, '');                      // drop trailing preposition/article
+      return t || s.slice(0, max);                      // fallback: hard cut
+    };
+
     const destOverlayPaths = [];
     for (let i = 0; i < DESTINATION_COUNT; i++) {
       const dest = script.destinations[i];
@@ -297,8 +307,8 @@ export async function composeMonthReel(script, opts = {}) {
       await renderTemplate('month-destination-overlay.html', {
         '{{RANK}}': String(i + 1),
         '{{MONTH_SHORT}}': script.monthShort,
-        '{{LOCATION}}': dest.name,
-        '{{REASON}}': dest.reason,
+        '{{LOCATION}}': truncate(dest.name, MAX_LOCATION),
+        '{{REASON}}': truncate(dest.reason, MAX_REASON),
       }, overlayPath);
       destOverlayPaths.push(overlayPath);
       tempFiles.push(overlayPath);

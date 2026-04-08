@@ -44,6 +44,9 @@
     letter-spacing: 1px;
     text-shadow: 0 4px 16px rgba(0, 0, 0, 0.9);
     line-height: 1.1;
+    max-width: 960px;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   /* ── Column headers row (flags above the price columns) ── */
@@ -128,6 +131,9 @@
     flex-shrink: 0;
     line-height: 1;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* France price = white, muted (the expensive reference side) */
@@ -140,6 +146,9 @@
     flex-shrink: 0;
     line-height: 1;
     padding-left: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* ── Total row (yellow band — brand signature) ── */

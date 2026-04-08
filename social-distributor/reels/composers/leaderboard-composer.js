@@ -95,12 +95,25 @@ async function addAudioTrack(videoPath, outputPath, duration) {
   return outputPath;
 }
 
+// ── Hard truncation helpers (prevent text overflow in overlay) ──────────────
+const MAX_TITLE = 30;
+const MAX_VALUE = 15;
+const DANGLING = /\s+(?:en|de|du|d|à|au|aux|le|la|les|un|une|des|pour|par|sans|sur|avec|et|ou|qui|que|ne|se|ce)\s*$/i;
+function truncate(s, max) {
+  if (!s || s.length <= max) return s;
+  let t = s.slice(0, max).replace(/\s+\S*$/, ''); // cut at word boundary
+  t = t.replace(DANGLING, '');                      // drop trailing preposition/article
+  return t || s.slice(0, max);                      // fallback if regex ate everything
+}
+
 function buildOverlayReplacements(script) {
   // Fully static layout: #1 is permanently highlighted via is-highlighted
   // class. No hook scene, no reveal animation.
+  const rawLine1 = (script.title || '').split('\n')[0] || '';
+  const rawLine2 = (script.title || '').split('\n')[1] || '';
   const replacements = {
-    '{{TITLE_LINE_1}}': (script.title || '').split('\n')[0] || '',
-    '{{TITLE_LINE_2}}': (script.title || '').split('\n')[1] || '',
+    '{{TITLE_LINE_1}}': truncate(rawLine1, MAX_TITLE),
+    '{{TITLE_LINE_2}}': truncate(rawLine2, MAX_TITLE),
     '{{METRIC_LABEL}}': script.metricLabel || '',
     '{{HIGHLIGHT_CLASS}}': 'is-highlighted', // permanent yellow band on #1
   };
@@ -111,7 +124,7 @@ function buildOverlayReplacements(script) {
     replacements[`{{RANK_${n}}}`] = item ? String(item.rank) : '';
     replacements[`{{FLAG_${n}}}`] = item ? item.flag : '';
     replacements[`{{NAME_${n}}}`] = item ? item.displayName : '';
-    replacements[`{{VALUE_${n}}}`] = item ? item.display : '';
+    replacements[`{{VALUE_${n}}}`] = item ? truncate(item.display, MAX_VALUE) : '';
   }
 
   return replacements;

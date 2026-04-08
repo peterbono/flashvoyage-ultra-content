@@ -187,11 +187,26 @@ export async function composeAvantApresReel(script, opts = {}) {
 
     // ── 2. Render 3 overlay PNGs ──────────────────────────────────────────
 
+    // Hard truncation to prevent text overflow in overlays
+    const MAX_DESTINATION = 25;
+    const MAX_TEXT = 40;
+    const DANGLING = /\s+(?:en|de|du|d|à|au|aux|le|la|les|un|une|des|pour|par|sans|sur|avec|et|ou|qui|que|ne|se|ce)\s*$/i;
+    const truncate = (s, max) => {
+      if (!s || s.length <= max) return s;
+      let t = s.slice(0, max).replace(/\s+\S*$/, ''); // cut at word boundary
+      t = t.replace(DANGLING, '');                      // drop trailing preposition/article
+      return t || s.slice(0, max);                      // fallback if truncation emptied it
+    };
+
+    const safeDestination = truncate(script.destination, MAX_DESTINATION);
+    const safeExpectationText = truncate(script.expectation.text || '', MAX_TEXT);
+    const safeRealityText = truncate(script.reality.text || '', MAX_TEXT);
+
     // 2a. Expectation overlay
     const expectOverlayPath = join(TMP_DIR, `avantapres-expect-overlay-${ts}.png`);
     await renderTemplate('avantapres-expectation-overlay.html', {
-      '{{DESTINATION}}': script.destination,
-      '{{EXPECTATION_TEXT}}': script.expectation.text || '',
+      '{{DESTINATION}}': safeDestination,
+      '{{EXPECTATION_TEXT}}': safeExpectationText,
     }, expectOverlayPath);
     tempFiles.push(expectOverlayPath);
     console.log(`[REEL/AVANTAPRES] Expectation overlay rendered`);
@@ -199,8 +214,8 @@ export async function composeAvantApresReel(script, opts = {}) {
     // 2b. Reality overlay
     const realityOverlayPath = join(TMP_DIR, `avantapres-reality-overlay-${ts}.png`);
     await renderTemplate('avantapres-reality-overlay.html', {
-      '{{DESTINATION}}': script.destination,
-      '{{REALITY_TEXT}}': script.reality.text || '',
+      '{{DESTINATION}}': safeDestination,
+      '{{REALITY_TEXT}}': safeRealityText,
     }, realityOverlayPath);
     tempFiles.push(realityOverlayPath);
     console.log(`[REEL/AVANTAPRES] Reality overlay rendered`);

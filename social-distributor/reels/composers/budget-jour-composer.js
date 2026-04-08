@@ -181,14 +181,27 @@ async function addAudioTrack(inputPath, outputPath, duration) {
  * @param {boolean} showTotal - Whether to show total row + divider
  * @returns {Object} Replacements map for renderTemplate
  */
+// ── Hard truncation helpers (prevent text overflow in rendered overlays) ────
+const MAX_CARD_TITLE = 30;
+const MAX_LINE_LABEL = 20;
+const MAX_LINE_PRICE = 12;
+const MAX_TOTAL_PRICE = 14;
+const DANGLING = /\s+(?:en|de|du|d|à|au|aux|le|la|les|un|une|des|pour|par|sans|sur|avec|et|ou|qui|que|ne|se|ce)\s*$/i;
+function truncate(s, max) {
+  if (!s || s.length <= max) return s;
+  let t = s.slice(0, max).replace(/\s+\S*$/, ''); // cut at word boundary
+  t = t.replace(DANGLING, '');                      // drop trailing preposition/article
+  return t || s.slice(0, max);                      // fallback: hard cut
+}
+
 function buildCardReplacements(script, revealUpTo, showTotal = false) {
   const HIDDEN = 'display:none';
   const VISIBLE = '';
 
   const replacements = {
-    '{{CARD_TITLE}}': script.destination,
+    '{{CARD_TITLE}}': truncate(script.destination, MAX_CARD_TITLE),
     '{{DURATION_BADGE}}': script.durationLabel || 'PAR JOUR',
-    '{{TOTAL_PRICE}}': script.totalPrice,
+    '{{TOTAL_PRICE}}': truncate(script.totalPrice, MAX_TOTAL_PRICE),
   };
 
   // Fill all 4 category lines
@@ -198,8 +211,8 @@ function buildCardReplacements(script, revealUpTo, showTotal = false) {
     const isVisible = i < revealUpTo;
 
     replacements[`{{LINE_${lineNum}_EMOJI}}`] = cat.emoji;
-    replacements[`{{LINE_${lineNum}_LABEL}}`] = cat.label;
-    replacements[`{{LINE_${lineNum}_PRICE}}`] = cat.price;
+    replacements[`{{LINE_${lineNum}_LABEL}}`] = truncate(cat.label, MAX_LINE_LABEL);
+    replacements[`{{LINE_${lineNum}_PRICE}}`] = truncate(cat.price, MAX_LINE_PRICE);
     replacements[`{{LINE_${lineNum}_STYLE}}`] = isVisible ? VISIBLE : HIDDEN;
   }
 
@@ -260,7 +273,7 @@ export async function composeBudgetJourReel(script, opts = {}) {
     // ── 2. Render hook title overlay ────────────────────────────────────────
     const hookOverlayPath = join(TMP_DIR, `budget-hook-overlay-${ts}.png`);
     await renderTemplate('budget-jour-title-overlay.html', {
-      '{{DESTINATION}}': script.destination,
+      '{{DESTINATION}}': truncate(script.destination, MAX_CARD_TITLE),
       '{{DURATION_LABEL}}': script.durationLabel || 'PAR JOUR',
     }, hookOverlayPath);
     tempFiles.push(hookOverlayPath);
