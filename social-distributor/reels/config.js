@@ -23,7 +23,7 @@ export const FONTS = {
 };
 
 export const SAFE_ZONES = {
-  top: 200,
+  top: 320,
   bottom: 280,
   sides: 40,
 };

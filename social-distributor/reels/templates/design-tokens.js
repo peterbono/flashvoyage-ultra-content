@@ -27,16 +27,16 @@ export const CANVAS = {
 // These zones must remain clear of critical content.
 
 export const SAFE_ZONES = {
-  top: 200,        // Camera UI, IG username bar, close button
+  top: 320,        // IG/TikTok UI: username, follow button, music info (~300px)
   bottom: 280,     // Caption text area, audio pill, like/comment/share buttons
   left: 40,        // Edge padding
   right: 40,       // Edge padding
-  // Usable content area: 1000px wide x 1440px tall (center of frame)
+  // Usable content area: 1000px wide x 1320px tall (center of frame)
   content: {
     x: 40,
-    y: 200,
+    y: 320,
     width: 1000,
-    height: 1440,
+    height: 1320,
   },
 };
 
