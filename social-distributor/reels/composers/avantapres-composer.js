@@ -25,10 +25,10 @@ const TMP_DIR = join(__dirname, '..', 'tmp');
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
-const EXPECTATION_DURATION = 3;  // seconds
-const REALITY_DURATION = 3;      // seconds
+const EXPECTATION_DURATION = 4;  // seconds (was 3 — TikTok 10s minimum)
+const REALITY_DURATION = 4;      // seconds (was 3 — TikTok 10s minimum)
 const CTA_DURATION = 2;          // seconds
-const TOTAL_DURATION = EXPECTATION_DURATION + REALITY_DURATION + CTA_DURATION; // 8s
+const TOTAL_DURATION = EXPECTATION_DURATION + REALITY_DURATION + CTA_DURATION; // 10s
 
 const WIDTH = 1080;
 const HEIGHT = 1920;

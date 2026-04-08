@@ -303,7 +303,7 @@ async function publishIfRequested(result, article, format, shouldPublish) {
     || 'Flash Voyage';
   const hashtags = result.script?.hashtags || ['#FlashVoyage'];
 
-  const pubResult = await publishReel(videoBuffer, caption, hashtags);
+  const pubResult = await publishReel(videoBuffer, caption, hashtags, undefined, { format });
   const reelId = pubResult.reelId;
   const permalink = pubResult.permalink;
 

@@ -42,7 +42,7 @@ export const FORMATS = {
   pick: {
     name: 'Trip Pick',
     tier: 'S',
-    duration: { min: 7, max: 10 },
+    duration: { min: 10, max: 12 },
     scenes: '4-8',
     audio: null, // silent
     description: 'X spots a ne pas rater, cuts rapides',
@@ -66,7 +66,7 @@ export const FORMATS = {
   avantapres: {
     name: 'Avant/Apres',
     tier: 'S+',
-    duration: { min: 8, max: 12 },
+    duration: { min: 10, max: 12 },
     scenes: 3,
     audio: null,
     description: 'Expectation vs reality — STAR FORMAT: only format with saves (0.50%), 1.00% engagement',
@@ -82,7 +82,7 @@ export const FORMATS = {
   'cost-vs': {
     name: 'Cost vs France',
     tier: 'S+',
-    duration: { min: 8, max: 8 },
+    duration: { min: 10, max: 10 },
     scenes: 2,
     audio: 'upbeat',
     description: 'Comparaison de 8 items X vs France + total mensuel band jaune — STAR FORMAT: 1.01% engagement, strong watch time',

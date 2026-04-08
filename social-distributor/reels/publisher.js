@@ -207,7 +207,7 @@ function getPageToken() {
  * @param {string} [pageToken] - Override page token (optional)
  * @returns {Promise<{ reelId: string, permalink: string|null }>}
  */
-export async function publishReel(videoBuffer, caption, hashtags, pageToken) {
+export async function publishReel(videoBuffer, caption, hashtags, pageToken, meta = {}) {
   const token = pageToken || getPageToken();
   if (!token) {
     throw new Error('No IG page token available. Check data/tokens.json');
@@ -292,8 +292,8 @@ export async function publishReel(videoBuffer, caption, hashtags, pageToken) {
       permalink = mediaData.permalink || null;
     } catch { /* non-fatal */ }
 
-    // 6. Send to Telegram for manual TikTok repost
-    await sendToTelegram(videoBuffer, fullCaption, permalink).catch(err =>
+    // 6. Send to Telegram for manual TikTok repost (with TikTok-ready caption)
+    await sendToTelegram(videoBuffer, fullCaption, permalink, meta).catch(err =>
       console.warn(`[REEL/PUB] Telegram send failed (non-fatal): ${err.message}`)
     );
 
@@ -304,14 +304,44 @@ export async function publishReel(videoBuffer, caption, hashtags, pageToken) {
 }
 
 /**
- * Send reel video + caption to Telegram bot for manual TikTok repost.
+ * TikTok hashtag sets by format — optimized for FR travel TikTok.
  */
-async function sendToTelegram(videoBuffer, caption, permalink) {
+const TIKTOK_HASHTAGS = {
+  pick:        '#voyage #travel #spots #asiedusudest #pourtoi #fyp #flashvoyage',
+  budget:      '#voyage #budget #budgetvoyage #coutdevie #pourtoi #fyp #flashvoyage',
+  avantapres:  '#voyage #expectationvsreality #avantapres #travel #pourtoi #fyp #flashvoyage',
+  'cost-vs':   '#voyage #coutdevie #expatlife #comparatif #pourtoi #fyp #flashvoyage',
+  leaderboard: '#voyage #top10 #classement #travel #pourtoi #fyp #flashvoyage',
+  humor:       '#voyage #humour #relatable #travel #pourtoi #fyp #flashvoyage',
+  'humor-tweet':'#voyage #humour #relatable #travel #pourtoi #fyp #flashvoyage',
+  'best-time': '#voyage #quandpartir #travel #saison #pourtoi #fyp #flashvoyage',
+  month:       '#voyage #oupartir #travel #destination #pourtoi #fyp #flashvoyage',
+  _default:    '#voyage #travel #asiedusudest #pourtoi #fyp #flashvoyage',
+};
+
+/**
+ * Send reel video + caption to Telegram bot for manual TikTok repost.
+ * Includes a TikTok-ready copy-paste caption block.
+ */
+async function sendToTelegram(videoBuffer, caption, permalink, meta = {}) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!botToken || !chatId) return;
 
-  const tgCaption = `${caption}\n\n${permalink ? '📱 IG: ' + permalink : ''}`.slice(0, 1024);
+  const format = meta.format || 'unknown';
+  const tiktokHashtags = TIKTOK_HASHTAGS[format] || TIKTOK_HASHTAGS._default;
+
+  // Build TikTok-ready caption: first line = hook/CTA, then hashtags
+  const tiktokCaption = `${caption.split('\n')[0]}\n\n${tiktokHashtags}`;
+
+  const tgCaption = [
+    `🎬 REEL — ${format.toUpperCase()}`,
+    '',
+    '📋 TIKTOK (copier-coller) :',
+    tiktokCaption,
+    '',
+    permalink ? `📱 IG: ${permalink}` : '',
+  ].filter(Boolean).join('\n').slice(0, 1024);
 
   const form = new FormData();
   form.append('chat_id', chatId);

@@ -29,7 +29,7 @@ const TMP_DIR = join(__dirname, '..', 'tmp');
 
 // ── Constants ───────────────────────────────────────────────────────────────
 
-const SCENE_DURATIONS = [8]; // 1 static scene, all elements visible from frame 1
+const SCENE_DURATIONS = [10]; // 1 static scene, 10s for TikTok minimum (was 8)
 const TOTAL_DURATION = SCENE_DURATIONS.reduce((a, b) => a + b, 0);
 
 const WIDTH = 1080;
