@@ -1,0 +1,43 @@
+name: TikTok Telegram Batch (13h BKK)
+
+on:
+  # 06:00 UTC = 13:00 BKK — daily batch of overnight reels for TikTok
+  schedule:
+    - cron: '0 6 * * *'
+
+  # Manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      hours_back:
+        description: 'Hours to look back for reels (default 12)'
+        required: false
+        default: '12'
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  NODE_ENV: production
+
+jobs:
+  send-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Send overnight reels to Telegram
+        env:
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          node social-distributor/reels/tiktok-telegram-batch.js
