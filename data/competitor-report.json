@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-07T05:18:46.016Z",
+  "timestamp": "2026-04-08T05:20:15.657Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -10,129 +10,873 @@
     {
       "id": "noobvoyage",
       "name": "Noobvoyage",
-      "totalUrls": 0,
-      "newUrls": 0
+      "totalUrls": 126,
+      "newUrls": 126
     },
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 4391,
-      "newUrls": 2007
+      "totalUrls": 4392,
+      "newUrls": 1005
     }
   ],
   "newArticles": [
     {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-penang/",
-      "lastmod": "2025-04-25T13:47:48+00:00",
-      "destination": "penang",
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/sun-moon-lake-taiwan/",
+      "lastmod": "2014-03-19T05:09:49+00:00",
+      "destination": "taiwan",
       "contentType": "general",
-      "title": "Loger Penang",
+      "title": "Sun Moon Lake Taiwan",
       "action": "content_gap",
       "priority": "P1",
-      "reason": "Competitor covers \"Loger Penang\" (penang, general) — no matching FlashVoyage article found"
+      "reason": "Competitor covers \"Sun Moon Lake Taiwan\" (taiwan, general) — no matching FlashVoyage article found"
     },
     {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/dormir-aeroport-manille/",
-      "lastmod": "2025-04-26T06:35:37+00:00",
-      "destination": "manille",
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/culture/critique-livre-shantaram-inde/",
+      "lastmod": "2014-01-22T11:47:17+00:00",
+      "destination": "inde",
       "contentType": "general",
-      "title": "Dormir Aeroport Manille",
+      "title": "Critique Livre Shantaram Inde",
       "action": "content_gap",
       "priority": "P1",
-      "reason": "Competitor covers \"Dormir Aeroport Manille\" (manille, general) — no matching FlashVoyage article found"
+      "reason": "Competitor covers \"Critique Livre Shantaram Inde\" (inde, general) — no matching FlashVoyage article found"
     },
     {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/airbnb-phuket/",
-      "lastmod": "2025-04-26T06:42:26+00:00",
-      "destination": "phuket",
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/cavernes-ajanta-ellora-inde/",
+      "lastmod": "2014-01-22T06:08:17+00:00",
+      "destination": "inde",
       "contentType": "general",
-      "title": "Airbnb Phuket",
+      "title": "Cavernes Ajanta Ellora Inde",
       "action": "content_gap",
       "priority": "P1",
-      "reason": "Competitor covers \"Airbnb Phuket\" (phuket, general) — no matching FlashVoyage article found"
+      "reason": "Competitor covers \"Cavernes Ajanta Ellora Inde\" (inde, general) — no matching FlashVoyage article found"
     },
     {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotel-kyoto/",
-      "lastmod": "2025-04-26T09:56:30+00:00",
-      "destination": "kyoto",
-      "contentType": "hebergement",
-      "title": "Hotel Kyoto",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Hotel Kyoto\" (kyoto, hebergement) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/kyoto-ceremonie-du-the/",
-      "lastmod": "2025-05-02T11:25:05+00:00",
-      "destination": "kyoto",
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/hampi-inde-du-sud/",
+      "lastmod": "2014-01-22T06:01:07+00:00",
+      "destination": "inde",
       "contentType": "general",
-      "title": "Kyoto Ceremonie Du The",
+      "title": "Hampi Inde Du Sud",
       "action": "content_gap",
       "priority": "P1",
-      "reason": "Competitor covers \"Kyoto Ceremonie Du The\" (kyoto, general) — no matching FlashVoyage article found"
+      "reason": "Competitor covers \"Hampi Inde Du Sud\" (inde, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/images/video_myanmar/",
+      "lastmod": "2014-01-22T05:02:07+00:00",
+      "destination": "myanmar",
+      "contentType": "general",
+      "title": "Video_myanmar",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Video_myanmar\" (myanmar, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/images/video-une-journee-en-inde/",
+      "lastmod": "2014-01-17T06:42:10+00:00",
+      "destination": "inde",
+      "contentType": "general",
+      "title": "Video Une Journee En Inde",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Video Une Journee En Inde\" (inde, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/quoi-faire-au-nepal/",
+      "lastmod": "2014-01-15T03:30:56+00:00",
+      "destination": "nepal",
+      "contentType": "guide",
+      "title": "Quoi Faire Au Nepal",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Quoi Faire Au Nepal\" (nepal, guide) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/quoi-faire-a-brunei/",
+      "lastmod": "2014-01-15T03:26:40+00:00",
+      "destination": "brunei",
+      "contentType": "guide",
+      "title": "Quoi Faire A Brunei",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Quoi Faire A Brunei\" (brunei, guide) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/parc-national-gorges-taroko-taiwan/",
+      "lastmod": "2014-01-10T07:56:24+00:00",
+      "destination": "taiwan",
+      "contentType": "general",
+      "title": "Parc National Gorges Taroko Taiwan",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Parc National Gorges Taroko Taiwan\" (taiwan, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/culture/film-seediq-bale-taiwan/",
+      "lastmod": "2014-01-10T07:52:00+00:00",
+      "destination": "taiwan",
+      "contentType": "general",
+      "title": "Film Seediq Bale Taiwan",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Film Seediq Bale Taiwan\" (taiwan, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-inde/",
+      "lastmod": "2013-11-28T06:11:27+00:00",
+      "destination": "inde",
+      "contentType": "guide",
+      "title": "Infos Pratiques Inde",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Infos Pratiques Inde\" (inde, guide) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-taiwan/",
+      "lastmod": "2013-10-16T02:52:44+00:00",
+      "destination": "taiwan",
+      "contentType": "guide",
+      "title": "Infos Pratiques Taiwan",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Infos Pratiques Taiwan\" (taiwan, guide) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-myanmar/",
+      "lastmod": "2013-10-16T02:50:18+00:00",
+      "destination": "myanmar",
+      "contentType": "guide",
+      "title": "Infos Pratiques Myanmar",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Infos Pratiques Myanmar\" (myanmar, guide) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/taj_mahal_inde/",
+      "lastmod": "2013-10-11T03:17:26+00:00",
+      "destination": "inde",
+      "contentType": "general",
+      "title": "Taj_mahal_inde",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Taj_mahal_inde\" (inde, general) — no matching FlashVoyage article found"
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visiter-krabi-faire-voir/",
-      "lastmod": "2025-05-01T13:12:04+00:00",
-      "destination": "krabi",
+      "url": "https://generationvoyage.fr/treks-nepal/",
+      "lastmod": "2025-12-16T17:57:04+00:00",
+      "destination": "nepal",
+      "contentType": "general",
+      "title": "Treks Nepal",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Treks Nepal\" (nepal, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-siem-reap-faire-voir/",
+      "lastmod": "2025-12-16T18:32:13+00:00",
+      "destination": "siem-reap",
       "contentType": "activites",
-      "title": "Visiter Krabi Faire Voir",
+      "title": "Visiter Siem Reap Faire Voir",
       "action": "content_gap",
       "priority": "P1",
-      "reason": "Competitor covers \"Visiter Krabi Faire Voir\" (krabi, activites) — no matching FlashVoyage article found"
+      "reason": "Competitor covers \"Visiter Siem Reap Faire Voir\" (siem-reap, activites) — no matching FlashVoyage article found"
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visa-birmanie/",
-      "lastmod": "2025-05-02T10:29:10+00:00",
-      "destination": "birmanie",
-      "contentType": "visa",
-      "title": "Visa Birmanie",
+      "url": "https://generationvoyage.fr/endroits-visiter-inde/",
+      "lastmod": "2025-12-16T18:36:10+00:00",
+      "destination": "inde",
+      "contentType": "activites",
+      "title": "Endroits Visiter Inde",
       "action": "content_gap",
       "priority": "P1",
-      "reason": "Competitor covers \"Visa Birmanie\" (birmanie, visa) — no matching FlashVoyage article found"
+      "reason": "Competitor covers \"Endroits Visiter Inde\" (inde, activites) — no matching FlashVoyage article found"
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/plus-beaux-endroits-birmanie/",
-      "lastmod": "2025-05-02T10:29:13+00:00",
-      "destination": "birmanie",
+      "url": "https://generationvoyage.fr/jardin-zen-kyoto/",
+      "lastmod": "2025-12-24T09:01:11+00:00",
+      "destination": "kyoto",
       "contentType": "general",
-      "title": "Plus Beaux Endroits Birmanie",
+      "title": "Jardin Zen Kyoto",
       "action": "content_gap",
       "priority": "P1",
-      "reason": "Competitor covers \"Plus Beaux Endroits Birmanie\" (birmanie, general) — no matching FlashVoyage article found"
+      "reason": "Competitor covers \"Jardin Zen Kyoto\" (kyoto, general) — no matching FlashVoyage article found"
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-maldives/",
-      "lastmod": "2025-04-25T13:49:44+00:00",
-      "destination": "maldives",
+      "url": "https://generationvoyage.fr/temple-kyoto/",
+      "lastmod": "2025-12-24T09:36:19+00:00",
+      "destination": "kyoto",
+      "contentType": "activites",
+      "title": "Temple Kyoto",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Temple Kyoto\" (kyoto, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/9-choses-a-faire-a-kyoto/",
+      "lastmod": "2025-12-24T10:02:41+00:00",
+      "destination": "kyoto",
       "contentType": "general",
-      "title": "Loger Maldives",
+      "title": "9 Choses A Faire A Kyoto",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"9 Choses A Faire A Kyoto\" (kyoto, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-philippines/",
+      "lastmod": "2014-03-13T04:26:06+00:00",
+      "destination": "philippines",
+      "contentType": "guide",
+      "title": "Infos Pratiques Philippines",
       "action": "monitor",
       "priority": "P3",
-      "reason": "We cover this topic: \"Maratua vs Maldives pour une lune de miel : arbitrer entre authenticité et logistique\" (score=18, freshness=1.00)",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
       "matchedArticle": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/que-faire-au-japon/",
+      "lastmod": "2014-03-11T14:14:18+00:00",
+      "destination": "japon",
+      "contentType": "general",
+      "title": "Que Faire Au Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=43, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 43,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/a-voir-faire-absolument-en-thailande/",
+      "lastmod": "2014-03-10T15:53:18+00:00",
+      "destination": "thailande",
+      "contentType": "general",
+      "title": "A Voir Faire Absolument En Thailande",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=70, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4487,
+        "slug": "voyage-thailande-pas-cher-2026-budget",
+        "compositeScore": 70,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-thailande/",
+      "lastmod": "2014-03-08T08:38:12+00:00",
+      "destination": "thailande",
+      "contentType": "guide",
+      "title": "Infos Pratiques Thailande",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=70, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4487,
+        "slug": "voyage-thailande-pas-cher-2026-budget",
+        "compositeScore": 70,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/top10bali/",
+      "lastmod": "2014-03-08T08:31:35+00:00",
+      "destination": "bali",
+      "contentType": "classement",
+      "title": "Top10bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=35, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 35,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/sur_la_route/voyage-philippines-avis-impressions/",
+      "lastmod": "2014-03-06T12:47:47+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Voyage Philippines Avis Impressions",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/ile-de-corregidor-philippines/",
+      "lastmod": "2014-03-04T10:09:04+00:00",
+      "destination": "philippines",
+      "contentType": "plage",
+      "title": "Ile De Corregidor Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/sur_la_route/philippines-malate-le-ghetto-backpacker-de-manila/",
+      "lastmod": "2014-03-03T12:32:22+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Philippines Malate Le Ghetto Backpacker De Manila",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/visiter-angkor-wat-cambodge/",
+      "lastmod": "2014-02-04T08:55:16+00:00",
+      "destination": "cambodge",
+      "contentType": "activites",
+      "title": "Visiter Angkor Wat Cambodge",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas\" (score=42, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4369,
+        "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+        "compositeScore": 42,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/culture/meilleurs-films-coree-du-sud/",
+      "lastmod": "2014-01-22T14:32:42+00:00",
+      "destination": "coree",
+      "contentType": "classement",
+      "title": "Meilleurs Films Coree Du Sud",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage en Corée du Sud en avril : la pollution de l&rsquo;air compromet-elle vraiment ton itinéraire ?\" (score=19, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 3243,
+        "slug": "voyage-en-coree-du-sud-en-avril-la-pollution-de-lair-compromet-elle-vraiment-ton-itineraire",
+        "compositeScore": 19,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/visiter-borobudur-java-indonesie/",
+      "lastmod": "2014-01-22T06:33:56+00:00",
+      "destination": "indonesie",
+      "contentType": "activites",
+      "title": "Visiter Borobudur Java Indonesie",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Indonésie solo 4 semaines : les 5 pièges que les guides oublient\" (score=26, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 3546,
+        "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+        "compositeScore": 26,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/guide-voyage-indonesie/",
+      "lastmod": "2014-01-22T06:15:54+00:00",
+      "destination": "indonesie",
+      "contentType": "guide",
+      "title": "Guide Voyage Indonesie",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Indonésie solo 4 semaines : les 5 pièges que les guides oublient\" (score=26, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 3546,
+        "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+        "compositeScore": 26,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/volcan-bromo-java-indonesie/",
+      "lastmod": "2014-01-22T05:57:46+00:00",
+      "destination": "indonesie",
+      "contentType": "transport",
+      "title": "Volcan Bromo Java Indonesie",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Indonésie solo 4 semaines : les 5 pièges que les guides oublient\" (score=26, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 3546,
+        "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+        "compositeScore": 26,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-japon/",
+      "lastmod": "2014-01-14T06:01:32+00:00",
+      "destination": "japon",
+      "contentType": "guide",
+      "title": "Infos Pratiques Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=43, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 43,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/thailande/top-things-to-do-see-in-thailand/",
+      "lastmod": "2014-01-14T05:40:20+00:00",
+      "destination": "thailande",
+      "contentType": "classement",
+      "title": "Top Things To Do See In Thailand",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=70, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4487,
+        "slug": "voyage-thailande-pas-cher-2026-budget",
+        "compositeScore": 70,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/images/vietnam_son_doong/",
+      "lastmod": "2013-12-17T11:25:09+00:00",
+      "destination": "vietnam",
+      "contentType": "general",
+      "title": "Vietnam_son_doong",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Vietnam : le comparatif que les blogs ne font jamais (et les frais cachés)\" (score=54, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4250,
+        "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
+        "compositeScore": 54,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/photos_de_voyage/photos_coree_du_sud/",
+      "lastmod": "2013-11-28T06:15:11+00:00",
+      "destination": "coree",
+      "contentType": "general",
+      "title": "Photos_coree_du_sud",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage en Corée du Sud en avril : la pollution de l&rsquo;air compromet-elle vraiment ton itinéraire ?\" (score=19, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 3243,
+        "slug": "voyage-en-coree-du-sud-en-avril-la-pollution-de-lair-compromet-elle-vraiment-ton-itineraire",
+        "compositeScore": 19,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-voyage-cambodge/",
+      "lastmod": "2013-11-28T06:11:06+00:00",
+      "destination": "cambodge",
+      "contentType": "guide",
+      "title": "Infos Pratiques Voyage Cambodge",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas\" (score=42, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4369,
+        "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+        "compositeScore": 42,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/culture/departures-film-japon/",
+      "lastmod": "2013-11-03T05:33:37+00:00",
+      "destination": "japon",
+      "contentType": "general",
+      "title": "Departures Film Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=43, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 43,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/mont-koya-japon/",
+      "lastmod": "2013-10-26T04:52:08+00:00",
+      "destination": "japon",
+      "contentType": "general",
+      "title": "Mont Koya Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=43, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 43,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-voyage-laos/",
+      "lastmod": "2013-10-19T06:30:00+00:00",
+      "destination": "laos",
+      "contentType": "guide",
+      "title": "Infos Pratiques Voyage Laos",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Laos solo : 2 risques que les blogs voyage cachent aux femmes seules\" (score=34, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 3410,
+        "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
+        "compositeScore": 34,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/conseils-visite-hiroshima-miyajima-japon/",
+      "lastmod": "2013-10-16T03:45:47+00:00",
+      "destination": "japon",
+      "contentType": "activites",
+      "title": "Conseils Visite Hiroshima Miyajima Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=43, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 43,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-coree-du-sud/",
+      "lastmod": "2013-10-16T02:52:37+00:00",
+      "destination": "coree",
+      "contentType": "guide",
+      "title": "Infos Pratiques Coree Du Sud",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage en Corée du Sud en avril : la pollution de l&rsquo;air compromet-elle vraiment ton itinéraire ?\" (score=19, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 3243,
+        "slug": "voyage-en-coree-du-sud-en-avril-la-pollution-de-lair-compromet-elle-vraiment-ton-itineraire",
+        "compositeScore": 19,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-sri-lanka/",
+      "lastmod": "2013-10-16T02:52:33+00:00",
+      "destination": "sri-lanka",
+      "contentType": "guide",
+      "title": "Infos Pratiques Sri Lanka",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés\" (score=15, freshness=0.99)",
+      "matchedArticle": {
+        "wpId": 3056,
+        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
+        "compositeScore": 15,
+        "freshness": 0.99
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-vietnam/",
+      "lastmod": "2013-10-16T02:52:23+00:00",
+      "destination": "vietnam",
+      "contentType": "guide",
+      "title": "Infos Pratiques Vietnam",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Vietnam : le comparatif que les blogs ne font jamais (et les frais cachés)\" (score=54, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4250,
+        "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
+        "compositeScore": 54,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-singapour/",
+      "lastmod": "2013-10-16T02:52:19+00:00",
+      "destination": "singapour",
+      "contentType": "guide",
+      "title": "Infos Pratiques Singapour",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?\" (score=33, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5072,
+        "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+        "compositeScore": 33,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-malaisie/",
+      "lastmod": "2013-10-16T02:48:00+00:00",
+      "destination": "malaisie",
+      "contentType": "guide",
+      "title": "Infos Pratiques Malaisie",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Escale Singapour ou Kuala Lumpur ? Le dilemme incontournable pour la Malaisie\" (score=18, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5162,
+        "slug": "escale-singapour-ou-kuala-lumpur-le-dilemme-incontournable-pour-la-malaisie",
         "compositeScore": 18,
         "freshness": 1
       }
     },
     {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-lombok/",
-      "lastmod": "2025-04-25T13:53:27+00:00",
-      "destination": "lombok",
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/interview/interview_vietnam/",
+      "lastmod": "2013-10-11T03:15:26+00:00",
+      "destination": "vietnam",
       "contentType": "general",
-      "title": "Loger Lombok",
+      "title": "Interview_vietnam",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Vietnam : le comparatif que les blogs ne font jamais (et les frais cachés)\" (score=54, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4250,
+        "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
+        "compositeScore": 54,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/sur_la_route/impressions_coree_du_sud/",
+      "lastmod": "2013-10-11T02:01:44+00:00",
+      "destination": "coree",
+      "contentType": "general",
+      "title": "Impressions_coree_du_sud",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage en Corée du Sud en avril : la pollution de l&rsquo;air compromet-elle vraiment ton itinéraire ?\" (score=19, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 3243,
+        "slug": "voyage-en-coree-du-sud-en-avril-la-pollution-de-lair-compromet-elle-vraiment-ton-itineraire",
+        "compositeScore": 19,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/working_holiday_visa/obtenir-whv-japon/",
+      "lastmod": "2013-06-12T17:42:33+00:00",
+      "destination": "japon",
+      "contentType": "visa",
+      "title": "Obtenir Whv Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=43, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 43,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/spots-plongee-philippines/",
+      "lastmod": "2025-12-16T16:40:17+00:00",
+      "destination": "philippines",
+      "contentType": "plage",
+      "title": "Spots Plongee Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/plus-belles-iles-philippines/",
+      "lastmod": "2025-12-16T16:43:38+00:00",
+      "destination": "philippines",
+      "contentType": "plage",
+      "title": "Plus Belles Iles Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/riziere-philippines/",
+      "lastmod": "2025-12-16T16:44:12+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Riziere Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/island-hopping-philippines/",
+      "lastmod": "2025-12-16T16:45:40+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Island Hopping Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/surf-bali/",
+      "lastmod": "2025-12-16T17:08:58+00:00",
+      "destination": "bali",
+      "contentType": "general",
+      "title": "Surf Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=35, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 35,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/randonnee-mont-batur-bali/",
+      "lastmod": "2025-12-16T17:16:24+00:00",
+      "destination": "bali",
+      "contentType": "general",
+      "title": "Randonnee Mont Batur Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=35, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 35,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-cascade-tegenungan-bali/",
+      "lastmod": "2025-12-16T17:34:42+00:00",
+      "destination": "bali",
+      "contentType": "activites",
+      "title": "Visiter Cascade Tegenungan Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=35, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 35,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-lombok-faire-voir/",
+      "lastmod": "2025-12-16T17:45:55+00:00",
+      "destination": "lombok",
+      "contentType": "activites",
+      "title": "Visiter Lombok Faire Voir",
       "action": "monitor",
       "priority": "P3",
       "reason": "We cover this topic: \"Vivre à Lombok en tant que nomade numérique : les 10 coûts cachés qui dévorent ton budget\" (score=15, freshness=1.00)",
@@ -145,402 +889,164 @@
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/expressions-phrases-indonesien/",
-      "lastmod": "2025-04-25T13:53:34+00:00",
-      "destination": "indonesie",
-      "contentType": "general",
-      "title": "Expressions Phrases Indonesien",
+      "url": "https://generationvoyage.fr/visiter-kuala-lumpur-faire-voir/",
+      "lastmod": "2025-12-16T18:27:13+00:00",
+      "destination": "kuala-lumpur",
+      "contentType": "activites",
+      "title": "Visiter Kuala Lumpur Faire Voir",
       "action": "monitor",
       "priority": "P3",
-      "reason": "We cover this topic: \"Indonésie solo 4 semaines : les 5 pièges que les guides oublient\" (score=27, freshness=1.00)",
+      "reason": "We cover this topic: \"Choisir Entre Taipei et Kuala Lumpur : Un Itinéraire de 4 Jours Qui Compte\" (score=14, freshness=0.96)",
       "matchedArticle": {
-        "wpId": 3546,
-        "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
-        "compositeScore": 27,
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 14,
+        "freshness": 0.96
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/endroits-visiter-malaisie/",
+      "lastmod": "2025-12-16T18:27:19+00:00",
+      "destination": "malaisie",
+      "contentType": "activites",
+      "title": "Endroits Visiter Malaisie",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Escale Singapour ou Kuala Lumpur ? Le dilemme incontournable pour la Malaisie\" (score=18, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5162,
+        "slug": "escale-singapour-ou-kuala-lumpur-le-dilemme-incontournable-pour-la-malaisie",
+        "compositeScore": 18,
         "freshness": 1
       }
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/observer-elephants-sri-lanka/",
-      "lastmod": "2025-04-26T06:30:36+00:00",
-      "destination": "sri-lanka",
-      "contentType": "general",
-      "title": "Observer Elephants Sri Lanka",
+      "url": "https://generationvoyage.fr/visiter-singapour-faire-voir/",
+      "lastmod": "2025-12-16T18:28:15+00:00",
+      "destination": "singapour",
+      "contentType": "activites",
+      "title": "Visiter Singapour Faire Voir",
       "action": "monitor",
       "priority": "P3",
-      "reason": "We cover this topic: \"Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés\" (score=15, freshness=0.99)",
+      "reason": "We cover this topic: \"Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?\" (score=33, freshness=1.00)",
       "matchedArticle": {
-        "wpId": 3056,
-        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
+        "wpId": 5072,
+        "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+        "compositeScore": 33,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/endroits-visiter-cambodge/",
+      "lastmod": "2025-12-16T18:32:22+00:00",
+      "destination": "cambodge",
+      "contentType": "activites",
+      "title": "Endroits Visiter Cambodge",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas\" (score=42, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4369,
+        "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+        "compositeScore": 42,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/guide-quartier-lumphini-bangkok/",
+      "lastmod": "2025-12-19T14:03:49+00:00",
+      "destination": "bangkok",
+      "contentType": "guide",
+      "title": "Guide Quartier Lumphini Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
+      "matchedArticle": {
+        "wpId": 3174,
+        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
         "compositeScore": 15,
         "freshness": 0.99
       }
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/ferry-thailande/",
-      "lastmod": "2025-04-26T06:37:51+00:00",
-      "destination": "thailande",
-      "contentType": "transport",
-      "title": "Ferry Thailande",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=67, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4487,
-        "slug": "voyage-thailande-pas-cher-2026-budget",
-        "compositeScore": 67,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/assurance-voyage-thailande/",
-      "lastmod": "2025-04-26T06:39:20+00:00",
-      "destination": "thailande",
-      "contentType": "general",
-      "title": "Assurance Voyage Thailande",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=67, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4487,
-        "slug": "voyage-thailande-pas-cher-2026-budget",
-        "compositeScore": 67,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-avec-vue-tokyo/",
-      "lastmod": "2025-04-26T06:39:22+00:00",
-      "destination": "tokyo",
-      "contentType": "hebergement",
-      "title": "Hotels Avec Vue Tokyo",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/assurance-voyage-indonesie/",
-      "lastmod": "2025-04-26T06:43:41+00:00",
-      "destination": "indonesie",
-      "contentType": "general",
-      "title": "Assurance Voyage Indonesie",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Indonésie solo 4 semaines : les 5 pièges que les guides oublient\" (score=27, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 3546,
-        "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
-        "compositeScore": 27,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/randonnees-thailande/",
-      "lastmod": "2025-04-26T06:44:19+00:00",
-      "destination": "thailande",
-      "contentType": "general",
-      "title": "Randonnees Thailande",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=67, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4487,
-        "slug": "voyage-thailande-pas-cher-2026-budget",
-        "compositeScore": 67,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/assurance-voyage-japon/",
-      "lastmod": "2025-04-26T06:44:24+00:00",
-      "destination": "japon",
-      "contentType": "general",
-      "title": "Assurance Voyage Japon",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=44, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4373,
-        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
-        "compositeScore": 44,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/assurance-voyage-inde/",
-      "lastmod": "2025-04-26T06:45:19+00:00",
-      "destination": "inde",
-      "contentType": "general",
-      "title": "Assurance Voyage Inde",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement\" (score=40, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4252,
-        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-        "compositeScore": 40,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/ferry-philippines/",
-      "lastmod": "2025-04-26T06:49:14+00:00",
-      "destination": "philippines",
-      "contentType": "transport",
-      "title": "Ferry Philippines",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=39, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4371,
-        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
-        "compositeScore": 39,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-capsule-tokyo/",
-      "lastmod": "2025-04-26T09:31:13+00:00",
-      "destination": "tokyo",
-      "contentType": "hebergement",
-      "title": "Hotels Capsule Tokyo",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/airbnb-vue-tokyo/",
-      "lastmod": "2025-04-26T09:45:36+00:00",
-      "destination": "tokyo",
-      "contentType": "general",
-      "title": "Airbnb Vue Tokyo",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotel-tokyo/",
-      "lastmod": "2025-04-26T09:52:40+00:00",
-      "destination": "tokyo",
-      "contentType": "hebergement",
-      "title": "Hotel Tokyo",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotel-futuriste-tokyo/",
-      "lastmod": "2025-04-26T09:53:31+00:00",
-      "destination": "tokyo",
-      "contentType": "hebergement",
-      "title": "Hotel Futuriste Tokyo",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-airbnb-traditionnel-tokyo/",
-      "lastmod": "2025-04-26T09:53:37+00:00",
-      "destination": "tokyo",
-      "contentType": "hebergement",
-      "title": "Hotels Airbnb Traditionnel Tokyo",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotel-luxe-tokyo/",
-      "lastmod": "2025-04-26T09:53:39+00:00",
-      "destination": "tokyo",
-      "contentType": "hebergement",
-      "title": "Hotel Luxe Tokyo",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/randonne-balade-tokyo/",
-      "lastmod": "2025-04-26T09:53:49+00:00",
-      "destination": "tokyo",
-      "contentType": "general",
-      "title": "Randonne Balade Tokyo",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotel-manga-tokyo/",
-      "lastmod": "2025-04-26T09:55:47+00:00",
-      "destination": "tokyo",
-      "contentType": "hebergement",
-      "title": "Hotel Manga Tokyo",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/logement-traditionnel-japon/",
-      "lastmod": "2025-04-26T09:56:28+00:00",
-      "destination": "japon",
-      "contentType": "hebergement",
-      "title": "Logement Traditionnel Japon",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=44, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4373,
-        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
-        "compositeScore": 44,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/airbnb-moderne-japon/",
-      "lastmod": "2025-04-26T09:56:35+00:00",
-      "destination": "japon",
-      "contentType": "general",
-      "title": "Airbnb Moderne Japon",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=44, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4373,
-        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
-        "compositeScore": 44,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/randonnee-japon/",
-      "lastmod": "2025-04-26T09:58:09+00:00",
-      "destination": "japon",
-      "contentType": "general",
-      "title": "Randonnee Japon",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=44, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4373,
-        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
-        "compositeScore": 44,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/secrets-historiques-tokyo/",
-      "lastmod": "2025-04-26T10:17:08+00:00",
-      "destination": "tokyo",
-      "contentType": "general",
-      "title": "Secrets Historiques Tokyo",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/voyage-vietnam-petits-prix-ou-luxe/",
-      "lastmod": "2025-04-26T10:18:53+00:00",
+      "url": "https://generationvoyage.fr/endroits-visiter-vietnam/",
+      "lastmod": "2025-12-19T14:21:27+00:00",
       "destination": "vietnam",
-      "contentType": "budget",
-      "title": "Voyage Vietnam Petits Prix Ou Luxe",
+      "contentType": "activites",
+      "title": "Endroits Visiter Vietnam",
       "action": "monitor",
       "priority": "P3",
-      "reason": "We cover this topic: \"eSIM Vietnam : le comparatif que les blogs ne font jamais (et les frais cachés)\" (score=56, freshness=1.00)",
+      "reason": "We cover this topic: \"eSIM Vietnam : le comparatif que les blogs ne font jamais (et les frais cachés)\" (score=54, freshness=1.00)",
       "matchedArticle": {
         "wpId": 4250,
         "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
-        "compositeScore": 56,
+        "compositeScore": 54,
         "freshness": 1
       }
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/voyage-tokyo-2025-conseils/",
-      "lastmod": "2025-04-26T13:41:30+00:00",
-      "destination": "tokyo",
+      "url": "https://generationvoyage.fr/plus-beaux-endroits-philippines/",
+      "lastmod": "2025-12-19T14:25:10+00:00",
+      "destination": "philippines",
       "contentType": "general",
-      "title": "Voyage Tokyo 2025 Conseils",
+      "title": "Plus Beaux Endroits Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/temples-bali/",
+      "lastmod": "2025-12-19T14:26:11+00:00",
+      "destination": "bali",
+      "contentType": "activites",
+      "title": "Temples Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=35, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 35,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/guide-quartier-hua-lamphong-bangkok/",
+      "lastmod": "2025-12-19T14:30:17+00:00",
+      "destination": "bangkok",
+      "contentType": "guide",
+      "title": "Guide Quartier Hua Lamphong Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
+      "matchedArticle": {
+        "wpId": 3174,
+        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
+        "compositeScore": 15,
+        "freshness": 0.99
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/temples-et-palais-tokyo/",
+      "lastmod": "2025-12-19T16:38:10+00:00",
+      "destination": "tokyo",
+      "contentType": "activites",
+      "title": "Temples Et Palais Tokyo",
       "action": "monitor",
       "priority": "P3",
       "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
@@ -553,383 +1059,162 @@
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/airbnb-bali/",
-      "lastmod": "2025-05-02T10:14:37+00:00",
-      "destination": "bali",
+      "url": "https://generationvoyage.fr/lieux-samourais-tokyo/",
+      "lastmod": "2025-12-19T16:39:16+00:00",
+      "destination": "tokyo",
       "contentType": "general",
-      "title": "Airbnb Bali",
+      "title": "Lieux Samourais Tokyo",
       "action": "monitor",
       "priority": "P3",
-      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=36, freshness=1.00)",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
       "matchedArticle": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 36,
-        "freshness": 1
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 15,
+        "freshness": 0.99
       }
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-bali/",
-      "lastmod": "2025-05-02T10:14:46+00:00",
-      "destination": "bali",
+      "url": "https://generationvoyage.fr/excursion-tokyo/",
+      "lastmod": "2025-12-19T16:40:02+00:00",
+      "destination": "tokyo",
       "contentType": "general",
-      "title": "Loger Bali",
+      "title": "Excursion Tokyo",
       "action": "monitor",
       "priority": "P3",
-      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=36, freshness=1.00)",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=15, freshness=0.99)",
       "matchedArticle": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 36,
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 15,
+        "freshness": 0.99
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/temple-japonais-visiter/",
+      "lastmod": "2025-12-24T09:36:26+00:00",
+      "destination": "japon",
+      "contentType": "activites",
+      "title": "Temple Japonais Visiter",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=43, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 43,
         "freshness": 1
       }
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visa-indonesie-bali/",
-      "lastmod": "2025-05-02T10:14:50+00:00",
-      "destination": "bali",
-      "contentType": "visa",
-      "title": "Visa Indonesie Bali",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=36, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 36,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotel-luxe-bali/",
-      "lastmod": "2025-05-02T10:14:52+00:00",
-      "destination": "bali",
-      "contentType": "hebergement",
-      "title": "Hotel Luxe Bali",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=36, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 36,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/airbnb-luxe-bali/",
-      "lastmod": "2025-05-02T10:15:01+00:00",
-      "destination": "bali",
+      "url": "https://generationvoyage.fr/endroits-fan-manga-japon/",
+      "lastmod": "2025-12-24T09:36:30+00:00",
+      "destination": "japon",
       "contentType": "general",
-      "title": "Airbnb Luxe Bali",
+      "title": "Endroits Fan Manga Japon",
       "action": "monitor",
       "priority": "P3",
-      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=36, freshness=1.00)",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=43, freshness=1.00)",
       "matchedArticle": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 36,
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 43,
         "freshness": 1
       }
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/meilleurs-spots-plongee-bali/",
-      "lastmod": "2025-05-02T10:15:09+00:00",
-      "destination": "bali",
+      "url": "https://generationvoyage.fr/plages-philippines/",
+      "lastmod": "2025-12-24T10:01:39+00:00",
+      "destination": "philippines",
       "contentType": "plage",
-      "title": "Meilleurs Spots Plongee Bali",
+      "title": "Plages Philippines",
       "action": "monitor",
       "priority": "P3",
-      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=36, freshness=1.00)",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
       "matchedArticle": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 36,
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
         "freshness": 1
       }
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/quel-budget-partir-bali/",
-      "lastmod": "2025-05-02T10:15:12+00:00",
-      "destination": "bali",
-      "contentType": "budget",
-      "title": "Quel Budget Partir Bali",
+      "url": "https://generationvoyage.fr/randonnees-philippines/",
+      "lastmod": "2025-12-24T10:01:44+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Randonnees Philippines",
       "action": "monitor",
       "priority": "P3",
-      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=36, freshness=1.00)",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
       "matchedArticle": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 36,
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
         "freshness": 1
       }
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/airbnb-bangkok/",
-      "lastmod": "2025-05-02T10:15:30+00:00",
-      "destination": "bangkok",
+      "url": "https://generationvoyage.fr/ascension-volcans-philippines/",
+      "lastmod": "2025-12-24T10:01:50+00:00",
+      "destination": "philippines",
+      "contentType": "transport",
+      "title": "Ascension Volcans Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/cascades-philippines/",
+      "lastmod": "2025-12-24T10:01:53+00:00",
+      "destination": "philippines",
       "contentType": "general",
-      "title": "Airbnb Bangkok",
+      "title": "Cascades Philippines",
       "action": "monitor",
       "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
       "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
+        "freshness": 1
       }
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/chang-chui-bangkok/",
-      "lastmod": "2025-05-02T10:15:33+00:00",
-      "destination": "bangkok",
-      "contentType": "general",
-      "title": "Chang Chui Bangkok",
+      "url": "https://generationvoyage.fr/activites-famille-philippines/",
+      "lastmod": "2025-12-24T10:01:56+00:00",
+      "destination": "philippines",
+      "contentType": "activites",
+      "title": "Activites Famille Philippines",
       "action": "monitor",
       "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
+      "reason": "We cover this topic: \"Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas\" (score=38, freshness=1.00)",
       "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-avec-vue-bangkok/",
-      "lastmod": "2025-05-02T10:15:58+00:00",
-      "destination": "bangkok",
-      "contentType": "hebergement",
-      "title": "Hotels Avec Vue Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-aeroport-bangkok/",
-      "lastmod": "2025-05-02T10:16:01+00:00",
-      "destination": "bangkok",
-      "contentType": "hebergement",
-      "title": "Hotels Aeroport Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-centre-ville-bangkok/",
-      "lastmod": "2025-05-02T10:16:04+00:00",
-      "destination": "bangkok",
-      "contentType": "hebergement",
-      "title": "Hotels Centre Ville Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/marches-bangkok/",
-      "lastmod": "2025-05-02T10:16:07+00:00",
-      "destination": "bangkok",
-      "contentType": "general",
-      "title": "Marches Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/rooftops-bars-bangkok/",
-      "lastmod": "2025-05-02T10:16:09+00:00",
-      "destination": "bangkok",
-      "contentType": "classement",
-      "title": "Rooftops Bars Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-romantiques-bangkok/",
-      "lastmod": "2025-05-02T10:16:12+00:00",
-      "destination": "bangkok",
-      "contentType": "hebergement",
-      "title": "Hotels Romantiques Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/airbnb-piscine-bangkok/",
-      "lastmod": "2025-05-02T10:16:15+00:00",
-      "destination": "bangkok",
-      "contentType": "general",
-      "title": "Airbnb Piscine Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/appart-hotel-bangkok/",
-      "lastmod": "2025-05-02T10:16:17+00:00",
-      "destination": "bangkok",
-      "contentType": "hebergement",
-      "title": "Appart Hotel Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/airbnb-rooftop-bangkok/",
-      "lastmod": "2025-05-02T10:16:20+00:00",
-      "destination": "bangkok",
-      "contentType": "classement",
-      "title": "Airbnb Rooftop Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/boutique-hotels-bangkok/",
-      "lastmod": "2025-05-02T10:16:22+00:00",
-      "destination": "bangkok",
-      "contentType": "hebergement",
-      "title": "Boutique Hotels Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-bangkok/",
-      "lastmod": "2025-05-02T10:16:26+00:00",
-      "destination": "bangkok",
-      "contentType": "hebergement",
-      "title": "Hotels Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-piscine-bangkok/",
-      "lastmod": "2025-05-02T10:16:29+00:00",
-      "destination": "bangkok",
-      "contentType": "hebergement",
-      "title": "Hotels Piscine Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-luxe-bangkok/",
-      "lastmod": "2025-05-02T10:16:32+00:00",
-      "destination": "bangkok",
-      "contentType": "hebergement",
-      "title": "Hotels Luxe Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades\" (score=15, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 15,
-        "freshness": 0.99
+        "wpId": 4371,
+        "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+        "compositeScore": 38,
+        "freshness": 1
       }
     }
   ],
   "summary": {
-    "totalNew": 56,
-    "contentGaps": 8,
+    "totalNew": 77,
+    "contentGaps": 20,
     "staleRefreshes": 0,
-    "monitoring": 48
+    "monitoring": 57
   }
 }

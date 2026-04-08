@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-07T05:15:40.330Z",
+  "timestamp": "2026-04-08T05:17:10.829Z",
   "queueSize": 13,
   "queue": [
     {
@@ -81,7 +81,7 @@
         "wpId": 2945,
         "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -97,7 +97,7 @@
         "wpId": 2938,
         "slug": "indonesie-en-14-jours-decisions-cruciales-pour-un-itineraire-parfait",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
