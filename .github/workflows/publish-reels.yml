@@ -41,6 +41,9 @@ on:
         default: 'false'
         type: boolean
 
+permissions:
+  contents: write
+
 env:
   NODE_ENV: production
   # Cross-posting tokens are injected at step level (secrets not available at workflow env level)
@@ -105,11 +108,17 @@ jobs:
           else
             # Cron trigger — try smart scheduler, fallback to static calendar
             echo "[SCHEDULER] Cron trigger — running smart scheduler..."
-            RESULT=$(timeout 30 node --input-type=module -e "
+            SCHEDULER_STDERR=$(mktemp)
+            RESULT=$(timeout 60 node --input-type=module -e "
               import { decideContent } from './social-distributor/reels/smart-scheduler.js';
               const decision = await decideContent();
               console.log(JSON.stringify(decision));
-            " 2>/dev/null | tail -1) || true
+            " 2>"$SCHEDULER_STDERR" | tail -1) || true
+            if [ -s "$SCHEDULER_STDERR" ]; then
+              echo "[SCHEDULER] stderr output:"
+              cat "$SCHEDULER_STDERR"
+            fi
+            rm -f "$SCHEDULER_STDERR"
 
             if [ -z "$RESULT" ] || ! echo "$RESULT" | jq -e '.format' >/dev/null 2>&1; then
               echo "[SCHEDULER] Smart scheduler failed or timed out — using static calendar fallback"
