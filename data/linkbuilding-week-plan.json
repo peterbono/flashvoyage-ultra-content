@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 9,
+      "posted": 10,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -76,6 +76,14 @@
           "thread": "idees-itineraires-java-hors-yogyakarta-bromo-ijen-d11462719",
           "title": "Idées d'itinéraires à Java (hors Yogyakarta, Bromo et Ijen)",
           "hasLink": false,
+          "generated": true,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-09T06:17:02.561Z",
+          "thread": "bangkok-suvarnabhumi-bagages-plastifies-tarifs-conseils-pratiques-d11466716",
+          "title": "Bangkok Suvarnabhumi: bagages plastifiés, tarifs et conseils pratiques",
+          "hasLink": true,
           "generated": true,
           "status": "published"
         }
@@ -308,7 +316,7 @@
       ]
     }
   },
-  "total_posted": 22,
+  "total_posted": 23,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
