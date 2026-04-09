@@ -531,6 +531,39 @@ async function modeFormatPublish(format, postId = null) {
   return publishIfRequested(result, article, format, true);
 }
 
+// ── v2 Mode: Telegram Only (no IG/FB publish) ──────────────────────────────
+
+async function modeTelegramOnly(format, postId = null) {
+  log(`--- v2 TELEGRAM ONLY: format=${format} (NO IG/FB publish) ---`);
+
+  if (!existsSync(TMP_DIR)) mkdirSync(TMP_DIR, { recursive: true });
+
+  const article = await fetchArticle(postId);
+  const outputPath = join(TMP_DIR, `reel-${format}-${Date.now()}.mp4`);
+
+  const result = await routeToComposer(format, article, { outputPath });
+
+  log(`Reel composed: ${result.videoPath}`);
+  if (existsSync(result.videoPath)) {
+    const size = readFileSync(result.videoPath).length;
+    log(`Size: ${(size / 1024 / 1024).toFixed(1)} MB`);
+  }
+
+  // Send ONLY to Telegram — NO IG, NO FB, NO Threads
+  const caption = result.script?.caption || article.title || 'Flash Voyage';
+  const hashtags = result.script?.hashtags || ['#FlashVoyage'];
+  const tgCaption = `${caption}\n\n${hashtags.join(' ')}`;
+
+  try {
+    await sendTestReelToTelegram(result.videoPath, tgCaption);
+    log(`Sent to Telegram ONLY (no social publish)`);
+  } catch (err) {
+    log(`Telegram send failed: ${err.message}`);
+  }
+
+  return result;
+}
+
 // ── Legacy Delegation ────────────────────────────────────────────────────────
 
 /**
@@ -710,16 +743,19 @@ async function main() {
   const postId = getFlagValue('post');
   const isTest = hasFlag('test');
   const isPublish = hasFlag('publish');
+  const isTelegramOnly = hasFlag('telegram-only');
 
   // ── v2 format mode ────────────────────────────────────────────────────────
   const allV2 = new Set([...FORMAT_NAMES, 'humor-tweet', 'versus']);
   if (format && allV2.has(format)) {
-    log(`FlashVoyage Reels v2 — format: ${format}, test: ${isTest}, publish: ${isPublish}`);
+    log(`FlashVoyage Reels v2 — format: ${format}, test: ${isTest}, publish: ${isPublish}, telegramOnly: ${isTelegramOnly}`);
     log(`ANTHROPIC_API_KEY: ${process.env.ANTHROPIC_API_KEY ? 'set' : 'NOT SET'}`);
     log(`PEXELS_API_KEY: ${process.env.PEXELS_API_KEY ? 'set' : 'not set'}`);
 
     if (isTest) {
       await modeFormatTest(format, postId);
+    } else if (isTelegramOnly) {
+      await modeTelegramOnly(format, postId);
     } else if (isPublish) {
       await modeFormatPublish(format, postId);
     } else {

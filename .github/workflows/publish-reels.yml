@@ -40,6 +40,11 @@ on:
         required: false
         default: 'false'
         type: boolean
+      telegram_only:
+        description: 'Telegram only — generate + send to Telegram, NO IG/FB publish'
+        required: false
+        default: 'false'
+        type: boolean
 
 permissions:
   contents: write
@@ -108,7 +113,15 @@ jobs:
             echo "reason=$REASON" >> $GITHUB_OUTPUT
             echo "article_id=$ARTICLE_ID" >> $GITHUB_OUTPUT
             echo "is_breaking=$IS_BREAKING" >> $GITHUB_OUTPUT
-            echo "publish=${{ github.event.inputs.test_only == 'true' && 'false' || 'true' }}" >> $GITHUB_OUTPUT
+            # publish=false if test_only, telegram_only means generate+telegram but no IG/FB
+            TELEGRAM_ONLY="${{ github.event.inputs.telegram_only }}"
+            if [ "${{ github.event.inputs.test_only }}" = "true" ]; then
+              echo "publish=false" >> $GITHUB_OUTPUT
+            elif [ "$TELEGRAM_ONLY" = "true" ]; then
+              echo "publish=telegram" >> $GITHUB_OUTPUT
+            else
+              echo "publish=true" >> $GITHUB_OUTPUT
+            fi
           else
             # Cron trigger — try smart scheduler, fallback to static calendar
             echo "[SCHEDULER] Cron trigger — running smart scheduler..."
@@ -193,6 +206,8 @@ jobs:
 
           if [ "$PUBLISH" = "true" ]; then
             node social-distributor/reels/index-v2.js $ARGS --publish
+          elif [ "$PUBLISH" = "telegram" ]; then
+            node social-distributor/reels/index-v2.js $ARGS --telegram-only
           else
             node social-distributor/reels/index-v2.js $ARGS --test
           fi

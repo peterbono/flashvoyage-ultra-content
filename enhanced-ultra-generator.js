@@ -2080,8 +2080,9 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
       'philippines': 'Philippines', // ID: 64 (parent: 1)
       'indonesia': 'Indonésie', // ID: 182 (parent: 1)
       
+      'malaysia': 'Malaisie', // ID: 212 (parent: 1)
+
       // Destinations sans sous-catégorie → catégorie principale "Destinations"
-      'malaysia': 'Destinations',
       'taiwan': 'Destinations',
       'hong kong': 'Destinations',
       'spain': 'Destinations',

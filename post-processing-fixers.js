@@ -2620,8 +2620,110 @@ export function fixOrphanClosingTags(html) {
   return out;
 }
 
+// ─── LLM HTML SANITIZER ────────────────────────────────────
+// Catches and fixes common LLM-generated HTML bugs before other fixers run.
+// 1. Hallucinated WP block comments (wp:post-content, wp:content)
+// 2. Orphaned </p> without opening <p>
+// 3. </br> → <br/>
+// 4. Unrendered [fv_widget ...] shortcodes
+// 5. Missing spaces before accented words (word collisions)
+export function sanitizeLlmHtml(html) {
+  let out = html;
+  let fixCount = 0;
+
+  // 1. Remove hallucinated WordPress block comments
+  // Keep legitimate ones: wp:html, wp:heading, wp:group, wp:list, wp:paragraph, wp:details
+  const legitWpBlocks = /^(html|heading|group|list|paragraph|details)$/;
+  out = out.replace(/<!--\s*\/?\s*wp:([a-z-]+)\s*-->/gi, (match, blockName) => {
+    if (legitWpBlocks.test(blockName.toLowerCase())) return match;
+    fixCount++;
+    return '';
+  });
+
+  // 2. Fix orphaned </p> without opening <p>
+  // Pattern: <strong>text</strong> more text.</p> without a preceding <p> tag
+  // Handles both start-of-line and inline cases (e.g. after </div> or other closing tags)
+  out = out.replace(/((?:^|(?:<\/\w+>\s*)|(?:-->\s*)))\s*(<strong>[^<]*<\/strong>[^]*?<\/p>)/gm, (match, prefix, content) => {
+    // Only wrap if there's no opening <p> before the <strong>
+    if (/<p[\s>][^]*$/i.test(prefix)) return match;
+    // Don't double-wrap if already has <p>
+    if (/^<p[\s>]/i.test(content.trim())) return match;
+    fixCount++;
+    return prefix + '<p>' + content;
+  });
+
+  // 3. Fix </br> to <br/>
+  out = out.replace(/<\/br>/gi, () => { fixCount++; return '<br/>'; });
+
+  // 4. Remove unrendered [fv_widget ...] shortcodes
+  out = out.replace(/\[fv_widget[^\]]*\]/gi, () => { fixCount++; return ''; });
+
+  // 5. Remove empty affiliate-module asides (no widget/CTA/iframe inside)
+  out = out.replace(/<aside class="affiliate-module"[^>]*>[\s\S]*?<\/aside>/gi, (match) => {
+    // Keep if it contains an actual widget, CTA link, or iframe
+    if (/<iframe|<a[^>]*class="[^"]*affiliate-module-cta|data-widget-id|\[fv_widget|tp_widget|travelpayouts/i.test(match)) {
+      return match;
+    }
+    fixCount++;
+    return '';
+  });
+
+  // 6. Split checklist items crammed into one <p> onto separate <p> tags
+  // LLMs often put multiple ✔️/❌ items in a single paragraph
+  out = out.replace(/<p>([^<]*(?:✔️|✅|☑|❌|🚫)[^<]*(?:✔️|✅|☑|❌|🚫)[^<]*)<\/p>/g, (match, inner) => {
+    const items = inner.trim().split(/\s*(?=✔️|✅|☑|❌|🚫)/).filter(s => s.trim());
+    if (items.length <= 1) return match;
+    fixCount += items.length - 1;
+    return items.map(item => '<p>' + item.trim() + '</p>').join('\n');
+  });
+
+  // 7. Fix FAQ structure: ensure each <details> is in its own fv-faq-item wrapper
+  // LLMs often dump all FAQ questions inside a single container div
+  const faqItemStyle = 'border:1px solid #e5e7eb;border-radius:8px;margin-bottom:0.75rem;overflow:hidden;';
+  const summaryStyle = 'padding:1rem 1.2rem;cursor:pointer;font-weight:600;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;';
+  const answerStyle = 'padding:0 1.2rem 1rem;color:#4b5563;line-height:1.6;';
+
+  // Find fv-faq-item containers that have multiple <details> children (broken structure)
+  out = out.replace(/<div class="fv-faq-item"[^>]*>([\s\S]*?)<\/div>(?=\s*(?:<[^d]|<d[^e]|$))/gi, (match, inner) => {
+    const detailsBlocks = inner.match(/<details[\s\S]*?<\/details>/gi);
+    if (!detailsBlocks || detailsBlocks.length <= 1) return match;
+
+    // Multiple <details> in one container — split them
+    fixCount++;
+    return detailsBlocks.map(block => {
+      // Extract question and answer
+      const qMatch = block.match(/<summary[^>]*>([\s\S]*?)<\/summary>/i);
+      const aMatch = block.match(/<\/summary>([\s\S]*?)<\/details>/i);
+      if (!qMatch || !aMatch) return block;
+
+      // Clean question text (remove SVGs, extra tags)
+      let question = qMatch[1].replace(/<svg[\s\S]*?<\/svg>/gi, '').replace(/<\/?span>/gi, '').trim();
+      // Clean answer (use div instead of p, strip wrapper tags)
+      let answer = aMatch[1].replace(/^\s*<(?:div|p)[^>]*>/i, '').replace(/<\/(?:div|p)>\s*$/i, '').trim();
+
+      return `<div class="fv-faq-item" style="${faqItemStyle}"><details style="padding:0;">\n` +
+        `<summary style="${summaryStyle}">${question}</summary>\n` +
+        `<div style="${answerStyle}">${answer}</div>\n` +
+        `</details></div>`;
+    }).join('\n');
+  });
+
+  // 8. Fix missing spaces before accented words
+  // Only when a lowercase ASCII letter is immediately followed by an uppercase accented letter
+  // starting a new word — e.g., "veuxÉviter" → "veux Éviter"
+  // Careful: do NOT split inside normal French words (àéèê etc. can appear mid-word in lowercase)
+  out = out.replace(/([a-z])([ÉÈÊËÀÂÄÔÙÛÜÏÎÇ])/g, (match, before, accent) => {
+    fixCount++;
+    return before + ' ' + accent;
+  });
+
+  if (fixCount > 0) console.log('🧼 LLM_SANITIZER: ' + fixCount + ' LLM HTML issue(s) fixed');
+  return out;
+}
+
 export function applyPostProcessingFixers(html) {
   let c = html;
+  c = sanitizeLlmHtml(c);
   c = scrubUnicodeArtifacts(c);
   c = fixGenericAccentJoins(c);
   c = fixEncodingBreaks(c);
