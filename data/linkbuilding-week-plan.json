@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 10,
+      "posted": 11,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -86,6 +86,14 @@
           "hasLink": true,
           "generated": true,
           "status": "published"
+        },
+        {
+          "date": "2026-04-09T08:02:52.654Z",
+          "thread": "remboursement-oman-air-d11467238",
+          "title": "Remboursement Oman Air",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
         }
       ],
       "posts_queued": [
@@ -131,7 +139,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 7,
+      "posted": 8,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -214,6 +222,14 @@
           "id": "ai-3881-1775548815230",
           "search": "Voyager au Japon en famille en voiture",
           "hasLink": true,
+          "status": "published",
+          "generated": true
+        },
+        {
+          "date": "2026-04-09T08:00:54.331Z",
+          "id": "ai-2867-1775721614953",
+          "search": "Comment prolonger son visa en Thaïlande",
+          "hasLink": false,
           "status": "published",
           "generated": true
         }
@@ -314,9 +330,22 @@
           "status": "published"
         }
       ]
+    },
+    "tripadvisor": {
+      "posted": 1,
+      "posts_done": [
+        {
+          "date": "2026-04-09T08:07:24.621Z",
+          "threadId": "14915508",
+          "title": "31 mars 2026",
+          "section": "Japon",
+          "hasLink": false,
+          "status": "published"
+        }
+      ]
     }
   },
-  "total_posted": 23,
+  "total_posted": 26,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
