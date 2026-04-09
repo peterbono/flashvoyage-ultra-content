@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-08T05:17:10.829Z",
+  "timestamp": "2026-04-09T05:15:57.500Z",
   "queueSize": 13,
   "queue": [
     {
@@ -129,7 +129,7 @@
         "wpId": 2910,
         "slug": "les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -145,7 +145,7 @@
         "wpId": 2904,
         "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -161,7 +161,7 @@
         "wpId": 2898,
         "slug": "vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -177,7 +177,7 @@
         "wpId": 2888,
         "slug": "48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -193,7 +193,7 @@
         "wpId": 2878,
         "slug": "vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }

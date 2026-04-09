@@ -1,8 +1,8 @@
 {
   "summary": {
-    "generatedAt": "2026-04-08T05:17:22.139Z",
-    "elapsedSeconds": 10,
-    "totalArticles": 121,
+    "generatedAt": "2026-04-09T05:16:09.009Z",
+    "elapsedSeconds": 11,
+    "totalArticles": 123,
     "articlesWithRecommendations": 8,
     "totalRecommendations": 8,
     "byPriority": {
@@ -33,7 +33,7 @@
       "ga4": {
         "pageviews": 12,
         "sessions": 10,
-        "avgDuration": 170
+        "avgDuration": 172
       },
       "gsc": {
         "impressions": 0,
@@ -87,9 +87,9 @@
       "internalLinks": 41,
       "lastModified": "2026-03-31T18:35:03",
       "ga4": {
-        "pageviews": 7,
-        "sessions": 7,
-        "avgDuration": 25
+        "pageviews": 8,
+        "sessions": 8,
+        "avgDuration": 22
       },
       "gsc": {
         "impressions": 8,
@@ -120,6 +120,90 @@
         }
       ],
       "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4132,
+      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
+      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
+      "url": "https://flashvoyage.com/japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais/",
+      "wordCount": 5121,
+      "widgetCount": 0,
+      "internalLinks": 38,
+      "lastModified": "2026-03-31T18:35:15",
+      "ga4": {
+        "pageviews": 6,
+        "sessions": 6,
+        "avgDuration": 5
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3501,
+      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "title": "Ce que Thaïlande m&rsquo;a coûté (et que les blogs ne montrent pas)",
+      "url": "https://flashvoyage.com/ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas/",
+      "wordCount": 5585,
+      "widgetCount": 0,
+      "internalLinks": 44,
+      "lastModified": "2026-03-31T17:39:14",
+      "ga4": {
+        "pageviews": 6,
+        "sessions": 6,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2857,
+      "slug": "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2",
+      "title": "Voyager au Japon : Quand voir les cerisiers sans la foule",
+      "url": "https://flashvoyage.com/voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2/",
+      "wordCount": 1541,
+      "widgetCount": 0,
+      "internalLinks": 21,
+      "lastModified": "2026-03-31T17:41:54",
+      "ga4": {
+        "pageviews": 6,
+        "sessions": 6,
+        "avgDuration": 1
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -171,62 +255,6 @@
         }
       ],
       "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4132,
-      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
-      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
-      "url": "https://flashvoyage.com/japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais/",
-      "wordCount": 5121,
-      "widgetCount": 0,
-      "internalLinks": 38,
-      "lastModified": "2026-03-31T18:35:15",
-      "ga4": {
-        "pageviews": 5,
-        "sessions": 5,
-        "avgDuration": 6
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 2857,
-      "slug": "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2",
-      "title": "Voyager au Japon : Quand voir les cerisiers sans la foule",
-      "url": "https://flashvoyage.com/voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2/",
-      "wordCount": 1541,
-      "widgetCount": 0,
-      "internalLinks": 21,
-      "lastModified": "2026-03-31T17:41:54",
-      "ga4": {
-        "pageviews": 5,
-        "sessions": 5,
-        "avgDuration": 1
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -289,9 +317,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 10,
         "clicks": 0,
-        "position": 5.7,
+        "position": 5.9,
         "topQueries": [
           {
             "query": "10 jours aux philippines",
@@ -365,34 +393,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 3501,
-      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
-      "title": "Ce que Thaïlande m&rsquo;a coûté (et que les blogs ne montrent pas)",
-      "url": "https://flashvoyage.com/ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas/",
-      "wordCount": 5585,
-      "widgetCount": 0,
-      "internalLinks": 44,
-      "lastModified": "2026-03-31T17:39:14",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 3090,
       "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
       "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
@@ -410,6 +410,62 @@
         "impressions": 2,
         "clicks": 2,
         "position": 22.5,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5189,
+      "slug": "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier",
+      "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
+      "url": "https://flashvoyage.com/malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier/",
+      "wordCount": 1193,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-04-08T11:15:26",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 1,
+        "avgDuration": 254
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5179,
+      "slug": "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage",
+      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
+      "url": "https://flashvoyage.com/thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage/",
+      "wordCount": 1547,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-04-08T10:43:43",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 2
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -461,6 +517,34 @@
         "pageviews": 3,
         "sessions": 1,
         "avgDuration": 424
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5053,
+      "slug": "thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage",
+      "title": "Thaïlande vs Vietnam : le dilemme caché pour un premier voyage",
+      "url": "https://flashvoyage.com/thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage/",
+      "wordCount": 1458,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-04-04T11:34:05",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 170
       },
       "gsc": {
         "impressions": 0,
@@ -544,7 +628,7 @@
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 15
+        "avgDuration": 34
       },
       "gsc": {
         "impressions": 0,
@@ -573,34 +657,6 @@
         "pageviews": 2,
         "sessions": 2,
         "avgDuration": 16
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5053,
-      "slug": "thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage",
-      "title": "Thaïlande vs Vietnam : le dilemme caché pour un premier voyage",
-      "url": "https://flashvoyage.com/thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage/",
-      "wordCount": 1458,
-      "widgetCount": 0,
-      "internalLinks": 22,
-      "lastModified": "2026-04-04T11:34:05",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 256
       },
       "gsc": {
         "impressions": 0,
@@ -659,9 +715,9 @@
         "avgDuration": 18
       },
       "gsc": {
-        "impressions": 31,
+        "impressions": 32,
         "clicks": 1,
-        "position": 9.9,
+        "position": 10,
         "topQueries": [
           {
             "query": "bali c'est en thailande",
@@ -919,9 +975,9 @@
         "avgDuration": 17
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 9,
         "clicks": 0,
-        "position": 6.7,
+        "position": 7.4,
         "topQueries": []
       },
       "reels": {
@@ -1140,7 +1196,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 33
+        "avgDuration": 36
       },
       "gsc": {
         "impressions": 0,
@@ -1225,6 +1281,34 @@
         "pageviews": 1,
         "sessions": 1,
         "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4030,
+      "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "url": "https://flashvoyage.com/coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget/",
+      "wordCount": 4198,
+      "widgetCount": 0,
+      "internalLinks": 38,
+      "lastModified": "2026-03-31T17:38:04",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -1949,34 +2033,6 @@
       "widgetCount": 0,
       "internalLinks": 31,
       "lastModified": "2026-03-31T17:38:00",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4030,
-      "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "url": "https://flashvoyage.com/coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget/",
-      "wordCount": 4198,
-      "widgetCount": 0,
-      "internalLinks": 38,
-      "lastModified": "2026-03-31T17:38:04",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
