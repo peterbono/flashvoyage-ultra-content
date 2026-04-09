@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-04-09T13:15:34.215Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-04-09T18:57:35.533Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "April holiday travel surge pushes Vietnam's airfares, train tickets to peak levels",
-      "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/traffic/april-holiday-travel-surge-pushes-vietnam-s-airfares-train-tickets-to-peak-levels-5060090.html",
-      "velocityScore": 0.448,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1494,
-      "estimatedTrafficIn24h": 1460,
-      "trafficLossPerHour": 1,
-      "breakdown": {
-        "trendIntensity": 0.6,
-        "timeDecay": 0.996,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 3.9
-      },
-      "detectedAt": "2026-04-09T09:19:49.000Z",
-      "scoredAt": "2026-04-09T13:15:12.260Z"
-    }
-  ]
+  "queue": []
 }
