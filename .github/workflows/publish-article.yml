@@ -21,6 +21,13 @@ on:
     - cron: '0 3 * * *'
     - cron: '0 8 * * *'
 
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-article
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -107,10 +114,10 @@ jobs:
 
       - name: Marquer l'article comme publié dans la queue
         if: success() && steps.queue.outputs.skip == 'false' && github.event.inputs.dry_run != '1'
+        env:
+          HINT: ${{ steps.queue.outputs.article_hint }}
         run: |
-          HINT="${{ steps.queue.outputs.article_hint }}"
           QUEUE_FILE="data/publication-queue.json"
-          # Met à jour le statut du premier article pending qui correspond au hint
           node --input-type=module -e "
             import fs from 'fs';
             const queue = JSON.parse(fs.readFileSync('$QUEUE_FILE', 'utf-8'));
@@ -124,7 +131,7 @@ jobs:
             } else {
               console.warn('[QUEUE] Could not find pending article with hint:', hint);
             }
-          " HINT="$HINT"
+          "
 
       - name: Mettre a jour le dashboard couts
         if: success() && steps.queue.outputs.skip == 'false'
@@ -140,6 +147,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main || true
           git add data/ published-articles-cache.json published-reddit-urls.json used-images.json articles-database.json || true
           git diff --cached --quiet || git commit -m "chore: update state after article publication"
-          git push || true
+          git push || { echo "::warning::git push failed — state files not persisted"; }

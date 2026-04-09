@@ -44,6 +44,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: reels-${{ github.event.schedule || 'manual' }}
+  cancel-in-progress: false
+
 env:
   NODE_ENV: production
   # Cross-posting tokens are injected at step level (secrets not available at workflow env level)
@@ -219,6 +223,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main || true
           git add social-distributor/data/reel-history.jsonl social-distributor/reels/data/pexels-used.json social-distributor/reels/data/content-history.json 2>/dev/null || true
           git diff --cached --quiet || git commit -m "chore: update reel state after publish [$(date -u +%Y-%m-%d)]"
-          git push || true
+          git push || { echo "::warning::git push failed — state files not persisted"; }

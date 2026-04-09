@@ -43,44 +43,45 @@ function logError(msg) {
 
 // ── Base Calendar (fallback when no overrides) ──────────────────────────────
 // hour (UTC) -> day of week (1=Mon ... 7=Sun) -> format
-// 05 UTC = 7h00 Paris summer / 6h00 winter
-// 10 UTC = 12h00 Paris (the cron is at 10:30 but we round to 10)
-// 16 UTC = 18h00 Paris
+// Cron schedule: 17:00, 19:00, 20:30 UTC
+// 17 UTC = 19h00 Paris (CEST) — prime time start
+// 19 UTC = 21h00 Paris — peak mobile
+// 20 UTC = 22h30 Paris — end of prime time (cron at 20:30)
 
 // Strategy (CEO + Growth Hacker, 2026-04-05):
-// avantapres: 2/day (morning + midday)  | cost-vs: 1/day (morning or midday)
+// avantapres: 2/day (slot 1 + slot 2)   | cost-vs: 1/day (slot 1 or slot 2)
 // leaderboard: 1 every 2 days           | best-time: 1 every 2 days
 // pick: 1/day max                       | budget: 1 every 2 days
-// humor/humor-tweet: 1 every 3 days     | month: 1 every 3 days (first Tue only)
+// humor/humor-tweet: 1 every 3 days     | month: 1 every 3 days
 // poll: KILLED                          | versus: KILLED
 
 const BASE_CALENDAR = {
-  '05': {
-    1: 'avantapres',   // Mon morning: Avant/Apres (star format)
-    2: 'cost-vs',      // Tue morning: Cost vs France (star format)
-    3: 'avantapres',   // Wed morning: Avant/Apres
-    4: 'cost-vs',      // Thu morning: Cost vs France
-    5: 'avantapres',   // Fri morning: Avant/Apres
-    6: 'cost-vs',      // Sat morning: Cost vs France
-    7: 'avantapres',   // Sun morning: Avant/Apres
+  '17': {
+    1: 'avantapres',   // Mon 19h Paris: Avant/Apres (star format)
+    2: 'cost-vs',      // Tue 19h Paris: Cost vs France
+    3: 'avantapres',   // Wed 19h Paris: Avant/Apres
+    4: 'cost-vs',      // Thu 19h Paris: Cost vs France
+    5: 'avantapres',   // Fri 19h Paris: Avant/Apres
+    6: 'cost-vs',      // Sat 19h Paris: Cost vs France
+    7: 'avantapres',   // Sun 19h Paris: Avant/Apres
   },
-  '10': {
-    1: 'avantapres',   // Mon midday: Avant/Apres (2nd daily slot)
-    2: 'avantapres',   // Tue midday: Avant/Apres (2nd daily slot)
-    3: 'avantapres',   // Wed midday: Avant/Apres (2nd daily slot)
-    4: 'avantapres',   // Thu midday: Avant/Apres (2nd daily slot)
-    5: 'avantapres',   // Fri midday: Avant/Apres (2nd daily slot)
-    6: 'avantapres',   // Sat midday: Avant/Apres (2nd daily slot)
-    7: 'avantapres',   // Sun midday: Avant/Apres (2nd daily slot)
+  '19': {
+    1: 'avantapres',   // Mon 21h Paris: Avant/Apres (2nd daily slot)
+    2: 'avantapres',   // Tue 21h Paris: Avant/Apres
+    3: 'avantapres',   // Wed 21h Paris: Avant/Apres
+    4: 'avantapres',   // Thu 21h Paris: Avant/Apres
+    5: 'avantapres',   // Fri 21h Paris: Avant/Apres
+    6: 'avantapres',   // Sat 21h Paris: Avant/Apres
+    7: 'avantapres',   // Sun 21h Paris: Avant/Apres
   },
-  '16': {
-    1: 'pick',         // Mon evening: Trip Pick
-    2: 'leaderboard',  // Tue evening: Top 10 Leaderboard
-    3: 'humor',        // Wed evening: Humor
-    4: 'budget',       // Thu evening: Budget Jour
-    5: 'best-time',    // Fri evening: Best Time to Visit
-    6: 'humor-tweet',  // Sat evening: Humor Tweet
-    7: 'month',        // Sun evening: Ou Partir En (guarded: 1st Tue only)
+  '20': {
+    1: 'pick',         // Mon 22h30 Paris: Trip Pick
+    2: 'leaderboard',  // Tue 22h30 Paris: Top 10 Leaderboard
+    3: 'humor',        // Wed 22h30 Paris: Humor
+    4: 'budget',       // Thu 22h30 Paris: Budget Jour
+    5: 'best-time',    // Fri 22h30 Paris: Best Time to Visit
+    6: 'humor-tweet',  // Sat 22h30 Paris: Humor Tweet
+    7: 'month',        // Sun 22h30 Paris: Ou Partir En
   },
 };
 
