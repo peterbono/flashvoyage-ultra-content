@@ -139,8 +139,8 @@ async function main() {
   if (!token) { log('ERROR: FB_PAGE_TOKEN not set'); process.exit(1); }
   if (!botToken || !chatId) { log('ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set'); process.exit(1); }
 
-  // Fetch reels from last N hours (default 14 to cover overnight crons with margin)
-  const hoursBack = parseInt(process.env.HOURS_BACK, 10) || 14;
+  // Fetch reels from last N hours (default 18 to cover all 3 crons: 17:00, 19:00, 20:30 UTC)
+  const hoursBack = parseInt(process.env.HOURS_BACK, 10) || 18;
   const reels = await fetchRecentReels(token, hoursBack);
 
   if (reels.length === 0) {
