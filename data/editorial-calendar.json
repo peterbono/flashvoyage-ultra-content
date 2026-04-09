@@ -1,5 +1,5 @@
 {
-  "totalPublished": 214,
+  "totalPublished": 215,
   "currentClusterId": "asie-sud-est",
   "history": [
     {
@@ -659,6 +659,13 @@
       "articleType": "support",
       "hint": "temples angkor",
       "title": "Singapour en backpacking : les 4 pièges que les guides cachent"
+    },
+    {
+      "date": "2026-04-09T13:29:31.717Z",
+      "clusterId": "asie-sud-est",
+      "articleType": "pillar",
+      "hint": "vietnam vs thailand 2026 which is better first time",
+      "title": "Vietnam vs Thaïlande : l'arbitrage crucial pour un premier voyage en Asie du Sud-Est"
     }
   ]
 }
