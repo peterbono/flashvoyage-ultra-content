@@ -23,8 +23,17 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const REELS_DATA_DIR = join(__dirname, '..', 'reels', 'data');
 const WEIGHTS_PATH = join(REELS_DATA_DIR, 'performance-weights.json');
 
-// Known formats from reels/config.js
-const KNOWN_FORMATS = ['poll', 'pick', 'humor', 'budget', 'avantapres', 'month', 'versus'];
+// Known formats from reels/config.js — must mirror smart-scheduler.js VALID_FORMATS
+// otherwise nightly refresh silently drops formats we actually publish.
+const KNOWN_FORMATS = [
+  'poll', 'pick', 'humor', 'humor-tweet', 'budget', 'versus', 'avantapres',
+  'month', 'cost-vs', 'leaderboard', 'best-time',
+];
+
+// Hardcoded killed formats — preserved in the weights file so the scheduler's
+// loadKilledFormats() always finds them even after an automated refresh.
+// Mirrors KILLED_FORMATS_HARDCODED in smart-scheduler.js.
+const KILLED_FORMATS_OUT = ['poll', 'versus'];
 
 // Known SE Asia destinations for cross-referencing
 const KNOWN_DESTINATIONS = [
@@ -397,6 +406,7 @@ export async function updatePerformanceWeights() {
   const weights = {
     lastUpdated: new Date().toISOString().slice(0, 10),
     formatScores,
+    killedFormats: KILLED_FORMATS_OUT,
     destinationScores,
     recommendations,
   };
