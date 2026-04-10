@@ -233,6 +233,46 @@ export class ContentRefresher {
    * Rafraichit tous les articles de +N jours.
    */
   /**
+   * Rafraichit plusieurs articles par leurs slugs en sequence.
+   * Utilise par le bouton "Refresh selected (N)" du dashboard pour un batch
+   * refresh qui tourne dans un SEUL run GitHub Actions (beaucoup plus rapide
+   * que N runs sequentiels, ~6 min vs N × 15 min).
+   * @param {string[]} slugs
+   * @returns {Promise<{ refreshed: number, skipped: number, errors: number }>}
+   */
+  async refreshBySlugs(slugs) {
+    if (!Array.isArray(slugs) || slugs.length === 0) {
+      throw new Error('refreshBySlugs: tableau de slugs requis');
+    }
+
+    console.log(`🔄 Batch refresh — ${slugs.length} articles\n`);
+
+    let refreshed = 0;
+    let skipped = 0;
+    let errors = 0;
+
+    for (const slug of slugs) {
+      try {
+        const ok = await this.refreshBySlug(slug);
+        if (ok) refreshed++;
+        else skipped++;
+      } catch (err) {
+        console.error(`   ❌ ${slug}: ${err.message}`);
+        errors++;
+      }
+    }
+
+    console.log('\n═══════════════════════════════════════════');
+    console.log(`📊 Batch résumé:`);
+    console.log(`   Rafraîchis: ${refreshed}`);
+    console.log(`   Ignorés:    ${skipped}`);
+    console.log(`   Erreurs:    ${errors}`);
+    console.log('═══════════════════════════════════════════\n');
+
+    return { refreshed, skipped, errors };
+  }
+
+  /**
    * Rafraichit un seul article par son slug.
    * Utilise par le bouton "Refresh this" du dashboard pour declencher
    * un refresh ciblé sur un article qui saigne dans la Refresh Queue.

@@ -7,6 +7,7 @@
  *   node scripts/refresh-articles.js --days 14            # articles de +14 jours
  *   node scripts/refresh-articles.js --limit 5            # max 5 articles
  *   node scripts/refresh-articles.js --slug my-article    # un seul article ciblé
+ *   node scripts/refresh-articles.js --slugs s1,s2,s3     # plusieurs articles (CSV)
  */
 
 import { ContentRefresher } from '../content-refresher.js';
@@ -14,6 +15,22 @@ import { ContentRefresher } from '../content-refresher.js';
 async function main() {
   const args = process.argv.slice(2);
   const options = {};
+
+  // Mode batch ciblé: --slugs <csv> → refresh plusieurs articles en un seul run
+  const slugsIdx = args.indexOf('--slugs');
+  if (slugsIdx >= 0 && args[slugsIdx + 1]) {
+    const slugs = args[slugsIdx + 1]
+      .split(',')
+      .map(s => s.trim())
+      .filter(Boolean);
+    if (slugs.length === 0) {
+      console.error('❌ --slugs: au moins un slug requis');
+      process.exit(1);
+    }
+    const refresher = new ContentRefresher();
+    await refresher.refreshBySlugs(slugs);
+    return;
+  }
 
   // Mode ciblé: --slug <slug> → refresh un seul article
   const slugIdx = args.indexOf('--slug');

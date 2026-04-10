@@ -3,6 +3,10 @@ name: Rafraichir les articles
 on:
   workflow_dispatch:
     inputs:
+      slugs:
+        description: 'Liste CSV de slugs (batch, prioritaire sur slug/days)'
+        required: false
+        default: ''
       slug:
         description: 'Slug d un article specifique a refresh (prioritaire sur days/limit)'
         required: false
@@ -45,8 +49,12 @@ jobs:
           TRAVELPAYOUTS_API_TOKEN: ${{ secrets.TRAVELPAYOUTS_API_TOKEN }}
           FLASHVOYAGE_DRY_RUN: '0'
         run: |
+          SLUGS="${{ github.event.inputs.slugs }}"
           SLUG="${{ github.event.inputs.slug }}"
-          if [ -n "$SLUG" ]; then
+          if [ -n "$SLUGS" ]; then
+            echo "📦 Batch refresh ciblé: $SLUGS"
+            node scripts/refresh-articles.js --slugs "$SLUGS"
+          elif [ -n "$SLUG" ]; then
             echo "🎯 Refresh ciblé: $SLUG"
             node scripts/refresh-articles.js --slug "$SLUG"
           else
