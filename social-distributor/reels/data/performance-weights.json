@@ -4,11 +4,19 @@
     "poll": 0,
     "pick": 0,
     "humor": 0,
+    "humor-tweet": 0,
     "budget": 0,
+    "versus": 0,
     "avantapres": 0,
     "month": 0,
-    "versus": 0
+    "cost-vs": 0,
+    "leaderboard": 0,
+    "best-time": 0
   },
+  "killedFormats": [
+    "poll",
+    "versus"
+  ],
   "destinationScores": {
     "thailande": 4,
     "vietnam": 4,
