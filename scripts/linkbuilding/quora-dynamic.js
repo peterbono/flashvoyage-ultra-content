@@ -167,7 +167,7 @@ async function generateSearchQuery(article) {
 
 async function generateAnswer(article, questionTitle, includeLink) {
   const linkInstruction = includeLink
-    ? `\nINCLUS CE LIEN naturellement dans ta réponse (pas à la fin, intégré dans une phrase) : ${article.url}?utm_source=quora&utm_medium=community&utm_campaign=linkbuilding`
+    ? `\nINCLUS CE LIEN a la fin d'une phrase d'introduction claire (Quora n'accepte pas de markdown, l'URL sera visible en brut). Exemple: "Pour un comparatif detaille entre destinations, voir : ${article.url}" ou "J'ai detaille les budgets ici : ${article.url}". L'URL doit etre propre (sans UTM).`
     : '\nNE mets AUCUN lien dans cette réponse.';
 
   const res = await fetch('https://api.anthropic.com/v1/messages', {

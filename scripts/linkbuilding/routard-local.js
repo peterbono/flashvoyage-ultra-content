@@ -208,7 +208,7 @@ async function fetchRandomArticle() {
 
 async function generateReply(topicTitle, firstPost, article, includeLink) {
   const linkInstr = includeLink && article
-    ? `\nINCLUS CE LIEN naturellement : ${article.url}?utm_source=routard&utm_medium=community&utm_campaign=s1`
+    ? `\nINCLUS CE LIEN en BBCode [url=${article.url}]texte descriptif naturel[/url] integre dans une phrase, PAS a la fin. Exemple: "J'ai detaille les budgets [url=${article.url}]dans cette comparaison[/url] si ca peut aider." Le texte d'ancrage doit sembler naturel, jamais "clique ici" ni l'URL brute.`
     : '\nNE mets AUCUN lien.';
 
   const ctx = article ? `\nSource FlashVoyage (NE PAS copier) :\n${article.content.slice(0, 2000)}` : '';

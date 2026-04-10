@@ -408,13 +408,11 @@ function isEnglishSub(sub) {
 async function generateReply(sub, threadTitle, opContent, article, includeLink) {
   const isEN = isEnglishSub(sub);
   const toneRules = isEN ? TONE_RULES_EN : TONE_RULES_FR;
-  const utmSource = 'reddit';
-  const utmCampaign = isEN ? 'reddit_en' : 'reddit_fr';
 
   const linkInstruction = includeLink && article
     ? (isEN
-        ? `\nINCLUDE THIS LINK naturally in your reply (woven into a sentence, NOT at the end): ${article.url}?utm_source=${utmSource}&utm_medium=community&utm_campaign=${utmCampaign}`
-        : `\nINCLUS CE LIEN naturellement dans ta reponse (integre dans une phrase, PAS a la fin) : ${article.url}?utm_source=${utmSource}&utm_medium=community&utm_campaign=${utmCampaign}`)
+        ? `\nINCLUDE THIS LINK in markdown format [descriptive anchor text](${article.url}) woven into a sentence, NOT at the end. Example: "I broke down the real costs [in this comparison](${article.url}) if it helps." The anchor text should feel natural, never "click here" or the raw URL.`
+        : `\nINCLUS CE LIEN en markdown [texte descriptif naturel](${article.url}) integre dans une phrase, PAS a la fin. Exemple: "J'ai detaille les budgets [dans cette comparaison](${article.url}) si ca peut aider." Le texte d'ancrage doit sembler naturel, jamais "clique ici" ni l'URL brute.`)
     : (isEN
         ? '\nDo NOT include any link in this reply.'
         : '\nNE mets AUCUN lien dans cette reponse.');

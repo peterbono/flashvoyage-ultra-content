@@ -420,7 +420,7 @@ async function fetchRandomArticle() {
 
 async function generateReply(threadTitle, threadContent, article, includeLink) {
   const linkInstruction = includeLink && article
-    ? `\nINCLUS CE LIEN naturellement dans ta reponse (integre dans une phrase, PAS a la fin) : ${article.url}?utm_source=tripadvisor&utm_medium=community&utm_campaign=s1`
+    ? `\nINCLUS CE LIEN a la fin d'une phrase d'introduction claire (TripAdvisor n'accepte pas de markdown). Exemple: "Pour un comparatif detaille entre destinations : ${article.url}" ou "J'ai detaille les budgets ici : ${article.url}". L'URL doit etre propre, sans UTM. Sois subtil pour eviter les filtres anti-spam de TripAdvisor.`
     : '\nNE mets AUCUN lien dans cette reponse.';
 
   const articleContext = article
