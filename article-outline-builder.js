@@ -61,8 +61,7 @@ const ANGLE_SECTION_TEMPLATES = {
     { titlePattern: 'Comment optimiser chaque journée sur place', focus: 'optimization', ctaSlot: true },
     { titlePattern: 'Les arbitrages temporels inévitables', focus: 'tradeoffs', ctaSlot: true },
     { titlePattern: 'Le planning optimisé jour par jour', focus: 'action_plan', ctaSlot: false }
-  ]
-};
+  ],
 
   // SEO-first templates: neutral, informational, keyword-optimized (used when ARTICLE_HINT is set)
   seo_informational: [
