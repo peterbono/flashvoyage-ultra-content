@@ -64,6 +64,30 @@ const ANGLE_SECTION_TEMPLATES = {
   ]
 };
 
+  // SEO-first templates: neutral, informational, keyword-optimized (used when ARTICLE_HINT is set)
+  seo_informational: [
+    { titlePattern: '{topic} : guide complet et conseils pratiques', focus: 'overview', ctaSlot: false },
+    { titlePattern: 'Prix, options et comparatif détaillé', focus: 'comparison', ctaSlot: true },
+    { titlePattern: 'Comment choisir : critères et recommandations', focus: 'decision', ctaSlot: true },
+    { titlePattern: 'Questions fréquentes et réponses concrètes', focus: 'faq', ctaSlot: false },
+    { titlePattern: 'Notre avis et verdict final', focus: 'verdict', ctaSlot: true }
+  ],
+  seo_comparison: [
+    { titlePattern: '{topic} : tableau comparatif complet', focus: 'comparison_table', ctaSlot: false },
+    { titlePattern: 'Prix et fonctionnalités côte à côte', focus: 'pricing', ctaSlot: true },
+    { titlePattern: 'Avantages et inconvénients de chaque option', focus: 'pros_cons', ctaSlot: false },
+    { titlePattern: 'Quel choix selon votre profil', focus: 'recommendation', ctaSlot: true },
+    { titlePattern: 'FAQ et questions pratiques', focus: 'faq', ctaSlot: false }
+  ],
+  seo_budget: [
+    { titlePattern: 'Budget détaillé pour {topic} : poste par poste', focus: 'breakdown', ctaSlot: false },
+    { titlePattern: 'Hébergement, transport, nourriture : les vrais prix', focus: 'categories', ctaSlot: true },
+    { titlePattern: 'Astuces pour réduire les coûts sans sacrifier l\'expérience', focus: 'tips', ctaSlot: true },
+    { titlePattern: 'Budget par profil : backpacker, confort, luxe', focus: 'profiles', ctaSlot: false },
+    { titlePattern: 'Récapitulatif et budget journalier moyen', focus: 'summary', ctaSlot: false }
+  ],
+};
+
 // ─── Hook Suggestion Builder ──────────────────────────────────────────────────
 
 /**

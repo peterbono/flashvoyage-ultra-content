@@ -3518,26 +3518,60 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
     const redditTitle = extracted.source?.title || extracted.title || '';
     const angle = options.angle?.primary_angle?.tension || '';
 
-    const systemPrompt = `Tu es un expert SEO voyage pour FlashVoyages. Génère un titre H1 et un title_tag SEO pour un article basé sur un témoignage Reddit.
+    // SEO-first title generation: if article_hint contains a target keyword, use it as the primary title signal
+    const targetKeyword = options.article_hint || '';
+    const isSEOMode = targetKeyword.length > 0;
+
+    const systemPrompt = isSEOMode
+      ? `Tu es un expert SEO voyage pour FlashVoyage. Génère un titre H1 et un title_tag SEO optimisés pour le mot-clé cible.
+
+MOT-CLÉ CIBLE : "${targetKeyword}"
+
+RÈGLES SEO-FIRST :
+- Le title_tag (50-60 caractères MAX) DOIT commencer par le mot-clé cible, suivi d'un qualificateur (année, destination, comparatif).
+- Le H1 (60-80 caractères) est une version plus naturelle/engageante du title_tag, mais contient toujours le mot-clé.
+- Langue : 100% français. Zéro anglais. Montants en euros.
+- NE PAS utiliser "pièges cachés", "ce que les blogs ignorent", "personne ne te dit". Style INFORMATIF et UTILE.
+- Structure du title_tag : [Mot-clé] : [Bénéfice/Qualificateur] [Année]
+
+EXEMPLES :
+- Mot-clé "esim japon comparatif" →
+  title_tag : «eSIM Japon 2026 : comparatif Airalo, Holafly, Ubigi»
+  H1 : «eSIM Japon 2026 : Airalo, Holafly ou Ubigi ? Prix, couverture et avis»
+- Mot-clé "budget thailande par jour" →
+  title_tag : «Budget Thaïlande 2026 : coût réel jour par jour»
+  H1 : «Budget Thaïlande 2026 : combien ça coûte vraiment par jour (backpacker à luxe)»
+- Mot-clé "vol paris bangkok pas cher" →
+  title_tag : «Vol Paris Bangkok pas cher : quand réserver en 2026»
+  H1 : «Vol Paris-Bangkok pas cher : les meilleures périodes et compagnies en 2026»
+
+Réponds UNIQUEMENT en JSON : { "titre": "...", "title_tag": "..." }`
+      : `Tu es un expert SEO voyage pour FlashVoyages. Génère un titre H1 et un title_tag SEO pour un article basé sur un témoignage Reddit.
 
 RÈGLES :
 - Le titre H1 (60-80 caractères) doit être accrocheur, contenir la destination principale et un angle éditorial fort.
 - Le title_tag (50-60 caractères MAX) est optimisé pour Google : mot-clé principal en tête, distinct du H1.
 - Langue : 100% français. Zéro anglais. Montants en euros.
 - NE JAMAIS utiliser "Témoignage Reddit" ou "décrypté" dans le titre.
-- Le titre doit donner envie de cliquer : tension, chiffre concret, ou promesse de valeur.
+- Privilégier un style INFORMATIF et UTILE plutôt que clickbait.
 
 EXEMPLES :
-- H1 : «Thaïlande : pourquoi ton budget de 50 €/jour ne suffira pas»
-  title_tag : «Budget Thaïlande : coût réel et pièges à éviter»
-- H1 : «Bali en couple : l'itinéraire que personne ne recommande (et qui marche)»
-  title_tag : «Itinéraire Bali couple : guide alternatif et budget»
-- H1 : «Japon 3 semaines : le vrai coût quand on sort des sentiers battus»
-  title_tag : «Japon 3 semaines budget réel : guide complet»
+- H1 : «Budget Thaïlande 2026 : combien ça coûte vraiment par jour»
+  title_tag : «Budget Thaïlande 2026 : coût réel jour par jour»
+- H1 : «Itinéraire Bali 10 jours : les étapes incontournables et budget»
+  title_tag : «Itinéraire Bali 10 jours : guide complet et budget»
+- H1 : «Japon 3 semaines : budget détaillé et itinéraire optimisé»
+  title_tag : «Japon 3 semaines budget : guide complet 2026»
 
 Réponds UNIQUEMENT en JSON : { "titre": "...", "title_tag": "..." }`;
 
-    const userPrompt = `TITRE REDDIT ORIGINAL : ${redditTitle}
+    const userPrompt = isSEOMode
+      ? `MOT-CLÉ CIBLE : ${targetKeyword}
+${mainDestFR ? 'DESTINATION : ' + mainDestFR : ''}
+${extracted.post?.clean_text ? 'CONTEXTE :\n' + extracted.post.clean_text.substring(0, 300) : ''}
+
+Génère le JSON avec titre H1 et title_tag SEO optimisés pour ce mot-clé.`
+      : `TITRE REDDIT ORIGINAL : ${redditTitle}
 ${mainDestFR ? 'DESTINATION : ' + mainDestFR : ''}
 ${angle ? 'ANGLE ÉDITORIAL : ' + angle : ''}
 ${extracted.post?.clean_text ? 'EXTRAIT DU POST :\n' + extracted.post.clean_text.substring(0, 500) : ''}
