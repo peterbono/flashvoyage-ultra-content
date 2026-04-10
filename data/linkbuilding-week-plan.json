@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 11,
+      "posted": 12,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -94,6 +94,14 @@
           "hasLink": false,
           "generated": true,
           "status": "published"
+        },
+        {
+          "date": "2026-04-10T06:28:02.540Z",
+          "thread": "etat-circulation-route-louang-namtha--houei-sai-traversee-velo-d11461831",
+          "title": "Etat de la circulation sur la route Louang Namtha -Houei Sai pour traversée à vélo",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
         }
       ],
       "posts_queued": [
@@ -139,7 +147,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 8,
+      "posted": 9,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -229,6 +237,14 @@
           "date": "2026-04-09T08:00:54.331Z",
           "id": "ai-2867-1775721614953",
           "search": "Comment prolonger son visa en Thaïlande",
+          "hasLink": false,
+          "status": "published",
+          "generated": true
+        },
+        {
+          "date": "2026-04-10T06:26:11.898Z",
+          "id": "ai-4058-1775802334611",
+          "search": "Première visite aux Philippines conseils pratiques",
           "hasLink": false,
           "status": "published",
           "generated": true
@@ -332,7 +348,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 1,
+      "posted": 2,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -341,11 +357,19 @@
           "section": "Japon",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-10T06:32:32.575Z",
+          "threadId": "13814867",
+          "title": "06 janvier 2026",
+          "section": "Japon",
+          "hasLink": true,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 26,
+  "total_posted": 29,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
