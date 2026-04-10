@@ -1,29 +1,36 @@
 {
-  "lastUpdated": "2026-04-05",
+  "lastUpdated": "2026-04-10",
   "formatScores": {
-    "avantapres": 100,
-    "cost-vs": 90,
-    "leaderboard": 60,
-    "best-time": 60,
-    "pick": 40,
-    "budget": 35,
-    "humor": 25,
-    "humor-tweet": 25,
-    "month": 25,
     "poll": 0,
+    "pick": 0,
+    "humor": 0,
+    "budget": 0,
+    "avantapres": 0,
+    "month": 0,
     "versus": 0
   },
-  "killedFormats": ["poll", "versus"],
-  "destinationScores": {},
+  "destinationScores": {
+    "thailande": 4,
+    "vietnam": 4,
+    "philippines": 1.9,
+    "indonesie": 1.3,
+    "singapour": 0.8,
+    "bali": 0.7,
+    "cambodge": 0.6,
+    "malaisie": 0.4,
+    "laos": 0.3,
+    "lombok": 0.3,
+    "chiang mai": 0.2,
+    "bangkok": 0.2,
+    "krabi": 0.2,
+    "koh samui": 0.1,
+    "ubud": 0.1,
+    "koh lanta": 0.1
+  },
   "recommendations": [
-    "CEO + Growth Hacker analysis of 15 reels (2026-04-05):",
-    "avantapres: ONLY format with saves (0.50%), best engagement (1.00%) → DOUBLE to 2/day",
-    "cost-vs: highest engagement (1.01%), strong watch time → DOUBLE to 1/day",
-    "poll: worst watch time (1.1s), zero engagement → KILLED",
-    "versus: zero interactions on 258 views → KILLED",
-    "leaderboard: best watch time, needs more data → moderate frequency",
-    "best-time: new format, needs testing → moderate frequency",
-    "pick: 0.36% engagement, 6 data points confirm mediocre → reduced to 1/day max",
-    "budget, humor, humor-tweet, month: kept at low frequency"
+    "thailande content trending — prioritize",
+    "vietnam content trending — prioritize",
+    "philippines content trending — prioritize",
+    "No reel data yet — weights are placeholder, will update after first reels are published"
   ]
 }
