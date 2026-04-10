@@ -1,6 +1,6 @@
 {
-  "totalPublished": 215,
-  "currentClusterId": "asie-sud-est",
+  "totalPublished": 216,
+  "currentClusterId": "japon",
   "history": [
     {
       "date": "2026-03-15T22:09:35.429Z",
@@ -666,6 +666,13 @@
       "articleType": "pillar",
       "hint": "vietnam vs thailand 2026 which is better first time",
       "title": "Vietnam vs Thaïlande : l'arbitrage crucial pour un premier voyage en Asie du Sud-Est"
+    },
+    {
+      "date": "2026-04-10T09:41:04.965Z",
+      "clusterId": "japon",
+      "articleType": "pillar",
+      "hint": "esim japan 2026 airalo holafly ubigi comparison price coverage",
+      "title": "Esim Japon : Combien Ça Te Coûte Vraiment ?"
     }
   ]
 }

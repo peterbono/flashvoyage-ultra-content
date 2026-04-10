@@ -7,7 +7,10 @@
     "pace": "2/day",
     "cost_per_article_usd": 0.075,
     "daily_llm_cost_usd": 0.15,
-    "cron_slots": ["0 3 * * *", "0 8 * * *"],
+    "cron_slots": [
+      "0 3 * * *",
+      "0 8 * * *"
+    ],
     "indexing_horizon_days": "14-28 days post-publish",
     "rule_no_consecutive_country": true,
     "esim_affiliate_note": "eSIM articles target Airalo/Holafly/Ubigi affiliate revenue. Every PM slot = eSIM content."
@@ -23,7 +26,10 @@
       "title_target": "Thailande ou Vietnam 2026 : le comparatif complet pour choisir",
       "article_hint": "thailand or vietnam 2026 comparison which to choose first trip",
       "keyword": "thailande ou vietnam",
-      "countries": ["Thailande", "Vietnam"],
+      "countries": [
+        "Thailande",
+        "Vietnam"
+      ],
       "cluster": "thailande",
       "slug_pattern": "thailande-ou-vietnam-2026-comparatif-complet",
       "seo_intent": "COMMERCIAL_INVESTIGATION",
@@ -40,12 +46,15 @@
       "title_target": "eSIM Japon 2026 : Airalo, Holafly ou Ubigi ? Comparatif prix et couverture",
       "article_hint": "esim japan 2026 airalo holafly ubigi comparison price coverage",
       "keyword": "esim japon comparatif",
-      "countries": ["Japon"],
+      "countries": [
+        "Japon"
+      ],
       "cluster": "esim-asia",
       "slug_pattern": "esim-japon-2026-airalo-holafly-ubigi-comparatif",
       "seo_intent": "COMMERCIAL_INVESTIGATION",
       "rationale": "Japan = top eSIM search volume in FR market. Direct affiliate revenue via Airalo/Holafly/Ubigi links.",
-      "status": "pending"
+      "status": "published",
+      "published_at": "2026-04-10T09:41:31.643Z"
     },
     {
       "id": 3,
@@ -57,7 +66,9 @@
       "title_target": "Budget Thailande 2026 : cout reel jour par jour (backpacker, confort, luxe)",
       "article_hint": "thailand budget 2026 real daily cost backpacker comfort luxury breakdown",
       "keyword": "budget thailande par jour",
-      "countries": ["Thailande"],
+      "countries": [
+        "Thailande"
+      ],
       "cluster": "thailande",
       "slug_pattern": "budget-thailande-2026-cout-jour-par-jour",
       "seo_intent": "INFORMATIONAL_PLANNING",
@@ -74,7 +85,9 @@
       "title_target": "eSIM Indonesie Bali 2026 : quel forfait data choisir",
       "article_hint": "esim indonesia bali 2026 which data plan to choose comparison",
       "keyword": "esim indonesie bali",
-      "countries": ["Indonesie"],
+      "countries": [
+        "Indonesie"
+      ],
       "cluster": "esim-asia",
       "slug_pattern": "esim-indonesie-bali-2026-forfait-data",
       "seo_intent": "COMMERCIAL_INVESTIGATION",
@@ -91,7 +104,9 @@
       "title_target": "Combien coute un taxi aeroport Bangkok en 2026",
       "article_hint": "bangkok airport taxi cost 2026 how much grab bolt meter taxi",
       "keyword": "taxi aeroport bangkok prix",
-      "countries": ["Thailande"],
+      "countries": [
+        "Thailande"
+      ],
       "cluster": "thailande",
       "slug_pattern": "taxi-aeroport-bangkok-prix-2026",
       "seo_intent": "INFORMATIONAL_TRANSACTIONAL",
@@ -108,7 +123,9 @@
       "title_target": "eSIM Coree du Sud 2026 : comparatif operateurs et prix",
       "article_hint": "esim south korea 2026 operator comparison price coverage",
       "keyword": "esim coree du sud",
-      "countries": ["Coree du Sud"],
+      "countries": [
+        "Coree du Sud"
+      ],
       "cluster": "esim-asia",
       "slug_pattern": "esim-coree-du-sud-2026-comparatif-operateurs-prix",
       "seo_intent": "COMMERCIAL_INVESTIGATION",
@@ -125,7 +142,9 @@
       "title_target": "Itineraire Vietnam 3 semaines Nord au Sud : budget et etapes",
       "article_hint": "vietnam 3 weeks itinerary north to south budget stages complete guide",
       "keyword": "itineraire vietnam 3 semaines",
-      "countries": ["Vietnam"],
+      "countries": [
+        "Vietnam"
+      ],
       "cluster": "vietnam",
       "slug_pattern": "itineraire-vietnam-3-semaines-nord-sud-budget",
       "seo_intent": "INFORMATIONAL_PLANNING",
@@ -159,7 +178,9 @@
       "title_target": "Thailande : les 10 arnaques courantes et comment les eviter en 2026",
       "article_hint": "thailand common scams 2026 how to avoid tourist traps",
       "keyword": "arnaques thailande",
-      "countries": ["Thailande"],
+      "countries": [
+        "Thailande"
+      ],
       "cluster": "thailande",
       "slug_pattern": "arnaques-thailande-2026-comment-eviter",
       "seo_intent": "INFORMATIONAL",
@@ -193,7 +214,9 @@
       "title_target": "Vol Paris Bangkok pas cher : quand reserver en 2026",
       "article_hint": "cheap flight paris bangkok 2026 when to book best time price",
       "keyword": "vol paris bangkok pas cher",
-      "countries": ["Thailande"],
+      "countries": [
+        "Thailande"
+      ],
       "cluster": "thailande",
       "slug_pattern": "vol-paris-bangkok-pas-cher-quand-reserver-2026",
       "seo_intent": "TRANSACTIONAL",
@@ -210,7 +233,9 @@
       "title_target": "Peut-on boire l'eau du robinet au Vietnam en 2026",
       "article_hint": "can you drink tap water vietnam 2026 safe drinking water guide",
       "keyword": "eau du robinet vietnam",
-      "countries": ["Vietnam"],
+      "countries": [
+        "Vietnam"
+      ],
       "cluster": "vietnam",
       "slug_pattern": "eau-robinet-vietnam-2026-boire-sans-risque",
       "seo_intent": "INFORMATIONAL",
@@ -227,7 +252,9 @@
       "title_target": "Visa Vietnam e-visa 2026 : demande pas a pas, prix et delai",
       "article_hint": "vietnam e-visa 2026 step by step application price processing time",
       "keyword": "e-visa vietnam 2026",
-      "countries": ["Vietnam"],
+      "countries": [
+        "Vietnam"
+      ],
       "cluster": "vietnam",
       "slug_pattern": "visa-vietnam-e-visa-2026-demande-prix-delai",
       "seo_intent": "INFORMATIONAL_TRANSACTIONAL",
@@ -255,28 +282,118 @@
   "diversity_check": {
     "rule": "No two consecutive articles on the same primary country. AM=consolidation, PM=eSIM (different geo focus by design).",
     "validation": [
-      {"ids": "1->2", "countries": "TH+VN -> JP (eSIM)", "ok": true},
-      {"ids": "2->3", "countries": "JP (eSIM) -> TH", "ok": true},
-      {"ids": "3->4", "countries": "TH -> ID (eSIM)", "ok": true},
-      {"ids": "4->5", "countries": "ID (eSIM) -> TH", "ok": true, "note": "TH again but separated by Indonesia eSIM"},
-      {"ids": "5->6", "countries": "TH -> KR (eSIM)", "ok": true},
-      {"ids": "6->7", "countries": "KR (eSIM) -> VN", "ok": true},
-      {"ids": "7->8", "countries": "VN -> Global (eSIM)", "ok": true},
-      {"ids": "8->9", "countries": "Global (eSIM) -> TH", "ok": true},
-      {"ids": "9->10", "countries": "TH -> SEA (eSIM)", "ok": true},
-      {"ids": "10->11", "countries": "SEA (eSIM) -> TH", "ok": true},
-      {"ids": "11->12", "countries": "TH -> VN", "ok": true},
-      {"ids": "12->13", "countries": "VN -> VN", "ok": false, "note": "Back-to-back Vietnam (eau robinet + e-visa) but different types (practical vs visa). Acceptable because PM Day6 and AM Day7 are overnight gap."},
-      {"ids": "13->14", "countries": "VN -> SEA (eSIM pillar)", "ok": true}
+      {
+        "ids": "1->2",
+        "countries": "TH+VN -> JP (eSIM)",
+        "ok": true
+      },
+      {
+        "ids": "2->3",
+        "countries": "JP (eSIM) -> TH",
+        "ok": true
+      },
+      {
+        "ids": "3->4",
+        "countries": "TH -> ID (eSIM)",
+        "ok": true
+      },
+      {
+        "ids": "4->5",
+        "countries": "ID (eSIM) -> TH",
+        "ok": true,
+        "note": "TH again but separated by Indonesia eSIM"
+      },
+      {
+        "ids": "5->6",
+        "countries": "TH -> KR (eSIM)",
+        "ok": true
+      },
+      {
+        "ids": "6->7",
+        "countries": "KR (eSIM) -> VN",
+        "ok": true
+      },
+      {
+        "ids": "7->8",
+        "countries": "VN -> Global (eSIM)",
+        "ok": true
+      },
+      {
+        "ids": "8->9",
+        "countries": "Global (eSIM) -> TH",
+        "ok": true
+      },
+      {
+        "ids": "9->10",
+        "countries": "TH -> SEA (eSIM)",
+        "ok": true
+      },
+      {
+        "ids": "10->11",
+        "countries": "SEA (eSIM) -> TH",
+        "ok": true
+      },
+      {
+        "ids": "11->12",
+        "countries": "TH -> VN",
+        "ok": true
+      },
+      {
+        "ids": "12->13",
+        "countries": "VN -> VN",
+        "ok": false,
+        "note": "Back-to-back Vietnam (eau robinet + e-visa) but different types (practical vs visa). Acceptable because PM Day6 and AM Day7 are overnight gap."
+      },
+      {
+        "ids": "13->14",
+        "countries": "VN -> SEA (eSIM pillar)",
+        "ok": true
+      }
     ],
     "flagged_pairs": [
-      {"ids": "12->13", "reason": "Back-to-back Vietnam. Mitigated by overnight gap and different content types (practical vs visa)."}
+      {
+        "ids": "12->13",
+        "reason": "Back-to-back Vietnam. Mitigated by overnight gap and different content types (practical vs visa)."
+      }
     ]
   },
   "cluster_summary": {
-    "esim-asia": {"count": 7, "priority": "P1", "articles": [2, 4, 6, 8, 10, 14], "pillar": 14, "note": "Every PM slot. Pillar page (id:14) published last for internal linking."},
-    "thailande": {"count": 5, "priority": "P2", "articles": [1, 3, 5, 9, 11], "note": "Comparison + budget + practical + scams + flights. Strongest existing cluster, consolidation focus."},
-    "vietnam": {"count": 3, "priority": "P2", "articles": [7, 12, 13], "note": "Itinerary + practical + visa. Builds topical authority for Vietnam cluster."}
+    "esim-asia": {
+      "count": 7,
+      "priority": "P1",
+      "articles": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        14
+      ],
+      "pillar": 14,
+      "note": "Every PM slot. Pillar page (id:14) published last for internal linking."
+    },
+    "thailande": {
+      "count": 5,
+      "priority": "P2",
+      "articles": [
+        1,
+        3,
+        5,
+        9,
+        11
+      ],
+      "note": "Comparison + budget + practical + scams + flights. Strongest existing cluster, consolidation focus."
+    },
+    "vietnam": {
+      "count": 3,
+      "priority": "P2",
+      "articles": [
+        7,
+        12,
+        13
+      ],
+      "note": "Itinerary + practical + visa. Builds topical authority for Vietnam cluster."
+    }
   },
   "indexing_forecast": {
     "publication_window": "2026-04-10 to 2026-04-16",
