@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 12,
+      "posted": 13,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -99,6 +99,14 @@
           "date": "2026-04-10T06:28:02.540Z",
           "thread": "etat-circulation-route-louang-namtha--houei-sai-traversee-velo-d11461831",
           "title": "Etat de la circulation sur la route Louang Namtha -Houei Sai pour traversée à vélo",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-10T08:03:00.599Z",
+          "thread": "voyage-bangkok-kanchanaburi--koh-yao-noi-phuket-pratiques-en-live-d11461716",
+          "title": "Voyage Bangkok - Kanchanaburi- Koh Yao Noi - Phuket: infos pratiques en live",
           "hasLink": false,
           "generated": true,
           "status": "published"
@@ -348,7 +356,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 2,
+      "posted": 3,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -365,11 +373,19 @@
           "section": "Japon",
           "hasLink": true,
           "status": "published"
+        },
+        {
+          "date": "2026-04-10T08:08:00.465Z",
+          "threadId": "15435360",
+          "title": "25 février 2026",
+          "section": "Cambodge",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 29,
+  "total_posted": 31,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
