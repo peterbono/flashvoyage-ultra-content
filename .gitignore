@@ -118,3 +118,6 @@ used-pexels-images.json
 social-distributor/data/tokens.json
 social-distributor/data/post-history.jsonl
 social-distributor/reels/tmp/
+
+# GA4 service account key (provisioned from secret in CI)
+ga4-service-account.json

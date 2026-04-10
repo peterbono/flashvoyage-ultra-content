@@ -36,6 +36,46 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Provision credentials (tokens.json + GA4 service account)
+        env:
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          GA4_SERVICE_ACCOUNT: ${{ secrets.GA4_SERVICE_ACCOUNT }}
+        run: |
+          set -eo pipefail
+
+          # tokens.json — consumed by ig-stats-fetcher.js via getToken('instagram')
+          # Mirrors the provisioning logic in publish-reels.yml so every runner has
+          # the same token surface (daily-analytics never provisioned this before,
+          # which silently masked zero IG data for weeks).
+          if [ -n "$FB_PAGE_TOKEN" ]; then
+            mkdir -p social-distributor/data
+            cat > social-distributor/data/tokens.json <<EOF
+          {
+            "facebook": { "token": "${FB_PAGE_TOKEN}", "expiresAt": "never" },
+            "threads":  { "token": "${THREADS_TOKEN:-}", "expiresAt": "2026-05-23T00:00:00Z" }
+          }
+          EOF
+            echo "[PROVISION] tokens.json written (fb token length: ${#FB_PAGE_TOKEN})"
+          else
+            echo "::warning::FB_PAGE_TOKEN secret is empty — IG fetcher will skip"
+          fi
+
+          # ga4-service-account.json — consumed by ga4-fetcher.js via SA_PATHS lookup.
+          # Secret value is the raw JSON blob of the service account key.
+          if [ -n "$GA4_SERVICE_ACCOUNT" ]; then
+            printf '%s' "$GA4_SERVICE_ACCOUNT" > ga4-service-account.json
+            # Basic sanity check — must be valid JSON with a client_email field
+            if node --input-type=module -e "import { readFileSync } from 'fs'; const k = JSON.parse(readFileSync('ga4-service-account.json','utf8')); if (!k.client_email) process.exit(1); console.log('[PROVISION] GA4 SA key ok, client_email=' + k.client_email);" 2>/dev/null; then
+              echo "GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/ga4-service-account.json" >> $GITHUB_ENV
+            else
+              echo "::warning::GA4_SERVICE_ACCOUNT secret is not valid JSON or missing client_email — GA4 fetcher will skip"
+              rm -f ga4-service-account.json
+            fi
+          else
+            echo "::warning::GA4_SERVICE_ACCOUNT secret is empty — GA4 fetcher will skip"
+          fi
+
       - name: Scan Google Trends
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -46,22 +86,18 @@ jobs:
           }
 
       - name: Fetch IG stats (last 48h reels)
-        env:
-          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
         run: |
           echo "[ANALYTICS] Fetching Instagram reel performance (last 48h)..."
           node social-distributor/analytics/ig-stats-fetcher.js --days 2 2>&1 || {
-            echo "[ANALYTICS] WARN: IG stats fetch failed (non-fatal)"
+            echo "::warning::IG stats fetch failed — performance-scorer will have no new data"
           }
 
       - name: Fetch GA4 stats (last 7 days)
-        env:
-          GA4_SERVICE_ACCOUNT: ${{ secrets.GA4_SERVICE_ACCOUNT }}
         run: |
           DAYS="${{ github.event.inputs.days || '7' }}"
           echo "[ANALYTICS] Fetching GA4 website analytics (last ${DAYS} days)..."
           node social-distributor/analytics/ga4-fetcher.js --days "$DAYS" 2>&1 || {
-            echo "[ANALYTICS] WARN: GA4 fetch failed (non-fatal)"
+            echo "::warning::GA4 fetch failed — destination scoring will lose GA4 signal"
           }
 
       - name: Generate performance report + update scheduler weights
