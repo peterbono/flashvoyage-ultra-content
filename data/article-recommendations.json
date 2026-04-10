@@ -1,8 +1,8 @@
 {
   "summary": {
-    "generatedAt": "2026-04-09T05:16:09.009Z",
-    "elapsedSeconds": 11,
-    "totalArticles": 123,
+    "generatedAt": "2026-04-10T05:31:27.293Z",
+    "elapsedSeconds": 10,
+    "totalArticles": 125,
     "articlesWithRecommendations": 8,
     "totalRecommendations": 8,
     "byPriority": {
@@ -89,7 +89,7 @@
       "ga4": {
         "pageviews": 8,
         "sessions": 8,
-        "avgDuration": 22
+        "avgDuration": 26
       },
       "gsc": {
         "impressions": 8,
@@ -317,9 +317,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 11,
         "clicks": 0,
-        "position": 5.9,
+        "position": 6.3,
         "topQueries": [
           {
             "query": "10 jours aux philippines",
@@ -432,7 +432,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 1,
-        "avgDuration": 254
+        "avgDuration": 38
       },
       "gsc": {
         "impressions": 0,
@@ -460,7 +460,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 2
+        "avgDuration": 1
       },
       "gsc": {
         "impressions": 0,
@@ -778,9 +778,9 @@
         "avgDuration": 21
       },
       "gsc": {
-        "impressions": 88,
-        "clicks": 0,
-        "position": 16.6,
+        "impressions": 92,
+        "clicks": 1,
+        "position": 16.1,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -1185,6 +1185,62 @@
       "p0Count": 0
     },
     {
+      "wpId": 5239,
+      "slug": "kuala-lumpur-ou-singapour-quel-stopover-te-fera-vraiment-gagner-du-temps",
+      "title": "Kuala Lumpur ou Singapour : quel stopover te fera vraiment gagner du temps ?",
+      "url": "https://flashvoyage.com/kuala-lumpur-ou-singapour-quel-stopover-te-fera-vraiment-gagner-du-temps/",
+      "wordCount": 1355,
+      "widgetCount": 0,
+      "internalLinks": 17,
+      "lastModified": "2026-04-09T09:05:55",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5229,
+      "slug": "vietnam-vs-thailande-le-dilemme-cache-de-ton-premier-voyage",
+      "title": "Vietnam vs Thaïlande : le dilemme caché de ton premier voyage",
+      "url": "https://flashvoyage.com/vietnam-vs-thailande-le-dilemme-cache-de-ton-premier-voyage/",
+      "wordCount": 1315,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-04-09T05:20:15",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5162,
       "slug": "escale-singapour-ou-kuala-lumpur-le-dilemme-incontournable-pour-la-malaisie",
       "title": "Escale Singapour ou Kuala Lumpur ? Le dilemme incontournable pour la Malaisie",
@@ -1308,7 +1364,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 0
+        "avgDuration": 31
       },
       "gsc": {
         "impressions": 0,

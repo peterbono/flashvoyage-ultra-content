@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-09T05:15:57.500Z",
+  "timestamp": "2026-04-10T05:31:16.140Z",
   "queueSize": 13,
   "queue": [
     {
@@ -7,11 +7,11 @@
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
-      "topic": "[Calendar rotation: news article]",
-      "articleType": "news",
+      "topic": "[Calendar rotation: pillar article]",
+      "articleType": "pillar",
       "context": {
-        "cyclePosition": 4,
-        "reason": "Standard editorial calendar rotation (position 5/5)"
+        "cyclePosition": 0,
+        "reason": "Standard editorial calendar rotation (position 1/5)"
       }
     },
     {
@@ -19,11 +19,11 @@
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
-      "topic": "[Calendar rotation: pillar article]",
-      "articleType": "pillar",
+      "topic": "[Calendar rotation: support article]",
+      "articleType": "support",
       "context": {
-        "cyclePosition": 0,
-        "reason": "Standard editorial calendar rotation (position 1/5)"
+        "cyclePosition": 1,
+        "reason": "Standard editorial calendar rotation (position 2/5)"
       }
     },
     {
@@ -34,8 +34,8 @@
       "topic": "[Calendar rotation: support article]",
       "articleType": "support",
       "context": {
-        "cyclePosition": 1,
-        "reason": "Standard editorial calendar rotation (position 2/5)"
+        "cyclePosition": 2,
+        "reason": "Standard editorial calendar rotation (position 3/5)"
       }
     },
     {
@@ -49,7 +49,7 @@
         "wpId": 2980,
         "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -65,7 +65,7 @@
         "wpId": 2952,
         "slug": "indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
