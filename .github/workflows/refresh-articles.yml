@@ -3,6 +3,10 @@ name: Rafraichir les articles
 on:
   workflow_dispatch:
     inputs:
+      slug:
+        description: 'Slug d un article specifique a refresh (prioritaire sur days/limit)'
+        required: false
+        default: ''
       days:
         description: 'Age minimum en jours'
         required: false
@@ -33,7 +37,7 @@ jobs:
 
       - run: npm ci
 
-      - name: Rafraichir les articles anciens
+      - name: Rafraichir les articles
         env:
           WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
           WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
@@ -41,6 +45,13 @@ jobs:
           TRAVELPAYOUTS_API_TOKEN: ${{ secrets.TRAVELPAYOUTS_API_TOKEN }}
           FLASHVOYAGE_DRY_RUN: '0'
         run: |
-          node scripts/refresh-articles.js \
-            --days ${{ github.event.inputs.days || '30' }} \
-            --limit ${{ github.event.inputs.limit || '10' }}
+          SLUG="${{ github.event.inputs.slug }}"
+          if [ -n "$SLUG" ]; then
+            echo "🎯 Refresh ciblé: $SLUG"
+            node scripts/refresh-articles.js --slug "$SLUG"
+          else
+            echo "📦 Refresh batch (days/limit)"
+            node scripts/refresh-articles.js \
+              --days ${{ github.event.inputs.days || '30' }} \
+              --limit ${{ github.event.inputs.limit || '10' }}
+          fi

@@ -232,6 +232,49 @@ export class ContentRefresher {
   /**
    * Rafraichit tous les articles de +N jours.
    */
+  /**
+   * Rafraichit un seul article par son slug.
+   * Utilise par le bouton "Refresh this" du dashboard pour declencher
+   * un refresh ciblé sur un article qui saigne dans la Refresh Queue.
+   * @param {string} slug
+   * @returns {Promise<boolean>} true si mis a jour
+   */
+  async refreshBySlug(slug) {
+    if (!slug || typeof slug !== 'string') {
+      throw new Error('refreshBySlug: slug requis');
+    }
+
+    console.log(`🔄 Refresh ciblé — slug: ${slug}\n`);
+
+    const { WORDPRESS_URL, WORDPRESS_USERNAME, WORDPRESS_APP_PASSWORD } = await import('./config.js');
+    const auth = Buffer.from(`${WORDPRESS_USERNAME}:${WORDPRESS_APP_PASSWORD}`).toString('base64');
+    const headers = { Authorization: `Basic ${auth}` };
+
+    const resp = await axios.get(`${WORDPRESS_URL}/wp-json/wp/v2/posts`, {
+      headers,
+      params: { slug, status: 'publish', _fields: 'id,title,slug,modified,link,content,meta' },
+    });
+
+    const article = Array.isArray(resp.data) ? resp.data[0] : null;
+    if (!article) {
+      console.log(`❌ Article introuvable pour slug=${slug}`);
+      this.stats.errors++;
+      return false;
+    }
+
+    try {
+      const updated = await this.refreshArticle(article);
+      console.log('\n═══════════════════════════════════════════');
+      console.log(`📊 Résumé: refresh ${updated ? '✅ reussi' : '⏭️  skip'}`);
+      console.log('═══════════════════════════════════════════\n');
+      return updated;
+    } catch (err) {
+      console.error(`❌ Erreur refresh ${slug}: ${err.message}`);
+      this.stats.errors++;
+      throw err;
+    }
+  }
+
   async refreshAll(options = {}) {
     const { minAgeDays = 30, limit = Infinity } = options;
 
