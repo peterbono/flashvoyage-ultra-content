@@ -25,6 +25,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
+          persist-credentials: true
 
       - uses: actions/setup-node@v4
         with:
@@ -69,21 +71,99 @@ jobs:
             echo "[ANALYTICS] WARN: Performance scorer failed (non-fatal)"
           }
 
+      - name: Diagnostic — analytics data snapshot before commit
+        run: |
+          echo "===== git status (short) ====="
+          git status --short || true
+          echo "===== content-history.json head (500 bytes) ====="
+          if [ -f social-distributor/reels/data/content-history.json ]; then
+            head -c 500 social-distributor/reels/data/content-history.json
+            echo
+          else
+            echo "(missing)"
+          fi
+          echo "===== performance-weights.json head (500 bytes) ====="
+          if [ -f social-distributor/reels/data/performance-weights.json ]; then
+            head -c 500 social-distributor/reels/data/performance-weights.json
+            echo
+          else
+            echo "(missing)"
+          fi
+          echo "===== trend-priorities.json head (500 bytes) ====="
+          if [ -f social-distributor/reels/data/trend-priorities.json ]; then
+            head -c 500 social-distributor/reels/data/trend-priorities.json
+            echo
+          else
+            echo "(missing)"
+          fi
+
       - name: Commit updated data files
         run: |
+          set -eo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Stage analytics data files (only if they exist and changed)
-          git add social-distributor/reels/data/trend-priorities.json 2>/dev/null || true
-          git add social-distributor/reels/data/performance-weights.json 2>/dev/null || true
-          git add social-distributor/reels/data/content-history.json 2>/dev/null || true
-          git add social-distributor/analytics/reports/ 2>/dev/null || true
+          STATE_FILES=(
+            "social-distributor/reels/data/trend-priorities.json"
+            "social-distributor/reels/data/performance-weights.json"
+            "social-distributor/reels/data/content-history.json"
+          )
 
-          # Only commit if there are staged changes
-          git diff --cached --quiet || {
-            git commit -m "chore: daily analytics update [$(date -u +%Y-%m-%d)]"
-            git push || echo "[ANALYTICS] WARN: git push failed (non-fatal)"
-          }
+          # Stage state files (individually so missing ones don't abort)
+          for f in "${STATE_FILES[@]}"; do
+            if [ -f "$f" ]; then
+              git add "$f" || true
+            fi
+          done
+          # Reports directory is optional — stage if present
+          if [ -d social-distributor/analytics/reports ]; then
+            git add social-distributor/analytics/reports/ || true
+          fi
 
-          echo "[ANALYTICS] Done. Scheduler will use fresh data at next reel trigger."
+          if git diff --cached --quiet; then
+            echo "[ANALYTICS] No data file changes to commit."
+            echo "[ANALYTICS] Done. Scheduler will use fresh data at next reel trigger."
+            exit 0
+          fi
+
+          git commit -m "chore: daily analytics update [$(date -u +%Y-%m-%d)]"
+
+          MAX_ATTEMPTS=3
+          ATTEMPT=0
+          while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
+            ATTEMPT=$((ATTEMPT + 1))
+            echo "[ANALYTICS] Push attempt $ATTEMPT/$MAX_ATTEMPTS"
+
+            if git push origin HEAD:main; then
+              echo "[ANALYTICS] Push succeeded on attempt $ATTEMPT"
+              echo "[ANALYTICS] Done. Scheduler will use fresh data at next reel trigger."
+              exit 0
+            fi
+
+            echo "[ANALYTICS] Push failed — main likely moved. Rebasing onto fresh origin/main."
+            git fetch origin main
+
+            if ! git rebase -X ours origin/main; then
+              echo "[ANALYTICS] Rebase hit an unresolvable conflict — aborting and falling back to reset-soft strategy."
+              git rebase --abort || true
+              git reset --soft origin/main
+              for f in "${STATE_FILES[@]}"; do
+                if [ -f "$f" ]; then
+                  git add "$f" || true
+                fi
+              done
+              if [ -d social-distributor/analytics/reports ]; then
+                git add social-distributor/analytics/reports/ || true
+              fi
+              if git diff --cached --quiet; then
+                echo "[ANALYTICS] After reset-soft, nothing to commit — origin/main already has our changes."
+                exit 0
+              fi
+              git commit -m "chore: daily analytics update [$(date -u +%Y-%m-%d)]"
+            fi
+
+            sleep 3
+          done
+
+          echo "::error::Analytics state persistence failed after $MAX_ATTEMPTS push attempts — trend-priorities / performance-weights / content-history NOT pushed. Scheduler will use stale data next run."
+          exit 1

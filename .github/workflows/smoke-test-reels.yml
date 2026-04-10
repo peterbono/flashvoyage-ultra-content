@@ -1,0 +1,34 @@
+name: Smoke Test — Reels Pipeline
+
+# Runs every day at 05:00 UTC — 1h after daily-analytics finishes — to verify
+# the reels pipeline is still learning (weights fresh, dedup DB populated,
+# reel-history current, scheduler decideContent still returns a valid format).
+#
+# If the smoke test exits non-zero, the job fails LOUD so the red X is visible
+# in the Actions UI and GitHub emails the repo owner by default.
+#
+# Manual trigger is enabled via workflow_dispatch for on-demand verification.
+
+on:
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+
+jobs:
+  smoke-test:
+    name: Run reels pipeline smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run smoke test
+        run: node scripts/smoke-test-reels-pipeline.mjs

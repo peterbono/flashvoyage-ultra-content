@@ -415,7 +415,14 @@ export async function updatePerformanceWeights() {
 // ── CLI mode ────────────────────────────────────────────────────────────────
 
 if (process.argv[1] && process.argv[1].includes('performance-scorer')) {
-  const command = process.argv[2] || 'report';
+  // Normalize: strip leading `--` so `--update`, `update`, `--weights`, `weights`
+  // all hit the same case. Keeps backwards compat with the original positional
+  // commands (`report`, `formats`, etc.) while also supporting the flag-style
+  // invocation the daily-analytics workflow uses (`--update`).
+  const rawCommand = process.argv[2] || 'report';
+  const command = rawCommand.replace(/^--/, '');
+
+  log(`CLI invoked with command: "${rawCommand}" (normalized: "${command}")`);
 
   (async () => {
     try {
@@ -437,7 +444,9 @@ if (process.argv[1] && process.argv[1].includes('performance-scorer')) {
           console.log(JSON.stringify(ranking, null, 2));
           break;
         }
-        case 'weights': {
+        case 'weights':
+        case 'update': {
+          log('Updating performance weights...');
           const weights = await updatePerformanceWeights();
           console.log(JSON.stringify(weights, null, 2));
           break;
@@ -450,7 +459,8 @@ if (process.argv[1] && process.argv[1].includes('performance-scorer')) {
           break;
         }
         default:
-          console.log('Usage: node performance-scorer.js [report|formats|destinations|weights|score] [days]');
+          console.log(`Usage: node performance-scorer.js [report|formats|destinations|weights|update|score] [days]`);
+          console.log(`Unknown command: "${rawCommand}"`);
       }
     } catch (err) {
       logError(err.message);

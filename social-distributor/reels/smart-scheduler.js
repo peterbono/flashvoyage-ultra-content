@@ -118,18 +118,45 @@ const KILLED_FORMATS = loadKilledFormats();
 const DEDUP_DESTINATION_DAYS = 3;   // Don't repeat same destination within 3 days
 const DEDUP_FORMAT_SAME_SLOT = 2;   // Don't repeat same format in same time slot 2 days in a row
 const DEDUP_ARTICLE_DAYS = 7;       // Don't reuse same article within 7 days
+const DEDUP_FINGERPRINT_DAYS = 2;   // Don't repeat same fmt+dest+slug-head fingerprint within 2 days
+
+// ── Known Destinations (shared between slug extraction + IG caption matching) ─
+const KNOWN_DESTINATIONS = [
+  'bali', 'thailande', 'vietnam', 'philippines', 'cambodge', 'laos',
+  'myanmar', 'malaisie', 'singapour', 'indonesie', 'jakarta', 'bangkok',
+  'chiang-mai', 'phuket', 'koh-samui', 'koh-phangan', 'hanoi',
+  'ho-chi-minh', 'da-nang', 'hoi-an', 'siem-reap', 'luang-prabang',
+  'kuala-lumpur', 'cebu', 'palawan', 'el-nido', 'siargao', 'ubud',
+  'lombok', 'nusa-penida', 'java', 'raja-ampat', 'japon', 'coree',
+  'sri-lanka', 'inde', 'maldives', 'nepal',
+];
 
 // ── Content History ─────────────────────────────────────────────────────────
 
 function loadHistory() {
+  const empty = {
+    recentDestinations: [],
+    recentFormats: [],
+    recentArticleIds: [],
+    recentFingerprints: [],
+  };
   if (!existsSync(HISTORY_PATH)) {
-    return { recentDestinations: [], recentFormats: [], recentArticleIds: [] };
+    return empty;
   }
   try {
-    return JSON.parse(readFileSync(HISTORY_PATH, 'utf-8'));
+    const parsed = JSON.parse(readFileSync(HISTORY_PATH, 'utf-8')) || {};
+    // Backwards-compat: default-initialize any missing fields so older
+    // content-history.json files (and the empty-file state another agent
+    // is patching) don't crash downstream code.
+    return {
+      recentDestinations: Array.isArray(parsed.recentDestinations) ? parsed.recentDestinations : [],
+      recentFormats: Array.isArray(parsed.recentFormats) ? parsed.recentFormats : [],
+      recentArticleIds: Array.isArray(parsed.recentArticleIds) ? parsed.recentArticleIds : [],
+      recentFingerprints: Array.isArray(parsed.recentFingerprints) ? parsed.recentFingerprints : [],
+    };
   } catch (err) {
     logWarn(`Failed to parse content-history.json: ${err.message}`);
-    return { recentDestinations: [], recentFormats: [], recentArticleIds: [] };
+    return empty;
   }
 }
 
@@ -141,8 +168,18 @@ function saveHistory(history) {
 /**
  * Record a published piece of content in the history tracker.
  * Called after successful publication.
+ *
+ * @param {Object} params
+ * @param {string} params.format        - Reel format (e.g. "avantapres").
+ * @param {number|string} params.articleId - WP article id (optional).
+ * @param {string} params.destination   - Destination name (optional).
+ * @param {string} [params.slug]        - WP slug (optional). When provided, a
+ *   content fingerprint is generated and stored in `recentFingerprints` so the
+ *   scheduler can block same-format + same-destination + similar-slug reels
+ *   within `DEDUP_FINGERPRINT_DAYS`. Workflows that don't yet pass `slug`
+ *   still work — the fingerprint is simply skipped.
  */
-export function recordPublication({ format, articleId, destination }) {
+export function recordPublication({ format, articleId, destination, slug }) {
   const history = loadHistory();
   const now = new Date().toISOString();
   const today = now.slice(0, 10);
@@ -166,6 +203,12 @@ export function recordPublication({ format, articleId, destination }) {
     }
   }
 
+  // Fingerprint (only if slug provided — optional for backwards compat)
+  if (slug) {
+    const fp = buildFingerprint(format, destination, slug);
+    history.recentFingerprints.push({ fp, date: now });
+  }
+
   // Prune old entries to keep the file small
   const cutoffDate = new Date();
   cutoffDate.setDate(cutoffDate.getDate() - 14); // Keep 14 days of history
@@ -177,13 +220,43 @@ export function recordPublication({ format, articleId, destination }) {
   history.recentFormats = history.recentFormats.filter(
     f => f.date >= cutoffStr
   );
+  history.recentFingerprints = history.recentFingerprints.filter(
+    f => f.date >= cutoffStr
+  );
   // Keep last 100 article IDs
   if (history.recentArticleIds.length > 100) {
     history.recentArticleIds = history.recentArticleIds.slice(-100);
   }
 
   saveHistory(history);
-  log(`Recorded publication: format=${format}, destination=${destination || 'none'}, articleId=${articleId || 'none'}`);
+  log(`Recorded publication: format=${format}, destination=${destination || 'none'}, articleId=${articleId || 'none'}${slug ? `, slug=${slug.slice(0, 30)}` : ''}`);
+}
+
+// ── Fingerprint Helpers ─────────────────────────────────────────────────────
+
+/**
+ * Build a content fingerprint from format + destination + slug head.
+ * Used to block near-identical reels (same format + same destination + similar
+ * slug start) within `DEDUP_FINGERPRINT_DAYS`, even when the WP article id differs.
+ */
+function buildFingerprint(format, destination, slug) {
+  const f = (format || 'none').toLowerCase();
+  const d = (destination || 'none').toLowerCase();
+  const s = (slug || '').toLowerCase().slice(0, 30);
+  return `fmt:${f}|dest:${d}|slug:${s}`;
+}
+
+/**
+ * Check if a given fingerprint was seen within DEDUP_FINGERPRINT_DAYS.
+ */
+function isFingerprintRecent(fp, history) {
+  if (!fp || !Array.isArray(history.recentFingerprints)) return false;
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - DEDUP_FINGERPRINT_DAYS);
+  const cutoffIso = cutoff.toISOString();
+  return history.recentFingerprints.some(
+    entry => entry && entry.fp === fp && entry.date >= cutoffIso
+  );
 }
 
 // ── Dedup Checks ────────────────────────────────────────────────────────────
@@ -280,12 +353,16 @@ function getBestTrendingDestination(history) {
 // ── Performance Weights ─────────────────────────────────────────────────────
 
 function loadPerformanceWeights() {
-  if (!existsSync(PERF_PATH)) return {};
+  const empty = { formatScores: {}, destinationScores: {} };
+  if (!existsSync(PERF_PATH)) return empty;
   try {
     const data = JSON.parse(readFileSync(PERF_PATH, 'utf-8'));
-    return data.formatScores || {};
+    return {
+      formatScores: data.formatScores || {},
+      destinationScores: data.destinationScores || {},
+    };
   } catch {
-    return {};
+    return empty;
   }
 }
 
@@ -300,7 +377,7 @@ function loadPerformanceWeights() {
  * Guaranteed: never returns a killed format.
  */
 function applyPerformanceBoost(baseFormat, hourSlot, history) {
-  const weights = loadPerformanceWeights();
+  const { formatScores: weights } = loadPerformanceWeights();
   const formatNames = Object.keys(weights);
 
   // ── Hard block: never return a killed format ──────────────────────────────
@@ -414,23 +491,58 @@ async function checkBreakingNewsForScheduler() {
  * Pick the best article for the given format and trending destination.
  * Uses the WP REST API to fetch candidates and filters by dedup rules.
  *
- * Returns { articleId, destination } or { articleId: null, destination: null }.
+ * @param {string} format - Target reel format.
+ * @param {string|null} trendingDest - Optional trending destination hint.
+ * @param {Object} history - loaded content-history.json.
+ * @param {Object} [options]
+ * @param {Set<string>} [options.igRecentDestinations] - Destinations seen in recent IG feed
+ *        (ephemeral, not persisted — merged into the dedup set for this call only).
+ * @param {Set<string>} [options.igRecentArticleHints] - Article slugs hinted at in recent IG
+ *        captions (ephemeral, used to penalize those slugs in this call only).
+ *
+ * Returns { articleId, destination, slug } or { articleId: null, destination: null, slug: null }.
  */
-async function selectArticle(format, trendingDest, history) {
+async function selectArticle(format, trendingDest, history, options = {}) {
+  const igRecentDestinations = options.igRecentDestinations || new Set();
+  const igRecentArticleHints = options.igRecentArticleHints || new Set();
+
   try {
     const { fetchAllPosts } = await import('../extractor.js');
     const posts = await fetchAllPosts();
 
     if (!posts || posts.length === 0) {
       log('No articles found in WordPress');
-      return { articleId: null, destination: null };
+      return { articleId: null, destination: null, slug: null };
     }
 
+    const { destinationScores } = loadPerformanceWeights();
     const recentIds = new Set(history.recentArticleIds || []);
-    const recentDests = new Set(getRecentDestinations(history));
+    // Merge history dedup with IG ephemeral dedup so manual IG posts are respected.
+    const recentDests = new Set([
+      ...getRecentDestinations(history),
+      ...Array.from(igRecentDestinations, d => (d || '').toLowerCase()),
+    ]);
+    const recentSlugHints = new Set(
+      Array.from(igRecentArticleHints, s => (s || '').toLowerCase())
+    );
 
-    // Filter out recently used articles
-    let candidates = posts.filter(p => !recentIds.has(p.id));
+    // Filter out recently used articles (article id + slug hints from IG)
+    let candidates = posts.filter(p => {
+      if (recentIds.has(p.id)) return false;
+      const slug = (p.slug || '').toLowerCase();
+      if (slug && recentSlugHints.has(slug)) return false;
+      return true;
+    });
+
+    // Filter out candidates whose fingerprint (fmt+dest+slug) collides with a
+    // recent publication (2-day window). This catches same-format + same-dest
+    // reels even when the WP article id differs.
+    candidates = candidates.filter(p => {
+      const slug = (p.slug || '').toLowerCase();
+      const dest = extractDestinationFromSlug(slug);
+      const fp = buildFingerprint(format, dest, slug);
+      return !isFingerprintRecent(fp, history);
+    });
 
     // If we have a trending destination, try to find a matching article
     if (trendingDest) {
@@ -443,10 +555,12 @@ async function selectArticle(format, trendingDest, history) {
 
       if (destMatches.length > 0) {
         const picked = destMatches[0];
+        const pickedSlug = (picked.slug || '').toLowerCase();
         log(`Selected trending article #${picked.id}: "${(picked.title?.rendered || '').slice(0, 50)}" (matches trend: ${trendingDest})`);
         return {
           articleId: picked.id,
           destination: trendingDest,
+          slug: pickedSlug,
         };
       }
     }
@@ -454,7 +568,7 @@ async function selectArticle(format, trendingDest, history) {
     // Filter out articles whose destination was used recently
     const filtered = candidates.filter(p => {
       const slug = (p.slug || '').toLowerCase();
-      return !Array.from(recentDests).some(d => slug.includes(d));
+      return !Array.from(recentDests).some(d => d && slug.includes(d));
     });
 
     // Pick from filtered if available, otherwise from all candidates
@@ -463,46 +577,108 @@ async function selectArticle(format, trendingDest, history) {
     if (pool.length === 0) {
       log('All articles recently used, picking from full pool');
       const fallback = posts[Math.floor(Math.random() * Math.min(posts.length, 10))];
-      return { articleId: fallback.id, destination: null };
+      return {
+        articleId: fallback.id,
+        destination: null,
+        slug: (fallback.slug || '').toLowerCase() || null,
+      };
     }
 
-    // Pick a random article from the top 10 (to add variety)
-    const topPool = pool.slice(0, Math.min(pool.length, 10));
-    const picked = topPool[Math.floor(Math.random() * topPool.length)];
-    const destGuess = extractDestinationFromSlug(picked.slug || '');
+    // Score candidates by destinationScores (Problem B).
+    // Weight formula: 1 + (score / 10). Articles from top destinations get
+    // proportionally more picks. Fall back to uniform if no scores are set.
+    const hasDestScores = destinationScores && Object.keys(destinationScores).length > 0;
+    const scored = pool.map(p => {
+      const slug = (p.slug || '').toLowerCase();
+      const dest = extractDestinationFromSlug(slug);
+      const rawScore = dest && destinationScores ? (destinationScores[dest] || 0) : 0;
+      return {
+        post: p,
+        dest,
+        slug,
+        destScore: rawScore,
+        weight: 1 + (rawScore > 0 ? rawScore / 10 : 0),
+      };
+    });
 
-    log(`Selected article #${picked.id}: "${(picked.title?.rendered || '').slice(0, 50)}" (destination: ${destGuess || 'unknown'})`);
+    // Sort by destScore desc so the "top 10" pool surfaces the best destinations.
+    scored.sort((a, b) => b.destScore - a.destScore);
+    const topPool = scored.slice(0, Math.min(scored.length, 10));
+
+    // Weighted pick across the top pool.
+    let picked;
+    if (hasDestScores && topPool.some(c => c.destScore > 0)) {
+      const totalWeight = topPool.reduce((sum, c) => sum + c.weight, 0);
+      let r = Math.random() * totalWeight;
+      for (const c of topPool) {
+        r -= c.weight;
+        if (r <= 0) {
+          picked = c;
+          break;
+        }
+      }
+      if (!picked) picked = topPool[0];
+    } else {
+      // Fallback: uniform pick from top pool (original behavior).
+      picked = topPool[Math.floor(Math.random() * topPool.length)];
+    }
+
+    log(`Selected article #${picked.post.id}: "${(picked.post.title?.rendered || '').slice(0, 50)}" (destination: ${picked.dest || 'unknown'}, destScore: ${picked.destScore})`);
 
     return {
-      articleId: picked.id,
-      destination: destGuess,
+      articleId: picked.post.id,
+      destination: picked.dest,
+      slug: picked.slug || null,
     };
   } catch (err) {
     logError(`Article selection failed: ${err.message}`);
-    return { articleId: null, destination: null };
+    return { articleId: null, destination: null, slug: null };
   }
 }
 
 /**
  * Best-effort destination extraction from a WP slug.
  * e.g. "budget-bali-2-semaines" -> "bali"
+ * Uses the module-level KNOWN_DESTINATIONS list (shared with the IG caption scan).
  */
 function extractDestinationFromSlug(slug) {
-  const KNOWN_DESTINATIONS = [
-    'bali', 'thailande', 'vietnam', 'philippines', 'cambodge', 'laos',
-    'myanmar', 'malaisie', 'singapour', 'indonesie', 'jakarta', 'bangkok',
-    'chiang-mai', 'phuket', 'koh-samui', 'koh-phangan', 'hanoi',
-    'ho-chi-minh', 'da-nang', 'hoi-an', 'siem-reap', 'luang-prabang',
-    'kuala-lumpur', 'cebu', 'palawan', 'el-nido', 'siargao', 'ubud',
-    'lombok', 'nusa-penida', 'java', 'raja-ampat', 'japon', 'coree',
-    'sri-lanka', 'inde', 'maldives', 'nepal',
-  ];
-
+  if (!slug) return null;
   const slugLower = slug.toLowerCase();
   for (const dest of KNOWN_DESTINATIONS) {
     if (slugLower.includes(dest)) return dest;
   }
   return null;
+}
+
+/**
+ * Best-effort destination extraction from an IG caption (or any free text).
+ * Looks for KNOWN_DESTINATIONS tokens as substrings (case-insensitive).
+ * Returns array of matches (a caption can mention multiple destinations).
+ */
+function extractDestinationsFromText(text) {
+  if (!text) return [];
+  const lower = text.toLowerCase();
+  const hits = [];
+  for (const dest of KNOWN_DESTINATIONS) {
+    if (lower.includes(dest)) hits.push(dest);
+  }
+  return hits;
+}
+
+/**
+ * Best-effort article slug extraction from an IG caption.
+ * Looks for "flashvoyage.com/<slug>" URLs and returns the slug portion.
+ */
+function extractArticleSlugsFromText(text) {
+  if (!text) return [];
+  const hits = [];
+  // Match flashvoyage.com/slug-with-dashes (stop at whitespace, punctuation, or #)
+  const re = /flashvoyage\.com\/([a-z0-9][a-z0-9-]{3,})/gi;
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    hits.push(m[1].toLowerCase());
+  }
+  return hits;
 }
 
 // ── "Ou Partir En" Month Guard ──────────────────────────────────────────────
@@ -554,6 +730,41 @@ export async function decideContent(options = {}) {
   log('='.repeat(60));
 
   const history = loadHistory();
+
+  // ── 0. IG feed cross-check (Problem A) ────────────────────────────────────
+  // Best-effort: look at the last N IG media items and extract destinations /
+  // article slug hints from captions. This means manually-posted IG reels are
+  // factored into dedup, not just cron-published ones. Failures here (missing
+  // token, rate limit) are non-fatal — we log and continue.
+  const igRecentDestinations = new Set();
+  const igRecentArticleHints = new Set();
+  try {
+    const { fetchRecentMedia } = await import('../analytics/ig-stats-fetcher.js');
+    const media = await fetchRecentMedia(25);
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - DEDUP_DESTINATION_DAYS);
+    const cutoffIso = cutoff.toISOString();
+
+    let matchedDests = 0;
+    let matchedSlugs = 0;
+    for (const item of media || []) {
+      if (!item || !item.timestamp) continue;
+      // Only consider media within the dedup window
+      if (item.timestamp < cutoffIso) continue;
+      const caption = item.caption || '';
+      for (const d of extractDestinationsFromText(caption)) {
+        if (!igRecentDestinations.has(d)) matchedDests++;
+        igRecentDestinations.add(d);
+      }
+      for (const s of extractArticleSlugsFromText(caption)) {
+        if (!igRecentArticleHints.has(s)) matchedSlugs++;
+        igRecentArticleHints.add(s);
+      }
+    }
+    log(`IG feed cross-check: ${media?.length || 0} media scanned, ${matchedDests} new destination hits, ${matchedSlugs} slug hints`);
+  } catch (err) {
+    logWarn(`IG feed cross-check failed (non-fatal): ${err.message}`);
+  }
 
   // ── 1. Check breaking news ────────────────────────────────────────────────
   let breakingNews = null;
@@ -653,10 +864,11 @@ export async function decideContent(options = {}) {
   }
 
   // ── 6. Select article ────────────────────────────────────────────────────
-  const { articleId, destination } = await selectArticle(
+  const { articleId, destination, slug } = await selectArticle(
     finalFormat,
     trendingDest,
-    history
+    history,
+    { igRecentDestinations, igRecentArticleHints }
   );
 
   // ── 7. Queued breaking news info (score 30-59) ────────────────────────────
@@ -675,6 +887,7 @@ export async function decideContent(options = {}) {
     format: finalFormat,
     articleId,
     destination,
+    slug: slug || null,
     reason,
     isBreakingNews: false,
   };

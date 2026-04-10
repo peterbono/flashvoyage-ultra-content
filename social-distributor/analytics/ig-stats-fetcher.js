@@ -192,7 +192,9 @@ export async function fetchRecentReelStats(days = 7, pageToken) {
 
   const history = readReelHistory();
   if (history.length === 0) {
-    log('No reel history entries found');
+    logError(`LOUD WARNING: reel-history.jsonl is EMPTY or missing at ${REEL_HISTORY_PATH}. `
+      + `This likely means the publish pipeline never wrote a history entry, OR the file path is wrong. `
+      + `Performance scoring will produce zero data until this is fixed.`);
     return [];
   }
 
@@ -207,7 +209,12 @@ export async function fetchRecentReelStats(days = 7, pageToken) {
 
   log(`Found ${recent.length} reels in the last ${days} days (of ${history.length} total)`);
 
-  if (recent.length === 0) return [];
+  if (recent.length === 0) {
+    logError(`LOUD WARNING: history has ${history.length} entries total but ZERO match the last ${days}-day window. `
+      + `Stale reel-history.jsonl? Publish pipeline stopped writing? `
+      + `Most recent entry date in history: ${history[history.length - 1]?.date ?? 'unknown'}.`);
+    return [];
+  }
 
   // Fetch insights for each, with a small delay to respect rate limits
   // IG Graph API rate limit: ~200 calls per hour per token
@@ -285,8 +292,33 @@ export async function fetchRecentMedia(limit = 25, pageToken) {
 // ── CLI mode ────────────────────────────────────────────────────────────────
 
 if (process.argv[1] && process.argv[1].includes('ig-stats-fetcher')) {
-  const days = parseInt(process.argv[2] || '7', 10);
+  // Parse `--days N`, `--days=N`, or bare positional `N`. Fall back to 7.
+  function parseDaysArg(argv) {
+    const args = argv.slice(2);
+    for (let i = 0; i < args.length; i++) {
+      const a = args[i];
+      // `--days=N`
+      if (a.startsWith('--days=')) {
+        const n = parseInt(a.slice('--days='.length), 10);
+        if (!Number.isNaN(n) && n > 0) return n;
+      }
+      // `--days N`
+      if (a === '--days' && i + 1 < args.length) {
+        const n = parseInt(args[i + 1], 10);
+        if (!Number.isNaN(n) && n > 0) return n;
+      }
+      // bare positional integer (legacy behavior: `ig-stats-fetcher.js 14`)
+      if (!a.startsWith('-')) {
+        const n = parseInt(a, 10);
+        if (!Number.isNaN(n) && n > 0) return n;
+      }
+    }
+    return 7;
+  }
 
+  const days = parseDaysArg(process.argv);
+
+  log(`CLI invoked with argv: ${JSON.stringify(process.argv.slice(2))} → parsed days=${days}`);
   log(`Fetching IG reel stats for the last ${days} days...`);
 
   fetchRecentReelStats(days)

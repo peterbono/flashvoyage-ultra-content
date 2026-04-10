@@ -50,7 +50,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: reels-${{ github.event.schedule || 'manual' }}
+  group: reels-publish
   cancel-in-progress: false
 
 env:
@@ -66,6 +66,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
+          persist-credentials: true
 
       - uses: actions/setup-node@v4
         with:
@@ -103,16 +105,22 @@ jobs:
               REASON=$(echo "$RESULT" | jq -r '.reason // "auto fallback"')
               ARTICLE_ID=$(echo "$RESULT" | jq -r '.articleId // empty')
               IS_BREAKING=$(echo "$RESULT" | jq -r '.isBreakingNews // false')
+              DESTINATION=$(echo "$RESULT" | jq -r '.destination // empty')
+              SLUG=$(echo "$RESULT" | jq -r '.slug // empty')
               echo "[SCHEDULER] Smart decision: $FORMAT ($REASON)"
             else
               REASON="manual dispatch"
               ARTICLE_ID="${{ github.event.inputs.article_id }}"
               IS_BREAKING="false"
+              DESTINATION=""
+              SLUG=""
             fi
             echo "format=$FORMAT" >> $GITHUB_OUTPUT
             echo "reason=$REASON" >> $GITHUB_OUTPUT
             echo "article_id=$ARTICLE_ID" >> $GITHUB_OUTPUT
             echo "is_breaking=$IS_BREAKING" >> $GITHUB_OUTPUT
+            echo "destination=$DESTINATION" >> $GITHUB_OUTPUT
+            echo "slug=$SLUG" >> $GITHUB_OUTPUT
             # publish=false if test_only, telegram_only means generate+telegram but no IG/FB
             TELEGRAM_ONLY="${{ github.event.inputs.telegram_only }}"
             if [ "${{ github.event.inputs.test_only }}" = "true" ]; then
@@ -150,22 +158,30 @@ jobs:
               REASON="static calendar fallback (scheduler failed)"
               ARTICLE_ID=""
               IS_BREAKING="false"
+              DESTINATION=""
+              SLUG=""
             else
               FORMAT=$(echo "$RESULT" | jq -r '.format // "pick"')
               REASON=$(echo "$RESULT" | jq -r '.reason // "fallback"')
               ARTICLE_ID=$(echo "$RESULT" | jq -r '.articleId // empty')
               IS_BREAKING=$(echo "$RESULT" | jq -r '.isBreakingNews // false')
+              DESTINATION=$(echo "$RESULT" | jq -r '.destination // empty')
+              SLUG=$(echo "$RESULT" | jq -r '.slug // empty')
             fi
 
             echo "[SCHEDULER] Decision: format=$FORMAT"
             echo "[SCHEDULER] Reason: $REASON"
             echo "[SCHEDULER] Article ID: ${ARTICLE_ID:-auto}"
+            echo "[SCHEDULER] Destination: ${DESTINATION:-none}"
+            echo "[SCHEDULER] Slug: ${SLUG:-none}"
             echo "[SCHEDULER] Breaking news: $IS_BREAKING"
 
             echo "format=$FORMAT" >> $GITHUB_OUTPUT
             echo "reason=$REASON" >> $GITHUB_OUTPUT
             echo "article_id=$ARTICLE_ID" >> $GITHUB_OUTPUT
             echo "is_breaking=$IS_BREAKING" >> $GITHUB_OUTPUT
+            echo "destination=$DESTINATION" >> $GITHUB_OUTPUT
+            echo "slug=$SLUG" >> $GITHUB_OUTPUT
             echo "publish=true" >> $GITHUB_OUTPUT
           fi
 
@@ -217,28 +233,122 @@ jobs:
         env:
           REC_FORMAT: ${{ steps.format.outputs.format }}
           REC_ARTICLE_ID: ${{ steps.format.outputs.article_id }}
+          REC_DESTINATION: ${{ steps.format.outputs.destination }}
+          REC_SLUG: ${{ steps.format.outputs.slug }}
         run: |
           node --input-type=module -e "
             import { recordPublication } from './social-distributor/reels/smart-scheduler.js';
             recordPublication({
               format: process.env.REC_FORMAT,
               articleId: process.env.REC_ARTICLE_ID ? Number(process.env.REC_ARTICLE_ID) : null,
-              destination: null,
+              destination: process.env.REC_DESTINATION || null,
+              slug: process.env.REC_SLUG || null,
             });
-            console.log('[SCHEDULER] Publication recorded in content history.');
-          " 2>&1 || echo "[SCHEDULER] WARN: Failed to record publication (non-fatal)"
+            console.log('[SCHEDULER] Publication recorded: format=' + process.env.REC_FORMAT + ' dest=' + (process.env.REC_DESTINATION || 'none') + ' slug=' + (process.env.REC_SLUG || 'none'));
+          " 2>&1 || { echo "::error::Failed to record publication in content-history.json — dedup will be broken on next run"; exit 1; }
 
 
       # Cross-publishing (FB Reel + Threads + IG Story) is now handled inside
       # index-v2.js → crossPublishReel() after the IG Reel is published.
       # See social-distributor/reels/index-v2.js:publishIfRequested.
 
+      - name: Diagnostic — state files snapshot before commit
+        if: success() && steps.format.outputs.publish == 'true'
+        run: |
+          echo "===== git status (short) ====="
+          git status --short || true
+          echo "===== reel-history.jsonl line count ====="
+          if [ -f social-distributor/data/reel-history.jsonl ]; then
+            wc -l social-distributor/data/reel-history.jsonl
+          else
+            echo "(missing)"
+          fi
+          echo "===== content-history.json head (500 bytes) ====="
+          if [ -f social-distributor/reels/data/content-history.json ]; then
+            head -c 500 social-distributor/reels/data/content-history.json
+            echo
+          else
+            echo "(missing)"
+          fi
+          echo "===== pexels-used.json head (500 bytes) ====="
+          if [ -f social-distributor/reels/data/pexels-used.json ]; then
+            head -c 500 social-distributor/reels/data/pexels-used.json
+            echo
+          else
+            echo "(missing)"
+          fi
+
       - name: Commit state files (reel history, pexels dedup)
         if: success() && steps.format.outputs.publish == 'true'
         run: |
+          set -eo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main || true
-          git add social-distributor/data/reel-history.jsonl social-distributor/reels/data/pexels-used.json social-distributor/reels/data/content-history.json 2>/dev/null || true
-          git diff --cached --quiet || git commit -m "chore: update reel state after publish [$(date -u +%Y-%m-%d)]"
-          git push || { echo "::warning::git push failed — state files not persisted"; }
+
+          STATE_FILES=(
+            "social-distributor/data/reel-history.jsonl"
+            "social-distributor/reels/data/pexels-used.json"
+            "social-distributor/reels/data/content-history.json"
+          )
+
+          # Stage whatever exists and has changed
+          for f in "${STATE_FILES[@]}"; do
+            if [ -f "$f" ]; then
+              git add "$f" || true
+            fi
+          done
+
+          # Nothing to commit? Exit clean.
+          if git diff --cached --quiet; then
+            echo "[STATE] No state file changes to commit."
+            exit 0
+          fi
+
+          # Create the local commit once — we'll re-apply on top of origin/main if needed.
+          git commit -m "chore: update reel state after publish [$(date -u +%Y-%m-%d)]"
+
+          MAX_ATTEMPTS=3
+          ATTEMPT=0
+          while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
+            ATTEMPT=$((ATTEMPT + 1))
+            echo "[STATE] Push attempt $ATTEMPT/$MAX_ATTEMPTS"
+
+            if git push origin HEAD:main; then
+              echo "[STATE] Push succeeded on attempt $ATTEMPT"
+              exit 0
+            fi
+
+            echo "[STATE] Push failed — main likely moved. Rebasing onto fresh origin/main."
+            git fetch origin main
+
+            # Stash-free rebase: our commit only touches JSON state files,
+            # conflicts are possible only if another job committed the same files.
+            # For JSON-only state, "ours" is the safe resolution — our state reflects
+            # the publish that just happened; we don't want to lose it.
+            if ! git rebase -X ours origin/main; then
+              echo "[STATE] Rebase hit an unresolvable conflict — aborting rebase and falling back to reset-soft strategy."
+              git rebase --abort || true
+
+              # Fallback: move HEAD to origin/main while keeping our state files staged,
+              # then re-commit on top of the fresh tip.
+              git reset --soft origin/main
+              # Re-stage state files (reset --soft keeps them in the index already,
+              # but be explicit in case of path edge cases).
+              for f in "${STATE_FILES[@]}"; do
+                if [ -f "$f" ]; then
+                  git add "$f" || true
+                fi
+              done
+              if git diff --cached --quiet; then
+                echo "[STATE] After reset-soft, nothing to commit — origin/main already has our changes."
+                exit 0
+              fi
+              git commit -m "chore: update reel state after publish [$(date -u +%Y-%m-%d)]"
+            fi
+
+            # Small backoff before next push attempt
+            sleep 3
+          done
+
+          echo "::error::State persistence failed after $MAX_ATTEMPTS push attempts — reel-history.jsonl / content-history.json NOT pushed. Dedup will be stale next run."
+          exit 1
