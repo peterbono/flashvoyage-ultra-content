@@ -1,5 +1,28 @@
 {
-  "recentDestinations": [],
-  "recentFormats": [],
-  "recentArticleIds": []
+  "recentDestinations": [
+    {
+      "name": "thailande",
+      "date": "2026-04-10",
+      "format": "best-time"
+    }
+  ],
+  "recentFormats": [
+    {
+      "format": "best-time",
+      "date": "2026-04-10T21:03:05.430Z"
+    },
+    {
+      "format": "best-time",
+      "date": "2026-04-10T21:03:40.288Z"
+    }
+  ],
+  "recentArticleIds": [
+    5260
+  ],
+  "recentFingerprints": [
+    {
+      "fp": "fmt:best-time|dest:thailande|slug:vietnam-vs-thailande-en-2026-l",
+      "date": "2026-04-10T21:03:40.288Z"
+    }
+  ]
 }
