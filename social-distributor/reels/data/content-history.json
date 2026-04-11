@@ -19,6 +19,11 @@
       "name": "bali",
       "date": "2026-04-11",
       "format": "avantapres"
+    },
+    {
+      "name": "laos",
+      "date": "2026-04-11",
+      "format": "humor-tweet"
     }
   ],
   "recentFormats": [
@@ -41,12 +46,21 @@
     {
       "format": "avantapres",
       "date": "2026-04-11T19:42:30.273Z"
+    },
+    {
+      "format": "humor-tweet",
+      "date": "2026-04-11T20:57:44.984Z"
+    },
+    {
+      "format": "humor-tweet",
+      "date": "2026-04-11T20:58:15.206Z"
     }
   ],
   "recentArticleIds": [
     5260,
     5286,
-    5296
+    5296,
+    4255
   ],
   "recentFingerprints": [
     {
@@ -60,6 +74,10 @@
     {
       "fp": "fmt:avantapres|dest:bali|slug:choisir-le-bon-plan-esim-pour-",
       "date": "2026-04-11T19:42:30.273Z"
+    },
+    {
+      "fp": "fmt:humor-tweet|dest:laos|slug:cambodge-ou-laos-lequel-choisi",
+      "date": "2026-04-11T20:58:15.206Z"
     }
   ]
 }
