@@ -1,5 +1,5 @@
 {
-  "totalPublished": 216,
+  "totalPublished": 217,
   "currentClusterId": "japon",
   "history": [
     {
@@ -673,6 +673,13 @@
       "articleType": "pillar",
       "hint": "esim japan 2026 airalo holafly ubigi comparison price coverage",
       "title": "Esim Japon : Combien Ça Te Coûte Vraiment ?"
+    },
+    {
+      "date": "2026-04-11T08:44:28.279Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "esim indonesia bali 2026 which data plan to choose comparison",
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu'on ne te dit pas"
     }
   ]
 }
