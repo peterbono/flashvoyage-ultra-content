@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 13,
+      "posted": 14,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -110,6 +110,14 @@
           "hasLink": false,
           "generated": true,
           "status": "published"
+        },
+        {
+          "date": "2026-04-11T08:02:42.275Z",
+          "thread": "quelle-destination-coupler-avec-indonesie-polynesie-duree-4-mois-d11464909",
+          "title": "Quelle destination coupler avec l'Indonésie et la Polynésie sur une durée de 4 mois?",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
         }
       ],
       "posts_queued": [
@@ -155,7 +163,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 9,
+      "posted": 10,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -253,6 +261,14 @@
           "date": "2026-04-10T06:26:11.898Z",
           "id": "ai-4058-1775802334611",
           "search": "Première visite aux Philippines conseils pratiques",
+          "hasLink": false,
+          "status": "published",
+          "generated": true
+        },
+        {
+          "date": "2026-04-11T08:00:53.051Z",
+          "id": "ai-4004-1775894415849",
+          "search": "Quels sont les frais cachés d'un voyage au Japon",
           "hasLink": false,
           "status": "published",
           "generated": true
@@ -356,7 +372,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 3,
+      "posted": 4,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -381,11 +397,19 @@
           "section": "Cambodge",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-11T08:07:03.501Z",
+          "threadId": "15415050",
+          "title": "Love bali taxe",
+          "section": "Bali",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 31,
+  "total_posted": 34,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
