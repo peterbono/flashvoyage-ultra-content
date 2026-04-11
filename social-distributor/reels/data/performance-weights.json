@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-10",
+  "lastUpdated": "2026-04-11",
   "formatScores": {
     "poll": 0,
     "pick": 0,
@@ -18,26 +18,25 @@
     "versus"
   ],
   "destinationScores": {
-    "thailande": 4,
     "vietnam": 4,
-    "philippines": 1.9,
-    "indonesie": 1.3,
-    "singapour": 0.8,
-    "bali": 0.7,
+    "thailande": 3.9,
+    "philippines": 1.8,
+    "indonesie": 1.1,
+    "singapour": 0.7,
+    "bali": 0.6,
     "cambodge": 0.6,
     "malaisie": 0.4,
     "laos": 0.3,
     "lombok": 0.3,
-    "chiang mai": 0.2,
     "bangkok": 0.2,
+    "chiang mai": 0.2,
     "krabi": 0.2,
     "koh samui": 0.1,
-    "ubud": 0.1,
     "koh lanta": 0.1
   },
   "recommendations": [
-    "thailande content trending — prioritize",
     "vietnam content trending — prioritize",
+    "thailande content trending — prioritize",
     "philippines content trending — prioritize",
     "No reel data yet — weights are placeholder, will update after first reels are published"
   ]
