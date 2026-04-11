@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-10T05:31:15.158Z",
+  "timestamp": "2026-04-11T05:00:51.111Z",
   "articleMap": {
     "voyage-thailande-pas-cher-2026-budget": {
       "wpId": 4487,
@@ -49,18 +49,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "cambodge-ou-laos-lequel-choisir-2-semaines-budget": {
-      "wpId": 4255,
-      "title": "Cambodge ou Laos : le choix que tu dois faire (et ce que chaque option te coûte vraiment)",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
     "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
       "wpId": 4252,
       "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
@@ -73,16 +61,16 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules": {
-      "wpId": 3410,
-      "title": "Laos solo : 2 risques que les blogs voyage cachent aux femmes seules",
+    "bali-vs-thailande-premier-voyage-asie-comparatif": {
+      "wpId": 4254,
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
       "reels": [],
       "suggestedFormats": [
-        "humor",
+        "pick",
         "poll",
-        "avantapres"
+        "humor"
       ],
-      "category": "securite",
+      "category": "default",
       "igReferralTraffic": null
     },
     "esim-philippines-globe-smart-comparatif-2026": {
@@ -109,6 +97,42 @@
       "category": "budget",
       "igReferralTraffic": null
     },
+    "cambodge-ou-laos-lequel-choisir-2-semaines-budget": {
+      "wpId": 4255,
+      "title": "Cambodge ou Laos : le choix que tu dois faire (et ce que chaque option te coûte vraiment)",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules": {
+      "wpId": 3410,
+      "title": "Laos solo : 2 risques que les blogs voyage cachent aux femmes seules",
+      "reels": [],
+      "suggestedFormats": [
+        "humor",
+        "poll",
+        "avantapres"
+      ],
+      "category": "securite",
+      "igReferralTraffic": null
+    },
+    "esim-thailande-comparatif-ais-dtac-true-2026": {
+      "wpId": 4253,
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "bali-lombok-gili-10-jours-itineraire-budget-2026": {
       "wpId": 4370,
       "title": "Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent",
@@ -121,9 +145,9 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "bali-vs-thailande-premier-voyage-asie-comparatif": {
-      "wpId": 4254,
-      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
+    "thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage": {
+      "wpId": 5053,
+      "title": "Thaïlande vs Vietnam : le dilemme caché pour un premier voyage",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -145,33 +169,21 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "esim-thailande-comparatif-ais-dtac-true-2026": {
-      "wpId": 4253,
-      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+    "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas": {
+      "wpId": 3501,
+      "title": "Ce que Thaïlande m&rsquo;a coûté (et que les blogs ne montrent pas)",
       "reels": [],
       "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
+        "budget",
+        "versus",
+        "poll"
       ],
-      "category": "default",
+      "category": "budget",
       "igReferralTraffic": null
     },
     "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
       "wpId": 5072,
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage": {
-      "wpId": 5053,
-      "title": "Thaïlande vs Vietnam : le dilemme caché pour un premier voyage",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -217,21 +229,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas": {
-      "wpId": 3501,
-      "title": "Ce que Thaïlande m&rsquo;a coûté (et que les blogs ne montrent pas)",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2": {
-      "wpId": 2857,
-      "title": "Voyager au Japon : Quand voir les cerisiers sans la foule",
+    "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
+      "wpId": 5260,
+      "title": "Vietnam vs Thaïlande en 2026 : l&rsquo;arbitrage crucial pour un premier voyage",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -253,16 +253,16 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient": {
-      "wpId": 3546,
-      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
+    "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2": {
+      "wpId": 2857,
+      "title": "Voyager au Japon : Quand voir les cerisiers sans la foule",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "month",
-        "avantapres"
+        "poll",
+        "humor"
       ],
-      "category": "itineraire",
+      "category": "default",
       "igReferralTraffic": null
     },
     "vietnam-vs-thailande-le-dilemme-cache-de-ton-premier-voyage": {
@@ -289,40 +289,16 @@
       "category": "securite",
       "igReferralTraffic": null
     },
-    "vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser": {
-      "wpId": 3182,
-      "title": "Vaccin contre la rage pour un périple en Asie du Sud-Est : Faut-il vraiment dépenser ?",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier": {
-      "wpId": 5189,
-      "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
+    "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient": {
+      "wpId": 3546,
+      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "poll",
-        "humor"
+        "month",
+        "avantapres"
       ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "planifier-un-voyage-au-japon-comment-optimiser-chaque-journee": {
-      "wpId": 3040,
-      "title": "Planifier un voyage au Japon : Comment optimiser chaque journée",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
+      "category": "itineraire",
       "igReferralTraffic": null
     },
     "visa-vietnam-lerreur-qui-ma-coute-cher-et-comment-leviter": {
@@ -337,33 +313,9 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "voyager-au-vietnam-avec-500-e-comment-optimiser-chaque-depense-2": {
-      "wpId": 2837,
-      "title": "Voyager au Vietnam avec 500 € : Comment optimiser chaque dépense",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs-mars-2026": {
-      "wpId": 3930,
-      "title": "Japon : la vérité que tu ne liras nulle part ailleurs (mars 2026)",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
-      "wpId": 4105,
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+    "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
+      "wpId": 5063,
+      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -385,30 +337,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "japon-les-2-pieges-que-les-guides-cachent-aux-backpackers": {
-      "wpId": 3550,
-      "title": "Japon : les 2 pièges que les guides cachent aux backpackers",
-      "reels": [],
-      "suggestedFormats": [
-        "humor",
-        "poll",
-        "avantapres"
-      ],
-      "category": "securite",
-      "igReferralTraffic": null
-    },
-    "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
-      "wpId": 5063,
-      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
     "voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite": {
       "wpId": 3264,
       "title": "Voyager 2 semaines en Thaïlande : arbitrer entre Bangkok, Chiang Mai et Krabi sans sacrifier l&rsquo;authenticité",
@@ -421,9 +349,165 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
+    "planifier-un-voyage-au-japon-comment-optimiser-chaque-journee": {
+      "wpId": 3040,
+      "title": "Planifier un voyage au Japon : Comment optimiser chaque journée",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "thailande-choisir-entre-koh-samui-koh-chang-et-koh-lanta-cest-renoncer-a-quoi": {
+      "wpId": 4138,
+      "title": "Thaïlande : choisir entre Koh Samui, Koh Chang et Koh Lanta, c&rsquo;est renoncer à quoi ?",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas": {
+      "wpId": 4087,
+      "title": "Thaïlande : 2 pièges cachés que les blogs voyage ne te disent pas",
+      "reels": [],
+      "suggestedFormats": [
+        "humor",
+        "poll",
+        "avantapres"
+      ],
+      "category": "securite",
+      "igReferralTraffic": null
+    },
+    "thailande-8-realites-que-les-blogs-voyage-cachent-aux-expatries": {
+      "wpId": 4076,
+      "title": "Thaïlande : 8 réalités que les blogs voyage cachent aux expatriés",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "thailande-3-risques-caches-que-les-blogs-voyage-oublient-de-mentionner": {
+      "wpId": 3484,
+      "title": "Thaïlande : 3 risques cachés que les blogs voyage oublient de mentionner",
+      "reels": [],
+      "suggestedFormats": [
+        "humor",
+        "poll",
+        "avantapres"
+      ],
+      "category": "securite",
+      "igReferralTraffic": null
+    },
+    "voyager-au-vietnam-avec-500-e-comment-optimiser-chaque-depense-2": {
+      "wpId": 2837,
+      "title": "Voyager au Vietnam avec 500 € : Comment optimiser chaque dépense",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier": {
+      "wpId": 5189,
+      "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs-mars-2026": {
+      "wpId": 3930,
+      "title": "Japon : la vérité que tu ne liras nulle part ailleurs (mars 2026)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver": {
+      "wpId": 3504,
+      "title": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "budget-2-200-e-en-thailande-5-arbitrages-caches-qui-peuvent-te-ruiner": {
       "wpId": 3259,
       "title": "Budget 2 200 € en Thaïlande : 5 arbitrages cachés qui peuvent te ruiner",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique": {
+      "wpId": 3198,
+      "title": "Maratua vs Maldives pour une lune de miel : arbitrer entre authenticité et logistique",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
+      "wpId": 4105,
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "japon-les-2-pieges-que-les-guides-cachent-aux-backpackers": {
+      "wpId": 3550,
+      "title": "Japon : les 2 pièges que les guides cachent aux backpackers",
+      "reels": [],
+      "suggestedFormats": [
+        "humor",
+        "poll",
+        "avantapres"
+      ],
+      "category": "securite",
+      "igReferralTraffic": null
+    },
+    "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas": {
+      "wpId": 3517,
+      "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas)",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -442,29 +526,6 @@
         "humor"
       ],
       "category": "visa",
-      "igReferralTraffic": null
-    },
-    "japon-comment-arbitrer-entre-experiences-incontournables-et-logistique": {
-      "wpId": 3032,
-      "title": "Japon : Comment Arbitrer Entre Expériences Incontournables et Logistique",
-      "reels": [],
-      "suggestedFormats": [
-        "poll",
-        "humor"
-      ],
-      "category": "visa",
-      "igReferralTraffic": null
-    },
-    "thailande-choisir-entre-koh-samui-koh-chang-et-koh-lanta-cest-renoncer-a-quoi": {
-      "wpId": 4138,
-      "title": "Thaïlande : choisir entre Koh Samui, Koh Chang et Koh Lanta, c&rsquo;est renoncer à quoi ?",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
       "igReferralTraffic": null
     },
     "japon-5-risques-que-les-blogs-voyage-oublient-de-mentionner": {
@@ -527,9 +588,9 @@
       "category": "securite",
       "igReferralTraffic": null
     },
-    "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas": {
-      "wpId": 4087,
-      "title": "Thaïlande : 2 pièges cachés que les blogs voyage ne te disent pas",
+    "thailande-6-pieges-financiers-que-les-blogs-cachent-aux-voyageurs": {
+      "wpId": 4081,
+      "title": "Thaïlande : 6 pièges financiers que les blogs cachent aux voyageurs",
       "reels": [],
       "suggestedFormats": [
         "humor",
@@ -539,16 +600,28 @@
       "category": "securite",
       "igReferralTraffic": null
     },
-    "thailande-8-realites-que-les-blogs-voyage-cachent-aux-expatries": {
-      "wpId": 4076,
-      "title": "Thaïlande : 8 réalités que les blogs voyage cachent aux expatriés",
+    "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
+      "wpId": 4071,
+      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
       "reels": [],
       "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
+        "budget",
+        "versus",
+        "poll"
       ],
-      "category": "default",
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "thailande-mai-2-pieges-que-les-blogs-cachent-aux-voyageurs-solo": {
+      "wpId": 4066,
+      "title": "Thaïlande mai : 2 pièges que les blogs cachent aux voyageurs solo",
+      "reels": [],
+      "suggestedFormats": [
+        "humor",
+        "poll",
+        "avantapres"
+      ],
+      "category": "securite",
       "igReferralTraffic": null
     },
     "philippines-les-5-frais-caches-qui-explosent-ton-budget-de-voyage": {
@@ -587,6 +660,18 @@
       "category": "securite",
       "igReferralTraffic": null
     },
+    "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver-mars-2026": {
+      "wpId": 4013,
+      "title": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver (mars 2026)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "vietnam-ce-que-jaurais-voulu-savoir-avant-de-reserver": {
       "wpId": 3936,
       "title": "Vietnam : ce que j&rsquo;aurais voulu savoir avant de réserver",
@@ -623,16 +708,16 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas": {
-      "wpId": 3517,
-      "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas)",
+    "pourquoi-personne-ne-te-previent-vraiment-sur-thailande": {
+      "wpId": 3869,
+      "title": "Pourquoi personne ne te prévient vraiment sur la Thaïlande",
       "reels": [],
       "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
+        "pick",
+        "poll",
+        "humor"
       ],
-      "category": "budget",
+      "category": "default",
       "igReferralTraffic": null
     },
     "vietnam-6-semaines-litineraire-que-tu-dois-abandonner-pour-reussir": {
@@ -647,21 +732,21 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
+    "thailande-les-vrais-arbitrages-budgetaires-que-personne-ne-te-montre": {
+      "wpId": 3494,
+      "title": "Thaïlande : les vrais arbitrages budgétaires que personne ne te montre",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "japon-seul-a-19-ans-4-pieges-que-les-blogs-voyage-cachent": {
       "wpId": 3487,
       "title": "Japon seul à 19 ans : 4 pièges que les blogs voyage cachent",
-      "reels": [],
-      "suggestedFormats": [
-        "humor",
-        "poll",
-        "avantapres"
-      ],
-      "category": "securite",
-      "igReferralTraffic": null
-    },
-    "thailande-3-risques-caches-que-les-blogs-voyage-oublient-de-mentionner": {
-      "wpId": 3484,
-      "title": "Thaïlande : 3 risques cachés que les blogs voyage oublient de mentionner",
       "reels": [],
       "suggestedFormats": [
         "humor",
@@ -693,6 +778,53 @@
         "avantapres"
       ],
       "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "vivre-en-thailande-avec-500-usd-realite-ou-illusion": {
+      "wpId": 3167,
+      "title": "Vivre en Thaïlande avec 500 USD : Réalité ou Illusion ?",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "travailler-en-thailande-les-dilemmes-fiscaux-des-travailleurs-a-distance": {
+      "wpId": 3150,
+      "title": "Travailler en Thaïlande : Les Dilemmes Fiscaux des Travailleurs à Distance",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "organiser-son-voyage-en-indonesie-dilemmes-logistiques-et-couts-caches": {
+      "wpId": 3074,
+      "title": "Organiser son voyage en Indonésie : dilemmes logistiques et coûts cachés",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "japon-comment-arbitrer-entre-experiences-incontournables-et-logistique": {
+      "wpId": 3032,
+      "title": "Japon : Comment Arbitrer Entre Expériences Incontournables et Logistique",
+      "reels": [],
+      "suggestedFormats": [
+        "poll",
+        "humor"
+      ],
+      "category": "visa",
       "igReferralTraffic": null
     },
     "itineraire-vers-lindonesie-comment-bien-choisir-entre-valise-et-sac-a-dos": {
@@ -731,18 +863,6 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "kuala-lumpur-ou-singapour-quel-stopover-te-fera-vraiment-gagner-du-temps": {
-      "wpId": 5239,
-      "title": "Kuala Lumpur ou Singapour : quel stopover te fera vraiment gagner du temps ?",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "escale-singapour-ou-kuala-lumpur-le-dilemme-incontournable-pour-la-malaisie": {
       "wpId": 5162,
       "title": "Escale Singapour ou Kuala Lumpur ? Le dilemme incontournable pour la Malaisie",
@@ -767,28 +887,28 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "pourquoi-personne-ne-te-previent-vraiment-sur-japon-guide-mars-2026": {
-      "wpId": 4010,
-      "title": "Pourquoi personne ne te prévient vraiment sur Japon — Guide mars 2026",
+    "ce-que-japon-ma-coute-et-que-les-blogs-ne-montrent-pas": {
+      "wpId": 3872,
+      "title": "Ce que Japon m&rsquo;a coûté (et que les blogs ne montrent pas)",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "japon-en-solo-a-23-ans-pourquoi-18-jours-cest-trop-ou-pas-assez": {
+      "wpId": 3490,
+      "title": "Japon en solo à 23 ans : pourquoi 18 jours c&rsquo;est trop (ou pas assez)",
       "reels": [],
       "suggestedFormats": [
         "pick",
         "month",
         "avantapres"
       ],
-      "category": "destination",
-      "igReferralTraffic": null
-    },
-    "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver": {
-      "wpId": 3504,
-      "title": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
+      "category": "itineraire",
       "igReferralTraffic": null
     },
     "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis": {
@@ -803,9 +923,9 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "itineraire-en-indonesie-arbitrer-entre-ubud-nusa-penida-et-les-iles-gili-sans-sacrifier-ton-experience": {
-      "wpId": 3239,
-      "title": "Itinéraire en Indonésie : arbitrer entre Ubud, Nusa Penida et les îles Gili sans sacrifier ton expérience",
+    "3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier": {
+      "wpId": 3207,
+      "title": "3 jours à Singapour : l&rsquo;itinéraire que tu dois affiner (pas copier)",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -813,30 +933,6 @@
         "avantapres"
       ],
       "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique": {
-      "wpId": 3198,
-      "title": "Maratua vs Maldives pour une lune de miel : arbitrer entre authenticité et logistique",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "organiser-son-voyage-en-indonesie-dilemmes-logistiques-et-couts-caches": {
-      "wpId": 3074,
-      "title": "Organiser son voyage en Indonésie : dilemmes logistiques et coûts cachés",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "arbitrer-son-itineraire-au-vietnam-decisions-cruciales-en-saison-des-pluies": {
@@ -887,6 +983,53 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "visa-run-en-thailande-secrets-caches-et-arbitrages-financiers": {
+      "wpId": 2867,
+      "title": "Visa Run en Thaïlande : Secrets Cachés et Arbitrages Financiers",
+      "reels": [],
+      "suggestedFormats": [
+        "poll",
+        "humor"
+      ],
+      "category": "visa",
+      "igReferralTraffic": null
+    },
+    "kuala-lumpur-ou-singapour-quel-stopover-te-fera-vraiment-gagner-du-temps": {
+      "wpId": 5239,
+      "title": "Kuala Lumpur ou Singapour : quel stopover te fera vraiment gagner du temps ?",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "pourquoi-personne-ne-te-previent-vraiment-sur-japon-guide-mars-2026": {
+      "wpId": 4010,
+      "title": "Pourquoi personne ne te prévient vraiment sur Japon — Guide mars 2026",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "destination",
+      "igReferralTraffic": null
+    },
+    "vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser": {
+      "wpId": 3182,
+      "title": "Vaccin contre la rage pour un périple en Asie du Sud-Est : Faut-il vraiment dépenser ?",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes": {
       "wpId": 2989,
       "title": "Comment découvrir l&rsquo;Indonésie authentique : itinéraire, choix et découvertes",
@@ -902,6 +1045,18 @@
     "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget": {
       "wpId": 2924,
       "title": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "esim-japon-combien-ca-te-coute-vraiment": {
+      "wpId": 5270,
+      "title": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -947,42 +1102,6 @@
       "category": "securite",
       "igReferralTraffic": null
     },
-    "thailande-6-pieges-financiers-que-les-blogs-cachent-aux-voyageurs": {
-      "wpId": 4081,
-      "title": "Thaïlande : 6 pièges financiers que les blogs cachent aux voyageurs",
-      "reels": [],
-      "suggestedFormats": [
-        "humor",
-        "poll",
-        "avantapres"
-      ],
-      "category": "securite",
-      "igReferralTraffic": null
-    },
-    "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
-      "wpId": 4071,
-      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "thailande-mai-2-pieges-que-les-blogs-cachent-aux-voyageurs-solo": {
-      "wpId": 4066,
-      "title": "Thaïlande mai : 2 pièges que les blogs cachent aux voyageurs solo",
-      "reels": [],
-      "suggestedFormats": [
-        "humor",
-        "poll",
-        "avantapres"
-      ],
-      "category": "securite",
-      "igReferralTraffic": null
-    },
     "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire": {
       "wpId": 4058,
       "title": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
@@ -1017,18 +1136,6 @@
         "avantapres"
       ],
       "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver-mars-2026": {
-      "wpId": 4013,
-      "title": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver (mars 2026)",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
       "igReferralTraffic": null
     },
     "japon-14-jours-les-10-frais-caches-qui-explosent-ton-budget": {
@@ -1103,30 +1210,6 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "ce-que-japon-ma-coute-et-que-les-blogs-ne-montrent-pas": {
-      "wpId": 3872,
-      "title": "Ce que Japon m&rsquo;a coûté (et que les blogs ne montrent pas)",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "pourquoi-personne-ne-te-previent-vraiment-sur-thailande": {
-      "wpId": 3869,
-      "title": "Pourquoi personne ne te prévient vraiment sur la Thaïlande",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs": {
       "wpId": 3549,
       "title": "Japon : la vérité que tu ne liras nulle part ailleurs",
@@ -1137,30 +1220,6 @@
         "humor"
       ],
       "category": "default",
-      "igReferralTraffic": null
-    },
-    "thailande-les-vrais-arbitrages-budgetaires-que-personne-ne-te-montre": {
-      "wpId": 3494,
-      "title": "Thaïlande : les vrais arbitrages budgétaires que personne ne te montre",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "japon-en-solo-a-23-ans-pourquoi-18-jours-cest-trop-ou-pas-assez": {
-      "wpId": 3490,
-      "title": "Japon en solo à 23 ans : pourquoi 18 jours c&rsquo;est trop (ou pas assez)",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
       "igReferralTraffic": null
     },
     "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
@@ -1187,6 +1246,18 @@
       "category": "budget",
       "igReferralTraffic": null
     },
+    "itineraire-en-indonesie-arbitrer-entre-ubud-nusa-penida-et-les-iles-gili-sans-sacrifier-ton-experience": {
+      "wpId": 3239,
+      "title": "Itinéraire en Indonésie : arbitrer entre Ubud, Nusa Penida et les îles Gili sans sacrifier ton expérience",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
     "arbitrer-son-itineraire-japon-chine-mongolie-en-15-20-jours-les-vrais-dilemmes-logistiques": {
       "wpId": 3234,
       "title": "Arbitrer son itinéraire Japon-Chine-Mongolie en 15-20 jours : les vrais dilemmes logistiques",
@@ -1211,18 +1282,6 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier": {
-      "wpId": 3207,
-      "title": "3 jours à Singapour : l&rsquo;itinéraire que tu dois affiner (pas copier)",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
     "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades": {
       "wpId": 3174,
       "title": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
@@ -1235,33 +1294,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "vivre-en-thailande-avec-500-usd-realite-ou-illusion": {
-      "wpId": 3167,
-      "title": "Vivre en Thaïlande avec 500 USD : Réalité ou Illusion ?",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques": {
       "wpId": 3159,
       "title": "Vivre en Asie du Sud-Est avec 10 000 $ : Frais cachés et choix stratégiques",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "travailler-en-thailande-les-dilemmes-fiscaux-des-travailleurs-a-distance": {
-      "wpId": 3150,
-      "title": "Travailler en Thaïlande : Les Dilemmes Fiscaux des Travailleurs à Distance",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -1486,17 +1521,6 @@
       ],
       "category": "default",
       "igReferralTraffic": null
-    },
-    "visa-run-en-thailande-secrets-caches-et-arbitrages-financiers": {
-      "wpId": 2867,
-      "title": "Visa Run en Thaïlande : Secrets Cachés et Arbitrages Financiers",
-      "reels": [],
-      "suggestedFormats": [
-        "poll",
-        "humor"
-      ],
-      "category": "visa",
-      "igReferralTraffic": null
     }
   },
   "viralAlerts": [],
@@ -1518,14 +1542,20 @@
       "format": "budget",
       "publishedAt": null,
       "caption": ""
+    },
+    {
+      "reelId": "unknown",
+      "format": "best-time",
+      "publishedAt": null,
+      "caption": ""
     }
   ],
   "stats": {
-    "totalArticles": 125,
+    "totalArticles": 127,
     "articlesWithReels": 0,
-    "articlesWithoutReels": 125,
+    "articlesWithoutReels": 127,
     "totalReels": 0,
     "viralReels": 0,
-    "orphanReels": 3
+    "orphanReels": 4
   }
 }

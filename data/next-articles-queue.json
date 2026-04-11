@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-10T05:31:16.140Z",
+  "timestamp": "2026-04-11T05:00:52.092Z",
   "queueSize": 13,
   "queue": [
     {
@@ -7,11 +7,11 @@
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
-      "topic": "[Calendar rotation: pillar article]",
-      "articleType": "pillar",
+      "topic": "[Calendar rotation: support article]",
+      "articleType": "support",
       "context": {
-        "cyclePosition": 0,
-        "reason": "Standard editorial calendar rotation (position 1/5)"
+        "cyclePosition": 1,
+        "reason": "Standard editorial calendar rotation (position 2/5)"
       }
     },
     {
@@ -22,8 +22,8 @@
       "topic": "[Calendar rotation: support article]",
       "articleType": "support",
       "context": {
-        "cyclePosition": 1,
-        "reason": "Standard editorial calendar rotation (position 2/5)"
+        "cyclePosition": 2,
+        "reason": "Standard editorial calendar rotation (position 3/5)"
       }
     },
     {
@@ -34,8 +34,8 @@
       "topic": "[Calendar rotation: support article]",
       "articleType": "support",
       "context": {
-        "cyclePosition": 2,
-        "reason": "Standard editorial calendar rotation (position 3/5)"
+        "cyclePosition": 3,
+        "reason": "Standard editorial calendar rotation (position 4/5)"
       }
     },
     {
@@ -81,7 +81,7 @@
         "wpId": 2945,
         "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -97,7 +97,7 @@
         "wpId": 2938,
         "slug": "indonesie-en-14-jours-decisions-cruciales-pour-un-itineraire-parfait",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -113,7 +113,7 @@
         "wpId": 2916,
         "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }

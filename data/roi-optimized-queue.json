@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-10T05:31:28.251Z",
+  "timestamp": "2026-04-11T05:01:04.839Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,8 +17,8 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 170,
-    "medianTrafficSignal": "0.170",
+    "medianMonthlyPV": 150,
+    "medianTrafficSignal": "0.150",
     "avgRpm": 2,
     "articlesAnalyzed": 52
   },
@@ -28,18 +28,18 @@
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
-      "topic": "[Calendar rotation: pillar article]",
-      "articleType": "pillar",
+      "topic": "[Calendar rotation: support article]",
+      "articleType": "support",
       "context": {
-        "cyclePosition": 0,
-        "reason": "Standard editorial calendar rotation (position 1/5)"
+        "cyclePosition": 1,
+        "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 4.53,
-        "projectedMonthlyTraffic": 170,
-        "projectedMonthlyRevenue": 0.34,
+        "expectedRoi": 4,
+        "projectedMonthlyTraffic": 150,
+        "projectedMonthlyRevenue": 0.3,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (150 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -52,15 +52,15 @@
       "topic": "[Calendar rotation: support article]",
       "articleType": "support",
       "context": {
-        "cyclePosition": 1,
-        "reason": "Standard editorial calendar rotation (position 2/5)"
+        "cyclePosition": 2,
+        "reason": "Standard editorial calendar rotation (position 3/5)"
       },
       "roi": {
-        "expectedRoi": 4.53,
-        "projectedMonthlyTraffic": 170,
-        "projectedMonthlyRevenue": 0.34,
+        "expectedRoi": 4,
+        "projectedMonthlyTraffic": 150,
+        "projectedMonthlyRevenue": 0.3,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (150 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -73,15 +73,15 @@
       "topic": "[Calendar rotation: support article]",
       "articleType": "support",
       "context": {
-        "cyclePosition": 2,
-        "reason": "Standard editorial calendar rotation (position 3/5)"
+        "cyclePosition": 3,
+        "reason": "Standard editorial calendar rotation (position 4/5)"
       },
       "roi": {
-        "expectedRoi": 4.53,
-        "projectedMonthlyTraffic": 170,
-        "projectedMonthlyRevenue": 0.34,
+        "expectedRoi": 4,
+        "projectedMonthlyTraffic": 150,
+        "projectedMonthlyRevenue": 0.3,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (150 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -147,7 +147,7 @@
         "wpId": 2945,
         "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -172,7 +172,7 @@
         "wpId": 2938,
         "slug": "indonesie-en-14-jours-decisions-cruciales-pour-un-itineraire-parfait",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -197,7 +197,7 @@
         "wpId": 2916,
         "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -342,8 +342,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.034,
-    "expectedDailyRoi": 0.15
+    "expectedDailyRevenue": 0.03,
+    "expectedDailyRoi": 0.13
   },
   "summary": {
     "write_new": 0,
