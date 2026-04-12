@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 14,
+      "posted": 15,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -118,6 +118,14 @@
           "hasLink": false,
           "generated": true,
           "status": "published"
+        },
+        {
+          "date": "2026-04-12T11:32:30.284Z",
+          "thread": "transport-aeroport-jusqu-marche-chatuchak-d11461633",
+          "title": "Transport de l'aéroport jusqu'au marché Chatuchak",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
         }
       ],
       "posts_queued": [
@@ -163,7 +171,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 10,
+      "posted": 11,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -272,6 +280,14 @@
           "hasLink": false,
           "status": "published",
           "generated": true
+        },
+        {
+          "date": "2026-04-12T11:30:41.658Z",
+          "id": "ai-2837-1775993403330",
+          "search": "Comment voyager Vietnam petit budget",
+          "hasLink": false,
+          "status": "published",
+          "generated": true
         }
       ]
     },
@@ -372,7 +388,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 4,
+      "posted": 5,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -405,11 +421,19 @@
           "section": "Bali",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-12T11:37:02.040Z",
+          "threadId": "15519437",
+          "title": "Koh rong une île Paradisiaque",
+          "section": "Cambodge",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 34,
+  "total_posted": 37,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }

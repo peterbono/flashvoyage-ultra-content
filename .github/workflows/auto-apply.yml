@@ -1,0 +1,77 @@
+name: auto-apply
+
+on:
+  workflow_dispatch:
+    inputs:
+      dryRun:
+        description: 'Dry-run (no WordPress writes, no data/ writes)'
+        required: false
+        default: 'true'
+        type: boolean
+      ruleIds:
+        description: 'Comma-separated rule IDs (empty = all LOW rules)'
+        required: false
+        default: ''
+  schedule:
+    # Daily at 10:00 UTC (17:00 BKK / 05:00 ET). Cron always runs live.
+    - cron: '0 10 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  auto-apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Run auto-apply runner
+        id: run
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+        run: |
+          set -eu
+          DRY_FLAG=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dryRun }}" = "true" ]; then
+            DRY_FLAG="--dry-run"
+          fi
+
+          RULE_FLAG=""
+          RAW_RULES="${{ inputs.ruleIds }}"
+          if [ -n "$RAW_RULES" ]; then
+            RULE_FLAG="--rules=$RAW_RULES"
+          fi
+
+          echo "▶ node scripts/auto-apply/runner.js $DRY_FLAG $RULE_FLAG"
+          node scripts/auto-apply/runner.js $DRY_FLAG $RULE_FLAG
+
+      - name: Commit audit log + cooldowns (skip on dry-run)
+        if: ${{ github.event_name == 'schedule' || inputs.dryRun == false || inputs.dryRun == 'false' }}
+        run: |
+          set -eu
+          git config user.name  "flashvoyage-bot"
+          git config user.email "bot@flashvoyage.com"
+
+          # Stage only the files this workflow is allowed to change
+          git add data/auto-apply/cooldowns.json data/auto-edit-log.jsonl || true
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "chore(auto-apply): update cooldowns + audit log"
+          git push origin HEAD:main
