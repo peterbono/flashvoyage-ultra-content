@@ -34,6 +34,16 @@
       "name": "thailande",
       "date": "2026-04-12",
       "format": "avantapres"
+    },
+    {
+      "name": "thaïlande",
+      "date": "2026-04-12",
+      "format": "avantapres"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-12",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -72,6 +82,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-12T17:34:03.033Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-12T19:45:02.107Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-12T19:45:34.805Z"
     }
   ],
   "recentArticleIds": [
@@ -79,7 +97,8 @@
     5286,
     5296,
     4255,
-    5333
+    5333,
+    5229
   ],
   "recentFingerprints": [
     {
@@ -101,6 +120,10 @@
     {
       "fp": "fmt:avantapres|dest:thailande|slug:thailande-ou-vietnam-en-2026-l",
       "date": "2026-04-12T17:34:03.033Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:thailande|slug:vietnam-vs-thailande-le-dilemm",
+      "date": "2026-04-12T19:45:34.805Z"
     }
   ]
 }
