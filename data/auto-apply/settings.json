@@ -1,0 +1,7 @@
+{
+  "master": false,
+  "low": true,
+  "medium": false,
+  "high": false,
+  "dailyCap": 5
+}
