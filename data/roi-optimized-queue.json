@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-11T05:01:04.839Z",
+  "timestamp": "2026-04-12T05:29:47.029Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -20,7 +20,7 @@
     "medianMonthlyPV": 150,
     "medianTrafficSignal": "0.150",
     "avgRpm": 2,
-    "articlesAnalyzed": 52
+    "articlesAnalyzed": 51
   },
   "queue": [
     {
@@ -31,8 +31,8 @@
       "topic": "[Calendar rotation: support article]",
       "articleType": "support",
       "context": {
-        "cyclePosition": 1,
-        "reason": "Standard editorial calendar rotation (position 2/5)"
+        "cyclePosition": 2,
+        "reason": "Standard editorial calendar rotation (position 3/5)"
       },
       "roi": {
         "expectedRoi": 4,
@@ -52,8 +52,8 @@
       "topic": "[Calendar rotation: support article]",
       "articleType": "support",
       "context": {
-        "cyclePosition": 2,
-        "reason": "Standard editorial calendar rotation (position 3/5)"
+        "cyclePosition": 3,
+        "reason": "Standard editorial calendar rotation (position 4/5)"
       },
       "roi": {
         "expectedRoi": 4,
@@ -70,11 +70,11 @@
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
-      "topic": "[Calendar rotation: support article]",
-      "articleType": "support",
+      "topic": "[Calendar rotation: news article]",
+      "articleType": "news",
       "context": {
-        "cyclePosition": 3,
-        "reason": "Standard editorial calendar rotation (position 4/5)"
+        "cyclePosition": 4,
+        "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
         "expectedRoi": 4,
@@ -222,7 +222,7 @@
         "wpId": 2910,
         "slug": "les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city",
         "compositeScore": 14,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -247,7 +247,7 @@
         "wpId": 2904,
         "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
         "compositeScore": 14,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -272,7 +272,7 @@
         "wpId": 2898,
         "slug": "vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital",
         "compositeScore": 14,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -297,7 +297,7 @@
         "wpId": 2888,
         "slug": "48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget",
         "compositeScore": 14,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -322,7 +322,7 @@
         "wpId": 2878,
         "slug": "vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre",
         "compositeScore": 14,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
