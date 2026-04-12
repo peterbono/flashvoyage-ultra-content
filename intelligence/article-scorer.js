@@ -18,6 +18,12 @@
  *
  * Writes: data/article-scores.json
  *
+ * Each scored article also carries FR-traffic metadata (Phase 1):
+ *   - signals.frPageviews : integer, pageviews coming from France (30d)
+ *   - signals.frShare     : 0-1, FR share of total pageviews (null if 0 traffic)
+ * These are metadata ONLY — NOT weighted into the composite formula. The
+ * dashboard uses them to surface FR-SEO / sibling / reel-reallocation ops.
+ *
  * Cron: daily at 3h00 UTC (before analytics at 4h00 UTC)
  */
 
@@ -26,7 +32,7 @@ import { existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-import { fetchTopArticles, fetchArticleTrafficSources, fetchSiteSummary } from '../social-distributor/analytics/ga4-fetcher.js';
+import { fetchTopArticles, fetchTopArticlesFR, fetchArticleTrafficSources, fetchSiteSummary } from '../social-distributor/analytics/ga4-fetcher.js';
 import { scanTrends } from '../social-distributor/sources/trends-scanner.js';
 import { fetchRecentReelStats } from '../social-distributor/analytics/ig-stats-fetcher.js';
 import { scoreReel } from '../social-distributor/analytics/performance-scorer.js';
@@ -180,7 +186,9 @@ function fuzzyTrendMatch(articleSlug, articleTitle, trendQuery) {
  *       trendAlignment: number,
  *       reelAmplification: number,
  *       freshness: number,
- *       monetization: number
+ *       monetization: number,
+ *       frShare: number|null,       // 0-1, FR share of pageviews (metadata only, not weighted)
+ *       frPageviews: number         // raw FR pageviews (metadata only, not weighted)
  *     },
  *     flags: string[],
  *     date: string
@@ -194,24 +202,56 @@ export async function scoreAllArticles({ trafficDays = 30, reelDays = 14 } = {})
   // ── Step 1: Fetch all WP articles ──
   const articles = await fetchAllWpArticles();
 
-  // ── Step 2: Fetch GA4 traffic (top articles by pageviews) ──
+  // ── Step 2: Fetch GA4 traffic (total + FR-only) in parallel ──
+  // frShare / frPageviews are metadata — NOT fed into the composite score.
   let trafficData = [];
+  let frTrafficMap = new Map();
   try {
-    trafficData = await fetchTopArticles(trafficDays, 200);
-    log(`GA4: ${trafficData.length} articles with traffic data`);
+    const [allRes, frRes] = await Promise.all([
+      fetchTopArticles(trafficDays, 200),
+      fetchTopArticlesFR(trafficDays, 500),
+    ]);
+    trafficData = allRes;
+    frTrafficMap = frRes;
+    log(`GA4: ${trafficData.length} articles with traffic data (${frTrafficMap.size} with FR traffic)`);
   } catch (err) {
     logError(`GA4 fetch failed: ${err.message} — scoring without traffic data`);
   }
 
-  // Build lookup: slug → traffic metrics
+  // Build lookup: slug → traffic metrics (total + FR)
+  // fetchTopArticles() groups by (pagePath, pageTitle), so the same slug can
+  // appear multiple times when a title was edited mid-window. Sum pageviews/
+  // sessions across rows and duration-weighted-average the duration — otherwise
+  // the last-write-wins pattern drops 80-90% of traffic for re-titled articles
+  // (visible as frShare > 1 on articles where the minor-variant title ranked
+  // below the primary in the DESC sort).
   const trafficBySlug = {};
   for (const t of trafficData) {
     const slug = t.pagePath.replace(/^\/|\/$/g, '');
-    trafficBySlug[slug] = {
-      pageviews: t.pageviews,
-      sessions: t.sessions,
-      avgDuration: t.avgSessionDuration,
-    };
+    const prev = trafficBySlug[slug];
+    if (!prev) {
+      trafficBySlug[slug] = {
+        pageviews: t.pageviews,
+        sessions: t.sessions,
+        avgDuration: t.avgSessionDuration,
+      };
+    } else {
+      const totalSessions = prev.sessions + t.sessions;
+      trafficBySlug[slug] = {
+        pageviews: prev.pageviews + t.pageviews,
+        sessions: totalSessions,
+        avgDuration: totalSessions > 0
+          ? (prev.avgDuration * prev.sessions + t.avgSessionDuration * t.sessions) / totalSessions
+          : 0,
+      };
+    }
+  }
+
+  // FR pageviews indexed by the same slug key (strip leading/trailing slash)
+  const frBySlug = {};
+  for (const [pagePath, m] of frTrafficMap.entries()) {
+    const slug = pagePath.replace(/^\/|\/$/g, '');
+    frBySlug[slug] = { pageviews: m.pageviews, sessions: m.sessions };
   }
 
   // ── Step 3: Fetch trending topics ──
@@ -251,7 +291,15 @@ export async function scoreAllArticles({ trafficDays = 30, reelDays = 14 } = {})
 
   const scored = articles.map(article => {
     const traffic = trafficBySlug[article.slug] || { pageviews: 0, sessions: 0, avgDuration: 0 };
+    const frTraffic = frBySlug[article.slug] || { pageviews: 0, sessions: 0 };
     const flags = [];
+
+    // FR-share metadata (NOT weighted into composite — Phase 1)
+    const frPageviews = frTraffic.pageviews;
+    const totalPageviews = traffic.pageviews;
+    const frShare = totalPageviews > 0
+      ? Math.round((frPageviews / totalPageviews) * 100) / 100
+      : null;
 
     // Signal 1: Traffic (normalized 0-1)
     const trafficSignal = normalize(traffic.pageviews, 0, maxPageviews);
@@ -305,6 +353,17 @@ export async function scoreAllArticles({ trafficDays = 30, reelDays = 14 } = {})
     if (traffic.pageviews === 0) flags.push('zero_traffic');
     if (traffic.pageviews > maxPageviews * 0.5) flags.push('top_performer');
 
+    // FR-share diagnostic flags (metadata only — 20-pageview floor to kill noise)
+    if (frShare !== null && frShare >= 0.8 && totalPageviews >= 20) {
+      flags.push('fr_heavy');
+    }
+    if (frShare !== null && frShare < 0.25 && composite >= 50) {
+      flags.push('fr_light');
+    }
+    if (frShare !== null && frShare >= 0.25 && frShare < 0.6 && totalPageviews >= 50) {
+      flags.push('fr_diversified');
+    }
+
     return {
       wpId: article.id,
       slug: article.slug,
@@ -317,6 +376,9 @@ export async function scoreAllArticles({ trafficDays = 30, reelDays = 14 } = {})
         reelAmplification: Math.round(reelSignal * 100) / 100,
         freshness: Math.round(freshSignal * 100) / 100,
         monetization: monetizationSignal,
+        // FR-traffic metadata (NOT weighted)
+        frShare,
+        frPageviews,
       },
       flags,
       date: article.date,
@@ -339,6 +401,10 @@ export async function scoreAllArticles({ trafficDays = 30, reelDays = 14 } = {})
       missingWidgets: scored.filter(s => s.flags.includes('missing_widgets')).length,
       zeroTraffic: scored.filter(s => s.flags.includes('zero_traffic')).length,
       trending: scored.filter(s => s.flags.includes('trending')).length,
+      // FR-share breakdown (metadata only)
+      frHeavy: scored.filter(s => s.flags.includes('fr_heavy')).length,
+      frLight: scored.filter(s => s.flags.includes('fr_light')).length,
+      frDiversified: scored.filter(s => s.flags.includes('fr_diversified')).length,
     },
   };
 
@@ -365,6 +431,9 @@ if (isMain) {
       console.log(`  Missing Widgets: ${result.summary.missingWidgets}`);
       console.log(`  Zero Traffic: ${result.summary.zeroTraffic}`);
       console.log(`  Trending: ${result.summary.trending}`);
+      console.log(`  FR Heavy: ${result.summary.frHeavy}`);
+      console.log(`  FR Light (rewrite cand.): ${result.summary.frLight}`);
+      console.log(`  FR Diversified: ${result.summary.frDiversified}`);
     })
     .catch(err => {
       console.error('FATAL:', err);
