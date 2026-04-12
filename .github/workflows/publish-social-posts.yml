@@ -74,6 +74,7 @@ jobs:
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          DISABLE_THREADS: ${{ secrets.DISABLE_THREADS }}
         run: |
           POST_ID="${{ steps.config.outputs.post_id }}"
           PUBLISH="${{ steps.config.outputs.publish }}"

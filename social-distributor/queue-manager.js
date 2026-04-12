@@ -362,6 +362,13 @@ export async function processQueue(tokens) {
         }
 
         case 'threads':
+          // Gated via DISABLE_THREADS env (same mechanism as cross-publisher.js).
+          // Reason: Threads API without insights scope = publishing blind, burns
+          // content for zero learning signal. Re-enable by clearing the flag once
+          // a new token with threads_manage_insights is generated.
+          if (process.env.DISABLE_THREADS === '1') {
+            throw new Error('disabled: DISABLE_THREADS=1 (no insights, burns content)');
+          }
           result = await publishThreads({
             text: item.message,
             imageUrl: item.imageUrl || undefined,
