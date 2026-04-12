@@ -1,5 +1,5 @@
 {
-  "totalPublished": 217,
+  "totalPublished": 218,
   "currentClusterId": "japon",
   "history": [
     {
@@ -680,6 +680,13 @@
       "articleType": "support",
       "hint": "esim indonesia bali 2026 which data plan to choose comparison",
       "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu'on ne te dit pas"
+    },
+    {
+      "date": "2026-04-12T08:44:09.653Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "esim south korea 2026 operator comparison price coverage",
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu"
     }
   ]
 }

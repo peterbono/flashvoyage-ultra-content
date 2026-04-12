@@ -1,7 +1,147 @@
 {
-  "crawled_at": "2026-04-11T08:44:53.361Z",
-  "total_articles": 129,
+  "crawled_at": "2026-04-12T08:44:35.984Z",
+  "total_articles": 131,
   "articles": [
+    {
+      "id": 5343,
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "url": "https://flashvoyage.com/pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu/",
+      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+      "excerpt": "Claire Moreau · Flash Voyage Guide complet basé sur nos recherches terrain et données voyage 2026. Sources vérifiées, enrichies par nos données temps réel. Imag&#8230;\n",
+      "content": "\n\nClaire Moreau · Flash Voyage\nGuide complet basé sur nos recherches terrain et données voyage 2026. Sources vérifiées, enrichies par nos données temps réel.\n\n Imagine arriver sur place sans avoir prévu ce détail. Quand tu penses à voyager en Corée du Sud, l’image idéale d’une culture vibrante et de paysages urbains te vient en tête.\nMais le véritable défi commence dès que tu commences à planifier ton budget.\nLe truc c’est que chaque décision, du choix de ton eSIM au transport quotidien, peut t’",
+      "categories": [
+        {
+          "id": 63,
+          "name": "Corée du Sud",
+          "slug": "coree-du-sud"
+        }
+      ],
+      "tags": [
+        {
+          "id": 195,
+          "name": "Assurance voyage",
+          "slug": "assurance-voyage"
+        },
+        {
+          "id": 87,
+          "name": "Budget",
+          "slug": "budget"
+        },
+        {
+          "id": 183,
+          "name": "Corée du Sud",
+          "slug": "coree-du-sud"
+        },
+        {
+          "id": 201,
+          "name": "eSIM",
+          "slug": "esim"
+        },
+        {
+          "id": 84,
+          "name": "Guide",
+          "slug": "guide"
+        },
+        {
+          "id": 199,
+          "name": "Itinéraire",
+          "slug": "itineraire"
+        },
+        {
+          "id": 194,
+          "name": "Santé",
+          "slug": "sante"
+        },
+        {
+          "id": 200,
+          "name": "Sécurité",
+          "slug": "securite"
+        },
+        {
+          "id": 110,
+          "name": "Transport",
+          "slug": "transport"
+        },
+        {
+          "id": 77,
+          "name": "Visa",
+          "slug": "visa"
+        }
+      ],
+      "date": "2026-04-12T08:43:46",
+      "modified": "2026-04-12T08:44:18",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/04/featured-5343.jpg"
+    },
+    {
+      "id": 5333,
+      "title": "Thaïlande ou Vietnam en 2026 : l&rsquo;arbitrage qui change tout",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout/",
+      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
+      "excerpt": "Claire Moreau · Flash Voyage Guide complet basé sur nos recherches terrain et données voyage 2026. Sources vérifiées, enrichies par nos données temps réel. Chaq&#8230;\n",
+      "content": "\n\nClaire Moreau · Flash Voyage\nGuide complet basé sur nos recherches terrain et données voyage 2026. Sources vérifiées, enrichies par nos données temps réel.\n\n Peu de gens le savent, mais chaque choix implique un renoncement.\nEt c’est exactement le dilemme que des milliers de voyageurs affrontent chaque année en planifiant leur premier voyage en Asie du Sud-Est.\nOn a recoupé les retours de 30 voyageurs et expatriés sur les forums, voici ce que les blogs ignorent souvent. Ce guide repose sur ces ",
+      "categories": [
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "tags": [
+        {
+          "id": 87,
+          "name": "Budget",
+          "slug": "budget"
+        },
+        {
+          "id": 198,
+          "name": "Culture",
+          "slug": "culture"
+        },
+        {
+          "id": 197,
+          "name": "Gastronomie",
+          "slug": "gastronomie"
+        },
+        {
+          "id": 84,
+          "name": "Guide",
+          "slug": "guide"
+        },
+        {
+          "id": 196,
+          "name": "Hébergement",
+          "slug": "hebergement"
+        },
+        {
+          "id": 199,
+          "name": "Itinéraire",
+          "slug": "itineraire"
+        },
+        {
+          "id": 194,
+          "name": "Santé",
+          "slug": "sante"
+        },
+        {
+          "id": 200,
+          "name": "Sécurité",
+          "slug": "securite"
+        },
+        {
+          "id": 110,
+          "name": "Transport",
+          "slug": "transport"
+        },
+        {
+          "id": 77,
+          "name": "Visa",
+          "slug": "visa"
+        }
+      ],
+      "date": "2026-04-12T05:34:09",
+      "modified": "2026-04-12T05:34:40",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/04/featured-5333.jpg"
+    },
     {
       "id": 5296,
       "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
