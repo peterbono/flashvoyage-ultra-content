@@ -1,5 +1,5 @@
 {
-  "master": true,
+  "master": false,
   "low": true,
   "medium": false,
   "high": false,
