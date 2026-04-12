@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-11",
+  "lastUpdated": "2026-04-12",
   "formatScores": {
     "poll": 0,
     "pick": 0,
@@ -19,18 +19,15 @@
   ],
   "destinationScores": {
     "vietnam": 4,
-    "thailande": 3.9,
+    "thailande": 3.7,
     "philippines": 1.8,
     "indonesie": 1.1,
+    "bali": 1,
     "singapour": 0.7,
-    "bali": 0.6,
     "cambodge": 0.6,
     "malaisie": 0.4,
     "laos": 0.3,
     "lombok": 0.3,
-    "bangkok": 0.2,
-    "chiang mai": 0.2,
-    "krabi": 0.2,
     "koh samui": 0.1,
     "koh lanta": 0.1
   },
