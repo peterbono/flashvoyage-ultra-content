@@ -3,7 +3,7 @@
  *
  * Uses Google Analytics Data API (v1beta) with service account auth.
  * Property: 505793742
- * Service account key: ga4-service-account.json (at repo root or clodoproject/)
+ * Service account key: ga4-service-account.json (at repo root, gitignored)
  *
  * Fetches: pageviews, sessions, avg session duration per article page
  *
@@ -21,8 +21,7 @@ const GA4_PROPERTY = '505793742';
 
 // Locate service account key file — check multiple paths
 const SA_PATHS = [
-  join(__dirname, '..', '..', 'ga4-service-account.json'),                   // flashvoyage-content/
-  join(__dirname, '..', '..', '..', 'clodoproject', 'ga4-service-account.json'), // clodoproject/
+  join(__dirname, '..', '..', 'ga4-service-account.json'),                   // flashvoyage-content/ (gitignored)
   process.env.GOOGLE_APPLICATION_CREDENTIALS,                                  // env override
 ].filter(Boolean);
 
@@ -152,6 +151,89 @@ export async function fetchTopArticles(days = 30, limit = 20) {
 
   log(`Found ${filtered.length} articles with traffic data`);
   return filtered;
+}
+
+/**
+ * Fetch top articles by pageviews in the last N days, filtered to France only.
+ *
+ * Returns Map<pagePath, { pageviews: number, sessions: number }> for easy join
+ * by pagePath against the output of {@link fetchTopArticles}. Empty Map if the
+ * call fails (graceful degradation — never throws).
+ *
+ * Used by the article scorer to compute `frShare = frPageviews / totalPageviews`
+ * as metadata (NOT part of the composite score formula — Phase 1).
+ *
+ * @param {number} days  - Lookback window (default 30, matches fetchTopArticles)
+ * @param {number} limit - Max articles to return (default 500)
+ * @returns {Promise<Map<string, { pageviews: number, sessions: number }>>}
+ */
+export async function fetchTopArticlesFR(days = 30, limit = 500) {
+  const result = new Map();
+
+  let client;
+  try {
+    client = createClient();
+  } catch (err) {
+    logError(`FR fetch skipped — GA4 client init failed: ${err.message}`);
+    return result;
+  }
+
+  log(`Fetching top ${limit} FR articles over the last ${days} days...`);
+
+  try {
+    const [response] = await client.runReport({
+      property: `properties/${GA4_PROPERTY}`,
+      dateRanges: [
+        {
+          startDate: daysAgoStr(days),
+          endDate: 'today',
+        },
+      ],
+      dimensions: [{ name: 'pagePath' }],
+      metrics: [
+        { name: 'screenPageViews' },
+        { name: 'sessions' },
+      ],
+      orderBys: [
+        {
+          metric: { metricName: 'screenPageViews' },
+          desc: true,
+        },
+      ],
+      limit,
+      // Filter: France only. GA4 `country` dimension returns the English
+      // display name ("France"), matching the audience-segments query above.
+      dimensionFilter: {
+        filter: {
+          fieldName: 'country',
+          stringFilter: {
+            matchType: 'EXACT',
+            value: 'France',
+            caseSensitive: false,
+          },
+        },
+      },
+    });
+
+    for (const row of response.rows ?? []) {
+      const pagePath = row.dimensionValues[0].value;
+      // Skip non-article paths (same filter as fetchTopArticles)
+      if (pagePath === '/' || pagePath === '/wp-admin' || pagePath.startsWith('/wp-')) continue;
+      if (pagePath.includes('/feed') || pagePath.includes('/page/') || pagePath.includes('?')) continue;
+      if (pagePath === '/(not set)') continue;
+
+      result.set(pagePath, {
+        pageviews: parseInt(row.metricValues[0].value, 10) || 0,
+        sessions: parseInt(row.metricValues[1].value, 10) || 0,
+      });
+    }
+
+    log(`FR traffic: ${result.size} articles`);
+  } catch (err) {
+    logError(`FR fetch failed: ${err.message} — returning empty map`);
+  }
+
+  return result;
 }
 
 /**
