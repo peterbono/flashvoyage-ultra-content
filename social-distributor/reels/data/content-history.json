@@ -44,6 +44,16 @@
       "name": "thailande",
       "date": "2026-04-12",
       "format": "avantapres"
+    },
+    {
+      "name": "thaïlande & vietnam",
+      "date": "2026-04-12",
+      "format": "pick"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-12",
+      "format": "pick"
     }
   ],
   "recentFormats": [
@@ -90,6 +100,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-12T19:45:34.805Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-12T21:01:51.272Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-12T21:02:12.946Z"
     }
   ],
   "recentArticleIds": [
@@ -98,7 +116,8 @@
     5296,
     4255,
     5333,
-    5229
+    5229,
+    5179
   ],
   "recentFingerprints": [
     {
@@ -124,6 +143,10 @@
     {
       "fp": "fmt:avantapres|dest:thailande|slug:vietnam-vs-thailande-le-dilemm",
       "date": "2026-04-12T19:45:34.805Z"
+    },
+    {
+      "fp": "fmt:pick|dest:thailande|slug:thailande-vs-vietnam-pourquoi-",
+      "date": "2026-04-12T21:02:12.946Z"
     }
   ]
 }
