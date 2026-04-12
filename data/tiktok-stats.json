@@ -4,21 +4,29 @@
   "account": {
     "followers": 8,
     "following": 0,
-    "totalViews": 5871,
-    "totalLikes": 132,
-    "totalComments": 4,
-    "totalShares": 4,
+    "totalViews": 2597,
+    "totalLikes": 87,
+    "totalComments": 2,
+    "totalShares": 0,
     "daysSinceStart": 5
   },
   "videos": [
     {
-      "title": "What’s your daily budget",
-      "format": "budget",
-      "date": "2026-04-04",
-      "views": 592,
-      "likes": 7,
+      "title": "5 plats de street food à goûter en Thaïlande 🇹🇭 Lequel tu choisis",
+      "date": "2026-04-08",
+      "views": 378,
+      "likes": 13,
       "comments": 0,
-      "shares": 1
+      "shares": 0
+    },
+    {
+      "title": "5 spots de soirée à Bangkok 🇹🇭 Lequel tu choisis",
+      "format": "pick",
+      "date": "2026-04-07",
+      "views": 163,
+      "likes": 9,
+      "comments": 0,
+      "shares": 0
     },
     {
       "title": "5 spots à ne pas rater au Japon 🇯🇵Lequel tu visites en premier",
@@ -30,22 +38,13 @@
       "shares": 0
     },
     {
-      "title": "Budget journalier à Bali 🇮🇩 🏠 Hébergement : 25 €/nuit 🍜 Nourriture : 12 €/jour 🛵 Tran",
-      "format": "budget",
-      "date": "2026-04-04",
-      "views": 666,
-      "likes": 15,
-      "comments": 1,
-      "shares": 0
-    },
-    {
-      "title": "flashvoyagemedia 5 spots à ne pas rater en Thaïlande 🇹🇭",
-      "format": "pick",
-      "date": "2026-04-03",
-      "views": 458,
-      "likes": 11,
+      "title": "Kyoto vs Kanazawa : cerisiers en fleurs sans la foule",
+      "format": "versus",
+      "date": "2026-04-06",
+      "views": 128,
+      "likes": 3,
       "comments": 0,
-      "shares": 1
+      "shares": 0
     },
     {
       "title": "Asie du Sud-Est : expectation vs reality 😅 Et toi c'était comment",
@@ -57,82 +56,12 @@
       "shares": 0
     },
     {
-      "title": "Conseil boulot : leve-toi, etire-toi, marche un peu ... Ce que j’entends: Va à l'aeroport.",
-      "format": "humor",
-      "date": "2026-04-08",
-      "views": 411,
-      "likes": 13,
-      "comments": 0,
-      "shares": 2
-    },
-    {
-      "title": "Thaïlande vs France 💰",
-      "format": "versus",
-      "date": "2026-04-10",
-      "views": 403,
-      "likes": 4,
-      "comments": 2,
-      "shares": 0
-    },
-    {
-      "title": "Budget journalier à Maratua, Indonésie 🇮🇩 🏠 Hébergement : 45 €/nuit 🍜 Nourriture : 12",
+      "title": "Budget journalier à Bali 🇮🇩 🏠 Hébergement : 25 €/nuit 🍜 Nourriture : 12 €/jour 🛵 Tran",
       "format": "budget",
-      "date": "2026-04-05",
-      "views": 413,
-      "likes": 10,
-      "comments": 0,
-      "shares": 0
-    },
-    {
-      "title": "5 spots de soirée à Cambodge 🇰🇭 Marché de nuit gourmand ou rooftop branché",
-      "format": "pick",
-      "date": "2026-04-05",
-      "views": 326,
-      "likes": 4,
-      "comments": 0,
-      "shares": 0
-    },
-    {
-      "title": "5 plats de street food à goûter en Thaïlande 🇹🇭 Lequel tu choisis",
-      "date": "2026-04-08",
-      "views": 378,
-      "likes": 13,
-      "comments": 0,
-      "shares": 0
-    },
-    {
-      "title": "POV tu as testé trop de streetfood",
-      "format": "humor",
-      "date": "2026-04-09",
-      "views": 371,
-      "likes": 5,
-      "comments": 0,
-      "shares": 0
-    },
-    {
-      "title": "Vietnam vs Thaïlande : tu choisis quoi pour ton road trip en moto",
-      "format": "versus",
-      "date": "2026-04-06",
-      "views": 140,
-      "likes": 0,
-      "comments": 0,
-      "shares": 0
-    },
-    {
-      "title": "5 pièges à éviter pour ton visa Cambodge 🇰🇭 Lequel te surprend le plus",
-      "date": "2026-04-08",
-      "views": 238,
-      "likes": 1,
-      "comments": 0,
-      "shares": 0
-    },
-    {
-      "title": "Budget journalier à Kuala Lumpur, Malaisie 🇲🇾 🏠 Hébergement : 20 €/nuit 🍜 Nourriture :",
-      "format": "budget",
-      "date": "2026-04-10",
-      "views": 213,
-      "likes": 2,
-      "comments": 0,
+      "date": "2026-04-04",
+      "views": 666,
+      "likes": 15,
+      "comments": 1,
       "shares": 0
     }
   ]
