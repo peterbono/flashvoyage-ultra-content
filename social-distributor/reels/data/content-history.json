@@ -24,6 +24,16 @@
       "name": "laos",
       "date": "2026-04-11",
       "format": "humor-tweet"
+    },
+    {
+      "name": "thaïlande",
+      "date": "2026-04-12",
+      "format": "avantapres"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-12",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -54,13 +64,22 @@
     {
       "format": "humor-tweet",
       "date": "2026-04-11T20:58:15.206Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-12T17:33:26.017Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-12T17:34:03.033Z"
     }
   ],
   "recentArticleIds": [
     5260,
     5286,
     5296,
-    4255
+    4255,
+    5333
   ],
   "recentFingerprints": [
     {
@@ -78,6 +97,10 @@
     {
       "fp": "fmt:humor-tweet|dest:laos|slug:cambodge-ou-laos-lequel-choisi",
       "date": "2026-04-11T20:58:15.206Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:thailande|slug:thailande-ou-vietnam-en-2026-l",
+      "date": "2026-04-12T17:34:03.033Z"
     }
   ]
 }
