@@ -328,22 +328,43 @@ class ArticleFinalizer {
       enhancements.scopeWarnings = scopeWarnings;
     }
 
-    // FV-FIX 2026-04-13: strip <a> tags inside <summary> elements.
-    // The LLM (intelligent-content-analyzer prompt asks for "maillage interne 3 à 8 liens" +
-    // FAQ as raw HTML) sometimes renders an internal link inside the question text itself,
-    // e.g. <summary>Les taxis sont-ils chers en <a href=".../coree-du-sud/">Corée du Sud?</a></summary>.
-    // That produces red-linked text in the middle of a FAQ question — visually broken.
-    // Strip any <a>...</a> nested inside <summary>, keeping the plain text. Parser-free: we
-    // only rewrite within <summary>...</summary> boundaries to avoid touching body content.
-    const stripLinksInsideSummary = (htmlStr) => {
+    // FV-FIX 2026-04-13: sanitize FAQ <summary> elements against unwanted links.
+    //
+    // Two failure modes observed in production:
+    //  1. The LLM (intelligent-content-analyzer prompt asks for "maillage interne
+    //     3 à 8 liens" + FAQ as raw HTML) sometimes renders an internal link inside
+    //     the question text itself, e.g.
+    //     <summary>Les taxis sont-ils chers en <a href=".../coree-du-sud/">Corée du Sud?</a></summary>
+    //     → renders as red-linked text in the middle of a FAQ question.
+    //  2. Rank Math Pro Auto-Link reinjects keyword links on the WP server side
+    //     after every save — so a pure strip is reverted on the next admin edit.
+    //
+    // Belt + suspenders fix:
+    //  - Strip any <a>…</a> already nested inside <summary>, keeping plain text.
+    //  - Wrap the entire summary inner content in <span class="no-autolink">…</span>,
+    //    which is the standard class Rank Math respects to skip linkification.
+    //    Idempotent: if the wrapper is already there, don't double-wrap.
+    //
+    // Parser-free: we only rewrite within <summary>...</summary> boundaries so
+    // body content (where auto-linking IS desirable) is untouched.
+    const sanitizeSummary = (htmlStr) => {
       if (!htmlStr || typeof htmlStr !== 'string' || !htmlStr.includes('<summary')) return htmlStr;
       return htmlStr.replace(/(<summary[^>]*>)([\s\S]*?)(<\/summary>)/gi, (full, openTag, inner, closeTag) => {
-        if (!/<a[\s>]/i.test(inner)) return full;
-        const cleaned = inner.replace(/<a\b[^>]*>([\s\S]*?)<\/a>/gi, '$1');
-        return openTag + cleaned + closeTag;
+        // Step 1: strip any <a>…</a> nested inside the summary.
+        let cleaned = inner.replace(/<a\b[^>]*>([\s\S]*?)<\/a>/gi, '$1');
+        // Step 2: wrap inner content with no-autolink span (idempotent).
+        const trimmed = cleaned.trim();
+        if (!trimmed) return openTag + cleaned + closeTag;
+        if (/^<span class="no-autolink">[\s\S]*<\/span>$/i.test(trimmed)) {
+          return openTag + cleaned + closeTag;
+        }
+        // Preserve leading/trailing whitespace around the wrapper for readability.
+        const leadingWs = cleaned.match(/^\s*/)[0];
+        const trailingWs = cleaned.match(/\s*$/)[0];
+        return openTag + leadingWs + '<span class="no-autolink">' + trimmed + '</span>' + trailingWs + closeTag;
       });
     };
-    finalContent = stripLinksInsideSummary(finalContent);
+    finalContent = sanitizeSummary(finalContent);
 
     // PROTECTION FAQ GUTENBERG: Extraire la section FAQ complète avant tout traitement
     // Pattern identique à content-marketing-pass.js — protège heading + details + schema
@@ -353,7 +374,7 @@ class ArticleFinalizer {
       /(<!-- wp:heading[^>]*-->\s*<h2[^>]*>Questions?\s+fr[eé]quentes<\/h2>\s*<!-- \/wp:heading -->\s*(?:<!-- wp:details -->[\s\S]*?<!-- \/wp:details -->\s*)+(?:<script type="application\/ld\+json">[\s\S]*?<\/script>\s*)?)/gi,
       (match) => {
         // FV-FIX 2026-04-13: sanitize the protected FAQ block too, so the preserved value is clean.
-        const sanitized = stripLinksInsideSummary(match);
+        const sanitized = sanitizeSummary(match);
         const placeholder = `__FAQ_PROTECTED_${faqPlaceholderCount++}__`;
         faqPlaceholderMap.set(placeholder, sanitized);
         return placeholder;
@@ -808,7 +829,7 @@ class ArticleFinalizer {
     // FV-FIX 2026-04-13: belt-and-suspenders — re-strip any <a> that slipped into a <summary>
     // after restoration or that bypassed the FAQ placeholder regex (atypical FAQ structures).
     // Idempotent: no-op when no links are present inside <summary>.
-    finalContent = stripLinksInsideSummary(finalContent);
+    finalContent = sanitizeSummary(finalContent);
 
     // NEWS-specific (conditional)
     if (editorialMode === 'news') {
