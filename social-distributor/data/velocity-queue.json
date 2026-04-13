@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-04-13T02:09:23.324Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-04-13T07:55:53.944Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Police launch probe after TV director lured to Poipet scam camp",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3235923/police-launch-probe-after-tv-director-lured-to-poipet-scam-camp",
-      "velocityScore": 0.489,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2445,
-      "estimatedTrafficIn24h": 2389,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.2
-      },
-      "detectedAt": "2026-04-12T23:56:00.000Z",
-      "scoredAt": "2026-04-13T02:09:19.388Z"
-    }
-  ]
+  "queue": []
 }
