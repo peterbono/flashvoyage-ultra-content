@@ -350,18 +350,27 @@ class ArticleFinalizer {
     const sanitizeSummary = (htmlStr) => {
       if (!htmlStr || typeof htmlStr !== 'string' || !htmlStr.includes('<summary')) return htmlStr;
       return htmlStr.replace(/(<summary[^>]*>)([\s\S]*?)(<\/summary>)/gi, (full, openTag, inner, closeTag) => {
-        // Step 1: strip any <a>…</a> nested inside the summary.
-        let cleaned = inner.replace(/<a\b[^>]*>([\s\S]*?)<\/a>/gi, '$1');
-        // Step 2: wrap inner content with no-autolink span (idempotent).
-        const trimmed = cleaned.trim();
-        if (!trimmed) return openTag + cleaned + closeTag;
-        if (/^<span class="no-autolink">[\s\S]*<\/span>$/i.test(trimmed)) {
-          return openTag + cleaned + closeTag;
-        }
-        // Preserve leading/trailing whitespace around the wrapper for readability.
-        const leadingWs = cleaned.match(/^\s*/)[0];
-        const trailingWs = cleaned.match(/\s*$/)[0];
-        return openTag + leadingWs + '<span class="no-autolink">' + trimmed + '</span>' + trailingWs + closeTag;
+        // FV-FIX 2026-04-13 (v2): extract the trailing SVG chevron BEFORE wrapping.
+        // The summary uses display:flex + justify-content:space-between to put the
+        // question text on the left and the chevron on the right. If we wrap the
+        // SVG INSIDE the no-autolink span, the summary sees only ONE flex child
+        // and the chevron loses its right-alignment — or worse, gets distributed
+        // across the row leaving a big gap between two text segments.
+        // Solution: keep the SVG as a separate flex sibling outside the span.
+        const svgMatch = inner.match(/<svg[\s\S]*?<\/svg>/i);
+        const svgHtml = svgMatch ? svgMatch[0] : '';
+        let textPart = svgHtml ? inner.replace(svgHtml, '') : inner;
+        // Strip any <a>…</a> tags injected by the LLM (Bug 1 from FV-FIX 2026-04-13)
+        // AND any pre-existing span wrappers (open + close, with or without attributes).
+        // We always rebuild from clean text — that makes this idempotent and also
+        // cleans up partial wraps from earlier fix passes.
+        textPart = textPart.replace(/<a\b[^>]*>([\s\S]*?)<\/a>/gi, '$1');
+        textPart = textPart.replace(/<\/?span[^>]*>/gi, '');
+        const cleanText = textPart.replace(/\s+/g, ' ').trim();
+        if (!cleanText && !svgHtml) return full;
+        const wrapped = cleanText ? `<span class="no-autolink">${cleanText}</span>` : '';
+        const spacer = wrapped && svgHtml ? ' ' : '';
+        return `${openTag}${wrapped}${spacer}${svgHtml}${closeTag}`;
       });
     };
     finalContent = sanitizeSummary(finalContent);
