@@ -1,5 +1,5 @@
 {
-  "totalPublished": 218,
+  "totalPublished": 219,
   "currentClusterId": "japon",
   "history": [
     {
@@ -687,6 +687,13 @@
       "articleType": "support",
       "hint": "esim south korea 2026 operator comparison price coverage",
       "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu"
+    },
+    {
+      "date": "2026-04-13T09:55:33.369Z",
+      "clusterId": "japon",
+      "articleType": "support",
+      "hint": "airalo vs holafly 2026 complete comparison asia travel esim",
+      "title": "Pourquoi choisir entre Airalo et Holafly pour ton voyage en Asie peut tout changer"
     }
   ]
 }
