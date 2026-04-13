@@ -4,11 +4,21 @@
  * Uses Claude Haiku to generate expectation vs reality content
  * for a travel destination extracted from an article.
  *
- * Output: { destination, expectation, reality, caption, hashtags }
+ * ANGLE DIVERSITY (2026-04-13 rewrite):
+ *   A narrow-prompt bug used to lock every reel on the same "plage déserte
+ *   vs plage bondée" cliché because the Haiku system prompt hardcoded a
+ *   single example. We now pick one of 18 angles (see
+ *   ../angles/avantapres-angles.json) with rotation (no repeat within the
+ *   last 6 picks, persisted on disk) and inject the chosen direction into
+ *   the prompt as THE mandatory framing. The LLM is explicitly told not to
+ *   fall back to beach/temple.
+ *
+ * Output: { destination, angle, expectation, reality, caption, hashtags }
  * Cost: ~$0.003 per generation (1 Haiku call, max 500 tokens)
  */
 
 import { createTrackedClient } from '../../tracked-anthropic.js';
+import { pickAngle } from '../angles/picker.js';
 
 // ── Lazy Anthropic client ────────────────────────────────────────────────────
 
@@ -58,6 +68,7 @@ function extractDestination(article) {
  * @param {Object} article - Article data: { title, hook, keyStats, rawText, ... }
  * @returns {Promise<{
  *   destination: string,
+ *   angle: { id: string, label: string, tone: string },
  *   expectation: { text: string, pexelsQuery: string },
  *   reality: { text: string, pexelsQuery: string },
  *   caption: string,
@@ -66,13 +77,16 @@ function extractDestination(article) {
  */
 export async function generateAvantApresScript(article) {
   const destination = extractDestination(article);
+  const angle = pickAngle('avantapres');
 
-  console.log(`[AVANTAPRES-GEN] Generating script for destination: "${destination}"`);
+  console.log(
+    `[AVANTAPRES-GEN] Angle: ${angle.id} (tone: ${angle.tone}) — destination: "${destination}"`
+  );
 
   const client = getClient();
   if (!client) {
     console.warn(`[AVANTAPRES-GEN] No ANTHROPIC_API_KEY — using fallback`);
-    return fallbackScript(destination);
+    return fallbackScript(destination, angle);
   }
 
   try {
@@ -82,13 +96,18 @@ export async function generateAvantApresScript(article) {
       temperature: 0.7,
       system: `Tu es un créateur de contenu voyage viral spécialisé dans le format "expectation vs reality".
 
-TON JOB : Créer un CONTRASTE MAXIMUM entre ce que les touristes imaginent et la réalité. Plus le décalage est grand, plus c'est drôle et partageable.
+TON JOB : Créer un CONTRASTE MAXIMUM entre l'attente et la réalité, selon l'angle imposé ci-dessous. Plus le décalage est grand et SPÉCIFIQUE à l'angle, plus c'est drôle et partageable.
+
+ANGLE IMPOSÉ POUR CE REEL : ${angle.label} (${angle.id})
+- Expectation direction : ${angle.expectationDirection}
+- Reality direction : ${angle.realityDirection}
+- Ton attendu : ${angle.tone}
 
 RÈGLES :
-- "Expectation" = la version Instagram/Pinterest/rêve : plage déserte, temple vide, coucher de soleil parfait
-- "Reality" = ce qui se passe vraiment : foule, pluie, arnaques, scooters partout, touristes en masse
-- Le contraste doit être VISUEL (pour des vidéos Pexels)
-- Les queries Pexels doivent être en ANGLAIS, spécifiques et visuelles
+- Il existe 18 angles possibles. Tu DOIS respecter STRICTEMENT l'angle imposé ci-dessus.
+- NE REVIENS PAS au cliché "plage déserte vs plage bondée" ou "temple zen vs temple touristique" si ce n'est pas l'angle choisi.
+- Le contraste doit rester VISUEL (pour des vidéos Pexels)
+- Les queries Pexels doivent être en ANGLAIS, spécifiques à l'angle imposé (pas de query générique)
 - Répondre UNIQUEMENT en JSON valide, rien d'autre`,
       messages: [{
         role: 'user',
@@ -96,20 +115,19 @@ RÈGLES :
 ARTICLE : ${article.title || 'Voyage'}
 CONTEXTE : ${(article.hook || article.keyStats || '').slice(0, 200)}
 
-Génère un script "Avant/Après" pour ${destination}.
+ANGLE IMPOSÉ : ${angle.label}
+- Direction "expectation" : ${angle.expectationDirection}
+- Direction "reality" : ${angle.realityDirection}
+
+Génère un script "Avant/Après" pour ${destination} en respectant STRICTEMENT cet angle.
 
 Réponds en JSON strict :
 {
-  "expectation_text": "description courte de ce qu'on imagine (max 40 chars, français)",
-  "expectation_pexels": "query Pexels anglais pour la version rêvée (beautiful, pristine, empty)",
-  "reality_text": "description courte de la réalité (max 40 chars, français)",
-  "reality_pexels": "query Pexels anglais pour la version réelle (crowded, chaotic, real)"
+  "expectation_text": "description courte de ce qu'on imagine (max 40 chars, français) — doit matcher la direction expectation ci-dessus",
+  "expectation_pexels": "query Pexels anglais qui illustre VISUELLEMENT la direction expectation (spécifique à l'angle, pas générique)",
+  "reality_text": "description courte de la réalité (max 40 chars, français) — doit matcher la direction reality ci-dessus",
+  "reality_pexels": "query Pexels anglais qui illustre VISUELLEMENT la direction reality (spécifique à l'angle, pas générique)"
 }
-
-EXEMPLES de bons contrastes :
-- Bali: expectation "Rizières désertes au lever du soleil" / reality "Selfie-sticks et files d'attente"
-- Bangkok: expectation "Temple doré paisible" / reality "40°C, 200 touristes, un singe"
-- Phuket: expectation "Plage paradisiaque privée" / reality "Parasols à perte de vue"
 
 JSON uniquement :`
       }],
@@ -128,6 +146,7 @@ JSON uniquement :`
 
     const script = {
       destination,
+      angle: { id: angle.id, label: angle.label, tone: angle.tone },
       expectation: {
         text: (parsed.expectation_text || '').slice(0, 50),
         pexelsQuery: parsed.expectation_pexels || `${destination.toLowerCase()} beautiful scenic`,
@@ -144,7 +163,7 @@ JSON uniquement :`
       ],
     };
 
-    console.log(`[AVANTAPRES-GEN] Script ready:`);
+    console.log(`[AVANTAPRES-GEN] Script ready (angle: ${angle.id}):`);
     console.log(`  Expectation: "${script.expectation.text}" → query: "${script.expectation.pexelsQuery}"`);
     console.log(`  Reality: "${script.reality.text}" → query: "${script.reality.pexelsQuery}"`);
 
@@ -152,41 +171,81 @@ JSON uniquement :`
 
   } catch (err) {
     console.error(`[AVANTAPRES-GEN] Haiku call failed: ${err.message}, using fallback`);
-    return fallbackScript(destination);
+    return fallbackScript(destination, angle);
   }
 }
 
 // ── Fallback (no API key or error) ───────────────────────────────────────────
+// Uses the picked angle's directions as both the visible copy and the Pexels
+// query hints. Destination name is woven in so the overlay stays contextual.
 
-const FALLBACK_SCRIPTS = {
-  'Bali': {
-    expectation: { text: 'Rizi\u00E8res d\u00E9sertes au lever du soleil', pexelsQuery: 'bali rice terrace beautiful sunrise empty' },
-    reality: { text: 'Selfie-sticks et files d\u2019attente', pexelsQuery: 'bali crowded tourists temple queue' },
-  },
-  'Bangkok': {
-    expectation: { text: 'Temple dor\u00E9 paisible et zen', pexelsQuery: 'bangkok golden temple peaceful morning' },
-    reality: { text: '40\u00B0C, 200 touristes, un singe voleur', pexelsQuery: 'bangkok street crowded hot traffic chaos' },
-  },
-  'Phuket': {
-    expectation: { text: 'Plage paradisiaque priv\u00E9e', pexelsQuery: 'phuket beach pristine empty turquoise' },
-    reality: { text: 'Parasols \u00E0 perte de vue', pexelsQuery: 'crowded tropical beach umbrellas tourists' },
-  },
-  'default': {
-    expectation: { text: 'Paysage de carte postale', pexelsQuery: 'southeast asia beautiful scenic landscape' },
-    reality: { text: 'La r\u00E9alit\u00E9 du backpacker', pexelsQuery: 'southeast asia crowded street market tourists' },
-  },
-};
+function fallbackScript(destination, angle) {
+  console.log(`[AVANTAPRES-GEN] Using fallback script for "${destination}" (angle: ${angle.id})`);
 
-function fallbackScript(destination) {
-  const fb = FALLBACK_SCRIPTS[destination] || FALLBACK_SCRIPTS['default'];
-
-  console.log(`[AVANTAPRES-GEN] Using fallback script for "${destination}"`);
+  const expectationText = truncate(angle.label.split(' vs ')[0] || angle.label, 40);
+  const realityText = truncate(angle.label.split(' vs ')[1] || angle.tone, 40);
 
   return {
     destination,
-    expectation: { ...fb.expectation },
-    reality: { ...fb.reality },
+    angle: { id: angle.id, label: angle.label, tone: angle.tone },
+    expectation: {
+      text: expectationText,
+      pexelsQuery: toPexelsQuery(destination, angle.expectationDirection, 'beautiful scenic'),
+    },
+    reality: {
+      text: realityText,
+      pexelsQuery: toPexelsQuery(destination, angle.realityDirection, 'crowded tourists'),
+    },
     caption: `${destination} : expectation vs reality \u{1F605}\n\nEt toi c'\u00E9tait comment ? \u{1F447}\n\n#FlashVoyage #AvantApr\u00E8s #VoyageHumour`,
     hashtags: ['#FlashVoyage', '#AvantApres', '#VoyageHumour', `#${destination.replace(/\s+/g, '')}`],
   };
+}
+
+function truncate(s, max) {
+  if (!s) return '';
+  return s.length <= max ? s : s.slice(0, max).replace(/\s+\S*$/, '');
+}
+
+/**
+ * Build a best-effort Pexels query from a French direction sentence by
+ * extracting obvious visual nouns and appending the destination.
+ * The Haiku call produces a better query when the API is available — this
+ * is only used when we fall back.
+ */
+function toPexelsQuery(destination, direction, defaultSuffix) {
+  const VISUAL_HINTS = {
+    'plage': 'beach',
+    'palmier': 'palm tree',
+    'temple': 'temple',
+    'rue': 'street',
+    'marché': 'market',
+    'piscine': 'swimming pool',
+    'piscine d\'hôtel': 'hotel pool',
+    'foule': 'crowd',
+    'touristes': 'tourists',
+    'scooter': 'scooter',
+    'valise': 'suitcase',
+    'hôpital': 'hospital',
+    'aéroport': 'airport',
+    'frontière': 'border crossing',
+    'moines': 'monks',
+    'coucher de soleil': 'sunset',
+    'pluie': 'rain',
+    'cantine': 'street food stall',
+    'street food': 'street food',
+    'chambre': 'hotel room',
+    'selfie': 'selfie',
+    'train': 'train',
+    'bus': 'bus',
+    'avion': 'airplane',
+    'montagne': 'mountain',
+    'rizière': 'rice terrace',
+  };
+  const lower = (direction || '').toLowerCase();
+  const hits = [];
+  for (const [fr, en] of Object.entries(VISUAL_HINTS)) {
+    if (lower.includes(fr)) hits.push(en);
+  }
+  const base = hits.length > 0 ? hits.slice(0, 3).join(' ') : defaultSuffix;
+  return `${destination.toLowerCase()} ${base}`.trim();
 }
