@@ -190,7 +190,9 @@ function buildCtaOverlayHtml(month) {
  * @returns {Promise<string>} outputPath
  */
 async function addAudioTrack(inputPath, outputPath, duration) {
-  const audioPath = pickMusicTrack('tropical') || pickMusicTrack('chill');
+  // FV-FIX 2026-04-13: ASMR-first for month-destination reels (seasonal guides).
+  // Informational format — ambient sound > upbeat. Fallback: asmr → tropical → chill.
+  const audioPath = pickMusicTrack('asmr') || pickMusicTrack('tropical') || pickMusicTrack('chill');
 
   if (audioPath) {
     await ffmpeg([

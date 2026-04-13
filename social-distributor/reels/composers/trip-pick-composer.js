@@ -96,7 +96,10 @@ async function prepareCtaBackground(inputPath, outputPath) {
  * @returns {Promise<string>} outputPath
  */
 async function addAudioTrack(inputPath, outputPath, duration) {
-  const audioPath = pickMusicTrack('chill') || pickMusicTrack('tropical');
+  // FV-FIX 2026-04-13: ASMR-first for trip-pick (5 spots / top destinations).
+  // Viewer scans locations — ambient sound carries the travel mood without
+  // competing. Fallback: asmr → chill → tropical.
+  const audioPath = pickMusicTrack('asmr') || pickMusicTrack('chill') || pickMusicTrack('tropical');
 
   if (audioPath) {
     await ffmpeg([

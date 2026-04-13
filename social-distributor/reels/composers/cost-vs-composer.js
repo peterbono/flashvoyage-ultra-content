@@ -82,7 +82,9 @@ async function concatClips(clips, outputPath) {
 }
 
 async function addAudioTrack(videoPath, outputPath, duration) {
-  const musicPath = pickMusicTrack('upbeat');
+  // FV-FIX 2026-04-13: ASMR-first for cost-comparison reels — data-heavy format
+  // where ambient sound lets the numbers breathe. Fallback: asmr → upbeat.
+  const musicPath = pickMusicTrack('asmr') || pickMusicTrack('upbeat');
   if (!musicPath) {
     // No music track — just copy the video
     await ffmpeg(['-i', videoPath, '-c:v', 'copy', '-an', '-y', outputPath]);
