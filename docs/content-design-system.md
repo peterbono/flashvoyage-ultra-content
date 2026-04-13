@@ -173,14 +173,16 @@ Ces blocs sont **immuables**. Un agent qui les détecte doit les laisser intacts
 
 1. **`.fv-faq-item`** — toute div existante avec cette classe (FAQ historique, TL;DR déjà posés)
 2. **`.fv-esim-widget`** — widget eSIM injecté par le pipeline auto-apply T1
-3. **Travelpayouts scripts et divs** — toute ligne contenant :
+3. **`.articles-connexes`** — widget related-articles (accent border-left + bg `#f8f9fa`), émis par le pipeline publication
+4. **`.fv-byline`, `.fv-author-box`** — credit + author card blocks, émis par le pipeline
+5. **Travelpayouts scripts et divs** — toute ligne contenant :
    - `shmarker=676421`
    - `trs=463418`
    - `travelpayouts.com`
    - widgets IDs `7879` (flights), `3947` (tours), `8588` (esim)
-4. **ez-toc spans** — `<span class="ez-toc-section" id="…">`, `<span class="ez-toc-section-end">` (TOC auto-généré)
-5. **WPCode Lite snippets** — commentaires HTML `<!-- wpcode … -->` ou `<!-- /wpcode -->`
-6. **Rank Math schema JSON** — `<script type="application/ld+json">` déjà présents
+6. **ez-toc spans** — `<span class="ez-toc-section" id="…">`, `<span class="ez-toc-section-end">` (TOC auto-généré)
+7. **WPCode Lite snippets** — commentaires HTML `<!-- wpcode … -->` ou `<!-- /wpcode -->`
+8. **Rank Math schema JSON** — `<script type="application/ld+json">` déjà présents
 
 Règle : si tu ne reconnais pas un bloc et qu'il n'est pas dans les Patterns 1-4 **et** pas Forbidden,
 → par défaut **preserve**, pas delete. Mieux vaut laisser un bloc legacy qu'effacer un widget rentable.
