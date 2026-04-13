@@ -123,7 +123,11 @@ export function loadTikTokStats() {
 export function detectFormatFromTitle(title) {
   if (!title) return null;
   const lower = title.toLowerCase();
-  if (/#trippick|5 spots|3 spots|top \d/.test(lower)) return 'pick';
+  // FV-FIX 2026-04-14: broadened pick/listicle regex — was missing FR nouns
+  // like "plats", "choses", "lieux" (e.g. "5 plats de street food…" was
+  // classified as null, losing a TikTok pick-format scoring data point).
+  // Mirror this change in dashboard TikTokStatsEditor.tsx detectFormat().
+  if (/#trippick|\b\d+\s+(spots?|plats|choses|lieux|endroits|raisons|erreurs|pi[eè]ges|astuces|incontournables?)\b|\btop\s*\d/.test(lower)) return 'pick';
   if (/#budget|budget|€\/jour|\/nuit/.test(lower)) return 'budget';
   if (/expectation.*reality|avant.*apr[eè]s|#avantapres/.test(lower)) return 'avantapres';
   if (/\bvs\b|versus|#versus/.test(lower)) return 'versus';
