@@ -54,6 +54,13 @@ Un agent qui génère un de ces patterns doit être rejeté avant PUT WordPress.
 - ❌ **Gradients** (`linear-gradient`, `radial-gradient`) sous toutes leurs formes.
 - ❌ **Box-shadow custom** (`box-shadow:0 4px 12px rgba(...)`) — JNews gère ses ombres.
 - ❌ **Width/max-width fixés** (`width:600px`, `max-width:80%`) — cassent le responsive.
+- ❌ **Fake widget cards** (blocs stylisés type card/border/CTA fléché qui imitent un widget)
+  Tout bloc qui annonce un produit/service partenaire (vol, hôtel, eSIM, excursion, assurance)
+  SANS le script Travelpayouts fonctionnel derrière est interdit. 3 options autorisées :
+  1. **Widget réel** avec script `shmarker=676421` + `trs=463418` + `promo_id=...`
+  2. **Lien inline** dans un paragraphe en prose (préféré pour articles informatifs)
+  3. **Pas de mention** du tout (si pas de widget ET pas de contexte naturel)
+  Growth : la fake card convertit ~6× moins bien qu'un vrai widget et kill le trust.
 
 ---
 
@@ -90,7 +97,7 @@ ci-dessous sont **figés** — ne pas les modifier, ne pas en ajouter.
 
 ```html
 <div class="fv-faq-item" style="border:1px solid #e5e7eb;border-radius:8px;margin-bottom:1rem;padding:1rem 1.2rem;background:#fffbeb;">
-  <p style="margin:0 0 0.5rem;color:#1f2937;font-weight:600;">⚡ TL;DR — En bref</p>
+  <p style="margin:0 0 0.5rem;color:#1f2937;font-weight:600;">⚡ L'essentiel</p>
   <ul style="margin:0;padding-left:1.2rem;color:#4b5563;line-height:1.6;">
     <li><strong>Key point :</strong> value</li>
     <li><strong>Second point :</strong> value</li>
@@ -99,7 +106,7 @@ ci-dessous sont **figés** — ne pas les modifier, ne pas en ajouter.
 ```
 
 **Variants autorisés du titre `<p>` :**
-- `⚡ TL;DR — En bref`
+- `⚡ L'essentiel`
 - `💡 À retenir`
 - `📌 Info clé`
 - `❓ FAQ — [question]`
@@ -152,7 +159,7 @@ hook consécutifs — ça devient du spam.
 ```
 Je veux ajouter…
 
-├─ un résumé en tête d'article (2-5 bullets)          → Pattern 2 (.fv-faq-item "⚡ TL;DR — En bref")
+├─ un résumé en tête d'article (2-5 bullets)          → Pattern 2 (.fv-faq-item "⚡ L'essentiel")
 ├─ un comparatif chiffré (prix, dates, durée)         → Pattern 1 (table plain)
 ├─ une phrase d'accroche avec un chiffre choc         → Pattern 3 (<p><strong>…</strong></p>)
 ├─ un encart FAQ "Q / R"                              → Pattern 2 (.fv-faq-item "❓ FAQ — …")
@@ -172,17 +179,18 @@ Si aucun cas ne matche : **ne pas générer de HTML custom**. Revenir au produit
 Ces blocs sont **immuables**. Un agent qui les détecte doit les laisser intacts, byte-pour-byte.
 
 1. **`.fv-faq-item`** — toute div existante avec cette classe (FAQ historique, TL;DR déjà posés)
-2. **`.fv-esim-widget`** — widget eSIM injecté par le pipeline auto-apply T1
-3. **`.articles-connexes`** — widget related-articles (accent border-left + bg `#f8f9fa`), émis par le pipeline publication
-4. **`.fv-byline`, `.fv-author-box`** — credit + author card blocks, émis par le pipeline
-5. **Travelpayouts scripts et divs** — toute ligne contenant :
+2. **`.fv-checklist`** — checklist block canonique (navy border `#3182CE`), présent sur articles comme `vietnam-4-pieges-que-les-blogs-voyage-cachent`
+3. **`.fv-esim-widget`** — widget eSIM injecté par le pipeline auto-apply T1
+4. **`.articles-connexes`** — widget related-articles (accent border-left + bg `#f8f9fa`), émis par le pipeline publication
+5. **`.fv-byline`, `.fv-author-box`** — credit + author card blocks, émis par le pipeline
+6. **Travelpayouts scripts et divs** — toute ligne contenant :
    - `shmarker=676421`
    - `trs=463418`
    - `travelpayouts.com`
    - widgets IDs `7879` (flights), `3947` (tours), `8588` (esim)
-6. **ez-toc spans** — `<span class="ez-toc-section" id="…">`, `<span class="ez-toc-section-end">` (TOC auto-généré)
-7. **WPCode Lite snippets** — commentaires HTML `<!-- wpcode … -->` ou `<!-- /wpcode -->`
-8. **Rank Math schema JSON** — `<script type="application/ld+json">` déjà présents
+7. **ez-toc spans** — `<span class="ez-toc-section" id="…">`, `<span class="ez-toc-section-end">` (TOC auto-généré)
+8. **WPCode Lite snippets** — commentaires HTML `<!-- wpcode … -->` ou `<!-- /wpcode -->`
+9. **Rank Math schema JSON** — `<script type="application/ld+json">` déjà présents
 
 Règle : si tu ne reconnais pas un bloc et qu'il n'est pas dans les Patterns 1-4 **et** pas Forbidden,
 → par défaut **preserve**, pas delete. Mieux vaut laisser un bloc legacy qu'effacer un widget rentable.
