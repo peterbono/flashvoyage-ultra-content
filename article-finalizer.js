@@ -2346,12 +2346,45 @@ class ArticleFinalizer {
       || pipelineContext?.input?.post?.selftext || pipelineContext?.post?.selftext || '';
     const hasPostText = postText && postText.length > 50;
 
+    // FV-FIX 2026-04-13: detect evergreen-hint synthetic source_text leaking as a fake testimonial.
+    // When enhanced-ultra-generator.js falls back to "evergreen-hint" (no Reddit source), it injects
+    // a canned directive into post.selftext ("Sujet: X. Cet article est un contenu evergreen généré
+    // à partir du hint éditorial. Utilise tes connaissances..."). That text propagates into
+    // evidence.source_snippets and was rendered verbatim as a <blockquote> — polluting posts 5270-5343.
+    // Any snippet containing this directive MUST be skipped; no testimonial blockquote should be
+    // inserted when there is no real quote to show.
+    const isEvergreenFallbackText = (txt) => {
+      if (!txt || typeof txt !== 'string') return false;
+      const t = txt.toLowerCase();
+      return (
+        t.includes('contenu evergreen généré') ||
+        t.includes('contenu evergreen genere') ||
+        t.includes('hint éditorial') ||
+        t.includes('hint editorial') ||
+        t.includes('hintéditorial') ||
+        t.includes('hinteditorial') ||
+        t.includes('utilise tes connaissances pour produire') ||
+        // Also guard on the explicit source marker if upstream labelled the article
+        t.startsWith('sujet:') && t.includes('asie du sud-est') && t.includes('connaissances')
+      );
+    };
+    const evergreenHintSource = (
+      pipelineContext?.story?.extracted?.source?.source === 'evergreen-hint' ||
+      pipelineContext?.story?.extracted?.meta?.source === 'evergreen-hint' ||
+      pipelineContext?.input?.source?.source === 'evergreen-hint'
+    );
+
     if (hasEvidenceSnippetsEarly) {
       // 1) Priorité : insérer une citation depuis evidence.source_snippets (extraits du récit)
       const snippets = pipelineContext.story.evidence.source_snippets;
       for (const snippet of snippets) {
         let snippetText = typeof snippet === 'string' ? snippet : (snippet?.text || snippet?.content || snippet?.body || snippet?.quote || snippet?.excerpt || snippet?.snippet || '');
         if (!snippetText || (snippetText = snippetText.trim()).length < 20) continue;
+        // FV-FIX 2026-04-13: skip synthetic evergreen-hint brief masquerading as a testimonial.
+        if (isEvergreenFallbackText(snippetText) || evergreenHintSource) {
+          console.log('🧹 FINALIZER: skip evergreen-hint snippet (no real testimonial to render)');
+          continue;
+        }
         const excerpt = this.smartTruncate(snippetText, 250, 350);
         if (excerpt.length < 20) continue;
         let citationText = excerpt;
@@ -2412,7 +2445,9 @@ class ArticleFinalizer {
     // 2) Fallback : si aucune citation insérée, une depuis le post extracted (traduit si en ligne)
     // FIX: Utiliser [\s\S] au lieu de . pour matcher les newlines dans les blockquotes multilignes
     const hasBlockquoteNow = /<blockquote[^>]*>[\s\S]*?<\/blockquote>/i.test(finalHtml);
-    if (!hasBlockquoteNow && hasPostText) {
+    // FV-FIX 2026-04-13: block the postText fallback too — when the article is evergreen-hint,
+    // postText IS the canned directive, so rendering it as a testimonial reproduces the same leak.
+    if (!hasBlockquoteNow && hasPostText && !isEvergreenFallbackText(postText) && !evergreenHintSource) {
       let excerpt = this.smartTruncate(postText, 250, 350);
       if (!FORCE_OFFLINE && this.intelligentContentAnalyzer) {
         try {
@@ -2669,7 +2704,14 @@ class ArticleFinalizer {
         if (!snippetText || typeof snippetText !== 'string') continue;
         snippetText = snippetText.trim();
         if (snippetText.length < 20) continue;
-        
+
+        // FV-FIX 2026-04-13: skip synthetic evergreen-hint brief masquerading as a testimonial.
+        // Same guard as CHECK A above — prevents the editorial directive from leaking as a <blockquote>.
+        if (isEvergreenFallbackText(snippetText) || evergreenHintSource) {
+          console.log('🧹 FINALIZER QA: skip evergreen-hint snippet (no real testimonial to render)');
+          continue;
+        }
+
         // APPROCHE INTELLIGENTE: Troncature respectant les limites de phrases et de mots
         // AMÉLIORATION: Augmenter les limites pour les citations Reddit (meilleure lisibilité)
         let citationText = this.smartTruncate(snippetText, 250, 350);
