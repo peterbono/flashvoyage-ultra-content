@@ -171,7 +171,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 11,
+      "posted": 12,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -288,6 +288,14 @@
           "hasLink": false,
           "status": "published",
           "generated": true
+        },
+        {
+          "date": "2026-04-13T07:45:56.749Z",
+          "id": "ai-3888-1776066317025",
+          "search": "Comment bien préparer son premier voyage?",
+          "hasLink": false,
+          "status": "published",
+          "generated": true
         }
       ]
     },
@@ -388,7 +396,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 5,
+      "posted": 6,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -429,11 +437,19 @@
           "section": "Cambodge",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-13T07:51:41.025Z",
+          "threadId": "15346502",
+          "title": "14 février 2026",
+          "section": "Cambodge",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 37,
+  "total_posted": 39,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
