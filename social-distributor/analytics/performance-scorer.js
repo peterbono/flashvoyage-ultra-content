@@ -22,6 +22,21 @@ import { fetchTopArticles, fetchDestinationTraffic } from './ga4-fetcher.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REELS_DATA_DIR = join(__dirname, '..', 'reels', 'data');
 const WEIGHTS_PATH = join(REELS_DATA_DIR, 'performance-weights.json');
+// TikTok stats live at repo root: data/tiktok-stats.json (edited by dashboard or by hand).
+// From this file: social-distributor/analytics/ → ../../data/tiktok-stats.json
+const TIKTOK_STATS_PATH = join(__dirname, '..', '..', 'data', 'tiktok-stats.json');
+
+// Merge weights — TikTok currently out-reaches IG on FlashVoyage, so default bias
+// the merged score 60/40 in TikTok's favor. Overridable via env var (0.0-1.0 clamp).
+const DEFAULT_TIKTOK_WEIGHT = 0.6;
+function resolveTikTokWeight() {
+  const raw = process.env.SCORER_TIKTOK_WEIGHT;
+  if (raw === undefined || raw === null || raw === '') return DEFAULT_TIKTOK_WEIGHT;
+  const parsed = Number(raw);
+  if (!Number.isFinite(parsed)) return DEFAULT_TIKTOK_WEIGHT;
+  // Clamp to [0, 1]
+  return Math.max(0, Math.min(1, parsed));
+}
 
 // Known formats from reels/config.js — must mirror smart-scheduler.js VALID_FORMATS
 // otherwise nightly refresh silently drops formats we actually publish.
@@ -50,8 +65,231 @@ function log(msg) {
   console.log(`[ANALYTICS/SCORE] ${msg}`);
 }
 
+function logWarn(msg) {
+  console.warn(`[ANALYTICS/SCORE] WARN: ${msg}`);
+}
+
+function logInfo(msg) {
+  console.log(`[ANALYTICS/SCORE] INFO: ${msg}`);
+}
+
 function logError(msg) {
   console.error(`[ANALYTICS/SCORE] ERROR: ${msg}`);
+}
+
+// ── TikTok Stats Loader ─────────────────────────────────────────────────────
+
+/**
+ * Load TikTok stats JSON from the repo root `data/tiktok-stats.json`.
+ * Returns parsed object `{ account, videos, lastUpdated, ... }` or null on
+ * missing/malformed file. Logs a WARN when null so the caller knows TikTok
+ * data is missing and the scorer will fall back to IG-only behavior.
+ *
+ * @returns {{ account?: object, videos?: Array, lastUpdated?: string } | null}
+ */
+export function loadTikTokStats() {
+  if (!existsSync(TIKTOK_STATS_PATH)) {
+    logWarn(`TikTok stats file not found at ${TIKTOK_STATS_PATH} — falling back to IG-only scoring`);
+    return null;
+  }
+  try {
+    const raw = readFileSync(TIKTOK_STATS_PATH, 'utf-8');
+    const data = JSON.parse(raw);
+    if (!data || typeof data !== 'object') {
+      logWarn(`TikTok stats file is not a JSON object — falling back to IG-only`);
+      return null;
+    }
+    return data;
+  } catch (err) {
+    logWarn(`Failed to parse TikTok stats: ${err.message} — falling back to IG-only`);
+    return null;
+  }
+}
+
+// ── TikTok Format Classifier (server-side, mirrors dashboard heuristic) ────
+
+/**
+ * Classify a TikTok video title into one of the known formats.
+ * Mirrors `detectFormat()` in dashboard's TikTokStatsEditor.tsx so classification
+ * is consistent across CSV import (dashboard) and nightly scoring (this file).
+ *
+ * Returns null if the title doesn't match any known pattern. Note: classifier
+ * returns `guide` which is NOT in KNOWN_FORMATS — callers should map unknowns
+ * to `unclassified` or drop them.
+ *
+ * @param {string} title
+ * @returns {string | null}
+ */
+export function detectFormatFromTitle(title) {
+  if (!title) return null;
+  const lower = title.toLowerCase();
+  if (/#trippick|5 spots|3 spots|top \d/.test(lower)) return 'pick';
+  if (/#budget|budget|€\/jour|\/nuit/.test(lower)) return 'budget';
+  if (/expectation.*reality|avant.*apr[eè]s|#avantapres/.test(lower)) return 'avantapres';
+  if (/\bvs\b|versus|#versus/.test(lower)) return 'versus';
+  if (/#poll|sondage|ou\s*\?/.test(lower)) return 'poll';
+  if (/#humor|humour/.test(lower)) return 'humor';
+  if (/guide|comment/.test(lower)) return 'guide';
+  return null;
+}
+
+/**
+ * Resolve the effective format for a TikTok video. Precedence:
+ *   1. If `video.format` is present and in KNOWN_FORMATS, use it.
+ *   2. Otherwise run the title classifier; if result is in KNOWN_FORMATS, use it.
+ *   3. Otherwise return null (unclassified).
+ *
+ * @param {{ format?: string, title?: string }} video
+ * @returns {string | null}
+ */
+function resolveTikTokVideoFormat(video) {
+  if (!video) return null;
+  if (video.format && KNOWN_FORMATS.includes(video.format)) return video.format;
+  const detected = detectFormatFromTitle(video.title);
+  if (detected && KNOWN_FORMATS.includes(detected)) return detected;
+  return null;
+}
+
+// ── TikTok Video Scoring ────────────────────────────────────────────────────
+
+/**
+ * Score a single TikTok video.
+ * Mirrors the IG formula spirit but TikTok has no `saves` equivalent, so the
+ * formula is 4 terms instead of 5.
+ *
+ * Formula: (views / 100) + (likes * 0.5) + (comments * 1.5) + (shares * 2)
+ *
+ * @param {{ views?: number, likes?: number, comments?: number, shares?: number }} v
+ * @returns {number}
+ */
+export function scoreTikTokVideo(v) {
+  if (!v) return 0;
+  const score =
+    (v.views ?? 0) / 100 +
+    (v.likes ?? 0) * 0.5 +
+    (v.comments ?? 0) * 1.5 +
+    (v.shares ?? 0) * 2;
+  return Math.round(score * 10) / 10;
+}
+
+/**
+ * Aggregate TikTok videos into per-format and per-destination score maps.
+ * Skips formats with fewer than 2 videos (single-video averages are noisy).
+ *
+ * @param {Array<object>} videos
+ * @returns {{
+ *   formatScores: Record<string, number>,
+ *   formatCount: Record<string, number>,
+ *   destinationScores: Record<string, number>,
+ *   destinationCount: Record<string, number>,
+ *   unclassifiedCount: number,
+ *   totalVideos: number,
+ * }}
+ */
+function aggregateTikTokScores(videos) {
+  const formatBuckets = {};    // { format: [score, score, ...] }
+  const destBuckets = {};      // { dest: [score, score, ...] }
+  let unclassifiedCount = 0;
+
+  for (const v of videos || []) {
+    const score = scoreTikTokVideo(v);
+    const fmt = resolveTikTokVideoFormat(v);
+    if (fmt) {
+      if (!formatBuckets[fmt]) formatBuckets[fmt] = [];
+      formatBuckets[fmt].push(score);
+    } else {
+      unclassifiedCount += 1;
+    }
+
+    // Scan title for known destinations
+    const title = (v.title || '').toLowerCase();
+    for (const dest of KNOWN_DESTINATIONS) {
+      if (title.includes(dest)) {
+        if (!destBuckets[dest]) destBuckets[dest] = [];
+        destBuckets[dest].push(score);
+      }
+    }
+  }
+
+  const formatScores = {};
+  const formatCount = {};
+  for (const [fmt, scores] of Object.entries(formatBuckets)) {
+    formatCount[fmt] = scores.length;
+    if (scores.length < 2) continue; // too few data points, skip
+    const avg = scores.reduce((s, x) => s + x, 0) / scores.length;
+    formatScores[fmt] = Math.round(avg * 10) / 10;
+  }
+
+  const destinationScores = {};
+  const destinationCount = {};
+  for (const [dest, scores] of Object.entries(destBuckets)) {
+    destinationCount[dest] = scores.length;
+    // For destinations, keep single-mention data (IG side does too via contributor sum)
+    const avg = scores.reduce((s, x) => s + x, 0) / scores.length;
+    destinationScores[dest] = Math.round(avg * 10) / 10;
+  }
+
+  return {
+    formatScores,
+    formatCount,
+    destinationScores,
+    destinationCount,
+    unclassifiedCount,
+    totalVideos: (videos || []).length,
+  };
+}
+
+// ── Score Merge (IG + TikTok) ──────────────────────────────────────────────
+
+/**
+ * Merge two score maps (platform-agnostic). When both platforms have a value
+ * for a given key, the merged score is a weighted average. When only one has
+ * data, use that one (no dilution with zeroes).
+ *
+ * Returns `{ merged, sources }` where `sources[key]` records which platform(s)
+ * contributed: "ig-only" | "tiktok-only" | "merged(60/40)".
+ *
+ * @param {Record<string, number>} igScores
+ * @param {Record<string, number>} tiktokScores
+ * @param {{ tiktok?: number, ig?: number }} [weight]
+ * @returns {{ merged: Record<string, number>, sources: Record<string, string> }}
+ */
+export function mergeFormatScores(igScores, tiktokScores, weight = { tiktok: DEFAULT_TIKTOK_WEIGHT, ig: 1 - DEFAULT_TIKTOK_WEIGHT }) {
+  const ig = igScores || {};
+  const tt = tiktokScores || {};
+  const w = {
+    tiktok: typeof weight.tiktok === 'number' ? weight.tiktok : DEFAULT_TIKTOK_WEIGHT,
+    ig: typeof weight.ig === 'number' ? weight.ig : (1 - DEFAULT_TIKTOK_WEIGHT),
+  };
+  const tagPct = `${Math.round(w.tiktok * 100)}/${Math.round(w.ig * 100)}`;
+
+  const merged = {};
+  const sources = {};
+  const allKeys = new Set([...Object.keys(ig), ...Object.keys(tt)]);
+
+  for (const key of allKeys) {
+    const hasIG = ig[key] !== undefined && ig[key] !== null && ig[key] > 0;
+    const hasTT = tt[key] !== undefined && tt[key] !== null && tt[key] > 0;
+
+    if (hasIG && hasTT) {
+      const m = ig[key] * w.ig + tt[key] * w.tiktok;
+      merged[key] = Math.round(m * 10) / 10;
+      sources[key] = `merged(${tagPct})`;
+    } else if (hasTT) {
+      merged[key] = tt[key];
+      sources[key] = 'tiktok-only';
+    } else if (hasIG) {
+      merged[key] = ig[key];
+      sources[key] = 'ig-only';
+    } else {
+      // Neither has useful data — include as 0 for backward compat with the
+      // canonical KNOWN_FORMATS shape (IG side always emitted a key per format,
+      // possibly 0). Source left undefined.
+      merged[key] = 0;
+    }
+  }
+
+  return { merged, sources };
 }
 
 // ── Reel Scoring ────────────────────────────────────────────────────────────
@@ -368,29 +606,101 @@ export async function updatePerformanceWeights() {
     rankDestinations(30),
   ]);
 
-  // Convert format rankings to score map
-  const formatScores = {};
+  // ── IG score maps (pure, pre-merge) ──────────────────────────────────────
+  const igFormatScores = {};
   for (const f of formatRanking) {
-    formatScores[f.format] = f.avgScore;
+    igFormatScores[f.format] = f.avgScore;
+  }
+  const igDestinationScores = {};
+  for (const d of destRanking.filter(d => d.combinedScore > 0)) {
+    igDestinationScores[d.destination] = d.combinedScore;
   }
 
-  // Convert destination rankings to score map (top 20)
+  // ── TikTok score maps (graceful — empty if data missing/insufficient) ────
+  const tiktokStats = loadTikTokStats();
+  const tiktokWeight = resolveTikTokWeight();
+  const igWeight = 1 - tiktokWeight;
+  const weightPair = { tiktok: tiktokWeight, ig: igWeight };
+  const weightTag = `${Math.round(tiktokWeight * 100)}/${Math.round(igWeight * 100)}`;
+
+  let tiktokFormatScores = {};
+  let tiktokFormatCount = {};
+  let tiktokDestinationScores = {};
+  let tiktokAgg = null;
+  let tiktokActive = false;
+
+  if (tiktokStats && Array.isArray(tiktokStats.videos) && tiktokStats.videos.length > 0) {
+    if (tiktokStats.videos.length < 3) {
+      logInfo(`TikTok has only ${tiktokStats.videos.length} videos (<3) — using IG-only scoring`);
+    } else {
+      tiktokAgg = aggregateTikTokScores(tiktokStats.videos);
+      tiktokFormatScores = tiktokAgg.formatScores;
+      tiktokFormatCount = tiktokAgg.formatCount;
+      tiktokDestinationScores = tiktokAgg.destinationScores;
+
+      // If classifier completely failed (nothing classified), warn and skip merge
+      if (Object.keys(tiktokFormatScores).length === 0) {
+        logWarn(
+          `None of the ${tiktokAgg.totalVideos} TikTok videos could be classified into a known format — ` +
+          `founder should add hashtags (#trippick, #budget, #avantapres, #versus) or set \`format\` in the CSV editor. ` +
+          `Falling back to IG-only for format merge.`
+        );
+      } else {
+        tiktokActive = true;
+        if (tiktokAgg.unclassifiedCount > 0) {
+          logWarn(
+            `${tiktokAgg.unclassifiedCount}/${tiktokAgg.totalVideos} TikTok videos unclassified — ` +
+            `consider adding hashtags or tagging format in dashboard CSV editor`
+          );
+        }
+      }
+    }
+  } else if (tiktokStats) {
+    logInfo('TikTok stats file present but contains no videos — using IG-only scoring');
+  } else {
+    logInfo('No TikTok stats available — using IG-only scoring');
+  }
+
+  // ── Merge format scores ──────────────────────────────────────────────────
+  const formatMerge = tiktokActive
+    ? mergeFormatScores(igFormatScores, tiktokFormatScores, weightPair)
+    : { merged: { ...igFormatScores }, sources: Object.fromEntries(Object.keys(igFormatScores).map(k => [k, igFormatScores[k] > 0 ? 'ig-only' : undefined])) };
+
+  // Guarantee every KNOWN_FORMATS key is present in formatScores (backward compat
+  // with smart-scheduler which iterates that shape).
+  const formatScores = {};
+  for (const fmt of KNOWN_FORMATS) {
+    formatScores[fmt] = formatMerge.merged[fmt] ?? 0;
+  }
+  const formatScoreSource = formatMerge.sources;
+
+  // ── Merge destination scores ─────────────────────────────────────────────
+  const destMerge = tiktokActive
+    ? mergeFormatScores(igDestinationScores, tiktokDestinationScores, weightPair)
+    : { merged: { ...igDestinationScores }, sources: Object.fromEntries(Object.keys(igDestinationScores).map(k => [k, 'ig-only'])) };
+
+  // Keep top 20 positive-score destinations for backward compat
   const destinationScores = {};
-  for (const d of destRanking.filter(d => d.combinedScore > 0).slice(0, 20)) {
-    destinationScores[d.destination] = d.combinedScore;
+  const sortedDests = Object.entries(destMerge.merged)
+    .filter(([, v]) => v > 0)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 20);
+  for (const [dest, score] of sortedDests) {
+    destinationScores[dest] = score;
   }
+  const destinationScoreSource = destMerge.sources;
 
-  // Build recommendation strings
+  // ── Recommendations ──────────────────────────────────────────────────────
   const recommendations = [];
 
   const sorted = [...formatRanking].sort((a, b) => b.avgScore - a.avgScore);
   if (sorted[0]?.count > 0) {
-    recommendations.push(`Increase ${sorted[0].format} frequency (top performer, avg ${sorted[0].avgScore})`);
+    recommendations.push(`Increase ${sorted[0].format} frequency (top IG performer, avg ${sorted[0].avgScore})`);
   }
 
   const worst = sorted.filter(f => f.count > 0 && f.recommendation === 'decrease');
   for (const w of worst) {
-    recommendations.push(`Reduce ${w.format} (underperforming, avg ${w.avgScore})`);
+    recommendations.push(`Reduce ${w.format} (underperforming on IG, avg ${w.avgScore})`);
   }
 
   const topDest = destRanking.filter(d => d.combinedScore > 0).slice(0, 3);
@@ -398,17 +708,68 @@ export async function updatePerformanceWeights() {
     recommendations.push(`${d.destination} content trending — prioritize`);
   }
 
-  // If no data available yet, add a note
-  if (formatRanking.every(f => f.count === 0)) {
-    recommendations.push('No reel data yet — weights are placeholder, will update after first reels are published');
+  // TikTok recommendation
+  if (tiktokActive) {
+    const topTT = Object.entries(tiktokFormatScores).sort(([, a], [, b]) => b - a)[0];
+    if (topTT) {
+      recommendations.push(`Top TikTok format: ${topTT[0]} (avg ${topTT[1]}, ${tiktokFormatCount[topTT[0]]} videos)`);
+    }
   }
 
+  // If no data available yet, add a note
+  if (formatRanking.every(f => f.count === 0) && !tiktokActive) {
+    recommendations.push('No reel or TikTok data yet — weights are placeholder, will update after first posts are published');
+  }
+
+  // ── Observability summary ────────────────────────────────────────────────
+  const igTopEntry = Object.entries(igFormatScores).filter(([, v]) => v > 0).sort(([, a], [, b]) => b - a)[0];
+  const ttTopEntry = Object.entries(tiktokFormatScores).sort(([, a], [, b]) => b - a)[0];
+  const mergedTopEntry = Object.entries(formatScores).filter(([, v]) => v > 0).sort(([, a], [, b]) => b - a)[0];
+  const igReelCount = formatRanking.reduce((s, f) => s + f.count, 0);
+  const ttVideoCount = tiktokAgg?.totalVideos ?? 0;
+
+  log('Format scoring summary:');
+  if (igReelCount > 0 && igTopEntry) {
+    log(`  IG: ${igReelCount} reels over 14d, top format=${igTopEntry[0]} (score ${igTopEntry[1]})`);
+  } else {
+    log(`  IG: ${igReelCount} reels over 14d, no top format`);
+  }
+  if (tiktokActive && ttTopEntry) {
+    const days = tiktokStats?.account?.daysSinceStart ?? '?';
+    log(`  TikTok: ${ttVideoCount} videos over ${days}d, top format=${ttTopEntry[0]} (score ${ttTopEntry[1]})`);
+  } else {
+    log(`  TikTok: ${ttVideoCount} videos, merge skipped (insufficient or unclassified)`);
+  }
+  if (mergedTopEntry) {
+    const mergeLabel = tiktokActive ? `Merged (${weightTag} TikTok:IG)` : 'Merged (IG-only)';
+    log(`  ${mergeLabel}: top format=${mergedTopEntry[0]}`);
+  }
+  if (igTopEntry && ttTopEntry && igTopEntry[0] !== ttTopEntry[0]) {
+    log(`  Discrepancy: IG top (${igTopEntry[0]}) ≠ TikTok top (${ttTopEntry[0]}) → founder should review`);
+  }
+
+  // ── Assemble weights file ────────────────────────────────────────────────
   const weights = {
     lastUpdated: new Date().toISOString().slice(0, 10),
     formatScores,
     killedFormats: KILLED_FORMATS_OUT,
     destinationScores,
     recommendations,
+    // Debug side fields — not consumed by smart-scheduler or article-reel-router.
+    // Useful for the weekly CEO report and for manual inspection.
+    igFormatScores,
+    tiktokFormatScores,
+    formatScoreSource,
+    igDestinationScores,
+    tiktokDestinationScores,
+    destinationScoreSource,
+    mergeConfig: {
+      tiktokWeight,
+      igWeight,
+      active: tiktokActive,
+      tiktokVideoCount: ttVideoCount,
+      tiktokUnclassifiedCount: tiktokAgg?.unclassifiedCount ?? 0,
+    },
   };
 
   // Ensure directory exists

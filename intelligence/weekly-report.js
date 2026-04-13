@@ -379,12 +379,26 @@ function buildReportMarkdown(data) {
   const prevPageviews = ga4?.previousWeek?.totalPageviews || 0;
   const pageviewsDelta = formatDelta(ga4?.summary7d?.totalPageviews || 0, prevPageviews);
 
-  // Top performing format from weights
+  // Top performing format from weights (merged IG + TikTok)
   const topFormat = weights?.formatScores
     ? Object.entries(weights.formatScores)
         .sort(([, a], [, b]) => b - a)
         .filter(([, score]) => score > 0)[0]
     : null;
+
+  // Platform-specific tops (debug side fields from performance-scorer v2 with TikTok merge).
+  // Absent on older weights files → harmless, they fall through to null.
+  const topFormatIG = weights?.igFormatScores
+    ? Object.entries(weights.igFormatScores)
+        .sort(([, a], [, b]) => b - a)
+        .filter(([, score]) => score > 0)[0]
+    : null;
+  const topFormatTikTok = weights?.tiktokFormatScores
+    ? Object.entries(weights.tiktokFormatScores)
+        .sort(([, a], [, b]) => b - a)
+        .filter(([, score]) => score > 0)[0]
+    : null;
+  const formatDiscrepancy = topFormatIG && topFormatTikTok && topFormatIG[0] !== topFormatTikTok[0];
 
   // ── Build Markdown ──
   const lines = [];
@@ -500,6 +514,24 @@ function buildReportMarkdown(data) {
       }
       lines.push('');
     }
+
+    // Cross-platform top-format comparison (IG vs TikTok vs merged)
+    if (topFormat || topFormatIG || topFormatTikTok) {
+      lines.push(`**Top format par plateforme:**`);
+      if (topFormat) {
+        lines.push(`- Global (merged): **${topFormat[0]}** (score ${topFormat[1]})`);
+      }
+      if (topFormatIG) {
+        lines.push(`- IG seul: **${topFormatIG[0]}** (score ${topFormatIG[1]})`);
+      }
+      if (topFormatTikTok) {
+        lines.push(`- TikTok seul: **${topFormatTikTok[0]}** (score ${topFormatTikTok[1]})`);
+      }
+      if (formatDiscrepancy) {
+        lines.push(`- 🚨 Divergence IG / TikTok — les deux plateformes favorisent des formats différents, à arbitrer.`);
+      }
+      lines.push('');
+    }
   } else {
     lines.push('*Aucun reel publie cette semaine.*');
     lines.push('');
@@ -561,11 +593,14 @@ function buildReportMarkdown(data) {
     plan.push(`- **SEO**: Optimiser les titres/meta pour "${gsc.topQuickWins[0].query}" (pos ${gsc.topQuickWins[0].position})`);
   }
 
-  // Best format to double down on
+  // Best format to double down on (merged score — IG + TikTok weighted)
   if (topFormat) {
-    plan.push(`- **Social**: Augmenter la cadence du format "${topFormat[0]}" (meilleur score: ${topFormat[1]})`);
+    plan.push(`- **Social**: Augmenter la cadence du format "${topFormat[0]}" (score merged IG+TikTok: ${topFormat[1]})`);
   } else if (ig?.formatRanking?.length > 0) {
     plan.push(`- **Social**: Augmenter la cadence du format "${ig.formatRanking[0].format}" (meilleur score: ${ig.formatRanking[0].avgScore})`);
+  }
+  if (formatDiscrepancy) {
+    plan.push(`- **Social**: IG préfère "${topFormatIG[0]}" mais TikTok préfère "${topFormatTikTok[0]}" — arbitrer par plateforme ou tester les deux en cross-post.`);
   }
 
   // Content gaps
