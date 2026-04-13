@@ -189,10 +189,13 @@ function buildCtaOverlayHtml(month) {
  * @param {number} duration - Total duration in seconds
  * @returns {Promise<string>} outputPath
  */
-async function addAudioTrack(inputPath, outputPath, duration) {
+async function addAudioTrack(inputPath, outputPath, duration, destination = null) {
   // FV-FIX 2026-04-13: ASMR-first for month-destination reels (seasonal guides).
   // Informational format — ambient sound > upbeat. Fallback: asmr → tropical → chill.
-  const audioPath = pickMusicTrack('asmr') || pickMusicTrack('tropical') || pickMusicTrack('chill');
+  // Destination: month reels list 5 destinations — no single topic destination,
+  // so callers typically pass null. The function accepts it for symmetry /
+  // future single-destination variants.
+  const audioPath = pickMusicTrack('asmr', { destination }) || pickMusicTrack('tropical') || pickMusicTrack('chill');
 
   if (audioPath) {
     await ffmpeg([
@@ -393,7 +396,10 @@ export async function composeMonthReel(script, opts = {}) {
       : TOTAL_DURATION;
 
     const beforeCtaPath = join(TMP_DIR, `month-before-cta-${ts}.mp4`);
-    await addAudioTrack(concattedPath, beforeCtaPath, actualDuration);
+    // TODO: month reels cover 5 destinations — no single topic. We pass null so
+    // the picker uses the full generic ASMR pool. If the format ever becomes
+    // single-destination, pass script.destinations[0]?.country here.
+    await addAudioTrack(concattedPath, beforeCtaPath, actualDuration, null);
     tempFiles.push(beforeCtaPath);
 
     // ── 7. Append global save CTA (+2.5s) to boost IG save rate ────────────

@@ -73,10 +73,12 @@ async function concatClips(clips, outputPath) {
   return outputPath;
 }
 
-async function addAudioTrack(videoPath, outputPath, duration) {
+async function addAudioTrack(videoPath, outputPath, duration, destination = null) {
   // FV-FIX 2026-04-13: ASMR-first for leaderboard reels — ranking format where
   // viewer reads/scans content. Ambient sound > competing energy. Fallback chain.
-  const musicPath = pickMusicTrack('asmr') || pickMusicTrack('upbeat');
+  // Destination-aware: #1 country gets the spotlight (yellow band + Pexels bg),
+  // so we pick geo-matched ASMR for the #1. Falls back to generic if unknown.
+  const musicPath = pickMusicTrack('asmr', { destination }) || pickMusicTrack('upbeat');
   if (!musicPath) {
     await ffmpeg(['-i', videoPath, '-c:v', 'copy', '-an', '-y', outputPath]);
     return outputPath;
@@ -201,7 +203,10 @@ export async function composeLeaderboardReel(script, opts = {}) {
     tempFiles.push(concatPath);
 
     const beforeCtaPath = join(TMP_DIR, `leaderboard-before-cta-${ts}.mp4`);
-    await addAudioTrack(concatPath, beforeCtaPath, TOTAL_DURATION);
+    // Top-10 ranking: #1 is permanently highlighted (yellow band) and drives
+    // the Pexels background query. Use it as the geo-matching destination.
+    const topName = script.items?.[0]?.displayName || null;
+    await addAudioTrack(concatPath, beforeCtaPath, TOTAL_DURATION, topName);
     tempFiles.push(beforeCtaPath);
 
     // Append global save CTA (+2.5s) to boost IG save rate

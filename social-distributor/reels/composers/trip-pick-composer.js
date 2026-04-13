@@ -95,11 +95,12 @@ async function prepareCtaBackground(inputPath, outputPath) {
  * @param {number} duration - Total duration in seconds
  * @returns {Promise<string>} outputPath
  */
-async function addAudioTrack(inputPath, outputPath, duration) {
+async function addAudioTrack(inputPath, outputPath, duration, destination = null) {
   // FV-FIX 2026-04-13: ASMR-first for trip-pick (5 spots / top destinations).
   // Viewer scans locations — ambient sound carries the travel mood without
   // competing. Fallback: asmr → chill → tropical.
-  const audioPath = pickMusicTrack('asmr') || pickMusicTrack('chill') || pickMusicTrack('tropical');
+  // Destination-aware: script.country is the single country the 5 spots belong to.
+  const audioPath = pickMusicTrack('asmr', { destination }) || pickMusicTrack('chill') || pickMusicTrack('tropical');
 
   if (audioPath) {
     await ffmpeg([
@@ -303,7 +304,8 @@ export async function composeTripPickReel(script, opts = {}) {
       : TOTAL_DURATION;
 
     const beforeCtaPath = join(TMP_DIR, `pick-before-cta-${ts}.mp4`);
-    await addAudioTrack(concattedPath, beforeCtaPath, actualDuration);
+    // script.country = the single country the 5 spots are located in
+    await addAudioTrack(concattedPath, beforeCtaPath, actualDuration, script.country || null);
     tempFiles.push(beforeCtaPath);
 
     // ── 7. Append global save CTA (+2.5s) to boost IG save rate ────────────
