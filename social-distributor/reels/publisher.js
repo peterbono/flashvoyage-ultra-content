@@ -10,8 +10,8 @@
  * 5. Clean up WP media
  */
 
-import { readFileSync } from 'fs';
-import { join, dirname } from 'path';
+import { readFileSync, existsSync } from 'fs';
+import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -327,9 +327,49 @@ const TIKTOK_HASHTAGS = {
 };
 
 /**
+ * Resolve the picked-music filename to show in the Telegram preview caption.
+ *
+ * Sources, in priority order:
+ *   1. `meta.musicPath` passed explicitly by the caller (orchestrator).
+ *   2. Sidecar pragma file at `/tmp/last-reel-music.json` written by the
+ *      orchestrator right after `pickMusicTrack()` so we can surface the
+ *      picked track even when the composer doesn't propagate it back.
+ *      Shape: `{ musicPath: string, pickedAt: number }`.
+ *      Entries older than 10 min are ignored (stale guard).
+ *
+ * Returns the basename (e.g. `asmr-bangkok-tuktuk.mp3`) or null when
+ * unavailable. TELEGRAM-ONLY: this value never flows to IG/TikTok captions.
+ */
+function resolveMusicFilename(meta = {}) {
+  // 1. Explicit meta from the caller (preferred path).
+  if (meta.musicPath && typeof meta.musicPath === 'string') {
+    return basename(meta.musicPath);
+  }
+
+  // 2. Sidecar pragma file fallback (covers paths where the music path isn't
+  //    threaded through meta, e.g. v2 composers that own music picking).
+  try {
+    const pragmaPath = '/tmp/last-reel-music.json';
+    if (!existsSync(pragmaPath)) return null;
+    const raw = JSON.parse(readFileSync(pragmaPath, 'utf-8'));
+    if (!raw || !raw.musicPath) return null;
+    const ageMs = Date.now() - (raw.pickedAt || 0);
+    if (ageMs > 10 * 60 * 1000) return null;
+    return basename(raw.musicPath);
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Send reel video + caption to Telegram bot for manual TikTok repost.
  * Sends ONLY the TikTok-ready text (caption + hashtags) — no headers, no IG link.
  * User copies the entire message and pastes directly into TikTok.
+ *
+ * NOTE: The `🎵 <filename>` trailing line is Telegram-only — an internal
+ * signal for the founder to spot music repetition patterns. It is NEVER
+ * added to IG/TikTok/Threads captions (those are built upstream from
+ * `caption`).
  */
 async function sendToTelegram(videoBuffer, caption, permalink, meta = {}) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
@@ -349,8 +389,15 @@ async function sendToTelegram(videoBuffer, caption, permalink, meta = {}) {
   }
   const cleanCaption = textLines.join('\n').trim();
 
-  // TikTok caption = clean text + TikTok hashtags — ready to copy-paste as-is
-  const tgCaption = `${cleanCaption}\n\n${tiktokHashtags}`.slice(0, 1024);
+  // TikTok caption = clean text + TikTok hashtags — ready to copy-paste as-is.
+  // Build first, then (Telegram-only) append the music filename, then clamp
+  // to the 1024-char Telegram limit.
+  let tgCaption = `${cleanCaption}\n\n${tiktokHashtags}`;
+  const musicFilename = resolveMusicFilename(meta);
+  if (musicFilename) {
+    tgCaption += `\n\n🎵 ${musicFilename}`;
+  }
+  tgCaption = tgCaption.slice(0, 1024);
 
   const form = new FormData();
   form.append('chat_id', chatId);

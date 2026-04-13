@@ -53,6 +53,23 @@ function logError(msg) {
   console.error(`[${ts}] [REEL] ERROR: ${msg}`);
 }
 
+// ── Music pragma sidecar ─────────────────────────────────────────────────────
+// Records the last-picked music path so the Telegram publisher can surface
+// the filename in its preview caption (founder-visible repetition signal).
+// Telegram-only — never flows to IG/TikTok captions. Consumed by
+// publisher.js::resolveMusicFilename() via the `meta` object or this file.
+function writeLastReelMusicPragma(musicPath) {
+  if (!musicPath) return;
+  try {
+    writeFileSync(
+      '/tmp/last-reel-music.json',
+      JSON.stringify({ musicPath, pickedAt: Date.now() }),
+    );
+  } catch {
+    // Non-fatal: the publisher also receives musicPath via meta.
+  }
+}
+
 // ── Rate limiting ────────────────────────────────────────────────────────────
 
 function getReelsPublishedToday() {
@@ -154,6 +171,7 @@ export async function generateReel(article, options = {}) {
   const audioPath = pickMusicTrack('asmr') || pickMusicTrack('chill');
   if (audioPath) {
     log(`Music: ${audioPath}`);
+    writeLastReelMusicPragma(audioPath);
   } else {
     log(`No music available, will use silent audio`);
   }
@@ -184,6 +202,10 @@ export async function generateReel(article, options = {}) {
         videoBuffer,
         script.hook || article.title,
         script.hashtags || ['#FlashVoyage'],
+        undefined,
+        // musicPath is Telegram-only — publisher appends `🎵 <basename>`
+        // to the TG preview caption, never to IG/TikTok.
+        { musicPath: audioPath || null },
       );
       reelId = result.reelId;
       permalink = result.permalink;
@@ -241,6 +263,7 @@ async function generateListicleReelFlow(article, options = {}) {
   const audioPath = pickMusicTrack(script.mood || 'upbeat');
   if (audioPath) {
     log(`Music: ${audioPath}`);
+    writeLastReelMusicPragma(audioPath);
   } else {
     log(`No music available, will use silent audio`);
   }
@@ -266,6 +289,10 @@ async function generateListicleReelFlow(article, options = {}) {
         videoBuffer,
         script.caption || script.hook.text || article.title,
         script.hashtags || ['#FlashVoyage'],
+        undefined,
+        // musicPath is Telegram-only — publisher appends `🎵 <basename>`
+        // to the TG preview caption, never to IG/TikTok.
+        { musicPath: audioPath || null },
       );
       reelId = result.reelId;
       permalink = result.permalink;
