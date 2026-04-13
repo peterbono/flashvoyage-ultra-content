@@ -77,6 +77,9 @@ import * as QAPasses from './finalizer-passes/qa-passes.js';
 import * as LinkPasses from './finalizer-passes/link-passes.js';
 // FV-114: Invariant checks between phases
 import { checkInvariants } from './finalizer-invariants.js';
+// Content design-system validator — strip/warn forbidden HTML patterns
+// before returning finalContent. Spec: docs/content-design-system.md
+import { validateAndCleanContent } from './lib/content-validator.js';
 
 class ArticleFinalizer {
   constructor() {
@@ -1078,6 +1081,26 @@ class ArticleFinalizer {
       }
 
       console.log(`   ✅ Validation pré-publication OK: ${textLength} caractères`);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // DESIGN-SYSTEM VALIDATOR (last pass — strip + warn)
+    // Prevents hallucinated HTML (fake affiliate cards, dark-bg callouts,
+    // purple/navy tables) from reaching WordPress.
+    // Spec: docs/content-design-system.md
+    // ═══════════════════════════════════════════════════════════════════
+    if (returnValue.content) {
+      const { cleaned, warnings, errors } = validateAndCleanContent(returnValue.content);
+      if (warnings.length > 0) {
+        console.warn(`[finalizer] Design-system warnings: ${warnings.length}`);
+        for (const w of warnings) console.warn(`  - ${w.rule}: ${String(w.sample).slice(0, 100)}`);
+      }
+      if (errors.length > 0) {
+        console.error(`[finalizer] Design-system errors: ${errors.length}`);
+        for (const e of errors) console.error(`  - ${e.rule}: ${String(e.sample).slice(0, 120)}`);
+        // Don't throw — future iteration may wire this to a CI gate.
+      }
+      returnValue.content = cleaned;
     }
 
     return returnValue;
