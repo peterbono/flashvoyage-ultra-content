@@ -54,6 +54,11 @@
       "name": "thailande",
       "date": "2026-04-12",
       "format": "pick"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-13",
+      "format": "cost-vs"
     }
   ],
   "recentFormats": [
@@ -108,6 +113,10 @@
     {
       "format": "pick",
       "date": "2026-04-12T21:02:12.946Z"
+    },
+    {
+      "format": "cost-vs",
+      "date": "2026-04-13T17:59:28.890Z"
     }
   ],
   "recentArticleIds": [
@@ -117,7 +126,8 @@
     4255,
     5333,
     5229,
-    5179
+    5179,
+    5559
   ],
   "recentFingerprints": [
     {
@@ -147,6 +157,10 @@
     {
       "fp": "fmt:pick|dest:thailande|slug:thailande-vs-vietnam-pourquoi-",
       "date": "2026-04-12T21:02:12.946Z"
+    },
+    {
+      "fp": "fmt:cost-vs|dest:thailande|slug:thailande-ou-vietnam-en-2026-q",
+      "date": "2026-04-13T17:59:28.890Z"
     }
   ]
 }
