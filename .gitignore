@@ -121,3 +121,6 @@ social-distributor/reels/tmp/
 
 # GA4 service account key (provisioned from secret in CI)
 ga4-service-account.json
+
+# Ephemeral scraper workspace (Pixabay, etc.)
+.scraper-tmp/
