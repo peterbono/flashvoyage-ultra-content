@@ -111,10 +111,20 @@ async function addAudioTrack(videoPath, outputPath, duration, destination = null
 /**
  * Build the overlay replacements map.
  *
+ * Backward-compat 2026-04-13: accepts the new destinationA/destinationB
+ * fields emitted by the angle-driven generator, AND still works when only
+ * the legacy `destination` field is provided (fallback: dest vs France, so
+ * one release cycle of in-flight scripts keeps rendering correctly).
+ *
  * @param {Object} script - cost-vs script from generator
  */
 function buildOverlayReplacements(script) {
-  const { destination, rows, totals } = script;
+  const { rows, totals } = script;
+  const destinationA = script.destinationA || script.destination;
+  const destinationB = script.destinationB || {
+    displayName: 'France',
+    flag: '🇫🇷',
+  };
 
   // Hard truncation to prevent text overflow in overlay
   const MAX_DEST_NAME = 25;
@@ -127,11 +137,17 @@ function buildOverlayReplacements(script) {
   };
 
   const replacements = {
-    '{{DEST_NAME}}': truncate(destination.displayName, MAX_DEST_NAME),
-    '{{DEST_FLAG}}': destination.flag,
-    '{{FRANCE_FLAG}}': '🇫🇷',
+    '{{DEST_NAME}}': truncate(destinationA.displayName, MAX_DEST_NAME),
+    '{{DEST_FLAG}}': destinationA.flag,
+    // Legacy placeholder still used by the template. We point it at whatever
+    // comparison destination the angle resolved to — France by default, or
+    // e.g. 🇻🇳 when the angle compared Thaïlande to Vietnam.
+    '{{FRANCE_FLAG}}': destinationB.flag || '🇫🇷',
+    '{{COMPARISON_FLAG}}': destinationB.flag || '🇫🇷',
+    '{{COMPARISON_NAME}}': truncate(destinationB.displayName, MAX_DEST_NAME),
     '{{TOTAL_DEST}}': totals.destFormatted,
     '{{TOTAL_FRANCE}}': totals.franceFormatted,
+    '{{TOTAL_COMPARISON}}': totals.comparisonFormatted || totals.franceFormatted,
   };
 
   // Fill 8 rows (or pad to 8 if fewer)
@@ -257,7 +273,9 @@ export async function composeCostVsReel(script, opts = {}) {
 export async function generateCostVsReelFromArticle(article, opts = {}) {
   console.log(`[REEL/COST-VS] Generating Cost-vs reel from article: "${(article.title || '').slice(0, 60)}..."`);
   const script = await generateCostVsScript(article);
-  console.log(`[REEL/COST-VS] Script ready: ${script.destination.displayName} vs France — ${script.rows.length} rows`);
+  const _destA = script.destinationA || script.destination;
+  const _destB = script.destinationB || { displayName: 'France' };
+  console.log(`[REEL/COST-VS] Script ready (angle: ${script.angle?.id || 'legacy'}): ${_destA.displayName} vs ${_destB.displayName} — ${script.rows.length} rows`);
   const videoPath = await composeCostVsReel(script, opts);
   return { videoPath, script };
 }

@@ -1,0 +1,128 @@
+[
+  {
+    "id": "beach-crowds",
+    "label": "Plage rêve vs plage bondée",
+    "expectationDirection": "plage tropicale déserte au coucher de soleil, palmiers, sable blanc, eau turquoise calme",
+    "realityDirection": "plage bondée, parasols serrés les uns contre les autres, vendeurs ambulants, touristes partout",
+    "tone": "déception visuelle"
+  },
+  {
+    "id": "instagram-vs-real",
+    "label": "Photo Instagram filtrée vs shot honnête",
+    "expectationDirection": "photo Instagram voyage ultra-stylisée, couleurs boostées, lumière dorée magique, angle parfait",
+    "realityDirection": "shot honnête de la même vue, lumière plate, foule autour, déchets au sol, rien de magique",
+    "tone": "dévoilement filtre"
+  },
+  {
+    "id": "tourist-spot-vs-local-street",
+    "label": "Lieu iconique bondé vs rue locale vide",
+    "expectationDirection": "lieu iconique tourist hot-spot bondé de visiteurs faisant la queue pour une photo",
+    "realityDirection": "rue locale paisible et vide à quelques centaines de mètres, authentique, habitants qui vivent",
+    "tone": "astuce locale"
+  },
+  {
+    "id": "high-vs-low-season",
+    "label": "Même spot haute saison vs basse saison",
+    "expectationDirection": "destination pleine saison: soleil éclatant, ciel bleu, foule touristique, prix élevés",
+    "realityDirection": "même destination en saison des pluies: nuages gris, averses tropicales, rues vides, commerces fermés",
+    "tone": "saisonnalité crue"
+  },
+  {
+    "id": "morning-vs-night",
+    "label": "Même rue matin calme vs nuit chaos",
+    "expectationDirection": "rue d'Asie à 6h du matin: déserte, moines qui passent, lumière douce, silence",
+    "realityDirection": "même rue à 22h: chaos total, foule, musique qui hurle, scooters, bars débordants",
+    "tone": "contraste temporel"
+  },
+  {
+    "id": "airbnb-photo-vs-real",
+    "label": "Annonce Airbnb parfaite vs réalité chambre",
+    "expectationDirection": "photo Airbnb grand-angle parfaite: chambre lumineuse, lit impeccable, déco design",
+    "realityDirection": "réalité de la chambre: exiguë, moisissure visible, ventilateur bruyant, draps douteux",
+    "tone": "piège annonce"
+  },
+  {
+    "id": "blog-top10-vs-reality",
+    "label": "Top 10 spots blog vs réalité terrain",
+    "expectationDirection": "article de blog Top 10 spots secrets: photos soignées, promesses de paradis caché",
+    "realityDirection": "spot réel une fois sur place: banal, bondé des mêmes touristes qui ont lu le même blog",
+    "tone": "déception SEO"
+  },
+  {
+    "id": "tourist-menu-vs-local",
+    "label": "Menu touriste $$$ vs menu local $",
+    "expectationDirection": "menu touristique en anglais, photos plastifiées, prix élevés, plat occidentalisé",
+    "realityDirection": "cantine locale à 20 mètres: menu en langue locale, prix 3x moins cher, plat authentique délicieux",
+    "tone": "arnaque prix"
+  },
+  {
+    "id": "google-rating-vs-experience",
+    "label": "Resto 4.8 étoiles vs assiette réelle",
+    "expectationDirection": "resto top Google 4.8 étoiles, 2000 reviews, devanture stylée, influenceurs y mangent",
+    "realityDirection": "assiette servie: portions minuscules, plat quelconque, rien de la hype, addition salée",
+    "tone": "overrated"
+  },
+  {
+    "id": "before-vs-after-accident",
+    "label": "Planning scooter vs lendemain chute",
+    "expectationDirection": "départ en scooter tout sourire, louez pour 5€/jour, liberté, cheveux au vent, route panoramique",
+    "realityDirection": "lendemain: jambe bandée, pansements, béquilles, hôpital local, road rash, facture salée",
+    "tone": "humour noir sécurité"
+  },
+  {
+    "id": "first-day-vs-last-day",
+    "label": "Euphorie arrivée vs fatigue départ",
+    "expectationDirection": "premier jour de voyage: euphorie, sac neuf, valise fermée, excitation, découverte",
+    "realityDirection": "dernier jour: fatigue visible, cernes, sac explosé, débris de voyage, envie de rentrer",
+    "tone": "cycle voyage"
+  },
+  {
+    "id": "packed-vs-actually-used",
+    "label": "Valise optimisée vs 3 t-shirts portés",
+    "expectationDirection": "valise parfaitement organisée avant départ, 15 tenues planifiées, accessoires, gadgets voyage",
+    "realityDirection": "retour du voyage: les 3 mêmes t-shirts portés en boucle, reste jamais sorti du sac",
+    "tone": "autodérision"
+  },
+  {
+    "id": "planning-spreadsheet-vs-real",
+    "label": "Itinéraire Excel vs ce qu'on a fait",
+    "expectationDirection": "spreadsheet itinéraire ultra-détaillé, chaque heure planifiée, visites enchaînées au cordeau",
+    "realityDirection": "réalité: 80% du temps en hamac ou en terrasse, 2 activités faites sur 15 prévues",
+    "tone": "lâcher-prise"
+  },
+  {
+    "id": "budget-plan-vs-actual",
+    "label": "Budget prévu vs budget réel",
+    "expectationDirection": "budget prévu impeccable, calculé au centime près, 40€/jour, 3 semaines, total maîtrisé",
+    "realityDirection": "budget réel à la fin: le double dépensé, transferts cachés, activités spontanées, déprime carte bancaire",
+    "tone": "dérapage financier"
+  },
+  {
+    "id": "visa-promised-vs-real",
+    "label": "Visa online facile vs paperasse frontière",
+    "expectationDirection": "promesse visa online 10 minutes, formulaire rapide, email de confirmation, tout roule",
+    "realityDirection": "frontière: 3h de queue, formulaires supplémentaires en langue locale, tampons, photocopies, caution",
+    "tone": "piège administratif"
+  },
+  {
+    "id": "instagram-hotel-pool-vs-real",
+    "label": "Piscine d'hôtel pub vs piscine réelle",
+    "expectationDirection": "photo promo piscine d'hôtel: eau turquoise, zéro personne, transats vides, cocktails posés",
+    "realityDirection": "piscine à 11h: bondée d'enfants qui crient, eau tiède et trouble, transats tous pris depuis 8h",
+    "tone": "marketing vs vrai"
+  },
+  {
+    "id": "street-food-safe-vs-reality",
+    "label": "Mange partout vs turista jour 4",
+    "expectationDirection": "promesse des guides: street food safe, mange partout, aucun risque, expérience culinaire unique",
+    "realityDirection": "jour 4 du voyage: turista sévère, chambre d'hôtel, toilettes en boucle, pharmacie dévalisée",
+    "tone": "humour sanitaire"
+  },
+  {
+    "id": "temple-zen-vs-tourists",
+    "label": "Temple zen vs tour guidé bruyant",
+    "expectationDirection": "temple asiatique présenté comme lieu de méditation: moines en prière, encens, silence spirituel",
+    "realityDirection": "réalité: groupes de touristes guidés qui traversent, selfies au flash, haut-parleurs, foule",
+    "tone": "spiritualité parasitée"
+  }
+]

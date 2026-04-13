@@ -1,0 +1,146 @@
+[
+  {
+    "id": "destination-vs-france",
+    "label": "Destination vs France",
+    "scenarioDirection": "compare la destination principale de l'article à la France, poste par poste (référence historique pour le lecteur français)",
+    "pickDestinationB": "france",
+    "framingHint": "la France est la référence — montre l'écart brut pour donner envie de partir",
+    "tone": "réalité des prix FR"
+  },
+  {
+    "id": "destination-a-vs-b-asia",
+    "label": "Pays d'Asie vs Pays d'Asie",
+    "scenarioDirection": "compare 2 destinations d'Asie entre elles (ex: Thailand vs Vietnam, Japan vs Korea, Bali vs Phuket). L'utilisateur hésite entre les 2 → cost breakdown par poste",
+    "pickDestinationB": "another-asia-country",
+    "framingHint": "celui qui gagne dépend du poste — montre les nuances, pas de vainqueur écrasant",
+    "tone": "balanced comparison"
+  },
+  {
+    "id": "north-vs-south",
+    "label": "Nord vs Sud du même pays",
+    "scenarioDirection": "compare le nord et le sud d'un même pays (ex: Nord-Vietnam vs Sud-Vietnam, Nord-Thaïlande vs Sud-Thaïlande, Japon Nord vs Japon Sud) — budget, climat, ambiance",
+    "pickDestinationB": "same-country-other-region",
+    "framingHint": "deux ambiances opposées dans un même passeport — où aller en premier ?",
+    "tone": "géographie intra-pays"
+  },
+  {
+    "id": "capital-vs-second-city",
+    "label": "Capitale vs 2e ville",
+    "scenarioDirection": "compare la capitale à la 2e ville du pays (ex: Bangkok vs Chiang Mai, Hanoï vs Saigon, Tokyo vs Osaka) — vie locale, prix, rythme",
+    "pickDestinationB": "second-city",
+    "framingHint": "la capitale c'est l'entrée, la 2e ville c'est souvent la vraie vie",
+    "tone": "urbain double"
+  },
+  {
+    "id": "beach-vs-mountain",
+    "label": "Plage vs Montagne",
+    "scenarioDirection": "compare une destination plage à une destination montagne au sein d'une même région (ex: Krabi vs Pai, Bali côte vs Ubud, Phuket vs Chiang Dao) — activités, budget, saison",
+    "pickDestinationB": "mountain-counterpart",
+    "framingHint": "même pays, deux façons radicalement différentes de le vivre",
+    "tone": "nature opposée"
+  },
+  {
+    "id": "backpacker-vs-luxury",
+    "label": "Backpacker vs Luxe",
+    "scenarioDirection": "même destination, compare un profil backpacker 30€/j à un profil luxe 300€/j — poste par poste (hébergement, bouffe, activités, transport)",
+    "pickDestinationB": "same-destination-luxury",
+    "framingHint": "x10 sur le budget mais seulement x3 sur l'expérience — où est le sweet spot ?",
+    "tone": "gamme de budget"
+  },
+  {
+    "id": "solo-vs-couple",
+    "label": "Solo vs Couple",
+    "scenarioDirection": "même destination, compare le coût d'un voyage solo vs à 2 — certains postes doublent, d'autres non (hébergement partagé, transports, bouffe)",
+    "pickDestinationB": "same-destination-couple",
+    "framingHint": "à 2 c'est pas 2x plus cher — voici le vrai calcul",
+    "tone": "couple vs solo breakdown"
+  },
+  {
+    "id": "rainy-vs-dry-season",
+    "label": "Saison des pluies vs saison sèche",
+    "scenarioDirection": "même destination, compare les prix et l'expérience en saison des pluies vs saison sèche — hôtels, vols, activités, fréquentation",
+    "pickDestinationB": "same-destination-rainy",
+    "framingHint": "la saison des pluies c'est 40% moins cher et souvent pas si catastrophique",
+    "tone": "calendrier voyage"
+  },
+  {
+    "id": "street-food-vs-restaurant",
+    "label": "Street food vs Restaurant",
+    "scenarioDirection": "même ville, même plat emblématique, compare la version street food à la version restaurant — prix, goût, expérience",
+    "pickDestinationB": "same-destination-restaurant",
+    "framingHint": "souvent la street food gagne au goût ET au portefeuille",
+    "tone": "culinaire duel"
+  },
+  {
+    "id": "hotel-vs-airbnb-vs-hostel",
+    "label": "Hôtel vs Airbnb vs Hostel",
+    "scenarioDirection": "même destination, même nuit, compare 3 hébergements : hôtel mid-range, Airbnb standard, hostel — prix, confort, ambiance",
+    "pickDestinationB": "same-destination-airbnb",
+    "framingHint": "le meilleur rapport qualité/prix change selon la ville et la durée",
+    "tone": "hébergement face-à-face"
+  },
+  {
+    "id": "bus-vs-train-vs-plane",
+    "label": "Bus vs Train vs Avion",
+    "scenarioDirection": "même route A→B, compare 3 moyens de transport : bus de nuit, train, avion low-cost — prix, durée, confort",
+    "pickDestinationB": "same-route-other-transport",
+    "framingHint": "le plus cher n'est pas toujours le plus rapide — le bus de nuit économise souvent une nuit d'hôtel",
+    "tone": "transport comparé"
+  },
+  {
+    "id": "tour-vs-diy",
+    "label": "Tour organisé vs DIY",
+    "scenarioDirection": "même activité (trek, plongée, temple, randonnée), compare l'option tour organisé à la version DIY en local — prix, flexibilité, expérience",
+    "pickDestinationB": "same-activity-diy",
+    "framingHint": "le tour coûte 3x plus — parfois ça vaut, parfois c'est du flan",
+    "tone": "indépendance vs guidé"
+  },
+  {
+    "id": "year-over-year",
+    "label": "Cette année vs l'an dernier",
+    "scenarioDirection": "même destination, compare les prix de cette année à ceux de l'an dernier — hôtels, vols, bouffe, inflation ressentie sur le terrain",
+    "pickDestinationB": "same-destination-last-year",
+    "framingHint": "ce qui a vraiment grimpé vs ce qui est resté stable",
+    "tone": "inflation voyage"
+  },
+  {
+    "id": "famous-vs-alternative",
+    "label": "Destination célèbre vs alternative équivalente",
+    "scenarioDirection": "compare une destination mainstream à une alternative peu connue mais équivalente (ex: Bali vs Sumba, Santorini vs Milos, Koh Phi Phi vs Koh Kradan)",
+    "pickDestinationB": "lesser-known-alternative",
+    "framingHint": "l'alternative est 40% moins chère et souvent plus jolie",
+    "tone": "off-the-beaten-path"
+  },
+  {
+    "id": "tourist-zone-vs-local",
+    "label": "Quartier touristique vs quartier local",
+    "scenarioDirection": "même ville, compare les prix dans la zone touristique au même panier dans un quartier local à 15 min — hôtel, resto, massages, transport",
+    "pickDestinationB": "same-city-local-neighborhood",
+    "framingHint": "sortir de la rue à touristes divise la note par 2 ou 3",
+    "tone": "prix cachés"
+  },
+  {
+    "id": "week-vs-weekend",
+    "label": "Semaine vs Week-end",
+    "scenarioDirection": "même destination, compare les prix en semaine vs week-end (certaines destinations doublent le week-end : îles, stations balnéaires, lieux festifs)",
+    "pickDestinationB": "same-destination-weekend",
+    "framingHint": "partir un mardi plutôt qu'un vendredi change tout sur la facture",
+    "tone": "jour de semaine malin"
+  },
+  {
+    "id": "advertised-price-vs-total",
+    "label": "Prix affiché vs coût total",
+    "scenarioDirection": "compare le prix affiché d'un vol/tour/nuit (vol sec, chambre de base) vs le coût total réel avec tous les frais cachés (bagages, taxes, transferts, activités)",
+    "pickDestinationB": "same-product-all-fees",
+    "framingHint": "le prix d'appel et le prix réel ne jouent pas dans la même catégorie",
+    "tone": "frais cachés"
+  },
+  {
+    "id": "local-guide-vs-tour-agency",
+    "label": "Guide local vs Agence touristique",
+    "scenarioDirection": "même activité, compare un guide local indépendant trouvé sur place à une agence touristique en ligne — prix, qualité, flexibilité",
+    "pickDestinationB": "same-activity-local-guide",
+    "framingHint": "le guide local coûte 40% moins cher et connaît les vrais spots",
+    "tone": "agence vs terrain"
+  }
+]

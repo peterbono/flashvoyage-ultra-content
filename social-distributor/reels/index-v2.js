@@ -448,9 +448,13 @@ function buildTelegramTestCaption(format, article, script) {
   // Format-specific summaries
   if (script.type === 'cost-vs' && script.totals) {
     lines.push('');
-    lines.push(`💰 ${script.destination.displayName} ${script.destination.flag} vs France 🇫🇷`);
-    lines.push(`Total/mois: ${script.totals.destFormatted} vs ${script.totals.franceFormatted}`);
-    const diff = script.totals.france - script.totals.dest;
+    const destA = script.destinationA || script.destination;
+    const destB = script.destinationB || { displayName: 'France', flag: '🇫🇷' };
+    if (script.angle?.id) lines.push(`🎯 Angle: ${script.angle.id}`);
+    lines.push(`💰 ${destA.displayName} ${destA.flag} vs ${destB.displayName} ${destB.flag}`);
+    lines.push(`Total/mois: ${script.totals.destFormatted} vs ${script.totals.comparisonFormatted || script.totals.franceFormatted}`);
+    const compTotal = script.totals.comparison ?? script.totals.france;
+    const diff = compTotal - script.totals.dest;
     const sign = diff >= 0 ? '-' : '+';
     lines.push(`Écart: ${sign}${Math.abs(diff).toLocaleString('fr-FR')} €`);
   } else if (script.type === 'leaderboard' && Array.isArray(script.items)) {
