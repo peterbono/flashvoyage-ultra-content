@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-12T05:29:34.601Z",
+  "timestamp": "2026-04-13T05:47:39.787Z",
   "queueSize": 13,
   "queue": [
     {
@@ -10,8 +10,8 @@
       "topic": "[Calendar rotation: support article]",
       "articleType": "support",
       "context": {
-        "cyclePosition": 2,
-        "reason": "Standard editorial calendar rotation (position 3/5)"
+        "cyclePosition": 3,
+        "reason": "Standard editorial calendar rotation (position 4/5)"
       }
     },
     {
@@ -19,18 +19,6 @@
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
-      "topic": "[Calendar rotation: support article]",
-      "articleType": "support",
-      "context": {
-        "cyclePosition": 3,
-        "reason": "Standard editorial calendar rotation (position 4/5)"
-      }
-    },
-    {
-      "rank": 3,
-      "action": "standard",
-      "priority": "P3",
-      "priorityScore": 38,
       "topic": "[Calendar rotation: news article]",
       "articleType": "news",
       "context": {
@@ -39,39 +27,35 @@
       }
     },
     {
+      "rank": 3,
+      "action": "standard",
+      "priority": "P3",
+      "priorityScore": 38,
+      "topic": "[Calendar rotation: pillar article]",
+      "articleType": "pillar",
+      "context": {
+        "cyclePosition": 0,
+        "reason": "Standard editorial calendar rotation (position 1/5)"
+      }
+    },
+    {
       "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Choisir Entre Taipei et Kuala Lumpur : Un Itinéraire de 4 Jours Qui Compte",
+      "topic": "Itinéraire Indonésie 2026 : Comparatif des Meilleurs Circuits",
       "articleType": "support",
       "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "wpId": 2952,
+        "slug": "indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     },
     {
       "rank": 5,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Indonésie : Quand chaque choix d&rsquo;itinéraire devient un dilemme",
-      "articleType": "support",
-      "context": {
-        "wpId": 2952,
-        "slug": "indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme",
-        "compositeScore": 14,
-        "freshness": 0.95,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -87,7 +71,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -103,7 +87,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -119,7 +103,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -135,7 +119,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -151,7 +135,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -167,7 +151,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -183,7 +167,7 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -196,6 +180,22 @@
         "freshness": 0.93,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "articleType": "support",
+      "context": {
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     }
   ],
