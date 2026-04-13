@@ -155,15 +155,99 @@ const MOOD_MAP = {
 const _recentlyUsed = [];
 const MAX_RECENT = 8; // Don't repeat within last 8 picks
 
+// ── Destination → canonical slug aliases (FV-FIX 2026-04-13) ───────────────
+// Used by ASMR mood to pick a geo-matched track when the composer knows which
+// destination the article is about. Keys are lower-cased, accent-preserving,
+// and accent-stripped variants of common FR/EN forms. Values are canonical
+// slugs that key into DESTINATION_PREFIXES below.
+const DESTINATION_ALIASES = {
+  // Thailand → Bangkok track
+  'thailande': 'bangkok', 'thaïlande': 'bangkok', 'thailand': 'bangkok',
+  'bangkok': 'bangkok', 'phuket': 'bangkok', 'chiang mai': 'bangkok',
+  'koh samui': 'bangkok', 'krabi': 'bangkok', 'pattaya': 'bangkok',
+  // Indonesia / Bali
+  'bali': 'bali', 'indonesie': 'bali', 'indonésie': 'bali', 'indonesia': 'bali',
+  'ubud': 'bali', 'canggu': 'bali', 'seminyak': 'bali', 'jakarta': 'bali',
+  // Vietnam (has both motorbikes + sapa tracks)
+  'vietnam': 'vietnam', 'saigon': 'vietnam', 'hanoi': 'vietnam',
+  'ho chi minh': 'vietnam', 'ho chi minh ville': 'vietnam',
+  'da nang': 'vietnam', 'hoi an': 'vietnam', 'nha trang': 'vietnam',
+  'sapa': 'sapa', // explicit Sapa → dedicated cascade track
+  // Japan / Tokyo
+  'japon': 'tokyo', 'japan': 'tokyo', 'tokyo': 'tokyo',
+  'kyoto': 'tokyo', 'osaka': 'tokyo',
+  // Cambodia → Angkor Wat
+  'cambodge': 'angkor-wat', 'cambodia': 'angkor-wat',
+  'angkor': 'angkor-wat', 'angkor wat': 'angkor-wat',
+  'siem reap': 'angkor-wat', 'phnom penh': 'angkor-wat',
+  // Philippines
+  'philippines': 'philippines', 'manila': 'philippines', 'manille': 'philippines',
+  'cebu': 'philippines', 'palawan': 'philippines', 'boracay': 'philippines',
+  'el nido': 'philippines',
+  // Laos
+  'laos': 'laos', 'vientiane': 'laos', 'luang prabang': 'laos',
+  // Korea → Seoul
+  'coree': 'seoul', 'corée': 'seoul', 'coree du sud': 'seoul',
+  'corée du sud': 'seoul', 'korea': 'seoul', 'south korea': 'seoul',
+  'seoul': 'seoul', 'séoul': 'seoul', 'busan': 'seoul',
+};
+
+// canonical slug → list of filename prefixes to match (all start with `asmr-`)
+const DESTINATION_PREFIXES = {
+  'bangkok': ['asmr-bangkok-'],
+  'bali': ['asmr-bali-'],
+  'vietnam': ['asmr-vietnam-', 'asmr-sapa-'], // Sapa falls under Vietnam
+  'tokyo': ['asmr-tokyo-', 'asmr-japan-'],    // either Japan track
+  'angkor-wat': ['asmr-angkor-wat-'],
+  'philippines': ['asmr-philippines-'],
+  'laos': ['asmr-laos-'],
+  'seoul': ['asmr-seoul-'],
+  'sapa': ['asmr-sapa-'],
+};
+
+function normalizeDestination(raw) {
+  if (!raw || typeof raw !== 'string') return null;
+  // Lowercase + strip surrounding punctuation/whitespace, normalize multiple
+  // spaces. Keep accents — they're handled by the alias table.
+  const cleaned = raw
+    .toLowerCase()
+    .replace(/[()\[\]{},.!?;:"'’]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!cleaned) return null;
+
+  // Try direct hit first
+  if (DESTINATION_ALIASES[cleaned]) return DESTINATION_ALIASES[cleaned];
+
+  // Try splitting on common connector words (e.g. "Bali (Indonésie)" → "bali indonésie")
+  // and match any token / bigram against the alias table.
+  const tokens = cleaned.split(' ');
+  for (let n = Math.min(3, tokens.length); n >= 1; n--) {
+    for (let i = 0; i + n <= tokens.length; i++) {
+      const gram = tokens.slice(i, i + n).join(' ');
+      if (DESTINATION_ALIASES[gram]) return DESTINATION_ALIASES[gram];
+    }
+  }
+  return null;
+}
+
 /**
  * Pick a royalty-free music track with dedup.
  * Avoids repeating the same track within the last 8 picks.
  * First checks music/{genre}/ directory, then falls back to audio/.
  *
+ * When `opts.destination` is provided AND mood === 'asmr', prefer a geo-matched
+ * track (e.g. 'Bali' → asmr-bali-rice-fields.mp3). Falls back to the full ASMR
+ * pool if no match or if the geo-filtered pool is empty.
+ *
  * @param {string} mood - Desired mood: 'chill', 'upbeat', 'tropical', 'cinematic', 'lofi', 'asmr'
+ * @param {Object} [opts]
+ * @param {string} [opts.destination] - Optional article destination (FR or EN, any form)
  * @returns {string|null} Path to audio file or null if none available
  */
-export function pickMusicTrack(mood = 'chill') {
+export function pickMusicTrack(mood = 'chill', opts = {}) {
+  const { destination = null } = opts || {};
+
   // ── Try music/{genre}/ first ──
   const genre = MOOD_TO_GENRE[mood] || mood; // 'asmr' passes through as-is
   const genreDir = join(MUSIC_DIR, genre);
@@ -171,17 +255,39 @@ export function pickMusicTrack(mood = 'chill') {
   if (existsSync(genreDir)) {
     const genreFiles = readdirSync(genreDir).filter(f => f.endsWith('.mp3'));
     if (genreFiles.length > 0) {
-      // Filter out recently used tracks
-      const available = genreFiles.filter(f => !_recentlyUsed.includes(f));
+      // Destination-aware filtering (ASMR only) ─────────────────────────────
+      let pool = genreFiles;
+      let geoInfo = '';
+      if (mood === 'asmr' && destination) {
+        const slug = normalizeDestination(destination);
+        if (slug && DESTINATION_PREFIXES[slug]) {
+          const prefixes = DESTINATION_PREFIXES[slug];
+          const matched = genreFiles.filter(f => prefixes.some(p => f.startsWith(p)));
+          if (matched.length > 0) {
+            pool = matched;
+            geoInfo = ` dest='${destination}' → slug=${slug} → ${matched.length} matched`;
+          } else {
+            geoInfo = ` dest='${destination}' → slug=${slug} → 0 matched (fallback to full pool)`;
+          }
+        } else if (slug) {
+          geoInfo = ` dest='${destination}' → slug=${slug} (no prefix map, fallback)`;
+        } else {
+          console.warn(`[REEL/ASSET] Unknown destination "${destination}" for ASMR — consider adding alias`);
+          geoInfo = ` dest='${destination}' → unknown slug (fallback to full pool)`;
+        }
+      }
+
+      // Filter out recently used tracks (from the resolved pool)
+      const available = pool.filter(f => !_recentlyUsed.includes(f));
       // If all have been used recently, reset and use all
-      const pool = available.length > 0 ? available : genreFiles;
-      const pick = pool[Math.floor(Math.random() * pool.length)];
+      const finalPool = available.length > 0 ? available : pool;
+      const pick = finalPool[Math.floor(Math.random() * finalPool.length)];
 
       // Track usage
       _recentlyUsed.push(pick);
       if (_recentlyUsed.length > MAX_RECENT) _recentlyUsed.shift();
 
-      console.log(`[REEL/ASSET] Picked music (${mood}→${genre}): ${pick} [${_recentlyUsed.length} in history]`);
+      console.log(`[REEL/ASSET] Picked music (${mood}→${genre})${geoInfo}: ${pick} [${_recentlyUsed.length} in history]`);
       return join(genreDir, pick);
     }
   }

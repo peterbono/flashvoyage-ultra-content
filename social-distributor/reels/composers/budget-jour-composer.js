@@ -97,14 +97,15 @@ async function generateDarkBgClip(duration, outputPath) {
  * @param {number} duration - Total duration in seconds
  * @returns {Promise<string>} outputPath
  */
-async function addAudioTrack(inputPath, outputPath, duration) {
+async function addAudioTrack(inputPath, outputPath, duration, destination = null) {
   const sfxDir = join(__dirname, '..', 'audio', 'sfx');
   const coinsSfx = join(sfxDir, 'sfx-coins.mp3');
   const cashSfx = join(sfxDir, 'sfx-cash-register.mp3');
   // FV-FIX 2026-04-13: ASMR-first for budget-jour reels. Daily budget breakdown
   // format = slow, informational. Keeps the coins/cash SFX as the energy layer,
   // uses ambient ASMR as the background bed. Fallback: asmr → chill → tropical.
-  const bgMusic = pickMusicTrack('asmr') || pickMusicTrack('chill') || pickMusicTrack('tropical');
+  // Destination-aware: prefer geo-matched ASMR for the article's main location.
+  const bgMusic = pickMusicTrack('asmr', { destination }) || pickMusicTrack('chill') || pickMusicTrack('tropical');
 
   const hasSfx = existsSync(coinsSfx) && existsSync(cashSfx);
 
@@ -365,7 +366,8 @@ export async function composeBudgetJourReel(script, opts = {}) {
     // ── 7. Add audio (chill lofi) + final encode ────────────────────────────
     const actualDuration = HOOK_DURATION + (composedScenes.length - 2) * CATEGORY_DURATION + TOTAL_DURATION;
     const beforeCtaPath = join(TMP_DIR, `budget-before-cta-${ts}.mp4`);
-    await addAudioTrack(concattedPath, beforeCtaPath, actualDuration);
+    // script.destination is the budget's target location (e.g. "Bali", "Thaïlande")
+    await addAudioTrack(concattedPath, beforeCtaPath, actualDuration, script.destination || null);
     tempFiles.push(beforeCtaPath);
 
     // ── 8. Append global save CTA (+2.5s) to boost IG save rate ────────────

@@ -81,10 +81,12 @@ async function concatClips(clips, outputPath) {
   return outputPath;
 }
 
-async function addAudioTrack(videoPath, outputPath, duration) {
+async function addAudioTrack(videoPath, outputPath, duration, destination = null) {
   // FV-FIX 2026-04-13: ASMR-first for cost-comparison reels — data-heavy format
   // where ambient sound lets the numbers breathe. Fallback: asmr → upbeat.
-  const musicPath = pickMusicTrack('asmr') || pickMusicTrack('upbeat');
+  // Destination-aware: prefer geo-matched ASMR track when we know the article's
+  // topic destination (cost-vs pits destination vs France — use the FIRST).
+  const musicPath = pickMusicTrack('asmr', { destination }) || pickMusicTrack('upbeat');
   if (!musicPath) {
     // No music track — just copy the video
     await ffmpeg(['-i', videoPath, '-c:v', 'copy', '-an', '-y', outputPath]);
@@ -227,9 +229,11 @@ export async function composeCostVsReel(script, opts = {}) {
     tempFiles.push(concatPath);
     console.log(`[REEL/COST-VS] ${composedScenes.length} scenes concatenated`);
 
-    // 6. Add audio (before save CTA)
+    // 6. Add audio (before save CTA). Cost-vs pits destination vs France — use
+    // the primary (topic) destination for geo-matched ASMR.
     const beforeCtaPath = join(TMP_DIR, `cost-vs-before-cta-${ts}.mp4`);
-    await addAudioTrack(concatPath, beforeCtaPath, TOTAL_DURATION);
+    const destName = script.destination?.displayName || script.destination?.key || null;
+    await addAudioTrack(concatPath, beforeCtaPath, TOTAL_DURATION, destName);
     tempFiles.push(beforeCtaPath);
 
     // 7. Append global save CTA (+2.5s) to boost IG save rate

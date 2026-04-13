@@ -64,11 +64,14 @@ async function concatClips(clips, outputPath) {
   return outputPath;
 }
 
-async function addAudioTrack(videoPath, outputPath, duration) {
+async function addAudioTrack(videoPath, outputPath, duration, destination = null) {
   // FV-FIX 2026-04-13: ASMR-first for slow-paced informational format.
   // Best-time reels show calendar data — ambient sound reinforces immersion
   // better than generic upbeat. Fallback chain: asmr → upbeat.
-  const musicPath = pickMusicTrack('asmr') || pickMusicTrack('upbeat');
+  // Destination-aware: best-time is REGIONAL (e.g. SEA = 6 countries on
+  // screen). When no single destination dominates, we stay on the full generic
+  // ASMR pool. Single-country regions fall back cleanly too.
+  const musicPath = pickMusicTrack('asmr', { destination }) || pickMusicTrack('upbeat');
   if (!musicPath) {
     await ffmpeg(['-i', videoPath, '-c:v', 'copy', '-an', '-y', outputPath]);
     return outputPath;
@@ -185,7 +188,10 @@ export async function composeBestTimeReel(script, opts = {}) {
     tempFiles.push(concatPath);
 
     const beforeCtaPath = join(TMP_DIR, `best-time-before-cta-${ts}.mp4`);
-    await addAudioTrack(concatPath, beforeCtaPath, TOTAL_DURATION);
+    // TODO: best-time is regional (6 countries). If a future variant targets a
+    // single country, pass it here. For now the regional reel uses the generic
+    // ASMR pool (null destination → fallback path).
+    await addAudioTrack(concatPath, beforeCtaPath, TOTAL_DURATION, null);
     tempFiles.push(beforeCtaPath);
 
     // Append global save CTA (+2.5s) to boost IG save rate
