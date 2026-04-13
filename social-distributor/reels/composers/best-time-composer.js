@@ -65,7 +65,10 @@ async function concatClips(clips, outputPath) {
 }
 
 async function addAudioTrack(videoPath, outputPath, duration) {
-  const musicPath = pickMusicTrack('upbeat');
+  // FV-FIX 2026-04-13: ASMR-first for slow-paced informational format.
+  // Best-time reels show calendar data — ambient sound reinforces immersion
+  // better than generic upbeat. Fallback chain: asmr → upbeat.
+  const musicPath = pickMusicTrack('asmr') || pickMusicTrack('upbeat');
   if (!musicPath) {
     await ffmpeg(['-i', videoPath, '-c:v', 'copy', '-an', '-y', outputPath]);
     return outputPath;

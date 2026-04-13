@@ -147,8 +147,11 @@ export async function generateReel(article, options = {}) {
   }
 
   // Step 3: Pick background music
+  // FV-FIX 2026-04-13: ASMR-first for default pipeline. Slow-paced informational
+  // reels (most of FlashVoyage's output) benefit more from immersive ambient
+  // sound than generic upbeat tracks. Fallback: asmr → chill.
   log(`Step 3/4: Picking music...`);
-  const audioPath = pickMusicTrack('chill');
+  const audioPath = pickMusicTrack('asmr') || pickMusicTrack('chill');
   if (audioPath) {
     log(`Music: ${audioPath}`);
   } else {

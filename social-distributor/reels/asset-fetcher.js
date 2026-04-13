@@ -137,6 +137,10 @@ const MOOD_TO_GENRE = {
   cinematic: 'cinematic',
   dramatic: 'cinematic',
   lofi: 'lofi',
+  asmr: 'asmr', // FV-FIX 2026-04-13: ASMR is now a first-class mood for informational
+                // reels (best-time, cost-vs, budget-jour, etc.). Previously passed through
+                // via fallback — made explicit for self-documentation + to signal it's
+                // the preferred default for slow-paced formats.
 };
 
 // Legacy mood-to-filename keywords for audio/ dir fallback

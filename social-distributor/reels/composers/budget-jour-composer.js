@@ -101,7 +101,10 @@ async function addAudioTrack(inputPath, outputPath, duration) {
   const sfxDir = join(__dirname, '..', 'audio', 'sfx');
   const coinsSfx = join(sfxDir, 'sfx-coins.mp3');
   const cashSfx = join(sfxDir, 'sfx-cash-register.mp3');
-  const bgMusic = pickMusicTrack('chill') || pickMusicTrack('tropical');
+  // FV-FIX 2026-04-13: ASMR-first for budget-jour reels. Daily budget breakdown
+  // format = slow, informational. Keeps the coins/cash SFX as the energy layer,
+  // uses ambient ASMR as the background bed. Fallback: asmr → chill → tropical.
+  const bgMusic = pickMusicTrack('asmr') || pickMusicTrack('chill') || pickMusicTrack('tropical');
 
   const hasSfx = existsSync(coinsSfx) && existsSync(cashSfx);
 
