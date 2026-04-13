@@ -1,0 +1,603 @@
+{
+  "scannedAt": "2026-04-13T10:08:28.263Z",
+  "articleCount": 133,
+  "verticalStats": {
+    "flights": {
+      "real": 10,
+      "fake": 0,
+      "inline": 1,
+      "absent": 122
+    },
+    "hotels": {
+      "real": 0,
+      "fake": 0,
+      "inline": 0,
+      "absent": 133
+    },
+    "tours": {
+      "real": 0,
+      "fake": 0,
+      "inline": 1,
+      "absent": 132
+    },
+    "esim": {
+      "real": 27,
+      "fake": 0,
+      "inline": 1,
+      "absent": 105
+    }
+  },
+  "fakeCards": [],
+  "highOpportunities": [
+    {
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines : Globe vs Smart, le comparatif que personne ne fait",
+      "score": 54,
+      "vertical": "esim",
+      "keywords": [
+        "eSIM"
+      ],
+      "recommendedWidgetId": 8588,
+      "oppScore": 7,
+      "level": "HIGH"
+    },
+    {
+      "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
+      "title": "eSIM Vietnam : le comparatif que les blogs ne font jamais (et les frais cachés)",
+      "score": 44,
+      "vertical": "esim",
+      "keywords": [
+        "eSIM"
+      ],
+      "recommendedWidgetId": 8588,
+      "oppScore": 7,
+      "level": "HIGH"
+    },
+    {
+      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "score": 34,
+      "vertical": "esim",
+      "keywords": [
+        "eSIM"
+      ],
+      "recommendedWidgetId": 8588,
+      "oppScore": 7,
+      "level": "HIGH"
+    },
+    {
+      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu'on ne te dit pas",
+      "score": 28,
+      "vertical": "esim",
+      "keywords": [
+        "eSIM"
+      ],
+      "recommendedWidgetId": 8588,
+      "oppScore": 5,
+      "level": "HIGH"
+    },
+    {
+      "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
+      "title": "Voyager au Japon : eSIM et frais cachés à connaître",
+      "score": 14,
+      "vertical": "esim",
+      "keywords": [
+        "eSIM"
+      ],
+      "recommendedWidgetId": 8588,
+      "oppScore": 5,
+      "level": "HIGH"
+    }
+  ],
+  "mediumOpportunities": [
+    {
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
+      "score": 63,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
+      "score": 63,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
+      "score": 63,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
+      "score": 63,
+      "vertical": "esim",
+      "keywords": [],
+      "recommendedWidgetId": 8588,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "score": 61,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "score": 61,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines : Globe vs Smart, le comparatif que personne ne fait",
+      "score": 54,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines : Globe vs Smart, le comparatif que personne ne fait",
+      "score": 54,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines : Globe vs Smart, le comparatif que personne ne fait",
+      "score": 54,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
+      "title": "eSIM Vietnam : le comparatif que les blogs ne font jamais (et les frais cachés)",
+      "score": 44,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
+      "title": "eSIM Vietnam : le comparatif que les blogs ne font jamais (et les frais cachés)",
+      "score": 44,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
+      "title": "eSIM Vietnam : le comparatif que les blogs ne font jamais (et les frais cachés)",
+      "score": 44,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "score": 41,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "score": 41,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "score": 41,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "score": 41,
+      "vertical": "esim",
+      "keywords": [],
+      "recommendedWidgetId": 8588,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
+      "score": 40,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
+      "score": 40,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
+      "score": 40,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
+      "score": 40,
+      "vertical": "esim",
+      "keywords": [],
+      "recommendedWidgetId": 8588,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "score": 39,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "score": 39,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "score": 39,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "score": 39,
+      "vertical": "esim",
+      "keywords": [],
+      "recommendedWidgetId": 8588,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "score": 34,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "score": 34,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "score": 34,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "score": 34,
+      "vertical": "esim",
+      "keywords": [],
+      "recommendedWidgetId": 8588,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "score": 34,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "score": 34,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "score": 34,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "cambodge-ou-laos-lequel-choisir-2-semaines-budget",
+      "title": "Cambodge ou Laos 2026 : Comparatif Budget 2 Semaines",
+      "score": 32,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "cambodge-ou-laos-lequel-choisir-2-semaines-budget",
+      "title": "Cambodge ou Laos 2026 : Comparatif Budget 2 Semaines",
+      "score": 32,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "cambodge-ou-laos-lequel-choisir-2-semaines-budget",
+      "title": "Cambodge ou Laos 2026 : Comparatif Budget 2 Semaines",
+      "score": 32,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "cambodge-ou-laos-lequel-choisir-2-semaines-budget",
+      "title": "Cambodge ou Laos 2026 : Comparatif Budget 2 Semaines",
+      "score": 32,
+      "vertical": "esim",
+      "keywords": [],
+      "recommendedWidgetId": 8588,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "title": "Ce que Thaïlande m'a coûté (et que les blogs ne montrent pas)",
+      "score": 32,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "title": "Ce que Thaïlande m'a coûté (et que les blogs ne montrent pas)",
+      "score": 32,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "title": "Ce que Thaïlande m'a coûté (et que les blogs ne montrent pas)",
+      "score": 32,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
+      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
+      "score": 30,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
+      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
+      "score": 30,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
+      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
+      "score": 30,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
+      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
+      "score": 30,
+      "vertical": "esim",
+      "keywords": [],
+      "recommendedWidgetId": 8588,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
+      "title": "Laos Solo Femme 2026 : Sécurité et Risques Cachés",
+      "score": 30,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
+      "title": "Laos Solo Femme 2026 : Sécurité et Risques Cachés",
+      "score": 30,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
+      "title": "Laos Solo Femme 2026 : Sécurité et Risques Cachés",
+      "score": 30,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
+      "title": "Laos Solo Femme 2026 : Sécurité et Risques Cachés",
+      "score": 30,
+      "vertical": "esim",
+      "keywords": [],
+      "recommendedWidgetId": 8588,
+      "oppScore": 4,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage",
+      "title": "Thaïlande vs Vietnam : le dilemme caché pour un premier voyage",
+      "score": 30,
+      "vertical": "flights",
+      "keywords": [],
+      "recommendedWidgetId": 7879,
+      "oppScore": 3,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage",
+      "title": "Thaïlande vs Vietnam : le dilemme caché pour un premier voyage",
+      "score": 30,
+      "vertical": "hotels",
+      "keywords": [],
+      "recommendedWidgetId": null,
+      "oppScore": 3,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage",
+      "title": "Thaïlande vs Vietnam : le dilemme caché pour un premier voyage",
+      "score": 30,
+      "vertical": "tours",
+      "keywords": [],
+      "recommendedWidgetId": 3947,
+      "oppScore": 3,
+      "level": "MEDIUM"
+    },
+    {
+      "slug": "thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage",
+      "title": "Thaïlande vs Vietnam : le dilemme caché pour un premier voyage",
+      "score": 30,
+      "vertical": "esim",
+      "keywords": [],
+      "recommendedWidgetId": 8588,
+      "oppScore": 3,
+      "level": "MEDIUM"
+    }
+  ],
+  "summary": {
+    "totalFakeCards": 0,
+    "totalHighOpps": 5,
+    "totalMediumOpps": 50,
+    "totalLowOpps": 437,
+    "articlesWithTwoPlusRealWidgets": 4,
+    "articlesWithOnePlusRealWidget": 33
+  }
+}
