@@ -396,7 +396,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 6,
+      "posted": 7,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -445,11 +445,19 @@
           "section": "Cambodge",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-13T08:06:22.350Z",
+          "threadId": "14228061",
+          "title": "27 octobre 2025",
+          "section": "Cambodge",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 39,
+  "total_posted": 40,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
