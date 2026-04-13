@@ -328,6 +328,23 @@ class ArticleFinalizer {
       enhancements.scopeWarnings = scopeWarnings;
     }
 
+    // FV-FIX 2026-04-13: strip <a> tags inside <summary> elements.
+    // The LLM (intelligent-content-analyzer prompt asks for "maillage interne 3 à 8 liens" +
+    // FAQ as raw HTML) sometimes renders an internal link inside the question text itself,
+    // e.g. <summary>Les taxis sont-ils chers en <a href=".../coree-du-sud/">Corée du Sud?</a></summary>.
+    // That produces red-linked text in the middle of a FAQ question — visually broken.
+    // Strip any <a>...</a> nested inside <summary>, keeping the plain text. Parser-free: we
+    // only rewrite within <summary>...</summary> boundaries to avoid touching body content.
+    const stripLinksInsideSummary = (htmlStr) => {
+      if (!htmlStr || typeof htmlStr !== 'string' || !htmlStr.includes('<summary')) return htmlStr;
+      return htmlStr.replace(/(<summary[^>]*>)([\s\S]*?)(<\/summary>)/gi, (full, openTag, inner, closeTag) => {
+        if (!/<a[\s>]/i.test(inner)) return full;
+        const cleaned = inner.replace(/<a\b[^>]*>([\s\S]*?)<\/a>/gi, '$1');
+        return openTag + cleaned + closeTag;
+      });
+    };
+    finalContent = stripLinksInsideSummary(finalContent);
+
     // PROTECTION FAQ GUTENBERG: Extraire la section FAQ complète avant tout traitement
     // Pattern identique à content-marketing-pass.js — protège heading + details + schema
     const faqPlaceholderMap = new Map();
@@ -335,8 +352,10 @@ class ArticleFinalizer {
     finalContent = finalContent.replace(
       /(<!-- wp:heading[^>]*-->\s*<h2[^>]*>Questions?\s+fr[eé]quentes<\/h2>\s*<!-- \/wp:heading -->\s*(?:<!-- wp:details -->[\s\S]*?<!-- \/wp:details -->\s*)+(?:<script type="application\/ld\+json">[\s\S]*?<\/script>\s*)?)/gi,
       (match) => {
+        // FV-FIX 2026-04-13: sanitize the protected FAQ block too, so the preserved value is clean.
+        const sanitized = stripLinksInsideSummary(match);
         const placeholder = `__FAQ_PROTECTED_${faqPlaceholderCount++}__`;
-        faqPlaceholderMap.set(placeholder, match);
+        faqPlaceholderMap.set(placeholder, sanitized);
         return placeholder;
       }
     );
@@ -785,6 +804,11 @@ class ArticleFinalizer {
         console.warn(`🛡️ FAQ_PROTECT: placeholder disparu — FAQ réinsérée avant dernier H2`);
       }
     }
+
+    // FV-FIX 2026-04-13: belt-and-suspenders — re-strip any <a> that slipped into a <summary>
+    // after restoration or that bypassed the FAQ placeholder regex (atypical FAQ structures).
+    // Idempotent: no-op when no links are present inside <summary>.
+    finalContent = stripLinksInsideSummary(finalContent);
 
     // NEWS-specific (conditional)
     if (editorialMode === 'news') {
