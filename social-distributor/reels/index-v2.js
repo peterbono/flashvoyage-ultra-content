@@ -26,7 +26,7 @@
 import dotenv from 'dotenv';
 dotenv.config({ override: true });
 
-import { readFileSync, existsSync, mkdirSync, appendFileSync } from 'fs';
+import { readFileSync, existsSync, mkdirSync, appendFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { FORMATS, FORMAT_NAMES } from './config.js';
@@ -282,9 +282,52 @@ async function routeToComposer(format, article, opts = {}) {
   }
 }
 
+// ── Music-pick capture (Telegram preview only) ──────────────────────────────
+// v2 composers own music picking internally and we don't modify them. To
+// surface the picked filename in the Telegram preview caption (founder
+// repetition-spotting signal), we tap `console.log` around the composer call
+// and scrape the `[REEL/ASSET] Picked music ... : <basename>` line emitted
+// by asset-fetcher::pickMusicTrack(). The captured path is then persisted
+// via the `/tmp/last-reel-music.json` sidecar read by publisher.js.
+//
+// Telegram-only — never flows to IG/TikTok captions.
+const PICK_MUSIC_RE = /\[REEL\/ASSET\] Picked music[^:]*: ([^\s\[]+\.(?:mp3|wav|m4a))/;
+
+async function runComposerCapturingMusic(format, article, opts) {
+  let capturedBasename = null;
+  const origLog = console.log;
+  console.log = function patchedLog(...args) {
+    try {
+      // Scan the first argument (or joined msg) for the music-pick log line.
+      const msg = typeof args[0] === 'string' ? args[0] : args.map(String).join(' ');
+      const m = PICK_MUSIC_RE.exec(msg);
+      if (m && m[1]) capturedBasename = m[1];
+    } catch { /* never swallow the log */ }
+    return origLog.apply(this, args);
+  };
+  try {
+    const result = await routeToComposer(format, article, opts);
+    return { result, musicBasename: capturedBasename };
+  } finally {
+    console.log = origLog;
+  }
+}
+
+function writeLastReelMusicPragma(musicBasename) {
+  if (!musicBasename) return;
+  try {
+    writeFileSync(
+      '/tmp/last-reel-music.json',
+      JSON.stringify({ musicPath: musicBasename, pickedAt: Date.now() }),
+    );
+  } catch {
+    // Non-fatal — publisher also accepts musicPath via meta.
+  }
+}
+
 // ── Publishing ───────────────────────────────────────────────────────────────
 
-async function publishIfRequested(result, article, format, shouldPublish) {
+async function publishIfRequested(result, article, format, shouldPublish, musicBasename = null) {
   if (!shouldPublish) return result;
 
   const reelsToday = getReelsPublishedToday();
@@ -304,7 +347,14 @@ async function publishIfRequested(result, article, format, shouldPublish) {
   const hashtags = result.script?.hashtags || ['#FlashVoyage'];
 
   const subtopic = result.script?.subtopic || null;
-  const pubResult = await publishReel(videoBuffer, caption, hashtags, undefined, { format, subtopic });
+  // musicPath is Telegram-only — publisher appends `🎵 <basename>` to the TG
+  // preview caption only. Never sent to IG/TikTok. Falls through silently if
+  // we didn't capture a basename from the composer's stdout.
+  const pubResult = await publishReel(videoBuffer, caption, hashtags, undefined, {
+    format,
+    subtopic,
+    musicPath: musicBasename || undefined,
+  });
   const reelId = pubResult.reelId;
   const permalink = pubResult.permalink;
 
@@ -476,7 +526,10 @@ async function modeFormatTest(format, postId = null) {
   const article = await fetchArticle(postId);
   const outputPath = `/tmp/test-fv-${format}.mp4`;
 
-  const result = await routeToComposer(format, article, { outputPath });
+  // Capture the picked music filename from the composer (stdout tap) so we
+  // can append it to the Telegram preview caption for repetition spotting.
+  const { result, musicBasename } = await runComposerCapturingMusic(format, article, { outputPath });
+  if (musicBasename) log(`Music (for TG preview): ${musicBasename}`);
 
   // Log results
   log(`Reel saved: ${result.videoPath}`);
@@ -501,7 +554,11 @@ async function modeFormatTest(format, postId = null) {
 
   // Send the test reel to Telegram for visual preview (non-fatal)
   try {
-    const tgCaption = buildTelegramTestCaption(format, article, result.script);
+    let tgCaption = buildTelegramTestCaption(format, article, result.script);
+    // Telegram-only: append music filename at the end (founder repetition signal).
+    if (musicBasename) {
+      tgCaption = `${tgCaption}\n\n🎵 ${musicBasename}`.slice(0, 1024);
+    }
     await sendTestReelToTelegram(result.videoPath, tgCaption);
   } catch (err) {
     log(`Telegram preview failed (non-fatal): ${err.message}`);
@@ -520,7 +577,13 @@ async function modeFormatPublish(format, postId = null) {
   const article = await fetchArticle(postId);
   const outputPath = join(TMP_DIR, `reel-${format}-${Date.now()}.mp4`);
 
-  const result = await routeToComposer(format, article, { outputPath });
+  // Capture the music filename picked inside the composer (stdout tap) so the
+  // Telegram preview can show it. See runComposerCapturingMusic() for details.
+  const { result, musicBasename } = await runComposerCapturingMusic(format, article, { outputPath });
+  if (musicBasename) {
+    writeLastReelMusicPragma(musicBasename);
+    log(`Captured music pick for TG preview: ${musicBasename}`);
+  }
 
   log(`Reel composed: ${result.videoPath}`);
   if (existsSync(result.videoPath)) {
@@ -528,7 +591,7 @@ async function modeFormatPublish(format, postId = null) {
     log(`Size: ${(size / 1024 / 1024).toFixed(1)} MB`);
   }
 
-  return publishIfRequested(result, article, format, true);
+  return publishIfRequested(result, article, format, true, musicBasename);
 }
 
 // ── v2 Mode: Telegram Only (no IG/FB publish) ──────────────────────────────
@@ -541,7 +604,9 @@ async function modeTelegramOnly(format, postId = null) {
   const article = await fetchArticle(postId);
   const outputPath = join(TMP_DIR, `reel-${format}-${Date.now()}.mp4`);
 
-  const result = await routeToComposer(format, article, { outputPath });
+  // Capture the picked music filename from the composer stdout (Telegram-only).
+  const { result, musicBasename } = await runComposerCapturingMusic(format, article, { outputPath });
+  if (musicBasename) log(`Music (for TG preview): ${musicBasename}`);
 
   log(`Reel composed: ${result.videoPath}`);
   if (existsSync(result.videoPath)) {
@@ -552,7 +617,10 @@ async function modeTelegramOnly(format, postId = null) {
   // Send ONLY to Telegram — NO IG, NO FB, NO Threads
   const caption = result.script?.caption || article.title || 'Flash Voyage';
   const hashtags = result.script?.hashtags || ['#FlashVoyage'];
-  const tgCaption = `${caption}\n\n${hashtags.join(' ')}`;
+  let tgCaption = `${caption}\n\n${hashtags.join(' ')}`;
+  if (musicBasename) {
+    tgCaption += `\n\n🎵 ${musicBasename}`;
+  }
 
   try {
     await sendTestReelToTelegram(result.videoPath, tgCaption);
