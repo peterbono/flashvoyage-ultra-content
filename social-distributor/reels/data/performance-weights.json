@@ -1,6 +1,44 @@
 {
-  "lastUpdated": "2026-04-13",
+  "lastUpdated": "2026-04-14",
   "formatScores": {
+    "poll": 0,
+    "pick": 6.2,
+    "humor": 10.4,
+    "humor-tweet": 0,
+    "budget": 9.9,
+    "versus": 5.3,
+    "avantapres": 8.2,
+    "month": 0,
+    "cost-vs": 0,
+    "leaderboard": 0,
+    "best-time": 0
+  },
+  "killedFormats": [
+    "poll",
+    "versus"
+  ],
+  "destinationScores": {
+    "bangkok": 6.1,
+    "bali": 5.8,
+    "thailande": 3.9,
+    "cambodge": 2.7,
+    "vietnam": 2.4,
+    "malaisie": 2.1,
+    "philippines": 1.7,
+    "indonesie": 0.9,
+    "singapour": 0.7,
+    "lombok": 0.5,
+    "laos": 0.1,
+    "koh samui": 0.1,
+    "koh lanta": 0.1
+  },
+  "recommendations": [
+    "vietnam content trending — prioritize",
+    "thailande content trending — prioritize",
+    "philippines content trending — prioritize",
+    "Top TikTok format: humor (avg 10.4, 2 videos)"
+  ],
+  "igFormatScores": {
     "poll": 0,
     "pick": 0,
     "humor": 0,
@@ -13,28 +51,61 @@
     "leaderboard": 0,
     "best-time": 0
   },
-  "killedFormats": [
-    "poll",
-    "versus"
-  ],
-  "destinationScores": {
+  "tiktokFormatScores": {
+    "avantapres": 8.2,
+    "budget": 9.9,
+    "humor": 10.4,
+    "versus": 5.3,
+    "pick": 6.2
+  },
+  "formatScoreSource": {
+    "pick": "tiktok-only",
+    "humor": "tiktok-only",
+    "budget": "tiktok-only",
+    "versus": "tiktok-only",
+    "avantapres": "tiktok-only"
+  },
+  "igDestinationScores": {
     "vietnam": 4,
-    "thailande": 3.8,
+    "thailande": 3.9,
     "philippines": 1.7,
     "bali": 1.2,
-    "indonesie": 1.1,
+    "indonesie": 0.9,
     "singapour": 0.7,
     "cambodge": 0.6,
     "lombok": 0.5,
     "malaisie": 0.4,
-    "laos": 0.3,
+    "laos": 0.1,
     "koh samui": 0.1,
     "koh lanta": 0.1
   },
-  "recommendations": [
-    "vietnam content trending — prioritize",
-    "thailande content trending — prioritize",
-    "philippines content trending — prioritize",
-    "No reel data yet — weights are placeholder, will update after first reels are published"
-  ]
+  "tiktokDestinationScores": {
+    "cambodge": 4.1,
+    "malaisie": 3.2,
+    "bali": 8.8,
+    "bangkok": 6.1,
+    "vietnam": 1.4
+  },
+  "destinationScoreSource": {
+    "vietnam": "merged(60/40)",
+    "thailande": "ig-only",
+    "philippines": "ig-only",
+    "bali": "merged(60/40)",
+    "indonesie": "ig-only",
+    "singapour": "ig-only",
+    "cambodge": "merged(60/40)",
+    "lombok": "ig-only",
+    "malaisie": "merged(60/40)",
+    "laos": "ig-only",
+    "koh samui": "ig-only",
+    "koh lanta": "ig-only",
+    "bangkok": "tiktok-only"
+  },
+  "mergeConfig": {
+    "tiktokWeight": 0.6,
+    "igWeight": 0.4,
+    "active": true,
+    "tiktokVideoCount": 15,
+    "tiktokUnclassifiedCount": 1
+  }
 }
