@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 16,
+      "posted": 17,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -134,6 +134,14 @@
           "hasLink": false,
           "generated": true,
           "status": "published"
+        },
+        {
+          "date": "2026-04-14T08:02:41.861Z",
+          "thread": "indonesie-en-famille-15-jours-itineraire-java-bali-gili-d11467818",
+          "title": "Indonésie en famille 15 jours: avis sur itinéraire Java, Bali, Gili",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
         }
       ],
       "posts_queued": [
@@ -179,7 +187,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 13,
+      "posted": 14,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -312,6 +320,14 @@
           "hasLink": false,
           "status": "published",
           "generated": true
+        },
+        {
+          "date": "2026-04-14T08:00:57.208Z",
+          "id": "ai-3425-1776153615211",
+          "search": "Comment voyager seul en Corée du Sud",
+          "hasLink": false,
+          "status": "published",
+          "generated": true
         }
       ]
     },
@@ -412,7 +428,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 8,
+      "posted": 9,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -477,11 +493,19 @@
           "section": "Vietnam",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-14T08:07:05.931Z",
+          "threadId": "15484312",
+          "title": "28 février 2026",
+          "section": "Vietnam",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 43,
+  "total_posted": 46,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
