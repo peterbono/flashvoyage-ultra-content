@@ -289,6 +289,7 @@ jobs:
             "social-distributor/data/reel-history.jsonl"
             "social-distributor/reels/data/pexels-used.json"
             "social-distributor/reels/data/content-history.json"
+            "social-distributor/reels/data/angles/angle-state.json"
           )
 
           # Stage whatever exists and has changed

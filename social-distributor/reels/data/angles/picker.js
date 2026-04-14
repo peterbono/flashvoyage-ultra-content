@@ -38,8 +38,12 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export const MAX_RECENT = 6;
 
 const REELS_ROOT = join(__dirname, '..', '..');
-const STATE_DIR = join(REELS_ROOT, 'tmp');
-const STATE_PATH = join(STATE_DIR, 'angle-state.json');
+// FV-FIX 2026-04-15: state moved from reels/tmp/ (gitignored) to this angles/
+// directory so it's tracked by git. On GH Actions, tmp/ is recreated fresh
+// every run → rotation state was lost between crons → same angle could be
+// picked 2-3 runs in a row purely by random chance. Now the workflow commits
+// the updated state at the end of each publish-reels run (see publish-reels.yml).
+const STATE_PATH = join(__dirname, 'angle-state.json');
 
 // Library name → JSON file path
 const LIBRARIES = {
@@ -76,7 +80,9 @@ function loadLibrary(libraryName) {
 // ── State persistence ───────────────────────────────────────────────────────
 
 function ensureStateDir() {
-  if (!existsSync(STATE_DIR)) mkdirSync(STATE_DIR, { recursive: true });
+  // State now lives alongside the library JSON files in this angles/ dir,
+  // which always exists since the libraries themselves do. Kept as a noop
+  // for API compatibility with any call sites.
 }
 
 function readState() {
