@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-04-14T13:16:30.677Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-04-14T19:06:18.682Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Top Vietnamese leader To Lam visits China's Xiong'an New Area, model for smart urban development",
-      "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/top-vietnamese-leader-to-lam-visits-china-s-xiong-an-new-area-model-for-smart-urban-development-5062367.html",
-      "velocityScore": 0.509,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1696,
-      "estimatedTrafficIn24h": 1658,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.68,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 2.3
-      },
-      "detectedAt": "2026-04-14T11:00:46.000Z",
-      "scoredAt": "2026-04-14T13:16:12.882Z"
-    }
-  ]
+  "queue": []
 }
