@@ -34,6 +34,14 @@ jobs:
           GMAIL_USER: florian.gouloubi@gmail.com
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          # Exposed to let the digest call GitHub Actions API for workflow run
+          # status + Actions usage (section 1 anomalies + section 5 pipeline health).
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          # GA4 service account is needed for FR-filtered WoW signals in section 2.
+          # Graceful degradation if unset — section falls back to "GA4 indisponible".
+          GA4_SERVICE_ACCOUNT: ${{ secrets.GA4_SERVICE_ACCOUNT }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           # Setup tokens for data collection
           mkdir -p social-distributor/data

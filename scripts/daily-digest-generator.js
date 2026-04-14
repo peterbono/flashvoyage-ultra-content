@@ -1,31 +1,54 @@
 #!/usr/bin/env node
 
 /**
- * Daily Digest Generator — FlashVoyage
+ * Daily Digest Generator — FlashVoyage (v2, decision-oriented)
  *
- * Generates a comprehensive morning email digest for the founder.
- * Aggregates data from all overnight automation runs:
- *   - Reel publications (reel-history.jsonl)
- *   - IG stats (ig-stats-fetcher.js)
- *   - GA4 site metrics (ga4-fetcher.js)
- *   - Revenue data (revenue-tracker.js)
- *   - Content intelligence (article-scores, content-gaps, competitor-report)
- *   - Seasonal forecast (seasonal-forecast.json)
- *   - LLM cost tracking (cost-history.jsonl)
- *   - A/B tests (ab-tests.json)
- *   - Token expiration (tokens.json)
+ * Morning email for the founder. Five sections MAX, all anchored to
+ * decisions — no vanity metrics. If a section has nothing to say, it
+ * collapses to a single OK line.
  *
- * Schedule: 1h15 UTC = 8h15 Bangkok (founder reads at 8-9am GMT+7)
+ * New section layout (was 9, now 5):
+ *   1. 🚨 ANOMALIES              — P0 items (tokens, workflow fails, FR crashes, fake cards, API errors)
+ *   2. 📈 GROWTH SIGNALS         — FR WoW gainers/losers (Thailand excluded), top format per platform, angle used
+ *   3. 🎯 TODAY'S 3 ACTIONS      — refresh candidate, write candidate, reel OR widget opp
+ *   4. 💰 MONETIZATION HEALTH    — widget coverage delta, high-traffic articles without widgets, regression alerts
+ *   5. ⚙️ PIPELINE HEALTH         — LLM cost Δ, last cron per workflow, auto-apply count, Actions minutes
  *
- * Output: HTML email sent via Gmail API (or written to file for review)
+ * Old sections REMOVED / MERGED:
+ *   - "Brief CEO du jour"            → kept, trimmed to 3 bullet points anchored on actions
+ *   - "Operations de la nuit"        → folded into Pipeline Health
+ *   - "Traffic GA4 (3 derniers jours)" → replaced by FR-filtered WoW in Growth Signals
+ *   - "Linkbuilding"                 → only surfaces if anomalous (bot dead, missing links)
+ *   - "Snapshot Performance"         → replaced by Growth Signals + Actions
+ *   - "Intelligence editoriale"      → folded into 3 Actions
+ *   - "Couts LLM"                    → folded into Pipeline Health
+ *   - "Actions requises"             → becomes section 3 (3 ACTIONS)
+ *   - "Motivation du jour"           → killed (vanity)
  *
- * CLI:
- *   node scripts/daily-digest-generator.js              # Generate + output HTML to stdout
- *   node scripts/daily-digest-generator.js --file       # Write to data/daily-digest.html
- *   node scripts/daily-digest-generator.js --json       # Output raw data as JSON
+ * New data sources tapped:
+ *   - data/article-scores.json        → frShare, frPageviews, signals, flags
+ *   - data/score-history/*.json       → 7-day composite-score deltas
+ *   - data/partner-widget-audit.json  → HIGH opportunities, fakeCards, verticalStats
+ *   - data/auto-edit-log.jsonl        → LOW-tier auto-apply status counts
+ *   - social-distributor/reels/data/performance-weights.json
+ *                                    → igFormatScores, tiktokFormatScores,
+ *                                      formatScoreSource, discrepancy detection
+ *   - social-distributor/reels/tmp/angle-state.json → angles used yesterday
+ *   - GA4 FR-filtered (country = France, Thailand excluded) for WoW delta
+ *   - GitHub Actions API → workflow run status last 24h
+ *   - data/next-articles-queue.json / data/content-gaps.json → write candidate
+ *
+ * CLI (unchanged interface):
+ *   node scripts/daily-digest-generator.js              # HTML to stdout
+ *   node scripts/daily-digest-generator.js --file       # write data/daily-digest.html
+ *   node scripts/daily-digest-generator.js --json       # JSON digest data
+ *   node scripts/daily-digest-generator.js --subject    # subject line only
+ *   node scripts/daily-digest-generator.js --send       # generate + send via Gmail
+ *
+ * No new npm deps. Each data source is optional (graceful degradation).
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -34,9 +57,12 @@ const ROOT = join(__dirname, '..');
 const DATA_DIR = join(ROOT, 'data');
 const SD_DATA = join(ROOT, 'social-distributor', 'data');
 const REELS_DATA = join(ROOT, 'social-distributor', 'reels', 'data');
-const INTEL_DATA = join(ROOT, 'intelligence', 'data');
+const REELS_TMP = join(ROOT, 'social-distributor', 'reels', 'tmp');
+const SCORE_HISTORY_DIR = join(DATA_DIR, 'score-history');
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// Helpers
+// ─────────────────────────────────────────────────────────────────────────────
 
 function log(msg) {
   console.error(`[DIGEST] ${msg}`);
@@ -58,370 +84,860 @@ function loadJSONL(path) {
     return readFileSync(path, 'utf-8')
       .split('\n')
       .filter(Boolean)
-      .map(line => {
-        try { return JSON.parse(line); }
-        catch { return null; }
-      })
+      .map(line => { try { return JSON.parse(line); } catch { return null; } })
       .filter(Boolean);
   } catch {
     return [];
   }
 }
 
-function daysAgo(dateStr) {
+function fileAgeDays(path) {
+  try {
+    if (!existsSync(path)) return Infinity;
+    const s = statSync(path);
+    return (Date.now() - s.mtimeMs) / 86400000;
+  } catch { return Infinity; }
+}
+
+function daysUntil(dateStr) {
   if (!dateStr) return Infinity;
   const d = new Date(dateStr);
-  const now = new Date();
-  return Math.floor((now - d) / (1000 * 60 * 60 * 24));
-}
-
-function isYesterday(dateStr) {
-  if (!dateStr) return false;
-  const d = new Date(dateStr);
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  return d.toISOString().slice(0, 10) === yesterday.toISOString().slice(0, 10);
-}
-
-function isToday(dateStr) {
-  if (!dateStr) return false;
-  const d = new Date(dateStr);
-  return d.toISOString().slice(0, 10) === new Date().toISOString().slice(0, 10);
+  return Math.floor((d.getTime() - Date.now()) / 86400000);
 }
 
 function isLast24h(dateStr) {
   if (!dateStr) return false;
-  const d = new Date(dateStr);
-  return (Date.now() - d.getTime()) < 24 * 60 * 60 * 1000;
-}
-
-function formatDelta(current, previous, suffix = '') {
-  if (previous === 0 || previous === undefined || previous === null) {
-    return `<span style="color:#666">${current}${suffix}</span>`;
-  }
-  const delta = current - previous;
-  const pct = Math.round((delta / previous) * 100);
-  if (delta > 0) {
-    return `<span style="color:#16a34a; font-weight:600">${current}${suffix}</span> <span style="color:#16a34a; font-size:11px">+${pct}%</span>`;
-  } else if (delta < 0) {
-    return `<span style="color:#dc2626; font-weight:600">${current}${suffix}</span> <span style="color:#dc2626; font-size:11px">${pct}%</span>`;
-  }
-  return `<span style="color:#666">${current}${suffix}</span> <span style="color:#666; font-size:11px">=</span>`;
-}
-
-function formatEUR(amount) {
-  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(amount);
+  return (Date.now() - new Date(dateStr).getTime()) < 86400000;
 }
 
 function formatUSD(amount) {
-  return `$${amount.toFixed(4)}`;
+  if (typeof amount !== 'number' || isNaN(amount)) return '$0.00';
+  return `$${amount.toFixed(2)}`;
 }
 
-// ── Data Collection ──────────────────────────────────────────────────────────
+function pct(value) {
+  if (value === Infinity || isNaN(value)) return '—';
+  const sign = value > 0 ? '+' : '';
+  return `${sign}${Math.round(value)}%`;
+}
 
-async function collectReelData() {
-  const historyPath = join(SD_DATA, 'reel-history.jsonl');
-  const allReels = loadJSONL(historyPath);
-  const last24h = allReels.filter(r => isLast24h(r.date));
-  const contentHistory = loadJSON(join(REELS_DATA, 'content-history.json')) || {};
+function scorePath(dateStr) {
+  return join(SCORE_HISTORY_DIR, `${dateStr}.json`);
+}
 
-  // Also fetch from IG API (reel-history.jsonl might be stale)
-  let igReels = [];
+function loadScoreSnapshot(daysAgo) {
+  const d = new Date();
+  d.setDate(d.getDate() - daysAgo);
+  const iso = d.toISOString().slice(0, 10);
+  return loadJSON(scorePath(iso));
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GA4 — FR-filtered WoW (Thailand excluded, self-traffic guard)
+// ─────────────────────────────────────────────────────────────────────────────
+
+async function fetchGA4Wow() {
   try {
-    const tokens = loadJSON(join(SD_DATA, 'tokens.json'));
-    if (tokens?.facebook?.token) {
-      const res = await fetch(`https://graph.facebook.com/v21.0/17841442283434789/media?fields=media_type,timestamp,caption,permalink&limit=10&access_token=${tokens.facebook.token}`);
-      const data = await res.json();
-      igReels = (data.data || []).filter(m => m.media_type === 'VIDEO' && isLast24h(m.timestamp)).map(m => ({
-        date: m.timestamp,
-        type: 'reel',
-        destination: (m.caption || '').split('\n')[0].slice(0, 50),
-        permalink: m.permalink,
-      }));
+    const saKeyPath = join(ROOT, 'ga4-service-account.json');
+    let saKey = null;
+    if (existsSync(saKeyPath)) saKey = loadJSON(saKeyPath);
+    else if (process.env.GA4_SERVICE_ACCOUNT) {
+      saKey = JSON.parse(process.env.GA4_SERVICE_ACCOUNT);
     }
-  } catch {}
-
-  // Merge: use IG API data if local history is stale
-  const mergedLast24h = last24h.length >= igReels.length ? last24h : igReels;
-  const totalPublished = mergedLast24h.length;
-
-  return {
-    total: allReels.length,
-    last24h: mergedLast24h,
-    publishedToday: totalPublished,
-    formats: mergedLast24h.map(r => r.type || r.format || 'reel'),
-    contentHistory,
-  };
-}
-
-function collectArticleData() {
-  const scores = loadJSON(join(DATA_DIR, 'article-scores.json'));
-  if (!scores?.scores) return { total: 0, articles: [], newArticles: [], topPerformers: [], declining: [] };
-
-  const articles = scores.scores || [];
-  // Articles published in last 24h
-  const newArticles = articles.filter(a => isLast24h(a.publishedAt));
-  // Articles with declining traffic
-  const declining = articles
-    .filter(a => a.signals?.trafficTrend === 'declining' || (a.signals?.freshness && a.signals.freshness < 0.3))
-    .sort((a, b) => (a.signals?.freshness || 0) - (b.signals?.freshness || 0))
-    .slice(0, 5);
-  // Top performers
-  const topPerformers = [...articles]
-    .sort((a, b) => (b.compositeScore || 0) - (a.compositeScore || 0))
-    .slice(0, 5);
-
-  return {
-    total: articles.length,
-    newArticles,
-    topPerformers,
-    declining,
-    articles,
-  };
-}
-
-function collectGAData() {
-  const audiencePath = join(SD_DATA, 'audience-segments.json');
-  const audience = loadJSON(audiencePath);
-  return { audience, available: !!audience };
-}
-
-function collectLinkbuildingData() {
-  const logPath = join(DATA_DIR, 'linkbuilding-log.jsonl');
-  const planPath = join(DATA_DIR, 'linkbuilding-week-plan.json');
-  const allEntries = loadJSONL(logPath);
-  const plan = loadJSON(planPath);
-
-  const last24h = allEntries.filter(e => isLast24h(e.date));
-  const quoraPosts = allEntries.filter(e => e.platform === 'quora_fr' && e.success);
-  const vfPosts = allEntries.filter(e => e.platform === 'voyageforum' && e.success);
-
-  return {
-    today: last24h,
-    quoraTotal: quoraPosts.length,
-    vfTotal: vfPosts.length,
-    totalPosted: plan?.total_posted || 0,
-    quoraWithLink: quoraPosts.filter(e => e.hasLink).length,
-  };
-}
-
-async function fetchLiveGA4() {
-  // Fetch live GA4 data for the digest (last 3 days)
-  try {
-    const saKeyPath = join(ROOT, '..', 'clodoproject', 'ga4-service-account.json');
-    if (!existsSync(saKeyPath)) {
-      // Try env var
-      const saJson = process.env.GA4_SERVICE_ACCOUNT;
-      if (!saJson) return null;
+    if (!saKey) {
+      log('GA4 WoW skipped — no service account key');
+      return null;
     }
+
     const { GoogleAuth } = await import('google-auth-library');
-    const saKey = loadJSON(saKeyPath) || JSON.parse(process.env.GA4_SERVICE_ACCOUNT || '{}');
     const auth = new GoogleAuth({ credentials: saKey, scopes: ['https://www.googleapis.com/auth/analytics.readonly'] });
     const client = await auth.getClient();
 
-    const today = new Date().toISOString().slice(0, 10);
-    const threeDaysAgo = new Date(Date.now() - 3 * 86400000).toISOString().slice(0, 10);
+    const today = new Date();
+    const ymd = (d) => d.toISOString().slice(0, 10);
+    const addDays = (base, n) => { const d = new Date(base); d.setDate(d.getDate() + n); return d; };
 
-    const [dailyRes, sourceRes] = await Promise.all([
-      client.request({
+    // This week = last 7 days ending today. Previous week = the 7 days before that.
+    const thisWkStart = ymd(addDays(today, -6));
+    const thisWkEnd = ymd(today);
+    const prevWkStart = ymd(addDays(today, -13));
+    const prevWkEnd = ymd(addDays(today, -7));
+
+    // One call per window, France only, Thailand excluded at filter level
+    // (we actually run two queries per window: "country=France" + "country != Thailand")
+    // The scorer example excludes Thailand via NOT-MATCH. We'll request France only — by
+    // definition that already excludes Thailand. But we ALSO exclude any country==Thailand
+    // across the board to filter self-traffic from the FR articles when the cover VPN slips.
+    // Simpler: just query France-only (FR gainers/losers is what matters).
+    const franceFilter = {
+      filter: {
+        fieldName: 'country',
+        stringFilter: { matchType: 'EXACT', value: 'France', caseSensitive: false },
+      },
+    };
+
+    async function query(startDate, endDate) {
+      const res = await client.request({
         url: 'https://analyticsdata.googleapis.com/v1beta/properties/505793742:runReport',
         method: 'POST',
-        data: { dateRanges: [{ startDate: threeDaysAgo, endDate: today }], dimensions: [{ name: 'date' }], metrics: [{ name: 'sessions' }, { name: 'activeUsers' }, { name: 'screenPageViews' }] },
-      }),
-      client.request({
-        url: 'https://analyticsdata.googleapis.com/v1beta/properties/505793742:runReport',
-        method: 'POST',
-        data: { dateRanges: [{ startDate: threeDaysAgo, endDate: today }], dimensions: [{ name: 'sessionSource' }], metrics: [{ name: 'sessions' }], orderBys: [{ metric: { metricName: 'sessions' }, desc: true }], limit: 5 },
-      }),
+        data: {
+          dateRanges: [{ startDate, endDate }],
+          dimensions: [{ name: 'pagePath' }],
+          metrics: [{ name: 'sessions' }, { name: 'screenPageViews' }],
+          dimensionFilter: franceFilter,
+          limit: 200,
+        },
+      });
+      const out = new Map();
+      for (const row of res.data.rows || []) {
+        const p = row.dimensionValues[0].value;
+        if (p === '/' || p.startsWith('/wp-') || p.includes('/feed') || p.includes('/page/') || p.includes('?')) continue;
+        if (p === '/(not set)') continue;
+        out.set(p, {
+          sessions: parseInt(row.metricValues[0].value, 10) || 0,
+          pageviews: parseInt(row.metricValues[1].value, 10) || 0,
+        });
+      }
+      return out;
+    }
+
+    const [thisWk, prevWk] = await Promise.all([
+      query(thisWkStart, thisWkEnd),
+      query(prevWkStart, prevWkEnd),
     ]);
 
-    const daily = dailyRes.data.rows?.map(r => ({
-      date: r.dimensionValues[0].value,
-      sessions: parseInt(r.metricValues[0].value),
-      users: parseInt(r.metricValues[1].value),
-      pageviews: parseInt(r.metricValues[2].value),
-    })) || [];
+    // Diff — per-article
+    const rows = [];
+    const paths = new Set([...thisWk.keys(), ...prevWk.keys()]);
+    for (const p of paths) {
+      const cur = thisWk.get(p) || { sessions: 0, pageviews: 0 };
+      const prev = prevWk.get(p) || { sessions: 0, pageviews: 0 };
+      // Skip paths with too little signal — we need at least 3 sessions either week
+      if (cur.sessions < 3 && prev.sessions < 3) continue;
+      const delta = cur.sessions - prev.sessions;
+      const deltaPct = prev.sessions === 0 ? Infinity : ((cur.sessions - prev.sessions) / prev.sessions) * 100;
+      rows.push({
+        pagePath: p,
+        slug: p.replace(/^\//, '').replace(/\/$/, ''),
+        thisSessions: cur.sessions,
+        prevSessions: prev.sessions,
+        delta,
+        deltaPct,
+        thisPv: cur.pageviews,
+        prevPv: prev.pageviews,
+      });
+    }
 
-    const sources = sourceRes.data.rows?.map(r => ({
-      source: r.dimensionValues[0].value,
-      sessions: parseInt(r.metricValues[0].value),
-    })) || [];
+    const gainers = rows
+      .filter(r => r.delta > 0)
+      .sort((a, b) => b.delta - a.delta)
+      .slice(0, 3);
+    const losers = rows
+      .filter(r => r.delta < 0)
+      .sort((a, b) => a.delta - b.delta)
+      .slice(0, 3);
 
-    const todayData = daily.find(d => d.date === today.replace(/-/g, ''));
-    const yesterdayDate = new Date(Date.now() - 86400000).toISOString().slice(0, 10).replace(/-/g, '');
-    const yesterdayData = daily.find(d => d.date === yesterdayDate);
-
-    return { daily, sources, today: todayData, yesterday: yesterdayData };
+    return { gainers, losers, totalFrArticlesTracked: rows.length, thisWkStart, thisWkEnd };
   } catch (err) {
-    log(`GA4 fetch failed: ${err.message}`);
+    log(`GA4 WoW fetch failed: ${err.message}`);
     return null;
   }
 }
 
-async function generateAIBrief(data) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) return null;
+// ─────────────────────────────────────────────────────────────────────────────
+// GitHub Actions — recent workflow runs (for anomalies + pipeline health)
+// ─────────────────────────────────────────────────────────────────────────────
 
-  const summary = {
-    reels: `${data.reels.publishedToday} reels publiés (total: ${data.reels.total})`,
-    linkbuilding: `Quora: ${data.linkbuilding.quoraTotal} posts, VF: ${data.linkbuilding.vfTotal} posts`,
-    ga4: data.ga4Live ? `Sessions hier: ${data.ga4Live.yesterday?.sessions || 0}, Sources: ${data.ga4Live.sources?.map(s => s.source + ':' + s.sessions).join(', ')}` : 'GA4 indisponible',
-    costs: `LLM 24h: $${data.costs.totalCostToday.toFixed(4)}, 30j: $${data.costs.totalCostMonth.toFixed(4)}`,
-    tokenWarnings: data.tokens.warnings.map(w => `${w.platform}: expire dans ${w.daysLeft}j`).join(', ') || 'aucun',
-    errors: data.errors.map(e => `${e.module}: stale ${e.daysStale}j`).join(', ') || 'aucun',
-  };
-
+async function fetchWorkflowRuns() {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) return null;
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 400,
-        messages: [{ role: 'user', content: `Tu es le CEO advisor de FlashVoyage, un media voyage français. Voici les données du jour:
-
-${JSON.stringify(summary, null, 2)}
-
-Génère un brief matinal en français (5-8 lignes max):
-1. Un résumé de la situation en 2 phrases
-2. Les 3 actions prioritaires du jour (numérotées, concrètes, actionnables)
-3. Un warning UNIQUEMENT si un token expire bientôt ou si un workflow est cassé
-
-Contexte: FlashVoyage est un nouveau site (lancé mars 2026). Le trafic est faible mais en croissance. Les sources GA4 comme "(not set)", "(direct)", "chatgpt.com", "google" sont NORMALES et POSITIVES — ne les flag pas comme suspectes.
-Focus sur: croissance du trafic, performances des reels IG, progression du linkbuilding Quora/VF.
-Ton: direct, concis, pas de blabla. Comme un Slack du CTO.` }],
-      }),
+    const repo = process.env.GITHUB_REPOSITORY || 'peterbono/flashvoyage-ultra-content';
+    const url = `https://api.github.com/repos/${repo}/actions/runs?per_page=40`;
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' },
     });
-    const result = await res.json();
-    return result.content?.[0]?.text || null;
+    if (!res.ok) {
+      log(`GitHub Actions fetch failed: HTTP ${res.status}`);
+      return null;
+    }
+    const data = await res.json();
+    const runs = data.workflow_runs || [];
+    const now = Date.now();
+    const last24h = runs.filter(r => now - new Date(r.created_at).getTime() < 86400000);
+    const failed24h = last24h.filter(r => r.conclusion === 'failure');
+    // Per workflow, keep only the most recent run
+    const byWorkflow = new Map();
+    for (const r of runs) {
+      const key = r.name;
+      if (!byWorkflow.has(key) || new Date(r.created_at) > new Date(byWorkflow.get(key).created_at)) {
+        byWorkflow.set(key, r);
+      }
+    }
+    return { last24h, failed24h, latestByWorkflow: byWorkflow };
+  } catch (err) {
+    log(`GitHub Actions fetch error: ${err.message}`);
+    return null;
+  }
+}
+
+async function fetchActionsUsage() {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) return null;
+  try {
+    const repo = process.env.GITHUB_REPOSITORY || 'peterbono/flashvoyage-ultra-content';
+    const owner = repo.split('/')[0];
+    const url = `https://api.github.com/users/${owner}/settings/billing/actions`;
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' },
+    });
+    if (!res.ok) return null;
+    return await res.json();
   } catch { return null; }
 }
 
-function collectRevenueData() {
-  const revenuePath = join(SD_DATA, 'revenue-report.json');
-  const revenue = loadJSON(revenuePath);
-  return revenue || { summary: { totalRevenue: 0, totalClicks: 0, balance: 0, pendingBalance: 0 } };
-}
+// ─────────────────────────────────────────────────────────────────────────────
+// Data collectors
+// ─────────────────────────────────────────────────────────────────────────────
 
-function collectIntelligenceData() {
-  const gaps = loadJSON(join(DATA_DIR, 'content-gaps.json'));
-  const competitor = loadJSON(join(DATA_DIR, 'competitor-report.json'));
-  const forecast = loadJSON(join(DATA_DIR, 'seasonal-forecast.json'));
-  const queue = loadJSON(join(DATA_DIR, 'next-articles-queue.json'));
+function collectScoreDelta() {
+  const today = loadJSON(scorePath(new Date().toISOString().slice(0, 10))) || loadScoreSnapshot(0);
+  const lastWeek = loadScoreSnapshot(7);
+  if (!today?.scores) return { drops: [], available: false };
 
-  return { gaps, competitor, forecast, queue };
-}
-
-function collectCostData() {
-  const costPath = join(DATA_DIR, 'cost-history.jsonl');
-  const allCosts = loadJSONL(costPath);
-
-  const now = Date.now();
-  const DAY = 86400000;
-  const last24h = allCosts.filter(c => {
-    const t = new Date(c.timestamp || c.date).getTime();
-    return now - t < DAY;
-  });
-  const last7d = allCosts.filter(c => {
-    const t = new Date(c.timestamp || c.date).getTime();
-    return now - t < 7 * DAY;
-  });
-  const last30d = allCosts.filter(c => {
-    const t = new Date(c.timestamp || c.date).getTime();
-    return now - t < 30 * DAY;
-  });
-
-  const sumCost = (arr) => arr.reduce((sum, c) => sum + (c.totalCost || c.costUSD || 0), 0);
-  const sumTokens = (arr) => arr.reduce((sum, c) => sum + (c.totalTokens || 0), 0);
-
-  // Breakdown by provider (haiku vs gpt)
-  const byProvider = {};
-  for (const c of last30d) {
-    const provider = c.model?.includes('haiku') || c.model?.includes('claude') ? 'haiku' :
-                     c.model?.includes('gpt') ? 'gpt4o' : 'other';
-    byProvider[provider] = (byProvider[provider] || 0) + (c.totalCost || c.costUSD || 0);
+  const prevMap = new Map((lastWeek?.scores || []).map(s => [s.slug, s.compositeScore]));
+  const drops = [];
+  for (const cur of today.scores) {
+    const prev = prevMap.get(cur.slug);
+    if (typeof prev !== 'number') continue;
+    const delta = cur.compositeScore - prev;
+    if (delta <= -10) {
+      drops.push({ slug: cur.slug, prev, current: cur.compositeScore, delta });
+    }
   }
+  drops.sort((a, b) => a.delta - b.delta);
+  return { drops, available: true };
+}
 
+function collectFrShareCrash() {
+  // Find articles whose frShare dropped ≥ 0.20 vs the signals snapshot 7d ago.
+  // Our score-history only keeps { slug, compositeScore }, so if the richer
+  // history is unavailable we compare today's article-scores vs 7d-old article-scores
+  // if such a file ever gets archived. For now: best-effort — return [] unless we
+  // have two article-scores snapshots to compare.
+  const todayFull = loadJSON(join(DATA_DIR, 'article-scores.json'));
+  // Look for a richer snapshot file in data/score-history/YYYY-MM-DD-full.json if present
+  // (not produced today, so just return [] gracefully)
+  if (!todayFull?.scores) return [];
+  // No historical snapshot of full signals today — placeholder empty list.
+  return [];
+}
+
+function collectFakeCards() {
+  const audit = loadJSON(join(DATA_DIR, 'partner-widget-audit.json'));
+  if (!audit) return { fakeCards: [], available: false };
   return {
-    totalCostToday: sumCost(last24h),
-    totalCostWeek: sumCost(last7d),
-    totalCostMonth: sumCost(last30d),
-    totalTokensToday: sumTokens(last24h),
-    totalTokensWeek: sumTokens(last7d),
-    totalTokensMonth: sumTokens(last30d),
-    callsToday: last24h.length,
-    callsWeek: last7d.length,
-    callsMonth: last30d.length,
-    byProvider,
-    allTimeEntries: allCosts.length,
+    fakeCards: audit.fakeCards || [],
+    highOpportunities: audit.highOpportunities || [],
+    mediumOpportunities: audit.mediumOpportunities || [],
+    summary: audit.summary || {},
+    verticalStats: audit.verticalStats || {},
+    scannedAt: audit.scannedAt,
+    available: true,
   };
 }
 
-function collectTokenData() {
+function collectAutoApplyLog() {
+  const entries = loadJSONL(join(DATA_DIR, 'auto-edit-log.jsonl'));
+  const last24h = entries.filter(e => isLast24h(e.ts));
+  const failures24h = last24h.filter(e => e.status === 'failed' || e.status === 'error');
+  return { total: entries.length, last24h, failures24h };
+}
+
+function collectCostHistory() {
+  const entries = loadJSONL(join(DATA_DIR, 'cost-history.jsonl'));
+  const now = Date.now();
+  const last24h = entries.filter(c => now - new Date(c.timestamp || c.date).getTime() < 86400000);
+  const last7d = entries.filter(c => now - new Date(c.timestamp || c.date).getTime() < 7 * 86400000);
+  const sum = arr => arr.reduce((s, c) => s + (c.totalCost || c.totalCostUSD || c.costUSD || 0), 0);
+  const cost24h = sum(last24h);
+  const cost7d = sum(last7d);
+  const avg7d = cost7d / 7;
+  const deltaPct = avg7d === 0 ? 0 : ((cost24h - avg7d) / avg7d) * 100;
+  const errors24h = last24h.filter(c => c.error || c.status === 'failed');
+  return { cost24h, cost7d, avg7d, deltaPct, calls24h: last24h.length, errors24h };
+}
+
+function collectTokens() {
   const tokens = loadJSON(join(SD_DATA, 'tokens.json')) || {};
   const warnings = [];
-
   for (const [platform, data] of Object.entries(tokens)) {
-    if (data.expiresAt && data.expiresAt !== 'never') {
-      const daysLeft = daysAgo(data.expiresAt) * -1; // negative daysAgo = future
-      if (daysLeft <= 14) {
-        warnings.push({
-          platform,
-          expiresAt: data.expiresAt,
-          daysLeft,
-          urgent: daysLeft <= 3,
-        });
-      }
+    if (!data.expiresAt || data.expiresAt === 'never') continue;
+    const daysLeft = daysUntil(data.expiresAt);
+    if (daysLeft <= 14) {
+      warnings.push({ platform, daysLeft, expiresAt: data.expiresAt, urgent: daysLeft <= 3 });
     }
   }
-
   return { tokens, warnings };
 }
 
-function collectABTestData() {
-  const abTests = loadJSON(join(SD_DATA, 'ab-tests.json')) || { activeTests: [], completedTests: [] };
+function collectPerformanceWeights() {
+  const w = loadJSON(join(REELS_DATA, 'performance-weights.json'));
+  if (!w) return { available: false };
+
+  const pickTop = (obj) => {
+    if (!obj) return null;
+    const entries = Object.entries(obj).filter(([, v]) => typeof v === 'number' && v > 0);
+    if (entries.length === 0) return null;
+    entries.sort(([, a], [, b]) => b - a);
+    return { format: entries[0][0], score: entries[0][1] };
+  };
+
+  const igTop = pickTop(w.igFormatScores);
+  const tiktokTop = pickTop(w.tiktokFormatScores);
+  const mergedTop = pickTop(w.formatScores);
+
+  const mergedSource = mergedTop && w.formatScoreSource
+    ? w.formatScoreSource[mergedTop.format] || 'unknown'
+    : 'unknown';
+
+  const discrepancy = igTop && tiktokTop && igTop.format !== tiktokTop.format;
+
   return {
-    active: abTests.activeTests || [],
-    completed: abTests.completedTests || [],
-    readyForDecision: (abTests.activeTests || []).filter(t => t.status === 'ready_for_decision'),
+    available: true,
+    lastUpdated: w.lastUpdated,
+    igTop,
+    tiktokTop,
+    mergedTop,
+    mergedSource,
+    discrepancy,
+    killedFormats: w.killedFormats || [],
+    recommendations: w.recommendations || [],
+    destinationScores: w.destinationScores || {},
   };
 }
 
-// ── GitHub Actions Run Data ──────────────────────────────────────────────────
+function collectAngleState() {
+  const st = loadJSON(join(REELS_TMP, 'angle-state.json')) || {};
+  // Format: { library: { recentIds: [...] } } — latest ID used is the LAST element.
+  const yesterday = {};
+  for (const [lib, val] of Object.entries(st)) {
+    const recent = val?.recentIds || [];
+    if (recent.length > 0) {
+      yesterday[lib] = recent[recent.length - 1];
+    }
+  }
+  return { raw: st, yesterday };
+}
 
-function collectWorkflowErrors() {
-  // This would ideally parse GitHub Actions API, but for now we check
-  // local log markers in data files
-  const errors = [];
+function collectArticleData() {
+  const scores = loadJSON(join(DATA_DIR, 'article-scores.json'));
+  return {
+    articles: scores?.scores || [],
+    total: (scores?.scores || []).length,
+    generatedAt: scores?.timestamp || null,
+  };
+}
 
-  // Check if key data files are stale (indicating workflow failures)
-  const checkFiles = [
-    { path: join(DATA_DIR, 'article-scores.json'), name: 'Content Intelligence' },
-    { path: join(DATA_DIR, 'competitor-report.json'), name: 'Competitor Monitor' },
-    { path: join(REELS_DATA, 'trend-priorities.json'), name: 'Trends Scanner' },
-    { path: join(REELS_DATA, 'performance-weights.json'), name: 'Performance Scorer' },
+function collectNextArticle() {
+  const q = loadJSON(join(DATA_DIR, 'next-articles-queue.json'));
+  if (q?.queue?.length) return q.queue[0];
+  const gaps = loadJSON(join(DATA_DIR, 'content-gaps.json'));
+  if (gaps?.gaps?.length) {
+    const g = gaps.gaps[0];
+    return {
+      topic: g.keyword || g.topic || g.query || '(gap)',
+      priority: g.priority || 'P2',
+      articleType: 'gap-fill',
+      context: { reason: `Content gap: ${g.category || g.type || 'opportunity'}` },
+    };
+  }
+  return null;
+}
+
+function collectLinkbuildingData() {
+  const logPath = join(DATA_DIR, 'linkbuilding-log.jsonl');
+  const all = loadJSONL(logPath);
+  const last24h = all.filter(e => isLast24h(e.date));
+  const quoraLast24h = last24h.filter(e => e.platform === 'quora_fr');
+  const quoraFailures = quoraLast24h.filter(e => !e.success);
+  const quoraWithLinkLast24h = quoraLast24h.filter(e => e.success && e.hasLink);
+  return {
+    last24hCount: last24h.length,
+    quoraLast24h: quoraLast24h.length,
+    quoraFailures: quoraFailures.length,
+    quoraWithLink24h: quoraWithLinkLast24h.length,
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Action builder — the core decision engine (Section 3)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function pickRefreshCandidate(articles) {
+  if (!articles.length) return null;
+  // Prefer revenue-bearing articles (frShare ≥ 0.25) whose composite score is low
+  // OR who lost ≥ 10 pts in a week.
+  const pool = articles.filter(a => {
+    const frShare = a.signals?.frShare ?? 0;
+    const score = a.compositeScore ?? 100;
+    return frShare >= 0.25 && score < 50;
+  });
+  const ranked = (pool.length ? pool : articles)
+    .slice()
+    .sort((a, b) => (a.compositeScore ?? 100) - (b.compositeScore ?? 100));
+  return ranked[0] || null;
+}
+
+function pickReelSuggestion(perfWeights, angleState) {
+  if (!perfWeights.available) return null;
+  const top = perfWeights.tiktokTop || perfWeights.mergedTop || perfWeights.igTop;
+  if (!top) return null;
+  const [topDest] = Object.entries(perfWeights.destinationScores || {})
+    .sort(([, a], [, b]) => b - a);
+  const angleLib = top.format === 'versus' ? 'versus' : top.format === 'avantapres' ? 'avantapres' : null;
+  const lastAngle = angleLib ? angleState.yesterday[angleLib] : null;
+  return {
+    format: top.format,
+    formatScore: top.score,
+    destination: topDest ? topDest[0] : 'vietnam',
+    lastAngle,
+    rotateFrom: lastAngle
+      ? `last used: "${lastAngle}" — picker will pick next`
+      : `angle library untapped — picker will pick first`,
+  };
+}
+
+function pickWidgetOpp(widgetAudit, articles) {
+  if (!widgetAudit.available) return null;
+  const ops = widgetAudit.highOpportunities || [];
+  if (!ops.length) return null;
+  // Sort by article compositeScore desc (high-traffic first)
+  const scoreBySlug = new Map(articles.map(a => [a.slug, a.compositeScore || 0]));
+  const sorted = [...ops].sort((a, b) =>
+    (scoreBySlug.get(b.slug) || b.score || 0) - (scoreBySlug.get(a.slug) || a.score || 0)
+  );
+  return sorted[0];
+}
+
+function buildActions({ articles, perfWeights, widgetAudit, angleState }) {
+  const actions = [];
+
+  const refresh = pickRefreshCandidate(articles);
+  if (refresh) {
+    actions.push({
+      type: 'refresh',
+      title: 'Rafraichir',
+      slug: refresh.slug,
+      articleTitle: refresh.title,
+      score: refresh.compositeScore,
+      frShare: refresh.signals?.frShare ?? 0,
+      url: `https://flashvoyage.com/${refresh.slug}/`,
+      editUrl: refresh.wpId ? `https://flashvoyage.com/wp-admin/post.php?post=${refresh.wpId}&action=edit` : null,
+      rationale: `Score ${refresh.compositeScore} · frShare ${Math.round((refresh.signals?.frShare || 0) * 100)}%`,
+    });
+  }
+
+  const next = collectNextArticle();
+  if (next) {
+    actions.push({
+      type: 'write',
+      title: 'Ecrire',
+      topic: next.topic,
+      priority: next.priority,
+      rationale: next.context?.reason || next.articleType || 'calendar rotation',
+    });
+  }
+
+  // Widget opportunity if there are real HIGH opps, else reel suggestion
+  const widgetOpp = pickWidgetOpp(widgetAudit, articles);
+  const reel = pickReelSuggestion(perfWeights, angleState);
+  if (widgetOpp) {
+    actions.push({
+      type: 'widget',
+      title: 'Ajouter widget',
+      slug: widgetOpp.slug,
+      articleTitle: widgetOpp.title,
+      widgetId: widgetOpp.recommendedWidgetId,
+      vertical: widgetOpp.vertical,
+      url: `https://flashvoyage.com/${widgetOpp.slug}/`,
+      rationale: `${widgetOpp.vertical} widget missing · article score ${widgetOpp.score}`,
+    });
+  } else if (reel) {
+    actions.push({
+      type: 'reel',
+      title: 'Produire reel',
+      format: reel.format,
+      destination: reel.destination,
+      rationale: `TikTok top format (score ${reel.formatScore}) · ${reel.rotateFrom}`,
+    });
+  }
+
+  return actions.slice(0, 3);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Anomaly detectors (Section 1)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function buildAnomalies({ tokens, wfRuns, scoreDelta, widgetAudit, costs, autoApply, linkbuilding }) {
+  const anomalies = [];
+
+  // Tokens expiring
+  for (const t of tokens.warnings) {
+    anomalies.push({
+      severity: t.urgent ? 'critical' : 'warning',
+      icon: '🔑',
+      text: `Token <b>${t.platform}</b> expire dans ${t.daysLeft}j (${t.expiresAt.slice(0, 10)})`,
+      action: 'Refresh manually',
+    });
+  }
+
+  // Workflow failures
+  if (wfRuns?.failed24h?.length) {
+    // Deduplicate by workflow name (keep most recent failure)
+    const byName = new Map();
+    for (const r of wfRuns.failed24h) {
+      if (!byName.has(r.name) || new Date(r.created_at) > new Date(byName.get(r.name).created_at)) {
+        byName.set(r.name, r);
+      }
+    }
+    for (const r of byName.values()) {
+      anomalies.push({
+        severity: 'critical',
+        icon: '⚙️',
+        text: `Workflow <b>${r.name}</b> failed at ${new Date(r.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Bangkok' })}`,
+        action: `<a href="${r.html_url}" style="color:inherit;text-decoration:underline">View run</a>`,
+      });
+    }
+  }
+
+  // Score drops ≥ 10 pts WoW
+  if (scoreDelta?.drops?.length) {
+    for (const d of scoreDelta.drops.slice(0, 3)) {
+      anomalies.push({
+        severity: 'warning',
+        icon: '📉',
+        text: `Score drop <b>${d.slug}</b>: ${d.prev} → ${d.current} (${d.delta})`,
+        action: 'Refresh candidate',
+      });
+    }
+  }
+
+  // Fake cards detected
+  if (widgetAudit.available && (widgetAudit.fakeCards || []).length > 0) {
+    anomalies.push({
+      severity: 'critical',
+      icon: '🚨',
+      text: `<b>${widgetAudit.fakeCards.length}</b> fake card${widgetAudit.fakeCards.length > 1 ? 's' : ''} detected (.fv-faq-item without Travelpayouts script)`,
+      action: 'Run partner-widget-audit',
+    });
+  }
+
+  // API errors in cost-history
+  if (costs.errors24h?.length) {
+    anomalies.push({
+      severity: 'warning',
+      icon: '🔴',
+      text: `<b>${costs.errors24h.length}</b> LLM error${costs.errors24h.length > 1 ? 's' : ''} in last 24h`,
+      action: 'Check cost-history.jsonl',
+    });
+  }
+
+  // Auto-apply failures
+  if (autoApply.failures24h?.length) {
+    anomalies.push({
+      severity: 'warning',
+      icon: '⚠️',
+      text: `<b>${autoApply.failures24h.length}</b> auto-apply failure${autoApply.failures24h.length > 1 ? 's' : ''} in last 24h`,
+      action: 'Check auto-edit-log.jsonl',
+    });
+  }
+
+  // Linkbuilding anomaly (only if nothing shipped + bot used to work)
+  if (linkbuilding.quoraFailures > 3 && linkbuilding.quoraWithLink24h === 0) {
+    anomalies.push({
+      severity: 'warning',
+      icon: '🔗',
+      text: `Quora bot: <b>${linkbuilding.quoraFailures}</b> failures, 0 posts with link`,
+      action: 'Check Quora login session',
+    });
+  }
+
+  return anomalies;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Growth signals builder (Section 2)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function buildGrowthSignals({ ga4Wow, perfWeights, angleState }) {
+  return {
+    ga4Wow,
+    perfWeights,
+    angleState,
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Monetization health (Section 4)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function buildMonetization({ widgetAudit, articles }) {
+  if (!widgetAudit.available) return { available: false };
+  const s = widgetAudit.summary || {};
+  const totalArticles = articles.length || widgetAudit.summary?.articleCount || 133;
+  const articlesWithWidget = s.articlesWithOnePlusRealWidget || 0;
+  const coveragePct = totalArticles > 0 ? Math.round((articlesWithWidget / totalArticles) * 100) : 0;
+
+  // Top leak: high-opportunity HIGH-level articles sorted by article score
+  const scoreBySlug = new Map(articles.map(a => [a.slug, a.compositeScore || 0]));
+  const topLeaks = (widgetAudit.highOpportunities || [])
+    .map(o => ({ ...o, articleScore: scoreBySlug.get(o.slug) || o.score || 0 }))
+    .sort((a, b) => b.articleScore - a.articleScore)
+    .slice(0, 3);
+
+  return {
+    available: true,
+    coveragePct,
+    articlesWithWidget,
+    totalArticles,
+    fakeCards: widgetAudit.fakeCards?.length || 0,
+    topLeaks,
+    verticalStats: widgetAudit.verticalStats,
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Pipeline health (Section 5)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function buildPipelineHealth({ costs, wfRuns, autoApply, actionsUsage }) {
+  const KEY_WORKFLOWS = [
+    'Content Intelligence Engine',
+    'Daily Analytics',
+    'Publish Reels',
+    'Publish Article',
+    'Daily Founder Digest Email',
   ];
 
-  for (const { path, name } of checkFiles) {
-    const data = loadJSON(path);
-    if (data?.timestamp || data?.generatedAt || data?.fetchedAt) {
-      const ts = data.timestamp || data.generatedAt || data.fetchedAt;
-      const age = daysAgo(ts);
-      if (age > 2) {
-        errors.push({
-          module: name,
-          lastRun: ts,
-          daysStale: age,
-          severity: age > 7 ? 'critical' : 'warning',
+  const lastRuns = [];
+  if (wfRuns?.latestByWorkflow) {
+    for (const name of KEY_WORKFLOWS) {
+      const run = wfRuns.latestByWorkflow.get(name);
+      if (run) {
+        lastRuns.push({
+          name,
+          conclusion: run.conclusion,
+          status: run.status,
+          createdAt: run.created_at,
+          ageHours: (Date.now() - new Date(run.created_at).getTime()) / 3600000,
         });
+      } else {
+        lastRuns.push({ name, conclusion: null, status: 'unknown', createdAt: null });
       }
     }
   }
 
-  return errors;
+  return {
+    cost24h: costs.cost24h,
+    avg7d: costs.avg7d,
+    deltaPct: costs.deltaPct,
+    costFlagged: Math.abs(costs.deltaPct) > 30 && costs.cost24h > 0.1,
+    autoApply24h: autoApply.last24h.length,
+    autoApplyTotal: autoApply.total,
+    lastRuns,
+    actionsUsage,
+  };
 }
 
-// ── HTML Email Generator ─────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// HTML rendering (mobile-first, single column, max-width 600px)
+// ─────────────────────────────────────────────────────────────────────────────
+
+const HDR_STYLE = 'font-size:15px;font-weight:700;color:#1a1a2e;margin:0 0 10px 0;padding-bottom:6px;border-bottom:2px solid #FFD700';
+const FOOT_STYLE = 'font-size:11px;color:#888;margin-top:6px;font-style:italic';
+const ROW_STYLE = 'padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px';
+const PILL = (color, text) => `<span style="background:${color};color:white;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;margin-right:4px">${text}</span>`;
+
+function renderAnomalies(anomalies) {
+  if (!anomalies.length) {
+    return `<div style="font-size:13px;color:#16a34a;padding:8px 0">✓ All systems nominal</div>`;
+  }
+  const visible = anomalies.slice(0, 7);
+  const hidden = anomalies.length - visible.length;
+  const rows = visible.map(a => {
+    const color = a.severity === 'critical' ? '#DC2626' : '#F59E0B';
+    return `<div style="${ROW_STYLE};display:flex;gap:8px;align-items:flex-start">
+      <span style="flex-shrink:0;font-size:14px">${a.icon}</span>
+      <div style="flex:1">
+        <div>${PILL(color, a.severity.toUpperCase())}<span style="color:#333">${a.text}</span></div>
+        <div style="font-size:11px;color:#888;margin-top:2px">→ ${a.action}</div>
+      </div>
+    </div>`;
+  }).join('');
+  const more = hidden > 0
+    ? `<div style="font-size:11px;color:#888;padding:6px 0">+ ${hidden} more</div>`
+    : '';
+  return rows + more;
+}
+
+function renderGrowth(growth) {
+  const { ga4Wow, perfWeights, angleState } = growth;
+  const parts = [];
+
+  // WoW gainers / losers
+  if (ga4Wow && (ga4Wow.gainers.length || ga4Wow.losers.length)) {
+    const renderRow = (r, color) => {
+      const arrow = r.delta > 0 ? '▲' : '▼';
+      return `<div style="${ROW_STYLE}">
+        <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">
+          <span style="font-size:12px;color:#333;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:360px">${r.slug || r.pagePath}</span>
+          <span style="color:${color};font-size:12px;font-weight:600;white-space:nowrap">${r.prevSessions} → ${r.thisSessions} ${arrow} ${pct(r.deltaPct)}</span>
+        </div>
+      </div>`;
+    };
+
+    if (ga4Wow.gainers.length) {
+      parts.push(`<div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:#16a34a;margin-bottom:4px">FR gainers cette semaine</div>${ga4Wow.gainers.map(r => renderRow(r, '#16a34a')).join('')}</div>`);
+    }
+    if (ga4Wow.losers.length) {
+      parts.push(`<div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:#F59E0B;margin-bottom:4px">FR losers — refresh candidates</div>${ga4Wow.losers.map(r => renderRow(r, '#F59E0B')).join('')}</div>`);
+    }
+  } else {
+    parts.push(`<div style="font-size:12px;color:#888;margin-bottom:10px">GA4 WoW indisponible (service account manquant ou trop peu de signal FR)</div>`);
+  }
+
+  // Top format per platform
+  if (perfWeights.available) {
+    const { igTop, tiktokTop, mergedTop, mergedSource, discrepancy } = perfWeights;
+    const igStr = igTop ? `<b>${igTop.format}</b> (${igTop.score.toFixed(1)})` : '<span style="color:#888">—</span>';
+    const ttStr = tiktokTop ? `<b>${tiktokTop.format}</b> (${tiktokTop.score.toFixed(1)})` : '<span style="color:#888">—</span>';
+    const mergedStr = mergedTop ? `<b>${mergedTop.format}</b> (src: ${mergedSource})` : '<span style="color:#888">—</span>';
+    parts.push(`<div style="background:#f8f9fa;border-radius:6px;padding:8px 10px;margin-bottom:10px">
+      <div style="font-size:12px;font-weight:600;margin-bottom:4px">Top format par plateforme</div>
+      <div style="font-size:12px;line-height:1.7">
+        IG: ${igStr}<br>
+        TikTok: ${ttStr}<br>
+        Merged (60/40): ${mergedStr}
+      </div>
+      ${discrepancy ? '<div style="font-size:11px;color:#DC2626;margin-top:6px">🚨 Platforms disagree — check /content tab to investigate</div>' : ''}
+    </div>`);
+  }
+
+  // Angles used yesterday
+  if (angleState.yesterday && Object.keys(angleState.yesterday).length > 0) {
+    const list = Object.entries(angleState.yesterday)
+      .map(([lib, id]) => `${lib}: <code style="background:#eee;padding:1px 4px;border-radius:3px">${id}</code>`).join(' · ');
+    parts.push(`<div style="font-size:11px;color:#666;margin-bottom:4px">Angles utilisés hier: ${list}</div>`);
+  } else {
+    parts.push(`<div style="font-size:11px;color:#888;margin-bottom:4px">Aucun angle utilisé récemment (picker n'a pas tourné)</div>`);
+  }
+
+  // Footer action
+  const footer = ga4Wow?.losers?.length
+    ? `→ Rafraichir les ${Math.min(ga4Wow.losers.length, 3)} losers cette semaine`
+    : perfWeights.tiktokTop
+      ? `→ Doubler la mise sur le top format TikTok (${perfWeights.tiktokTop.format})`
+      : `→ Publier plus de reels pour générer du signal`;
+  parts.push(`<div style="${FOOT_STYLE}">${footer}</div>`);
+
+  return parts.join('');
+}
+
+function renderActions(actions) {
+  if (!actions.length) {
+    return `<div style="font-size:13px;color:#888;padding:8px 0">Pas de données suffisantes pour suggérer 3 actions — vérifier les pipelines intelligence / analytics.</div>`;
+  }
+  const icons = { refresh: '🔄', write: '✍️', widget: '💰', reel: '🎬' };
+  const colors = { refresh: '#F59E0B', write: '#2563EB', widget: '#16a34a', reel: '#7c3aed' };
+  return actions.map((a, i) => {
+    const icon = icons[a.type] || '→';
+    const color = colors[a.type] || '#333';
+    let body = '';
+    if (a.type === 'refresh') {
+      body = `<div style="font-size:13px;color:#333;margin-bottom:2px"><b>${a.articleTitle || a.slug}</b></div>
+        <div style="font-size:11px;color:#666">${a.rationale}</div>
+        ${a.editUrl ? `<div style="font-size:11px;margin-top:4px"><a href="${a.editUrl}" style="color:${color};text-decoration:none">Do it → Edit in WP</a></div>` : `<div style="font-size:11px;margin-top:4px"><a href="${a.url}" style="color:${color};text-decoration:none">Do it → View article</a></div>`}`;
+    } else if (a.type === 'write') {
+      body = `<div style="font-size:13px;color:#333;margin-bottom:2px"><b>${a.topic}</b> ${PILL('#6366f1', a.priority)}</div>
+        <div style="font-size:11px;color:#666">${a.rationale}</div>
+        <div style="font-size:11px;margin-top:4px"><a href="https://github.com/peterbono/flashvoyage-ultra-content/actions/workflows/publish-article.yml" style="color:${color};text-decoration:none">Do it → Dispatch publish-article</a></div>`;
+    } else if (a.type === 'widget') {
+      body = `<div style="font-size:13px;color:#333;margin-bottom:2px"><b>${a.articleTitle || a.slug}</b></div>
+        <div style="font-size:11px;color:#666">${a.rationale} · widget ID <code style="background:#eee;padding:1px 4px;border-radius:3px">${a.widgetId}</code></div>
+        <div style="font-size:11px;margin-top:4px"><a href="${a.url}" style="color:${color};text-decoration:none">Do it → View article</a></div>`;
+    } else if (a.type === 'reel') {
+      body = `<div style="font-size:13px;color:#333;margin-bottom:2px">Format <b>${a.format}</b>, destination <b>${a.destination}</b></div>
+        <div style="font-size:11px;color:#666">${a.rationale}</div>
+        <div style="font-size:11px;margin-top:4px"><a href="https://github.com/peterbono/flashvoyage-ultra-content/actions/workflows/publish-reels.yml" style="color:${color};text-decoration:none">Do it → Dispatch publish-reels</a></div>`;
+    }
+    return `<div style="border-left:3px solid ${color};padding:8px 12px;margin-bottom:${i < actions.length - 1 ? 10 : 0}px;background:#fafafa;border-radius:0 6px 6px 0">
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:${color};margin-bottom:4px">${icon} ${a.title}</div>
+      ${body}
+    </div>`;
+  }).join('');
+}
+
+function renderMonetization(m) {
+  if (!m.available) {
+    return `<div style="font-size:12px;color:#888">Audit widget non disponible — lancer partner-widget-audit.</div>`;
+  }
+  const deltaBadge = m.fakeCards > 0 ? PILL('#DC2626', `${m.fakeCards} FAKE CARDS`) : '';
+  const leakRows = m.topLeaks.map(l => `
+    <div style="${ROW_STYLE}">
+      <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">
+        <span style="font-size:12px;color:#333;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:340px">${l.title || l.slug}</span>
+        <span style="font-size:11px;color:#16a34a;white-space:nowrap">+${l.vertical} widget</span>
+      </div>
+      <div style="font-size:10px;color:#888">article score ${l.articleScore} · widget ID ${l.recommendedWidgetId}</div>
+    </div>`).join('');
+
+  return `
+    <div style="margin-bottom:10px">
+      <div style="font-size:12px;color:#333">Widget coverage: <b>${m.articlesWithWidget} / ${m.totalArticles} (${m.coveragePct}%)</b> ${deltaBadge}</div>
+    </div>
+    ${m.topLeaks.length ? `<div style="margin-bottom:8px">
+      <div style="font-size:12px;font-weight:600;margin-bottom:4px">Top 3 articles sans widget (opportunity cost)</div>
+      ${leakRows}
+    </div>` : '<div style="font-size:12px;color:#16a34a;padding:4px 0">✓ Pas d\'opportunité HIGH restante sur les top articles</div>'}
+    <div style="${FOOT_STYLE}">→ Déployer un widget sur le #1 article de la liste aujourd\'hui</div>`;
+}
+
+function renderPipelineHealth(h) {
+  const allHealthy = (h.lastRuns || []).every(r => r.conclusion === 'success' || r.conclusion === null) && !h.costFlagged;
+  if (allHealthy) {
+    return `<div style="font-size:12px;color:#16a34a">✓ All pipelines healthy · ${formatUSD(h.cost24h)} spent in last 24h</div>`;
+  }
+
+  const costStr = h.avg7d > 0
+    ? `${formatUSD(h.cost24h)} <span style="color:${h.costFlagged ? '#DC2626' : '#888'};font-size:11px">(${pct(h.deltaPct)} vs 7d avg ${formatUSD(h.avg7d)})</span>`
+    : formatUSD(h.cost24h);
+
+  const runRows = (h.lastRuns || []).map(r => {
+    const color = r.conclusion === 'success' ? '#16a34a'
+      : r.conclusion === 'failure' ? '#DC2626'
+      : r.conclusion === null ? '#888'
+      : '#F59E0B';
+    const badge = r.conclusion === 'success' ? '✓'
+      : r.conclusion === 'failure' ? '✗'
+      : '—';
+    const when = r.createdAt
+      ? `${Math.round(r.ageHours)}h ago`
+      : 'never';
+    return `<div style="font-size:11px;padding:2px 0"><span style="color:${color};font-weight:600">${badge}</span> ${r.name}: ${when}</div>`;
+  }).join('');
+
+  const usage = h.actionsUsage?.total_minutes_used
+    ? `Actions minutes ce mois: ${h.actionsUsage.total_minutes_used} / ${h.actionsUsage.included_minutes || '∞'}`
+    : '';
+
+  return `
+    <div style="font-size:12px;color:#333;margin-bottom:6px">LLM cost 24h: <b>${costStr}</b></div>
+    <div style="margin-bottom:6px">${runRows || '<span style="font-size:11px;color:#888">GitHub Actions API indisponible (GITHUB_TOKEN manquant)</span>'}</div>
+    <div style="font-size:11px;color:#666">Auto-apply LOW-tier 24h: <b>${h.autoApply24h}</b> · cumul: ${h.autoApplyTotal}</div>
+    ${usage ? `<div style="font-size:11px;color:#666">${usage}</div>` : ''}`;
+}
 
 function generateDigestHTML(data) {
   const now = new Date();
@@ -432,639 +948,160 @@ function generateDigestHTML(data) {
     day: 'numeric',
   });
 
-  const { reels, articles, ga, revenue, intel, costs, tokens, abTests, errors, linkbuilding, ga4Live, aiBrief } = data;
+  const { anomalies, growth, actions, monetization, pipelineHealth } = data;
 
-  // Build sections
-  const sections = [];
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // SECTION 1: OVERNIGHT OPERATIONS
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  let overnightHTML = '';
-
-  // Reels published
-  if (reels.publishedToday > 0) {
-    const reelRows = reels.last24h.map(r => {
-      const format = (r.type || 'unknown').toUpperCase();
-      const dest = r.destination || r.postId || '?';
-      return `<tr>
-        <td style="padding:4px 8px; border-bottom:1px solid #f0f0f0"><span style="background:#FFF3CD; color:#856404; padding:2px 6px; border-radius:4px; font-size:11px; font-weight:600">${format}</span></td>
-        <td style="padding:4px 8px; border-bottom:1px solid #f0f0f0; font-size:13px">${dest}</td>
-        <td style="padding:4px 8px; border-bottom:1px solid #f0f0f0; font-size:11px; color:#666">${r.date ? new Date(r.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '?'}</td>
-      </tr>`;
-    }).join('');
-
-    overnightHTML += `
-      <div style="margin-bottom:12px">
-        <div style="font-size:14px; font-weight:600; margin-bottom:6px">
-          <span style="font-size:16px">&#127916;</span> ${reels.publishedToday} Reel${reels.publishedToday > 1 ? 's' : ''} publie${reels.publishedToday > 1 ? 's' : ''}
-        </div>
-        <table style="width:100%; border-collapse:collapse; font-family:monospace; font-size:13px">
-          <tr style="background:#f8f9fa">
-            <th style="text-align:left; padding:4px 8px; font-size:11px; color:#666">FORMAT</th>
-            <th style="text-align:left; padding:4px 8px; font-size:11px; color:#666">SUJET</th>
-            <th style="text-align:left; padding:4px 8px; font-size:11px; color:#666">HEURE</th>
-          </tr>
-          ${reelRows}
-        </table>
-      </div>`;
-  } else {
-    overnightHTML += `
-      <div style="margin-bottom:12px">
-        <div style="font-size:14px; color:#666">
-          <span style="font-size:16px">&#127916;</span> Aucun reel publie (total historique : ${reels.total})
-        </div>
-      </div>`;
-  }
-
-  // New articles
-  if (articles.newArticles.length > 0) {
-    overnightHTML += `
-      <div style="margin-bottom:12px">
-        <div style="font-size:14px; font-weight:600">
-          <span style="font-size:16px">&#128221;</span> ${articles.newArticles.length} article${articles.newArticles.length > 1 ? 's' : ''} publie${articles.newArticles.length > 1 ? 's' : ''}
-        </div>
-        ${articles.newArticles.map(a => `<div style="font-size:13px; padding:2px 0 2px 24px; color:#333">${a.title || a.slug}</div>`).join('')}
-      </div>`;
-  }
-
-  // Errors / Stale workflows
-  if (errors.length > 0) {
-    overnightHTML += `
-      <div style="margin-bottom:12px; background:#FEF2F2; border-radius:8px; padding:10px 12px">
-        <div style="font-size:14px; font-weight:600; color:#DC2626">
-          <span style="font-size:16px">&#9888;&#65039;</span> ${errors.length} alerte${errors.length > 1 ? 's' : ''} pipeline
-        </div>
-        ${errors.map(e => `
-          <div style="font-size:12px; padding:3px 0 3px 24px; color:#991B1B">
-            <strong>${e.module}</strong> — donne es vieilles de ${e.daysStale}j
-            ${e.severity === 'critical' ? '<span style="background:#DC2626; color:white; padding:1px 5px; border-radius:3px; font-size:10px; margin-left:4px">CRITIQUE</span>' : ''}
-          </div>`).join('')}
-      </div>`;
-  }
-
-  sections.push({
-    icon: '&#9881;&#65039;',
-    title: 'Operations de la nuit',
-    content: overnightHTML || '<div style="font-size:13px; color:#999">Aucune activite detectee</div>',
-  });
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // AI BRIEF (CEO morning briefing)
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  if (aiBrief) {
-    sections.unshift({
-      icon: '&#129302;',
-      title: 'Brief CEO du jour',
-      content: `<div style="background:#FFFBEB; border-left:4px solid #FFD700; padding:12px 16px; border-radius:0 8px 8px 0; font-size:13px; line-height:1.6; white-space:pre-line">${aiBrief}</div>`,
-    });
-  }
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // GA4 LIVE TRAFFIC
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  if (ga4Live) {
-    const dailyRows = (ga4Live.daily || []).map(d =>
-      `<tr><td style="padding:3px 8px;font-size:12px">${d.date}</td><td style="padding:3px 8px;font-size:12px;font-weight:700">${d.sessions}</td><td style="padding:3px 8px;font-size:12px">${d.users}</td><td style="padding:3px 8px;font-size:12px">${d.pageviews}</td></tr>`
-    ).join('');
-    const sourceRows = (ga4Live.sources || []).map(s =>
-      `<span style="background:#f0f4f8;padding:2px 8px;border-radius:4px;font-size:11px;margin:2px">${s.source}: <b>${s.sessions}</b></span>`
-    ).join(' ');
-
-    sections.push({
-      icon: '&#128200;',
-      title: 'Traffic GA4 (3 derniers jours)',
-      content: `
-        <table style="width:100%;border-collapse:collapse;font-family:monospace;margin-bottom:8px">
-          <tr style="background:#f8f9fa"><th style="text-align:left;padding:4px 8px;font-size:10px">DATE</th><th style="text-align:left;padding:4px 8px;font-size:10px">SESSIONS</th><th style="text-align:left;padding:4px 8px;font-size:10px">USERS</th><th style="text-align:left;padding:4px 8px;font-size:10px">PV</th></tr>
-          ${dailyRows}
-        </table>
-        <div style="font-size:11px;color:#666;margin-top:4px"><b>Sources:</b> ${sourceRows}</div>`,
-    });
-  }
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // LINKBUILDING
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  if (linkbuilding) {
-    const todayPosts = linkbuilding.today || [];
-    const todayDetail = todayPosts.length > 0
-      ? todayPosts.map(p => `<div style="font-size:12px;padding:2px 0">• ${p.platform} ${p.success ? '✅' : '❌'} ${p.search || p.thread || ''}</div>`).join('')
-      : '<div style="font-size:12px;color:#999">Aucun post aujourd\'hui</div>';
-
-    sections.push({
-      icon: '&#128279;',
-      title: 'Linkbuilding',
-      content: `
-        <div style="display:flex;gap:16px;margin-bottom:8px">
-          <div><span style="font-size:20px;font-weight:700;color:#333">${linkbuilding.quoraTotal}</span> <span style="font-size:11px;color:#888">Quora</span></div>
-          <div><span style="font-size:20px;font-weight:700;color:#333">${linkbuilding.vfTotal}</span> <span style="font-size:11px;color:#888">VF</span></div>
-          <div><span style="font-size:20px;font-weight:700;color:#FFD700">${linkbuilding.quoraWithLink}</span> <span style="font-size:11px;color:#888">avec lien</span></div>
-        </div>
-        <div style="font-size:11px;font-weight:600;margin-bottom:4px">Aujourd'hui :</div>
-        ${todayDetail}`,
-    });
-  }
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // SECTION 2: PERFORMANCE SNAPSHOT
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  let perfHTML = '';
-
-  // GA4 summary
-  if (ga.available && ga.audience) {
-    const a = ga.audience;
-    perfHTML += `
-      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px">
-        <div style="flex:1; min-width:80px; background:#f0fdf4; border-radius:8px; padding:10px; text-align:center">
-          <div style="font-size:11px; color:#666; text-transform:uppercase; letter-spacing:0.5px">Top Pays</div>
-          <div style="font-size:18px; font-weight:700; color:#16a34a">${a.byCountry?.[0]?.country || '?'}</div>
-          <div style="font-size:10px; color:#888">${a.byCountry?.[0]?.percentage || 0}% du trafic</div>
-        </div>
-        <div style="flex:1; min-width:80px; background:#eff6ff; border-radius:8px; padding:10px; text-align:center">
-          <div style="font-size:11px; color:#666; text-transform:uppercase; letter-spacing:0.5px">Top Canal</div>
-          <div style="font-size:18px; font-weight:700; color:#2563eb">${a.byChannel?.[0]?.channel || '?'}</div>
-          <div style="font-size:10px; color:#888">${a.byChannel?.[0]?.sessions || 0} sessions</div>
-        </div>
-        <div style="flex:1; min-width:80px; background:#fefce8; border-radius:8px; padding:10px; text-align:center">
-          <div style="font-size:11px; color:#666; text-transform:uppercase; letter-spacing:0.5px">Mobile</div>
-          <div style="font-size:18px; font-weight:700; color:#ca8a04">${a.byDevice?.find(d => d.device === 'mobile')?.percentage || '?'}%</div>
-          <div style="font-size:10px; color:#888">du trafic</div>
-        </div>
-        <div style="flex:1; min-width:80px; background:#faf5ff; border-radius:8px; padding:10px; text-align:center">
-          <div style="font-size:11px; color:#666; text-transform:uppercase; letter-spacing:0.5px">Retour</div>
-          <div style="font-size:18px; font-weight:700; color:#7c3aed">${a.newVsReturning?.returningRate || 0}%</div>
-          <div style="font-size:10px; color:#888">visiteurs fideles</div>
-        </div>
-      </div>`;
-  } else {
-    perfHTML += `
-      <div style="font-size:13px; color:#999; margin-bottom:12px">
-        <span style="font-size:14px">&#128202;</span> Donnees GA4 non disponibles (verifier le workflow daily-analytics)
-      </div>`;
-  }
-
-  // Revenue
-  const rev = revenue.summary || {};
-  perfHTML += `
-    <div style="background:#fefce8; border-radius:8px; padding:10px 12px; margin-bottom:12px">
-      <div style="font-size:13px; font-weight:600; color:#854d0e; margin-bottom:4px">
-        <span style="font-size:14px">&#128176;</span> Revenus Travelpayouts
-      </div>
-      <div style="display:flex; gap:16px; flex-wrap:wrap">
-        <div>
-          <span style="font-size:11px; color:#92400e">Solde</span>
-          <div style="font-size:16px; font-weight:700; color:#854d0e">${formatEUR(rev.balance || 0)}</div>
-        </div>
-        <div>
-          <span style="font-size:11px; color:#92400e">En attente</span>
-          <div style="font-size:16px; font-weight:700; color:#ca8a04">${formatEUR(rev.pendingBalance || 0)}</div>
-        </div>
-        <div>
-          <span style="font-size:11px; color:#92400e">Clics (30j)</span>
-          <div style="font-size:16px; font-weight:700; color:#854d0e">${rev.totalClicks || 0}</div>
-        </div>
-        <div>
-          <span style="font-size:11px; color:#92400e">Conversions</span>
-          <div style="font-size:16px; font-weight:700; color:#854d0e">${rev.totalConversions || 0}</div>
-        </div>
-      </div>
-    </div>`;
-
-  // Content inventory
-  perfHTML += `
-    <div style="font-size:13px; color:#333">
-      <span style="font-size:14px">&#128218;</span> <strong>${articles.total}</strong> articles | <strong>${reels.total}</strong> reels publies au total
-    </div>`;
-
-  sections.push({
-    icon: '&#128200;',
-    title: 'Snapshot Performance',
-    content: perfHTML,
-  });
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // SECTION 3: INTELLIGENCE HIGHLIGHTS
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  let intelHTML = '';
-
-  // Content gaps
-  if (intel.gaps?.gaps?.length > 0) {
-    const topGaps = intel.gaps.gaps.slice(0, 3);
-    intelHTML += `
-      <div style="margin-bottom:12px">
-        <div style="font-size:13px; font-weight:600; margin-bottom:4px">
-          <span style="font-size:14px">&#128270;</span> Sujets manquants (content gaps)
-        </div>
-        ${topGaps.map(g => `
-          <div style="font-size:12px; padding:3px 0 3px 24px; color:#333">
-            <span style="background:#DBEAFE; color:#1E40AF; padding:1px 5px; border-radius:3px; font-size:10px">${g.type || g.category || 'gap'}</span>
-            ${g.keyword || g.topic || g.query || '?'}
-            ${g.monthlySearches ? `<span style="color:#888; font-size:11px">(~${g.monthlySearches} rech/mois)</span>` : ''}
-          </div>`).join('')}
-      </div>`;
-  }
-
-  // Competitor moves
-  if (intel.competitor?.summary) {
-    const s = intel.competitor.summary;
-    if (s.totalNew > 0) {
-      intelHTML += `
-        <div style="margin-bottom:12px">
-          <div style="font-size:13px; font-weight:600; margin-bottom:4px">
-            <span style="font-size:14px">&#128373;&#65039;</span> Mouvements concurrents
-          </div>
-          <div style="font-size:12px; padding:3px 0 3px 24px; color:#333">
-            <strong>${s.totalNew}</strong> nouveaux articles detectes
-            ${s.contentGaps > 0 ? ` dont <span style="color:#DC2626; font-weight:600">${s.contentGaps} gaps P1</span>` : ''}
-            ${s.staleRefreshes > 0 ? ` et <span style="color:#F59E0B; font-weight:600">${s.staleRefreshes} a rafraichir</span>` : ''}
-          </div>
-          ${(intel.competitor.newArticles || []).filter(a => a.priority === 'P1').slice(0, 3).map(a => `
-            <div style="font-size:11px; padding:2px 0 2px 24px; color:#666">
-              <span style="color:#DC2626; font-weight:600">P1</span> ${a.title} <span style="color:#999">(${a.competitor})</span>
-            </div>`).join('')}
-        </div>`;
-    }
-  }
-
-  // Declining articles (skip if no article data yet)
-  if (articles.declining.length > 0 && articles.total > 10) {
-    intelHTML += `
-      <div style="margin-bottom:12px">
-        <div style="font-size:13px; font-weight:600; margin-bottom:4px">
-          <span style="font-size:14px">&#128308;</span> Articles en declin
-        </div>
-        ${articles.declining.slice(0, 3).map(a => `
-          <div style="font-size:12px; padding:3px 0 3px 24px; color:#333">
-            ${a.title || a.slug}
-            <span style="color:#DC2626; font-size:11px">(fraicheur: ${((a.signals?.freshness || 0) * 100).toFixed(0)}%)</span>
-          </div>`).join('')}
-      </div>`;
-  }
-
-  // Seasonal forecast
-  if (intel.forecast?.destinations) {
-    const urgent = intel.forecast.destinations.filter(d => d.urgency === 'URGENT' || d.daysUntilPublish <= 30);
-    if (urgent.length > 0) {
-      intelHTML += `
-        <div style="margin-bottom:12px; background:#FEF2F2; border-radius:8px; padding:10px 12px">
-          <div style="font-size:13px; font-weight:600; color:#DC2626; margin-bottom:4px">
-            <span style="font-size:14px">&#128197;</span> Alertes saisonnieres URGENTES
-          </div>
-          ${urgent.slice(0, 3).map(d => `
-            <div style="font-size:12px; padding:3px 0 3px 24px; color:#991B1B">
-              Publier <strong>${d.destination}</strong> avant le <strong>${d.publishBy || '?'}</strong>
-              <span style="font-size:11px; color:#999">(pic en ${d.peakMonth || '?'})</span>
-            </div>`).join('')}
-        </div>`;
-    }
-  }
-
-  if (!intelHTML) {
-    intelHTML = '<div style="font-size:13px; color:#999">Aucune alerte intelligence aujourd\'hui</div>';
-  }
-
-  sections.push({
-    icon: '&#129504;',
-    title: 'Intelligence editoriale',
-    content: intelHTML,
-  });
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // SECTION 4: COSTS
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  const fmtTokens = (n) => n > 1000000 ? `${(n/1000000).toFixed(1)}M` : n > 1000 ? `${(n/1000).toFixed(1)}k` : String(n);
-  const providerBreakdown = Object.entries(costs.byProvider || {}).map(([k, v]) =>
-    `<span style="font-size:11px; color:#666">${k}: ${formatUSD(v)}</span>`
-  ).join(' &middot; ') || '<span style="font-size:11px; color:#999">aucun appel</span>';
-
-  let costsHTML = `
-    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px">
-      <div style="flex:1; min-width:90px; background:#f8f9fa; border-radius:8px; padding:10px; text-align:center">
-        <div style="font-size:10px; color:#666; text-transform:uppercase">24h</div>
-        <div style="font-size:20px; font-weight:700; color:#333">${formatUSD(costs.totalCostToday)}</div>
-        <div style="font-size:10px; color:#888">${costs.callsToday} appels</div>
-      </div>
-      <div style="flex:1; min-width:90px; background:#f8f9fa; border-radius:8px; padding:10px; text-align:center">
-        <div style="font-size:10px; color:#666; text-transform:uppercase">7 jours</div>
-        <div style="font-size:20px; font-weight:700; color:#333">${formatUSD(costs.totalCostWeek)}</div>
-        <div style="font-size:10px; color:#888">${costs.callsWeek} appels</div>
-      </div>
-      <div style="flex:1; min-width:90px; background:#f8f9fa; border-radius:8px; padding:10px; text-align:center">
-        <div style="font-size:10px; color:#666; text-transform:uppercase">30 jours</div>
-        <div style="font-size:20px; font-weight:700; color:#333">${formatUSD(costs.totalCostMonth)}</div>
-        <div style="font-size:10px; color:#888">${costs.callsMonth} appels</div>
-      </div>
-    </div>
-    <div style="background:#f0f4f8; border-radius:6px; padding:8px 10px; margin-bottom:6px">
-      <div style="font-size:11px; font-weight:600; color:#555; margin-bottom:4px">Repartition par provider (30j)</div>
-      <div>${providerBreakdown}</div>
-    </div>
-    <div style="font-size:11px; color:#888">Tokens 24h: ${fmtTokens(costs.totalTokensToday)} &middot; 7j: ${fmtTokens(costs.totalTokensWeek)} &middot; 30j: ${fmtTokens(costs.totalTokensMonth)}</div>`;
-
-  // Only show costs if data is meaningful (non-zero)
-  if (costs.totalCostMonth > 0.01) {
-    sections.push({
-      icon: '&#128184;',
-      title: 'Couts LLM (Haiku + GPT)',
-      content: costsHTML,
-    });
-  }
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // SECTION 5: ACTION ITEMS
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  let actionsHTML = '';
-  const actionItems = [];
-
-  // Token warnings
-  for (const tw of tokens.warnings) {
-    actionItems.push({
-      priority: tw.urgent ? 'P0' : 'P1',
-      icon: '&#128273;',
-      text: `Token <strong>${tw.platform}</strong> expire dans <strong>${tw.daysLeft}j</strong> (${tw.expiresAt.slice(0, 10)})`,
-      color: tw.urgent ? '#DC2626' : '#F59E0B',
-    });
-  }
-
-  // A/B tests ready for decision
-  for (const test of abTests.readyForDecision) {
-    actionItems.push({
-      priority: 'P1',
-      icon: '&#9878;&#65039;',
-      text: `A/B test <strong>${test.name || test.id}</strong> pret pour decision`,
-      color: '#2563EB',
-    });
-  }
-
-  // Competitor P1 gaps (manual review needed)
-  const p1Gaps = (intel.competitor?.newArticles || []).filter(a => a.priority === 'P1').length;
-  if (p1Gaps > 0) {
-    actionItems.push({
-      priority: 'P2',
-      icon: '&#128221;',
-      text: `<strong>${p1Gaps}</strong> gap${p1Gaps > 1 ? 's' : ''} concurrent${p1Gaps > 1 ? 's' : ''} P1 — valider le calendrier editorial`,
-      color: '#F59E0B',
-    });
-  }
-
-  // Stale data warnings
-  const criticalErrors = errors.filter(e => e.severity === 'critical');
-  for (const e of criticalErrors) {
-    actionItems.push({
-      priority: 'P0',
-      icon: '&#128680;',
-      text: `<strong>${e.module}</strong> en panne depuis ${e.daysStale}j — verifier GitHub Actions`,
-      color: '#DC2626',
-    });
-  }
-
-  if (actionItems.length > 0) {
-    actionItems.sort((a, b) => a.priority.localeCompare(b.priority));
-    actionsHTML = actionItems.map(item => `
-      <div style="padding:6px 0; border-bottom:1px solid #f0f0f0; display:flex; align-items:flex-start; gap:8px">
-        <span style="font-size:14px; flex-shrink:0">${item.icon}</span>
-        <div>
-          <span style="background:${item.color}; color:white; padding:1px 6px; border-radius:3px; font-size:10px; font-weight:600; margin-right:4px">${item.priority}</span>
-          <span style="font-size:13px; color:#333">${item.text}</span>
-        </div>
-      </div>`).join('');
-  } else {
-    actionsHTML = `
-      <div style="font-size:13px; color:#16a34a; text-align:center; padding:12px 0">
-        <span style="font-size:20px">&#9989;</span><br>
-        Aucune action manuelle requise.<br>
-        <span style="font-size:12px; color:#999">Les bots gerent tout. Profite de Bangkok.</span>
-      </div>`;
-  }
-
-  sections.push({
-    icon: '&#9997;&#65039;',
-    title: `Actions requises${actionItems.length > 0 ? ` (${actionItems.length})` : ''}`,
-    content: actionsHTML,
-  });
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // SECTION 6: MOTIVATION / FUN
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  let funHTML = '';
-
-  // Milestones
-  const milestones = [];
-  if (reels.total === 1) milestones.push('Premier reel publie !');
-  if (reels.total === 10) milestones.push('10 reels publies !');
-  if (reels.total === 50) milestones.push('50 reels publies !');
-  if (reels.total === 100) milestones.push('100 reels — triple chiffre !');
-  if (articles.total === 100) milestones.push('100 articles publies !');
-  if (articles.total === 150) milestones.push('150 articles — la machine tourne !');
-  if (articles.total === 200) milestones.push('200 articles publies !');
-
-  if (milestones.length > 0) {
-    funHTML += milestones.map(m => `
-      <div style="background:linear-gradient(135deg, #FFD700, #FFA500); border-radius:8px; padding:12px; text-align:center; margin-bottom:8px">
-        <div style="font-size:20px; margin-bottom:4px">&#127881;</div>
-        <div style="font-size:14px; font-weight:700; color:#333">${m}</div>
-      </div>`).join('');
-  }
-
-  // Growth metrics that matter now (not article scores — useless with low traffic)
-  const totalReels = reels.total + reels.publishedToday;
-  const totalBacklinks = (linkbuilding?.quoraWithLink || 0) + (linkbuilding?.vfTotal || 0);
-  funHTML += `
-    <div style="background:#f0fdf4; border-radius:8px; padding:10px 12px; text-align:center">
-      <div style="font-size:11px; color:#16a34a; text-transform:uppercase; letter-spacing:0.5px">Distribution cette semaine</div>
-      <div style="display:flex; justify-content:space-around; margin-top:8px">
-        <div><span style="font-size:20px; font-weight:700">${totalReels}</span><br><span style="font-size:10px; color:#888">Reels IG</span></div>
-        <div><span style="font-size:20px; font-weight:700">${linkbuilding?.quoraTotal || 0}</span><br><span style="font-size:10px; color:#888">Posts Quora</span></div>
-        <div><span style="font-size:20px; font-weight:700">${totalBacklinks}</span><br><span style="font-size:10px; color:#888">Backlinks</span></div>
-      </div>
-    </div>`;
-
-  if (!funHTML) {
-    // Motivational quote rotation
-    const quotes = [
-      'Le meilleur moment pour planter un arbre etait il y a 20 ans. Le deuxieme meilleur moment, c\'est maintenant.',
-      'Chaque article publie est un actif qui travaille pour toi 24/7.',
-      'La constance bat le talent quand le talent ne travaille pas.',
-      'Un voyage de mille lieues commence par un seul pas.',
-      'Les grandes choses se font par une serie de petites choses reunies.',
-    ];
-    const quote = quotes[Math.floor(Math.random() * quotes.length)];
-    funHTML = `
-      <div style="font-size:13px; font-style:italic; color:#666; text-align:center; padding:8px 12px">
-        "${quote}"
-      </div>`;
-  }
-
-  sections.push({
-    icon: '&#128170;',
-    title: 'Motivation du jour',
-    content: funHTML,
-  });
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // ASSEMBLE FULL EMAIL
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  const sectionHTML = sections.map((s, i) => `
-    <div style="margin-bottom:${i < sections.length - 1 ? '20' : '0'}px">
-      <div style="font-size:16px; font-weight:700; color:#1a1a2e; margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid #FFD700">
-        <span style="margin-right:6px">${s.icon}</span>${s.title}
-      </div>
-      ${s.content}
-    </div>`).join('');
-
-  const priorityStatusColor = actionItems.some(a => a.priority === 'P0')
+  const priorityColor = anomalies.some(a => a.severity === 'critical')
     ? '#DC2626'
-    : actionItems.some(a => a.priority === 'P1')
+    : anomalies.length > 0
       ? '#F59E0B'
       : '#16a34a';
+  const priorityText = anomalies.some(a => a.severity === 'critical')
+    ? `${anomalies.filter(a => a.severity === 'critical').length} CRITICAL`
+    : anomalies.length > 0
+      ? `${anomalies.length} WARNING${anomalies.length > 1 ? 'S' : ''}`
+      : 'ALL OK';
 
-  const priorityStatusText = actionItems.some(a => a.priority === 'P0')
-    ? 'ACTION REQUISE'
-    : actionItems.some(a => a.priority === 'P1')
-      ? 'A SURVEILLER'
-      : 'TOUT EST OK';
+  const preheader = actions.length
+    ? actions.map(a => a.title).join(' · ') + (priorityColor !== '#16a34a' ? ` · ${priorityText}` : '')
+    : priorityText;
 
-  const emailHTML = `<!DOCTYPE html>
+  const section = (title, body, collapseIfEmpty = false) => {
+    if (collapseIfEmpty && !body) return '';
+    return `<div style="margin-bottom:20px">
+      <h2 style="${HDR_STYLE}">${title}</h2>
+      ${body}
+    </div>`;
+  };
+
+  // Section 1 header varies based on anomalies
+  const anomalyTitle = anomalies.length === 0
+    ? '✓ ANOMALIES'
+    : `🚨 ANOMALIES (${anomalies.length})`;
+
+  return `<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FlashVoyage Daily Digest</title>
 </head>
-<body style="margin:0; padding:0; background-color:#f4f4f5; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing:antialiased">
+<body style="margin:0;padding:0;background-color:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased">
+  <div style="display:none;max-height:0;overflow:hidden">${preheader}</div>
 
-  <!-- Preheader (hidden text for inbox preview) -->
-  <div style="display:none; max-height:0; overflow:hidden">
-    ${reels.publishedToday} reels | ${articles.total} articles | ${priorityStatusText} | ${formatEUR(rev.balance || 0)} TP balance
-  </div>
-
-  <div style="max-width:520px; margin:0 auto; padding:16px">
+  <div style="max-width:600px;margin:0 auto;padding:12px">
 
     <!-- HEADER -->
-    <div style="background:linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius:12px 12px 0 0; padding:20px 20px 16px; text-align:center">
-      <div style="font-size:24px; margin-bottom:4px">&#9889;</div>
-      <div style="font-size:20px; font-weight:800; color:#FFD700; letter-spacing:0.5px; font-family:'Montserrat', sans-serif">FLASH VOYAGE</div>
-      <div style="font-size:11px; color:#94a3b8; margin-top:2px; text-transform:uppercase; letter-spacing:1px">Daily Digest</div>
-      <div style="font-size:12px; color:#cbd5e1; margin-top:6px">${dateStr}</div>
-      <div style="margin-top:10px">
-        <span style="background:${priorityStatusColor}; color:white; padding:4px 12px; border-radius:12px; font-size:11px; font-weight:700; letter-spacing:0.5px">${priorityStatusText}</span>
-      </div>
-    </div>
-
-    <!-- QUICK STATS BAR -->
-    <div style="background:#1e293b; padding:10px 16px; display:flex; justify-content:space-around; flex-wrap:wrap; gap:4px">
-      <div style="text-align:center">
-        <div style="font-size:18px; font-weight:700; color:#FFD700">${reels.publishedToday}</div>
-        <div style="font-size:9px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px">Reels</div>
-      </div>
-      <div style="text-align:center">
-        <div style="font-size:18px; font-weight:700; color:#60a5fa">${articles.total}</div>
-        <div style="font-size:9px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px">Articles</div>
-      </div>
-      <div style="text-align:center">
-        <div style="font-size:18px; font-weight:700; color:#34d399">${formatEUR(rev.balance || 0)}</div>
-        <div style="font-size:9px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px">Revenue</div>
-      </div>
-      <div style="text-align:center">
-        <div style="font-size:18px; font-weight:700; color:#${costs.totalCostToday > 0.50 ? 'f87171' : 'a3e635'}">${formatUSD(costs.totalCostToday)}</div>
-        <div style="font-size:9px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px">Couts</div>
-      </div>
+    <div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border-radius:10px 10px 0 0;padding:16px 20px;text-align:center">
+      <div style="font-size:18px;font-weight:800;color:#FFD700;letter-spacing:0.5px">FLASH VOYAGE</div>
+      <div style="font-size:10px;color:#94a3b8;margin-top:2px;text-transform:uppercase;letter-spacing:1.2px">Daily Digest</div>
+      <div style="font-size:11px;color:#cbd5e1;margin-top:4px">${dateStr}</div>
+      <div style="margin-top:8px"><span style="background:${priorityColor};color:white;padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;letter-spacing:0.5px">${priorityText}</span></div>
     </div>
 
     <!-- MAIN CONTENT -->
-    <div style="background:white; padding:20px; border-radius:0 0 12px 12px; box-shadow:0 2px 8px rgba(0,0,0,0.06)">
-      ${sectionHTML}
+    <div style="background:white;padding:18px 20px;border-radius:0 0 10px 10px;box-shadow:0 2px 8px rgba(0,0,0,0.06)">
+
+      ${section(anomalyTitle, renderAnomalies(anomalies))}
+      ${section('📈 GROWTH SIGNALS', renderGrowth(growth))}
+      ${section('🎯 TODAY\'S 3 ACTIONS', renderActions(actions))}
+      ${section('💰 MONETIZATION HEALTH', renderMonetization(monetization))}
+      ${section('⚙️ PIPELINE HEALTH', renderPipelineHealth(pipelineHealth))}
+
     </div>
 
     <!-- FOOTER -->
-    <div style="text-align:center; padding:16px 0 8px; font-size:10px; color:#94a3b8">
-      FlashVoyage Daily Digest — genere automatiquement a ${now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Bangkok' })} (Bangkok)<br>
-      <a href="https://flashvoyage.com" style="color:#FFD700; text-decoration:none">flashvoyage.com</a>
-      &nbsp;|&nbsp;
-      <a href="https://github.com/peterbono/flashvoyage-ultra-content/actions" style="color:#60a5fa; text-decoration:none">GitHub Actions</a>
+    <div style="text-align:center;padding:12px 0 8px;font-size:10px;color:#94a3b8">
+      FlashVoyage Daily Digest · genere a ${now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Bangkok' })} (Bangkok)<br>
+      <a href="https://flashvoyage.com" style="color:#FFD700;text-decoration:none">flashvoyage.com</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/peterbono/flashvoyage-ultra-content/actions" style="color:#60a5fa;text-decoration:none">Actions</a>
     </div>
   </div>
 </body>
 </html>`;
-
-  return emailHTML;
 }
 
-// ── Subject Line Generator ───────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// Subject line
+// ─────────────────────────────────────────────────────────────────────────────
 
 function generateSubject(data) {
-  const { reels, articles, errors, tokens, costs } = data;
-
-  // Priority indicator
-  const hasP0 = tokens.warnings.some(t => t.urgent) || errors.some(e => e.severity === 'critical');
-  const hasP1 = tokens.warnings.length > 0 || errors.length > 0;
-
-  let prefix;
-  if (hasP0) {
-    prefix = '🔴';
-  } else if (hasP1) {
-    prefix = '🟡';
-  } else {
-    prefix = '🟢';
-  }
-
+  const { anomalies, actions } = data;
+  const hasCritical = anomalies.some(a => a.severity === 'critical');
+  const hasWarning = anomalies.length > 0;
+  const prefix = hasCritical ? '🔴' : hasWarning ? '🟡' : '🟢';
   const dateShort = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-  const reelCount = reels.publishedToday;
-  const costStr = costs.totalCostToday > 0 ? ` | ${formatUSD(costs.totalCostToday)}` : '';
-
-  return `${prefix} FlashVoyage ${dateShort} — ${reelCount} reel${reelCount !== 1 ? 's' : ''}${costStr}`;
+  const summary = anomalies.length > 0
+    ? `${anomalies.length} anomal${anomalies.length > 1 ? 'ies' : 'ie'}`
+    : `${actions.length} action${actions.length > 1 ? 's' : ''}`;
+  return `${prefix} FlashVoyage ${dateShort} — ${summary}`;
 }
 
-// ── Main Entry ───────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// Orchestrator
+// ─────────────────────────────────────────────────────────────────────────────
 
 async function collectAllData() {
-  const reels = await collectReelData();
-  const articles = collectArticleData();
-  const ga = collectGAData();
-  const revenue = collectRevenueData();
-  const intel = collectIntelligenceData();
-  const costs = collectCostData();
-  const tokens = collectTokenData();
-  const abTests = collectABTestData();
-  const errors = collectWorkflowErrors();
+  // Local file-based (fast, always available)
+  const articlesData = collectArticleData();
+  const tokens = collectTokens();
+  const widgetAudit = collectFakeCards();
+  const autoApply = collectAutoApplyLog();
+  const costs = collectCostHistory();
+  const perfWeights = collectPerformanceWeights();
+  const angleState = collectAngleState();
+  const scoreDelta = collectScoreDelta();
   const linkbuilding = collectLinkbuildingData();
-  const ga4Live = await fetchLiveGA4().catch(() => null);
 
-  const allData = { reels, articles, ga, revenue, intel, costs, tokens, abTests, errors, linkbuilding, ga4Live };
-  allData.aiBrief = await generateAIBrief(allData).catch(() => null);
+  // Network (parallel, best-effort)
+  const [ga4Wow, wfRuns, actionsUsage] = await Promise.all([
+    fetchGA4Wow().catch(err => { log(`GA4 failed: ${err.message}`); return null; }),
+    fetchWorkflowRuns().catch(err => { log(`GH runs failed: ${err.message}`); return null; }),
+    fetchActionsUsage().catch(() => null),
+  ]);
 
-  return allData;
+  // Build sections
+  const anomalies = buildAnomalies({ tokens, wfRuns, scoreDelta, widgetAudit, costs, autoApply, linkbuilding });
+  const growth = buildGrowthSignals({ ga4Wow, perfWeights, angleState });
+  const actions = buildActions({ articles: articlesData.articles, perfWeights, widgetAudit, angleState });
+  const monetization = buildMonetization({ widgetAudit, articles: articlesData.articles });
+  const pipelineHealth = buildPipelineHealth({ costs, wfRuns, autoApply, actionsUsage });
+
+  return {
+    generatedAt: new Date().toISOString(),
+    version: 'v2-decision-oriented',
+    anomalies,
+    growth,
+    actions,
+    monetization,
+    pipelineHealth,
+    // Raw debug blocks (exposed in --json for downstream consumers)
+    _raw: {
+      articleCount: articlesData.total,
+      tokens: tokens.warnings,
+      scoreDrops: scoreDelta.drops,
+      widgetSummary: widgetAudit.summary,
+      perfWeights,
+      angleState,
+      wfLast24h: wfRuns?.last24h?.length || 0,
+      wfFailed24h: wfRuns?.failed24h?.length || 0,
+    },
+  };
 }
 
-// ── Email Sender ───────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// Email sender (preserved from v1)
+// ─────────────────────────────────────────────────────────────────────────────
 
 async function sendDigestEmail(html, subject) {
   const nodemailer = (await import('nodemailer')).default;
-
   const user = process.env.GMAIL_USER || 'florian.gouloubi@gmail.com';
   const pass = process.env.GMAIL_APP_PASSWORD;
-
   if (!pass) {
     console.error('[DIGEST] GMAIL_APP_PASSWORD not set. Cannot send email.');
     return false;
   }
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: { user, pass },
-  });
-
+  const transporter = nodemailer.createTransport({ service: 'gmail', auth: { user, pass } });
   try {
     const info = await transporter.sendMail({
       from: `"FlashVoyage Bot" <${user}>`,
@@ -1080,10 +1117,11 @@ async function sendDigestEmail(html, subject) {
   }
 }
 
-// ── CLI Interface ──────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// CLI
+// ─────────────────────────────────────────────────────────────────────────────
 
-const args = process.argv.slice(2);
-const mode = args[0] || '--stdout';
+const mode = (process.argv.slice(2)[0] || '--stdout');
 
 const data = await collectAllData();
 
@@ -1091,8 +1129,8 @@ if (mode === '--json') {
   console.log(JSON.stringify(data, null, 2));
 } else if (mode === '--file') {
   const html = generateDigestHTML(data);
-  const outPath = join(DATA_DIR, 'daily-digest.html');
   if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
+  const outPath = join(DATA_DIR, 'daily-digest.html');
   writeFileSync(outPath, html, 'utf-8');
   log(`Digest written to ${outPath}`);
   console.log(outPath);
@@ -1104,7 +1142,6 @@ if (mode === '--json') {
   log(`Sending digest: ${subject}`);
   const sent = await sendDigestEmail(html, subject);
   if (!sent) {
-    // Fallback: write to file
     const outPath = join(DATA_DIR, 'daily-digest.html');
     writeFileSync(outPath, html, 'utf-8');
     log(`Fallback: digest written to ${outPath}`);
@@ -1114,5 +1151,4 @@ if (mode === '--json') {
   console.log(html);
 }
 
-// Export for programmatic use
 export { collectAllData, generateDigestHTML, generateSubject };
