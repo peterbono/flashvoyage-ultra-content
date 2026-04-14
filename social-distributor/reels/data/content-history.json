@@ -69,6 +69,11 @@
       "name": "thailande",
       "date": "2026-04-14",
       "format": "cost-vs"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-14",
+      "format": "leaderboard"
     }
   ],
   "recentFormats": [
@@ -139,6 +144,14 @@
     {
       "format": "cost-vs",
       "date": "2026-04-14T18:03:22.657Z"
+    },
+    {
+      "format": "leaderboard",
+      "date": "2026-04-14T20:12:11.554Z"
+    },
+    {
+      "format": "leaderboard",
+      "date": "2026-04-14T20:12:36.533Z"
     }
   ],
   "recentArticleIds": [
@@ -151,7 +164,8 @@
     5179,
     5559,
     5150,
-    5627
+    5627,
+    5119
   ],
   "recentFingerprints": [
     {
@@ -193,6 +207,10 @@
     {
       "fp": "fmt:cost-vs|dest:thailande|slug:thailande-ou-vietnam-le-choix-",
       "date": "2026-04-14T18:03:22.657Z"
+    },
+    {
+      "fp": "fmt:leaderboard|dest:thailande|slug:thailande-ou-vietnam-le-dilemm",
+      "date": "2026-04-14T20:12:36.533Z"
     }
   ]
 }
