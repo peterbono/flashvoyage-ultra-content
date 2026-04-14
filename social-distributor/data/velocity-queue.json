@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-04-14T02:04:08.779Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-04-14T07:24:29.041Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Chinese man arrested at Bangkok airport after in-flight thefts",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/thailand/general/3236793/chinese-man-arrested-at-bangkok-airport-after-inflight-thefts",
+      "velocityScore": 0.489,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2446,
+      "estimatedTrafficIn24h": 2391,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.5
+      },
+      "detectedAt": "2026-04-14T05:53:00.000Z",
+      "scoredAt": "2026-04-14T07:24:18.170Z"
+    }
+  ]
 }
