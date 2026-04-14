@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 15,
+      "posted": 16,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -126,6 +126,14 @@
           "hasLink": false,
           "generated": true,
           "status": "published"
+        },
+        {
+          "date": "2026-04-14T03:32:47.360Z",
+          "thread": "lombok-flores-snorkeling-d11463505",
+          "title": "Lombok ou Flores pour le snorkeling?",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
         }
       ],
       "posts_queued": [
@@ -171,7 +179,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 12,
+      "posted": 13,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -296,6 +304,14 @@
           "hasLink": false,
           "status": "published",
           "generated": true
+        },
+        {
+          "date": "2026-04-14T03:31:02.040Z",
+          "id": "ai-4090-1776137416884",
+          "search": "Quels sont les risques de faire de la moto au Vietnam seul",
+          "hasLink": false,
+          "status": "published",
+          "generated": true
         }
       ]
     },
@@ -396,7 +412,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 7,
+      "posted": 8,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -453,11 +469,19 @@
           "section": "Cambodge",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-14T03:37:07.467Z",
+          "threadId": "15419222",
+          "title": "Trip responsable au Laos ou Cambodge? Asia King ok?",
+          "section": "Vietnam",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 40,
+  "total_posted": 43,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
