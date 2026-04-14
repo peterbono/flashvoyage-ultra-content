@@ -74,6 +74,11 @@
       "name": "thailande",
       "date": "2026-04-14",
       "format": "leaderboard"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-14",
+      "format": "leaderboard"
     }
   ],
   "recentFormats": [
@@ -152,6 +157,14 @@
     {
       "format": "leaderboard",
       "date": "2026-04-14T20:12:36.533Z"
+    },
+    {
+      "format": "leaderboard",
+      "date": "2026-04-14T21:13:59.575Z"
+    },
+    {
+      "format": "leaderboard",
+      "date": "2026-04-14T21:14:20.373Z"
     }
   ],
   "recentArticleIds": [
@@ -165,7 +178,8 @@
     5559,
     5150,
     5627,
-    5119
+    5119,
+    5063
   ],
   "recentFingerprints": [
     {
@@ -211,6 +225,10 @@
     {
       "fp": "fmt:leaderboard|dest:thailande|slug:thailande-ou-vietnam-le-dilemm",
       "date": "2026-04-14T20:12:36.533Z"
+    },
+    {
+      "fp": "fmt:leaderboard|dest:thailande|slug:thailande-litineraire-cache-qu",
+      "date": "2026-04-14T21:14:20.373Z"
     }
   ]
 }
