@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-14T07:24:29.041Z",
+  "generatedAt": "2026-04-14T13:16:30.677Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Chinese man arrested at Bangkok airport after in-flight thefts",
+      "topic": "Top Vietnamese leader To Lam visits China's Xiong'an New Area, model for smart urban development",
       "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3236793/chinese-man-arrested-at-bangkok-airport-after-inflight-thefts",
-      "velocityScore": 0.489,
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/top-vietnamese-leader-to-lam-visits-china-s-xiong-an-new-area-model-for-smart-urban-development-5062367.html",
+      "velocityScore": 0.509,
       "action": "QUEUE_NORMAL",
       "hoursRemaining": 718,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2446,
-      "estimatedTrafficIn24h": 2391,
+      "estimatedTrafficNow": 1696,
+      "estimatedTrafficIn24h": 1658,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 0.999,
+        "trendIntensity": 0.68,
+        "timeDecay": 0.998,
         "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.5
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 2.3
       },
-      "detectedAt": "2026-04-14T05:53:00.000Z",
-      "scoredAt": "2026-04-14T07:24:18.170Z"
+      "detectedAt": "2026-04-14T11:00:46.000Z",
+      "scoredAt": "2026-04-14T13:16:12.882Z"
     }
   ]
 }
