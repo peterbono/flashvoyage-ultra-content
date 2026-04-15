@@ -94,6 +94,11 @@
       "name": "bali",
       "date": "2026-04-15",
       "format": "humor"
+    },
+    {
+      "name": "laos",
+      "date": "2026-04-15",
+      "format": "humor"
     }
   ],
   "recentFormats": [
@@ -196,6 +201,14 @@
     {
       "format": "humor",
       "date": "2026-04-15T20:09:08.924Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-04-15T21:13:26.154Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-04-15T21:13:53.759Z"
     }
   ],
   "recentArticleIds": [
@@ -212,7 +225,8 @@
     5119,
     5063,
     5668,
-    4370
+    4370,
+    3410
   ],
   "recentFingerprints": [
     {
@@ -270,6 +284,10 @@
     {
       "fp": "fmt:humor|dest:bali|slug:bali-lombok-gili-10-jours-itin",
       "date": "2026-04-15T20:09:08.924Z"
+    },
+    {
+      "fp": "fmt:humor|dest:laos|slug:laos-solo-2-risques-que-les-bl",
+      "date": "2026-04-15T21:13:53.759Z"
     }
   ]
 }
