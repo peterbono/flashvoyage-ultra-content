@@ -79,6 +79,16 @@
       "name": "thailande",
       "date": "2026-04-14",
       "format": "leaderboard"
+    },
+    {
+      "name": "thaïlande",
+      "date": "2026-04-15",
+      "format": "avantapres"
+    },
+    {
+      "name": "vietnam",
+      "date": "2026-04-15",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -165,6 +175,14 @@
     {
       "format": "leaderboard",
       "date": "2026-04-14T21:14:20.373Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-15T18:05:08.906Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-15T18:05:37.860Z"
     }
   ],
   "recentArticleIds": [
@@ -179,7 +197,8 @@
     5150,
     5627,
     5119,
-    5063
+    5063,
+    5668
   ],
   "recentFingerprints": [
     {
@@ -229,6 +248,10 @@
     {
       "fp": "fmt:leaderboard|dest:thailande|slug:thailande-litineraire-cache-qu",
       "date": "2026-04-14T21:14:20.373Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:vietnam|slug:thailande-ou-vietnam-le-choix-",
+      "date": "2026-04-15T18:05:37.860Z"
     }
   ]
 }
