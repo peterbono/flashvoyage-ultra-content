@@ -89,6 +89,11 @@
       "name": "vietnam",
       "date": "2026-04-15",
       "format": "avantapres"
+    },
+    {
+      "name": "bali",
+      "date": "2026-04-15",
+      "format": "humor"
     }
   ],
   "recentFormats": [
@@ -183,6 +188,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-15T18:05:37.860Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-04-15T20:08:36.602Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-04-15T20:09:08.924Z"
     }
   ],
   "recentArticleIds": [
@@ -198,7 +211,8 @@
     5627,
     5119,
     5063,
-    5668
+    5668,
+    4370
   ],
   "recentFingerprints": [
     {
@@ -252,6 +266,10 @@
     {
       "fp": "fmt:avantapres|dest:vietnam|slug:thailande-ou-vietnam-le-choix-",
       "date": "2026-04-15T18:05:37.860Z"
+    },
+    {
+      "fp": "fmt:humor|dest:bali|slug:bali-lombok-gili-10-jours-itin",
+      "date": "2026-04-15T20:09:08.924Z"
     }
   ]
 }
