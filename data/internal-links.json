@@ -1,6 +1,25 @@
 {
   "articles": [
     {
+      "id": 5668,
+      "slug": "thailande-ou-vietnam-le-choix-crucial-pour-ton-voyage-en-2026",
+      "title": "Thaïlande ou Vietnam : le choix crucial pour ton voyage en 2026",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-le-choix-crucial-pour-ton-voyage-en-2026/",
+      "category": "temoignage",
+      "keywords": [
+        "thailande",
+        "vietnam",
+        "choix",
+        "crucial",
+        "ton",
+        "voyage",
+        "2026",
+        "budget",
+        "asie"
+      ],
+      "excerpt": "Thomas Renard · Flash Voyage Guide complet basé sur nos recherches terrain et données voyage 2026. S"
+    },
+    {
       "id": 5627,
       "slug": "thailande-ou-vietnam-le-choix-crucial-pour-un-premier-voyage",
       "title": "Thaïlande ou Vietnam : le choix crucial pour un premier voyage",
@@ -1958,23 +1977,6 @@
         "asie"
       ],
       "excerpt": "Le Japon, pays aux mille contrastes, se révèle être un terrain de jeu fascinant pour les nomades num"
-    },
-    {
-      "id": 3122,
-      "slug": "budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations",
-      "title": "Budget Réel pour Vivre à Koh Lanta : Dépenses et Optimisations",
-      "url": "https://flashvoyage.com/budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations/",
-      "category": "budget",
-      "keywords": [
-        "budget",
-        "reel",
-        "vivre",
-        "koh",
-        "lanta",
-        "depenses",
-        "optimisations"
-      ],
-      "excerpt": "Sur l&rsquo;île de Koh Lanta, chaque dépense se transforme en un arbitrage complexe entre confort et"
     }
   ],
   "blacklist": [

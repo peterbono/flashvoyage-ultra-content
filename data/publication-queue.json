@@ -206,7 +206,8 @@
       "slug_pattern": "esim-multi-pays-asie-sud-est-quelle-carte",
       "seo_intent": "COMMERCIAL_INVESTIGATION",
       "rationale": "Multi-country eSIM = higher ARPU for affiliate (regional plans cost more). Captures backpackers doing multi-stop SEA trips.",
-      "status": "pending"
+      "status": "published",
+      "published_at": "2026-04-15T09:18:03.848Z"
     },
     {
       "id": 11,
