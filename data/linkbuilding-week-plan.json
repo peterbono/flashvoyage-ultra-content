@@ -444,7 +444,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 10,
+      "posted": 11,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -525,11 +525,19 @@
           "section": "Cambodge",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-15T09:41:08.738Z",
+          "threadId": "15522936",
+          "title": "Avis objectif sur Koh Tao",
+          "section": "Thailande",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 49,
+  "total_posted": 50,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
