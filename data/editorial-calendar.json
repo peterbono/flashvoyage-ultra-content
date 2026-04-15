@@ -1,5 +1,5 @@
 {
-  "totalPublished": 219,
+  "totalPublished": 220,
   "currentClusterId": "japon",
   "history": [
     {
@@ -694,6 +694,13 @@
       "articleType": "support",
       "hint": "airalo vs holafly 2026 complete comparison asia travel esim",
       "title": "Pourquoi choisir entre Airalo et Holafly pour ton voyage en Asie peut tout changer"
+    },
+    {
+      "date": "2026-04-15T05:34:18.664Z",
+      "clusterId": "japon",
+      "articleType": "pillar",
+      "hint": "thailand or vietnam 2026 comparison which to choose first trip",
+      "title": "Thaïlande ou Vietnam : le choix crucial pour ton voyage en 2026"
     }
   ]
 }

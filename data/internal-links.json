@@ -1,6 +1,45 @@
 {
   "articles": [
     {
+      "id": 5627,
+      "slug": "thailande-ou-vietnam-le-choix-crucial-pour-un-premier-voyage",
+      "title": "Thaïlande ou Vietnam : le choix crucial pour un premier voyage",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-le-choix-crucial-pour-un-premier-voyage/",
+      "category": "temoignage",
+      "keywords": [
+        "thailande",
+        "vietnam",
+        "choix",
+        "crucial",
+        "premier",
+        "voyage",
+        "budget",
+        "asie"
+      ],
+      "excerpt": "Thomas Renard · Flash Voyage Guide complet basé sur nos recherches terrain et données voyage 2026. S"
+    },
+    {
+      "id": 5608,
+      "slug": "pourquoi-choisir-entre-airalo-et-holafly-pour-ton-voyage-en-asie-peut-tout-changer",
+      "title": "Pourquoi choisir entre Airalo et Holafly pour ton voyage en Asie peut tout changer",
+      "url": "https://flashvoyage.com/pourquoi-choisir-entre-airalo-et-holafly-pour-ton-voyage-en-asie-peut-tout-changer/",
+      "category": "temoignage",
+      "keywords": [
+        "pourquoi",
+        "choisir",
+        "entre",
+        "airalo",
+        "holafly",
+        "ton",
+        "voyage",
+        "asie",
+        "peut",
+        "tout",
+        "changer"
+      ],
+      "excerpt": "Sophie Leclerc · Flash Voyage Guide complet basé sur nos recherches terrain et données voyage 2026. "
+    },
+    {
       "id": 5559,
       "slug": "thailande-ou-vietnam-en-2026-quel-choix-transformerait-votre-voyage",
       "title": "Thaïlande ou Vietnam en 2026 : quel choix transformerait votre voyage ?",
@@ -1936,44 +1975,6 @@
         "optimisations"
       ],
       "excerpt": "Sur l&rsquo;île de Koh Lanta, chaque dépense se transforme en un arbitrage complexe entre confort et"
-    },
-    {
-      "id": 3115,
-      "slug": "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable",
-      "title": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
-      "url": "https://flashvoyage.com/bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable/",
-      "category": "temoignage",
-      "keywords": [
-        "bali",
-        "pourquoi",
-        "1400",
-        "usd",
-        "suffisent",
-        "plus",
-        "sejour",
-        "confortable",
-        "voyage",
-        "budget",
-        "asie"
-      ],
-      "excerpt": "Chaque décision prise à Bali peut transformer ton rêve de voyage en un cauchemar financier. Avec un "
-    },
-    {
-      "id": 3107,
-      "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-      "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
-      "url": "https://flashvoyage.com/optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils/",
-      "category": "visa",
-      "keywords": [
-        "visa",
-        "nomade",
-        "digital",
-        "asie",
-        "2026",
-        "strategies",
-        "pieges"
-      ],
-      "excerpt": "Dans le tumulte vibrant de Hô-Chi-Minh-Ville, un freelance en marketing entreprend un voyage adminis"
     }
   ],
   "blacklist": [

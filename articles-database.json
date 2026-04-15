@@ -1,7 +1,147 @@
 {
-  "crawled_at": "2026-04-13T09:56:05.315Z",
-  "total_articles": 133,
+  "crawled_at": "2026-04-15T05:34:45.182Z",
+  "total_articles": 135,
   "articles": [
+    {
+      "id": 5668,
+      "title": "Thaïlande ou Vietnam : le choix crucial pour ton voyage en 2026",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-le-choix-crucial-pour-ton-voyage-en-2026/",
+      "slug": "thailande-ou-vietnam-le-choix-crucial-pour-ton-voyage-en-2026",
+      "excerpt": "Thomas Renard · Flash Voyage Guide complet basé sur nos recherches terrain et données voyage 2026. Sources vérifiées, enrichies par nos données temps réel. Peu &#8230;\n",
+      "content": "\n\nThomas Renard · Flash Voyage\nGuide complet basé sur nos recherches terrain et données voyage 2026. Sources vérifiées, enrichies par nos données temps réel.\n\n Peu de gens le savent, mais L’air chaud de Bangkok te frappe dès que tu sors de l’aéroport.\nLe bourdonnement des tuk-tuks, l’odeur des brochettes de poulet grillées, et déjà, tu te demandes si tu as fait le bon choix.\nThaïlande ou Vietnam, quelle destination aurait dû accueillir tes premiers pas en Asie du Sud-Est? Et c’est exactement le ",
+      "categories": [
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "tags": [
+        {
+          "id": 87,
+          "name": "Budget",
+          "slug": "budget"
+        },
+        {
+          "id": 198,
+          "name": "Culture",
+          "slug": "culture"
+        },
+        {
+          "id": 197,
+          "name": "Gastronomie",
+          "slug": "gastronomie"
+        },
+        {
+          "id": 84,
+          "name": "Guide",
+          "slug": "guide"
+        },
+        {
+          "id": 196,
+          "name": "Hébergement",
+          "slug": "hebergement"
+        },
+        {
+          "id": 199,
+          "name": "Itinéraire",
+          "slug": "itineraire"
+        },
+        {
+          "id": 200,
+          "name": "Sécurité",
+          "slug": "securite"
+        },
+        {
+          "id": 75,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        },
+        {
+          "id": 110,
+          "name": "Transport",
+          "slug": "transport"
+        },
+        {
+          "id": 77,
+          "name": "Visa",
+          "slug": "visa"
+        }
+      ],
+      "date": "2026-04-15T05:33:49",
+      "modified": "2026-04-15T05:34:28",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/04/featured-5668.jpg"
+    },
+    {
+      "id": 5627,
+      "title": "Thaïlande ou Vietnam : le choix crucial pour un premier voyage",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-le-choix-crucial-pour-un-premier-voyage/",
+      "slug": "thailande-ou-vietnam-le-choix-crucial-pour-un-premier-voyage",
+      "excerpt": "Thomas Renard · Flash Voyage Guide complet basé sur nos recherches terrain et données voyage 2026. Sources vérifiées, enrichies par nos données temps réel. Imag&#8230;\n",
+      "content": "\n\nThomas Renard · Flash Voyage\nGuide complet basé sur nos recherches terrain et données voyage 2026. Sources vérifiées, enrichies par nos données temps réel.\n\n Imagine-toi sur une plage thaïlandaise, le bruit des vagues en fond sonore, une douce brise caressant ton visage.\nOu peut-être es-tu dans une ruelle animée de Hanoï, un bol de pho fumant à la main.\nDu coup, tu te demandes: Thaïlande ou Vietnam pour ton premier voyage en Asie du Sud-Est? Franchement, chaque choix implique un renoncement.\nE",
+      "categories": [
+        {
+          "id": 60,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        }
+      ],
+      "tags": [
+        {
+          "id": 87,
+          "name": "Budget",
+          "slug": "budget"
+        },
+        {
+          "id": 198,
+          "name": "Culture",
+          "slug": "culture"
+        },
+        {
+          "id": 197,
+          "name": "Gastronomie",
+          "slug": "gastronomie"
+        },
+        {
+          "id": 84,
+          "name": "Guide",
+          "slug": "guide"
+        },
+        {
+          "id": 196,
+          "name": "Hébergement",
+          "slug": "hebergement"
+        },
+        {
+          "id": 199,
+          "name": "Itinéraire",
+          "slug": "itineraire"
+        },
+        {
+          "id": 75,
+          "name": "Thaïlande",
+          "slug": "thailande"
+        },
+        {
+          "id": 110,
+          "name": "Transport",
+          "slug": "transport"
+        },
+        {
+          "id": 95,
+          "name": "Vietnam",
+          "slug": "vietnam"
+        },
+        {
+          "id": 77,
+          "name": "Visa",
+          "slug": "visa"
+        }
+      ],
+      "date": "2026-04-14T05:33:32",
+      "modified": "2026-04-14T05:34:12",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/04/featured-5627.jpg"
+    },
     {
       "id": 5608,
       "title": "Pourquoi choisir entre Airalo et Holafly pour ton voyage en Asie peut tout changer",
@@ -349,7 +489,7 @@
         }
       ],
       "date": "2026-04-11T08:44:09",
-      "modified": "2026-04-13T05:47:24",
+      "modified": "2026-04-14T10:54:31",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/04/featured-5296.jpg"
     },
     {
@@ -489,7 +629,7 @@
         }
       ],
       "date": "2026-04-10T09:40:41",
-      "modified": "2026-04-13T05:47:36",
+      "modified": "2026-04-14T10:54:34",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/04/featured-5270.jpg"
     },
     {
@@ -769,7 +909,7 @@
         }
       ],
       "date": "2026-04-08T09:02:34",
-      "modified": "2026-04-13T05:47:47",
+      "modified": "2026-04-14T10:54:36",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/04/featured-5189.jpg"
     },
     {
@@ -1259,7 +1399,7 @@
         }
       ],
       "date": "2026-04-05T05:24:53",
-      "modified": "2026-04-13T06:36:29",
+      "modified": "2026-04-14T10:54:38",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/04/featured-5063.jpg"
     },
     {
@@ -1359,7 +1499,7 @@
         }
       ],
       "date": "2026-03-31T16:22:55",
-      "modified": "2026-04-12T10:03:47",
+      "modified": "2026-04-13T11:07:09",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/voyage-thailande-pas-cher-2026-1.jpg"
     },
     {
@@ -1378,7 +1518,7 @@
       ],
       "tags": [],
       "date": "2026-03-23T13:20:52",
-      "modified": "2026-03-31T18:35:03",
+      "modified": "2026-04-13T11:07:11",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/japon-couple-voyage-skyline.jpg"
     },
     {
@@ -1397,7 +1537,7 @@
       ],
       "tags": [],
       "date": "2026-03-23T13:19:57",
-      "modified": "2026-04-13T00:19:59",
+      "modified": "2026-04-14T10:54:39",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/esim-philippines-manila-ville.jpg"
     },
     {
@@ -1416,7 +1556,7 @@
       ],
       "tags": [],
       "date": "2026-03-23T13:18:06",
-      "modified": "2026-03-31T18:06:29",
+      "modified": "2026-04-13T11:07:13",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/philippines-10-jours-el-nido-palawan-lagon.jpg"
     },
     {
@@ -1492,7 +1632,7 @@
       ],
       "tags": [],
       "date": "2026-03-23T12:02:05",
-      "modified": "2026-03-31T18:35:09",
+      "modified": "2026-04-13T11:07:15",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/bali-vs-thailande-danse-kecak-uluwatu-1.jpg"
     },
     {
@@ -1511,7 +1651,7 @@
       ],
       "tags": [],
       "date": "2026-03-23T11:58:01",
-      "modified": "2026-03-31T18:06:42",
+      "modified": "2026-04-13T11:07:17",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/esim-thailande-tuk-tuk-bangkok-1.jpg"
     },
     {
