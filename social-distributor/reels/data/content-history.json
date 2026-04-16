@@ -99,6 +99,16 @@
       "name": "laos",
       "date": "2026-04-15",
       "format": "humor"
+    },
+    {
+      "name": "thaïlande / vietnam",
+      "date": "2026-04-16",
+      "format": "pick"
+    },
+    {
+      "name": "southeast-asia",
+      "date": "2026-04-16",
+      "format": "pick"
     }
   ],
   "recentFormats": [
@@ -209,6 +219,14 @@
     {
       "format": "humor",
       "date": "2026-04-15T21:13:53.759Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-16T18:07:49.723Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-16T18:08:27.097Z"
     }
   ],
   "recentArticleIds": [
