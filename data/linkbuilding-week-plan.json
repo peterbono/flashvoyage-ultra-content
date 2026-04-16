@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 18,
+      "posted": 19,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -147,6 +147,14 @@
           "date": "2026-04-15T03:32:41.667Z",
           "thread": "organisation-visites-etapes-18-jours-cambodge-d11463488",
           "title": "Organisation des visites et étapes 18 jours au Cambodge",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-16T08:02:20.565Z",
+          "thread": "itineraire-familial-chang-mai-krabi-raillay-bangkok-d11467514",
+          "title": "Avis itinéraire familial: Chang Mai - Krabi/Raillay - Bangkok",
           "hasLink": false,
           "generated": true,
           "status": "published"
@@ -537,7 +545,7 @@
       ]
     }
   },
-  "total_posted": 50,
+  "total_posted": 51,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
