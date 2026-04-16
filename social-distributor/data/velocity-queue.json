@@ -1,10 +1,86 @@
 {
-  "generatedAt": "2026-04-16T07:25:15.578Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-04-16T13:20:57.356Z",
+  "totalTopics": 3,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 3
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "China issues US safety alert for citizens citing 'malicious questioning' by US border officers",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/china-issues-us-safety-alert-for-citizens-citing-malicious-questioning-by-us-border-officers",
+      "velocityScore": 0.497,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 714,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2486,
+      "estimatedTrafficIn24h": 2429,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.994,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 5.9
+      },
+      "detectedAt": "2026-04-16T07:28:36.000Z",
+      "scoredAt": "2026-04-16T13:20:40.187Z"
+    },
+    {
+      "topic": "Europe running low on jet fuel, stoking fears of flight cancellations",
+      "source": "rss_breaking",
+      "destination": "asia",
+      "link": "https://www.scmp.com/news/world/europe/article/3350352/europe-running-low-jet-fuel-stoking-fears-flight-cancellations?utm_source=rss_feed",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2072,
+      "estimatedTrafficIn24h": 2024,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.6
+      },
+      "detectedAt": "2026-04-16T11:44:20.000Z",
+      "scoredAt": "2026-04-16T13:20:46.372Z"
+    },
+    {
+      "topic": "China issues US safety alert over citizens citing ‘malicious questioning’ by US border officers",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/east-asia/china-issues-us-safety-alert-for-citizens-citing-malicious-questioning-by-us-border-officers",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 715,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2064,
+      "estimatedTrafficIn24h": 2017,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.995,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 5.5
+      },
+      "detectedAt": "2026-04-16T07:52:00.000Z",
+      "scoredAt": "2026-04-16T13:20:43.651Z"
+    }
+  ]
 }
