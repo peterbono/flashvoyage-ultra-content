@@ -1,5 +1,5 @@
 {
-  "totalPublished": 221,
+  "totalPublished": 222,
   "currentClusterId": "afrique-moyen-orient",
   "history": [
     {
@@ -421,6 +421,13 @@
       "articleType": "pillar",
       "hint": "esim multi country southeast asia which card plan to choose",
       "title": "Choisir son eSIM pour l'Asie du Sud-Est : l'arbitrage qui change tout"
+    },
+    {
+      "date": "2026-04-16T05:38:23.240Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "thailand budget 2026 real daily cost backpacker comfort luxury breakdown",
+      "title": "Thaïlande : Le coût réel d'un voyage entre confort et luxe"
     }
   ]
 }

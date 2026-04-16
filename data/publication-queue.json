@@ -74,7 +74,8 @@
       "slug_pattern": "budget-thailande-2026-cout-jour-par-jour",
       "seo_intent": "INFORMATIONAL_PLANNING",
       "rationale": "Evergreen budget query. Three-tier format (backpacker/confort/luxe) captures all intent segments. Internal links to Thailand comparison.",
-      "status": "pending"
+      "status": "published",
+      "published_at": "2026-04-16T05:38:48.873Z"
     },
     {
       "id": 4,
