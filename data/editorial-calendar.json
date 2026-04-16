@@ -1,5 +1,5 @@
 {
-  "totalPublished": 222,
+  "totalPublished": 223,
   "currentClusterId": "afrique-moyen-orient",
   "history": [
     {
@@ -428,6 +428,13 @@
       "articleType": "support",
       "hint": "thailand budget 2026 real daily cost backpacker comfort luxury breakdown",
       "title": "Thaïlande : Le coût réel d'un voyage entre confort et luxe"
+    },
+    {
+      "date": "2026-04-16T09:18:36.215Z",
+      "clusterId": "afrique-moyen-orient",
+      "articleType": "support",
+      "hint": "can you drink tap water vietnam 2026 safe drinking water guide",
+      "title": "Vietnam : l'arbitrage crucial pour un budget maîtrisé sur place"
     }
   ]
 }

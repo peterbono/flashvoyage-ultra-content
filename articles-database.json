@@ -1,7 +1,77 @@
 {
-  "crawled_at": "2026-04-16T05:38:48.820Z",
-  "total_articles": 137,
+  "crawled_at": "2026-04-16T09:19:05.223Z",
+  "total_articles": 138,
   "articles": [
+    {
+      "id": 5720,
+      "title": "Vietnam : l&rsquo;arbitrage crucial pour un budget maîtrisé sur place",
+      "url": "https://flashvoyage.com/vietnam-larbitrage-crucial-pour-un-budget-maitrise-sur-place/",
+      "slug": "vietnam-larbitrage-crucial-pour-un-budget-maitrise-sur-place",
+      "excerpt": "Sophie Leclerc · Flash Voyage Guide complet basé sur nos recherches terrain et données voyage 2026. Sources vérifiées, enrichies par nos données temps réel. Cha&#8230;\n",
+      "content": "\n\nSophie Leclerc · Flash Voyage\nGuide complet basé sur nos recherches terrain et données voyage 2026. Sources vérifiées, enrichies par nos données temps réel.\n\n Chaque année, des milliers de voyageurs se posent cette même question et se retrouvent face à un dilemme budgétaire imprévu.\nEt c’est exactement le dilemme que des milliers de voyageurs affrontent chaque année. En vrai, choisir comment répartir son budget au Vietnam oblige à trancher entre confort, durée et expériences. Spoiler : ce n’es",
+      "categories": [
+        {
+          "id": 59,
+          "name": "Vietnam",
+          "slug": "vietnam"
+        }
+      ],
+      "tags": [
+        {
+          "id": 195,
+          "name": "Assurance voyage",
+          "slug": "assurance-voyage"
+        },
+        {
+          "id": 87,
+          "name": "Budget",
+          "slug": "budget"
+        },
+        {
+          "id": 197,
+          "name": "Gastronomie",
+          "slug": "gastronomie"
+        },
+        {
+          "id": 84,
+          "name": "Guide",
+          "slug": "guide"
+        },
+        {
+          "id": 196,
+          "name": "Hébergement",
+          "slug": "hebergement"
+        },
+        {
+          "id": 199,
+          "name": "Itinéraire",
+          "slug": "itineraire"
+        },
+        {
+          "id": 194,
+          "name": "Santé",
+          "slug": "sante"
+        },
+        {
+          "id": 200,
+          "name": "Sécurité",
+          "slug": "securite"
+        },
+        {
+          "id": 110,
+          "name": "Transport",
+          "slug": "transport"
+        },
+        {
+          "id": 77,
+          "name": "Visa",
+          "slug": "visa"
+        }
+      ],
+      "date": "2026-04-16T09:18:09",
+      "modified": "2026-04-16T09:18:47",
+      "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/04/featured-5720.jpg"
+    },
     {
       "id": 5702,
       "title": "Thaïlande : Le coût réel d&rsquo;un voyage entre confort et luxe",
@@ -69,7 +139,7 @@
         }
       ],
       "date": "2026-04-16T05:38:01",
-      "modified": "2026-04-16T05:38:32",
+      "modified": "2026-04-16T07:02:05",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/04/featured-5702.jpg"
     },
     {
@@ -1658,7 +1728,7 @@
       ],
       "tags": [],
       "date": "2026-03-23T13:20:52",
-      "modified": "2026-04-13T11:07:11",
+      "modified": "2026-04-16T07:38:18",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/japon-couple-voyage-skyline.jpg"
     },
     {
@@ -1677,7 +1747,7 @@
       ],
       "tags": [],
       "date": "2026-03-23T13:19:57",
-      "modified": "2026-04-14T10:54:39",
+      "modified": "2026-04-16T07:39:50",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/esim-philippines-manila-ville.jpg"
     },
     {
@@ -1715,7 +1785,7 @@
       ],
       "tags": [],
       "date": "2026-03-23T13:17:41",
-      "modified": "2026-04-15T10:50:24",
+      "modified": "2026-04-16T07:36:17",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/bali-lombok-gili-iles-turquoise-aerien.jpg"
     },
     {
@@ -1810,7 +1880,7 @@
       ],
       "tags": [],
       "date": "2026-03-23T11:57:07",
-      "modified": "2026-04-15T10:50:27",
+      "modified": "2026-04-16T07:34:52",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/assurance-voyage-vietnam-documents-1.jpg"
     },
     {
@@ -4979,7 +5049,7 @@
         }
       ],
       "date": "2026-03-11T18:08:11",
-      "modified": "2026-04-13T00:01:14",
+      "modified": "2026-04-16T07:40:44",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-1773252486823.jpg"
     },
     {
@@ -5277,7 +5347,7 @@
       ],
       "tags": [],
       "date": "2026-03-04T19:51:24",
-      "modified": "2026-04-12T18:45:35",
+      "modified": "2026-04-16T07:42:03",
       "featured_image": "https://flashvoyage.com/wp-content/uploads/2026/03/featured-3107.jpg"
     },
     {

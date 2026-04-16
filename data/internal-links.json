@@ -1,6 +1,26 @@
 {
   "articles": [
     {
+      "id": 5702,
+      "slug": "thailande-le-cout-reel-dun-voyage-entre-confort-et-luxe",
+      "title": "Thaïlande : Le coût réel d&rsquo;un voyage entre confort et luxe",
+      "url": "https://flashvoyage.com/thailande-le-cout-reel-dun-voyage-entre-confort-et-luxe/",
+      "category": "temoignage",
+      "keywords": [
+        "thailande",
+        "cout",
+        "reel",
+        "d&rsquo;un",
+        "voyage",
+        "entre",
+        "confort",
+        "luxe",
+        "budget",
+        "asie"
+      ],
+      "excerpt": "Claire Moreau · Flash Voyage Guide complet basé sur nos recherches terrain et données voyage 2026. S"
+    },
+    {
       "id": 5678,
       "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
       "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
@@ -1956,25 +1976,6 @@
         "strategiques"
       ],
       "excerpt": "Avec un revenu mensuel compris entre 10 000 et 14 000 euros, le rêve de s&rsquo;installer en Asie du"
-    },
-    {
-      "id": 3150,
-      "slug": "travailler-en-thailande-les-dilemmes-fiscaux-des-travailleurs-a-distance",
-      "title": "Travailler en Thaïlande : Les Dilemmes Fiscaux des Travailleurs à Distance",
-      "url": "https://flashvoyage.com/travailler-en-thailande-les-dilemmes-fiscaux-des-travailleurs-a-distance/",
-      "category": "coworking",
-      "keywords": [
-        "travailler",
-        "thailande",
-        "dilemmes",
-        "fiscaux",
-        "travailleurs",
-        "distance",
-        "voyage",
-        "budget",
-        "asie"
-      ],
-      "excerpt": "Dans les rues animées de Bangkok, un dilemme se dessine pour les travailleurs à distance : comment o"
     }
   ],
   "blacklist": [
