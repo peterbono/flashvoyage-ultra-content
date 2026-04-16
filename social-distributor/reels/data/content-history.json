@@ -119,6 +119,16 @@
       "name": "thailande",
       "date": "2026-04-16",
       "format": "budget"
+    },
+    {
+      "name": "thaïlande",
+      "date": "2026-04-16",
+      "format": "budget"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-16",
+      "format": "budget"
     }
   ],
   "recentFormats": [
@@ -245,6 +255,14 @@
     {
       "format": "budget",
       "date": "2026-04-16T20:05:59.945Z"
+    },
+    {
+      "format": "budget",
+      "date": "2026-04-16T21:10:00.467Z"
+    },
+    {
+      "format": "budget",
+      "date": "2026-04-16T21:10:27.385Z"
     }
   ],
   "recentArticleIds": [
@@ -263,7 +281,8 @@
     5668,
     4370,
     3410,
-    5702
+    5702,
+    5053
   ],
   "recentFingerprints": [
     {
@@ -329,6 +348,10 @@
     {
       "fp": "fmt:budget|dest:thailande|slug:thailande-le-cout-reel-dun-voy",
       "date": "2026-04-16T20:05:59.945Z"
+    },
+    {
+      "fp": "fmt:budget|dest:thailande|slug:thailande-vs-vietnam-le-dilemm",
+      "date": "2026-04-16T21:10:27.385Z"
     }
   ]
 }
