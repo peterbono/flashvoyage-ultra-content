@@ -109,6 +109,16 @@
       "name": "southeast-asia",
       "date": "2026-04-16",
       "format": "pick"
+    },
+    {
+      "name": "bangkok, thaïlande",
+      "date": "2026-04-16",
+      "format": "budget"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-16",
+      "format": "budget"
     }
   ],
   "recentFormats": [
@@ -227,6 +237,14 @@
     {
       "format": "pick",
       "date": "2026-04-16T18:08:27.097Z"
+    },
+    {
+      "format": "budget",
+      "date": "2026-04-16T20:05:31.209Z"
+    },
+    {
+      "format": "budget",
+      "date": "2026-04-16T20:05:59.945Z"
     }
   ],
   "recentArticleIds": [
@@ -244,7 +262,8 @@
     5063,
     5668,
     4370,
-    3410
+    3410,
+    5702
   ],
   "recentFingerprints": [
     {
@@ -306,6 +325,10 @@
     {
       "fp": "fmt:humor|dest:laos|slug:laos-solo-2-risques-que-les-bl",
       "date": "2026-04-15T21:13:53.759Z"
+    },
+    {
+      "fp": "fmt:budget|dest:thailande|slug:thailande-le-cout-reel-dun-voy",
+      "date": "2026-04-16T20:05:59.945Z"
     }
   ]
 }
