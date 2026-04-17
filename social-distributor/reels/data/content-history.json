@@ -144,6 +144,11 @@
       "name": "thailande",
       "date": "2026-04-17",
       "format": "best-time"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-17",
+      "format": "best-time"
     }
   ],
   "recentFormats": [
@@ -294,6 +299,14 @@
     {
       "format": "best-time",
       "date": "2026-04-17T20:02:29.931Z"
+    },
+    {
+      "format": "best-time",
+      "date": "2026-04-17T21:09:31.711Z"
+    },
+    {
+      "format": "best-time",
+      "date": "2026-04-17T21:10:09.092Z"
     }
   ],
   "recentArticleIds": [
@@ -315,7 +328,8 @@
     5702,
     5053,
     4487,
-    4254
+    4254,
+    4253
   ],
   "recentFingerprints": [
     {
@@ -393,6 +407,10 @@
     {
       "fp": "fmt:best-time|dest:thailande|slug:bali-vs-thailande-premier-voya",
       "date": "2026-04-17T20:02:29.931Z"
+    },
+    {
+      "fp": "fmt:best-time|dest:thailande|slug:esim-thailande-comparatif-ais-",
+      "date": "2026-04-17T21:10:09.092Z"
     }
   ]
 }
