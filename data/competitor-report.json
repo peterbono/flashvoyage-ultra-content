@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-14T05:32:07.784Z",
+  "timestamp": "2026-04-17T05:36:21.617Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,50 +16,15 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 7414,
-      "newUrls": 355
+      "totalUrls": 4426,
+      "newUrls": 16
     }
   ],
-  "newArticles": [
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/rafting-bali/",
-      "lastmod": "2026-04-13T13:38:35+00:00",
-      "destination": "bali",
-      "contentType": "general",
-      "title": "Rafting Bali",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=34, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 34,
-        "freshness": 1
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/surf-bali/",
-      "lastmod": "2026-04-13T13:38:42+00:00",
-      "destination": "bali",
-      "contentType": "general",
-      "title": "Surf Bali",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=34, freshness=1.00)",
-      "matchedArticle": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 34,
-        "freshness": 1
-      }
-    }
-  ],
+  "newArticles": [],
   "summary": {
-    "totalNew": 2,
+    "totalNew": 0,
     "contentGaps": 0,
     "staleRefreshes": 0,
-    "monitoring": 2
+    "monitoring": 0
   }
 }

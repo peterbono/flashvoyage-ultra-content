@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-14T05:30:17.774Z",
+  "timestamp": "2026-04-17T05:33:32.295Z",
   "queueSize": 13,
   "queue": [
     {
@@ -7,6 +7,18 @@
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
+      "topic": "[Calendar rotation: support article]",
+      "articleType": "support",
+      "context": {
+        "cyclePosition": 3,
+        "reason": "Standard editorial calendar rotation (position 4/5)"
+      }
+    },
+    {
+      "rank": 2,
+      "action": "standard",
+      "priority": "P3",
+      "priorityScore": 39,
       "topic": "[Calendar rotation: news article]",
       "articleType": "news",
       "context": {
@@ -15,10 +27,10 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
-      "priorityScore": 39,
+      "priorityScore": 38,
       "topic": "[Calendar rotation: pillar article]",
       "articleType": "pillar",
       "context": {
@@ -27,29 +39,17 @@
       }
     },
     {
-      "rank": 3,
-      "action": "standard",
-      "priority": "P3",
-      "priorityScore": 38,
-      "topic": "[Calendar rotation: support article]",
-      "articleType": "support",
-      "context": {
-        "cyclePosition": 1,
-        "reason": "Standard editorial calendar rotation (position 2/5)"
-      }
-    },
-    {
       "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Itinéraire Indonésie 2026 : Comparatif des Meilleurs Circuits",
+      "topic": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
       "articleType": "support",
       "context": {
-        "wpId": 2952,
-        "slug": "indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme",
+        "wpId": 3174,
+        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
         "compositeScore": 14,
-        "freshness": 0.94,
+        "freshness": 0.96,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -59,13 +59,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Voyager en Asie du Sud-Est : Itinéraire et Coûts Réels à Prévoir",
+      "topic": "Vivre en Asie du Sud-Est avec 10 000 $ : Frais cachés et choix stratégiques",
       "articleType": "support",
       "context": {
-        "wpId": 2945,
-        "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
+        "wpId": 3159,
+        "slug": "vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques",
         "compositeScore": 14,
-        "freshness": 0.93,
+        "freshness": 0.96,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -75,13 +75,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Indonésie en 14 jours : Décisions cruciales pour un itinéraire parfait",
+      "topic": "Décider de son itinéraire au Japon : entre confort et choix logistiques",
       "articleType": "support",
       "context": {
-        "wpId": 2938,
-        "slug": "indonesie-en-14-jours-decisions-cruciales-pour-un-itineraire-parfait",
+        "wpId": 3131,
+        "slug": "decider-de-son-itineraire-au-japon-entre-confort-et-choix-logistiques",
         "compositeScore": 14,
-        "freshness": 0.93,
+        "freshness": 0.96,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -91,13 +91,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Voyager au Japon : eSIM et frais cachés à connaître",
+      "topic": "Budget Réel pour Vivre à Koh Lanta : Dépenses et Optimisations",
       "articleType": "support",
       "context": {
-        "wpId": 2916,
-        "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
+        "wpId": 3122,
+        "slug": "budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations",
         "compositeScore": 14,
-        "freshness": 0.93,
+        "freshness": 0.96,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -107,13 +107,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Les 3 coûts cachés des espaces de coworking à Ho Chi Minh City",
+      "topic": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
       "articleType": "support",
       "context": {
-        "wpId": 2910,
-        "slug": "les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city",
+        "wpId": 3115,
+        "slug": "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable",
         "compositeScore": 14,
-        "freshness": 0.93,
+        "freshness": 0.96,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -123,13 +123,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Voyager en Asie du Sud-Est : les frais cachés qui gonflent ton budget",
+      "topic": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques",
       "articleType": "support",
       "context": {
-        "wpId": 2904,
-        "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
+        "wpId": 3099,
+        "slug": "indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques",
         "compositeScore": 14,
-        "freshness": 0.93,
+        "freshness": 0.96,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -139,13 +139,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Vivre à Chiang Mai : le vrai coût d&rsquo;un rêve de nomade digital",
+      "topic": "Choisir où séjourner à Bali : dilemmes et décisions cruciales",
       "articleType": "support",
       "context": {
-        "wpId": 2898,
-        "slug": "vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital",
+        "wpId": 3082,
+        "slug": "choisir-ou-sejourner-a-bali-dilemmes-et-decisions-cruciales",
         "compositeScore": 14,
-        "freshness": 0.93,
+        "freshness": 0.96,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -155,13 +155,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "48 Heures à Singapour : Optimisez Chaque Centime de Votre Budget",
+      "topic": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
       "articleType": "support",
       "context": {
-        "wpId": 2888,
-        "slug": "48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget",
+        "wpId": 3065,
+        "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
         "compositeScore": 14,
-        "freshness": 0.93,
+        "freshness": 0.96,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -171,13 +171,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Vivre en Indonésie avec 1000 € : les frais cachés à connaître",
+      "topic": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
       "articleType": "support",
       "context": {
-        "wpId": 2878,
-        "slug": "vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre",
+        "wpId": 3056,
+        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
         "compositeScore": 14,
-        "freshness": 0.93,
+        "freshness": 0.96,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -186,16 +186,16 @@
       "rank": 13,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "priorityScore": -4,
+      "topic": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
       "articleType": "support",
       "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 15,
-        "freshness": 1,
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.96,
         "traffic": 0,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     }
   ],

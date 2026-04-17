@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-14T05:29:57.508Z",
+  "timestamp": "2026-04-17T05:33:12.444Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -8,17 +8,39 @@
     "freshness": 0.15,
     "monetization": 0.1
   },
-  "articleCount": 133,
+  "articleCount": 138,
   "scores": [
+    {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "compositeScore": 66,
+      "signals": {
+        "traffic": 0.9,
+        "sessionQuality": 0.17,
+        "trendAlignment": 0.62,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 1,
+        "frShare": 0.5,
+        "frPageviews": 9
+      },
+      "flags": [
+        "trending",
+        "top_performer"
+      ],
+      "date": "2026-03-31T16:22:55",
+      "wordCount": 2349
+    },
     {
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement",
-      "compositeScore": 64,
+      "compositeScore": 65,
       "signals": {
         "traffic": 1,
         "sessionQuality": 0.07,
-        "trendAlignment": 0.41,
+        "trendAlignment": 0.47,
         "reelAmplification": 0,
         "freshness": 1,
         "monetization": 1,
@@ -29,29 +51,7 @@
         "top_performer"
       ],
       "date": "2026-03-23T11:57:07",
-      "wordCount": 4307
-    },
-    {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "compositeScore": 61,
-      "signals": {
-        "traffic": 0.75,
-        "sessionQuality": 0.15,
-        "trendAlignment": 0.62,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 1,
-        "frShare": 0.4,
-        "frPageviews": 6
-      },
-      "flags": [
-        "trending",
-        "top_performer"
-      ],
-      "date": "2026-03-31T16:22:55",
-      "wordCount": 2349
+      "wordCount": 4340
     },
     {
       "wpId": 4372,
@@ -73,7 +73,7 @@
         "fr_light"
       ],
       "date": "2026-03-23T13:19:57",
-      "wordCount": 2294
+      "wordCount": 2362
     },
     {
       "wpId": 4250,
@@ -92,7 +92,7 @@
       },
       "flags": [],
       "date": "2026-03-23T11:56:46",
-      "wordCount": 3392
+      "wordCount": 3409
     },
     {
       "wpId": 4373,
@@ -111,26 +111,7 @@
       },
       "flags": [],
       "date": "2026-03-23T13:20:52",
-      "wordCount": 4317
-    },
-    {
-      "wpId": 4369,
-      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
-      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
-      "compositeScore": 40,
-      "signals": {
-        "traffic": 0.3,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.29,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 1,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-23T13:17:33",
-      "wordCount": 2367
+      "wordCount": 4367
     },
     {
       "wpId": 4254,
@@ -150,6 +131,44 @@
       "flags": [],
       "date": "2026-03-23T12:02:05",
       "wordCount": 4248
+    },
+    {
+      "wpId": 4369,
+      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "compositeScore": 38,
+      "signals": {
+        "traffic": 0.3,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 1,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-23T13:17:33",
+      "wordCount": 2367
+    },
+    {
+      "wpId": 3501,
+      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "title": "Ce que Thaïlande m&rsquo;a coûté (et que les blogs ne montrent pas)",
+      "compositeScore": 36,
+      "signals": {
+        "traffic": 0.5,
+        "sessionQuality": 0,
+        "trendAlignment": 0.31,
+        "reelAmplification": 0,
+        "freshness": 0.99,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-15T16:05:18",
+      "wordCount": 5518
     },
     {
       "wpId": 4255,
@@ -195,18 +214,18 @@
       "title": "Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent",
       "compositeScore": 34,
       "signals": {
-        "traffic": 0.35,
-        "sessionQuality": 0.5,
-        "trendAlignment": 0.16,
+        "traffic": 0.4,
+        "sessionQuality": 0.73,
+        "trendAlignment": 0,
         "reelAmplification": 0,
         "freshness": 1,
         "monetization": 0,
-        "frShare": 0.14,
+        "frShare": 0.13,
         "frPageviews": 1
       },
       "flags": [],
       "date": "2026-03-23T13:17:41",
-      "wordCount": 3514
+      "wordCount": 3565
     },
     {
       "wpId": 4253,
@@ -228,56 +247,18 @@
       "wordCount": 3400
     },
     {
-      "wpId": 3501,
-      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
-      "title": "Ce que Thaïlande m&rsquo;a coûté (et que les blogs ne montrent pas)",
-      "compositeScore": 33,
-      "signals": {
-        "traffic": 0.4,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.31,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-15T16:05:18",
-      "wordCount": 5518
-    },
-    {
-      "wpId": 5296,
-      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "compositeScore": 30,
-      "signals": {
-        "traffic": 0.3,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.31,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-04-11T08:44:09",
-      "wordCount": 1549
-    },
-    {
       "wpId": 5053,
       "slug": "thailande-vs-vietnam-le-dilemme-cache-pour-un-premier-voyage",
       "title": "Thaïlande vs Vietnam : le dilemme caché pour un premier voyage",
-      "compositeScore": 30,
+      "compositeScore": 31,
       "signals": {
-        "traffic": 0.15,
-        "sessionQuality": 0.19,
+        "traffic": 0.2,
+        "sessionQuality": 0.14,
         "trendAlignment": 0.41,
         "reelAmplification": 0,
         "freshness": 1,
         "monetization": 0,
-        "frShare": 0.67,
+        "frShare": 0.5,
         "frPageviews": 2
       },
       "flags": [],
@@ -304,6 +285,25 @@
       "wordCount": 3880
     },
     {
+      "wpId": 5119,
+      "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
+      "title": "Thaïlande ou Vietnam : le dilemme caché du premier voyage",
+      "compositeScore": 29,
+      "signals": {
+        "traffic": 0.2,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0.41,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-04-06T05:37:25",
+      "wordCount": 1322
+    },
+    {
       "wpId": 3107,
       "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
       "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
@@ -313,14 +313,14 @@
         "sessionQuality": 1,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
       },
       "flags": [],
       "date": "2026-03-04T19:51:24",
-      "wordCount": 1637
+      "wordCount": 1651
     },
     {
       "wpId": 5179,
@@ -361,25 +361,6 @@
       "wordCount": 1400
     },
     {
-      "wpId": 5119,
-      "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
-      "title": "Thaïlande ou Vietnam : le dilemme caché du premier voyage",
-      "compositeScore": 28,
-      "signals": {
-        "traffic": 0.15,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.41,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-04-06T05:37:25",
-      "wordCount": 1322
-    },
-    {
       "wpId": 5072,
       "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
@@ -399,6 +380,25 @@
       "wordCount": 1258
     },
     {
+      "wpId": 5296,
+      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "compositeScore": 27,
+      "signals": {
+        "traffic": 0.3,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0.16,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-04-11T08:44:09",
+      "wordCount": 1566
+    },
+    {
       "wpId": 3090,
       "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
       "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
@@ -408,7 +408,7 @@
         "sessionQuality": 0.22,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": 0.25,
         "frPageviews": 1
@@ -435,6 +435,25 @@
       "flags": [],
       "date": "2026-04-10T05:37:09",
       "wordCount": 1464
+    },
+    {
+      "wpId": 5702,
+      "slug": "thailande-le-cout-reel-dun-voyage-entre-confort-et-luxe",
+      "title": "Thaïlande : Le coût réel d&rsquo;un voyage entre confort et luxe",
+      "compositeScore": 25,
+      "signals": {
+        "traffic": 0.05,
+        "sessionQuality": 0,
+        "trendAlignment": 0.41,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-04-16T05:38:01",
+      "wordCount": 1332
     },
     {
       "wpId": 5229,
@@ -472,7 +491,7 @@
       },
       "flags": [],
       "date": "2026-03-18T11:30:24",
-      "wordCount": 2765
+      "wordCount": 2782
     },
     {
       "wpId": 4087,
@@ -493,7 +512,49 @@
         "zero_traffic"
       ],
       "date": "2026-03-18T11:08:26",
-      "wordCount": 4667
+      "wordCount": 4684
+    },
+    {
+      "wpId": 5668,
+      "slug": "thailande-ou-vietnam-le-choix-crucial-pour-ton-voyage-en-2026",
+      "title": "Thaïlande ou Vietnam : le choix crucial pour ton voyage en 2026",
+      "compositeScore": 23,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.41,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-04-15T05:33:49",
+      "wordCount": 1450
+    },
+    {
+      "wpId": 5627,
+      "slug": "thailande-ou-vietnam-le-choix-crucial-pour-un-premier-voyage",
+      "title": "Thaïlande ou Vietnam : le choix crucial pour un premier voyage",
+      "compositeScore": 23,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.41,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-04-14T05:33:32",
+      "wordCount": 1452
     },
     {
       "wpId": 5559,
@@ -556,26 +617,7 @@
         "zero_traffic"
       ],
       "date": "2026-03-18T10:48:58",
-      "wordCount": 3772
-    },
-    {
-      "wpId": 3546,
-      "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
-      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
-      "compositeScore": 23,
-      "signals": {
-        "traffic": 0.15,
-        "sessionQuality": 0.3,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-15T17:06:07",
-      "wordCount": 4325
+      "wordCount": 3785
     },
     {
       "wpId": 3484,
@@ -587,7 +629,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.41,
         "reelAmplification": 0,
-        "freshness": 1,
+        "freshness": 0.99,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -608,7 +650,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -653,7 +695,7 @@
       },
       "flags": [],
       "date": "2026-04-05T05:24:53",
-      "wordCount": 1356
+      "wordCount": 1374
     },
     {
       "wpId": 4138,
@@ -675,6 +717,25 @@
       "wordCount": 3120
     },
     {
+      "wpId": 3546,
+      "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
+      "compositeScore": 22,
+      "signals": {
+        "traffic": 0.15,
+        "sessionQuality": 0.3,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.99,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-15T17:06:07",
+      "wordCount": 4325
+    },
+    {
       "wpId": 3410,
       "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
       "title": "Laos Solo Femme 2026 : Sécurité et Risques Cachés",
@@ -684,7 +745,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.35,
         "reelAmplification": 0,
-        "freshness": 1,
+        "freshness": 0.99,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -696,35 +757,16 @@
       "wordCount": 4136
     },
     {
-      "wpId": 3040,
-      "slug": "planifier-un-voyage-au-japon-comment-optimiser-chaque-journee",
-      "title": "Planifier Voyage Japon 2026 : Itinéraire Optimal",
-      "compositeScore": 22,
-      "signals": {
-        "traffic": 0.1,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 0.97,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-04T17:49:53",
-      "wordCount": 1047
-    },
-    {
       "wpId": 3024,
       "slug": "visa-vietnam-lerreur-qui-ma-coute-cher-et-comment-leviter",
       "title": "Visa Vietnam : L&rsquo;Erreur qui M&rsquo;a Coûté Cher et Comment L&rsquo;Éviter",
       "compositeScore": 22,
       "signals": {
-        "traffic": 0.1,
+        "traffic": 0.05,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
+        "trendAlignment": 0.31,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -772,14 +814,14 @@
       "wordCount": 2287
     },
     {
-      "wpId": 4071,
-      "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
-      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "wpId": 3918,
+      "slug": "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas-mars-2026",
+      "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas) (mars 2026)",
       "compositeScore": 21,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
-        "trendAlignment": 0.29,
+        "trendAlignment": 0.31,
         "reelAmplification": 0,
         "freshness": 1,
         "monetization": 0,
@@ -789,65 +831,29 @@
       "flags": [
         "zero_traffic"
       ],
-      "date": "2026-03-18T10:40:12",
-      "wordCount": 3113
-    },
-    {
-      "wpId": 3918,
-      "slug": "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas-mars-2026",
-      "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas) (mars 2026)",
-      "compositeScore": 21,
-      "signals": {
-        "traffic": 0.05,
-        "sessionQuality": 0,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
       "date": "2026-03-17T17:25:51",
       "wordCount": 2507
     },
     {
-      "wpId": 3504,
-      "slug": "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver",
-      "title": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver",
+      "wpId": 3517,
+      "slug": "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas)",
       "compositeScore": 21,
       "signals": {
-        "traffic": 0.05,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.31,
         "reelAmplification": 0,
-        "freshness": 1,
+        "freshness": 0.99,
         "monetization": 0,
-        "frShare": 0,
+        "frShare": null,
         "frPageviews": 0
       },
-      "flags": [],
-      "date": "2026-03-15T16:14:48",
-      "wordCount": 4150
-    },
-    {
-      "wpId": 2837,
-      "slug": "voyager-au-vietnam-avec-500-e-comment-optimiser-chaque-depense-2",
-      "title": "Voyager au Vietnam avec 500 € : Comment optimiser chaque dépense",
-      "compositeScore": 21,
-      "signals": {
-        "traffic": 0.1,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 0.93,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-02-18T18:30:51",
-      "wordCount": 1581
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-15T16:23:09",
+      "wordCount": 4357
     },
     {
       "wpId": 5189,
@@ -866,87 +872,47 @@
       },
       "flags": [],
       "date": "2026-04-08T09:02:34",
-      "wordCount": 1182
+      "wordCount": 1199
     },
     {
-      "wpId": 3930,
-      "slug": "japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs-mars-2026",
-      "title": "Japon : la vérité que tu ne liras nulle part ailleurs (mars 2026)",
+      "wpId": 3040,
+      "slug": "planifier-un-voyage-au-japon-comment-optimiser-chaque-journee",
+      "title": "Planifier Voyage Japon 2026 : Itinéraire Optimal",
       "compositeScore": 20,
       "signals": {
         "traffic": 0.05,
-        "sessionQuality": 0.38,
-        "trendAlignment": 0,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 0.96,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-04T17:49:53",
+      "wordCount": 1047
+    },
+    {
+      "wpId": 5720,
+      "slug": "vietnam-larbitrage-crucial-pour-un-budget-maitrise-sur-place",
+      "title": "Vietnam : l&rsquo;arbitrage crucial pour un budget maîtrisé sur place",
+      "compositeScore": 19,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.21,
         "reelAmplification": 0,
         "freshness": 1,
         "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-17T18:12:48",
-      "wordCount": 2184
-    },
-    {
-      "wpId": 3182,
-      "slug": "vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser",
-      "title": "Vaccin Rage Asie du Sud-Est 2026 : Prix, Avis et Guide",
-      "compositeScore": 20,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.29,
-        "reelAmplification": 0,
-        "freshness": 0.97,
-        "monetization": 0,
         "frShare": null,
         "frPageviews": 0
       },
       "flags": [
         "zero_traffic"
       ],
-      "date": "2026-03-04T22:15:31",
-      "wordCount": 2340
-    },
-    {
-      "wpId": 2989,
-      "slug": "comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes",
-      "title": "Comment découvrir l&rsquo;Indonésie authentique : itinéraire, choix et découvertes",
-      "compositeScore": 20,
-      "signals": {
-        "traffic": 0.2,
-        "sessionQuality": 0.02,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.94,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-02-23T11:50:39",
-      "wordCount": 1330
-    },
-    {
-      "wpId": 2980,
-      "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-      "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
-      "compositeScore": 20,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.29,
-        "reelAmplification": 0,
-        "freshness": 0.94,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-02-23T10:54:23",
-      "wordCount": 3106
+      "date": "2026-04-16T09:18:09",
+      "wordCount": 1490
     },
     {
       "wpId": 5608,
@@ -1051,7 +1017,7 @@
         "zero_traffic"
       ],
       "date": "2026-03-18T13:13:18",
-      "wordCount": 3081
+      "wordCount": 3065
     },
     {
       "wpId": 4090,
@@ -1072,7 +1038,7 @@
         "zero_traffic"
       ],
       "date": "2026-03-18T11:21:50",
-      "wordCount": 3567
+      "wordCount": 3553
     },
     {
       "wpId": 4081,
@@ -1093,7 +1059,28 @@
         "zero_traffic"
       ],
       "date": "2026-03-18T10:57:39",
-      "wordCount": 4067
+      "wordCount": 4084
+    },
+    {
+      "wpId": 4071,
+      "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
+      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "compositeScore": 19,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-18T10:40:12",
+      "wordCount": 3113
     },
     {
       "wpId": 4066,
@@ -1285,35 +1272,16 @@
       "wordCount": 2306
     },
     {
-      "wpId": 3550,
-      "slug": "japon-les-2-pieges-que-les-guides-cachent-aux-backpackers",
-      "title": "Japon : les 2 pièges que les guides cachent aux backpackers",
-      "compositeScore": 19,
-      "signals": {
-        "traffic": 0.1,
-        "sessionQuality": 0.08,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-15T17:35:18",
-      "wordCount": 2597
-    },
-    {
-      "wpId": 3517,
-      "slug": "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas",
-      "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas)",
+      "wpId": 3504,
+      "slug": "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver",
+      "title": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver",
       "compositeScore": 19,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 1,
+        "freshness": 0.99,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1321,8 +1289,8 @@
       "flags": [
         "zero_traffic"
       ],
-      "date": "2026-03-15T16:23:09",
-      "wordCount": 4357
+      "date": "2026-03-15T16:14:48",
+      "wordCount": 4150
     },
     {
       "wpId": 3497,
@@ -1334,7 +1302,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 1,
+        "freshness": 0.99,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1355,7 +1323,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 1,
+        "freshness": 0.99,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1376,7 +1344,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 1,
+        "freshness": 0.99,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1397,7 +1365,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.99,
+        "freshness": 0.98,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1418,7 +1386,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.99,
+        "freshness": 0.98,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1439,7 +1407,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.99,
+        "freshness": 0.98,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1460,7 +1428,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.99,
+        "freshness": 0.98,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1481,7 +1449,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.99,
+        "freshness": 0.98,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -1489,6 +1457,27 @@
       "flags": [],
       "date": "2026-03-11T15:15:39",
       "wordCount": 3115
+    },
+    {
+      "wpId": 3182,
+      "slug": "vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser",
+      "title": "Vaccin Rage Asie du Sud-Est 2026 : Prix, Avis et Guide",
+      "compositeScore": 19,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 0.96,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-04T22:15:31",
+      "wordCount": 2340
     },
     {
       "wpId": 3167,
@@ -1500,7 +1489,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1521,7 +1510,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1542,7 +1531,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1552,6 +1541,25 @@
       ],
       "date": "2026-03-04T18:58:43",
       "wordCount": 792
+    },
+    {
+      "wpId": 2837,
+      "slug": "voyager-au-vietnam-avec-500-e-comment-optimiser-chaque-depense-2",
+      "title": "Voyager au Vietnam avec 500 € : Comment optimiser chaque dépense",
+      "compositeScore": 19,
+      "signals": {
+        "traffic": 0.05,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 0.92,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-02-18T18:30:51",
+      "wordCount": 1581
     },
     {
       "wpId": 3872,
@@ -1584,7 +1592,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.16,
         "reelAmplification": 0,
-        "freshness": 1,
+        "freshness": 0.99,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1596,27 +1604,6 @@
       "wordCount": 1656
     },
     {
-      "wpId": 3254,
-      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
-      "compositeScore": 18,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.18,
-        "reelAmplification": 0,
-        "freshness": 0.99,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-03-11T20:13:21",
-      "wordCount": 3437
-    },
-    {
       "wpId": 3207,
       "slug": "3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier",
       "title": "3 jours à Singapour : l&rsquo;itinéraire que tu dois affiner (pas copier)",
@@ -1626,7 +1613,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.16,
         "reelAmplification": 0,
-        "freshness": 0.99,
+        "freshness": 0.98,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1638,67 +1625,6 @@
       "wordCount": 3365
     },
     {
-      "wpId": 3115,
-      "slug": "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable",
-      "title": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
-      "compositeScore": 18,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.16,
-        "reelAmplification": 0,
-        "freshness": 0.97,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-03-04T20:07:23",
-      "wordCount": 878
-    },
-    {
-      "wpId": 3082,
-      "slug": "choisir-ou-sejourner-a-bali-dilemmes-et-decisions-cruciales",
-      "title": "Choisir où séjourner à Bali : dilemmes et décisions cruciales",
-      "compositeScore": 18,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.16,
-        "reelAmplification": 0,
-        "freshness": 0.97,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-03-04T19:02:54",
-      "wordCount": 996
-    },
-    {
-      "wpId": 3032,
-      "slug": "japon-comment-arbitrer-entre-experiences-incontournables-et-logistique",
-      "title": "Japon 2026 : Guide des Expériences Incontournables",
-      "compositeScore": 18,
-      "signals": {
-        "traffic": 0.1,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.97,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-04T17:44:30",
-      "wordCount": 1051
-    },
-    {
       "wpId": 3005,
       "slug": "arbitrer-son-itineraire-au-vietnam-decisions-cruciales-en-saison-des-pluies",
       "title": "Arbitrer son Itinéraire au Vietnam : Décisions Cruciales en Saison des Pluies",
@@ -1708,7 +1634,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1729,7 +1655,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1741,6 +1667,27 @@
       "wordCount": 2808
     },
     {
+      "wpId": 2980,
+      "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+      "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "compositeScore": 18,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 0.93,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-02-23T10:54:23",
+      "wordCount": 3106
+    },
+    {
       "wpId": 2967,
       "slug": "les-6-couts-caches-dun-voyage-au-japon-optimiser-chaque-yen",
       "title": "Les 6 Coûts Cachés d&rsquo;un Voyage au Japon : Optimiser chaque Yen",
@@ -1750,7 +1697,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1771,7 +1718,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1792,7 +1739,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -1861,80 +1808,23 @@
       "wordCount": 4046
     },
     {
-      "wpId": 3425,
-      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "wpId": 2989,
+      "slug": "comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes",
+      "title": "Comment découvrir l&rsquo;Indonésie authentique : itinéraire, choix et découvertes",
       "compositeScore": 17,
       "signals": {
-        "traffic": 0.05,
+        "traffic": 0.1,
         "sessionQuality": 0.02,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-14T20:55:07",
-      "wordCount": 4803
-    },
-    {
-      "wpId": 3015,
-      "slug": "itineraire-vers-lindonesie-comment-bien-choisir-entre-valise-et-sac-a-dos",
-      "title": "Itinéraire vers l&rsquo;Indonésie : Comment Bien Choisir Entre Valise et Sac à Dos",
-      "compositeScore": 17,
-      "signals": {
-        "traffic": 0.1,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.94,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-02-23T18:41:03",
-      "wordCount": 1316
-    },
-    {
-      "wpId": 2931,
-      "slug": "voyager-au-japon-comment-bien-choisir-son-itineraire-sans-regret",
-      "title": "Voyager au Japon : Comment bien choisir son itinéraire sans regret",
-      "compositeScore": 17,
-      "signals": {
-        "traffic": 0.1,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
         "freshness": 0.93,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
       },
       "flags": [],
-      "date": "2026-02-21T09:41:20",
-      "wordCount": 2382
-    },
-    {
-      "wpId": 2847,
-      "slug": "voyager-au-japon-comment-eviter-les-foule-et-voir-les-cerisiers",
-      "title": "Voyager au Japon : Comment Éviter les Foule et Voir les Cerisiers",
-      "compositeScore": 17,
-      "signals": {
-        "traffic": 0.1,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.93,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-02-18T19:22:02",
-      "wordCount": 3045
+      "date": "2026-02-23T11:50:39",
+      "wordCount": 1330
     },
     {
       "wpId": 5239,
@@ -1956,6 +1846,44 @@
       "wordCount": 1243
     },
     {
+      "wpId": 3032,
+      "slug": "japon-comment-arbitrer-entre-experiences-incontournables-et-logistique",
+      "title": "Japon 2026 : Guide des Expériences Incontournables",
+      "compositeScore": 16,
+      "signals": {
+        "traffic": 0.05,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.96,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-04T17:44:30",
+      "wordCount": 1051
+    },
+    {
+      "wpId": 3015,
+      "slug": "itineraire-vers-lindonesie-comment-bien-choisir-entre-valise-et-sac-a-dos",
+      "title": "Itinéraire vers l&rsquo;Indonésie : Comment Bien Choisir Entre Valise et Sac à Dos",
+      "compositeScore": 16,
+      "signals": {
+        "traffic": 0.05,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.93,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-02-23T18:41:03",
+      "wordCount": 1316
+    },
+    {
       "wpId": 2924,
       "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
       "title": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
@@ -1973,6 +1901,27 @@
       "flags": [],
       "date": "2026-02-21T09:23:42",
       "wordCount": 3064
+    },
+    {
+      "wpId": 5678,
+      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "compositeScore": 15,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-04-15T09:17:09",
+      "wordCount": 1487
     },
     {
       "wpId": 5270,
@@ -1993,7 +1942,7 @@
         "zero_traffic"
       ],
       "date": "2026-04-10T09:40:41",
-      "wordCount": 1309
+      "wordCount": 1326
     },
     {
       "wpId": 5132,
@@ -2056,7 +2005,7 @@
         "zero_traffic"
       ],
       "date": "2026-03-18T19:09:04",
-      "wordCount": 3297
+      "wordCount": 3314
     },
     {
       "wpId": 4058,
@@ -2141,6 +2090,27 @@
       ],
       "date": "2026-03-17T19:09:17",
       "wordCount": 2957
+    },
+    {
+      "wpId": 3930,
+      "slug": "japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs-mars-2026",
+      "title": "Japon : la vérité que tu ne liras nulle part ailleurs (mars 2026)",
+      "compositeScore": 15,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-17T18:12:48",
+      "wordCount": 2184
     },
     {
       "wpId": 3892,
@@ -2248,6 +2218,27 @@
       "wordCount": 2531
     },
     {
+      "wpId": 3550,
+      "slug": "japon-les-2-pieges-que-les-guides-cachent-aux-backpackers",
+      "title": "Japon : les 2 pièges que les guides cachent aux backpackers",
+      "compositeScore": 15,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.99,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-15T17:35:18",
+      "wordCount": 2597
+    },
+    {
       "wpId": 3549,
       "slug": "japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs",
       "title": "Japon : la vérité que tu ne liras nulle part ailleurs",
@@ -2257,7 +2248,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 1,
+        "freshness": 0.99,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2269,6 +2260,48 @@
       "wordCount": 3719
     },
     {
+      "wpId": 3425,
+      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "compositeScore": 15,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.99,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-14T20:55:07",
+      "wordCount": 4803
+    },
+    {
+      "wpId": 3254,
+      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
+      "compositeScore": 15,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.98,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-11T20:13:21",
+      "wordCount": 3437
+    },
+    {
       "wpId": 3251,
       "slug": "vivre-a-lombok-en-tant-que-nomade-numerique-les-10-couts-caches-qui-devorent-ton-budget",
       "title": "Vivre à Lombok en tant que nomade numérique : les 10 coûts cachés qui dévorent ton budget",
@@ -2278,7 +2311,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.99,
+        "freshness": 0.98,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2299,7 +2332,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.99,
+        "freshness": 0.98,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2308,7 +2341,7 @@
         "zero_traffic"
       ],
       "date": "2026-03-11T18:08:11",
-      "wordCount": 2853
+      "wordCount": 2870
     },
     {
       "wpId": 3234,
@@ -2320,7 +2353,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.99,
+        "freshness": 0.98,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2341,7 +2374,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.99,
+        "freshness": 0.98,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2353,16 +2386,54 @@
       "wordCount": 4734
     },
     {
+      "wpId": 2931,
+      "slug": "voyager-au-japon-comment-bien-choisir-son-itineraire-sans-regret",
+      "title": "Voyager au Japon : Comment bien choisir son itinéraire sans regret",
+      "compositeScore": 15,
+      "signals": {
+        "traffic": 0.05,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.93,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-02-21T09:41:20",
+      "wordCount": 2382
+    },
+    {
+      "wpId": 2847,
+      "slug": "voyager-au-japon-comment-eviter-les-foule-et-voir-les-cerisiers",
+      "title": "Voyager au Japon : Comment Éviter les Foule et Voir les Cerisiers",
+      "compositeScore": 15,
+      "signals": {
+        "traffic": 0.05,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.92,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-02-18T19:22:02",
+      "wordCount": 3045
+    },
+    {
       "wpId": 3174,
       "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
       "title": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
-      "compositeScore": 15,
+      "compositeScore": 14,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2377,13 +2448,13 @@
       "wpId": 3159,
       "slug": "vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques",
       "title": "Vivre en Asie du Sud-Est avec 10 000 $ : Frais cachés et choix stratégiques",
-      "compositeScore": 15,
+      "compositeScore": 14,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2398,13 +2469,13 @@
       "wpId": 3131,
       "slug": "decider-de-son-itineraire-au-japon-entre-confort-et-choix-logistiques",
       "title": "Décider de son itinéraire au Japon : entre confort et choix logistiques",
-      "compositeScore": 15,
+      "compositeScore": 14,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2419,13 +2490,13 @@
       "wpId": 3122,
       "slug": "budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations",
       "title": "Budget Réel pour Vivre à Koh Lanta : Dépenses et Optimisations",
-      "compositeScore": 15,
+      "compositeScore": 14,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2437,16 +2508,37 @@
       "wordCount": 978
     },
     {
-      "wpId": 3099,
-      "slug": "indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques",
-      "title": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques",
-      "compositeScore": 15,
+      "wpId": 3115,
+      "slug": "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable",
+      "title": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
+      "compositeScore": 14,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-04T20:07:23",
+      "wordCount": 878
+    },
+    {
+      "wpId": 3099,
+      "slug": "indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques",
+      "title": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques",
+      "compositeScore": 14,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2458,16 +2550,37 @@
       "wordCount": 1882
     },
     {
-      "wpId": 3065,
-      "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
-      "title": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
-      "compositeScore": 15,
+      "wpId": 3082,
+      "slug": "choisir-ou-sejourner-a-bali-dilemmes-et-decisions-cruciales",
+      "title": "Choisir où séjourner à Bali : dilemmes et décisions cruciales",
+      "compositeScore": 14,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-04T19:02:54",
+      "wordCount": 996
+    },
+    {
+      "wpId": 3065,
+      "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
+      "title": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
+      "compositeScore": 14,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2482,13 +2595,13 @@
       "wpId": 3056,
       "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
       "title": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
-      "compositeScore": 15,
+      "compositeScore": 14,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2503,13 +2616,13 @@
       "wpId": 3048,
       "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
       "title": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
-      "compositeScore": 15,
+      "compositeScore": 14,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2530,7 +2643,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2593,7 +2706,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2614,7 +2727,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2635,7 +2748,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2656,7 +2769,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2677,7 +2790,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2698,7 +2811,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -2715,7 +2828,7 @@
     "topPerformers": 3,
     "staleArticles": 0,
     "missingWidgets": 0,
-    "zeroTraffic": 82,
+    "zeroTraffic": 91,
     "trending": 1,
     "frHeavy": 0,
     "frLight": 1,
