@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-04-16T19:06:10.350Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-04-17T02:04:57.841Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "China issues US safety alert for citizens citing 'malicious questioning' by US border officers",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/china-issues-us-safety-alert-for-citizens-citing-malicious-questioning-by-us-border-officers",
-      "velocityScore": 0.42,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 708,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2101,
-      "estimatedTrafficIn24h": 2053,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.85,
-        "timeDecay": 0.989,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 11.6
-      },
-      "detectedAt": "2026-04-16T07:28:36.000Z",
-      "scoredAt": "2026-04-16T19:06:02.001Z"
-    }
-  ]
+  "queue": []
 }
