@@ -1,6 +1,41 @@
 {
   "articles": [
     {
+      "id": 5742,
+      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
+      "category": "temoignage",
+      "keywords": [
+        "bangkok",
+        "vrai",
+        "cout",
+        "taxis",
+        "aeroport",
+        "2026"
+      ],
+      "excerpt": "Thomas Renard · Flash Voyage Guide complet basé sur nos recherches terrain et données voyage 2026. S"
+    },
+    {
+      "id": 5720,
+      "slug": "vietnam-larbitrage-crucial-pour-un-budget-maitrise-sur-place",
+      "title": "Vietnam : l&rsquo;arbitrage crucial pour un budget maîtrisé sur place",
+      "url": "https://flashvoyage.com/vietnam-larbitrage-crucial-pour-un-budget-maitrise-sur-place/",
+      "category": "budget",
+      "keywords": [
+        "vietnam",
+        "l&rsquo;arbitrage",
+        "crucial",
+        "budget",
+        "maitrise",
+        "sur",
+        "place",
+        "voyage",
+        "asie"
+      ],
+      "excerpt": "Sophie Leclerc · Flash Voyage Guide complet basé sur nos recherches terrain et données voyage 2026. "
+    },
+    {
       "id": 5702,
       "slug": "thailande-le-cout-reel-dun-voyage-entre-confort-et-luxe",
       "title": "Thaïlande : Le coût réel d&rsquo;un voyage entre confort et luxe",
@@ -1936,46 +1971,6 @@
         "nomades"
       ],
       "excerpt": "Bangkok, une métropole vibrante, ou Chiang Mai, un havre de paix culturel ? Choisir entre ces deux d"
-    },
-    {
-      "id": 3167,
-      "slug": "vivre-en-thailande-avec-500-usd-realite-ou-illusion",
-      "title": "Vivre en Thaïlande avec 500 USD : Réalité ou Illusion ?",
-      "url": "https://flashvoyage.com/vivre-en-thailande-avec-500-usd-realite-ou-illusion/",
-      "category": "temoignage",
-      "keywords": [
-        "vivre",
-        "thailande",
-        "avec",
-        "500",
-        "usd",
-        "realite",
-        "illusion",
-        "voyage",
-        "budget",
-        "asie"
-      ],
-      "excerpt": "En arrivant en Thaïlande, chaque décision financière devient un arbitrage délicat entre confort et p"
-    },
-    {
-      "id": 3159,
-      "slug": "vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques",
-      "title": "Vivre en Asie du Sud-Est avec 10 000 $ : Frais cachés et choix stratégiques",
-      "url": "https://flashvoyage.com/vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques/",
-      "category": "temoignage",
-      "keywords": [
-        "vivre",
-        "asie",
-        "sud",
-        "est",
-        "avec",
-        "000",
-        "frais",
-        "caches",
-        "choix",
-        "strategiques"
-      ],
-      "excerpt": "Avec un revenu mensuel compris entre 10 000 et 14 000 euros, le rêve de s&rsquo;installer en Asie du"
     }
   ],
   "blacklist": [

@@ -283,7 +283,8 @@
       "slug_pattern": "esim-asie-sud-est-2026-guide-comparatif-complet-pays",
       "seo_intent": "COMMERCIAL_INVESTIGATION",
       "rationale": "Pillar page for the entire eSIM cluster. Links to every country-specific eSIM article (Japan, Indonesia, Korea, multi-country). Captures the broadest eSIM query. Published last so all spoke articles exist for internal linking.",
-      "status": "pending"
+      "status": "published",
+      "published_at": "2026-04-17T09:18:05.516Z"
     }
   ],
   "diversity_check": {
