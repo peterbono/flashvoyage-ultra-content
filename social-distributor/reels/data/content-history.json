@@ -129,6 +129,16 @@
       "name": "thailande",
       "date": "2026-04-16",
       "format": "budget"
+    },
+    {
+      "name": "thaïlande",
+      "date": "2026-04-17",
+      "format": "avantapres"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-17",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -263,6 +273,14 @@
     {
       "format": "budget",
       "date": "2026-04-16T21:10:27.385Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-17T17:47:53.342Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-17T17:48:26.315Z"
     }
   ],
   "recentArticleIds": [
@@ -282,7 +300,8 @@
     4370,
     3410,
     5702,
-    5053
+    5053,
+    4487
   ],
   "recentFingerprints": [
     {
@@ -352,6 +371,10 @@
     {
       "fp": "fmt:budget|dest:thailande|slug:thailande-vs-vietnam-le-dilemm",
       "date": "2026-04-16T21:10:27.385Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:thailande|slug:voyage-thailande-pas-cher-2026",
+      "date": "2026-04-17T17:48:26.315Z"
     }
   ]
 }
