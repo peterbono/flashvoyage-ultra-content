@@ -4,5 +4,10 @@
       "google-rating-vs-experience",
       "beach-crowds"
     ]
+  },
+  "versus": {
+    "recentIds": [
+      "destination-vs-france"
+    ]
   }
 }

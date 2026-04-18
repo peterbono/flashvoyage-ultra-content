@@ -149,6 +149,11 @@
       "name": "thailande",
       "date": "2026-04-17",
       "format": "best-time"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-18",
+      "format": "cost-vs"
     }
   ],
   "recentFormats": [
@@ -307,6 +312,10 @@
     {
       "format": "best-time",
       "date": "2026-04-17T21:10:09.092Z"
+    },
+    {
+      "format": "cost-vs",
+      "date": "2026-04-18T17:36:06.021Z"
     }
   ],
   "recentArticleIds": [
@@ -329,7 +338,8 @@
     5053,
     4487,
     4254,
-    4253
+    4253,
+    4138
   ],
   "recentFingerprints": [
     {
@@ -411,6 +421,10 @@
     {
       "fp": "fmt:best-time|dest:thailande|slug:esim-thailande-comparatif-ais-",
       "date": "2026-04-17T21:10:09.092Z"
+    },
+    {
+      "fp": "fmt:cost-vs|dest:thailande|slug:thailande-choisir-entre-koh-sa",
+      "date": "2026-04-18T17:36:06.021Z"
     }
   ]
 }
