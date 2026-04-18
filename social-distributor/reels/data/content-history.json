@@ -154,6 +154,16 @@
       "name": "thailande",
       "date": "2026-04-18",
       "format": "cost-vs"
+    },
+    {
+      "name": "thaïlande",
+      "date": "2026-04-18",
+      "format": "avantapres"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-18",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -316,6 +326,14 @@
     {
       "format": "cost-vs",
       "date": "2026-04-18T17:36:06.021Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-18T19:46:10.381Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-18T19:46:44.055Z"
     }
   ],
   "recentArticleIds": [
@@ -339,7 +357,8 @@
     4487,
     4254,
     4253,
-    4138
+    4138,
+    4087
   ],
   "recentFingerprints": [
     {
@@ -425,6 +444,10 @@
     {
       "fp": "fmt:cost-vs|dest:thailande|slug:thailande-choisir-entre-koh-sa",
       "date": "2026-04-18T17:36:06.021Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:thailande|slug:thailande-2-pieges-caches-que-",
+      "date": "2026-04-18T19:46:44.055Z"
     }
   ]
 }
