@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-17T05:33:43.122Z",
+  "timestamp": "2026-04-18T05:13:02.157Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,29 +17,33 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 150,
-    "medianTrafficSignal": "0.150",
+    "medianMonthlyPV": 100,
+    "medianTrafficSignal": "0.100",
     "avgRpm": 2,
-    "articlesAnalyzed": 47
+    "articlesAnalyzed": 51
   },
   "queue": [
     {
       "rank": 1,
-      "action": "standard",
-      "priority": "P3",
-      "priorityScore": 40,
-      "topic": "[Calendar rotation: support article]",
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 141,
+      "topic": "voyage pas cher",
       "articleType": "support",
       "context": {
-        "cyclePosition": 3,
-        "reason": "Standard editorial calendar rotation (position 4/5)"
+        "gapScore": 61,
+        "destination": "thailande",
+        "category": "budget",
+        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
       },
       "roi": {
-        "expectedRoi": 4,
-        "projectedMonthlyTraffic": 150,
-        "projectedMonthlyRevenue": 0.3,
+        "expectedRoi": 2.72,
+        "projectedMonthlyTraffic": 102,
+        "projectedMonthlyRevenue": 0.204,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (150 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (100 PV) × gap boost (1.02)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -48,7 +52,7 @@
       "rank": 2,
       "action": "standard",
       "priority": "P3",
-      "priorityScore": 39,
+      "priorityScore": 40,
       "topic": "[Calendar rotation: news article]",
       "articleType": "news",
       "context": {
@@ -56,11 +60,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 4,
-        "projectedMonthlyTraffic": 150,
-        "projectedMonthlyRevenue": 0.3,
+        "expectedRoi": 2.67,
+        "projectedMonthlyTraffic": 100,
+        "projectedMonthlyRevenue": 0.2,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (150 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -69,7 +73,7 @@
       "rank": 3,
       "action": "standard",
       "priority": "P3",
-      "priorityScore": 38,
+      "priorityScore": 39,
       "topic": "[Calendar rotation: pillar article]",
       "articleType": "pillar",
       "context": {
@@ -77,17 +81,38 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 4,
-        "projectedMonthlyTraffic": 150,
-        "projectedMonthlyRevenue": 0.3,
+        "expectedRoi": 2.67,
+        "projectedMonthlyTraffic": 100,
+        "projectedMonthlyRevenue": 0.2,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (150 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
       "rank": 4,
+      "action": "standard",
+      "priority": "P3",
+      "priorityScore": 38,
+      "topic": "[Calendar rotation: support article]",
+      "articleType": "support",
+      "context": {
+        "cyclePosition": 1,
+        "reason": "Standard editorial calendar rotation (position 2/5)"
+      },
+      "roi": {
+        "expectedRoi": 2.67,
+        "projectedMonthlyTraffic": 100,
+        "projectedMonthlyRevenue": 0.2,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -108,11 +133,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -133,11 +158,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -158,11 +183,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -183,11 +208,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -208,11 +233,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -233,11 +258,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -258,11 +283,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -283,11 +308,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -308,11 +333,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 13,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -333,20 +358,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.225,
+    "totalCost": 0.3,
     "dailyBudget": 2,
-    "itemsWithinBudget": 13,
+    "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.03,
-    "expectedDailyRoi": 0.13
+    "expectedDailyRevenue": 0.027,
+    "expectedDailyRoi": 0.09
   },
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

@@ -1,8 +1,8 @@
 {
   "summary": {
-    "generatedAt": "2026-04-17T05:33:42.149Z",
+    "generatedAt": "2026-04-18T05:13:01.192Z",
     "elapsedSeconds": 9,
-    "totalArticles": 138,
+    "totalArticles": 140,
     "articlesWithRecommendations": 8,
     "totalRecommendations": 8,
     "byPriority": {
@@ -31,9 +31,9 @@
       "internalLinks": 40,
       "lastModified": "2026-04-13T11:07:09",
       "ga4": {
-        "pageviews": 18,
-        "sessions": 14,
-        "avgDuration": 161
+        "pageviews": 19,
+        "sessions": 15,
+        "avgDuration": 151
       },
       "gsc": {
         "impressions": 0,
@@ -179,6 +179,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 2857,
+      "slug": "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2",
+      "title": "Voyager au Japon : Quand voir les cerisiers sans la foule",
+      "url": "https://flashvoyage.com/voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2/",
+      "wordCount": 1213,
+      "widgetCount": 0,
+      "internalLinks": 21,
+      "lastModified": "2026-04-12T15:42:44",
+      "ga4": {
+        "pageviews": 7,
+        "sessions": 7,
+        "avgDuration": 1
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5296,
       "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
       "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
@@ -258,34 +286,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 2857,
-      "slug": "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2",
-      "title": "Voyager au Japon : Quand voir les cerisiers sans la foule",
-      "url": "https://flashvoyage.com/voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2/",
-      "wordCount": 1213,
-      "widgetCount": 0,
-      "internalLinks": 21,
-      "lastModified": "2026-04-12T15:42:44",
-      "ga4": {
-        "pageviews": 6,
-        "sessions": 6,
-        "avgDuration": 1
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4372,
       "slug": "esim-philippines-globe-smart-comparatif-2026",
       "title": "eSIM Philippines : Globe vs Smart, le comparatif que personne ne fait",
@@ -300,7 +300,7 @@
         "avgDuration": 35
       },
       "gsc": {
-        "impressions": 30,
+        "impressions": 32,
         "clicks": 2,
         "position": 6.1,
         "topQueries": [
@@ -494,6 +494,34 @@
         "impressions": 5,
         "clicks": 2,
         "position": 12.8,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5333,
+      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
+      "title": "Thaïlande ou Vietnam en 2026 : l&rsquo;arbitrage qui change tout",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout/",
+      "wordCount": 1216,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-04-13T05:47:16",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 10
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -729,18 +757,18 @@
       "p0Count": 0
     },
     {
-      "wpId": 5343,
-      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "url": "https://flashvoyage.com/pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu/",
-      "wordCount": 1437,
+      "wpId": 5702,
+      "slug": "thailande-le-cout-reel-dun-voyage-entre-confort-et-luxe",
+      "title": "Thaïlande : Le coût réel d&rsquo;un voyage entre confort et luxe",
+      "url": "https://flashvoyage.com/thailande-le-cout-reel-dun-voyage-entre-confort-et-luxe/",
+      "wordCount": 1330,
       "widgetCount": 0,
-      "internalLinks": 15,
-      "lastModified": "2026-04-13T06:36:19",
+      "internalLinks": 19,
+      "lastModified": "2026-04-16T07:02:05",
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 5
+        "avgDuration": 80
       },
       "gsc": {
         "impressions": 0,
@@ -757,18 +785,18 @@
       "p0Count": 0
     },
     {
-      "wpId": 5333,
-      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
-      "title": "Thaïlande ou Vietnam en 2026 : l&rsquo;arbitrage qui change tout",
-      "url": "https://flashvoyage.com/thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout/",
-      "wordCount": 1216,
+      "wpId": 5343,
+      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "url": "https://flashvoyage.com/pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu/",
+      "wordCount": 1437,
       "widgetCount": 0,
-      "internalLinks": 19,
-      "lastModified": "2026-04-13T05:47:16",
+      "internalLinks": 15,
+      "lastModified": "2026-04-13T06:36:19",
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 0
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
@@ -883,14 +911,14 @@
         "avgDuration": 18
       },
       "gsc": {
-        "impressions": 42,
+        "impressions": 44,
         "clicks": 1,
-        "position": 11.7,
+        "position": 12.2,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 38,
-            "impressions": 3,
+            "position": 37,
+            "impressions": 4,
             "ctr": 0
           },
           {
@@ -952,9 +980,9 @@
         "avgDuration": 21
       },
       "gsc": {
-        "impressions": 115,
+        "impressions": 118,
         "clicks": 1,
-        "position": 14.7,
+        "position": 14.6,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -995,6 +1023,62 @@
       "p0Count": 0
     },
     {
+      "wpId": 4105,
+      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "url": "https://flashvoyage.com/vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher/",
+      "wordCount": 2286,
+      "widgetCount": 0,
+      "internalLinks": 42,
+      "lastModified": "2026-04-12T15:39:49",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 34
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4095,
+      "slug": "vietnam-4-pieges-que-les-blogs-voyage-cachent-et-que-les-voyageurs-decouvrent-trop-tard",
+      "title": "Vietnam : 4 pièges que les blogs voyage cachent (et que les voyageurs découvrent trop tard)",
+      "url": "https://flashvoyage.com/vietnam-4-pieges-que-les-blogs-voyage-cachent-et-que-les-voyageurs-decouvrent-trop-tard/",
+      "wordCount": 2781,
+      "widgetCount": 0,
+      "internalLinks": 28,
+      "lastModified": "2026-04-16T10:53:49",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 55
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 2989,
       "slug": "comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes",
       "title": "Comment découvrir l&rsquo;Indonésie authentique : itinéraire, choix et découvertes",
@@ -1023,18 +1107,74 @@
       "p0Count": 0
     },
     {
-      "wpId": 5702,
-      "slug": "thailande-le-cout-reel-dun-voyage-entre-confort-et-luxe",
-      "title": "Thaïlande : Le coût réel d&rsquo;un voyage entre confort et luxe",
-      "url": "https://flashvoyage.com/thailande-le-cout-reel-dun-voyage-entre-confort-et-luxe/",
-      "wordCount": 1330,
+      "wpId": 5742,
+      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
+      "wordCount": 1480,
       "widgetCount": 0,
-      "internalLinks": 19,
-      "lastModified": "2026-04-16T07:02:05",
+      "internalLinks": 21,
+      "lastModified": "2026-04-17T05:37:43",
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 0
+        "avgDuration": 76
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5668,
+      "slug": "thailande-ou-vietnam-le-choix-crucial-pour-ton-voyage-en-2026",
+      "title": "Thaïlande ou Vietnam : le choix crucial pour ton voyage en 2026",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-le-choix-crucial-pour-ton-voyage-en-2026/",
+      "wordCount": 1448,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-04-15T05:34:28",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 16
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5270,
+      "slug": "esim-japon-combien-ca-te-coute-vraiment",
+      "title": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "url": "https://flashvoyage.com/esim-japon-combien-ca-te-coute-vraiment/",
+      "wordCount": 1324,
+      "widgetCount": 0,
+      "internalLinks": 18,
+      "lastModified": "2026-04-14T10:54:34",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 15
       },
       "gsc": {
         "impressions": 0,
@@ -1163,62 +1303,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4105,
-      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "url": "https://flashvoyage.com/vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher/",
-      "wordCount": 2286,
-      "widgetCount": 0,
-      "internalLinks": 42,
-      "lastModified": "2026-04-12T15:39:49",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 4
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4095,
-      "slug": "vietnam-4-pieges-que-les-blogs-voyage-cachent-et-que-les-voyageurs-decouvrent-trop-tard",
-      "title": "Vietnam : 4 pièges que les blogs voyage cachent (et que les voyageurs découvrent trop tard)",
-      "url": "https://flashvoyage.com/vietnam-4-pieges-que-les-blogs-voyage-cachent-et-que-les-voyageurs-decouvrent-trop-tard/",
-      "wordCount": 2781,
-      "widgetCount": 0,
-      "internalLinks": 28,
-      "lastModified": "2026-04-16T10:53:49",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 6
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4030,
       "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
       "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
@@ -1259,6 +1343,34 @@
         "pageviews": 1,
         "sessions": 1,
         "avgDuration": 7
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3182,
+      "slug": "vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser",
+      "title": "Vaccin Rage Asie du Sud-Est 2026 : Prix, Avis et Guide",
+      "url": "https://flashvoyage.com/vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser/",
+      "wordCount": 2339,
+      "widgetCount": 0,
+      "internalLinks": 27,
+      "lastModified": "2026-04-13T00:00:57",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 106
       },
       "gsc": {
         "impressions": 0,
@@ -1499,14 +1611,42 @@
       "p0Count": 0
     },
     {
+      "wpId": 5752,
+      "slug": "lesim-en-asie-du-sud-est-ce-que-ca-va-vraiment-te-couter",
+      "title": "L&rsquo;ESIM en Asie du Sud-Est : Ce que ça va vraiment te coûter",
+      "url": "https://flashvoyage.com/lesim-en-asie-du-sud-est-ce-que-ca-va-vraiment-te-couter/",
+      "wordCount": 1118,
+      "widgetCount": 0,
+      "internalLinks": 18,
+      "lastModified": "2026-04-17T09:17:47",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5720,
       "slug": "vietnam-larbitrage-crucial-pour-un-budget-maitrise-sur-place",
       "title": "Vietnam : l&rsquo;arbitrage crucial pour un budget maîtrisé sur place",
       "url": "https://flashvoyage.com/vietnam-larbitrage-crucial-pour-un-budget-maitrise-sur-place/",
-      "wordCount": 1488,
+      "wordCount": 1505,
       "widgetCount": 0,
       "internalLinks": 16,
-      "lastModified": "2026-04-16T09:18:47",
+      "lastModified": "2026-04-17T10:45:22",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -1535,34 +1675,6 @@
       "widgetCount": 0,
       "internalLinks": 17,
       "lastModified": "2026-04-15T09:17:45",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5668,
-      "slug": "thailande-ou-vietnam-le-choix-crucial-pour-ton-voyage-en-2026",
-      "title": "Thaïlande ou Vietnam : le choix crucial pour ton voyage en 2026",
-      "url": "https://flashvoyage.com/thailande-ou-vietnam-le-choix-crucial-pour-ton-voyage-en-2026/",
-      "wordCount": 1448,
-      "widgetCount": 0,
-      "internalLinks": 19,
-      "lastModified": "2026-04-15T05:34:28",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -1675,34 +1787,6 @@
       "widgetCount": 0,
       "internalLinks": 16,
       "lastModified": "2026-04-13T05:47:31",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5270,
-      "slug": "esim-japon-combien-ca-te-coute-vraiment",
-      "title": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "url": "https://flashvoyage.com/esim-japon-combien-ca-te-coute-vraiment/",
-      "wordCount": 1324,
-      "widgetCount": 0,
-      "internalLinks": 18,
-      "lastModified": "2026-04-14T10:54:34",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2119,10 +2203,10 @@
       "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
       "title": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
       "url": "https://flashvoyage.com/philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire/",
-      "wordCount": 3592,
+      "wordCount": 3572,
       "widgetCount": 0,
       "internalLinks": 39,
-      "lastModified": "2026-04-12T15:40:09",
+      "lastModified": "2026-04-17T10:45:26",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2147,10 +2231,10 @@
       "slug": "vietnam-les-12-frais-caches-qui-explosent-ton-budget-de-1200-e-mois",
       "title": "Vietnam : les 12 frais cachés qui explosent ton budget de 1200 €/mois",
       "url": "https://flashvoyage.com/vietnam-les-12-frais-caches-qui-explosent-ton-budget-de-1200-e-mois/",
-      "wordCount": 2807,
+      "wordCount": 2820,
       "widgetCount": 0,
       "internalLinks": 42,
-      "lastModified": "2026-04-13T06:36:50",
+      "lastModified": "2026-04-17T10:45:27",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2231,10 +2315,10 @@
       "slug": "japon-en-lune-de-miel-pourquoi-votre-itineraire-classique-vous-fera-rater-lessentiel",
       "title": "Japon en lune de miel : pourquoi votre itinéraire classique vous fera rater l&rsquo;essentiel",
       "url": "https://flashvoyage.com/japon-en-lune-de-miel-pourquoi-votre-itineraire-classique-vous-fera-rater-lessentiel/",
-      "wordCount": 3501,
+      "wordCount": 3511,
       "widgetCount": 0,
       "internalLinks": 40,
-      "lastModified": "2026-04-13T05:48:25",
+      "lastModified": "2026-04-17T10:45:29",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2259,10 +2343,10 @@
       "slug": "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver-mars-2026",
       "title": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver (mars 2026)",
       "url": "https://flashvoyage.com/thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver-mars-2026/",
-      "wordCount": 4689,
+      "wordCount": 4701,
       "widgetCount": 0,
       "internalLinks": 31,
-      "lastModified": "2026-04-13T05:48:29",
+      "lastModified": "2026-04-17T10:45:30",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3235,34 +3319,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 3182,
-      "slug": "vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser",
-      "title": "Vaccin Rage Asie du Sud-Est 2026 : Prix, Avis et Guide",
-      "url": "https://flashvoyage.com/vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser/",
-      "wordCount": 2339,
-      "widgetCount": 0,
-      "internalLinks": 27,
-      "lastModified": "2026-04-13T00:00:57",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 3174,
       "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
       "title": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
@@ -3832,9 +3888,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 20,
+        "impressions": 21,
         "clicks": 0,
-        "position": 5.5,
+        "position": 5.3,
         "topQueries": []
       },
       "reels": {
