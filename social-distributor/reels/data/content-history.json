@@ -164,6 +164,11 @@
       "name": "thailande",
       "date": "2026-04-18",
       "format": "avantapres"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-18",
+      "format": "humor-tweet"
     }
   ],
   "recentFormats": [
@@ -334,6 +339,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-18T19:46:44.055Z"
+    },
+    {
+      "format": "humor-tweet",
+      "date": "2026-04-18T21:01:47.626Z"
+    },
+    {
+      "format": "humor-tweet",
+      "date": "2026-04-18T21:02:19.824Z"
     }
   ],
   "recentArticleIds": [
@@ -358,7 +371,8 @@
     4254,
     4253,
     4138,
-    4087
+    4087,
+    4081
   ],
   "recentFingerprints": [
     {
@@ -448,6 +462,10 @@
     {
       "fp": "fmt:avantapres|dest:thailande|slug:thailande-2-pieges-caches-que-",
       "date": "2026-04-18T19:46:44.055Z"
+    },
+    {
+      "fp": "fmt:humor-tweet|dest:thailande|slug:thailande-6-pieges-financiers-",
+      "date": "2026-04-18T21:02:19.824Z"
     }
   ]
 }
