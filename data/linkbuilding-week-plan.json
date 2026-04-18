@@ -203,7 +203,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 15,
+      "posted": 16,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -350,6 +350,14 @@
           "id": "ai-4095-1776223818898",
           "search": "Pièges à éviter voyage Vietnam",
           "hasLink": true,
+          "status": "published",
+          "generated": true
+        },
+        {
+          "date": "2026-04-18T03:53:43.447Z",
+          "id": "ai-5150-1776484195568",
+          "search": "Thaïlande ou Vietnam où aller",
+          "hasLink": false,
           "status": "published",
           "generated": true
         }
@@ -545,7 +553,7 @@
       ]
     }
   },
-  "total_posted": 51,
+  "total_posted": 52,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
