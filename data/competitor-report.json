@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-18T05:15:49.685Z",
+  "timestamp": "2026-04-19T05:36:50.395Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,15 +16,920 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 3431,
-      "newUrls": 8
+      "totalUrls": 5435,
+      "newUrls": 2004
     }
   ],
-  "newArticles": [],
+  "newArticles": [
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-penang/",
+      "lastmod": "2025-04-25T13:47:48+00:00",
+      "destination": "penang",
+      "contentType": "general",
+      "title": "Loger Penang",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Penang\" (penang, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/dormir-aeroport-manille/",
+      "lastmod": "2025-04-26T06:35:37+00:00",
+      "destination": "manille",
+      "contentType": "general",
+      "title": "Dormir Aeroport Manille",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Dormir Aeroport Manille\" (manille, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/airbnb-phuket/",
+      "lastmod": "2025-04-26T06:42:26+00:00",
+      "destination": "phuket",
+      "contentType": "general",
+      "title": "Airbnb Phuket",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Airbnb Phuket\" (phuket, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotel-kyoto/",
+      "lastmod": "2025-04-26T09:56:30+00:00",
+      "destination": "kyoto",
+      "contentType": "hebergement",
+      "title": "Hotel Kyoto",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Hotel Kyoto\" (kyoto, hebergement) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/kyoto-ceremonie-du-the/",
+      "lastmod": "2025-05-02T11:25:05+00:00",
+      "destination": "kyoto",
+      "contentType": "general",
+      "title": "Kyoto Ceremonie Du The",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Kyoto Ceremonie Du The\" (kyoto, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-krabi-faire-voir/",
+      "lastmod": "2025-05-01T13:12:04+00:00",
+      "destination": "krabi",
+      "contentType": "activites",
+      "title": "Visiter Krabi Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Krabi Faire Voir\" (krabi, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visa-birmanie/",
+      "lastmod": "2025-05-02T10:29:10+00:00",
+      "destination": "birmanie",
+      "contentType": "visa",
+      "title": "Visa Birmanie",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visa Birmanie\" (birmanie, visa) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/plus-beaux-endroits-birmanie/",
+      "lastmod": "2025-05-02T10:29:13+00:00",
+      "destination": "birmanie",
+      "contentType": "general",
+      "title": "Plus Beaux Endroits Birmanie",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Plus Beaux Endroits Birmanie\" (birmanie, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-maldives/",
+      "lastmod": "2025-04-25T13:49:44+00:00",
+      "destination": "maldives",
+      "contentType": "general",
+      "title": "Loger Maldives",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Maratua vs Maldives pour une lune de miel : arbitrer entre authenticité et logistique\" (score=19, freshness=0.97)",
+      "matchedArticle": {
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 19,
+        "freshness": 0.97
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-lombok/",
+      "lastmod": "2025-04-25T13:53:27+00:00",
+      "destination": "lombok",
+      "contentType": "general",
+      "title": "Loger Lombok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Vivre à Lombok en tant que nomade numérique : les 10 coûts cachés qui dévorent ton budget\" (score=15, freshness=0.97)",
+      "matchedArticle": {
+        "wpId": 3251,
+        "slug": "vivre-a-lombok-en-tant-que-nomade-numerique-les-10-couts-caches-qui-devorent-ton-budget",
+        "compositeScore": 15,
+        "freshness": 0.97
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/expressions-phrases-indonesien/",
+      "lastmod": "2025-04-25T13:53:34+00:00",
+      "destination": "indonesie",
+      "contentType": "general",
+      "title": "Expressions Phrases Indonesien",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Indonésie solo 4 semaines : les 5 pièges que les guides oublient\" (score=22, freshness=0.99)",
+      "matchedArticle": {
+        "wpId": 3546,
+        "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+        "compositeScore": 22,
+        "freshness": 0.99
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/observer-elephants-sri-lanka/",
+      "lastmod": "2025-04-26T06:30:36+00:00",
+      "destination": "sri-lanka",
+      "contentType": "general",
+      "title": "Observer Elephants Sri Lanka",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés\" (score=14, freshness=0.95)",
+      "matchedArticle": {
+        "wpId": 3056,
+        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
+        "compositeScore": 14,
+        "freshness": 0.95
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/ferry-thailande/",
+      "lastmod": "2025-04-26T06:37:51+00:00",
+      "destination": "thailande",
+      "contentType": "transport",
+      "title": "Ferry Thailande",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=66, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4487,
+        "slug": "voyage-thailande-pas-cher-2026-budget",
+        "compositeScore": 66,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/assurance-voyage-thailande/",
+      "lastmod": "2025-04-26T06:39:20+00:00",
+      "destination": "thailande",
+      "contentType": "general",
+      "title": "Assurance Voyage Thailande",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=66, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4487,
+        "slug": "voyage-thailande-pas-cher-2026-budget",
+        "compositeScore": 66,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotels-avec-vue-tokyo/",
+      "lastmod": "2025-04-26T06:39:22+00:00",
+      "destination": "tokyo",
+      "contentType": "hebergement",
+      "title": "Hotels Avec Vue Tokyo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=14, freshness=0.95)",
+      "matchedArticle": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.95
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/assurance-voyage-indonesie/",
+      "lastmod": "2025-04-26T06:43:41+00:00",
+      "destination": "indonesie",
+      "contentType": "general",
+      "title": "Assurance Voyage Indonesie",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Indonésie solo 4 semaines : les 5 pièges que les guides oublient\" (score=22, freshness=0.99)",
+      "matchedArticle": {
+        "wpId": 3546,
+        "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+        "compositeScore": 22,
+        "freshness": 0.99
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/randonnees-thailande/",
+      "lastmod": "2025-04-26T06:44:19+00:00",
+      "destination": "thailande",
+      "contentType": "general",
+      "title": "Randonnees Thailande",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=66, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4487,
+        "slug": "voyage-thailande-pas-cher-2026-budget",
+        "compositeScore": 66,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/assurance-voyage-japon/",
+      "lastmod": "2025-04-26T06:44:24+00:00",
+      "destination": "japon",
+      "contentType": "general",
+      "title": "Assurance Voyage Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=40, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 40,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/assurance-voyage-inde/",
+      "lastmod": "2025-04-26T06:45:19+00:00",
+      "destination": "inde",
+      "contentType": "general",
+      "title": "Assurance Voyage Inde",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement\" (score=65, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 65,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/ferry-philippines/",
+      "lastmod": "2025-04-26T06:49:14+00:00",
+      "destination": "philippines",
+      "contentType": "transport",
+      "title": "Ferry Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines : Globe vs Smart, le comparatif que personne ne fait\" (score=51, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 51,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotels-capsule-tokyo/",
+      "lastmod": "2025-04-26T09:31:13+00:00",
+      "destination": "tokyo",
+      "contentType": "hebergement",
+      "title": "Hotels Capsule Tokyo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=14, freshness=0.95)",
+      "matchedArticle": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.95
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/airbnb-vue-tokyo/",
+      "lastmod": "2025-04-26T09:45:36+00:00",
+      "destination": "tokyo",
+      "contentType": "general",
+      "title": "Airbnb Vue Tokyo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=14, freshness=0.95)",
+      "matchedArticle": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.95
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotel-tokyo/",
+      "lastmod": "2025-04-26T09:52:40+00:00",
+      "destination": "tokyo",
+      "contentType": "hebergement",
+      "title": "Hotel Tokyo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=14, freshness=0.95)",
+      "matchedArticle": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.95
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotel-futuriste-tokyo/",
+      "lastmod": "2025-04-26T09:53:31+00:00",
+      "destination": "tokyo",
+      "contentType": "hebergement",
+      "title": "Hotel Futuriste Tokyo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=14, freshness=0.95)",
+      "matchedArticle": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.95
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotels-airbnb-traditionnel-tokyo/",
+      "lastmod": "2025-04-26T09:53:37+00:00",
+      "destination": "tokyo",
+      "contentType": "hebergement",
+      "title": "Hotels Airbnb Traditionnel Tokyo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=14, freshness=0.95)",
+      "matchedArticle": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.95
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotel-luxe-tokyo/",
+      "lastmod": "2025-04-26T09:53:39+00:00",
+      "destination": "tokyo",
+      "contentType": "hebergement",
+      "title": "Hotel Luxe Tokyo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=14, freshness=0.95)",
+      "matchedArticle": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.95
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/randonne-balade-tokyo/",
+      "lastmod": "2025-04-26T09:53:49+00:00",
+      "destination": "tokyo",
+      "contentType": "general",
+      "title": "Randonne Balade Tokyo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=14, freshness=0.95)",
+      "matchedArticle": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.95
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotel-manga-tokyo/",
+      "lastmod": "2025-04-26T09:55:47+00:00",
+      "destination": "tokyo",
+      "contentType": "hebergement",
+      "title": "Hotel Manga Tokyo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=14, freshness=0.95)",
+      "matchedArticle": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.95
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/logement-traditionnel-japon/",
+      "lastmod": "2025-04-26T09:56:28+00:00",
+      "destination": "japon",
+      "contentType": "hebergement",
+      "title": "Logement Traditionnel Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=40, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 40,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/airbnb-moderne-japon/",
+      "lastmod": "2025-04-26T09:56:35+00:00",
+      "destination": "japon",
+      "contentType": "general",
+      "title": "Airbnb Moderne Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=40, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 40,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/randonnee-japon/",
+      "lastmod": "2025-04-26T09:58:09+00:00",
+      "destination": "japon",
+      "contentType": "general",
+      "title": "Randonnee Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=40, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 40,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/secrets-historiques-tokyo/",
+      "lastmod": "2025-04-26T10:17:08+00:00",
+      "destination": "tokyo",
+      "contentType": "general",
+      "title": "Secrets Historiques Tokyo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=14, freshness=0.95)",
+      "matchedArticle": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.95
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/voyage-vietnam-petits-prix-ou-luxe/",
+      "lastmod": "2025-04-26T10:18:53+00:00",
+      "destination": "vietnam",
+      "contentType": "budget",
+      "title": "Voyage Vietnam Petits Prix Ou Luxe",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam : ce que ton assureur ne te dit pas sur le rapatriement\" (score=65, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 65,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/voyage-tokyo-2025-conseils/",
+      "lastmod": "2025-04-26T13:41:30+00:00",
+      "destination": "tokyo",
+      "contentType": "general",
+      "title": "Voyage Tokyo 2025 Conseils",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=14, freshness=0.95)",
+      "matchedArticle": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.95
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/airbnb-bali/",
+      "lastmod": "2025-05-02T10:14:37+00:00",
+      "destination": "bali",
+      "contentType": "general",
+      "title": "Airbnb Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=39, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 39,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-bali/",
+      "lastmod": "2025-05-02T10:14:46+00:00",
+      "destination": "bali",
+      "contentType": "general",
+      "title": "Loger Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=39, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 39,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visa-indonesie-bali/",
+      "lastmod": "2025-05-02T10:14:50+00:00",
+      "destination": "bali",
+      "contentType": "visa",
+      "title": "Visa Indonesie Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=39, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 39,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotel-luxe-bali/",
+      "lastmod": "2025-05-02T10:14:52+00:00",
+      "destination": "bali",
+      "contentType": "hebergement",
+      "title": "Hotel Luxe Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=39, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 39,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/airbnb-luxe-bali/",
+      "lastmod": "2025-05-02T10:15:01+00:00",
+      "destination": "bali",
+      "contentType": "general",
+      "title": "Airbnb Luxe Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=39, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 39,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/meilleurs-spots-plongee-bali/",
+      "lastmod": "2025-05-02T10:15:09+00:00",
+      "destination": "bali",
+      "contentType": "plage",
+      "title": "Meilleurs Spots Plongee Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=39, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 39,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/quel-budget-partir-bali/",
+      "lastmod": "2025-05-02T10:15:12+00:00",
+      "destination": "bali",
+      "contentType": "budget",
+      "title": "Quel Budget Partir Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent\" (score=39, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 39,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/airbnb-bangkok/",
+      "lastmod": "2025-05-02T10:15:30+00:00",
+      "destination": "bangkok",
+      "contentType": "general",
+      "title": "Airbnb Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/chang-chui-bangkok/",
+      "lastmod": "2025-05-02T10:15:33+00:00",
+      "destination": "bangkok",
+      "contentType": "general",
+      "title": "Chang Chui Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotels-avec-vue-bangkok/",
+      "lastmod": "2025-05-02T10:15:58+00:00",
+      "destination": "bangkok",
+      "contentType": "hebergement",
+      "title": "Hotels Avec Vue Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotels-aeroport-bangkok/",
+      "lastmod": "2025-05-02T10:16:01+00:00",
+      "destination": "bangkok",
+      "contentType": "hebergement",
+      "title": "Hotels Aeroport Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotels-centre-ville-bangkok/",
+      "lastmod": "2025-05-02T10:16:04+00:00",
+      "destination": "bangkok",
+      "contentType": "hebergement",
+      "title": "Hotels Centre Ville Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/marches-bangkok/",
+      "lastmod": "2025-05-02T10:16:07+00:00",
+      "destination": "bangkok",
+      "contentType": "general",
+      "title": "Marches Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/rooftops-bars-bangkok/",
+      "lastmod": "2025-05-02T10:16:09+00:00",
+      "destination": "bangkok",
+      "contentType": "classement",
+      "title": "Rooftops Bars Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotels-romantiques-bangkok/",
+      "lastmod": "2025-05-02T10:16:12+00:00",
+      "destination": "bangkok",
+      "contentType": "hebergement",
+      "title": "Hotels Romantiques Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/airbnb-piscine-bangkok/",
+      "lastmod": "2025-05-02T10:16:15+00:00",
+      "destination": "bangkok",
+      "contentType": "general",
+      "title": "Airbnb Piscine Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/appart-hotel-bangkok/",
+      "lastmod": "2025-05-02T10:16:17+00:00",
+      "destination": "bangkok",
+      "contentType": "hebergement",
+      "title": "Appart Hotel Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/airbnb-rooftop-bangkok/",
+      "lastmod": "2025-05-02T10:16:20+00:00",
+      "destination": "bangkok",
+      "contentType": "classement",
+      "title": "Airbnb Rooftop Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/boutique-hotels-bangkok/",
+      "lastmod": "2025-05-02T10:16:22+00:00",
+      "destination": "bangkok",
+      "contentType": "hebergement",
+      "title": "Boutique Hotels Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotels-bangkok/",
+      "lastmod": "2025-05-02T10:16:26+00:00",
+      "destination": "bangkok",
+      "contentType": "hebergement",
+      "title": "Hotels Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotels-piscine-bangkok/",
+      "lastmod": "2025-05-02T10:16:29+00:00",
+      "destination": "bangkok",
+      "contentType": "hebergement",
+      "title": "Hotels Piscine Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotels-luxe-bangkok/",
+      "lastmod": "2025-05-02T10:16:32+00:00",
+      "destination": "bangkok",
+      "contentType": "hebergement",
+      "title": "Hotels Luxe Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=16, freshness=1.00)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 16,
+        "freshness": 1
+      }
+    }
+  ],
   "summary": {
-    "totalNew": 0,
-    "contentGaps": 0,
+    "totalNew": 56,
+    "contentGaps": 8,
     "staleRefreshes": 0,
-    "monitoring": 0
+    "monitoring": 48
   }
 }

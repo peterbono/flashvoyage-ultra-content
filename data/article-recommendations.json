@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-04-18T05:13:01.192Z",
+    "generatedAt": "2026-04-19T05:34:14.540Z",
     "elapsedSeconds": 9,
     "totalArticles": 140,
     "articlesWithRecommendations": 8,
@@ -33,7 +33,7 @@
       "ga4": {
         "pageviews": 19,
         "sessions": 15,
-        "avgDuration": 151
+        "avgDuration": 152
       },
       "gsc": {
         "impressions": 0,
@@ -190,7 +190,7 @@
       "ga4": {
         "pageviews": 7,
         "sessions": 7,
-        "avgDuration": 1
+        "avgDuration": 4
       },
       "gsc": {
         "impressions": 0,
@@ -300,9 +300,9 @@
         "avgDuration": 35
       },
       "gsc": {
-        "impressions": 32,
+        "impressions": 34,
         "clicks": 2,
-        "position": 6.1,
+        "position": 6,
         "topQueries": [
           {
             "query": "philippines globe",
@@ -516,7 +516,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 10
+        "avgDuration": 1
       },
       "gsc": {
         "impressions": 0,
@@ -673,6 +673,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4087,
+      "slug": "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas",
+      "title": "Thaïlande : 2 pièges cachés que les blogs voyage ne te disent pas",
+      "url": "https://flashvoyage.com/thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas/",
+      "wordCount": 4683,
+      "widgetCount": 0,
+      "internalLinks": 35,
+      "lastModified": "2026-04-16T10:53:53",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 3546,
       "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
       "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
@@ -768,7 +796,7 @@
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 80
+        "avgDuration": 3
       },
       "gsc": {
         "impressions": 0,
@@ -911,14 +939,14 @@
         "avgDuration": 18
       },
       "gsc": {
-        "impressions": 44,
+        "impressions": 46,
         "clicks": 1,
-        "position": 12.2,
+        "position": 13.2,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 37,
-            "impressions": 4,
+            "position": 36.3,
+            "impressions": 6,
             "ctr": 0
           },
           {
@@ -1034,7 +1062,7 @@
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 34
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
@@ -1062,7 +1090,7 @@
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 55
+        "avgDuration": 6
       },
       "gsc": {
         "impressions": 0,
@@ -1118,7 +1146,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 76
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
@@ -1146,7 +1174,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 16
+        "avgDuration": 6
       },
       "gsc": {
         "impressions": 0,
@@ -1174,7 +1202,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 15
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
@@ -1275,34 +1303,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4138,
-      "slug": "thailande-choisir-entre-koh-samui-koh-chang-et-koh-lanta-cest-renoncer-a-quoi",
-      "title": "Thaïlande : choisir entre Koh Samui, Koh Chang et Koh Lanta, c&rsquo;est renoncer à quoi ?",
-      "url": "https://flashvoyage.com/thailande-choisir-entre-koh-samui-koh-chang-et-koh-lanta-cest-renoncer-a-quoi/",
-      "wordCount": 3119,
-      "widgetCount": 0,
-      "internalLinks": 35,
-      "lastModified": "2026-04-12T15:39:34",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 97
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4030,
       "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
       "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
@@ -1335,10 +1335,10 @@
       "slug": "pourquoi-personne-ne-te-previent-vraiment-sur-japon-guide-mars-2026",
       "title": "Pourquoi personne ne te prévient vraiment sur Japon — Guide mars 2026",
       "url": "https://flashvoyage.com/pourquoi-personne-ne-te-previent-vraiment-sur-japon-guide-mars-2026/",
-      "wordCount": 4045,
+      "wordCount": 4062,
       "widgetCount": 0,
       "internalLinks": 39,
-      "lastModified": "2026-04-13T06:36:54",
+      "lastModified": "2026-04-18T10:29:29",
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
@@ -1370,7 +1370,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 106
+        "avgDuration": 4
       },
       "gsc": {
         "impressions": 0,
@@ -1835,6 +1835,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4138,
+      "slug": "thailande-choisir-entre-koh-samui-koh-chang-et-koh-lanta-cest-renoncer-a-quoi",
+      "title": "Thaïlande : choisir entre Koh Samui, Koh Chang et Koh Lanta, c&rsquo;est renoncer à quoi ?",
+      "url": "https://flashvoyage.com/thailande-choisir-entre-koh-samui-koh-chang-et-koh-lanta-cest-renoncer-a-quoi/",
+      "wordCount": 3119,
+      "widgetCount": 0,
+      "internalLinks": 35,
+      "lastModified": "2026-04-12T15:39:34",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4129,
       "slug": "japon-5-risques-que-les-blogs-voyage-oublient-de-mentionner",
       "title": "Japon : 5 risques que les blogs voyage oublient de mentionner",
@@ -2011,34 +2039,6 @@
       "widgetCount": 0,
       "internalLinks": 37,
       "lastModified": "2026-04-16T10:53:52",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4087,
-      "slug": "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas",
-      "title": "Thaïlande : 2 pièges cachés que les blogs voyage ne te disent pas",
-      "url": "https://flashvoyage.com/thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas/",
-      "wordCount": 4683,
-      "widgetCount": 0,
-      "internalLinks": 35,
-      "lastModified": "2026-04-16T10:53:53",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2399,10 +2399,10 @@
       "slug": "vietnam-ce-que-jaurais-voulu-savoir-avant-de-reserver",
       "title": "Vietnam : ce que j&rsquo;aurais voulu savoir avant de réserver",
       "url": "https://flashvoyage.com/vietnam-ce-que-jaurais-voulu-savoir-avant-de-reserver/",
-      "wordCount": 2738,
+      "wordCount": 2751,
       "widgetCount": 0,
       "internalLinks": 26,
-      "lastModified": "2026-04-12T15:40:30",
+      "lastModified": "2026-04-18T10:29:32",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2455,10 +2455,10 @@
       "slug": "vietnam-2027-ha-giang-ou-nord-ouest-le-choix-que-tu-dois-faire-maintenant",
       "title": "Vietnam 2027 : Ha Giang ou Nord-Ouest ? Le choix que tu dois faire maintenant",
       "url": "https://flashvoyage.com/vietnam-2027-ha-giang-ou-nord-ouest-le-choix-que-tu-dois-faire-maintenant/",
-      "wordCount": 3509,
+      "wordCount": 3521,
       "widgetCount": 0,
       "internalLinks": 34,
-      "lastModified": "2026-04-13T05:48:41",
+      "lastModified": "2026-04-18T10:29:34",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2483,10 +2483,10 @@
       "slug": "ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas-mars-2026",
       "title": "Ce que Vietnam m&rsquo;a coûté (et que les blogs ne montrent pas) (mars 2026)",
       "url": "https://flashvoyage.com/ce-que-vietnam-ma-coute-et-que-les-blogs-ne-montrent-pas-mars-2026/",
-      "wordCount": 2506,
+      "wordCount": 2516,
       "widgetCount": 0,
       "internalLinks": 25,
-      "lastModified": "2026-04-12T15:40:37",
+      "lastModified": "2026-04-18T10:29:35",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2595,10 +2595,10 @@
       "slug": "japon-en-famille-3-semaines-en-voiture-pourquoi-ton-itineraire-va-echouer",
       "title": "Japon en famille : 3 semaines en voiture, pourquoi ton itinéraire va échouer",
       "url": "https://flashvoyage.com/japon-en-famille-3-semaines-en-voiture-pourquoi-ton-itineraire-va-echouer/",
-      "wordCount": 2707,
+      "wordCount": 2724,
       "widgetCount": 0,
       "internalLinks": 23,
-      "lastModified": "2026-04-13T05:48:49",
+      "lastModified": "2026-04-18T10:29:37",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3333,7 +3333,7 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 20,
+        "impressions": 19,
         "clicks": 0,
         "position": 6.3,
         "topQueries": [
@@ -3888,10 +3888,17 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 21,
+        "impressions": 23,
         "clicks": 0,
-        "position": 5.3,
-        "topQueries": []
+        "position": 7.2,
+        "topQueries": [
+          {
+            "query": "itinéraire luxe asie du sud-est",
+            "position": 46,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
       },
       "reels": {
         "linkedReels": 0,

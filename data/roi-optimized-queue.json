@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-18T05:13:02.157Z",
+  "timestamp": "2026-04-19T05:34:15.471Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,8 +17,8 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 100,
-    "medianTrafficSignal": "0.100",
+    "medianMonthlyPV": 140,
+    "medianTrafficSignal": "0.140",
     "avgRpm": 2,
     "articlesAnalyzed": 51
   },
@@ -39,11 +39,11 @@
         "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
       },
       "roi": {
-        "expectedRoi": 2.72,
-        "projectedMonthlyTraffic": 102,
-        "projectedMonthlyRevenue": 0.204,
+        "expectedRoi": 3.79,
+        "projectedMonthlyTraffic": 142,
+        "projectedMonthlyRevenue": 0.284,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (100 PV) × gap boost (1.02)"
+        "trafficSource": "median baseline (140 PV) × gap boost (1.02)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -60,11 +60,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 2.67,
-        "projectedMonthlyTraffic": 100,
-        "projectedMonthlyRevenue": 0.2,
+        "expectedRoi": 3.73,
+        "projectedMonthlyTraffic": 140,
+        "projectedMonthlyRevenue": 0.28,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -81,11 +81,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 2.67,
-        "projectedMonthlyTraffic": 100,
-        "projectedMonthlyRevenue": 0.2,
+        "expectedRoi": 3.73,
+        "projectedMonthlyTraffic": 140,
+        "projectedMonthlyRevenue": 0.28,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -102,11 +102,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 2.67,
-        "projectedMonthlyTraffic": 100,
-        "projectedMonthlyRevenue": 0.2,
+        "expectedRoi": 3.73,
+        "projectedMonthlyTraffic": 140,
+        "projectedMonthlyRevenue": 0.28,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.3,
       "withinBudget": true
@@ -122,7 +122,7 @@
         "wpId": 3174,
         "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -147,7 +147,7 @@
         "wpId": 3159,
         "slug": "vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -172,7 +172,7 @@
         "wpId": 3131,
         "slug": "decider-de-son-itineraire-au-japon-entre-confort-et-choix-logistiques",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -197,7 +197,7 @@
         "wpId": 3122,
         "slug": "budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -216,13 +216,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
+      "topic": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques",
       "articleType": "support",
       "context": {
-        "wpId": 3115,
-        "slug": "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable",
+        "wpId": 3099,
+        "slug": "indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -241,13 +241,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques",
+      "topic": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
       "articleType": "support",
       "context": {
-        "wpId": 3099,
-        "slug": "indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques",
+        "wpId": 3065,
+        "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -266,13 +266,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Choisir où séjourner à Bali : dilemmes et décisions cruciales",
+      "topic": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
       "articleType": "support",
       "context": {
-        "wpId": 3082,
-        "slug": "choisir-ou-sejourner-a-bali-dilemmes-et-decisions-cruciales",
+        "wpId": 3056,
+        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -291,13 +291,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
+      "topic": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
       "articleType": "support",
       "context": {
-        "wpId": 3065,
-        "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -316,13 +316,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
+      "topic": "Itinéraire Indonésie 2026 : Comparatif des Meilleurs Circuits",
       "articleType": "support",
       "context": {
-        "wpId": 3056,
-        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
+        "wpId": 2952,
+        "slug": "indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.93,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -341,13 +341,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
+      "topic": "Voyager en Asie du Sud-Est : Itinéraire et Coûts Réels à Prévoir",
       "articleType": "support",
       "context": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "wpId": 2945,
+        "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.92,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -367,8 +367,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.027,
-    "expectedDailyRoi": 0.09
+    "expectedDailyRevenue": 0.037,
+    "expectedDailyRoi": 0.12
   },
   "summary": {
     "write_new": 1,
