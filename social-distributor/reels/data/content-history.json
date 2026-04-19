@@ -169,6 +169,16 @@
       "name": "thailande",
       "date": "2026-04-18",
       "format": "humor-tweet"
+    },
+    {
+      "name": "vietnam",
+      "date": "2026-04-19",
+      "format": "avantapres"
+    },
+    {
+      "name": "vietnam",
+      "date": "2026-04-19",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -347,6 +357,14 @@
     {
       "format": "humor-tweet",
       "date": "2026-04-18T21:02:19.824Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-19T17:34:37.855Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-19T17:35:27.934Z"
     }
   ],
   "recentArticleIds": [
@@ -372,7 +390,8 @@
     4253,
     4138,
     4087,
-    4081
+    4081,
+    5720
   ],
   "recentFingerprints": [
     {
@@ -466,6 +485,10 @@
     {
       "fp": "fmt:humor-tweet|dest:thailande|slug:thailande-6-pieges-financiers-",
       "date": "2026-04-18T21:02:19.824Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:vietnam|slug:vietnam-larbitrage-crucial-pou",
+      "date": "2026-04-19T17:35:27.934Z"
     }
   ]
 }
