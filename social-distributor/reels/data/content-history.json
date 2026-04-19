@@ -179,6 +179,16 @@
       "name": "vietnam",
       "date": "2026-04-19",
       "format": "avantapres"
+    },
+    {
+      "name": "bali",
+      "date": "2026-04-19",
+      "format": "avantapres"
+    },
+    {
+      "name": "bali",
+      "date": "2026-04-19",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -365,6 +375,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-19T17:35:27.934Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-19T19:46:42.198Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-19T19:47:21.613Z"
     }
   ],
   "recentArticleIds": [
@@ -391,7 +409,8 @@
     4138,
     4087,
     4081,
-    5720
+    5720,
+    3115
   ],
   "recentFingerprints": [
     {
@@ -489,6 +508,10 @@
     {
       "fp": "fmt:avantapres|dest:vietnam|slug:vietnam-larbitrage-crucial-pou",
       "date": "2026-04-19T17:35:27.934Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:bali|slug:bali-pourquoi-1400-usd-ne-suff",
+      "date": "2026-04-19T19:47:21.613Z"
     }
   ]
 }
