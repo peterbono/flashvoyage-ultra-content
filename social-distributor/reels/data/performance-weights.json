@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-18",
+  "lastUpdated": "2026-04-19",
   "formatScores": {
     "poll": 0,
     "pick": 6.2,
@@ -18,19 +18,18 @@
     "versus"
   ],
   "destinationScores": {
-    "bali": 7,
+    "bali": 8.2,
     "thailande": 4,
     "bangkok": 3.7,
+    "koh samui": 3,
     "cambodge": 2.7,
-    "vietnam": 2.3,
+    "vietnam": 2.2,
     "malaisie": 2,
     "philippines": 1.4,
-    "singapour": 0.6,
     "indonesie": 0.6,
     "lombok": 0.6,
-    "laos": 0.1,
-    "koh samui": 0.1,
-    "koh lanta": 0.1
+    "singapour": 0.5,
+    "laos": 0.1
   },
   "recommendations": [
     "bali content trending — prioritize",
@@ -66,19 +65,18 @@
     "avantapres": "tiktok-only"
   },
   "igDestinationScores": {
-    "bali": 4.4,
+    "bali": 7.4,
     "thailande": 4,
-    "vietnam": 3.7,
+    "vietnam": 3.5,
+    "koh samui": 3,
     "philippines": 1.4,
-    "singapour": 0.6,
     "indonesie": 0.6,
     "lombok": 0.6,
     "cambodge": 0.5,
+    "singapour": 0.5,
     "malaisie": 0.3,
     "bangkok": 0.1,
-    "laos": 0.1,
-    "koh samui": 0.1,
-    "koh lanta": 0.1
+    "laos": 0.1
   },
   "tiktokDestinationScores": {
     "cambodge": 4.1,
@@ -91,16 +89,15 @@
     "bali": "merged(60/40)",
     "thailande": "ig-only",
     "vietnam": "merged(60/40)",
+    "koh samui": "ig-only",
     "philippines": "ig-only",
-    "singapour": "ig-only",
     "indonesie": "ig-only",
     "lombok": "ig-only",
     "cambodge": "merged(60/40)",
+    "singapour": "ig-only",
     "malaisie": "merged(60/40)",
     "bangkok": "merged(60/40)",
-    "laos": "ig-only",
-    "koh samui": "ig-only",
-    "koh lanta": "ig-only"
+    "laos": "ig-only"
   },
   "mergeConfig": {
     "tiktokWeight": 0.6,
