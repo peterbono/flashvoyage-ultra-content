@@ -204,6 +204,16 @@
       "name": "indonesie",
       "date": "2026-04-20",
       "format": "cost-vs"
+    },
+    {
+      "name": "bangkok",
+      "date": "2026-04-20",
+      "format": "pick"
+    },
+    {
+      "name": "southeast-asia",
+      "date": "2026-04-20",
+      "format": "pick"
     }
   ],
   "recentFormats": [
@@ -410,6 +420,14 @@
     {
       "format": "cost-vs",
       "date": "2026-04-20T17:27:32.685Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-20T19:33:27.533Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-20T19:34:03.898Z"
     }
   ],
   "recentArticleIds": [
