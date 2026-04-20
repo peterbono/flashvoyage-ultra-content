@@ -1,37 +1,11 @@
 {
-  "timestamp": "2026-04-19T05:34:02.640Z",
-  "gapCount": 1,
-  "gaps": [
-    {
-      "topic": "voyage pas cher",
-      "source": "trends",
-      "gapScore": 61,
-      "signals": {
-        "searchVolume": 0.47,
-        "trendGrowth": 0.47,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "thailande",
-      "category": "budget",
-      "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-      "articleType": "support",
-      "priority": "high"
-    }
-  ],
+  "timestamp": "2026-04-20T04:12:25.716Z",
+  "gapCount": 0,
+  "gaps": [],
   "summary": {
-    "byPriority": {
-      "high": 1
-    },
-    "byCategory": {
-      "budget": 1
-    },
-    "byDestination": {
-      "thailande": 1
-    },
-    "topDestinationGaps": [
-      "thailande"
-    ]
+    "byPriority": {},
+    "byCategory": {},
+    "byDestination": {},
+    "topDestinationGaps": []
   }
 }

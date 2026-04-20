@@ -1,25 +1,9 @@
 {
-  "timestamp": "2026-04-19T05:34:04.522Z",
-  "queueSize": 14,
+  "timestamp": "2026-04-20T04:12:27.646Z",
+  "queueSize": 13,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 61,
-        "destination": "thailande",
-        "category": "budget",
-        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +15,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +27,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -55,7 +39,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -71,7 +55,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -87,7 +71,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -103,7 +87,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -112,6 +96,22 @@
       "context": {
         "wpId": 3122,
         "slug": "budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations",
+        "compositeScore": 14,
+        "freshness": 0.95,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
+      "articleType": "support",
+      "context": {
+        "wpId": 3115,
+        "slug": "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable",
         "compositeScore": 14,
         "freshness": 0.95,
         "traffic": 0,
@@ -139,6 +139,22 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
+      "topic": "Choisir où séjourner à Bali : dilemmes et décisions cruciales",
+      "articleType": "support",
+      "context": {
+        "wpId": 3082,
+        "slug": "choisir-ou-sejourner-a-bali-dilemmes-et-decisions-cruciales",
+        "compositeScore": 14,
+        "freshness": 0.95,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
       "topic": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
       "articleType": "support",
       "context": {
@@ -151,7 +167,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -167,7 +183,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -181,42 +197,10 @@
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Itinéraire Indonésie 2026 : Comparatif des Meilleurs Circuits",
-      "articleType": "support",
-      "context": {
-        "wpId": 2952,
-        "slug": "indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme",
-        "compositeScore": 14,
-        "freshness": 0.93,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Voyager en Asie du Sud-Est : Itinéraire et Coûts Réels à Prévoir",
-      "articleType": "support",
-      "context": {
-        "wpId": 2945,
-        "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
-        "compositeScore": 14,
-        "freshness": 0.92,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,

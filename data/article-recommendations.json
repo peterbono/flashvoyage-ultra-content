@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-04-19T05:34:14.540Z",
-    "elapsedSeconds": 9,
+    "generatedAt": "2026-04-20T04:12:38.746Z",
+    "elapsedSeconds": 10,
     "totalArticles": 140,
     "articlesWithRecommendations": 8,
     "totalRecommendations": 8,
@@ -300,9 +300,9 @@
         "avgDuration": 35
       },
       "gsc": {
-        "impressions": 34,
+        "impressions": 36,
         "clicks": 2,
-        "position": 6,
+        "position": 5.9,
         "topQueries": [
           {
             "query": "philippines globe",
@@ -477,6 +477,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 3546,
+      "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
+      "url": "https://flashvoyage.com/indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient/",
+      "wordCount": 4324,
+      "widgetCount": 0,
+      "internalLinks": 28,
+      "lastModified": "2026-04-12T15:41:01",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 3,
+        "avgDuration": 198
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 3090,
       "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
       "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
@@ -517,6 +545,34 @@
         "pageviews": 3,
         "sessions": 3,
         "avgDuration": 1
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5260,
+      "slug": "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage",
+      "title": "Vietnam vs Thaïlande en 2026 : l&rsquo;arbitrage crucial pour un premier voyage",
+      "url": "https://flashvoyage.com/vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage/",
+      "wordCount": 1462,
+      "widgetCount": 0,
+      "internalLinks": 21,
+      "lastModified": "2026-04-13T05:47:40",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 253
       },
       "gsc": {
         "impressions": 0,
@@ -684,35 +740,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3546,
-      "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
-      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
-      "url": "https://flashvoyage.com/indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient/",
-      "wordCount": 4324,
-      "widgetCount": 0,
-      "internalLinks": 28,
-      "lastModified": "2026-04-12T15:41:01",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 2,
-        "avgDuration": 278
+        "avgDuration": 10
       },
       "gsc": {
         "impressions": 0,
@@ -785,6 +813,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 5720,
+      "slug": "vietnam-larbitrage-crucial-pour-un-budget-maitrise-sur-place",
+      "title": "Vietnam : l&rsquo;arbitrage crucial pour un budget maîtrisé sur place",
+      "url": "https://flashvoyage.com/vietnam-larbitrage-crucial-pour-un-budget-maitrise-sur-place/",
+      "wordCount": 1505,
+      "widgetCount": 0,
+      "internalLinks": 16,
+      "lastModified": "2026-04-17T10:45:22",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 15
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5702,
       "slug": "thailande-le-cout-reel-dun-voyage-entre-confort-et-luxe",
       "title": "Thaïlande : Le coût réel d&rsquo;un voyage entre confort et luxe",
@@ -825,34 +881,6 @@
         "pageviews": 2,
         "sessions": 2,
         "avgDuration": 5
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5260,
-      "slug": "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage",
-      "title": "Vietnam vs Thaïlande en 2026 : l&rsquo;arbitrage crucial pour un premier voyage",
-      "url": "https://flashvoyage.com/vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage/",
-      "wordCount": 1462,
-      "widgetCount": 0,
-      "internalLinks": 21,
-      "lastModified": "2026-04-13T05:47:40",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -939,14 +967,14 @@
         "avgDuration": 18
       },
       "gsc": {
-        "impressions": 46,
+        "impressions": 51,
         "clicks": 1,
-        "position": 13.2,
+        "position": 13.8,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 36.3,
-            "impressions": 6,
+            "position": 36.4,
+            "impressions": 7,
             "ctr": 0
           },
           {
@@ -1008,14 +1036,14 @@
         "avgDuration": 21
       },
       "gsc": {
-        "impressions": 118,
+        "impressions": 119,
         "clicks": 1,
-        "position": 14.6,
+        "position": 15.2,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
-            "position": 52.9,
-            "impressions": 11,
+            "position": 56,
+            "impressions": 12,
             "ctr": 0
           },
           {
@@ -1359,6 +1387,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 3254,
+      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
+      "url": "https://flashvoyage.com/chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget/",
+      "wordCount": 3435,
+      "widgetCount": 0,
+      "internalLinks": 41,
+      "lastModified": "2026-04-12T15:41:29",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 2,
+        "clicks": 0,
+        "position": 2,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 3182,
       "slug": "vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser",
       "title": "Vaccin Rage Asie du Sud-Est 2026 : Prix, Avis et Guide",
@@ -1619,34 +1675,6 @@
       "widgetCount": 0,
       "internalLinks": 18,
       "lastModified": "2026-04-17T09:17:47",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5720,
-      "slug": "vietnam-larbitrage-crucial-pour-un-budget-maitrise-sur-place",
-      "title": "Vietnam : l&rsquo;arbitrage crucial pour un budget maîtrisé sur place",
-      "url": "https://flashvoyage.com/vietnam-larbitrage-crucial-pour-un-budget-maitrise-sur-place/",
-      "wordCount": 1505,
-      "widgetCount": 0,
-      "internalLinks": 16,
-      "lastModified": "2026-04-17T10:45:22",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2185,9 +2213,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 9,
         "clicks": 0,
-        "position": 6.3,
+        "position": 5.8,
         "topQueries": []
       },
       "reels": {
@@ -2623,10 +2651,10 @@
       "slug": "pourquoi-personne-ne-te-previent-vraiment-sur-japon",
       "title": "Pourquoi personne ne te prévient vraiment sur le Japon",
       "url": "https://flashvoyage.com/pourquoi-personne-ne-te-previent-vraiment-sur-japon/",
-      "wordCount": 2443,
+      "wordCount": 2460,
       "widgetCount": 0,
       "internalLinks": 20,
-      "lastModified": "2026-04-13T05:48:53",
+      "lastModified": "2026-04-19T10:28:28",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2651,10 +2679,10 @@
       "slug": "japon-ce-que-jaurais-voulu-savoir-avant-de-reserver",
       "title": "Japon : ce que j&rsquo;aurais voulu savoir avant de réserver",
       "url": "https://flashvoyage.com/japon-ce-que-jaurais-voulu-savoir-avant-de-reserver/",
-      "wordCount": 2530,
+      "wordCount": 2547,
       "widgetCount": 0,
       "internalLinks": 25,
-      "lastModified": "2026-04-13T05:48:59",
+      "lastModified": "2026-04-19T10:28:32",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2679,10 +2707,10 @@
       "slug": "ce-que-japon-ma-coute-et-que-les-blogs-ne-montrent-pas",
       "title": "Ce que Japon m&rsquo;a coûté (et que les blogs ne montrent pas)",
       "url": "https://flashvoyage.com/ce-que-japon-ma-coute-et-que-les-blogs-ne-montrent-pas/",
-      "wordCount": 3342,
+      "wordCount": 3359,
       "widgetCount": 0,
       "internalLinks": 24,
-      "lastModified": "2026-04-13T06:37:01",
+      "lastModified": "2026-04-19T10:28:33",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2707,10 +2735,10 @@
       "slug": "pourquoi-personne-ne-te-previent-vraiment-sur-thailande",
       "title": "Pourquoi personne ne te prévient vraiment sur la Thaïlande",
       "url": "https://flashvoyage.com/pourquoi-personne-ne-te-previent-vraiment-sur-thailande/",
-      "wordCount": 2305,
+      "wordCount": 2322,
       "widgetCount": 0,
       "internalLinks": 22,
-      "lastModified": "2026-04-13T05:49:02",
+      "lastModified": "2026-04-19T10:28:35",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2735,10 +2763,10 @@
       "slug": "japon-les-2-pieges-que-les-guides-cachent-aux-backpackers",
       "title": "Japon : les 2 pièges que les guides cachent aux backpackers",
       "url": "https://flashvoyage.com/japon-les-2-pieges-que-les-guides-cachent-aux-backpackers/",
-      "wordCount": 2595,
+      "wordCount": 2612,
       "widgetCount": 0,
       "internalLinks": 29,
-      "lastModified": "2026-04-12T15:40:56",
+      "lastModified": "2026-04-19T10:28:36",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3095,34 +3123,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 3254,
-      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
-      "url": "https://flashvoyage.com/chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget/",
-      "wordCount": 3435,
-      "widgetCount": 0,
-      "internalLinks": 41,
-      "lastModified": "2026-04-12T15:41:29",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 2,
-        "clicks": 0,
-        "position": 2,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 3251,
       "slug": "vivre-a-lombok-en-tant-que-nomade-numerique-les-10-couts-caches-qui-devorent-ton-budget",
       "title": "Vivre à Lombok en tant que nomade numérique : les 10 coûts cachés qui dévorent ton budget",
@@ -3221,9 +3221,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 11,
         "clicks": 0,
-        "position": 8.7,
+        "position": 8.5,
         "topQueries": []
       },
       "reels": {
@@ -3335,7 +3335,7 @@
       "gsc": {
         "impressions": 19,
         "clicks": 0,
-        "position": 6.3,
+        "position": 6.2,
         "topQueries": [
           {
             "query": "bangkok ou chiang mai",
