@@ -214,6 +214,11 @@
       "name": "southeast-asia",
       "date": "2026-04-20",
       "format": "pick"
+    },
+    {
+      "name": "lombok",
+      "date": "2026-04-20",
+      "format": "leaderboard"
     }
   ],
   "recentFormats": [
@@ -428,6 +433,14 @@
     {
       "format": "pick",
       "date": "2026-04-20T19:34:03.898Z"
+    },
+    {
+      "format": "leaderboard",
+      "date": "2026-04-20T20:46:58.084Z"
+    },
+    {
+      "format": "leaderboard",
+      "date": "2026-04-20T20:47:31.367Z"
     }
   ],
   "recentArticleIds": [
@@ -457,7 +470,8 @@
     5720,
     3115,
     3174,
-    3546
+    3546,
+    3251
   ],
   "recentFingerprints": [
     {
@@ -567,6 +581,10 @@
     {
       "fp": "fmt:cost-vs|dest:indonesie|slug:indonesie-solo-4-semaines-les-",
       "date": "2026-04-20T17:27:32.685Z"
+    },
+    {
+      "fp": "fmt:leaderboard|dest:lombok|slug:vivre-a-lombok-en-tant-que-nom",
+      "date": "2026-04-20T20:47:31.367Z"
     }
   ]
 }
