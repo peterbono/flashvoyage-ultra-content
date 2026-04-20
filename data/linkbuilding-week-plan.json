@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 19,
+      "posted": 20,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -155,6 +155,14 @@
           "date": "2026-04-16T08:02:20.565Z",
           "thread": "itineraire-familial-chang-mai-krabi-raillay-bangkok-d11467514",
           "title": "Avis itinéraire familial: Chang Mai - Krabi/Raillay - Bangkok",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-20T09:05:36.485Z",
+          "thread": "quelle-idee-trek-journee-en-pays-toraja-d11468437",
+          "title": "Quelle idée de trek sur une journée en pays Toraja?",
           "hasLink": false,
           "generated": true,
           "status": "published"
@@ -460,7 +468,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 11,
+      "posted": 12,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -549,11 +557,19 @@
           "section": "Thailande",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-20T09:09:56.613Z",
+          "threadId": "15405794",
+          "title": "09 février 2026",
+          "section": "Cambodge",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 52,
+  "total_posted": 54,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
