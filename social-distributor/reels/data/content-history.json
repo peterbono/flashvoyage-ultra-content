@@ -199,6 +199,11 @@
       "name": "bangkok",
       "date": "2026-04-19",
       "format": "pick"
+    },
+    {
+      "name": "indonesie",
+      "date": "2026-04-20",
+      "format": "cost-vs"
     }
   ],
   "recentFormats": [
@@ -401,6 +406,10 @@
     {
       "format": "pick",
       "date": "2026-04-19T21:03:12.861Z"
+    },
+    {
+      "format": "cost-vs",
+      "date": "2026-04-20T17:27:32.685Z"
     }
   ],
   "recentArticleIds": [
@@ -429,7 +438,8 @@
     4081,
     5720,
     3115,
-    3174
+    3174,
+    3546
   ],
   "recentFingerprints": [
     {
@@ -535,6 +545,10 @@
     {
       "fp": "fmt:pick|dest:bangkok|slug:choisir-entre-bangkok-et-chian",
       "date": "2026-04-19T21:03:12.861Z"
+    },
+    {
+      "fp": "fmt:cost-vs|dest:indonesie|slug:indonesie-solo-4-semaines-les-",
+      "date": "2026-04-20T17:27:32.685Z"
     }
   ]
 }
