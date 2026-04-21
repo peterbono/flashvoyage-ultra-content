@@ -239,6 +239,11 @@
       "name": "singapour",
       "date": "2026-04-21",
       "format": "avantapres"
+    },
+    {
+      "name": "japon",
+      "date": "2026-04-21",
+      "format": "month"
     }
   ],
   "recentFormats": [
@@ -477,6 +482,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-21T19:36:49.013Z"
+    },
+    {
+      "format": "month",
+      "date": "2026-04-21T20:48:09.010Z"
+    },
+    {
+      "format": "month",
+      "date": "2026-04-21T20:48:44.337Z"
     }
   ],
   "recentArticleIds": [
@@ -509,7 +522,8 @@
     3546,
     3251,
     4371,
-    5072
+    5072,
+    4132
   ],
   "recentFingerprints": [
     {
@@ -631,6 +645,10 @@
     {
       "fp": "fmt:avantapres|dest:singapour|slug:kuala-lumpur-ou-singapour-quel",
       "date": "2026-04-21T19:36:49.013Z"
+    },
+    {
+      "fp": "fmt:month|dest:japon|slug:japon-64-jours-les-2-pieges-qu",
+      "date": "2026-04-21T20:48:44.337Z"
     }
   ]
 }
