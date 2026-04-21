@@ -211,7 +211,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 16,
+      "posted": 17,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -368,6 +368,14 @@
           "hasLink": false,
           "status": "published",
           "generated": true
+        },
+        {
+          "date": "2026-04-21T03:30:52.216Z",
+          "id": "ai-2997-1776742214395",
+          "search": "Comment organiser son voyage au Vietnam",
+          "hasLink": false,
+          "status": "published",
+          "generated": true
         }
       ]
     },
@@ -468,7 +476,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 12,
+      "posted": 13,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -565,11 +573,19 @@
           "section": "Cambodge",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-21T03:36:59.796Z",
+          "threadId": "15519249",
+          "title": "02 avril 2026",
+          "section": "Thailande",
+          "hasLink": true,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 54,
+  "total_posted": 56,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
