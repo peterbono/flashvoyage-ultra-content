@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-04-20",
+  "lastUpdated": "2026-04-21",
   "formatScores": {
     "poll": 0,
-    "pick": 6.2,
-    "humor": 10.4,
+    "pick": 10,
+    "humor": 12.4,
     "humor-tweet": 0,
-    "budget": 9.9,
-    "versus": 5.3,
-    "avantapres": 8.2,
+    "budget": 9.1,
+    "versus": 0,
+    "avantapres": 7,
     "month": 0,
     "cost-vs": 0,
     "leaderboard": 0,
@@ -19,16 +19,16 @@
   ],
   "destinationScores": {
     "bali": 8.2,
-    "bangkok": 4.9,
+    "vietnam": 7.5,
     "thailande": 4,
+    "bangkok": 3.1,
     "chiang mai": 3.1,
     "koh samui": 3,
-    "cambodge": 2.7,
-    "vietnam": 2.3,
     "malaisie": 2,
     "philippines": 1.3,
-    "indonesie": 0.6,
+    "indonesie": 0.7,
     "lombok": 0.6,
+    "cambodge": 0.5,
     "singapour": 0.5,
     "laos": 0.1,
     "phuket": 0.1
@@ -37,7 +37,7 @@
     "bali content trending — prioritize",
     "thailande content trending — prioritize",
     "vietnam content trending — prioritize",
-    "Top TikTok format: humor (avg 10.4, 2 videos)"
+    "Top TikTok format: humor (avg 12.4, 3 videos)"
   ],
   "igFormatScores": {
     "poll": 0,
@@ -53,28 +53,26 @@
     "best-time": 0
   },
   "tiktokFormatScores": {
-    "avantapres": 8.2,
-    "budget": 9.9,
-    "humor": 10.4,
-    "versus": 5.3,
-    "pick": 6.2
+    "humor": 12.4,
+    "avantapres": 7,
+    "pick": 10,
+    "budget": 9.1
   },
   "formatScoreSource": {
     "pick": "tiktok-only",
     "humor": "tiktok-only",
     "budget": "tiktok-only",
-    "versus": "tiktok-only",
     "avantapres": "tiktok-only"
   },
   "igDestinationScores": {
     "bali": 7.4,
     "thailande": 4,
-    "vietnam": 3.6,
+    "vietnam": 3.7,
     "bangkok": 3.1,
     "chiang mai": 3.1,
     "koh samui": 3,
     "philippines": 1.3,
-    "indonesie": 0.6,
+    "indonesie": 0.7,
     "lombok": 0.6,
     "cambodge": 0.5,
     "singapour": 0.5,
@@ -83,23 +81,21 @@
     "phuket": 0.1
   },
   "tiktokDestinationScores": {
-    "cambodge": 4.1,
-    "malaisie": 3.2,
-    "bali": 8.8,
-    "bangkok": 6.1,
-    "vietnam": 1.4
+    "vietnam": 10,
+    "bali": 8.7,
+    "malaisie": 3.2
   },
   "destinationScoreSource": {
     "bali": "merged(60/40)",
     "thailande": "ig-only",
     "vietnam": "merged(60/40)",
-    "bangkok": "merged(60/40)",
+    "bangkok": "ig-only",
     "chiang mai": "ig-only",
     "koh samui": "ig-only",
     "philippines": "ig-only",
     "indonesie": "ig-only",
     "lombok": "ig-only",
-    "cambodge": "merged(60/40)",
+    "cambodge": "ig-only",
     "singapour": "ig-only",
     "malaisie": "merged(60/40)",
     "laos": "ig-only",
