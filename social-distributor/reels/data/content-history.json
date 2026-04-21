@@ -229,6 +229,16 @@
       "name": "philippines",
       "date": "2026-04-21",
       "format": "avantapres"
+    },
+    {
+      "name": "singapour",
+      "date": "2026-04-21",
+      "format": "avantapres"
+    },
+    {
+      "name": "singapour",
+      "date": "2026-04-21",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -459,6 +469,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-21T17:26:22.824Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-21T19:36:12.483Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-21T19:36:49.013Z"
     }
   ],
   "recentArticleIds": [
@@ -490,7 +508,8 @@
     3174,
     3546,
     3251,
-    4371
+    4371,
+    5072
   ],
   "recentFingerprints": [
     {
@@ -608,6 +627,10 @@
     {
       "fp": "fmt:avantapres|dest:philippines|slug:philippines-10-jours-itinerair",
       "date": "2026-04-21T17:26:22.824Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:singapour|slug:kuala-lumpur-ou-singapour-quel",
+      "date": "2026-04-21T19:36:49.013Z"
     }
   ]
 }
