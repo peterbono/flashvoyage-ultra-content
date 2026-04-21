@@ -103,3 +103,8 @@
 {"date":"2026-04-21T03:33:17.120Z","platform":"routard","status":"login_failed"}
 {"date":"2026-04-21T03:34:17.383Z","platform":"reddit_fr","sub":"r/france","status":"login_failed"}
 {"date":"2026-04-21T03:36:59.787Z","platform":"tripadvisor","section":"Thailande","threadId":"15519249","thread":"02 avril 2026","hasLink":true,"generated":true,"articleId":3243,"success":true,"submitResult":"clicked:input[value*=\"Publier\"], input[value*=\"Envoyer\"], input[value*=\"poster\"]:publier votre réponse","successCheck":"confirmed"}
+{"date":"2026-04-21T08:00:57.084Z","platform":"quora_fr","id":"ai-3174-1776758418517","search":"Où vivre en Thaïlande nomade digital","hasLink":false,"success":true,"generated":true,"question":"Quels sont les meilleurs pays dans lesquels vivre pour les freelances en IT ?","articleId":3174,"articleTitle":"Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades"}
+{"date":"2026-04-21T08:02:12.321Z","platform":"voyageforum","thread":"agence-circuit-en-solo-iles-indonesie-d11464083","status":"login_failed"}
+{"date":"2026-04-21T08:03:21.700Z","platform":"routard","status":"login_failed"}
+{"date":"2026-04-21T08:04:22.096Z","platform":"reddit_fr","sub":"r/france","status":"login_failed"}
+{"date":"2026-04-21T08:07:02.201Z","platform":"tripadvisor","section":"Cambodge","threadId":"14845136","thread":"Guide touristique sur le Cambodge \"Invitation au voyage au C (Discussion fermée)","status":"no_reply_form","success":false}

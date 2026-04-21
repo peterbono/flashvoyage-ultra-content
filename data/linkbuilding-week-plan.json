@@ -211,7 +211,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 17,
+      "posted": 18,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -373,6 +373,14 @@
           "date": "2026-04-21T03:30:52.216Z",
           "id": "ai-2997-1776742214395",
           "search": "Comment organiser son voyage au Vietnam",
+          "hasLink": false,
+          "status": "published",
+          "generated": true
+        },
+        {
+          "date": "2026-04-21T08:00:57.091Z",
+          "id": "ai-3174-1776758418517",
+          "search": "Où vivre en Thaïlande nomade digital",
           "hasLink": false,
           "status": "published",
           "generated": true
@@ -585,7 +593,7 @@
       ]
     }
   },
-  "total_posted": 56,
+  "total_posted": 57,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
