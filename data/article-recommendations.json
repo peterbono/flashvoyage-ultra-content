@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-04-20T04:12:38.746Z",
+    "generatedAt": "2026-04-21T04:08:14.004Z",
     "elapsedSeconds": 10,
     "totalArticles": 140,
     "articlesWithRecommendations": 8,
@@ -127,10 +127,10 @@
       "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
       "title": "Ce que Thaïlande m&rsquo;a coûté (et que les blogs ne montrent pas)",
       "url": "https://flashvoyage.com/ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas/",
-      "wordCount": 5517,
+      "wordCount": 5534,
       "widgetCount": 0,
       "internalLinks": 43,
-      "lastModified": "2026-04-12T15:41:12",
+      "lastModified": "2026-04-20T10:31:00",
       "ga4": {
         "pageviews": 10,
         "sessions": 9,
@@ -286,6 +286,62 @@
       "p0Count": 0
     },
     {
+      "wpId": 3546,
+      "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
+      "url": "https://flashvoyage.com/indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient/",
+      "wordCount": 4324,
+      "widgetCount": 0,
+      "internalLinks": 28,
+      "lastModified": "2026-04-12T15:41:01",
+      "ga4": {
+        "pageviews": 6,
+        "sessions": 5,
+        "avgDuration": 119
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5119,
+      "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
+      "title": "Thaïlande ou Vietnam : le dilemme caché du premier voyage",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage/",
+      "wordCount": 1320,
+      "widgetCount": 0,
+      "internalLinks": 16,
+      "lastModified": "2026-04-12T15:39:25",
+      "ga4": {
+        "pageviews": 5,
+        "sessions": 5,
+        "avgDuration": 12
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4372,
       "slug": "esim-philippines-globe-smart-comparatif-2026",
       "title": "eSIM Philippines : Globe vs Smart, le comparatif que personne ne fait",
@@ -300,9 +356,9 @@
         "avgDuration": 35
       },
       "gsc": {
-        "impressions": 36,
+        "impressions": 37,
         "clicks": 2,
-        "position": 5.9,
+        "position": 6.1,
         "topQueries": [
           {
             "query": "philippines globe",
@@ -331,23 +387,23 @@
       "p0Count": 0
     },
     {
-      "wpId": 5119,
-      "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
-      "title": "Thaïlande ou Vietnam : le dilemme caché du premier voyage",
-      "url": "https://flashvoyage.com/thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage/",
-      "wordCount": 1320,
+      "wpId": 3090,
+      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
+      "wordCount": 1646,
       "widgetCount": 0,
-      "internalLinks": 16,
-      "lastModified": "2026-04-12T15:39:25",
+      "internalLinks": 23,
+      "lastModified": "2026-04-12T15:45:18",
       "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 8
+        "pageviews": 5,
+        "sessions": 5,
+        "avgDuration": 176
       },
       "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
+        "impressions": 5,
+        "clicks": 2,
+        "position": 12.8,
         "topQueries": []
       },
       "reels": {
@@ -477,62 +533,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 3546,
-      "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
-      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
-      "url": "https://flashvoyage.com/indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient/",
-      "wordCount": 4324,
-      "widgetCount": 0,
-      "internalLinks": 28,
-      "lastModified": "2026-04-12T15:41:01",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 3,
-        "avgDuration": 198
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3090,
-      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
-      "wordCount": 1646,
-      "widgetCount": 0,
-      "internalLinks": 23,
-      "lastModified": "2026-04-12T15:45:18",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 204
-      },
-      "gsc": {
-        "impressions": 5,
-        "clicks": 2,
-        "position": 12.8,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 5333,
       "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
       "title": "Thaïlande ou Vietnam en 2026 : l&rsquo;arbitrage qui change tout",
@@ -572,7 +572,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 253
+        "avgDuration": 265
       },
       "gsc": {
         "impressions": 0,
@@ -824,7 +824,7 @@
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 15
+        "avgDuration": 30
       },
       "gsc": {
         "impressions": 0,
@@ -967,14 +967,14 @@
         "avgDuration": 18
       },
       "gsc": {
-        "impressions": 51,
+        "impressions": 52,
         "clicks": 1,
-        "position": 13.8,
+        "position": 14.2,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 36.4,
-            "impressions": 7,
+            "position": 36.3,
+            "impressions": 8,
             "ctr": 0
           },
           {
@@ -1398,7 +1398,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 0
+        "avgDuration": 31
       },
       "gsc": {
         "impressions": 2,
@@ -2959,10 +2959,10 @@
       "slug": "japon-seul-a-19-ans-4-pieges-que-les-blogs-voyage-cachent",
       "title": "Japon seul à 19 ans : 4 pièges que les blogs voyage cachent",
       "url": "https://flashvoyage.com/japon-seul-a-19-ans-4-pieges-que-les-blogs-voyage-cachent/",
-      "wordCount": 3915,
+      "wordCount": 3904,
       "widgetCount": 0,
       "internalLinks": 35,
-      "lastModified": "2026-04-12T15:41:19",
+      "lastModified": "2026-04-20T10:31:09",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3071,10 +3071,10 @@
       "slug": "voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite",
       "title": "Thaïlande 2 Semaines 2026 : Bangkok, Chiang Mai, Krabi",
       "url": "https://flashvoyage.com/voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite/",
-      "wordCount": 3611,
+      "wordCount": 3604,
       "widgetCount": 0,
       "internalLinks": 40,
-      "lastModified": "2026-04-13T00:01:25",
+      "lastModified": "2026-04-20T10:31:10",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3099,10 +3099,10 @@
       "slug": "budget-2-200-e-en-thailande-5-arbitrages-caches-qui-peuvent-te-ruiner",
       "title": "Budget Thaïlande 2026 : Guide pour 2 200 € (Pièges à Éviter)",
       "url": "https://flashvoyage.com/budget-2-200-e-en-thailande-5-arbitrages-caches-qui-peuvent-te-ruiner/",
-      "wordCount": 3194,
+      "wordCount": 3211,
       "widgetCount": 0,
       "internalLinks": 34,
-      "lastModified": "2026-04-13T00:01:05",
+      "lastModified": "2026-04-20T10:31:12",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3155,10 +3155,10 @@
       "slug": "voyage-au-japon-et-en-asie-du-sud-est-avec-2500-usd-les-arbitrages-caches-qui-vont-decider-de-ton-itineraire",
       "title": "Voyage au Japon et en Asie du Sud-Est avec 2500 USD : les arbitrages cachés qui vont décider de ton itinéraire",
       "url": "https://flashvoyage.com/voyage-au-japon-et-en-asie-du-sud-est-avec-2500-usd-les-arbitrages-caches-qui-vont-decider-de-ton-itineraire/",
-      "wordCount": 3329,
+      "wordCount": 3303,
       "widgetCount": 0,
       "internalLinks": 37,
-      "lastModified": "2026-04-12T15:41:33",
+      "lastModified": "2026-04-20T10:31:13",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3333,16 +3333,10 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 19,
+        "impressions": 13,
         "clicks": 0,
-        "position": 6.2,
+        "position": 6.3,
         "topQueries": [
-          {
-            "query": "bangkok ou chiang mai",
-            "position": 7,
-            "impressions": 2,
-            "ctr": 0
-          },
           {
             "query": "chiang mai ou bangkok",
             "position": 6,
@@ -3359,9 +3353,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"bangkok ou chiang mai\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"chiang mai ou bangkok\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bangkok ou chiang mai\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"chiang mai ou bangkok\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -3888,9 +3882,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 23,
+        "impressions": 26,
         "clicks": 0,
-        "position": 7.2,
+        "position": 7.4,
         "topQueries": [
           {
             "query": "itinéraire luxe asie du sud-est",
