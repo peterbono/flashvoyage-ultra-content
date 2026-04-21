@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-04-21T00:28:50.516Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-04-21T06:39:14.693Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Pattaya villa raid nets more than 20 Indians in investment scam",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/pattaya/pattaya-villa-raid-nets-20-indians-in-alleged-investment-scam",
+      "velocityScore": 0.489,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2443,
+      "estimatedTrafficIn24h": 2387,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.1
+      },
+      "detectedAt": "2026-04-21T03:32:31.000Z",
+      "scoredAt": "2026-04-21T06:39:01.236Z"
+    }
+  ]
 }
