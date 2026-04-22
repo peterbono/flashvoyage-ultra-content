@@ -742,6 +742,29 @@ class ArticleFinalizer {
 
     console.log(`[finalizer] Phase widgets: widget + affiliate injection complete`);
 
+    // 8c. MVP H1.2 — resolve [AFFILIATE:<key>] placeholders to tracked TP URLs.
+    // Runs BEFORE the WP PUT step (final HTML returned to the orchestrator).
+    try {
+      const articleId =
+        pipelineContext?.article_id ||
+        pipelineContext?.wp_post_id ||
+        pipelineContext?.postId ||
+        analysis?.articleId ||
+        'unknown';
+      const affResult = await this.resolveAffiliatePlaceholders({
+        html: finalContent,
+        articleId,
+      });
+      if (affResult && affResult.swapped > 0) {
+        finalContent = affResult.html;
+        enhancements.affiliatePlaceholdersSwapped = affResult.swapped;
+        enhancements.affiliatePlaceholdersTracked = affResult.tracked;
+        enhancements.affiliatePlaceholdersFallback = affResult.fallback;
+      }
+    } catch (err) {
+      console.warn('[finalizer] resolveAffiliatePlaceholders skipped:', err.message);
+    }
+
     // ═══════════════════════════════════════════════════════════════════
     // Phase 9: LINKS
     // ═══════════════════════════════════════════════════════════════════
@@ -10484,8 +10507,134 @@ class ArticleFinalizer {
         details: 'Aucun placeholder détecté'
       });
     }
-    
+
     return modifiedHtml;
+  }
+
+  /**
+   * H1.2 — Resolve [AFFILIATE:<key>] placeholders to tracked Travelpayouts URLs.
+   *
+   * For each occurrence, look up the key in intelligence/affiliate-placeholder-map.json:
+   *  - if partner is TP-subscribed (campaignId != null) → call createTrackedLink,
+   *    replace placeholder with partner_url
+   *  - if partner is NOT subscribed (e.g. Holafly) → replace with fallbackUrl (direct)
+   *    and log a warning so we can apply to the direct program
+   *
+   * The placeholder is substituted as-is (caller supplies its own <a href="..."> wrapper).
+   *
+   * @param {{ html: string, articleId: string|number }} opts
+   * @returns {Promise<{ html: string, swapped: number, tracked: number, fallback: number, errors: Array }>}
+   */
+  async resolveAffiliatePlaceholders({ html, articleId }) {
+    const summary = { html: html || '', swapped: 0, tracked: 0, fallback: 0, errors: [] };
+    if (!html || typeof html !== 'string') return summary;
+
+    const placeholderRe = /\[AFFILIATE:([a-z0-9][a-z0-9-]*)\]/gi;
+    const matches = [...html.matchAll(placeholderRe)];
+    if (matches.length === 0) return summary;
+
+    // Lazy-load deps (keeps module graph lean for articles without placeholders)
+    const [{ createTrackedLink }, mapModule, fsMod, pathMod, urlMod] = await Promise.all([
+      import('./intelligence/travelpayouts-client.js'),
+      import('./intelligence/affiliate-placeholder-map.json', { with: { type: 'json' } }).catch(async () => {
+        // fallback: read+parse manually if JSON import assertions unsupported
+        const { readFile } = await import('node:fs/promises');
+        const { fileURLToPath } = await import('node:url');
+        const { dirname: dn, join: jn } = await import('node:path');
+        const here = dn(fileURLToPath(import.meta.url));
+        const raw = await readFile(jn(here, 'intelligence', 'affiliate-placeholder-map.json'), 'utf8');
+        return { default: JSON.parse(raw) };
+      }),
+      import('node:fs/promises'),
+      import('node:path'),
+      import('node:url'),
+    ]);
+    const placeholderMap = mapModule.default || mapModule;
+
+    const articleIdStr = String(articleId ?? 'unknown');
+    const variant = 'a';
+    const uniqueKeys = [...new Set(matches.map((m) => m[1].toLowerCase()))];
+    const resolved = new Map(); // key → { url, tracked: boolean }
+
+    for (const key of uniqueKeys) {
+      const entry = placeholderMap[key];
+      if (!entry) {
+        summary.errors.push({ key, reason: 'unknown_placeholder' });
+        console.warn(`[finalizer] resolveAffiliatePlaceholders: unknown key "${key}" — leaving placeholder intact`);
+        continue;
+      }
+      const subId = `${articleIdStr}-${key}-${variant}`;
+
+      if (!entry.trackingAvailable || !entry.campaignId) {
+        const url = entry.fallbackUrl || entry.targetUrl;
+        resolved.set(key, { url, tracked: false });
+        console.warn(`[finalizer] [AFFILIATE:${key}] → DIRECT (no tracking) for partner=${entry.partner}. Apply to direct program.`);
+        continue;
+      }
+
+      const res = await createTrackedLink({
+        campaignId: entry.campaignId,
+        targetUrl: entry.targetUrl,
+        subId,
+      });
+
+      if (res.success && res.partnerUrl) {
+        resolved.set(key, { url: res.partnerUrl, tracked: true });
+      } else {
+        const fallback = res.fallbackUrl || entry.targetUrl;
+        resolved.set(key, { url: fallback, tracked: false });
+        summary.errors.push({ key, reason: res.error || 'tp_failed' });
+        console.warn(`[finalizer] [AFFILIATE:${key}] TP failed (${res.error}) — using direct URL as fallback`);
+      }
+    }
+
+    // Substitute every occurrence
+    const newHtml = html.replace(placeholderRe, (full, rawKey) => {
+      const key = rawKey.toLowerCase();
+      const r = resolved.get(key);
+      if (!r) return full; // unknown — leave intact
+      summary.swapped += 1;
+      if (r.tracked) summary.tracked += 1; else summary.fallback += 1;
+      return r.url;
+    });
+
+    summary.html = newHtml;
+
+    console.log(
+      `[finalizer] resolveAffiliatePlaceholders: swapped=${summary.swapped} tracked=${summary.tracked} fallback=${summary.fallback} errors=${summary.errors.length} article=${articleIdStr}`
+    );
+
+    // Append-only audit breadcrumb
+    try {
+      const { readFile, writeFile, mkdir } = fsMod;
+      const { join, dirname } = pathMod;
+      const { fileURLToPath } = urlMod;
+      const here = dirname(fileURLToPath(import.meta.url));
+      const auditPath = join(here, 'data', 'partner-widget-audit.json');
+      let existing = {};
+      try {
+        const raw = await readFile(auditPath, 'utf8');
+        existing = JSON.parse(raw) || {};
+      } catch { /* missing or corrupt: start fresh */ }
+      const bucket = existing.affiliateResolves || {};
+      const history = Array.isArray(bucket[articleIdStr]) ? bucket[articleIdStr] : [];
+      history.push({
+        ts: new Date().toISOString(),
+        swapped: summary.swapped,
+        tracked: summary.tracked,
+        fallback: summary.fallback,
+        errors: summary.errors,
+        keys: uniqueKeys,
+      });
+      bucket[articleIdStr] = history;
+      existing.affiliateResolves = bucket;
+      await mkdir(dirname(auditPath), { recursive: true });
+      await writeFile(auditPath, JSON.stringify(existing, null, 2), 'utf8');
+    } catch (err) {
+      console.warn('[finalizer] partner-widget-audit write failed:', err.message);
+    }
+
+    return summary;
   }
 
   /**
