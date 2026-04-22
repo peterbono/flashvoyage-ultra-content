@@ -31,20 +31,26 @@ export const FEW_SHOT_EXAMPLES = {
   hook: `<p>L'écran du distributeur affiche 220 bahts de frais — tu calcules mentalement pendant que la queue s'allonge derrière toi dans la chaleur moite de Silom. Ton compte Wise indique 1 847 € : le budget du mois, censé couvrir le loyer, le coworking et les trois border runs que tu n'avais pas anticipés.</p>
 <p>Ce voyageur, développeur freelance installé à Bangkok depuis quatre mois, pensait avoir tout prévu. « J'avais un tableur avec chaque ligne de dépense, raconte-t-il sur un forum de voyageurs. Sauf que personne ne t'explique que le vrai coût de la Thaïlande, c'est les frais que tu ne vois pas. »</p>`,
 
-  decisionalH2: `<h2>Pourquoi Chiang Mai coûte 40 % moins cher que Bali — et ce que tu sacrifies en échange</h2>
-<p>Sur le papier, le calcul est simple : un studio climatisé à Nimman revient à 350 € par mois contre 580 € pour un équivalent à Canggu. Le coworking Punspace facture 85 € mensuels là où Dojo Bali en demande 160. Mais ce différentiel masque un arbitrage que peu de guides mentionnent. À Chiang Mai, tu gagnes en budget ce que tu perds en réseau international : la communauté est plus petite, les événements tech moins fréquents, et les vols directs vers l'Europe inexistants. Si ton activité dépend de rencontres clients en personne ou de connexions avec des startups, ce « rabais » de 40 % a un prix invisible que ton tableur ne capture pas.</p>`,
+  // Concrete, specific, no "arbitrage"/"dilemme"/"crucial" — names the places, names the numbers,
+  // ends with a grounded detail instead of a rhetorical framing.
+  decisionalH2: `<h2>Chiang Mai contre Bali à 1 500 € par mois : où l'argent part vraiment</h2>
+<p>Un studio climatisé à Nimman revient à 350 € par mois. Le même, à Canggu, coûte 580 €. Le coworking Punspace à Chiang Mai ? 85 € mensuels, contre 160 € chez Dojo Bali. Mais si tu factures en Europe et que tes clients veulent t'appeler à 17h heure de Paris, Chiang Mai te réveille à 22h là-bas. Bali passe à 20h. Sur trois mois, cette seule différence a fait rentrer Marc chez lui trois semaines plus tôt que prévu.</p>`,
 
   verdict: `<p>Si ton budget plafonne à 1 500 € par mois et que tu travailles en asynchrone, privilégie Chiang Mai de novembre à janvier puis bascule sur Da Nang pendant la saison des brûlis. En revanche, si tu factures plus de 4 000 € mensuels et que tu as besoin de networking régulier, Bali reste un investissement — pas une dépense. Le vrai piège, c'est de choisir une destination pour son image Instagram plutôt que pour sa compatibilité avec ton rythme de travail.</p>`,
 
   seoTitle: {
-    input: "Article about budget travel in Thailand",
+    input: "Article about budget travel in Thailand — 3 weeks, Bangkok + Chiang Mai + islands",
+    // Deliberately specific title that names real places, real prices, real duration.
+    // NO "arbitrages", "pièges cachés", "secrets", "crucial", "dilemme", "optimiser chaque X".
+    // NO formulaic "[Number] trucs/pièges/secrets/erreurs" clickbait openers.
     output: {
-      titre: "Budget 2 200 € en Thaïlande : 5 arbitrages cachés qui peuvent te ruiner",
-      title_tag: "Budget Thaïlande : les 5 pièges cachés (2026)"
+      titre: "Thaïlande 3 semaines : on a dépensé 1 680 € à deux, voici le détail",
+      title_tag: "Thaïlande 3 semaines à deux : 1 680 € détaillés"
     }
   },
 
-  bodySection: `<h2>Comment arbitrer entre ryokan et auberge — le calcul que personne ne te montre</h2>
+  // H2 no longer starts with "Comment arbitrer" (banned pattern). Frames as a direct reader question.
+  bodySection: `<h2>Ryokan à 85 € ou auberge à 28 € : ce que Marie a recalculé à Kyoto</h2>
 <p>Tu arrives à Kyoto avec un budget hébergement de 45 € par nuit. Sur Booking, les auberges de jeunesse affichent 28 € en dortoir mixte, les ryokans « économiques » démarrent à 85 €. Le choix semble évident — sauf que tu oublies trois postes cachés.</p>
 <p>En auberge, tu paies 28 € la nuit mais tu dînes dehors : 12 à 18 € par repas dans le quartier de Gion. En ryokan, le tarif de 85 € inclut le kaiseki du soir et le petit-déjeuner japonais. « J'ai fait le calcul après cinq jours, confie un voyageur sur r/japantravel. Le ryokan me revenait à 85 € tout compris contre 28 + 15 + 8 = 51 € en auberge — soit 34 € d'écart, pas 57. »</p>
 <p>Deuxième poste invisible : le temps. Les auberges bon marché à Kyoto se concentrent autour de la gare, à 25 minutes en bus des temples du nord. Un ryokan à Higashiyama te place à pied de Kiyomizu-dera — tu économises 45 minutes et 4,80 € de transport par jour.</p>
@@ -61,12 +67,10 @@ export const FEW_SHOT_EXAMPLES = {
 <p><strong>Budget confortable (50-100 €/jour) :</strong> Alterne deux nuits en auberge, une nuit en ryokan. Le JR Pass 7 jours (200 €) devient rentable si tu fais au moins Tokyo–Kyoto aller-retour plus un trajet vers Hiroshima. Réserve les ryokans sur Japanican pour accéder aux tarifs locaux — souvent 15 à 20 % moins chers que sur Booking.</p>
 <p><strong>Budget large (plus de 100 €/jour) :</strong> Réserve des ryokans haut de gamme à Kinosaki Onsen ou Hakone (150-250 €/nuit, kaiseki inclus). Prends le Green Car sur les Shinkansen pour 40 € de supplément — les sièges 2+2 valent le surcoût sur les trajets de plus de deux heures. Envisage un pocket Wi-Fi plutôt qu'une SIM locale — à 5 €/jour, c'est plus fiable dans les zones rurales.</p>`,
 
-  // Verdict Flash Voyage — structured decision guide
-  verdictBlock: `<h2>Verdict Flash Voyage : à qui c'est vraiment destiné</h2>
-<p><strong>Si tu es backpacker solo avec moins de 40 €/jour</strong> → Chiang Mai de novembre à février. Coworking Punspace à 85 €/mois, appart à 300 €. Le ratio qualité/prix est imbattable.</p>
-<p><strong>Si tu es en couple budget confort (3 000 €/mois)</strong> → Teste Canggu 2 mois. Le surcoût de 40 % par rapport à la Thaïlande est un investissement réseau, pas une dépense lifestyle.</p>
-<p><strong>Si tu es freelance qui veut closer des clients</strong> → Bali, pas Chiang Mai. Les événements tech y sont 3 fois plus fréquents.</p>
-<p><strong>Si tu cherches « le paradis pas cher »</strong> → Oublie. Ça n'existe pas. Chaque destination a un coût caché que ton tableur n'a pas prévu.</p>`,
+  // "Verdict Flash Voyage : à qui c'est vraiment destiné" is a template tell. Reframe as
+  // a natural paragraph; let the model decide if it even needs a verdict section.
+  verdictBlock: `<h2>Notre recommandation concrète</h2>
+<p>Si ton budget plafonne à 1 500 € par mois et que tu bosses en asynchrone, Chiang Mai de novembre à janvier est probablement ton meilleur choix. Punspace à 85 €, appart à 350 €, et des vols directs vers Bangkok en 1h pour les week-ends. Au-delà de 3 000 € mensuels ou si tu as besoin de networking tech régulier, Bali reprend l'avantage malgré le surcoût — mais budgète les 40 % en plus sans te mentir.</p>`,
 
   // Checklist Flash Voyage — screenshot-worthy
   checklistBlock: `<div class="fv-checklist" style="background:#f7fafc;border:2px solid #3182CE;border-radius:12px;padding:24px;margin:24px 0;">

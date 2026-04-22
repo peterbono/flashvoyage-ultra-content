@@ -52,6 +52,24 @@ function decodeHtmlEntities(text) {
     .replace(/&apos;/g, "'");
 }
 
+/**
+ * Remove words that bias the LLM toward Google-flagged patterns when building the title prompt.
+ * The angle-hunter may still use these words internally; we scrub them before they reach the title LLM.
+ */
+function sanitizeAngleForTitle(angleText) {
+  if (!angleText) return '';
+  return angleText
+    .replace(/\barbitrages?\b/gi, 'différence')
+    .replace(/\barbitrer\b/gi, 'choisir')
+    .replace(/\bdilemmes?\b/gi, 'question')
+    .replace(/\bcruciales?\b|\bcrucial\b|\bcruciaux\b/gi, 'important')
+    .replace(/\bco[uû]ts? cach[eé]s?\b/gi, 'frais moins visibles')
+    .replace(/\bpi[eè]ges? cach[eé]s?\b/gi, 'points sensibles')
+    .replace(/\bsecrets? cach[eé]s?\b/gi, 'détails')
+    .replace(/\boptimiser chaque\b/gi, 'mieux doser')
+    .trim();
+}
+
 // 2) Utilitaire pour sécuriser tous les JSON.parse avec réparation automatique
 function safeJsonParse(str, label = 'json') {
   if (!str || typeof str !== 'string' || str.trim().length === 0) {
@@ -1888,11 +1906,15 @@ Chaque section, chaque paragraphe doit faire avancer cette tension vers une rés
 On ne décrit pas. On arbitre. On évalue. On tranche.
 Le lecteur doit sentir qu'une décision se joue à chaque paragraphe.
 
-RÈGLE ANTI-ARTICLE INTERCHANGEABLE (80%+ des H2 doivent être décisionnels) :
-Chaque H2 doit poser un arbitrage ou une tension, pas simplement informer.
-Privilégie les H2 contenant un verbe décisionnel (choisir, éviter, payer, optimiser, risquer, arbitrer, renoncer, privilégier, sacrifier, négliger) ou un connecteur de tension (mais, vs, au prix de, à condition de, en revanche, pas encore, vrai/véritables).
-Les H2 sur les coûts doivent inclure "frais", "surcoût", "facture", "caché", "piège" ou un arbitrage — jamais un titre neutre.
-Un H2 purement descriptif ("Budget au Vietnam", "Transports à Bali") affaiblit l'article et sera pénalisé à l'audit (-3 à -8 pts).
+RÈGLE ANTI-ARTICLE INTERCHANGEABLE :
+Chaque H2 nomme UN fait concret que le lecteur reconnaît comme spécifique à cet article (un lieu précis, un chiffre, une date, une observation tirée directement du témoignage).
+MOTS INTERDITS dans les H2 : "arbitrage", "arbitrer", "dilemme", "crucial", "secrets", "pièges cachés", "coûts cachés", "optimiser chaque". Ces formulations sont détectées par les classifieurs de contenu IA.
+Un bon H2 fait une des choses suivantes :
+- pose une question concrète ("Combien coûte une nuit à Higashiyama en pleine saison des érables ?")
+- nomme un lieu + un chiffre ("JR Pass 7 jours : 245 € contre 280 € pour les billets unitaires sur Tokyo→Kyoto→Hiroshima")
+- raconte un moment ("Le soir où le DAB de Don Mueang a avalé notre carte")
+- compare deux options réelles, chiffrées ("Ryokan de Hakone à 180 € vs Airbnb à 95 € + onsen public à 8 €")
+Un H2 purement descriptif («Budget au Vietnam», «Transports à Bali») reste faible : ajoute un élément concret (saison, chiffre, comparaison). Mais ne le transforme PAS en formule "[Le vrai X de Y] [que personne ne te dit]" — c'est pire.
 
 📖 OUVERTURE IMMERSIVE — HOOK CINÉMATIQUE (premier paragraphe, OBLIGATOIRE) :
 - Ouvrir sur une micro-scène sensorielle (2-4 phrases) : lieu, odeur, bruit, geste, tension. Puis 1 question qui accroche.
@@ -2188,7 +2210,7 @@ Chaque citation DOIT inclure un contexte humain + une quantification chiffree. F
 ✅ Format inline « ... » uniquement (le système gère les blockquotes).
 ❌ INTERDIT de répéter la même citation 2 fois. Minimum 2 citations uniques pour validation.
 
-7. H2 DÉCISIONNELS (80%+ obligatoire) : chaque H2 pose un arbitrage, une tension ou un choix. ✅ Verbe décisionnel (choisir, éviter, optimiser, sacrifier, risquer) ou connecteur de tension (mais, vs, en revanche, caché, vrai). ✅ Exemples : «Pourquoi 220 bahts par retrait te coûtent une nuit d'hôtel par mois», «Chiang Mai vs Bangkok : où ton budget tient le plus longtemps».
+7. H2 CONCRETS (règle non négociable) : chaque H2 nomme UN fait concret — un lieu, un chiffre, une durée, une observation précise tirée du témoignage. MOTS INTERDITS dans les H2 : "arbitrage", "arbitrer", "dilemme", "crucial", "secrets", "pièges cachés", "coûts cachés", "optimiser chaque". ✅ Exemples : «220 bahts par retrait : ce que ça fait sur un séjour de 3 semaines», «Chiang Mai à 350 € le studio contre Bangkok à 480 € : le détail du loyer», «Le soir où le ferry pour Koh Tao a été annulé à 17h».
 ✅ BONUS CURATION : certains H2 peuvent communiquer la méthode de curation pour renforcer la crédibilité. Exemples :
   - «Ce que 30 voyageurs disent vraiment sur [sujet]»
   - «Le risque n°1 cité par les expatriés (et ignoré par tous les guides)»
@@ -2248,33 +2270,32 @@ INTERDIT : chiffres sans source. "73% des voyageurs" sans dire d'où ça vient =
 
 🇫🇷 TOUT EN FRANCAIS : Produis 100 % du JSON en francais. Source anglaise → redige directement en francais.
 
-📝 RÈGLES POUR LE TITRE (OBLIGATOIRE) — HOOK ÉMOTIONNEL + SEO :
-- Structure : [Tension/Enjeu émotionnel] + [Destination] + [Curiosity gap]
-- Le titre doit provoquer une ÉMOTION : peur de rater, regret, surprise, soulagement, injustice.
-- Patterns qui HOOKENT (utilise-en un) :
-  • REGRET : "J'aurais dû savoir ça avant [destination]" / "L'erreur à X€ que j'ai faite à [destination]"
-  • TENSION : "[Destination] : le moment où j'ai compris que [révélation]"
-  • INJUSTICE : "Pourquoi personne ne te prévient sur [problème] à [destination]"
-  • CURIOSITÉ : "[Chiffre inattendu] + [destination] : ce que ça change vraiment"
-  • CONTRASTE : "[Destination] : ce que tu crois vs ce qui t'attend vraiment"
-- ❌ INTERDITS : titres descriptifs plats ("X risques que...", "l'itinéraire qu'on te cache", "guide complet", "tout savoir sur")
-- Le lecteur doit ressentir : "il FAUT que je lise ça sinon je vais le regretter"
-- Intent explicite : budget / sécurité / long séjour / erreurs à éviter / guide pratique
-- ✅ Titre sans date — sauf si l'année est liée à une actualité (changement de visa, nouvelle loi). Exemple : «Visa nomade Thaïlande : retour d'expérience» plutôt que «Visa nomade Thaïlande (2026)».
+📝 RÈGLES POUR LE TITRE (OBLIGATOIRE) :
+
+Longueur : 55 à 65 caractères strict. Compte avant de valider.
+Langue : 100% français, prix en euros.
+
+INTERDICTIONS (rejet automatique si présent) :
+- Mots : "arbitrage", "dilemme", "crucial", "secrets", "pièges cachés", "coûts cachés", "optimiser chaque", "la vérité que".
+- Structures : "[N] secrets/pièges/risques/arbitrages que [...]", "Le dilemme de [...]", "[X] vs [Y] : le choix crucial", "Décisions cruciales pour [...]", "Ce que personne ne te dit sur [...]".
+- Ouverture par nombre seul ("5 X", "3 Y", "7 Z") sauf si le nombre est ancré dans une réalité concrète ("14 jours", "1 680 €").
+
+CE QUE TU VISES (mélange des registres) :
+1. Factuel spécifique : "Thaïlande 3 semaines à deux : 1 680 € détaillés"
+2. Observation à la 1re personne : "Bali, on y est restés 6 mois — voici ce qu'on refait pas"
+3. Comparatif réel : "eSIM au Japon : Airalo ou Ubigi, on a testé les deux"
+4. Moment / instant : "Kyoto en juin : il pleut, et c'est très bien"
+5. Question directe : "Combien coûte vraiment 2 semaines au Laos en 2026 ?"
+6. Planning concret : "Bangkok en 4 jours : le planning qu'on a tenu"
+7. Angle étroit : "Séoul quand on ne parle pas coréen : ce qui a marché"
+8. Récit ciblé : "Notre train de nuit Hanoï-Danang : 24 € et 17 heures"
+
+Varie : le titre ne doit PAS suivre le même pattern que l'article précédent sur la même destination.
+Le titre DOIT contenir au moins un élément concret parmi : prix en euros, durée chiffrée, nom de lieu précis (ville, quartier, site), saison/mois, nombre de personnes.
+Le titre DOIT contenir une destination asiatique précise (ville ou pays).
 - ✅ Titres H1 et H2 en texte pur — les emojis restent dans le corps de l'article (paragraphes, listes). Exemple : «<h2>Nos recommandations</h2>» et non «<h2>🎯 Nos recommandations</h2>».
 - ✅ FIDÉLITÉ CHIFFRES TITRE : chaque chiffre dans le titre garde son contexte source. Exemple : si la source dit «$50/month for coworking», le titre peut dire «coworking à ~46 €/mois» — le chiffre reste lié au coworking, pas au coût de la vie global.
 - 💶 TITRE EN EUROS UNIQUEMENT : convertis en euros (taux ~0.92). Exemple : source «$2500» → titre «2 300 €». Le symbole € se place après le nombre.
-- Exemples HOOKS (à imiter) :
-  ✅ "J'ai claqué 400€ de trop en Thaïlande — l'erreur bête que tout le monde fait"
-  ✅ "Vietnam solo : le truc que j'aurais voulu savoir avant de réserver"
-  ✅ "Bali à 1000€/mois ? Voilà ce qu'on ne te dit pas"
-  ✅ "Pourquoi ton premier mois à Bangkok va te coûter le double"
-  ✅ "Visa run au Laos : ce que 3 passages m'ont vraiment coûté"
-  ✅ "Corée du Sud : l'arnaque transport que 90% des touristes se prennent"
-- Transforme les titres descriptifs en hooks emotionnels avec tension + destination + enjeu concret.
-- Le titre DOIT contenir une destination asiatique précise (ville ou pays)
-- Le titre DOIT être actionnable et spécifique
-- Maximum 70 caractères pour le SEO
 - ✅ Titres intemporels par défaut. Réserve l'année aux actualités datées (changement de visa, nouvelle loi en ${new Date().getFullYear()}). Exemple : «Nouveau visa nomade Thaïlande ${new Date().getFullYear()} : conditions et retours» est OK ; «Bali : guide logement (${new Date().getFullYear()})» ne l'est pas.
 
 ${anglesBlock}
@@ -3528,42 +3549,61 @@ Chaque H2 doit être UNIQUE et refléter l'angle spécifique de CET article.`;
 MOT-CLÉ CIBLE : "${targetKeyword}"
 
 RÈGLES SEO-FIRST :
-- Le title_tag (50-60 caractères MAX) DOIT commencer par le mot-clé cible, suivi d'un qualificateur (année, destination, comparatif).
-- Le H1 (60-80 caractères) est une version plus naturelle/engageante du title_tag, mais contient toujours le mot-clé.
-- Langue : 100% français. Zéro anglais. Montants en euros.
-- NE PAS utiliser "pièges cachés", "ce que les blogs ignorent", "personne ne te dit". Style INFORMATIF et UTILE.
-- Structure du title_tag : [Mot-clé] : [Bénéfice/Qualificateur] [Année]
+- Le title_tag (50-60 caractères MAX) DOIT commencer par le mot-clé cible, suivi d'un qualificateur factuel (durée, prix en euros, destination précise).
+- Le H1 (55-65 caractères) est une version plus naturelle du title_tag, mais contient toujours le mot-clé.
+- Langue : 100% français. Zéro anglais. Prix en euros uniquement.
+- Tu comptes les caractères avant de répondre.
 
-EXEMPLES :
+INTERDICTIONS ABSOLUES (un seul de ces mots/patterns = rejet) :
+- Mots bannis : "arbitrage", "arbitrages", "arbitrer", "dilemme", "dilemmes", "crucial", "cruciales", "cruciaux", "secrets", "secret caché", "pièges cachés", "coûts cachés", "surcoûts cachés", "décisions cruciales", "choix crucial", "itinéraire parfait", "optimiser chaque", "la vérité que personne", "ce que les blogs cachent", "ce que les guides ignorent", "les X vérités".
+- Structures bannies : "X vs Y : le choix crucial", "X secrets de Y", "X risques que les blogs Y", "X arbitrages que Y", "Le dilemme Z", "Optimiser chaque W", "Décisions cruciales pour V", "Ce que personne ne te dit sur...".
+- Formules bannies : "[chiffre] + pièges/secrets/erreurs/vérités/arbitrages/dilemmes + cachés/que personne + ne te dit/ignore".
+- Le title_tag doit contenir le mot-clé mais ne doit JAMAIS utiliser les mots bannis ci-dessus. Maximum 60 caractères. Compte les caractères avant de répondre.
+
+EXEMPLES (à imiter dans l'esprit, pas à copier) :
 - Mot-clé "esim japon comparatif" →
-  title_tag : «eSIM Japon 2026 : comparatif Airalo, Holafly, Ubigi»
-  H1 : «eSIM Japon 2026 : Airalo, Holafly ou Ubigi ? Prix, couverture et avis»
+  title_tag : «eSIM Japon : Airalo ou Ubigi, on a testé les deux»
+  H1 : «eSIM au Japon : Airalo ou Ubigi, on a testé les deux»
 - Mot-clé "budget thailande par jour" →
-  title_tag : «Budget Thaïlande 2026 : coût réel jour par jour»
-  H1 : «Budget Thaïlande 2026 : combien ça coûte vraiment par jour (backpacker à luxe)»
+  title_tag : «Budget Thaïlande : 45 € par jour, le détail»
+  H1 : «Budget Thaïlande : 45 € par jour, le détail poste par poste»
 - Mot-clé "vol paris bangkok pas cher" →
-  title_tag : «Vol Paris Bangkok pas cher : quand réserver en 2026»
-  H1 : «Vol Paris-Bangkok pas cher : les meilleures périodes et compagnies en 2026»
+  title_tag : «Vol Paris-Bangkok : quand réserver en 2026»
+  H1 : «Vol Paris-Bangkok pas cher : les périodes qui marchent»
 
-Réponds UNIQUEMENT en JSON : { "titre": "...", "title_tag": "..." }`
-      : `Tu es un expert SEO voyage pour FlashVoyages. Génère un titre H1 et un title_tag SEO pour un article basé sur un témoignage Reddit.
+Réponds UNIQUEMENT en JSON : { "titre": "...", "title_tag": "..." }
+Avant de répondre, compte les caractères du titre et du title_tag. Si l'un dépasse sa limite, recommence.`
+      : `Tu es rédacteur en chef d'un magazine voyage français. Ton job : écrire un titre H1 et un title_tag qui sonnent humains, spécifiques et variés. Pas de formule.
 
-RÈGLES :
-- Le titre H1 (60-80 caractères) doit être accrocheur, contenir la destination principale et un angle éditorial fort.
-- Le title_tag (50-60 caractères MAX) est optimisé pour Google : mot-clé principal en tête, distinct du H1.
-- Langue : 100% français. Zéro anglais. Montants en euros.
-- NE JAMAIS utiliser "Témoignage Reddit" ou "décrypté" dans le titre.
-- Privilégier un style INFORMATIF et UTILE plutôt que clickbait.
+RÈGLES ABSOLUES :
+- Le H1 et le title_tag parlent d'une destination nommée (ville OU pays), avec au moins UN élément concret : un prix en euros, une durée ("3 semaines"), un nombre de personnes ("à deux"), une saison/mois, un moyen de transport, un nom d'endroit précis.
+- Longueur : H1 = 55 à 65 caractères. Title_tag = 50 à 60 caractères. Tu comptes les caractères avant de répondre.
+- Langue : 100% français. Zéro anglais. Prix en euros uniquement.
 
-EXEMPLES :
-- H1 : «Budget Thaïlande 2026 : combien ça coûte vraiment par jour»
-  title_tag : «Budget Thaïlande 2026 : coût réel jour par jour»
-- H1 : «Itinéraire Bali 10 jours : les étapes incontournables et budget»
-  title_tag : «Itinéraire Bali 10 jours : guide complet et budget»
-- H1 : «Japon 3 semaines : budget détaillé et itinéraire optimisé»
-  title_tag : «Japon 3 semaines budget : guide complet 2026»
+INTERDICTIONS ABSOLUES (un seul de ces mots/patterns dans le titre = rejet) :
+- Mots/expressions bannis : "arbitrage", "arbitrages", "arbitrer", "dilemme", "dilemmes", "crucial", "cruciales", "cruciaux", "secrets", "secret caché", "pièges cachés", "coûts cachés", "surcoûts cachés", "décisions cruciales", "choix crucial", "itinéraire parfait", "optimiser chaque", "la vérité que personne", "ce que les blogs cachent", "ce que les guides ignorent", "les X vérités".
+- Structures bannies : "X vs Y : le choix crucial", "X secrets de Y", "X risques que les blogs Y", "X arbitrages que Y", "Le dilemme Z", "Optimiser chaque W", "Décisions cruciales pour V", "Ce que personne ne te dit sur...".
+- Formules bannies : "[chiffre] + pièges/secrets/erreurs/vérités/arbitrages/dilemmes + cachés/que personne + ne te dit/ignore".
+- Ne commence JAMAIS par un nombre seul ("5 risques...", "3 arbitrages...", "7 secrets..."). Si tu utilises un nombre, qu'il soit ancré dans le réel ("Japon 14 jours : 1 680 €...", pas "Les 5 secrets du Japon").
 
-Réponds UNIQUEMENT en JSON : { "titre": "...", "title_tag": "..." }`;
+CE QUE TU VISES (8 exemples calibrés — varie la structure, ne les copie pas) :
+1. "Thaïlande 3 semaines à deux : on a dépensé 1 680 €"
+2. "Kyoto en juin : il pleut, et c'est très bien"
+3. "Bali, on y est restés 6 mois — voici ce qu'on refait pas"
+4. "Vietnam du nord au sud en train de nuit : notre trajet"
+5. "eSIM au Japon : Airalo ou Ubigi, on a testé les deux"
+6. "Bangkok en 4 jours : le planning qu'on a tenu (et celui qu'on avait prévu)"
+7. "Budget Laos 2 semaines : 620 € sans se priver"
+8. "Séoul quand on ne parle pas coréen : ce qui a marché"
+
+Remarque sur le style :
+- Ces titres sont courts, directs, souvent fragmentés avec un tiret ou deux-points. Ils parlent à la première personne ou à la deuxième sans surjouer. Ils ne promettent pas "LA vérité", ils racontent UNE expérience.
+- Mélange les registres : un titre peut être factuel et neutre, un autre conversationnel, un autre poser une question simple. Jamais deux articles de suite avec la même structure.
+
+Le title_tag est plus SEO : mot-clé en tête + qualificateur factuel. Pas plus court que 45 caractères, pas plus long que 60.
+
+Réponds UNIQUEMENT en JSON : { "titre": "...", "title_tag": "..." }
+Avant de répondre, compte les caractères du titre et du title_tag. Si l'un dépasse sa limite, recommence.`;
 
     const userPrompt = isSEOMode
       ? `MOT-CLÉ CIBLE : ${targetKeyword}
@@ -3573,7 +3613,7 @@ ${extracted.post?.clean_text ? 'CONTEXTE :\n' + extracted.post.clean_text.substr
 Génère le JSON avec titre H1 et title_tag SEO optimisés pour ce mot-clé.`
       : `TITRE REDDIT ORIGINAL : ${redditTitle}
 ${mainDestFR ? 'DESTINATION : ' + mainDestFR : ''}
-${angle ? 'ANGLE ÉDITORIAL : ' + angle : ''}
+${angle ? 'ANGLE ÉDITORIAL : ' + sanitizeAngleForTitle(angle) : ''}
 ${extracted.post?.clean_text ? 'EXTRAIT DU POST :\n' + extracted.post.clean_text.substring(0, 500) : ''}
 
 Génère le JSON avec titre H1 et title_tag SEO.`;
@@ -3814,8 +3854,11 @@ Génère UNIQUEMENT le HTML de l'introduction (2-3 paragraphes <p>). Pas de JSON
 
 RÈGLES DE STRUCTURE :
 - ${isNews ? '3-4 H2 factuels, 600-800 mots total. MAXIMUM ABSOLU : 1000 mots.' : '4-5 H2 décisionnels, 1800-2200 mots total. MAXIMUM ABSOLU : 2200 mots et 5 H2. CHAQUE MOT AU-DELÀ DE 2200 = du remplissage. Coupe. Sois concis. Un article de 2000 mots dense > un article de 3500 mots dilué.'}
-- Chaque H2 pose un arbitrage, une tension ou un choix. Inclure un verbe décisionnel (choisir, éviter, optimiser, risquer).
-- ✅ Chaque H2 contient un verbe décisionnel + destination ou angle concret. Exemple : «Pourquoi Bali coûte 40 % plus cher que prévu» au lieu de «Budget».
+- Chaque H2 répond à UNE question concrète que le lecteur se pose à ce stade de l'article. Le H2 nomme un élément concret : un lieu précis, un chiffre, une durée, une comparaison factuelle entre deux options nommées.
+- Bons patterns : question directe ("Combien coûte une nuit en ryokan à Hakone en juillet ?"), observation ancrée ("Ce qu'on a fait le jour où Google Maps nous a menti à Tokyo"), comparaison chiffrée ("JR Pass à 245 € contre billets unitaires : le seuil à 3 trajets").
+- MOTS BANNIS dans les H2 et H1 : "arbitrage", "arbitrer", "dilemme", "crucial", "secrets", "optimiser chaque", "pièges cachés", "coûts cachés", "décisions cruciales", "choix crucial". Ces mots déclenchent un classifieur de contenu généré chez Google.
+- Ne JAMAIS commencer un H2 par "Pourquoi" plus de 2 fois dans l'article. Varie les ouvertures : question, chiffre, nom de lieu, verbe d'action.
+- ✅ Bon H2 : nomme un lieu + donne un chiffre ou une observation concrète. «Canggu en février : 580 € le studio, et la pluie qui va avec» vaut mieux que «Le vrai coût de Bali» (générique).
 - EXEMPLE DE QUALITE ATTENDUE (H2 decisionnel + premier paragraphe):
 \`\`\`html
 ${FEW_SHOT_EXAMPLES.decisionalH2}
@@ -3891,7 +3934,7 @@ ${isNews ? `CADRE NEWS :
 - Tableau comparatif si 2+ options. Checklist si guide pratique.
 
 SECTIONS SERP OBLIGATOIRES (non négociable — inclure ces 3 H2 parmi les sections) :
-1. **Angle différenciant** : Un H2 dont le titre NOMME la destination ET un sujet précis. Commence par <!-- FV:DIFF_ANGLE -->. Pattern obligatoire : «Le [sujet spécifique] de [destination] que les guides occultent». Exemples : «Le surcoût du JR Pass que les blogs ignorent», «La réalité des arnaques au tuk-tuk après 22h à Bangkok», «Les fermetures de temples à Bali entre janvier et mars». INTERDIT : titre générique sans destination ni sujet concret. Le contenu sous ce H2 DOIT contenir au minimum 2 faits spécifiques avec chiffres/prix/dates du témoignage. PATTERNS BANNIS (rejet automatique) : «les coûts cachés des transferts locaux», «les périodes creuses», «les arnaques récurrentes ciblant les touristes francophones». Exige plutôt : arnaques nommées avec lieu, coûts en devise locale + EUR, dates de fermeture précises.
+1. **Angle différenciant** : Un H2 dont le titre NOMME la destination ET un sujet précis. Commence par <!-- FV:DIFF_ANGLE -->. Pattern obligatoire : H2 qui nomme UN fait concret apparu au moins 3 fois dans le témoignage. Exemples : «Les fermetures du Fushimi Inari après 20h en juillet», «Le tarif "résident" des ferries vers Gili qu'on ne voit pas en ligne», «Le surcoût du JR Pass sur le trajet Tokyo-Kyoto-Hiroshima à 3 personnes». INTERDIT : formulations vagues type "ce que les guides ignorent / occultent / cachent". INTERDIT : titre générique sans destination ni sujet concret. Le contenu sous ce H2 DOIT contenir au minimum 2 faits spécifiques avec chiffres/prix/dates du témoignage. PATTERNS BANNIS (rejet automatique) : «les coûts cachés des transferts locaux», «les périodes creuses», «les arnaques récurrentes ciblant les touristes francophones». Exige plutôt : arnaques nommées avec lieu, coûts en devise locale + EUR, dates de fermeture précises.
 2. **Erreurs courantes** : Un H2 sur les pièges et erreurs fréquentes des voyageurs. Commence par <!-- FV:COMMON_MISTAKES -->. Exemple : «Les 3 erreurs qui plombent ton budget à [destination]» ou «Pourquoi 80 % des voyageurs se trompent sur [sujet]».
 3. **Limites et biais** : <h2>Limites et biais de cet article</h2> — 1-2 paragraphes honnêtes sur les limites du témoignage (un seul point de vue, période spécifique, etc.).`}
 

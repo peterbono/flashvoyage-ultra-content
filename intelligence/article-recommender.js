@@ -813,7 +813,11 @@ Regles :
 - Sois SPECIFIQUE et ACTIONNABLE — pas de conseils generiques
 - Utilise des chiffres quand possible
 - Le ton est informatif, expert, engageant (pas marketing agressif)
-- Les titres doivent contenir un chiffre + benefice
+- Les titres doivent être spécifiques (lieu nommé, chiffre réel, durée, saison) et faire 55 à 65 caractères.
+- Mots INTERDITS dans tout titre proposé : "arbitrage", "dilemme", "crucial", "secrets", "pièges cachés", "coûts cachés", "optimiser chaque". Ces mots déclenchent le classifieur de contenu IA de Google.
+- Structures INTERDITES : "[N] pièges/secrets/arbitrages que [...]", "Le dilemme de [...]", "[X] vs [Y] : le choix crucial".
+- Privilégie : question directe, récit à la 1re personne, comparatif réel chiffré, observation étroite.
+- Exemples : "Thaïlande 3 semaines à deux : 1 680 € détaillés", "eSIM au Japon : Airalo ou Ubigi", "Kyoto en juin : il pleut, et c'est très bien".
 - Les meta descriptions font 150-155 caracteres exactement
 - Les FAQs doivent cibler les People Also Ask de Google`;
 
@@ -838,7 +842,7 @@ ${recommendations.map(r => `[${r.priority}] ${r.action}: ${r.details.slice(0, 20
 
 Genere un plan d'amelioration au format JSON avec exactement cette structure :
 {
-  "suggestedTitle": "nouveau titre SEO (avec chiffre + benefice, max 60 caracteres)",
+  "suggestedTitle": "nouveau titre SEO — 55 à 65 caractères, lieu nommé + chiffre ou détail concret, aucun mot banni (liste ci-dessus)",
   "suggestedMeta": "nouvelle meta description (150-155 caracteres, hook + CTA)",
   "suggestedIntro": "nouveau paragraphe d'introduction (200 mots max, hook percutant, question ou chiffre choc en premiere phrase)",
   "faqQuestions": [

@@ -16,6 +16,10 @@ const safe = (arr) => Array.isArray(arr) ? arr : [];
 const safeLen = (arr) => safe(arr).length;
 const safeStr = (val) => typeof val === 'string' ? val : '';
 const safeNum = (val) => typeof val === 'number' ? val : 0;
+const capitalize = (val) => {
+  const s = safeStr(val);
+  return s.length > 0 ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+};
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -40,7 +44,8 @@ const TIEBREAKER_ORDER = [
 
 const MODE_CAPS = { news: 1, evergreen: 3 };
 
-const CONFLICT_WORDS = /\b(vs|mais|risque|piège|piege|erreur|vraiment|caché|cache|coût|cout|perdre|gagner|choisir|arbitrage|dilemme|ignorer|coûter|couter)\b/i;
+// Removed "arbitrage" and "dilemme" from detection — we don't want to reward these words anywhere in the pipeline.
+const CONFLICT_WORDS = /\b(vs|mais|risque|erreur|vraiment|coût|cout|perdre|gagner|choisir|ignorer|coûter|couter|différence|écart|surprise)\b/i;
 
 const CONSEQUENCE_WORDS = /\b(coût|cout|temps|risque|confort|argent|jours|euros|heures|budget|perte|dépense|depense|nuit|semaine|mois)\b/i;
 
@@ -106,16 +111,16 @@ const COMPETITOR_TEMPLATES = {
     what_we_do: 'expose les pièges concrets documentés par des voyageurs récents'
   },
   cost_arbitrage: {
-    what_they_do: 'listent les prix sans arbitrage',
-    what_we_do: 'confronte les coûts réels et les trade-offs financiers'
+    what_they_do: 'listent des prix moyens sans contexte',
+    what_we_do: 'montre où l\'argent part vraiment, avec les chiffres d\'un voyageur qui vient de rentrer'
   },
   logistic_dilemma: {
-    what_they_do: 'proposent un itinéraire linéaire sans choix',
-    what_we_do: 'pose les vrais dilemmes logistiques et aide à trancher'
+    what_they_do: 'proposent un itinéraire type sans question',
+    what_we_do: 'pose les questions que tu te poses la veille de partir et y répond avec un exemple concret'
   },
   timeline_tension: {
-    what_they_do: 'ignorent les contraintes temporelles',
-    what_we_do: 'intègre la pression du calendrier dans chaque recommandation'
+    what_they_do: 'annoncent un calendrier moyen sans nuance',
+    what_we_do: 'détaille combien de jours suffisent vraiment, avec les retours de voyageurs récents'
   }
 };
 
@@ -349,7 +354,7 @@ function buildAngleContent(angleType, signals) {
       const contradCount = signals.contradictions.length + detectConflictPairs(signals.insights);
       if (hookMode === 'chiffre' && budget) {
         return {
-          hook: `Pour un budget de ${budget} vers ${dest}, les avis divergent radicalement : certains recommandent, d'autres mettent en garde contre des coûts cachés`,
+          hook: `Pour un budget de ${budget} vers ${dest}, les avis divergent radicalement : certains recommandent, d'autres mettent en garde contre des frais moins visibles`,
           tension: `Les voyageurs sont divisés sur ce choix — ${contradCount} points de friction identifiés vs le consensus apparent des guides classiques`,
           stake: `Suivre le mauvais avis peut coûter plusieurs centaines d'euros et des jours perdus sur place`
         };
@@ -363,7 +368,7 @@ function buildAngleContent(angleType, signals) {
         };
       }
       return {
-        hook: `Choisir entre les recommandations contradictoires des voyageurs vers ${dest} oblige à arbitrer entre ${contradCount} avis divergents`,
+        hook: `Choisir entre les recommandations contradictoires des voyageurs vers ${dest} oblige à trancher entre ${contradCount} avis divergents`,
         tension: `Les retours terrain se contredisent sur des points cruciaux — impossible de suivre tous les conseils sans sacrifier quelque chose`,
         stake: `Chaque décision non arbitrée risque de coûter du temps, du confort ou de l'argent sur place`
       };
@@ -374,7 +379,7 @@ function buildAngleContent(angleType, signals) {
       if (hookMode === 'chiffre' && budget) {
         return {
           hook: `Avec un budget de ${budget} pour ${destFor}, ${riskCount} risques concrets identifiés par des voyageurs peuvent faire exploser le budget initial`,
-          tension: `${riskCount} pièges documentés par des voyageurs récents vs le discours rassurant des guides classiques sur ${dest}`,
+          tension: `${riskCount} points sensibles documentés par des voyageurs récents vs le discours rassurant des guides classiques sur ${dest}`,
           stake: `Ignorer ces risques peut coûter entre 50 et 300 euros de frais imprévus par semaine`
         };
       }
@@ -387,7 +392,7 @@ function buildAngleContent(angleType, signals) {
         };
       }
       return {
-        hook: `Partir vers ${dest} sans connaître les ${riskCount} pièges remontés par des voyageurs récents revient à choisir l'improvisation face au risque`,
+        hook: `Partir vers ${dest} sans connaître les ${riskCount} points sensibles remontés par des voyageurs récents revient à choisir l'improvisation face au risque`,
         tension: `${riskCount} risques concrets identifiés par des voyageurs récents vs le discours rassurant des blogs voyage`,
         stake: `Chaque risque ignoré peut coûter du temps, du confort ou de l'argent sur place`
       };
@@ -397,23 +402,23 @@ function buildAngleContent(angleType, signals) {
       const costCount = signals.costs.length;
       if (hookMode === 'chiffre' && budget) {
         return {
-          hook: `Avec ${budget} pour ${destFor}, chaque choix logistique devient un arbitrage entre confort et durée de voyage — ${costCount} postes de dépense à optimiser`,
-          tension: `Le vrai coût d'un voyage vers ${dest} ne se mesure pas au budget annoncé mais aux ${costCount} frais cachés qui s'accumulent`,
-          stake: `Chaque mauvais arbitrage peut coûter 10 à 30% du budget quotidien prévu`
+          hook: `Avec ${budget} pour ${destFor}, ${costCount} postes de dépense reviennent dans la plupart des témoignages — et les écarts réels entre voyageurs vont du simple au triple sur le même itinéraire`,
+          tension: `Entre deux voyageurs avec le même budget affiché sur ${dest}, la différence se joue sur 3 ou 4 lignes précises qu'aucun comparateur ne détaille`,
+          stake: `Mal calibrer ces postes peut décaler le budget de 10 à 30 % sur un séjour d'une semaine`
         };
       }
       if (hookMode === 'contrainte') {
         const constraint = findFirstConstraint(signals);
         return {
-          hook: `Optimiser son budget vers ${dest} oblige à arbitrer entre ${constraint} et confort — un calcul que les guides classiques ne posent jamais`,
-          tension: `Le vrai coût du voyage vers ${dest} dépend d'arbitrages sur ${constraint} que personne ne détaille`,
-          stake: `Sans arbitrage clair, le budget peut déraper de plusieurs centaines d'euros sur la durée du voyage`
+          hook: `${capitalize(constraint)} à ${dest} : l'écart entre ce que les guides annoncent et ce que les voyageurs paient sur place peut atteindre 40 %`,
+          tension: `${capitalize(constraint)} est le poste où les chiffres officiels vieillissent le plus vite — un voyageur de mars 2026 et un de mars 2024 ne paient déjà plus la même chose`,
+          stake: `Un chiffre périmé sur ce poste décale le budget total de plusieurs centaines d'euros`
         };
       }
       return {
-        hook: `Choisir comment répartir son budget vers ${dest} oblige à trancher entre confort, durée et expériences — un arbitrage que les guides classiques ignorent`,
-        tension: `Le vrai coût d'un voyage vers ${dest} ne se mesure pas au budget annoncé mais aux arbitrages quotidiens`,
-        stake: `Chaque décision budgétaire non anticipée risque de coûter du temps ou du confort sur place`
+        hook: `Combien ça coûte vraiment de passer ${budget || 'deux semaines'} à ${dest}, ligne par ligne — pas la moyenne des comparateurs mais le détail d'un voyageur rentré cette année`,
+        tension: `La différence entre le budget "officiel" d'un guide et ce que paye un voyageur en 2026 se concentre sur 3-4 postes — les autres sont conformes aux chiffres annoncés`,
+        stake: `Sur un séjour d'une semaine, l'écart peut représenter le prix de 2 nuits supplémentaires`
       };
     },
 
@@ -421,22 +426,22 @@ function buildAngleContent(angleType, signals) {
       const questionCount = signals.openQuestions.length;
       if (hookMode === 'chiffre' && budget) {
         return {
-          hook: `Avec ${budget} et un temps limité vers ${dest}, ${questionCount || 'plusieurs'} dilemmes logistiques se posent — chaque choix a un coût d'opportunité réel`,
-          tension: `Chaque jour ajouté à une étape est un jour retiré à une autre — les dilemmes logistiques vers ${dest} obligent à trancher`,
-          stake: `Mal arbitrer ces choix peut coûter des jours entiers de voyage et des dizaines d'euros en transports inutiles`
+          hook: `Avec ${budget} et un temps limité vers ${dest}, ${questionCount || 'plusieurs'} questions reviennent dans la plupart des témoignages — chaque réponse a un coût concret en jours et en euros`,
+          tension: `Chaque jour ajouté à une étape est un jour retiré à une autre : les voyageurs récents vers ${dest} ont répondu différemment selon leur profil`,
+          stake: `Mal calibrer ces choix peut coûter des jours entiers et des dizaines d'euros en transports inutiles`
         };
       }
       if (hookMode === 'contrainte') {
         const constraint = findFirstConstraint(signals);
         return {
-          hook: `Les contraintes de ${constraint} vers ${dest} forcent à choisir entre plusieurs itinéraires — impossible de tout faire sans sacrifier quelque chose`,
-          tension: `Chaque choix logistique vers ${dest} implique un sacrifice — les contraintes de ${constraint} rendent l'arbitrage inévitable`,
-          stake: `Renoncer au mauvais élément peut coûter l'expérience la plus marquante du voyage`
+          hook: `Dans quelle ville commencer ton itinéraire ${dest} quand ${constraint} entre en jeu : 3 profils qui ont fait 3 choix différents`,
+          tension: `${capitalize(constraint)} change complètement la logique de l'itinéraire — les retours terrain vers ${dest} le confirment sur plusieurs cas`,
+          stake: `Partir sur le mauvais itinéraire peut coûter l'expérience la plus marquante du voyage`
         };
       }
       return {
-        hook: `Décider quoi garder et quoi sacrifier dans un itinéraire vers ${dest} oblige à arbitrer entre des expériences qui semblent toutes indispensables`,
-        tension: `Chaque choix d'itinéraire vers ${dest} implique un renoncement — les guides classiques ne posent jamais cet arbitrage`,
+        hook: `Quelle ville garder et laquelle retirer dans un itinéraire vers ${dest} : ce que les voyageurs récents ont choisi, et pourquoi ils le referaient pareil (ou pas)`,
+        tension: `Chaque choix d'itinéraire vers ${dest} a des conséquences concrètes en jours, km et euros — les guides classiques ne donnent jamais ce détail`,
         stake: `Chaque décision mal calibrée risque de coûter une expérience irremplaçable ou des jours de transport inutiles`
       };
     },
@@ -445,22 +450,22 @@ function buildAngleContent(angleType, signals) {
       const eventCount = signals.events || signals.dates.length;
       if (hookMode === 'chiffre' && budget) {
         return {
-          hook: `Avec ${budget} et ${eventCount} contraintes temporelles vers ${dest}, chaque jour compte — un mauvais timing peut coûter une étape entière`,
-          tension: `La pression du calendrier vers ${dest} transforme chaque étape en arbitrage entre temps disponible et expérience souhaitée`,
-          stake: `Un retard d'un seul jour peut forcer à sacrifier une étape prévue et perdre des réservations non remboursables`
+          hook: `Avec ${budget} et ${eventCount} repères de calendrier vers ${dest}, chaque jour compte — un mauvais timing peut coûter une étape entière`,
+          tension: `La pression du calendrier vers ${dest} oblige à choisir entre temps disponible et expérience souhaitée, avec un coût chiffré par jour raté`,
+          stake: `Un retard d'un seul jour peut forcer à retirer une étape prévue et faire perdre des réservations non remboursables`
         };
       }
       if (hookMode === 'contrainte') {
         const constraint = findFirstConstraint(signals);
         return {
-          hook: `Les contraintes de ${constraint} vers ${dest} imposent un calendrier serré — chaque retard a des conséquences en cascade sur le reste du voyage`,
-          tension: `La pression temporelle liée à ${constraint} vers ${dest} oblige à arbitrer chaque journée entre priorités concurrentes`,
-          stake: `Ignorer ces contraintes de timing risque de coûter des étapes entières et des réservations perdues`
+          hook: `Combien de jours à ${dest} avant que la routine s'installe quand ${constraint} impose son rythme : ce qu'en disent les voyageurs de 2 semaines vs 1 mois`,
+          tension: `${capitalize(constraint)} vers ${dest} impose un calendrier serré — chaque retard a des conséquences en cascade sur le reste du voyage`,
+          stake: `Ignorer ces contraintes de timing risque de faire perdre des étapes entières et des réservations`
         };
       }
       return {
-        hook: `Arbitrer entre les étapes d'un voyage vers ${dest} quand le temps est compté oblige à décider ce qui mérite vraiment chaque journée`,
-        tension: `La pression du calendrier vers ${dest} transforme chaque étape en choix stratégique — les guides classiques ignorent cette réalité`,
+        hook: `Combien de jours suffisent vraiment pour voir ${dest} sans courir : les retours des voyageurs de 2 semaines contre ceux d'un mois`,
+        tension: `La pression du calendrier vers ${dest} transforme chaque étape en choix concret — les guides classiques ignorent cette réalité`,
         stake: `Chaque journée mal allouée risque de coûter une expérience irremplaçable ou des frais de transport supplémentaires`
       };
     }
@@ -806,7 +811,7 @@ function buildFallback(signals, sourceFacts, detectors, businessPrimary, seoInte
     source_facts: sourceFacts,
     primary_angle: {
       type: ANGLE_TYPES.LOGISTIC_DILEMMA,
-      hook: `Décider comment organiser son voyage vers ${dest} oblige à arbitrer entre des choix qui semblent tous raisonnables mais qui ont chacun un coût caché`,
+      hook: `Décider comment organiser son voyage vers ${dest} oblige à trancher entre des choix qui semblent tous raisonnables mais qui ont chacun un coût moins visible`,
       hook_mode: 'decision',
       tension: `Les choix logistiques vers ${dest} impliquent des renoncements que les guides classiques ne posent jamais`,
       stake: `Chaque décision non anticipée risque de coûter du temps ou du confort sur place`

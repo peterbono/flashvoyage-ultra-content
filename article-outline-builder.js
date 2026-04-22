@@ -34,33 +34,39 @@ const ANGLE_SECTION_TEMPLATES = {
     { titlePattern: 'Comment trancher entre les avis contradictoires', focus: 'decision', ctaSlot: true },
     { titlePattern: 'Le verdict terrain : ce qui fonctionne vraiment', focus: 'verdict', ctaSlot: false }
   ],
+  // Keys kept (consumed by angle type lookup); prompt-facing strings rewritten.
+  // Kill "les pièges que les guides ignorent / cachés" pattern. Use concrete framing.
   hidden_risk: [
-    { titlePattern: 'Les risques que les guides classiques ignorent sur {topic}', focus: 'warnings', ctaSlot: false },
-    { titlePattern: 'Pourquoi ces pièges passent sous le radar', focus: 'analysis', ctaSlot: false },
-    { titlePattern: 'Ce que ça coûte concrètement de ne pas anticiper', focus: 'costs', ctaSlot: true },
-    { titlePattern: 'Comment éviter chaque piège identifié', focus: 'solutions', ctaSlot: true },
-    { titlePattern: 'Le plan d\'action anti-galère', focus: 'action_plan', ctaSlot: false }
+    { titlePattern: 'Ce qu\'on aurait aimé savoir avant de partir pour {topic}', focus: 'warnings', ctaSlot: false },
+    { titlePattern: 'La journée où notre plan est tombé à l\'eau (et ce qu\'on a fait)', focus: 'analysis', ctaSlot: false },
+    { titlePattern: 'Ce que ça nous a coûté en euros et en heures perdues', focus: 'costs', ctaSlot: true },
+    { titlePattern: 'Les 3 trucs qui auraient pu l\'éviter', focus: 'solutions', ctaSlot: true },
+    { titlePattern: 'Ce qu\'on refera différemment la prochaine fois', focus: 'action_plan', ctaSlot: false }
   ],
+  // No "coûts cachés", no "optimiser chaque poste", no "arbitrer", no "dilemme".
+  // Each titlePattern names a concrete deliverable or number slot.
   cost_arbitrage: [
-    { titlePattern: 'Le vrai budget pour {topic} : au-delà des chiffres annoncés', focus: 'costs', ctaSlot: false },
-    { titlePattern: 'Les coûts cachés qui font déraper le budget', focus: 'hidden_costs', ctaSlot: true },
-    { titlePattern: 'Comparer les options : où va ton argent', focus: 'comparison', ctaSlot: true },
-    { titlePattern: 'Comment optimiser chaque poste de dépense', focus: 'optimization', ctaSlot: true },
-    { titlePattern: 'Le budget réaliste et le plan pour s\'y tenir', focus: 'verdict', ctaSlot: false }
+    { titlePattern: 'Ce que {topic} nous a coûté, ligne par ligne', focus: 'costs', ctaSlot: false },
+    { titlePattern: 'Les 3 postes où le budget dérape le plus souvent', focus: 'hidden_costs', ctaSlot: true },
+    { titlePattern: 'Combien tu paies en plus si tu réserves en haute saison', focus: 'comparison', ctaSlot: true },
+    { titlePattern: 'Ce qu\'on referait différemment pour la moitié du prix', focus: 'optimization', ctaSlot: true },
+    { titlePattern: 'Notre budget final vs le budget prévu', focus: 'verdict', ctaSlot: false }
   ],
+  // "Le dilemme central" and "Option A vs Option B" are Google-flagged formula patterns.
   logistic_dilemma: [
-    { titlePattern: 'Le dilemme central : {topic}', focus: 'dilemma', ctaSlot: false },
-    { titlePattern: 'Option A vs Option B : ce que chaque choix implique', focus: 'comparison', ctaSlot: false },
-    { titlePattern: 'Les contraintes que personne ne t\'explique', focus: 'constraints', ctaSlot: true },
-    { titlePattern: 'Comment décider sans regretter', focus: 'decision', ctaSlot: true },
-    { titlePattern: 'Le plan logistique étape par étape', focus: 'action_plan', ctaSlot: false }
+    { titlePattern: 'La question qu\'on s\'est posée la veille du départ pour {topic}', focus: 'dilemma', ctaSlot: false },
+    { titlePattern: 'Ce que les deux options donnent concrètement — en jours, en km, en euros', focus: 'comparison', ctaSlot: false },
+    { titlePattern: 'Ce qu\'on a appris seulement sur place (et qu\'on aurait aimé savoir avant)', focus: 'constraints', ctaSlot: true },
+    { titlePattern: 'Ce qu\'on a choisi et pourquoi on referait pareil (ou pas)', focus: 'decision', ctaSlot: true },
+    { titlePattern: 'Notre itinéraire jour par jour', focus: 'action_plan', ctaSlot: false }
   ],
+  // "Optimiser chaque journée" and "arbitrages temporels inévitables" are Google-flagged patterns.
   timeline_tension: [
-    { titlePattern: 'Le calendrier réel pour {topic}', focus: 'timeline', ctaSlot: false },
-    { titlePattern: 'Les étapes qui prennent plus de temps que prévu', focus: 'delays', ctaSlot: false },
-    { titlePattern: 'Comment optimiser chaque journée sur place', focus: 'optimization', ctaSlot: true },
-    { titlePattern: 'Les arbitrages temporels inévitables', focus: 'tradeoffs', ctaSlot: true },
-    { titlePattern: 'Le planning optimisé jour par jour', focus: 'action_plan', ctaSlot: false }
+    { titlePattern: 'Le vrai calendrier de {topic} : ce qui a pris plus de temps que prévu', focus: 'timeline', ctaSlot: false },
+    { titlePattern: 'Les 2 étapes où on aurait dû prévoir un jour de plus', focus: 'delays', ctaSlot: false },
+    { titlePattern: 'Combien de jours suffisent pour voir {topic} sans courir', focus: 'pacing', ctaSlot: true },
+    { titlePattern: 'Ce qu\'on a sauté et qu\'on ne regrette pas', focus: 'tradeoffs', ctaSlot: true },
+    { titlePattern: 'Notre planning final (et celui qu\'on avait prévu au départ)', focus: 'action_plan', ctaSlot: false }
   ],
 
   // SEO-first templates: neutral, informational, keyword-optimized (used when ARTICLE_HINT is set)
@@ -398,7 +404,7 @@ function buildKeyPoints(focus, evidencePool, story, extracted) {
       break;
 
     case 'tradeoffs':
-      points.push('Les arbitrages temporels inévitables');
+      points.push('Les étapes qu\'on a dû raccourcir ou allonger, avec le détail en jours');
       points.push('Ce que tu sacrifies en choisissant chaque option');
       if (evidencePool.communityInsights.length > 0) points.push('Retours de la communauté sur ces compromis');
       break;
