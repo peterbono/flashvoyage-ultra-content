@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-04-21T04:08:14.004Z",
-    "elapsedSeconds": 10,
+    "generatedAt": "2026-04-22T04:07:02.387Z",
+    "elapsedSeconds": 9,
     "totalArticles": 140,
     "articlesWithRecommendations": 8,
     "totalRecommendations": 8,
@@ -160,9 +160,37 @@
       "internalLinks": 38,
       "lastModified": "2026-04-12T15:39:36",
       "ga4": {
+        "pageviews": 8,
+        "sessions": 8,
+        "avgDuration": 8
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3546,
+      "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
+      "url": "https://flashvoyage.com/indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient/",
+      "wordCount": 4324,
+      "widgetCount": 0,
+      "internalLinks": 28,
+      "lastModified": "2026-04-12T15:41:01",
+      "ga4": {
         "pageviews": 7,
-        "sessions": 7,
-        "avgDuration": 5
+        "sessions": 6,
+        "avgDuration": 99
       },
       "gsc": {
         "impressions": 0,
@@ -286,34 +314,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 3546,
-      "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
-      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
-      "url": "https://flashvoyage.com/indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient/",
-      "wordCount": 4324,
-      "widgetCount": 0,
-      "internalLinks": 28,
-      "lastModified": "2026-04-12T15:41:01",
-      "ga4": {
-        "pageviews": 6,
-        "sessions": 5,
-        "avgDuration": 119
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 5119,
       "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
       "title": "Thaïlande ou Vietnam : le dilemme caché du premier voyage",
@@ -356,9 +356,9 @@
         "avgDuration": 35
       },
       "gsc": {
-        "impressions": 37,
+        "impressions": 39,
         "clicks": 2,
-        "position": 6.1,
+        "position": 5.9,
         "topQueries": [
           {
             "query": "philippines globe",
@@ -387,6 +387,51 @@
       "p0Count": 0
     },
     {
+      "wpId": 4371,
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
+      "wordCount": 3297,
+      "widgetCount": 3,
+      "internalLinks": 39,
+      "lastModified": "2026-04-13T11:07:13",
+      "ga4": {
+        "pageviews": 5,
+        "sessions": 5,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 13,
+        "clicks": 0,
+        "position": 6.4,
+        "topQueries": [
+          {
+            "query": "10 jours aux philippines",
+            "position": 4,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"10 jours aux philippines\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"10 jours aux philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 3090,
       "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
       "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
@@ -401,9 +446,65 @@
         "avgDuration": 176
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 7,
         "clicks": 2,
-        "position": 12.8,
+        "position": 10,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5742,
+      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
+      "wordCount": 1480,
+      "widgetCount": 0,
+      "internalLinks": 21,
+      "lastModified": "2026-04-17T05:37:43",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 4,
+        "avgDuration": 1
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5072,
+      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
+      "url": "https://flashvoyage.com/kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage/",
+      "wordCount": 1256,
+      "widgetCount": 0,
+      "internalLinks": 14,
+      "lastModified": "2026-04-12T15:39:27",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 2,
+        "avgDuration": 212
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -440,51 +541,6 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4371,
-      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
-      "wordCount": 3297,
-      "widgetCount": 3,
-      "internalLinks": 39,
-      "lastModified": "2026-04-13T11:07:13",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 13,
-        "clicks": 0,
-        "position": 6.4,
-        "topQueries": [
-          {
-            "query": "10 jours aux philippines",
-            "position": 4,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"10 jours aux philippines\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"10 jours aux philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -575,9 +631,9 @@
         "avgDuration": 265
       },
       "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
+        "impressions": 1,
+        "clicks": 1,
+        "position": 7,
         "topQueries": []
       },
       "reels": {
@@ -657,34 +713,6 @@
         "pageviews": 3,
         "sessions": 3,
         "avgDuration": 33
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5072,
-      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
-      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "url": "https://flashvoyage.com/kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage/",
-      "wordCount": 1256,
-      "widgetCount": 0,
-      "internalLinks": 14,
-      "lastModified": "2026-04-12T15:39:27",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 1,
-        "avgDuration": 424
       },
       "gsc": {
         "impressions": 0,
@@ -802,6 +830,34 @@
         "impressions": 9,
         "clicks": 0,
         "position": 7.4,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5752,
+      "slug": "lesim-en-asie-du-sud-est-ce-que-ca-va-vraiment-te-couter",
+      "title": "L&rsquo;ESIM en Asie du Sud-Est : Ce que ça va vraiment te coûter",
+      "url": "https://flashvoyage.com/lesim-en-asie-du-sud-est-ce-que-ca-va-vraiment-te-couter/",
+      "wordCount": 1118,
+      "widgetCount": 0,
+      "internalLinks": 18,
+      "lastModified": "2026-04-17T09:17:47",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -967,9 +1023,9 @@
         "avgDuration": 18
       },
       "gsc": {
-        "impressions": 52,
+        "impressions": 53,
         "clicks": 1,
-        "position": 14.2,
+        "position": 14,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -1036,7 +1092,7 @@
         "avgDuration": 21
       },
       "gsc": {
-        "impressions": 119,
+        "impressions": 120,
         "clicks": 1,
         "position": 15.2,
         "topQueries": [
@@ -1147,34 +1203,6 @@
         "pageviews": 2,
         "sessions": 1,
         "avgDuration": 17
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5742,
-      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
-      "wordCount": 1480,
-      "widgetCount": 0,
-      "internalLinks": 21,
-      "lastModified": "2026-04-17T05:37:43",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
@@ -1447,10 +1475,10 @@
       "slug": "planifier-un-voyage-au-japon-comment-optimiser-chaque-journee",
       "title": "Planifier Voyage Japon 2026 : Itinéraire Optimal",
       "url": "https://flashvoyage.com/planifier-un-voyage-au-japon-comment-optimiser-chaque-journee/",
-      "wordCount": 1046,
+      "wordCount": 1064,
       "widgetCount": 0,
       "internalLinks": 19,
-      "lastModified": "2026-04-12T23:57:11",
+      "lastModified": "2026-04-21T10:27:05",
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
@@ -1475,10 +1503,10 @@
       "slug": "japon-comment-arbitrer-entre-experiences-incontournables-et-logistique",
       "title": "Japon 2026 : Guide des Expériences Incontournables",
       "url": "https://flashvoyage.com/japon-comment-arbitrer-entre-experiences-incontournables-et-logistique/",
-      "wordCount": 1051,
+      "wordCount": 1069,
       "widgetCount": 0,
       "internalLinks": 13,
-      "lastModified": "2026-04-12T18:55:38",
+      "lastModified": "2026-04-21T10:27:07",
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
@@ -1651,34 +1679,6 @@
         "pageviews": 1,
         "sessions": 1,
         "avgDuration": 6
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5752,
-      "slug": "lesim-en-asie-du-sud-est-ce-que-ca-va-vraiment-te-couter",
-      "title": "L&rsquo;ESIM en Asie du Sud-Est : Ce que ça va vraiment te coûter",
-      "url": "https://flashvoyage.com/lesim-en-asie-du-sud-est-ce-que-ca-va-vraiment-te-couter/",
-      "wordCount": 1118,
-      "widgetCount": 0,
-      "internalLinks": 18,
-      "lastModified": "2026-04-17T09:17:47",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -3221,9 +3221,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 11,
+        "impressions": 10,
         "clicks": 0,
-        "position": 8.5,
+        "position": 8.2,
         "topQueries": []
       },
       "reels": {
@@ -3239,10 +3239,10 @@
       "slug": "arbitrer-son-itineraire-japon-chine-mongolie-en-15-20-jours-les-vrais-dilemmes-logistiques",
       "title": "Arbitrer son itinéraire Japon-Chine-Mongolie en 15-20 jours : les vrais dilemmes logistiques",
       "url": "https://flashvoyage.com/arbitrer-son-itineraire-japon-chine-mongolie-en-15-20-jours-les-vrais-dilemmes-logistiques/",
-      "wordCount": 2764,
+      "wordCount": 2759,
       "widgetCount": 0,
       "internalLinks": 37,
-      "lastModified": "2026-04-12T15:41:40",
+      "lastModified": "2026-04-21T10:26:56",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3333,14 +3333,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 10,
         "clicks": 0,
-        "position": 6.3,
+        "position": 6.7,
         "topQueries": [
           {
             "query": "chiang mai ou bangkok",
-            "position": 6,
-            "impressions": 2,
+            "position": 5,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -3424,10 +3424,10 @@
       "slug": "travailler-en-thailande-les-dilemmes-fiscaux-des-travailleurs-a-distance",
       "title": "Travailler en Thaïlande : Les Dilemmes Fiscaux des Travailleurs à Distance",
       "url": "https://flashvoyage.com/travailler-en-thailande-les-dilemmes-fiscaux-des-travailleurs-a-distance/",
-      "wordCount": 1050,
+      "wordCount": 1059,
       "widgetCount": 0,
       "internalLinks": 22,
-      "lastModified": "2026-04-12T15:41:56",
+      "lastModified": "2026-04-21T10:27:02",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3452,10 +3452,10 @@
       "slug": "decider-de-son-itineraire-au-japon-entre-confort-et-choix-logistiques",
       "title": "Décider de son itinéraire au Japon : entre confort et choix logistiques",
       "url": "https://flashvoyage.com/decider-de-son-itineraire-au-japon-entre-confort-et-choix-logistiques/",
-      "wordCount": 1338,
+      "wordCount": 1355,
       "widgetCount": 0,
       "internalLinks": 22,
-      "lastModified": "2026-04-12T15:41:58",
+      "lastModified": "2026-04-21T10:27:04",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,

@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-04-21T04:08:15.894Z",
+  "timestamp": "2026-04-22T04:07:04.008Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-04-21T04:08:17.006Z",
+      "lastScan": "2026-04-22T04:07:04.821Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-04-21T04:08:17.694Z",
+      "lastScan": "2026-04-22T04:07:05.235Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-04-21T04:09:37.504Z",
-      "urlCount": 9442,
+      "lastScan": "2026-04-22T04:08:15.110Z",
+      "urlCount": 9446,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -6889,7 +6889,6 @@
         "https://generationvoyage.fr/transports-istanbul/": "2025-11-26T15:27:38+00:00",
         "https://generationvoyage.fr/temple-cao-dai-tay-ninh-cote-saigon/": "2025-11-26T15:27:40+00:00",
         "https://generationvoyage.fr/city-pass-dubai/": "2025-11-26T15:27:57+00:00",
-        "https://generationvoyage.fr/plages-toscane/": "2025-11-26T15:28:01+00:00",
         "https://generationvoyage.fr/musees-histoire-montreal/": "2025-11-26T15:28:19+00:00",
         "https://generationvoyage.fr/musees-histoire-bretagne/": "2025-11-26T15:28:42+00:00",
         "https://generationvoyage.fr/musees-maritimes-bretagne/": "2025-11-26T15:28:44+00:00",
@@ -9583,7 +9582,12 @@
         "https://generationvoyage.fr/meilleurs-hotels-bonifacio/": "2026-04-20T10:25:30+00:00",
         "https://generationvoyage.fr/activites-gratuites-valence/": "2026-04-20T10:26:34+00:00",
         "https://generationvoyage.fr/visiter-koufonissia-faire-voir/": "2026-04-20T12:54:08+00:00",
-        "https://generationvoyage.fr/ferry-sicile/": "2026-04-20T13:27:42+00:00"
+        "https://generationvoyage.fr/ferry-sicile/": "2026-04-20T13:27:42+00:00",
+        "https://generationvoyage.fr/construction-pantheon-rome/": "2026-04-21T06:53:55+00:00",
+        "https://generationvoyage.fr/bruges-bruxelles/": "2026-04-21T09:31:10+00:00",
+        "https://generationvoyage.fr/dormir-saint-jacques-de-compostelle/": "2026-04-21T12:41:45+00:00",
+        "https://generationvoyage.fr/visiter-saumur-faire-voir/": "2026-04-21T14:43:09+00:00",
+        "https://generationvoyage.fr/plages-toscane/": "2026-04-21T16:29:11+00:00"
       }
     }
   }
