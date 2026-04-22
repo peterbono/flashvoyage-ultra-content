@@ -59,7 +59,7 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Vivre en Asie du Sud-Est avec 10 000 $ : Frais cachés et choix stratégiques",
+      "topic": "Vivre en Asie du Sud-Est avec 10 000 $ : Frais cach\u00e9s et choix strat\u00e9giques",
       "articleType": "support",
       "context": {
         "wpId": 3159,
@@ -75,7 +75,7 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Décider de son itinéraire au Japon : entre confort et choix logistiques",
+      "topic": "D\u00e9cider de son itin\u00e9raire au Japon : entre confort et choix logistiques",
       "articleType": "support",
       "context": {
         "wpId": 3131,
@@ -91,7 +91,7 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Budget Réel pour Vivre à Koh Lanta : Dépenses et Optimisations",
+      "topic": "Budget R\u00e9el pour Vivre \u00e0 Koh Lanta : D\u00e9penses et Optimisations",
       "articleType": "support",
       "context": {
         "wpId": 3122,
@@ -107,7 +107,7 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
+      "topic": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un S\u00e9jour Confortable",
       "articleType": "support",
       "context": {
         "wpId": 3115,
@@ -123,7 +123,7 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques",
+      "topic": "Indon\u00e9sie : Naviguer entre Culture et Nature sans les Pi\u00e8ges Touristiques",
       "articleType": "support",
       "context": {
         "wpId": 3099,
@@ -139,7 +139,7 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Choisir où séjourner à Bali : dilemmes et décisions cruciales",
+      "topic": "Choisir o\u00f9 s\u00e9journer \u00e0 Bali : dilemmes et d\u00e9cisions cruciales",
       "articleType": "support",
       "context": {
         "wpId": 3082,
@@ -155,7 +155,7 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
+      "topic": "Itin\u00e9raire en Irlande : Comment Choisir Entre Nord et Sud",
       "articleType": "support",
       "context": {
         "wpId": 3065,
@@ -171,7 +171,7 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
+      "topic": "Voyager au Sri Lanka : Choix Cruciaux et Itin\u00e9raires Optimis\u00e9s",
       "articleType": "support",
       "context": {
         "wpId": 3056,
@@ -187,7 +187,7 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
+      "topic": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itin\u00e9raire Parfait",
       "articleType": "support",
       "context": {
         "wpId": 3048,
@@ -197,14 +197,6 @@
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
-    },
-    {
-      "id": "q-1776850131910-fuiec2",
-      "title": "__token_test_delete_me__",
-      "topic": "token test",
-      "priority": "low",
-      "addedAt": "2026-04-22T09:28:51.910Z",
-      "addedBy": "dashboard"
     }
   ],
   "summary": {
