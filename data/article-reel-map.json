@@ -1,10 +1,71 @@
 {
-  "timestamp": "2026-04-22T04:06:52.016Z",
+  "timestamp": "2026-04-22T12:19:35.489Z",
   "articleMap": {
     "voyage-thailande-pas-cher-2026-budget": {
       "wpId": 4487,
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "reels": [],
+      "reels": [
+        {
+          "reelId": "tiktok:2026-04-16",
+          "format": "avantapres",
+          "platform": "tiktok",
+          "score": 7.1,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-16",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        },
+        {
+          "reelId": "tiktok:2026-04-14",
+          "format": "avantapres",
+          "platform": "tiktok",
+          "score": 10.6,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-14",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        },
+        {
+          "reelId": "tiktok:2026-04-13",
+          "format": "avantapres",
+          "platform": "tiktok",
+          "score": 6.5,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-13",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        },
+        {
+          "reelId": "tiktok:2026-04-12",
+          "format": "avantapres",
+          "platform": "tiktok",
+          "score": 5.7,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-12",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        },
+        {
+          "reelId": "tiktok:2026-04-18",
+          "format": "budget",
+          "platform": "tiktok",
+          "score": 8.3,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-18",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        },
+        {
+          "reelId": "tiktok:2026-04-10",
+          "format": "versus",
+          "platform": "tiktok",
+          "score": 9.2,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-10",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
       "suggestedFormats": [
         "budget",
         "versus",
@@ -52,7 +113,38 @@
     "bali-vs-thailande-premier-voyage-asie-comparatif": {
       "wpId": 4254,
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
-      "reels": [],
+      "reels": [
+        {
+          "reelId": "17873104899455483",
+          "format": "poll",
+          "platform": "instagram",
+          "score": 0,
+          "engagementRate": 0,
+          "publishedAt": "2026-03-30T17:10:08.000Z",
+          "isViral": false,
+          "matchSource": "wp-id"
+        },
+        {
+          "reelId": "18042318470534698",
+          "format": "versus",
+          "platform": "instagram",
+          "score": 0,
+          "engagementRate": 0,
+          "publishedAt": "2026-03-30T17:59:54.000Z",
+          "isViral": false,
+          "matchSource": "wp-id"
+        },
+        {
+          "reelId": "tiktok:2026-04-12",
+          "format": "avantapres",
+          "platform": "tiktok",
+          "score": 4.9,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-12",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
       "suggestedFormats": [
         "pick",
         "poll",
@@ -64,7 +156,18 @@
     "esim-vietnam-comparatif-forfait-2026-frais-caches": {
       "wpId": 4250,
       "title": "eSIM Vietnam : le comparatif que les blogs ne font jamais (et les frais cachés)",
-      "reels": [],
+      "reels": [
+        {
+          "reelId": "tiktok:2026-04-14",
+          "format": "guide",
+          "platform": "tiktok",
+          "score": 9.8,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-14",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
       "suggestedFormats": [
         "pick",
         "poll",
@@ -100,7 +203,28 @@
     "bali-lombok-gili-10-jours-itineraire-budget-2026": {
       "wpId": 4370,
       "title": "Bali + Lombok + Gili en 10 jours : l’itinéraire budget que les blogs te cachent",
-      "reels": [],
+      "reels": [
+        {
+          "reelId": "tiktok:2026-04-16",
+          "format": "humor",
+          "platform": "tiktok",
+          "score": 5.4,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-16",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        },
+        {
+          "reelId": "tiktok:2026-04-04",
+          "format": "budget",
+          "platform": "tiktok",
+          "score": 15.8,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-04",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
       "suggestedFormats": [
         "budget",
         "versus",
@@ -136,7 +260,18 @@
     "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
       "wpId": 5260,
       "title": "Vietnam vs Thaïlande en 2026 : l&rsquo;arbitrage crucial pour un premier voyage",
-      "reels": [],
+      "reels": [
+        {
+          "reelId": "tiktok:2026-04-13",
+          "format": "pick",
+          "platform": "tiktok",
+          "score": 8.1,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-13",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
       "suggestedFormats": [
         "pick",
         "poll",
@@ -471,7 +606,18 @@
     "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier": {
       "wpId": 5189,
       "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
-      "reels": [],
+      "reels": [
+        {
+          "reelId": "tiktok:2026-04-10",
+          "format": "budget",
+          "platform": "tiktok",
+          "score": 3.2,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-10",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
       "suggestedFormats": [
         "pick",
         "poll",
@@ -699,7 +845,18 @@
     "budget-2-200-e-en-thailande-5-arbitrages-caches-qui-peuvent-te-ruiner": {
       "wpId": 3259,
       "title": "Budget Thaïlande 2026 : Guide pour 2 200 € (Pièges à Éviter)",
-      "reels": [],
+      "reels": [
+        {
+          "reelId": "tiktok:2026-04-17",
+          "format": "pick",
+          "platform": "tiktok",
+          "score": 11.9,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-17",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
       "suggestedFormats": [
         "budget",
         "versus",
@@ -1682,227 +1839,227 @@
   "viralAlerts": [],
   "orphanReels": [
     {
-      "reelId": "unknown",
-      "format": "poll",
-      "publishedAt": null,
-      "caption": ""
-    },
-    {
-      "reelId": "unknown",
-      "format": "versus",
-      "publishedAt": null,
-      "caption": ""
-    },
-    {
-      "reelId": "unknown",
+      "reelId": "18137853628455691",
       "format": "budget",
-      "publishedAt": null,
+      "publishedAt": "2026-03-31T03:09:23.000Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18067939412321587",
       "format": "best-time",
-      "publishedAt": null,
+      "publishedAt": "2026-04-10T21:03:05.428Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18100810021750962",
       "format": "cost-vs",
-      "publishedAt": null,
+      "publishedAt": "2026-04-11T17:29:43.862Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17995828811931958",
       "format": "avantapres",
-      "publishedAt": null,
+      "publishedAt": "2026-04-11T19:41:52.373Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17979407105990721",
       "format": "humor-tweet",
-      "publishedAt": null,
+      "publishedAt": "2026-04-11T20:57:44.982Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18429682666184821",
       "format": "avantapres",
-      "publishedAt": null,
+      "publishedAt": "2026-04-12T17:33:26.015Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17941632714183347",
       "format": "avantapres",
-      "publishedAt": null,
+      "publishedAt": "2026-04-12T19:45:02.105Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18125340880593327",
       "format": "pick",
-      "publishedAt": null,
+      "publishedAt": "2026-04-12T21:01:51.270Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18077095475427001",
       "format": "cost-vs",
-      "publishedAt": null,
+      "publishedAt": "2026-04-13T17:58:58.595Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17981091579003280",
       "format": "month",
-      "publishedAt": null,
+      "publishedAt": "2026-04-13T20:12:24.694Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18008241200891092",
       "format": "cost-vs",
-      "publishedAt": null,
+      "publishedAt": "2026-04-14T18:02:54.549Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17881830738394073",
       "format": "leaderboard",
-      "publishedAt": null,
+      "publishedAt": "2026-04-14T20:12:11.543Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18545663794069691",
       "format": "leaderboard",
-      "publishedAt": null,
+      "publishedAt": "2026-04-14T21:13:59.571Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18021807152649985",
       "format": "avantapres",
-      "publishedAt": null,
+      "publishedAt": "2026-04-15T18:05:08.904Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18108815977880485",
       "format": "humor",
-      "publishedAt": null,
+      "publishedAt": "2026-04-15T20:08:36.591Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18065647136671401",
       "format": "humor",
-      "publishedAt": null,
+      "publishedAt": "2026-04-15T21:13:26.151Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18121434151618637",
       "format": "pick",
-      "publishedAt": null,
+      "publishedAt": "2026-04-16T18:07:49.721Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17930992923072045",
       "format": "budget",
-      "publishedAt": null,
+      "publishedAt": "2026-04-16T20:05:31.206Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18037929596588254",
       "format": "budget",
-      "publishedAt": null,
+      "publishedAt": "2026-04-16T21:10:00.465Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18157918189450017",
       "format": "avantapres",
-      "publishedAt": null,
+      "publishedAt": "2026-04-17T17:47:53.339Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17898300936428031",
       "format": "best-time",
-      "publishedAt": null,
+      "publishedAt": "2026-04-17T20:01:54.887Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18097573919015917",
       "format": "best-time",
-      "publishedAt": null,
+      "publishedAt": "2026-04-17T21:09:31.709Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17994976157945207",
       "format": "cost-vs",
-      "publishedAt": null,
+      "publishedAt": "2026-04-18T17:35:24.070Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17993478959779066",
       "format": "avantapres",
-      "publishedAt": null,
+      "publishedAt": "2026-04-18T19:46:10.379Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17864150793548210",
       "format": "humor-tweet",
-      "publishedAt": null,
+      "publishedAt": "2026-04-18T21:01:47.624Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17905769997403383",
       "format": "avantapres",
-      "publishedAt": null,
+      "publishedAt": "2026-04-19T17:34:37.852Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17923095936295274",
       "format": "avantapres",
-      "publishedAt": null,
+      "publishedAt": "2026-04-19T19:46:42.195Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17957826912114557",
       "format": "pick",
-      "publishedAt": null,
+      "publishedAt": "2026-04-19T21:02:42.514Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17972391333011039",
       "format": "cost-vs",
-      "publishedAt": null,
+      "publishedAt": "2026-04-20T17:26:48.052Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18078377525532675",
       "format": "pick",
-      "publishedAt": null,
+      "publishedAt": "2026-04-20T19:33:27.531Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18099604547091261",
       "format": "leaderboard",
-      "publishedAt": null,
+      "publishedAt": "2026-04-20T20:46:58.081Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17879083791426809",
       "format": "avantapres",
-      "publishedAt": null,
+      "publishedAt": "2026-04-21T17:25:43.564Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "18119558698575880",
       "format": "avantapres",
-      "publishedAt": null,
+      "publishedAt": "2026-04-21T19:36:12.481Z",
       "caption": ""
     },
     {
-      "reelId": "unknown",
+      "reelId": "17861877825566450",
       "format": "month",
-      "publishedAt": null,
+      "publishedAt": "2026-04-21T20:48:09.008Z",
       "caption": ""
+    },
+    {
+      "reelId": "tiktok:2026-04-13:Comment tu conduis u",
+      "format": "humor",
+      "publishedAt": "2026-04-13",
+      "caption": "Comment tu conduis un scooter en Asie"
+    },
+    {
+      "reelId": "tiktok:2026-04-17:J'ai besoin de 6 moi",
+      "format": "humor",
+      "publishedAt": "2026-04-17",
+      "caption": "J'ai besoin de 6 mois de vacances ... Deux fois par an Envoie ca a un pote qui c"
     }
   ],
   "stats": {
     "totalArticles": 140,
-    "articlesWithReels": 0,
-    "articlesWithoutReels": 140,
-    "totalReels": 0,
+    "articlesWithReels": 7,
+    "articlesWithoutReels": 133,
+    "totalReels": 15,
     "viralReels": 0,
     "orphanReels": 36
   }
