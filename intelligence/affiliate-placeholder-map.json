@@ -1,0 +1,112 @@
+{
+  "_meta": {
+    "description": "Maps [AFFILIATE:<key>] placeholders → target URL + TP campaign metadata. Consumed by resolveAffiliatePlaceholders() in article-finalizer.js.",
+    "campaigns": {
+      "airalo": 541,
+      "aviasales": 100,
+      "kiwi": 111,
+      "tiqets": 89
+    },
+    "notSubscribed": ["holafly", "saily", "yesim", "ubigi", "booking", "getyourguide"],
+    "subIdFormat": "{wpId}-{slot}-{variant}",
+    "variantDefault": "a"
+  },
+
+  "airalo-philippines": {
+    "partner": "airalo",
+    "campaignId": 541,
+    "targetUrl": "https://www.airalo.com/philippines-esim",
+    "trackingAvailable": true,
+    "commissionHint": "12%"
+  },
+  "airalo-asialink": {
+    "partner": "airalo",
+    "campaignId": 541,
+    "targetUrl": "https://www.airalo.com/asia-esim",
+    "trackingAvailable": true,
+    "commissionHint": "12%"
+  },
+  "airalo-vietnam": {
+    "partner": "airalo",
+    "campaignId": 541,
+    "targetUrl": "https://www.airalo.com/vietnam-esim",
+    "trackingAvailable": true,
+    "commissionHint": "12%"
+  },
+  "airalo-thailand": {
+    "partner": "airalo",
+    "campaignId": 541,
+    "targetUrl": "https://www.airalo.com/thailand-esim",
+    "trackingAvailable": true,
+    "commissionHint": "12%"
+  },
+  "airalo-japan": {
+    "partner": "airalo",
+    "campaignId": 541,
+    "targetUrl": "https://www.airalo.com/japan-esim",
+    "trackingAvailable": true,
+    "commissionHint": "12%"
+  },
+  "airalo-indonesia": {
+    "partner": "airalo",
+    "campaignId": 541,
+    "targetUrl": "https://www.airalo.com/indonesia-esim",
+    "trackingAvailable": true,
+    "commissionHint": "12%"
+  },
+
+  "holafly-philippines": {
+    "partner": "holafly",
+    "campaignId": null,
+    "targetUrl": "https://esim.holafly.com/fr/esim-philippines/",
+    "fallbackUrl": "https://esim.holafly.com/fr/esim-philippines/",
+    "trackingAvailable": false,
+    "commissionHint": "0% (not subscribed — apply to direct program)"
+  },
+  "holafly-vietnam": {
+    "partner": "holafly",
+    "campaignId": null,
+    "targetUrl": "https://esim.holafly.com/fr/esim-vietnam/",
+    "fallbackUrl": "https://esim.holafly.com/fr/esim-vietnam/",
+    "trackingAvailable": false,
+    "commissionHint": "0% (not subscribed — apply to direct program)"
+  },
+  "holafly-thailand": {
+    "partner": "holafly",
+    "campaignId": null,
+    "targetUrl": "https://esim.holafly.com/fr/esim-thailande/",
+    "fallbackUrl": "https://esim.holafly.com/fr/esim-thailande/",
+    "trackingAvailable": false,
+    "commissionHint": "0% (not subscribed — apply to direct program)"
+  },
+  "holafly-japan": {
+    "partner": "holafly",
+    "campaignId": null,
+    "targetUrl": "https://esim.holafly.com/fr/esim-japon/",
+    "fallbackUrl": "https://esim.holafly.com/fr/esim-japon/",
+    "trackingAvailable": false,
+    "commissionHint": "0% (not subscribed — apply to direct program)"
+  },
+
+  "kiwi-flights": {
+    "partner": "kiwi",
+    "campaignId": 111,
+    "targetUrl": "https://www.kiwi.com/fr/",
+    "trackingAvailable": true,
+    "commissionHint": "3%"
+  },
+  "aviasales-flights": {
+    "partner": "aviasales",
+    "campaignId": 100,
+    "targetUrl": "https://www.aviasales.com/",
+    "trackingAvailable": true,
+    "commissionHint": "40%"
+  },
+  "tiqets-activities": {
+    "partner": "tiqets",
+    "campaignId": 89,
+    "targetUrl": "https://www.tiqets.com/en/",
+    "trackingAvailable": true,
+    "commissionHint": "~5-8%"
+  }
+}

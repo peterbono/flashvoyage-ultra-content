@@ -124,3 +124,9 @@ ga4-service-account.json
 
 # Ephemeral scraper workspace (Pixabay, etc.)
 .scraper-tmp/
+
+# Travelpayouts link cache (runtime, regenerated from TP API)
+data/live-cache/tp-links.json
+
+# Whitelist committed regression-guard scripts that match test-* glob above
+!scripts/test-affiliate-resolver.mjs
