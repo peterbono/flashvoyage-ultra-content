@@ -1,150 +1,149 @@
 {
   "_readme": "Manual TikTok stats — edited via dashboard (/analytics TikTok editor) or by hand. App-review auto-fetch pending.",
-  "lastUpdated": "2026-04-20",
+  "lastUpdated": "2026-04-22",
   "account": {
     "followers": 22,
     "following": 0,
-    "totalViews": 5913,
-    "totalLikes": 120,
-    "totalComments": 6,
-    "totalShares": 5,
+    "totalViews": 5944,
+    "totalLikes": 108,
+    "totalComments": 7,
+    "totalShares": 4,
     "daysSinceStart": 16
   },
   "videos": [
     {
-      "title": "Comment tu conduis un scooter en Asie",
-      "date": "2026-04-13",
-      "views": 442,
-      "likes": 8,
+      "title": "Budget journalier en Thaïlande 🇹🇭 🏠 Hébergement : 25 €/nuit 🍜 Nourriture : 12 €/jour \ud83d",
+      "format": "budget",
+      "date": "2026-04-18",
+      "views": 478,
+      "likes": 7,
       "comments": 0,
-      "shares": 1,
-      "format": "humor"
+      "shares": 0
+    },
+    {
+      "title": "5 pièges à touristes à éviter en Thaïlande & Vietnam 🇹🇭🇻🇳 Lequel t'a piégé",
+      "format": "pick",
+      "date": "2026-04-17",
+      "views": 443,
+      "likes": 9,
+      "comments": 2,
+      "shares": 0
     },
     {
       "title": "Thaïlande : expectation vs reality 😅 Et toi c'était comment",
+      "format": "avantapres",
       "date": "2026-04-16",
       "views": 409,
       "likes": 6,
       "comments": 0,
-      "shares": 0,
-      "format": "avantapres"
+      "shares": 0
     },
     {
       "title": "Thaïlande : expectation vs reality 😅 Et toi c'était comment",
+      "format": "avantapres",
       "date": "2026-04-14",
-      "views": 409,
+      "views": 410,
       "likes": 13,
       "comments": 0,
-      "shares": 0,
-      "format": "avantapres"
-    },
-    {
-      "title": "5 pièges à touristes à éviter en Thaïlande & Vietnam 🇹🇭🇻🇳 Lequel t'a piégé",
-      "date": "2026-04-17",
-      "views": 436,
-      "likes": 9,
-      "comments": 2,
-      "shares": 0,
-      "format": "pick"
+      "shares": 0
     },
     {
       "title": "J'ai besoin de 6 mois de vacances ... Deux fois par an Envoie ca a un pote qui comprend 😂",
+      "format": "humor",
       "date": "2026-04-17",
       "views": 386,
       "likes": 16,
       "comments": 1,
-      "shares": 4,
-      "format": "humor"
+      "shares": 4
     },
     {
       "title": "Où partir en Mai",
+      "format": "guide",
       "date": "2026-04-14",
-      "views": 379,
+      "views": 381,
       "likes": 12,
       "comments": 0,
-      "shares": 0,
-      "format": "guide"
+      "shares": 0
     },
     {
-      "title": "5 astuces transport locales en Thaïlande 🇹🇭 & Vietnam 🇻🇳 Laquelle tu testes en premier",
-      "date": "2026-04-13",
-      "views": 357,
-      "likes": 9,
+      "title": "Moi : 'Je veux voyager plus' ... Mon compte en banque : 'Genre, au parc",
+      "date": "2026-04-19",
+      "views": 359,
+      "likes": 0,
       "comments": 0,
-      "shares": 0,
-      "format": "pick"
+      "shares": 0
     },
     {
       "title": "Thaïlande : expectation vs reality 😅 Et toi c'était comment",
-      "date": "2026-04-13",
-      "views": 345,
-      "likes": 6,
+      "format": "avantapres",
+      "date": "2026-04-19",
+      "views": 354,
+      "likes": 3,
       "comments": 0,
-      "shares": 0,
-      "format": "avantapres"
+      "shares": 0
     },
     {
       "title": "Revenir en France après 10 jours à Bali ... Tes potes parlent de météo, tu pleures Envoie",
+      "format": "humor",
       "date": "2026-04-16",
       "views": 342,
       "likes": 4,
       "comments": 0,
-      "shares": 0,
-      "format": "humor"
+      "shares": 0
+    },
+    {
+      "title": "5 astuces transport locales en Thaïlande 🇹🇭 & Vietnam 🇻🇳 Laquelle tu testes en premier",
+      "format": "pick",
+      "date": "2026-04-13",
+      "views": 358,
+      "likes": 9,
+      "comments": 0,
+      "shares": 0
     },
     {
       "title": "Thaïlande : expectation vs reality 😅 Et toi c'était comment",
-      "date": "2026-04-12",
-      "views": 316,
-      "likes": 5,
+      "format": "avantapres",
+      "date": "2026-04-13",
+      "views": 345,
+      "likes": 6,
       "comments": 0,
-      "shares": 0,
-      "format": "avantapres"
-    },
-    {
-      "title": "Budget journalier en Thaïlande 🇹🇭 🏠 Hébergement : 25 €/nuit 🍜 Nourriture : 12 €/jour \ud83d",
-      "date": "2026-04-18",
-      "views": 475,
-      "likes": 7,
-      "comments": 0,
-      "shares": 0,
-      "format": "budget"
+      "shares": 0
     },
     {
       "title": "Bali : expectation vs reality 😅 Et toi c'était comment",
-      "date": "2026-04-12",
-      "views": 294,
-      "likes": 4,
-      "comments": 0,
-      "shares": 0,
-      "format": "avantapres"
+      "format": "avantapres",
+      "date": "2026-04-20",
+      "views": 353,
+      "likes": 2,
+      "comments": 1,
+      "shares": 0
     },
     {
       "title": "Thaïlande vs France 💰",
+      "format": "versus",
       "date": "2026-04-10",
-      "views": 419,
+      "views": 420,
       "likes": 4,
       "comments": 2,
-      "shares": 0,
-      "format": "versus"
+      "shares": 0
+    },
+    {
+      "title": "Budget journalier à Bali 🇮🇩 🏠 Hébergement : 25 €/nuit 🍜 Nourriture : 12 €/jour 🛵 Tran",
+      "format": "budget",
+      "date": "2026-04-04",
+      "views": 682,
+      "likes": 15,
+      "comments": 1,
+      "shares": 0
     },
     {
       "title": "Budget journalier à Kuala Lumpur, Malaisie 🇲🇾 🏠 Hébergement : 20 €/nuit 🍜 Nourriture :",
+      "format": "budget",
       "date": "2026-04-10",
       "views": 224,
       "likes": 2,
       "comments": 0,
-      "shares": 0,
-      "format": "budget"
-    },
-    {
-      "title": "Budget journalier à Bali 🇮🇩 🏠 Hébergement : 25 €/nuit 🍜 Nourriture : 12 €/jour 🛵 Tran",
-      "date": "2026-04-04",
-      "views": 680,
-      "likes": 15,
-      "comments": 1,
-      "shares": 0,
-      "format": "budget"
+      "shares": 0
     }
   ]
 }
