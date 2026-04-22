@@ -249,6 +249,11 @@
       "name": "thailande",
       "date": "2026-04-22",
       "format": "cost-vs"
+    },
+    {
+      "name": "asie du sud-est",
+      "date": "2026-04-22",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -499,6 +504,14 @@
     {
       "format": "cost-vs",
       "date": "2026-04-22T17:25:20.662Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-22T19:37:33.588Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-22T19:38:14.948Z"
     }
   ],
   "recentArticleIds": [
@@ -533,7 +546,8 @@
     4371,
     5072,
     4132,
-    4076
+    4076,
+    5678
   ],
   "recentFingerprints": [
     {
@@ -663,6 +677,10 @@
     {
       "fp": "fmt:cost-vs|dest:thailande|slug:thailande-8-realites-que-les-b",
       "date": "2026-04-22T17:25:20.662Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:choisir-son-esim-pour-lasie-du",
+      "date": "2026-04-22T19:38:14.948Z"
     }
   ]
 }
