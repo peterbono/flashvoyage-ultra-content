@@ -265,10 +265,16 @@ export async function scoreAllArticles({ trafficDays = 30, reelDays = 14 } = {})
   }
 
   // ── Step 4: Load article-reel map ──
+  // The linker writes a top-level envelope: { timestamp, articleMap, orphanReels, stats, ... }.
+  // We want the inner articleMap keyed by slug. Historically this code read the
+  // envelope directly (reelMap[slug]?.reels), which silently returned undefined
+  // for every article because the slug keys live one level deeper. That bug is
+  // what pinned reelAmplification to 0 across the board. Unwrap articleMap here.
   let reelMap = {};
   try {
     if (existsSync(REEL_MAP_PATH)) {
-      reelMap = JSON.parse(await readFile(REEL_MAP_PATH, 'utf-8'));
+      const raw = JSON.parse(await readFile(REEL_MAP_PATH, 'utf-8'));
+      reelMap = raw?.articleMap || raw || {};
     }
   } catch (err) {
     logError(`Reel map load failed: ${err.message}`);
@@ -317,14 +323,32 @@ export async function scoreAllArticles({ trafficDays = 30, reelDays = 14 } = {})
     if (trendSignal > 0.5) flags.push('trending');
 
     // Signal 4: Reel amplification (does this article have linked reels?)
+    //
+    // The linker writes pre-scored reels onto each article in article-reel-map.json:
+    //   reels: [{ reelId, format, platform, score, engagementRate, isViral, ... }]
+    // Prior to 2026-04-22 this code treated `linkedReels` as an array of bare
+    // reel-ID strings and tried to `.find()` them in `reelStats` — which is only
+    // populated for IG reels in the last `reelDays` window, so anything older
+    // (and everything from TikTok) dropped out. Use the pre-computed score from
+    // the linker and only fall back to the live IG stats if the linker didn't
+    // record a score.
     let reelSignal = 0;
     const linkedReels = reelMap[article.slug]?.reels || [];
     if (linkedReels.length > 0) {
-      // Average reel performance score (normalized roughly)
       const reelScores = linkedReels
-        .map(reelId => reelStats.find(r => r.id === reelId)?.stats)
-        .filter(Boolean)
-        .map(stats => scoreReel(stats));
+        .map(r => {
+          if (typeof r === 'string') {
+            // legacy shape: array of raw reelIds — look up in live IG stats
+            const s = reelStats.find(x => x.id === r)?.stats;
+            return s ? scoreReel(s) : 0;
+          }
+          if (typeof r?.score === 'number') return r.score;
+          // Object with only an ID — try live IG stats as a last resort
+          const id = r?.reelId || r?.id || null;
+          const s = id ? reelStats.find(x => x.id === id)?.stats : null;
+          return s ? scoreReel(s) : 0;
+        })
+        .filter(s => s > 0);
       if (reelScores.length > 0) {
         reelSignal = Math.min(1, reelScores.reduce((a, b) => a + b, 0) / (reelScores.length * 50));
       }

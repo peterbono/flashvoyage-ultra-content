@@ -33,7 +33,7 @@ import { fileURLToPath } from 'url';
 
 import { fetchArticleTrafficSources } from '../social-distributor/analytics/ga4-fetcher.js';
 import { fetchRecentReelStats } from '../social-distributor/analytics/ig-stats-fetcher.js';
-import { scoreReel, engagementRate } from '../social-distributor/analytics/performance-scorer.js';
+import { scoreReel, engagementRate, loadTikTokStats, scoreTikTokVideo } from '../social-distributor/analytics/performance-scorer.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, '..', 'data');
@@ -41,6 +41,7 @@ const MAP_PATH = join(DATA_DIR, 'article-reel-map.json');
 const SCORES_PATH = join(DATA_DIR, 'article-scores.json');
 const REEL_HISTORY_PATH = join(__dirname, '..', 'social-distributor', 'data', 'reel-history.jsonl');
 const CONTENT_HISTORY_PATH = join(__dirname, '..', 'social-distributor', 'reels', 'data', 'content-history.json');
+const POST_ARTICLE_MAP_PATH = join(__dirname, '..', 'social-distributor', 'data', 'post-article-map.json');
 
 // ── Reel Format Suggestions by Content Type ────────────────────────────────
 
@@ -108,17 +109,67 @@ async function loadContentHistory() {
 }
 
 /**
+ * Load explicit IG-media-id → article URL map, written by the Save-to-IG flow.
+ * This is the strongest join signal we have; use it before any fuzzy matching.
+ *
+ * Shape: { [igMediaId]: { articleUrl, title, savedAt } }
+ */
+async function loadPostArticleMap() {
+  if (!existsSync(POST_ARTICLE_MAP_PATH)) return {};
+  try {
+    return JSON.parse(await readFile(POST_ARTICLE_MAP_PATH, 'utf-8'));
+  } catch { return {}; }
+}
+
+/**
+ * Pull the slug out of a flashvoyage.com article URL.
+ * Accepts both trailing-slash and trailing-slash-less forms.
+ * Returns null on anything we don't recognise.
+ */
+function slugFromArticleUrl(url) {
+  if (!url || typeof url !== 'string') return null;
+  try {
+    const u = new URL(url);
+    // Pathname like "/japon-couple-15-jours-budget-tout-compris-2026/"
+    const slug = u.pathname.replace(/^\/+|\/+$/g, '');
+    return slug || null;
+  } catch {
+    return null;
+  }
+}
+
+// Known destination tokens used to derive an implicit destination signal when
+// reel.destination is absent (TikTok titles / newer IG reels often omit it).
+// Keep this list aligned with performance-scorer.js KNOWN_DESTINATIONS.
+const DESTINATION_TOKENS = [
+  'thailande', 'thailand', 'vietnam', 'bali', 'japon', 'japan', 'cambodge',
+  'laos', 'philippines', 'malaisie', 'malaysia', 'indonesie', 'singapour',
+  'singapore', 'taipei', 'taiwan', 'kuala lumpur',
+];
+
+/**
  * Try to match a reel to an article by caption/destination fuzzy matching.
- * @param {Object} reel - Reel entry from history
+ * @param {Object} reel - Reel entry from history (or synthetic reel from a TikTok video)
  * @param {Array<Object>} articles - Article list from scores
+ * @param {number} [minScore=0.35] - Minimum combined score to accept a match.
+ *   Dropped from 0.4 → 0.35 on 2026-04-22 because TikTok titles are short and
+ *   emoji-heavy, so legitimate conceptual matches ("Thaïlande vs France 💰" →
+ *   voyage-thailande-pas-cher) landed at 0.38-0.50 and were being rejected.
  * @returns {string|null} Matched article slug, or null
  */
-function fuzzyMatchReelToArticle(reel, articles) {
+function fuzzyMatchReelToArticle(reel, articles, minScore = 0.35) {
   // If reel already has an articleSlug, use it
   if (reel.articleSlug) return reel.articleSlug;
 
   const caption = normalize(reel.caption || '');
-  const destination = normalize(reel.destination || '');
+  let destination = normalize(reel.destination || '');
+
+  // If no explicit destination, try to infer one from the caption.
+  if (!destination && caption) {
+    for (const token of DESTINATION_TOKENS) {
+      if (caption.includes(token)) { destination = token; break; }
+    }
+  }
 
   if (!caption && !destination) return null;
 
@@ -134,11 +185,11 @@ function fuzzyMatchReelToArticle(reel, articles) {
     const matchingWords = captionWords.filter(w => slug.includes(w) || title.includes(w));
     const score = captionWords.length > 0 ? matchingWords.length / captionWords.length : 0;
 
-    // Bonus for destination match
+    // Bonus for destination match (explicit or inferred from caption)
     const destBonus = destination && (slug.includes(destination) || title.includes(destination)) ? 0.3 : 0;
 
     const total = score + destBonus;
-    if (total > bestScore && total >= 0.4) {
+    if (total > bestScore && total >= minScore) {
       bestScore = total;
       bestMatch = article.slug;
     }
@@ -217,7 +268,10 @@ export async function linkArticlesAndReels({ reelDays = 14, checkReferrals = fal
   // ── Load data ──
   const reelHistory = loadReelHistory();
   const contentHistory = await loadContentHistory();
+  const postArticleMap = await loadPostArticleMap();
   const reelStats = await fetchRecentReelStats(reelDays).catch(() => []);
+  const tiktokData = loadTikTokStats();
+  const tiktokVideos = tiktokData?.videos || [];
 
   let articleScores = [];
   try {
@@ -227,7 +281,15 @@ export async function linkArticlesAndReels({ reelDays = 14, checkReferrals = fal
     }
   } catch { /* ignore */ }
 
-  log(`Loaded: ${reelHistory.length} reel history entries, ${articleScores.length} articles`);
+  log(`Loaded: ${reelHistory.length} reel history entries, ${Object.keys(postArticleMap).length} IG→article mappings, ${tiktokVideos.length} TikTok videos, ${articleScores.length} articles`);
+
+  // Build wpId → slug and slug → article lookups for explicit joins
+  const slugByWpId = {};
+  const articleBySlug = {};
+  for (const a of articleScores) {
+    if (a.wpId) slugByWpId[a.wpId] = a.slug;
+    articleBySlug[a.slug] = a;
+  }
 
   // ── Build reel stats lookup ──
   const reelStatsById = {};
@@ -254,44 +316,142 @@ export async function linkArticlesAndReels({ reelDays = 14, checkReferrals = fal
   }
 
   // ── Link reels to articles ──
+  //
+  // Join precedence (strongest first):
+  //   1. reel.articleSlug (pre-resolved by upstream tooling)
+  //   2. reel.postId → articleScores wpId → slug (explicit wp-id link written
+  //      by older reel-publish flow; present on ~a third of reel-history rows)
+  //   3. post-article-map.json[reelId] → articleUrl → slug (the Save-to-IG
+  //      dashboard flow writes this; it is the authoritative IG-media-id link)
+  //   4. fuzzy caption/destination match (only useful when we actually have
+  //      caption text — newer reel-history rows do not)
+  //
+  // Prior to 2026-04-22 only branch 4 was tried, and since current reel-history
+  // rows carry no caption/destination, every reel fell through to orphans —
+  // which is why reelAmplification was pinned to 0 across the article set.
   for (const reel of reelHistory) {
-    const matchedSlug = fuzzyMatchReelToArticle(reel, articleScores);
+    // reelId field in reel-history.jsonl is `reelId`; older rows used `id`;
+    // the legacy IG API path used `igMediaId`. Accept all three.
+    const reelId = reel.reelId || reel.igMediaId || reel.id || null;
 
-    if (!matchedSlug || !articleMap[matchedSlug]) {
+    let matchedSlug = null;
+    let matchSource = null;
+
+    if (reel.articleSlug && articleMap[reel.articleSlug]) {
+      matchedSlug = reel.articleSlug;
+      matchSource = 'explicit-slug';
+    } else if (reel.postId && slugByWpId[reel.postId]) {
+      matchedSlug = slugByWpId[reel.postId];
+      matchSource = 'wp-id';
+    } else if (reelId && postArticleMap[reelId]?.articleUrl) {
+      const slug = slugFromArticleUrl(postArticleMap[reelId].articleUrl);
+      if (slug && articleMap[slug]) {
+        matchedSlug = slug;
+        matchSource = 'post-article-map';
+      }
+    }
+
+    if (!matchedSlug) {
+      const fuzzy = fuzzyMatchReelToArticle(reel, articleScores);
+      if (fuzzy && articleMap[fuzzy]) {
+        matchedSlug = fuzzy;
+        matchSource = 'fuzzy';
+      }
+    }
+
+    if (!matchedSlug) {
       orphanReels.push({
-        reelId: reel.id || reel.igMediaId || 'unknown',
+        reelId: reelId || 'unknown',
         format: reel.format || 'unknown',
-        publishedAt: reel.publishedAt || null,
+        publishedAt: reel.publishedAt || reel.date || null,
         caption: (reel.caption || '').slice(0, 80),
       });
       continue;
     }
 
-    const stats = reelStatsById[reel.igMediaId || reel.id];
+    const stats = reelStatsById[reelId];
     const score = stats?.stats ? scoreReel(stats.stats) : 0;
     const er = stats?.stats ? engagementRate(stats.stats) : 0;
     const isViral = score >= VIRAL_SCORE_THRESHOLD;
 
     articleMap[matchedSlug].reels.push({
-      reelId: reel.igMediaId || reel.id || 'unknown',
+      reelId: reelId || 'unknown',
       format: reel.format || 'unknown',
+      platform: 'instagram',
       score,
       engagementRate: er,
-      publishedAt: reel.publishedAt || null,
+      publishedAt: reel.publishedAt || reel.date || null,
       isViral,
+      matchSource,
     });
 
     // Viral alert
     if (isViral) {
       viralAlerts.push({
         articleSlug: matchedSlug,
-        reelId: reel.igMediaId || reel.id,
+        reelId,
         reelScore: score,
         engagementRate: er,
         recommendation: `Viral reel detected! Boost article "${articleMap[matchedSlug].title}" via internal links, social shares, and ad spend.`,
       });
     }
   }
+
+  // ── Link TikTok videos to articles ──
+  //
+  // TikTok entries in data/tiktok-stats.json carry no explicit articleSlug or
+  // postId, but they DO carry a destination-rich title and a format. Match by
+  // fuzzy title → article slug/title overlap. This is the channel driving the
+  // "GA4 traffic with no GSC impressions" pattern for this site, so feeding it
+  // into reelAmplification is explicitly in-scope.
+  let tiktokLinked = 0;
+  let tiktokOrphaned = 0;
+  for (const v of tiktokVideos) {
+    const title = v.title || '';
+    if (!title.trim()) { tiktokOrphaned++; continue; }
+
+    // Reuse the fuzzy matcher with a synthetic reel object. caption = title
+    // so the overlap scoring treats the TikTok title as reel caption.
+    const matchedSlug = fuzzyMatchReelToArticle({ caption: title }, articleScores);
+    if (!matchedSlug || !articleMap[matchedSlug]) {
+      tiktokOrphaned++;
+      orphanReels.push({
+        reelId: `tiktok:${v.date || ''}:${title.slice(0, 20)}`,
+        format: v.format || 'unknown',
+        publishedAt: v.date || null,
+        caption: title.slice(0, 80),
+      });
+      continue;
+    }
+
+    const score = scoreTikTokVideo(v);
+    // Reuse the IG viral threshold — TikTok scoreTikTokVideo and scoreReel
+    // are on the same rough magnitude (views/100 + weighted engagement terms).
+    const isViral = score >= VIRAL_SCORE_THRESHOLD;
+
+    articleMap[matchedSlug].reels.push({
+      reelId: `tiktok:${v.date || 'unknown'}`,
+      format: v.format || 'unknown',
+      platform: 'tiktok',
+      score,
+      engagementRate: 0, // TikTok manual stats have no reach field → ER not computable
+      publishedAt: v.date || null,
+      isViral,
+      matchSource: 'tiktok-fuzzy-title',
+    });
+    tiktokLinked++;
+
+    if (isViral) {
+      viralAlerts.push({
+        articleSlug: matchedSlug,
+        reelId: `tiktok:${v.date}`,
+        reelScore: score,
+        engagementRate: 0,
+        recommendation: `Viral TikTok detected for "${articleMap[matchedSlug].title}". Consider ad boost + cross-promote on IG.`,
+      });
+    }
+  }
+  log(`TikTok: ${tiktokLinked} videos linked, ${tiktokOrphaned} unmatched`);
 
   // ── Optional: Check GA4 for IG referral traffic per article ──
   if (checkReferrals) {
