@@ -14,12 +14,13 @@ on:
         required: false
         default: ''
 
-  # CRON ACTIF — 2 articles/jour, stagger par rapport aux reels (05h00/10h30/16h00 UTC)
-  # Slot 1: 03h00 UTC = 10h Paris / 10h Bangkok
-  # Slot 2: 08h00 UTC = 15h Paris / 15h Bangkok
-  schedule:
-    - cron: '0 3 * * *'
-    - cron: '0 8 * * *'
+  # CRON SUSPENDU — Plan C hard-reset SEO (2026-04-22). Publication automatique
+  # désactivée le temps que Google re-priorize le crawl. Re-enable en dé-commentant
+  # après mesure GSC (indexation de 30-50 canoniques de la nouvelle base).
+  # Dispatch manuel via workflow_dispatch reste disponible.
+  # schedule:
+  #   - cron: '0 3 * * *'
+  #   - cron: '0 8 * * *'
 
 permissions:
   contents: write
