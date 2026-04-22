@@ -244,6 +244,11 @@
       "name": "japon",
       "date": "2026-04-21",
       "format": "month"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-22",
+      "format": "cost-vs"
     }
   ],
   "recentFormats": [
@@ -490,6 +495,10 @@
     {
       "format": "month",
       "date": "2026-04-21T20:48:44.337Z"
+    },
+    {
+      "format": "cost-vs",
+      "date": "2026-04-22T17:25:20.662Z"
     }
   ],
   "recentArticleIds": [
@@ -523,7 +532,8 @@
     3251,
     4371,
     5072,
-    4132
+    4132,
+    4076
   ],
   "recentFingerprints": [
     {
@@ -649,6 +659,10 @@
     {
       "fp": "fmt:month|dest:japon|slug:japon-64-jours-les-2-pieges-qu",
       "date": "2026-04-21T20:48:44.337Z"
+    },
+    {
+      "fp": "fmt:cost-vs|dest:thailande|slug:thailande-8-realites-que-les-b",
+      "date": "2026-04-22T17:25:20.662Z"
     }
   ]
 }
