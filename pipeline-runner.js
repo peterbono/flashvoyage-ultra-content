@@ -160,7 +160,7 @@ class PipelineRunner {
         return { allowedNumbers: nums, allowedLocations: [...locs].slice(0, 25), isPoor: nums.length === 0 };
       })();
       const articleOutline = buildArticleOutline(extracted, story, angleResult, outlineTruthPack);
-      console.log(`   OUTLINE: ${articleOutline.sections.length} sections, ${articleOutline._meta.ctaSlots} CTA slots, ${articleOutline._meta.evidenceItems} evidence items`);
+      console.log(`   OUTLINE: ${articleOutline.sections.length} sections, ${articleOutline._meta.ctaSlots} CTA slots, ${articleOutline._meta.evidenceItems} evidence items, template=${articleOutline._meta.templateKey}`);
       console.log(`   hookStrategy=${articleOutline.hookSuggestion.strategy} verdictTone=${articleOutline.mandatoryElements.verdictDirection.tone}`);
       console.log(`   quickGuide: ${articleOutline.mandatoryElements.quickGuide.length} bullets, faqTopics: ${articleOutline.mandatoryElements.faqTopics.length} topics`);
       pipelineReport.endStep('article-outline-builder', articleOutline, { status: 'pass' });

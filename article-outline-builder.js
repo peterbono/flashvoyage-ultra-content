@@ -91,7 +91,83 @@ const ANGLE_SECTION_TEMPLATES = {
     { titlePattern: 'Budget par profil : backpacker, confort, luxe', focus: 'profiles', ctaSlot: false },
     { titlePattern: 'Récapitulatif et budget journalier moyen', focus: 'summary', ctaSlot: false }
   ],
+  // loose_narrative: 3-section shape, applied randomly (~30%) regardless of angle.
+  // Goal: break the uniform 5-H2 skeleton that Google's classifier reads as formula.
+  // Natural sentence-case French; no "arbitrage/dilemme/caché/crucial" vocabulary.
+  // Hook hints stored in `hookHint` to guide the LLM without prescribing a rigid formula.
+  loose_narrative: [
+    {
+      titlePattern: 'Notre premier contact avec {topic}',
+      focus: 'scene',
+      ctaSlot: false,
+      hookHint: 'Ouvre sur une scène concrète : un moment, un lieu, une phrase entendue — pas d\'analyse, juste ce qu\'on a vu en arrivant.'
+    },
+    {
+      titlePattern: 'Ce que ça implique concrètement : prix, temps, logistique',
+      focus: 'costs',
+      ctaSlot: true,
+      hookHint: 'Entre dans le vif — montants en euros, durées en jours/heures, démarches pratiques. L\'info brute que le lecteur est venu chercher.'
+    },
+    {
+      titlePattern: 'Ce qu\'on en retient, en une phrase',
+      focus: 'verdict',
+      ctaSlot: false,
+      hookHint: 'Conclus court : un verdict d\'une à deux phrases, sans relancer de tension ni empiler de nuances.'
+    }
+  ],
 };
+
+// ─── Template Selection (Randomized) ──────────────────────────────────────────
+
+/**
+ * Rate at which `loose_narrative` (3-section) template is chosen instead of the
+ * angle-typed template. Configurable via env so we can A/B the skeleton diversity
+ * without shipping code.
+ */
+const LOOSE_NARRATIVE_RATE = (() => {
+  const raw = parseFloat(process.env.LOOSE_NARRATIVE_RATE);
+  if (Number.isFinite(raw) && raw >= 0 && raw <= 1) return raw;
+  return 0.3;
+})();
+
+/**
+ * Derive a stable numeric seed in [0,1) from a string. Used so that regenerating
+ * the same article (same slug / id) picks the same template — reproducible outputs.
+ * Falls back to Math.random() when no seed is available.
+ */
+function seededUnit(seed) {
+  if (!seed || typeof seed !== 'string') return Math.random();
+  let h = 2166136261 >>> 0; // FNV-1a
+  for (let i = 0; i < seed.length; i++) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return (h >>> 0) / 0xFFFFFFFF;
+}
+
+/**
+ * Choose the section template for this article.
+ * - ~LOOSE_NARRATIVE_RATE of calls return `loose_narrative` (3 sections), breaking the uniform 5-H2 shape.
+ * - Otherwise falls back to the angle-typed template (or `logistic_dilemma` if unknown).
+ * Seed (extracted.slug / id / source.id) makes regeneration deterministic.
+ */
+function selectTemplate(angleType, extracted) {
+  const seed = safeStr(
+    extracted?.slug ||
+    extracted?.article_id ||
+    extracted?.id ||
+    extracted?.source?.id ||
+    extracted?.source?.url ||
+    extracted?.source?.title ||
+    ''
+  );
+  const roll = seededUnit(seed);
+  if (roll < LOOSE_NARRATIVE_RATE) {
+    return { key: 'loose_narrative', template: ANGLE_SECTION_TEMPLATES.loose_narrative };
+  }
+  const fallback = ANGLE_SECTION_TEMPLATES[angleType] || ANGLE_SECTION_TEMPLATES.logistic_dilemma;
+  return { key: angleType in ANGLE_SECTION_TEMPLATES ? angleType : 'logistic_dilemma', template: fallback };
+}
 
 // ─── Hook Suggestion Builder ──────────────────────────────────────────────────
 
@@ -275,7 +351,7 @@ function determineVerdictDirection(story) {
  */
 function buildSections(extracted, story, angle, truthPack) {
   const angleType = safeStr(angle?.primary_angle?.type || 'logistic_dilemma');
-  const templates = ANGLE_SECTION_TEMPLATES[angleType] || ANGLE_SECTION_TEMPLATES.logistic_dilemma;
+  const { key: templateKey, template: templates } = selectTemplate(angleType, extracted);
   const destination = safeStr(extracted?._smart_destination || extracted?.destination || 'cette destination');
   const title = safeStr(extracted?.source?.title || extracted?.title || '');
 
@@ -296,9 +372,12 @@ function buildSections(extracted, story, angle, truthPack) {
       truthPackNumbers: assignTruthNumbers(template.focus, truthNumbers, evidencePool),
       ctaSlot: template.ctaSlot
     };
+    if (template.hookHint) section.hookHint = template.hookHint;
     sections.push(section);
   }
 
+  // Attach chosen template key onto the returned array (read by buildArticleOutline)
+  sections._templateKey = templateKey;
   return sections;
 }
 
@@ -421,6 +500,13 @@ function buildKeyPoints(focus, evidencePool, story, extracted) {
       if (evidencePool.communityInsights.length > 0) points.push('Consensus (ou non) de la communauté');
       break;
 
+    case 'scene':
+      // Opening scene for loose_narrative — concrete, sensory, no analysis
+      if (evidencePool.sourceSnippets.length > 0) points.push('Détail concret tiré du témoignage (lieu, horaire, ressenti)');
+      if (evidencePool.locations.length > 0) points.push('Situer physiquement : où, quand, dans quelles conditions');
+      points.push('Pas d\'analyse ni de chiffres — juste la scène telle qu\'elle a été vécue');
+      break;
+
     default:
       points.push('Analyse approfondie de ce point');
       points.push('Données terrain et retours d\'expérience');
@@ -452,7 +538,8 @@ function assignEvidence(focus, evidencePool) {
     constraints: ['warnings', 'problems'],
     tradeoffs: ['openQuestions', 'communityInsights'],
     action_plan: ['lessons', 'communityInsights'],
-    verdict: ['communityInsights', 'insights']
+    verdict: ['communityInsights', 'insights'],
+    scene: ['sourceSnippets', 'locations']
   };
 
   const sources = focusMapping[focus] || ['sourceSnippets'];
@@ -522,17 +609,23 @@ export function buildArticleOutline(extracted, story, angle, truthPack) {
       sectionCount: 0,
       ctaSlots: 0,
       evidenceItems: 0,
-      truthPackNumbers: safeNum(truthPack?.allowedNumbers?.length)
+      truthPackNumbers: safeNum(truthPack?.allowedNumbers?.length),
+      templateKey: null,
+      looseNarrativeRate: LOOSE_NARRATIVE_RATE
     }
   };
 
-  // Build sections based on angle type
-  outline.sections = buildSections(extracted, story, angle, truthPack);
+  // Build sections based on angle type (may be overridden to loose_narrative ~30% of the time)
+  const builtSections = buildSections(extracted, story, angle, truthPack);
+  const templateKey = builtSections._templateKey || null;
+  // Drop the non-enumerable-ish tag before exposing the array downstream
+  outline.sections = builtSections.map(s => s);
 
   // Populate meta
   outline._meta.sectionCount = outline.sections.length;
   outline._meta.ctaSlots = outline.sections.filter(s => s.ctaSlot).length;
   outline._meta.evidenceItems = outline.sections.reduce((sum, s) => sum + s.evidence.length, 0);
+  outline._meta.templateKey = templateKey;
 
   return outline;
 }
