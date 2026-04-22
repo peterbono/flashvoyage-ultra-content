@@ -1903,7 +1903,7 @@ USAGE DU "TU" : toujours suivi d'une conséquence concrète, d'un coût, ou d'un
 RÈGLE CARDINALE — TENSION ORBITALE :
 Ton article entier doit orbiter autour d'une tension éditoriale unique fournie dans les données (bloc ANGLE EDITORIAL STRATEGIQUE).
 Chaque section, chaque paragraphe doit faire avancer cette tension vers une résolution.
-On ne décrit pas. On arbitre. On évalue. On tranche.
+On ne décrit pas. On tranche. On évalue. On recommande.
 Le lecteur doit sentir qu'une décision se joue à chaque paragraphe.
 
 RÈGLE ANTI-ARTICLE INTERCHANGEABLE :
@@ -1945,7 +1945,7 @@ REGLE ANSWER-FIRST : Après chaque H2, la PREMIÈRE phrase doit être la répons
 - Chaque citation contextualisée : "Un voyageur résume : « citation »", "L'auteur précise : « citation »".
 - Les citations servent de preuve, pas de décoration — elles ancrent un argument.
 
-🎯 ARBITRAGE ÉDITORIAL (OBLIGATOIRE) :
+🎯 RECOMMANDATION TRANCHÉE (OBLIGATOIRE) :
 - Écrire noir sur blanc une recommandation tranchée basée sur les signaux Reddit.
 - Format : "Si ton budget est [X]... [recommandation]. Si tu veux [Y]... [alternative]."
 - Ne PAS rester neutre — choisir, trancher, recommander. Le lecteur vient pour un avis, pas un résumé.
@@ -1963,7 +1963,7 @@ REGLE ANSWER-FIRST : Après chaque H2, la PREMIÈRE phrase doit être la répons
 
 ✍️ GUIDE DE STYLE — PHRASES À HAUTE VALEUR (chaque phrase contient un fait, un chiffre, ou un choix) :
 - ✅ Remplace les tournures impersonnelles par des phrases directes avec tutoiement. Exemple : «Le visa te coûtera 35 €» au lieu de «Il est important de savoir que le visa coûte 35 €».
-- ✅ Chaque phrase apporte un fait concret ou un arbitrage. Exemple : «La ligne de bus 39 relie l'aéroport au centre pour 0,90 €» au lieu de «Il est recommandé de prendre le bus».
+- ✅ Chaque phrase apporte un fait concret ou un choix tranché. Exemple : «La ligne de bus 39 relie l'aéroport au centre pour 0,90 €» au lieu de «Il est recommandé de prendre le bus».
 - ✅ Attaque avec le sujet réel, pas une béquille syntaxique. Exemple : «Le décalage horaire depuis Paris (+5h/+6h) complique les visios» au lieu de «Dans un premier temps, il convient de noter le décalage».
 - ✅ Chaque phrase passe le test : «Est-ce que cette info aide le lecteur à prendre une décision ?» Si non, reformule avec un fait ou un chiffre.
 
@@ -1979,7 +1979,7 @@ REGLE ANSWER-FIRST : Après chaque H2, la PREMIÈRE phrase doit être la répons
    - LONGUEUR : 2000-3000 mots. Assez pour couvrir le sujet EN PROFONDEUR, pas assez pour divaguer.
    - ⛔ SCOPE LOCK : L'article couvre EXACTEMENT ce que le titre promet. RIEN DE PLUS.
      Si le titre dit "2 risques" → l'article parle de CES 2 risques en profondeur. Pas de guide général, pas de FAQ sur les vols, pas de section budget générique.
-     Si le titre dit "5 frais cachés" → 5 frais, chacun développé. Pas de section "comment se déplacer" ou "meilleure période".
+     Si le titre dit "5 frais imprévus" → 5 frais, chacun développé. Pas de section "comment se déplacer" ou "meilleure période".
      CHAQUE section H2 doit répondre directement à la promesse du titre. Si une section pourrait exister dans un article avec un AUTRE titre → elle n'a pas sa place ici.
    - Contenu en HTML libre (<h2>, <h3>, <p>, <ul><li>). Arc narratif (situation → surprise → impact → options → choix → plan d'action).
    - OBLIGATOIRE : Hook cinématique, 2-5 citations inline « ... », témoignage comme preuve, angles SERP, 3 CTA narratifs, affiliation dans le flux.
@@ -2053,7 +2053,7 @@ SANS CE BLOC, L'ARTICLE EST AUTOMATIQUEMENT REJETÉ PAR LE PANEL DE REVIEW.
 
 ⚡ RISQUES, ERREURS ET CONSEILS ACTIONNABLES : action préventive concrète, ancres d'affiliation naturelles.
 
-🔍 ANALYSE CRITIQUE : coûts cachés, pieges, erreurs frequentes. Distinction faits / ressentis / interpretations.
+🔍 ANALYSE CRITIQUE : dépenses sous-estimées, pieges, erreurs frequentes. Distinction faits / ressentis / interpretations.
 
 📐 STRUCTURE PARAGRAPHES — CONTRAINTES DURES :
 - MINIMUM 200 caractères par <p> (sauf max 2 one-liners dramatiques par article entier).
@@ -2180,7 +2180,7 @@ RYTHME PARAGRAPHES TPG : Alterne INTENTIONNELLEMENT paragraphes courts et moyens
 
 3. HOOK EN 3 TEMPS + CONTRAT ÉDITORIAL (réf TPG) : Le début de l'article suit un arc en 4 paragraphes OBLIGATOIRES :
 (1) FRICTION — micro-scène sensorielle concrète qui pose le problème (lieu, action, tension).
-(2) EMPATHIE — tu reconnais que le lecteur vit cette question ("Et c'est exactement le dilemme que des milliers de voyageurs affrontent chaque année").
+(2) EMPATHIE — tu reconnais que le lecteur vit cette question ("Et c'est exactement la question que des milliers de voyageurs se posent chaque année").
 (3) PROMESSE DE VALEUR — tu annonces ce que l'article apporte ("On a recoupé les retours de 30 voyageurs et expatriés sur les forums — voici ce que les blogs ignorent").
 (4) 🔒 CONTRAT ÉDITORIAL (OBLIGATOIRE — ne JAMAIS sauter) — Un paragraphe dédié qui explique au lecteur COMMENT cet article a été produit. Ce paragraphe DOIT :
    - Indiquer le NOMBRE EXACT de témoignages analysés (utilise le count réel des données fournies, ex: "On a recoupé les retours de [N] voyageurs et expatriés sur les forums")
@@ -2195,7 +2195,7 @@ RYTHME PARAGRAPHES TPG : Alterne INTENTIONNELLEMENT paragraphes courts et moyens
 
 4. TITRE HOOK ÉMOTIONNEL : Le titre provoque une émotion forte (regret, peur, surprise). ❌ INTERDIT les listicles : "X risques que...", "X choses que...", "X erreurs que...". ❌ INTERDIT : "les blogs cachent", "guide complet", "tout savoir". ✅ Patterns : "J'ai [vécu X] à [destination] — [conséquence inattendue]", "[Destination] : le moment où j'ai compris que [révélation]", "Pourquoi personne ne te prévient sur [problème concret] à [destination]".
 
-5. LIENS INTERNES INLINE (pas en bloc) : Les liens internes doivent être tissés DANS les phrases, comme TPG fait. ✅ "les frais cachés du JR Pass peuvent représenter <a href='...'>un vrai piège logistique</a>". ❌ INTERDIT les blocs dédiés type "Pour aller plus loin, Article Title." ou "<p class='internal-link-transition'>". Fréquence : 1 lien interne tous les 100-150 mots, toujours contextuel.
+5. LIENS INTERNES INLINE (pas en bloc) : Les liens internes doivent être tissés DANS les phrases, comme TPG fait. ✅ "les frais imprévus du JR Pass peuvent représenter <a href='...'>un vrai piège logistique</a>". ❌ INTERDIT les blocs dédiés type "Pour aller plus loin, Article Title." ou "<p class='internal-link-transition'>". Fréquence : 1 lien interne tous les 100-150 mots, toujours contextuel.
 
 6. CITATIONS INLINE — TOUJOURS QUANTIFIÉES (RÈGLE CRITIQUE) : intègre 2-5 citations courtes entre guillemets français « ... » depuis les données du témoignage.
 🔒 RÈGLE ABSOLUE : CHAQUE citation DOIT être introduite avec un CONTEXTE HUMAIN + une QUANTIFICATION CHIFFRÉE. Pas d'exception.
@@ -2204,7 +2204,7 @@ RYTHME PARAGRAPHES TPG : Alterne INTENTIONNELLEMENT paragraphes courts et moyens
   2. "Un expatrié installé depuis 3 ans résume ce que 12 autres confirment : « on sous-estime toujours les frais de visa »"
   3. "Une voyageuse qui a vécu 6 mois sur place, et dont l'avis est partagé par 15 autres témoignages : « les arnaques transport sont systématiques »"
   4. "Parmi les [N] retours analysés, 18 mentionnent exactement ce problème : « les ATM prennent 220 bahts à chaque retrait »"
-  5. "Ce constat revient mot pour mot dans un tiers des témoignages : « personne ne te prévient sur les frais cachés »"
+  5. "Ce constat revient mot pour mot dans un tiers des témoignages : « personne ne te prévient sur les frais qui s'accumulent »"
 Chaque citation DOIT inclure un contexte humain + une quantification chiffree. Formulations generiques sans quantification = article rejete.
 ✅ Varie les verbes d'introduction : résume, prévient, confirme, nuance, met en garde, alerte, tempère, relativise.
 ✅ Format inline « ... » uniquement (le système gère les blockquotes).
@@ -2370,7 +2370,7 @@ ${editorialBlock}
 🚨 RAPPEL CRITIQUE — SECTIONS SERP OBLIGATOIRES DANS "developpement" :
 Le champ "developpement" DOIT contenir ces 3 H2 comme dernières sections de contenu (AVANT FAQ/Comparatif/Retenir) :
 1. Un H2 avec un angle différenciant SPÉCIFIQUE à cet article. ✅ Exemples : «Pourquoi 3 jours à Chiang Mai changent tout», «Le piège du ferry Krabi-Koh Lanta que personne ne mentionne», «Ce qui change vraiment entre 1 mois et 3 mois à Bali»
-2. Un H2 sur les pièges concrets avec un titre NARRATIF. ✅ Exemples : «Quatre décisions qui plombent un séjour en [destination]», «Ce que j'aurais aimé savoir avant de réserver», «Les 3 frais cachés qui grèvent ton budget dès la première semaine»
+2. Un H2 sur les pièges concrets avec un titre NARRATIF. ✅ Exemples : «Quatre décisions qui plombent un séjour en [destination]», «Ce que j'aurais aimé savoir avant de réserver», «Les 3 frais imprévus qui grèvent ton budget dès la première semaine»
 3. <h2>Limites et biais de cet article</h2> — transparence E-E-A-T, 1-2 paragraphes honnêtes sur les sources utilisées. Cite explicitement le lien Reddit source.
 Si tu omets ces 3 sections, l'article sera REJETÉ par le quality gate.`;
 
@@ -2485,7 +2485,7 @@ ${options.angle ? `
 
 TON ARTICLE ENTIER DOIT ORBITER AUTOUR DE CETTE TENSION. Chaque H2 doit y contribuer.
 
-🔑 MOTS-CLÉS DU HOOK DANS L'INTRO (OBLIGATOIRE) : Les 2 premiers paragraphes (<p>) de l'article DOIVENT reprendre au moins 3 mots significatifs du hook stratégique ci-dessus (ex: si le hook parle d'"arbitrage", "confort", "optimiser" → ces mots ou leurs dérivés doivent apparaître dans l'intro). Le lecteur doit reconnaître immédiatement la tension annoncée.
+🔑 MOTS-CLÉS DU HOOK DANS L'INTRO (OBLIGATOIRE) : Les 2 premiers paragraphes (<p>) de l'article DOIVENT reprendre au moins 3 mots significatifs du hook stratégique ci-dessus (ex: si le hook parle de "budget", "confort", "trajet" → ces mots ou leurs dérivés doivent apparaître dans l'intro). Le lecteur doit reconnaître immédiatement la tension annoncée.
 ` : ''}
 ${(() => {
   const tp = buildPromptTruthPack(extracted, story);
@@ -2496,10 +2496,10 @@ Ne mentionne aucun lieu absent de cette liste.`;
   return `📋 CONTRAINTES FACTUELLES :
 - Nombres autorises : ${tp.allowedNumbers.join(', ')}
 - Lieux autorises : ${tp.allowedLocations.join(', ')}${tp.allowedDurations.length > 0 ? '\n- Durees/distances autorisees : ' + tp.allowedDurations.join(', ') : ''}
-- Tous les chiffres, lieux et durees de l\'article doivent provenir de ces listes. Si tu as besoin de plus de contenu, approfondis les analyses et arbitrages.`;
+- Tous les chiffres, lieux et durees de l\'article doivent provenir de ces listes. Si tu as besoin de plus de contenu, approfondis les analyses et les choix concrets.`;
 })()}
 
-📐 RAPPEL LONGUEUR : Ton champ "developpement" doit contenir au minimum 6 sections H2 avec chacune 2-3 paragraphes denses. Chaque section doit introduire un arbitrage, un cout, un risque ou un trade-off — pas de paragraphe purement descriptif.
+📐 RAPPEL LONGUEUR : Ton champ "developpement" doit contenir au minimum 6 sections H2 avec chacune 2-3 paragraphes denses. Chaque section doit introduire un choix concret, un cout, un risque ou un trade-off — pas de paragraphe purement descriptif.
 
 ⚠️ RAPPEL CRITIQUE: Intègre TOUT dans "developpement" avec des titres H2 NARRATIFS uniques. Utilise les données non-null du squelette narratif comme matière première, PAS comme structure de sections.
 
@@ -3687,11 +3687,11 @@ P1 — LA FAUSSE VÉRITÉ (2 phrases max)
 P2 — LE TÉMOIN + LE VERDICT COLLECTIF (3-4 phrases)
 - Présente le protagoniste : prénom inventé + âge + profil concret (freelance, couple, backpacker solo, retraité). PAS "un voyageur".
 - Décris sa situation en 1 phrase factuelle (durée, lieu, contexte).
-- Puis le verdict collectif : "Sur {N} témoignages de voyageurs ayant fait le même arbitrage, {Y} arrivent au même constat : {conclusion en 1 phrase}."
+- Puis le verdict collectif : "Sur {N} témoignages de voyageurs dans la même situation, {Y} arrivent au même constat : {conclusion en 1 phrase}."
 
 P3 — LA PUNCHLINE-PROBLÈME (1-2 phrases)
 - Reformule le vrai problème sous-jacent. Pas de solution ici, juste le diagnostic.
-- Pattern : "Parce que le vrai coût de ${mainDestFR || 'cette destination'}, ce n'est pas {élément évident}. C'est {élément caché}."
+- Pattern : "Parce que le vrai coût de ${mainDestFR || 'cette destination'}, ce n'est pas {élément évident}. C'est {élément sous-estimé}."
 
 ADRESSAGE "TU" (NON-NÉGOCIABLE) :
 - "Tu" = le LECTEUR qui planifie. TOUJOURS au futur ou présent de planification.
@@ -3710,14 +3710,14 @@ P1 — LE CHIFFRE-CHOC (2-3 phrases)
 
 P2 — LE TÉMOIN + LE RECOUPEMENT (3 phrases)
 - Présente le protagoniste : prénom inventé + âge + profil.
-- "On a croisé son expérience avec les retours de {N} voyageurs ayant fait le même arbitrage."
+- "On a croisé son expérience avec les retours de {N} voyageurs partis dans les mêmes conditions."
 - "Résultat : {conclusion factuelle en 1 phrase avec chiffre}."
 
 P3 — PROMISE STACK (3-4 phrases)
 - "Ce qu'on couvre ici :" suivi de 3 points CONCRETS entre tirets :
   - Les vrais chiffres poste par poste (avec fourchettes)
   - Les pièges de trésorerie / logistique que les guides ignorent
-  - Comment recalculer / décider / arbitrer avant de réserver
+  - Comment recalculer / décider / trancher avant de réserver
 - Chaque point doit être SPÉCIFIQUE à cette destination et ce sujet.
 
 ADRESSAGE "TU" (NON-NÉGOCIABLE) :
@@ -3895,7 +3895,7 @@ Règles : le chiffre doit être surprenant OU contredire une croyance OU sauver 
   - Le voyageur source = 3e personne : "Lucas a dépensé...", "elle a constaté..."
 
   COHÉRENCE TITRE/CONTENU :
-  - Si le titre contient un nombre (ex: "10 frais cachés", "5 pièges"), le contenu DOIT livrer EXACTEMENT ce nombre d'éléments, numérotés en H3 : <h3>1. Premier élément</h3>, <h3>2. Deuxième</h3>, etc.
+  - Si le titre contient un nombre (ex: "10 frais imprévus", "5 pièges"), le contenu DOIT livrer EXACTEMENT ce nombre d'éléments, numérotés en H3 : <h3>1. Premier élément</h3>, <h3>2. Deuxième</h3>, etc.
   - Si tu ne peux pas remplir le nombre promis, RÉDUIS le nombre dans le titre.
 
   BLOCKQUOTES :
@@ -3950,7 +3950,7 @@ Tu DOIS utiliser au minimum 4 de ces expressions EXACTES (mot pour mot) dans l'a
 - "Traduction :" suivi d'un reformulation cash d'un euphemisme
 - "On a fait le calcul" avant de detailler un comparatif
 - "Personne ne te le dira, mais..." avant une verite qui derange
-- "Le vrai coût, c'est..." pour reveler un coût caché
+- "Le vrai coût, c'est..." pour reveler une dépense que le lecteur n'avait pas anticipée
 - "Verdict terrain :" avant un avis tranche
 - "À tester si..." ou "À éviter si..." pour segmenter les profils lecteurs
 
@@ -4078,7 +4078,7 @@ Tu DOIS générer un bloc HTML COMPLET avec :
 - 3-4 paragraphes avec ce pattern EXACT : <p><strong>Si tu es [profil spécifique avec chiffre]</strong> → [action directe impérative]</p>
 - Le symbole → (fleche) est OBLIGATOIRE entre le profil et l'action.
 - Le dernier profil = contrarian (qui NE devrait PAS faire ça).
-- Termine par 1 phrase de conclusion avec "Verdict terrain :" ou "Le vrai arbitrage, c'est..."
+- Termine par 1 phrase de conclusion avec "Verdict terrain :" ou "Le vrai choix, c'est..."
 EXEMPLE EXACT A SUIVRE :
 ${FEW_SHOT_EXAMPLES.verdictBlock}
 
@@ -4491,7 +4491,7 @@ Génère UNIQUEMENT le JSON de conclusion.`;
 - Tokens numeriques autorises : ${truthPack.allowedNumberTokens.join(', ')}
 - Lieux autorises : ${truthPack.allowedLocations.join(', ')}
 - Tu NE PEUX PAS introduire de nouveau lieu, nouveau prix, nouveau chiffre, ou nouvel exemple concret non source.
-- Si tu as besoin de plus de contenu, approfondis les analyses, trade-offs et arbitrages — ne fabrique pas de nouvelles donnees.`;
+- Si tu as besoin de plus de contenu, approfondis les analyses, les trade-offs et les choix concrets — ne fabrique pas de nouvelles donnees.`;
 
     const tensionBlock = angle
       ? `\nTENSION ORBITALE : Chaque paragraphe ajoute doit faire avancer cette tension : "${angle.primary_angle?.tension || ''}"`
@@ -4512,7 +4512,7 @@ REGLES ABSOLUES :
 4. ENRICHIS chaque section H2 existante avec :
    - Analyses plus profondes (avantages/inconvenients, pieges a eviter)
    - Contexte supplementaire (comparaisons, mises en perspective)
-   - Trade-offs et arbitrages concrets
+   - Trade-offs et choix concrets à faire
 5. CONSERVE le meme ton (tutoiement, expert accessible, pas scolaire).
 6. ECRIS EN FRANCAIS uniquement.
 7. RETOURNE l'article HTML COMPLET enrichi (pas un diff, pas un resume).
@@ -4520,13 +4520,13 @@ ${truthPackBlock}${tensionBlock}${existingClaimsBlock}
 
 COHERENCE ANGLE (ABSOLU) :
 - Chaque paragraphe ajoute doit servir la tension editoriale centrale. Si le paragraphe ne fait PAS avancer la tension, ne l'ajoute pas.
-- Chaque H2 ajoute doit contenir un arbitrage, une decision, ou un trade-off — pas une description neutre.
+- Chaque H2 ajoute doit contenir un choix tranché, une decision, ou un trade-off — pas une description neutre.
 - Reutilise l'angle editorial dans les transitions entre sections pour maintenir le fil rouge.
 - Si les sections 'Ce que les autres ne disent pas' ou 'Erreurs frequentes' sont absentes, AJOUTE-LES obligatoirement.
 
 REGLES DE FORME :
 - Chaque paragraphe DOIT faire au moins 3 phrases (PAS de paragraphe d'une seule phrase).
-- Chaque paragraphe DOIT contenir un avis, un arbitrage, un chiffre, ou une recommandation concrete.
+- Chaque paragraphe DOIT contenir un avis, un choix tranché, un chiffre, ou une recommandation concrete.
 - PAS de phrases de transition isolees comme "Parlons maintenant de..." ou "Voyons comment...".
 - Fusionne les informations liees dans des paragraphes denses, pas des micro-paragraphes.
 
@@ -4546,8 +4546,8 @@ TON ET STYLE :
 CONTRAINTES FACTUELLES STRICTES :
 - ✅ Utilise uniquement les lieux listés dans "Lieux autorisés". Exemple : si Chiang Mai et Bangkok sont autorisés, reste sur ces villes.
 - ✅ Utilise uniquement les chiffres listés dans "Nombres autorisés". Pour un coût non sourcé, reformule sans montant : «reste abordable», «le surcoût est réel», «pèse sur ton budget».
-- ✅ Enrichis les analyses et arbitrages existants plutôt que d'inventer de nouveaux exemples ou anecdotes.
-- ✅ Chaque paragraphe contient un avis, un arbitrage, un chiffre ou une recommandation concrète.
+- ✅ Enrichis les analyses et recommandations existantes plutôt que d'inventer de nouveaux exemples ou anecdotes.
+- ✅ Chaque paragraphe contient un avis, un choix tranché, un chiffre ou une recommandation concrète.
 - ✅ Fusionne les paragraphes courts (< 3 phrases) avec le paragraphe précédent ou suivant pour créer des blocs denses.`;
 
     const angleBlock = angle ? `
