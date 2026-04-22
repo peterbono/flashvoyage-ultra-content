@@ -197,6 +197,14 @@
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
+    },
+    {
+      "id": "q-1776850131910-fuiec2",
+      "title": "__token_test_delete_me__",
+      "topic": "token test",
+      "priority": "low",
+      "addedAt": "2026-04-22T09:28:51.910Z",
+      "addedBy": "dashboard"
     }
   ],
   "summary": {
@@ -220,5 +228,6 @@
       "standard": 3,
       "review": 10
     }
-  }
+  },
+  "updatedAt": "2026-04-22T09:28:51.910Z"
 }
