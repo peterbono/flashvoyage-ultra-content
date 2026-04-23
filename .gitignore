@@ -128,5 +128,12 @@ ga4-service-account.json
 # Travelpayouts link cache (runtime, regenerated from TP API)
 data/live-cache/tp-links.json
 
+# Authority amplifier runtime output (per-article queues regenerated on publish)
+data/amplifier-queue/*.json
+!data/amplifier-queue/.gitkeep
+# Quora profile cache (regenerated every 7d or by sibling agent)
+data/live-cache/quora-profile-*.json
+
 # Whitelist committed regression-guard scripts that match test-* glob above
 !scripts/test-affiliate-resolver.mjs
+!scripts/test-authority-amplifier.mjs
