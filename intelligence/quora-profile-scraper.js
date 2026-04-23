@@ -107,7 +107,29 @@ function normaliseAnswer(raw) {
     return m[2] ? Math.round(n * 1000) : Math.round(n);
   };
   const topics = [];
-  const title = (raw.questionTitle || '').toLowerCase();
+  // Prefer URL-derived title when on-page title looks like a date/time stamp
+  // (Quora FR often renders e.g. "1 h", "mar.", "11 avr." instead of the
+  // question title when the card has already been viewed / is recent).
+  const looksLikeDate = (s) => {
+    if (!s) return true;
+    const t = String(s).trim();
+    return /^(\d{1,2}\s*(h|min|j|sem\.?|mois)|\d{1,2}\s+[a-zéû]{3,5}\.?|lun\.|mar\.|mer\.|jeu\.|ven\.|sam\.|dim\.)$/i.test(t)
+      || t.length < 6;
+  };
+  const titleFromUrl = (url) => {
+    if (!url) return '';
+    try {
+      const u = new URL(url);
+      const seg = decodeURIComponent(u.pathname.split('/').filter(Boolean)[0] || '');
+      return seg.replace(/-/g, ' ').trim();
+    } catch { return ''; }
+  };
+  let effectiveTitle = raw.questionTitle || '';
+  if (!effectiveTitle || looksLikeDate(effectiveTitle)) {
+    const fromUrl = titleFromUrl(raw.answerUrl);
+    if (fromUrl) effectiveTitle = fromUrl;
+  }
+  const title = effectiveTitle.toLowerCase();
   const destinations = {
     thailand: /thail|thaïl|bangkok|phuket|chiang/,
     vietnam: /vi[eê]tn|hanoi|ho chi|saigon/,
@@ -124,7 +146,7 @@ function normaliseAnswer(raw) {
   return {
     answerUrl: raw.answerUrl,
     questionUrl: raw.questionUrl,
-    questionTitle: raw.questionTitle,
+    questionTitle: effectiveTitle,
     snippet: raw.snippet || '',
     upvotes: parseNum(raw.upvotes),
     views: parseNum(raw.views),

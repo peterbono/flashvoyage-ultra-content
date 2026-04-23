@@ -51,11 +51,31 @@ function normaliseLooseAnswer(a) {
     const n = parseFloat(m[1].replace(',', '.')) || 0;
     return m[2] ? Math.round(n * 1000) : Math.round(n);
   };
+  const looksLikeDate = (s) => {
+    if (!s) return true;
+    const t = String(s).trim();
+    return /^(\d{1,2}\s*(h|min|j|sem\.?|mois)|\d{1,2}\s+[a-zéû]{3,5}\.?|lun\.|mar\.|mer\.|jeu\.|ven\.|sam\.|dim\.)$/i.test(t)
+      || t.length < 6;
+  };
+  const titleFromUrl = (url) => {
+    if (!url) return '';
+    try {
+      const u = new URL(url);
+      const seg = decodeURIComponent(u.pathname.split('/').filter(Boolean)[0] || '');
+      return seg.replace(/-/g, ' ').trim();
+    } catch { return ''; }
+  };
+  const answerUrl = a.answerUrl || a.questionUrl || '';
+  let title = a.questionTitle || '';
+  if (!title || looksLikeDate(title)) {
+    const t = titleFromUrl(answerUrl);
+    if (t) title = t;
+  }
   return {
     ...a,
-    answerUrl: a.answerUrl || a.questionUrl || '',
+    answerUrl,
     questionUrl: a.questionUrl || '',
-    questionTitle: a.questionTitle || '',
+    questionTitle: title,
     snippet: a.snippet || '',
     views: typeof a.views === 'number' ? a.views : parseViews(a.views),
     upvotes: typeof a.upvotes === 'number' ? a.upvotes : parseViews(a.upvotes),
