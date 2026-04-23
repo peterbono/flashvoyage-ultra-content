@@ -765,6 +765,11 @@ class ArticleFinalizer {
       console.warn('[finalizer] resolveAffiliatePlaceholders skipped:', err.message);
     }
 
+    // NOTE (Phase 9 — AUTHORITY AMPLIFIER): the post-publish amplifier hook
+    // lives in `enhanced-ultra-generator.js` right after `publishToWordPress`
+    // (it requires a successful WP PUT to have a stable article URL). See
+    // `intelligence/authority-amplifier.js` and `intelligence/AUTHORITY-AMPLIFIER.md`.
+
     // ═══════════════════════════════════════════════════════════════════
     // Phase 9: LINKS
     // ═══════════════════════════════════════════════════════════════════

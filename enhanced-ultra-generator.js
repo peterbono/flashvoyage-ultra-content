@@ -1486,6 +1486,53 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
       console.log('✅ Article publié avec succès!');
       console.log('🔗 Lien:', publishedArticle.link);
 
+      // ═══════════════════════════════════════════════════════════════════
+      // Phase 9: AUTHORITY AMPLIFIER (non-blocking, runs AFTER successful WP PUT)
+      // Queues — never executes — insertion opportunities on Quora/Reddit/etc.
+      // ═══════════════════════════════════════════════════════════════════
+      if (!process.env.SKIP_AUTHORITY_AMPLIFIER) {
+        try {
+          const { amplifyArticle } = await import('./intelligence/authority-amplifier.js');
+          const ampSlug = finalizedArticle.slug || publishedArticle.slug
+            || (publishedArticle.link && publishedArticle.link.replace(/\/$/, '').split('/').pop());
+          const ampKeyword = pipelineContext?.primaryKeyword
+            || pipelineContext?.seo?.primaryKeyword
+            || directive?.searchHints?.[0]
+            || '';
+          const ampTokens = [
+            ...(Array.isArray(pipelineContext?.topicTokens) ? pipelineContext.topicTokens : []),
+            ...(Array.isArray(directive?.searchHints) ? directive.searchHints : []),
+            pipelineContext?.final_destination || finalizedArticle.final_destination,
+          ].filter(Boolean);
+          const ampResult = await amplifyArticle({
+            slug: ampSlug,
+            title: finalizedArticle.title,
+            url: publishedArticle.link,
+            primaryKeyword: ampKeyword,
+            topicTokens: ampTokens,
+          });
+          console.log(`📣 AUTHORITY_AMPLIFIER: queued=${ampResult.queued} file=${ampResult.queueFile}`);
+          try {
+            const { appendFileSync } = await import('fs');
+            const { dirname: _dn } = await import('path');
+            const { fileURLToPath: _fu } = await import('url');
+            const _here = _dn(_fu(import.meta.url));
+            appendFileSync(`${_here}/data/engagement-log.jsonl`, JSON.stringify({
+              ts: new Date().toISOString(),
+              event: 'authority-amplifier',
+              slug: ampSlug,
+              queued: ampResult.queued,
+              byPlatform: ampResult.byPlatform,
+              queueFile: ampResult.queueFile,
+            }) + '\n');
+          } catch (logErr) {
+            console.warn('⚠️ AUTHORITY_AMPLIFIER: audit log failed:', logErr.message);
+          }
+        } catch (ampErr) {
+          console.warn('⚠️ AUTHORITY_AMPLIFIER skipped (non-blocking):', ampErr.message);
+        }
+      }
+
       // After WordPress publish, distribute to social media (VP Carousel)
       if (!process.env.FLASHVOYAGE_DRY_RUN && !process.env.SKIP_SOCIAL) {
         try {
