@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-04-22",
+  "lastUpdated": "2026-04-23",
   "formatScores": {
     "poll": 0,
     "pick": 10,
-    "humor": 12.4,
+    "humor": 13.4,
     "humor-tweet": 0,
     "budget": 9.1,
     "versus": 0,
@@ -18,26 +18,26 @@
     "versus"
   ],
   "destinationScores": {
-    "bali": 8.2,
-    "vietnam": 7.5,
+    "bali": 8.5,
+    "vietnam": 7.1,
     "thailande": 4,
     "bangkok": 3.2,
     "chiang mai": 3.1,
     "koh samui": 3,
     "malaisie": 2,
-    "philippines": 1.4,
-    "indonesie": 0.8,
-    "lombok": 0.6,
-    "singapour": 0.6,
-    "cambodge": 0.5,
+    "philippines": 1.1,
+    "indonesie": 0.6,
+    "singapour": 0.5,
+    "lombok": 0.4,
+    "cambodge": 0.3,
     "laos": 0.1,
     "phuket": 0.1
   },
   "recommendations": [
     "bali content trending — prioritize",
     "thailande content trending — prioritize",
-    "vietnam content trending — prioritize",
-    "Top TikTok format: humor (avg 12.4, 3 videos)"
+    "bangkok content trending — prioritize",
+    "Top TikTok format: humor (avg 13.4, 2 videos)"
   ],
   "igFormatScores": {
     "poll": 0,
@@ -53,10 +53,10 @@
     "best-time": 0
   },
   "tiktokFormatScores": {
-    "humor": 12.4,
-    "avantapres": 7,
+    "budget": 9.1,
     "pick": 10,
-    "budget": 9.1
+    "avantapres": 7,
+    "humor": 13.4
   },
   "formatScoreSource": {
     "pick": "tiktok-only",
@@ -65,37 +65,37 @@
     "avantapres": "tiktok-only"
   },
   "igDestinationScores": {
-    "bali": 7.4,
+    "bali": 7.5,
     "thailande": 4,
-    "vietnam": 3.7,
     "bangkok": 3.2,
     "chiang mai": 3.1,
     "koh samui": 3,
-    "philippines": 1.4,
-    "indonesie": 0.8,
-    "lombok": 0.6,
-    "singapour": 0.6,
-    "cambodge": 0.5,
+    "vietnam": 2.8,
+    "philippines": 1.1,
+    "indonesie": 0.6,
+    "singapour": 0.5,
+    "lombok": 0.4,
+    "cambodge": 0.3,
     "malaisie": 0.3,
     "laos": 0.1,
     "phuket": 0.1
   },
   "tiktokDestinationScores": {
     "vietnam": 10,
-    "bali": 8.7,
+    "bali": 9.1,
     "malaisie": 3.2
   },
   "destinationScoreSource": {
     "bali": "merged(60/40)",
     "thailande": "ig-only",
-    "vietnam": "merged(60/40)",
     "bangkok": "ig-only",
     "chiang mai": "ig-only",
     "koh samui": "ig-only",
+    "vietnam": "merged(60/40)",
     "philippines": "ig-only",
     "indonesie": "ig-only",
-    "lombok": "ig-only",
     "singapour": "ig-only",
+    "lombok": "ig-only",
     "cambodge": "ig-only",
     "malaisie": "merged(60/40)",
     "laos": "ig-only",
@@ -106,6 +106,6 @@
     "igWeight": 0.4,
     "active": true,
     "tiktokVideoCount": 15,
-    "tiktokUnclassifiedCount": 1
+    "tiktokUnclassifiedCount": 2
   }
 }
