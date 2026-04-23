@@ -269,6 +269,16 @@
       "name": "vietnam",
       "date": "2026-04-23",
       "format": "avantapres"
+    },
+    {
+      "name": "bali",
+      "date": "2026-04-23",
+      "format": "avantapres"
+    },
+    {
+      "name": "bali",
+      "date": "2026-04-23",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -543,6 +553,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-23T17:35:26.531Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-23T19:38:35.362Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-23T19:39:18.290Z"
     }
   ],
   "recentArticleIds": [
@@ -580,7 +598,8 @@
     4076,
     5678,
     5343,
-    4252
+    4252,
+    3082
   ],
   "recentFingerprints": [
     {
@@ -722,6 +741,10 @@
     {
       "fp": "fmt:avantapres|dest:vietnam|slug:assurance-voyage-vietnam-rapat",
       "date": "2026-04-23T17:35:26.531Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:bali|slug:choisir-ou-sejourner-a-bali-di",
+      "date": "2026-04-23T19:39:18.290Z"
     }
   ]
 }
