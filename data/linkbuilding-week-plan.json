@@ -211,7 +211,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 19,
+      "posted": 18,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -381,14 +381,6 @@
           "date": "2026-04-21T08:00:57.091Z",
           "id": "ai-3174-1776758418517",
           "search": "Où vivre en Thaïlande nomade digital",
-          "hasLink": false,
-          "status": "published",
-          "generated": true
-        },
-        {
-          "date": "2026-04-23T03:31:54.302Z",
-          "id": "ai-3005-1776915076883",
-          "search": "voyage Vietnam saison pluies conseils",
           "hasLink": false,
           "status": "published",
           "generated": true
@@ -601,7 +593,7 @@
       ]
     }
   },
-  "total_posted": 58,
+  "total_posted": 57,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }

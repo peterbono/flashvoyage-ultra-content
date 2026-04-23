@@ -259,6 +259,16 @@
       "name": "coree",
       "date": "2026-04-22",
       "format": "humor"
+    },
+    {
+      "name": "vietnam",
+      "date": "2026-04-23",
+      "format": "avantapres"
+    },
+    {
+      "name": "vietnam",
+      "date": "2026-04-23",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -525,6 +535,14 @@
     {
       "format": "humor",
       "date": "2026-04-22T20:49:20.762Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-23T17:34:45.637Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-23T17:35:26.531Z"
     }
   ],
   "recentArticleIds": [
@@ -561,7 +579,8 @@
     4132,
     4076,
     5678,
-    5343
+    5343,
+    4252
   ],
   "recentFingerprints": [
     {
@@ -699,6 +718,10 @@
     {
       "fp": "fmt:humor|dest:coree|slug:pourquoi-ton-premier-mois-en-c",
       "date": "2026-04-22T20:49:20.762Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:vietnam|slug:assurance-voyage-vietnam-rapat",
+      "date": "2026-04-23T17:35:26.531Z"
     }
   ]
 }
