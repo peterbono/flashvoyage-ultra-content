@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-04-22T04:07:04.008Z",
+  "timestamp": "2026-04-23T04:08:36.143Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-04-22T04:07:04.821Z",
+      "lastScan": "2026-04-23T04:08:43.309Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-04-22T04:07:05.235Z",
+      "lastScan": "2026-04-23T04:08:43.767Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-04-22T04:08:15.110Z",
-      "urlCount": 9446,
+      "lastScan": "2026-04-23T04:10:00.216Z",
+      "urlCount": 9450,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9587,7 +9587,11 @@
         "https://generationvoyage.fr/bruges-bruxelles/": "2026-04-21T09:31:10+00:00",
         "https://generationvoyage.fr/dormir-saint-jacques-de-compostelle/": "2026-04-21T12:41:45+00:00",
         "https://generationvoyage.fr/visiter-saumur-faire-voir/": "2026-04-21T14:43:09+00:00",
-        "https://generationvoyage.fr/plages-toscane/": "2026-04-21T16:29:11+00:00"
+        "https://generationvoyage.fr/plages-toscane/": "2026-04-21T16:29:11+00:00",
+        "https://generationvoyage.fr/visiter-porto-rico-faire-voir/": "2026-04-22T08:51:47+00:00",
+        "https://generationvoyage.fr/dormir-bidart/": "2026-04-22T10:16:04+00:00",
+        "https://generationvoyage.fr/alhambra-grenade/": "2026-04-22T12:17:45+00:00",
+        "https://generationvoyage.fr/budapest-vienne/": "2026-04-22T14:19:33+00:00"
       }
     }
   }

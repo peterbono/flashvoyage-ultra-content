@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-22T04:08:15.126Z",
+  "timestamp": "2026-04-23T04:10:00.232Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,8 +16,8 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 9446,
-      "newUrls": 5
+      "totalUrls": 9450,
+      "newUrls": 4
     }
   ],
   "newArticles": [],
