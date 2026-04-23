@@ -279,6 +279,11 @@
       "name": "bali",
       "date": "2026-04-23",
       "format": "avantapres"
+    },
+    {
+      "name": "viêt nam",
+      "date": "2026-04-23",
+      "format": "budget"
     }
   ],
   "recentFormats": [
@@ -561,6 +566,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-23T19:39:18.290Z"
+    },
+    {
+      "format": "budget",
+      "date": "2026-04-23T20:47:25.984Z"
+    },
+    {
+      "format": "budget",
+      "date": "2026-04-23T20:47:54.882Z"
     }
   ],
   "recentArticleIds": [
@@ -599,7 +612,8 @@
     5678,
     5343,
     4252,
-    3082
+    3082,
+    4071
   ],
   "recentFingerprints": [
     {
@@ -745,6 +759,10 @@
     {
       "fp": "fmt:avantapres|dest:bali|slug:choisir-ou-sejourner-a-bali-di",
       "date": "2026-04-23T19:39:18.290Z"
+    },
+    {
+      "fp": "fmt:budget|dest:none|slug:budget-backpack-200-000-donnee",
+      "date": "2026-04-23T20:47:54.882Z"
     }
   ]
 }
