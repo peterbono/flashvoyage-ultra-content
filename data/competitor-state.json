@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-04-23T04:08:36.143Z",
+  "timestamp": "2026-04-24T04:11:18.709Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-04-23T04:08:43.309Z",
+      "lastScan": "2026-04-24T04:11:19.625Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-04-23T04:08:43.767Z",
+      "lastScan": "2026-04-24T04:11:20.178Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-04-23T04:10:00.216Z",
-      "urlCount": 9450,
+      "lastScan": "2026-04-24T04:12:34.921Z",
+      "urlCount": 9455,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -2549,7 +2549,6 @@
         "https://generationvoyage.fr/road-trip-gran-canaria/": "2025-04-26T08:12:27+00:00",
         "https://generationvoyage.fr/road-trip-fuerteventura/": "2025-04-26T08:12:29+00:00",
         "https://generationvoyage.fr/meilleurs-hotels-grenade/": "2025-04-26T08:12:37+00:00",
-        "https://generationvoyage.fr/road-trip-corfou/": "2025-04-26T08:12:42+00:00",
         "https://generationvoyage.fr/endroits-sortir-corfou/": "2025-04-26T08:12:47+00:00",
         "https://generationvoyage.fr/endroits-sortir-lile-de-re/": "2025-04-26T08:12:49+00:00",
         "https://generationvoyage.fr/meilleurs-restaurants-seville/": "2025-04-26T08:12:51+00:00",
@@ -9553,7 +9552,6 @@
         "https://generationvoyage.fr/marrakech-casablanca/": "2026-04-16T08:45:29+00:00",
         "https://generationvoyage.fr/dormir-villefranche-sur-mer/": "2026-04-16T08:46:46+00:00",
         "https://generationvoyage.fr/date-fin-sagrada-familia/": "2026-04-16T12:41:10+00:00",
-        "https://generationvoyage.fr/partir-camping-2026/": "2026-04-16T14:28:04+00:00",
         "https://generationvoyage.fr/journees-du-patrimoine-nantes-2026/": "2026-04-17T09:36:17+00:00",
         "https://generationvoyage.fr/visiter-romans-sur-isere-faire-voir/": "2026-04-17T09:37:49+00:00",
         "https://generationvoyage.fr/prague-vienne/": "2026-04-17T09:40:49+00:00",
@@ -9591,7 +9589,14 @@
         "https://generationvoyage.fr/visiter-porto-rico-faire-voir/": "2026-04-22T08:51:47+00:00",
         "https://generationvoyage.fr/dormir-bidart/": "2026-04-22T10:16:04+00:00",
         "https://generationvoyage.fr/alhambra-grenade/": "2026-04-22T12:17:45+00:00",
-        "https://generationvoyage.fr/budapest-vienne/": "2026-04-22T14:19:33+00:00"
+        "https://generationvoyage.fr/budapest-vienne/": "2026-04-22T14:19:33+00:00",
+        "https://generationvoyage.fr/roadtrip-colorado/": "2026-04-23T06:53:47+00:00",
+        "https://generationvoyage.fr/road-trip-corfou/": "2026-04-23T07:49:55+00:00",
+        "https://generationvoyage.fr/visiter-kirghizistan-faire-voir/": "2026-04-23T07:54:11+00:00",
+        "https://generationvoyage.fr/nice-cannes/": "2026-04-23T09:31:30+00:00",
+        "https://generationvoyage.fr/visite-alhambra/": "2026-04-23T13:33:42+00:00",
+        "https://generationvoyage.fr/dormir-beaulieu-sur-mer/": "2026-04-23T15:37:04+00:00",
+        "https://generationvoyage.fr/partir-camping-2026/": "2026-04-23T14:54:12+00:00"
       }
     }
   }

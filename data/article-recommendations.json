@@ -1,22 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-04-23T04:08:34.261Z",
-    "elapsedSeconds": 8,
+    "generatedAt": "2026-04-24T04:11:16.850Z",
+    "elapsedSeconds": 10,
     "totalArticles": 110,
-    "articlesWithRecommendations": 7,
-    "totalRecommendations": 7,
+    "articlesWithRecommendations": 4,
+    "totalRecommendations": 4,
     "byPriority": {
       "P0": 0,
       "P1": 0,
-      "P2": 7
+      "P2": 4
     },
     "byType": {
-      "seo": 7
+      "seo": 4
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
-        "count": 7
+        "count": 4
       }
     ]
   },
@@ -50,17 +50,45 @@
       "p0Count": 0
     },
     {
+      "wpId": 4071,
+      "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
+      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "url": "https://flashvoyage.com/budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides/",
+      "wordCount": 3112,
+      "widgetCount": 0,
+      "internalLinks": 33,
+      "lastModified": "2026-04-12T15:40:04",
+      "ga4": {
+        "pageviews": 13,
+        "sessions": 13,
+        "avgDuration": 2
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5678,
       "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
       "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
       "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
-      "wordCount": 1518,
+      "wordCount": 1530,
       "widgetCount": 0,
-      "internalLinks": 18,
-      "lastModified": "2026-04-22T12:41:55",
+      "internalLinks": 19,
+      "lastModified": "2026-04-23T17:09:22",
       "ga4": {
-        "pageviews": 10,
-        "sessions": 10,
+        "pageviews": 11,
+        "sessions": 11,
         "avgDuration": 3
       },
       "gsc": {
@@ -148,34 +176,17 @@
         "avgDuration": 29
       },
       "gsc": {
-        "impressions": 19,
+        "impressions": 21,
         "clicks": 0,
-        "position": 6.5,
-        "topQueries": [
-          {
-            "query": "\"tokyo tokyo\" \"gyudon\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
-            "position": 10,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
+        "position": 6.2,
+        "topQueries": []
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"\"tokyo tokyo\" \"gyudon\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"\"tokyo tokyo\" \"gyudon\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -293,21 +304,21 @@
     {
       "wpId": 4372,
       "slug": "esim-philippines-globe-smart-comparatif-2026",
-      "title": "eSIM Philippines : Globe vs Smart, le comparatif que personne ne fait",
+      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
       "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
-      "wordCount": 2361,
-      "widgetCount": 3,
-      "internalLinks": 41,
-      "lastModified": "2026-04-16T07:39:50",
+      "wordCount": 5657,
+      "widgetCount": 0,
+      "internalLinks": 53,
+      "lastModified": "2026-04-23T17:08:25",
       "ga4": {
         "pageviews": 5,
         "sessions": 5,
         "avgDuration": 35
       },
       "gsc": {
-        "impressions": 42,
+        "impressions": 41,
         "clicks": 2,
-        "position": 6,
+        "position": 5.7,
         "topQueries": [
           {
             "query": "philippines globe",
@@ -321,18 +332,8 @@
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"philippines globe\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"philippines globe\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -350,9 +351,9 @@
         "avgDuration": 176
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 9,
         "clicks": 3,
-        "position": 9.4,
+        "position": 9.3,
         "topQueries": []
       },
       "reels": {
@@ -403,7 +404,7 @@
       "ga4": {
         "pageviews": 4,
         "sessions": 4,
-        "avgDuration": 10
+        "avgDuration": 17
       },
       "gsc": {
         "impressions": 0,
@@ -462,14 +463,14 @@
         "avgDuration": 8
       },
       "gsc": {
-        "impressions": 26,
+        "impressions": 16,
         "clicks": 0,
-        "position": 10.1,
+        "position": 13.4,
         "topQueries": [
           {
             "query": "prix visa cambodge 2026",
-            "position": 4.5,
-            "impressions": 2,
+            "position": 5,
+            "impressions": 1,
             "ctr": 0
           },
           {
@@ -510,7 +511,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 10
+        "avgDuration": 15
       },
       "gsc": {
         "impressions": 0,
@@ -569,9 +570,9 @@
         "avgDuration": 265
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 4,
         "clicks": 1,
-        "position": 7,
+        "position": 8.8,
         "topQueries": []
       },
       "reels": {
@@ -653,34 +654,17 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 12,
         "clicks": 0,
-        "position": 6.4,
-        "topQueries": [
-          {
-            "query": "10 jours aux philippines",
-            "position": 4,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
+        "position": 6.6,
+        "topQueries": []
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"10 jours aux philippines\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"10 jours aux philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -754,9 +738,9 @@
         "avgDuration": 918
       },
       "gsc": {
-        "impressions": 9,
+        "impressions": 7,
         "clicks": 0,
-        "position": 7.4,
+        "position": 9.1,
         "topQueries": []
       },
       "reels": {
@@ -866,9 +850,9 @@
         "avgDuration": 22
       },
       "gsc": {
-        "impressions": 19,
+        "impressions": 15,
         "clicks": 3,
-        "position": 6.8,
+        "position": 7.8,
         "topQueries": [
           {
             "query": "itinéraire lombok 10 jours",
@@ -911,9 +895,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 1,
         "clicks": 0,
-        "position": 0,
+        "position": 8,
         "topQueries": []
       },
       "reels": {
@@ -1009,34 +993,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4255,
-      "slug": "cambodge-ou-laos-lequel-choisir-2-semaines-budget",
-      "title": "Cambodge ou Laos 2026 : Comparatif Budget 2 Semaines",
-      "url": "https://flashvoyage.com/cambodge-ou-laos-lequel-choisir-2-semaines-budget/",
-      "wordCount": 3829,
-      "widgetCount": 3,
-      "internalLinks": 39,
-      "lastModified": "2026-04-12T18:45:19",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 37
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -1051,20 +1007,14 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 52,
-        "clicks": 1,
-        "position": 14.3,
+        "impressions": 44,
+        "clicks": 0,
+        "position": 15.7,
         "topQueries": [
           {
             "query": "bali ou thailande",
             "position": 36.3,
             "impressions": 8,
-            "ctr": 0
-          },
-          {
-            "query": "bali c'est en thailande",
-            "position": 9.5,
-            "impressions": 2,
             "ctr": 0
           },
           {
@@ -1114,14 +1064,14 @@
         "avgDuration": 13
       },
       "gsc": {
-        "impressions": 122,
+        "impressions": 117,
         "clicks": 1,
-        "position": 15.7,
+        "position": 14.5,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
-            "position": 58.5,
-            "impressions": 13,
+            "position": 56,
+            "impressions": 11,
             "ctr": 0
           },
           {
@@ -1227,9 +1177,9 @@
         "avgDuration": 31
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 0,
         "clicks": 0,
-        "position": 2,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -1325,14 +1275,42 @@
       "p0Count": 0
     },
     {
+      "wpId": 4255,
+      "slug": "cambodge-ou-laos-lequel-choisir-2-semaines-budget",
+      "title": "Cambodge ou Laos 2026 : Comparatif Budget 2 Semaines",
+      "url": "https://flashvoyage.com/cambodge-ou-laos-lequel-choisir-2-semaines-budget/",
+      "wordCount": 3829,
+      "widgetCount": 3,
+      "internalLinks": 39,
+      "lastModified": "2026-04-12T18:45:19",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4253,
       "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
       "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
       "url": "https://flashvoyage.com/esim-thailande-comparatif-ais-dtac-true-2026/",
-      "wordCount": 3399,
+      "wordCount": 3416,
       "widgetCount": 3,
-      "internalLinks": 38,
-      "lastModified": "2026-04-13T11:07:17",
+      "internalLinks": 39,
+      "lastModified": "2026-04-23T17:09:15",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -1357,10 +1335,10 @@
       "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
       "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
       "url": "https://flashvoyage.com/esim-vietnam-comparatif-forfait-2026-frais-caches/",
-      "wordCount": 3341,
+      "wordCount": 3363,
       "widgetCount": 3,
-      "internalLinks": 38,
-      "lastModified": "2026-04-22T13:39:51",
+      "internalLinks": 39,
+      "lastModified": "2026-04-23T17:09:05",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -1521,34 +1499,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4071,
-      "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
-      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "url": "https://flashvoyage.com/budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides/",
-      "wordCount": 3112,
-      "widgetCount": 0,
-      "internalLinks": 33,
-      "lastModified": "2026-04-12T15:40:04",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4066,
       "slug": "thailande-mai-2-pieges-que-les-blogs-cachent-aux-voyageurs-solo",
       "title": "Thaïlande mai : 2 pièges que les blogs cachent aux voyageurs solo",
@@ -1581,10 +1531,10 @@
       "slug": "philippines-les-5-frais-caches-qui-explosent-ton-budget-de-voyage",
       "title": "Philippines : les 5 frais cachés qui explosent ton budget de voyage",
       "url": "https://flashvoyage.com/philippines-les-5-frais-caches-qui-explosent-ton-budget-de-voyage/",
-      "wordCount": 3589,
+      "wordCount": 3614,
       "widgetCount": 0,
-      "internalLinks": 35,
-      "lastModified": "2026-04-12T15:40:07",
+      "internalLinks": 36,
+      "lastModified": "2026-04-23T17:08:33",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -1609,10 +1559,10 @@
       "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
       "title": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
       "url": "https://flashvoyage.com/philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire/",
-      "wordCount": 3572,
+      "wordCount": 3628,
       "widgetCount": 0,
-      "internalLinks": 39,
-      "lastModified": "2026-04-17T10:45:26",
+      "internalLinks": 40,
+      "lastModified": "2026-04-23T17:08:52",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2067,9 +2017,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 2,
         "clicks": 0,
-        "position": 8.3,
+        "position": 11,
         "topQueries": []
       },
       "reels": {
@@ -2207,9 +2157,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 2,
         "clicks": 0,
-        "position": 7.3,
+        "position": 7,
         "topQueries": []
       },
       "reels": {
@@ -2963,9 +2913,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 26,
+        "impressions": 32,
         "clicks": 0,
-        "position": 7.4,
+        "position": 7.3,
         "topQueries": [
           {
             "query": "itinéraire luxe asie du sud-est",
@@ -3100,10 +3050,10 @@
       "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
       "title": "Voyager en Asie du Sud-Est : les frais cachés qui gonflent ton budget",
       "url": "https://flashvoyage.com/voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget/",
-      "wordCount": 3335,
+      "wordCount": 3353,
       "widgetCount": 0,
-      "internalLinks": 25,
-      "lastModified": "2026-04-22T12:41:42",
+      "internalLinks": 26,
+      "lastModified": "2026-04-23T17:09:29",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3184,10 +3134,10 @@
       "slug": "vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre",
       "title": "Vivre en Indonésie avec 1000 € : les frais cachés à connaître",
       "url": "https://flashvoyage.com/vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre/",
-      "wordCount": 2669,
+      "wordCount": 2686,
       "widgetCount": 0,
       "internalLinks": 16,
-      "lastModified": "2026-03-31T17:47:39",
+      "lastModified": "2026-04-23T10:28:01",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3212,10 +3162,10 @@
       "slug": "visa-run-en-thailande-secrets-caches-et-arbitrages-financiers",
       "title": "Visa Run en Thaïlande : Secrets Cachés et Arbitrages Financiers",
       "url": "https://flashvoyage.com/visa-run-en-thailande-secrets-caches-et-arbitrages-financiers/",
-      "wordCount": 3150,
+      "wordCount": 3167,
       "widgetCount": 0,
       "internalLinks": 16,
-      "lastModified": "2026-03-31T17:47:42",
+      "lastModified": "2026-04-23T10:28:03",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -3240,10 +3190,10 @@
       "slug": "voyager-au-vietnam-avec-500-e-comment-optimiser-chaque-depense-2",
       "title": "Voyager au Vietnam avec 500 € : Comment optimiser chaque dépense",
       "url": "https://flashvoyage.com/voyager-au-vietnam-avec-500-e-comment-optimiser-chaque-depense-2/",
-      "wordCount": 1579,
+      "wordCount": 1597,
       "widgetCount": 0,
       "internalLinks": 15,
-      "lastModified": "2026-03-31T17:47:47",
+      "lastModified": "2026-04-23T10:28:05",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,

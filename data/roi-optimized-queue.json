@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-23T04:08:35.193Z",
+  "timestamp": "2026-04-24T04:11:17.775Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,8 +17,8 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 140,
-    "medianTrafficSignal": "0.140",
+    "medianMonthlyPV": 100,
+    "medianTrafficSignal": "0.100",
     "avgRpm": 2,
     "articlesAnalyzed": 40
   },
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 3.73,
-        "projectedMonthlyTraffic": 140,
-        "projectedMonthlyRevenue": 0.28,
+        "expectedRoi": 2.67,
+        "projectedMonthlyTraffic": 100,
+        "projectedMonthlyRevenue": 0.2,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 3.73,
-        "projectedMonthlyTraffic": 140,
-        "projectedMonthlyRevenue": 0.28,
+        "expectedRoi": 2.67,
+        "projectedMonthlyTraffic": 100,
+        "projectedMonthlyRevenue": 0.2,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,17 +77,42 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 3.73,
-        "projectedMonthlyTraffic": 140,
-        "projectedMonthlyRevenue": 0.28,
+        "expectedRoi": 2.67,
+        "projectedMonthlyTraffic": 100,
+        "projectedMonthlyRevenue": 0.2,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
       "rank": 4,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Thaïlande 2 Semaines 2026 : Bangkok, Chiang Mai, Krabi",
+      "articleType": "support",
+      "context": {
+        "wpId": 3264,
+        "slug": "voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite",
+        "compositeScore": 14,
+        "freshness": 0.96,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -112,7 +137,7 @@
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -137,7 +162,7 @@
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -162,7 +187,7 @@
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -187,7 +212,32 @@
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "3 jours à Singapour : l&rsquo;itinéraire que tu dois affiner (pas copier)",
+      "articleType": "support",
+      "context": {
+        "wpId": 3207,
+        "slug": "3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier",
+        "compositeScore": 14,
+        "freshness": 0.96,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -212,7 +262,32 @@
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Vivre en Thaïlande avec 500 USD : Réalité ou Illusion ?",
+      "articleType": "support",
+      "context": {
+        "wpId": 3167,
+        "slug": "vivre-en-thailande-avec-500-usd-realite-ou-illusion",
+        "compositeScore": 14,
+        "freshness": 0.94,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -237,90 +312,15 @@
       "withinBudget": true
     },
     {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Budget Réel pour Vivre à Koh Lanta : Dépenses et Optimisations",
-      "articleType": "support",
-      "context": {
-        "wpId": 3122,
-        "slug": "budget-reel-pour-vivre-a-koh-lanta-depenses-et-optimisations",
-        "compositeScore": 14,
-        "freshness": 0.94,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
-      "articleType": "support",
-      "context": {
-        "wpId": 3115,
-        "slug": "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable",
-        "compositeScore": 14,
-        "freshness": 0.94,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques",
-      "articleType": "support",
-      "context": {
-        "wpId": 3099,
-        "slug": "indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques",
-        "compositeScore": 14,
-        "freshness": 0.94,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
       "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Choisir où séjourner à Bali : dilemmes et décisions cruciales",
+      "topic": "Travailler en Thaïlande : Les Dilemmes Fiscaux des Travailleurs à Distance",
       "articleType": "support",
       "context": {
-        "wpId": 3082,
-        "slug": "choisir-ou-sejourner-a-bali-dilemmes-et-decisions-cruciales",
+        "wpId": 3150,
+        "slug": "travailler-en-thailande-les-dilemmes-fiscaux-des-travailleurs-a-distance",
         "compositeScore": 14,
         "freshness": 0.94,
         "traffic": 0,
@@ -342,8 +342,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.028,
-    "expectedDailyRoi": 0.12
+    "expectedDailyRevenue": 0.02,
+    "expectedDailyRoi": 0.09
   },
   "summary": {
     "write_new": 0,
