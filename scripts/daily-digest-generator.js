@@ -51,6 +51,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { buildDeepFocusReport } from '../intelligence/deep-focus-tracker.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -845,6 +846,88 @@ function renderGrowth(growth) {
   return parts.join('');
 }
 
+function renderDeepFocus(report) {
+  if (!report || !Array.isArray(report.articles) || report.articles.length === 0) {
+    return `<div style="font-size:12px;color:#888;padding:4px 0">no articles under focus</div>`;
+  }
+
+  const fmtNum = (v) => (v == null || Number.isNaN(v) ? 'n/a' : String(v));
+  const fmtPct = (v) => (v == null || Number.isNaN(v) ? 'n/a' : `${v > 0 ? '+' : ''}${Math.round(v)}%`);
+  const fmtPos = (v) => (typeof v === 'number' ? v.toFixed(1) : 'n/a');
+  const fmtEur = (v) => (typeof v === 'number' ? `${v.toFixed(2)}€` : 'n/a');
+  const colorForBadge = (b) => (b === '▲' ? '#16a34a' : b === '▼' ? '#DC2626' : '#888');
+
+  const blocks = report.articles.map((a, idx) => {
+    const g = a.metrics.gsc || {};
+    const ga = a.metrics.ga4 || {};
+    const tp = a.metrics.tp || {};
+    const d = a.deltas || {};
+
+    // Header line: slug + D{n}
+    const dLabel = a.daysSinceFocus != null ? `D${a.daysSinceFocus}` : '—';
+    const header = `<div style="font-size:12px;font-weight:700;color:#1a1a2e;margin-bottom:4px">
+      <span style="font-family:monospace">${a.slug.slice(0, 42)}${a.slug.length > 42 ? '…' : ''}</span>
+      <span style="color:#888;font-weight:400;margin-left:6px">${dLabel} · "${a.primaryKeyword}"</span>
+    </div>`;
+
+    // GSC line
+    const impDelta = d.impressions24hVsAvg7d || {};
+    const gscLine = g.available
+      ? `<div style="font-size:11px;color:#333">
+          GSC: ${fmtNum(g.impressions24h)} imp <span style="color:${colorForBadge(impDelta.badge)}">${impDelta.badge} ${fmtPct(impDelta.pct)}</span> vs 7d avg
+          · ${fmtNum(g.clicks24h)} clicks · CTR ${g.ctr24h != null ? (g.ctr24h * 100).toFixed(1) + '%' : 'n/a'}
+        </div>
+        <div style="font-size:11px;color:#333">
+          Pos: ${fmtPos(g.positionToday)} <span style="color:${colorForBadge((d.positionVsD0 || {}).badge)}">${(d.positionVsD0 || {}).badge || '◆'}</span> (D0: ${fmtPos(g.positionAtD0)})
+        </div>`
+      : `<div style="font-size:11px;color:#888">GSC: n/a (${g.error || 'unavailable'})</div>`;
+
+    // Top queries
+    const topQ = g.available && (g.topQueries || []).length
+      ? `<div style="font-size:10px;color:#555;margin-top:2px">Top kw: ${g.topQueries.slice(0, 5).map(q => `${q.query} <b>p${q.position.toFixed(1)}</b>`).join(' · ')}</div>`
+      : '';
+
+    // GA4 line
+    const sessDelta = d.sessions24hVsSameDayLastWeek || {};
+    const otherStr = (ga.otherSources || []).length
+      ? ` · others: ${ga.otherSources.map(o => `${o.source}:${o.sessions}`).join(', ')}`
+      : '';
+    const ga4Line = ga.available
+      ? `<div style="font-size:11px;color:#333">
+          GA4: ${fmtNum(ga.sessions24h)} sessions <span style="color:${colorForBadge(sessDelta.badge)}">${sessDelta.badge} ${fmtPct(sessDelta.pct)}</span>
+          · quora:${fmtNum(ga.quoraSessions24h)} · reddit:${fmtNum(ga.redditSessions24h)}${otherStr}
+        </div>`
+      : `<div style="font-size:11px;color:#888">GA4: n/a (${ga.error || 'unavailable'})</div>`;
+
+    // TP line
+    const tpLine = tp.available
+      ? `<div style="font-size:11px;color:#333">
+          TP: ${fmtNum(tp.conversions24h)} conv 24h · ${fmtNum(tp.conversionsSinceFocus)} since D0 · ${fmtEur(tp.revenueEurSinceFocus)}${tp.topPartner ? ' · top: ' + tp.topPartner : ''}
+        </div>${tp.todo ? `<div style="font-size:10px;color:#F59E0B">⚠ ${tp.todo}</div>` : ''}`
+      : `<div style="font-size:11px;color:#888">TP: n/a (${tp.error || 'unavailable'})</div>`;
+
+    // Sparkline (text)
+    let sparkLine = '';
+    if (g.available && (g.sparkline || []).length) {
+      const spark = g.sparkline.slice(-7).map(p => p.impressions);
+      const cur = g.impressions24h != null ? g.impressions24h : '?';
+      sparkLine = `<div style="font-size:10px;color:#666;font-family:monospace;margin-top:2px">imp 7d: ${spark.join(' · ')} → <b>${cur}</b></div>`;
+    }
+
+    const marginBottom = idx < report.articles.length - 1 ? 10 : 0;
+    return `<div style="border-left:3px solid #7c3aed;padding:6px 10px;margin-bottom:${marginBottom}px;background:#faf5ff;border-radius:0 6px 6px 0">
+      ${header}
+      ${gscLine}
+      ${topQ}
+      ${ga4Line}
+      ${tpLine}
+      ${sparkLine}
+    </div>`;
+  });
+
+  return blocks.join('');
+}
+
 function renderActions(actions) {
   if (!actions.length) {
     return `<div style="font-size:13px;color:#888;padding:8px 0">Pas de données suffisantes pour suggérer 3 actions — vérifier les pipelines intelligence / analytics.</div>`;
@@ -948,7 +1031,7 @@ function generateDigestHTML(data) {
     day: 'numeric',
   });
 
-  const { anomalies, growth, actions, monetization, pipelineHealth } = data;
+  const { anomalies, growth, deepFocus, actions, monetization, pipelineHealth } = data;
 
   const priorityColor = anomalies.some(a => a.severity === 'critical')
     ? '#DC2626'
@@ -1003,6 +1086,13 @@ function generateDigestHTML(data) {
 
       ${section(anomalyTitle, renderAnomalies(anomalies))}
       ${section('📈 GROWTH SIGNALS', renderGrowth(growth))}
+      ${(() => {
+        const count = deepFocus?.articles?.length || 0;
+        const title = count === 0
+          ? '🔍 DEEP FOCUS TRACKER — no articles under focus'
+          : `🔍 DEEP FOCUS TRACKER (${count})`;
+        return section(title, renderDeepFocus(deepFocus));
+      })()}
       ${section('🎯 TODAY\'S 3 ACTIONS', renderActions(actions))}
       ${section('💰 MONETIZATION HEALTH', renderMonetization(monetization))}
       ${section('⚙️ PIPELINE HEALTH', renderPipelineHealth(pipelineHealth))}
@@ -1054,10 +1144,11 @@ async function collectAllData() {
   const linkbuilding = collectLinkbuildingData();
 
   // Network (parallel, best-effort)
-  const [ga4Wow, wfRuns, actionsUsage] = await Promise.all([
+  const [ga4Wow, wfRuns, actionsUsage, deepFocus] = await Promise.all([
     fetchGA4Wow().catch(err => { log(`GA4 failed: ${err.message}`); return null; }),
     fetchWorkflowRuns().catch(err => { log(`GH runs failed: ${err.message}`); return null; }),
     fetchActionsUsage().catch(() => null),
+    buildDeepFocusReport().catch(err => { log(`Deep focus failed: ${err.message}`); return null; }),
   ]);
 
   // Build sections
@@ -1072,6 +1163,7 @@ async function collectAllData() {
     version: 'v2-decision-oriented',
     anomalies,
     growth,
+    deepFocus,
     actions,
     monetization,
     pipelineHealth,
