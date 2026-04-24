@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 20,
+      "posted": 21,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -163,6 +163,14 @@
           "date": "2026-04-20T09:05:36.485Z",
           "thread": "quelle-idee-trek-journee-en-pays-toraja-d11468437",
           "title": "Quelle idée de trek sur une journée en pays Toraja?",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-24T03:32:19.469Z",
+          "thread": "voyage-en-pays-thai-lao-d11199447",
+          "title": "Voyage en pays thaï et lao",
           "hasLink": false,
           "generated": true,
           "status": "published"
@@ -484,7 +492,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 13,
+      "posted": 14,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -589,11 +597,19 @@
           "section": "Thailande",
           "hasLink": true,
           "status": "published"
+        },
+        {
+          "date": "2026-04-24T03:36:51.729Z",
+          "threadId": "15369353",
+          "title": "24 septembre 2025",
+          "section": "Cambodge",
+          "hasLink": true,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 57,
+  "total_posted": 59,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
