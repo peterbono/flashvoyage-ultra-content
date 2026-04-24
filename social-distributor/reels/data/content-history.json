@@ -289,6 +289,16 @@
       "name": "malaisie",
       "date": "2026-04-24",
       "format": "cost-vs"
+    },
+    {
+      "name": "bali",
+      "date": "2026-04-24",
+      "format": "avantapres"
+    },
+    {
+      "name": "indonesie",
+      "date": "2026-04-24",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -583,6 +593,14 @@
     {
       "format": "cost-vs",
       "date": "2026-04-24T17:24:06.467Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-24T19:26:37.152Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-24T19:27:32.784Z"
     }
   ],
   "recentArticleIds": [
@@ -623,7 +641,8 @@
     4252,
     3082,
     4071,
-    2924
+    2924,
+    2989
   ],
   "recentFingerprints": [
     {
@@ -777,6 +796,10 @@
     {
       "fp": "fmt:cost-vs|dest:malaisie|slug:malaisie-les-11-frais-caches-q",
       "date": "2026-04-24T17:24:06.467Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:indonesie|slug:comment-decouvrir-lindonesie-a",
+      "date": "2026-04-24T19:27:32.784Z"
     }
   ]
 }
