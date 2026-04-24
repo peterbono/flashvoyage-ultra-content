@@ -284,6 +284,11 @@
       "name": "viêt nam",
       "date": "2026-04-23",
       "format": "budget"
+    },
+    {
+      "name": "malaisie",
+      "date": "2026-04-24",
+      "format": "cost-vs"
     }
   ],
   "recentFormats": [
@@ -574,6 +579,10 @@
     {
       "format": "budget",
       "date": "2026-04-23T20:47:54.882Z"
+    },
+    {
+      "format": "cost-vs",
+      "date": "2026-04-24T17:24:06.467Z"
     }
   ],
   "recentArticleIds": [
@@ -613,7 +622,8 @@
     5343,
     4252,
     3082,
-    4071
+    4071,
+    2924
   ],
   "recentFingerprints": [
     {
@@ -763,6 +773,10 @@
     {
       "fp": "fmt:budget|dest:none|slug:budget-backpack-200-000-donnee",
       "date": "2026-04-23T20:47:54.882Z"
+    },
+    {
+      "fp": "fmt:cost-vs|dest:malaisie|slug:malaisie-les-11-frais-caches-q",
+      "date": "2026-04-24T17:24:06.467Z"
     }
   ]
 }
