@@ -299,6 +299,11 @@
       "name": "indonesie",
       "date": "2026-04-24",
       "format": "avantapres"
+    },
+    {
+      "name": "chiang-mai",
+      "date": "2026-04-24",
+      "format": "best-time"
     }
   ],
   "recentFormats": [
@@ -601,6 +606,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-24T19:27:32.784Z"
+    },
+    {
+      "format": "best-time",
+      "date": "2026-04-24T20:47:11.067Z"
+    },
+    {
+      "format": "best-time",
+      "date": "2026-04-24T20:47:47.630Z"
     }
   ],
   "recentArticleIds": [
@@ -642,7 +655,8 @@
     3082,
     4071,
     2924,
-    2989
+    2989,
+    3254
   ],
   "recentFingerprints": [
     {
@@ -800,6 +814,10 @@
     {
       "fp": "fmt:avantapres|dest:indonesie|slug:comment-decouvrir-lindonesie-a",
       "date": "2026-04-24T19:27:32.784Z"
+    },
+    {
+      "fp": "fmt:best-time|dest:chiang-mai|slug:chiang-mai-vs-phuket-ou-combin",
+      "date": "2026-04-24T20:47:47.630Z"
     }
   ]
 }
