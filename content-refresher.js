@@ -220,6 +220,10 @@ export class ContentRefresher {
       updateData.meta = { fv_schema_json: updatedSchema };
     }
 
+    // Guardrail: abort if editorial placeholders remain ([VERIFY], [TODO], [AFFILIATE:X], ...)
+    const { assertNoPlaceholdersInPayload } = await import('./intelligence/content-guardrails.js');
+    assertNoPlaceholdersInPayload(updateData, { context: `content-refresher:update(wpId=${wpId})` });
+
     await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts/${wpId}`, updateData, {
       headers: { Authorization: `Basic ${auth}`, 'Content-Type': 'application/json' },
     });

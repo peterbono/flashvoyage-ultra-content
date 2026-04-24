@@ -2941,7 +2941,11 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
       
       // Authentification
       const auth = Buffer.from(`${WORDPRESS_USERNAME}:${WORDPRESS_APP_PASSWORD}`).toString('base64');
-      
+
+      // Guardrail: abort if editorial placeholders remain ([VERIFY], [TODO], [AFFILIATE:X], ...)
+      const { assertNoPlaceholdersInPayload } = await import('./intelligence/content-guardrails.js');
+      assertNoPlaceholdersInPayload(wordpressData, { context: 'enhanced-ultra-generator:publish' });
+
       // Publication
       const response = await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts`, wordpressData, {
         headers: {

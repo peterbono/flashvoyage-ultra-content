@@ -1215,6 +1215,10 @@ async function publishArticle(article) {
     }
   };
 
+  // Guardrail: abort if editorial placeholders remain ([VERIFY], [TODO], [AFFILIATE:X], ...)
+  const { assertNoPlaceholdersInPayload } = await import('./intelligence/content-guardrails.js');
+  assertNoPlaceholdersInPayload(postData, { context: 'quality-loop-publisher:publish' });
+
   const response = await axios.post(`${wpUrl}/wp-json/wp/v2/posts`, postData, {
     headers: { Authorization: `Basic ${auth}`, 'Content-Type': 'application/json' }
   });

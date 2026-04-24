@@ -919,6 +919,12 @@ class UltraStrategicGenerator {
 
       // Créer l'article
       console.log('📝 Création de l\'article stratégique sur WordPress...');
+      // Guardrail: abort if editorial placeholders remain ([VERIFY], [TODO], [AFFILIATE:X], ...)
+      const { assertNoPlaceholdersInPayload } = await import('./intelligence/content-guardrails.js');
+      assertNoPlaceholdersInPayload({
+        title: strategicContent.title,
+        content: strategicContent.content,
+      }, { context: 'ultra-strategic-generator:publish' });
       const articleResponse = await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts`, {
         title: strategicContent.title,
         content: strategicContent.content,

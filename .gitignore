@@ -137,3 +137,4 @@ data/live-cache/quora-profile-*.json
 # Whitelist committed regression-guard scripts that match test-* glob above
 !scripts/test-affiliate-resolver.mjs
 !scripts/test-authority-amplifier.mjs
+!scripts/test-content-guardrails.mjs
