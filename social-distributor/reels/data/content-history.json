@@ -1,11 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "thailande",
-      "date": "2026-04-10",
-      "format": "best-time"
-    },
-    {
       "name": "vietnam",
       "date": "2026-04-11",
       "format": "cost-vs"
@@ -304,17 +299,19 @@
       "name": "chiang-mai",
       "date": "2026-04-24",
       "format": "best-time"
+    },
+    {
+      "name": "philippines",
+      "date": "2026-04-25",
+      "format": "avantapres"
+    },
+    {
+      "name": "philippines",
+      "date": "2026-04-25",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
-    {
-      "format": "best-time",
-      "date": "2026-04-10T21:03:05.430Z"
-    },
-    {
-      "format": "best-time",
-      "date": "2026-04-10T21:03:40.288Z"
-    },
     {
       "format": "cost-vs",
       "date": "2026-04-11T17:30:13.917Z"
@@ -614,6 +611,14 @@
     {
       "format": "best-time",
       "date": "2026-04-24T20:47:47.630Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-25T17:17:25.465Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-25T17:18:11.681Z"
     }
   ],
   "recentArticleIds": [
@@ -656,13 +661,10 @@
     4071,
     2924,
     2989,
-    3254
+    3254,
+    4058
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:best-time|dest:thailande|slug:vietnam-vs-thailande-en-2026-l",
-      "date": "2026-04-10T21:03:40.288Z"
-    },
     {
       "fp": "fmt:cost-vs|dest:vietnam|slug:thailande-vs-vietnam-larbitrag",
       "date": "2026-04-11T17:30:13.917Z"
@@ -818,6 +820,10 @@
     {
       "fp": "fmt:best-time|dest:chiang-mai|slug:chiang-mai-vs-phuket-ou-combin",
       "date": "2026-04-24T20:47:47.630Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:philippines|slug:philippines-les-3-arbitrages-q",
+      "date": "2026-04-25T17:18:11.681Z"
     }
   ]
 }
