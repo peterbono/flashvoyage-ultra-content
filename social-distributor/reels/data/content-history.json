@@ -309,6 +309,16 @@
       "name": "philippines",
       "date": "2026-04-25",
       "format": "avantapres"
+    },
+    {
+      "name": "bangkok",
+      "date": "2026-04-25",
+      "format": "avantapres"
+    },
+    {
+      "name": "bangkok",
+      "date": "2026-04-25",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -619,6 +629,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-25T17:18:11.681Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-25T19:25:18.788Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-25T19:25:56.929Z"
     }
   ],
   "recentArticleIds": [
@@ -662,7 +680,8 @@
     2924,
     2989,
     3254,
-    4058
+    4058,
+    5742
   ],
   "recentFingerprints": [
     {
@@ -824,6 +843,10 @@
     {
       "fp": "fmt:avantapres|dest:philippines|slug:philippines-les-3-arbitrages-q",
       "date": "2026-04-25T17:18:11.681Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:bangkok|slug:bangkok-le-vrai-cout-des-taxis",
+      "date": "2026-04-25T19:25:56.929Z"
     }
   ]
 }
