@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-24T04:11:05.956Z",
+  "timestamp": "2026-04-25T04:03:33.956Z",
   "queueSize": 13,
   "queue": [
     {
@@ -42,20 +42,84 @@
       "rank": 4,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Thaïlande 2 Semaines 2026 : Bangkok, Chiang Mai, Krabi",
+      "priorityScore": -3,
+      "topic": "Les 3 coûts cachés des espaces de coworking à Ho Chi Minh City",
       "articleType": "support",
       "context": {
-        "wpId": 3264,
-        "slug": "voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite",
-        "compositeScore": 14,
-        "freshness": 0.96,
+        "wpId": 2910,
+        "slug": "les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city",
+        "compositeScore": 13,
+        "freshness": 0.89,
         "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
       "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Voyager en Asie du Sud-Est : les frais cachés qui gonflent ton budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 2904,
+        "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Vivre à Chiang Mai : le vrai coût d&rsquo;un rêve de nomade digital",
+      "articleType": "support",
+      "context": {
+        "wpId": 2898,
+        "slug": "vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "48 Heures à Singapour : Optimisez Chaque Centime de Votre Budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 2888,
+        "slug": "48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Vivre en Indonésie avec 1000 € : les frais cachés à connaître",
+      "articleType": "support",
+      "context": {
+        "wpId": 2878,
+        "slug": "vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -71,7 +135,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -87,7 +151,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -103,7 +167,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -119,23 +183,7 @@
       }
     },
     {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "3 jours à Singapour : l&rsquo;itinéraire que tu dois affiner (pas copier)",
-      "articleType": "support",
-      "context": {
-        "wpId": 3207,
-        "slug": "3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier",
-        "compositeScore": 14,
-        "freshness": 0.96,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 10,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -144,54 +192,6 @@
       "context": {
         "wpId": 3174,
         "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 14,
-        "freshness": 0.94,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Vivre en Thaïlande avec 500 USD : Réalité ou Illusion ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 3167,
-        "slug": "vivre-en-thailande-avec-500-usd-realite-ou-illusion",
-        "compositeScore": 14,
-        "freshness": 0.94,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Vivre en Asie du Sud-Est avec 10 000 $ : Frais cachés et choix stratégiques",
-      "articleType": "support",
-      "context": {
-        "wpId": 3159,
-        "slug": "vivre-en-asie-du-sud-est-avec-10-000-frais-caches-et-choix-strategiques",
-        "compositeScore": 14,
-        "freshness": 0.94,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Travailler en Thaïlande : Les Dilemmes Fiscaux des Travailleurs à Distance",
-      "articleType": "support",
-      "context": {
-        "wpId": 3150,
-        "slug": "travailler-en-thailande-les-dilemmes-fiscaux-des-travailleurs-a-distance",
         "compositeScore": 14,
         "freshness": 0.94,
         "traffic": 0,

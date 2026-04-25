@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-04-24T04:11:18.709Z",
+  "timestamp": "2026-04-25T04:03:45.513Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-04-24T04:11:19.625Z",
+      "lastScan": "2026-04-25T04:03:46.223Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-04-24T04:11:20.178Z",
+      "lastScan": "2026-04-25T04:03:46.618Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-04-24T04:12:34.921Z",
-      "urlCount": 9455,
+      "lastScan": "2026-04-25T04:04:53.971Z",
+      "urlCount": 9459,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -4121,7 +4121,6 @@
         "https://generationvoyage.fr/airbnb-salerne/": "2025-05-02T10:50:05+00:00",
         "https://generationvoyage.fr/loger-positano/": "2025-05-02T10:50:08+00:00",
         "https://generationvoyage.fr/loger-salerne/": "2025-05-02T10:50:10+00:00",
-        "https://generationvoyage.fr/airbnb-positano/": "2025-05-02T10:50:18+00:00",
         "https://generationvoyage.fr/activites-outdoor-ete-indien-quebec/": "2025-05-02T10:50:38+00:00",
         "https://generationvoyage.fr/circuits-organises-quebec/": "2025-05-02T10:50:40+00:00",
         "https://generationvoyage.fr/sports-hiver-sejour-quebec/": "2025-05-02T10:50:53+00:00",
@@ -9596,7 +9595,12 @@
         "https://generationvoyage.fr/nice-cannes/": "2026-04-23T09:31:30+00:00",
         "https://generationvoyage.fr/visite-alhambra/": "2026-04-23T13:33:42+00:00",
         "https://generationvoyage.fr/dormir-beaulieu-sur-mer/": "2026-04-23T15:37:04+00:00",
-        "https://generationvoyage.fr/partir-camping-2026/": "2026-04-23T14:54:12+00:00"
+        "https://generationvoyage.fr/partir-camping-2026/": "2026-04-23T14:54:12+00:00",
+        "https://generationvoyage.fr/visiter-chinon-faire-voir/": "2026-04-24T09:08:25+00:00",
+        "https://generationvoyage.fr/majorque-minorque/": "2026-04-24T10:41:09+00:00",
+        "https://generationvoyage.fr/randonnees-bergen/": "2026-04-24T12:16:30+00:00",
+        "https://generationvoyage.fr/dormir-hiroshima/": "2026-04-24T14:48:40+00:00",
+        "https://generationvoyage.fr/airbnb-positano/": "2026-04-24T16:20:36+00:00"
       }
     }
   }
