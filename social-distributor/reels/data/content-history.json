@@ -319,6 +319,11 @@
       "name": "bangkok",
       "date": "2026-04-25",
       "format": "avantapres"
+    },
+    {
+      "name": "singapour",
+      "date": "2026-04-25",
+      "format": "humor-tweet"
     }
   ],
   "recentFormats": [
@@ -637,6 +642,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-25T19:25:56.929Z"
+    },
+    {
+      "format": "humor-tweet",
+      "date": "2026-04-25T20:46:00.708Z"
+    },
+    {
+      "format": "humor-tweet",
+      "date": "2026-04-25T20:46:32.851Z"
     }
   ],
   "recentArticleIds": [
@@ -681,7 +694,8 @@
     2989,
     3254,
     4058,
-    5742
+    5742,
+    2888
   ],
   "recentFingerprints": [
     {
@@ -847,6 +861,10 @@
     {
       "fp": "fmt:avantapres|dest:bangkok|slug:bangkok-le-vrai-cout-des-taxis",
       "date": "2026-04-25T19:25:56.929Z"
+    },
+    {
+      "fp": "fmt:humor-tweet|dest:singapour|slug:48-heures-a-singapour-optimise",
+      "date": "2026-04-25T20:46:32.851Z"
     }
   ]
 }
