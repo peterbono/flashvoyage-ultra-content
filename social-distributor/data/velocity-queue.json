@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-04-25T12:14:15.626Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-04-25T18:14:27.098Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Flood of small parcels from China pushes Belgian airport’s capacity to limit",
-      "source": "rss_breaking",
-      "destination": "asia",
-      "link": "https://www.scmp.com/economy/china-economy/article/3351338/flood-small-parcels-china-pushes-belgian-airports-capacity-limit?utm_source=rss_feed",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2065,
-      "estimatedTrafficIn24h": 2017,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5.2
-      },
-      "detectedAt": "2026-04-25T07:00:10.000Z",
-      "scoredAt": "2026-04-25T12:14:12.755Z"
-    }
-  ]
+  "queue": []
 }
