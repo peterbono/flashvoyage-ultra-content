@@ -314,6 +314,16 @@
       "name": "asie du sud-est",
       "date": "2026-04-26",
       "format": "avantapres"
+    },
+    {
+      "name": "japon : tokyo, hakone, kyoto, osaka, hiroshima",
+      "date": "2026-04-26",
+      "format": "pick"
+    },
+    {
+      "name": "japon",
+      "date": "2026-04-26",
+      "format": "pick"
     }
   ],
   "recentFormats": [
@@ -632,6 +642,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-26T19:26:58.577Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-26T20:46:23.204Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-26T20:47:05.172Z"
     }
   ],
   "recentArticleIds": [
@@ -679,7 +697,8 @@
     5742,
     2888,
     4066,
-    4110
+    4110,
+    4373
   ],
   "recentFingerprints": [
     {
@@ -845,6 +864,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:vivre-en-couple-a-letranger-4-",
       "date": "2026-04-26T19:26:58.577Z"
+    },
+    {
+      "fp": "fmt:pick|dest:japon|slug:japon-couple-15-jours-budget-t",
+      "date": "2026-04-26T20:47:05.172Z"
     }
   ]
 }
