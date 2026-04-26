@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-04-25T04:03:43.577Z",
-    "elapsedSeconds": 9,
+    "generatedAt": "2026-04-26T04:15:27.726Z",
+    "elapsedSeconds": 7,
     "totalArticles": 110,
     "articlesWithRecommendations": 4,
     "totalRecommendations": 4,
@@ -190,6 +190,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 5742,
+      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
+      "wordCount": 1513,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-04-22T12:41:31",
+      "ga4": {
+        "pageviews": 7,
+        "sessions": 7,
+        "avgDuration": 1
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4373,
       "slug": "japon-couple-15-jours-budget-tout-compris-2026",
       "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
@@ -302,34 +330,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 5742,
-      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
-      "wordCount": 1513,
-      "widgetCount": 0,
-      "internalLinks": 22,
-      "lastModified": "2026-04-22T12:41:31",
-      "ga4": {
-        "pageviews": 5,
-        "sessions": 5,
-        "avgDuration": 1
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 5119,
       "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
@@ -369,13 +369,48 @@
       "ga4": {
         "pageviews": 5,
         "sessions": 3,
-        "avgDuration": 236
+        "avgDuration": 159
       },
       "gsc": {
         "impressions": 0,
         "clicks": 0,
         "position": 0,
         "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4372,
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
+      "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
+      "wordCount": 5643,
+      "widgetCount": 0,
+      "internalLinks": 53,
+      "lastModified": "2026-04-24T04:56:05",
+      "ga4": {
+        "pageviews": 5,
+        "sessions": 5,
+        "avgDuration": 35
+      },
+      "gsc": {
+        "impressions": 36,
+        "clicks": 2,
+        "position": 5.7,
+        "topQueries": [
+          {
+            "query": "philippines globe",
+            "position": 7,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
       },
       "reels": {
         "linkedReels": 0,
@@ -425,7 +460,7 @@
       "ga4": {
         "pageviews": 4,
         "sessions": 4,
-        "avgDuration": 11
+        "avgDuration": 15
       },
       "gsc": {
         "impressions": 0,
@@ -484,7 +519,7 @@
         "avgDuration": 15
       },
       "gsc": {
-        "impressions": 11,
+        "impressions": 10,
         "clicks": 0,
         "position": 6.5,
         "topQueries": []
@@ -554,7 +589,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 13
+        "avgDuration": 3
       },
       "gsc": {
         "impressions": 0,
@@ -655,41 +690,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4372,
-      "slug": "esim-philippines-globe-smart-comparatif-2026",
-      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
-      "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
-      "wordCount": 5643,
-      "widgetCount": 0,
-      "internalLinks": 53,
-      "lastModified": "2026-04-24T04:56:05",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 2,
-        "avgDuration": 291
-      },
-      "gsc": {
-        "impressions": 38,
-        "clicks": 2,
-        "position": 5.9,
-        "topQueries": [
-          {
-            "query": "philippines globe",
-            "position": 7,
-            "impressions": 2,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4105,
       "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
       "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
@@ -701,7 +701,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 9
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 1,
@@ -729,7 +729,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 4
+        "avgDuration": 6
       },
       "gsc": {
         "impressions": 0,
@@ -841,7 +841,7 @@
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 13
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
@@ -900,9 +900,9 @@
         "avgDuration": 22
       },
       "gsc": {
-        "impressions": 14,
+        "impressions": 10,
         "clicks": 2,
-        "position": 7.7,
+        "position": 8,
         "topQueries": [
           {
             "query": "itinéraire lombok 10 jours",
@@ -931,6 +931,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 3222,
+      "slug": "3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles",
+      "title": "3 jours à Singapour : optimiser son itinéraire sans sacrifier les expériences essentielles",
+      "url": "https://flashvoyage.com/3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles/",
+      "wordCount": 4733,
+      "widgetCount": 0,
+      "internalLinks": 36,
+      "lastModified": "2026-04-12T15:41:42",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5260,
       "slug": "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage",
       "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
@@ -942,7 +970,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 37
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 4,
@@ -1052,14 +1080,14 @@
         "avgDuration": 13
       },
       "gsc": {
-        "impressions": 95,
+        "impressions": 79,
         "clicks": 1,
-        "position": 13.5,
+        "position": 14.2,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
-            "position": 54.2,
-            "impressions": 10,
+            "position": 59.9,
+            "impressions": 8,
             "ctr": 0
           },
           {
@@ -1184,7 +1212,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 120
+        "avgDuration": 6
       },
       "gsc": {
         "impressions": 3,
@@ -1513,10 +1541,10 @@
       "slug": "philippines-les-5-frais-caches-qui-explosent-ton-budget-de-voyage",
       "title": "Philippines : les 5 frais cachés qui explosent ton budget de voyage",
       "url": "https://flashvoyage.com/philippines-les-5-frais-caches-qui-explosent-ton-budget-de-voyage/",
-      "wordCount": 3614,
+      "wordCount": 3630,
       "widgetCount": 0,
       "internalLinks": 36,
-      "lastModified": "2026-04-23T17:08:33",
+      "lastModified": "2026-04-25T10:13:27",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2139,9 +2167,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 1,
         "clicks": 0,
-        "position": 7,
+        "position": 12,
         "topQueries": []
       },
       "reels": {
@@ -2161,34 +2189,6 @@
       "widgetCount": 0,
       "internalLinks": 37,
       "lastModified": "2026-04-21T10:26:56",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3222,
-      "slug": "3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles",
-      "title": "3 jours à Singapour : optimiser son itinéraire sans sacrifier les expériences essentielles",
-      "url": "https://flashvoyage.com/3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles/",
-      "wordCount": 4733,
-      "widgetCount": 0,
-      "internalLinks": 36,
-      "lastModified": "2026-04-12T15:41:42",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2895,9 +2895,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 32,
+        "impressions": 31,
         "clicks": 0,
-        "position": 7.3,
+        "position": 7.4,
         "topQueries": [
           {
             "query": "itinéraire luxe asie du sud-est",

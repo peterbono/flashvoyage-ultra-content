@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-25T04:03:44.544Z",
+  "timestamp": "2026-04-26T04:15:28.651Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -20,7 +20,7 @@
     "medianMonthlyPV": 120,
     "medianTrafficSignal": "0.120",
     "avgRpm": 2,
-    "articlesAnalyzed": 40
+    "articlesAnalyzed": 41
   },
   "queue": [
     {
@@ -216,11 +216,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Vivre à Lombok en tant que nomade numérique : les 10 coûts cachés qui dévorent ton budget",
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "articleType": "support",
       "context": {
-        "wpId": 3251,
-        "slug": "vivre-a-lombok-en-tant-que-nomade-numerique-les-10-couts-caches-qui-devorent-ton-budget",
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 14,
         "freshness": 0.96,
         "traffic": 0,
@@ -241,13 +241,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Itinéraire Indonésie 2026 : Ubud, Nusa Penida ou Gili ?",
+      "topic": "Vivre à Lombok en tant que nomade numérique : les 10 coûts cachés qui dévorent ton budget",
       "articleType": "support",
       "context": {
-        "wpId": 3239,
-        "slug": "itineraire-en-indonesie-arbitrer-entre-ubud-nusa-penida-et-les-iles-gili-sans-sacrifier-ton-experience",
+        "wpId": 3251,
+        "slug": "vivre-a-lombok-en-tant-que-nomade-numerique-les-10-couts-caches-qui-devorent-ton-budget",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -266,13 +266,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Arbitrer son itinéraire Japon-Chine-Mongolie en 15-20 jours : les vrais dilemmes logistiques",
+      "topic": "Itinéraire Indonésie 2026 : Ubud, Nusa Penida ou Gili ?",
       "articleType": "support",
       "context": {
-        "wpId": 3234,
-        "slug": "arbitrer-son-itineraire-japon-chine-mongolie-en-15-20-jours-les-vrais-dilemmes-logistiques",
+        "wpId": 3239,
+        "slug": "itineraire-en-indonesie-arbitrer-entre-ubud-nusa-penida-et-les-iles-gili-sans-sacrifier-ton-experience",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -291,13 +291,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "3 jours à Singapour : optimiser son itinéraire sans sacrifier les expériences essentielles",
+      "topic": "Arbitrer son itinéraire Japon-Chine-Mongolie en 15-20 jours : les vrais dilemmes logistiques",
       "articleType": "support",
       "context": {
-        "wpId": 3222,
-        "slug": "3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles",
+        "wpId": 3234,
+        "slug": "arbitrer-son-itineraire-japon-chine-mongolie-en-15-20-jours-les-vrais-dilemmes-logistiques",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -322,7 +322,7 @@
         "wpId": 3174,
         "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
         "compositeScore": 14,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },

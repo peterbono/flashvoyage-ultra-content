@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-04-25T04:04:55.006Z",
+  "timestamp": "2026-04-26T04:16:43.589Z",
   "articleCount": 110,
   "stateCounts": {
-    "GROWING": 75,
-    "DECLINING": 26,
-    "NEW": 9
+    "GROWING": 79,
+    "DECLINING": 23,
+    "NEW": 8
   },
-  "totalActions": 246,
+  "totalActions": 243,
   "actionsByPriority": {
-    "P0": 35,
-    "P1": 136,
-    "P2": 75,
+    "P0": 31,
+    "P1": 133,
+    "P2": 79,
     "P3": 0
   },
   "articles": [
@@ -18,16 +18,16 @@
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
       "wpId": 4487,
-      "compositeScore": 56,
+      "compositeScore": 59,
       "date": "2026-03-31T16:22:55",
-      "ageDays": 24,
+      "ageDays": 25,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.152,
-        "trend14d": -0.164,
-        "consecutiveRising": 1,
-        "variance7d": 0.086,
-        "dataPoints": 23
+        "trend7d": -0.106,
+        "trend14d": -0.157,
+        "consecutiveRising": 2,
+        "variance7d": 0.085,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -47,6 +47,7 @@
         }
       ],
       "flags": [
+        "trending",
         "6_reels",
         "top_performer"
       ]
@@ -55,16 +56,16 @@
       "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
       "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
       "wpId": 4369,
-      "compositeScore": 33,
+      "compositeScore": 35,
       "date": "2026-03-23T13:17:33",
-      "ageDays": 33,
+      "ageDays": 34,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.132,
-        "trend14d": -0.195,
-        "consecutiveRising": 0,
-        "variance7d": 0.063,
-        "dataPoints": 24
+        "trend7d": -0.103,
+        "trend14d": -0.186,
+        "consecutiveRising": 1,
+        "variance7d": 0.056,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -91,14 +92,14 @@
       "wpId": 4373,
       "compositeScore": 32,
       "date": "2026-03-23T13:20:52",
-      "ageDays": 33,
+      "ageDays": 34,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": -0.2,
         "trend14d": -0.304,
         "consecutiveRising": 0,
-        "variance7d": 0.114,
-        "dataPoints": 24
+        "variance7d": 0.124,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -120,19 +121,19 @@
       "flags": []
     },
     {
-      "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
-      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
-      "wpId": 4250,
+      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "wpId": 4253,
       "compositeScore": 29,
-      "date": "2026-03-23T11:56:46",
-      "ageDays": 33,
+      "date": "2026-03-23T11:58:01",
+      "ageDays": 34,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.326,
-        "trend14d": -0.442,
-        "consecutiveRising": 0,
-        "variance7d": 0.168,
-        "dataPoints": 23
+        "trend7d": -0.147,
+        "trend14d": -0.194,
+        "consecutiveRising": 2,
+        "variance7d": 0.096,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -156,19 +157,19 @@
       ]
     },
     {
-      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
-      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
-      "wpId": 4253,
-      "compositeScore": 28,
-      "date": "2026-03-23T11:58:01",
-      "ageDays": 33,
+      "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
+      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
+      "wpId": 4250,
+      "compositeScore": 29,
+      "date": "2026-03-23T11:56:46",
+      "ageDays": 34,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.282,
-        "trend14d": -0.222,
-        "consecutiveRising": 1,
-        "variance7d": 0.103,
-        "dataPoints": 23
+        "trend7d": -0.31,
+        "trend14d": -0.442,
+        "consecutiveRising": 0,
+        "variance7d": 0.178,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -195,50 +196,16 @@
       "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
       "wpId": 5072,
-      "compositeScore": 27,
+      "compositeScore": 26,
       "date": "2026-04-05T08:42:10",
-      "ageDays": 20,
+      "ageDays": 21,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.036,
-        "trend14d": -0.156,
-        "consecutiveRising": 1,
-        "variance7d": 0.036,
-        "dataPoints": 18
-      },
-      "actions": [
-        {
-          "action": "content_refresh",
-          "priority": "P0",
-          "reason": "Article declining -15%+ over 14d — urgent content refresh needed"
-        },
-        {
-          "action": "update_title_meta",
-          "priority": "P1",
-          "reason": "Declining article — refresh title/meta for improved CTR"
-        },
-        {
-          "action": "add_fresh_sections",
-          "priority": "P1",
-          "reason": "Declining article — add 2026 updates, new sections, fresh data"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
-      "title": "Trois semaines en Thaïlande m&rsquo;ont coûté le double",
-      "wpId": 3501,
-      "compositeScore": 27,
-      "date": "2026-03-15T16:05:18",
-      "ageDays": 40,
-      "state": "DECLINING",
-      "trajectory": {
-        "trend7d": -0.308,
-        "trend14d": -0.182,
+        "trend7d": -0.071,
+        "trend14d": -0.187,
         "consecutiveRising": 0,
-        "variance7d": 0.101,
-        "dataPoints": 24
+        "variance7d": 0.037,
+        "dataPoints": 19
       },
       "actions": [
         {
@@ -265,14 +232,14 @@
       "wpId": 4132,
       "compositeScore": 26,
       "date": "2026-03-18T20:02:54",
-      "ageDays": 37,
+      "ageDays": 38,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": -0.103,
         "trend14d": -0.212,
         "consecutiveRising": 0,
-        "variance7d": 0.049,
-        "dataPoints": 24
+        "variance7d": 0.058,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -297,16 +264,16 @@
       "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
       "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
       "wpId": 3090,
-      "compositeScore": 25,
+      "compositeScore": 26,
       "date": "2026-03-04T19:08:20",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.038,
-        "trend14d": -0.194,
-        "consecutiveRising": 0,
+        "trend7d": 0,
+        "trend14d": -0.161,
+        "consecutiveRising": 1,
         "variance7d": 0.032,
-        "dataPoints": 24
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -328,19 +295,19 @@
       "flags": []
     },
     {
-      "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
-      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
-      "wpId": 3546,
-      "compositeScore": 22,
-      "date": "2026-03-15T17:06:07",
-      "ageDays": 40,
+      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "wpId": 5296,
+      "compositeScore": 24,
+      "date": "2026-04-11T08:44:09",
+      "ageDays": 15,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": 0,
-        "trend14d": -0.154,
+        "trend7d": -0.2,
+        "trend14d": -0.2,
         "consecutiveRising": 0,
-        "variance7d": 0.063,
-        "dataPoints": 24
+        "variance7d": 0.084,
+        "dataPoints": 13
       },
       "actions": [
         {
@@ -360,115 +327,6 @@
         }
       ],
       "flags": []
-    },
-    {
-      "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
-      "title": "Laos Solo Femme 2026 : Sécurité et Risques Cachés",
-      "wpId": 3410,
-      "compositeScore": 22,
-      "date": "2026-03-14T19:48:33",
-      "ageDays": 41,
-      "state": "DECLINING",
-      "trajectory": {
-        "trend7d": 0,
-        "trend14d": -0.405,
-        "consecutiveRising": 0,
-        "variance7d": 0.072,
-        "dataPoints": 24
-      },
-      "actions": [
-        {
-          "action": "content_refresh",
-          "priority": "P0",
-          "reason": "Article declining -15%+ over 14d — urgent content refresh needed"
-        },
-        {
-          "action": "update_title_meta",
-          "priority": "P1",
-          "reason": "Declining article — refresh title/meta for improved CTR"
-        },
-        {
-          "action": "add_fresh_sections",
-          "priority": "P1",
-          "reason": "Declining article — add 2026 updates, new sections, fresh data"
-        }
-      ],
-      "flags": [
-        "zero_traffic"
-      ]
-    },
-    {
-      "slug": "voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite",
-      "title": "Thaïlande 2 Semaines 2026 : Bangkok, Chiang Mai, Krabi",
-      "wpId": 3264,
-      "compositeScore": 20,
-      "date": "2026-03-11T21:47:31",
-      "ageDays": 44,
-      "state": "DECLINING",
-      "trajectory": {
-        "trend7d": -0.167,
-        "trend14d": -0.167,
-        "consecutiveRising": 1,
-        "variance7d": 0.1,
-        "dataPoints": 23
-      },
-      "actions": [
-        {
-          "action": "content_refresh",
-          "priority": "P0",
-          "reason": "Article declining -15%+ over 14d — urgent content refresh needed"
-        },
-        {
-          "action": "update_title_meta",
-          "priority": "P1",
-          "reason": "Declining article — refresh title/meta for improved CTR"
-        },
-        {
-          "action": "add_fresh_sections",
-          "priority": "P1",
-          "reason": "Declining article — add 2026 updates, new sections, fresh data"
-        }
-      ],
-      "flags": [
-        "1_reels",
-        "zero_traffic"
-      ]
-    },
-    {
-      "slug": "visa-vietnam-lerreur-qui-ma-coute-cher-et-comment-leviter",
-      "title": "Visa Vietnam : L&rsquo;Erreur qui M&rsquo;a Coûté Cher et Comment L&rsquo;Éviter",
-      "wpId": 3024,
-      "compositeScore": 20,
-      "date": "2026-03-04T17:05:45",
-      "ageDays": 51,
-      "state": "DECLINING",
-      "trajectory": {
-        "trend7d": 0,
-        "trend14d": -0.231,
-        "consecutiveRising": 1,
-        "variance7d": 0.057,
-        "dataPoints": 23
-      },
-      "actions": [
-        {
-          "action": "content_refresh",
-          "priority": "P0",
-          "reason": "Article declining -15%+ over 14d — urgent content refresh needed"
-        },
-        {
-          "action": "update_title_meta",
-          "priority": "P1",
-          "reason": "Declining article — refresh title/meta for improved CTR"
-        },
-        {
-          "action": "add_fresh_sections",
-          "priority": "P1",
-          "reason": "Declining article — add 2026 updates, new sections, fresh data"
-        }
-      ],
-      "flags": [
-        "zero_traffic"
-      ]
     },
     {
       "slug": "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2",
@@ -476,48 +334,14 @@
       "wpId": 2857,
       "compositeScore": 20,
       "date": "2026-02-18T20:08:26",
-      "ageDays": 65,
+      "ageDays": 66,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": -0.167,
         "trend14d": -0.286,
         "consecutiveRising": 0,
-        "variance7d": 0.068,
-        "dataPoints": 24
-      },
-      "actions": [
-        {
-          "action": "content_refresh",
-          "priority": "P0",
-          "reason": "Article declining -15%+ over 14d — urgent content refresh needed"
-        },
-        {
-          "action": "update_title_meta",
-          "priority": "P1",
-          "reason": "Declining article — refresh title/meta for improved CTR"
-        },
-        {
-          "action": "add_fresh_sections",
-          "priority": "P1",
-          "reason": "Declining article — add 2026 updates, new sections, fresh data"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier",
-      "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
-      "wpId": 5189,
-      "compositeScore": 18,
-      "date": "2026-04-08T09:02:34",
-      "ageDays": 17,
-      "state": "DECLINING",
-      "trajectory": {
-        "trend7d": -0.1,
-        "trend14d": -0.182,
-        "consecutiveRising": 0,
-        "variance7d": 0.045,
-        "dataPoints": 15
+        "variance7d": 0.079,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -542,16 +366,16 @@
       "slug": "thailande-choisir-entre-koh-samui-koh-chang-et-koh-lanta-cest-renoncer-a-quoi",
       "title": "Thaïlande : choisir entre Koh Samui, Koh Chang et Koh Lanta, c&rsquo;est renoncer à quoi ?",
       "wpId": 4138,
-      "compositeScore": 18,
+      "compositeScore": 19,
       "date": "2026-03-19T07:22:48",
-      "ageDays": 37,
+      "ageDays": 38,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.333,
-        "trend14d": -0.217,
-        "consecutiveRising": 1,
-        "variance7d": 0.081,
-        "dataPoints": 23
+        "trend7d": -0.05,
+        "trend14d": -0.174,
+        "consecutiveRising": 2,
+        "variance7d": 0.075,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -575,19 +399,19 @@
       ]
     },
     {
-      "slug": "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver",
-      "title": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver",
-      "wpId": 3504,
-      "compositeScore": 18,
-      "date": "2026-03-15T16:14:48",
-      "ageDays": 40,
+      "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
+      "title": "Laos Solo Femme 2026 : Sécurité et Risques Cachés",
+      "wpId": 3410,
+      "compositeScore": 19,
+      "date": "2026-03-14T19:48:33",
+      "ageDays": 42,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.25,
-        "trend14d": -0.182,
-        "consecutiveRising": 1,
-        "variance7d": 0.081,
-        "dataPoints": 23
+        "trend7d": 0,
+        "trend14d": -0.441,
+        "consecutiveRising": 0,
+        "variance7d": 0.072,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -609,6 +433,40 @@
       "flags": [
         "zero_traffic"
       ]
+    },
+    {
+      "slug": "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier",
+      "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
+      "wpId": 5189,
+      "compositeScore": 18,
+      "date": "2026-04-08T09:02:34",
+      "ageDays": 18,
+      "state": "DECLINING",
+      "trajectory": {
+        "trend7d": -0.1,
+        "trend14d": -0.182,
+        "consecutiveRising": 0,
+        "variance7d": 0.054,
+        "dataPoints": 16
+      },
+      "actions": [
+        {
+          "action": "content_refresh",
+          "priority": "P0",
+          "reason": "Article declining -15%+ over 14d — urgent content refresh needed"
+        },
+        {
+          "action": "update_title_meta",
+          "priority": "P1",
+          "reason": "Declining article — refresh title/meta for improved CTR"
+        },
+        {
+          "action": "add_fresh_sections",
+          "priority": "P1",
+          "reason": "Declining article — add 2026 updates, new sections, fresh data"
+        }
+      ],
+      "flags": []
     },
     {
       "slug": "planifier-un-voyage-au-japon-comment-optimiser-chaque-journee",
@@ -616,14 +474,50 @@
       "wpId": 3040,
       "compositeScore": 18,
       "date": "2026-03-04T17:49:53",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": -0.1,
-        "trend14d": -0.25,
+        "trend14d": -0.217,
         "consecutiveRising": 0,
         "variance7d": 0.052,
-        "dataPoints": 23
+        "dataPoints": 24
+      },
+      "actions": [
+        {
+          "action": "content_refresh",
+          "priority": "P0",
+          "reason": "Article declining -15%+ over 14d — urgent content refresh needed"
+        },
+        {
+          "action": "update_title_meta",
+          "priority": "P1",
+          "reason": "Declining article — refresh title/meta for improved CTR"
+        },
+        {
+          "action": "add_fresh_sections",
+          "priority": "P1",
+          "reason": "Declining article — add 2026 updates, new sections, fresh data"
+        }
+      ],
+      "flags": [
+        "zero_traffic"
+      ]
+    },
+    {
+      "slug": "visa-vietnam-lerreur-qui-ma-coute-cher-et-comment-leviter",
+      "title": "Visa Vietnam : L&rsquo;Erreur qui M&rsquo;a Coûté Cher et Comment L&rsquo;Éviter",
+      "wpId": 3024,
+      "compositeScore": 18,
+      "date": "2026-03-04T17:05:45",
+      "ageDays": 52,
+      "state": "DECLINING",
+      "trajectory": {
+        "trend7d": -0.182,
+        "trend14d": -0.217,
+        "consecutiveRising": 0,
+        "variance7d": 0.046,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -652,14 +546,14 @@
       "wpId": 3198,
       "compositeScore": 17,
       "date": "2026-03-11T15:15:39",
-      "ageDays": 45,
+      "ageDays": 46,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": -0.105,
         "trend14d": -0.227,
         "consecutiveRising": 0,
-        "variance7d": 0.049,
-        "dataPoints": 24
+        "variance7d": 0.055,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -686,14 +580,14 @@
       "wpId": 2837,
       "compositeScore": 17,
       "date": "2026-02-18T18:30:51",
-      "ageDays": 65,
+      "ageDays": 66,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.105,
-        "trend14d": -0.261,
+        "trend7d": -0.056,
+        "trend14d": -0.227,
         "consecutiveRising": 0,
         "variance7d": 0.074,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -722,14 +616,14 @@
       "wpId": 3550,
       "compositeScore": 15,
       "date": "2026-03-15T17:35:18",
-      "ageDays": 40,
+      "ageDays": 41,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": -0.286,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -756,16 +650,16 @@
       "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
       "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "wpId": 3425,
-      "compositeScore": 15,
+      "compositeScore": 14,
       "date": "2026-03-14T20:55:07",
-      "ageDays": 41,
+      "ageDays": 42,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": 0,
-        "trend14d": -0.167,
+        "trend7d": -0.067,
+        "trend14d": -0.222,
         "consecutiveRising": 0,
-        "variance7d": 0,
-        "dataPoints": 24
+        "variance7d": 0.024,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -794,14 +688,14 @@
       "wpId": 3032,
       "compositeScore": 14,
       "date": "2026-03-04T17:44:30",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": -0.125,
         "trend14d": -0.263,
         "consecutiveRising": 0,
-        "variance7d": 0.065,
-        "dataPoints": 23
+        "variance7d": 0.067,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -830,14 +724,14 @@
       "wpId": 3015,
       "compositeScore": 14,
       "date": "2026-02-23T18:41:03",
-      "ageDays": 60,
+      "ageDays": 61,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": -0.067,
         "trend14d": -0.263,
         "consecutiveRising": 0,
         "variance7d": 0.034,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -866,14 +760,14 @@
       "wpId": 2989,
       "compositeScore": 14,
       "date": "2026-02-23T11:50:39",
-      "ageDays": 61,
+      "ageDays": 62,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": -0.176,
         "trend14d": -0.176,
         "consecutiveRising": 0,
-        "variance7d": 0.094,
-        "dataPoints": 23
+        "variance7d": 0.097,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -902,14 +796,14 @@
       "wpId": 2931,
       "compositeScore": 14,
       "date": "2026-02-21T09:41:20",
-      "ageDays": 63,
+      "ageDays": 64,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": -0.067,
         "trend14d": -0.263,
         "consecutiveRising": 0,
         "variance7d": 0.034,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -936,16 +830,16 @@
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Vietnam : pourquoi 14 800 € n&rsquo;ont pas été remboursés",
       "wpId": 4252,
-      "compositeScore": 65,
+      "compositeScore": 64,
       "date": "2026-03-23T11:57:07",
-      "ageDays": 33,
+      "ageDays": 34,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.016,
-        "trend14d": 0.667,
-        "consecutiveRising": 1,
-        "variance7d": 0.015,
-        "dataPoints": 24
+        "trend7d": -0.015,
+        "trend14d": 0.73,
+        "consecutiveRising": 0,
+        "variance7d": 0.014,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -967,16 +861,16 @@
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
       "wpId": 4254,
-      "compositeScore": 49,
+      "compositeScore": 51,
       "date": "2026-03-23T12:02:05",
-      "ageDays": 33,
+      "ageDays": 34,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.14,
-        "trend14d": 0.289,
-        "consecutiveRising": 1,
-        "variance7d": 0.079,
-        "dataPoints": 24
+        "trend7d": 0.133,
+        "trend14d": 0.342,
+        "consecutiveRising": 2,
+        "variance7d": 0.081,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -992,6 +886,38 @@
       ],
       "flags": [
         "3_reels",
+        "top_performer",
+        "fr_light"
+      ]
+    },
+    {
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
+      "wpId": 4372,
+      "compositeScore": 43,
+      "date": "2026-03-23T13:19:57",
+      "ageDays": 34,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.157,
+        "trend14d": 0.162,
+        "consecutiveRising": 2,
+        "variance7d": 0.167,
+        "dataPoints": 25
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": [
         "top_performer"
       ]
     },
@@ -1001,14 +927,14 @@
       "wpId": 4370,
       "compositeScore": 39,
       "date": "2026-03-23T13:17:41",
-      "ageDays": 33,
+      "ageDays": 34,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.083,
+        "trend7d": 0,
         "trend14d": 0.147,
-        "consecutiveRising": 1,
+        "consecutiveRising": 0,
         "variance7d": 0.045,
-        "dataPoints": 24
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -1028,82 +954,19 @@
       ]
     },
     {
-      "slug": "esim-philippines-globe-smart-comparatif-2026",
-      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
-      "wpId": 4372,
-      "compositeScore": 35,
-      "date": "2026-03-23T13:19:57",
-      "ageDays": 33,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": -0.314,
-        "trend14d": -0.054,
-        "consecutiveRising": 1,
-        "variance7d": 0.169,
-        "dataPoints": 24
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": [
-        "top_performer"
-      ]
-    },
-    {
-      "slug": "cambodge-ou-laos-lequel-choisir-2-semaines-budget",
-      "title": "Cambodge ou Laos 2026 : Comparatif Budget 2 Semaines",
-      "wpId": 4255,
-      "compositeScore": 35,
-      "date": "2026-03-23T12:02:51",
-      "ageDays": 33,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": 0,
-        "trend14d": -0.054,
-        "consecutiveRising": 3,
-        "variance7d": 0.094,
-        "dataPoints": 23
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": [
-        "1_reels",
-        "zero_traffic"
-      ]
-    },
-    {
       "slug": "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage",
       "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
       "wpId": 5260,
       "compositeScore": 33,
       "date": "2026-04-10T05:37:09",
-      "ageDays": 15,
+      "ageDays": 16,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.222,
+        "trend7d": 0.269,
         "trend14d": 0.179,
-        "consecutiveRising": 1,
-        "variance7d": 0.074,
-        "dataPoints": 13
+        "consecutiveRising": 0,
+        "variance7d": 0.044,
+        "dataPoints": 14
       },
       "actions": [
         {
@@ -1127,14 +990,14 @@
       "wpId": 4371,
       "compositeScore": 32,
       "date": "2026-03-23T13:18:06",
-      "ageDays": 33,
+      "ageDays": 34,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.059,
         "trend14d": -0.135,
-        "consecutiveRising": 1,
-        "variance7d": 0.067,
-        "dataPoints": 24
+        "consecutiveRising": 0,
+        "variance7d": 0.066,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -1151,19 +1014,80 @@
       "flags": []
     },
     {
+      "slug": "cambodge-ou-laos-lequel-choisir-2-semaines-budget",
+      "title": "Cambodge ou Laos 2026 : Comparatif Budget 2 Semaines",
+      "wpId": 4255,
+      "compositeScore": 31,
+      "date": "2026-03-23T12:02:51",
+      "ageDays": 34,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": 0.107,
+        "trend14d": 0.033,
+        "consecutiveRising": 0,
+        "variance7d": 0.081,
+        "dataPoints": 24
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": [
+        "1_reels",
+        "zero_traffic"
+      ]
+    },
+    {
       "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
       "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
       "wpId": 4071,
       "compositeScore": 31,
       "date": "2026-03-18T10:40:12",
-      "ageDays": 38,
+      "ageDays": 39,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.632,
+        "trend7d": 0.476,
         "trend14d": 0.632,
-        "consecutiveRising": 2,
-        "variance7d": 0.21,
-        "dataPoints": 24
+        "consecutiveRising": 0,
+        "variance7d": 0.233,
+        "dataPoints": 25
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
+    },
+    {
+      "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
+      "title": "Trois semaines en Thaïlande m&rsquo;ont coûté le double",
+      "wpId": 3501,
+      "compositeScore": 30,
+      "date": "2026-03-15T16:05:18",
+      "ageDays": 42,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.143,
+        "trend14d": -0.143,
+        "consecutiveRising": 1,
+        "variance7d": 0.101,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -1185,14 +1109,14 @@
       "wpId": 5119,
       "compositeScore": 28,
       "date": "2026-04-06T05:37:25",
-      "ageDays": 19,
+      "ageDays": 20,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.067,
+        "trend7d": -0.034,
         "trend14d": -0.067,
         "consecutiveRising": 0,
-        "variance7d": 0.04,
-        "dataPoints": 17
+        "variance7d": 0.044,
+        "dataPoints": 18
       },
       "actions": [
         {
@@ -1214,14 +1138,43 @@
       "wpId": 3107,
       "compositeScore": 28,
       "date": "2026-03-04T19:51:24",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.034,
-        "trend14d": 0.4,
-        "consecutiveRising": 1,
-        "variance7d": 0.025,
-        "dataPoints": 24
+        "trend14d": 0.474,
+        "consecutiveRising": 0,
+        "variance7d": 0.023,
+        "dataPoints": 25
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
+    },
+    {
+      "slug": "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas",
+      "title": "Thaïlande : deux détails que j&rsquo;ai découverts sur place",
+      "wpId": 4087,
+      "compositeScore": 27,
+      "date": "2026-03-18T11:08:26",
+      "ageDays": 39,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.036,
+        "trend14d": 0.125,
+        "consecutiveRising": 2,
+        "variance7d": 0.087,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -1243,14 +1196,14 @@
       "wpId": 5179,
       "compositeScore": 26,
       "date": "2026-04-08T05:23:01",
-      "ageDays": 17,
+      "ageDays": 18,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.103,
+        "trend7d": -0.071,
         "trend14d": -0.133,
         "consecutiveRising": 0,
-        "variance7d": 0.032,
-        "dataPoints": 15
+        "variance7d": 0.034,
+        "dataPoints": 16
       },
       "actions": [
         {
@@ -1272,101 +1225,14 @@
       "wpId": 4095,
       "compositeScore": 26,
       "date": "2026-03-18T11:30:24",
-      "ageDays": 38,
+      "ageDays": 39,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.037,
-        "trend14d": 0,
-        "consecutiveRising": 1,
-        "variance7d": 0.055,
-        "dataPoints": 24
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas",
-      "title": "Thaïlande : deux détails que j&rsquo;ai découverts sur place",
-      "wpId": 4087,
-      "compositeScore": 25,
-      "date": "2026-03-18T11:08:26",
-      "ageDays": 38,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": 0.042,
-        "trend14d": 0.087,
-        "consecutiveRising": 1,
-        "variance7d": 0.088,
-        "dataPoints": 24
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
-      "wpId": 3254,
-      "compositeScore": 25,
-      "date": "2026-03-11T20:13:21",
-      "ageDays": 44,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": 0.042,
-        "trend14d": 0.667,
-        "consecutiveRising": 1,
-        "variance7d": 0.181,
-        "dataPoints": 24
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "wpId": 4105,
-      "compositeScore": 22,
-      "date": "2026-03-18T13:26:31",
-      "ageDays": 38,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": 0,
-        "trend14d": 0.048,
-        "consecutiveRising": 1,
-        "variance7d": 0.062,
-        "dataPoints": 24
+        "trend7d": 0.083,
+        "trend14d": 0.083,
+        "consecutiveRising": 0,
+        "variance7d": 0.054,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -1386,16 +1252,16 @@
       "slug": "thailande-8-realites-que-les-blogs-voyage-cachent-aux-expatries",
       "title": "Thaïlande : 8 réalités que les blogs voyage cachent aux expatriés",
       "wpId": 4076,
-      "compositeScore": 22,
+      "compositeScore": 23,
       "date": "2026-03-18T10:48:58",
-      "ageDays": 38,
+      "ageDays": 39,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.083,
-        "trend14d": -0.043,
-        "consecutiveRising": 1,
+        "trend7d": 0,
+        "trend14d": 0,
+        "consecutiveRising": 2,
         "variance7d": 0.061,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -1414,19 +1280,48 @@
       ]
     },
     {
-      "slug": "thailande-3-risques-caches-que-les-blogs-voyage-oublient-de-mentionner",
-      "title": "Thaïlande : 3 risques cachés que les blogs voyage oublient de mentionner",
-      "wpId": 3484,
-      "compositeScore": 22,
-      "date": "2026-03-15T11:18:29",
+      "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
+      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
+      "wpId": 3546,
+      "compositeScore": 23,
+      "date": "2026-03-15T17:06:07",
       "ageDays": 41,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.083,
-        "trend14d": -0.043,
+        "trend7d": 0.045,
+        "trend14d": -0.115,
         "consecutiveRising": 1,
+        "variance7d": 0.057,
+        "dataPoints": 25
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
+    },
+    {
+      "slug": "thailande-3-risques-caches-que-les-blogs-voyage-oublient-de-mentionner",
+      "title": "Thaïlande : 3 risques cachés que les blogs voyage oublient de mentionner",
+      "wpId": 3484,
+      "compositeScore": 23,
+      "date": "2026-03-15T11:18:29",
+      "ageDays": 42,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": 0,
+        "trend14d": 0,
+        "consecutiveRising": 2,
         "variance7d": 0.061,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -1450,14 +1345,14 @@
       "wpId": 3259,
       "compositeScore": 22,
       "date": "2026-03-11T20:55:02",
-      "ageDays": 44,
+      "ageDays": 45,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.083,
-        "trend14d": 0,
-        "consecutiveRising": 1,
-        "variance7d": 0.081,
-        "dataPoints": 23
+        "trend7d": 0.158,
+        "trend14d": 0.158,
+        "consecutiveRising": 0,
+        "variance7d": 0.089,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -1477,19 +1372,19 @@
       ]
     },
     {
-      "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
-      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
-      "wpId": 5063,
-      "compositeScore": 21,
-      "date": "2026-04-05T05:24:53",
-      "ageDays": 20,
+      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
+      "wpId": 3254,
+      "compositeScore": 22,
+      "date": "2026-03-11T20:13:21",
+      "ageDays": 45,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.222,
-        "trend14d": -0.125,
-        "consecutiveRising": 1,
-        "variance7d": 0.086,
-        "dataPoints": 18
+        "trend7d": -0.083,
+        "trend14d": 0.158,
+        "consecutiveRising": 0,
+        "variance7d": 0.168,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -1506,18 +1401,139 @@
       "flags": []
     },
     {
+      "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
+      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+      "wpId": 5063,
+      "compositeScore": 21,
+      "date": "2026-04-05T05:24:53",
+      "ageDays": 21,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.087,
+        "trend14d": -0.125,
+        "consecutiveRising": 0,
+        "variance7d": 0.08,
+        "dataPoints": 19
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
+    },
+    {
+      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "wpId": 4105,
+      "compositeScore": 21,
+      "date": "2026-03-18T13:26:31",
+      "ageDays": 39,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": 0,
+        "trend14d": 0,
+        "consecutiveRising": 0,
+        "variance7d": 0.062,
+        "dataPoints": 25
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
+    },
+    {
+      "slug": "voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite",
+      "title": "Thaïlande 2 Semaines 2026 : Bangkok, Chiang Mai, Krabi",
+      "wpId": 3264,
+      "compositeScore": 20,
+      "date": "2026-03-11T21:47:31",
+      "ageDays": 45,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": 0.053,
+        "trend14d": 0.053,
+        "consecutiveRising": 0,
+        "variance7d": 0.104,
+        "dataPoints": 24
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": [
+        "1_reels",
+        "zero_traffic"
+      ]
+    },
+    {
       "slug": "vivre-en-couple-a-letranger-4-pieges-que-les-blogs-voyage-cachent",
       "title": "Vivre en couple à l&rsquo;étranger : 4 pièges que les blogs voyage cachent",
       "wpId": 4110,
       "compositeScore": 19,
       "date": "2026-03-18T13:53:17",
-      "ageDays": 38,
+      "ageDays": 39,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
+        "dataPoints": 25
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": [
+        "zero_traffic"
+      ]
+    },
+    {
+      "slug": "thailande-mai-2-pieges-que-les-blogs-cachent-aux-voyageurs-solo",
+      "title": "Thaïlande mai : 2 pièges que les blogs cachent aux voyageurs solo",
+      "wpId": 4066,
+      "compositeScore": 19,
+      "date": "2026-03-18T10:28:23",
+      "ageDays": 39,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.05,
+        "trend14d": 0,
+        "consecutiveRising": 2,
+        "variance7d": 0.075,
         "dataPoints": 24
       },
       "actions": [
@@ -1542,14 +1558,14 @@
       "wpId": 4062,
       "compositeScore": 19,
       "date": "2026-03-18T08:31:38",
-      "ageDays": 38,
+      "ageDays": 39,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -1573,14 +1589,14 @@
       "wpId": 4054,
       "compositeScore": 19,
       "date": "2026-03-18T08:07:33",
-      "ageDays": 38,
+      "ageDays": 39,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": 0.056,
         "trend14d": 0,
         "consecutiveRising": 0,
-        "variance7d": 0.075,
-        "dataPoints": 23
+        "variance7d": 0.076,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -1604,14 +1620,14 @@
       "wpId": 4022,
       "compositeScore": 19,
       "date": "2026-03-18T06:01:59",
-      "ageDays": 38,
+      "ageDays": 39,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": 0.056,
         "trend14d": 0,
         "consecutiveRising": 0,
-        "variance7d": 0.075,
-        "dataPoints": 23
+        "variance7d": 0.076,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -1635,14 +1651,45 @@
       "wpId": 3888,
       "compositeScore": 19,
       "date": "2026-03-17T07:58:30",
-      "ageDays": 39,
+      "ageDays": 40,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": [
+        "zero_traffic"
+      ]
+    },
+    {
+      "slug": "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver",
+      "title": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver",
+      "wpId": 3504,
+      "compositeScore": 19,
+      "date": "2026-03-15T16:14:48",
+      "ageDays": 42,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.05,
+        "trend14d": -0.136,
+        "consecutiveRising": 2,
+        "variance7d": 0.075,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -1666,14 +1713,45 @@
       "wpId": 3497,
       "compositeScore": 19,
       "date": "2026-03-15T15:53:55",
-      "ageDays": 41,
+      "ageDays": 42,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": 0.056,
         "trend14d": 0,
         "consecutiveRising": 0,
+        "variance7d": 0.076,
+        "dataPoints": 24
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": [
+        "zero_traffic"
+      ]
+    },
+    {
+      "slug": "thailande-les-vrais-arbitrages-budgetaires-que-personne-ne-te-montre",
+      "title": "Thaïlande : les vrais arbitrages budgétaires que personne ne te montre",
+      "wpId": 3494,
+      "compositeScore": 19,
+      "date": "2026-03-15T15:47:52",
+      "ageDays": 42,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.05,
+        "trend14d": 0,
+        "consecutiveRising": 2,
         "variance7d": 0.075,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -1697,76 +1775,14 @@
       "wpId": 3487,
       "compositeScore": 19,
       "date": "2026-03-15T11:26:43",
-      "ageDays": 41,
+      "ageDays": 42,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": [
-        "zero_traffic"
-      ]
-    },
-    {
-      "slug": "voyage-au-japon-et-en-asie-du-sud-est-avec-2500-usd-les-arbitrages-caches-qui-vont-decider-de-ton-itineraire",
-      "title": "Voyage au Japon et en Asie du Sud-Est avec 2500 USD : les arbitrages cachés qui vont décider de ton itinéraire",
-      "wpId": 3246,
-      "compositeScore": 19,
-      "date": "2026-03-11T18:57:57",
-      "ageDays": 44,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": 0,
-        "trend14d": 0,
-        "consecutiveRising": 0,
-        "variance7d": 0,
-        "dataPoints": 23
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": [
-        "zero_traffic"
-      ]
-    },
-    {
-      "slug": "voyage-en-coree-du-sud-en-avril-la-pollution-de-lair-compromet-elle-vraiment-ton-itineraire",
-      "title": "Voyage en Corée du Sud en avril : la pollution de l&rsquo;air compromet-elle vraiment ton itinéraire ?",
-      "wpId": 3243,
-      "compositeScore": 19,
-      "date": "2026-03-11T18:48:01",
-      "ageDays": 44,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": 0,
-        "trend14d": 0,
-        "consecutiveRising": 0,
-        "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -1790,14 +1806,14 @@
       "wpId": 3182,
       "compositeScore": 19,
       "date": "2026-03-04T22:15:31",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.095,
+        "trend7d": -0.136,
         "trend14d": 0.118,
-        "consecutiveRising": 1,
-        "variance7d": 0.102,
-        "dataPoints": 24
+        "consecutiveRising": 0,
+        "variance7d": 0.089,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -1814,81 +1830,19 @@
       "flags": []
     },
     {
-      "slug": "thailande-mai-2-pieges-que-les-blogs-cachent-aux-voyageurs-solo",
-      "title": "Thaïlande mai : 2 pièges que les blogs cachent aux voyageurs solo",
-      "wpId": 4066,
-      "compositeScore": 18,
-      "date": "2026-03-18T10:28:23",
-      "ageDays": 38,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": -0.25,
-        "trend14d": -0.053,
-        "consecutiveRising": 1,
-        "variance7d": 0.081,
-        "dataPoints": 23
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": [
-        "zero_traffic"
-      ]
-    },
-    {
-      "slug": "thailande-les-vrais-arbitrages-budgetaires-que-personne-ne-te-montre",
-      "title": "Thaïlande : les vrais arbitrages budgétaires que personne ne te montre",
-      "wpId": 3494,
-      "compositeScore": 18,
-      "date": "2026-03-15T15:47:52",
-      "ageDays": 41,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": -0.25,
-        "trend14d": -0.053,
-        "consecutiveRising": 1,
-        "variance7d": 0.081,
-        "dataPoints": 23
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": [
-        "zero_traffic"
-      ]
-    },
-    {
       "slug": "japon-en-solo-a-23-ans-pourquoi-18-jours-cest-trop-ou-pas-assez",
       "title": "Japon en solo à 23 ans : pourquoi 18 jours c&rsquo;est trop (ou pas assez)",
       "wpId": 3490,
       "compositeScore": 18,
       "date": "2026-03-15T11:35:31",
-      "ageDays": 41,
+      "ageDays": 42,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.053,
+        "trend7d": 0,
         "trend14d": 0,
-        "consecutiveRising": 1,
+        "consecutiveRising": 0,
         "variance7d": 0.06,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -1907,19 +1861,50 @@
       ]
     },
     {
-      "slug": "3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier",
-      "title": "3 jours à Singapour : l&rsquo;itinéraire que tu dois affiner (pas copier)",
-      "wpId": 3207,
+      "slug": "voyage-au-japon-et-en-asie-du-sud-est-avec-2500-usd-les-arbitrages-caches-qui-vont-decider-de-ton-itineraire",
+      "title": "Voyage au Japon et en Asie du Sud-Est avec 2500 USD : les arbitrages cachés qui vont décider de ton itinéraire",
+      "wpId": 3246,
       "compositeScore": 18,
-      "date": "2026-03-11T16:54:50",
-      "ageDays": 44,
+      "date": "2026-03-11T18:57:57",
+      "ageDays": 45,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
-        "trend14d": 0,
-        "consecutiveRising": 1,
-        "variance7d": 0.08,
-        "dataPoints": 23
+        "trend7d": -0.053,
+        "trend14d": -0.053,
+        "consecutiveRising": 0,
+        "variance7d": 0.019,
+        "dataPoints": 24
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": [
+        "zero_traffic"
+      ]
+    },
+    {
+      "slug": "voyage-en-coree-du-sud-en-avril-la-pollution-de-lair-compromet-elle-vraiment-ton-itineraire",
+      "title": "Voyage en Corée du Sud en avril : la pollution de l&rsquo;air compromet-elle vraiment ton itinéraire ?",
+      "wpId": 3243,
+      "compositeScore": 18,
+      "date": "2026-03-11T18:48:01",
+      "ageDays": 45,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.053,
+        "trend14d": -0.053,
+        "consecutiveRising": 0,
+        "variance7d": 0.019,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -1943,14 +1928,14 @@
       "wpId": 3167,
       "compositeScore": 18,
       "date": "2026-03-04T21:38:37",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.25,
+        "trend7d": -0.053,
         "trend14d": -0.053,
-        "consecutiveRising": 1,
-        "variance7d": 0.085,
-        "dataPoints": 23
+        "consecutiveRising": 0,
+        "variance7d": 0.08,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -1974,14 +1959,14 @@
       "wpId": 3150,
       "compositeScore": 18,
       "date": "2026-03-04T20:46:34",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.25,
+        "trend7d": -0.053,
         "trend14d": -0.053,
-        "consecutiveRising": 1,
-        "variance7d": 0.085,
-        "dataPoints": 23
+        "consecutiveRising": 0,
+        "variance7d": 0.08,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2005,14 +1990,14 @@
       "wpId": 3074,
       "compositeScore": 18,
       "date": "2026-03-04T18:58:43",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.053,
+        "trend7d": 0,
         "trend14d": -0.053,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2036,14 +2021,14 @@
       "wpId": 3005,
       "compositeScore": 18,
       "date": "2026-02-23T16:02:19",
-      "ageDays": 61,
+      "ageDays": 62,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": 0.059,
         "trend14d": 0,
         "consecutiveRising": 0,
-        "variance7d": 0.079,
-        "dataPoints": 23
+        "variance7d": 0.08,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2067,14 +2052,14 @@
       "wpId": 2997,
       "compositeScore": 18,
       "date": "2026-02-23T15:16:12",
-      "ageDays": 61,
+      "ageDays": 62,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": 0.059,
         "trend14d": 0,
         "consecutiveRising": 0,
-        "variance7d": 0.079,
-        "dataPoints": 23
+        "variance7d": 0.08,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2098,14 +2083,14 @@
       "wpId": 2980,
       "compositeScore": 18,
       "date": "2026-02-23T10:54:23",
-      "ageDays": 61,
+      "ageDays": 62,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": -0.1,
         "trend14d": 0.286,
-        "consecutiveRising": 1,
-        "variance7d": 0.094,
-        "dataPoints": 24
+        "consecutiveRising": 0,
+        "variance7d": 0.08,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -2129,14 +2114,14 @@
       "wpId": 2967,
       "compositeScore": 18,
       "date": "2026-02-23T08:29:05",
-      "ageDays": 61,
+      "ageDays": 62,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2160,14 +2145,14 @@
       "wpId": 2959,
       "compositeScore": 18,
       "date": "2026-02-23T07:59:20",
-      "ageDays": 61,
+      "ageDays": 62,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": 0.059,
         "trend14d": 0,
         "consecutiveRising": 0,
-        "variance7d": 0.079,
-        "dataPoints": 23
+        "variance7d": 0.08,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2191,14 +2176,14 @@
       "wpId": 5270,
       "compositeScore": 17,
       "date": "2026-04-10T09:40:41",
-      "ageDays": 15,
+      "ageDays": 16,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": 0.063,
         "trend14d": 0.133,
-        "consecutiveRising": 1,
-        "variance7d": 0.022,
-        "dataPoints": 13
+        "consecutiveRising": 0,
+        "variance7d": 0.028,
+        "dataPoints": 14
       },
       "actions": [
         {
@@ -2215,19 +2200,50 @@
       "flags": []
     },
     {
+      "slug": "3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier",
+      "title": "3 jours à Singapour : l&rsquo;itinéraire que tu dois affiner (pas copier)",
+      "wpId": 3207,
+      "compositeScore": 17,
+      "date": "2026-03-11T16:54:50",
+      "ageDays": 45,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.056,
+        "trend14d": -0.056,
+        "consecutiveRising": 0,
+        "variance7d": 0.08,
+        "dataPoints": 24
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": [
+        "zero_traffic"
+      ]
+    },
+    {
       "slug": "visa-run-en-thailande-secrets-caches-et-arbitrages-financiers",
       "title": "Visa Run en Thaïlande : Secrets Cachés et Arbitrages Financiers",
       "wpId": 2867,
       "compositeScore": 17,
       "date": "2026-02-18T20:46:05",
-      "ageDays": 65,
+      "ageDays": 66,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.261,
+        "trend7d": -0.056,
         "trend14d": -0.056,
-        "consecutiveRising": 1,
-        "variance7d": 0.079,
-        "dataPoints": 23
+        "consecutiveRising": 0,
+        "variance7d": 0.077,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2251,14 +2267,14 @@
       "wpId": 5239,
       "compositeScore": 16,
       "date": "2026-04-09T09:05:27",
-      "ageDays": 16,
+      "ageDays": 17,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": -0.059,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 14
+        "dataPoints": 15
       },
       "actions": [
         {
@@ -2280,14 +2296,14 @@
       "wpId": 4030,
       "compositeScore": 16,
       "date": "2026-03-18T06:42:56",
-      "ageDays": 38,
+      "ageDays": 39,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.059,
         "trend14d": -0.111,
         "consecutiveRising": 0,
         "variance7d": 0.03,
-        "dataPoints": 24
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -2309,14 +2325,43 @@
       "wpId": 4010,
       "compositeScore": 16,
       "date": "2026-03-17T19:18:01",
-      "ageDays": 38,
+      "ageDays": 39,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.059,
+        "trend7d": 0,
         "trend14d": -0.059,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
+    },
+    {
+      "slug": "3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles",
+      "title": "3 jours à Singapour : optimiser son itinéraire sans sacrifier les expériences essentielles",
+      "wpId": 3222,
+      "compositeScore": 16,
+      "date": "2026-03-11T17:06:35",
+      "ageDays": 45,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": 0.067,
+        "trend14d": 0.067,
+        "consecutiveRising": 1,
+        "variance7d": 0.048,
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -2338,14 +2383,14 @@
       "wpId": 4125,
       "compositeScore": 15,
       "date": "2026-03-18T19:33:49",
-      "ageDays": 37,
+      "ageDays": 38,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 24
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -2369,14 +2414,14 @@
       "wpId": 4117,
       "compositeScore": 15,
       "date": "2026-03-18T19:09:04",
-      "ageDays": 37,
+      "ageDays": 38,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2400,14 +2445,14 @@
       "wpId": 4058,
       "compositeScore": 15,
       "date": "2026-03-18T08:22:09",
-      "ageDays": 38,
+      "ageDays": 39,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0.068,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2431,14 +2476,14 @@
       "wpId": 4004,
       "compositeScore": 15,
       "date": "2026-03-17T19:09:17",
-      "ageDays": 38,
+      "ageDays": 39,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2462,14 +2507,14 @@
       "wpId": 3892,
       "compositeScore": 15,
       "date": "2026-03-17T08:04:32",
-      "ageDays": 39,
+      "ageDays": 40,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2493,14 +2538,14 @@
       "wpId": 3549,
       "compositeScore": 15,
       "date": "2026-03-15T17:14:02",
-      "ageDays": 40,
+      "ageDays": 41,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2519,19 +2564,48 @@
       ]
     },
     {
+      "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+      "title": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "wpId": 2924,
+      "compositeScore": 15,
+      "date": "2026-02-21T09:23:42",
+      "ageDays": 64,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": 0,
+        "trend14d": -0.062,
+        "consecutiveRising": 1,
+        "variance7d": 0.024,
+        "dataPoints": 25
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
+    },
+    {
       "slug": "vivre-a-lombok-en-tant-que-nomade-numerique-les-10-couts-caches-qui-devorent-ton-budget",
       "title": "Vivre à Lombok en tant que nomade numérique : les 10 coûts cachés qui dévorent ton budget",
       "wpId": 3251,
       "compositeScore": 14,
       "date": "2026-03-11T19:47:01",
-      "ageDays": 44,
+      "ageDays": 45,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.067,
         "trend14d": -0.067,
         "consecutiveRising": 0,
         "variance7d": 0.034,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2555,14 +2629,14 @@
       "wpId": 3239,
       "compositeScore": 14,
       "date": "2026-03-11T18:08:11",
-      "ageDays": 44,
+      "ageDays": 45,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.067,
         "trend14d": -0.067,
         "consecutiveRising": 0,
         "variance7d": 0.034,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2586,38 +2660,7 @@
       "wpId": 3234,
       "compositeScore": 14,
       "date": "2026-03-11T17:25:34",
-      "ageDays": 44,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": -0.067,
-        "trend14d": -0.067,
-        "consecutiveRising": 0,
-        "variance7d": 0.034,
-        "dataPoints": 23
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": [
-        "zero_traffic"
-      ]
-    },
-    {
-      "slug": "3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles",
-      "title": "3 jours à Singapour : optimiser son itinéraire sans sacrifier les expériences essentielles",
-      "wpId": 3222,
-      "compositeScore": 14,
-      "date": "2026-03-11T17:06:35",
-      "ageDays": 44,
+      "ageDays": 45,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.067,
@@ -2648,14 +2691,14 @@
       "wpId": 3174,
       "compositeScore": 14,
       "date": "2026-03-04T22:05:07",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": -0.067,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2679,14 +2722,14 @@
       "wpId": 3159,
       "compositeScore": 14,
       "date": "2026-03-04T21:19:08",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": -0.067,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2710,14 +2753,14 @@
       "wpId": 3122,
       "compositeScore": 14,
       "date": "2026-03-04T20:13:35",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": -0.067,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2741,14 +2784,14 @@
       "wpId": 3115,
       "compositeScore": 14,
       "date": "2026-03-04T20:07:23",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": -0.176,
         "trend14d": -0.067,
         "consecutiveRising": 0,
-        "variance7d": 0.073,
-        "dataPoints": 23
+        "variance7d": 0,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2772,14 +2815,14 @@
       "wpId": 3099,
       "compositeScore": 14,
       "date": "2026-03-04T19:28:11",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": -0.067,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2803,14 +2846,14 @@
       "wpId": 3082,
       "compositeScore": 14,
       "date": "2026-03-04T19:02:54",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": -0.176,
         "trend14d": -0.067,
         "consecutiveRising": 0,
-        "variance7d": 0.073,
-        "dataPoints": 23
+        "variance7d": 0,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2834,14 +2877,14 @@
       "wpId": 3065,
       "compositeScore": 14,
       "date": "2026-03-04T18:50:49",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": -0.067,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 24
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -2865,14 +2908,14 @@
       "wpId": 3056,
       "compositeScore": 14,
       "date": "2026-03-04T18:22:05",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": -0.067,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 24
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -2896,14 +2939,14 @@
       "wpId": 3048,
       "compositeScore": 14,
       "date": "2026-03-04T18:10:01",
-      "ageDays": 51,
+      "ageDays": 52,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": -0.067,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 24
+        "dataPoints": 25
       },
       "actions": [
         {
@@ -2927,14 +2970,14 @@
       "wpId": 2952,
       "compositeScore": 14,
       "date": "2026-02-23T07:52:55",
-      "ageDays": 61,
+      "ageDays": 62,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2958,14 +3001,14 @@
       "wpId": 2945,
       "compositeScore": 14,
       "date": "2026-02-21T10:25:43",
-      "ageDays": 63,
+      "ageDays": 64,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -2989,14 +3032,14 @@
       "wpId": 2938,
       "compositeScore": 14,
       "date": "2026-02-21T10:15:03",
-      "ageDays": 63,
+      "ageDays": 64,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -3015,48 +3058,19 @@
       ]
     },
     {
-      "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
-      "title": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
-      "wpId": 2924,
-      "compositeScore": 14,
-      "date": "2026-02-21T09:23:42",
-      "ageDays": 63,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": -0.067,
-        "trend14d": -0.125,
-        "consecutiveRising": 0,
-        "variance7d": 0.024,
-        "dataPoints": 24
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": []
-    },
-    {
       "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
       "title": "Voyager au Japon : eSIM et frais cachés à connaître",
       "wpId": 2916,
       "compositeScore": 14,
       "date": "2026-02-20T23:39:39",
-      "ageDays": 63,
+      "ageDays": 64,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 23
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -3080,14 +3094,14 @@
       "wpId": 2910,
       "compositeScore": 13,
       "date": "2026-02-18T23:09:07",
-      "ageDays": 65,
+      "ageDays": 66,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.071,
         "trend14d": -0.071,
         "consecutiveRising": 0,
-        "variance7d": 0.025,
-        "dataPoints": 23
+        "variance7d": 0.033,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -3111,14 +3125,14 @@
       "wpId": 2904,
       "compositeScore": 13,
       "date": "2026-02-18T22:58:44",
-      "ageDays": 65,
+      "ageDays": 66,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.071,
         "trend14d": -0.071,
         "consecutiveRising": 0,
-        "variance7d": 0.025,
-        "dataPoints": 23
+        "variance7d": 0.033,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -3142,14 +3156,14 @@
       "wpId": 2898,
       "compositeScore": 13,
       "date": "2026-02-18T22:11:00",
-      "ageDays": 65,
+      "ageDays": 66,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.071,
         "trend14d": -0.071,
         "consecutiveRising": 0,
-        "variance7d": 0.025,
-        "dataPoints": 23
+        "variance7d": 0.033,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -3173,14 +3187,14 @@
       "wpId": 2888,
       "compositeScore": 13,
       "date": "2026-02-18T21:52:32",
-      "ageDays": 65,
+      "ageDays": 66,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.071,
         "trend14d": -0.071,
         "consecutiveRising": 0,
-        "variance7d": 0.025,
-        "dataPoints": 23
+        "variance7d": 0.033,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -3204,14 +3218,14 @@
       "wpId": 2878,
       "compositeScore": 13,
       "date": "2026-02-18T21:22:00",
-      "ageDays": 65,
+      "ageDays": 66,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.071,
         "trend14d": -0.071,
         "consecutiveRising": 0,
-        "variance7d": 0.025,
-        "dataPoints": 23
+        "variance7d": 0.033,
+        "dataPoints": 24
       },
       "actions": [
         {
@@ -3233,16 +3247,16 @@
       "slug": "thailande-le-cout-reel-dun-voyage-entre-confort-et-luxe",
       "title": "Thaïlande : Le coût réel d&rsquo;un voyage entre confort et luxe",
       "wpId": 5702,
-      "compositeScore": 25,
+      "compositeScore": 26,
       "date": "2026-04-16T05:38:01",
-      "ageDays": 9,
+      "ageDays": 10,
       "state": "NEW",
       "trajectory": {
-        "trend7d": -0.107,
+        "trend7d": 0,
         "trend14d": 0,
-        "consecutiveRising": 1,
+        "consecutiveRising": 2,
         "variance7d": 0.068,
-        "dataPoints": 9
+        "dataPoints": 10
       },
       "actions": [
         {
@@ -3264,43 +3278,14 @@
       "wpId": 5678,
       "compositeScore": 25,
       "date": "2026-04-15T09:17:09",
-      "ageDays": 10,
+      "ageDays": 11,
       "state": "NEW",
       "trajectory": {
         "trend7d": 0.667,
         "trend14d": 0,
         "consecutiveRising": 0,
-        "variance7d": 0.274,
-        "dataPoints": 9
-      },
-      "actions": [
-        {
-          "action": "create_reel",
-          "priority": "P1",
-          "reason": "New article needs reel amplification within first 2 weeks"
-        },
-        {
-          "action": "social_share",
-          "priority": "P0",
-          "reason": "New article — share on FB/IG/Threads for initial traffic burst"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "wpId": 5296,
-      "compositeScore": 24,
-      "date": "2026-04-11T08:44:09",
-      "ageDays": 14,
-      "state": "NEW",
-      "trajectory": {
-        "trend7d": -0.111,
-        "trend14d": -0.2,
-        "consecutiveRising": 1,
-        "variance7d": 0.101,
-        "dataPoints": 12
+        "variance7d": 0.243,
+        "dataPoints": 10
       },
       "actions": [
         {
@@ -3322,14 +3307,14 @@
       "wpId": 5343,
       "compositeScore": 22,
       "date": "2026-04-12T08:43:46",
-      "ageDays": 13,
+      "ageDays": 14,
       "state": "NEW",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": 0.048,
         "trend14d": 0.1,
-        "consecutiveRising": 1,
+        "consecutiveRising": 0,
         "variance7d": 0.065,
-        "dataPoints": 11
+        "dataPoints": 12
       },
       "actions": [
         {
@@ -3351,14 +3336,43 @@
       "wpId": 5333,
       "compositeScore": 22,
       "date": "2026-04-12T05:34:09",
-      "ageDays": 13,
+      "ageDays": 14,
       "state": "NEW",
       "trajectory": {
-        "trend7d": -0.241,
+        "trend7d": -0.083,
         "trend14d": 0.048,
         "consecutiveRising": 0,
-        "variance7d": 0.033,
-        "dataPoints": 11
+        "variance7d": 0.031,
+        "dataPoints": 12
+      },
+      "actions": [
+        {
+          "action": "create_reel",
+          "priority": "P1",
+          "reason": "New article needs reel amplification within first 2 weeks"
+        },
+        {
+          "action": "social_share",
+          "priority": "P0",
+          "reason": "New article — share on FB/IG/Threads for initial traffic burst"
+        }
+      ],
+      "flags": []
+    },
+    {
+      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "wpId": 5742,
+      "compositeScore": 21,
+      "date": "2026-04-17T05:37:11",
+      "ageDays": 9,
+      "state": "NEW",
+      "trajectory": {
+        "trend7d": 0.313,
+        "trend14d": 0,
+        "consecutiveRising": 2,
+        "variance7d": 0.105,
+        "dataPoints": 9
       },
       "actions": [
         {
@@ -3380,43 +3394,14 @@
       "wpId": 5720,
       "compositeScore": 21,
       "date": "2026-04-16T09:18:09",
-      "ageDays": 9,
+      "ageDays": 10,
       "state": "NEW",
       "trajectory": {
-        "trend7d": 0.105,
+        "trend7d": 0.167,
         "trend14d": 0,
         "consecutiveRising": 0,
-        "variance7d": 0.082,
-        "dataPoints": 9
-      },
-      "actions": [
-        {
-          "action": "create_reel",
-          "priority": "P1",
-          "reason": "New article needs reel amplification within first 2 weeks"
-        },
-        {
-          "action": "social_share",
-          "priority": "P0",
-          "reason": "New article — share on FB/IG/Threads for initial traffic burst"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "wpId": 5742,
-      "compositeScore": 20,
-      "date": "2026-04-17T05:37:11",
-      "ageDays": 8,
-      "state": "NEW",
-      "trajectory": {
-        "trend7d": 0.176,
-        "trend14d": 0,
-        "consecutiveRising": 1,
-        "variance7d": 0.112,
-        "dataPoints": 8
+        "variance7d": 0.062,
+        "dataPoints": 10
       },
       "actions": [
         {
@@ -3438,14 +3423,14 @@
       "wpId": 5752,
       "compositeScore": 19,
       "date": "2026-04-17T09:17:14",
-      "ageDays": 8,
+      "ageDays": 9,
       "state": "NEW",
       "trajectory": {
         "trend7d": 0.267,
         "trend14d": 0,
-        "consecutiveRising": 1,
-        "variance7d": 0.104,
-        "dataPoints": 8
+        "consecutiveRising": 0,
+        "variance7d": 0.096,
+        "dataPoints": 9
       },
       "actions": [
         {
@@ -3467,14 +3452,14 @@
       "wpId": 5608,
       "compositeScore": 19,
       "date": "2026-04-13T09:55:08",
-      "ageDays": 12,
+      "ageDays": 13,
       "state": "NEW",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0.018,
-        "dataPoints": 10
+        "dataPoints": 11
       },
       "actions": [
         {
