@@ -508,7 +508,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 15,
+      "posted": 16,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -629,11 +629,19 @@
           "section": "Bali",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-26T03:36:19.574Z",
+          "threadId": "15523690",
+          "title": "23 avril 2026",
+          "section": "Philippines",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 62,
+  "total_posted": 63,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
