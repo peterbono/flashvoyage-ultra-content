@@ -1,26 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "vietnam",
-      "date": "2026-04-11",
-      "format": "cost-vs"
-    },
-    {
-      "name": "bali",
-      "date": "2026-04-11",
-      "format": "avantapres"
-    },
-    {
-      "name": "bali",
-      "date": "2026-04-11",
-      "format": "avantapres"
-    },
-    {
-      "name": "laos",
-      "date": "2026-04-11",
-      "format": "humor-tweet"
-    },
-    {
       "name": "thaïlande",
       "date": "2026-04-12",
       "format": "avantapres"
@@ -324,29 +304,14 @@
       "name": "singapour",
       "date": "2026-04-25",
       "format": "humor-tweet"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-26",
+      "format": "cost-vs"
     }
   ],
   "recentFormats": [
-    {
-      "format": "cost-vs",
-      "date": "2026-04-11T17:30:13.917Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-11T19:41:52.375Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-11T19:42:30.273Z"
-    },
-    {
-      "format": "humor-tweet",
-      "date": "2026-04-11T20:57:44.984Z"
-    },
-    {
-      "format": "humor-tweet",
-      "date": "2026-04-11T20:58:15.206Z"
-    },
     {
       "format": "avantapres",
       "date": "2026-04-12T17:33:26.017Z"
@@ -650,6 +615,10 @@
     {
       "format": "humor-tweet",
       "date": "2026-04-25T20:46:32.851Z"
+    },
+    {
+      "format": "cost-vs",
+      "date": "2026-04-26T17:18:32.354Z"
     }
   ],
   "recentArticleIds": [
@@ -695,21 +664,10 @@
     3254,
     4058,
     5742,
-    2888
+    2888,
+    4066
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:cost-vs|dest:vietnam|slug:thailande-vs-vietnam-larbitrag",
-      "date": "2026-04-11T17:30:13.917Z"
-    },
-    {
-      "fp": "fmt:avantapres|dest:bali|slug:choisir-le-bon-plan-esim-pour-",
-      "date": "2026-04-11T19:42:30.273Z"
-    },
-    {
-      "fp": "fmt:humor-tweet|dest:laos|slug:cambodge-ou-laos-lequel-choisi",
-      "date": "2026-04-11T20:58:15.206Z"
-    },
     {
       "fp": "fmt:avantapres|dest:thailande|slug:thailande-ou-vietnam-en-2026-l",
       "date": "2026-04-12T17:34:03.033Z"
@@ -865,6 +823,10 @@
     {
       "fp": "fmt:humor-tweet|dest:singapour|slug:48-heures-a-singapour-optimise",
       "date": "2026-04-25T20:46:32.851Z"
+    },
+    {
+      "fp": "fmt:cost-vs|dest:thailande|slug:thailande-mai-2-pieges-que-les",
+      "date": "2026-04-26T17:18:32.354Z"
     }
   ]
 }
