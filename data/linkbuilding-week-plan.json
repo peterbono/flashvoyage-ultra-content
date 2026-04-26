@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 22,
+      "posted": 23,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -180,6 +180,14 @@
           "thread": "jet-ski-avec-adolescents-en-thailande-d11170631",
           "title": "Jet ski avec adolescents en Thaïlande",
           "hasLink": true,
+          "generated": true,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-26T08:02:19.808Z",
+          "thread": "rome2rio-en-thailande-d11149701",
+          "title": "Question sur Rome2Rio en Thaïlande",
+          "hasLink": false,
           "generated": true,
           "status": "published"
         }
@@ -641,7 +649,7 @@
       ]
     }
   },
-  "total_posted": 63,
+  "total_posted": 64,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
