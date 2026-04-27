@@ -1,36 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "thaïlande",
-      "date": "2026-04-12",
-      "format": "avantapres"
-    },
-    {
-      "name": "thailande",
-      "date": "2026-04-12",
-      "format": "avantapres"
-    },
-    {
-      "name": "thaïlande",
-      "date": "2026-04-12",
-      "format": "avantapres"
-    },
-    {
-      "name": "thailande",
-      "date": "2026-04-12",
-      "format": "avantapres"
-    },
-    {
-      "name": "thaïlande & vietnam",
-      "date": "2026-04-12",
-      "format": "pick"
-    },
-    {
-      "name": "thailande",
-      "date": "2026-04-12",
-      "format": "pick"
-    },
-    {
       "name": "thailande",
       "date": "2026-04-13",
       "format": "cost-vs"
@@ -324,33 +294,19 @@
       "name": "japon",
       "date": "2026-04-26",
       "format": "pick"
+    },
+    {
+      "name": "vietnam",
+      "date": "2026-04-27",
+      "format": "avantapres"
+    },
+    {
+      "name": "vietnam",
+      "date": "2026-04-27",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
-    {
-      "format": "avantapres",
-      "date": "2026-04-12T17:33:26.017Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-12T17:34:03.033Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-12T19:45:02.107Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-12T19:45:34.805Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-12T21:01:51.272Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-12T21:02:12.946Z"
-    },
     {
       "format": "cost-vs",
       "date": "2026-04-13T17:59:28.890Z"
@@ -650,6 +606,14 @@
     {
       "format": "pick",
       "date": "2026-04-26T20:47:05.172Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-27T17:34:11.130Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-27T17:34:53.859Z"
     }
   ],
   "recentArticleIds": [
@@ -698,21 +662,10 @@
     2888,
     4066,
     4110,
-    4373
+    4373,
+    4250
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:avantapres|dest:thailande|slug:thailande-ou-vietnam-en-2026-l",
-      "date": "2026-04-12T17:34:03.033Z"
-    },
-    {
-      "fp": "fmt:avantapres|dest:thailande|slug:vietnam-vs-thailande-le-dilemm",
-      "date": "2026-04-12T19:45:34.805Z"
-    },
-    {
-      "fp": "fmt:pick|dest:thailande|slug:thailande-vs-vietnam-pourquoi-",
-      "date": "2026-04-12T21:02:12.946Z"
-    },
     {
       "fp": "fmt:cost-vs|dest:thailande|slug:thailande-ou-vietnam-en-2026-q",
       "date": "2026-04-13T17:59:28.890Z"
@@ -868,6 +821,10 @@
     {
       "fp": "fmt:pick|dest:japon|slug:japon-couple-15-jours-budget-t",
       "date": "2026-04-26T20:47:05.172Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:vietnam|slug:esim-vietnam-comparatif-forfai",
+      "date": "2026-04-27T17:34:53.859Z"
     }
   ]
 }
