@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 24,
+      "posted": 25,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -195,6 +195,14 @@
           "date": "2026-04-27T06:55:07.307Z",
           "thread": "agence-circuit-en-solo-iles-indonesie-d11464083",
           "title": "Recherche agence pour circuit en solo sur îles Indonésie",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-27T08:02:19.467Z",
+          "thread": "vols-entre-jakarta-flores-d11469362",
+          "title": "Vols entre Jakarta et Florès",
           "hasLink": false,
           "generated": true,
           "status": "published"
@@ -673,7 +681,7 @@
       ]
     }
   },
-  "total_posted": 67,
+  "total_posted": 68,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
