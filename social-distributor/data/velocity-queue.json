@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-04-27T12:32:57.662Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-04-27T18:28:53.402Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Philippines says no ban on Filipino seafarers in war-hit regions",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/philippines-says-no-ban-on-filipino-seafarers-in-war-hit-regions",
-      "velocityScore": 0.509,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1698,
-      "estimatedTrafficIn24h": 1659,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.68,
-        "timeDecay": 0.999,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 1.2
-      },
-      "detectedAt": "2026-04-27T11:22:42.000Z",
-      "scoredAt": "2026-04-27T12:32:47.060Z"
-    }
-  ]
+  "queue": []
 }
