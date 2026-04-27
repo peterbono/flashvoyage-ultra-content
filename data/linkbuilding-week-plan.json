@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 23,
+      "posted": 24,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -190,6 +190,14 @@
           "hasLink": false,
           "generated": true,
           "status": "published"
+        },
+        {
+          "date": "2026-04-27T06:55:07.307Z",
+          "thread": "agence-circuit-en-solo-iles-indonesie-d11464083",
+          "title": "Recherche agence pour circuit en solo sur îles Indonésie",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
         }
       ],
       "posts_queued": [
@@ -235,7 +243,7 @@
       ]
     },
     "quora_fr": {
-      "posted": 19,
+      "posted": 20,
       "target": 4,
       "blocker": "Cloudflare anti-bot — needs real Chrome",
       "account": "Florian Gouloubi (Gmail)",
@@ -416,6 +424,14 @@
           "hasLink": false,
           "status": "published",
           "generated": true
+        },
+        {
+          "date": "2026-04-27T06:53:17.683Z",
+          "id": "ai-5260-1777272760758",
+          "search": "Thaïlande ou Vietnam destination vacances",
+          "hasLink": false,
+          "status": "published",
+          "generated": true
         }
       ]
     },
@@ -516,7 +532,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 16,
+      "posted": 17,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -645,11 +661,19 @@
           "section": "Philippines",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-27T06:59:31.153Z",
+          "threadId": "15522644",
+          "title": "Location studios Bangkok",
+          "section": "Thailande",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 64,
+  "total_posted": 67,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
