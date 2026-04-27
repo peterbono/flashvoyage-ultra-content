@@ -309,6 +309,11 @@
       "name": "asie du sud-est",
       "date": "2026-04-27",
       "format": "avantapres"
+    },
+    {
+      "name": "coree",
+      "date": "2026-04-27",
+      "format": "humor"
     }
   ],
   "recentFormats": [
@@ -627,6 +632,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-27T19:40:40.778Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-04-27T20:49:32.113Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-04-27T20:50:06.386Z"
     }
   ],
   "recentArticleIds": [
@@ -677,7 +690,8 @@
     4110,
     4373,
     4250,
-    5608
+    5608,
+    4030
   ],
   "recentFingerprints": [
     {
@@ -843,6 +857,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:pourquoi-choisir-entre-airalo-",
       "date": "2026-04-27T19:40:40.778Z"
+    },
+    {
+      "fp": "fmt:humor|dest:coree|slug:coree-du-sud-les-2-frais-cache",
+      "date": "2026-04-27T20:50:06.386Z"
     }
   ]
 }
