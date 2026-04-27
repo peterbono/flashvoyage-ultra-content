@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-04-27T00:29:57.451Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-04-27T06:54:17.477Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Krabi flight evacuated after passenger tells attendant ‘beware of bomb’",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/world/aviation/chon-buri-man-makes-bomb-threat-on-krabi-bangkok-flight",
+      "velocityScore": 0.488,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2440,
+      "estimatedTrafficIn24h": 2385,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 4.1
+      },
+      "detectedAt": "2026-04-27T02:47:56.000Z",
+      "scoredAt": "2026-04-27T06:54:09.922Z"
+    }
+  ]
 }
