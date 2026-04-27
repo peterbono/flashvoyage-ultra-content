@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-26T04:15:28.651Z",
+  "timestamp": "2026-04-27T04:20:02.261Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,10 +17,10 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 120,
-    "medianTrafficSignal": "0.120",
+    "medianMonthlyPV": 130,
+    "medianTrafficSignal": "0.130",
     "avgRpm": 2,
-    "articlesAnalyzed": 41
+    "articlesAnalyzed": 40
   },
   "queue": [
     {
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 3.2,
-        "projectedMonthlyTraffic": 120,
-        "projectedMonthlyRevenue": 0.24,
+        "expectedRoi": 3.47,
+        "projectedMonthlyTraffic": 130,
+        "projectedMonthlyRevenue": 0.26,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (120 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (130 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 3.2,
-        "projectedMonthlyTraffic": 120,
-        "projectedMonthlyRevenue": 0.24,
+        "expectedRoi": 3.47,
+        "projectedMonthlyTraffic": 130,
+        "projectedMonthlyRevenue": 0.26,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (120 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (130 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,17 +77,42 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 3.2,
-        "projectedMonthlyTraffic": 120,
-        "projectedMonthlyRevenue": 0.24,
+        "expectedRoi": 3.47,
+        "projectedMonthlyTraffic": 130,
+        "projectedMonthlyRevenue": 0.26,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (120 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (130 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
       "rank": 4,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Voyager au Japon : eSIM et frais cachés à connaître",
+      "articleType": "support",
+      "context": {
+        "wpId": 2916,
+        "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -112,7 +137,7 @@
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -137,7 +162,7 @@
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -162,7 +187,7 @@
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -187,7 +212,7 @@
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -212,7 +237,82 @@
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Japon : les 2 pièges que les guides cachent aux backpackers",
+      "articleType": "support",
+      "context": {
+        "wpId": 3550,
+        "slug": "japon-les-2-pieges-que-les-guides-cachent-aux-backpackers",
+        "compositeScore": 14,
+        "freshness": 0.96,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Japon : la vérité que tu ne liras nulle part ailleurs",
+      "articleType": "support",
+      "context": {
+        "wpId": 3549,
+        "slug": "japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs",
+        "compositeScore": 14,
+        "freshness": 0.96,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Japon en solo à 23 ans : pourquoi 18 jours c&rsquo;est trop (ou pas assez)",
+      "articleType": "support",
+      "context": {
+        "wpId": 3490,
+        "slug": "japon-en-solo-a-23-ans-pourquoi-18-jours-cest-trop-ou-pas-assez",
+        "compositeScore": 14,
+        "freshness": 0.96,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -235,106 +335,6 @@
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Vivre à Lombok en tant que nomade numérique : les 10 coûts cachés qui dévorent ton budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 3251,
-        "slug": "vivre-a-lombok-en-tant-que-nomade-numerique-les-10-couts-caches-qui-devorent-ton-budget",
-        "compositeScore": 14,
-        "freshness": 0.95,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Itinéraire Indonésie 2026 : Ubud, Nusa Penida ou Gili ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 3239,
-        "slug": "itineraire-en-indonesie-arbitrer-entre-ubud-nusa-penida-et-les-iles-gili-sans-sacrifier-ton-experience",
-        "compositeScore": 14,
-        "freshness": 0.95,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Arbitrer son itinéraire Japon-Chine-Mongolie en 15-20 jours : les vrais dilemmes logistiques",
-      "articleType": "support",
-      "context": {
-        "wpId": 3234,
-        "slug": "arbitrer-son-itineraire-japon-chine-mongolie-en-15-20-jours-les-vrais-dilemmes-logistiques",
-        "compositeScore": 14,
-        "freshness": 0.95,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
-      "articleType": "support",
-      "context": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 14,
-        "freshness": 0.93,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
     }
   ],
   "budgetAllocation": {
@@ -342,8 +342,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.024,
-    "expectedDailyRoi": 0.11
+    "expectedDailyRevenue": 0.026,
+    "expectedDailyRoi": 0.12
   },
   "summary": {
     "write_new": 0,

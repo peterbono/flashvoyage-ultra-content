@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-04-26T04:15:29.596Z",
+  "timestamp": "2026-04-27T04:20:03.245Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-04-26T04:15:30.216Z",
+      "lastScan": "2026-04-27T04:20:04.596Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-04-26T04:15:30.688Z",
+      "lastScan": "2026-04-27T04:20:05.382Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-04-26T04:16:42.597Z",
-      "urlCount": 9463,
+      "lastScan": "2026-04-27T04:21:19.849Z",
+      "urlCount": 9467,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9604,7 +9604,11 @@
         "https://generationvoyage.fr/visiter-paimpol-faire-voir/": "2026-04-25T09:07:48+00:00",
         "https://generationvoyage.fr/sagrada-familia-parc-guell/": "2026-04-25T11:07:24+00:00",
         "https://generationvoyage.fr/rome-naples/": "2026-04-25T13:09:11+00:00",
-        "https://generationvoyage.fr/dormir-iles-des-saintes/": "2026-04-25T15:10:33+00:00"
+        "https://generationvoyage.fr/dormir-iles-des-saintes/": "2026-04-25T15:10:33+00:00",
+        "https://generationvoyage.fr/visiter-cambrai-faire-voir/": "2026-04-26T08:13:12+00:00",
+        "https://generationvoyage.fr/dormir-arezzo/": "2026-04-26T11:14:29+00:00",
+        "https://generationvoyage.fr/acces-alhambra-grenade/": "2026-04-26T14:20:30+00:00",
+        "https://generationvoyage.fr/dormir-beaune/": "2026-04-26T16:21:48+00:00"
       }
     }
   }

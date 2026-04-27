@@ -1,26 +1,105 @@
 {
   "summary": {
-    "generatedAt": "2026-04-26T04:15:27.726Z",
-    "elapsedSeconds": 7,
+    "generatedAt": "2026-04-27T04:20:01.288Z",
+    "elapsedSeconds": 11,
     "totalArticles": 110,
     "articlesWithRecommendations": 4,
-    "totalRecommendations": 4,
+    "totalRecommendations": 6,
     "byPriority": {
       "P0": 0,
-      "P1": 0,
-      "P2": 4
+      "P1": 1,
+      "P2": 5
     },
     "byType": {
+      "engagement": 1,
+      "amplification": 1,
       "seo": 4
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
         "count": 4
+      },
+      {
+        "action": "IMPROVE_READABILITY",
+        "count": 1
+      },
+      {
+        "action": "CREATE_REELS",
+        "count": 1
       }
     ]
   },
   "articles": [
+    {
+      "wpId": 4252,
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Vietnam : pourquoi 14 800 € n&rsquo;ont pas été remboursés",
+      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
+      "wordCount": 4310,
+      "widgetCount": 3,
+      "internalLinks": 48,
+      "lastModified": "2026-04-22T13:41:52",
+      "ga4": {
+        "pageviews": 32,
+        "sessions": 24,
+        "avgDuration": 55
+      },
+      "gsc": {
+        "impressions": 73,
+        "clicks": 1,
+        "position": 14.8,
+        "topQueries": [
+          {
+            "query": "assurance voyage vietnam",
+            "position": 67.4,
+            "impressions": 7,
+            "ctr": 0
+          },
+          {
+            "query": "assurance voyage vietnam obligatoire",
+            "position": 5,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "engagement",
+          "priority": "P1",
+          "metric": "Temps lu: 55s / 1293s attendus (4% du contenu lu)",
+          "action": "IMPROVE_READABILITY",
+          "details": "Seulement 4% du contenu est lu (4310 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
+          "effort": "30min",
+          "expectedImpact": "Temps sur page +40 a +60%, meilleur signal qualite pour Google"
+        },
+        {
+          "type": "amplification",
+          "priority": "P2",
+          "metric": "32 vues/mois, 0 reels lies a cet article",
+          "action": "CREATE_REELS",
+          "details": "Article populaire sans couverture reel. Creer 2-3 reels automatises : 1) Trip Pick \"X spots incontournables a [destination]\" — format liste visuelle. 2) Budget Jour si l'article contient des donnees budget. 3) Versus si l'article compare 2 destinations. Les reels drivent du traffic IG → article via Story links + lien bio. Utiliser le module reels/generator.js.",
+          "effort": "5min (auto-genere via pipeline reels)",
+          "expectedImpact": "+20 a +50 visites/mois via IG Stories (actuellement 0 referral social)"
+        },
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 3,
+      "p0Count": 0
+    },
     {
       "wpId": 4487,
       "slug": "voyage-thailande-pas-cher-2026-budget",
@@ -31,9 +110,9 @@
       "internalLinks": 45,
       "lastModified": "2026-04-22T12:43:04",
       "ga4": {
-        "pageviews": 19,
-        "sessions": 15,
-        "avgDuration": 152
+        "pageviews": 20,
+        "sessions": 16,
+        "avgDuration": 143
       },
       "gsc": {
         "impressions": 0,
@@ -47,6 +126,102 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4370,
+      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+      "title": "10 jours à Bali, Lombok et Gili : ce que j&rsquo;ai vraiment fait",
+      "url": "https://flashvoyage.com/bali-lombok-gili-10-jours-itineraire-budget-2026/",
+      "wordCount": 3551,
+      "widgetCount": 0,
+      "internalLinks": 42,
+      "lastModified": "2026-04-22T13:42:03",
+      "ga4": {
+        "pageviews": 16,
+        "sessions": 13,
+        "avgDuration": 306
+      },
+      "gsc": {
+        "impressions": 10,
+        "clicks": 2,
+        "position": 8,
+        "topQueries": [
+          {
+            "query": "itinéraire lombok 10 jours",
+            "position": 10,
+            "impressions": 2,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"itinéraire lombok 10 jours\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"itinéraire lombok 10 jours\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4254,
+      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
+      "url": "https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/",
+      "wordCount": 4270,
+      "widgetCount": 3,
+      "internalLinks": 39,
+      "lastModified": "2026-04-22T12:42:48",
+      "ga4": {
+        "pageviews": 16,
+        "sessions": 15,
+        "avgDuration": 16
+      },
+      "gsc": {
+        "impressions": 32,
+        "clicks": 0,
+        "position": 18.8,
+        "topQueries": [
+          {
+            "query": "bali ou thailande",
+            "position": 36.3,
+            "impressions": 8,
+            "ctr": 0
+          },
+          {
+            "query": "bali indonesia thailand",
+            "position": 100,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"bali ou thailande\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -134,6 +309,62 @@
       "p0Count": 0
     },
     {
+      "wpId": 4110,
+      "slug": "vivre-en-couple-a-letranger-4-pieges-que-les-blogs-voyage-cachent",
+      "title": "Vivre en couple à l&rsquo;étranger : 4 pièges que les blogs voyage cachent",
+      "url": "https://flashvoyage.com/vivre-en-couple-a-letranger-4-pieges-que-les-blogs-voyage-cachent/",
+      "wordCount": 4386,
+      "widgetCount": 0,
+      "internalLinks": 41,
+      "lastModified": "2026-04-12T15:39:47",
+      "ga4": {
+        "pageviews": 9,
+        "sessions": 9,
+        "avgDuration": 2
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4373,
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
+      "wordCount": 4333,
+      "widgetCount": 2,
+      "internalLinks": 45,
+      "lastModified": "2026-04-22T12:45:35",
+      "ga4": {
+        "pageviews": 8,
+        "sessions": 7,
+        "avgDuration": 34
+      },
+      "gsc": {
+        "impressions": 19,
+        "clicks": 0,
+        "position": 6.2,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4132,
       "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
       "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
@@ -207,34 +438,6 @@
         "impressions": 0,
         "clicks": 0,
         "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4373,
-      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
-      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
-      "wordCount": 4333,
-      "widgetCount": 2,
-      "internalLinks": 45,
-      "lastModified": "2026-04-22T12:45:35",
-      "ga4": {
-        "pageviews": 7,
-        "sessions": 7,
-        "avgDuration": 29
-      },
-      "gsc": {
-        "impressions": 19,
-        "clicks": 0,
-        "position": 6.2,
         "topQueries": []
       },
       "reels": {
@@ -400,10 +603,16 @@
         "avgDuration": 35
       },
       "gsc": {
-        "impressions": 36,
-        "clicks": 2,
-        "position": 5.7,
+        "impressions": 33,
+        "clicks": 1,
+        "position": 7.4,
         "topQueries": [
+          {
+            "query": "dore site instagram com reel",
+            "position": 53,
+            "impressions": 1,
+            "ctr": 0
+          },
           {
             "query": "philippines globe",
             "position": 7,
@@ -411,34 +620,6 @@
             "ctr": 0
           }
         ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3090,
-      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
-      "wordCount": 1646,
-      "widgetCount": 0,
-      "internalLinks": 23,
-      "lastModified": "2026-04-12T15:45:18",
-      "ga4": {
-        "pageviews": 5,
-        "sessions": 5,
-        "avgDuration": 176
-      },
-      "gsc": {
-        "impressions": 10,
-        "clicks": 3,
-        "position": 11,
-        "topQueries": []
       },
       "reels": {
         "linkedReels": 0,
@@ -533,48 +714,31 @@
       "p0Count": 0
     },
     {
-      "wpId": 4369,
-      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
-      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
-      "url": "https://flashvoyage.com/visa-cambodge-francais-2026-evisa-prix-pieges/",
-      "wordCount": 2366,
-      "widgetCount": 3,
-      "internalLinks": 43,
-      "lastModified": "2026-03-31T18:06:34",
+      "wpId": 3090,
+      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
+      "wordCount": 1646,
+      "widgetCount": 0,
+      "internalLinks": 23,
+      "lastModified": "2026-04-12T15:45:18",
       "ga4": {
         "pageviews": 4,
         "sessions": 4,
-        "avgDuration": 8
+        "avgDuration": 219
       },
       "gsc": {
         "impressions": 10,
-        "clicks": 0,
-        "position": 16.7,
-        "topQueries": [
-          {
-            "query": "visa cambodge 2022",
-            "position": 96,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
+        "clicks": 3,
+        "position": 11,
+        "topQueries": []
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"visa cambodge 2022\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"visa cambodge 2022\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -690,115 +854,48 @@
       "p0Count": 0
     },
     {
-      "wpId": 4105,
-      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "url": "https://flashvoyage.com/vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher/",
-      "wordCount": 2286,
-      "widgetCount": 0,
-      "internalLinks": 42,
-      "lastModified": "2026-04-12T15:39:49",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 5
-      },
-      "gsc": {
-        "impressions": 1,
-        "clicks": 0,
-        "position": 8,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4095,
-      "slug": "vietnam-4-pieges-que-les-blogs-voyage-cachent-et-que-les-voyageurs-decouvrent-trop-tard",
-      "title": "Vietnam : 4 pièges que les blogs voyage cachent (et que les voyageurs découvrent trop tard)",
-      "url": "https://flashvoyage.com/vietnam-4-pieges-que-les-blogs-voyage-cachent-et-que-les-voyageurs-decouvrent-trop-tard/",
-      "wordCount": 2786,
-      "widgetCount": 0,
-      "internalLinks": 29,
-      "lastModified": "2026-04-22T12:45:03",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 6
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4087,
-      "slug": "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas",
-      "title": "Thaïlande : deux détails que j&rsquo;ai découverts sur place",
-      "url": "https://flashvoyage.com/thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas/",
-      "wordCount": 4693,
-      "widgetCount": 0,
-      "internalLinks": 35,
-      "lastModified": "2026-04-22T13:46:28",
+      "wpId": 4369,
+      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "url": "https://flashvoyage.com/visa-cambodge-francais-2026-evisa-prix-pieges/",
+      "wordCount": 2366,
+      "widgetCount": 3,
+      "internalLinks": 43,
+      "lastModified": "2026-03-31T18:06:34",
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
         "avgDuration": 10
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 10,
         "clicks": 0,
-        "position": 0,
-        "topQueries": []
+        "position": 16.7,
+        "topQueries": [
+          {
+            "query": "visa cambodge 2022",
+            "position": 96,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3198,
-      "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
-      "title": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
-      "url": "https://flashvoyage.com/maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique/",
-      "wordCount": 3150,
-      "widgetCount": 0,
-      "internalLinks": 38,
-      "lastModified": "2026-04-22T13:40:44",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 2
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"visa cambodge 2022\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"visa cambodge 2022\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -886,48 +983,87 @@
       "p0Count": 0
     },
     {
-      "wpId": 4370,
-      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-      "title": "10 jours à Bali, Lombok et Gili : ce que j&rsquo;ai vraiment fait",
-      "url": "https://flashvoyage.com/bali-lombok-gili-10-jours-itineraire-budget-2026/",
-      "wordCount": 3551,
+      "wpId": 4105,
+      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "url": "https://flashvoyage.com/vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher/",
+      "wordCount": 2286,
       "widgetCount": 0,
       "internalLinks": 42,
-      "lastModified": "2026-04-22T13:42:03",
+      "lastModified": "2026-04-12T15:39:49",
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 22
+        "avgDuration": 6
       },
       "gsc": {
-        "impressions": 10,
-        "clicks": 2,
+        "impressions": 1,
+        "clicks": 0,
         "position": 8,
-        "topQueries": [
-          {
-            "query": "itinéraire lombok 10 jours",
-            "position": 10,
-            "impressions": 2,
-            "ctr": 0
-          }
-        ]
+        "topQueries": []
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"itinéraire lombok 10 jours\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"itinéraire lombok 10 jours\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4095,
+      "slug": "vietnam-4-pieges-que-les-blogs-voyage-cachent-et-que-les-voyageurs-decouvrent-trop-tard",
+      "title": "Vietnam : 4 pièges que les blogs voyage cachent (et que les voyageurs découvrent trop tard)",
+      "url": "https://flashvoyage.com/vietnam-4-pieges-que-les-blogs-voyage-cachent-et-que-les-voyageurs-decouvrent-trop-tard/",
+      "wordCount": 2786,
+      "widgetCount": 0,
+      "internalLinks": 29,
+      "lastModified": "2026-04-22T12:45:03",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4087,
+      "slug": "thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas",
+      "title": "Thaïlande : deux détails que j&rsquo;ai découverts sur place",
+      "url": "https://flashvoyage.com/thailande-2-pieges-caches-que-les-blogs-voyage-ne-te-disent-pas/",
+      "wordCount": 4693,
+      "widgetCount": 0,
+      "internalLinks": 35,
+      "lastModified": "2026-04-22T13:46:28",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 27
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -939,6 +1075,34 @@
       "widgetCount": 0,
       "internalLinks": 36,
       "lastModified": "2026-04-12T15:41:42",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3198,
+      "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+      "title": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "url": "https://flashvoyage.com/maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique/",
+      "wordCount": 3150,
+      "widgetCount": 0,
+      "internalLinks": 38,
+      "lastModified": "2026-04-22T13:40:44",
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
@@ -1015,108 +1179,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4254,
-      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
-      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
-      "url": "https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/",
-      "wordCount": 4270,
-      "widgetCount": 3,
-      "internalLinks": 39,
-      "lastModified": "2026-04-22T12:42:48",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 6
-      },
-      "gsc": {
-        "impressions": 30,
-        "clicks": 0,
-        "position": 19.3,
-        "topQueries": [
-          {
-            "query": "bali ou thailande",
-            "position": 36.3,
-            "impressions": 8,
-            "ctr": 0
-          },
-          {
-            "query": "bali indonesia thailand",
-            "position": 100,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"bali ou thailande\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4252,
-      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-      "title": "Vietnam : pourquoi 14 800 € n&rsquo;ont pas été remboursés",
-      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
-      "wordCount": 4310,
-      "widgetCount": 3,
-      "internalLinks": 48,
-      "lastModified": "2026-04-22T13:41:52",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 13
-      },
-      "gsc": {
-        "impressions": 79,
-        "clicks": 1,
-        "position": 14.2,
-        "topQueries": [
-          {
-            "query": "assurance voyage vietnam",
-            "position": 59.9,
-            "impressions": 8,
-            "ctr": 0
-          },
-          {
-            "query": "assurance voyage vietnam obligatoire",
-            "position": 5,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
       "wpId": 4030,
       "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
       "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
@@ -1129,34 +1191,6 @@
         "pageviews": 1,
         "sessions": 1,
         "avgDuration": 31
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4010,
-      "slug": "pourquoi-personne-ne-te-previent-vraiment-sur-japon-guide-mars-2026",
-      "title": "Pourquoi personne ne te prévient vraiment sur Japon — Guide mars 2026",
-      "url": "https://flashvoyage.com/pourquoi-personne-ne-te-previent-vraiment-sur-japon-guide-mars-2026/",
-      "wordCount": 4091,
-      "widgetCount": 0,
-      "internalLinks": 41,
-      "lastModified": "2026-04-22T12:45:26",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 7
       },
       "gsc": {
         "impressions": 0,
@@ -1218,34 +1252,6 @@
         "impressions": 3,
         "clicks": 0,
         "position": 10,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 2924,
-      "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
-      "title": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
-      "url": "https://flashvoyage.com/malaisie-les-11-frais-caches-qui-font-exploser-ton-budget/",
-      "wordCount": 3055,
-      "widgetCount": 0,
-      "internalLinks": 26,
-      "lastModified": "2026-04-22T10:27:05",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 6
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -1453,34 +1459,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4110,
-      "slug": "vivre-en-couple-a-letranger-4-pieges-que-les-blogs-voyage-cachent",
-      "title": "Vivre en couple à l&rsquo;étranger : 4 pièges que les blogs voyage cachent",
-      "url": "https://flashvoyage.com/vivre-en-couple-a-letranger-4-pieges-que-les-blogs-voyage-cachent/",
-      "wordCount": 4386,
-      "widgetCount": 0,
-      "internalLinks": 41,
-      "lastModified": "2026-04-12T15:39:47",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4076,
       "slug": "thailande-8-realites-que-les-blogs-voyage-cachent-aux-expatries",
       "title": "Thaïlande : 8 réalités que les blogs voyage cachent aux expatriés",
@@ -1551,9 +1529,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 10,
-        "clicks": 0,
-        "position": 6.3,
+        "impressions": 11,
+        "clicks": 1,
+        "position": 6.8,
         "topQueries": []
       },
       "reels": {
@@ -1629,6 +1607,34 @@
       "widgetCount": 0,
       "internalLinks": 39,
       "lastModified": "2026-04-13T05:48:20",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4010,
+      "slug": "pourquoi-personne-ne-te-previent-vraiment-sur-japon-guide-mars-2026",
+      "title": "Pourquoi personne ne te prévient vraiment sur Japon — Guide mars 2026",
+      "url": "https://flashvoyage.com/pourquoi-personne-ne-te-previent-vraiment-sur-japon-guide-mars-2026/",
+      "wordCount": 4091,
+      "widgetCount": 0,
+      "internalLinks": 41,
+      "lastModified": "2026-04-22T12:45:26",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -2167,9 +2173,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 0,
         "clicks": 0,
-        "position": 12,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -2895,9 +2901,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 31,
+        "impressions": 32,
         "clicks": 0,
-        "position": 7.4,
+        "position": 7.5,
         "topQueries": [
           {
             "query": "itinéraire luxe asie du sud-est",
@@ -2952,6 +2958,34 @@
       "widgetCount": 0,
       "internalLinks": 15,
       "lastModified": "2026-04-22T10:27:04",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 2924,
+      "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+      "title": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "url": "https://flashvoyage.com/malaisie-les-11-frais-caches-qui-font-exploser-ton-budget/",
+      "wordCount": 3055,
+      "widgetCount": 0,
+      "internalLinks": 26,
+      "lastModified": "2026-04-22T10:27:05",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
