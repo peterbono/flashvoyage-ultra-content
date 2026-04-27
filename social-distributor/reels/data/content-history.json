@@ -304,6 +304,11 @@
       "name": "vietnam",
       "date": "2026-04-27",
       "format": "avantapres"
+    },
+    {
+      "name": "asie du sud-est",
+      "date": "2026-04-27",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -614,6 +619,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-27T17:34:53.859Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-27T19:39:58.698Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-27T19:40:40.778Z"
     }
   ],
   "recentArticleIds": [
@@ -663,7 +676,8 @@
     4066,
     4110,
     4373,
-    4250
+    4250,
+    5608
   ],
   "recentFingerprints": [
     {
@@ -825,6 +839,10 @@
     {
       "fp": "fmt:avantapres|dest:vietnam|slug:esim-vietnam-comparatif-forfai",
       "date": "2026-04-27T17:34:53.859Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:pourquoi-choisir-entre-airalo-",
+      "date": "2026-04-27T19:40:40.778Z"
     }
   ]
 }
