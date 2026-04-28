@@ -314,6 +314,16 @@
       "name": "philippines",
       "date": "2026-04-28",
       "format": "pick"
+    },
+    {
+      "name": "japon (tokyo, kyoto) + chine (beijing) + mongolie (ulaanbaatar)",
+      "date": "2026-04-28",
+      "format": "pick"
+    },
+    {
+      "name": "philippines",
+      "date": "2026-04-28",
+      "format": "pick"
     }
   ],
   "recentFormats": [
@@ -636,6 +646,14 @@
     {
       "format": "pick",
       "date": "2026-04-28T17:37:51.365Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-28T19:40:41.971Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-28T19:41:23.070Z"
     }
   ],
   "recentArticleIds": [
