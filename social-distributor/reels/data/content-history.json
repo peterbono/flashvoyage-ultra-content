@@ -324,6 +324,16 @@
       "name": "philippines",
       "date": "2026-04-28",
       "format": "pick"
+    },
+    {
+      "name": "kuala lumpur",
+      "date": "2026-04-28",
+      "format": "pick"
+    },
+    {
+      "name": "philippines",
+      "date": "2026-04-28",
+      "format": "pick"
     }
   ],
   "recentFormats": [
@@ -654,6 +664,14 @@
     {
       "format": "pick",
       "date": "2026-04-28T19:41:23.070Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-28T20:54:34.190Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-28T20:55:14.325Z"
     }
   ],
   "recentArticleIds": [
