@@ -2,16 +2,6 @@
   "recentDestinations": [
     {
       "name": "thailande",
-      "date": "2026-04-13",
-      "format": "cost-vs"
-    },
-    {
-      "name": "thailande",
-      "date": "2026-04-13",
-      "format": "month"
-    },
-    {
-      "name": "thailande",
       "date": "2026-04-14",
       "format": "cost-vs"
     },
@@ -314,21 +304,19 @@
       "name": "coree",
       "date": "2026-04-27",
       "format": "humor"
+    },
+    {
+      "name": "séoul, corée du sud",
+      "date": "2026-04-28",
+      "format": "pick"
+    },
+    {
+      "name": "philippines",
+      "date": "2026-04-28",
+      "format": "pick"
     }
   ],
   "recentFormats": [
-    {
-      "format": "cost-vs",
-      "date": "2026-04-13T17:59:28.890Z"
-    },
-    {
-      "format": "month",
-      "date": "2026-04-13T20:12:24.706Z"
-    },
-    {
-      "format": "month",
-      "date": "2026-04-13T20:12:52.409Z"
-    },
     {
       "format": "cost-vs",
       "date": "2026-04-14T18:03:22.657Z"
@@ -640,6 +628,14 @@
     {
       "format": "humor",
       "date": "2026-04-27T20:50:06.386Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-28T17:37:08.587Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-04-28T17:37:51.365Z"
     }
   ],
   "recentArticleIds": [
@@ -694,14 +690,6 @@
     4030
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:cost-vs|dest:thailande|slug:thailande-ou-vietnam-en-2026-q",
-      "date": "2026-04-13T17:59:28.890Z"
-    },
-    {
-      "fp": "fmt:month|dest:thailande|slug:thailande-ou-vietnam-en-2026-l",
-      "date": "2026-04-13T20:12:52.409Z"
-    },
     {
       "fp": "fmt:cost-vs|dest:thailande|slug:thailande-ou-vietnam-le-choix-",
       "date": "2026-04-14T18:03:22.657Z"
