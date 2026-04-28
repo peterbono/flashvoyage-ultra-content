@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-27T04:20:02.261Z",
+  "timestamp": "2026-04-28T04:21:52.050Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,10 +17,10 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 130,
-    "medianTrafficSignal": "0.130",
+    "medianMonthlyPV": 120,
+    "medianTrafficSignal": "0.120",
     "avgRpm": 2,
-    "articlesAnalyzed": 40
+    "articlesAnalyzed": 41
   },
   "queue": [
     {
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 3.47,
-        "projectedMonthlyTraffic": 130,
-        "projectedMonthlyRevenue": 0.26,
+        "expectedRoi": 3.2,
+        "projectedMonthlyTraffic": 120,
+        "projectedMonthlyRevenue": 0.24,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (130 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (120 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 3.47,
-        "projectedMonthlyTraffic": 130,
-        "projectedMonthlyRevenue": 0.26,
+        "expectedRoi": 3.2,
+        "projectedMonthlyTraffic": 120,
+        "projectedMonthlyRevenue": 0.24,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (130 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (120 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,17 +77,142 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 3.47,
-        "projectedMonthlyTraffic": 130,
-        "projectedMonthlyRevenue": 0.26,
+        "expectedRoi": 3.2,
+        "projectedMonthlyTraffic": 120,
+        "projectedMonthlyRevenue": 0.24,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (130 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (120 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
       "rank": 4,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 125,
+      "topic": "suspension permis telephone au volant",
+      "articleType": "support",
+      "context": {
+        "gapScore": 45,
+        "destination": null,
+        "category": "transport",
+        "suggestedTitle": "Suspension permis telephone au volant : Guide Pratique",
+        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+        "reason": "Content gap: \"suspension permis telephone au volant\" (score 45, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 2.4,
+        "projectedMonthlyTraffic": 90,
+        "projectedMonthlyRevenue": 0.18,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (120 PV) × gap boost (0.75)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Voyager en Asie du Sud-Est : Itinéraire et Coûts Réels à Prévoir",
+      "articleType": "support",
+      "context": {
+        "wpId": 2945,
+        "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Indonésie en 14 jours : Décisions cruciales pour un itinéraire parfait",
+      "articleType": "support",
+      "context": {
+        "wpId": 2938,
+        "slug": "indonesie-en-14-jours-decisions-cruciales-pour-un-itineraire-parfait",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Voyager au Japon : Comment bien choisir son itinéraire sans regret",
+      "articleType": "support",
+      "context": {
+        "wpId": 2931,
+        "slug": "voyager-au-japon-comment-bien-choisir-son-itineraire-sans-regret",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -108,11 +233,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -133,11 +258,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -158,11 +283,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -183,11 +308,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -208,11 +333,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -233,120 +358,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Japon : les 2 pièges que les guides cachent aux backpackers",
-      "articleType": "support",
-      "context": {
-        "wpId": 3550,
-        "slug": "japon-les-2-pieges-que-les-guides-cachent-aux-backpackers",
-        "compositeScore": 14,
-        "freshness": 0.96,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Japon : la vérité que tu ne liras nulle part ailleurs",
-      "articleType": "support",
-      "context": {
-        "wpId": 3549,
-        "slug": "japon-la-verite-que-tu-ne-liras-nulle-part-ailleurs",
-        "compositeScore": 14,
-        "freshness": 0.96,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Japon en solo à 23 ans : pourquoi 18 jours c&rsquo;est trop (ou pas assez)",
-      "articleType": "support",
-      "context": {
-        "wpId": 3490,
-        "slug": "japon-en-solo-a-23-ans-pourquoi-18-jours-cest-trop-ou-pas-assez",
-        "compositeScore": 14,
-        "freshness": 0.96,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "articleType": "support",
-      "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-        "compositeScore": 14,
-        "freshness": 0.96,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.225,
+    "totalCost": 0.3,
     "dailyBudget": 2,
-    "itemsWithinBudget": 13,
+    "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.026,
-    "expectedDailyRoi": 0.12
+    "expectedDailyRevenue": 0.03,
+    "expectedDailyRoi": 0.1
   },
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

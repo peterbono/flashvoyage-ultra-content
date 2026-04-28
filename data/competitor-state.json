@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-04-27T04:20:03.245Z",
+  "timestamp": "2026-04-28T04:21:53.090Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-04-27T04:20:04.596Z",
+      "lastScan": "2026-04-28T04:21:54.228Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-04-27T04:20:05.382Z",
+      "lastScan": "2026-04-28T04:21:54.850Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-04-27T04:21:19.849Z",
-      "urlCount": 9467,
+      "lastScan": "2026-04-28T04:23:04.881Z",
+      "urlCount": 9471,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -1023,7 +1023,6 @@
         "https://generationvoyage.fr/parking-rome/": "2025-04-25T13:35:01+00:00",
         "https://generationvoyage.fr/loger-saragosse/": "2025-04-25T13:35:04+00:00",
         "https://generationvoyage.fr/parking-naples/": "2025-04-25T13:35:09+00:00",
-        "https://generationvoyage.fr/parking-florence/": "2025-04-25T13:35:14+00:00",
         "https://generationvoyage.fr/incontournables-guatemala/": "2025-04-25T13:35:17+00:00",
         "https://generationvoyage.fr/parking-londres/": "2025-04-25T13:35:24+00:00",
         "https://generationvoyage.fr/loger-fukuoka/": "2025-04-25T13:35:35+00:00",
@@ -3880,7 +3879,6 @@
         "https://generationvoyage.fr/hotels-barcelone-camp-nou/": "2025-05-02T10:20:05+00:00",
         "https://generationvoyage.fr/hotels-barcelone-quartier-gothique/": "2025-05-02T10:20:09+00:00",
         "https://generationvoyage.fr/hotel-luxe-barcelone/": "2025-05-02T10:20:12+00:00",
-        "https://generationvoyage.fr/hotels-spa-barcelone/": "2025-05-02T10:20:15+00:00",
         "https://generationvoyage.fr/location-bateau-barcelone-itineraires/": "2025-05-02T10:20:28+00:00",
         "https://generationvoyage.fr/parking-barcelone/": "2025-05-02T10:20:40+00:00",
         "https://generationvoyage.fr/quel-budget-partir-barcelone/": "2025-05-02T10:20:43+00:00",
@@ -5393,7 +5391,6 @@
         "https://generationvoyage.fr/visiter-larnaca-faire-voir/": "2025-07-28T06:00:44+00:00",
         "https://generationvoyage.fr/randonnees-uruguay/": "2025-07-28T07:00:31+00:00",
         "https://generationvoyage.fr/activites-famille-hong-kong/": "2025-07-28T08:44:07+00:00",
-        "https://generationvoyage.fr/visiter-syracuse-faire-voir/": "2025-07-28T13:29:01+00:00",
         "https://generationvoyage.fr/visiter-hong-kong-automne/": "2025-08-01T07:17:17+00:00",
         "https://generationvoyage.fr/endroits-visiter-arabie-saoudite/": "2025-08-04T06:00:24+00:00",
         "https://generationvoyage.fr/gagner-sa-vie-en-voyageant/": "2025-08-11T17:03:52+00:00",
@@ -8342,7 +8339,6 @@
         "https://generationvoyage.fr/visiter-palma-majorque-faire-voir/": "2025-12-19T14:33:06+00:00",
         "https://generationvoyage.fr/activites-pluie-porto/": "2025-12-19T14:33:14+00:00",
         "https://generationvoyage.fr/visiter-carcassonne-faire-voir/": "2025-12-19T14:33:25+00:00",
-        "https://generationvoyage.fr/visiter-occitanie-faire-voir/": "2025-12-19T14:33:43+00:00",
         "https://generationvoyage.fr/musees-visiter-new-york/": "2025-12-19T14:34:06+00:00",
         "https://generationvoyage.fr/activites-pluie-londres/": "2025-12-19T14:34:30+00:00",
         "https://generationvoyage.fr/visiter-bains-budapest/": "2025-12-19T14:34:49+00:00",
@@ -9608,7 +9604,15 @@
         "https://generationvoyage.fr/visiter-cambrai-faire-voir/": "2026-04-26T08:13:12+00:00",
         "https://generationvoyage.fr/dormir-arezzo/": "2026-04-26T11:14:29+00:00",
         "https://generationvoyage.fr/acces-alhambra-grenade/": "2026-04-26T14:20:30+00:00",
-        "https://generationvoyage.fr/dormir-beaune/": "2026-04-26T16:21:48+00:00"
+        "https://generationvoyage.fr/dormir-beaune/": "2026-04-26T16:21:48+00:00",
+        "https://generationvoyage.fr/visiter-syracuse-faire-voir/": "2026-04-27T06:40:49+00:00",
+        "https://generationvoyage.fr/hotels-spa-barcelone/": "2026-04-27T06:50:07+00:00",
+        "https://generationvoyage.fr/parking-florence/": "2026-04-27T06:57:27+00:00",
+        "https://generationvoyage.fr/visiter-le-treport-faire-voir/": "2026-04-27T08:45:36+00:00",
+        "https://generationvoyage.fr/barcelone-madrid/": "2026-04-27T13:51:52+00:00",
+        "https://generationvoyage.fr/visiter-okinawa-faire-voir/": "2026-04-27T16:53:23+00:00",
+        "https://generationvoyage.fr/alhambra-famille/": "2026-04-27T11:11:46+00:00",
+        "https://generationvoyage.fr/visiter-occitanie-faire-voir/": "2026-04-27T15:21:36+00:00"
       }
     }
   }

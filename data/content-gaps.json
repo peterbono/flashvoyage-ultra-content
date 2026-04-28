@@ -1,10 +1,32 @@
 {
-  "timestamp": "2026-04-27T04:19:47.135Z",
-  "gapCount": 0,
-  "gaps": [],
+  "timestamp": "2026-04-28T04:21:37.767Z",
+  "gapCount": 1,
+  "gaps": [
+    {
+      "topic": "suspension permis telephone au volant",
+      "source": "trends",
+      "gapScore": 45,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.4
+      },
+      "destination": null,
+      "category": "transport",
+      "suggestedTitle": "Suspension permis telephone au volant : Guide Pratique",
+      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+      "articleType": "support",
+      "priority": "medium"
+    }
+  ],
   "summary": {
-    "byPriority": {},
-    "byCategory": {},
+    "byPriority": {
+      "medium": 1
+    },
+    "byCategory": {
+      "transport": 1
+    },
     "byDestination": {},
     "topDestinationGaps": []
   }

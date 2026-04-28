@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-27T04:19:48.104Z",
+  "timestamp": "2026-04-28T04:21:38.762Z",
   "articleMap": {
     "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
       "wpId": 4252,
@@ -174,18 +174,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "japon-couple-15-jours-budget-tout-compris-2026": {
-      "wpId": 4373,
-      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
     "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
       "wpId": 5260,
       "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
@@ -207,6 +195,30 @@
         "humor"
       ],
       "category": "default",
+      "igReferralTraffic": null
+    },
+    "japon-couple-15-jours-budget-tout-compris-2026": {
+      "wpId": 4373,
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "philippines-10-jours-itineraire-plages-budget-2026": {
+      "wpId": 4371,
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "visa-cambodge-francais-2026-evisa-prix-pieges": {
@@ -236,30 +248,6 @@
           "matchSource": "tiktok-fuzzy-title"
         }
       ],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
-      "wpId": 4071,
-      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "philippines-10-jours-itineraire-plages-budget-2026": {
-      "wpId": 4371,
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "reels": [],
       "suggestedFormats": [
         "budget",
         "versus",
@@ -316,6 +304,18 @@
       "category": "securite",
       "igReferralTraffic": null
     },
+    "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
+      "wpId": 4071,
+      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas": {
       "wpId": 3501,
       "title": "Trois semaines en Thaïlande m&rsquo;ont coûté le double",
@@ -328,18 +328,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "vivre-en-couple-a-letranger-4-pieges-que-les-blogs-voyage-cachent": {
-      "wpId": 4110,
-      "title": "Vivre en couple à l&rsquo;étranger : 4 pièges que les blogs voyage cachent",
-      "reels": [],
-      "suggestedFormats": [
-        "humor",
-        "poll",
-        "avantapres"
-      ],
-      "category": "securite",
-      "igReferralTraffic": null
-    },
     "thailande-le-cout-reel-dun-voyage-entre-confort-et-luxe": {
       "wpId": 5702,
       "title": "Thaïlande : Le coût réel d&rsquo;un voyage entre confort et luxe",
@@ -350,6 +338,18 @@
         "poll"
       ],
       "category": "budget",
+      "igReferralTraffic": null
+    },
+    "pourquoi-choisir-entre-airalo-et-holafly-pour-ton-voyage-en-asie-peut-tout-changer": {
+      "wpId": 5608,
+      "title": "Pourquoi choisir entre Airalo et Holafly pour ton voyage en Asie peut tout changer",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
       "igReferralTraffic": null
     },
     "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage": {
@@ -388,6 +388,18 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
+    "vivre-en-couple-a-letranger-4-pieges-que-les-blogs-voyage-cachent": {
+      "wpId": 4110,
+      "title": "Vivre en couple à l&rsquo;étranger : 4 pièges que les blogs voyage cachent",
+      "reels": [],
+      "suggestedFormats": [
+        "humor",
+        "poll",
+        "avantapres"
+      ],
+      "category": "securite",
+      "igReferralTraffic": null
+    },
     "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils": {
       "wpId": 3107,
       "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
@@ -397,18 +409,6 @@
         "humor"
       ],
       "category": "visa",
-      "igReferralTraffic": null
-    },
-    "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout": {
-      "wpId": 5678,
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
       "igReferralTraffic": null
     },
     "vietnam-4-pieges-que-les-blogs-voyage-cachent-et-que-les-voyageurs-decouvrent-trop-tard": {
@@ -423,16 +423,28 @@
       "category": "securite",
       "igReferralTraffic": null
     },
-    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
-      "wpId": 3090,
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+    "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout": {
+      "wpId": 5678,
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "month",
-        "avantapres"
+        "poll",
+        "humor"
       ],
-      "category": "itineraire",
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
+      "wpId": 5296,
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
       "igReferralTraffic": null
     },
     "thailande-8-realites-que-les-blogs-voyage-cachent-aux-expatries": {
@@ -459,33 +471,9 @@
       "category": "securite",
       "igReferralTraffic": null
     },
-    "bangkok-le-vrai-cout-des-taxis-aeroport-2026": {
-      "wpId": 5742,
-      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
-      "wpId": 5333,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient": {
-      "wpId": 3546,
-      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
+    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
+      "wpId": 3090,
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -518,18 +506,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
-      "wpId": 3254,
-      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
     "vietnam-larbitrage-crucial-pour-un-budget-maitrise-sur-place": {
       "wpId": 5720,
       "title": "Vietnam : l&rsquo;arbitrage crucial pour un budget maîtrisé sur place",
@@ -542,9 +518,21 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
-      "wpId": 5296,
-      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
+      "wpId": 5343,
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
+      "wpId": 5333,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -566,6 +554,30 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
+    "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient": {
+      "wpId": 3546,
+      "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "bangkok-le-vrai-cout-des-taxis-aeroport-2026": {
+      "wpId": 5742,
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
       "wpId": 4105,
       "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
@@ -576,6 +588,18 @@
         "avantapres"
       ],
       "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget": {
+      "wpId": 4030,
+      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite": {
@@ -601,45 +625,9 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2": {
-      "wpId": 2857,
-      "title": "Voyager au Japon : Quand voir les cerisiers sans la foule",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "lesim-en-asie-du-sud-est-ce-que-ca-va-vraiment-te-couter": {
-      "wpId": 5752,
-      "title": "L&rsquo;ESIM en Asie du Sud-Est : Ce que ça va vraiment te coûter",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "pourquoi-choisir-entre-airalo-et-holafly-pour-ton-voyage-en-asie-peut-tout-changer": {
-      "wpId": 5608,
-      "title": "Pourquoi choisir entre Airalo et Holafly pour ton voyage en Asie peut tout changer",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
-      "wpId": 5343,
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
+      "wpId": 3254,
+      "title": "Chiang Mai vs Phuket : où combiner travail à distance et Muay Thai sans sacrifier ton budget",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -793,6 +781,30 @@
       "category": "budget",
       "igReferralTraffic": null
     },
+    "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2": {
+      "wpId": 2857,
+      "title": "Voyager au Japon : Quand voir les cerisiers sans la foule",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "lesim-en-asie-du-sud-est-ce-que-ca-va-vraiment-te-couter": {
+      "wpId": 5752,
+      "title": "L&rsquo;ESIM en Asie du Sud-Est : Ce que ça va vraiment te coûter",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier": {
       "wpId": 5189,
       "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
@@ -803,6 +815,18 @@
         "humor"
       ],
       "category": "default",
+      "igReferralTraffic": null
+    },
+    "japon-en-solo-a-23-ans-pourquoi-18-jours-cest-trop-ou-pas-assez": {
+      "wpId": 3490,
+      "title": "Japon en solo à 23 ans : pourquoi 18 jours c&rsquo;est trop (ou pas assez)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
       "igReferralTraffic": null
     },
     "voyage-au-japon-et-en-asie-du-sud-est-avec-2500-usd-les-arbitrages-caches-qui-vont-decider-de-ton-itineraire": {
@@ -961,6 +985,42 @@
       "category": "budget",
       "igReferralTraffic": null
     },
+    "3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier": {
+      "wpId": 3207,
+      "title": "3 jours à Singapour : l&rsquo;itinéraire que tu dois affiner (pas copier)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable": {
+      "wpId": 3115,
+      "title": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "choisir-ou-sejourner-a-bali-dilemmes-et-decisions-cruciales": {
+      "wpId": 3082,
+      "title": "Choisir où séjourner à Bali : dilemmes et décisions cruciales",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "visa-run-en-thailande-secrets-caches-et-arbitrages-financiers": {
       "wpId": 2867,
       "title": "Visa Run en Thaïlande : Secrets Cachés et Arbitrages Financiers",
@@ -994,18 +1054,6 @@
         "humor"
       ],
       "category": "default",
-      "igReferralTraffic": null
-    },
-    "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget": {
-      "wpId": 4030,
-      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "3-jours-a-singapour-optimiser-son-itineraire-sans-sacrifier-les-experiences-essentielles": {
@@ -1128,18 +1176,6 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "japon-en-solo-a-23-ans-pourquoi-18-jours-cest-trop-ou-pas-assez": {
-      "wpId": 3490,
-      "title": "Japon en solo à 23 ans : pourquoi 18 jours c&rsquo;est trop (ou pas assez)",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
     "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis": {
       "wpId": 3425,
       "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
@@ -1188,18 +1224,6 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "3-jours-a-singapour-litineraire-que-tu-dois-affiner-pas-copier": {
-      "wpId": 3207,
-      "title": "3 jours à Singapour : l&rsquo;itinéraire que tu dois affiner (pas copier)",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
     "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades": {
       "wpId": 3174,
       "title": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
@@ -1236,18 +1260,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "bali-pourquoi-1400-usd-ne-suffisent-plus-pour-un-sejour-confortable": {
-      "wpId": 3115,
-      "title": "Bali : Pourquoi 1400 USD ne Suffisent Plus pour un Séjour Confortable",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "indonesie-naviguer-entre-culture-et-nature-sans-les-pieges-touristiques": {
       "wpId": 3099,
       "title": "Indonésie : Naviguer entre Culture et Nature sans les Pièges Touristiques",
@@ -1258,18 +1270,6 @@
         "avantapres"
       ],
       "category": "securite",
-      "igReferralTraffic": null
-    },
-    "choisir-ou-sejourner-a-bali-dilemmes-et-decisions-cruciales": {
-      "wpId": 3082,
-      "title": "Choisir où séjourner à Bali : dilemmes et décisions cruciales",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
       "igReferralTraffic": null
     },
     "itineraire-en-irlande-comment-choisir-entre-nord-et-sud": {
@@ -1773,6 +1773,24 @@
       "caption": ""
     },
     {
+      "reelId": "18078001421173443",
+      "format": "avantapres",
+      "publishedAt": "2026-04-27T17:34:11.127Z",
+      "caption": ""
+    },
+    {
+      "reelId": "18090013511265366",
+      "format": "avantapres",
+      "publishedAt": "2026-04-27T19:39:58.696Z",
+      "caption": ""
+    },
+    {
+      "reelId": "18318661252282419",
+      "format": "humor",
+      "publishedAt": "2026-04-27T20:49:32.110Z",
+      "caption": ""
+    },
+    {
       "reelId": "tiktok:2026-04-17:J'ai besoin de 6 moi",
       "format": "humor",
       "publishedAt": "2026-04-17",
@@ -1791,6 +1809,6 @@
     "articlesWithoutReels": 103,
     "totalReels": 15,
     "viralReels": 0,
-    "orphanReels": 51
+    "orphanReels": 54
   }
 }
