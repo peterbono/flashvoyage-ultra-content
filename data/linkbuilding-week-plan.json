@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 25,
+      "posted": 26,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -203,6 +203,14 @@
           "date": "2026-04-27T08:02:19.467Z",
           "thread": "vols-entre-jakarta-flores-d11469362",
           "title": "Vols entre Jakarta et Florès",
+          "hasLink": false,
+          "generated": true,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-28T03:32:15.618Z",
+          "thread": "que-choisir-togians-banggai-sulawesi-d11463124",
+          "title": "Que choisir: les Togians ou Banggai à Sulawesi?",
           "hasLink": false,
           "generated": true,
           "status": "published"
@@ -540,7 +548,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 17,
+      "posted": 18,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -677,11 +685,19 @@
           "section": "Thailande",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-28T03:36:34.320Z",
+          "threadId": "9712036",
+          "title": "Notification \"Exemption de visas''",
+          "section": "Vietnam",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 68,
+  "total_posted": 70,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
