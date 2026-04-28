@@ -548,7 +548,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 18,
+      "posted": 19,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -693,11 +693,19 @@
           "section": "Vietnam",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-28T08:06:21.078Z",
+          "threadId": "15494397",
+          "title": "Île de Cat Ba & Baie de Lan Ha avec Tonkin Vietnam Travel",
+          "section": "Vietnam",
+          "hasLink": true,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 70,
+  "total_posted": 71,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
