@@ -919,9 +919,10 @@ class UltraStrategicGenerator {
 
       // Créer l'article
       console.log('📝 Création de l\'article stratégique sur WordPress...');
-      // Guardrail: abort if editorial placeholders remain ([VERIFY], [TODO], [AFFILIATE:X], ...)
-      const { assertNoPlaceholdersInPayload } = await import('./intelligence/content-guardrails.js');
-      assertNoPlaceholdersInPayload({
+      // Guardrails: editorial placeholders ([VERIFY], [TODO], [AFFILIATE:X]) AND
+      // JSON-LD schema structure (wrapper noise, Product missing image, FAQPage duplicate).
+      const { assertContentSafeToPublish } = await import('./intelligence/content-guardrails.js');
+      assertContentSafeToPublish({
         title: strategicContent.title,
         content: strategicContent.content,
       }, { context: 'ultra-strategic-generator:publish' });

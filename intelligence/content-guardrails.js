@@ -138,3 +138,153 @@ export function assertNoPlaceholdersInPayload(payload, options = {}) {
 }
 
 export const PLACEHOLDER_PATTERNS = DEFAULT_PATTERNS;
+
+// ---------------------------------------------------------------------------
+// JSON-LD structural validator
+// ---------------------------------------------------------------------------
+// Catches schema bugs that Google Search Console flags as critical:
+//   - Wrapper noise (e.g., `{note: "...", schema: {...}}` instead of pure JSON-LD)
+//   - Product schema missing `image` field (rejects Merchant listing rich snippet)
+//   - More than one FAQPage on the same page (rejects FAQ rich snippet)
+//   - Missing @context at root
+//
+// Bug that triggered this: 2026-04-29 — esim-philippines shipped with all 3
+// of the above issues, GSC sent 2 critical "rich snippet rejected" emails.
+
+const JSONLD_SCRIPT_REGEX = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+
+/**
+ * Scan an HTML body for JSON-LD blocks and validate each structurally.
+ *
+ * @param {string} html - HTML content (usually the WP post body about to be persisted)
+ * @param {object} [options]
+ * @param {string} [options.context='publish']
+ * @param {boolean} [options.warnOnly=false]
+ * @returns {Array<{type, message, blockIndex, severity}>} findings (empty if clean).
+ *   Throws SchemaGuardrailError if !warnOnly and findings non-empty.
+ */
+export function assertSchemaWellFormed(html, options = {}) {
+  const { context = 'publish', warnOnly = false } = options;
+  if (!html || typeof html !== 'string') return [];
+
+  const findings = [];
+  const blocks = [...html.matchAll(JSONLD_SCRIPT_REGEX)];
+
+  // Track FAQPage count across all blocks (Google rejects rich snippet if > 1)
+  let faqPageCount = 0;
+
+  for (let i = 0; i < blocks.length; i++) {
+    const inner = blocks[i][1].trim();
+    let parsed;
+    try {
+      parsed = JSON.parse(inner);
+    } catch (e) {
+      findings.push({ type: 'INVALID_JSON', message: `block[${i}]: JSON parse failed (${e.message.slice(0, 80)})`, blockIndex: i, severity: 'error' });
+      continue;
+    }
+
+    // 1. Wrapper noise — root has `schema` or `note` keys but no @context
+    if (!parsed['@context'] && !parsed['@graph'] && (parsed.note || parsed.schema)) {
+      findings.push({
+        type: 'WRAPPER_NOISE',
+        message: `block[${i}]: JSON-LD wrapped in {note,schema} instead of being raw schema. Strip the wrapper before injecting.`,
+        blockIndex: i,
+        severity: 'error',
+      });
+      continue;
+    }
+
+    // 2. Missing @context at root (must be on the outer object that holds @graph or @type)
+    if (!parsed['@context']) {
+      findings.push({
+        type: 'MISSING_CONTEXT',
+        message: `block[${i}]: missing @context at root. Schema.org requires "@context": "https://schema.org".`,
+        blockIndex: i,
+        severity: 'error',
+      });
+    }
+
+    // Walk @graph (or treat root as the only entry)
+    const entries = Array.isArray(parsed['@graph']) ? parsed['@graph'] : [parsed];
+
+    for (let j = 0; j < entries.length; j++) {
+      const entry = entries[j];
+      if (!entry || typeof entry !== 'object') continue;
+      const type = entry['@type'];
+
+      // 3. Product without image — Google requires image on Product/Offer for Merchant listing
+      if (type === 'Product') {
+        if (!entry.image) {
+          findings.push({
+            type: 'PRODUCT_MISSING_IMAGE',
+            message: `block[${i}].@graph[${j}]: Product "${entry.name || '?'}" missing "image" field. Google rejects Merchant rich snippet without it.`,
+            blockIndex: i,
+            severity: 'error',
+          });
+        }
+        if (!entry.name) {
+          findings.push({
+            type: 'PRODUCT_MISSING_NAME',
+            message: `block[${i}].@graph[${j}]: Product missing "name" field.`,
+            blockIndex: i,
+            severity: 'error',
+          });
+        }
+        if (!entry.offers && !entry.aggregateRating && !entry.review) {
+          findings.push({
+            type: 'PRODUCT_MISSING_OFFERS',
+            message: `block[${i}].@graph[${j}]: Product "${entry.name || '?'}" needs at least one of: offers, aggregateRating, review.`,
+            blockIndex: i,
+            severity: 'error',
+          });
+        }
+      }
+
+      // 4. FAQPage counter — track total across blocks
+      if (type === 'FAQPage') {
+        faqPageCount++;
+      }
+    }
+  }
+
+  // 5. Multiple FAQPage = rich snippet rejected
+  if (faqPageCount > 1) {
+    findings.push({
+      type: 'FAQPAGE_DUPLICATE',
+      message: `Found ${faqPageCount} FAQPage entries across all JSON-LD blocks. Google rejects FAQ rich snippet if more than one. Ensure only one FAQPage per page (Rank Math may auto-generate one — coordinate with it).`,
+      blockIndex: -1,
+      severity: 'error',
+    });
+  }
+
+  if (findings.length === 0) return [];
+
+  const summary = findings.slice(0, 10).map(f => `  · [${f.type}] ${f.message}`).join('\n');
+  const more = findings.length > 10 ? `\n  · …and ${findings.length - 10} more` : '';
+  const msg = `Schema guardrail failed (${context}): ${findings.length} structural issue(s) in JSON-LD blocks.\n${summary}${more}\n\nFix: parse + repair before injecting. See intelligence/content-guardrails.js.`;
+
+  if (warnOnly) {
+    // eslint-disable-next-line no-console
+    console.warn('[schema-guardrails]', msg);
+    return findings;
+  }
+  const err = new Error(msg);
+  err.name = 'SchemaGuardrailError';
+  err.findings = findings;
+  err.context = context;
+  throw err;
+}
+
+/**
+ * Convenience: run BOTH placeholder + schema guardrails on a payload.
+ * This is what publish-time wiring should call.
+ */
+export function assertContentSafeToPublish(payload, options = {}) {
+  // Always run placeholder check first (cheaper, more critical for visible markers)
+  assertNoPlaceholdersInPayload(payload, options);
+  // Then schema check on content field
+  const html = typeof payload.content === 'string' ? payload.content : payload.content?.raw || payload.content?.rendered;
+  if (html) {
+    assertSchemaWellFormed(html, options);
+  }
+}
