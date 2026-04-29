@@ -1,25 +1,9 @@
 {
-  "timestamp": "2026-04-28T04:21:39.777Z",
-  "queueSize": 14,
+  "timestamp": "2026-04-29T04:19:12.698Z",
+  "queueSize": 13,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 125,
-      "topic": "suspension permis telephone au volant",
-      "articleType": "support",
-      "context": {
-        "gapScore": 45,
-        "destination": null,
-        "category": "transport",
-        "suggestedTitle": "Suspension permis telephone au volant : Guide Pratique",
-        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
-        "reason": "Content gap: \"suspension permis telephone au volant\" (score 45, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +15,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +27,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -55,7 +39,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -71,7 +55,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -87,7 +71,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -103,7 +87,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -119,7 +103,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -135,7 +119,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -145,13 +129,13 @@
         "wpId": 2910,
         "slug": "les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city",
         "compositeScore": 13,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
-      "rank": 11,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -161,13 +145,13 @@
         "wpId": 2904,
         "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
         "compositeScore": 13,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
-      "rank": 12,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -177,13 +161,13 @@
         "wpId": 2898,
         "slug": "vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital",
         "compositeScore": 13,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
-      "rank": 13,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -193,13 +177,13 @@
         "wpId": 2888,
         "slug": "48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget",
         "compositeScore": 13,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
-      "rank": 14,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -209,14 +193,14 @@
         "wpId": 2878,
         "slug": "vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre",
         "compositeScore": 13,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,

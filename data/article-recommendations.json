@@ -1,24 +1,24 @@
 {
   "summary": {
-    "generatedAt": "2026-04-28T04:21:51.060Z",
-    "elapsedSeconds": 10,
+    "generatedAt": "2026-04-29T04:19:25.086Z",
+    "elapsedSeconds": 12,
     "totalArticles": 110,
-    "articlesWithRecommendations": 3,
-    "totalRecommendations": 5,
+    "articlesWithRecommendations": 4,
+    "totalRecommendations": 6,
     "byPriority": {
       "P0": 0,
       "P1": 1,
-      "P2": 4
+      "P2": 5
     },
     "byType": {
       "engagement": 1,
       "amplification": 1,
-      "seo": 3
+      "seo": 4
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
-        "count": 3
+        "count": 4
       },
       {
         "action": "IMPROVE_READABILITY",
@@ -41,9 +41,9 @@
       "internalLinks": 48,
       "lastModified": "2026-04-22T13:41:52",
       "ga4": {
-        "pageviews": 41,
-        "sessions": 33,
-        "avgDuration": 44
+        "pageviews": 42,
+        "sessions": 34,
+        "avgDuration": 46
       },
       "gsc": {
         "impressions": 70,
@@ -72,16 +72,16 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 44s / 1293s attendus (3% du contenu lu)",
+          "metric": "Temps lu: 46s / 1293s attendus (4% du contenu lu)",
           "action": "IMPROVE_READABILITY",
-          "details": "Seulement 3% du contenu est lu (4310 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
+          "details": "Seulement 4% du contenu est lu (4310 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
           "expectedImpact": "Temps sur page +40 a +60%, meilleur signal qualite pour Google"
         },
         {
           "type": "amplification",
           "priority": "P2",
-          "metric": "41 vues/mois, 0 reels lies a cet article",
+          "metric": "42 vues/mois, 0 reels lies a cet article",
           "action": "CREATE_REELS",
           "details": "Article populaire sans couverture reel. Creer 2-3 reels automatises : 1) Trip Pick \"X spots incontournables a [destination]\" — format liste visuelle. 2) Budget Jour si l'article contient des donnees budget. 3) Versus si l'article compare 2 destinations. Les reels drivent du traffic IG → article via Story links + lien bio. Utiliser le module reels/generator.js.",
           "effort": "5min (auto-genere via pipeline reels)",
@@ -143,7 +143,7 @@
         "avgDuration": 306
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 13,
         "clicks": 2,
         "position": 7.8,
         "topQueries": [
@@ -188,9 +188,9 @@
         "avgDuration": 16
       },
       "gsc": {
-        "impressions": 33,
+        "impressions": 38,
         "clicks": 0,
-        "position": 15.9,
+        "position": 14.9,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -275,6 +275,51 @@
       "p0Count": 0
     },
     {
+      "wpId": 4373,
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
+      "wordCount": 4333,
+      "widgetCount": 2,
+      "internalLinks": 45,
+      "lastModified": "2026-04-22T12:45:35",
+      "ga4": {
+        "pageviews": 11,
+        "sessions": 10,
+        "avgDuration": 24
+      },
+      "gsc": {
+        "impressions": 21,
+        "clicks": 1,
+        "position": 6.1,
+        "topQueries": [
+          {
+            "query": "taxe de sejour kyoto",
+            "position": 3,
+            "impressions": 1,
+            "ctr": 100
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"taxe de sejour kyoto\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"taxe de sejour kyoto\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 3501,
       "slug": "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas",
       "title": "Trois semaines en Thaïlande m&rsquo;ont coûté le double",
@@ -287,6 +332,34 @@
         "pageviews": 10,
         "sessions": 9,
         "avgDuration": 4
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5742,
+      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
+      "wordCount": 1513,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-04-22T12:41:31",
+      "ga4": {
+        "pageviews": 9,
+        "sessions": 9,
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
@@ -359,23 +432,23 @@
       "p0Count": 0
     },
     {
-      "wpId": 4373,
-      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
-      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
-      "wordCount": 4333,
-      "widgetCount": 2,
-      "internalLinks": 45,
-      "lastModified": "2026-04-22T12:45:35",
+      "wpId": 4132,
+      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
+      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
+      "url": "https://flashvoyage.com/japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais/",
+      "wordCount": 3898,
+      "widgetCount": 0,
+      "internalLinks": 40,
+      "lastModified": "2026-04-22T12:44:11",
       "ga4": {
         "pageviews": 8,
-        "sessions": 7,
-        "avgDuration": 34
+        "sessions": 8,
+        "avgDuration": 8
       },
       "gsc": {
-        "impressions": 20,
+        "impressions": 0,
         "clicks": 0,
-        "position": 6.3,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -387,14 +460,14 @@
       "p0Count": 0
     },
     {
-      "wpId": 4132,
-      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
-      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
-      "url": "https://flashvoyage.com/japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais/",
-      "wordCount": 3898,
+      "wpId": 4030,
+      "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "url": "https://flashvoyage.com/coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget/",
+      "wordCount": 4167,
       "widgetCount": 0,
-      "internalLinks": 40,
-      "lastModified": "2026-04-22T12:44:11",
+      "internalLinks": 39,
+      "lastModified": "2026-04-22T12:43:16",
       "ga4": {
         "pageviews": 8,
         "sessions": 8,
@@ -443,46 +516,18 @@
       "p0Count": 0
     },
     {
-      "wpId": 5742,
-      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
-      "wordCount": 1513,
+      "wpId": 5189,
+      "slug": "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier",
+      "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
+      "url": "https://flashvoyage.com/malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier/",
+      "wordCount": 1243,
       "widgetCount": 0,
-      "internalLinks": 22,
-      "lastModified": "2026-04-22T12:41:31",
+      "internalLinks": 20,
+      "lastModified": "2026-04-22T12:41:10",
       "ga4": {
         "pageviews": 7,
-        "sessions": 7,
-        "avgDuration": 1
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4030,
-      "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "url": "https://flashvoyage.com/coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget/",
-      "wordCount": 4167,
-      "widgetCount": 0,
-      "internalLinks": 39,
-      "lastModified": "2026-04-22T12:43:16",
-      "ga4": {
-        "pageviews": 7,
-        "sessions": 7,
-        "avgDuration": 4
+        "sessions": 5,
+        "avgDuration": 8
       },
       "gsc": {
         "impressions": 0,
@@ -539,6 +584,34 @@
         "pageviews": 7,
         "sessions": 7,
         "avgDuration": 4
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5752,
+      "slug": "lesim-en-asie-du-sud-est-ce-que-ca-va-vraiment-te-couter",
+      "title": "L&rsquo;ESIM en Asie du Sud-Est : Ce que ça va vraiment te coûter",
+      "url": "https://flashvoyage.com/lesim-en-asie-du-sud-est-ce-que-ca-va-vraiment-te-couter/",
+      "wordCount": 1118,
+      "widgetCount": 0,
+      "internalLinks": 18,
+      "lastModified": "2026-04-17T09:17:47",
+      "ga4": {
+        "pageviews": 6,
+        "sessions": 6,
+        "avgDuration": 10
       },
       "gsc": {
         "impressions": 0,
@@ -625,9 +698,9 @@
         "avgDuration": 35
       },
       "gsc": {
-        "impressions": 35,
+        "impressions": 34,
         "clicks": 1,
-        "position": 14.1,
+        "position": 14.4,
         "topQueries": [
           {
             "query": "dore site instagram com reel",
@@ -642,34 +715,6 @@
             "ctr": 0
           }
         ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5752,
-      "slug": "lesim-en-asie-du-sud-est-ce-que-ca-va-vraiment-te-couter",
-      "title": "L&rsquo;ESIM en Asie du Sud-Est : Ce que ça va vraiment te coûter",
-      "url": "https://flashvoyage.com/lesim-en-asie-du-sud-est-ce-que-ca-va-vraiment-te-couter/",
-      "wordCount": 1118,
-      "widgetCount": 0,
-      "internalLinks": 18,
-      "lastModified": "2026-04-17T09:17:47",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 15
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
       },
       "reels": {
         "linkedReels": 0,
@@ -722,9 +767,37 @@
         "avgDuration": 15
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 15,
         "clicks": 0,
-        "position": 7,
+        "position": 6.8,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3182,
+      "slug": "vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser",
+      "title": "Vaccin Rage Asie du Sud-Est 2026 : Prix, Avis et Guide",
+      "url": "https://flashvoyage.com/vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser/",
+      "wordCount": 2339,
+      "widgetCount": 0,
+      "internalLinks": 27,
+      "lastModified": "2026-04-13T00:00:57",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 2,
+        "avgDuration": 21
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -750,9 +823,9 @@
         "avgDuration": 219
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 12,
         "clicks": 3,
-        "position": 11,
+        "position": 10.3,
         "topQueries": []
       },
       "reels": {
@@ -804,34 +877,6 @@
         "pageviews": 3,
         "sessions": 3,
         "avgDuration": 1
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5189,
-      "slug": "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier",
-      "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
-      "url": "https://flashvoyage.com/malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier/",
-      "wordCount": 1243,
-      "widgetCount": 0,
-      "internalLinks": 20,
-      "lastModified": "2026-04-22T12:41:10",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 1,
-        "avgDuration": 38
       },
       "gsc": {
         "impressions": 0,
@@ -1195,35 +1240,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3182,
-      "slug": "vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser",
-      "title": "Vaccin Rage Asie du Sud-Est 2026 : Prix, Avis et Guide",
-      "url": "https://flashvoyage.com/vaccin-contre-la-rage-pour-un-periple-en-asie-du-sud-est-faut-il-vraiment-depenser/",
-      "wordCount": 2339,
-      "widgetCount": 0,
-      "internalLinks": 27,
-      "lastModified": "2026-04-13T00:00:57",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 4
+        "avgDuration": 15
       },
       "gsc": {
         "impressions": 0,
@@ -1506,9 +1523,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 13,
         "clicks": 1,
-        "position": 7.1,
+        "position": 6.6,
         "topQueries": []
       },
       "reels": {
@@ -2880,7 +2897,7 @@
       "gsc": {
         "impressions": 29,
         "clicks": 0,
-        "position": 8.5,
+        "position": 8,
         "topQueries": [
           {
             "query": "itinéraire luxe asie du sud-est",
