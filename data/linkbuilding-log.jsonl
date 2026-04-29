@@ -148,3 +148,6 @@
 {"date":"2026-04-29T03:32:59.506Z","platform":"routard","status":"login_failed"}
 {"date":"2026-04-29T03:33:59.770Z","platform":"reddit_fr","sub":"r/solotravel","status":"login_failed"}
 {"date":"2026-04-29T03:36:25.940Z","platform":"tripadvisor","section":"Cambodge","threadId":"15528183","thread":"Chauffeur et guide fantastique à Siem Reap 🎉","hasLink":false,"generated":true,"articleId":null,"success":true,"submitResult":"clicked:input[value*=\"Publier\"], input[value*=\"Envoyer\"], input[value*=\"poster\"]:publier votre réponse","successCheck":"confirmed"}
+{"date":"2026-04-29T08:03:04.098Z","platform":"routard","status":"login_failed"}
+{"date":"2026-04-29T08:04:04.578Z","platform":"reddit_fr","sub":"r/solotravel","threadId":"1sygwy9","thread":"Language basics saved my solo trip through Southern Italy","postUrl":"https://old.reddit.com/r/solotravel/comments/1sygwy9/language_basics_saved_my_solo_trip_through/","hasLink":false,"success":false,"generated":true,"articleId":null,"commentCount":3}
+{"date":"2026-04-29T08:06:27.779Z","platform":"tripadvisor","section":"Cambodge","threadId":"14679929","thread":"Guide parlant Français (Discussion fermée)","hasLink":false,"generated":true,"articleId":null,"success":false,"submitResult":"ERROR","successCheck":"ERROR"}
