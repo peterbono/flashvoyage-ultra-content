@@ -1,51 +1,113 @@
 {
   "_readme": "Manual TikTok stats — edited via dashboard (/analytics TikTok editor) or by hand. App-review auto-fetch pending.",
-  "lastUpdated": "2026-04-23",
+  "lastUpdated": "2026-04-29",
   "account": {
-    "followers": 23,
+    "followers": 26,
     "following": 0,
-    "totalViews": 6058,
-    "totalLikes": 108,
-    "totalComments": 8,
-    "totalShares": 4,
+    "totalViews": 5064,
+    "totalLikes": 61,
+    "totalComments": 5,
+    "totalShares": 1,
     "daysSinceStart": 16
   },
   "videos": [
     {
-      "title": "Budget journalier en Thaïlande 🇹🇭 🏠 Hébergement : 25 €/nuit 🍜 Nourriture : 12 €/jour \ud83d",
-      "format": "budget",
-      "date": "2026-04-18",
-      "views": 479,
-      "likes": 7,
+      "title": "Dire à tes potes je reviens dans 2 semaines ... Envoyer un message depuis Bali 6 mois plus",
+      "format": "humor",
+      "date": "2026-04-29",
+      "views": 0,
+      "likes": 0,
       "comments": 0,
       "shares": 0
     },
     {
-      "title": "5 pièges à touristes à éviter en Thaïlande & Vietnam 🇹🇭🇻🇳 Lequel t'a piégé",
-      "format": "pick",
-      "date": "2026-04-17",
-      "views": 444,
-      "likes": 9,
-      "comments": 2,
+      "title": "Budget journalier au Viêt Nam 🇻🇳 🏠 Hébergement : 5 €/nuit 🍜 Nourriture : 5 €/jour 🛵 T",
+      "format": "budget",
+      "date": "2026-04-25",
+      "views": 414,
+      "likes": 12,
+      "comments": 0,
+      "shares": 1
+    },
+    {
+      "title": "J'ai payé 49€ chez mon opérateur pour 3,80€ de data réelle aux Philippines 🤡 Globe 9,60€",
+      "format": "budget",
+      "date": "2026-04-24",
+      "views": 369,
+      "likes": 2,
+      "comments": 0,
       "shares": 0
     },
     {
-      "title": "Thaïlande : expectation vs reality 😅 Et toi c'était comment",
+      "title": "Malaisie vs France : un Grab à 3€ au lieu de 15€ de taxi, et ton budget respirera enfin 🇲",
+      "format": "budget",
+      "date": "2026-04-25",
+      "views": 366,
+      "likes": 1,
+      "comments": 0,
+      "shares": 0
+    },
+    {
+      "title": "Bali : expectation vs reality 😅 Et toi c'était comment",
       "format": "avantapres",
-      "date": "2026-04-16",
-      "views": 409,
+      "date": "2026-04-20",
+      "views": 354,
+      "likes": 2,
+      "comments": 1,
+      "shares": 0
+    },
+    {
+      "title": "5 activités gratuites à Bangkok & Chiang Mai 🇹🇭 Lequel tu fais en premier",
+      "date": "2026-04-21",
+      "views": 345,
+      "likes": 4,
+      "comments": 1,
+      "shares": 0
+    },
+    {
+      "title": "Où partir en Juin",
+      "format": "guide",
+      "date": "2026-04-22",
+      "views": 344,
+      "likes": 8,
+      "comments": 1,
+      "shares": 0
+    },
+    {
+      "title": "5 spots de soirée à Bangkok 🇹🇭 Lequel tu rajoutes à ton itinéraire",
+      "format": "pick",
+      "date": "2026-04-22",
+      "views": 344,
       "likes": 6,
       "comments": 0,
       "shares": 0
     },
     {
-      "title": "J'ai besoin de 6 mois de vacances ... Deux fois par an Envoie ca a un pote qui comprend 😂",
-      "format": "humor",
-      "date": "2026-04-17",
-      "views": 386,
-      "likes": 16,
-      "comments": 1,
-      "shares": 4
+      "title": "Indonésie vs Thaïlande : où ton budget tient vraiment 4 semaines",
+      "format": "budget",
+      "date": "2026-04-22",
+      "views": 334,
+      "likes": 4,
+      "comments": 0,
+      "shares": 0
+    },
+    {
+      "title": "Vietnam : expectation vs reality 😅 Et toi c'était comment",
+      "format": "avantapres",
+      "date": "2026-04-24",
+      "views": 327,
+      "likes": 6,
+      "comments": 0,
+      "shares": 0
+    },
+    {
+      "title": "Philippines : expectation vs reality 😅 Et toi c'était comment",
+      "format": "avantapres",
+      "date": "2026-04-26",
+      "views": 355,
+      "likes": 1,
+      "comments": 0,
+      "shares": 0
     },
     {
       "title": "Moi : 'Je veux voyager plus' ... Mon compte en banque : 'Genre, au parc",
@@ -56,92 +118,30 @@
       "shares": 0
     },
     {
-      "title": "Thaïlande : expectation vs reality 😅 Et toi c'était comment",
+      "title": "Bangkok : expectation vs reality 😅 Et toi c'était comment",
       "format": "avantapres",
-      "date": "2026-04-19",
-      "views": 354,
+      "date": "2026-04-26",
+      "views": 338,
       "likes": 3,
       "comments": 0,
       "shares": 0
     },
     {
-      "title": "Bali : expectation vs reality 😅 Et toi c'était comment",
-      "format": "avantapres",
-      "date": "2026-04-20",
-      "views": 353,
-      "likes": 2,
-      "comments": 1,
-      "shares": 0
-    },
-    {
-      "title": "Revenir en France après 10 jours à Bali ... Tes potes parlent de météo, tu pleures Envoie",
-      "format": "humor",
-      "date": "2026-04-16",
-      "views": 342,
-      "likes": 4,
-      "comments": 0,
-      "shares": 0
-    },
-    {
-      "title": "Où partir en Mai",
-      "format": "guide",
-      "date": "2026-04-14",
-      "views": 384,
-      "likes": 12,
-      "comments": 0,
-      "shares": 0
-    },
-    {
       "title": "Thaïlande : expectation vs reality 😅 Et toi c'était comment",
       "format": "avantapres",
-      "date": "2026-04-14",
-      "views": 411,
-      "likes": 13,
+      "date": "2026-04-19",
+      "views": 356,
+      "likes": 3,
       "comments": 0,
       "shares": 0
     },
     {
-      "title": "5 activités gratuites à Bangkok & Chiang Mai 🇹🇭 Lequel tu fais en premier",
-      "date": "2026-04-21",
-      "views": 342,
-      "likes": 4,
-      "comments": 1,
-      "shares": 0
-    },
-    {
-      "title": "Indonésie vs Thaïlande : où ton budget tient vraiment 4 semaines",
-      "format": "budget",
-      "date": "2026-04-22",
-      "views": 333,
-      "likes": 4,
-      "comments": 0,
-      "shares": 0
-    },
-    {
-      "title": "Budget journalier à Bali 🇮🇩 🏠 Hébergement : 25 €/nuit 🍜 Nourriture : 12 €/jour 🛵 Tran",
-      "format": "budget",
-      "date": "2026-04-04",
-      "views": 683,
-      "likes": 15,
-      "comments": 1,
-      "shares": 0
-    },
-    {
-      "title": "Thaïlande vs France 💰",
-      "format": "versus",
-      "date": "2026-04-10",
-      "views": 420,
-      "likes": 4,
-      "comments": 2,
-      "shares": 0
-    },
-    {
-      "title": "5 astuces transport locales en Thaïlande 🇹🇭 & Vietnam 🇻🇳 Laquelle tu testes en premier",
+      "title": "5 pièges à touristes à éviter en Thaïlande & Vietnam 🇹🇭🇻🇳 Lequel t'a piégé",
       "format": "pick",
-      "date": "2026-04-13",
-      "views": 359,
+      "date": "2026-04-17",
+      "views": 459,
       "likes": 9,
-      "comments": 0,
+      "comments": 2,
       "shares": 0
     }
   ]
