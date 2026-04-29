@@ -144,3 +144,7 @@
 {"date":"2026-04-28T08:02:47.833Z","platform":"routard","status":"login_failed"}
 {"date":"2026-04-28T08:03:48.248Z","platform":"reddit_fr","sub":"r/AskFrance","status":"login_failed"}
 {"date":"2026-04-28T08:06:21.077Z","platform":"tripadvisor","section":"Vietnam","threadId":"15494397","thread":"Île de Cat Ba & Baie de Lan Ha avec Tonkin Vietnam Travel","hasLink":true,"generated":true,"articleId":3264,"success":true,"submitResult":"clicked:input[value*=\"Publier\"], input[value*=\"Envoyer\"], input[value*=\"poster\"]:publier votre réponse","successCheck":"unknown"}
+{"date":"2026-04-29T03:31:50.307Z","platform":"voyageforum","thread":"securite-angkor-d11078521","status":"login_failed"}
+{"date":"2026-04-29T03:32:59.506Z","platform":"routard","status":"login_failed"}
+{"date":"2026-04-29T03:33:59.770Z","platform":"reddit_fr","sub":"r/solotravel","status":"login_failed"}
+{"date":"2026-04-29T03:36:25.940Z","platform":"tripadvisor","section":"Cambodge","threadId":"15528183","thread":"Chauffeur et guide fantastique à Siem Reap 🎉","hasLink":false,"generated":true,"articleId":null,"success":true,"submitResult":"clicked:input[value*=\"Publier\"], input[value*=\"Envoyer\"], input[value*=\"poster\"]:publier votre réponse","successCheck":"confirmed"}

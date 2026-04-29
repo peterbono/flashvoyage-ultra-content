@@ -548,7 +548,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 19,
+      "posted": 20,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -701,11 +701,19 @@
           "section": "Vietnam",
           "hasLink": true,
           "status": "published"
+        },
+        {
+          "date": "2026-04-29T03:36:25.943Z",
+          "threadId": "15528183",
+          "title": "Chauffeur et guide fantastique à Siem Reap 🎉",
+          "section": "Cambodge",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 71,
+  "total_posted": 72,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
