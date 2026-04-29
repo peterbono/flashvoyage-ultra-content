@@ -329,6 +329,16 @@
       "name": "indonesie",
       "date": "2026-04-29",
       "format": "avantapres"
+    },
+    {
+      "name": "singapour",
+      "date": "2026-04-29",
+      "format": "avantapres"
+    },
+    {
+      "name": "singapour",
+      "date": "2026-04-29",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -655,6 +665,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-29T17:36:02.900Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-29T19:40:28.100Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-29T19:40:55.421Z"
     }
   ],
   "recentArticleIds": [
@@ -707,7 +725,8 @@
     4250,
     5608,
     4030,
-    3074
+    3074,
+    3207
   ],
   "recentFingerprints": [
     {
@@ -861,6 +880,10 @@
     {
       "fp": "fmt:avantapres|dest:indonesie|slug:organiser-son-voyage-en-indone",
       "date": "2026-04-29T17:36:02.900Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:singapour|slug:3-jours-a-singapour-litinerair",
+      "date": "2026-04-29T19:40:55.421Z"
     }
   ]
 }
