@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-04-28T18:33:25.643Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-04-29T00:34:27.900Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "32 mines found in one day near border",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/thailand/general/3246009/32-mines-found-in-one-day-near-border",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2071,
+      "estimatedTrafficIn24h": 2024,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.9
+      },
+      "detectedAt": "2026-04-28T22:40:00.000Z",
+      "scoredAt": "2026-04-29T00:34:21.366Z"
+    }
+  ]
 }
