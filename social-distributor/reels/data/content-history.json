@@ -673,6 +673,14 @@
     {
       "format": "avantapres",
       "date": "2026-04-29T19:40:55.421Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-04-29T20:49:08.634Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-04-29T20:49:46.579Z"
     }
   ],
   "recentArticleIds": [
@@ -726,7 +734,8 @@
     5608,
     4030,
     3074,
-    3207
+    3207,
+    3888
   ],
   "recentFingerprints": [
     {
@@ -884,6 +893,10 @@
     {
       "fp": "fmt:avantapres|dest:singapour|slug:3-jours-a-singapour-litinerair",
       "date": "2026-04-29T19:40:55.421Z"
+    },
+    {
+      "fp": "fmt:humor|dest:none|slug:temoignage-voyage-retours-et-l",
+      "date": "2026-04-29T20:49:46.579Z"
     }
   ]
 }
