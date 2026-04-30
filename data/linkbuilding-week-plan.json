@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 26,
+      "posted": 27,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -212,6 +212,14 @@
           "thread": "que-choisir-togians-banggai-sulawesi-d11463124",
           "title": "Que choisir: les Togians ou Banggai à Sulawesi?",
           "hasLink": false,
+          "generated": true,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-30T03:59:27.987Z",
+          "thread": "questions-itineraire-meteo-1-semaine-laos-en-famille-d11373382",
+          "title": "Questions itinéraire et météo 1 semaine au Laos en famille",
+          "hasLink": true,
           "generated": true,
           "status": "published"
         }
@@ -548,7 +556,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 20,
+      "posted": 21,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -709,11 +717,19 @@
           "section": "Cambodge",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-30T04:28:23.601Z",
+          "threadId": "14204043",
+          "title": "22 mai 2025",
+          "section": "Cambodge",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 72,
+  "total_posted": 74,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
