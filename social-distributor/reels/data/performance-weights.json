@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-04-29",
+  "lastUpdated": "2026-04-30",
   "formatScores": {
     "poll": 0,
-    "pick": 10,
-    "humor": 13.4,
+    "pick": 9.3,
+    "humor": 0,
     "humor-tweet": 0,
-    "budget": 9.8,
+    "budget": 6.6,
     "versus": 0,
-    "avantapres": 7.2,
+    "avantapres": 5.3,
     "month": 0,
     "cost-vs": 0,
     "leaderboard": 0,
@@ -18,17 +18,17 @@
     "versus"
   ],
   "destinationScores": {
-    "bali": 8.6,
-    "vietnam": 7.5,
-    "bangkok": 5.5,
-    "chiang mai": 5.5,
+    "vietnam": 7,
+    "chiang mai": 5.6,
+    "bali": 5,
+    "bangkok": 5,
     "thailande": 4,
+    "philippines": 3.4,
     "koh samui": 3,
-    "philippines": 1.8,
+    "malaisie": 2.7,
     "lombok": 0.8,
     "singapour": 0.8,
     "indonesie": 0.5,
-    "malaisie": 0.4,
     "phuket": 0.4,
     "cambodge": 0.1
   },
@@ -36,7 +36,7 @@
     "bali content trending — prioritize",
     "thailande content trending — prioritize",
     "vietnam content trending — prioritize",
-    "Top TikTok format: humor (avg 13.4, 2 videos)"
+    "Top TikTok format: pick (avg 9.3, 2 videos)"
   ],
   "igFormatScores": {
     "poll": 0,
@@ -52,21 +52,19 @@
     "best-time": 0
   },
   "tiktokFormatScores": {
-    "budget": 9.8,
-    "pick": 10,
-    "avantapres": 7.2,
-    "humor": 13.4
+    "budget": 6.6,
+    "avantapres": 5.3,
+    "pick": 9.3
   },
   "formatScoreSource": {
     "pick": "tiktok-only",
-    "humor": "tiktok-only",
     "budget": "tiktok-only",
     "avantapres": "tiktok-only"
   },
   "igDestinationScores": {
     "bali": 7.9,
     "thailande": 4,
-    "vietnam": 3.7,
+    "vietnam": 3.6,
     "bangkok": 3.4,
     "chiang mai": 3.4,
     "koh samui": 3,
@@ -79,10 +77,12 @@
     "cambodge": 0.1
   },
   "tiktokDestinationScores": {
-    "vietnam": 10,
-    "bali": 9.1,
-    "chiang mai": 6.9,
-    "bangkok": 6.9
+    "bali": 3,
+    "philippines": 4.4,
+    "malaisie": 4.2,
+    "chiang mai": 7,
+    "bangkok": 6.1,
+    "vietnam": 9.2
   },
   "destinationScoreSource": {
     "bali": "merged(60/40)",
@@ -91,11 +91,11 @@
     "bangkok": "merged(60/40)",
     "chiang mai": "merged(60/40)",
     "koh samui": "ig-only",
-    "philippines": "ig-only",
+    "philippines": "merged(60/40)",
     "lombok": "ig-only",
     "singapour": "ig-only",
     "indonesie": "ig-only",
-    "malaisie": "ig-only",
+    "malaisie": "merged(60/40)",
     "phuket": "ig-only",
     "cambodge": "ig-only"
   },
