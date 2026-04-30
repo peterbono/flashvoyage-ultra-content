@@ -324,6 +324,11 @@
       "name": "thailande",
       "date": "2026-04-30",
       "format": "cost-vs"
+    },
+    {
+      "name": "chiang mai",
+      "date": "2026-04-30",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -646,6 +651,14 @@
     {
       "format": "cost-vs",
       "date": "2026-04-30T17:34:36.491Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-30T19:40:10.918Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-04-30T19:40:46.365Z"
     }
   ],
   "recentArticleIds": [
@@ -701,7 +714,8 @@
     3074,
     3207,
     3888,
-    3504
+    3504,
+    3107
   ],
   "recentFingerprints": [
     {
@@ -855,6 +869,10 @@
     {
       "fp": "fmt:cost-vs|dest:thailande|slug:thailande-ce-que-jaurais-voulu",
       "date": "2026-04-30T17:34:36.491Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:optimiser-son-visa-de-nomade-d",
+      "date": "2026-04-30T19:40:46.365Z"
     }
   ]
 }
