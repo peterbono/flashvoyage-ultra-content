@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-29T04:19:25.898Z",
+  "timestamp": "2026-04-30T04:21:10.436Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -91,6 +91,106 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
+      "topic": "Itinéraire vers l&rsquo;Indonésie : Comment Bien Choisir Entre Valise et Sac à Dos",
+      "articleType": "support",
+      "context": {
+        "wpId": 3015,
+        "slug": "itineraire-vers-lindonesie-comment-bien-choisir-entre-valise-et-sac-a-dos",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Comment découvrir l&rsquo;Indonésie authentique : itinéraire, choix et découvertes",
+      "articleType": "support",
+      "context": {
+        "wpId": 2989,
+        "slug": "comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Itinéraire Indonésie 2026 : Comparatif des Meilleurs Circuits",
+      "articleType": "support",
+      "context": {
+        "wpId": 2952,
+        "slug": "indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
       "topic": "Voyager en Asie du Sud-Est : Itinéraire et Coûts Réels à Prévoir",
       "articleType": "support",
       "context": {
@@ -112,7 +212,7 @@
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -137,7 +237,7 @@
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -162,7 +262,7 @@
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -187,7 +287,7 @@
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -212,7 +312,7 @@
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -221,106 +321,6 @@
       "context": {
         "wpId": 2910,
         "slug": "les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city",
-        "compositeScore": 13,
-        "freshness": 0.88,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Voyager en Asie du Sud-Est : les frais cachés qui gonflent ton budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 2904,
-        "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
-        "compositeScore": 13,
-        "freshness": 0.88,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Vivre à Chiang Mai : le vrai coût d&rsquo;un rêve de nomade digital",
-      "articleType": "support",
-      "context": {
-        "wpId": 2898,
-        "slug": "vivre-a-chiang-mai-le-vrai-cout-dun-reve-de-nomade-digital",
-        "compositeScore": 13,
-        "freshness": 0.88,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "48 Heures à Singapour : Optimisez Chaque Centime de Votre Budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 2888,
-        "slug": "48-heures-a-singapour-optimisez-chaque-centime-de-votre-budget",
-        "compositeScore": 13,
-        "freshness": 0.88,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Vivre en Indonésie avec 1000 € : les frais cachés à connaître",
-      "articleType": "support",
-      "context": {
-        "wpId": 2878,
-        "slug": "vivre-en-indonesie-avec-1000-e-les-frais-caches-a-connaitre",
         "compositeScore": 13,
         "freshness": 0.88,
         "traffic": 0,
