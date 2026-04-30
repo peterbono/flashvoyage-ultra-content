@@ -4,7 +4,7 @@
   "utm_template": "?utm_source={platform}&utm_medium=community&utm_campaign=s1",
   "status": {
     "voyage_forum": {
-      "posted": 27,
+      "posted": 28,
       "target": 6,
       "limit": "1 post/24h (new account)",
       "account": "FloAsie",
@@ -220,6 +220,14 @@
           "thread": "questions-itineraire-meteo-1-semaine-laos-en-famille-d11373382",
           "title": "Questions itinéraire et météo 1 semaine au Laos en famille",
           "hasLink": true,
+          "generated": true,
+          "status": "published"
+        },
+        {
+          "date": "2026-04-30T08:02:20.947Z",
+          "thread": "petite-video-notre-viree-nord-vietnam-yunnan-via-haut-laos-d11079876",
+          "title": "Petite vidéo sur notre virée du nord Vietnam au Yunnan via le Haut Laos",
+          "hasLink": false,
           "generated": true,
           "status": "published"
         }
@@ -556,7 +564,7 @@
       ]
     },
     "tripadvisor": {
-      "posted": 21,
+      "posted": 22,
       "posts_done": [
         {
           "date": "2026-04-09T08:07:24.621Z",
@@ -725,11 +733,19 @@
           "section": "Cambodge",
           "hasLink": false,
           "status": "published"
+        },
+        {
+          "date": "2026-04-30T08:06:51.041Z",
+          "threadId": "14500680",
+          "title": "Guide francophone",
+          "section": "Japon",
+          "hasLink": false,
+          "status": "published"
         }
       ]
     }
   },
-  "total_posted": 74,
+  "total_posted": 76,
   "total_target": 12,
   "next_action": "Fix Chrome MCP extension, then execute Quora + remaining Voyage Forum posts"
 }
