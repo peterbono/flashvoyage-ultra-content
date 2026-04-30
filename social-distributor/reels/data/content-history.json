@@ -1,26 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "thaïlande",
-      "date": "2026-04-15",
-      "format": "avantapres"
-    },
-    {
-      "name": "vietnam",
-      "date": "2026-04-15",
-      "format": "avantapres"
-    },
-    {
-      "name": "bali",
-      "date": "2026-04-15",
-      "format": "humor"
-    },
-    {
-      "name": "laos",
-      "date": "2026-04-15",
-      "format": "humor"
-    },
-    {
       "name": "thaïlande / vietnam",
       "date": "2026-04-16",
       "format": "pick"
@@ -339,33 +319,14 @@
       "name": "singapour",
       "date": "2026-04-29",
       "format": "avantapres"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-04-30",
+      "format": "cost-vs"
     }
   ],
   "recentFormats": [
-    {
-      "format": "avantapres",
-      "date": "2026-04-15T18:05:08.906Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-15T18:05:37.860Z"
-    },
-    {
-      "format": "humor",
-      "date": "2026-04-15T20:08:36.602Z"
-    },
-    {
-      "format": "humor",
-      "date": "2026-04-15T20:09:08.924Z"
-    },
-    {
-      "format": "humor",
-      "date": "2026-04-15T21:13:26.154Z"
-    },
-    {
-      "format": "humor",
-      "date": "2026-04-15T21:13:53.759Z"
-    },
     {
       "format": "pick",
       "date": "2026-04-16T18:07:49.723Z"
@@ -681,6 +642,10 @@
     {
       "format": "humor",
       "date": "2026-04-29T20:49:46.579Z"
+    },
+    {
+      "format": "cost-vs",
+      "date": "2026-04-30T17:34:36.491Z"
     }
   ],
   "recentArticleIds": [
@@ -735,21 +700,10 @@
     4030,
     3074,
     3207,
-    3888
+    3888,
+    3504
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:avantapres|dest:vietnam|slug:thailande-ou-vietnam-le-choix-",
-      "date": "2026-04-15T18:05:37.860Z"
-    },
-    {
-      "fp": "fmt:humor|dest:bali|slug:bali-lombok-gili-10-jours-itin",
-      "date": "2026-04-15T20:09:08.924Z"
-    },
-    {
-      "fp": "fmt:humor|dest:laos|slug:laos-solo-2-risques-que-les-bl",
-      "date": "2026-04-15T21:13:53.759Z"
-    },
     {
       "fp": "fmt:budget|dest:thailande|slug:thailande-le-cout-reel-dun-voy",
       "date": "2026-04-16T20:05:59.945Z"
@@ -897,6 +851,10 @@
     {
       "fp": "fmt:humor|dest:none|slug:temoignage-voyage-retours-et-l",
       "date": "2026-04-29T20:49:46.579Z"
+    },
+    {
+      "fp": "fmt:cost-vs|dest:thailande|slug:thailande-ce-que-jaurais-voulu",
+      "date": "2026-04-30T17:34:36.491Z"
     }
   ]
 }
