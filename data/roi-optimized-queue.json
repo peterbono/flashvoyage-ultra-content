@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-30T04:21:10.436Z",
+  "timestamp": "2026-05-01T04:29:40.253Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,8 +17,8 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 140,
-    "medianTrafficSignal": "0.140",
+    "medianMonthlyPV": 110,
+    "medianTrafficSignal": "0.110",
     "avgRpm": 2,
     "articlesAnalyzed": 41
   },
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 3.73,
-        "projectedMonthlyTraffic": 140,
-        "projectedMonthlyRevenue": 0.28,
+        "expectedRoi": 2.93,
+        "projectedMonthlyTraffic": 110,
+        "projectedMonthlyRevenue": 0.22,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 3.73,
-        "projectedMonthlyTraffic": 140,
-        "projectedMonthlyRevenue": 0.28,
+        "expectedRoi": 2.93,
+        "projectedMonthlyTraffic": 110,
+        "projectedMonthlyRevenue": 0.22,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,11 +77,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 3.73,
-        "projectedMonthlyTraffic": 140,
-        "projectedMonthlyRevenue": 0.28,
+        "expectedRoi": 2.93,
+        "projectedMonthlyTraffic": 110,
+        "projectedMonthlyRevenue": 0.22,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -91,13 +91,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Itinéraire vers l&rsquo;Indonésie : Comment Bien Choisir Entre Valise et Sac à Dos",
+      "topic": "Trois mois en Asie du Sud-Est : ce que j&rsquo;ai vraiment dépensé",
       "articleType": "support",
       "context": {
-        "wpId": 3015,
-        "slug": "itineraire-vers-lindonesie-comment-bien-choisir-entre-valise-et-sac-a-dos",
+        "wpId": 2945,
+        "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
         "compositeScore": 13,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
@@ -116,13 +116,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Comment découvrir l&rsquo;Indonésie authentique : itinéraire, choix et découvertes",
+      "topic": "Voyager en Asie du Sud-Est : les frais cachés qui gonflent ton budget",
       "articleType": "support",
       "context": {
-        "wpId": 2989,
-        "slug": "comment-decouvrir-lindonesie-authentique-itineraire-choix-et-decouvertes",
+        "wpId": 2904,
+        "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
         "compositeScore": 13,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
@@ -140,16 +140,16 @@
       "rank": 6,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "priorityScore": -4,
+      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
       "articleType": "support",
       "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-        "compositeScore": 13,
-        "freshness": 0.89,
+        "wpId": 4125,
+        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
+        "compositeScore": 14,
+        "freshness": 0.96,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -165,16 +165,16 @@
       "rank": 7,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Itinéraire Indonésie 2026 : Comparatif des Meilleurs Circuits",
+      "priorityScore": -4,
+      "topic": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
       "articleType": "support",
       "context": {
-        "wpId": 2952,
-        "slug": "indonesie-quand-chaque-choix-ditineraire-devient-un-dilemme",
-        "compositeScore": 13,
-        "freshness": 0.89,
+        "wpId": 4058,
+        "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
+        "compositeScore": 14,
+        "freshness": 0.96,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -190,16 +190,16 @@
       "rank": 8,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Voyager en Asie du Sud-Est : Itinéraire et Coûts Réels à Prévoir",
+      "priorityScore": -4,
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "articleType": "support",
       "context": {
-        "wpId": 2945,
-        "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
-        "compositeScore": 13,
-        "freshness": 0.89,
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "compositeScore": 14,
+        "freshness": 0.95,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -215,16 +215,16 @@
       "rank": 9,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Indonésie en 14 jours : Décisions cruciales pour un itinéraire parfait",
+      "priorityScore": -4,
+      "topic": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
       "articleType": "support",
       "context": {
-        "wpId": 2938,
-        "slug": "indonesie-en-14-jours-decisions-cruciales-pour-un-itineraire-parfait",
-        "compositeScore": 13,
-        "freshness": 0.89,
+        "wpId": 3174,
+        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
+        "compositeScore": 14,
+        "freshness": 0.92,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -240,16 +240,16 @@
       "rank": 10,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Voyager au Japon : Comment bien choisir son itinéraire sans regret",
+      "priorityScore": -4,
+      "topic": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
       "articleType": "support",
       "context": {
-        "wpId": 2931,
-        "slug": "voyager-au-japon-comment-bien-choisir-son-itineraire-sans-regret",
-        "compositeScore": 13,
-        "freshness": 0.89,
+        "wpId": 3065,
+        "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
+        "compositeScore": 14,
+        "freshness": 0.92,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -265,16 +265,16 @@
       "rank": 11,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "priorityScore": -4,
+      "topic": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
       "articleType": "support",
       "context": {
-        "wpId": 2924,
-        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
-        "compositeScore": 13,
-        "freshness": 0.89,
+        "wpId": 3056,
+        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
+        "compositeScore": 14,
+        "freshness": 0.92,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -290,16 +290,16 @@
       "rank": 12,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Voyager au Japon : eSIM et frais cachés à connaître",
+      "priorityScore": -4,
+      "topic": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
       "articleType": "support",
       "context": {
-        "wpId": 2916,
-        "slug": "voyager-au-japon-esim-et-frais-caches-a-connaitre",
-        "compositeScore": 13,
-        "freshness": 0.89,
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.92,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -315,16 +315,16 @@
       "rank": 13,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Les 3 coûts cachés des espaces de coworking à Ho Chi Minh City",
+      "priorityScore": -4,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
       "articleType": "support",
       "context": {
-        "wpId": 2910,
-        "slug": "les-3-couts-caches-des-espaces-de-coworking-a-ho-chi-minh-city",
-        "compositeScore": 13,
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 14,
         "freshness": 0.88,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -342,8 +342,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.028,
-    "expectedDailyRoi": 0.12
+    "expectedDailyRevenue": 0.022,
+    "expectedDailyRoi": 0.1
   },
   "summary": {
     "write_new": 0,

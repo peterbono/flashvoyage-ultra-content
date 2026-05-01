@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-04-30T04:21:11.410Z",
+  "timestamp": "2026-05-01T04:29:41.213Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-04-30T04:21:12.499Z",
+      "lastScan": "2026-05-01T04:29:41.836Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-04-30T04:21:13.153Z",
+      "lastScan": "2026-05-01T04:29:42.338Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-04-30T04:22:21.270Z",
-      "urlCount": 9479,
+      "lastScan": "2026-05-01T04:30:49.525Z",
+      "urlCount": 9483,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9620,7 +9620,11 @@
         "https://generationvoyage.fr/bruges-gand/": "2026-04-29T15:30:54+00:00",
         "https://generationvoyage.fr/plages-majorque/": "2026-04-28T17:02:13+00:00",
         "https://generationvoyage.fr/visiter-korcula-faire-voir/": "2026-04-28T17:10:35+00:00",
-        "https://generationvoyage.fr/endroits-sortir-marbella/": "2026-04-28T17:19:54+00:00"
+        "https://generationvoyage.fr/endroits-sortir-marbella/": "2026-04-28T17:19:54+00:00",
+        "https://generationvoyage.fr/dormir-alhambra-grenade/": "2026-04-30T07:42:49+00:00",
+        "https://generationvoyage.fr/dormir-thorenc/": "2026-04-30T09:43:44+00:00",
+        "https://generationvoyage.fr/milan-turin/": "2026-04-30T11:45:36+00:00",
+        "https://generationvoyage.fr/dormir-saint-jean-cap-ferrat/": "2026-04-30T14:47:35+00:00"
       }
     }
   }
