@@ -319,6 +319,11 @@
       "name": "vietnam",
       "date": "2026-05-01",
       "format": "avantapres"
+    },
+    {
+      "name": "asie du sud-est",
+      "date": "2026-05-01",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -641,6 +646,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-01T17:25:57.031Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-01T19:36:16.840Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-01T19:36:40.292Z"
     }
   ],
   "recentArticleIds": [
@@ -699,7 +712,8 @@
     3504,
     3107,
     5270,
-    4105
+    4105,
+    4125
   ],
   "recentFingerprints": [
     {
@@ -857,6 +871,10 @@
     {
       "fp": "fmt:avantapres|dest:vietnam|slug:vietnam-central-13-jours-3-cho",
       "date": "2026-05-01T17:25:57.031Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:hokkaido-en-9-jours-sans-voitu",
+      "date": "2026-05-01T19:36:40.292Z"
     }
   ]
 }
