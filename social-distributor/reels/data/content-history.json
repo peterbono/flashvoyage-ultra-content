@@ -324,6 +324,11 @@
       "name": "asie du sud-est",
       "date": "2026-05-01",
       "format": "avantapres"
+    },
+    {
+      "name": "cambodge",
+      "date": "2026-05-01",
+      "format": "best-time"
     }
   ],
   "recentFormats": [
@@ -654,6 +659,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-01T19:36:40.292Z"
+    },
+    {
+      "format": "best-time",
+      "date": "2026-05-01T20:47:18.863Z"
+    },
+    {
+      "format": "best-time",
+      "date": "2026-05-01T20:47:45.210Z"
     }
   ],
   "recentArticleIds": [
@@ -713,7 +726,8 @@
     3107,
     5270,
     4105,
-    4125
+    4125,
+    4369
   ],
   "recentFingerprints": [
     {
@@ -875,6 +889,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:hokkaido-en-9-jours-sans-voitu",
       "date": "2026-05-01T19:36:40.292Z"
+    },
+    {
+      "fp": "fmt:best-time|dest:cambodge|slug:visa-cambodge-francais-2026-ev",
+      "date": "2026-05-01T20:47:45.210Z"
     }
   ]
 }
