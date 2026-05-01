@@ -159,3 +159,4 @@
 {"date":"2026-04-30T08:03:30.361Z","platform":"routard","status":"login_failed"}
 {"date":"2026-04-30T08:04:30.635Z","platform":"reddit_fr","sub":"r/voyage","threadId":"1szni3d","thread":"Voyage invite codes","postUrl":"https://old.reddit.com/r/Voyage/comments/1szni3d/voyage_invite_codes/","hasLink":true,"success":false,"generated":true,"articleId":4487,"commentCount":4}
 {"date":"2026-04-30T08:06:51.029Z","platform":"tripadvisor","section":"Japon","threadId":"14500680","thread":"Guide francophone","hasLink":false,"generated":true,"articleId":null,"success":true,"submitResult":"clicked:input[value*=\"Publier\"], input[value*=\"Envoyer\"], input[value*=\"poster\"]:publier votre réponse","successCheck":"confirmed"}
+{"date":"2026-05-01T03:36:27.842Z","platform":"reddit_fr","sub":"r/france","status":"login_failed"}
