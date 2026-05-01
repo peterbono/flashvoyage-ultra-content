@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-04-30",
+  "lastUpdated": "2026-05-01",
   "formatScores": {
     "poll": 0,
-    "pick": 9.3,
+    "pick": 6.6,
     "humor": 0,
     "humor-tweet": 0,
     "budget": 6.6,
     "versus": 0,
-    "avantapres": 5.3,
+    "avantapres": 6.4,
     "month": 0,
     "cost-vs": 0,
     "leaderboard": 0,
@@ -18,25 +18,25 @@
     "versus"
   ],
   "destinationScores": {
-    "vietnam": 7,
+    "bali": 7.9,
+    "thailande": 7,
+    "vietnam": 6.1,
     "chiang mai": 5.6,
-    "bali": 5,
     "bangkok": 5,
-    "thailande": 4,
     "philippines": 3.4,
     "koh samui": 3,
     "malaisie": 2.7,
     "lombok": 0.8,
     "singapour": 0.8,
-    "indonesie": 0.5,
     "phuket": 0.4,
+    "indonesie": 0.3,
     "cambodge": 0.1
   },
   "recommendations": [
     "bali content trending — prioritize",
     "thailande content trending — prioritize",
     "vietnam content trending — prioritize",
-    "Top TikTok format: pick (avg 9.3, 2 videos)"
+    "Top TikTok format: budget (avg 6.6, 4 videos)"
   ],
   "igFormatScores": {
     "poll": 0,
@@ -53,8 +53,8 @@
   },
   "tiktokFormatScores": {
     "budget": 6.6,
-    "avantapres": 5.3,
-    "pick": 9.3
+    "pick": 6.6,
+    "avantapres": 6.4
   },
   "formatScoreSource": {
     "pick": "tiktok-only",
@@ -63,29 +63,29 @@
   },
   "igDestinationScores": {
     "bali": 7.9,
-    "thailande": 4,
-    "vietnam": 3.6,
+    "thailande": 7,
+    "vietnam": 6.8,
     "bangkok": 3.4,
     "chiang mai": 3.4,
     "koh samui": 3,
-    "philippines": 1.8,
+    "philippines": 1.9,
     "lombok": 0.8,
     "singapour": 0.8,
-    "indonesie": 0.5,
     "malaisie": 0.4,
     "phuket": 0.4,
+    "indonesie": 0.3,
     "cambodge": 0.1
   },
   "tiktokDestinationScores": {
-    "bali": 3,
+    "bali": 0,
     "philippines": 4.4,
     "malaisie": 4.2,
-    "chiang mai": 7,
     "bangkok": 6.1,
-    "vietnam": 9.2
+    "vietnam": 5.7,
+    "chiang mai": 7
   },
   "destinationScoreSource": {
-    "bali": "merged(60/40)",
+    "bali": "ig-only",
     "thailande": "ig-only",
     "vietnam": "merged(60/40)",
     "bangkok": "merged(60/40)",
@@ -94,9 +94,9 @@
     "philippines": "merged(60/40)",
     "lombok": "ig-only",
     "singapour": "ig-only",
-    "indonesie": "ig-only",
     "malaisie": "merged(60/40)",
     "phuket": "ig-only",
+    "indonesie": "ig-only",
     "cambodge": "ig-only"
   },
   "mergeConfig": {
@@ -104,6 +104,6 @@
     "igWeight": 0.4,
     "active": true,
     "tiktokVideoCount": 15,
-    "tiktokUnclassifiedCount": 3
+    "tiktokUnclassifiedCount": 2
   }
 }
