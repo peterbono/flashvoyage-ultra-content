@@ -636,6 +636,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-02T19:30:37.498Z"
+    },
+    {
+      "format": "humor-tweet",
+      "date": "2026-05-02T20:46:12.714Z"
+    },
+    {
+      "format": "humor-tweet",
+      "date": "2026-05-02T20:46:32.183Z"
     }
   ],
   "recentArticleIds": [
@@ -697,7 +705,8 @@
     4105,
     4125,
     4369,
-    3048
+    3048,
+    3090
   ],
   "recentFingerprints": [
     {
@@ -855,6 +864,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:entre-hong-kong-et-tokyo-choix",
       "date": "2026-05-02T19:30:37.498Z"
+    },
+    {
+      "fp": "fmt:humor-tweet|dest:none|slug:asie-du-sud-est-choix-ditinera",
+      "date": "2026-05-02T20:46:32.183Z"
     }
   ]
 }
