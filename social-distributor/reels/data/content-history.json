@@ -1,26 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "thaïlande",
-      "date": "2026-04-17",
-      "format": "avantapres"
-    },
-    {
-      "name": "thailande",
-      "date": "2026-04-17",
-      "format": "avantapres"
-    },
-    {
-      "name": "thailande",
-      "date": "2026-04-17",
-      "format": "best-time"
-    },
-    {
-      "name": "thailande",
-      "date": "2026-04-17",
-      "format": "best-time"
-    },
-    {
       "name": "thailande",
       "date": "2026-04-18",
       "format": "cost-vs"
@@ -329,33 +309,14 @@
       "name": "cambodge",
       "date": "2026-05-01",
       "format": "best-time"
+    },
+    {
+      "name": "tokyo",
+      "date": "2026-05-02",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
-    {
-      "format": "avantapres",
-      "date": "2026-04-17T17:47:53.342Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-17T17:48:26.315Z"
-    },
-    {
-      "format": "best-time",
-      "date": "2026-04-17T20:01:54.899Z"
-    },
-    {
-      "format": "best-time",
-      "date": "2026-04-17T20:02:29.931Z"
-    },
-    {
-      "format": "best-time",
-      "date": "2026-04-17T21:09:31.711Z"
-    },
-    {
-      "format": "best-time",
-      "date": "2026-04-17T21:10:09.092Z"
-    },
     {
       "format": "cost-vs",
       "date": "2026-04-18T17:36:06.021Z"
@@ -667,6 +628,14 @@
     {
       "format": "best-time",
       "date": "2026-05-01T20:47:45.210Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-02T19:30:11.296Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-02T19:30:37.498Z"
     }
   ],
   "recentArticleIds": [
@@ -727,21 +696,10 @@
     5270,
     4105,
     4125,
-    4369
+    4369,
+    3048
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:avantapres|dest:thailande|slug:voyage-thailande-pas-cher-2026",
-      "date": "2026-04-17T17:48:26.315Z"
-    },
-    {
-      "fp": "fmt:best-time|dest:thailande|slug:bali-vs-thailande-premier-voya",
-      "date": "2026-04-17T20:02:29.931Z"
-    },
-    {
-      "fp": "fmt:best-time|dest:thailande|slug:esim-thailande-comparatif-ais-",
-      "date": "2026-04-17T21:10:09.092Z"
-    },
     {
       "fp": "fmt:cost-vs|dest:thailande|slug:thailande-choisir-entre-koh-sa",
       "date": "2026-04-18T17:36:06.021Z"
@@ -893,6 +851,10 @@
     {
       "fp": "fmt:best-time|dest:cambodge|slug:visa-cambodge-francais-2026-ev",
       "date": "2026-05-01T20:47:45.210Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:entre-hong-kong-et-tokyo-choix",
+      "date": "2026-05-02T19:30:37.498Z"
     }
   ]
 }
