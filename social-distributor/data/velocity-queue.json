@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-05-02T00:32:57.618Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-05-02T06:39:50.982Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Later nightlife closing time sought for border town",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3248177/later-nightlife-closing-time-sought-for-border-town",
-      "velocityScore": 0.499,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2497,
-      "estimatedTrafficIn24h": 2440,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.999,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.2
-      },
-      "detectedAt": "2026-05-01T23:20:00.000Z",
-      "scoredAt": "2026-05-02T00:32:53.695Z"
-    }
-  ]
+  "queue": []
 }
