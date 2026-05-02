@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-05-02T06:39:50.982Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-05-02T12:18:59.742Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Thai airlines call for urgent aid as jet fuel costs soar",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/national/thai-airlines-call-for-urgent-aid-as-jet-fuel-costs-soar",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2067,
+      "estimatedTrafficIn24h": 2020,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.8
+      },
+      "detectedAt": "2026-05-02T08:30:56.000Z",
+      "scoredAt": "2026-05-02T12:18:55.610Z"
+    }
+  ]
 }
