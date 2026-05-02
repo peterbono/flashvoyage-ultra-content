@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-05-01T04:29:39.309Z",
+    "generatedAt": "2026-05-02T04:11:39.378Z",
     "elapsedSeconds": 6,
     "totalArticles": 58,
     "articlesWithRecommendations": 5,
@@ -43,17 +43,17 @@
       "ga4": {
         "pageviews": 44,
         "sessions": 36,
-        "avgDuration": 86
+        "avgDuration": 52
       },
       "gsc": {
-        "impressions": 56,
+        "impressions": 44,
         "clicks": 1,
-        "position": 12.6,
+        "position": 12.3,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
-            "position": 62.3,
-            "impressions": 3,
+            "position": 89.5,
+            "impressions": 2,
             "ctr": 0
           }
         ]
@@ -66,9 +66,9 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 86s / 1332s attendus (6% du contenu lu)",
+          "metric": "Temps lu: 52s / 1332s attendus (4% du contenu lu)",
           "action": "IMPROVE_READABILITY",
-          "details": "Seulement 6% du contenu est lu (4440 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
+          "details": "Seulement 4% du contenu est lu (4440 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
           "expectedImpact": "Temps sur page +40 a +60%, meilleur signal qualite pour Google"
         },
@@ -95,34 +95,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2386,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-04-22T12:43:04",
-      "ga4": {
-        "pageviews": 18,
-        "sessions": 15,
-        "avgDuration": 146
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -132,14 +104,14 @@
       "internalLinks": 45,
       "lastModified": "2026-04-30T07:39:40",
       "ga4": {
-        "pageviews": 17,
-        "sessions": 16,
-        "avgDuration": 89
+        "pageviews": 18,
+        "sessions": 17,
+        "avgDuration": 39
       },
       "gsc": {
-        "impressions": 39,
+        "impressions": 37,
         "clicks": 0,
-        "position": 14.8,
+        "position": 15.3,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -165,6 +137,34 @@
         }
       ],
       "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2386,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-04-22T12:43:04",
+      "ga4": {
+        "pageviews": 17,
+        "sessions": 13,
+        "avgDuration": 149
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -280,12 +280,12 @@
       "ga4": {
         "pageviews": 11,
         "sessions": 9,
-        "avgDuration": 282
+        "avgDuration": 95
       },
       "gsc": {
-        "impressions": 19,
+        "impressions": 20,
         "clicks": 1,
-        "position": 5.8,
+        "position": 6.1,
         "topQueries": [
           {
             "query": "taxe de sejour kyoto",
@@ -622,6 +622,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4371,
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
+      "wordCount": 3421,
+      "widgetCount": 3,
+      "internalLinks": 47,
+      "lastModified": "2026-04-30T07:39:20",
+      "ga4": {
+        "pageviews": 5,
+        "sessions": 5,
+        "avgDuration": 93
+      },
+      "gsc": {
+        "impressions": 13,
+        "clicks": 0,
+        "position": 7.2,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 3546,
       "slug": "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient",
       "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
@@ -667,34 +695,6 @@
         "impressions": 0,
         "clicks": 0,
         "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4371,
-      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
-      "wordCount": 3421,
-      "widgetCount": 3,
-      "internalLinks": 47,
-      "lastModified": "2026-04-30T07:39:20",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 15
-      },
-      "gsc": {
-        "impressions": 12,
-        "clicks": 0,
-        "position": 7.3,
         "topQueries": []
       },
       "reels": {
@@ -1186,10 +1186,10 @@
       "slug": "esim-philippines-globe-smart-comparatif-2026",
       "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
       "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
-      "wordCount": 5488,
+      "wordCount": 5455,
       "widgetCount": 0,
       "internalLinks": 57,
-      "lastModified": "2026-04-30T07:39:24",
+      "lastModified": "2026-05-01T10:28:16",
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
@@ -1250,7 +1250,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 3224
+        "avgDuration": 458
       },
       "gsc": {
         "impressions": 0,
@@ -1561,9 +1561,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 8,
         "clicks": 0,
-        "position": 7.1,
+        "position": 6.5,
         "topQueries": []
       },
       "reels": {
