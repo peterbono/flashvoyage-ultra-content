@@ -1,26 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "thailande",
-      "date": "2026-04-18",
-      "format": "cost-vs"
-    },
-    {
-      "name": "thaïlande",
-      "date": "2026-04-18",
-      "format": "avantapres"
-    },
-    {
-      "name": "thailande",
-      "date": "2026-04-18",
-      "format": "avantapres"
-    },
-    {
-      "name": "thailande",
-      "date": "2026-04-18",
-      "format": "humor-tweet"
-    },
-    {
       "name": "vietnam",
       "date": "2026-04-19",
       "format": "avantapres"
@@ -314,29 +294,14 @@
       "name": "tokyo",
       "date": "2026-05-02",
       "format": "avantapres"
+    },
+    {
+      "name": "asie du sud-est",
+      "date": "2026-05-03",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
-    {
-      "format": "cost-vs",
-      "date": "2026-04-18T17:36:06.021Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-18T19:46:10.381Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-18T19:46:44.055Z"
-    },
-    {
-      "format": "humor-tweet",
-      "date": "2026-04-18T21:01:47.626Z"
-    },
-    {
-      "format": "humor-tweet",
-      "date": "2026-04-18T21:02:19.824Z"
-    },
     {
       "format": "avantapres",
       "date": "2026-04-19T17:34:37.855Z"
@@ -644,6 +609,14 @@
     {
       "format": "humor-tweet",
       "date": "2026-05-02T20:46:32.183Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-03T17:20:45.332Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-03T17:21:14.153Z"
     }
   ],
   "recentArticleIds": [
@@ -706,21 +679,10 @@
     4125,
     4369,
     3048,
-    3090
+    3090,
+    5752
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:cost-vs|dest:thailande|slug:thailande-choisir-entre-koh-sa",
-      "date": "2026-04-18T17:36:06.021Z"
-    },
-    {
-      "fp": "fmt:avantapres|dest:thailande|slug:thailande-2-pieges-caches-que-",
-      "date": "2026-04-18T19:46:44.055Z"
-    },
-    {
-      "fp": "fmt:humor-tweet|dest:thailande|slug:thailande-6-pieges-financiers-",
-      "date": "2026-04-18T21:02:19.824Z"
-    },
     {
       "fp": "fmt:avantapres|dest:vietnam|slug:vietnam-larbitrage-crucial-pou",
       "date": "2026-04-19T17:35:27.934Z"
@@ -868,6 +830,10 @@
     {
       "fp": "fmt:humor-tweet|dest:none|slug:asie-du-sud-est-choix-ditinera",
       "date": "2026-05-02T20:46:32.183Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:lesim-en-asie-du-sud-est-ce-qu",
+      "date": "2026-05-03T17:21:14.153Z"
     }
   ]
 }
