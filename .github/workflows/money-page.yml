@@ -1,0 +1,77 @@
+name: Money Page (weekly)
+
+# Weekly automated money-page pipeline.
+# - Distinct from publish-article.yml (daily editorial).
+# - Generates ONE high-commercial-intent comparison article per run (eSIM/SIM,
+#   FLASH5 discount, Travelpayouts-anchored).
+# - Consumes data/money-page-queue.json one entry at a time.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (no WP write, prints generated content)'
+        required: false
+        default: '1'
+        type: choice
+        options: ['0', '1']
+      entry_id:
+        description: 'Force a specific queue entry id (laisser vide = next pending)'
+        required: false
+        default: ''
+
+  # Sunday 02:00 UTC — well before the daily editorial cron (03:00 UTC).
+  schedule:
+    - cron: '0 2 * * 0'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: money-page
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Generate + publish money page
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          TRAVELPAYOUTS_API_TOKEN: ${{ secrets.TRAVELPAYOUTS_API_TOKEN }}
+          MONEY_PAGE_DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
+          MONEY_PAGE_ENTRY_ID: ${{ github.event.inputs.entry_id }}
+        run: |
+          if [ "${MONEY_PAGE_DRY_RUN}" = "1" ]; then
+            node scripts/generate-money-page.js --dry-run ${MONEY_PAGE_ENTRY_ID:+--entry-id="$MONEY_PAGE_ENTRY_ID"}
+          else
+            node scripts/generate-money-page.js --publish ${MONEY_PAGE_ENTRY_ID:+--entry-id="$MONEY_PAGE_ENTRY_ID"}
+          fi
+
+      - name: Commit state files
+        if: success() && github.event.inputs.dry_run != '1'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main || true
+          git add data/money-page-queue.json data/live-cache || true
+          git diff --cached --quiet || git commit -m "chore(money-page): mark queue entry as published"
+          git push || { echo "::warning::git push failed — queue state not persisted"; }
