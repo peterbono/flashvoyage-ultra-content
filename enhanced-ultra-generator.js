@@ -2947,6 +2947,29 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
       // Authentification
       const auth = Buffer.from(`${WORDPRESS_USERNAME}:${WORDPRESS_APP_PASSWORD}`).toString('base64');
 
+      // Geo-proof image substitution: replace `[GEO_PROOF]` placeholders with a
+      // real founder photo from Cloudinary (or strip if no asset exists).
+      // MUST run BEFORE assertContentSafeToPublish so leftover markers are caught
+      // by guardrails on next iteration. See docs/geo-proof-pipeline.md.
+      try {
+        const { injectGeoProof } = await import('./intelligence/geo-proof-resolver.js');
+        const geoCountry = article.final_destination
+          || article.destination
+          || article.meta?.destination
+          || '';
+        if (geoCountry) {
+          const before = wordpressData.content;
+          wordpressData.content = await injectGeoProof(before, geoCountry, { logger: console });
+          if (wordpressData.content !== before) {
+            article.content = wordpressData.content; // keep article in sync
+            console.log(`   🌏 geo-proof: substitution applied for "${geoCountry}"`);
+          }
+        }
+      } catch (geoErr) {
+        // Non-fatal: pipeline continues, guardrails will still strip if any [GEO_PROOF] survives
+        console.warn(`   ⚠️ geo-proof substitution failed: ${geoErr.message}`);
+      }
+
       // Guardrails: editorial placeholders ([VERIFY], [TODO], [AFFILIATE:X]) AND
       // JSON-LD schema structure (wrapper noise, Product missing image, FAQPage duplicate).
       const { assertContentSafeToPublish } = await import('./intelligence/content-guardrails.js');

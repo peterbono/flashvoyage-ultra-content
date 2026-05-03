@@ -3751,6 +3751,7 @@ STYLE D'ECRITURE — OBLIGATOIRE :
 - Paragraphe 3 : PROMESSE de l'article en 1-2 phrases. Ce qu'on couvre, pourquoi c'est différent des guides classiques. Termine par une promesse chiffrée.
 - JAMAIS de phrases comme "il est important de savoir", "dans cet article nous allons", "force est de constater".
 - Varie la longueur des phrases : une courte percutante, une longue détaillée, une courte de transition.
+- GEO-PROOF : si l'article décrit une expérience de première main dans un pays, insère le marqueur \`[GEO_PROOF]\` UNE SEULE FOIS dans l'introduction (typiquement entre paragraphe 2 et paragraphe 3, dans son propre <p>). Le pipeline le remplacera par une vraie photo prise par Florian sur place. N'invente pas d'URL ni de balise <img>, juste \`[GEO_PROOF]\`.
 
 EXEMPLE DE QUALITÉ ATTENDUE:
 \`\`\`html
