@@ -309,6 +309,16 @@
       "name": "philippines",
       "date": "2026-05-03",
       "format": "avantapres"
+    },
+    {
+      "name": "taipei",
+      "date": "2026-05-03",
+      "format": "pick"
+    },
+    {
+      "name": "kuala-lumpur",
+      "date": "2026-05-03",
+      "format": "pick"
     }
   ],
   "recentFormats": [
@@ -635,6 +645,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-03T19:30:51.142Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-03T20:46:25.652Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-03T20:46:53.132Z"
     }
   ],
   "recentArticleIds": [
@@ -699,7 +717,8 @@
     3048,
     3090,
     5752,
-    4062
+    4062,
+    2980
   ],
   "recentFingerprints": [
     {
@@ -857,6 +876,10 @@
     {
       "fp": "fmt:avantapres|dest:philippines|slug:philippines-les-5-frais-caches",
       "date": "2026-05-03T19:30:51.142Z"
+    },
+    {
+      "fp": "fmt:pick|dest:kuala-lumpur|slug:choisir-entre-taipei-et-kuala-",
+      "date": "2026-05-03T20:46:53.132Z"
     }
   ]
 }
