@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-05-02T04:11:32.225Z",
-  "queueSize": 14,
+  "timestamp": "2026-05-03T04:24:30.181Z",
+  "queueSize": 15,
   "queue": [
     {
       "rank": 1,
@@ -20,6 +20,22 @@
     },
     {
       "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 125,
+      "topic": "narges mohammadi prix nobel",
+      "articleType": "support",
+      "context": {
+        "gapScore": 45,
+        "destination": null,
+        "category": "budget",
+        "suggestedTitle": "Narges mohammadi prix nobel : Le Guide Budget Complet",
+        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+        "reason": "Content gap: \"narges mohammadi prix nobel\" (score 45, source: trends)"
+      }
+    },
+    {
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +47,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +59,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -55,7 +71,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -71,7 +87,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -87,7 +103,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -97,23 +113,7 @@
         "wpId": 4125,
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 14,
-        "freshness": 0.96,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 8,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
-      "articleType": "support",
-      "context": {
-        "wpId": 4058,
-        "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
-        "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -123,11 +123,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "topic": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
       "articleType": "support",
       "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "wpId": 4058,
+        "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
         "compositeScore": 14,
         "freshness": 0.95,
         "traffic": 0,
@@ -139,13 +139,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "articleType": "support",
       "context": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 14,
-        "freshness": 0.92,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -155,13 +155,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
+      "topic": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
       "articleType": "support",
       "context": {
-        "wpId": 3065,
-        "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
+        "wpId": 3174,
+        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
         "compositeScore": 14,
-        "freshness": 0.92,
+        "freshness": 0.91,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -171,13 +171,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
+      "topic": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
       "articleType": "support",
       "context": {
-        "wpId": 3056,
-        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
+        "wpId": 3065,
+        "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
         "compositeScore": 14,
-        "freshness": 0.92,
+        "freshness": 0.91,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -187,19 +187,35 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
+      "topic": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
       "articleType": "support",
       "context": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "wpId": 3056,
+        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
         "compositeScore": 14,
-        "freshness": 0.92,
+        "freshness": 0.91,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     },
     {
       "rank": 14,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
+      "articleType": "support",
+      "context": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 14,
+        "freshness": 0.91,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 15,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -216,7 +232,7 @@
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 2,
     "update": 0,
     "enrich": 0,
     "standard": 3,

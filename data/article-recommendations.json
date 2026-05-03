@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-05-02T04:11:39.378Z",
+    "generatedAt": "2026-05-03T04:24:36.727Z",
     "elapsedSeconds": 6,
     "totalArticles": 58,
     "articlesWithRecommendations": 5,
@@ -109,9 +109,9 @@
         "avgDuration": 39
       },
       "gsc": {
-        "impressions": 37,
+        "impressions": 38,
         "clicks": 0,
-        "position": 15.3,
+        "position": 15.2,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -241,6 +241,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 5742,
+      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
+      "wordCount": 1513,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-04-22T12:41:31",
+      "ga4": {
+        "pageviews": 11,
+        "sessions": 11,
+        "avgDuration": 4
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5678,
       "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
       "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
@@ -283,9 +311,9 @@
         "avgDuration": 95
       },
       "gsc": {
-        "impressions": 20,
+        "impressions": 26,
         "clicks": 1,
-        "position": 6.1,
+        "position": 6.3,
         "topQueries": [
           {
             "query": "taxe de sejour kyoto",
@@ -311,34 +339,6 @@
         }
       ],
       "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5742,
-      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
-      "wordCount": 1513,
-      "widgetCount": 0,
-      "internalLinks": 22,
-      "lastModified": "2026-04-22T12:41:31",
-      "ga4": {
-        "pageviews": 9,
-        "sessions": 9,
-        "avgDuration": 5
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -633,12 +633,12 @@
       "ga4": {
         "pageviews": 5,
         "sessions": 5,
-        "avgDuration": 93
+        "avgDuration": 100
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 14,
         "clicks": 0,
-        "position": 7.2,
+        "position": 7,
         "topQueries": []
       },
       "reels": {
@@ -692,37 +692,9 @@
         "avgDuration": 17
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 1,
         "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3090,
-      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
-      "wordCount": 1772,
-      "widgetCount": 0,
-      "internalLinks": 29,
-      "lastModified": "2026-04-30T07:39:57",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 219
-      },
-      "gsc": {
-        "impressions": 11,
-        "clicks": 2,
-        "position": 10.8,
+        "position": 6,
         "topQueries": []
       },
       "reels": {
@@ -832,9 +804,9 @@
         "avgDuration": 10
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 4,
         "clicks": 0,
-        "position": 7.7,
+        "position": 6.8,
         "topQueries": []
       },
       "reels": {
@@ -863,6 +835,34 @@
         "impressions": 0,
         "clicks": 0,
         "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3090,
+      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
+      "wordCount": 1772,
+      "widgetCount": 0,
+      "internalLinks": 29,
+      "lastModified": "2026-04-30T07:39:57",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 134
+      },
+      "gsc": {
+        "impressions": 12,
+        "clicks": 2,
+        "position": 10.8,
         "topQueries": []
       },
       "reels": {
@@ -1112,9 +1112,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 5,
         "clicks": 1,
-        "position": 8.8,
+        "position": 9,
         "topQueries": []
       },
       "reels": {
@@ -1198,7 +1198,7 @@
       "gsc": {
         "impressions": 38,
         "clicks": 1,
-        "position": 13.7,
+        "position": 13.8,
         "topQueries": [
           {
             "query": "dore site instagram com reel",
@@ -1393,9 +1393,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 11,
+        "impressions": 9,
         "clicks": 1,
-        "position": 7.6,
+        "position": 7.3,
         "topQueries": []
       },
       "reels": {
