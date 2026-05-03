@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-05-03T12:17:49.357Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-05-03T18:18:43.455Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Cambodia scam crackdown sends 635 Thais back home",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/hot-news/crime/cambodia-scam-crackdown-sends-635-thais-home",
-      "velocityScore": 0.488,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2441,
-      "estimatedTrafficIn24h": 2386,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3.6
-      },
-      "detectedAt": "2026-05-03T08:40:24.000Z",
-      "scoredAt": "2026-05-03T12:17:43.237Z"
-    }
-  ]
+  "queue": []
 }
