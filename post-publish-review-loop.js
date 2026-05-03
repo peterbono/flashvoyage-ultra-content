@@ -21,6 +21,7 @@ import axios from 'axios';
 import { WORDPRESS_URL, WORDPRESS_USERNAME, WORDPRESS_APP_PASSWORD } from './config.js';
 import { runAllAgents, runCeoValidator } from './review-agents.js';
 import { applyAllFixes } from './review-auto-fixers.js';
+import { assertContentSafeToPublish } from './intelligence/content-guardrails.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -74,6 +75,10 @@ async function fetchLatestArticle() {
 }
 
 async function updateArticleContent(postId, newContent) {
+  // Guardrail: review-loop fixer output is pushed straight back to WP.
+  // Re-check for leaked editorial placeholders ([VERIFY]/[TODO]/etc.) before publish.
+  assertContentSafeToPublish({ content: newContent }, { context: 'review-loop:update' });
+
   const { url, auth } = getWpAuth();
   const res = await axios.put(`${url}/wp-json/wp/v2/posts/${postId}`, {
     content: newContent

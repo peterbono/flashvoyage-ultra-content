@@ -1601,7 +1601,12 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
               const axios = (await import('axios')).default;
               const { WORDPRESS_URL, WORDPRESS_USERNAME, WORDPRESS_APP_PASSWORD } = await import('./config.js');
               const auth = Buffer.from(`${WORDPRESS_USERNAME}:${WORDPRESS_APP_PASSWORD}`).toString('base64');
-              
+
+              // Guardrail: validator-loop pushes fixer-corrected content back to WP.
+              // Any leaked [VERIFY]/[TODO] marker would now be visible to readers — abort.
+              const { assertContentSafeToPublish } = await import('./intelligence/content-guardrails.js');
+              assertContentSafeToPublish({ content: article.content, title: article.title }, { context: 'validator-loop:update' });
+
               await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts/${articleId}`, {
                 content: article.content,
                 title: article.title
@@ -3072,6 +3077,11 @@ Basé sur <a href="${articleLink}" target="_blank" rel="noopener">un témoignage
               updatedContent = applyPostProcessingFixers(updatedContent);
             }
             try {
+              // Guardrail: post-publish image-URL rewrite re-pushes content to WP.
+              // Re-check for leaked editorial placeholders before persisting.
+              const { assertContentSafeToPublish } = await import('./intelligence/content-guardrails.js');
+              assertContentSafeToPublish({ content: updatedContent }, { context: 'image-url-rewrite:update' });
+
               await axios.post(`${WORDPRESS_URL}/wp-json/wp/v2/posts/${publishedArticle.id}`, {
                 content: updatedContent
               }, {
