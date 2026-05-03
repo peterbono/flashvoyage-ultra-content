@@ -45,7 +45,7 @@ Single shortcut on the iPhone home screen:
 4. POST `https://api.cloudinary.com/v1_1/<cloud>/image/upload` with:
    - `upload_preset=geo_proof_signed`
    - `folder=flashvoyage-geo-proof/<country>`
-   - `tags=geo-proof,florian-shot,<country>,<YYYY-MM>`
+   - `tags=geo-proof,<country>,<YYYY-MM>`
    - `context=country=<country>|city=<city>|taken_at=<ISO>`
 
 Why this wins: 1 tap from the home screen, no third-party service, no GPS
@@ -53,16 +53,20 @@ quota, country is always correct because Florian picks it. EXIF date is
 preserved for the caption.
 
 Fallback if Shortcut breaks: open the Cloudinary mobile app, upload to folder
-`flashvoyage-geo-proof/<country>`, manually add tag `florian-shot`.
+`flashvoyage-geo-proof/<country>` and add tag `geo-proof,<country>`.
 
 ## 2. Tagging convention
 
 The resolver searches by **tag**, not folder, so tagging is the contract.
 
 Required tags on every geo-proof asset (all lowercase, no accents):
-- `geo-proof` — distinguishes founder shots from any other Cloudinary asset
-- `florian-shot` — author marker (future-proof for guest photographers)
+- `geo-proof` — distinguishes first-person shots from stock/Pexels assets
 - `<country>` — one of the 14 country slugs above (no accent: `thailande` not `thaïlande`)
+
+Author attribution is handled at the WP layer (post.author byline). No need to
+encode photographer identity in the photo tag — photos are pooled across the
+6 WP authors (flash-voyage, claire-nomade, claire-moreau, marc-delacroix,
+sophie-leclerc, thomas-renard), and any author can use any country shot.
 
 Optional but recommended:
 - `<YYYY-MM>` — month bucket, lets us prefer recent photos

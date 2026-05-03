@@ -2,8 +2,9 @@
  * GEO-PROOF RESOLVER
  *
  * Substitutes `[GEO_PROOF]` placeholders in generated article HTML with a real
- * first-person photo shot by Florian (the founder), retrieved from Cloudinary
- * by country tag.
+ * first-person photo from one of the WordPress authors, retrieved from
+ * Cloudinary by country tag. The article's WP author byline already attributes
+ * the post — the photo just needs to match the geographic context.
  *
  * Design doc: docs/geo-proof-pipeline.md
  *
@@ -17,7 +18,7 @@
  *   CLOUDINARY_API_SECRET
  *
  * Tagging contract on Cloudinary side:
- *   tags=geo-proof,florian-shot,<country-slug>
+ *   tags=geo-proof,<country-slug>
  *   country-slug = lowercase, no accent, FR (e.g. "thailande", "vietnam",
  *   "indonesie"). See docs/geo-proof-pipeline.md §2.
  */
