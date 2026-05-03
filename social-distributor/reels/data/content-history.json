@@ -299,6 +299,16 @@
       "name": "asie du sud-est",
       "date": "2026-05-03",
       "format": "avantapres"
+    },
+    {
+      "name": "philippines",
+      "date": "2026-05-03",
+      "format": "avantapres"
+    },
+    {
+      "name": "philippines",
+      "date": "2026-05-03",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -617,6 +627,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-03T17:21:14.153Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-03T19:30:26.468Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-03T19:30:51.142Z"
     }
   ],
   "recentArticleIds": [
@@ -680,7 +698,8 @@
     4369,
     3048,
     3090,
-    5752
+    5752,
+    4062
   ],
   "recentFingerprints": [
     {
@@ -834,6 +853,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:lesim-en-asie-du-sud-est-ce-qu",
       "date": "2026-05-03T17:21:14.153Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:philippines|slug:philippines-les-5-frais-caches",
+      "date": "2026-05-03T19:30:51.142Z"
     }
   ]
 }
