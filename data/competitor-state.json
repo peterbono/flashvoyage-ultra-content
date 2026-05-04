@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-05-03T04:24:38.661Z",
+  "timestamp": "2026-05-04T04:24:50.178Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-05-03T04:24:39.479Z",
+      "lastScan": "2026-05-04T04:24:50.508Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-05-03T04:24:39.975Z",
+      "lastScan": "2026-05-04T04:24:50.970Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-05-03T04:25:50.818Z",
-      "urlCount": 9491,
+      "lastScan": "2026-05-04T04:25:53.223Z",
+      "urlCount": 9495,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9632,7 +9632,11 @@
         "https://generationvoyage.fr/dormir-delos/": "2026-05-02T09:36:05+00:00",
         "https://generationvoyage.fr/visiter-wissembourg-faire-voir/": "2026-05-02T11:36:39+00:00",
         "https://generationvoyage.fr/budapest-prague/": "2026-05-02T13:38:36+00:00",
-        "https://generationvoyage.fr/dormir-pays-basque-espagnol/": "2026-05-02T15:41:04+00:00"
+        "https://generationvoyage.fr/dormir-pays-basque-espagnol/": "2026-05-02T15:41:04+00:00",
+        "https://generationvoyage.fr/visiter-trentemoult-faire-voir/": "2026-05-03T08:11:00+00:00",
+        "https://generationvoyage.fr/dormir-messine/": "2026-05-03T10:13:45+00:00",
+        "https://generationvoyage.fr/malaga-marbella/": "2026-05-03T13:18:05+00:00",
+        "https://generationvoyage.fr/visiter-mimizan-faire-voir/": "2026-05-03T15:34:27+00:00"
       }
     }
   }

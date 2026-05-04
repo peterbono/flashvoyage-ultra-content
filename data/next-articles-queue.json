@@ -1,41 +1,9 @@
 {
-  "timestamp": "2026-05-03T04:24:30.181Z",
-  "queueSize": 15,
+  "timestamp": "2026-05-04T04:24:41.758Z",
+  "queueSize": 13,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 61,
-        "destination": "thailande",
-        "category": "budget",
-        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 125,
-      "topic": "narges mohammadi prix nobel",
-      "articleType": "support",
-      "context": {
-        "gapScore": 45,
-        "destination": null,
-        "category": "budget",
-        "suggestedTitle": "Narges mohammadi prix nobel : Le Guide Budget Complet",
-        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
-        "reason": "Content gap: \"narges mohammadi prix nobel\" (score 45, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -47,7 +15,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -59,7 +27,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -71,7 +39,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -87,7 +55,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -103,7 +71,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -119,7 +87,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -135,7 +103,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -151,7 +119,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -167,7 +135,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -183,7 +151,7 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -199,7 +167,7 @@
       }
     },
     {
-      "rank": 14,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -215,7 +183,7 @@
       }
     },
     {
-      "rank": 15,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -232,7 +200,7 @@
     }
   ],
   "summary": {
-    "write_new": 2,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,

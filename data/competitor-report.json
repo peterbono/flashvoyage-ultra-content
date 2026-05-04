@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-03T04:25:50.859Z",
+  "timestamp": "2026-05-04T04:25:53.237Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,106 +16,15 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 9491,
-      "newUrls": 1004
+      "totalUrls": 9495,
+      "newUrls": 4
     }
   ],
-  "newArticles": [
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/airbnb-kyoto/",
-      "lastmod": "2025-04-26T07:48:09+00:00",
-      "destination": "kyoto",
-      "contentType": "general",
-      "title": "Airbnb Kyoto",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Airbnb Kyoto\" (kyoto, general) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/meilleurs-treks-manaslu-nepal/",
-      "lastmod": "2025-04-26T08:41:57+00:00",
-      "destination": "nepal",
-      "contentType": "classement",
-      "title": "Meilleurs Treks Manaslu Nepal",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Meilleurs Treks Manaslu Nepal\" (nepal, classement) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-ecoresponsables-maldives/",
-      "lastmod": "2025-04-26T08:33:58+00:00",
-      "destination": "maldives",
-      "contentType": "hebergement",
-      "title": "Hotels Ecoresponsables Maldives",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel\" (score=15, freshness=0.93)",
-      "matchedArticle": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
-        "compositeScore": 15,
-        "freshness": 0.93
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-ecoresponsables-thailande/",
-      "lastmod": "2025-04-26T08:35:31+00:00",
-      "destination": "thailande",
-      "contentType": "hebergement",
-      "title": "Hotels Ecoresponsables Thailande",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=52, freshness=0.99)",
-      "matchedArticle": {
-        "wpId": 4487,
-        "slug": "voyage-thailande-pas-cher-2026-budget",
-        "compositeScore": 52,
-        "freshness": 0.99
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/circuits-vietnam/",
-      "lastmod": "2025-04-26T08:44:37+00:00",
-      "destination": "vietnam",
-      "contentType": "itineraire",
-      "title": "Circuits Vietnam",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Vietnam : pourquoi 14 800 € n&rsquo;ont pas été remboursés\" (score=63, freshness=0.97)",
-      "matchedArticle": {
-        "wpId": 4252,
-        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-        "compositeScore": 63,
-        "freshness": 0.97
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/circuits-safari-sri-lanka/",
-      "lastmod": "2025-04-26T08:44:59+00:00",
-      "destination": "sri-lanka",
-      "contentType": "itineraire",
-      "title": "Circuits Safari Sri Lanka",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés\" (score=14, freshness=0.91)",
-      "matchedArticle": {
-        "wpId": 3056,
-        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
-        "compositeScore": 14,
-        "freshness": 0.91
-      }
-    }
-  ],
+  "newArticles": [],
   "summary": {
-    "totalNew": 6,
-    "contentGaps": 2,
+    "totalNew": 0,
+    "contentGaps": 0,
     "staleRefreshes": 0,
-    "monitoring": 4
+    "monitoring": 0
   }
 }

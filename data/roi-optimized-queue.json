@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-03T04:24:37.684Z",
+  "timestamp": "2026-05-04T04:24:49.219Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,39 +17,14 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 110,
-    "medianTrafficSignal": "0.110",
+    "medianMonthlyPV": 120,
+    "medianTrafficSignal": "0.120",
     "avgRpm": 2,
-    "articlesAnalyzed": 41
+    "articlesAnalyzed": 42
   },
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 61,
-        "destination": "thailande",
-        "category": "budget",
-        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 2.99,
-        "projectedMonthlyTraffic": 112,
-        "projectedMonthlyRevenue": 0.224,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (110 PV) × gap boost (1.02)"
-      },
-      "cumulativeCost": 0.075,
-      "withinBudget": true
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -60,17 +35,17 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 2.93,
-        "projectedMonthlyTraffic": 110,
-        "projectedMonthlyRevenue": 0.22,
+        "expectedRoi": 3.2,
+        "projectedMonthlyTraffic": 120,
+        "projectedMonthlyRevenue": 0.24,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (120 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.15,
+      "cumulativeCost": 0.075,
       "withinBudget": true
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -81,17 +56,17 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 2.93,
-        "projectedMonthlyTraffic": 110,
-        "projectedMonthlyRevenue": 0.22,
+        "expectedRoi": 3.2,
+        "projectedMonthlyTraffic": 120,
+        "projectedMonthlyRevenue": 0.24,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (120 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.15,
       "withinBudget": true
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -102,42 +77,17 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 2.93,
-        "projectedMonthlyTraffic": 110,
-        "projectedMonthlyRevenue": 0.22,
+        "expectedRoi": 3.2,
+        "projectedMonthlyTraffic": 120,
+        "projectedMonthlyRevenue": 0.24,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (120 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 5,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 125,
-      "topic": "narges mohammadi prix nobel",
-      "articleType": "support",
-      "context": {
-        "gapScore": 45,
-        "destination": null,
-        "category": "budget",
-        "suggestedTitle": "Narges mohammadi prix nobel : Le Guide Budget Complet",
-        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
-        "reason": "Content gap: \"narges mohammadi prix nobel\" (score 45, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 2.21,
-        "projectedMonthlyTraffic": 83,
-        "projectedMonthlyRevenue": 0.166,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (110 PV) × gap boost (0.75)"
-      },
-      "cumulativeCost": 0.375,
-      "withinBudget": true
-    },
-    {
-      "rank": 6,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -158,11 +108,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -183,11 +133,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -208,11 +158,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -233,11 +183,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -258,11 +208,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -283,11 +233,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -308,11 +258,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 13,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -333,11 +283,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 14,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -358,11 +308,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 15,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -383,20 +333,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.375,
+    "totalCost": 0.225,
     "dailyBudget": 2,
-    "itemsWithinBudget": 15,
+    "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.035,
-    "expectedDailyRoi": 0.09
+    "expectedDailyRevenue": 0.024,
+    "expectedDailyRoi": 0.11
   },
   "summary": {
-    "write_new": 2,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,
