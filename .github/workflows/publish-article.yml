@@ -14,13 +14,17 @@ on:
         required: false
         default: ''
 
-  # CRON ACTIF — 2 articles/jour, stagger par rapport aux reels (05h00/10h30/16h00 UTC)
-  # Slot 1: 03h00 UTC = 10h Paris / 10h Bangkok
-  # Slot 2: 08h00 UTC = 15h Paris / 15h Bangkok
-  # Restored 2026-05-03 — OVH IPLB Googlebot block bypassed via Cloudflare UA rewrite.
-  schedule:
-    - cron: '0 3 * * *'
-    - cron: '0 8 * * *'
+  # CRON SUSPENDU — re-suspended 2026-05-05 (post-CF unblock).
+  # CF Transform Rule fixed Googlebot 503 on 2026-05-03 and the cron was resumed,
+  # but the daily editorial brief produces low commercial-intent fluff. Holding
+  # daily publishing until: (a) money-page weekly cron has shipped its first
+  # waves (next fire 2026-05-10), (b) the editorial brief is tuned for money
+  # intent + anti-fluff, (c) publication-queue.json is refilled with topics
+  # aligned to the consolidated KEEP pillars.
+  # Manual dispatch still available via workflow_dispatch.
+  # schedule:
+  #   - cron: '0 3 * * *'
+  #   - cron: '0 8 * * *'
 
 permissions:
   contents: write
