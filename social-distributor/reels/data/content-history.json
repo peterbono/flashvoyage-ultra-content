@@ -1,36 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "vietnam",
-      "date": "2026-04-19",
-      "format": "avantapres"
-    },
-    {
-      "name": "vietnam",
-      "date": "2026-04-19",
-      "format": "avantapres"
-    },
-    {
-      "name": "bali",
-      "date": "2026-04-19",
-      "format": "avantapres"
-    },
-    {
-      "name": "bali",
-      "date": "2026-04-19",
-      "format": "avantapres"
-    },
-    {
-      "name": "bangkok et chiang mai",
-      "date": "2026-04-19",
-      "format": "pick"
-    },
-    {
-      "name": "bangkok",
-      "date": "2026-04-19",
-      "format": "pick"
-    },
-    {
       "name": "indonesie",
       "date": "2026-04-20",
       "format": "cost-vs"
@@ -319,33 +289,14 @@
       "name": "kuala-lumpur",
       "date": "2026-05-03",
       "format": "pick"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-05-04",
+      "format": "cost-vs"
     }
   ],
   "recentFormats": [
-    {
-      "format": "avantapres",
-      "date": "2026-04-19T17:34:37.855Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-19T17:35:27.934Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-19T19:46:42.198Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-19T19:47:21.613Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-19T21:02:42.517Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-19T21:03:12.861Z"
-    },
     {
       "format": "cost-vs",
       "date": "2026-04-20T17:27:32.685Z"
@@ -653,6 +604,10 @@
     {
       "format": "pick",
       "date": "2026-05-03T20:46:53.132Z"
+    },
+    {
+      "format": "cost-vs",
+      "date": "2026-05-04T17:36:20.829Z"
     }
   ],
   "recentArticleIds": [
@@ -718,21 +673,10 @@
     3090,
     5752,
     4062,
-    2980
+    2980,
+    3501
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:avantapres|dest:vietnam|slug:vietnam-larbitrage-crucial-pou",
-      "date": "2026-04-19T17:35:27.934Z"
-    },
-    {
-      "fp": "fmt:avantapres|dest:bali|slug:bali-pourquoi-1400-usd-ne-suff",
-      "date": "2026-04-19T19:47:21.613Z"
-    },
-    {
-      "fp": "fmt:pick|dest:bangkok|slug:choisir-entre-bangkok-et-chian",
-      "date": "2026-04-19T21:03:12.861Z"
-    },
     {
       "fp": "fmt:cost-vs|dest:indonesie|slug:indonesie-solo-4-semaines-les-",
       "date": "2026-04-20T17:27:32.685Z"
@@ -880,6 +824,10 @@
     {
       "fp": "fmt:pick|dest:kuala-lumpur|slug:choisir-entre-taipei-et-kuala-",
       "date": "2026-05-03T20:46:53.132Z"
+    },
+    {
+      "fp": "fmt:cost-vs|dest:thailande|slug:ce-que-thailande-ma-coute-et-q",
+      "date": "2026-05-04T17:36:20.829Z"
     }
   ]
 }
