@@ -608,6 +608,14 @@
     {
       "format": "cost-vs",
       "date": "2026-05-04T17:36:20.829Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-05-04T20:53:51.455Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-05-04T20:54:15.817Z"
     }
   ],
   "recentArticleIds": [
@@ -674,7 +682,8 @@
     5752,
     4062,
     2980,
-    3501
+    3501,
+    2904
   ],
   "recentFingerprints": [
     {
@@ -828,6 +837,10 @@
     {
       "fp": "fmt:cost-vs|dest:thailande|slug:ce-que-thailande-ma-coute-et-q",
       "date": "2026-05-04T17:36:20.829Z"
+    },
+    {
+      "fp": "fmt:humor|dest:none|slug:voyager-en-asie-du-sud-est-les",
+      "date": "2026-05-04T20:54:15.817Z"
     }
   ]
 }
