@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-04T04:24:49.219Z",
+  "timestamp": "2026-05-05T04:09:43.615Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -91,11 +91,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Trois mois en Asie du Sud-Est : ce que j&rsquo;ai vraiment dépensé",
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
       "articleType": "support",
       "context": {
-        "wpId": 2945,
-        "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 13,
         "freshness": 0.88,
         "traffic": 0,
@@ -113,6 +113,31 @@
     },
     {
       "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Trois mois en Asie du Sud-Est : ce que j&rsquo;ai vraiment dépensé",
+      "articleType": "support",
+      "context": {
+        "wpId": 2945,
+        "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
+        "compositeScore": 13,
+        "freshness": 0.87,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -137,7 +162,7 @@
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -162,7 +187,7 @@
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -187,7 +212,7 @@
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -212,7 +237,7 @@
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -237,7 +262,7 @@
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -262,7 +287,7 @@
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -287,7 +312,7 @@
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -298,31 +323,6 @@
         "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
         "compositeScore": 14,
         "freshness": 0.91,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 2924,
-        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
-        "compositeScore": 14,
-        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },

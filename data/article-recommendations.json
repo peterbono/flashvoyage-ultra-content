@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-05-04T04:24:48.288Z",
-    "elapsedSeconds": 6,
+    "generatedAt": "2026-05-05T04:09:42.661Z",
+    "elapsedSeconds": 7,
     "totalArticles": 58,
     "articlesWithRecommendations": 4,
     "totalRecommendations": 6,
@@ -41,9 +41,9 @@
       "internalLinks": 54,
       "lastModified": "2026-04-30T07:39:32",
       "ga4": {
-        "pageviews": 43,
-        "sessions": 35,
-        "avgDuration": 53
+        "pageviews": 35,
+        "sessions": 32,
+        "avgDuration": 36
       },
       "gsc": {
         "impressions": 40,
@@ -66,16 +66,16 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 53s / 1332s attendus (4% du contenu lu)",
+          "metric": "Temps lu: 36s / 1332s attendus (3% du contenu lu)",
           "action": "IMPROVE_READABILITY",
-          "details": "Seulement 4% du contenu est lu (4440 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
+          "details": "Seulement 3% du contenu est lu (4440 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
           "expectedImpact": "Temps sur page +40 a +60%, meilleur signal qualite pour Google"
         },
         {
           "type": "amplification",
           "priority": "P2",
-          "metric": "43 vues/mois, 0 reels lies a cet article",
+          "metric": "35 vues/mois, 0 reels lies a cet article",
           "action": "CREATE_REELS",
           "details": "Article populaire sans couverture reel. Creer 2-3 reels automatises : 1) Trip Pick \"X spots incontournables a [destination]\" — format liste visuelle. 2) Budget Jour si l'article contient des donnees budget. 3) Versus si l'article compare 2 destinations. Les reels drivent du traffic IG → article via Story links + lien bio. Utiliser le module reels/generator.js.",
           "effort": "5min (auto-genere via pipeline reels)",
@@ -111,12 +111,12 @@
       "gsc": {
         "impressions": 39,
         "clicks": 0,
-        "position": 15.1,
+        "position": 15.7,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 36.3,
-            "impressions": 8,
+            "position": 36.2,
+            "impressions": 9,
             "ctr": 0
           }
         ]
@@ -149,9 +149,9 @@
       "internalLinks": 45,
       "lastModified": "2026-04-22T12:43:04",
       "ga4": {
-        "pageviews": 17,
-        "sessions": 13,
-        "avgDuration": 149
+        "pageviews": 16,
+        "sessions": 12,
+        "avgDuration": 108
       },
       "gsc": {
         "impressions": 0,
@@ -619,9 +619,9 @@
         "avgDuration": 100
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 12,
         "clicks": 0,
-        "position": 6.6,
+        "position": 6.7,
         "topQueries": []
       },
       "reels": {
@@ -811,8 +811,8 @@
       "lastModified": "2026-04-23T17:09:15",
       "ga4": {
         "pageviews": 3,
-        "sessions": 1,
-        "avgDuration": 507
+        "sessions": 2,
+        "avgDuration": 131
       },
       "gsc": {
         "impressions": 0,
@@ -1292,7 +1292,7 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 1,
         "clicks": 0,
         "position": 10,
         "topQueries": []
