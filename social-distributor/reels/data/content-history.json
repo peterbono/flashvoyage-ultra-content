@@ -284,6 +284,16 @@
       "name": "vietnam",
       "date": "2026-05-05",
       "format": "avantapres"
+    },
+    {
+      "name": "sri lanka",
+      "date": "2026-05-05",
+      "format": "avantapres"
+    },
+    {
+      "name": "sri-lanka",
+      "date": "2026-05-05",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -594,6 +604,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-05T17:39:00.142Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-05T19:45:14.413Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-05T19:45:38.133Z"
     }
   ],
   "recentArticleIds": [
@@ -662,7 +680,8 @@
     2980,
     3501,
     2904,
-    4095
+    4095,
+    3056
   ],
   "recentFingerprints": [
     {
@@ -816,6 +835,10 @@
     {
       "fp": "fmt:avantapres|dest:vietnam|slug:vietnam-4-pieges-que-les-blogs",
       "date": "2026-05-05T17:39:00.142Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:sri-lanka|slug:voyager-au-sri-lanka-choix-cru",
+      "date": "2026-05-05T19:45:38.133Z"
     }
   ]
 }
