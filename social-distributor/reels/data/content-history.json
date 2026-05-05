@@ -294,6 +294,11 @@
       "name": "sri-lanka",
       "date": "2026-05-05",
       "format": "avantapres"
+    },
+    {
+      "name": "coree",
+      "date": "2026-05-05",
+      "format": "leaderboard"
     }
   ],
   "recentFormats": [
@@ -612,6 +617,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-05T19:45:38.133Z"
+    },
+    {
+      "format": "leaderboard",
+      "date": "2026-05-05T20:50:00.504Z"
+    },
+    {
+      "format": "leaderboard",
+      "date": "2026-05-05T20:50:24.638Z"
     }
   ],
   "recentArticleIds": [
@@ -681,7 +694,8 @@
     3501,
     2904,
     4095,
-    3056
+    3056,
+    3425
   ],
   "recentFingerprints": [
     {
@@ -839,6 +853,10 @@
     {
       "fp": "fmt:avantapres|dest:sri-lanka|slug:voyager-au-sri-lanka-choix-cru",
       "date": "2026-05-05T19:45:38.133Z"
+    },
+    {
+      "fp": "fmt:leaderboard|dest:coree|slug:coree-du-sud-en-solo-litinerai",
+      "date": "2026-05-05T20:50:24.638Z"
     }
   ]
 }
