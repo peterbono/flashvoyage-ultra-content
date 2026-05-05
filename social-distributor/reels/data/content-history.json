@@ -1,26 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "indonesie",
-      "date": "2026-04-20",
-      "format": "cost-vs"
-    },
-    {
-      "name": "bangkok",
-      "date": "2026-04-20",
-      "format": "pick"
-    },
-    {
-      "name": "southeast-asia",
-      "date": "2026-04-20",
-      "format": "pick"
-    },
-    {
-      "name": "lombok",
-      "date": "2026-04-20",
-      "format": "leaderboard"
-    },
-    {
       "name": "philippines",
       "date": "2026-04-21",
       "format": "avantapres"
@@ -294,29 +274,19 @@
       "name": "thailande",
       "date": "2026-05-04",
       "format": "cost-vs"
+    },
+    {
+      "name": "vietnam",
+      "date": "2026-05-05",
+      "format": "avantapres"
+    },
+    {
+      "name": "vietnam",
+      "date": "2026-05-05",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
-    {
-      "format": "cost-vs",
-      "date": "2026-04-20T17:27:32.685Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-20T19:33:27.533Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-20T19:34:03.898Z"
-    },
-    {
-      "format": "leaderboard",
-      "date": "2026-04-20T20:46:58.084Z"
-    },
-    {
-      "format": "leaderboard",
-      "date": "2026-04-20T20:47:31.367Z"
-    },
     {
       "format": "avantapres",
       "date": "2026-04-21T17:25:43.566Z"
@@ -616,6 +586,14 @@
     {
       "format": "humor",
       "date": "2026-05-04T20:54:15.817Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-05T17:38:33.195Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-05T17:39:00.142Z"
     }
   ],
   "recentArticleIds": [
@@ -683,17 +661,10 @@
     4062,
     2980,
     3501,
-    2904
+    2904,
+    4095
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:cost-vs|dest:indonesie|slug:indonesie-solo-4-semaines-les-",
-      "date": "2026-04-20T17:27:32.685Z"
-    },
-    {
-      "fp": "fmt:leaderboard|dest:lombok|slug:vivre-a-lombok-en-tant-que-nom",
-      "date": "2026-04-20T20:47:31.367Z"
-    },
     {
       "fp": "fmt:avantapres|dest:philippines|slug:philippines-10-jours-itinerair",
       "date": "2026-04-21T17:26:22.824Z"
@@ -841,6 +812,10 @@
     {
       "fp": "fmt:humor|dest:none|slug:voyager-en-asie-du-sud-est-les",
       "date": "2026-05-04T20:54:15.817Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:vietnam|slug:vietnam-4-pieges-que-les-blogs",
+      "date": "2026-05-05T17:39:00.142Z"
     }
   ]
 }
