@@ -279,6 +279,11 @@
       "name": "japon",
       "date": "2026-05-06",
       "format": "cost-vs"
+    },
+    {
+      "name": "bangkok",
+      "date": "2026-05-06",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -585,6 +590,14 @@
     {
       "format": "cost-vs",
       "date": "2026-05-06T17:37:19.890Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-06T19:42:47.151Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-06T19:43:26.190Z"
     }
   ],
   "recentArticleIds": [
@@ -656,7 +669,8 @@
     4095,
     3056,
     3425,
-    2857
+    2857,
+    3182
   ],
   "recentFingerprints": [
     {
@@ -810,6 +824,10 @@
     {
       "fp": "fmt:cost-vs|dest:japon|slug:voyager-au-japon-quand-voir-le",
       "date": "2026-05-06T17:37:19.890Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:vaccin-contre-la-rage-pour-un-",
+      "date": "2026-05-06T19:43:26.190Z"
     }
   ]
 }
