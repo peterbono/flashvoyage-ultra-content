@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-05T04:09:35.057Z",
+  "timestamp": "2026-05-06T04:21:47.868Z",
   "queueSize": 13,
   "queue": [
     {
@@ -43,22 +43,6 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
-      "articleType": "support",
-      "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-        "compositeScore": 13,
-        "freshness": 0.88,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 5,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
       "topic": "Trois mois en Asie du Sud-Est : ce que j&rsquo;ai vraiment dépensé",
       "articleType": "support",
       "context": {
@@ -71,7 +55,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -81,13 +65,13 @@
         "wpId": 2904,
         "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
         "compositeScore": 13,
-        "freshness": 0.87,
+        "freshness": 0.86,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -103,7 +87,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -113,13 +97,13 @@
         "wpId": 4058,
         "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     },
     {
-      "rank": 9,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -129,7 +113,23 @@
         "wpId": 3425,
         "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 14,
-        "freshness": 0.94,
+        "freshness": 0.93,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "articleType": "support",
+      "context": {
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 14,
+        "freshness": 0.92,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -145,7 +145,7 @@
         "wpId": 3174,
         "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
         "compositeScore": 14,
-        "freshness": 0.91,
+        "freshness": 0.9,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -161,7 +161,7 @@
         "wpId": 3065,
         "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
         "compositeScore": 14,
-        "freshness": 0.91,
+        "freshness": 0.9,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -177,7 +177,7 @@
         "wpId": 3056,
         "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
         "compositeScore": 14,
-        "freshness": 0.91,
+        "freshness": 0.9,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -193,7 +193,7 @@
         "wpId": 3048,
         "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
         "compositeScore": 14,
-        "freshness": 0.91,
+        "freshness": 0.9,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
