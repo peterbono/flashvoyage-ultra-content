@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-05-06T06:55:57.480Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-05-06T12:38:18.678Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 0,
+    "queue_priority": 1,
     "queue_normal": 1
   },
   "queue": [
     {
-      "topic": "Hanoi doctor treats passenger with facial paralysis on flight to France",
+      "topic": "Budget-friendly Bangkok rentals near MRT Blue Line for remote workers",
       "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/hanoi-doctor-treats-passenger-with-facial-paralysis-on-flight-to-france-5070439.html",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/guides/budget-friendly-bangkok-rentals-near-mrt-blue-line-for-remote-workers",
+      "velocityScore": 0.62,
+      "action": "QUEUE_PRIORITY",
       "hoursRemaining": 716,
       "topicType": {
         "key": "evergreen_trend",
@@ -26,11 +26,36 @@
         "trendIntensity": 0.83,
         "timeDecay": 0.996,
         "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 4.1
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 3.9
       },
-      "detectedAt": "2026-05-06T02:48:11.000Z",
-      "scoredAt": "2026-05-06T06:55:57.480Z"
+      "detectedAt": "2026-05-06T08:45:32.000Z",
+      "scoredAt": "2026-05-06T12:38:10.565Z"
+    },
+    {
+      "topic": "LPA brings rain to parts of Mindanao, Visayas; Tropical Storm Hagupit heads for PAR",
+      "source": "rss_breaking",
+      "destination": "philippines",
+      "link": "https://www.rappler.com/philippines/weather/lpa-tropical-storm-hagupit-update-pagasa-forecast-may-6-2026-4pm/",
+      "velocityScore": 0.404,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 46,
+      "topicType": {
+        "key": "policy_change",
+        "halfLifeHours": 48
+      },
+      "estimatedTrafficNow": 2019,
+      "estimatedTrafficIn24h": 1428,
+      "trafficLossPerHour": 25,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.973,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.9
+      },
+      "detectedAt": "2026-05-06T10:45:11.000Z",
+      "scoredAt": "2026-05-06T12:38:14.016Z"
     }
   ]
 }
