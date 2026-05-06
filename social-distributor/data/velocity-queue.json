@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-05-06T12:38:18.678Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-05-06T18:34:40.618Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 1,
+    "queue_priority": 0,
     "queue_normal": 1
   },
   "queue": [
@@ -12,50 +12,25 @@
       "source": "rss_breaking",
       "destination": "thailand",
       "link": "https://thethaiger.com/guides/budget-friendly-bangkok-rentals-near-mrt-blue-line-for-remote-workers",
-      "velocityScore": 0.62,
-      "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 716,
+      "velocityScore": 0.409,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 710,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2067,
-      "estimatedTrafficIn24h": 2020,
-      "trafficLossPerHour": 2,
+      "estimatedTrafficNow": 1362,
+      "estimatedTrafficIn24h": 1331,
+      "trafficLossPerHour": 1,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.996,
+        "trendIntensity": 0.55,
+        "timeDecay": 0.991,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 3.9
+        "hoursSinceDetection": 9.8
       },
       "detectedAt": "2026-05-06T08:45:32.000Z",
-      "scoredAt": "2026-05-06T12:38:10.565Z"
-    },
-    {
-      "topic": "LPA brings rain to parts of Mindanao, Visayas; Tropical Storm Hagupit heads for PAR",
-      "source": "rss_breaking",
-      "destination": "philippines",
-      "link": "https://www.rappler.com/philippines/weather/lpa-tropical-storm-hagupit-update-pagasa-forecast-may-6-2026-4pm/",
-      "velocityScore": 0.404,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 46,
-      "topicType": {
-        "key": "policy_change",
-        "halfLifeHours": 48
-      },
-      "estimatedTrafficNow": 2019,
-      "estimatedTrafficIn24h": 1428,
-      "trafficLossPerHour": 25,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.973,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.9
-      },
-      "detectedAt": "2026-05-06T10:45:11.000Z",
-      "scoredAt": "2026-05-06T12:38:14.016Z"
+      "scoredAt": "2026-05-06T18:34:35.471Z"
     }
   ]
 }
