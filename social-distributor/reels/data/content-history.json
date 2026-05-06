@@ -284,6 +284,11 @@
       "name": "bangkok",
       "date": "2026-05-06",
       "format": "avantapres"
+    },
+    {
+      "name": "singapour",
+      "date": "2026-05-06",
+      "format": "humor"
     }
   ],
   "recentFormats": [
@@ -598,6 +603,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-06T19:43:26.190Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-05-06T20:57:11.328Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-05-06T20:57:41.611Z"
     }
   ],
   "recentArticleIds": [
@@ -670,7 +683,8 @@
     3056,
     3425,
     2857,
-    3182
+    3182,
+    3222
   ],
   "recentFingerprints": [
     {
@@ -828,6 +842,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:vaccin-contre-la-rage-pour-un-",
       "date": "2026-05-06T19:43:26.190Z"
+    },
+    {
+      "fp": "fmt:humor|dest:singapour|slug:3-jours-a-singapour-optimiser-",
+      "date": "2026-05-06T20:57:41.611Z"
     }
   ]
 }
