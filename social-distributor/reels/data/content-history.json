@@ -294,6 +294,16 @@
       "name": "maldives",
       "date": "2026-05-07",
       "format": "avantapres"
+    },
+    {
+      "name": "philippines",
+      "date": "2026-05-07",
+      "format": "budget"
+    },
+    {
+      "name": "philippines",
+      "date": "2026-05-07",
+      "format": "budget"
     }
   ],
   "recentFormats": [
@@ -612,6 +622,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-07T19:40:32.270Z"
+    },
+    {
+      "format": "budget",
+      "date": "2026-05-07T20:53:59.032Z"
+    },
+    {
+      "format": "budget",
+      "date": "2026-05-07T20:54:23.826Z"
     }
   ],
   "recentArticleIds": [
@@ -686,7 +704,8 @@
     2857,
     3182,
     3222,
-    3198
+    3198,
+    4372
   ],
   "recentFingerprints": [
     {
@@ -840,6 +859,10 @@
     {
       "fp": "fmt:avantapres|dest:maldives|slug:maratua-vs-maldives-pour-une-l",
       "date": "2026-05-07T19:40:32.270Z"
+    },
+    {
+      "fp": "fmt:budget|dest:philippines|slug:esim-philippines-globe-smart-c",
+      "date": "2026-05-07T20:54:23.826Z"
     }
   ]
 }
