@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-05-07T07:00:34.889Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-05-07T12:38:07.531Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Singaporean woman arrested at Samui airport over nominee businesses",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/samui/singaporean-woman-held-over-nominee-businesses-on-koh-samui",
+      "velocityScore": 0.448,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 715,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2239,
+      "estimatedTrafficIn24h": 2188,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 0.995,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 5.1
+      },
+      "detectedAt": "2026-05-07T07:31:18.000Z",
+      "scoredAt": "2026-05-07T12:37:57.942Z"
+    }
+  ]
 }
