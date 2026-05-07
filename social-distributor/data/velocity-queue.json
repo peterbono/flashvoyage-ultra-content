@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-06T18:34:40.618Z",
+  "generatedAt": "2026-05-07T00:33:36.880Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Budget-friendly Bangkok rentals near MRT Blue Line for remote workers",
+      "topic": "Cambodia’s scam crackdown creates a new problem: Foreigners left jobless and stranded",
       "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/guides/budget-friendly-bangkok-rentals-near-mrt-blue-line-for-remote-workers",
-      "velocityScore": 0.409,
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/se-asia/cambodias-scam-crackdown-creates-a-new-problem-foreigners-left-jobless-and-stranded",
+      "velocityScore": 0.488,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 710,
+      "hoursRemaining": 716,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1362,
-      "estimatedTrafficIn24h": 1331,
-      "trafficLossPerHour": 1,
+      "estimatedTrafficNow": 2442,
+      "estimatedTrafficIn24h": 2386,
+      "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.55,
-        "timeDecay": 0.991,
+        "trendIntensity": 0.98,
+        "timeDecay": 0.997,
         "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 9.8
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.6
       },
-      "detectedAt": "2026-05-06T08:45:32.000Z",
-      "scoredAt": "2026-05-06T18:34:35.471Z"
+      "detectedAt": "2026-05-06T21:00:00.000Z",
+      "scoredAt": "2026-05-07T00:33:34.838Z"
     }
   ]
 }
