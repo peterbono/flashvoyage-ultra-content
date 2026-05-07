@@ -284,6 +284,16 @@
       "name": "southeast-asia",
       "date": "2026-05-07",
       "format": "pick"
+    },
+    {
+      "name": "indonésie",
+      "date": "2026-05-07",
+      "format": "avantapres"
+    },
+    {
+      "name": "maldives",
+      "date": "2026-05-07",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -594,6 +604,14 @@
     {
       "format": "pick",
       "date": "2026-05-07T17:37:42.653Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-07T19:40:03.341Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-07T19:40:32.270Z"
     }
   ],
   "recentArticleIds": [
@@ -667,7 +685,8 @@
     3425,
     2857,
     3182,
-    3222
+    3222,
+    3198
   ],
   "recentFingerprints": [
     {
@@ -817,6 +836,10 @@
     {
       "fp": "fmt:humor|dest:singapour|slug:3-jours-a-singapour-optimiser-",
       "date": "2026-05-06T20:57:41.611Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:maldives|slug:maratua-vs-maldives-pour-une-l",
+      "date": "2026-05-07T19:40:32.270Z"
     }
   ]
 }
