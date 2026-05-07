@@ -1,36 +1,36 @@
 {
-  "generatedAt": "2026-05-07T12:38:07.531Z",
+  "generatedAt": "2026-05-07T18:34:46.849Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 0,
-    "queue_normal": 1
+    "queue_priority": 1,
+    "queue_normal": 0
   },
   "queue": [
     {
-      "topic": "Singaporean woman arrested at Samui airport over nominee businesses",
+      "topic": "Sri Lanka arrests more than 260 foreigners over cyberscams",
       "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/samui/singaporean-woman-held-over-nominee-businesses-on-koh-samui",
-      "velocityScore": 0.448,
-      "action": "QUEUE_NORMAL",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/south-asia/sri-lanka-arrests-more-than-260-foreigners-over-cyberscams",
+      "velocityScore": 0.731,
+      "action": "QUEUE_PRIORITY",
       "hoursRemaining": 715,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2239,
-      "estimatedTrafficIn24h": 2188,
+      "estimatedTrafficNow": 2437,
+      "estimatedTrafficIn24h": 2381,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.9,
+        "trendIntensity": 0.98,
         "timeDecay": 0.995,
         "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5.1
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 5.5
       },
-      "detectedAt": "2026-05-07T07:31:18.000Z",
-      "scoredAt": "2026-05-07T12:37:57.942Z"
+      "detectedAt": "2026-05-07T13:05:00.000Z",
+      "scoredAt": "2026-05-07T18:34:39.773Z"
     }
   ]
 }
