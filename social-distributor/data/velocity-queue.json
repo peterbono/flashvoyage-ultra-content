@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-05-07T00:33:36.880Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-05-07T07:00:34.889Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Cambodia’s scam crackdown creates a new problem: Foreigners left jobless and stranded",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/se-asia/cambodias-scam-crackdown-creates-a-new-problem-foreigners-left-jobless-and-stranded",
-      "velocityScore": 0.488,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2442,
-      "estimatedTrafficIn24h": 2386,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3.6
-      },
-      "detectedAt": "2026-05-06T21:00:00.000Z",
-      "scoredAt": "2026-05-07T00:33:34.838Z"
-    }
-  ]
+  "queue": []
 }
