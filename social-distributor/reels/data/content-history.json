@@ -1,21 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "thailande",
-      "date": "2026-04-22",
-      "format": "cost-vs"
-    },
-    {
-      "name": "asie du sud-est",
-      "date": "2026-04-22",
-      "format": "avantapres"
-    },
-    {
-      "name": "coree",
-      "date": "2026-04-22",
-      "format": "humor"
-    },
-    {
       "name": "vietnam",
       "date": "2026-04-23",
       "format": "avantapres"
@@ -289,29 +274,19 @@
       "name": "singapour",
       "date": "2026-05-06",
       "format": "humor"
+    },
+    {
+      "name": "hong kong, tokyo, shanghai, taipei, chongqing",
+      "date": "2026-05-07",
+      "format": "pick"
+    },
+    {
+      "name": "southeast-asia",
+      "date": "2026-05-07",
+      "format": "pick"
     }
   ],
   "recentFormats": [
-    {
-      "format": "cost-vs",
-      "date": "2026-04-22T17:25:20.662Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-22T19:37:33.588Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-22T19:38:14.948Z"
-    },
-    {
-      "format": "humor",
-      "date": "2026-04-22T20:48:33.310Z"
-    },
-    {
-      "format": "humor",
-      "date": "2026-04-22T20:49:20.762Z"
-    },
     {
       "format": "avantapres",
       "date": "2026-04-23T17:34:45.637Z"
@@ -611,6 +586,14 @@
     {
       "format": "humor",
       "date": "2026-05-06T20:57:41.611Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-07T17:37:11.252Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-07T17:37:42.653Z"
     }
   ],
   "recentArticleIds": [
@@ -687,18 +670,6 @@
     3222
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:cost-vs|dest:thailande|slug:thailande-8-realites-que-les-b",
-      "date": "2026-04-22T17:25:20.662Z"
-    },
-    {
-      "fp": "fmt:avantapres|dest:none|slug:choisir-son-esim-pour-lasie-du",
-      "date": "2026-04-22T19:38:14.948Z"
-    },
-    {
-      "fp": "fmt:humor|dest:coree|slug:pourquoi-ton-premier-mois-en-c",
-      "date": "2026-04-22T20:49:20.762Z"
-    },
     {
       "fp": "fmt:avantapres|dest:vietnam|slug:assurance-voyage-vietnam-rapat",
       "date": "2026-04-23T17:35:26.531Z"
