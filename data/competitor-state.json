@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-05-06T04:21:55.985Z",
+  "timestamp": "2026-05-07T04:21:42.900Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-05-06T04:21:57.008Z",
+      "lastScan": "2026-05-07T04:21:43.712Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-05-06T04:21:57.590Z",
+      "lastScan": "2026-05-07T04:21:44.588Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-05-06T04:23:11.184Z",
-      "urlCount": 9503,
+      "lastScan": "2026-05-07T04:22:51.069Z",
+      "urlCount": 9507,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9644,7 +9644,11 @@
         "https://generationvoyage.fr/assurance-habitation-airbnb/": "2026-05-05T12:43:24+00:00",
         "https://generationvoyage.fr/sous-louer-legalement-airbnb/": "2026-05-05T12:45:07+00:00",
         "https://generationvoyage.fr/concurrents-airbnb-alternatives/": "2026-05-05T12:50:59+00:00",
-        "https://generationvoyage.fr/anecdotes-buckingham-palace/": "2026-05-05T17:33:52+00:00"
+        "https://generationvoyage.fr/anecdotes-buckingham-palace/": "2026-05-05T17:33:52+00:00",
+        "https://generationvoyage.fr/dormir-duomo-florence/": "2026-05-06T09:05:17+00:00",
+        "https://generationvoyage.fr/anecdotes-neuschwanstein/": "2026-05-06T11:05:44+00:00",
+        "https://generationvoyage.fr/randonnees-amsterdam/": "2026-05-06T13:08:11+00:00",
+        "https://generationvoyage.fr/rome-venise/": "2026-05-06T15:09:58+00:00"
       }
     }
   }
