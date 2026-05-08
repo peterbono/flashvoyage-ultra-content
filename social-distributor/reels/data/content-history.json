@@ -1,31 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "vietnam",
-      "date": "2026-04-23",
-      "format": "avantapres"
-    },
-    {
-      "name": "vietnam",
-      "date": "2026-04-23",
-      "format": "avantapres"
-    },
-    {
-      "name": "bali",
-      "date": "2026-04-23",
-      "format": "avantapres"
-    },
-    {
-      "name": "bali",
-      "date": "2026-04-23",
-      "format": "avantapres"
-    },
-    {
-      "name": "viêt nam",
-      "date": "2026-04-23",
-      "format": "budget"
-    },
-    {
       "name": "malaisie",
       "date": "2026-04-24",
       "format": "cost-vs"
@@ -304,33 +279,19 @@
       "name": "philippines",
       "date": "2026-05-07",
       "format": "budget"
+    },
+    {
+      "name": "thaïlande",
+      "date": "2026-05-08",
+      "format": "avantapres"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-05-08",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
-    {
-      "format": "avantapres",
-      "date": "2026-04-23T17:34:45.637Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-23T17:35:26.531Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-23T19:38:35.362Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-23T19:39:18.290Z"
-    },
-    {
-      "format": "budget",
-      "date": "2026-04-23T20:47:25.984Z"
-    },
-    {
-      "format": "budget",
-      "date": "2026-04-23T20:47:54.882Z"
-    },
     {
       "format": "cost-vs",
       "date": "2026-04-24T17:24:06.467Z"
@@ -630,6 +591,14 @@
     {
       "format": "budget",
       "date": "2026-05-07T20:54:23.826Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-08T17:34:33.419Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-08T17:35:04.381Z"
     }
   ],
   "recentArticleIds": [
@@ -705,21 +674,10 @@
     3182,
     3222,
     3198,
-    4372
+    4372,
+    3264
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:avantapres|dest:vietnam|slug:assurance-voyage-vietnam-rapat",
-      "date": "2026-04-23T17:35:26.531Z"
-    },
-    {
-      "fp": "fmt:avantapres|dest:bali|slug:choisir-ou-sejourner-a-bali-di",
-      "date": "2026-04-23T19:39:18.290Z"
-    },
-    {
-      "fp": "fmt:budget|dest:none|slug:budget-backpack-200-000-donnee",
-      "date": "2026-04-23T20:47:54.882Z"
-    },
     {
       "fp": "fmt:cost-vs|dest:malaisie|slug:malaisie-les-11-frais-caches-q",
       "date": "2026-04-24T17:24:06.467Z"
@@ -863,6 +821,10 @@
     {
       "fp": "fmt:budget|dest:philippines|slug:esim-philippines-globe-smart-c",
       "date": "2026-05-07T20:54:23.826Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:thailande|slug:voyager-2-semaines-en-thailand",
+      "date": "2026-05-08T17:35:04.381Z"
     }
   ]
 }
