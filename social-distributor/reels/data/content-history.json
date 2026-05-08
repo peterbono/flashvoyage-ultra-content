@@ -612,6 +612,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-08T19:40:05.811Z"
+    },
+    {
+      "format": "best-time",
+      "date": "2026-05-08T20:48:39.442Z"
+    },
+    {
+      "format": "best-time",
+      "date": "2026-05-08T20:49:04.665Z"
     }
   ],
   "recentArticleIds": [
@@ -689,7 +697,8 @@
     3198,
     4372,
     3264,
-    3065
+    3065,
+    2945
   ],
   "recentFingerprints": [
     {
@@ -843,6 +852,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:itineraire-en-irlande-comment-",
       "date": "2026-05-08T19:40:05.811Z"
+    },
+    {
+      "fp": "fmt:best-time|dest:none|slug:voyager-en-asie-du-sud-est-iti",
+      "date": "2026-05-08T20:49:04.665Z"
     }
   ]
 }
