@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-05-07T04:21:42.900Z",
+  "timestamp": "2026-05-08T04:09:54.419Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-05-07T04:21:43.712Z",
+      "lastScan": "2026-05-08T04:09:55.004Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-05-07T04:21:44.588Z",
+      "lastScan": "2026-05-08T04:09:55.483Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-05-07T04:22:51.069Z",
-      "urlCount": 9507,
+      "lastScan": "2026-05-08T04:11:10.807Z",
+      "urlCount": 9511,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9648,7 +9648,11 @@
         "https://generationvoyage.fr/dormir-duomo-florence/": "2026-05-06T09:05:17+00:00",
         "https://generationvoyage.fr/anecdotes-neuschwanstein/": "2026-05-06T11:05:44+00:00",
         "https://generationvoyage.fr/randonnees-amsterdam/": "2026-05-06T13:08:11+00:00",
-        "https://generationvoyage.fr/rome-venise/": "2026-05-06T15:09:58+00:00"
+        "https://generationvoyage.fr/rome-venise/": "2026-05-06T15:09:58+00:00",
+        "https://generationvoyage.fr/chateau-edinbourg/": "2026-05-07T09:46:32+00:00",
+        "https://generationvoyage.fr/visiter-chantilly-faire-voir/": "2026-05-07T11:48:32+00:00",
+        "https://generationvoyage.fr/dormir-cote-vermeille/": "2026-05-07T14:51:52+00:00",
+        "https://generationvoyage.fr/manger-alhambra-restaurants/": "2026-05-07T15:52:40+00:00"
       }
     }
   }

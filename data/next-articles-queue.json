@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-07T04:21:35.480Z",
+  "timestamp": "2026-05-08T04:09:46.509Z",
   "queueSize": 13,
   "queue": [
     {
@@ -43,11 +43,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Trois mois en Asie du Sud-Est : ce que j&rsquo;ai vraiment dépensé",
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
       "articleType": "support",
       "context": {
-        "wpId": 2945,
-        "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 13,
         "freshness": 0.87,
         "traffic": 0,
@@ -56,6 +56,22 @@
     },
     {
       "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Trois mois en Asie du Sud-Est : ce que j&rsquo;ai vraiment dépensé",
+      "articleType": "support",
+      "context": {
+        "wpId": 2945,
+        "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
+        "compositeScore": 13,
+        "freshness": 0.86,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -71,7 +87,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -87,7 +103,55 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Philippines : les 5 frais cachés qui explosent ton budget de voyage",
+      "articleType": "support",
+      "context": {
+        "wpId": 4062,
+        "slug": "philippines-les-5-frais-caches-qui-explosent-ton-budget-de-voyage",
+        "compositeScore": 14,
+        "freshness": 0.94,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
+      "articleType": "support",
+      "context": {
+        "wpId": 4058,
+        "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
+        "compositeScore": 14,
+        "freshness": 0.94,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver",
+      "articleType": "support",
+      "context": {
+        "wpId": 3504,
+        "slug": "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver",
+        "compositeScore": 14,
+        "freshness": 0.93,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -103,7 +167,23 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Laos Solo Femme 2026 : Sécurité et Risques Cachés",
+      "articleType": "support",
+      "context": {
+        "wpId": 3410,
+        "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
+        "compositeScore": 14,
+        "freshness": 0.93,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -114,86 +194,6 @@
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 14,
         "freshness": 0.92,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
-      "articleType": "support",
-      "context": {
-        "wpId": 3174,
-        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
-        "compositeScore": 14,
-        "freshness": 0.9,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
-      "articleType": "support",
-      "context": {
-        "wpId": 3065,
-        "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
-        "compositeScore": 14,
-        "freshness": 0.9,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
-      "articleType": "support",
-      "context": {
-        "wpId": 3056,
-        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
-        "compositeScore": 14,
-        "freshness": 0.9,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
-      "articleType": "support",
-      "context": {
-        "wpId": 3048,
-        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
-        "compositeScore": 14,
-        "freshness": 0.9,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 2924,
-        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
-        "compositeScore": 14,
-        "freshness": 0.87,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }

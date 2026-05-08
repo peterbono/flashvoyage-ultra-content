@@ -1,18 +1,17 @@
 {
   "summary": {
-    "generatedAt": "2026-05-07T04:21:41.007Z",
+    "generatedAt": "2026-05-08T04:09:52.528Z",
     "elapsedSeconds": 5,
-    "totalArticles": 58,
+    "totalArticles": 57,
     "articlesWithRecommendations": 4,
-    "totalRecommendations": 6,
+    "totalRecommendations": 5,
     "byPriority": {
       "P0": 0,
       "P1": 1,
-      "P2": 5
+      "P2": 4
     },
     "byType": {
       "engagement": 1,
-      "amplification": 1,
       "seo": 4
     },
     "topActions": [
@@ -22,10 +21,6 @@
       },
       {
         "action": "IMPROVE_READABILITY",
-        "count": 1
-      },
-      {
-        "action": "CREATE_REELS",
         "count": 1
       }
     ]
@@ -41,14 +36,14 @@
       "internalLinks": 54,
       "lastModified": "2026-04-30T07:39:32",
       "ga4": {
-        "pageviews": 32,
-        "sessions": 29,
+        "pageviews": 29,
+        "sessions": 27,
         "avgDuration": 37
       },
       "gsc": {
-        "impressions": 28,
+        "impressions": 20,
         "clicks": 0,
-        "position": 15.3,
+        "position": 17.9,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -73,15 +68,6 @@
           "expectedImpact": "Temps sur page +40 a +60%, meilleur signal qualite pour Google"
         },
         {
-          "type": "amplification",
-          "priority": "P2",
-          "metric": "32 vues/mois, 0 reels lies a cet article",
-          "action": "CREATE_REELS",
-          "details": "Article populaire sans couverture reel. Creer 2-3 reels automatises : 1) Trip Pick \"X spots incontournables a [destination]\" — format liste visuelle. 2) Budget Jour si l'article contient des donnees budget. 3) Versus si l'article compare 2 destinations. Les reels drivent du traffic IG → article via Story links + lien bio. Utiliser le module reels/generator.js.",
-          "effort": "5min (auto-genere via pipeline reels)",
-          "expectedImpact": "+20 a +50 visites/mois via IG Stories (actuellement 0 referral social)"
-        },
-        {
           "type": "seo",
           "priority": "P2",
           "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
@@ -91,7 +77,7 @@
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
       ],
-      "recommendationCount": 3,
+      "recommendationCount": 2,
       "p0Count": 0
     },
     {
@@ -109,14 +95,14 @@
         "avgDuration": 37
       },
       "gsc": {
-        "impressions": 45,
+        "impressions": 47,
         "clicks": 0,
-        "position": 17.5,
+        "position": 17.6,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 36,
-            "impressions": 12,
+            "position": 35.9,
+            "impressions": 13,
             "ctr": 0
           },
           {
@@ -216,9 +202,9 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 1,
         "clicks": 0,
-        "position": 0,
+        "position": 2,
         "topQueries": []
       },
       "reels": {
@@ -272,9 +258,9 @@
         "avgDuration": 95
       },
       "gsc": {
-        "impressions": 26,
+        "impressions": 25,
         "clicks": 1,
-        "position": 6.2,
+        "position": 6.1,
         "topQueries": [
           {
             "query": "taxe de sejour kyoto",
@@ -300,34 +286,6 @@
         }
       ],
       "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2386,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-04-22T12:43:04",
-      "ga4": {
-        "pageviews": 9,
-        "sessions": 7,
-        "avgDuration": 83
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -371,6 +329,34 @@
         "pageviews": 8,
         "sessions": 8,
         "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2386,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-04-22T12:43:04",
+      "ga4": {
+        "pageviews": 8,
+        "sessions": 6,
+        "avgDuration": 94
       },
       "gsc": {
         "impressions": 0,
@@ -681,9 +667,9 @@
         "avgDuration": 166
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 13,
         "clicks": 0,
-        "position": 6.3,
+        "position": 6.4,
         "topQueries": []
       },
       "reels": {
@@ -1003,34 +989,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 2857,
-      "slug": "voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2",
-      "title": "Voyager au Japon : Quand voir les cerisiers sans la foule",
-      "url": "https://flashvoyage.com/voyager-au-japon-quand-voir-les-cerisiers-sans-la-foule-2/",
-      "wordCount": 1220,
-      "widgetCount": 0,
-      "internalLinks": 22,
-      "lastModified": "2026-04-22T12:45:50",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 10
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 5260,
       "slug": "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage",
       "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
@@ -1119,19 +1077,19 @@
       "slug": "esim-philippines-globe-smart-comparatif-2026",
       "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
       "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
-      "wordCount": 5455,
+      "wordCount": 5048,
       "widgetCount": 0,
       "internalLinks": 57,
-      "lastModified": "2026-05-01T10:28:16",
+      "lastModified": "2026-05-07T20:42:52",
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 40,
+        "impressions": 37,
         "clicks": 0,
-        "position": 13.2,
+        "position": 14.2,
         "topQueries": [
           {
             "query": "dore site instagram com reel",
@@ -1354,9 +1312,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 11,
+        "impressions": 10,
         "clicks": 1,
-        "position": 7.4,
+        "position": 7.3,
         "topQueries": []
       },
       "reels": {
@@ -1550,9 +1508,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 7,
         "clicks": 0,
-        "position": 6.5,
+        "position": 6.4,
         "topQueries": []
       },
       "reels": {
@@ -1690,9 +1648,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 22,
+        "impressions": 21,
         "clicks": 0,
-        "position": 9.4,
+        "position": 9.3,
         "topQueries": [
           {
             "query": "itinéraire luxe asie du sud-est",
