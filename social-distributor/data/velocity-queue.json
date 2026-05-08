@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-05-07T18:34:46.849Z",
+  "generatedAt": "2026-05-08T00:34:27.575Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 1,
-    "queue_normal": 0
+    "queue_priority": 0,
+    "queue_normal": 1
   },
   "queue": [
     {
@@ -12,25 +12,25 @@
       "source": "rss_breaking",
       "destination": "southeast-asia",
       "link": "https://www.straitstimes.com/asia/south-asia/sri-lanka-arrests-more-than-260-foreigners-over-cyberscams",
-      "velocityScore": 0.731,
-      "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 715,
+      "velocityScore": 0.482,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 709,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2437,
-      "estimatedTrafficIn24h": 2381,
+      "estimatedTrafficNow": 1607,
+      "estimatedTrafficIn24h": 1570,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 0.995,
+        "trendIntensity": 0.65,
+        "timeDecay": 0.989,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 5.5
+        "hoursSinceDetection": 11.5
       },
       "detectedAt": "2026-05-07T13:05:00.000Z",
-      "scoredAt": "2026-05-07T18:34:39.773Z"
+      "scoredAt": "2026-05-08T00:34:20.496Z"
     }
   ]
 }
