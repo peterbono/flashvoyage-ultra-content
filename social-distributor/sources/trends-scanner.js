@@ -40,6 +40,17 @@ const __dirname = dirname(__filename);
 /** RSS feed URL for daily trending searches in France */
 const TRENDS_RSS_URL = 'https://trends.google.com/trending/rss?geo=FR';
 
+/**
+ * Stale-while-error cache for trendingTopics. Google Trends' unofficial endpoint
+ * intermittently 429s and returns HTML instead of JSON; when ALL destination
+ * scans fail in a single run, dedupedTrends collapses to [] and downstream
+ * scoring assigns trendAlignment=0 to every article. Persisting the last
+ * successful result lets us reuse it for up to TRENDS_CACHE_MAX_AGE_DAYS
+ * instead of telegraphing the outage into the score.
+ */
+const TRENDS_CACHE_PATH = join(__dirname, '../../data/trends-cache.json');
+const TRENDS_CACHE_MAX_AGE_DAYS = 7;
+
 // ─── Load config ────────────────────────────────────────────────────────────
 
 const CONFIG_PATH = join(__dirname, 'trends-config.json');
@@ -621,6 +632,36 @@ export async function scanTrends(options = {}) {
 
   log(`${dedupedTrends.length} total unique travel trends after merge`);
 
+  // ── Stale-while-error fallback ──
+  // If today's scan returned nothing usable (e.g. Google Trends rate-limited
+  // every destination), reuse the most recent successful cache instead of
+  // letting trendAlignment collapse to 0 across the entire catalog.
+  let usedCacheFallback = false;
+  if (dedupedTrends.length === 0) {
+    try {
+      const cached = JSON.parse(await readFile(TRENDS_CACHE_PATH, 'utf-8'));
+      const ageDays = (Date.now() - new Date(cached.timestamp).getTime()) / 86_400_000;
+      if (ageDays <= TRENDS_CACHE_MAX_AGE_DAYS && Array.isArray(cached.trendingTopics) && cached.trendingTopics.length > 0) {
+        warn(`Live scan empty — falling back to cache (${cached.trendingTopics.length} topics, ${ageDays.toFixed(1)}d old)`);
+        dedupedTrends.push(...cached.trendingTopics);
+        usedCacheFallback = true;
+      }
+    } catch {
+      // No cache yet — first run, or pruned. Score with empty trends.
+    }
+  } else {
+    // Today's scan succeeded — refresh the cache for the next outage.
+    try {
+      await mkdir(dirname(TRENDS_CACHE_PATH), { recursive: true });
+      await writeFile(TRENDS_CACHE_PATH, JSON.stringify({
+        timestamp: new Date().toISOString(),
+        trendingTopics: dedupedTrends,
+      }, null, 2));
+    } catch (err) {
+      warn(`Cache write failed: ${err.message}`);
+    }
+  }
+
   // ── Cross-reference with WP articles ──
   const articles = await fetchWpArticles();
 
@@ -682,6 +723,7 @@ export async function scanTrends(options = {}) {
     reelPriorities,
     destinationInsights,
     interestComparison,
+    usedCacheFallback,
     stats: {
       totalDailyTrends: dailyTrends.length,
       travelRelevantRss: scoredTrends.length,
