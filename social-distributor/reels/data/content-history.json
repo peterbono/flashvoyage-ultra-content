@@ -289,6 +289,11 @@
       "name": "thailande",
       "date": "2026-05-08",
       "format": "avantapres"
+    },
+    {
+      "name": "asie du sud-est",
+      "date": "2026-05-08",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -599,6 +604,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-08T17:35:04.381Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-08T19:39:40.111Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-08T19:40:05.811Z"
     }
   ],
   "recentArticleIds": [
@@ -675,7 +688,8 @@
     3222,
     3198,
     4372,
-    3264
+    3264,
+    3065
   ],
   "recentFingerprints": [
     {
@@ -825,6 +839,10 @@
     {
       "fp": "fmt:avantapres|dest:thailande|slug:voyager-2-semaines-en-thailand",
       "date": "2026-05-08T17:35:04.381Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:itineraire-en-irlande-comment-",
+      "date": "2026-05-08T19:40:05.811Z"
     }
   ]
 }
