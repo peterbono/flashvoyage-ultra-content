@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-05-09T00:35:08.871Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-05-09T06:44:12.103Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Mount Dukono eruption: Key facts about one of Indonesia’s most active volcanoes",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/se-asia/mount-dukono-eruption-key-facts-about-one-of-indonesias-most-active-volcanoes",
+      "velocityScore": 0.435,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 11,
+      "topicType": {
+        "key": "breaking_news",
+        "halfLifeHours": 12
+      },
+      "estimatedTrafficNow": 1452,
+      "estimatedTrafficIn24h": 363,
+      "trafficLossPerHour": 45,
+      "breakdown": {
+        "trendIntensity": 0.6,
+        "timeDecay": 0.968,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 0.6
+      },
+      "detectedAt": "2026-05-09T06:10:00.000Z",
+      "scoredAt": "2026-05-09T06:44:08.290Z"
+    }
+  ]
 }
