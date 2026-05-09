@@ -294,6 +294,11 @@
       "name": "malaisie",
       "date": "2026-05-09",
       "format": "avantapres"
+    },
+    {
+      "name": "singapour",
+      "date": "2026-05-09",
+      "format": "humor-tweet"
     }
   ],
   "recentFormats": [
@@ -616,6 +621,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-09T19:32:57.052Z"
+    },
+    {
+      "format": "humor-tweet",
+      "date": "2026-05-09T20:45:54.890Z"
+    },
+    {
+      "format": "humor-tweet",
+      "date": "2026-05-09T20:46:14.888Z"
     }
   ],
   "recentArticleIds": [
@@ -695,7 +708,8 @@
     3264,
     3065,
     2945,
-    5189
+    5189,
+    5239
   ],
   "recentFingerprints": [
     {
@@ -845,6 +859,10 @@
     {
       "fp": "fmt:avantapres|dest:malaisie|slug:malaisie-escale-a-singapour-ou",
       "date": "2026-05-09T19:32:57.052Z"
+    },
+    {
+      "fp": "fmt:humor-tweet|dest:singapour|slug:kuala-lumpur-ou-singapour-quel",
+      "date": "2026-05-09T20:46:14.888Z"
     }
   ]
 }
