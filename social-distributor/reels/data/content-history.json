@@ -284,6 +284,16 @@
       "name": "thailand",
       "date": "2026-05-09",
       "format": "pick"
+    },
+    {
+      "name": "singapour",
+      "date": "2026-05-09",
+      "format": "avantapres"
+    },
+    {
+      "name": "malaisie",
+      "date": "2026-05-09",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -598,6 +608,14 @@
     {
       "format": "pick",
       "date": "2026-05-09T17:23:21.385Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-09T19:32:31.679Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-09T19:32:57.052Z"
     }
   ],
   "recentArticleIds": [
@@ -676,7 +694,8 @@
     4372,
     3264,
     3065,
-    2945
+    2945,
+    5189
   ],
   "recentFingerprints": [
     {
@@ -822,6 +841,10 @@
     {
       "fp": "fmt:best-time|dest:none|slug:voyager-en-asie-du-sud-est-iti",
       "date": "2026-05-08T20:49:04.665Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:malaisie|slug:malaisie-escale-a-singapour-ou",
+      "date": "2026-05-09T19:32:57.052Z"
     }
   ]
 }
