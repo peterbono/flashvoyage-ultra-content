@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-08T04:09:45.593Z",
+  "timestamp": "2026-05-09T04:14:45.609Z",
   "articleMap": {
     "esim-philippines-globe-smart-comparatif-2026": {
       "wpId": 4372,
@@ -325,16 +325,28 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier": {
-      "wpId": 5189,
-      "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
+    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
+      "wpId": 3254,
+      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
       "reels": [],
       "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
+        "budget",
+        "versus",
+        "poll"
       ],
-      "category": "default",
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
+      "wpId": 5343,
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget": {
@@ -352,30 +364,6 @@
     "ce-que-thailande-ma-coute-et-que-les-blogs-ne-montrent-pas": {
       "wpId": 3501,
       "title": "Trois semaines en Thaïlande m&rsquo;ont coûté le double",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
-      "wpId": 3254,
-      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
-      "wpId": 5343,
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -409,9 +397,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage": {
-      "wpId": 5179,
-      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
+    "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier": {
+      "wpId": 5189,
+      "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -514,18 +502,6 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais": {
-      "wpId": 4132,
-      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
     "indonesie-solo-4-semaines-les-5-pieges-que-les-guides-oublient": {
       "wpId": 3546,
       "title": "Indonésie solo 4 semaines : les 5 pièges que les guides oublient",
@@ -561,9 +537,33 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
+    "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage": {
+      "wpId": 5179,
+      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
       "wpId": 5063,
       "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais": {
+      "wpId": 4132,
+      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -705,6 +705,29 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget": {
+      "wpId": 2924,
+      "title": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-04-25",
+          "format": "budget",
+          "platform": "tiktok",
+          "score": 4.2,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-25",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades": {
       "wpId": 3174,
       "title": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
@@ -751,29 +774,6 @@
         "avantapres"
       ],
       "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget": {
-      "wpId": 2924,
-      "title": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-04-25",
-          "format": "budget",
-          "platform": "tiktok",
-          "score": 4.2,
-          "engagementRate": 0,
-          "publishedAt": "2026-04-25",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte": {
@@ -1296,6 +1296,24 @@
       "caption": ""
     },
     {
+      "reelId": "18097659890028218",
+      "format": "avantapres",
+      "publishedAt": "2026-05-08T17:34:33.417Z",
+      "caption": ""
+    },
+    {
+      "reelId": "18104744051316720",
+      "format": "avantapres",
+      "publishedAt": "2026-05-08T19:39:40.108Z",
+      "caption": ""
+    },
+    {
+      "reelId": "18061470152457146",
+      "format": "best-time",
+      "publishedAt": "2026-05-08T20:48:39.439Z",
+      "caption": ""
+    },
+    {
       "reelId": "tiktok:2026-04-22:Où partir en Juin",
       "format": "guide",
       "publishedAt": "2026-04-22",
@@ -1332,6 +1350,6 @@
     "articlesWithoutReels": 49,
     "totalReels": 12,
     "viralReels": 0,
-    "orphanReels": 85
+    "orphanReels": 88
   }
 }

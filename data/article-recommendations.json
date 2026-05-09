@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-05-08T04:09:52.528Z",
+    "generatedAt": "2026-05-09T04:14:52.655Z",
     "elapsedSeconds": 5,
     "totalArticles": 57,
     "articlesWithRecommendations": 4,
@@ -31,19 +31,19 @@
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Vietnam : pourquoi 14 800 € n&rsquo;ont pas été remboursés",
       "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
-      "wordCount": 4440,
+      "wordCount": 4332,
       "widgetCount": 3,
-      "internalLinks": 54,
-      "lastModified": "2026-04-30T07:39:32",
+      "internalLinks": 49,
+      "lastModified": "2026-05-08T22:25:42",
       "ga4": {
         "pageviews": 29,
         "sessions": 27,
         "avgDuration": 37
       },
       "gsc": {
-        "impressions": 20,
+        "impressions": 17,
         "clicks": 0,
-        "position": 17.9,
+        "position": 20.3,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -61,9 +61,9 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 37s / 1332s attendus (3% du contenu lu)",
+          "metric": "Temps lu: 37s / 1300s attendus (3% du contenu lu)",
           "action": "IMPROVE_READABILITY",
-          "details": "Seulement 3% du contenu est lu (4440 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
+          "details": "Seulement 3% du contenu est lu (4332 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
           "expectedImpact": "Temps sur page +40 a +60%, meilleur signal qualite pour Google"
         },
@@ -85,23 +85,23 @@
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
       "url": "https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/",
-      "wordCount": 4390,
+      "wordCount": 4301,
       "widgetCount": 3,
-      "internalLinks": 45,
-      "lastModified": "2026-04-30T07:39:40",
+      "internalLinks": 41,
+      "lastModified": "2026-05-08T22:30:16",
       "ga4": {
-        "pageviews": 19,
-        "sessions": 18,
-        "avgDuration": 37
+        "pageviews": 17,
+        "sessions": 16,
+        "avgDuration": 42
       },
       "gsc": {
-        "impressions": 47,
+        "impressions": 48,
         "clicks": 0,
-        "position": 17.6,
+        "position": 17.4,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 35.9,
+            "position": 36.2,
             "impressions": 13,
             "ctr": 0
           },
@@ -136,17 +136,17 @@
       "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
       "title": "10 jours à Bali, Lombok et Gili : ce que j&rsquo;ai vraiment fait",
       "url": "https://flashvoyage.com/bali-lombok-gili-10-jours-itineraire-budget-2026/",
-      "wordCount": 3683,
+      "wordCount": 3658,
       "widgetCount": 0,
-      "internalLinks": 48,
-      "lastModified": "2026-04-30T07:40:04",
+      "internalLinks": 47,
+      "lastModified": "2026-05-08T22:30:33",
       "ga4": {
         "pageviews": 16,
         "sessions": 13,
         "avgDuration": 306
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 12,
         "clicks": 2,
         "position": 7.8,
         "topQueries": []
@@ -248,19 +248,19 @@
       "slug": "japon-couple-15-jours-budget-tout-compris-2026",
       "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
       "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
-      "wordCount": 4465,
+      "wordCount": 4333,
       "widgetCount": 2,
-      "internalLinks": 51,
-      "lastModified": "2026-04-30T07:39:53",
+      "internalLinks": 45,
+      "lastModified": "2026-05-08T22:31:24",
       "ga4": {
-        "pageviews": 11,
-        "sessions": 9,
-        "avgDuration": 95
+        "pageviews": 10,
+        "sessions": 8,
+        "avgDuration": 103
       },
       "gsc": {
-        "impressions": 25,
+        "impressions": 24,
         "clicks": 1,
-        "position": 6.1,
+        "position": 6,
         "topQueries": [
           {
             "query": "taxe de sejour kyoto",
@@ -373,34 +373,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4030,
-      "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "url": "https://flashvoyage.com/coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget/",
-      "wordCount": 4167,
-      "widgetCount": 0,
-      "internalLinks": 39,
-      "lastModified": "2026-04-22T12:43:16",
-      "ga4": {
-        "pageviews": 8,
-        "sessions": 8,
-        "avgDuration": 8
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 3254,
       "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
       "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
@@ -429,18 +401,18 @@
       "p0Count": 0
     },
     {
-      "wpId": 5189,
-      "slug": "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier",
-      "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
-      "url": "https://flashvoyage.com/malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier/",
-      "wordCount": 1243,
+      "wpId": 4030,
+      "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "url": "https://flashvoyage.com/coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget/",
+      "wordCount": 4167,
       "widgetCount": 0,
-      "internalLinks": 20,
-      "lastModified": "2026-04-22T12:41:10",
+      "internalLinks": 39,
+      "lastModified": "2026-04-22T12:43:16",
       "ga4": {
         "pageviews": 7,
-        "sessions": 5,
-        "avgDuration": 8
+        "sessions": 7,
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
@@ -517,10 +489,10 @@
       "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
       "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
       "url": "https://flashvoyage.com/pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu/",
-      "wordCount": 1577,
+      "wordCount": 1510,
       "widgetCount": 0,
-      "internalLinks": 21,
-      "lastModified": "2026-04-30T07:39:44",
+      "internalLinks": 18,
+      "lastModified": "2026-05-08T22:32:17",
       "ga4": {
         "pageviews": 4,
         "sessions": 4,
@@ -530,6 +502,34 @@
         "impressions": 1,
         "clicks": 0,
         "position": 6,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5189,
+      "slug": "malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier",
+      "title": "Malaisie : escale à Singapour ou Kuala Lumpur, quel choix privilégier ?",
+      "url": "https://flashvoyage.com/malaisie-escale-a-singapour-ou-kuala-lumpur-quel-choix-privilegier/",
+      "wordCount": 1243,
+      "widgetCount": 0,
+      "internalLinks": 20,
+      "lastModified": "2026-04-22T12:41:10",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 4,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -625,51 +625,23 @@
       "p0Count": 0
     },
     {
-      "wpId": 5179,
-      "slug": "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage",
-      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
-      "url": "https://flashvoyage.com/thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage/",
-      "wordCount": 1513,
-      "widgetCount": 0,
-      "internalLinks": 22,
-      "lastModified": "2026-04-22T12:40:59",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 1
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4371,
       "slug": "philippines-10-jours-itineraire-plages-budget-2026",
       "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
       "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
-      "wordCount": 3421,
+      "wordCount": 3374,
       "widgetCount": 3,
-      "internalLinks": 47,
-      "lastModified": "2026-04-30T07:39:20",
+      "internalLinks": 45,
+      "lastModified": "2026-05-08T22:30:50",
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
         "avgDuration": 166
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 15,
         "clicks": 0,
-        "position": 6.4,
+        "position": 6.6,
         "topQueries": []
       },
       "reels": {
@@ -693,34 +665,6 @@
         "pageviews": 3,
         "sessions": 2,
         "avgDuration": 131
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4132,
-      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
-      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
-      "url": "https://flashvoyage.com/japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais/",
-      "wordCount": 3898,
-      "widgetCount": 0,
-      "internalLinks": 40,
-      "lastModified": "2026-04-22T12:44:11",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 10
       },
       "gsc": {
         "impressions": 0,
@@ -849,14 +793,42 @@
       "p0Count": 0
     },
     {
+      "wpId": 4132,
+      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
+      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
+      "url": "https://flashvoyage.com/japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais/",
+      "wordCount": 3898,
+      "widgetCount": 0,
+      "internalLinks": 40,
+      "lastModified": "2026-04-22T12:44:11",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 15
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4105,
       "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
       "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
       "url": "https://flashvoyage.com/vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher/",
-      "wordCount": 2416,
+      "wordCount": 2347,
       "widgetCount": 0,
-      "internalLinks": 48,
-      "lastModified": "2026-04-30T07:39:36",
+      "internalLinks": 45,
+      "lastModified": "2026-05-08T22:30:02",
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
@@ -965,19 +937,19 @@
       "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
       "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
       "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
-      "wordCount": 1772,
+      "wordCount": 1722,
       "widgetCount": 0,
-      "internalLinks": 29,
-      "lastModified": "2026-04-30T07:39:57",
+      "internalLinks": 27,
+      "lastModified": "2026-05-08T22:29:13",
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
         "avgDuration": 32
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 11,
         "clicks": 1,
-        "position": 8,
+        "position": 7.8,
         "topQueries": []
       },
       "reels": {
@@ -993,10 +965,10 @@
       "slug": "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage",
       "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
       "url": "https://flashvoyage.com/vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage/",
-      "wordCount": 1689,
+      "wordCount": 1665,
       "widgetCount": 0,
-      "internalLinks": 31,
-      "lastModified": "2026-04-30T07:39:46",
+      "internalLinks": 30,
+      "lastModified": "2026-05-08T22:32:01",
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
@@ -1077,19 +1049,19 @@
       "slug": "esim-philippines-globe-smart-comparatif-2026",
       "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
       "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
-      "wordCount": 5048,
+      "wordCount": 5028,
       "widgetCount": 0,
-      "internalLinks": 57,
-      "lastModified": "2026-05-07T20:42:52",
+      "internalLinks": 56,
+      "lastModified": "2026-05-08T22:31:08",
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 37,
+        "impressions": 36,
         "clicks": 0,
-        "position": 14.2,
+        "position": 14.5,
         "topQueries": [
           {
             "query": "dore site instagram com reel",
@@ -1144,9 +1116,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 2,
         "clicks": 0,
-        "position": 5.7,
+        "position": 6,
         "topQueries": []
       },
       "reels": {
@@ -1190,10 +1162,10 @@
       "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
       "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
       "url": "https://flashvoyage.com/optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils/",
-      "wordCount": 1752,
+      "wordCount": 1734,
       "widgetCount": 0,
-      "internalLinks": 29,
-      "lastModified": "2026-04-30T07:40:08",
+      "internalLinks": 28,
+      "lastModified": "2026-05-08T22:29:16",
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
@@ -1203,6 +1175,34 @@
         "impressions": 1,
         "clicks": 0,
         "position": 10,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5179,
+      "slug": "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage",
+      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
+      "url": "https://flashvoyage.com/thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage/",
+      "wordCount": 1513,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-04-22T12:40:59",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -1302,10 +1302,10 @@
       "slug": "philippines-les-5-frais-caches-qui-explosent-ton-budget-de-voyage",
       "title": "Philippines : les 5 frais cachés qui explosent ton budget de voyage",
       "url": "https://flashvoyage.com/philippines-les-5-frais-caches-qui-explosent-ton-budget-de-voyage/",
-      "wordCount": 3762,
+      "wordCount": 3717,
       "widgetCount": 0,
-      "internalLinks": 42,
-      "lastModified": "2026-04-30T07:39:15",
+      "internalLinks": 40,
+      "lastModified": "2026-05-08T22:29:59",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -1442,10 +1442,10 @@
       "slug": "voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite",
       "title": "Thaïlande 2 Semaines 2026 : Bangkok, Chiang Mai, Krabi",
       "url": "https://flashvoyage.com/voyager-2-semaines-en-thailande-arbitrer-entre-bangkok-chiang-mai-et-krabi-sans-sacrifier-lauthenticite/",
-      "wordCount": 3758,
+      "wordCount": 3690,
       "widgetCount": 0,
-      "internalLinks": 46,
-      "lastModified": "2026-04-30T07:39:50",
+      "internalLinks": 43,
+      "lastModified": "2026-05-08T22:29:35",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -1508,9 +1508,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 5,
         "clicks": 0,
-        "position": 6.4,
+        "position": 8.4,
         "topQueries": []
       },
       "reels": {

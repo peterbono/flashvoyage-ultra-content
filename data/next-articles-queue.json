@@ -1,9 +1,25 @@
 {
-  "timestamp": "2026-05-08T04:09:46.509Z",
-  "queueSize": 13,
+  "timestamp": "2026-05-09T04:14:46.577Z",
+  "queueSize": 14,
   "queue": [
     {
       "rank": 1,
+      "action": "enrich",
+      "priority": "P1",
+      "priorityScore": 140,
+      "topic": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 46,
+        "traffic": 1,
+        "revenue": 0,
+        "reason": "High-traffic article missing widgets: esim-philippines-globe-smart-comparatif-2026 (traffic=1)"
+      }
+    },
+    {
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -15,7 +31,7 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -27,7 +43,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -39,7 +55,71 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Choisir entre Bangkok et Chiang Mai : Le Dilemme Logistique des Nomades",
+      "articleType": "support",
+      "context": {
+        "wpId": 3174,
+        "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Itinéraire en Irlande : Comment Choisir Entre Nord et Sud",
+      "articleType": "support",
+      "context": {
+        "wpId": 3065,
+        "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Voyager au Sri Lanka : Choix Cruciaux et Itinéraires Optimisés",
+      "articleType": "support",
+      "context": {
+        "wpId": 3056,
+        "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait",
+      "articleType": "support",
+      "context": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -55,7 +135,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -71,7 +151,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -81,13 +161,13 @@
         "wpId": 2904,
         "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
         "compositeScore": 13,
-        "freshness": 0.86,
+        "freshness": 0.85,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
-      "rank": 7,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -103,7 +183,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -113,13 +193,13 @@
         "wpId": 4062,
         "slug": "philippines-les-5-frais-caches-qui-explosent-ton-budget-de-voyage",
         "compositeScore": 14,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     },
     {
-      "rank": 9,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -129,71 +209,7 @@
         "wpId": 4058,
         "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
         "compositeScore": 14,
-        "freshness": 0.94,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Thaïlande : ce que j&rsquo;aurais voulu savoir avant de réserver",
-      "articleType": "support",
-      "context": {
-        "wpId": 3504,
-        "slug": "thailande-ce-que-jaurais-voulu-savoir-avant-de-reserver",
-        "compositeScore": 14,
         "freshness": 0.93,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "articleType": "support",
-      "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-        "compositeScore": 14,
-        "freshness": 0.93,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Laos Solo Femme 2026 : Sécurité et Risques Cachés",
-      "articleType": "support",
-      "context": {
-        "wpId": 3410,
-        "slug": "laos-solo-2-risques-que-les-blogs-voyage-cachent-aux-femmes-seules",
-        "compositeScore": 14,
-        "freshness": 0.93,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
-      "articleType": "support",
-      "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
-        "compositeScore": 14,
-        "freshness": 0.92,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -202,7 +218,7 @@
   "summary": {
     "write_new": 0,
     "update": 0,
-    "enrich": 0,
+    "enrich": 1,
     "standard": 3,
     "review": 10
   },
