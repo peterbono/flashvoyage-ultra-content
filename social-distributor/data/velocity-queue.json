@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-05-08T18:30:21.130Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-05-09T00:35:08.871Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "‘Dukono erupts every second’: Local guides warn of risks on volcano hike",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.channelnewsasia.com/asia/indonesia-volcano-mount-dukono-erupts-hiking-tour-guides-dangerous-treks-6109711",
-      "velocityScore": 0.448,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1494,
-      "estimatedTrafficIn24h": 1460,
-      "trafficLossPerHour": 1,
-      "breakdown": {
-        "trendIntensity": 0.6,
-        "timeDecay": 0.996,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 4.2
-      },
-      "detectedAt": "2026-05-08T14:17:00.000Z",
-      "scoredAt": "2026-05-08T18:30:17.189Z"
-    }
-  ]
+  "queue": []
 }
