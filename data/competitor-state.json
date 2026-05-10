@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-05-09T04:14:54.632Z",
+  "timestamp": "2026-05-10T04:27:23.465Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-05-09T04:14:55.404Z",
+      "lastScan": "2026-05-10T04:27:24.194Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-05-09T04:14:55.867Z",
+      "lastScan": "2026-05-10T04:27:24.582Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-05-09T04:16:00.322Z",
-      "urlCount": 9515,
+      "lastScan": "2026-05-10T04:28:28.404Z",
+      "urlCount": 9519,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9656,7 +9656,11 @@
         "https://generationvoyage.fr/randonnees-norvege/": "2026-05-08T07:57:47+00:00",
         "https://generationvoyage.fr/anecdotes-alcazar-seville/": "2026-05-08T10:42:11+00:00",
         "https://generationvoyage.fr/visiter-chalon-sur-saone-faire-voir/": "2026-05-08T12:43:10+00:00",
-        "https://generationvoyage.fr/dormir-akureyri/": "2026-05-08T14:45:35+00:00"
+        "https://generationvoyage.fr/dormir-akureyri/": "2026-05-08T14:45:35+00:00",
+        "https://generationvoyage.fr/quand-visiter-acropole/": "2026-05-09T08:29:16+00:00",
+        "https://generationvoyage.fr/visiter-saint-valery-sur-somme-faire-voir/": "2026-05-09T10:30:46+00:00",
+        "https://generationvoyage.fr/dormir-chateau-edimbourg/": "2026-05-09T13:32:14+00:00",
+        "https://generationvoyage.fr/patio-doncellas-seville/": "2026-05-09T15:33:38+00:00"
       }
     }
   }
