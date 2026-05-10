@@ -1,31 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "philippines",
-      "date": "2026-04-25",
-      "format": "avantapres"
-    },
-    {
-      "name": "philippines",
-      "date": "2026-04-25",
-      "format": "avantapres"
-    },
-    {
-      "name": "bangkok",
-      "date": "2026-04-25",
-      "format": "avantapres"
-    },
-    {
-      "name": "bangkok",
-      "date": "2026-04-25",
-      "format": "avantapres"
-    },
-    {
-      "name": "singapour",
-      "date": "2026-04-25",
-      "format": "humor-tweet"
-    },
-    {
       "name": "thailande",
       "date": "2026-04-26",
       "format": "cost-vs"
@@ -299,33 +274,19 @@
       "name": "singapour",
       "date": "2026-05-09",
       "format": "humor-tweet"
+    },
+    {
+      "name": "thaïlande",
+      "date": "2026-05-10",
+      "format": "avantapres"
+    },
+    {
+      "name": "thailande",
+      "date": "2026-05-10",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
-    {
-      "format": "avantapres",
-      "date": "2026-04-25T17:17:25.465Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-25T17:18:11.681Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-25T19:25:18.788Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-25T19:25:56.929Z"
-    },
-    {
-      "format": "humor-tweet",
-      "date": "2026-04-25T20:46:00.708Z"
-    },
-    {
-      "format": "humor-tweet",
-      "date": "2026-04-25T20:46:32.851Z"
-    },
     {
       "format": "cost-vs",
       "date": "2026-04-26T17:18:32.354Z"
@@ -629,6 +590,14 @@
     {
       "format": "humor-tweet",
       "date": "2026-05-09T20:46:14.888Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-10T17:23:25.137Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-10T17:23:50.639Z"
     }
   ],
   "recentArticleIds": [
@@ -709,21 +678,10 @@
     3065,
     2945,
     5189,
-    5239
+    5239,
+    6195
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:avantapres|dest:philippines|slug:philippines-les-3-arbitrages-q",
-      "date": "2026-04-25T17:18:11.681Z"
-    },
-    {
-      "fp": "fmt:avantapres|dest:bangkok|slug:bangkok-le-vrai-cout-des-taxis",
-      "date": "2026-04-25T19:25:56.929Z"
-    },
-    {
-      "fp": "fmt:humor-tweet|dest:singapour|slug:48-heures-a-singapour-optimise",
-      "date": "2026-04-25T20:46:32.851Z"
-    },
     {
       "fp": "fmt:cost-vs|dest:thailande|slug:thailande-mai-2-pieges-que-les",
       "date": "2026-04-26T17:18:32.354Z"
@@ -863,6 +821,10 @@
     {
       "fp": "fmt:humor-tweet|dest:singapour|slug:kuala-lumpur-ou-singapour-quel",
       "date": "2026-05-09T20:46:14.888Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:thailande|slug:meilleur-esim-thailande-2026",
+      "date": "2026-05-10T17:23:50.639Z"
     }
   ]
 }
