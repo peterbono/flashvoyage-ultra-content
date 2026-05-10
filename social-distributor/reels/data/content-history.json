@@ -284,6 +284,11 @@
       "name": "thailande",
       "date": "2026-05-10",
       "format": "avantapres"
+    },
+    {
+      "name": "asie du sud-est",
+      "date": "2026-05-10",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -598,6 +603,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-10T17:23:50.639Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-10T19:32:46.275Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-10T19:33:21.998Z"
     }
   ],
   "recentArticleIds": [
@@ -825,6 +838,10 @@
     {
       "fp": "fmt:avantapres|dest:thailande|slug:meilleur-esim-thailande-2026",
       "date": "2026-05-10T17:23:50.639Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:pourquoi-ton-premier-mois-en-c",
+      "date": "2026-05-10T19:33:21.998Z"
     }
   ]
 }
