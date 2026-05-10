@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-05-10T00:35:16.275Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-05-10T06:55:49.329Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Foreign students in Finland could lose residency over a single welfare claim",
-      "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/education/foreign-students-in-finland-could-lose-residency-over-a-single-welfare-claim-5071914.html",
-      "velocityScore": 0.499,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2496,
-      "estimatedTrafficIn24h": 2439,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.6
-      },
-      "detectedAt": "2026-05-09T23:00:00.000Z",
-      "scoredAt": "2026-05-10T00:35:14.308Z"
-    }
-  ]
+  "queue": []
 }
