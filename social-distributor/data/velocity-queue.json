@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-05-10T12:19:40.134Z",
+  "generatedAt": "2026-05-10T18:20:24.209Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 1,
-    "queue_normal": 0
+    "queue_priority": 0,
+    "queue_normal": 1
   },
   "queue": [
     {
@@ -12,25 +12,25 @@
       "source": "rss_breaking",
       "destination": "indonesia",
       "link": "https://www.balidiscovery.com/the-whos-ewes-in-the-annals-of-bali-aviation-history/",
-      "velocityScore": 0.62,
-      "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 715,
+      "velocityScore": 0.408,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 709,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2066,
-      "estimatedTrafficIn24h": 2019,
-      "trafficLossPerHour": 2,
+      "estimatedTrafficNow": 1361,
+      "estimatedTrafficIn24h": 1330,
+      "trafficLossPerHour": 1,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.996,
+        "trendIntensity": 0.55,
+        "timeDecay": 0.99,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 4.5
+        "hoursSinceDetection": 10.5
       },
       "detectedAt": "2026-05-10T07:48:29.000Z",
-      "scoredAt": "2026-05-10T12:19:38.051Z"
+      "scoredAt": "2026-05-10T18:20:23.507Z"
     }
   ]
 }
