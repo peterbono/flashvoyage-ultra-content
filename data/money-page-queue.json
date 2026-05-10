@@ -16,18 +16,29 @@
       "country": "Thaïlande",
       "primaryKeyword": "meilleur esim thailande 2026",
       "targetSlug": "meilleur-esim-thailande-2026",
-      "comparisonItems": ["Holafly", "Airalo", "AIS Roaming"],
+      "comparisonItems": [
+        "Holafly",
+        "Airalo",
+        "AIS Roaming"
+      ],
       "tripDurationDays": 14,
       "scheduledFor": "2026-05-10",
       "discountCode": "FLASH5",
-      "published": false
+      "published": true,
+      "published_at": "2026-05-10T03:15:18.386Z",
+      "published_url": "https://flashvoyage.com/meilleur-esim-thailande-2026/",
+      "published_wp_id": 6195
     },
     {
       "id": "mp-2026-japon-esim",
       "country": "Japon",
       "primaryKeyword": "meilleur esim japon 2026",
       "targetSlug": "meilleur-esim-japon-2026",
-      "comparisonItems": ["Holafly", "Airalo", "Sakura Mobile"],
+      "comparisonItems": [
+        "Holafly",
+        "Airalo",
+        "Sakura Mobile"
+      ],
       "tripDurationDays": 10,
       "scheduledFor": "2026-05-17",
       "discountCode": "FLASH5",
@@ -38,7 +49,11 @@
       "country": "Vietnam",
       "primaryKeyword": "meilleur esim vietnam 2026",
       "targetSlug": "meilleur-esim-vietnam-2026",
-      "comparisonItems": ["Holafly", "Airalo", "Viettel"],
+      "comparisonItems": [
+        "Holafly",
+        "Airalo",
+        "Viettel"
+      ],
       "tripDurationDays": 21,
       "scheduledFor": "2026-05-24",
       "discountCode": "FLASH5",
@@ -49,7 +64,11 @@
       "country": "Bali (Indonésie)",
       "primaryKeyword": "meilleur esim bali 2026",
       "targetSlug": "meilleur-esim-bali-2026",
-      "comparisonItems": ["Holafly", "Airalo", "Telkomsel"],
+      "comparisonItems": [
+        "Holafly",
+        "Airalo",
+        "Telkomsel"
+      ],
       "tripDurationDays": 14,
       "scheduledFor": "2026-05-31",
       "discountCode": "FLASH5",
@@ -60,7 +79,11 @@
       "country": "Philippines",
       "primaryKeyword": "meilleur esim philippines 2026",
       "targetSlug": "meilleur-esim-philippines-2026",
-      "comparisonItems": ["Holafly", "Airalo", "Globe / Smart"],
+      "comparisonItems": [
+        "Holafly",
+        "Airalo",
+        "Globe / Smart"
+      ],
       "tripDurationDays": 14,
       "scheduledFor": "2026-06-07",
       "discountCode": "FLASH5",
@@ -71,7 +94,11 @@
       "country": "Cambodge",
       "primaryKeyword": "meilleur esim cambodge 2026",
       "targetSlug": "meilleur-esim-cambodge-2026",
-      "comparisonItems": ["Holafly", "Airalo", "Cellcard"],
+      "comparisonItems": [
+        "Holafly",
+        "Airalo",
+        "Cellcard"
+      ],
       "tripDurationDays": 10,
       "scheduledFor": "2026-06-14",
       "discountCode": "FLASH5",
