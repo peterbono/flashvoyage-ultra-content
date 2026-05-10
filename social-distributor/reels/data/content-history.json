@@ -289,6 +289,11 @@
       "name": "asie du sud-est",
       "date": "2026-05-10",
       "format": "avantapres"
+    },
+    {
+      "name": "corée du sud",
+      "date": "2026-05-10",
+      "format": "pick"
     }
   ],
   "recentFormats": [
@@ -611,6 +616,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-10T19:33:21.998Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-10T20:47:01.856Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-10T20:47:26.952Z"
     }
   ],
   "recentArticleIds": [
@@ -842,6 +855,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:pourquoi-ton-premier-mois-en-c",
       "date": "2026-05-10T19:33:21.998Z"
+    },
+    {
+      "fp": "fmt:pick|dest:none|slug:pourquoi-ton-premier-mois-en-c",
+      "date": "2026-05-10T20:47:26.952Z"
     }
   ]
 }
