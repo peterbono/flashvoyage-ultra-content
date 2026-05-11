@@ -173,6 +173,7 @@ jobs:
           git add data/seasonal-forecast.json 2>/dev/null || true
           git add data/score-history/ 2>/dev/null || true
           git add data/auto-executor-log.json 2>/dev/null || true
+          git add data/trends-cache.json 2>/dev/null || true
 
           # Only commit if there are staged changes
           git diff --cached --quiet || {
