@@ -1,26 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "thailande",
-      "date": "2026-04-26",
-      "format": "cost-vs"
-    },
-    {
-      "name": "asie du sud-est",
-      "date": "2026-04-26",
-      "format": "avantapres"
-    },
-    {
-      "name": "japon : tokyo, hakone, kyoto, osaka, hiroshima",
-      "date": "2026-04-26",
-      "format": "pick"
-    },
-    {
-      "name": "japon",
-      "date": "2026-04-26",
-      "format": "pick"
-    },
-    {
       "name": "vietnam",
       "date": "2026-04-27",
       "format": "avantapres"
@@ -297,26 +277,6 @@
     }
   ],
   "recentFormats": [
-    {
-      "format": "cost-vs",
-      "date": "2026-04-26T17:18:32.354Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-26T19:26:18.304Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-26T19:26:58.577Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-26T20:46:23.204Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-26T20:47:05.172Z"
-    },
     {
       "format": "avantapres",
       "date": "2026-04-27T17:34:11.130Z"
@@ -624,6 +584,10 @@
     {
       "format": "pick",
       "date": "2026-05-10T20:47:26.952Z"
+    },
+    {
+      "format": "cost-vs",
+      "date": "2026-05-11T17:44:06.689Z"
     }
   ],
   "recentArticleIds": [
@@ -708,18 +672,6 @@
     6195
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:cost-vs|dest:thailande|slug:thailande-mai-2-pieges-que-les",
-      "date": "2026-04-26T17:18:32.354Z"
-    },
-    {
-      "fp": "fmt:avantapres|dest:none|slug:vivre-en-couple-a-letranger-4-",
-      "date": "2026-04-26T19:26:58.577Z"
-    },
-    {
-      "fp": "fmt:pick|dest:japon|slug:japon-couple-15-jours-budget-t",
-      "date": "2026-04-26T20:47:05.172Z"
-    },
     {
       "fp": "fmt:avantapres|dest:vietnam|slug:esim-vietnam-comparatif-forfai",
       "date": "2026-04-27T17:34:53.859Z"
@@ -859,6 +811,10 @@
     {
       "fp": "fmt:pick|dest:none|slug:pourquoi-ton-premier-mois-en-c",
       "date": "2026-05-10T20:47:26.952Z"
+    },
+    {
+      "fp": "fmt:cost-vs|dest:none|slug:choisir-son-esim-pour-lasie-du",
+      "date": "2026-05-11T17:44:06.689Z"
     }
   ]
 }
