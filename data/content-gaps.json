@@ -1,37 +1,11 @@
 {
-  "timestamp": "2026-05-10T04:27:13.907Z",
-  "gapCount": 1,
-  "gaps": [
-    {
-      "topic": "myanmar",
-      "source": "trends",
-      "gapScore": 40,
-      "signals": {
-        "searchVolume": 0.35,
-        "trendGrowth": 0.35,
-        "monetization": 0.6,
-        "competition": 0.8
-      },
-      "destination": "myanmar",
-      "category": "destination",
-      "suggestedTitle": "Myanmar 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Myanmar — format pick ou month",
-      "articleType": "support",
-      "priority": "medium"
-    }
-  ],
+  "timestamp": "2026-05-11T04:32:41.528Z",
+  "gapCount": 0,
+  "gaps": [],
   "summary": {
-    "byPriority": {
-      "medium": 1
-    },
-    "byCategory": {
-      "destination": 1
-    },
-    "byDestination": {
-      "myanmar": 1
-    },
-    "topDestinationGaps": [
-      "myanmar"
-    ]
+    "byPriority": {},
+    "byCategory": {},
+    "byDestination": {},
+    "topDestinationGaps": []
   }
 }
