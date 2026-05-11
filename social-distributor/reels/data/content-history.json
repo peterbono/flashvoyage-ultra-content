@@ -274,6 +274,11 @@
       "name": "corée du sud",
       "date": "2026-05-10",
       "format": "pick"
+    },
+    {
+      "name": "bali",
+      "date": "2026-05-11",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -588,6 +593,14 @@
     {
       "format": "cost-vs",
       "date": "2026-05-11T17:44:06.689Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-11T19:41:29.384Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-11T19:41:55.600Z"
     }
   ],
   "recentArticleIds": [
@@ -815,6 +828,10 @@
     {
       "fp": "fmt:cost-vs|dest:none|slug:choisir-son-esim-pour-lasie-du",
       "date": "2026-05-11T17:44:06.689Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:choisir-le-bon-plan-esim-pour-",
+      "date": "2026-05-11T19:41:55.600Z"
     }
   ]
 }
