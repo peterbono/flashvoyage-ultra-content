@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-10",
+  "lastUpdated": "2026-05-11",
   "formatScores": {
     "poll": 0,
     "pick": 6.6,
@@ -20,7 +20,7 @@
   "destinationScores": {
     "bali": 8.8,
     "thailande": 6.9,
-    "vietnam": 6,
+    "vietnam": 5.9,
     "chiang mai": 5.6,
     "bangkok": 5.2,
     "philippines": 4.2,
@@ -64,7 +64,7 @@
   "igDestinationScores": {
     "bali": 8.8,
     "thailande": 6.9,
-    "vietnam": 6.5,
+    "vietnam": 6.3,
     "philippines": 4,
     "bangkok": 3.8,
     "chiang mai": 3.6,
