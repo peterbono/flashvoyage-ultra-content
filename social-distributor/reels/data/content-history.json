@@ -279,6 +279,11 @@
       "name": "bali",
       "date": "2026-05-11",
       "format": "avantapres"
+    },
+    {
+      "name": "vietnam",
+      "date": "2026-05-11",
+      "format": "pick"
     }
   ],
   "recentFormats": [
@@ -601,6 +606,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-11T19:41:55.600Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-11T21:02:34.872Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-11T21:03:02.734Z"
     }
   ],
   "recentArticleIds": [
@@ -832,6 +845,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:choisir-le-bon-plan-esim-pour-",
       "date": "2026-05-11T19:41:55.600Z"
+    },
+    {
+      "fp": "fmt:pick|dest:none|slug:vietnam-larbitrage-crucial-pou",
+      "date": "2026-05-11T21:03:02.734Z"
     }
   ]
 }
