@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-05-10T18:20:24.209Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-05-11T00:35:43.889Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "The “Who’s Ewes” in the “Annals” of Bali Aviation History",
-      "source": "rss_breaking",
-      "destination": "indonesia",
-      "link": "https://www.balidiscovery.com/the-whos-ewes-in-the-annals-of-bali-aviation-history/",
-      "velocityScore": 0.408,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 709,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1361,
-      "estimatedTrafficIn24h": 1330,
-      "trafficLossPerHour": 1,
-      "breakdown": {
-        "trendIntensity": 0.55,
-        "timeDecay": 0.99,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 10.5
-      },
-      "detectedAt": "2026-05-10T07:48:29.000Z",
-      "scoredAt": "2026-05-10T18:20:23.507Z"
-    }
-  ]
+  "queue": []
 }
