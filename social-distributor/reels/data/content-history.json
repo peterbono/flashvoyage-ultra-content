@@ -1,26 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "vietnam",
-      "date": "2026-04-27",
-      "format": "avantapres"
-    },
-    {
-      "name": "vietnam",
-      "date": "2026-04-27",
-      "format": "avantapres"
-    },
-    {
-      "name": "asie du sud-est",
-      "date": "2026-04-27",
-      "format": "avantapres"
-    },
-    {
-      "name": "coree",
-      "date": "2026-04-27",
-      "format": "humor"
-    },
-    {
       "name": "séoul, corée du sud",
       "date": "2026-04-28",
       "format": "pick"
@@ -284,33 +264,14 @@
       "name": "vietnam",
       "date": "2026-05-11",
       "format": "pick"
+    },
+    {
+      "name": "thaïlande",
+      "date": "2026-05-12",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
-    {
-      "format": "avantapres",
-      "date": "2026-04-27T17:34:11.130Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-27T17:34:53.859Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-27T19:39:58.698Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-27T19:40:40.778Z"
-    },
-    {
-      "format": "humor",
-      "date": "2026-04-27T20:49:32.113Z"
-    },
-    {
-      "format": "humor",
-      "date": "2026-04-27T20:50:06.386Z"
-    },
     {
       "format": "pick",
       "date": "2026-04-28T17:37:08.587Z"
@@ -614,6 +575,14 @@
     {
       "format": "pick",
       "date": "2026-05-11T21:03:02.734Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-12T19:40:59.112Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-12T19:41:27.679Z"
     }
   ],
   "recentArticleIds": [
@@ -698,18 +667,6 @@
     6195
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:avantapres|dest:vietnam|slug:esim-vietnam-comparatif-forfai",
-      "date": "2026-04-27T17:34:53.859Z"
-    },
-    {
-      "fp": "fmt:avantapres|dest:none|slug:pourquoi-choisir-entre-airalo-",
-      "date": "2026-04-27T19:40:40.778Z"
-    },
-    {
-      "fp": "fmt:humor|dest:coree|slug:coree-du-sud-les-2-frais-cache",
-      "date": "2026-04-27T20:50:06.386Z"
-    },
     {
       "fp": "fmt:avantapres|dest:indonesie|slug:organiser-son-voyage-en-indone",
       "date": "2026-04-29T17:36:02.900Z"
@@ -849,6 +806,10 @@
     {
       "fp": "fmt:pick|dest:none|slug:vietnam-larbitrage-crucial-pou",
       "date": "2026-05-11T21:03:02.734Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:thailande-ou-vietnam-en-2026-l",
+      "date": "2026-05-12T19:41:27.679Z"
     }
   ]
 }
