@@ -1,0 +1,72 @@
+name: Auto Indexing (Google Indexing API)
+
+# Daily: submit recently-modified WP posts to the Google Indexing API so
+# Googlebot recrawls them in 24-48h instead of waiting for the natural
+# crawl cycle (7-30d). Catches manual WP-admin edits, money-page-queue
+# publications, gsc-fix runs, content-cleanup scripts, and any future
+# script that writes to WP — no per-script wiring needed.
+#
+# Quota: Indexing API allows 200 publications/project/day. We cap at 100
+# to leave headroom for manual `gsc-request-indexing.mjs` invocations
+# from the dashboard.
+
+on:
+  schedule:
+    # 5h00 UTC = 7h00 Paris = 12h00 Bangkok
+    # Runs AFTER content-intelligence (3h00 UTC) and daily-analytics
+    # (4h00 UTC) so any morning-edit triggered by those pipelines is
+    # already committed before we pick up the modified-window.
+    - cron: '0 5 * * *'
+
+  workflow_dispatch:
+    inputs:
+      lookback_hours:
+        description: 'Hours back to look for modified posts'
+        required: false
+        default: '26'
+      dry_run:
+        description: 'Dry run (log only, no Indexing API submit)'
+        required: false
+        default: '0'
+        type: choice
+        options: ['0', '1']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-indexing
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run auto-index-modified
+        env:
+          GA4_SERVICE_ACCOUNT: ${{ secrets.GA4_SERVICE_ACCOUNT }}
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          LOOKBACK_HOURS: ${{ inputs.lookback_hours || '26' }}
+          DRY_RUN: ${{ inputs.dry_run || '0' }}
+        run: node scripts/auto-index-modified.mjs
+
+      - name: Commit log
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/gsc-indexing-log.jsonl 2>/dev/null || true
+          git diff --cached --quiet || {
+            git commit -m "chore: auto-indexing log [$(date -u +%Y-%m-%d)]"
+            git push || echo "[AUTOINDEX] WARN: git push failed (non-fatal)"
+          }
