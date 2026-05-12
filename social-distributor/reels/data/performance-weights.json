@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-11",
+  "lastUpdated": "2026-05-12",
   "formatScores": {
     "poll": 0,
     "pick": 6.6,
@@ -18,14 +18,14 @@
     "versus"
   ],
   "destinationScores": {
-    "bali": 8.8,
+    "bali": 8.4,
     "thailande": 6.9,
     "vietnam": 5.9,
     "chiang mai": 5.6,
     "bangkok": 5.2,
     "philippines": 4.2,
-    "cambodge": 3.1,
     "koh samui": 3,
+    "cambodge": 3,
     "malaisie": 2.6,
     "lombok": 1.2,
     "singapour": 0.6,
@@ -62,14 +62,14 @@
     "avantapres": "tiktok-only"
   },
   "igDestinationScores": {
-    "bali": 8.8,
+    "bali": 8.4,
     "thailande": 6.9,
     "vietnam": 6.3,
     "philippines": 4,
     "bangkok": 3.8,
     "chiang mai": 3.6,
-    "cambodge": 3.1,
     "koh samui": 3,
+    "cambodge": 3,
     "lombok": 1.2,
     "singapour": 0.6,
     "phuket": 0.6,
@@ -91,8 +91,8 @@
     "philippines": "merged(60/40)",
     "bangkok": "merged(60/40)",
     "chiang mai": "merged(60/40)",
-    "cambodge": "ig-only",
     "koh samui": "ig-only",
+    "cambodge": "ig-only",
     "lombok": "ig-only",
     "singapour": "ig-only",
     "phuket": "ig-only",
