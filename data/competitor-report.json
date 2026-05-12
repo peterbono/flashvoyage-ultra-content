@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-11T04:34:19.038Z",
+  "timestamp": "2026-05-12T04:23:36.878Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,15 +16,156 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 8520,
-      "newUrls": 1
+      "totalUrls": 8524,
+      "newUrls": 1004
     }
   ],
-  "newArticles": [],
+  "newArticles": [
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/trek-tour-annapurnas-nepal/",
+      "lastmod": "2025-11-26T15:25:58+00:00",
+      "destination": "nepal",
+      "contentType": "general",
+      "title": "Trek Tour Annapurnas Nepal",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Trek Tour Annapurnas Nepal\" (nepal, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-ile-james-bond-phang-nga-phuket/",
+      "lastmod": "2025-11-26T15:31:24+00:00",
+      "destination": "phuket",
+      "contentType": "plage",
+      "title": "Visiter Ile James Bond Phang Nga Phuket",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Ile James Bond Phang Nga Phuket\" (phuket, plage) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-nusa-penida-faire-voir/",
+      "lastmod": "2025-11-26T15:45:35+00:00",
+      "destination": "nusa",
+      "contentType": "activites",
+      "title": "Visiter Nusa Penida Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Nusa Penida Faire Voir\" (nusa, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-ubud-faire-voir/",
+      "lastmod": "2025-11-26T15:45:40+00:00",
+      "destination": "ubud",
+      "contentType": "activites",
+      "title": "Visiter Ubud Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Ubud Faire Voir\" (ubud, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-manille-faire-voir/",
+      "lastmod": "2025-11-26T15:50:02+00:00",
+      "destination": "manille",
+      "contentType": "activites",
+      "title": "Visiter Manille Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Manille Faire Voir\" (manille, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/specialites-culinaires-philippines/",
+      "lastmod": "2025-11-21T17:36:59+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Specialites Culinaires Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=46, freshness=0.94)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 46,
+        "freshness": 0.94
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/requins-baleines-philippines/",
+      "lastmod": "2025-11-21T17:37:41+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Requins Baleines Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=46, freshness=0.94)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 46,
+        "freshness": 0.94
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/evenements-annuels-philippines/",
+      "lastmod": "2025-11-21T17:40:06+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Evenements Annuels Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=46, freshness=0.94)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 46,
+        "freshness": 0.94
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/iles-japon/",
+      "lastmod": "2025-11-21T18:31:35+00:00",
+      "destination": "japon",
+      "contentType": "plage",
+      "title": "Iles Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=34, freshness=0.94)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 34,
+        "freshness": 0.94
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/robot-restaurant-tokyo/",
+      "lastmod": "2025-11-26T15:25:11+00:00",
+      "destination": "tokyo",
+      "contentType": "gastronomie",
+      "title": "Robot Restaurant Tokyo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Entre Hong Kong et Tokyo : Choix Cruciaux pour un Itinéraire Parfait\" (score=13, freshness=0.89)",
+      "matchedArticle": {
+        "wpId": 3048,
+        "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
+        "compositeScore": 13,
+        "freshness": 0.89
+      }
+    }
+  ],
   "summary": {
-    "totalNew": 0,
-    "contentGaps": 0,
+    "totalNew": 10,
+    "contentGaps": 5,
     "staleRefreshes": 0,
-    "monitoring": 0
+    "monitoring": 5
   }
 }
