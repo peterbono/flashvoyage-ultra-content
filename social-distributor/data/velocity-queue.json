@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T12:44:28.240Z",
+  "generatedAt": "2026-05-13T18:38:54.845Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Man drugged and robbed of 85,000 baht camera by buyer",
+      "topic": "Bodies of 3 women recovered from the sea off UK’s Brighton city",
       "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/bangkok/bangkok-man-robbed-after-being-drugged-with-spiked-orange-juice",
-      "velocityScore": 0.448,
+      "destination": "asia",
+      "link": "https://www.scmp.com/news/world/europe/article/3353475/bodies-3-women-recovered-sea-uks-brighton-city?utm_source=rss_feed",
+      "velocityScore": 0.414,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
+      "hoursRemaining": 717,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2239,
-      "estimatedTrafficIn24h": 2188,
+      "estimatedTrafficNow": 2068,
+      "estimatedTrafficIn24h": 2021,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.995,
+        "trendIntensity": 0.83,
+        "timeDecay": 0.997,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 5.2
+        "hoursSinceDetection": 3.4
       },
-      "detectedAt": "2026-05-13T07:34:20.000Z",
-      "scoredAt": "2026-05-13T12:44:25.608Z"
+      "detectedAt": "2026-05-13T15:14:00.000Z",
+      "scoredAt": "2026-05-13T18:38:52.545Z"
     }
   ]
 }
