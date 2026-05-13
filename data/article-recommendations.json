@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-05-12T04:21:56.642Z",
+    "generatedAt": "2026-05-13T04:25:36.880Z",
     "elapsedSeconds": 5,
     "totalArticles": 58,
     "articlesWithRecommendations": 4,
@@ -46,14 +46,14 @@
       "internalLinks": 56,
       "lastModified": "2026-05-08T22:31:08",
       "ga4": {
-        "pageviews": 51,
-        "sessions": 39,
+        "pageviews": 52,
+        "sessions": 40,
         "avgDuration": 83
       },
       "gsc": {
-        "impressions": 37,
+        "impressions": 35,
         "clicks": 0,
-        "position": 14,
+        "position": 14.4,
         "topQueries": [
           {
             "query": "dore site instagram com reel",
@@ -92,16 +92,16 @@
         {
           "type": "monetization",
           "priority": "P1",
-          "metric": "51 vues/mois mais seulement 0 widget(s) Travelpayouts",
+          "metric": "52 vues/mois mais seulement 0 widget(s) Travelpayouts",
           "action": "ADD_WIDGETS",
-          "details": "Article avec du traffic mais sous-monetise (0 widgets pour 51 vues). Ajouter : 1) Widget flights (data-tp-widget-id=\"7879\") apres la premiere mention de prix ou de vol. 2) Widget eSIM (id=\"8588\") si destination internationale (apres mention de \"Internet\" ou \"SIM\"). 3) Widget tours (id=\"3947\") apres description d'une activite ou \"que faire a\". 4) Widget assurance voyage apres mention de sante/securite. IMPORTANT : utiliser le format data-tp JSON, pas data-widget-type.",
+          "details": "Article avec du traffic mais sous-monetise (0 widgets pour 52 vues). Ajouter : 1) Widget flights (data-tp-widget-id=\"7879\") apres la premiere mention de prix ou de vol. 2) Widget eSIM (id=\"8588\") si destination internationale (apres mention de \"Internet\" ou \"SIM\"). 3) Widget tours (id=\"3947\") apres description d'une activite ou \"que faire a\". 4) Widget assurance voyage apres mention de sante/securite. IMPORTANT : utiliser le format data-tp JSON, pas data-widget-type.",
           "effort": "15min",
           "expectedImpact": "RPM article +100 a +300% (de ~0 EUR a ~1 EUR/mois potentiel)"
         },
         {
           "type": "amplification",
           "priority": "P2",
-          "metric": "51 vues/mois, 0 reels lies a cet article",
+          "metric": "52 vues/mois, 0 reels lies a cet article",
           "action": "CREATE_REELS",
           "details": "Article populaire sans couverture reel. Creer 2-3 reels automatises : 1) Trip Pick \"X spots incontournables a [destination]\" — format liste visuelle. 2) Budget Jour si l'article contient des donnees budget. 3) Versus si l'article compare 2 destinations. Les reels drivent du traffic IG → article via Story links + lien bio. Utiliser le module reels/generator.js.",
           "effort": "5min (auto-genere via pipeline reels)",
@@ -130,14 +130,14 @@
       "internalLinks": 49,
       "lastModified": "2026-05-11T19:31:15",
       "ga4": {
-        "pageviews": 28,
-        "sessions": 26,
-        "avgDuration": 39
+        "pageviews": 29,
+        "sessions": 27,
+        "avgDuration": 38
       },
       "gsc": {
-        "impressions": 16,
+        "impressions": 15,
         "clicks": 0,
-        "position": 19,
+        "position": 19.5,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -155,7 +155,7 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 39s / 1358s attendus (3% du contenu lu)",
+          "metric": "Temps lu: 38s / 1358s attendus (3% du contenu lu)",
           "action": "IMPROVE_READABILITY",
           "details": "Seulement 3% du contenu est lu (4528 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
@@ -189,14 +189,14 @@
         "avgDuration": 42
       },
       "gsc": {
-        "impressions": 54,
+        "impressions": 51,
         "clicks": 0,
         "position": 17.4,
         "topQueries": [
           {
             "query": "bali ou thailande",
             "position": 36.4,
-            "impressions": 14,
+            "impressions": 13,
             "ctr": 0
           },
           {
@@ -246,9 +246,9 @@
         "avgDuration": 306
       },
       "gsc": {
-        "impressions": 13,
-        "clicks": 1,
-        "position": 8.4,
+        "impressions": 12,
+        "clicks": 0,
+        "position": 8.6,
         "topQueries": []
       },
       "reels": {
@@ -257,6 +257,85 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5678,
+      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
+      "wordCount": 1657,
+      "widgetCount": 0,
+      "internalLinks": 25,
+      "lastModified": "2026-04-30T07:39:29",
+      "ga4": {
+        "pageviews": 13,
+        "sessions": 13,
+        "avgDuration": 2
+      },
+      "gsc": {
+        "impressions": 2,
+        "clicks": 0,
+        "position": 3,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4373,
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
+      "wordCount": 4478,
+      "widgetCount": 2,
+      "internalLinks": 45,
+      "lastModified": "2026-05-11T19:31:23",
+      "ga4": {
+        "pageviews": 13,
+        "sessions": 8,
+        "avgDuration": 121
+      },
+      "gsc": {
+        "impressions": 22,
+        "clicks": 1,
+        "position": 9.8,
+        "topQueries": [
+          {
+            "query": "taxe de sejour kyoto",
+            "position": 3,
+            "impressions": 1,
+            "ctr": 100
+          },
+          {
+            "query": "15 jours au japon budget",
+            "position": 83,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"taxe de sejour kyoto\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"taxe de sejour kyoto\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -285,79 +364,6 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5678,
-      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
-      "wordCount": 1657,
-      "widgetCount": 0,
-      "internalLinks": 25,
-      "lastModified": "2026-04-30T07:39:29",
-      "ga4": {
-        "pageviews": 12,
-        "sessions": 12,
-        "avgDuration": 2
-      },
-      "gsc": {
-        "impressions": 2,
-        "clicks": 0,
-        "position": 3,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4373,
-      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
-      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
-      "wordCount": 4478,
-      "widgetCount": 2,
-      "internalLinks": 45,
-      "lastModified": "2026-05-11T19:31:23",
-      "ga4": {
-        "pageviews": 12,
-        "sessions": 8,
-        "avgDuration": 110
-      },
-      "gsc": {
-        "impressions": 24,
-        "clicks": 1,
-        "position": 6,
-        "topQueries": [
-          {
-            "query": "taxe de sejour kyoto",
-            "position": 3,
-            "impressions": 1,
-            "ctr": 100
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"taxe de sejour kyoto\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"taxe de sejour kyoto\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -557,6 +563,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 6195,
+      "slug": "meilleur-esim-thailande-2026",
+      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
+      "url": "https://flashvoyage.com/meilleur-esim-thailande-2026/",
+      "wordCount": 1348,
+      "widgetCount": 0,
+      "internalLinks": 11,
+      "lastModified": "2026-05-11T11:00:15",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 4,
+        "avgDuration": 9
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5343,
       "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
       "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
@@ -683,9 +717,9 @@
         "avgDuration": 166
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 14,
         "clicks": 0,
-        "position": 6.6,
+        "position": 6.5,
         "topQueries": []
       },
       "reels": {
@@ -821,34 +855,6 @@
         "pageviews": 2,
         "sessions": 2,
         "avgDuration": 27
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4132,
-      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
-      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
-      "url": "https://flashvoyage.com/japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais/",
-      "wordCount": 3898,
-      "widgetCount": 0,
-      "internalLinks": 40,
-      "lastModified": "2026-04-22T12:44:11",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 15
       },
       "gsc": {
         "impressions": 0,
@@ -1016,7 +1022,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 398
+        "avgDuration": 3
       },
       "gsc": {
         "impressions": 0,
@@ -1047,9 +1053,9 @@
         "avgDuration": 794
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 8,
         "clicks": 1,
-        "position": 8.1,
+        "position": 7.9,
         "topQueries": []
       },
       "reels": {
@@ -1073,6 +1079,34 @@
         "pageviews": 1,
         "sessions": 1,
         "avgDuration": 15
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4132,
+      "slug": "japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais",
+      "title": "Japon 64 jours : les 2 pièges que les blogs voyage ne mentionnent jamais",
+      "url": "https://flashvoyage.com/japon-64-jours-les-2-pieges-que-les-blogs-voyage-ne-mentionnent-jamais/",
+      "wordCount": 3898,
+      "widgetCount": 0,
+      "internalLinks": 40,
+      "lastModified": "2026-04-22T12:44:11",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 30
       },
       "gsc": {
         "impressions": 0,
@@ -1134,34 +1168,6 @@
         "impressions": 2,
         "clicks": 0,
         "position": 10,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 6195,
-      "slug": "meilleur-esim-thailande-2026",
-      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
-      "url": "https://flashvoyage.com/meilleur-esim-thailande-2026/",
-      "wordCount": 1348,
-      "widgetCount": 0,
-      "internalLinks": 11,
-      "lastModified": "2026-05-11T11:00:15",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -1299,9 +1305,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 1,
         "clicks": 0,
-        "position": 5.7,
+        "position": 5,
         "topQueries": []
       },
       "reels": {
@@ -1719,9 +1725,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 16,
         "clicks": 0,
-        "position": 9.7,
+        "position": 10,
         "topQueries": [
           {
             "query": "itinéraire luxe asie du sud-est",

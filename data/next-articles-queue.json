@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-12T04:21:50.549Z",
+  "timestamp": "2026-05-13T04:25:31.172Z",
   "queueSize": 14,
   "queue": [
     {
@@ -12,7 +12,7 @@
       "context": {
         "wpId": 4372,
         "slug": "esim-philippines-globe-smart-comparatif-2026",
-        "compositeScore": 46,
+        "compositeScore": 48,
         "traffic": 1,
         "revenue": 0,
         "reason": "High-traffic article missing widgets: esim-philippines-globe-smart-comparatif-2026 (traffic=1)"
@@ -65,7 +65,7 @@
         "wpId": 3174,
         "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
         "compositeScore": 13,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
@@ -81,7 +81,7 @@
         "wpId": 3065,
         "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
         "compositeScore": 13,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
@@ -97,7 +97,7 @@
         "wpId": 3056,
         "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
         "compositeScore": 13,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
@@ -113,13 +113,29 @@
         "wpId": 3048,
         "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
         "compositeScore": 13,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
       "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 13,
+        "freshness": 0.85,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -135,7 +151,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -151,7 +167,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -161,23 +177,7 @@
         "wpId": 4125,
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 14,
-        "freshness": 0.93,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
-      "articleType": "support",
-      "context": {
-        "wpId": 4058,
-        "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
-        "compositeScore": 14,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -187,11 +187,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "topic": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
       "articleType": "support",
       "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "wpId": 4058,
+        "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
         "compositeScore": 14,
         "freshness": 0.92,
         "traffic": 0,
@@ -203,11 +203,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "articleType": "support",
       "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 14,
         "freshness": 0.91,
         "traffic": 0,
