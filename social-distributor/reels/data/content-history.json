@@ -259,6 +259,16 @@
       "name": "asia",
       "date": "2026-05-13",
       "format": "pick"
+    },
+    {
+      "name": "vietnam",
+      "date": "2026-05-13",
+      "format": "pick"
+    },
+    {
+      "name": "asia",
+      "date": "2026-05-13",
+      "format": "pick"
     }
   ],
   "recentFormats": [
@@ -573,6 +583,14 @@
     {
       "format": "pick",
       "date": "2026-05-13T19:42:27.857Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-13T21:05:52.798Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-13T21:06:21.765Z"
     }
   ],
   "recentArticleIds": [
