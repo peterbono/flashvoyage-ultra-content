@@ -249,6 +249,16 @@
       "name": "asia",
       "date": "2026-05-13",
       "format": "pick"
+    },
+    {
+      "name": "singapour",
+      "date": "2026-05-13",
+      "format": "pick"
+    },
+    {
+      "name": "asia",
+      "date": "2026-05-13",
+      "format": "pick"
     }
   ],
   "recentFormats": [
@@ -555,6 +565,14 @@
     {
       "format": "pick",
       "date": "2026-05-13T17:46:38.414Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-13T19:41:59.923Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-13T19:42:27.857Z"
     }
   ],
   "recentArticleIds": [
