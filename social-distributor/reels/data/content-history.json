@@ -1,36 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "séoul, corée du sud",
-      "date": "2026-04-28",
-      "format": "pick"
-    },
-    {
-      "name": "philippines",
-      "date": "2026-04-28",
-      "format": "pick"
-    },
-    {
-      "name": "japon (tokyo, kyoto) + chine (beijing) + mongolie (ulaanbaatar)",
-      "date": "2026-04-28",
-      "format": "pick"
-    },
-    {
-      "name": "philippines",
-      "date": "2026-04-28",
-      "format": "pick"
-    },
-    {
-      "name": "kuala lumpur",
-      "date": "2026-04-28",
-      "format": "pick"
-    },
-    {
-      "name": "philippines",
-      "date": "2026-04-28",
-      "format": "pick"
-    },
-    {
       "name": "indonésie",
       "date": "2026-04-29",
       "format": "avantapres"
@@ -269,33 +239,19 @@
       "name": "thaïlande",
       "date": "2026-05-12",
       "format": "avantapres"
+    },
+    {
+      "name": "asie du sud-est (bangkok, philippines, vietnam)",
+      "date": "2026-05-13",
+      "format": "pick"
+    },
+    {
+      "name": "asia",
+      "date": "2026-05-13",
+      "format": "pick"
     }
   ],
   "recentFormats": [
-    {
-      "format": "pick",
-      "date": "2026-04-28T17:37:08.587Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-28T17:37:51.365Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-28T19:40:41.971Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-28T19:41:23.070Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-28T20:54:34.190Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-04-28T20:55:14.325Z"
-    },
     {
       "format": "avantapres",
       "date": "2026-04-29T17:35:22.497Z"
@@ -591,6 +547,14 @@
     {
       "format": "leaderboard",
       "date": "2026-05-12T21:01:50.974Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-13T17:46:04.084Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-13T17:46:38.414Z"
     }
   ],
   "recentArticleIds": [
