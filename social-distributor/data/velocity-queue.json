@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T18:38:54.845Z",
+  "generatedAt": "2026-05-14T00:38:40.713Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,10 +8,10 @@
   },
   "queue": [
     {
-      "topic": "Bodies of 3 women recovered from the sea off UK’s Brighton city",
+      "topic": "Border trade boosted by flood of electronics",
       "source": "rss_breaking",
-      "destination": "asia",
-      "link": "https://www.scmp.com/news/world/europe/article/3353475/bodies-3-women-recovered-sea-uks-brighton-city?utm_source=rss_feed",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/business/general/3254643/border-trade-boosted-by-flood-of-electronics",
       "velocityScore": 0.414,
       "action": "QUEUE_NORMAL",
       "hoursRemaining": 717,
@@ -19,18 +19,18 @@
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2068,
-      "estimatedTrafficIn24h": 2021,
+      "estimatedTrafficNow": 2070,
+      "estimatedTrafficIn24h": 2022,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
         "timeDecay": 0.997,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 3.4
+        "hoursSinceDetection": 2.6
       },
-      "detectedAt": "2026-05-13T15:14:00.000Z",
-      "scoredAt": "2026-05-13T18:38:52.545Z"
+      "detectedAt": "2026-05-13T22:01:00.000Z",
+      "scoredAt": "2026-05-14T00:38:36.928Z"
     }
   ]
 }
