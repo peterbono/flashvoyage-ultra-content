@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-05-13T04:25:38.772Z",
+  "timestamp": "2026-05-14T04:25:13.036Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-05-13T04:25:39.250Z",
+      "lastScan": "2026-05-14T04:25:13.799Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-05-13T04:25:39.623Z",
+      "lastScan": "2026-05-14T04:25:14.298Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-05-13T04:26:50.090Z",
-      "urlCount": 9528,
+      "lastScan": "2026-05-14T04:26:32.614Z",
+      "urlCount": 9533,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -496,7 +496,6 @@
         "https://generationvoyage.fr/touristes-geste-maladroit/": "2024-05-27T06:18:36+00:00",
         "https://generationvoyage.fr/airdna-analyse-airbnb/": "2024-06-24T05:31:13+00:00",
         "https://generationvoyage.fr/sites-optimiser-gestion-airbnb/": "2024-06-24T05:31:30+00:00",
-        "https://generationvoyage.fr/pics-reservation-airbnb/": "2024-06-24T05:31:52+00:00",
         "https://generationvoyage.fr/reduire-frais-bancaires-etranger/": "2025-01-28T12:31:05+00:00",
         "https://generationvoyage.fr/chatbot-voyage-lea/": "2025-03-11T07:31:22+00:00",
         "https://generationvoyage.fr/partir-agence-de-voyage-locale/": "2025-03-17T14:43:39+00:00",
@@ -9616,11 +9615,9 @@
         "https://generationvoyage.fr/randonnees-oslo/": "2026-05-04T15:59:35+00:00",
         "https://generationvoyage.fr/dormir-pointe-a-pitre/": "2026-05-05T08:44:50+00:00",
         "https://generationvoyage.fr/ibiza-majorque/": "2026-05-05T10:33:25+00:00",
-        "https://generationvoyage.fr/louer-appartement-maison-airbnb/": "2026-05-05T09:18:32+00:00",
         "https://generationvoyage.fr/devenir-proprietaire-airbnb/": "2026-05-05T09:22:22+00:00",
         "https://generationvoyage.fr/louer-chambre-airbnb/": "2026-05-05T09:25:11+00:00",
         "https://generationvoyage.fr/visiter-boheme-faire-voir/": "2026-05-05T15:29:37+00:00",
-        "https://generationvoyage.fr/airbnb-vs-booking/": "2026-05-05T10:40:08+00:00",
         "https://generationvoyage.fr/estimation-revenus-airbnb/": "2026-05-05T10:47:38+00:00",
         "https://generationvoyage.fr/comparatif-conciergerie-airbnb/": "2026-05-05T10:59:28+00:00",
         "https://generationvoyage.fr/augmenter-reservations-airbnb/": "2026-05-05T11:01:22+00:00",
@@ -9630,7 +9627,6 @@
         "https://generationvoyage.fr/conciergerie-airbnb-rentable/": "2026-05-05T11:50:59+00:00",
         "https://generationvoyage.fr/optimiser-remplissage-calendrier-airbnb/": "2026-05-05T11:53:59+00:00",
         "https://generationvoyage.fr/airbnb-voyages-pro/": "2026-05-05T11:58:00+00:00",
-        "https://generationvoyage.fr/fiscalite-location-airbnb/": "2026-05-05T11:59:48+00:00",
         "https://generationvoyage.fr/declarer-revenus-locatifs-airbnb/": "2026-05-05T12:23:46+00:00",
         "https://generationvoyage.fr/rentable-airbnb-booking/": "2026-05-05T12:27:30+00:00",
         "https://generationvoyage.fr/louer-legalement-airbnb/": "2026-05-05T12:29:47+00:00",
@@ -9639,7 +9635,6 @@
         "https://generationvoyage.fr/eliot-me-prix-airbnb/": "2026-05-05T12:41:44+00:00",
         "https://generationvoyage.fr/assurance-habitation-airbnb/": "2026-05-05T12:43:24+00:00",
         "https://generationvoyage.fr/sous-louer-legalement-airbnb/": "2026-05-05T12:45:07+00:00",
-        "https://generationvoyage.fr/concurrents-airbnb-alternatives/": "2026-05-05T12:50:59+00:00",
         "https://generationvoyage.fr/anecdotes-buckingham-palace/": "2026-05-05T17:33:52+00:00",
         "https://generationvoyage.fr/dormir-duomo-florence/": "2026-05-06T09:05:17+00:00",
         "https://generationvoyage.fr/anecdotes-neuschwanstein/": "2026-05-06T11:05:44+00:00",
@@ -9669,7 +9664,17 @@
         "https://generationvoyage.fr/road-trip-en-corse/": "2026-05-12T15:26:21+00:00",
         "https://generationvoyage.fr/road-trip-martinique/": "2026-05-12T15:32:23+00:00",
         "https://generationvoyage.fr/roadtrip-guadeloupe/": "2026-05-12T15:36:59+00:00",
-        "https://generationvoyage.fr/roadtrip-reunion/": "2026-05-12T15:41:07+00:00"
+        "https://generationvoyage.fr/roadtrip-reunion/": "2026-05-12T15:41:07+00:00",
+        "https://generationvoyage.fr/visiter-braganca-faire-voir/": "2026-05-13T08:48:54+00:00",
+        "https://generationvoyage.fr/routes-colorado/": "2026-05-13T08:54:20+00:00",
+        "https://generationvoyage.fr/manger-parlement-budapest/": "2026-05-13T10:43:02+00:00",
+        "https://generationvoyage.fr/visiter-epinal-faire-voir/": "2026-05-13T13:43:34+00:00",
+        "https://generationvoyage.fr/visiter-auschwitz/": "2026-05-13T15:44:57+00:00",
+        "https://generationvoyage.fr/louer-appartement-maison-airbnb/": "2026-05-13T12:43:21+00:00",
+        "https://generationvoyage.fr/fiscalite-location-airbnb/": "2026-05-13T12:51:07+00:00",
+        "https://generationvoyage.fr/pics-reservation-airbnb/": "2026-05-13T12:52:49+00:00",
+        "https://generationvoyage.fr/airbnb-vs-booking/": "2026-05-13T12:57:09+00:00",
+        "https://generationvoyage.fr/concurrents-airbnb-alternatives/": "2026-05-13T13:05:59+00:00"
       }
     }
   }

@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-05-13T04:25:36.880Z",
+    "generatedAt": "2026-05-14T04:25:11.159Z",
     "elapsedSeconds": 5,
     "totalArticles": 58,
     "articlesWithRecommendations": 4,
@@ -48,12 +48,12 @@
       "ga4": {
         "pageviews": 52,
         "sessions": 40,
-        "avgDuration": 83
+        "avgDuration": 85
       },
       "gsc": {
-        "impressions": 35,
+        "impressions": 34,
         "clicks": 0,
-        "position": 14.4,
+        "position": 14.8,
         "topQueries": [
           {
             "query": "dore site instagram com reel",
@@ -83,7 +83,7 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 83s / 1508s attendus (6% du contenu lu)",
+          "metric": "Temps lu: 85s / 1508s attendus (6% du contenu lu)",
           "action": "IMPROVE_READABILITY",
           "details": "Seulement 6% du contenu est lu (5028 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
@@ -130,14 +130,14 @@
       "internalLinks": 49,
       "lastModified": "2026-05-11T19:31:15",
       "ga4": {
-        "pageviews": 29,
-        "sessions": 27,
-        "avgDuration": 38
+        "pageviews": 27,
+        "sessions": 25,
+        "avgDuration": 40
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 12,
         "clicks": 0,
-        "position": 19.5,
+        "position": 22.2,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -155,7 +155,7 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 38s / 1358s attendus (3% du contenu lu)",
+          "metric": "Temps lu: 40s / 1358s attendus (3% du contenu lu)",
           "action": "IMPROVE_READABILITY",
           "details": "Seulement 3% du contenu est lu (4528 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
@@ -191,11 +191,11 @@
       "gsc": {
         "impressions": 51,
         "clicks": 0,
-        "position": 17.4,
+        "position": 19.1,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 36.4,
+            "position": 37.5,
             "impressions": 13,
             "ctr": 0
           },
@@ -229,34 +229,6 @@
         }
       ],
       "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4370,
-      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "url": "https://flashvoyage.com/bali-lombok-gili-10-jours-itineraire-budget-2026/",
-      "wordCount": 3658,
-      "widgetCount": 0,
-      "internalLinks": 47,
-      "lastModified": "2026-05-11T19:31:26",
-      "ga4": {
-        "pageviews": 16,
-        "sessions": 13,
-        "avgDuration": 306
-      },
-      "gsc": {
-        "impressions": 12,
-        "clicks": 0,
-        "position": 8.6,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -299,7 +271,7 @@
       "ga4": {
         "pageviews": 13,
         "sessions": 8,
-        "avgDuration": 121
+        "avgDuration": 123
       },
       "gsc": {
         "impressions": 22,
@@ -356,6 +328,34 @@
         "impressions": 0,
         "clicks": 0,
         "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4370,
+      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "url": "https://flashvoyage.com/bali-lombok-gili-10-jours-itineraire-budget-2026/",
+      "wordCount": 3658,
+      "widgetCount": 0,
+      "internalLinks": 47,
+      "lastModified": "2026-05-11T19:31:26",
+      "ga4": {
+        "pageviews": 12,
+        "sessions": 11,
+        "avgDuration": 3
+      },
+      "gsc": {
+        "impressions": 12,
+        "clicks": 0,
+        "position": 8.6,
         "topQueries": []
       },
       "reels": {
@@ -435,34 +435,6 @@
         "pageviews": 8,
         "sessions": 8,
         "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2386,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-04-22T12:43:04",
-      "ga4": {
-        "pageviews": 8,
-        "sessions": 6,
-        "avgDuration": 93
       },
       "gsc": {
         "impressions": 0,
@@ -563,6 +535,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2386,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-04-22T12:43:04",
+      "ga4": {
+        "pageviews": 6,
+        "sessions": 4,
+        "avgDuration": 108
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 6195,
       "slug": "meilleur-esim-thailande-2026",
       "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
@@ -580,34 +580,6 @@
         "impressions": 0,
         "clicks": 0,
         "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5343,
-      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "url": "https://flashvoyage.com/pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu/",
-      "wordCount": 1510,
-      "widgetCount": 0,
-      "internalLinks": 18,
-      "lastModified": "2026-05-08T22:32:17",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 17
-      },
-      "gsc": {
-        "impressions": 1,
-        "clicks": 0,
-        "position": 6,
         "topQueries": []
       },
       "reels": {
@@ -804,6 +776,34 @@
         "impressions": 0,
         "clicks": 0,
         "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5343,
+      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "url": "https://flashvoyage.com/pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu/",
+      "wordCount": 1510,
+      "widgetCount": 0,
+      "internalLinks": 18,
+      "lastModified": "2026-05-08T22:32:17",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 30
+      },
+      "gsc": {
+        "impressions": 1,
+        "clicks": 0,
+        "position": 6,
         "topQueries": []
       },
       "reels": {
@@ -1725,9 +1725,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 16,
+        "impressions": 15,
         "clicks": 0,
-        "position": 10,
+        "position": 10.5,
         "topQueries": [
           {
             "query": "itinéraire luxe asie du sud-est",

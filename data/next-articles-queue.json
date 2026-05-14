@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-13T04:25:31.172Z",
+  "timestamp": "2026-05-14T04:25:04.780Z",
   "queueSize": 14,
   "queue": [
     {
@@ -12,7 +12,7 @@
       "context": {
         "wpId": 4372,
         "slug": "esim-philippines-globe-smart-comparatif-2026",
-        "compositeScore": 48,
+        "compositeScore": 46,
         "traffic": 1,
         "revenue": 0,
         "reason": "High-traffic article missing widgets: esim-philippines-globe-smart-comparatif-2026 (traffic=1)"
@@ -155,6 +155,22 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 13,
+        "freshness": 0.85,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
       "topic": "Voyager en Asie du Sud-Est : les frais cachés qui gonflent ton budget",
       "articleType": "support",
       "context": {
@@ -167,7 +183,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -183,7 +199,7 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -194,22 +210,6 @@
         "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
         "compositeScore": 14,
         "freshness": 0.92,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "articleType": "support",
-      "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-        "compositeScore": 14,
-        "freshness": 0.91,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
