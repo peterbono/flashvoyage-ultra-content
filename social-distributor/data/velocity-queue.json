@@ -1,36 +1,61 @@
 {
-  "generatedAt": "2026-05-14T07:01:28.394Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-05-14T12:37:36.683Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 0,
+    "queue_priority": 1,
     "queue_normal": 1
   },
   "queue": [
     {
-      "topic": "Vietnam plans Manhattan-sized city next to $12.8B Long Thanh airport",
+      "topic": "Philippines warns of serious power cuts as heat, outages strain grids",
       "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/traffic/vietnam-plans-manhattan-sized-city-next-to-12-8b-long-thanh-airport-5073461.html",
-      "velocityScore": 0.509,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/se-asia/philippines-warns-of-serious-power-cuts-as-heat-outages-strain-grids",
+      "velocityScore": 0.622,
+      "action": "QUEUE_PRIORITY",
+      "hoursRemaining": 719,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1695,
-      "estimatedTrafficIn24h": 1657,
+      "estimatedTrafficNow": 2072,
+      "estimatedTrafficIn24h": 2025,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.68,
-        "timeDecay": 0.997,
+        "trendIntensity": 0.83,
+        "timeDecay": 0.999,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 2.8
+        "hoursSinceDetection": 1.4
       },
-      "detectedAt": "2026-05-14T04:16:01.000Z",
-      "scoredAt": "2026-05-14T07:01:23.767Z"
+      "detectedAt": "2026-05-14T11:15:00.000Z",
+      "scoredAt": "2026-05-14T12:37:28.959Z"
+    },
+    {
+      "topic": "France, Netherlands say all hantavirus contact cases negative",
+      "source": "rss_breaking",
+      "destination": "asia",
+      "link": "https://www.scmp.com/news/world/europe/article/3353595/france-netherlands-say-all-hantavirus-contact-cases-negative?utm_source=rss_feed",
+      "velocityScore": 0.415,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 720,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2075,
+      "estimatedTrafficIn24h": 2027,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 1,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 0.2
+      },
+      "detectedAt": "2026-05-14T12:27:52.000Z",
+      "scoredAt": "2026-05-14T12:37:27.417Z"
     }
   ]
 }
