@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-14T00:38:40.713Z",
+  "generatedAt": "2026-05-14T07:01:28.394Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Border trade boosted by flood of electronics",
+      "topic": "Vietnam plans Manhattan-sized city next to $12.8B Long Thanh airport",
       "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/business/general/3254643/border-trade-boosted-by-flood-of-electronics",
-      "velocityScore": 0.414,
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/traffic/vietnam-plans-manhattan-sized-city-next-to-12-8b-long-thanh-airport-5073461.html",
+      "velocityScore": 0.509,
       "action": "QUEUE_NORMAL",
       "hoursRemaining": 717,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2070,
-      "estimatedTrafficIn24h": 2022,
+      "estimatedTrafficNow": 1695,
+      "estimatedTrafficIn24h": 1657,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.83,
+        "trendIntensity": 0.68,
         "timeDecay": 0.997,
         "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.6
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 2.8
       },
-      "detectedAt": "2026-05-13T22:01:00.000Z",
-      "scoredAt": "2026-05-14T00:38:36.928Z"
+      "detectedAt": "2026-05-14T04:16:01.000Z",
+      "scoredAt": "2026-05-14T07:01:23.767Z"
     }
   ]
 }
