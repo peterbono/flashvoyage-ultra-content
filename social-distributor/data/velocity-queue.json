@@ -1,61 +1,36 @@
 {
-  "generatedAt": "2026-05-15T07:07:42.585Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-05-15T12:37:53.859Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 1
   },
   "queue": [
     {
-      "topic": "Chinese man blacklisted for aggressive behaviour at Bangkok airport",
+      "topic": "Eight Pakistani troops killed in nighttime storming of border outpost",
       "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/national/chinese-man-faces-lifetime-blacklist-for-damaging-airport-auto-gate",
-      "velocityScore": 0.498,
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/eight-pakistani-troops-killed-in-nighttime-storming-of-border-outpost",
+      "velocityScore": 0.413,
       "action": "QUEUE_NORMAL",
       "hoursRemaining": 716,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2490,
-      "estimatedTrafficIn24h": 2433,
+      "estimatedTrafficNow": 2066,
+      "estimatedTrafficIn24h": 2019,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 1,
+        "trendIntensity": 0.83,
         "timeDecay": 0.996,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 4.1
+        "hoursSinceDetection": 4.4
       },
-      "detectedAt": "2026-05-15T02:58:43.000Z",
-      "scoredAt": "2026-05-15T07:07:38.536Z"
-    },
-    {
-      "topic": "Chinese tourist blacklisted after damaging airport immigration gate",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3255455/chinese-tourist-blacklisted-after-damaging-airport-immigration-gate",
-      "velocityScore": 0.448,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2240,
-      "estimatedTrafficIn24h": 2189,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.996,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 4.5
-      },
-      "detectedAt": "2026-05-15T02:35:00.000Z",
-      "scoredAt": "2026-05-15T07:07:37.672Z"
+      "detectedAt": "2026-05-15T08:12:36.000Z",
+      "scoredAt": "2026-05-15T12:37:46.567Z"
     }
   ]
 }
