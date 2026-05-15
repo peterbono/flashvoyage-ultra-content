@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-05-14T18:37:56.150Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-05-15T00:36:06.882Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Philippines warns of serious power cuts as heat, outages strain grids",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/se-asia/philippines-warns-of-serious-power-cuts-as-heat-outages-strain-grids",
-      "velocityScore": 0.41,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 713,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1365,
-      "estimatedTrafficIn24h": 1334,
-      "trafficLossPerHour": 1,
-      "breakdown": {
-        "trendIntensity": 0.55,
-        "timeDecay": 0.993,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 7.4
-      },
-      "detectedAt": "2026-05-14T11:15:00.000Z",
-      "scoredAt": "2026-05-14T18:37:47.988Z"
-    }
-  ]
+  "queue": []
 }
