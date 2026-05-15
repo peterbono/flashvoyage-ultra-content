@@ -1,26 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "thailande",
-      "date": "2026-04-30",
-      "format": "cost-vs"
-    },
-    {
-      "name": "chiang mai",
-      "date": "2026-04-30",
-      "format": "avantapres"
-    },
-    {
-      "name": "japon",
-      "date": "2026-04-30",
-      "format": "budget"
-    },
-    {
-      "name": "japon",
-      "date": "2026-04-30",
-      "format": "budget"
-    },
-    {
       "name": "vietnam",
       "date": "2026-05-01",
       "format": "avantapres"
@@ -269,29 +249,14 @@
       "name": "bangkok",
       "date": "2026-05-14",
       "format": "budget"
+    },
+    {
+      "name": "bali",
+      "date": "2026-05-15",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
-    {
-      "format": "cost-vs",
-      "date": "2026-04-30T17:34:36.491Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-30T19:40:10.918Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-04-30T19:40:46.365Z"
-    },
-    {
-      "format": "budget",
-      "date": "2026-04-30T20:49:02.700Z"
-    },
-    {
-      "format": "budget",
-      "date": "2026-04-30T20:49:20.596Z"
-    },
     {
       "format": "avantapres",
       "date": "2026-05-01T17:25:28.140Z"
@@ -591,6 +556,14 @@
     {
       "format": "budget",
       "date": "2026-05-14T20:57:32.943Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-15T17:34:34.949Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-15T17:35:06.061Z"
     }
   ],
   "recentArticleIds": [
@@ -675,18 +648,6 @@
     6195
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:cost-vs|dest:thailande|slug:thailande-ce-que-jaurais-voulu",
-      "date": "2026-04-30T17:34:36.491Z"
-    },
-    {
-      "fp": "fmt:avantapres|dest:none|slug:optimiser-son-visa-de-nomade-d",
-      "date": "2026-04-30T19:40:46.365Z"
-    },
-    {
-      "fp": "fmt:budget|dest:japon|slug:esim-japon-combien-ca-te-coute",
-      "date": "2026-04-30T20:49:20.596Z"
-    },
     {
       "fp": "fmt:avantapres|dest:vietnam|slug:vietnam-central-13-jours-3-cho",
       "date": "2026-05-01T17:25:57.031Z"
@@ -818,6 +779,10 @@
     {
       "fp": "fmt:budget|dest:none|slug:bangkok-le-vrai-cout-des-taxis",
       "date": "2026-05-14T20:57:32.943Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:choisir-le-bon-plan-esim-pour-",
+      "date": "2026-05-15T17:35:06.061Z"
     }
   ]
 }
