@@ -577,6 +577,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-15T19:40:13.517Z"
+    },
+    {
+      "format": "best-time",
+      "date": "2026-05-15T20:49:51.479Z"
+    },
+    {
+      "format": "best-time",
+      "date": "2026-05-15T20:50:18.178Z"
     }
   ],
   "recentArticleIds": [
@@ -800,6 +808,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:thailande-le-cout-reel-dun-voy",
       "date": "2026-05-15T19:40:13.517Z"
+    },
+    {
+      "fp": "fmt:best-time|dest:none|slug:vietnam-larbitrage-crucial-pou",
+      "date": "2026-05-15T20:50:18.178Z"
     }
   ]
 }
