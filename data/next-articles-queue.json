@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-14T04:25:04.780Z",
+  "timestamp": "2026-05-15T04:28:21.701Z",
   "queueSize": 14,
   "queue": [
     {
@@ -145,7 +145,7 @@
         "wpId": 2945,
         "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
         "compositeScore": 13,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
@@ -161,7 +161,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 13,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }

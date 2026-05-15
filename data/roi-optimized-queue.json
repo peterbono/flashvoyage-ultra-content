@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-14T04:25:12.096Z",
+  "timestamp": "2026-05-15T04:28:28.240Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,8 +17,8 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 70,
-    "medianTrafficSignal": "0.070",
+    "medianMonthlyPV": 60,
+    "medianTrafficSignal": "0.060",
     "avgRpm": 2,
     "articlesAnalyzed": 36
   },
@@ -60,11 +60,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 1.87,
-        "projectedMonthlyTraffic": 70,
-        "projectedMonthlyRevenue": 0.14,
+        "expectedRoi": 1.6,
+        "projectedMonthlyTraffic": 60,
+        "projectedMonthlyRevenue": 0.12,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (70 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (60 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.09,
       "withinBudget": true
@@ -81,11 +81,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 1.87,
-        "projectedMonthlyTraffic": 70,
-        "projectedMonthlyRevenue": 0.14,
+        "expectedRoi": 1.6,
+        "projectedMonthlyTraffic": 60,
+        "projectedMonthlyRevenue": 0.12,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (70 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (60 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.165,
       "withinBudget": true
@@ -102,11 +102,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 1.87,
-        "projectedMonthlyTraffic": 70,
-        "projectedMonthlyRevenue": 0.14,
+        "expectedRoi": 1.6,
+        "projectedMonthlyTraffic": 60,
+        "projectedMonthlyRevenue": 0.12,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (70 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (60 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.24,
       "withinBudget": true
@@ -247,7 +247,7 @@
         "wpId": 2945,
         "slug": "voyager-en-asie-du-sud-est-itineraire-et-couts-reels-a-prevoir",
         "compositeScore": 13,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
@@ -272,7 +272,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 13,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
@@ -367,7 +367,7 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.087,
+    "expectedDailyRevenue": 0.085,
     "expectedDailyRoi": 0.36
   },
   "summary": {

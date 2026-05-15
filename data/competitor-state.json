@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-05-14T04:25:13.036Z",
+  "timestamp": "2026-05-15T04:28:29.225Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-05-14T04:25:13.799Z",
+      "lastScan": "2026-05-15T04:28:29.895Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-05-14T04:25:14.298Z",
+      "lastScan": "2026-05-15T04:28:30.417Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-05-14T04:26:32.614Z",
-      "urlCount": 9533,
+      "lastScan": "2026-05-15T04:29:52.209Z",
+      "urlCount": 9537,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9674,7 +9674,11 @@
         "https://generationvoyage.fr/fiscalite-location-airbnb/": "2026-05-13T12:51:07+00:00",
         "https://generationvoyage.fr/pics-reservation-airbnb/": "2026-05-13T12:52:49+00:00",
         "https://generationvoyage.fr/airbnb-vs-booking/": "2026-05-13T12:57:09+00:00",
-        "https://generationvoyage.fr/concurrents-airbnb-alternatives/": "2026-05-13T13:05:59+00:00"
+        "https://generationvoyage.fr/concurrents-airbnb-alternatives/": "2026-05-13T13:05:59+00:00",
+        "https://generationvoyage.fr/dormir-chateau-neuschwanstein/": "2026-05-14T08:01:28+00:00",
+        "https://generationvoyage.fr/visiter-saint-hilaire-de-riez-faire-voir/": "2026-05-14T10:02:29+00:00",
+        "https://generationvoyage.fr/sphinx-gizeh/": "2026-05-14T13:04:35+00:00",
+        "https://generationvoyage.fr/anecdotes-maison-anne-frank/": "2026-05-14T15:33:44+00:00"
       }
     }
   }
