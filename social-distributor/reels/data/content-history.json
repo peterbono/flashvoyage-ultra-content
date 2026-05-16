@@ -558,6 +558,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-16T19:33:40.090Z"
+    },
+    {
+      "format": "humor-tweet",
+      "date": "2026-05-16T20:46:27.548Z"
+    },
+    {
+      "format": "humor-tweet",
+      "date": "2026-05-16T20:46:49.131Z"
     }
   ],
   "recentArticleIds": [
@@ -781,6 +789,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:meilleur-esim-thailande-2026",
       "date": "2026-05-16T19:33:40.090Z"
+    },
+    {
+      "fp": "fmt:humor-tweet|dest:none|slug:bangkok-le-vrai-cout-des-taxis",
+      "date": "2026-05-16T20:46:49.131Z"
     }
   ]
 }
