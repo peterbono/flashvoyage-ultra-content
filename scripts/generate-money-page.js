@@ -499,6 +499,18 @@ async function main() {
   });
   console.log(`   ✅ published: ${published.link} (id=${published.id})`);
 
+  // 4b. Featured image (cover) — money pages shipped without one until 2026-05.
+  // Non-fatal: a missing cover shouldn't block the publish or the queue mark.
+  try {
+    const { setFeaturedImage } = await import('./set-featured-image.mjs');
+    const imgQuery = `${entry.country} travel smartphone connectivity`;
+    const imgAlt = `${entry.primaryKeyword} — voyage et connexion mobile`;
+    console.log(`🖼️  Setting cover image (query="${imgQuery}")…`);
+    await setFeaturedImage(published.id, imgQuery, imgAlt);
+  } catch (imgErr) {
+    console.warn(`   ⚠️  cover image step failed (non-fatal): ${imgErr.message}`);
+  }
+
   // 5. Mark queue entry
   const idx = queueData.queue.findIndex((e) => e.id === entry.id);
   if (idx !== -1) {
