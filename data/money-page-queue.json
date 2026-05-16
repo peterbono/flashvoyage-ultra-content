@@ -4,11 +4,12 @@
     "consumed_by": "scripts/generate-money-page.js",
     "cron": ".github/workflows/money-page.yml (Sunday 02:00 UTC)",
     "rule": "Script consumes ONE pending entry per cron tick (oldest scheduledFor first), marks published=true after WP success.",
-    "discount_code_default": "FLASH5",
+    "discount_code_default": null,
     "tone_defaults": {
       "holafly_short_trips": "bullish",
       "airalo_long_trips": "bullish"
-    }
+    },
+    "discount_policy": "No FlashVoyage↔Holafly partnership exists. Never inject a promo code unless a real verified code is set explicitly per entry."
   },
   "queue": [
     {
@@ -23,7 +24,6 @@
       ],
       "tripDurationDays": 14,
       "scheduledFor": "2026-05-10",
-      "discountCode": "FLASH5",
       "published": true,
       "published_at": "2026-05-10T03:15:18.386Z",
       "published_url": "https://flashvoyage.com/meilleur-esim-thailande-2026/",
@@ -41,7 +41,6 @@
       ],
       "tripDurationDays": 10,
       "scheduledFor": "2026-05-17",
-      "discountCode": "FLASH5",
       "published": false
     },
     {
@@ -56,7 +55,6 @@
       ],
       "tripDurationDays": 21,
       "scheduledFor": "2026-05-24",
-      "discountCode": "FLASH5",
       "published": false
     },
     {
@@ -71,7 +69,6 @@
       ],
       "tripDurationDays": 14,
       "scheduledFor": "2026-05-31",
-      "discountCode": "FLASH5",
       "published": false
     },
     {
@@ -86,7 +83,6 @@
       ],
       "tripDurationDays": 14,
       "scheduledFor": "2026-06-07",
-      "discountCode": "FLASH5",
       "published": false
     },
     {
@@ -101,7 +97,6 @@
       ],
       "tripDurationDays": 10,
       "scheduledFor": "2026-06-14",
-      "discountCode": "FLASH5",
       "published": false
     }
   ]
