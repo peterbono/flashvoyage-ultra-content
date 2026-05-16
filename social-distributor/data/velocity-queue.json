@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-05-16T06:48:31.615Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-05-16T12:22:01.649Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "‘A burden for many locals’: Commuters cry foul over hike in cross-border taxi fares",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/se-asia/a-burden-for-many-locals-commuters-cry-foul-over-hike-in-cross-border-taxi-fares",
-      "velocityScore": 0.448,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2239,
-      "estimatedTrafficIn24h": 2187,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5.3
-      },
-      "detectedAt": "2026-05-16T01:30:00.000Z",
-      "scoredAt": "2026-05-16T06:48:28.249Z"
-    }
-  ]
+  "queue": []
 }
