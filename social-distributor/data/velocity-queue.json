@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-05-16T12:22:01.649Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-05-16T18:20:04.663Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Vietnam to tighten oversight of foreigners as arrivals hit record highs",
+      "source": "rss_breaking",
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/vietnam-to-tighten-oversight-of-foreigners-as-arrivals-hit-record-highs-5074747.html",
+      "velocityScore": 0.448,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 715,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 1493,
+      "estimatedTrafficIn24h": 1458,
+      "trafficLossPerHour": 1,
+      "breakdown": {
+        "trendIntensity": 0.6,
+        "timeDecay": 0.995,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 5.2
+      },
+      "detectedAt": "2026-05-16T13:10:59.000Z",
+      "scoredAt": "2026-05-16T18:20:00.003Z"
+    }
+  ]
 }
