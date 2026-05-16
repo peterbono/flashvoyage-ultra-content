@@ -1,25 +1,16 @@
 {
   "_readme": "Manual TikTok stats — edited via dashboard (/analytics TikTok editor) or by hand. App-review auto-fetch pending.",
-  "lastUpdated": "2026-05-12",
+  "lastUpdated": "2026-05-16",
   "account": {
     "followers": 29,
     "following": 0,
-    "totalViews": 5983,
-    "totalLikes": 166,
+    "totalViews": 6145,
+    "totalLikes": 236,
     "totalComments": 1,
     "totalShares": 1,
     "daysSinceStart": 16
   },
   "videos": [
-    {
-      "title": "Singapour : expectation vs reality 😅 Et toi c'était comment",
-      "format": "avantapres",
-      "date": "2026-05-05",
-      "views": 611,
-      "likes": 24,
-      "comments": 0,
-      "shares": 0
-    },
     {
       "title": "Budget journalier au Japon 🇯🇵 🏠 Hébergement : 35 €/nuit 🍜 Nourriture : 18 €/jour 🛵 Tr",
       "format": "budget",
@@ -30,11 +21,20 @@
       "shares": 0
     },
     {
-      "title": "'Je voyage pour la culture locale' ... Mange une pizza dans chaque pays Envoie ca a un pot",
+      "title": "Vietnam : expectation vs reality 😅 Et toi c'était comment",
+      "format": "avantapres",
+      "date": "2026-05-11",
+      "views": 584,
+      "likes": 26,
+      "comments": 0,
+      "shares": 0
+    },
+    {
+      "title": "Quand on te demande ou t'as achete un truc ... Tu reponds le nom du pays, pas le nom du ma",
       "format": "humor",
-      "date": "2026-05-06",
-      "views": 577,
-      "likes": 13,
+      "date": "2026-05-13",
+      "views": 597,
+      "likes": 41,
       "comments": 0,
       "shares": 0
     },
@@ -42,7 +42,7 @@
       "title": "Asie du Sud-Est : expectation vs reality 😅 Et toi c'était comment",
       "format": "avantapres",
       "date": "2026-05-10",
-      "views": 570,
+      "views": 571,
       "likes": 15,
       "comments": 0,
       "shares": 0
@@ -57,11 +57,11 @@
       "shares": 1
     },
     {
-      "title": "5 endroits secrets à Kuala Lumpur 🇲🇾 Lequel tu visites en priorité",
-      "format": "pick",
-      "date": "2026-05-01",
-      "views": 316,
-      "likes": 6,
+      "title": "'Je voyage pour la culture locale' ... Mange une pizza dans chaque pays Envoie ca a un pot",
+      "format": "humor",
+      "date": "2026-05-06",
+      "views": 578,
+      "likes": 13,
       "comments": 0,
       "shares": 0
     },
@@ -69,7 +69,7 @@
       "title": "Où partir en Mai",
       "format": "guide",
       "date": "2026-04-14",
-      "views": 400,
+      "views": 403,
       "likes": 12,
       "comments": 0,
       "shares": 0
@@ -83,29 +83,38 @@
       "shares": 0
     },
     {
-      "title": "Tourisme dentaire en Corée du Sud 🇰🇷 : 5 pièges cachés qui gonflent ton budget de 100%",
+      "title": "5 spots à ne pas rater au Japon 🇯🇵Lequel tu visites en premier",
       "format": "pick",
-      "date": "2026-04-29",
-      "views": 346,
-      "likes": 11,
+      "date": "2026-04-04",
+      "views": 671,
+      "likes": 36,
+      "comments": 1,
+      "shares": 0
+    },
+    {
+      "title": "Singapour : expectation vs reality 😅 Et toi c'était comment",
+      "format": "avantapres",
+      "date": "2026-05-05",
+      "views": 612,
+      "likes": 24,
       "comments": 0,
       "shares": 0
     },
     {
-      "title": "5 pièges à éviter pour ton visa Cambodge 🇰🇭 Lequel te surprend le plus",
+      "title": "7 choses à savoir avant de partir au Japon en couple 🇯🇵 Lequel te surprend le plus",
       "format": "pick",
-      "date": "2026-04-08",
-      "views": 246,
-      "likes": 1,
+      "date": "2026-04-27",
+      "views": 369,
+      "likes": 6,
       "comments": 0,
       "shares": 0
     },
     {
-      "title": "Budget journalier en Thaïlande 🇹🇭 🏠 Hébergement : 25 €/nuit 🍜 Nourriture : 12 €/jour \ud83d",
-      "format": "budget",
-      "date": "2026-04-18",
-      "views": 485,
-      "likes": 7,
+      "title": "Vietnam vs Thaïlande : tu choisis quoi pour ton road trip en moto",
+      "format": "versus",
+      "date": "2026-04-06",
+      "views": 145,
+      "likes": 0,
       "comments": 0,
       "shares": 0
     },
@@ -115,33 +124,6 @@
       "date": "2026-04-05",
       "views": 419,
       "likes": 10,
-      "comments": 0,
-      "shares": 0
-    },
-    {
-      "title": "Vietnam : expectation vs reality 😅 Et toi c'était comment",
-      "format": "avantapres",
-      "date": "2026-04-24",
-      "views": 328,
-      "likes": 6,
-      "comments": 0,
-      "shares": 0
-    },
-    {
-      "title": "Où partir en Juin",
-      "format": "guide",
-      "date": "2026-04-22",
-      "views": 345,
-      "likes": 8,
-      "comments": 1,
-      "shares": 0
-    },
-    {
-      "title": "Vietnam vs Thaïlande : tu choisis quoi pour ton road trip en moto",
-      "format": "versus",
-      "date": "2026-04-06",
-      "views": 144,
-      "likes": 0,
       "comments": 0,
       "shares": 0
     }
