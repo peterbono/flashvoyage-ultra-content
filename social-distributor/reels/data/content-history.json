@@ -1,26 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "vietnam",
-      "date": "2026-05-01",
-      "format": "avantapres"
-    },
-    {
-      "name": "vietnam",
-      "date": "2026-05-01",
-      "format": "avantapres"
-    },
-    {
-      "name": "asie du sud-est",
-      "date": "2026-05-01",
-      "format": "avantapres"
-    },
-    {
-      "name": "cambodge",
-      "date": "2026-05-01",
-      "format": "best-time"
-    },
-    {
       "name": "tokyo",
       "date": "2026-05-02",
       "format": "avantapres"
@@ -262,30 +242,6 @@
     }
   ],
   "recentFormats": [
-    {
-      "format": "avantapres",
-      "date": "2026-05-01T17:25:28.140Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-05-01T17:25:57.031Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-05-01T19:36:16.840Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-05-01T19:36:40.292Z"
-    },
-    {
-      "format": "best-time",
-      "date": "2026-05-01T20:47:18.863Z"
-    },
-    {
-      "format": "best-time",
-      "date": "2026-05-01T20:47:45.210Z"
-    },
     {
       "format": "avantapres",
       "date": "2026-05-02T19:30:11.296Z"
@@ -585,6 +541,10 @@
     {
       "format": "best-time",
       "date": "2026-05-15T20:50:18.178Z"
+    },
+    {
+      "format": "cost-vs",
+      "date": "2026-05-16T17:25:03.749Z"
     }
   ],
   "recentArticleIds": [
@@ -669,18 +629,6 @@
     6195
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:avantapres|dest:vietnam|slug:vietnam-central-13-jours-3-cho",
-      "date": "2026-05-01T17:25:57.031Z"
-    },
-    {
-      "fp": "fmt:avantapres|dest:none|slug:hokkaido-en-9-jours-sans-voitu",
-      "date": "2026-05-01T19:36:40.292Z"
-    },
-    {
-      "fp": "fmt:best-time|dest:cambodge|slug:visa-cambodge-francais-2026-ev",
-      "date": "2026-05-01T20:47:45.210Z"
-    },
     {
       "fp": "fmt:avantapres|dest:none|slug:entre-hong-kong-et-tokyo-choix",
       "date": "2026-05-02T19:30:37.498Z"
@@ -812,6 +760,10 @@
     {
       "fp": "fmt:best-time|dest:none|slug:vietnam-larbitrage-crucial-pou",
       "date": "2026-05-15T20:50:18.178Z"
+    },
+    {
+      "fp": "fmt:cost-vs|dest:none|slug:choisir-son-esim-pour-lasie-du",
+      "date": "2026-05-16T17:25:03.749Z"
     }
   ]
 }
