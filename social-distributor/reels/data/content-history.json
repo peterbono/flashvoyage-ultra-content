@@ -239,6 +239,11 @@
       "name": "thaïlande",
       "date": "2026-05-15",
       "format": "avantapres"
+    },
+    {
+      "name": "thaïlande",
+      "date": "2026-05-16",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -545,6 +550,14 @@
     {
       "format": "cost-vs",
       "date": "2026-05-16T17:25:03.749Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-16T19:32:59.055Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-16T19:33:40.090Z"
     }
   ],
   "recentArticleIds": [
@@ -764,6 +777,10 @@
     {
       "fp": "fmt:cost-vs|dest:none|slug:choisir-son-esim-pour-lasie-du",
       "date": "2026-05-16T17:25:03.749Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:meilleur-esim-thailande-2026",
+      "date": "2026-05-16T19:33:40.090Z"
     }
   ]
 }
