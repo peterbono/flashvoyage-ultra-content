@@ -12,9 +12,9 @@
  *   1. Read data/money-page-queue.json — pick next pending entry (oldest
  *      scheduledFor first), or honor --entry-id flag.
  *   2. Resolve Travelpayouts tracked links for partners that support tracking
- *      (Airalo). Holafly stays as a direct link with FLASH5 anchor.
+ *      (Airalo). Holafly stays as a plain honest direct link (no code).
  *   3. Call Claude Haiku 4.5 with a STRICT brief (see MONEY_PAGE_BRIEF below):
- *      - hero CTA (FLASH5 default)
+ *      - hero CTA (Airalo tracked link)
  *      - 3-column comparison table (Item A / Item B / SIM locale)
  *      - "Verdict Florian" tranchée
  *      - 5-question FAQ block (FAQ schema-ready)
@@ -57,7 +57,7 @@ const AIRALO_CAMPAIGN_ID = 541;
 // ---------------------------------------------------------------------------
 export const MONEY_PAGE_BRIEF = `Tu es Florian, fondateur de FlashVoyage.com. Tu écris une "money page" — un article de comparaison eSIM/SIM ultra-commercial pour un voyageur francophone qui hésite entre 2-3 solutions de connectivité dans un pays d'Asie.
 
-OBJECTIF UNIQUE: convertir le lecteur vers un partenaire affilié (Airalo via lien tracké, Holafly via code FLASH5). Pas de blabla éditorial. Du concret, des prix, un verdict tranché.
+OBJECTIF UNIQUE: convertir vers Airalo (lien affilié tracké). Holafly = mention honnête en lien direct, SANS code promo. INTERDIT d'inventer un code, un prix barré ou un avis chiffré. Prix réels publics uniquement, verdict tranché.
 
 CONTRAINTES DURES (le non-respect = rejet automatique):
 
@@ -66,7 +66,7 @@ CONTRAINTES DURES (le non-respect = rejet automatique):
 2. STRUCTURE OBLIGATOIRE (dans cet ordre, sans rien intercaler):
    <article>
      <!-- HERO CTA (premier élément visible) -->
-     <div class="fv-hero-cta">[un paragraphe qui résume le verdict en 2 phrases + bouton CTA principal vers le partenaire #1 avec mention du code FLASH5]</div>
+     <div class="fv-hero-cta">[verdict en 2 phrases + bouton CTA vers Airalo (partenaire tracké). AUCUN code promo.]</div>
 
      <!-- INTRO 150-200 mots -->
      <p>[Pose le problème en 4-5 phrases. Mentionne le voyageur-cible (durée du trip, cas d'usage type). PAS de "tu vas découvrir X choses que les blogs cachent". PAS de "voici LA vérité". PAS de fluff.]</p>
@@ -115,7 +115,7 @@ CONTRAINTES DURES (le non-respect = rejet automatique):
    </article>
 
 3. POSITION ÉDITORIALE (par défaut, sauf consigne contraire):
-   - Holafly = bullish pour les courts séjours (≤14 jours): data illimitée, simplicité, code FLASH5 réduit le frein prix.
+   - Holafly = bullish courts séjours (≤14j): data illimitée, simplicité. Prix premium réel, AUCUN code.
    - Airalo = bullish pour les longs séjours (>14 jours) et le nomade digital: granularité des forfaits, recharge facile, top-up régional.
    - SIM locale = mention objective: meilleur prix brut sur >1 mois, mais friction d'achat (queue aéroport, KYC, parfois passeport scanné).
    - Tu n'es PAS neutre. Tu tranches. Le lecteur veut un avis, pas un pour/contre stérile.
@@ -137,7 +137,7 @@ CONTRAINTES DURES (le non-respect = rejet automatique):
    - Pour CHAQUE partenaire commercial cité, mets un lien <a> avec attribut data-fv-partner="<slug>".
    - Slug Airalo: data-fv-partner="airalo-{country-code}". Slug Holafly: data-fv-partner="holafly-{country-code}".
    - URLs fournies dans le contexte (placeholders %%URL_AIRALO%%, %%URL_HOLAFLY%%) — utilise les EXACTES, ne les modifie pas.
-   - Code de réduction Holafly: FLASH5 (mentionné explicitement à 2 endroits min: hero CTA + verdict).
+   - AUCUN code Holafly n'existe. Ne JAMAIS inventer code/prix barré/remise.
    - Au moins 4 liens affiliés au total dans l'article (pas 12, c'est du spam, pas 1, c'est sous-monétisé).
 
 7. TON:
@@ -261,7 +261,7 @@ async function resolveAffiliateLinks(entry) {
     console.log(`  ⚠️  TP error for Airalo: ${err.message}`);
   }
 
-  // Holafly: not in TP campaigns subscribed → keep direct URL with FLASH5 in body.
+  // Holafly: not in TP campaigns subscribed → plain direct URL, NO promo code (no partnership exists).
   const holaflyUrl = holaflyTarget;
 
   return {
@@ -279,7 +279,7 @@ function buildUserPrompt(entry, links) {
   const items = (entry.comparisonItems || []).join(' / ');
   const code = links.countryCode;
   const tripDays = entry.tripDurationDays || 14;
-  const discount = entry.discountCode || 'FLASH5';
+  const discount = (entry.discountCode && entry.discountCode !== 'FLASH5') ? entry.discountCode : null;
 
   return `Génère une money page pour FlashVoyage.
 
@@ -289,7 +289,7 @@ CONTEXTE:
 - Slug cible: ${entry.targetSlug}
 - Items à comparer: ${items}
 - Durée du trip de référence: ${tripDays} jours
-- Code de réduction Holafly: ${discount}
+${discount ? `- Code Holafly (RÉEL, vérifié): ${discount}` : '- AUCUN code Holafly. Ne pas en inventer.'}
 
 URLS À UTILISER (telles quelles, ne les modifie pas):
 - %%URL_AIRALO%% = ${links.airaloUrl}
@@ -316,7 +316,7 @@ function buildStubArticle(entry, links) {
   const items = entry.comparisonItems || ['Holafly', 'Airalo', 'SIM locale'];
   return `<article>
 <h1>Meilleur eSIM ${entry.country} 2026: comparatif Holafly vs Airalo</h1>
-<div class="fv-hero-cta"><p>En 2026 pour ${entry.country}: Holafly reste mon choix par défaut sur les courts séjours grâce à la data illimitée et au code <strong>FLASH5</strong>. <a href="${links.holaflyUrl}" data-fv-partner="holafly-${code}">Voir Holafly ${entry.country} (FLASH5)</a></p></div>
+<div class="fv-hero-cta"><p>En 2026 pour ${entry.country}: Airalo est mon choix recommandé (forfaits flexibles, lien vérifié). Holafly = option premium data illimitée. <a href="${links.airaloUrl}" data-fv-partner="airalo-${code}">Voir les forfaits Airalo ${entry.country}</a></p></div>
 <p>Tu pars en ${entry.country} ${entry.tripDurationDays || 14} jours et tu te demandes quelle eSIM choisir. La réponse dépend de deux choses: la durée de ton séjour et ton tolérance à la friction administrative. Cet article tranche.</p>
 <h2>Comparatif: ${items[0]} vs ${items[1]} vs ${items[2] || 'SIM locale'}</h2>
 <table class="fv-money-comparison"><thead><tr><th></th><th>${items[0]}</th><th>${items[1]}</th><th>${items[2] || 'SIM locale'}</th></tr></thead><tbody>
@@ -326,12 +326,12 @@ function buildStubArticle(entry, links) {
 </tbody></table>
 <p>(stub article — generated in offline mode)</p>
 <div class="fv-verdict"><h2>Verdict Florian</h2>
-<p><strong>Court séjour (≤14 jours):</strong> Holafly + code <a href="${links.holaflyUrl}" data-fv-partner="holafly-${code}">FLASH5</a>.</p>
+<p><strong>Court séjour (≤14 jours):</strong> Holafly pour la data illimitée (<a href="${links.holaflyUrl}" data-fv-partner="holafly-${code}">voir Holafly ${entry.country}</a>) ou Airalo pour un forfait calibré.</p>
 <p><strong>Long séjour:</strong> <a href="${links.airaloUrl}" data-fv-partner="airalo-${code}">Airalo ${entry.country}</a>.</p>
 </div>
 <h2>FAQ</h2><div class="fv-faq">
 <h3>Mon iPhone est-il compatible eSIM en ${entry.country}?</h3><p>Oui à partir du iPhone XS.</p>
-<h3>Code FLASH5 valide en 2026?</h3><p>Oui sur Holafly.</p>
+<h3>Holafly propose-t-il un code de réduction&nbsp;?</h3><p>Pas de code partenaire FlashVoyage. Vérifie les promotions officielles sur le site Holafly.</p>
 <h3>Airalo ou Holafly pour 7 jours?</h3><p>Holafly pour la simplicité.</p>
 <h3>Puis-je faire du hotspot?</h3><p>Oui sur les deux.</p>
 <h3>SIM locale moins chère?</h3><p>Oui au-delà d'un mois.</p>
