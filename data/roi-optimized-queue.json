@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-15T04:28:28.240Z",
+  "timestamp": "2026-05-16T04:19:04.227Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -50,6 +50,31 @@
     },
     {
       "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 141,
+      "topic": "voyage pas cher",
+      "articleType": "support",
+      "context": {
+        "gapScore": 61,
+        "destination": "vietnam",
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 1.63,
+        "projectedMonthlyTraffic": 61,
+        "projectedMonthlyRevenue": 0.122,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (60 PV) × gap boost (1.02)"
+      },
+      "cumulativeCost": 0.09,
+      "withinBudget": true
+    },
+    {
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -66,11 +91,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (60 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.09,
+      "cumulativeCost": 0.165,
       "withinBudget": true
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -87,11 +112,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (60 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.165,
+      "cumulativeCost": 0.24,
       "withinBudget": true
     },
     {
-      "rank": 4,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -108,11 +133,61 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (60 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.24,
+      "cumulativeCost": 0.315,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Voyager en Asie du Sud-Est : les frais cachés qui gonflent ton budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 2904,
+        "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
+        "compositeScore": 12,
+        "freshness": 0.83,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.315,
+      "withinBudget": true
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "articleType": "support",
+      "context": {
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.315,
+      "withinBudget": true
+    },
+    {
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -122,7 +197,7 @@
         "wpId": 3174,
         "slug": "choisir-entre-bangkok-et-chiang-mai-le-dilemme-logistique-des-nomades",
         "compositeScore": 13,
-        "freshness": 0.88,
+        "freshness": 0.87,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
@@ -133,11 +208,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.24,
+      "cumulativeCost": 0.315,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -147,7 +222,7 @@
         "wpId": 3065,
         "slug": "itineraire-en-irlande-comment-choisir-entre-nord-et-sud",
         "compositeScore": 13,
-        "freshness": 0.88,
+        "freshness": 0.87,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
@@ -158,11 +233,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.24,
+      "cumulativeCost": 0.315,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -172,7 +247,7 @@
         "wpId": 3056,
         "slug": "voyager-au-sri-lanka-choix-cruciaux-et-itineraires-optimises",
         "compositeScore": 13,
-        "freshness": 0.88,
+        "freshness": 0.87,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
@@ -183,11 +258,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.24,
+      "cumulativeCost": 0.315,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -197,7 +272,7 @@
         "wpId": 3048,
         "slug": "entre-hong-kong-et-tokyo-choix-cruciaux-pour-un-itineraire-parfait",
         "compositeScore": 13,
-        "freshness": 0.88,
+        "freshness": 0.87,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
@@ -208,36 +283,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.24,
+      "cumulativeCost": 0.315,
       "withinBudget": true
     },
     {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
-      "articleType": "support",
-      "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-        "compositeScore": 13,
-        "freshness": 0.85,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.24,
-      "withinBudget": true
-    },
-    {
-      "rank": 10,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -258,11 +308,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.24,
+      "cumulativeCost": 0.315,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -283,36 +333,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.24,
+      "cumulativeCost": 0.315,
       "withinBudget": true
     },
     {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Voyager en Asie du Sud-Est : les frais cachés qui gonflent ton budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 2904,
-        "slug": "voyager-en-asie-du-sud-est-les-frais-caches-qui-gonflent-ton-budget",
-        "compositeScore": 13,
-        "freshness": 0.84,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.24,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -333,21 +358,21 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.24,
+      "cumulativeCost": 0.315,
       "withinBudget": true
     },
     {
-      "rank": 14,
+      "rank": 15,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "articleType": "support",
       "context": {
-        "wpId": 4058,
-        "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 14,
-        "freshness": 0.92,
+        "freshness": 0.9,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -358,20 +383,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.24,
+      "cumulativeCost": 0.315,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.24,
+    "totalCost": 0.315,
     "dailyBudget": 2,
-    "itemsWithinBudget": 14,
+    "itemsWithinBudget": 15,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.085,
-    "expectedDailyRoi": 0.36
+    "expectedDailyRevenue": 0.089,
+    "expectedDailyRoi": 0.28
   },
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 1,
     "standard": 3,
