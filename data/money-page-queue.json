@@ -41,7 +41,10 @@
       ],
       "tripDurationDays": 10,
       "scheduledFor": "2026-05-17",
-      "published": false
+      "published": true,
+      "published_at": "2026-05-17T03:15:56.802Z",
+      "published_url": "https://flashvoyage.com/meilleur-esim-japon-2026/",
+      "published_wp_id": 6309
     },
     {
       "id": "mp-2026-vietnam-esim",
