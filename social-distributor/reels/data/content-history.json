@@ -254,6 +254,11 @@
       "name": "vietnam",
       "date": "2026-05-17",
       "format": "avantapres"
+    },
+    {
+      "name": "corée du sud",
+      "date": "2026-05-17",
+      "format": "pick"
     }
   ],
   "recentFormats": [
@@ -576,6 +581,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-17T19:34:29.548Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-17T20:47:16.748Z"
+    },
+    {
+      "format": "pick",
+      "date": "2026-05-17T20:47:47.930Z"
     }
   ],
   "recentArticleIds": [
@@ -804,6 +817,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:vietnam-larbitrage-crucial-pou",
       "date": "2026-05-17T19:34:29.548Z"
+    },
+    {
+      "fp": "fmt:pick|dest:none|slug:pourquoi-ton-premier-mois-en-c",
+      "date": "2026-05-17T20:47:47.930Z"
     }
   ]
 }
