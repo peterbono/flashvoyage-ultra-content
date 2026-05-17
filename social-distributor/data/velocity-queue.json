@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-05-17T00:36:49.515Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-05-17T06:58:39.322Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 0,
+    "queue_priority": 1,
     "queue_normal": 0
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Crackdown in South-east Asia pushes scam networks to Sri Lanka",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/south-asia/crackdown-in-southeast-asia-pushes-scam-networks-to-sri-lanka",
+      "velocityScore": 0.733,
+      "action": "QUEUE_PRIORITY",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2443,
+      "estimatedTrafficIn24h": 2387,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 3
+      },
+      "detectedAt": "2026-05-17T03:57:56.000Z",
+      "scoredAt": "2026-05-17T06:58:37.401Z"
+    }
+  ]
 }
