@@ -249,6 +249,11 @@
       "name": "japon",
       "date": "2026-05-17",
       "format": "avantapres"
+    },
+    {
+      "name": "vietnam",
+      "date": "2026-05-17",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
@@ -563,6 +568,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-17T17:26:06.430Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-17T19:34:05.778Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-17T19:34:29.548Z"
     }
   ],
   "recentArticleIds": [
@@ -787,6 +800,10 @@
     {
       "fp": "fmt:avantapres|dest:japon|slug:meilleur-esim-japon-2026",
       "date": "2026-05-17T17:26:06.430Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:vietnam-larbitrage-crucial-pou",
+      "date": "2026-05-17T19:34:29.548Z"
     }
   ]
 }
