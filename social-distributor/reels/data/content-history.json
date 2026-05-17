@@ -1,11 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "tokyo",
-      "date": "2026-05-02",
-      "format": "avantapres"
-    },
-    {
       "name": "asie du sud-est",
       "date": "2026-05-03",
       "format": "avantapres"
@@ -244,25 +239,19 @@
       "name": "thaïlande",
       "date": "2026-05-16",
       "format": "avantapres"
+    },
+    {
+      "name": "japon",
+      "date": "2026-05-17",
+      "format": "avantapres"
+    },
+    {
+      "name": "japon",
+      "date": "2026-05-17",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
-    {
-      "format": "avantapres",
-      "date": "2026-05-02T19:30:11.296Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-05-02T19:30:37.498Z"
-    },
-    {
-      "format": "humor-tweet",
-      "date": "2026-05-02T20:46:12.714Z"
-    },
-    {
-      "format": "humor-tweet",
-      "date": "2026-05-02T20:46:32.183Z"
-    },
     {
       "format": "avantapres",
       "date": "2026-05-03T17:20:45.332Z"
@@ -566,6 +555,14 @@
     {
       "format": "humor-tweet",
       "date": "2026-05-16T20:46:49.131Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-17T17:25:41.864Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-17T17:26:06.430Z"
     }
   ],
   "recentArticleIds": [
@@ -647,17 +644,10 @@
     2945,
     5189,
     5239,
-    6195
+    6195,
+    6309
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:avantapres|dest:none|slug:entre-hong-kong-et-tokyo-choix",
-      "date": "2026-05-02T19:30:37.498Z"
-    },
-    {
-      "fp": "fmt:humor-tweet|dest:none|slug:asie-du-sud-est-choix-ditinera",
-      "date": "2026-05-02T20:46:32.183Z"
-    },
     {
       "fp": "fmt:avantapres|dest:none|slug:lesim-en-asie-du-sud-est-ce-qu",
       "date": "2026-05-03T17:21:14.153Z"
@@ -793,6 +783,10 @@
     {
       "fp": "fmt:humor-tweet|dest:none|slug:bangkok-le-vrai-cout-des-taxis",
       "date": "2026-05-16T20:46:49.131Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:japon|slug:meilleur-esim-japon-2026",
+      "date": "2026-05-17T17:26:06.430Z"
     }
   ]
 }
