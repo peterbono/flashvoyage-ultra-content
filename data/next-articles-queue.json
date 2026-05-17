@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-16T04:18:56.135Z",
+  "timestamp": "2026-05-17T04:30:10.565Z",
   "queueSize": 15,
   "queue": [
     {
@@ -209,7 +209,7 @@
         "wpId": 4125,
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 14,
-        "freshness": 0.92,
+        "freshness": 0.91,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
@@ -219,13 +219,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "topic": "Philippines : les 3 arbitrages que tout premier voyageur doit faire",
       "articleType": "support",
       "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "wpId": 4058,
+        "slug": "philippines-les-3-arbitrages-que-tout-premier-voyageur-doit-faire",
         "compositeScore": 14,
-        "freshness": 0.9,
+        "freshness": 0.91,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }

@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-05-16T04:19:05.207Z",
+  "timestamp": "2026-05-17T04:30:18.555Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-05-16T04:19:06.203Z",
+      "lastScan": "2026-05-17T04:30:19.244Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-05-16T04:19:06.887Z",
+      "lastScan": "2026-05-17T04:30:19.712Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-05-16T04:20:40.282Z",
-      "urlCount": 9541,
+      "lastScan": "2026-05-17T04:31:33.660Z",
+      "urlCount": 9545,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9682,7 +9682,11 @@
         "https://generationvoyage.fr/visiter-cholet-faire-voir/": "2026-05-15T08:57:31+00:00",
         "https://generationvoyage.fr/pierres-stonehenge/": "2026-05-15T11:23:46+00:00",
         "https://generationvoyage.fr/catacombes-paris-enfants/": "2026-05-15T13:25:47+00:00",
-        "https://generationvoyage.fr/randonnees-milan/": "2026-05-15T15:31:36+00:00"
+        "https://generationvoyage.fr/randonnees-milan/": "2026-05-15T15:31:36+00:00",
+        "https://generationvoyage.fr/visiter-evora-faire-voir/": "2026-05-16T07:36:12+00:00",
+        "https://generationvoyage.fr/joyaux-couronne-londres/": "2026-05-16T11:00:33+00:00",
+        "https://generationvoyage.fr/cite-carcassonne-gratuite/": "2026-05-16T13:02:35+00:00",
+        "https://generationvoyage.fr/entree-acropole-athenes/": "2026-05-16T15:03:36+00:00"
       }
     }
   }
