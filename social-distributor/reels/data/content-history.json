@@ -553,6 +553,14 @@
     {
       "format": "avantapres",
       "date": "2026-05-18T19:40:38.068Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-05-18T20:56:42.010Z"
+    },
+    {
+      "format": "humor",
+      "date": "2026-05-18T20:57:08.901Z"
     }
   ],
   "recentArticleIds": [
@@ -777,6 +785,10 @@
     {
       "fp": "fmt:avantapres|dest:none|slug:choisir-son-esim-pour-lasie-du",
       "date": "2026-05-18T19:40:38.068Z"
+    },
+    {
+      "fp": "fmt:humor|dest:none|slug:pourquoi-choisir-entre-airalo-",
+      "date": "2026-05-18T20:57:08.901Z"
     }
   ]
 }
