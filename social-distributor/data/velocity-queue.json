@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-18T00:37:26.730Z",
+  "generatedAt": "2026-05-18T07:23:16.374Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "80 suspected Ebola deaths: WHO declares emergency over Congo, Uganda outbreak",
+      "topic": "Thunderstorms tear off roofs, topple fences in Ho Chi Minh City",
       "source": "rss_breaking",
-      "destination": "philippines",
-      "link": "https://www.rappler.com/world/ebola-deaths-outbreak-congo-uganda-who-emergency-may-2026/",
-      "velocityScore": 0.415,
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/photo/environment/thunderstorms-tear-off-roofs-topple-fences-in-ho-chi-minh-city-5075048.html",
+      "velocityScore": 0.413,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
+      "hoursRemaining": 715,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2074,
-      "estimatedTrafficIn24h": 2026,
+      "estimatedTrafficNow": 2066,
+      "estimatedTrafficIn24h": 2018,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
-        "timeDecay": 0.999,
+        "timeDecay": 0.995,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 0.6
+        "hoursSinceDetection": 4.8
       },
-      "detectedAt": "2026-05-17T23:59:03.000Z",
-      "scoredAt": "2026-05-18T00:37:26.730Z"
+      "detectedAt": "2026-05-18T02:38:04.000Z",
+      "scoredAt": "2026-05-18T07:23:10.985Z"
     }
   ]
 }
