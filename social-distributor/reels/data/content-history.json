@@ -1,31 +1,6 @@
 {
   "recentDestinations": [
     {
-      "name": "asie du sud-est",
-      "date": "2026-05-03",
-      "format": "avantapres"
-    },
-    {
-      "name": "philippines",
-      "date": "2026-05-03",
-      "format": "avantapres"
-    },
-    {
-      "name": "philippines",
-      "date": "2026-05-03",
-      "format": "avantapres"
-    },
-    {
-      "name": "taipei",
-      "date": "2026-05-03",
-      "format": "pick"
-    },
-    {
-      "name": "kuala-lumpur",
-      "date": "2026-05-03",
-      "format": "pick"
-    },
-    {
       "name": "thailande",
       "date": "2026-05-04",
       "format": "cost-vs"
@@ -259,33 +234,14 @@
       "name": "corée du sud",
       "date": "2026-05-17",
       "format": "pick"
+    },
+    {
+      "name": "asie du sud-est",
+      "date": "2026-05-18",
+      "format": "avantapres"
     }
   ],
   "recentFormats": [
-    {
-      "format": "avantapres",
-      "date": "2026-05-03T17:20:45.332Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-05-03T17:21:14.153Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-05-03T19:30:26.468Z"
-    },
-    {
-      "format": "avantapres",
-      "date": "2026-05-03T19:30:51.142Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-05-03T20:46:25.652Z"
-    },
-    {
-      "format": "pick",
-      "date": "2026-05-03T20:46:53.132Z"
-    },
     {
       "format": "cost-vs",
       "date": "2026-05-04T17:36:20.829Z"
@@ -589,6 +545,14 @@
     {
       "format": "pick",
       "date": "2026-05-17T20:47:47.930Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-18T19:40:08.193Z"
+    },
+    {
+      "format": "avantapres",
+      "date": "2026-05-18T19:40:38.068Z"
     }
   ],
   "recentArticleIds": [
@@ -674,18 +638,6 @@
     6309
   ],
   "recentFingerprints": [
-    {
-      "fp": "fmt:avantapres|dest:none|slug:lesim-en-asie-du-sud-est-ce-qu",
-      "date": "2026-05-03T17:21:14.153Z"
-    },
-    {
-      "fp": "fmt:avantapres|dest:philippines|slug:philippines-les-5-frais-caches",
-      "date": "2026-05-03T19:30:51.142Z"
-    },
-    {
-      "fp": "fmt:pick|dest:kuala-lumpur|slug:choisir-entre-taipei-et-kuala-",
-      "date": "2026-05-03T20:46:53.132Z"
-    },
     {
       "fp": "fmt:cost-vs|dest:thailande|slug:ce-que-thailande-ma-coute-et-q",
       "date": "2026-05-04T17:36:20.829Z"
@@ -821,6 +773,10 @@
     {
       "fp": "fmt:pick|dest:none|slug:pourquoi-ton-premier-mois-en-c",
       "date": "2026-05-17T20:47:47.930Z"
+    },
+    {
+      "fp": "fmt:avantapres|dest:none|slug:choisir-son-esim-pour-lasie-du",
+      "date": "2026-05-18T19:40:38.068Z"
     }
   ]
 }
