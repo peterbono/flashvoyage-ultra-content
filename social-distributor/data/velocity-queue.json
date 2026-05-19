@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-05-18T18:37:19.366Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-05-19T00:40:05.470Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "US to screen for Ebola at airports, one American in DR Congo infected",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/world/3257394/us-to-screen-for-ebola-at-airports-one-american-in-dr-congo-infected",
+      "velocityScore": 0.449,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2247,
+      "estimatedTrafficIn24h": 2195,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.5
+      },
+      "detectedAt": "2026-05-18T23:09:00.000Z",
+      "scoredAt": "2026-05-19T00:39:40.678Z"
+    }
+  ]
 }
