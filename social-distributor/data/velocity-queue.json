@@ -1,61 +1,10 @@
 {
-  "generatedAt": "2026-05-19T07:13:30.546Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-05-19T13:05:18.796Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Watch out for fake Suvarnabhumi Fast Track services, officials say",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/national/suvarnabhumi-fast-track-claim-denied-immigration-bureau",
-      "velocityScore": 0.498,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2489,
-      "estimatedTrafficIn24h": 2432,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.996,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 4.5
-      },
-      "detectedAt": "2026-05-19T02:41:12.000Z",
-      "scoredAt": "2026-05-19T07:13:18.409Z"
-    },
-    {
-      "topic": "Indonesia heightens Ebola surveillance at border checkpoints after WHO’s global emergency alert",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/se-asia/indonesia-heightens-ebola-surveillance-at-border-checkpoints-after-whos-global-emergency-alert",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 714,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2063,
-      "estimatedTrafficIn24h": 2016,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.994,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5.8
-      },
-      "detectedAt": "2026-05-19T01:25:00.000Z",
-      "scoredAt": "2026-05-19T07:13:19.262Z"
-    }
-  ]
+  "queue": []
 }
