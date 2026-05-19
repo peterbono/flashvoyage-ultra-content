@@ -90,6 +90,25 @@ async function submitUrl(token, url, type = 'URL_UPDATED') {
   return { ok: r.ok, status: r.status, data };
 }
 
+// ── Pre-submit health check ─────────────────────────────────────────────
+// Only 200-OK URLs should reach the Indexing API. A modified post can be a
+// 301 (consolidated/redirected) or 404 (trashed) — submitting those tells
+// Google to crawl a URL that then redirects/404s, which surfaces as
+// "Page avec redirection" / "Introuvable (404)" in Search Console.
+async function urlStatus(url) {
+  try {
+    const r = await fetch(url, {
+      method: 'GET',
+      redirect: 'manual',
+      headers: { 'User-Agent': 'FlashVoyageAutoIndex/1.0' },
+      signal: AbortSignal.timeout(12000),
+    });
+    return r.status;
+  } catch {
+    return 0; // network/timeout — treat as unhealthy, skip
+  }
+}
+
 // ── Log line ────────────────────────────────────────────────────────────
 function logEntry(entry) {
   if (!existsSync(dirname(LOG_PATH))) mkdirSync(dirname(LOG_PATH), { recursive: true });
@@ -114,10 +133,18 @@ if (batch.length < posts.length) {
 
 const token = DRY_RUN ? null : await getAccessToken(loadSA(), 'https://www.googleapis.com/auth/indexing');
 
-let ok = 0, failed = 0;
+let ok = 0, failed = 0, skipped = 0;
 for (const post of batch) {
+  // Health gate: never submit a non-200 URL to the Indexing API.
+  const code = await urlStatus(post.url);
+  if (code !== 200) {
+    console.log(`  ⊘ skip ${post.slug}  [HTTP ${code}] not 200 — won't submit`);
+    logEntry({ id: post.id, slug: post.slug, url: post.url, modified: post.modified, result: 'skipped_non_200', status: code });
+    skipped++;
+    continue;
+  }
   if (DRY_RUN) {
-    console.log(`  [dry] would submit  ${post.url}  (modified ${post.modified})`);
+    console.log(`  [dry] would submit  ${post.url}  (modified ${post.modified}, HTTP 200)`);
     logEntry({ id: post.id, slug: post.slug, url: post.url, modified: post.modified, result: 'dry_run' });
     continue;
   }
@@ -145,5 +172,5 @@ for (const post of batch) {
   }
 }
 
-console.log(`[AUTOINDEX] Done: ${ok} ok, ${failed} failed`);
+console.log(`[AUTOINDEX] Done: ${ok} ok, ${failed} failed, ${skipped} skipped (non-200)`);
 process.exit(failed > 0 && ok === 0 ? 1 : 0);
