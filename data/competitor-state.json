@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-05-19T04:31:27.223Z",
+  "timestamp": "2026-05-20T04:32:48.706Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-05-19T04:31:28.172Z",
+      "lastScan": "2026-05-20T04:32:49.074Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-05-19T04:31:28.872Z",
+      "lastScan": "2026-05-20T04:32:49.515Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-05-19T04:32:38.570Z",
-      "urlCount": 9553,
+      "lastScan": "2026-05-20T04:34:03.175Z",
+      "urlCount": 9557,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -5525,7 +5525,6 @@
         "https://generationvoyage.fr/visiter-castelnou-faire-voir/": "2025-09-10T14:32:29+00:00",
         "https://generationvoyage.fr/visiter-mandelieu-napoule-faire-voir/": "2025-09-10T14:32:29+00:00",
         "https://generationvoyage.fr/visiter-katowice-faire-voir/": "2025-09-10T14:32:29+00:00",
-        "https://generationvoyage.fr/visiter-najac-faire-voir/": "2025-09-10T14:32:29+00:00",
         "https://generationvoyage.fr/visiter-vernazza-faire-voir/": "2025-09-10T14:32:29+00:00",
         "https://generationvoyage.fr/visiter-villefranche-sur-mer-faire-voir/": "2025-09-10T14:32:29+00:00",
         "https://generationvoyage.fr/visiter-saint-jean-cap-ferrat-faire-voir/": "2025-09-10T14:32:29+00:00",
@@ -9694,7 +9693,12 @@
         "https://generationvoyage.fr/pont-gard-famille/": "2026-05-18T08:46:05+00:00",
         "https://generationvoyage.fr/visiter-plovdiv-faire-voir/": "2026-05-18T10:37:54+00:00",
         "https://generationvoyage.fr/manger-chateau-edimbourg/": "2026-05-18T12:14:07+00:00",
-        "https://generationvoyage.fr/releve-garde-buckingham/": "2026-05-18T14:27:27+00:00"
+        "https://generationvoyage.fr/releve-garde-buckingham/": "2026-05-18T14:27:27+00:00",
+        "https://generationvoyage.fr/visiter-najac-faire-voir/": "2026-05-19T05:57:21+00:00",
+        "https://generationvoyage.fr/auschwitz-wieliczka/": "2026-05-19T08:54:36+00:00",
+        "https://generationvoyage.fr/oeuvres-rijksmuseum/": "2026-05-19T10:55:49+00:00",
+        "https://generationvoyage.fr/visiter-mont-noir-faire-voir/": "2026-05-19T13:27:50+00:00",
+        "https://generationvoyage.fr/hotels-empire-state-building/": "2026-05-19T15:18:35+00:00"
       }
     }
   }

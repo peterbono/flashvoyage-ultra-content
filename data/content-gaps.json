@@ -1,33 +1,37 @@
 {
-  "timestamp": "2026-05-19T04:31:16.991Z",
+  "timestamp": "2026-05-20T04:32:39.299Z",
   "gapCount": 1,
   "gaps": [
     {
-      "topic": "carter bryant",
+      "topic": "agence de voyage",
       "source": "trends",
-      "gapScore": 40,
+      "gapScore": 56,
       "signals": {
-        "searchVolume": 0.29,
-        "trendGrowth": 0.29,
-        "monetization": 0.6,
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
         "competition": 0.6
       },
-      "destination": null,
-      "category": "pratique",
-      "suggestedTitle": "Carter bryant : Guide Pratique 2026",
-      "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
+      "destination": "vietnam",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
       "articleType": "support",
-      "priority": "medium"
+      "priority": "high"
     }
   ],
   "summary": {
     "byPriority": {
-      "medium": 1
+      "high": 1
     },
     "byCategory": {
-      "pratique": 1
+      "destination": 1
     },
-    "byDestination": {},
-    "topDestinationGaps": []
+    "byDestination": {
+      "vietnam": 1
+    },
+    "topDestinationGaps": [
+      "vietnam"
+    ]
   }
 }

@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-05-19T04:31:25.317Z",
+    "generatedAt": "2026-05-20T04:32:46.781Z",
     "elapsedSeconds": 5,
     "totalArticles": 34,
     "articlesWithRecommendations": 5,
@@ -46,14 +46,14 @@
       "internalLinks": 56,
       "lastModified": "2026-05-16T01:05:23",
       "ga4": {
-        "pageviews": 52,
-        "sessions": 40,
-        "avgDuration": 85
+        "pageviews": 53,
+        "sessions": 41,
+        "avgDuration": 96
       },
       "gsc": {
-        "impressions": 27,
+        "impressions": 26,
         "clicks": 0,
-        "position": 17.4,
+        "position": 18,
         "topQueries": [
           {
             "query": "dore site instagram com reel",
@@ -83,25 +83,25 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 85s / 1605s attendus (5% du contenu lu)",
+          "metric": "Temps lu: 96s / 1605s attendus (6% du contenu lu)",
           "action": "IMPROVE_READABILITY",
-          "details": "Seulement 5% du contenu est lu (5349 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
+          "details": "Seulement 6% du contenu est lu (5349 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
           "expectedImpact": "Temps sur page +40 a +60%, meilleur signal qualite pour Google"
         },
         {
           "type": "monetization",
           "priority": "P1",
-          "metric": "52 vues/mois mais seulement 0 widget(s) Travelpayouts",
+          "metric": "53 vues/mois mais seulement 0 widget(s) Travelpayouts",
           "action": "ADD_WIDGETS",
-          "details": "Article avec du traffic mais sous-monetise (0 widgets pour 52 vues). Ajouter : 1) Widget flights (data-tp-widget-id=\"7879\") apres la premiere mention de prix ou de vol. 2) Widget eSIM (id=\"8588\") si destination internationale (apres mention de \"Internet\" ou \"SIM\"). 3) Widget tours (id=\"3947\") apres description d'une activite ou \"que faire a\". 4) Widget assurance voyage apres mention de sante/securite. IMPORTANT : utiliser le format data-tp JSON, pas data-widget-type.",
+          "details": "Article avec du traffic mais sous-monetise (0 widgets pour 53 vues). Ajouter : 1) Widget flights (data-tp-widget-id=\"7879\") apres la premiere mention de prix ou de vol. 2) Widget eSIM (id=\"8588\") si destination internationale (apres mention de \"Internet\" ou \"SIM\"). 3) Widget tours (id=\"3947\") apres description d'une activite ou \"que faire a\". 4) Widget assurance voyage apres mention de sante/securite. IMPORTANT : utiliser le format data-tp JSON, pas data-widget-type.",
           "effort": "15min",
           "expectedImpact": "RPM article +100 a +300% (de ~0 EUR a ~1 EUR/mois potentiel)"
         },
         {
           "type": "amplification",
           "priority": "P2",
-          "metric": "52 vues/mois, 0 reels lies a cet article",
+          "metric": "53 vues/mois, 0 reels lies a cet article",
           "action": "CREATE_REELS",
           "details": "Article populaire sans couverture reel. Creer 2-3 reels automatises : 1) Trip Pick \"X spots incontournables a [destination]\" — format liste visuelle. 2) Budget Jour si l'article contient des donnees budget. 3) Versus si l'article compare 2 destinations. Les reels drivent du traffic IG → article via Story links + lien bio. Utiliser le module reels/generator.js.",
           "effort": "5min (auto-genere via pipeline reels)",
@@ -135,9 +135,9 @@
         "avgDuration": 42
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 17,
         "clicks": 0,
-        "position": 18.4,
+        "position": 20,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -195,14 +195,14 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 9,
         "clicks": 0,
-        "position": 14.8,
+        "position": 22.6,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 26.5,
-            "impressions": 2,
+            "position": 28.1,
+            "impressions": 7,
             "ctr": 0
           }
         ]
@@ -240,9 +240,9 @@
         "avgDuration": 123
       },
       "gsc": {
-        "impressions": 27,
-        "clicks": 2,
-        "position": 15.5,
+        "impressions": 24,
+        "clicks": 3,
+        "position": 16.8,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
@@ -297,9 +297,9 @@
         "avgDuration": 49
       },
       "gsc": {
-        "impressions": 54,
+        "impressions": 55,
         "clicks": 0,
-        "position": 19.6,
+        "position": 20.6,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -452,18 +452,18 @@
       "p0Count": 0
     },
     {
-      "wpId": 3254,
-      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "url": "https://flashvoyage.com/chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget/",
-      "wordCount": 3464,
+      "wpId": 4030,
+      "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "url": "https://flashvoyage.com/coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget/",
+      "wordCount": 4167,
       "widgetCount": 0,
-      "internalLinks": 41,
-      "lastModified": "2026-04-30T07:33:25",
+      "internalLinks": 39,
+      "lastModified": "2026-04-22T12:43:16",
       "ga4": {
-        "pageviews": 8,
-        "sessions": 8,
-        "avgDuration": 19
+        "pageviews": 7,
+        "sessions": 7,
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
@@ -480,18 +480,46 @@
       "p0Count": 0
     },
     {
-      "wpId": 4030,
-      "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "url": "https://flashvoyage.com/coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget/",
-      "wordCount": 4167,
+      "wpId": 3254,
+      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "url": "https://flashvoyage.com/chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget/",
+      "wordCount": 3464,
       "widgetCount": 0,
-      "internalLinks": 39,
-      "lastModified": "2026-04-22T12:43:16",
+      "internalLinks": 41,
+      "lastModified": "2026-04-30T07:33:25",
       "ga4": {
         "pageviews": 7,
         "sessions": 7,
-        "avgDuration": 5
+        "avgDuration": 17
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2386,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-04-22T12:43:04",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 25
       },
       "gsc": {
         "impressions": 0,
@@ -620,34 +648,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2386,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-04-22T12:43:04",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 16
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 3090,
       "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
       "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
@@ -662,9 +662,9 @@
         "avgDuration": 32
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 6,
         "clicks": 0,
-        "position": 9.7,
+        "position": 9.8,
         "topQueries": []
       },
       "reels": {
@@ -743,12 +743,12 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 794
+        "avgDuration": 5
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 5,
         "clicks": 0,
-        "position": 8.1,
+        "position": 7.4,
         "topQueries": []
       },
       "reels": {
@@ -802,9 +802,9 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 0,
         "clicks": 0,
-        "position": 8,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -830,7 +830,7 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 1,
         "clicks": 0,
         "position": 10,
         "topQueries": []

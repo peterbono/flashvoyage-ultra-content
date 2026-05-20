@@ -1,34 +1,145 @@
 {
-  "timestamp": "2026-05-19T04:31:14.192Z",
+  "timestamp": "2026-05-20T04:32:36.071Z",
   "trendingTopics": [
     {
-      "query": "carter bryant",
-      "traffic": 100,
-      "trafficFormatted": "100+",
+      "query": "voyage bali pas cher",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
       "relatedQueries": [],
-      "articles": [
-        {
-          "title": "Carter Bryant’s toughest challenge yet may be Spurs’ best counter to SGA bait",
-          "url": "https://airalamo.com/carter-bryants-toughest-challenge-yet-may-be-spurs-best-counter-to-sga-bait",
-          "source": "Air Alamo"
-        },
-        {
-          "title": "Spurs 122-115 Thunder (May 18, 2026) Game Recap",
-          "url": "https://www.espn.com/nba/recap?gameId=401873197",
-          "source": "ESPN"
-        },
-        {
-          "title": "Live Updates: The Spurs-Thunder rivalry reignites",
-          "url": "https://www.nba.com/news/live-updates-2026-nba-playoffs-western-conference-finals-the-spurs-thunder-rivalry-reignites",
-          "source": "NBA"
-        }
-      ],
-      "date": "Mon, 18 May 2026 20:50:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "pratique",
-      "destination": null,
-      "compositeScore": 0.29008
+      "articles": [],
+      "date": "2026-05-20T04:32:25.436Z",
+      "source": "related-rising",
+      "parentDestination": "bali",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "bali",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "prix voyage thailande",
+      "traffic": 80,
+      "trafficFormatted": "+80 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-05-20T04:32:27.555Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "thailande",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "leclerc voyage thailande",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-05-20T04:32:27.555Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage thailande tout compris",
+      "traffic": 120,
+      "trafficFormatted": "+120 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-05-20T04:32:27.555Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage thailande phuket",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-05-20T04:32:27.555Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage vietnam cambodge",
+      "traffic": 550,
+      "trafficFormatted": "+550 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-05-20T04:32:29.670Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge",
+      "traffic": 170,
+      "trafficFormatted": "+170 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-05-20T04:32:29.670Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage au vietnam",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-05-20T04:32:29.670Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "cambodge",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-05-20T04:32:29.670Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "agence de voyage",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-05-20T04:32:29.670Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
     }
   ]
 }

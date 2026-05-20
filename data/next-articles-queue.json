@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-05-19T04:31:18.920Z",
-  "queueSize": 15,
+  "timestamp": "2026-05-20T04:32:41.216Z",
+  "queueSize": 12,
   "queue": [
     {
       "rank": 1,
@@ -12,7 +12,7 @@
       "context": {
         "wpId": 4372,
         "slug": "esim-philippines-globe-smart-comparatif-2026",
-        "compositeScore": 46,
+        "compositeScore": 50,
         "traffic": 1,
         "revenue": 0,
         "reason": "High-traffic article missing widgets: esim-philippines-globe-smart-comparatif-2026 (traffic=1)"
@@ -22,16 +22,16 @@
       "rank": 2,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 120,
-      "topic": "carter bryant",
+      "priorityScore": 136,
+      "topic": "agence de voyage",
       "articleType": "support",
       "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "pratique",
-        "suggestedTitle": "Carter bryant : Guide Pratique 2026",
-        "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
-        "reason": "Content gap: \"carter bryant\" (score 40, source: trends)"
+        "gapScore": 56,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"agence de voyage\" (score 56, source: trends)"
       }
     },
     {
@@ -122,38 +122,6 @@
       "rank": 9,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
-      "articleType": "support",
-      "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-        "compositeScore": 13,
-        "freshness": 0.84,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
-      "articleType": "support",
-      "context": {
-        "wpId": 5063,
-        "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
-        "compositeScore": 14,
-        "freshness": 0.96,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
       "priorityScore": -4,
       "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
       "articleType": "support",
@@ -161,29 +129,13 @@
         "wpId": 4125,
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 14,
-        "freshness": 0.91,
+        "freshness": 0.9,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     },
     {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4105,
-        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-        "compositeScore": 14,
-        "freshness": 0.91,
-        "traffic": 0.02,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -199,7 +151,7 @@
       }
     },
     {
-      "rank": 14,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -215,18 +167,18 @@
       }
     },
     {
-      "rank": 15,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
-        "wpId": 5296,
-        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
         "compositeScore": 15,
-        "freshness": 0.98,
-        "traffic": 0,
+        "freshness": 0.97,
+        "traffic": 0.02,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     }
@@ -236,7 +188,7 @@
     "update": 0,
     "enrich": 1,
     "standard": 3,
-    "review": 10
+    "review": 7
   },
   "thresholds": {
     "staleFreshnessThreshold": 0.3,
