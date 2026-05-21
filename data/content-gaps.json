@@ -1,37 +1,33 @@
 {
-  "timestamp": "2026-05-20T04:32:39.299Z",
+  "timestamp": "2026-05-21T04:35:32.721Z",
   "gapCount": 1,
   "gaps": [
     {
-      "topic": "agence de voyage",
+      "topic": "avion militaire",
       "source": "trends",
-      "gapScore": 56,
+      "gapScore": 40,
       "signals": {
-        "searchVolume": 0.47,
-        "trendGrowth": 0.47,
-        "monetization": 0.9,
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
         "competition": 0.6
       },
-      "destination": "vietnam",
-      "category": "destination",
-      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "destination": null,
+      "category": "transport",
+      "suggestedTitle": "Avion militaire : Guide Pratique",
+      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
       "articleType": "support",
-      "priority": "high"
+      "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
-      "high": 1
+      "medium": 1
     },
     "byCategory": {
-      "destination": 1
+      "transport": 1
     },
-    "byDestination": {
-      "vietnam": 1
-    },
-    "topDestinationGaps": [
-      "vietnam"
-    ]
+    "byDestination": {},
+    "topDestinationGaps": []
   }
 }

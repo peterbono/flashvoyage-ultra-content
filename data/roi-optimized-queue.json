@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-20T04:32:47.750Z",
+  "timestamp": "2026-05-21T04:35:39.546Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -33,7 +33,7 @@
       "context": {
         "wpId": 4372,
         "slug": "esim-philippines-globe-smart-comparatif-2026",
-        "compositeScore": 50,
+        "compositeScore": 49,
         "traffic": 1,
         "revenue": 0,
         "reason": "High-traffic article missing widgets: esim-philippines-globe-smart-comparatif-2026 (traffic=1)"
@@ -115,23 +115,23 @@
       "rank": 5,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 136,
-      "topic": "agence de voyage",
+      "priorityScore": 120,
+      "topic": "avion militaire",
       "articleType": "support",
       "context": {
-        "gapScore": 56,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"agence de voyage\" (score 56, source: trends)"
+        "gapScore": 40,
+        "destination": null,
+        "category": "transport",
+        "suggestedTitle": "Avion militaire : Guide Pratique",
+        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+        "reason": "Content gap: \"avion militaire\" (score 40, source: trends)"
       },
       "roi": {
-        "expectedRoi": 1.49,
-        "projectedMonthlyTraffic": 56,
-        "projectedMonthlyRevenue": 0.112,
+        "expectedRoi": 1.07,
+        "projectedMonthlyTraffic": 40,
+        "projectedMonthlyRevenue": 0.08,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (60 PV) × gap boost (0.93)"
+        "trafficSource": "median baseline (60 PV) × gap boost (0.67)"
       },
       "cumulativeCost": 0.315,
       "withinBudget": true
@@ -147,7 +147,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 12,
-        "freshness": 0.83,
+        "freshness": 0.82,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -241,6 +241,31 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
+      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4105,
+        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+        "compositeScore": 14,
+        "freshness": 0.9,
+        "traffic": 0.02,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.315,
+      "withinBudget": true
+    },
+    {
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
       "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
       "articleType": "support",
       "context": {
@@ -262,7 +287,7 @@
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -287,7 +312,7 @@
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -315,9 +340,9 @@
   "budgetAllocation": {
     "totalCost": 0.315,
     "dailyBudget": 2,
-    "itemsWithinBudget": 12,
+    "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.089,
+    "expectedDailyRevenue": 0.088,
     "expectedDailyRoi": 0.28
   },
   "summary": {
@@ -325,6 +350,6 @@
     "update": 0,
     "enrich": 1,
     "standard": 3,
-    "review": 7
+    "review": 8
   }
 }

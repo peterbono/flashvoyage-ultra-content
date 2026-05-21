@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-05-20T04:32:41.216Z",
-  "queueSize": 12,
+  "timestamp": "2026-05-21T04:35:34.334Z",
+  "queueSize": 13,
   "queue": [
     {
       "rank": 1,
@@ -12,7 +12,7 @@
       "context": {
         "wpId": 4372,
         "slug": "esim-philippines-globe-smart-comparatif-2026",
-        "compositeScore": 50,
+        "compositeScore": 49,
         "traffic": 1,
         "revenue": 0,
         "reason": "High-traffic article missing widgets: esim-philippines-globe-smart-comparatif-2026 (traffic=1)"
@@ -22,16 +22,16 @@
       "rank": 2,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 136,
-      "topic": "agence de voyage",
+      "priorityScore": 120,
+      "topic": "avion militaire",
       "articleType": "support",
       "context": {
-        "gapScore": 56,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"agence de voyage\" (score 56, source: trends)"
+        "gapScore": 40,
+        "destination": null,
+        "category": "transport",
+        "suggestedTitle": "Avion militaire : Guide Pratique",
+        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+        "reason": "Content gap: \"avion militaire\" (score 40, source: trends)"
       }
     },
     {
@@ -81,7 +81,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 12,
-        "freshness": 0.83,
+        "freshness": 0.82,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
@@ -139,6 +139,22 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
+      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4105,
+        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+        "compositeScore": 14,
+        "freshness": 0.9,
+        "traffic": 0.02,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
       "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
       "articleType": "support",
       "context": {
@@ -151,7 +167,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -167,7 +183,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -188,7 +204,7 @@
     "update": 0,
     "enrich": 1,
     "standard": 3,
-    "review": 7
+    "review": 8
   },
   "thresholds": {
     "staleFreshnessThreshold": 0.3,

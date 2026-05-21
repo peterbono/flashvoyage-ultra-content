@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-05-20T04:32:46.781Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-05-21T04:35:38.735Z",
+    "elapsedSeconds": 4,
     "totalArticles": 34,
     "articlesWithRecommendations": 5,
     "totalRecommendations": 9,
@@ -48,7 +48,7 @@
       "ga4": {
         "pageviews": 53,
         "sessions": 41,
-        "avgDuration": 96
+        "avgDuration": 91
       },
       "gsc": {
         "impressions": 26,
@@ -83,7 +83,7 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 96s / 1605s attendus (6% du contenu lu)",
+          "metric": "Temps lu: 91s / 1605s attendus (6% du contenu lu)",
           "action": "IMPROVE_READABILITY",
           "details": "Seulement 6% du contenu est lu (5349 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
@@ -195,14 +195,14 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 9,
+        "impressions": 10,
         "clicks": 0,
-        "position": 22.6,
+        "position": 23.2,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 28.1,
-            "impressions": 7,
+            "position": 28.3,
+            "impressions": 8,
             "ctr": 0
           }
         ]
@@ -519,7 +519,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 25
+        "avgDuration": 31
       },
       "gsc": {
         "impressions": 0,
@@ -648,34 +648,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 3090,
-      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
-      "wordCount": 1721,
-      "widgetCount": 0,
-      "internalLinks": 27,
-      "lastModified": "2026-05-16T01:05:16",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 32
-      },
-      "gsc": {
-        "impressions": 6,
-        "clicks": 0,
-        "position": 9.8,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 5333,
       "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
@@ -771,7 +743,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 29
+        "avgDuration": 15
       },
       "gsc": {
         "impressions": 0,
@@ -833,6 +805,34 @@
         "impressions": 1,
         "clicks": 0,
         "position": 10,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3090,
+      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
+      "wordCount": 1721,
+      "widgetCount": 0,
+      "internalLinks": 27,
+      "lastModified": "2026-05-16T01:05:16",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 5,
+        "clicks": 0,
+        "position": 6.6,
         "topQueries": []
       },
       "reels": {
