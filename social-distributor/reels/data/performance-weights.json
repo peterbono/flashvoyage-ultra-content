@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-20",
+  "lastUpdated": "2026-05-21",
   "formatScores": {
     "poll": 0,
     "pick": 16.5,
@@ -20,7 +20,7 @@
   "destinationScores": {
     "singapour": 11.1,
     "vietnam": 8.3,
-    "thailande": 6.7,
+    "thailande": 6.6,
     "philippines": 4,
     "cambodge": 2,
     "bali": 1.6,
@@ -28,8 +28,7 @@
     "lombok": 0.7,
     "chiang mai": 0.5,
     "phuket": 0.5,
-    "malaisie": 0.3,
-    "indonesie": 0.2
+    "malaisie": 0.3
   },
   "recommendations": [
     "vietnam content trending — prioritize",
@@ -64,7 +63,7 @@
   },
   "igDestinationScores": {
     "vietnam": 8.2,
-    "thailande": 6.7,
+    "thailande": 6.6,
     "philippines": 4,
     "cambodge": 2,
     "bali": 1.6,
@@ -73,8 +72,7 @@
     "singapour": 0.6,
     "chiang mai": 0.5,
     "phuket": 0.5,
-    "malaisie": 0.3,
-    "indonesie": 0.2
+    "malaisie": 0.3
   },
   "tiktokDestinationScores": {
     "vietnam": 8.4,
@@ -91,8 +89,7 @@
     "singapour": "merged(60/40)",
     "chiang mai": "ig-only",
     "phuket": "ig-only",
-    "malaisie": "ig-only",
-    "indonesie": "ig-only"
+    "malaisie": "ig-only"
   },
   "mergeConfig": {
     "tiktokWeight": 0.6,
