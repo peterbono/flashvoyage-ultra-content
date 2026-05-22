@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T00:39:02.895Z",
+  "generatedAt": "2026-05-22T07:13:36.545Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Woman jailed for nearly 42 years over US$250 million Minnesota fraud case",
+      "topic": "Questions raised over public viewing of Suvarnabhumi Airport checkpoint cameras",
       "source": "rss_breaking",
-      "destination": "asia",
-      "link": "https://www.scmp.com/news/world/united-states-canada/article/3354440/woman-jailed-nearly-42-years-over-us250-million-minnesota-fraud-case?utm_source=rss_feed",
-      "velocityScore": 0.49,
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/national/concerns-grow-over-public-access-to-suvarnabhumi-airport-cctv",
+      "velocityScore": 0.448,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
+      "hoursRemaining": 716,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2448,
-      "estimatedTrafficIn24h": 2392,
+      "estimatedTrafficNow": 2241,
+      "estimatedTrafficIn24h": 2189,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 0.999,
+        "trendIntensity": 0.9,
+        "timeDecay": 0.996,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 0.8
+        "hoursSinceDetection": 4.3
       },
-      "detectedAt": "2026-05-21T23:50:53.000Z",
-      "scoredAt": "2026-05-22T00:39:01.471Z"
+      "detectedAt": "2026-05-22T02:53:27.000Z",
+      "scoredAt": "2026-05-22T07:13:33.131Z"
     }
   ]
 }
