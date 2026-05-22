@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-21T04:35:39.546Z",
+  "timestamp": "2026-05-22T04:32:29.017Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -33,7 +33,7 @@
       "context": {
         "wpId": 4372,
         "slug": "esim-philippines-globe-smart-comparatif-2026",
-        "compositeScore": 49,
+        "compositeScore": 47,
         "traffic": 1,
         "revenue": 0,
         "reason": "High-traffic article missing widgets: esim-philippines-globe-smart-comparatif-2026 (traffic=1)"
@@ -116,15 +116,15 @@
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 120,
-      "topic": "avion militaire",
+      "topic": "kyle busch",
       "articleType": "support",
       "context": {
         "gapScore": 40,
         "destination": null,
         "category": "transport",
-        "suggestedTitle": "Avion militaire : Guide Pratique",
+        "suggestedTitle": "Kyle busch : Guide Pratique",
         "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
-        "reason": "Content gap: \"avion militaire\" (score 40, source: trends)"
+        "reason": "Content gap: \"kyle busch\" (score 40, source: trends)"
       },
       "roi": {
         "expectedRoi": 1.07,
@@ -241,31 +241,6 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4105,
-        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-        "compositeScore": 14,
-        "freshness": 0.9,
-        "traffic": 0.02,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.315,
-      "withinBudget": true
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
       "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
       "articleType": "support",
       "context": {
@@ -287,7 +262,7 @@
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -312,7 +287,7 @@
       "withinBudget": true
     },
     {
-      "rank": 13,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -322,7 +297,7 @@
         "wpId": 5270,
         "slug": "esim-japon-combien-ca-te-coute-vraiment",
         "compositeScore": 15,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "traffic": 0.02,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       },
@@ -340,7 +315,7 @@
   "budgetAllocation": {
     "totalCost": 0.315,
     "dailyBudget": 2,
-    "itemsWithinBudget": 13,
+    "itemsWithinBudget": 12,
     "itemsOverBudget": 0,
     "expectedDailyRevenue": 0.088,
     "expectedDailyRoi": 0.28
@@ -350,6 +325,6 @@
     "update": 0,
     "enrich": 1,
     "standard": 3,
-    "review": 8
+    "review": 7
   }
 }

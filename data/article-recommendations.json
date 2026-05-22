@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-05-21T04:35:38.735Z",
+    "generatedAt": "2026-05-22T04:32:28.033Z",
     "elapsedSeconds": 4,
     "totalArticles": 34,
     "articlesWithRecommendations": 5,
@@ -51,14 +51,14 @@
         "avgDuration": 91
       },
       "gsc": {
-        "impressions": 26,
+        "impressions": 25,
         "clicks": 0,
-        "position": 18,
+        "position": 16.6,
         "topQueries": [
           {
             "query": "dore site instagram com reel",
             "position": 52.8,
-            "impressions": 5,
+            "impressions": 4,
             "ctr": 0
           },
           {
@@ -130,12 +130,12 @@
       "internalLinks": 48,
       "lastModified": "2026-05-16T01:05:06",
       "ga4": {
-        "pageviews": 26,
-        "sessions": 24,
-        "avgDuration": 42
+        "pageviews": 25,
+        "sessions": 23,
+        "avgDuration": 35
       },
       "gsc": {
-        "impressions": 17,
+        "impressions": 16,
         "clicks": 0,
         "position": 20,
         "topQueries": [
@@ -161,9 +161,9 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 42s / 1466s attendus (3% du contenu lu)",
+          "metric": "Temps lu: 35s / 1466s attendus (2% du contenu lu)",
           "action": "IMPROVE_READABILITY",
-          "details": "Seulement 3% du contenu est lu (4886 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
+          "details": "Seulement 2% du contenu est lu (4886 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
           "expectedImpact": "Temps sur page +40 a +60%, meilleur signal qualite pour Google"
         },
@@ -195,14 +195,14 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 11,
         "clicks": 0,
-        "position": 23.2,
+        "position": 23.5,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 28.3,
-            "impressions": 8,
+            "position": 28.1,
+            "impressions": 9,
             "ctr": 0
           }
         ]
@@ -297,9 +297,9 @@
         "avgDuration": 49
       },
       "gsc": {
-        "impressions": 55,
+        "impressions": 53,
         "clicks": 0,
-        "position": 20.6,
+        "position": 21.1,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -396,34 +396,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 5742,
-      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
-      "wordCount": 1513,
-      "widgetCount": 0,
-      "internalLinks": 22,
-      "lastModified": "2026-04-22T12:41:31",
-      "ga4": {
-        "pageviews": 10,
-        "sessions": 10,
-        "avgDuration": 4
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4370,
       "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
       "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
@@ -441,6 +413,34 @@
         "impressions": 13,
         "clicks": 0,
         "position": 8.5,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5742,
+      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
+      "wordCount": 1513,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-04-22T12:41:31",
+      "ga4": {
+        "pageviews": 7,
+        "sessions": 7,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -536,34 +536,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4371,
-      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
-      "wordCount": 3354,
-      "widgetCount": 3,
-      "internalLinks": 44,
-      "lastModified": "2026-05-16T01:05:10",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 166
-      },
-      "gsc": {
-        "impressions": 14,
-        "clicks": 0,
-        "position": 6.5,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4253,
       "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
       "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
@@ -637,6 +609,34 @@
         "impressions": 0,
         "clicks": 0,
         "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4371,
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
+      "wordCount": 3354,
+      "widgetCount": 3,
+      "internalLinks": 44,
+      "lastModified": "2026-05-16T01:05:10",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 249
+      },
+      "gsc": {
+        "impressions": 14,
+        "clicks": 0,
+        "position": 6.5,
         "topQueries": []
       },
       "reels": {

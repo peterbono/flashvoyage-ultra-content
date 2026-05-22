@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-05-21T04:35:32.721Z",
+  "timestamp": "2026-05-22T04:32:21.063Z",
   "gapCount": 1,
   "gaps": [
     {
-      "topic": "avion militaire",
+      "topic": "kyle busch",
       "source": "trends",
       "gapScore": 40,
       "signals": {
@@ -14,7 +14,7 @@
       },
       "destination": null,
       "category": "transport",
-      "suggestedTitle": "Avion militaire : Guide Pratique",
+      "suggestedTitle": "Kyle busch : Guide Pratique",
       "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
       "articleType": "support",
       "priority": "medium"

@@ -1,55 +1,41 @@
 {
-  "timestamp": "2026-05-21T04:35:29.787Z",
+  "timestamp": "2026-05-22T04:32:18.177Z",
   "trendingTopics": [
     {
       "query": "voyage thailande prix",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-05-22T04:32:09.582Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "thailande",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage vietnam circuit",
       "traffic": 250,
       "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-05-21T04:35:21.188Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage thailande pas cher",
-      "traffic": 120,
-      "trafficFormatted": "+120 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-05-21T04:35:21.188Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage vietnam prix",
-      "traffic": 190,
-      "trafficFormatted": "+190 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-05-21T04:35:23.492Z",
+      "date": "2026-05-22T04:32:11.736Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 1,
-      "category": "budget",
+      "category": "itineraire",
       "destination": "vietnam",
       "compositeScore": 0.62
     },
     {
       "query": "voyage vietnam pas cher",
-      "traffic": 180,
-      "trafficFormatted": "+180 %",
+      "traffic": 130,
+      "trafficFormatted": "+130 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-05-21T04:35:23.492Z",
+      "date": "2026-05-22T04:32:11.736Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 1,
@@ -58,40 +44,12 @@
       "compositeScore": 0.62
     },
     {
-      "query": "circuit vietnam",
-      "traffic": 150,
-      "trafficFormatted": "+150 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-05-21T04:35:23.492Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.8,
-      "category": "itineraire",
-      "destination": "vietnam",
-      "compositeScore": 0.56
-    },
-    {
-      "query": "leclerc voyage thailande",
+      "query": "voyage thailande phuket",
       "traffic": 250,
       "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-05-21T04:35:21.188Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage thailande tout compris",
-      "traffic": 100,
-      "trafficFormatted": "+100 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-05-21T04:35:21.188Z",
+      "date": "2026-05-22T04:32:09.582Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -101,11 +59,25 @@
     },
     {
       "query": "voyage cambodge",
-      "traffic": 300,
-      "trafficFormatted": "+300 %",
+      "traffic": 400,
+      "trafficFormatted": "+400 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-05-21T04:35:23.492Z",
+      "date": "2026-05-22T04:32:11.736Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge vietnam",
+      "traffic": 170,
+      "trafficFormatted": "+170 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-05-22T04:32:11.736Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -115,11 +87,11 @@
     },
     {
       "query": "voyage au vietnam",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
+      "traffic": 90,
+      "trafficFormatted": "+90 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-05-21T04:35:23.492Z",
+      "date": "2026-05-22T04:32:11.736Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -133,7 +105,7 @@
       "trafficFormatted": "+120 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-05-21T04:35:29.785Z",
+      "date": "2026-05-22T04:32:18.176Z",
       "source": "related-rising",
       "parentDestination": "laos",
       "relevanceScore": 0.7,
@@ -143,11 +115,11 @@
     },
     {
       "query": "cambodge",
-      "traffic": 550,
-      "trafficFormatted": "+550 %",
+      "traffic": 40,
+      "trafficFormatted": "+40 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-05-21T04:35:23.492Z",
+      "date": "2026-05-22T04:32:11.736Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.5,
@@ -156,33 +128,33 @@
       "compositeScore": 0.47000000000000003
     },
     {
-      "query": "avion militaire",
-      "traffic": 100,
-      "trafficFormatted": "100+",
+      "query": "kyle busch",
+      "traffic": 2000,
+      "trafficFormatted": "2000+",
       "relatedQueries": [],
       "articles": [
         {
-          "title": "Guerre en Ukraine : Un incident sérieux en mer Noire entre un avion britannique et des chasseurs russes",
-          "url": "https://www.20minutes.fr/monde/ukraine/4224385-20260520-direct-guerre-ukraine-recu-xi-poutine-salue-dynamique-forte-cooperation-chine-russie",
-          "source": "20 Minutes"
+          "title": "Kyle Busch, two-time NASCAR Cup Series champion, dies at age 41",
+          "url": "https://www.nascar.com/news-media/2026/05/21/kyle-busch-two-time-nascar-cup-series-champion-dies-at-age-41/",
+          "source": "NASCAR.com"
         },
         {
-          "title": "Royaume-Uni : un avion militaire britannique «dangereusement» intercepté par deux chasseurs russes au-dessus de la mer Noire",
-          "url": "https://www.lefigaro.fr/international/royaume-uni-un-avion-militaire-britannique-dangereusement-intercepte-par-deux-chasseurs-russes-au-dessus-de-la-mer-noire-20260520",
-          "source": "Le Figaro"
+          "title": "Kyle Busch, two-time Nascar champion, dies aged 41",
+          "url": "https://www.theguardian.com/us-news/2026/may/21/kyle-busch-dead",
+          "source": "The Guardian"
         },
         {
-          "title": "Un avion militaire britannique « dangereusement » intercepté par deux chasseurs russes au-dessus de la mer Noire, affirme Londres",
-          "url": "https://www.sudouest.fr/international/un-avion-militaire-britannique-dangereusement-intercepte-par-deux-chasseurs-russes-au-dessus-de-la-mer-noire-affirme-londres-29154461.php",
-          "source": "Sud Ouest"
+          "title": "Kyle Busch hospitalized due to illness, to miss Coca-Cola 600",
+          "url": "https://www.espn.com/racing/nascar/story/_/id/48835359/kyle-busch-hospitalized-due-illness-miss-coca-cola-600",
+          "source": "ESPN"
         }
       ],
-      "date": "Wed, 20 May 2026 21:00:00 -0700",
+      "date": "Thu, 21 May 2026 15:00:00 -0700",
       "source": "rss",
       "relevanceScore": 0.3,
       "category": "transport",
       "destination": null,
-      "compositeScore": 0.29008
+      "compositeScore": 0.2916
     }
   ]
 }
