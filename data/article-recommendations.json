@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-05-22T04:32:28.033Z",
+    "generatedAt": "2026-05-23T04:22:25.387Z",
     "elapsedSeconds": 4,
     "totalArticles": 34,
     "articlesWithRecommendations": 5,
@@ -51,22 +51,10 @@
         "avgDuration": 91
       },
       "gsc": {
-        "impressions": 25,
+        "impressions": 18,
         "clicks": 0,
-        "position": 16.6,
+        "position": 7.6,
         "topQueries": [
-          {
-            "query": "dore site instagram com reel",
-            "position": 52.8,
-            "impressions": 4,
-            "ctr": 0
-          },
-          {
-            "query": "\"coworking bgc\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
-            "position": 10,
-            "impressions": 1,
-            "ctr": 0
-          },
           {
             "query": "globe vs smart philippines",
             "position": 3,
@@ -110,9 +98,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"dore site instagram com reel\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"globe vs smart philippines\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"dore site instagram com reel\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"globe vs smart philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -135,7 +123,7 @@
         "avgDuration": 35
       },
       "gsc": {
-        "impressions": 16,
+        "impressions": 17,
         "clicks": 0,
         "position": 20,
         "topQueries": [
@@ -181,51 +169,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 5678,
-      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
-      "wordCount": 1657,
-      "widgetCount": 0,
-      "internalLinks": 25,
-      "lastModified": "2026-04-30T07:39:29",
-      "ga4": {
-        "pageviews": 14,
-        "sessions": 14,
-        "avgDuration": 2
-      },
-      "gsc": {
-        "impressions": 11,
-        "clicks": 0,
-        "position": 23.5,
-        "topQueries": [
-          {
-            "query": "esim asie du sud est",
-            "position": 28.1,
-            "impressions": 9,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim asie du sud est\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim asie du sud est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
       "wpId": 4373,
       "slug": "japon-couple-15-jours-budget-tout-compris-2026",
       "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
@@ -240,9 +183,9 @@
         "avgDuration": 123
       },
       "gsc": {
-        "impressions": 24,
+        "impressions": 23,
         "clicks": 3,
-        "position": 16.8,
+        "position": 17.1,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
@@ -275,63 +218,6 @@
           "metric": "Pas de schema FAQ (keyword principal: \"15 jours au japon budget\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"15 jours au japon budget\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4254,
-      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
-      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
-      "url": "https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/",
-      "wordCount": 4807,
-      "widgetCount": 3,
-      "internalLinks": 41,
-      "lastModified": "2026-05-16T01:05:30",
-      "ga4": {
-        "pageviews": 13,
-        "sessions": 12,
-        "avgDuration": 49
-      },
-      "gsc": {
-        "impressions": 53,
-        "clicks": 0,
-        "position": 21.1,
-        "topQueries": [
-          {
-            "query": "bali ou thailande",
-            "position": 38.5,
-            "impressions": 11,
-            "ctr": 0
-          },
-          {
-            "query": "bali et thailande",
-            "position": 70,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "thailande ou bali",
-            "position": 44,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"bali ou thailande\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -410,9 +296,9 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 9,
         "clicks": 0,
-        "position": 8.5,
+        "position": 9.2,
         "topQueries": []
       },
       "reels": {
@@ -449,6 +335,63 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4254,
+      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
+      "url": "https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/",
+      "wordCount": 4807,
+      "widgetCount": 3,
+      "internalLinks": 41,
+      "lastModified": "2026-05-16T01:05:30",
+      "ga4": {
+        "pageviews": 7,
+        "sessions": 6,
+        "avgDuration": 73
+      },
+      "gsc": {
+        "impressions": 53,
+        "clicks": 0,
+        "position": 21.1,
+        "topQueries": [
+          {
+            "query": "bali ou thailande",
+            "position": 38.5,
+            "impressions": 11,
+            "ctr": 0
+          },
+          {
+            "query": "bali et thailande",
+            "position": 70,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "thailande ou bali",
+            "position": 44,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"bali ou thailande\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -508,6 +451,51 @@
       "p0Count": 0
     },
     {
+      "wpId": 5678,
+      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
+      "wordCount": 1657,
+      "widgetCount": 0,
+      "internalLinks": 25,
+      "lastModified": "2026-04-30T07:39:29",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 1
+      },
+      "gsc": {
+        "impressions": 14,
+        "clicks": 0,
+        "position": 24.6,
+        "topQueries": [
+          {
+            "query": "esim asie du sud est",
+            "position": 28.3,
+            "impressions": 12,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim asie du sud est\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim asie du sud est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 4487,
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
@@ -564,23 +552,23 @@
       "p0Count": 0
     },
     {
-      "wpId": 5343,
-      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "url": "https://flashvoyage.com/pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu/",
-      "wordCount": 1487,
+      "wpId": 5333,
+      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout/",
+      "wordCount": 1332,
       "widgetCount": 0,
-      "internalLinks": 17,
-      "lastModified": "2026-05-16T01:05:13",
+      "internalLinks": 23,
+      "lastModified": "2026-04-24T10:28:15",
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 30
+        "avgDuration": 29
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 0,
         "clicks": 0,
-        "position": 6,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -637,34 +625,6 @@
         "impressions": 14,
         "clicks": 0,
         "position": 6.5,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5333,
-      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "url": "https://flashvoyage.com/thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout/",
-      "wordCount": 1332,
-      "widgetCount": 0,
-      "internalLinks": 23,
-      "lastModified": "2026-04-24T10:28:15",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 29
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -861,6 +821,34 @@
         "impressions": 0,
         "clicks": 0,
         "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5343,
+      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "url": "https://flashvoyage.com/pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu/",
+      "wordCount": 1487,
+      "widgetCount": 0,
+      "internalLinks": 17,
+      "lastModified": "2026-05-16T01:05:13",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 1,
+        "clicks": 0,
+        "position": 6,
         "topQueries": []
       },
       "reels": {

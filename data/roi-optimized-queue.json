@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-22T04:32:29.017Z",
+  "timestamp": "2026-05-23T04:22:26.339Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -20,7 +20,7 @@
     "medianMonthlyPV": 60,
     "medianTrafficSignal": "0.060",
     "avgRpm": 2,
-    "articlesAnalyzed": 23
+    "articlesAnalyzed": 22
   },
   "queue": [
     {
@@ -113,27 +113,27 @@
     },
     {
       "rank": 5,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 120,
-      "topic": "kyle busch",
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
       "articleType": "support",
       "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "transport",
-        "suggestedTitle": "Kyle busch : Guide Pratique",
-        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
-        "reason": "Content gap: \"kyle busch\" (score 40, source: trends)"
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 12,
+        "freshness": 0.82,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
       "roi": {
-        "expectedRoi": 1.07,
-        "projectedMonthlyTraffic": 40,
-        "projectedMonthlyRevenue": 0.08,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (60 PV) × gap boost (0.67)"
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.315,
+      "cumulativeCost": 0.24,
       "withinBudget": true
     },
     {
@@ -158,7 +158,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.315,
+      "cumulativeCost": 0.24,
       "withinBudget": true
     },
     {
@@ -166,11 +166,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
       "articleType": "support",
       "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "wpId": 4125,
+        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 13,
         "freshness": 0.89,
         "traffic": 0,
@@ -183,7 +183,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.315,
+      "cumulativeCost": 0.24,
       "withinBudget": true
     },
     {
@@ -191,11 +191,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "articleType": "support",
       "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 13,
         "freshness": 0.88,
         "traffic": 0,
@@ -208,21 +208,46 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.315,
+      "cumulativeCost": 0.24,
       "withinBudget": true
     },
     {
       "rank": 9,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "priorityScore": -3,
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
       "articleType": "support",
       "context": {
-        "wpId": 4125,
-        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 13,
+        "freshness": 0.87,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.24,
+      "withinBudget": true
+    },
+    {
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "articleType": "support",
+      "context": {
+        "wpId": 5296,
+        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
         "compositeScore": 14,
-        "freshness": 0.9,
+        "freshness": 0.96,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -233,11 +258,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.315,
+      "cumulativeCost": 0.24,
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -247,7 +272,7 @@
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 14,
-        "freshness": 0.86,
+        "freshness": 0.85,
         "traffic": 0.02,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -258,11 +283,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.315,
+      "cumulativeCost": 0.24,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -283,11 +308,36 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.315,
+      "cumulativeCost": 0.24,
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "articleType": "support",
+      "context": {
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "compositeScore": 15,
+        "freshness": 0.97,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.24,
+      "withinBudget": true
+    },
+    {
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -308,23 +358,23 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.315,
+      "cumulativeCost": 0.24,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.315,
+    "totalCost": 0.24,
     "dailyBudget": 2,
-    "itemsWithinBudget": 12,
+    "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.088,
-    "expectedDailyRoi": 0.28
+    "expectedDailyRevenue": 0.085,
+    "expectedDailyRoi": 0.36
   },
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 1,
     "standard": 3,
-    "review": 7
+    "review": 10
   }
 }

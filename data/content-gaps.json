@@ -1,32 +1,10 @@
 {
-  "timestamp": "2026-05-22T04:32:21.063Z",
-  "gapCount": 1,
-  "gaps": [
-    {
-      "topic": "kyle busch",
-      "source": "trends",
-      "gapScore": 40,
-      "signals": {
-        "searchVolume": 0.29,
-        "trendGrowth": 0.29,
-        "monetization": 0.6,
-        "competition": 0.6
-      },
-      "destination": null,
-      "category": "transport",
-      "suggestedTitle": "Kyle busch : Guide Pratique",
-      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
-      "articleType": "support",
-      "priority": "medium"
-    }
-  ],
+  "timestamp": "2026-05-23T04:22:18.952Z",
+  "gapCount": 0,
+  "gaps": [],
   "summary": {
-    "byPriority": {
-      "medium": 1
-    },
-    "byCategory": {
-      "transport": 1
-    },
+    "byPriority": {},
+    "byCategory": {},
     "byDestination": {},
     "topDestinationGaps": []
   }
