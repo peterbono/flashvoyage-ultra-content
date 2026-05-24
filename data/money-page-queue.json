@@ -58,7 +58,10 @@
       ],
       "tripDurationDays": 21,
       "scheduledFor": "2026-05-24",
-      "published": false
+      "published": true,
+      "published_at": "2026-05-24T03:16:27.510Z",
+      "published_url": "https://flashvoyage.com/meilleur-esim-vietnam-2026/",
+      "published_wp_id": 6323
     },
     {
       "id": "mp-2026-bali-esim",
