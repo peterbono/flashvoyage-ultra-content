@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-05-25T07:34:15.202Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-05-25T13:08:58.565Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Ombudsman seeks travel ban vs Marcoleta, Defensor amid plunder complaint",
+      "source": "rss_breaking",
+      "destination": "philippines",
+      "link": "https://www.rappler.com/philippines/ombudsman-seeks-travel-ban-vs-rodante-marcoleta-mike-defensor-plunder-complaint/",
+      "velocityScore": 0.499,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2495,
+      "estimatedTrafficIn24h": 2438,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.9
+      },
+      "detectedAt": "2026-05-25T11:12:14.000Z",
+      "scoredAt": "2026-05-25T13:08:50.000Z"
+    }
+  ]
 }
