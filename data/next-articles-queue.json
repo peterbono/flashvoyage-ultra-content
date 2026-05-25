@@ -1,57 +1,41 @@
 {
-  "timestamp": "2026-05-24T04:34:02.659Z",
-  "queueSize": 13,
+  "timestamp": "2026-05-25T04:37:28.633Z",
+  "queueSize": 12,
   "queue": [
     {
       "rank": 1,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
+      "priorityScore": 142,
+      "topic": "voyage laos",
       "articleType": "support",
       "context": {
-        "gapScore": 61,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
-      "action": "enrich",
-      "priority": "P1",
-      "priorityScore": 140,
-      "topic": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4372,
-        "slug": "esim-philippines-globe-smart-comparatif-2026",
-        "compositeScore": 47,
-        "traffic": 1,
-        "revenue": 0,
-        "reason": "High-traffic article missing widgets: esim-philippines-globe-smart-comparatif-2026 (traffic=1)"
-      }
-    },
-    {
-      "rank": 3,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 131,
-      "topic": "laos",
-      "articleType": "support",
-      "context": {
-        "gapScore": 51,
+        "gapScore": 62,
         "destination": "vietnam",
         "category": "destination",
         "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
         "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"laos\" (score 51, source: trends)"
+        "reason": "Content gap: \"voyage laos\" (score 62, source: trends)"
       }
     },
     {
-      "rank": 4,
+      "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "carter bryant",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "pratique",
+        "suggestedTitle": "Carter bryant : Guide Pratique 2026",
+        "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
+        "reason": "Content gap: \"carter bryant\" (score 40, source: trends)"
+      }
+    },
+    {
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -63,7 +47,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -75,7 +59,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -87,7 +71,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -97,13 +81,13 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 12,
-        "freshness": 0.82,
+        "freshness": 0.81,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
     },
     {
-      "rank": 8,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -119,7 +103,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -135,7 +119,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -151,18 +135,34 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -4,
+      "priorityScore": -3,
       "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
       "articleType": "support",
       "context": {
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-        "compositeScore": 14,
+        "compositeScore": 13,
         "freshness": 0.85,
-        "traffic": 0.02,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "articleType": "support",
+      "context": {
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 14,
+        "freshness": 0.96,
+        "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     },
@@ -181,28 +181,12 @@
         "traffic": 0,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 15,
-        "freshness": 0.96,
-        "traffic": 0.02,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      }
     }
   ],
   "summary": {
     "write_new": 2,
     "update": 0,
-    "enrich": 1,
+    "enrich": 0,
     "standard": 3,
     "review": 7
   },

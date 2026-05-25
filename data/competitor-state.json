@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-05-24T04:34:09.771Z",
+  "timestamp": "2026-05-25T04:37:34.952Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-05-24T04:34:10.042Z",
+      "lastScan": "2026-05-25T04:37:35.907Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-05-24T04:34:10.470Z",
+      "lastScan": "2026-05-25T04:37:36.645Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-05-24T04:35:28.331Z",
-      "urlCount": 9572,
+      "lastScan": "2026-05-25T04:38:49.710Z",
+      "urlCount": 9576,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9713,7 +9713,11 @@
         "https://generationvoyage.fr/acropole-construction/": "2026-05-22T15:21:36+00:00",
         "https://generationvoyage.fr/ruines-colisee/": "2026-05-23T08:12:31+00:00",
         "https://generationvoyage.fr/visiter-bourg-en-bresse-faire-voir/": "2026-05-23T13:15:11+00:00",
-        "https://generationvoyage.fr/new-york-los-angeles/": "2026-05-23T15:16:50+00:00"
+        "https://generationvoyage.fr/new-york-los-angeles/": "2026-05-23T15:16:50+00:00",
+        "https://generationvoyage.fr/odeurs-versailles/": "2026-05-24T08:17:35+00:00",
+        "https://generationvoyage.fr/chateau-edimbourg-famille/": "2026-05-24T10:19:34+00:00",
+        "https://generationvoyage.fr/roi-buckingham/": "2026-05-24T13:21:46+00:00",
+        "https://generationvoyage.fr/cracovie-varsovie/": "2026-05-24T16:23:36+00:00"
       }
     }
   }

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-24T04:34:08.833Z",
+  "timestamp": "2026-05-25T04:37:34.180Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -20,61 +20,36 @@
     "medianMonthlyPV": 60,
     "medianTrafficSignal": "0.060",
     "avgRpm": 2,
-    "articlesAnalyzed": 21
+    "articlesAnalyzed": 15
   },
   "queue": [
     {
       "rank": 1,
-      "action": "enrich",
-      "priority": "P1",
-      "priorityScore": 140,
-      "topic": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 142,
+      "topic": "voyage laos",
       "articleType": "support",
       "context": {
-        "wpId": 4372,
-        "slug": "esim-philippines-globe-smart-comparatif-2026",
-        "compositeScore": 47,
-        "traffic": 1,
-        "revenue": 0,
-        "reason": "High-traffic article missing widgets: esim-philippines-globe-smart-comparatif-2026 (traffic=1)"
+        "gapScore": 62,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"voyage laos\" (score 62, source: trends)"
       },
       "roi": {
-        "expectedRoi": 146.67,
-        "projectedMonthlyTraffic": 1100,
-        "projectedMonthlyRevenue": 2.2,
-        "productionCost": 0.015,
-        "trafficSource": "current (1000 PV) × 1.1 uplift"
+        "expectedRoi": 1.65,
+        "projectedMonthlyTraffic": 62,
+        "projectedMonthlyRevenue": 0.124,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (60 PV) × gap boost (1.03)"
       },
-      "cumulativeCost": 0.015,
+      "cumulativeCost": 0.075,
       "withinBudget": true
     },
     {
       "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 61,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 1.63,
-        "projectedMonthlyTraffic": 61,
-        "projectedMonthlyRevenue": 0.122,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (60 PV) × gap boost (1.02)"
-      },
-      "cumulativeCost": 0.09,
-      "withinBudget": true
-    },
-    {
-      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -91,11 +66,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (60 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.165,
+      "cumulativeCost": 0.15,
       "withinBudget": true
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -112,11 +87,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (60 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.24,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -133,36 +108,36 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (60 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.315,
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "carter bryant",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "pratique",
+        "suggestedTitle": "Carter bryant : Guide Pratique 2026",
+        "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
+        "reason": "Content gap: \"carter bryant\" (score 40, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 1.07,
+        "projectedMonthlyTraffic": 40,
+        "projectedMonthlyRevenue": 0.08,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (60 PV) × gap boost (0.67)"
+      },
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
       "rank": 6,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 131,
-      "topic": "laos",
-      "articleType": "support",
-      "context": {
-        "gapScore": 51,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"laos\" (score 51, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 1.36,
-        "projectedMonthlyTraffic": 51,
-        "projectedMonthlyRevenue": 0.102,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (60 PV) × gap boost (0.85)"
-      },
-      "cumulativeCost": 0.39,
-      "withinBudget": true
-    },
-    {
-      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -172,7 +147,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 12,
-        "freshness": 0.82,
+        "freshness": 0.81,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -183,11 +158,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.39,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -208,11 +183,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.39,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -233,11 +208,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.39,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -258,7 +233,32 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.39,
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "articleType": "support",
+      "context": {
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 13,
+        "freshness": 0.85,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
@@ -266,14 +266,14 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
-        "wpId": 3107,
-        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
         "compositeScore": 14,
-        "freshness": 0.85,
-        "traffic": 0.02,
+        "freshness": 0.96,
+        "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
       "roi": {
@@ -283,7 +283,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.39,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
@@ -308,47 +308,22 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.39,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 15,
-        "freshness": 0.96,
-        "traffic": 0.02,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.39,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.39,
+    "totalCost": 0.375,
     "dailyBudget": 2,
-    "itemsWithinBudget": 13,
+    "itemsWithinBudget": 12,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.093,
-    "expectedDailyRoi": 0.24
+    "expectedDailyRevenue": 0.019,
+    "expectedDailyRoi": 0.05
   },
   "summary": {
     "write_new": 2,
     "update": 0,
-    "enrich": 1,
+    "enrich": 0,
     "standard": 3,
     "review": 7
   }
