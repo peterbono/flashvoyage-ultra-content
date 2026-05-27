@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-05-26T04:31:40.069Z",
-  "queueSize": 15,
+  "timestamp": "2026-05-27T04:36:22.455Z",
+  "queueSize": 14,
   "queue": [
     {
       "rank": 1,
@@ -20,22 +20,6 @@
     },
     {
       "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 131,
-      "topic": "laos",
-      "articleType": "support",
-      "context": {
-        "gapScore": 51,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"laos\" (score 51, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -47,7 +31,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -59,7 +43,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -71,7 +55,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -81,13 +65,13 @@
         "wpId": 2980,
         "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 12,
-        "freshness": 0.82,
+        "freshness": 0.81,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -103,7 +87,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -113,13 +97,13 @@
         "wpId": 4125,
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 13,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
-      "rank": 9,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -135,7 +119,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -151,7 +135,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -167,7 +151,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -183,7 +167,7 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -199,7 +183,7 @@
       }
     },
     {
-      "rank": 14,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -215,7 +199,7 @@
       }
     },
     {
-      "rank": 15,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -232,7 +216,7 @@
     }
   ],
   "summary": {
-    "write_new": 2,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

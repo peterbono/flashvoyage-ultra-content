@@ -1,24 +1,24 @@
 {
   "summary": {
-    "generatedAt": "2026-05-26T04:31:44.501Z",
+    "generatedAt": "2026-05-27T04:36:27.818Z",
     "elapsedSeconds": 4,
     "totalArticles": 35,
     "articlesWithRecommendations": 5,
-    "totalRecommendations": 7,
+    "totalRecommendations": 6,
     "byPriority": {
       "P0": 0,
       "P1": 1,
-      "P2": 6
+      "P2": 5
     },
     "byType": {
       "engagement": 1,
       "amplification": 1,
-      "seo": 5
+      "seo": 4
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
-        "count": 5
+        "count": 4
       },
       {
         "action": "IMPROVE_READABILITY",
@@ -46,17 +46,10 @@
         "avgDuration": 107
       },
       "gsc": {
-        "impressions": 16,
+        "impressions": 14,
         "clicks": 0,
         "position": 7.6,
-        "topQueries": [
-          {
-            "query": "globe vs smart philippines",
-            "position": 3,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
+        "topQueries": []
       },
       "reels": {
         "linkedReels": 0,
@@ -80,18 +73,9 @@
           "details": "Article populaire sans couverture reel. Creer 2-3 reels automatises : 1) Trip Pick \"X spots incontournables a [destination]\" — format liste visuelle. 2) Budget Jour si l'article contient des donnees budget. 3) Versus si l'article compare 2 destinations. Les reels drivent du traffic IG → article via Story links + lien bio. Utiliser le module reels/generator.js.",
           "effort": "5min (auto-genere via pipeline reels)",
           "expectedImpact": "+20 a +50 visites/mois via IG Stories (actuellement 0 referral social)"
-        },
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"globe vs smart philippines\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"globe vs smart philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
       ],
-      "recommendationCount": 3,
+      "recommendationCount": 2,
       "p0Count": 0
     },
     {
@@ -106,7 +90,7 @@
       "ga4": {
         "pageviews": 14,
         "sessions": 14,
-        "avgDuration": 174
+        "avgDuration": 152
       },
       "gsc": {
         "impressions": 17,
@@ -155,9 +139,9 @@
       "internalLinks": 45,
       "lastModified": "2026-05-15T02:03:45",
       "ga4": {
-        "pageviews": 13,
-        "sessions": 8,
-        "avgDuration": 123
+        "pageviews": 11,
+        "sessions": 7,
+        "avgDuration": 135
       },
       "gsc": {
         "impressions": 20,
@@ -295,9 +279,9 @@
         "avgDuration": 108
       },
       "gsc": {
-        "impressions": 48,
+        "impressions": 47,
         "clicks": 1,
-        "position": 22.3,
+        "position": 22.6,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -352,14 +336,14 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 17,
+        "impressions": 23,
         "clicks": 0,
-        "position": 25.2,
+        "position": 26.1,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 28.2,
-            "impressions": 15,
+            "position": 28.3,
+            "impressions": 21,
             "ctr": 0
           }
         ]
@@ -537,9 +521,37 @@
         "avgDuration": 438
       },
       "gsc": {
-        "impressions": 9,
+        "impressions": 8,
         "clicks": 0,
-        "position": 6,
+        "position": 5.9,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4369,
+      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "url": "https://flashvoyage.com/visa-cambodge-francais-2026-evisa-prix-pieges/",
+      "wordCount": 2354,
+      "widgetCount": 3,
+      "internalLinks": 44,
+      "lastModified": "2026-04-30T07:40:10",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 138
+      },
+      "gsc": {
+        "impressions": 2,
+        "clicks": 0,
+        "position": 25,
         "topQueries": []
       },
       "reels": {
@@ -820,34 +832,6 @@
         "impressions": 7,
         "clicks": 0,
         "position": 9,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4369,
-      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
-      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
-      "url": "https://flashvoyage.com/visa-cambodge-francais-2026-evisa-prix-pieges/",
-      "wordCount": 2354,
-      "widgetCount": 3,
-      "internalLinks": 44,
-      "lastModified": "2026-04-30T07:40:10",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 2,
-        "clicks": 0,
-        "position": 25,
         "topQueries": []
       },
       "reels": {
