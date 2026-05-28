@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-27T04:36:22.455Z",
+  "timestamp": "2026-05-28T04:33:38.642Z",
   "queueSize": 14,
   "queue": [
     {
@@ -81,13 +81,29 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 12,
-        "freshness": 0.81,
+        "freshness": 0.8,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
     },
     {
       "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "articleType": "support",
+      "context": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -103,7 +119,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -119,7 +135,23 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 4030,
+        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+        "compositeScore": 13,
+        "freshness": 0.88,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -135,7 +167,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -151,7 +183,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -167,7 +199,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -180,38 +212,6 @@
         "freshness": 0.84,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 14,
-        "freshness": 0.95,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "articleType": "support",
-      "context": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 14,
-        "freshness": 0.9,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     }
   ],

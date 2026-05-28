@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-27T04:36:21.510Z",
+  "timestamp": "2026-05-28T04:33:37.681Z",
   "articleMap": {
     "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
       "wpId": 4252,
@@ -145,6 +145,18 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "esim-thailande-comparatif-ais-dtac-true-2026": {
+      "wpId": 4253,
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "philippines-10-jours-itineraire-plages-budget-2026": {
       "wpId": 4371,
       "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
@@ -169,18 +181,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "esim-thailande-comparatif-ais-dtac-true-2026": {
-      "wpId": 4253,
-      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "meilleur-esim-thailande-2026": {
       "wpId": 6195,
       "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
@@ -191,6 +191,30 @@
         "avantapres"
       ],
       "category": "destination",
+      "igReferralTraffic": null
+    },
+    "esim-vietnam-comparatif-forfait-2026-frais-caches": {
+      "wpId": 4250,
+      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
+      "wpId": 5333,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
       "igReferralTraffic": null
     },
     "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage": {
@@ -214,41 +238,6 @@
         "avantapres"
       ],
       "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "esim-vietnam-comparatif-forfait-2026-frais-caches": {
-      "wpId": 4250,
-      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
-      "wpId": 5072,
-      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-05-05",
-          "format": "avantapres",
-          "platform": "tiktok",
-          "score": 18.1,
-          "engagementRate": 0,
-          "publishedAt": "2026-05-05",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
       "igReferralTraffic": null
     },
     "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
@@ -286,28 +275,27 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
-      "wpId": 5333,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "reels": [],
+    "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
+      "wpId": 5072,
+      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-05-05",
+          "format": "avantapres",
+          "platform": "tiktok",
+          "score": 18.1,
+          "engagementRate": 0,
+          "publishedAt": "2026-05-05",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
       "suggestedFormats": [
         "pick",
         "poll",
         "humor"
       ],
       "category": "default",
-      "igReferralTraffic": null
-    },
-    "meilleur-esim-vietnam-2026": {
-      "wpId": 6323,
-      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "destination",
       "igReferralTraffic": null
     },
     "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
@@ -322,33 +310,21 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
-      "wpId": 4105,
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+    "meilleur-esim-vietnam-2026": {
+      "wpId": 6323,
+      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
       "reels": [],
       "suggestedFormats": [
         "pick",
         "month",
         "avantapres"
       ],
-      "category": "itineraire",
+      "category": "destination",
       "igReferralTraffic": null
     },
-    "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget": {
-      "wpId": 4030,
-      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
-      "wpId": 3090,
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
+      "wpId": 4105,
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -370,16 +346,16 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
-      "wpId": 5343,
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
+      "wpId": 3090,
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
       "reels": [],
       "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
+        "pick",
+        "month",
+        "avantapres"
       ],
-      "category": "budget",
+      "category": "itineraire",
       "igReferralTraffic": null
     },
     "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout": {
@@ -392,6 +368,18 @@
         "humor"
       ],
       "category": "default",
+      "igReferralTraffic": null
+    },
+    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
+      "wpId": 5343,
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
@@ -457,6 +445,18 @@
     "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
       "wpId": 4071,
       "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget": {
+      "wpId": 4030,
+      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "reels": [],
       "suggestedFormats": [
         "budget",
