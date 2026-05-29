@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-28T04:35:00.371Z",
+  "timestamp": "2026-05-29T04:36:41.344Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,14 +16,26 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 9588,
-      "newUrls": 7
+      "totalUrls": 9592,
+      "newUrls": 4
     }
   ],
-  "newArticles": [],
+  "newArticles": [
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-da-nang-faire-voir/",
+      "lastmod": "2026-05-28T08:07:54+00:00",
+      "destination": "da-nang",
+      "contentType": "activites",
+      "title": "Visiter Da Nang Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Da Nang Faire Voir\" (da-nang, activites) — no matching FlashVoyage article found"
+    }
+  ],
   "summary": {
-    "totalNew": 0,
-    "contentGaps": 0,
+    "totalNew": 1,
+    "contentGaps": 1,
     "staleRefreshes": 0,
     "monitoring": 0
   }
