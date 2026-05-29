@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-05-29T07:20:43.784Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-05-29T13:05:23.744Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "JAL jet makes emergency landing at Narita airport, no injuries",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/world/3262825/jal-jet-makes-emergency-landing-at-narita-airport-no-injuries",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2068,
+      "estimatedTrafficIn24h": 2021,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.5
+      },
+      "detectedAt": "2026-05-29T09:36:00.000Z",
+      "scoredAt": "2026-05-29T13:05:13.078Z"
+    }
+  ]
 }
