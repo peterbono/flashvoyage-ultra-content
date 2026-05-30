@@ -1,9 +1,25 @@
 {
-  "timestamp": "2026-05-29T04:35:16.267Z",
-  "queueSize": 13,
+  "timestamp": "2026-05-30T04:27:48.164Z",
+  "queueSize": 12,
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 131,
+      "topic": "laos",
+      "articleType": "support",
+      "context": {
+        "gapScore": 51,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"laos\" (score 51, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -15,7 +31,7 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -27,7 +43,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -39,7 +55,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -55,7 +71,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -71,22 +87,6 @@
       }
     },
     {
-      "rank": 6,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "articleType": "support",
-      "context": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 13,
-        "freshness": 0.89,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
-    },
-    {
       "rank": 7,
       "action": "review",
       "priority": "P4",
@@ -97,7 +97,7 @@
         "wpId": 4125,
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 13,
-        "freshness": 0.88,
+        "freshness": 0.87,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
@@ -145,45 +145,13 @@
         "wpId": 3198,
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 13,
-        "freshness": 0.86,
+        "freshness": 0.85,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
       "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "articleType": "support",
-      "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 14,
-        "freshness": 0.95,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "articleType": "support",
-      "context": {
-        "wpId": 5296,
-        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-        "compositeScore": 14,
-        "freshness": 0.95,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -197,14 +165,30 @@
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
+    },
+    {
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
+      "articleType": "support",
+      "context": {
+        "wpId": 6309,
+        "slug": "meilleur-esim-japon-2026",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
     }
   ],
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 10
+    "review": 8
   },
   "thresholds": {
     "staleFreshnessThreshold": 0.3,

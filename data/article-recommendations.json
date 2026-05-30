@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-05-29T04:35:21.809Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-05-30T04:27:52.711Z",
+    "elapsedSeconds": 4,
     "totalArticles": 35,
     "articlesWithRecommendations": 6,
     "totalRecommendations": 7,
@@ -41,14 +41,14 @@
       "internalLinks": 56,
       "lastModified": "2026-05-16T01:05:23",
       "ga4": {
-        "pageviews": 37,
-        "sessions": 26,
-        "avgDuration": 111
+        "pageviews": 31,
+        "sessions": 23,
+        "avgDuration": 122
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 14,
         "clicks": 0,
-        "position": 7.7,
+        "position": 12.1,
         "topQueries": []
       },
       "reels": {
@@ -59,16 +59,16 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 111s / 1605s attendus (7% du contenu lu)",
+          "metric": "Temps lu: 122s / 1605s attendus (8% du contenu lu)",
           "action": "IMPROVE_READABILITY",
-          "details": "Seulement 7% du contenu est lu (5349 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
+          "details": "Seulement 8% du contenu est lu (5349 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
           "expectedImpact": "Temps sur page +40 a +60%, meilleur signal qualite pour Google"
         },
         {
           "type": "amplification",
           "priority": "P2",
-          "metric": "37 vues/mois, 0 reels lies a cet article",
+          "metric": "31 vues/mois, 0 reels lies a cet article",
           "action": "CREATE_REELS",
           "details": "Article populaire sans couverture reel. Creer 2-3 reels automatises : 1) Trip Pick \"X spots incontournables a [destination]\" — format liste visuelle. 2) Budget Jour si l'article contient des donnees budget. 3) Versus si l'article compare 2 destinations. Les reels drivent du traffic IG → article via Story links + lien bio. Utiliser le module reels/generator.js.",
           "effort": "5min (auto-genere via pipeline reels)",
@@ -121,14 +121,14 @@
         "avgDuration": 237
       },
       "gsc": {
-        "impressions": 14,
+        "impressions": 16,
         "clicks": 2,
-        "position": 27.6,
+        "position": 28.9,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 58.3,
-            "impressions": 4,
+            "position": 59,
+            "impressions": 5,
             "ctr": 0
           },
           {
@@ -174,12 +174,12 @@
       "gsc": {
         "impressions": 49,
         "clicks": 1,
-        "position": 23.6,
+        "position": 24.1,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 37.9,
-            "impressions": 14,
+            "position": 37.7,
+            "impressions": 15,
             "ctr": 0
           },
           {
@@ -229,9 +229,9 @@
         "avgDuration": 488
       },
       "gsc": {
-        "impressions": 17,
+        "impressions": 18,
         "clicks": 0,
-        "position": 19.8,
+        "position": 18.9,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -280,14 +280,14 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 25,
+        "impressions": 28,
         "clicks": 0,
-        "position": 26.3,
+        "position": 26.4,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 28.3,
-            "impressions": 23,
+            "position": 28.2,
+            "impressions": 26,
             "ctr": 0
           }
         ]
@@ -467,7 +467,7 @@
       "gsc": {
         "impressions": 6,
         "clicks": 0,
-        "position": 6,
+        "position": 6.7,
         "topQueries": []
       },
       "reels": {
@@ -706,9 +706,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 5,
         "clicks": 0,
-        "position": 6.8,
+        "position": 7.2,
         "topQueries": []
       },
       "reels": {
@@ -820,7 +820,7 @@
       "gsc": {
         "impressions": 7,
         "clicks": 0,
-        "position": 9,
+        "position": 8.6,
         "topQueries": []
       },
       "reels": {

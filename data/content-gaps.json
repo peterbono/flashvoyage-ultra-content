@@ -1,11 +1,37 @@
 {
-  "timestamp": "2026-05-29T04:35:14.687Z",
-  "gapCount": 0,
-  "gaps": [],
+  "timestamp": "2026-05-30T04:27:46.279Z",
+  "gapCount": 1,
+  "gaps": [
+    {
+      "topic": "laos",
+      "source": "trends",
+      "gapScore": 51,
+      "signals": {
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
+        "competition": 0.8
+      },
+      "destination": "vietnam",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    }
+  ],
   "summary": {
-    "byPriority": {},
-    "byCategory": {},
-    "byDestination": {},
-    "topDestinationGaps": []
+    "byPriority": {
+      "high": 1
+    },
+    "byCategory": {
+      "destination": 1
+    },
+    "byDestination": {
+      "vietnam": 1
+    },
+    "topDestinationGaps": [
+      "vietnam"
+    ]
   }
 }
