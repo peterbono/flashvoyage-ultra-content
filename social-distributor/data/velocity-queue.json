@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-05-30T07:01:23.931Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-05-30T12:25:48.380Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Laos cave survivors ate wooden gold pans to stay alive",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/se-asia/lao-cave-survivors-ate-wooden-gold-pans-to-stay-alive",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 715,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2066,
+      "estimatedTrafficIn24h": 2018,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 4.7
+      },
+      "detectedAt": "2026-05-30T07:45:00.000Z",
+      "scoredAt": "2026-05-30T12:25:46.896Z"
+    }
+  ]
 }
