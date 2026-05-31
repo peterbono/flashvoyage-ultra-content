@@ -75,7 +75,10 @@
       ],
       "tripDurationDays": 14,
       "scheduledFor": "2026-05-31",
-      "published": false
+      "published": true,
+      "published_at": "2026-05-31T03:17:56.580Z",
+      "published_url": "https://flashvoyage.com/meilleur-esim-bali-2026/",
+      "published_wp_id": 6327
     },
     {
       "id": "mp-2026-philippines-esim",
