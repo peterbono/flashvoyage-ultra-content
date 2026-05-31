@@ -1,25 +1,9 @@
 {
-  "timestamp": "2026-05-30T04:27:48.164Z",
-  "queueSize": 12,
+  "timestamp": "2026-05-31T04:36:42.209Z",
+  "queueSize": 13,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 131,
-      "topic": "laos",
-      "articleType": "support",
-      "context": {
-        "gapScore": 51,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"laos\" (score 51, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +15,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +27,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -55,7 +39,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -71,6 +55,22 @@
       }
     },
     {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 12,
+        "freshness": 0.8,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
+      }
+    },
+    {
       "rank": 6,
       "action": "review",
       "priority": "P4",
@@ -81,13 +81,29 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 12,
-        "freshness": 0.8,
+        "freshness": 0.79,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
     },
     {
       "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "articleType": "support",
+      "context": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 13,
+        "freshness": 0.88,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -103,7 +119,23 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4071,
+        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
+        "compositeScore": 13,
+        "freshness": 0.87,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -119,7 +151,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -135,7 +167,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -151,7 +183,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -165,30 +197,14 @@
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
-      "articleType": "support",
-      "context": {
-        "wpId": 6309,
-        "slug": "meilleur-esim-japon-2026",
-        "compositeScore": 15,
-        "freshness": 1,
-        "traffic": 0,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      }
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 8
+    "review": 10
   },
   "thresholds": {
     "staleFreshnessThreshold": 0.3,
