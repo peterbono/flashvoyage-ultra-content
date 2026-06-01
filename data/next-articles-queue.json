@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-31T04:36:42.209Z",
+  "timestamp": "2026-06-01T04:39:42.444Z",
   "queueSize": 13,
   "queue": [
     {
@@ -123,6 +123,22 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
+      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4105,
+        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+        "compositeScore": 13,
+        "freshness": 0.87,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
       "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
       "articleType": "support",
       "context": {
@@ -135,7 +151,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -151,7 +167,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -167,35 +183,19 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
       "articleType": "support",
       "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
         "compositeScore": 13,
         "freshness": 0.85,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 14,
-        "freshness": 0.94,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     }
   ],

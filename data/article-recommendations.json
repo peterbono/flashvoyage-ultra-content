@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-05-31T04:36:47.389Z",
+    "generatedAt": "2026-06-01T04:39:47.266Z",
     "elapsedSeconds": 4,
     "totalArticles": 36,
     "articlesWithRecommendations": 6,
@@ -107,14 +107,14 @@
         "avgDuration": 80
       },
       "gsc": {
-        "impressions": 17,
+        "impressions": 18,
         "clicks": 2,
-        "position": 30.9,
+        "position": 32.4,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 59.5,
-            "impressions": 6,
+            "position": 59.4,
+            "impressions": 7,
             "ctr": 0
           },
           {
@@ -144,6 +144,51 @@
       "p0Count": 0
     },
     {
+      "wpId": 5678,
+      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
+      "wordCount": 1657,
+      "widgetCount": 0,
+      "internalLinks": 25,
+      "lastModified": "2026-04-30T07:39:29",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 1
+      },
+      "gsc": {
+        "impressions": 30,
+        "clicks": 0,
+        "position": 26.5,
+        "topQueries": [
+          {
+            "query": "esim asie du sud est",
+            "position": 28.2,
+            "impressions": 28,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim asie du sud est\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim asie du sud est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -153,30 +198,30 @@
       "internalLinks": 41,
       "lastModified": "2026-05-16T01:05:30",
       "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
+        "pageviews": 3,
+        "sessions": 3,
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 49,
+        "impressions": 50,
         "clicks": 1,
-        "position": 24.1,
+        "position": 24.9,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 37.7,
-            "impressions": 15,
+            "position": 37.6,
+            "impressions": 16,
+            "ctr": 0
+          },
+          {
+            "query": "thailande ou bali",
+            "position": 40.5,
+            "impressions": 2,
             "ctr": 0
           },
           {
             "query": "bali et thailande",
             "position": 70,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "thailande ou bali",
-            "position": 44,
             "impressions": 1,
             "ctr": 0
           }
@@ -193,51 +238,6 @@
           "metric": "Pas de schema FAQ (keyword principal: \"bali ou thailande\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5678,
-      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
-      "wordCount": 1657,
-      "widgetCount": 0,
-      "internalLinks": 25,
-      "lastModified": "2026-04-30T07:39:29",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 1
-      },
-      "gsc": {
-        "impressions": 29,
-        "clicks": 0,
-        "position": 26.5,
-        "topQueries": [
-          {
-            "query": "esim asie du sud est",
-            "position": 28.3,
-            "impressions": 27,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim asie du sud est\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim asie du sud est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -437,34 +437,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4371,
-      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
-      "wordCount": 3354,
-      "widgetCount": 3,
-      "internalLinks": 44,
-      "lastModified": "2026-05-16T01:05:10",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 438
-      },
-      "gsc": {
-        "impressions": 7,
-        "clicks": 0,
-        "position": 6.7,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4369,
       "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
       "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
@@ -507,9 +479,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 3,
         "clicks": 0,
-        "position": 29.8,
+        "position": 46.7,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
@@ -726,9 +698,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 6,
         "clicks": 0,
-        "position": 7.2,
+        "position": 7.8,
         "topQueries": []
       },
       "reels": {
@@ -813,6 +785,34 @@
         "impressions": 0,
         "clicks": 0,
         "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4371,
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
+      "wordCount": 3354,
+      "widgetCount": 3,
+      "internalLinks": 44,
+      "lastModified": "2026-05-16T01:05:10",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 6,
+        "clicks": 0,
+        "position": 6.8,
         "topQueries": []
       },
       "reels": {
