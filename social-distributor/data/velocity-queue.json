@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-06-02T07:38:37.491Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-06-02T13:15:54.187Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Thai woman arrested after series of thefts at Bangkok airports",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/bangkok/thai-woman-arrested-after-series-of-thefts-at-bangkok-airports",
+      "velocityScore": 0.488,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 715,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2439,
+      "estimatedTrafficIn24h": 2383,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 4.6
+      },
+      "detectedAt": "2026-06-02T08:38:52.000Z",
+      "scoredAt": "2026-06-02T13:15:51.480Z"
+    }
+  ]
 }
