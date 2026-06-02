@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-06-02T00:45:26.143Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-06-02T07:38:37.491Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "'Insane scale': A close-up look at scam compounds along Cambodia's border with Vietnam",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.channelnewsasia.com/asia/cambodia-scamming-crimes-vietnam-crackdown-6149366",
-      "velocityScore": 0.561,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1870,
-      "estimatedTrafficIn24h": 1827,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.75,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 2.8
-      },
-      "detectedAt": "2026-06-01T22:00:00.000Z",
-      "scoredAt": "2026-06-02T00:45:23.979Z"
-    }
-  ]
+  "queue": []
 }
