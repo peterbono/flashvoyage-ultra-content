@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-06-01T04:39:47.266Z",
+    "generatedAt": "2026-06-02T04:36:55.328Z",
     "elapsedSeconds": 4,
     "totalArticles": 36,
     "articlesWithRecommendations": 6,
@@ -36,14 +36,14 @@
       "internalLinks": 56,
       "lastModified": "2026-05-16T01:05:23",
       "ga4": {
-        "pageviews": 27,
-        "sessions": 21,
-        "avgDuration": 108
+        "pageviews": 25,
+        "sessions": 19,
+        "avgDuration": 113
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 13,
         "clicks": 0,
-        "position": 11.6,
+        "position": 12.2,
         "topQueries": []
       },
       "reels": {
@@ -54,7 +54,7 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 108s / 1605s attendus (7% du contenu lu)",
+          "metric": "Temps lu: 113s / 1605s attendus (7% du contenu lu)",
           "action": "IMPROVE_READABILITY",
           "details": "Seulement 7% du contenu est lu (5349 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
@@ -158,14 +158,14 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 30,
+        "impressions": 31,
         "clicks": 0,
-        "position": 26.5,
+        "position": 26.6,
         "topQueries": [
           {
             "query": "esim asie du sud est",
             "position": 28.2,
-            "impressions": 28,
+            "impressions": 29,
             "ctr": 0
           }
         ]
@@ -203,26 +203,20 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 50,
+        "impressions": 46,
         "clicks": 1,
-        "position": 24.9,
+        "position": 24,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 37.6,
-            "impressions": 16,
+            "position": 38,
+            "impressions": 14,
             "ctr": 0
           },
           {
             "query": "thailande ou bali",
             "position": 40.5,
             "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "bali et thailande",
-            "position": 70,
-            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -258,34 +252,6 @@
         "pageviews": 3,
         "sessions": 2,
         "avgDuration": 131
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5742,
-      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
-      "wordCount": 1513,
-      "widgetCount": 0,
-      "internalLinks": 22,
-      "lastModified": "2026-04-22T12:41:31",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -479,9 +445,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 4,
         "clicks": 0,
-        "position": 46.7,
+        "position": 40.3,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
@@ -520,10 +486,10 @@
       "slug": "meilleur-esim-bali-2026",
       "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
       "url": "https://flashvoyage.com/meilleur-esim-bali-2026/",
-      "wordCount": 1156,
+      "wordCount": 1173,
       "widgetCount": 0,
       "internalLinks": 11,
-      "lastModified": "2026-05-31T03:17:55",
+      "lastModified": "2026-06-01T11:54:41",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -580,6 +546,34 @@
       "widgetCount": 0,
       "internalLinks": 11,
       "lastModified": "2026-05-18T11:15:19",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5742,
+      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
+      "wordCount": 1513,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-04-22T12:41:31",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -698,9 +692,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 7,
         "clicks": 0,
-        "position": 7.8,
+        "position": 8.1,
         "topQueries": []
       },
       "reels": {
@@ -1090,7 +1084,7 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 2,
         "clicks": 0,
         "position": 10,
         "topQueries": []

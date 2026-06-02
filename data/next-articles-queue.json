@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-01T04:39:42.444Z",
+  "timestamp": "2026-06-02T04:36:50.438Z",
   "queueSize": 13,
   "queue": [
     {
@@ -49,7 +49,7 @@
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 12,
-        "freshness": 0.83,
+        "freshness": 0.82,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
@@ -65,7 +65,7 @@
         "wpId": 2980,
         "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 12,
-        "freshness": 0.8,
+        "freshness": 0.79,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
@@ -91,13 +91,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
       "articleType": "support",
       "context": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "wpId": 4125,
+        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 13,
-        "freshness": 0.88,
+        "freshness": 0.86,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
@@ -107,13 +107,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
       "articleType": "support",
       "context": {
-        "wpId": 4125,
-        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
+        "wpId": 4105,
+        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
         "compositeScore": 13,
-        "freshness": 0.87,
+        "freshness": 0.86,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
@@ -123,13 +123,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
       "articleType": "support",
       "context": {
-        "wpId": 4105,
-        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+        "wpId": 4071,
+        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
         "compositeScore": 13,
-        "freshness": 0.87,
+        "freshness": 0.86,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
@@ -139,13 +139,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
-        "wpId": 4071,
-        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
+        "wpId": 4030,
+        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 13,
-        "freshness": 0.87,
+        "freshness": 0.86,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
@@ -155,13 +155,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "articleType": "support",
       "context": {
-        "wpId": 4030,
-        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 13,
-        "freshness": 0.87,
+        "freshness": 0.85,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
@@ -171,13 +171,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
       "articleType": "support",
       "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
         "compositeScore": 13,
-        "freshness": 0.86,
+        "freshness": 0.84,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
@@ -187,13 +187,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
       "articleType": "support",
       "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 13,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
