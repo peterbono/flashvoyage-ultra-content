@@ -1,36 +1,61 @@
 {
-  "generatedAt": "2026-06-03T00:50:23.561Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-06-03T07:42:07.306Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 2
   },
   "queue": [
     {
-      "topic": "Singaporeans in Japan advised to monitor local conditions closely as Typhoon Jangmi passes through",
+      "topic": "Sandiganbayan denies Martin Romualdez’s request to lift travel ban",
       "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/east-asia/singaporeans-in-japan-advised-to-monitor-local-conditions-closely-as-typhoon-jangmi-passes-through",
-      "velocityScore": 0.415,
+      "destination": "philippines",
+      "link": "https://www.rappler.com/philippines/sandiganbayan-denies-martin-romualdez-request-lift-precautionary-hold-departure-order/",
+      "velocityScore": 0.499,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 720,
+      "hoursRemaining": 718,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2075,
-      "estimatedTrafficIn24h": 2027,
+      "estimatedTrafficNow": 2495,
+      "estimatedTrafficIn24h": 2438,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 1,
+        "trendIntensity": 1,
+        "timeDecay": 0.998,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 0.1
+        "hoursSinceDetection": 2.2
       },
-      "detectedAt": "2026-06-03T00:44:00.000Z",
-      "scoredAt": "2026-06-03T00:50:22.025Z"
+      "detectedAt": "2026-06-03T05:31:25.000Z",
+      "scoredAt": "2026-06-03T07:42:03.478Z"
+    },
+    {
+      "topic": "Phuket airport to launch automated passport gates June 13",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/national/phuket-airport-to-launch-automated-passport-gates-june-13",
+      "velocityScore": 0.449,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 719,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2247,
+      "estimatedTrafficIn24h": 2196,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.5
+      },
+      "detectedAt": "2026-06-03T06:14:48.000Z",
+      "scoredAt": "2026-06-03T07:42:03.079Z"
     }
   ]
 }
