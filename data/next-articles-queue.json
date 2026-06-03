@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-02T04:36:50.438Z",
+  "timestamp": "2026-06-03T04:37:37.129Z",
   "queueSize": 13,
   "queue": [
     {
@@ -59,11 +59,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
       "articleType": "support",
       "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 12,
         "freshness": 0.79,
         "traffic": 0,
@@ -74,16 +74,16 @@
       "rank": 6,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "priorityScore": -3,
+      "topic": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
       "articleType": "support",
       "context": {
-        "wpId": 2924,
-        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
-        "compositeScore": 12,
-        "freshness": 0.79,
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 13,
+        "freshness": 0.88,
         "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
@@ -107,38 +107,6 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4105,
-        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-        "compositeScore": 13,
-        "freshness": 0.86,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4071,
-        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
-        "compositeScore": 13,
-        "freshness": 0.86,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
       "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
@@ -151,7 +119,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -167,7 +135,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -183,7 +151,7 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -196,6 +164,38 @@
         "freshness": 0.84,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "articleType": "support",
+      "context": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 14,
+        "freshness": 0.95,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "articleType": "support",
+      "context": {
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 14,
+        "freshness": 0.93,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     }
   ],

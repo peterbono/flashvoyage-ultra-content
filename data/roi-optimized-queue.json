@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-02T04:36:56.059Z",
+  "timestamp": "2026-06-03T04:37:43.220Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,10 +17,10 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 100,
-    "medianTrafficSignal": "0.100",
+    "medianMonthlyPV": 90,
+    "medianTrafficSignal": "0.090",
     "avgRpm": 2,
-    "articlesAnalyzed": 12
+    "articlesAnalyzed": 11
   },
   "queue": [
     {
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 2.67,
-        "projectedMonthlyTraffic": 100,
-        "projectedMonthlyRevenue": 0.2,
+        "expectedRoi": 2.4,
+        "projectedMonthlyTraffic": 90,
+        "projectedMonthlyRevenue": 0.18,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (90 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 2.67,
-        "projectedMonthlyTraffic": 100,
-        "projectedMonthlyRevenue": 0.2,
+        "expectedRoi": 2.4,
+        "projectedMonthlyTraffic": 90,
+        "projectedMonthlyRevenue": 0.18,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (90 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,11 +77,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 2.67,
-        "projectedMonthlyTraffic": 100,
-        "projectedMonthlyRevenue": 0.2,
+        "expectedRoi": 2.4,
+        "projectedMonthlyTraffic": 90,
+        "projectedMonthlyRevenue": 0.18,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (90 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -116,11 +116,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
       "articleType": "support",
       "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 12,
         "freshness": 0.79,
         "traffic": 0,
@@ -140,16 +140,16 @@
       "rank": 6,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "priorityScore": -3,
+      "topic": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
       "articleType": "support",
       "context": {
-        "wpId": 2924,
-        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
-        "compositeScore": 12,
-        "freshness": 0.79,
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 13,
+        "freshness": 0.88,
         "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -191,56 +191,6 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4105,
-        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-        "compositeScore": 13,
-        "freshness": 0.86,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4071,
-        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
-        "compositeScore": 13,
-        "freshness": 0.86,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
       "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
@@ -262,7 +212,7 @@
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -287,7 +237,7 @@
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -312,7 +262,7 @@
       "withinBudget": true
     },
     {
-      "rank": 13,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -335,6 +285,56 @@
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
+    },
+    {
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "articleType": "support",
+      "context": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 14,
+        "freshness": 0.95,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "articleType": "support",
+      "context": {
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 14,
+        "freshness": 0.93,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
     }
   ],
   "budgetAllocation": {
@@ -342,8 +342,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.02,
-    "expectedDailyRoi": 0.09
+    "expectedDailyRevenue": 0.018,
+    "expectedDailyRoi": 0.08
   },
   "summary": {
     "write_new": 0,

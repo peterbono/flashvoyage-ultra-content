@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-06-02T04:36:56.787Z",
+  "timestamp": "2026-06-03T04:37:44.172Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-06-02T04:36:57.668Z",
+      "lastScan": "2026-06-03T04:37:44.599Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-06-02T04:36:58.072Z",
+      "lastScan": "2026-06-03T04:37:45.047Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-06-02T04:38:13.859Z",
-      "urlCount": 9608,
+      "lastScan": "2026-06-03T04:38:59.792Z",
+      "urlCount": 9612,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9741,7 +9741,6 @@
         "https://generationvoyage.fr/visiter-amneville-faire-voir/": "2026-05-30T07:57:52+00:00",
         "https://generationvoyage.fr/chapelle-sixtine-photo/": "2026-05-30T09:59:36+00:00",
         "https://generationvoyage.fr/canalisation-pont-du-gard/": "2026-05-30T13:01:20+00:00",
-        "https://generationvoyage.fr/montreal-toronto/": "2026-05-30T16:03:37+00:00",
         "https://generationvoyage.fr/visiter-bayeux-faire-voir/": "2026-05-31T08:34:02+00:00",
         "https://generationvoyage.fr/arenes-verona-card/": "2026-05-31T11:35:18+00:00",
         "https://generationvoyage.fr/beefeaters-tour-londres/": "2026-05-31T13:42:36+00:00",
@@ -9749,7 +9748,12 @@
         "https://generationvoyage.fr/mudejar-alcazar-seville/": "2026-06-01T07:45:58+00:00",
         "https://generationvoyage.fr/domus-aurea-realite-vituelle/": "2026-06-01T10:47:33+00:00",
         "https://generationvoyage.fr/etna-eruption/": "2026-06-01T13:55:54+00:00",
-        "https://generationvoyage.fr/restaurants-acropole/": "2026-06-01T16:45:52+00:00"
+        "https://generationvoyage.fr/restaurants-acropole/": "2026-06-01T16:45:52+00:00",
+        "https://generationvoyage.fr/dormir-wawel-cracovie/": "2026-06-02T07:48:07+00:00",
+        "https://generationvoyage.fr/activites-paris-ete/": "2026-06-02T05:04:59+00:00",
+        "https://generationvoyage.fr/montreal-toronto/": "2026-06-02T05:46:13+00:00",
+        "https://generationvoyage.fr/sejour-foret-france/": "2026-06-02T07:36:29+00:00",
+        "https://generationvoyage.fr/vacances-famille/": "2026-06-02T07:36:31+00:00"
       }
     }
   }
