@@ -1,27 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-06-03T04:37:42.280Z",
-    "elapsedSeconds": 4,
+    "generatedAt": "2026-06-04T04:37:06.994Z",
+    "elapsedSeconds": 3,
     "totalArticles": 36,
-    "articlesWithRecommendations": 6,
-    "totalRecommendations": 6,
+    "articlesWithRecommendations": 5,
+    "totalRecommendations": 5,
     "byPriority": {
       "P0": 0,
-      "P1": 1,
+      "P1": 0,
       "P2": 5
     },
     "byType": {
-      "engagement": 1,
       "seo": 5
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
         "count": 5
-      },
-      {
-        "action": "IMPROVE_READABILITY",
-        "count": 1
       }
     ]
   },
@@ -36,9 +31,9 @@
       "internalLinks": 56,
       "lastModified": "2026-05-16T01:05:23",
       "ga4": {
-        "pageviews": 23,
-        "sessions": 16,
-        "avgDuration": 120
+        "pageviews": 19,
+        "sessions": 12,
+        "avgDuration": 137
       },
       "gsc": {
         "impressions": 13,
@@ -50,18 +45,8 @@
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [
-        {
-          "type": "engagement",
-          "priority": "P1",
-          "metric": "Temps lu: 120s / 1605s attendus (7% du contenu lu)",
-          "action": "IMPROVE_READABILITY",
-          "details": "Seulement 7% du contenu est lu (5349 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
-          "effort": "30min",
-          "expectedImpact": "Temps sur page +40 a +60%, meilleur signal qualite pour Google"
-        }
-      ],
-      "recommendationCount": 1,
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -158,14 +143,14 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 33,
+        "impressions": 34,
         "clicks": 0,
         "position": 27.5,
         "topQueries": [
           {
             "query": "esim asie du sud est",
             "position": 28.2,
-            "impressions": 32,
+            "impressions": 33,
             "ctr": 0
           }
         ]
@@ -261,18 +246,24 @@
       "gsc": {
         "impressions": 46,
         "clicks": 1,
-        "position": 24.3,
+        "position": 25.9,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 38.1,
+            "position": 37.9,
             "impressions": 14,
             "ctr": 0
           },
           {
             "query": "thailande ou bali",
-            "position": 40.5,
-            "impressions": 2,
+            "position": 46.3,
+            "impressions": 3,
+            "ctr": 0
+          },
+          {
+            "query": "voyage de noces bali vs thailande",
+            "position": 35,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -776,9 +767,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 2,
         "clicks": 0,
-        "position": 6.8,
+        "position": 6,
         "topQueries": []
       },
       "reels": {
@@ -828,7 +819,7 @@
       "lastModified": "2026-04-23T17:09:15",
       "ga4": {
         "pageviews": 0,
-        "sessions": 1,
+        "sessions": 0,
         "avgDuration": 0
       },
       "gsc": {

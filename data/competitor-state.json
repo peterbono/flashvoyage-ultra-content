@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-06-03T04:37:44.172Z",
+  "timestamp": "2026-06-04T04:37:08.885Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-06-03T04:37:44.599Z",
+      "lastScan": "2026-06-04T04:37:09.723Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-06-03T04:37:45.047Z",
+      "lastScan": "2026-06-04T04:37:10.355Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-06-03T04:38:59.792Z",
-      "urlCount": 9612,
+      "lastScan": "2026-06-04T04:38:22.576Z",
+      "urlCount": 9617,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -7222,7 +7222,6 @@
         "https://generationvoyage.fr/activites-pluie-bordeaux/": "2025-11-26T16:12:34+00:00",
         "https://generationvoyage.fr/meilleures-periodes-visiter-cirque-de-moureze/": "2025-11-26T16:12:45+00:00",
         "https://generationvoyage.fr/experiences-vin-beziers/": "2025-11-26T16:12:47+00:00",
-        "https://generationvoyage.fr/visites-medecine-montpellier/": "2025-11-26T16:12:53+00:00",
         "https://generationvoyage.fr/street-art-marseille/": "2025-11-26T16:12:57+00:00",
         "https://generationvoyage.fr/activites-romantiques-autour-paris/": "2025-11-26T16:13:03+00:00",
         "https://generationvoyage.fr/diner-restaurant-58-tour-eiffel-premier-etage/": "2025-11-26T16:13:05+00:00",
@@ -9753,7 +9752,13 @@
         "https://generationvoyage.fr/activites-paris-ete/": "2026-06-02T05:04:59+00:00",
         "https://generationvoyage.fr/montreal-toronto/": "2026-06-02T05:46:13+00:00",
         "https://generationvoyage.fr/sejour-foret-france/": "2026-06-02T07:36:29+00:00",
-        "https://generationvoyage.fr/vacances-famille/": "2026-06-02T07:36:31+00:00"
+        "https://generationvoyage.fr/vacances-famille/": "2026-06-02T07:36:31+00:00",
+        "https://generationvoyage.fr/minieurope-atomium/": "2026-06-03T07:51:39+00:00",
+        "https://generationvoyage.fr/monuments-istanbul/": "2026-06-03T09:52:34+00:00",
+        "https://generationvoyage.fr/empire-state-building-films/": "2026-06-03T13:55:59+00:00",
+        "https://generationvoyage.fr/visiter-rwanda-faire-voir/": "2026-06-03T16:53:01+00:00",
+        "https://generationvoyage.fr/visites-medecine-montpellier/": "2026-06-03T16:05:24+00:00",
+        "https://generationvoyage.fr/jeu-piste-montpellier/": "2026-06-03T16:18:45+00:00"
       }
     }
   }

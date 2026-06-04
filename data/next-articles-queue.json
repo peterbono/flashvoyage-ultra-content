@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-03T04:37:37.129Z",
+  "timestamp": "2026-06-04T04:37:02.873Z",
   "queueSize": 13,
   "queue": [
     {
@@ -65,7 +65,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 12,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
@@ -81,7 +81,7 @@
         "wpId": 4370,
         "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
         "compositeScore": 13,
-        "freshness": 0.88,
+        "freshness": 0.87,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
@@ -139,22 +139,6 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 13,
-        "freshness": 0.84,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
       "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
       "articleType": "support",
       "context": {
@@ -167,7 +151,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -183,7 +167,7 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -196,6 +180,22 @@
         "freshness": 0.93,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
+      "articleType": "support",
+      "context": {
+        "wpId": 6327,
+        "slug": "meilleur-esim-bali-2026",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     }
   ],

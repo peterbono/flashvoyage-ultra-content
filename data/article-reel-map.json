@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-03T04:37:36.197Z",
+  "timestamp": "2026-06-04T04:37:01.950Z",
   "articleMap": {
     "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
       "wpId": 4252,
@@ -124,18 +124,6 @@
       "category": "destination",
       "igReferralTraffic": null
     },
-    "visa-cambodge-francais-2026-evisa-prix-pieges": {
-      "wpId": 4369,
-      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
     "bali-vs-thailande-premier-voyage-asie-comparatif": {
       "wpId": 4254,
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -169,6 +157,18 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "visa-cambodge-francais-2026-evisa-prix-pieges": {
+      "wpId": 4369,
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "esim-thailande-comparatif-ais-dtac-true-2026": {
       "wpId": 4253,
       "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
@@ -191,6 +191,18 @@
         "humor"
       ],
       "category": "default",
+      "igReferralTraffic": null
+    },
+    "philippines-10-jours-itineraire-plages-budget-2026": {
+      "wpId": 4371,
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage": {
@@ -216,18 +228,6 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
-      "wpId": 5333,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
       "wpId": 5072,
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
@@ -243,30 +243,6 @@
           "matchSource": "tiktok-fuzzy-title"
         }
       ],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "philippines-10-jours-itineraire-plages-budget-2026": {
-      "wpId": 4371,
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
-      "wpId": 5260,
-      "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
-      "reels": [],
       "suggestedFormats": [
         "pick",
         "poll",
@@ -298,16 +274,28 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
-      "wpId": 5063,
-      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
+      "wpId": 5333,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "month",
-        "avantapres"
+        "poll",
+        "humor"
       ],
-      "category": "itineraire",
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
+      "wpId": 5260,
+      "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
       "igReferralTraffic": null
     },
     "meilleur-esim-vietnam-2026": {
@@ -334,9 +322,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
-      "wpId": 4105,
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+    "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
+      "wpId": 5063,
+      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -382,9 +370,33 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
+      "wpId": 4105,
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
     "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
       "wpId": 4071,
       "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
+      "wpId": 3254,
+      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -500,18 +512,6 @@
         "avantapres"
       ],
       "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
-      "wpId": 3254,
-      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique": {

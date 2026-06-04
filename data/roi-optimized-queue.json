@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-03T04:37:43.220Z",
+  "timestamp": "2026-06-04T04:37:07.935Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,8 +17,8 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 90,
-    "medianTrafficSignal": "0.090",
+    "medianMonthlyPV": 110,
+    "medianTrafficSignal": "0.110",
     "avgRpm": 2,
     "articlesAnalyzed": 11
   },
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 2.4,
-        "projectedMonthlyTraffic": 90,
-        "projectedMonthlyRevenue": 0.18,
+        "expectedRoi": 2.93,
+        "projectedMonthlyTraffic": 110,
+        "projectedMonthlyRevenue": 0.22,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (90 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 2.4,
-        "projectedMonthlyTraffic": 90,
-        "projectedMonthlyRevenue": 0.18,
+        "expectedRoi": 2.93,
+        "projectedMonthlyTraffic": 110,
+        "projectedMonthlyRevenue": 0.22,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (90 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,11 +77,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 2.4,
-        "projectedMonthlyTraffic": 90,
-        "projectedMonthlyRevenue": 0.18,
+        "expectedRoi": 2.93,
+        "projectedMonthlyTraffic": 110,
+        "projectedMonthlyRevenue": 0.22,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (90 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -122,7 +122,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 12,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -147,7 +147,7 @@
         "wpId": 4370,
         "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
         "compositeScore": 13,
-        "freshness": 0.88,
+        "freshness": 0.87,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
@@ -241,31 +241,6 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 13,
-        "freshness": 0.84,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
       "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
       "articleType": "support",
       "context": {
@@ -287,7 +262,7 @@
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -312,7 +287,7 @@
       "withinBudget": true
     },
     {
-      "rank": 13,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -335,6 +310,31 @@
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
+    },
+    {
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
+      "articleType": "support",
+      "context": {
+        "wpId": 6327,
+        "slug": "meilleur-esim-bali-2026",
+        "compositeScore": 15,
+        "freshness": 1,
+        "traffic": 0,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
     }
   ],
   "budgetAllocation": {
@@ -342,8 +342,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.018,
-    "expectedDailyRoi": 0.08
+    "expectedDailyRevenue": 0.022,
+    "expectedDailyRoi": 0.1
   },
   "summary": {
     "write_new": 0,
