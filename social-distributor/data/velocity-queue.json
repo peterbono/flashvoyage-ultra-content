@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-06-04T07:38:23.346Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-06-04T13:03:44.770Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Marcoleta’s attack on media ‘dangerous, irresponsible, reckless’ – Senate reporters",
-      "source": "rss_breaking",
-      "destination": "philippines",
-      "link": "https://www.rappler.com/philippines/senate-media-statement-rodante-marcoleta-attack/",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2070,
-      "estimatedTrafficIn24h": 2023,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.5
-      },
-      "detectedAt": "2026-06-04T05:10:05.000Z",
-      "scoredAt": "2026-06-04T07:38:21.011Z"
-    }
-  ]
+  "queue": []
 }
