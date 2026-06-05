@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-06-04T04:37:06.994Z",
+    "generatedAt": "2026-06-05T04:35:46.994Z",
     "elapsedSeconds": 3,
     "totalArticles": 36,
     "articlesWithRecommendations": 5,
@@ -21,34 +21,6 @@
     ]
   },
   "articles": [
-    {
-      "wpId": 4372,
-      "slug": "esim-philippines-globe-smart-comparatif-2026",
-      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
-      "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
-      "wordCount": 5349,
-      "widgetCount": 0,
-      "internalLinks": 56,
-      "lastModified": "2026-05-16T01:05:23",
-      "ga4": {
-        "pageviews": 19,
-        "sessions": 12,
-        "avgDuration": 137
-      },
-      "gsc": {
-        "impressions": 13,
-        "clicks": 0,
-        "position": 12.2,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
     {
       "wpId": 6195,
       "slug": "meilleur-esim-thailande-2026",
@@ -138,8 +110,8 @@
       "internalLinks": 25,
       "lastModified": "2026-04-30T07:39:29",
       "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
+        "pageviews": 2,
+        "sessions": 2,
         "avgDuration": 1
       },
       "gsc": {
@@ -244,20 +216,20 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 46,
+        "impressions": 43,
         "clicks": 1,
-        "position": 25.9,
+        "position": 25.6,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 37.9,
-            "impressions": 14,
+            "position": 37.3,
+            "impressions": 13,
             "ctr": 0
           },
           {
             "query": "thailande ou bali",
-            "position": 46.3,
-            "impressions": 3,
+            "position": 47.5,
+            "impressions": 2,
             "ctr": 0
           },
           {
@@ -742,6 +714,34 @@
         "impressions": 0,
         "clicks": 0,
         "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4372,
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
+      "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
+      "wordCount": 5349,
+      "widgetCount": 0,
+      "internalLinks": 56,
+      "lastModified": "2026-05-16T01:05:23",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 1,
+        "avgDuration": 166
+      },
+      "gsc": {
+        "impressions": 13,
+        "clicks": 0,
+        "position": 12.2,
         "topQueries": []
       },
       "reels": {

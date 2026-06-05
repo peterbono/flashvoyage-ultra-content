@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-04T04:37:01.950Z",
+  "timestamp": "2026-06-05T04:35:41.907Z",
   "articleMap": {
     "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
       "wpId": 4252,
@@ -34,6 +34,18 @@
         "humor"
       ],
       "category": "default",
+      "igReferralTraffic": null
+    },
+    "meilleur-esim-thailande-2026": {
+      "wpId": 6195,
+      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "destination",
       "igReferralTraffic": null
     },
     "voyage-thailande-pas-cher-2026-budget": {
@@ -112,16 +124,16 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "meilleur-esim-thailande-2026": {
-      "wpId": 6195,
-      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
+    "visa-cambodge-francais-2026-evisa-prix-pieges": {
+      "wpId": 4369,
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
       "reels": [],
       "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
+        "budget",
+        "versus",
+        "poll"
       ],
-      "category": "destination",
+      "category": "budget",
       "igReferralTraffic": null
     },
     "bali-vs-thailande-premier-voyage-asie-comparatif": {
@@ -157,18 +169,6 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "visa-cambodge-francais-2026-evisa-prix-pieges": {
-      "wpId": 4369,
-      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
     "esim-thailande-comparatif-ais-dtac-true-2026": {
       "wpId": 4253,
       "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
@@ -193,16 +193,16 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "philippines-10-jours-itineraire-plages-budget-2026": {
-      "wpId": 4371,
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
+      "wpId": 5333,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
       "reels": [],
       "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
+        "pick",
+        "poll",
+        "humor"
       ],
-      "category": "budget",
+      "category": "default",
       "igReferralTraffic": null
     },
     "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage": {
@@ -251,6 +251,18 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "philippines-10-jours-itineraire-plages-budget-2026": {
+      "wpId": 4371,
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage": {
       "wpId": 5179,
       "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
@@ -274,45 +286,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
-      "wpId": 5333,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
       "wpId": 5260,
       "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "meilleur-esim-vietnam-2026": {
-      "wpId": 6323,
-      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "destination",
-      "igReferralTraffic": null
-    },
-    "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout": {
-      "wpId": 5678,
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -334,6 +310,18 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
+    "meilleur-esim-vietnam-2026": {
+      "wpId": 6323,
+      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "destination",
+      "igReferralTraffic": null
+    },
     "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
       "wpId": 3090,
       "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
@@ -344,6 +332,30 @@
         "avantapres"
       ],
       "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
+      "wpId": 4105,
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout": {
+      "wpId": 5678,
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
       "igReferralTraffic": null
     },
     "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
@@ -368,18 +380,6 @@
         "humor"
       ],
       "category": "default",
-      "igReferralTraffic": null
-    },
-    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
-      "wpId": 4105,
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
       "igReferralTraffic": null
     },
     "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {

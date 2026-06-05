@@ -1,11 +1,56 @@
 {
-  "timestamp": "2026-06-04T04:37:01.010Z",
-  "gapCount": 0,
-  "gaps": [],
+  "timestamp": "2026-06-05T04:35:40.963Z",
+  "gapCount": 2,
+  "gaps": [
+    {
+      "topic": "agence de voyage",
+      "source": "trends",
+      "gapScore": 56,
+      "signals": {
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
+        "competition": 0.6
+      },
+      "destination": "vietnam",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "volodymyr zelensky",
+      "source": "trends",
+      "gapScore": 40,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.6
+      },
+      "destination": null,
+      "category": "transport",
+      "suggestedTitle": "Volodymyr zelensky : Guide Pratique",
+      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+      "articleType": "support",
+      "priority": "medium"
+    }
+  ],
   "summary": {
-    "byPriority": {},
-    "byCategory": {},
-    "byDestination": {},
-    "topDestinationGaps": []
+    "byPriority": {
+      "high": 1,
+      "medium": 1
+    },
+    "byCategory": {
+      "destination": 1,
+      "transport": 1
+    },
+    "byDestination": {
+      "vietnam": 1
+    },
+    "topDestinationGaps": [
+      "vietnam"
+    ]
   }
 }

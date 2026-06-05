@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-06-04T04:37:08.885Z",
+  "timestamp": "2026-06-05T04:35:48.883Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-06-04T04:37:09.723Z",
+      "lastScan": "2026-06-05T04:35:49.266Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-06-04T04:37:10.355Z",
+      "lastScan": "2026-06-05T04:35:49.642Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-06-04T04:38:22.576Z",
-      "urlCount": 9617,
+      "lastScan": "2026-06-05T04:37:05.591Z",
+      "urlCount": 9621,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9758,7 +9758,11 @@
         "https://generationvoyage.fr/empire-state-building-films/": "2026-06-03T13:55:59+00:00",
         "https://generationvoyage.fr/visiter-rwanda-faire-voir/": "2026-06-03T16:53:01+00:00",
         "https://generationvoyage.fr/visites-medecine-montpellier/": "2026-06-03T16:05:24+00:00",
-        "https://generationvoyage.fr/jeu-piste-montpellier/": "2026-06-03T16:18:45+00:00"
+        "https://generationvoyage.fr/jeu-piste-montpellier/": "2026-06-03T16:18:45+00:00",
+        "https://generationvoyage.fr/dormir-rijksmuseum/": "2026-06-04T08:19:52+00:00",
+        "https://generationvoyage.fr/visiter-belfort-faire-voir/": "2026-06-04T10:22:34+00:00",
+        "https://generationvoyage.fr/chakra-wawel/": "2026-06-04T13:24:09+00:00",
+        "https://generationvoyage.fr/visiter-sumatra-faire-voir/": "2026-06-04T16:31:11+00:00"
       }
     }
   }

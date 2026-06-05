@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-04T04:36:42.334Z",
+  "timestamp": "2026-06-05T04:35:23.454Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -14,11 +14,11 @@
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "compositeScore": 50,
+      "compositeScore": 49,
       "signals": {
         "traffic": 0.11,
         "sessionQuality": 1,
-        "trendAlignment": 0.41,
+        "trendAlignment": 0.35,
         "reelAmplification": 0.38,
         "freshness": 0.87,
         "monetization": 1,
@@ -43,8 +43,8 @@
         "reelAmplification": 0,
         "freshness": 0.87,
         "monetization": 0,
-        "frShare": 0.37,
-        "frPageviews": 7
+        "frShare": 0.17,
+        "frPageviews": 3
       },
       "flags": [
         "top_performer"
@@ -53,22 +53,42 @@
       "wordCount": 5350
     },
     {
+      "wpId": 6195,
+      "slug": "meilleur-esim-thailande-2026",
+      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
+      "compositeScore": 41,
+      "signals": {
+        "traffic": 0.56,
+        "sessionQuality": 0.03,
+        "trendAlignment": 0.47,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [
+        "top_performer"
+      ],
+      "date": "2026-05-10T03:15:12",
+      "wordCount": 1803
+    },
+    {
       "wpId": 4487,
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "compositeScore": 41,
+      "compositeScore": 38,
       "signals": {
         "traffic": 0.11,
         "sessionQuality": 0.06,
-        "trendAlignment": 0.62,
+        "trendAlignment": 0.47,
         "reelAmplification": 0.1,
-        "freshness": 0.9,
+        "freshness": 0.89,
         "monetization": 1,
         "frShare": 0.5,
         "frPageviews": 1
       },
       "flags": [
-        "trending",
         "1_reels"
       ],
       "date": "2026-03-31T16:22:55",
@@ -78,9 +98,9 @@
       "wpId": 4373,
       "slug": "japon-couple-15-jours-budget-tout-compris-2026",
       "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "compositeScore": 37,
+      "compositeScore": 38,
       "signals": {
-        "traffic": 0.26,
+        "traffic": 0.28,
         "sessionQuality": 0.1,
         "trendAlignment": 0,
         "reelAmplification": 0.34,
@@ -96,35 +116,33 @@
       "wordCount": 4905
     },
     {
-      "wpId": 6195,
-      "slug": "meilleur-esim-thailande-2026",
-      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
-      "compositeScore": 35,
+      "wpId": 4369,
+      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "compositeScore": 36,
       "signals": {
-        "traffic": 0.53,
-        "sessionQuality": 0.03,
-        "trendAlignment": 0.21,
+        "traffic": 0.06,
+        "sessionQuality": 0.17,
+        "trendAlignment": 0.47,
         "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0,
+        "freshness": 0.87,
+        "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
       },
-      "flags": [
-        "top_performer"
-      ],
-      "date": "2026-05-10T03:15:12",
-      "wordCount": 1803
+      "flags": [],
+      "date": "2026-03-23T13:17:33",
+      "wordCount": 2355
     },
     {
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
-      "compositeScore": 35,
+      "compositeScore": 36,
       "signals": {
         "traffic": 0.11,
         "sessionQuality": 0,
-        "trendAlignment": 0.41,
+        "trendAlignment": 0.47,
         "reelAmplification": 0,
         "freshness": 0.87,
         "monetization": 1,
@@ -138,33 +156,14 @@
       "wordCount": 4809
     },
     {
-      "wpId": 4369,
-      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
-      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
-      "compositeScore": 31,
-      "signals": {
-        "traffic": 0.05,
-        "sessionQuality": 0.17,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 0.87,
-        "monetization": 1,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-23T13:17:33",
-      "wordCount": 2355
-    },
-    {
       "wpId": 4253,
       "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
       "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
-      "compositeScore": 27,
+      "compositeScore": 32,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
-        "trendAlignment": 0.21,
+        "trendAlignment": 0.47,
         "reelAmplification": 0,
         "freshness": 0.87,
         "monetization": 1,
@@ -181,11 +180,11 @@
       "wpId": 4250,
       "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
       "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
-      "compositeScore": 27,
+      "compositeScore": 29,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
-        "trendAlignment": 0.21,
+        "trendAlignment": 0.28,
         "reelAmplification": 0,
         "freshness": 0.87,
         "monetization": 1,
@@ -197,6 +196,68 @@
       ],
       "date": "2026-03-23T11:56:46",
       "wordCount": 3364
+    },
+    {
+      "wpId": 5333,
+      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+      "compositeScore": 27,
+      "signals": {
+        "traffic": 0.11,
+        "sessionQuality": 0.04,
+        "trendAlignment": 0.47,
+        "reelAmplification": 0,
+        "freshness": 0.93,
+        "monetization": 0,
+        "frShare": 0.5,
+        "frPageviews": 1
+      },
+      "flags": [],
+      "date": "2026-04-12T05:34:09",
+      "wordCount": 1334
+    },
+    {
+      "wpId": 5119,
+      "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
+      "compositeScore": 26,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.47,
+        "reelAmplification": 0.2,
+        "freshness": 0.91,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "1_reels",
+        "zero_traffic"
+      ],
+      "date": "2026-04-06T05:37:25",
+      "wordCount": 1405
+    },
+    {
+      "wpId": 5072,
+      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
+      "compositeScore": 26,
+      "signals": {
+        "traffic": 0.06,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0.24,
+        "reelAmplification": 0.36,
+        "freshness": 0.91,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [
+        "1_reels"
+      ],
+      "date": "2026-04-05T08:42:10",
+      "wordCount": 1296
     },
     {
       "wpId": 4371,
@@ -220,57 +281,14 @@
       "wordCount": 3355
     },
     {
-      "wpId": 5119,
-      "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
-      "compositeScore": 25,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.41,
-        "reelAmplification": 0.2,
-        "freshness": 0.91,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "1_reels",
-        "zero_traffic"
-      ],
-      "date": "2026-04-06T05:37:25",
-      "wordCount": 1405
-    },
-    {
-      "wpId": 5072,
-      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
-      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "compositeScore": 25,
-      "signals": {
-        "traffic": 0.05,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0.36,
-        "freshness": 0.91,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [
-        "1_reels"
-      ],
-      "date": "2026-04-05T08:42:10",
-      "wordCount": 1296
-    },
-    {
       "wpId": 5179,
       "slug": "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage",
       "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
-      "compositeScore": 23,
+      "compositeScore": 24,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
-        "trendAlignment": 0.41,
+        "trendAlignment": 0.47,
         "reelAmplification": 0.03,
         "freshness": 0.92,
         "monetization": 0,
@@ -285,35 +303,16 @@
       "wordCount": 1515
     },
     {
-      "wpId": 5333,
-      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "compositeScore": 22,
-      "signals": {
-        "traffic": 0.11,
-        "sessionQuality": 0.04,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 0.93,
-        "monetization": 0,
-        "frShare": 0.5,
-        "frPageviews": 1
-      },
-      "flags": [],
-      "date": "2026-04-12T05:34:09",
-      "wordCount": 1334
-    },
-    {
       "wpId": 5260,
       "slug": "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage",
       "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
-      "compositeScore": 22,
+      "compositeScore": 23,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
-        "trendAlignment": 0.41,
+        "trendAlignment": 0.47,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -325,54 +324,14 @@
       "wordCount": 1664
     },
     {
-      "wpId": 6323,
-      "slug": "meilleur-esim-vietnam-2026",
-      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
-      "compositeScore": 19,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-05-24T03:16:15",
-      "wordCount": 1244
-    },
-    {
-      "wpId": 5678,
-      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "compositeScore": 19,
-      "signals": {
-        "traffic": 0.16,
-        "sessionQuality": 0,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.94,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-04-15T09:17:09",
-      "wordCount": 1659
-    },
-    {
       "wpId": 5063,
       "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
       "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
-      "compositeScore": 18,
+      "compositeScore": 23,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
-        "trendAlignment": 0.21,
+        "trendAlignment": 0.47,
         "reelAmplification": 0,
         "freshness": 0.91,
         "monetization": 0,
@@ -386,16 +345,37 @@
       "wordCount": 1374
     },
     {
+      "wpId": 6323,
+      "slug": "meilleur-esim-vietnam-2026",
+      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
+      "compositeScore": 21,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.28,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-05-24T03:16:15",
+      "wordCount": 1244
+    },
+    {
       "wpId": 3090,
       "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
       "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "compositeScore": 18,
+      "compositeScore": 19,
       "signals": {
-        "traffic": 0.05,
+        "traffic": 0.06,
         "sessionQuality": 0,
-        "trendAlignment": 0.21,
+        "trendAlignment": 0.24,
         "reelAmplification": 0,
-        "freshness": 0.82,
+        "freshness": 0.81,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -403,6 +383,46 @@
       "flags": [],
       "date": "2026-03-04T19:08:20",
       "wordCount": 1722
+    },
+    {
+      "wpId": 4105,
+      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "compositeScore": 18,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.28,
+        "reelAmplification": 0,
+        "freshness": 0.85,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-18T13:26:31",
+      "wordCount": 2346
+    },
+    {
+      "wpId": 5678,
+      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "compositeScore": 17,
+      "signals": {
+        "traffic": 0.11,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.94,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-04-15T09:17:09",
+      "wordCount": 1659
     },
     {
       "wpId": 5343,
@@ -447,27 +467,6 @@
       "wordCount": 1607
     },
     {
-      "wpId": 4105,
-      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "compositeScore": 17,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 0.86,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-03-18T13:26:31",
-      "wordCount": 2346
-    },
-    {
       "wpId": 4071,
       "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
       "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
@@ -477,7 +476,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.86,
+        "freshness": 0.85,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -498,7 +497,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.18,
         "reelAmplification": 0,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -582,7 +581,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -603,7 +602,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -666,7 +665,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.86,
+        "freshness": 0.85,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -687,7 +686,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -702,13 +701,13 @@
       "wpId": 3198,
       "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
       "title": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
-      "compositeScore": 13,
+      "compositeScore": 12,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -729,7 +728,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.82,
+        "freshness": 0.81,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -763,12 +762,12 @@
     }
   ],
   "summary": {
-    "avgScore": 22,
+    "avgScore": 23,
     "topPerformers": 2,
     "staleArticles": 0,
     "missingWidgets": 0,
     "zeroTraffic": 25,
-    "trending": 1,
+    "trending": 0,
     "frHeavy": 0,
     "frLight": 0,
     "frDiversified": 0

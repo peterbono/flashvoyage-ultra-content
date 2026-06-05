@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-04T04:37:07.935Z",
+  "timestamp": "2026-06-05T04:35:47.932Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -88,16 +88,66 @@
     },
     {
       "rank": 4,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 136,
+      "topic": "agence de voyage",
+      "articleType": "support",
+      "context": {
+        "gapScore": 56,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"agence de voyage\" (score 56, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 2.75,
+        "projectedMonthlyTraffic": 103,
+        "projectedMonthlyRevenue": 0.206,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (110 PV) × gap boost (0.93)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "volodymyr zelensky",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "transport",
+        "suggestedTitle": "Volodymyr zelensky : Guide Pratique",
+        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+        "reason": "Content gap: \"volodymyr zelensky\" (score 40, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 1.95,
+        "projectedMonthlyTraffic": 73,
+        "projectedMonthlyRevenue": 0.146,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (110 PV) × gap boost (0.67)"
+      },
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
       "articleType": "support",
       "context": {
-        "wpId": 3107,
-        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 12,
-        "freshness": 0.82,
+        "freshness": 0.83,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -108,11 +158,36 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "articleType": "support",
+      "context": {
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 12,
+        "freshness": 0.81,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -133,11 +208,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -158,11 +233,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -183,11 +258,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -196,31 +271,6 @@
       "context": {
         "wpId": 4030,
         "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-        "compositeScore": 13,
-        "freshness": 0.86,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "articleType": "support",
-      "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 13,
         "freshness": 0.85,
         "traffic": 0,
@@ -233,19 +283,19 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "articleType": "support",
       "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 13,
         "freshness": 0.84,
         "traffic": 0,
@@ -258,11 +308,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -272,7 +322,7 @@
         "wpId": 5742,
         "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
         "compositeScore": 14,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -283,11 +333,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -297,7 +347,7 @@
         "wpId": 5270,
         "slug": "esim-japon-combien-ca-te-coute-vraiment",
         "compositeScore": 14,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -308,11 +358,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 13,
+      "rank": 15,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -333,20 +383,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.225,
+    "totalCost": 0.375,
     "dailyBudget": 2,
-    "itemsWithinBudget": 13,
+    "itemsWithinBudget": 15,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.022,
-    "expectedDailyRoi": 0.1
+    "expectedDailyRevenue": 0.034,
+    "expectedDailyRoi": 0.09
   },
   "summary": {
-    "write_new": 0,
+    "write_new": 2,
     "update": 0,
     "enrich": 0,
     "standard": 3,
