@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-06-05T07:29:58.308Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-06-05T13:00:33.119Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 0,
+    "queue_priority": 1,
     "queue_normal": 0
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Indonesia volcano erupts, forcing airport to close",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/se-asia/indonesia-volcano-erupts-forcing-airport-to-close",
+      "velocityScore": 0.62,
+      "action": "QUEUE_PRIORITY",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2067,
+      "estimatedTrafficIn24h": 2020,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 3.9
+      },
+      "detectedAt": "2026-06-05T09:05:00.000Z",
+      "scoredAt": "2026-06-05T13:00:28.109Z"
+    }
+  ]
 }
