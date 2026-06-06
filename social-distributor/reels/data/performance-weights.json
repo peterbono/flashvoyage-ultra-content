@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-05",
+  "lastUpdated": "2026-06-06",
   "formatScores": {
     "poll": 0,
     "pick": 16.5,
@@ -61,8 +61,8 @@
     "thailande": 6.8,
     "philippines": 4,
     "bali": 0.4,
-    "singapour": 0.2,
-    "cambodge": 0.2
+    "cambodge": 0.2,
+    "singapour": 0.2
   },
   "tiktokDestinationScores": {
     "vietnam": 8.4,
@@ -73,8 +73,8 @@
     "thailande": "ig-only",
     "philippines": "ig-only",
     "bali": "ig-only",
-    "singapour": "merged(60/40)",
-    "cambodge": "ig-only"
+    "cambodge": "ig-only",
+    "singapour": "merged(60/40)"
   },
   "mergeConfig": {
     "tiktokWeight": 0.6,
