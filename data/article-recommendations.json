@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-06-05T04:35:46.994Z",
-    "elapsedSeconds": 3,
+    "generatedAt": "2026-06-06T04:28:38.696Z",
+    "elapsedSeconds": 4,
     "totalArticles": 36,
     "articlesWithRecommendations": 5,
     "totalRecommendations": 5,
@@ -216,9 +216,9 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 43,
+        "impressions": 39,
         "clicks": 1,
-        "position": 25.6,
+        "position": 27.5,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -273,9 +273,9 @@
         "avgDuration": 790
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 17,
         "clicks": 0,
-        "position": 18.9,
+        "position": 19.6,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -363,57 +363,6 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3090,
-      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
-      "wordCount": 1721,
-      "widgetCount": 0,
-      "internalLinks": 27,
-      "lastModified": "2026-05-16T01:05:16",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 4,
-        "clicks": 0,
-        "position": 40.3,
-        "topQueries": [
-          {
-            "query": "itinéraire asie hors des sentiers battus",
-            "position": 22,
-            "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "itinéraire luxe asie du sud-est",
-            "position": 96,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"itinéraire asie hors des sentiers battus\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"itinéraire asie hors des sentiers battus\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -627,9 +576,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 7,
         "clicks": 0,
-        "position": 8,
+        "position": 7.9,
         "topQueries": []
       },
       "reels": {
@@ -736,12 +685,12 @@
       "ga4": {
         "pageviews": 0,
         "sessions": 1,
-        "avgDuration": 166
+        "avgDuration": 117
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 12,
         "clicks": 0,
-        "position": 12.2,
+        "position": 12.8,
         "topQueries": []
       },
       "reels": {
@@ -795,9 +744,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 7,
         "clicks": 0,
-        "position": 8.6,
+        "position": 8.9,
         "topQueries": []
       },
       "reels": {
@@ -1086,6 +1035,57 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3090,
+      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
+      "wordCount": 1721,
+      "widgetCount": 0,
+      "internalLinks": 27,
+      "lastModified": "2026-05-16T01:05:16",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 4,
+        "clicks": 0,
+        "position": 40.3,
+        "topQueries": [
+          {
+            "query": "itinéraire asie hors des sentiers battus",
+            "position": 22,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "itinéraire luxe asie du sud-est",
+            "position": 96,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"itinéraire asie hors des sentiers battus\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"itinéraire asie hors des sentiers battus\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {

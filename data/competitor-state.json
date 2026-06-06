@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-06-05T04:35:48.883Z",
+  "timestamp": "2026-06-06T04:28:40.605Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-06-05T04:35:49.266Z",
+      "lastScan": "2026-06-06T04:28:40.899Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-06-05T04:35:49.642Z",
+      "lastScan": "2026-06-06T04:28:41.361Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-06-05T04:37:05.591Z",
-      "urlCount": 9621,
+      "lastScan": "2026-06-06T04:29:53.725Z",
+      "urlCount": 9625,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9762,7 +9762,11 @@
         "https://generationvoyage.fr/dormir-rijksmuseum/": "2026-06-04T08:19:52+00:00",
         "https://generationvoyage.fr/visiter-belfort-faire-voir/": "2026-06-04T10:22:34+00:00",
         "https://generationvoyage.fr/chakra-wawel/": "2026-06-04T13:24:09+00:00",
-        "https://generationvoyage.fr/visiter-sumatra-faire-voir/": "2026-06-04T16:31:11+00:00"
+        "https://generationvoyage.fr/visiter-sumatra-faire-voir/": "2026-06-04T16:31:11+00:00",
+        "https://generationvoyage.fr/couronne-statue-liberte/": "2026-06-05T07:59:37+00:00",
+        "https://generationvoyage.fr/visiter-leucate-faire-voir/": "2026-06-05T10:01:04+00:00",
+        "https://generationvoyage.fr/billets-anne-frank/": "2026-06-05T13:03:37+00:00",
+        "https://generationvoyage.fr/visiter-le-croisic-faire-voir/": "2026-06-05T16:05:36+00:00"
       }
     }
   }

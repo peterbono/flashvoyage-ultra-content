@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-05T04:35:23.454Z",
+  "timestamp": "2026-06-06T04:28:14.186Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -14,11 +14,11 @@
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "compositeScore": 49,
+      "compositeScore": 50,
       "signals": {
         "traffic": 0.11,
         "sessionQuality": 1,
-        "trendAlignment": 0.35,
+        "trendAlignment": 0.41,
         "reelAmplification": 0.38,
         "freshness": 0.87,
         "monetization": 1,
@@ -38,7 +38,7 @@
       "compositeScore": 45,
       "signals": {
         "traffic": 1,
-        "sessionQuality": 0.17,
+        "sessionQuality": 0.16,
         "trendAlignment": 0,
         "reelAmplification": 0,
         "freshness": 0.87,
@@ -51,6 +51,27 @@
       ],
       "date": "2026-03-23T13:19:57",
       "wordCount": 5350
+    },
+    {
+      "wpId": 4373,
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "compositeScore": 43,
+      "signals": {
+        "traffic": 0.28,
+        "sessionQuality": 0.1,
+        "trendAlignment": 0.27,
+        "reelAmplification": 0.34,
+        "freshness": 0.87,
+        "monetization": 1,
+        "frShare": 0.6,
+        "frPageviews": 3
+      },
+      "flags": [
+        "4_reels"
+      ],
+      "date": "2026-03-23T13:20:52",
+      "wordCount": 4905
     },
     {
       "wpId": 6195,
@@ -93,27 +114,6 @@
       ],
       "date": "2026-03-31T16:22:55",
       "wordCount": 2387
-    },
-    {
-      "wpId": 4373,
-      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
-      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "compositeScore": 38,
-      "signals": {
-        "traffic": 0.28,
-        "sessionQuality": 0.1,
-        "trendAlignment": 0,
-        "reelAmplification": 0.34,
-        "freshness": 0.87,
-        "monetization": 1,
-        "frShare": 0.6,
-        "frPageviews": 3
-      },
-      "flags": [
-        "4_reels"
-      ],
-      "date": "2026-03-23T13:20:52",
-      "wordCount": 4905
     },
     {
       "wpId": 4369,
@@ -246,7 +246,7 @@
       "signals": {
         "traffic": 0.06,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.24,
+        "trendAlignment": 0.27,
         "reelAmplification": 0.36,
         "freshness": 0.91,
         "monetization": 0,
@@ -290,7 +290,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.47,
         "reelAmplification": 0.03,
-        "freshness": 0.92,
+        "freshness": 0.91,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -333,7 +333,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.47,
         "reelAmplification": 0,
-        "freshness": 0.91,
+        "freshness": 0.9,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -366,23 +366,23 @@
       "wordCount": 1244
     },
     {
-      "wpId": 3090,
-      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "compositeScore": 19,
+      "wpId": 5678,
+      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "compositeScore": 20,
       "signals": {
-        "traffic": 0.06,
+        "traffic": 0.11,
         "sessionQuality": 0,
-        "trendAlignment": 0.24,
+        "trendAlignment": 0.13,
         "reelAmplification": 0,
-        "freshness": 0.81,
+        "freshness": 0.93,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
       },
       "flags": [],
-      "date": "2026-03-04T19:08:20",
-      "wordCount": 1722
+      "date": "2026-04-15T09:17:09",
+      "wordCount": 1659
     },
     {
       "wpId": 4105,
@@ -404,25 +404,6 @@
       ],
       "date": "2026-03-18T13:26:31",
       "wordCount": 2346
-    },
-    {
-      "wpId": 5678,
-      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "compositeScore": 17,
-      "signals": {
-        "traffic": 0.11,
-        "sessionQuality": 0,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.94,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-04-15T09:17:09",
-      "wordCount": 1659
     },
     {
       "wpId": 5343,
@@ -455,7 +436,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.16,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -488,6 +469,27 @@
       "wordCount": 3113
     },
     {
+      "wpId": 3090,
+      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "compositeScore": 17,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.27,
+        "reelAmplification": 0,
+        "freshness": 0.81,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-04T19:08:20",
+      "wordCount": 1722
+    },
+    {
       "wpId": 3254,
       "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
       "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
@@ -518,7 +520,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -644,7 +646,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.86,
+        "freshness": 0.85,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -766,7 +768,7 @@
     "topPerformers": 2,
     "staleArticles": 0,
     "missingWidgets": 0,
-    "zeroTraffic": 25,
+    "zeroTraffic": 26,
     "trending": 0,
     "frHeavy": 0,
     "frLight": 0,

@@ -1,37 +1,37 @@
 {
-  "timestamp": "2026-06-05T04:35:42.863Z",
+  "timestamp": "2026-06-06T04:28:33.832Z",
   "queueSize": 15,
   "queue": [
     {
       "rank": 1,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 136,
-      "topic": "agence de voyage",
+      "priorityScore": 141,
+      "topic": "voyage pas cher",
       "articleType": "support",
       "context": {
-        "gapScore": 56,
+        "gapScore": 61,
         "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"agence de voyage\" (score 56, source: trends)"
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
       }
     },
     {
       "rank": 2,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 120,
-      "topic": "volodymyr zelensky",
+      "priorityScore": 131,
+      "topic": "laos",
       "articleType": "support",
       "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "transport",
-        "suggestedTitle": "Volodymyr zelensky : Guide Pratique",
-        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
-        "reason": "Content gap: \"volodymyr zelensky\" (score 40, source: trends)"
+        "gapScore": 51,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"laos\" (score 51, source: trends)"
       }
     },
     {
@@ -145,7 +145,7 @@
         "wpId": 4125,
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 13,
-        "freshness": 0.86,
+        "freshness": 0.85,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }

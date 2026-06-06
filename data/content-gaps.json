@@ -1,16 +1,33 @@
 {
-  "timestamp": "2026-06-05T04:35:40.963Z",
+  "timestamp": "2026-06-06T04:28:31.955Z",
   "gapCount": 2,
   "gaps": [
     {
-      "topic": "agence de voyage",
+      "topic": "voyage pas cher",
       "source": "trends",
-      "gapScore": 56,
+      "gapScore": 61,
       "signals": {
         "searchVolume": 0.47,
         "trendGrowth": 0.47,
         "monetization": 0.9,
-        "competition": 0.6
+        "competition": 0.4
+      },
+      "destination": "vietnam",
+      "category": "budget",
+      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "laos",
+      "source": "trends",
+      "gapScore": 51,
+      "signals": {
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
+        "competition": 0.8
       },
       "destination": "vietnam",
       "category": "destination",
@@ -18,36 +35,18 @@
       "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
       "articleType": "support",
       "priority": "high"
-    },
-    {
-      "topic": "volodymyr zelensky",
-      "source": "trends",
-      "gapScore": 40,
-      "signals": {
-        "searchVolume": 0.29,
-        "trendGrowth": 0.29,
-        "monetization": 0.6,
-        "competition": 0.6
-      },
-      "destination": null,
-      "category": "transport",
-      "suggestedTitle": "Volodymyr zelensky : Guide Pratique",
-      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
-      "articleType": "support",
-      "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
-      "high": 1,
-      "medium": 1
+      "high": 2
     },
     "byCategory": {
-      "destination": 1,
-      "transport": 1
+      "budget": 1,
+      "destination": 1
     },
     "byDestination": {
-      "vietnam": 1
+      "vietnam": 2
     },
     "topDestinationGaps": [
       "vietnam"
