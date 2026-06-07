@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-06T04:29:53.739Z",
+  "timestamp": "2026-06-07T04:38:57.865Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,14 +16,26 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 9625,
+      "totalUrls": 7629,
       "newUrls": 4
     }
   ],
-  "newArticles": [],
+  "newArticles": [
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/tokyo-kyoto/",
+      "lastmod": "2026-06-06T07:15:14+00:00",
+      "destination": "tokyo",
+      "contentType": "general",
+      "title": "Tokyo Kyoto",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Tokyo Kyoto\" (tokyo, general) — no matching FlashVoyage article found"
+    }
+  ],
   "summary": {
-    "totalNew": 0,
-    "contentGaps": 0,
+    "totalNew": 1,
+    "contentGaps": 1,
     "staleRefreshes": 0,
     "monitoring": 0
   }

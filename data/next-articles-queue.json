@@ -1,41 +1,9 @@
 {
-  "timestamp": "2026-06-06T04:28:33.832Z",
-  "queueSize": 15,
+  "timestamp": "2026-06-07T04:37:02.222Z",
+  "queueSize": 13,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 61,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 131,
-      "topic": "laos",
-      "articleType": "support",
-      "context": {
-        "gapScore": 51,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"laos\" (score 51, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -47,7 +15,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -59,7 +27,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -71,7 +39,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -87,7 +55,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -103,7 +71,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -113,29 +81,13 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 12,
-        "freshness": 0.78,
+        "freshness": 0.77,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
     },
     {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "articleType": "support",
-      "context": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 13,
-        "freshness": 0.87,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 10,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -151,7 +103,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -167,7 +119,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -183,7 +135,7 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -199,7 +151,23 @@
       }
     },
     {
-      "rank": 14,
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "articleType": "support",
+      "context": {
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "compositeScore": 14,
+        "freshness": 0.92,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -215,15 +183,15 @@
       }
     },
     {
-      "rank": 15,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
+      "topic": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
       "articleType": "support",
       "context": {
-        "wpId": 6327,
-        "slug": "meilleur-esim-bali-2026",
+        "wpId": 6331,
+        "slug": "meilleur-esim-philippines-2026",
         "compositeScore": 15,
         "freshness": 1,
         "traffic": 0,
@@ -232,7 +200,7 @@
     }
   ],
   "summary": {
-    "write_new": 2,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,

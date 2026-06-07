@@ -1,8 +1,8 @@
 {
   "summary": {
-    "generatedAt": "2026-06-06T04:28:38.696Z",
+    "generatedAt": "2026-06-07T04:37:06.890Z",
     "elapsedSeconds": 4,
-    "totalArticles": 36,
+    "totalArticles": 37,
     "articlesWithRecommendations": 5,
     "totalRecommendations": 5,
     "byPriority": {
@@ -66,12 +66,12 @@
       "gsc": {
         "impressions": 23,
         "clicks": 2,
-        "position": 28.3,
+        "position": 30.6,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 58.3,
-            "impressions": 8,
+            "position": 58.1,
+            "impressions": 9,
             "ctr": 0
           },
           {
@@ -101,6 +101,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2386,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-04-22T12:43:04",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 29
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5678,
       "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
       "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
@@ -115,14 +143,14 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 34,
+        "impressions": 39,
         "clicks": 0,
-        "position": 27.5,
+        "position": 28.4,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 28.2,
-            "impressions": 33,
+            "position": 28.4,
+            "impressions": 39,
             "ctr": 0
           }
         ]
@@ -174,34 +202,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2386,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-04-22T12:43:04",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 43
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -218,12 +218,12 @@
       "gsc": {
         "impressions": 39,
         "clicks": 1,
-        "position": 27.5,
+        "position": 28.1,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 37.3,
-            "impressions": 13,
+            "position": 36.9,
+            "impressions": 14,
             "ctr": 0
           },
           {
@@ -273,9 +273,9 @@
         "avgDuration": 790
       },
       "gsc": {
-        "impressions": 17,
+        "impressions": 16,
         "clicks": 0,
-        "position": 19.6,
+        "position": 20.4,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -352,9 +352,37 @@
         "avgDuration": 138
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 1,
         "clicks": 0,
-        "position": 25,
+        "position": 45,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 6331,
+      "slug": "meilleur-esim-philippines-2026",
+      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
+      "url": "https://flashvoyage.com/meilleur-esim-philippines-2026/",
+      "wordCount": 1155,
+      "widgetCount": 0,
+      "internalLinks": 11,
+      "lastModified": "2026-06-07T03:18:13",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -576,9 +604,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 6,
         "clicks": 0,
-        "position": 7.9,
+        "position": 8.7,
         "topQueries": []
       },
       "reels": {
@@ -688,9 +716,9 @@
         "avgDuration": 117
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 11,
         "clicks": 0,
-        "position": 12.8,
+        "position": 13.7,
         "topQueries": []
       },
       "reels": {
@@ -744,9 +772,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 5,
         "clicks": 0,
-        "position": 8.9,
+        "position": 7.8,
         "topQueries": []
       },
       "reels": {
@@ -1024,7 +1052,7 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 1,
         "clicks": 0,
         "position": 10,
         "topQueries": []

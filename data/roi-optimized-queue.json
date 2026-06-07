@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-06T04:28:39.643Z",
+  "timestamp": "2026-06-07T04:37:07.842Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,39 +17,14 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 110,
-    "medianTrafficSignal": "0.110",
+    "medianMonthlyPV": 200,
+    "medianTrafficSignal": "0.200",
     "avgRpm": 2,
     "articlesAnalyzed": 10
   },
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 61,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 2.99,
-        "projectedMonthlyTraffic": 112,
-        "projectedMonthlyRevenue": 0.224,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (110 PV) × gap boost (1.02)"
-      },
-      "cumulativeCost": 0.075,
-      "withinBudget": true
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -60,17 +35,17 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 2.93,
-        "projectedMonthlyTraffic": 110,
-        "projectedMonthlyRevenue": 0.22,
+        "expectedRoi": 5.33,
+        "projectedMonthlyTraffic": 200,
+        "projectedMonthlyRevenue": 0.4,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (200 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.15,
+      "cumulativeCost": 0.075,
       "withinBudget": true
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -81,17 +56,17 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 2.93,
-        "projectedMonthlyTraffic": 110,
-        "projectedMonthlyRevenue": 0.22,
+        "expectedRoi": 5.33,
+        "projectedMonthlyTraffic": 200,
+        "projectedMonthlyRevenue": 0.4,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (200 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.15,
       "withinBudget": true
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -102,42 +77,17 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 2.93,
-        "projectedMonthlyTraffic": 110,
-        "projectedMonthlyRevenue": 0.22,
+        "expectedRoi": 5.33,
+        "projectedMonthlyTraffic": 200,
+        "projectedMonthlyRevenue": 0.4,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (200 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 5,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 131,
-      "topic": "laos",
-      "articleType": "support",
-      "context": {
-        "gapScore": 51,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"laos\" (score 51, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 2.51,
-        "projectedMonthlyTraffic": 94,
-        "projectedMonthlyRevenue": 0.188,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (110 PV) × gap boost (0.85)"
-      },
-      "cumulativeCost": 0.375,
-      "withinBudget": true
-    },
-    {
-      "rank": 6,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -158,11 +108,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -183,11 +133,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -197,7 +147,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 12,
-        "freshness": 0.78,
+        "freshness": 0.77,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -208,36 +158,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "articleType": "support",
-      "context": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 13,
-        "freshness": 0.87,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.375,
-      "withinBudget": true
-    },
-    {
-      "rank": 10,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -258,11 +183,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -283,11 +208,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -308,11 +233,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 13,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -333,11 +258,36 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 14,
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "articleType": "support",
+      "context": {
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "compositeScore": 14,
+        "freshness": 0.92,
+        "traffic": 0,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -358,19 +308,19 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 15,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
+      "topic": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
       "articleType": "support",
       "context": {
-        "wpId": 6327,
-        "slug": "meilleur-esim-bali-2026",
+        "wpId": 6331,
+        "slug": "meilleur-esim-philippines-2026",
         "compositeScore": 15,
         "freshness": 1,
         "traffic": 0,
@@ -383,20 +333,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.375,
+    "totalCost": 0.225,
     "dailyBudget": 2,
-    "itemsWithinBudget": 15,
+    "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.036,
-    "expectedDailyRoi": 0.1
+    "expectedDailyRevenue": 0.04,
+    "expectedDailyRoi": 0.18
   },
   "summary": {
-    "write_new": 2,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,
