@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-06-06T18:27:49.641Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-06-07T00:43:43.877Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "[Tech Thoughts] Kiko Barzaga’s House expulsion is just about right",
+      "source": "rss_breaking",
+      "destination": "philippines",
+      "link": "https://www.rappler.com/technology/tech-thoughts-kiko-barzaga-house-expulsion-opinion-reaction/",
+      "velocityScore": 0.415,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 719,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2074,
+      "estimatedTrafficIn24h": 2026,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 0.7
+      },
+      "detectedAt": "2026-06-07T00:00:00.000Z",
+      "scoredAt": "2026-06-07T00:43:39.737Z"
+    }
+  ]
 }
