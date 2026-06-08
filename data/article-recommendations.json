@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-06-07T04:37:06.890Z",
-    "elapsedSeconds": 4,
+    "generatedAt": "2026-06-08T04:38:14.604Z",
+    "elapsedSeconds": 5,
     "totalArticles": 37,
     "articlesWithRecommendations": 5,
     "totalRecommendations": 5,
@@ -64,13 +64,13 @@
         "avgDuration": 80
       },
       "gsc": {
-        "impressions": 23,
+        "impressions": 22,
         "clicks": 2,
-        "position": 30.6,
+        "position": 30,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 58.1,
+            "position": 54.9,
             "impressions": 9,
             "ctr": 0
           },
@@ -143,14 +143,14 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 39,
+        "impressions": 41,
         "clicks": 0,
         "position": 28.4,
         "topQueries": [
           {
             "query": "esim asie du sud est",
             "position": 28.4,
-            "impressions": 39,
+            "impressions": 41,
             "ctr": 0
           }
         ]
@@ -216,14 +216,14 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 39,
+        "impressions": 43,
         "clicks": 1,
-        "position": 28.1,
+        "position": 27.9,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 36.9,
-            "impressions": 14,
+            "position": 36.3,
+            "impressions": 16,
             "ctr": 0
           },
           {
@@ -235,7 +235,7 @@
           {
             "query": "voyage de noces bali vs thailande",
             "position": 35,
-            "impressions": 1,
+            "impressions": 2,
             "ctr": 0
           }
         ]
@@ -604,9 +604,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 5,
         "clicks": 0,
-        "position": 8.7,
+        "position": 9.2,
         "topQueries": []
       },
       "reels": {
@@ -716,9 +716,9 @@
         "avgDuration": 117
       },
       "gsc": {
-        "impressions": 11,
+        "impressions": 13,
         "clicks": 0,
-        "position": 13.7,
+        "position": 12.6,
         "topQueries": []
       },
       "reels": {
@@ -772,9 +772,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 3,
         "clicks": 0,
-        "position": 7.8,
+        "position": 7.7,
         "topQueries": []
       },
       "reels": {
