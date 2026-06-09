@@ -1,86 +1,10 @@
 {
-  "generatedAt": "2026-06-09T07:14:34.787Z",
-  "totalTopics": 3,
+  "generatedAt": "2026-06-09T13:00:20.751Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 1,
-    "queue_normal": 2
+    "queue_priority": 0,
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Thailand video news | Philippines Earthquake, Thailand’s Immigration App & AIRPORT complaint",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/video-podcasts/thailand-video-news-09-06-2026",
-      "velocityScore": 0.748,
-      "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2494,
-      "estimatedTrafficIn24h": 2437,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 2.6
-      },
-      "detectedAt": "2026-06-09T04:36:09.000Z",
-      "scoredAt": "2026-06-09T07:14:30.203Z"
-    },
-    {
-      "topic": "Storm pounds New Zealand's capital city, cancelling flights and ferries",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/world/3268250/storm-pounds-new-zealands-capital-city-cancelling-flights-and-ferries",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2069,
-      "estimatedTrafficIn24h": 2022,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.8
-      },
-      "detectedAt": "2026-06-09T04:26:00.000Z",
-      "scoredAt": "2026-06-09T07:14:30.745Z"
-    },
-    {
-      "topic": "Storm pounds New Zealand’s capital Wellington, cancelling flights and ferries",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/australianz/storm-pounds-new-zealands-capital-city-cancelling-flights-and-ferries",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2065,
-      "estimatedTrafficIn24h": 2017,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5.2
-      },
-      "detectedAt": "2026-06-09T02:02:17.000Z",
-      "scoredAt": "2026-06-09T07:14:32.266Z"
-    }
-  ]
+  "queue": []
 }
