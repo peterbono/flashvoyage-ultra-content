@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-06-08T04:38:14.604Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-06-09T04:31:25.804Z",
+    "elapsedSeconds": 3,
     "totalArticles": 37,
     "articlesWithRecommendations": 5,
     "totalRecommendations": 5,
@@ -64,14 +64,14 @@
         "avgDuration": 80
       },
       "gsc": {
-        "impressions": 22,
+        "impressions": 23,
         "clicks": 2,
-        "position": 30,
+        "position": 31,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 54.9,
-            "impressions": 9,
+            "position": 54.7,
+            "impressions": 10,
             "ctr": 0
           },
           {
@@ -143,14 +143,14 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 41,
+        "impressions": 42,
         "clicks": 0,
         "position": 28.4,
         "topQueries": [
           {
             "query": "esim asie du sud est",
             "position": 28.4,
-            "impressions": 41,
+            "impressions": 42,
             "ctr": 0
           }
         ]
@@ -216,14 +216,14 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 43,
+        "impressions": 41,
         "clicks": 1,
-        "position": 27.9,
+        "position": 26.1,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 36.3,
-            "impressions": 16,
+            "position": 35.5,
+            "impressions": 15,
             "ctr": 0
           },
           {
@@ -370,10 +370,10 @@
       "slug": "meilleur-esim-philippines-2026",
       "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
       "url": "https://flashvoyage.com/meilleur-esim-philippines-2026/",
-      "wordCount": 1155,
+      "wordCount": 1172,
       "widgetCount": 0,
       "internalLinks": 11,
-      "lastModified": "2026-06-07T03:18:13",
+      "lastModified": "2026-06-08T11:32:32",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -716,9 +716,9 @@
         "avgDuration": 117
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 12,
         "clicks": 0,
-        "position": 12.6,
+        "position": 12.8,
         "topQueries": []
       },
       "reels": {
