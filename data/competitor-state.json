@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-06-09T04:31:27.653Z",
+  "timestamp": "2026-06-10T04:36:10.810Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-06-09T04:31:28.555Z",
+      "lastScan": "2026-06-10T04:36:11.467Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-06-09T04:31:28.951Z",
+      "lastScan": "2026-06-10T04:36:11.915Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-06-09T04:32:40.232Z",
-      "urlCount": 9637,
+      "lastScan": "2026-06-10T04:37:25.164Z",
+      "urlCount": 9641,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9778,7 +9778,11 @@
         "https://generationvoyage.fr/visiter-boulogne-sur-mer-faire-voir/": "2026-06-08T08:15:04+00:00",
         "https://generationvoyage.fr/studio-harry-potter-enfants/": "2026-06-08T10:17:35+00:00",
         "https://generationvoyage.fr/necropole-vatican/": "2026-06-08T13:18:52+00:00",
-        "https://generationvoyage.fr/visiter-pont-gard/": "2026-06-08T16:20:53+00:00"
+        "https://generationvoyage.fr/visiter-pont-gard/": "2026-06-08T16:20:53+00:00",
+        "https://generationvoyage.fr/visiter-meaux-faire-voir/": "2026-06-09T08:17:36+00:00",
+        "https://generationvoyage.fr/reserver-domus-aurea/": "2026-06-09T10:19:13+00:00",
+        "https://generationvoyage.fr/palais-buckingham-enfants/": "2026-06-09T13:20:33+00:00",
+        "https://generationvoyage.fr/siege-beziers/": "2026-06-09T16:22:02+00:00"
       }
     }
   }

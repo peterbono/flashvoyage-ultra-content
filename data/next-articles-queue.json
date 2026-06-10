@@ -1,25 +1,41 @@
 {
-  "timestamp": "2026-06-09T04:31:21.765Z",
-  "queueSize": 14,
+  "timestamp": "2026-06-10T04:36:04.226Z",
+  "queueSize": 15,
   "queue": [
     {
       "rank": 1,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
+      "priorityScore": 125,
+      "topic": "train à grande vitesse",
       "articleType": "support",
       "context": {
-        "gapScore": 61,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
+        "gapScore": 45,
+        "destination": null,
+        "category": "transport",
+        "suggestedTitle": "Train à grande vitesse : Guide Pratique",
+        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+        "reason": "Content gap: \"train à grande vitesse\" (score 45, source: trends)"
       }
     },
     {
       "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "argentine – islande",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "budget",
+        "suggestedTitle": "Argentine – islande : Le Guide Budget Complet",
+        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+        "reason": "Content gap: \"argentine – islande\" (score 40, source: trends)"
+      }
+    },
+    {
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +47,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +59,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -55,7 +71,23 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 11,
+        "freshness": 0.76,
+        "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -71,7 +103,23 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "articleType": "support",
+      "context": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 12,
+        "freshness": 0.82,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -87,7 +135,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -103,15 +151,15 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
       "articleType": "support",
       "context": {
-        "wpId": 2924,
-        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 12,
         "freshness": 0.77,
         "traffic": 0,
@@ -119,7 +167,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -129,13 +177,13 @@
         "wpId": 4370,
         "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
         "compositeScore": 13,
-        "freshness": 0.86,
+        "freshness": 0.85,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
-      "rank": 10,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -151,7 +199,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -167,56 +215,24 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 15,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
       "articleType": "support",
       "context": {
-        "wpId": 4030,
-        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+        "wpId": 4071,
+        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
         "compositeScore": 13,
         "freshness": 0.84,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "articleType": "support",
-      "context": {
-        "wpId": 5742,
-        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-        "compositeScore": 14,
-        "freshness": 0.93,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 14,
-        "freshness": 0.91,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 2,
     "update": 0,
     "enrich": 0,
     "standard": 3,

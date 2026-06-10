@@ -1,37 +1,51 @@
 {
-  "timestamp": "2026-06-09T04:31:19.898Z",
-  "gapCount": 1,
+  "timestamp": "2026-06-10T04:36:02.347Z",
+  "gapCount": 2,
   "gaps": [
     {
-      "topic": "voyage pas cher",
+      "topic": "train à grande vitesse",
       "source": "trends",
-      "gapScore": 61,
+      "gapScore": 45,
       "signals": {
-        "searchVolume": 0.47,
-        "trendGrowth": 0.47,
-        "monetization": 0.9,
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
         "competition": 0.4
       },
-      "destination": "vietnam",
-      "category": "budget",
-      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "destination": null,
+      "category": "transport",
+      "suggestedTitle": "Train à grande vitesse : Guide Pratique",
+      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
       "articleType": "support",
-      "priority": "high"
+      "priority": "medium"
+    },
+    {
+      "topic": "argentine – islande",
+      "source": "trends",
+      "gapScore": 40,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.6
+      },
+      "destination": null,
+      "category": "budget",
+      "suggestedTitle": "Argentine – islande : Le Guide Budget Complet",
+      "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
-      "high": 1
+      "medium": 2
     },
     "byCategory": {
+      "transport": 1,
       "budget": 1
     },
-    "byDestination": {
-      "vietnam": 1
-    },
-    "topDestinationGaps": [
-      "vietnam"
-    ]
+    "byDestination": {},
+    "topDestinationGaps": []
   }
 }

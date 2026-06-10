@@ -1,55 +1,27 @@
 {
-  "timestamp": "2026-06-09T04:31:17.774Z",
+  "timestamp": "2026-06-10T04:36:00.992Z",
   "trendingTopics": [
     {
       "query": "voyage thailande pas cher",
-      "traffic": 190,
-      "trafficFormatted": "+190 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-06-09T04:31:07.234Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage thailande prix",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-06-09T04:31:07.234Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage vietnam prix",
-      "traffic": 160,
-      "trafficFormatted": "+160 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-06-09T04:31:09.689Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage vietnam circuit",
       "traffic": 100,
       "trafficFormatted": "+100 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-09T04:31:09.689Z",
+      "date": "2026-06-10T04:35:51.412Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "thailande",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage vietnam circuit",
+      "traffic": 350,
+      "trafficFormatted": "+350 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-06-10T04:35:53.720Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 1,
@@ -58,60 +30,155 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage thailande phuket",
+      "query": "voyage vietnam pas cher",
+      "traffic": 120,
+      "trafficFormatted": "+120 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-06-10T04:35:53.720Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "leclerc voyage thailande",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-06-10T04:35:51.412Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage au vietnam",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-06-10T04:35:53.720Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage vietnam",
       "traffic": 130,
       "trafficFormatted": "+130 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-09T04:31:07.234Z",
+      "date": "2026-06-10T04:35:58.603Z",
       "source": "related-rising",
-      "parentDestination": "thailande",
+      "parentDestination": "cambodge",
       "relevanceScore": 0.7,
       "category": "destination",
-      "destination": "thailande",
+      "destination": "cambodge",
       "compositeScore": 0.53
     },
     {
-      "query": "leclerc voyage thailande",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
+      "query": "voyage cambodge vietnam",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-09T04:31:07.234Z",
+      "date": "2026-06-10T04:35:58.603Z",
       "source": "related-rising",
-      "parentDestination": "thailande",
+      "parentDestination": "cambodge",
       "relevanceScore": 0.7,
       "category": "destination",
-      "destination": "thailande",
+      "destination": "cambodge",
       "compositeScore": 0.53
     },
     {
-      "query": "leclerc voyage vietnam",
-      "traffic": 160,
-      "trafficFormatted": "+160 %",
+      "query": "voyage laos cambodge",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-09T04:31:09.689Z",
+      "date": "2026-06-10T04:36:00.990Z",
       "source": "related-rising",
-      "parentDestination": "vietnam",
+      "parentDestination": "laos",
       "relevanceScore": 0.7,
       "category": "destination",
-      "destination": "vietnam",
+      "destination": "laos",
       "compositeScore": 0.53
     },
     {
-      "query": "voyage pas cher",
-      "traffic": 300,
-      "trafficFormatted": "+300 %",
+      "query": "cambodge",
+      "traffic": 140,
+      "trafficFormatted": "+140 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-09T04:31:09.689Z",
+      "date": "2026-06-10T04:35:53.720Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.5,
-      "category": "budget",
+      "category": "destination",
       "destination": "vietnam",
       "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "argentine – islande",
+      "traffic": 5000,
+      "trafficFormatted": "5000+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "Argentine 3-0 Islande, Matches amicaux A : match terminé",
+          "url": "https://www.lequipe.fr/Football/match-direct/matches-amicaux-a/2025-2026/argentine-islande-live/689351",
+          "source": "L'Équipe"
+        },
+        {
+          "title": "Coupe du monde 2026: penalty, but, record... le retour fracassant en 119 secondes de Lionel Messi avec l'Argentine",
+          "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-penalty-but-record-le-retour-fracassant-en-119-secondes-de-lionel-messi-avec-l-argentine_AV-202606100072.html",
+          "source": "RMC Sport"
+        },
+        {
+          "title": "Live Argentine - Islande Friendlies 1 de Matchs Amicaux 2026 10/06",
+          "url": "https://www.footmercato.net/live/6136429307513246738-argentine-vs-islande",
+          "source": "Foot Mercato"
+        }
+      ],
+      "date": "Tue, 9 Jun 2026 17:20:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "budget",
+      "destination": null,
+      "compositeScore": 0.29400000000000004
+    },
+    {
+      "query": "train à grande vitesse",
+      "traffic": 100,
+      "trafficFormatted": "100+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "Près de 2 heures de retard : un TGV immobilisé en pleine voie, un adolescent se trouvait sur la ligne à grande vitesse",
+          "url": "https://www.midilibre.fr/2026/06/09/pres-de-2-heures-de-retard-un-tgv-immobilise-en-pleine-voie-un-adolescent-se-trouvait-sur-la-ligne-a-grande-vitesse-13411208.php",
+          "source": "Midi Libre"
+        },
+        {
+          "title": "Franche-Comté. À cause d'un ado sur les voies, le TGV de Paris a dû s'arrêter avant la gare de Belfort-Montbéliard",
+          "url": "https://www.estrepublicain.fr/faits-divers-justice/2026/06/07/le-tgv-de-paris-arrete-avant-la-gare-de-belfort-montbeliard-a-cause-d-un-enfant-sur-les-voies",
+          "source": "L'Est Républicain"
+        }
+      ],
+      "date": "Tue, 9 Jun 2026 21:10:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "transport",
+      "destination": null,
+      "compositeScore": 0.29008
     }
   ]
 }
