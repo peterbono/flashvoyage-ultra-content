@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-09",
+  "lastUpdated": "2026-06-10",
   "formatScores": {
     "poll": 0,
     "pick": 16.5,
@@ -22,7 +22,7 @@
     "vietnam": 7.8,
     "thailande": 7,
     "philippines": 1.6,
-    "bali": 0.4,
+    "bali": 0.5,
     "cambodge": 0.2
   },
   "recommendations": [
@@ -60,7 +60,7 @@
     "thailande": 7,
     "vietnam": 6.9,
     "philippines": 1.6,
-    "bali": 0.4,
+    "bali": 0.5,
     "singapour": 0.2,
     "cambodge": 0.2
   },
