@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-06-10T07:29:22.378Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-06-10T13:09:46.906Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Ukrainian man arrested in nominee case after landing in Koh Samui",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/national/ukrainian-man-arrested-nominee-case-landing-koh-samui",
-      "velocityScore": 0.449,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2244,
-      "estimatedTrafficIn24h": 2193,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.8
-      },
-      "detectedAt": "2026-06-10T04:38:20.000Z",
-      "scoredAt": "2026-06-10T07:29:17.637Z"
-    }
-  ]
+  "queue": []
 }
