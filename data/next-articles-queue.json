@@ -1,41 +1,9 @@
 {
-  "timestamp": "2026-06-10T04:36:04.226Z",
-  "queueSize": 15,
+  "timestamp": "2026-06-11T04:36:53.759Z",
+  "queueSize": 13,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 125,
-      "topic": "train à grande vitesse",
-      "articleType": "support",
-      "context": {
-        "gapScore": 45,
-        "destination": null,
-        "category": "transport",
-        "suggestedTitle": "Train à grande vitesse : Guide Pratique",
-        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
-        "reason": "Content gap: \"train à grande vitesse\" (score 45, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 120,
-      "topic": "argentine – islande",
-      "articleType": "support",
-      "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "budget",
-        "suggestedTitle": "Argentine – islande : Le Guide Budget Complet",
-        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
-        "reason": "Content gap: \"argentine – islande\" (score 40, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -47,7 +15,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -59,7 +27,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -71,7 +39,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -87,7 +55,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -103,7 +71,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -119,7 +87,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -135,7 +103,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -151,7 +119,23 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "articleType": "support",
+      "context": {
+        "wpId": 3090,
+        "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+        "compositeScore": 12,
+        "freshness": 0.8,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -164,6 +148,22 @@
         "freshness": 0.77,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+      "articleType": "support",
+      "context": {
+        "wpId": 5063,
+        "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
@@ -197,42 +197,10 @@
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4105,
-        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-        "compositeScore": 13,
-        "freshness": 0.84,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 15,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4071,
-        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
-        "compositeScore": 13,
-        "freshness": 0.84,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
     }
   ],
   "summary": {
-    "write_new": 2,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,

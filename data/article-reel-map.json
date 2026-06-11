@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-10T04:36:03.284Z",
+  "timestamp": "2026-06-11T04:36:52.825Z",
   "articleMap": {
     "meilleur-esim-thailande-2026": {
       "wpId": 6195,
@@ -34,62 +34,6 @@
         "avantapres"
       ],
       "category": "destination",
-      "igReferralTraffic": null
-    },
-    "voyage-thailande-pas-cher-2026-budget": {
-      "wpId": 4487,
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-05-07",
-          "format": "budget",
-          "platform": "tiktok",
-          "score": 4.9,
-          "engagementRate": 0,
-          "publishedAt": "2026-05-07",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "bali-vs-thailande-premier-voyage-asie-comparatif": {
-      "wpId": 4254,
-      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
-      "reels": [
-        {
-          "reelId": "17873104899455483",
-          "format": "poll",
-          "platform": "instagram",
-          "score": 0,
-          "engagementRate": 0,
-          "publishedAt": "2026-03-30T17:10:08.000Z",
-          "isViral": false,
-          "matchSource": "wp-id"
-        },
-        {
-          "reelId": "18042318470534698",
-          "format": "versus",
-          "platform": "instagram",
-          "score": 0,
-          "engagementRate": 0,
-          "publishedAt": "2026-03-30T17:59:54.000Z",
-          "isViral": false,
-          "matchSource": "wp-id"
-        }
-      ],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
       "igReferralTraffic": null
     },
     "japon-couple-15-jours-budget-tout-compris-2026": {
@@ -157,6 +101,62 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "voyage-thailande-pas-cher-2026-budget": {
+      "wpId": 4487,
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-05-07",
+          "format": "budget",
+          "platform": "tiktok",
+          "score": 4.9,
+          "engagementRate": 0,
+          "publishedAt": "2026-05-07",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "bali-vs-thailande-premier-voyage-asie-comparatif": {
+      "wpId": 4254,
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
+      "reels": [
+        {
+          "reelId": "17873104899455483",
+          "format": "poll",
+          "platform": "instagram",
+          "score": 0,
+          "engagementRate": 0,
+          "publishedAt": "2026-03-30T17:10:08.000Z",
+          "isViral": false,
+          "matchSource": "wp-id"
+        },
+        {
+          "reelId": "18042318470534698",
+          "format": "versus",
+          "platform": "instagram",
+          "score": 0,
+          "engagementRate": 0,
+          "publishedAt": "2026-03-30T17:59:54.000Z",
+          "isViral": false,
+          "matchSource": "wp-id"
+        }
+      ],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "visa-cambodge-francais-2026-evisa-prix-pieges": {
       "wpId": 4369,
       "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
@@ -193,6 +193,18 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "esim-vietnam-comparatif-forfait-2026-frais-caches": {
+      "wpId": 4250,
+      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
       "wpId": 5072,
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
@@ -208,6 +220,18 @@
           "matchSource": "tiktok-fuzzy-title"
         }
       ],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout": {
+      "wpId": 5678,
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "reels": [],
       "suggestedFormats": [
         "pick",
         "poll",
@@ -243,113 +267,6 @@
           "matchSource": "tiktok-fuzzy-title"
         }
       ],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "esim-vietnam-comparatif-forfait-2026-frais-caches": {
-      "wpId": 4250,
-      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
-      "wpId": 5260,
-      "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage": {
-      "wpId": 5179,
-      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-04-06",
-          "format": "versus",
-          "platform": "tiktok",
-          "score": 1.5,
-          "engagementRate": 0,
-          "publishedAt": "2026-04-06",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout": {
-      "wpId": 5678,
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
-      "wpId": 5343,
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
-      "wpId": 5296,
-      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
-      "wpId": 5063,
-      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
-      "wpId": 3090,
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "reels": [],
       "suggestedFormats": [
         "pick",
         "month",
@@ -418,6 +335,30 @@
       "category": "budget",
       "igReferralTraffic": null
     },
+    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
+      "wpId": 5343,
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
+      "wpId": 5296,
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "esim-japon-combien-ca-te-coute-vraiment": {
       "wpId": 5270,
       "title": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
@@ -428,6 +369,53 @@
         "poll"
       ],
       "category": "budget",
+      "igReferralTraffic": null
+    },
+    "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
+      "wpId": 5260,
+      "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage": {
+      "wpId": 5179,
+      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-04-06",
+          "format": "versus",
+          "platform": "tiktok",
+          "score": 1.5,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-06",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
+      "wpId": 5063,
+      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
       "igReferralTraffic": null
     },
     "bali-lombok-gili-10-jours-itineraire-budget-2026": {
@@ -535,6 +523,18 @@
         "humor"
       ],
       "category": "visa",
+      "igReferralTraffic": null
+    },
+    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
+      "wpId": 3090,
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
       "igReferralTraffic": null
     },
     "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte": {

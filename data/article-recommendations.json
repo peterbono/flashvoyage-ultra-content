@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-06-10T04:36:08.874Z",
+    "generatedAt": "2026-06-11T04:36:58.907Z",
     "elapsedSeconds": 4,
     "totalArticles": 37,
     "articlesWithRecommendations": 5,
@@ -64,14 +64,14 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 47,
+        "impressions": 48,
         "clicks": 0,
         "position": 28.3,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 28.3,
-            "impressions": 46,
+            "position": 28.4,
+            "impressions": 47,
             "ctr": 0
           }
         ]
@@ -92,34 +92,6 @@
         }
       ],
       "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5333,
-      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "url": "https://flashvoyage.com/thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout/",
-      "wordCount": 1332,
-      "widgetCount": 0,
-      "internalLinks": 23,
-      "lastModified": "2026-04-24T10:28:15",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 29
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -210,9 +182,9 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 40,
+        "impressions": 39,
         "clicks": 1,
-        "position": 25.1,
+        "position": 25,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -221,14 +193,14 @@
             "ctr": 0
           },
           {
-            "query": "thailande ou bali",
-            "position": 47.5,
-            "impressions": 2,
+            "query": "voyage de noces bali vs thailande",
+            "position": 41.7,
+            "impressions": 3,
             "ctr": 0
           },
           {
-            "query": "voyage de noces bali vs thailande",
-            "position": 35,
+            "query": "thailande ou bali",
+            "position": 47.5,
             "impressions": 2,
             "ctr": 0
           }
@@ -267,14 +239,14 @@
         "avgDuration": 790
       },
       "gsc": {
-        "impressions": 14,
+        "impressions": 13,
         "clicks": 0,
-        "position": 20.8,
+        "position": 15.9,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
-            "position": 89,
-            "impressions": 2,
+            "position": 94,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -298,6 +270,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 5333,
+      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout/",
+      "wordCount": 1332,
+      "widgetCount": 0,
+      "internalLinks": 23,
+      "lastModified": "2026-04-24T10:28:15",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 30
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5072,
       "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
@@ -315,6 +315,34 @@
         "impressions": 0,
         "clicks": 0,
         "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4371,
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
+      "wordCount": 3354,
+      "widgetCount": 3,
+      "internalLinks": 44,
+      "lastModified": "2026-05-16T01:05:10",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 2,
+        "clicks": 0,
+        "position": 6,
         "topQueries": []
       },
       "reels": {
@@ -704,37 +732,9 @@
         "avgDuration": 117
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 12,
         "clicks": 0,
-        "position": 12.5,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4371,
-      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
-      "wordCount": 3354,
-      "widgetCount": 3,
-      "internalLinks": 44,
-      "lastModified": "2026-05-16T01:05:10",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 2,
-        "clicks": 0,
-        "position": 6,
+        "position": 12.7,
         "topQueries": []
       },
       "reels": {
