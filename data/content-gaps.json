@@ -1,33 +1,37 @@
 {
-  "timestamp": "2026-06-11T04:36:51.888Z",
+  "timestamp": "2026-06-12T04:36:40.075Z",
   "gapCount": 1,
   "gaps": [
     {
-      "topic": "obus",
+      "topic": "laos",
       "source": "trends",
-      "gapScore": 35,
+      "gapScore": 51,
       "signals": {
-        "searchVolume": 0.29,
-        "trendGrowth": 0.29,
-        "monetization": 0.6,
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
         "competition": 0.8
       },
-      "destination": null,
-      "category": "transport",
-      "suggestedTitle": "Obus : Guide Pratique",
-      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+      "destination": "vietnam",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
       "articleType": "support",
-      "priority": "medium"
+      "priority": "high"
     }
   ],
   "summary": {
     "byPriority": {
-      "medium": 1
+      "high": 1
     },
     "byCategory": {
-      "transport": 1
+      "destination": 1
     },
-    "byDestination": {},
-    "topDestinationGaps": []
+    "byDestination": {
+      "vietnam": 1
+    },
+    "topDestinationGaps": [
+      "vietnam"
+    ]
   }
 }

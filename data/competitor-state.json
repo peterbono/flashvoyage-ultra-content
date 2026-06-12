@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-06-11T04:37:00.804Z",
+  "timestamp": "2026-06-12T04:36:50.042Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-06-11T04:37:01.575Z",
+      "lastScan": "2026-06-12T04:36:50.851Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-06-11T04:37:02.058Z",
+      "lastScan": "2026-06-12T04:36:51.305Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-06-11T04:38:16.086Z",
-      "urlCount": 9645,
+      "lastScan": "2026-06-12T04:38:37.580Z",
+      "urlCount": 9649,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9727,8 +9727,6 @@
         "https://generationvoyage.fr/voir-statue-liberte/": "2026-05-27T13:47:02+00:00",
         "https://generationvoyage.fr/coupole-brunelleschi/": "2026-05-27T15:48:36+00:00",
         "https://generationvoyage.fr/visiter-montpellier-faire-voir/": "2026-05-27T14:17:28+00:00",
-        "https://generationvoyage.fr/visiter-sete-faire-voir/": "2026-05-27T14:19:54+00:00",
-        "https://generationvoyage.fr/visiter-beziers-faire-voir/": "2026-05-27T14:20:21+00:00",
         "https://generationvoyage.fr/visiter-da-nang-faire-voir/": "2026-05-28T08:07:54+00:00",
         "https://generationvoyage.fr/cassoulet-carcassonne/": "2026-05-28T10:09:35+00:00",
         "https://generationvoyage.fr/studios-harry-potter-paris/": "2026-05-28T13:12:00+00:00",
@@ -9782,11 +9780,17 @@
         "https://generationvoyage.fr/visiter-meaux-faire-voir/": "2026-06-09T08:17:36+00:00",
         "https://generationvoyage.fr/reserver-domus-aurea/": "2026-06-09T10:19:13+00:00",
         "https://generationvoyage.fr/palais-buckingham-enfants/": "2026-06-09T13:20:33+00:00",
-        "https://generationvoyage.fr/siege-beziers/": "2026-06-09T16:22:02+00:00",
         "https://generationvoyage.fr/visiter-la-roche-sur-yon-faire-voir/": "2026-06-10T08:11:00+00:00",
-        "https://generationvoyage.fr/sete-brassens/": "2026-06-10T10:12:36+00:00",
         "https://generationvoyage.fr/cracovie-shoah/": "2026-06-10T13:14:12+00:00",
-        "https://generationvoyage.fr/routes-aeriennes-2026/": "2026-06-10T16:16:31+00:00"
+        "https://generationvoyage.fr/visiter-orange-faire-voir/": "2026-06-11T08:19:11+00:00",
+        "https://generationvoyage.fr/maria-padilla-seville/": "2026-06-11T10:19:52+00:00",
+        "https://generationvoyage.fr/photos-acropole-parthenon/": "2026-06-11T13:21:36+00:00",
+        "https://generationvoyage.fr/bangkok-phuket/": "2026-06-11T16:23:05+00:00",
+        "https://generationvoyage.fr/visiter-sete-faire-voir/": "2026-06-11T11:21:40+00:00",
+        "https://generationvoyage.fr/sete-brassens/": "2026-06-11T11:23:21+00:00",
+        "https://generationvoyage.fr/siege-beziers/": "2026-06-11T11:25:35+00:00",
+        "https://generationvoyage.fr/visiter-beziers-faire-voir/": "2026-06-11T11:26:18+00:00",
+        "https://generationvoyage.fr/routes-aeriennes-2026/": "2026-06-11T11:30:43+00:00"
       }
     }
   }

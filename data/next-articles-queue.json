@@ -1,9 +1,25 @@
 {
-  "timestamp": "2026-06-11T04:36:53.759Z",
-  "queueSize": 13,
+  "timestamp": "2026-06-12T04:36:41.925Z",
+  "queueSize": 14,
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 131,
+      "topic": "laos",
+      "articleType": "support",
+      "context": {
+        "gapScore": 51,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"laos\" (score 51, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -15,7 +31,7 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -27,7 +43,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -39,7 +55,23 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 11,
+        "freshness": 0.76,
+        "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -55,49 +87,17 @@
       }
     },
     {
-      "rank": 5,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "articleType": "support",
-      "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-        "compositeScore": 12,
-        "freshness": 0.83,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 6,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 12,
-        "freshness": 0.82,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      }
-    },
-    {
       "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
       "articleType": "support",
       "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "wpId": 4125,
+        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 12,
-        "freshness": 0.82,
+        "freshness": 0.83,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
@@ -107,13 +107,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
       "articleType": "support",
       "context": {
-        "wpId": 3107,
-        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "wpId": 4071,
+        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
         "compositeScore": 12,
-        "freshness": 0.8,
+        "freshness": 0.83,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
@@ -123,13 +123,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
-        "wpId": 3090,
-        "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+        "wpId": 4030,
+        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 12,
-        "freshness": 0.8,
+        "freshness": 0.83,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
@@ -139,13 +139,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "articleType": "support",
       "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 12,
-        "freshness": 0.77,
+        "freshness": 0.82,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
@@ -154,20 +154,36 @@
       "rank": 11,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+      "priorityScore": -2,
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
       "articleType": "support",
       "context": {
-        "wpId": 5063,
-        "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
-        "compositeScore": 13,
-        "freshness": 0.89,
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 12,
+        "freshness": 0.81,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
     },
     {
       "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "articleType": "support",
+      "context": {
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 12,
+        "freshness": 0.79,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -183,24 +199,24 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "priorityScore": -4,
+      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
       "articleType": "support",
       "context": {
-        "wpId": 4125,
-        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
-        "compositeScore": 13,
-        "freshness": 0.84,
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 14,
+        "freshness": 0.92,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     }
   ],
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,
