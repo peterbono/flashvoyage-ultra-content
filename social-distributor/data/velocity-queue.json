@@ -1,10 +1,61 @@
 {
-  "generatedAt": "2026-06-11T19:00:21.879Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-06-12T00:47:09.987Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 2
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Passengers stuck for hours as storm diverts Ho Chi Minh City flights to Phu Quoc",
+      "source": "rss_breaking",
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/traffic/passengers-stuck-for-hours-as-storm-diverts-ho-chi-minh-city-flights-to-phu-quoc-5084747.html",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2072,
+      "estimatedTrafficIn24h": 2024,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.7
+      },
+      "detectedAt": "2026-06-11T23:06:25.000Z",
+      "scoredAt": "2026-06-12T00:47:08.032Z"
+    },
+    {
+      "topic": "Chaichanok to face grilling",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/thailand/general/3269455/chaichanok-to-face-grilling",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2069,
+      "estimatedTrafficIn24h": 2022,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.8
+      },
+      "detectedAt": "2026-06-11T22:00:00.000Z",
+      "scoredAt": "2026-06-12T00:47:08.705Z"
+    }
+  ]
 }
