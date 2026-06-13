@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-12",
+  "lastUpdated": "2026-06-13",
   "formatScores": {
     "poll": 0,
     "pick": 16.5,
@@ -19,9 +19,9 @@
   ],
   "destinationScores": {
     "singapour": 11,
-    "vietnam": 7.7,
     "thailande": 7,
-    "philippines": 2.5,
+    "vietnam": 6.7,
+    "philippines": 2.9,
     "bali": 0.7,
     "cambodge": 0.4
   },
@@ -58,11 +58,11 @@
   },
   "igDestinationScores": {
     "thailande": 7,
-    "vietnam": 6.7,
-    "philippines": 2.5,
+    "vietnam": 4.1,
+    "philippines": 2.9,
     "bali": 0.7,
-    "singapour": 0.4,
-    "cambodge": 0.4
+    "cambodge": 0.4,
+    "singapour": 0.4
   },
   "tiktokDestinationScores": {
     "vietnam": 8.4,
@@ -73,8 +73,8 @@
     "vietnam": "merged(60/40)",
     "philippines": "ig-only",
     "bali": "ig-only",
-    "singapour": "merged(60/40)",
-    "cambodge": "ig-only"
+    "cambodge": "ig-only",
+    "singapour": "merged(60/40)"
   },
   "mergeConfig": {
     "tiktokWeight": 0.6,
