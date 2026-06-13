@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-06-13T07:19:01.010Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-06-13T12:36:40.238Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "UnionBank tops Visa credit payment volume in the Philippines in 2025",
-      "source": "rss_breaking",
-      "destination": "philippines",
-      "link": "https://www.rappler.com/brandrap/unionbank-visa-credit-philippines-2025/",
-      "velocityScore": 0.485,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 44,
-      "topicType": {
-        "key": "policy_change",
-        "halfLifeHours": 48
-      },
-      "estimatedTrafficNow": 1616,
-      "estimatedTrafficIn24h": 1143,
-      "trafficLossPerHour": 20,
-      "breakdown": {
-        "trendIntensity": 0.68,
-        "timeDecay": 0.951,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 3.5
-      },
-      "detectedAt": "2026-06-13T03:48:21.000Z",
-      "scoredAt": "2026-06-13T07:19:00.094Z"
-    }
-  ]
+  "queue": []
 }
