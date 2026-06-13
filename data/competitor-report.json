@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-12T04:38:37.597Z",
+  "timestamp": "2026-06-13T04:37:35.460Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,33 +16,27 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 9649,
-      "newUrls": 9
+      "totalUrls": 9653,
+      "newUrls": 4
     }
   ],
   "newArticles": [
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/bangkok-phuket/",
-      "lastmod": "2026-06-11T16:23:05+00:00",
-      "destination": "bangkok",
-      "contentType": "general",
-      "title": "Bangkok Phuket",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=14, freshness=0.92)",
-      "matchedArticle": {
-        "wpId": 5742,
-        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-        "compositeScore": 14,
-        "freshness": 0.92
-      }
+      "url": "https://generationvoyage.fr/visiter-iles-gili-faire-voir/",
+      "lastmod": "2026-06-12T07:45:34+00:00",
+      "destination": "gili",
+      "contentType": "plage",
+      "title": "Visiter Iles Gili Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Iles Gili Faire Voir\" (gili, plage) — no matching FlashVoyage article found"
     }
   ],
   "summary": {
     "totalNew": 1,
-    "contentGaps": 0,
+    "contentGaps": 1,
     "staleRefreshes": 0,
-    "monitoring": 1
+    "monitoring": 0
   }
 }
