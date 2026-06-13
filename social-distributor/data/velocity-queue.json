@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-06-12T18:40:16.838Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-06-13T00:46:19.957Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "PP attacks B1.6bn AI programme",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/thailand/politics/3270085/pp-attacks-b16bn-ai-programme",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2070,
+      "estimatedTrafficIn24h": 2022,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.7
+      },
+      "detectedAt": "2026-06-12T22:02:00.000Z",
+      "scoredAt": "2026-06-13T00:46:17.060Z"
+    }
+  ]
 }
