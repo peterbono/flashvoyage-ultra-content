@@ -109,7 +109,10 @@
       ],
       "tripDurationDays": 10,
       "scheduledFor": "2026-06-14",
-      "published": false
+      "published": true,
+      "published_at": "2026-06-14T03:18:28.702Z",
+      "published_url": "https://flashvoyage.com/meilleur-esim-cambodge-2026/",
+      "published_wp_id": 6374
     }
   ]
 }
