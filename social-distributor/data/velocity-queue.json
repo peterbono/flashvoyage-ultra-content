@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-06-14T00:44:50.016Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-06-14T07:36:36.967Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Phuket airport opens arrivals autogate service",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/thailand/general/3270654/phuket-airport-opens-arrivals-autogate-service",
+      "velocityScore": 0.449,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2246,
+      "estimatedTrafficIn24h": 2194,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.1
+      },
+      "detectedAt": "2026-06-14T05:33:00.000Z",
+      "scoredAt": "2026-06-14T07:36:34.745Z"
+    }
+  ]
 }
