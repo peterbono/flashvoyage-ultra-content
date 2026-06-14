@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-13T04:37:35.460Z",
+  "timestamp": "2026-06-14T04:39:12.471Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,26 +16,14 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 9653,
+      "totalUrls": 9656,
       "newUrls": 4
     }
   ],
-  "newArticles": [
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visiter-iles-gili-faire-voir/",
-      "lastmod": "2026-06-12T07:45:34+00:00",
-      "destination": "gili",
-      "contentType": "plage",
-      "title": "Visiter Iles Gili Faire Voir",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Visiter Iles Gili Faire Voir\" (gili, plage) — no matching FlashVoyage article found"
-    }
-  ],
+  "newArticles": [],
   "summary": {
-    "totalNew": 1,
-    "contentGaps": 1,
+    "totalNew": 0,
+    "contentGaps": 0,
     "staleRefreshes": 0,
     "monitoring": 0
   }

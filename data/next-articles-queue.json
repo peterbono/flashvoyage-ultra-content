@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-13T04:36:08.541Z",
+  "timestamp": "2026-06-14T04:37:45.007Z",
   "queueSize": 13,
   "queue": [
     {
@@ -49,7 +49,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 11,
-        "freshness": 0.76,
+        "freshness": 0.75,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
@@ -161,7 +161,7 @@
         "wpId": 4370,
         "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
         "compositeScore": 13,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }

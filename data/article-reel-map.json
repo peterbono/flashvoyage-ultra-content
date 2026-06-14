@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-13T04:36:07.604Z",
+  "timestamp": "2026-06-14T04:37:44.063Z",
   "articleMap": {
     "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
       "wpId": 4252,
@@ -404,6 +404,18 @@
         "poll"
       ],
       "category": "budget",
+      "igReferralTraffic": null
+    },
+    "meilleur-esim-cambodge-2026": {
+      "wpId": 6374,
+      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "destination",
       "igReferralTraffic": null
     },
     "meilleur-esim-bali-2026": {
@@ -1256,9 +1268,9 @@
     }
   ],
   "stats": {
-    "totalArticles": 37,
+    "totalArticles": 38,
     "articlesWithReels": 7,
-    "articlesWithoutReels": 30,
+    "articlesWithoutReels": 31,
     "totalReels": 11,
     "viralReels": 0,
     "orphanReels": 115

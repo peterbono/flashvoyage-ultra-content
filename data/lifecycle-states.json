@@ -1,68 +1,32 @@
 {
-  "timestamp": "2026-06-13T04:37:36.443Z",
-  "articleCount": 37,
+  "timestamp": "2026-06-14T04:39:13.451Z",
+  "articleCount": 38,
   "stateCounts": {
-    "GROWING": 27,
+    "GROWING": 28,
     "DECLINING": 8,
     "NEW": 2
   },
-  "totalActions": 82,
+  "totalActions": 84,
   "actionsByPriority": {
     "P0": 10,
-    "P1": 45,
-    "P2": 27,
+    "P1": 46,
+    "P2": 28,
     "P3": 0
   },
   "articles": [
-    {
-      "slug": "esim-philippines-globe-smart-comparatif-2026",
-      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
-      "wpId": 4372,
-      "compositeScore": 39,
-      "date": "2026-03-23T13:19:57",
-      "ageDays": 82,
-      "state": "DECLINING",
-      "trajectory": {
-        "trend7d": -0.133,
-        "trend14d": -0.152,
-        "consecutiveRising": 2,
-        "variance7d": 0.063,
-        "dataPoints": 31
-      },
-      "actions": [
-        {
-          "action": "content_refresh",
-          "priority": "P0",
-          "reason": "Article declining -15%+ over 14d — urgent content refresh needed"
-        },
-        {
-          "action": "update_title_meta",
-          "priority": "P1",
-          "reason": "Declining article — refresh title/meta for improved CTR"
-        },
-        {
-          "action": "add_fresh_sections",
-          "priority": "P1",
-          "reason": "Declining article — add 2026 updates, new sections, fresh data"
-        }
-      ],
-      "flags": [
-        "top_performer"
-      ]
-    },
     {
       "slug": "japon-couple-15-jours-budget-tout-compris-2026",
       "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
       "wpId": 4373,
       "compositeScore": 28,
       "date": "2026-03-23T13:20:52",
-      "ageDays": 82,
+      "ageDays": 83,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.349,
-        "trend14d": -0.317,
+        "trend7d": -0.364,
+        "trend14d": -0.2,
         "consecutiveRising": 0,
-        "variance7d": 0.183,
+        "variance7d": 0.192,
         "dataPoints": 31
       },
       "actions": [
@@ -93,12 +57,12 @@
       "wpId": 4253,
       "compositeScore": 27,
       "date": "2026-03-23T11:58:01",
-      "ageDays": 82,
+      "ageDays": 83,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.156,
-        "trend14d": -0.182,
-        "consecutiveRising": 2,
+        "trend7d": 0,
+        "trend14d": -0.289,
+        "consecutiveRising": 0,
         "variance7d": 0.092,
         "dataPoints": 31
       },
@@ -129,13 +93,49 @@
       "wpId": 4250,
       "compositeScore": 23,
       "date": "2026-03-23T11:56:46",
-      "ageDays": 82,
+      "ageDays": 83,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.207,
+        "trend7d": -0.115,
         "trend14d": -0.207,
         "consecutiveRising": 0,
-        "variance7d": 0.092,
+        "variance7d": 0.095,
+        "dataPoints": 31
+      },
+      "actions": [
+        {
+          "action": "content_refresh",
+          "priority": "P0",
+          "reason": "Article declining -15%+ over 14d — urgent content refresh needed"
+        },
+        {
+          "action": "update_title_meta",
+          "priority": "P1",
+          "reason": "Declining article — refresh title/meta for improved CTR"
+        },
+        {
+          "action": "add_fresh_sections",
+          "priority": "P1",
+          "reason": "Declining article — add 2026 updates, new sections, fresh data"
+        }
+      ],
+      "flags": [
+        "zero_traffic"
+      ]
+    },
+    {
+      "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
+      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+      "wpId": 5063,
+      "compositeScore": 17,
+      "date": "2026-04-05T05:24:53",
+      "ageDays": 70,
+      "state": "DECLINING",
+      "trajectory": {
+        "trend7d": -0.056,
+        "trend14d": -0.261,
+        "consecutiveRising": 0,
+        "variance7d": 0.156,
         "dataPoints": 31
       },
       "actions": [
@@ -165,10 +165,10 @@
       "wpId": 3090,
       "compositeScore": 16,
       "date": "2026-03-04T19:08:20",
-      "ageDays": 100,
+      "ageDays": 101,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.059,
+        "trend7d": 0,
         "trend14d": -0.158,
         "consecutiveRising": 0,
         "variance7d": 0.096,
@@ -201,14 +201,14 @@
       "wpId": 6323,
       "compositeScore": 15,
       "date": "2026-05-24T03:16:15",
-      "ageDays": 20,
+      "ageDays": 21,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.286,
+        "trend7d": -0.211,
         "trend14d": -0.25,
         "consecutiveRising": 0,
         "variance7d": 0.141,
-        "dataPoints": 21
+        "dataPoints": 22
       },
       "actions": [
         {
@@ -232,18 +232,18 @@
       ]
     },
     {
-      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "wpId": 4370,
-      "compositeScore": 13,
-      "date": "2026-03-23T13:17:41",
-      "ageDays": 82,
+      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "wpId": 5742,
+      "compositeScore": 14,
+      "date": "2026-04-17T05:37:11",
+      "ageDays": 58,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": 0,
-        "trend14d": -0.235,
+        "trend14d": -0.176,
         "consecutiveRising": 0,
-        "variance7d": 0.078,
+        "variance7d": 0,
         "dataPoints": 31
       },
       "actions": [
@@ -273,13 +273,13 @@
       "wpId": 4105,
       "compositeScore": 12,
       "date": "2026-03-18T13:26:31",
-      "ageDays": 87,
+      "ageDays": 88,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.333,
+        "trend7d": -0.25,
         "trend14d": -0.333,
         "consecutiveRising": 0,
-        "variance7d": 0.151,
+        "variance7d": 0.162,
         "dataPoints": 31
       },
       "actions": [
@@ -307,14 +307,14 @@
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
       "wpId": 4252,
-      "compositeScore": 53,
+      "compositeScore": 52,
       "date": "2026-03-23T11:57:07",
-      "ageDays": 82,
+      "ageDays": 83,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.06,
+        "trend7d": 0,
         "trend14d": 0,
-        "consecutiveRising": 2,
+        "consecutiveRising": 0,
         "variance7d": 0.068,
         "dataPoints": 31
       },
@@ -340,11 +340,11 @@
       "wpId": 6195,
       "compositeScore": 49,
       "date": "2026-05-10T03:15:12",
-      "ageDays": 34,
+      "ageDays": 35,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.195,
-        "trend14d": 0.69,
+        "trend7d": 0,
+        "trend14d": 0.361,
         "consecutiveRising": 0,
         "variance7d": 0.055,
         "dataPoints": 31
@@ -371,13 +371,13 @@
       "wpId": 4487,
       "compositeScore": 47,
       "date": "2026-03-31T16:22:55",
-      "ageDays": 74,
+      "ageDays": 75,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.237,
+        "trend7d": 0.119,
         "trend14d": 0.175,
-        "consecutiveRising": 2,
-        "variance7d": 0.121,
+        "consecutiveRising": 0,
+        "variance7d": 0.124,
         "dataPoints": 31
       },
       "actions": [
@@ -403,13 +403,13 @@
       "wpId": 4254,
       "compositeScore": 41,
       "date": "2026-03-23T12:02:05",
-      "ageDays": 82,
+      "ageDays": 83,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.139,
-        "trend14d": 0.079,
-        "consecutiveRising": 2,
-        "variance7d": 0.098,
+        "trend7d": 0.108,
+        "trend14d": 0.108,
+        "consecutiveRising": 0,
+        "variance7d": 0.104,
         "dataPoints": 31
       },
       "actions": [
@@ -429,18 +429,49 @@
       ]
     },
     {
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
+      "wpId": 4372,
+      "compositeScore": 39,
+      "date": "2026-03-23T13:19:57",
+      "ageDays": 83,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": 0.026,
+        "trend14d": -0.133,
+        "consecutiveRising": 0,
+        "variance7d": 0.067,
+        "dataPoints": 31
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": [
+        "top_performer"
+      ]
+    },
+    {
       "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
       "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
       "wpId": 4369,
       "compositeScore": 34,
       "date": "2026-03-23T13:17:33",
-      "ageDays": 82,
+      "ageDays": 83,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.056,
-        "trend14d": -0.081,
-        "consecutiveRising": 2,
-        "variance7d": 0.087,
+        "trend7d": 0.063,
+        "trend14d": 0.133,
+        "consecutiveRising": 0,
+        "variance7d": 0.089,
         "dataPoints": 31
       },
       "actions": [
@@ -463,13 +494,13 @@
       "wpId": 4371,
       "compositeScore": 31,
       "date": "2026-03-23T13:18:06",
-      "ageDays": 82,
+      "ageDays": 83,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.192,
-        "trend14d": -0.139,
-        "consecutiveRising": 2,
-        "variance7d": 0.085,
+        "trend7d": 0.348,
+        "trend14d": -0.061,
+        "consecutiveRising": 0,
+        "variance7d": 0.079,
         "dataPoints": 31
       },
       "actions": [
@@ -492,13 +523,13 @@
       "wpId": 5072,
       "compositeScore": 28,
       "date": "2026-04-05T08:42:10",
-      "ageDays": 69,
+      "ageDays": 70,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0.077,
         "trend14d": 0.077,
         "consecutiveRising": 0,
-        "variance7d": 0.074,
+        "variance7d": 0.078,
         "dataPoints": 31
       },
       "actions": [
@@ -521,15 +552,15 @@
       "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
       "wpId": 5119,
-      "compositeScore": 25,
+      "compositeScore": 24,
       "date": "2026-04-06T05:37:25",
-      "ageDays": 68,
+      "ageDays": 69,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.038,
-        "trend14d": -0.107,
+        "trend7d": -0.04,
+        "trend14d": -0.143,
         "consecutiveRising": 0,
-        "variance7d": 0.139,
+        "variance7d": 0.138,
         "dataPoints": 31
       },
       "actions": [
@@ -555,13 +586,13 @@
       "wpId": 5333,
       "compositeScore": 23,
       "date": "2026-04-12T05:34:09",
-      "ageDays": 62,
+      "ageDays": 63,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.148,
-        "trend14d": 0.045,
+        "trend7d": -0.042,
+        "trend14d": -0.115,
         "consecutiveRising": 0,
-        "variance7d": 0.148,
+        "variance7d": 0.149,
         "dataPoints": 31
       },
       "actions": [
@@ -584,10 +615,10 @@
       "wpId": 5260,
       "compositeScore": 22,
       "date": "2026-04-10T05:37:09",
-      "ageDays": 64,
+      "ageDays": 65,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.043,
+        "trend7d": 0,
         "trend14d": -0.12,
         "consecutiveRising": 0,
         "variance7d": 0.142,
@@ -615,10 +646,10 @@
       "wpId": 5179,
       "compositeScore": 22,
       "date": "2026-04-08T05:23:01",
-      "ageDays": 66,
+      "ageDays": 67,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.083,
+        "trend7d": 0,
         "trend14d": -0.12,
         "consecutiveRising": 0,
         "variance7d": 0.148,
@@ -647,13 +678,13 @@
       "wpId": 5678,
       "compositeScore": 19,
       "date": "2026-04-15T09:17:09",
-      "ageDays": 59,
+      "ageDays": 60,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.05,
-        "trend14d": 0.118,
+        "trend14d": 0.056,
         "consecutiveRising": 0,
-        "variance7d": 0.023,
+        "variance7d": 0.025,
         "dataPoints": 31
       },
       "actions": [
@@ -676,13 +707,13 @@
       "wpId": 5343,
       "compositeScore": 17,
       "date": "2026-04-12T08:43:46",
-      "ageDays": 62,
+      "ageDays": 63,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": 0.214,
         "trend14d": 0,
-        "consecutiveRising": 1,
-        "variance7d": 0.094,
+        "consecutiveRising": 0,
+        "variance7d": 0.084,
         "dataPoints": 31
       },
       "actions": [
@@ -707,44 +738,13 @@
       "wpId": 5296,
       "compositeScore": 17,
       "date": "2026-04-11T08:44:09",
-      "ageDays": 63,
+      "ageDays": 64,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
-        "trend14d": -0.056,
-        "consecutiveRising": 1,
-        "variance7d": 0.084,
-        "dataPoints": 31
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": [
-        "zero_traffic"
-      ]
-    },
-    {
-      "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
-      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
-      "wpId": 5063,
-      "compositeScore": 17,
-      "date": "2026-04-05T05:24:53",
-      "ageDays": 69,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": -0.261,
-        "trend14d": -0.056,
+        "trend14d": 0,
         "consecutiveRising": 0,
-        "variance7d": 0.155,
+        "variance7d": 0.084,
         "dataPoints": 31
       },
       "actions": [
@@ -769,12 +769,12 @@
       "wpId": 4071,
       "compositeScore": 17,
       "date": "2026-03-18T10:40:12",
-      "ageDays": 87,
+      "ageDays": 88,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
-        "trend14d": 0,
-        "consecutiveRising": 1,
+        "trend14d": 0.308,
+        "consecutiveRising": 0,
         "variance7d": 0.143,
         "dataPoints": 31
       },
@@ -800,7 +800,7 @@
       "wpId": 3254,
       "compositeScore": 16,
       "date": "2026-03-11T20:13:21",
-      "ageDays": 93,
+      "ageDays": 94,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
@@ -831,14 +831,45 @@
       "wpId": 2980,
       "compositeScore": 16,
       "date": "2026-02-23T10:54:23",
-      "ageDays": 110,
+      "ageDays": 111,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
-        "trend14d": 0,
-        "consecutiveRising": 1,
+        "trend14d": 0.333,
+        "consecutiveRising": 0,
         "variance7d": 0.153,
         "dataPoints": 31
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": [
+        "zero_traffic"
+      ]
+    },
+    {
+      "slug": "meilleur-esim-bali-2026",
+      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
+      "wpId": 6327,
+      "compositeScore": 15,
+      "date": "2026-05-31T03:17:48",
+      "ageDays": 14,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.211,
+        "trend14d": 0,
+        "consecutiveRising": 0,
+        "variance7d": 0,
+        "dataPoints": 15
       },
       "actions": [
         {
@@ -862,45 +893,14 @@
       "wpId": 6309,
       "compositeScore": 15,
       "date": "2026-05-17T03:15:44",
-      "ageDays": 27,
+      "ageDays": 28,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 28
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": [
-        "zero_traffic"
-      ]
-    },
-    {
-      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "wpId": 5742,
-      "compositeScore": 14,
-      "date": "2026-04-17T05:37:11",
-      "ageDays": 57,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": 0,
-        "trend14d": -0.125,
-        "consecutiveRising": 0,
-        "variance7d": 0,
-        "dataPoints": 31
+        "dataPoints": 29
       },
       "actions": [
         {
@@ -924,10 +924,41 @@
       "wpId": 5270,
       "compositeScore": 14,
       "date": "2026-04-10T09:40:41",
-      "ageDays": 64,
+      "ageDays": 65,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
+        "trend14d": 0,
+        "consecutiveRising": 0,
+        "variance7d": 0,
+        "dataPoints": 31
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": [
+        "zero_traffic"
+      ]
+    },
+    {
+      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "wpId": 4370,
+      "compositeScore": 13,
+      "date": "2026-03-23T13:17:41",
+      "ageDays": 83,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.187,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
@@ -955,13 +986,13 @@
       "wpId": 4125,
       "compositeScore": 12,
       "date": "2026-03-18T19:33:49",
-      "ageDays": 86,
+      "ageDays": 87,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.077,
         "trend14d": -0.077,
         "consecutiveRising": 0,
-        "variance7d": 0.036,
+        "variance7d": 0.039,
         "dataPoints": 31
       },
       "actions": [
@@ -986,13 +1017,13 @@
       "wpId": 4030,
       "compositeScore": 12,
       "date": "2026-03-18T06:42:56",
-      "ageDays": 87,
+      "ageDays": 88,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.077,
         "trend14d": -0.077,
         "consecutiveRising": 0,
-        "variance7d": 0.036,
+        "variance7d": 0.039,
         "dataPoints": 31
       },
       "actions": [
@@ -1017,13 +1048,13 @@
       "wpId": 3425,
       "compositeScore": 12,
       "date": "2026-03-14T20:55:07",
-      "ageDays": 90,
+      "ageDays": 91,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.077,
         "trend14d": -0.077,
         "consecutiveRising": 0,
-        "variance7d": 0.029,
+        "variance7d": 0,
         "dataPoints": 31
       },
       "actions": [
@@ -1048,7 +1079,7 @@
       "wpId": 3198,
       "compositeScore": 12,
       "date": "2026-03-11T15:15:39",
-      "ageDays": 94,
+      "ageDays": 95,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
@@ -1079,7 +1110,7 @@
       "wpId": 3107,
       "compositeScore": 12,
       "date": "2026-03-04T19:51:24",
-      "ageDays": 100,
+      "ageDays": 101,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
@@ -1110,13 +1141,13 @@
       "wpId": 2924,
       "compositeScore": 11,
       "date": "2026-02-21T09:23:42",
-      "ageDays": 112,
+      "ageDays": 113,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.083,
         "trend14d": -0.083,
         "consecutiveRising": 0,
-        "variance7d": 0.043,
+        "variance7d": 0.04,
         "dataPoints": 31
       },
       "actions": [
@@ -1141,14 +1172,14 @@
       "wpId": 6331,
       "compositeScore": 26,
       "date": "2026-06-07T03:17:59",
-      "ageDays": 6,
+      "ageDays": 7,
       "state": "NEW",
       "trajectory": {
         "trend7d": 0.733,
         "trend14d": 0,
-        "consecutiveRising": 2,
-        "variance7d": 0.233,
-        "dataPoints": 7
+        "consecutiveRising": 0,
+        "variance7d": 0.256,
+        "dataPoints": 8
       },
       "actions": [
         {
@@ -1165,19 +1196,19 @@
       "flags": []
     },
     {
-      "slug": "meilleur-esim-bali-2026",
-      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
-      "wpId": 6327,
+      "slug": "meilleur-esim-cambodge-2026",
+      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+      "wpId": 6374,
       "compositeScore": 15,
-      "date": "2026-05-31T03:17:48",
-      "ageDays": 13,
+      "date": "2026-06-14T03:18:14",
+      "ageDays": 0,
       "state": "NEW",
       "trajectory": {
         "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
-        "variance7d": 0.09,
-        "dataPoints": 14
+        "variance7d": 0,
+        "dataPoints": 1
       },
       "actions": [
         {

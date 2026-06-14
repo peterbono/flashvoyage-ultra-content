@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-13T04:35:48.691Z",
+  "timestamp": "2026-06-14T04:37:24.718Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -8,19 +8,19 @@
     "freshness": 0.15,
     "monetization": 0.1
   },
-  "articleCount": 37,
+  "articleCount": 38,
   "scores": [
     {
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "compositeScore": 53,
+      "compositeScore": 52,
       "signals": {
         "traffic": 0.33,
         "sessionQuality": 1,
         "trendAlignment": 0.21,
         "reelAmplification": 0.38,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 1,
         "frShare": 0.5,
         "frPageviews": 1
@@ -41,7 +41,7 @@
         "sessionQuality": 0.04,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.99,
+        "freshness": 0.98,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -84,7 +84,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.41,
         "reelAmplification": 0,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 1,
         "frShare": 1,
         "frPageviews": 2
@@ -105,7 +105,7 @@
         "sessionQuality": 0.11,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 0,
         "frShare": 0.2,
         "frPageviews": 1
@@ -126,7 +126,7 @@
         "sessionQuality": 0.18,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -145,7 +145,7 @@
         "sessionQuality": 0.06,
         "trendAlignment": 0.16,
         "reelAmplification": 0,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 1,
         "frShare": 1,
         "frPageviews": 1
@@ -185,7 +185,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0.34,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -207,7 +207,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -241,13 +241,13 @@
       "wpId": 5119,
       "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
-      "compositeScore": 25,
+      "compositeScore": 24,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0.41,
         "reelAmplification": 0.2,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -288,7 +288,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -509,6 +509,27 @@
       "wordCount": 3218
     },
     {
+      "wpId": 6374,
+      "slug": "meilleur-esim-cambodge-2026",
+      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+      "compositeScore": 15,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-06-14T03:18:14",
+      "wordCount": 1234
+    },
+    {
       "wpId": 6327,
       "slug": "meilleur-esim-bali-2026",
       "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
@@ -623,7 +644,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -770,7 +791,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.76,
+        "freshness": 0.75,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -787,7 +808,7 @@
     "topPerformers": 2,
     "staleArticles": 0,
     "missingWidgets": 0,
-    "zeroTraffic": 26,
+    "zeroTraffic": 27,
     "trending": 1,
     "frHeavy": 0,
     "frLight": 0,
