@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-06-15T00:47:06.362Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-06-15T07:58:43.166Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Brit details Bangkok prison conditions after 18-month sentence",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/bangkok/brit-details-bangkok-prison-conditions-after-18-month-sentence",
+      "velocityScore": 0.489,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 719,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2447,
+      "estimatedTrafficIn24h": 2391,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.3
+      },
+      "detectedAt": "2026-06-15T06:42:27.000Z",
+      "scoredAt": "2026-06-15T07:58:36.085Z"
+    }
+  ]
 }
