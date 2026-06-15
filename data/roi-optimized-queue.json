@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-14T04:37:51.909Z",
+  "timestamp": "2026-06-15T04:39:12.171Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,10 +17,10 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 330,
-    "medianTrafficSignal": "0.330",
+    "medianMonthlyPV": 250,
+    "medianTrafficSignal": "0.250",
     "avgRpm": 2,
-    "articlesAnalyzed": 11
+    "articlesAnalyzed": 12
   },
   "queue": [
     {
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 8.8,
-        "projectedMonthlyTraffic": 330,
-        "projectedMonthlyRevenue": 0.66,
+        "expectedRoi": 6.67,
+        "projectedMonthlyTraffic": 250,
+        "projectedMonthlyRevenue": 0.5,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (330 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (250 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 8.8,
-        "projectedMonthlyTraffic": 330,
-        "projectedMonthlyRevenue": 0.66,
+        "expectedRoi": 6.67,
+        "projectedMonthlyTraffic": 250,
+        "projectedMonthlyRevenue": 0.5,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (330 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (250 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,11 +77,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 8.8,
-        "projectedMonthlyTraffic": 330,
-        "projectedMonthlyRevenue": 0.66,
+        "expectedRoi": 6.67,
+        "projectedMonthlyTraffic": 250,
+        "projectedMonthlyRevenue": 0.5,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (330 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (250 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -141,13 +141,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
-        "wpId": 4105,
-        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+        "wpId": 4030,
+        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 12,
-        "freshness": 0.83,
+        "freshness": 0.82,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -166,13 +166,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
       "articleType": "support",
       "context": {
-        "wpId": 4030,
-        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 12,
-        "freshness": 0.83,
+        "freshness": 0.8,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -191,13 +191,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
       "articleType": "support",
       "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 12,
-        "freshness": 0.82,
+        "freshness": 0.78,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -215,16 +215,16 @@
       "rank": 9,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "priorityScore": -3,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
-        "compositeScore": 12,
-        "freshness": 0.81,
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 13,
+        "freshness": 0.89,
         "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -240,16 +240,16 @@
       "rank": 10,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "priorityScore": -4,
+      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
       "articleType": "support",
       "context": {
-        "wpId": 3107,
-        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-        "compositeScore": 12,
-        "freshness": 0.79,
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 14,
+        "freshness": 0.91,
         "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -265,66 +265,16 @@
       "rank": 11,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "priorityScore": -5,
+      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
       "articleType": "support",
       "context": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 13,
-        "freshness": 0.84,
+        "wpId": 6309,
+        "slug": "meilleur-esim-japon-2026",
+        "compositeScore": 15,
+        "freshness": 1,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "articleType": "support",
-      "context": {
-        "wpId": 5742,
-        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-        "compositeScore": 14,
-        "freshness": 0.92,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 14,
-        "freshness": 0.9,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -340,16 +290,16 @@
   "budgetAllocation": {
     "totalCost": 0.225,
     "dailyBudget": 2,
-    "itemsWithinBudget": 13,
+    "itemsWithinBudget": 11,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.066,
-    "expectedDailyRoi": 0.29
+    "expectedDailyRevenue": 0.05,
+    "expectedDailyRoi": 0.22
   },
   "summary": {
     "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 10
+    "review": 8
   }
 }

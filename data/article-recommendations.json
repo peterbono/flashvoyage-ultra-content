@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-06-14T04:37:50.978Z",
+    "generatedAt": "2026-06-15T04:39:11.244Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 4,
@@ -120,14 +120,14 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 38,
+        "impressions": 37,
         "clicks": 1,
-        "position": 27.2,
+        "position": 26.6,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 33.6,
-            "impressions": 19,
+            "position": 33.5,
+            "impressions": 20,
             "ctr": 0
           },
           {
@@ -177,9 +177,9 @@
         "avgDuration": 776
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 4,
         "clicks": 0,
-        "position": 11,
+        "position": 8.8,
         "topQueries": []
       },
       "reels": {
@@ -205,14 +205,14 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 50,
+        "impressions": 46,
         "clicks": 0,
         "position": 28.3,
         "topQueries": [
           {
             "query": "esim asie du sud est",
             "position": 28.3,
-            "impressions": 49,
+            "impressions": 45,
             "ctr": 0
           }
         ]
@@ -332,6 +332,34 @@
         "pageviews": 1,
         "sessions": 1,
         "avgDuration": 138
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3425,
+      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "url": "https://flashvoyage.com/coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis/",
+      "wordCount": 4915,
+      "widgetCount": 0,
+      "internalLinks": 50,
+      "lastModified": "2026-06-11T05:33:43",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -699,8 +727,8 @@
       },
       "gsc": {
         "impressions": 18,
-        "clicks": 1,
-        "position": 34.7,
+        "clicks": 0,
+        "position": 35,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
@@ -749,9 +777,9 @@
         "avgDuration": 117
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 13,
         "clicks": 0,
-        "position": 12.8,
+        "position": 14.3,
         "topQueries": []
       },
       "reels": {
@@ -939,34 +967,6 @@
       "widgetCount": 0,
       "internalLinks": 39,
       "lastModified": "2026-06-11T05:33:42",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3425,
-      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "url": "https://flashvoyage.com/coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis/",
-      "wordCount": 4915,
-      "widgetCount": 0,
-      "internalLinks": 50,
-      "lastModified": "2026-06-11T05:33:43",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
