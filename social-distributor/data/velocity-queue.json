@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-06-16T00:52:07.423Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-06-16T07:57:28.596Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Wanted South Korean fraud suspect caught after 9-month visa overstay",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/bangkok/south-korean-fraud-suspect-wanted-by-interpol-arrested-in-bangkok",
+      "velocityScore": 0.469,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 45,
+      "topicType": {
+        "key": "policy_change",
+        "halfLifeHours": 48
+      },
+      "estimatedTrafficNow": 2346,
+      "estimatedTrafficIn24h": 1659,
+      "trafficLossPerHour": 29,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.958,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3
+      },
+      "detectedAt": "2026-06-16T04:57:06.000Z",
+      "scoredAt": "2026-06-16T07:57:13.092Z"
+    }
+  ]
 }
