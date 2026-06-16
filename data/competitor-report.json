@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-15T04:40:17.746Z",
+  "timestamp": "2026-06-16T04:42:05.242Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,15 +16,33 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 9659,
-      "newUrls": 3
+      "totalUrls": 9666,
+      "newUrls": 7
     }
   ],
-  "newArticles": [],
+  "newArticles": [
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/itineraire-vietnam/",
+      "lastmod": "2026-06-15T07:39:34+00:00",
+      "destination": "vietnam",
+      "contentType": "itineraire",
+      "title": "Itineraire Vietnam",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=57, freshness=0.84)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 57,
+        "freshness": 0.84
+      }
+    }
+  ],
   "summary": {
-    "totalNew": 0,
+    "totalNew": 1,
     "contentGaps": 0,
     "staleRefreshes": 0,
-    "monitoring": 0
+    "monitoring": 1
   }
 }

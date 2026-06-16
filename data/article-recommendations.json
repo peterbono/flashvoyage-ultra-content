@@ -1,54 +1,26 @@
 {
   "summary": {
-    "generatedAt": "2026-06-15T04:39:11.244Z",
+    "generatedAt": "2026-06-16T04:40:49.038Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
-    "articlesWithRecommendations": 4,
-    "totalRecommendations": 4,
+    "articlesWithRecommendations": 5,
+    "totalRecommendations": 5,
     "byPriority": {
       "P0": 0,
       "P1": 0,
-      "P2": 4
+      "P2": 5
     },
     "byType": {
-      "seo": 4
+      "seo": 5
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
-        "count": 4
+        "count": 5
       }
     ]
   },
   "articles": [
-    {
-      "wpId": 6195,
-      "slug": "meilleur-esim-thailande-2026",
-      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
-      "url": "https://flashvoyage.com/meilleur-esim-thailande-2026/",
-      "wordCount": 1886,
-      "widgetCount": 0,
-      "internalLinks": 17,
-      "lastModified": "2026-06-11T05:33:01",
-      "ga4": {
-        "pageviews": 6,
-        "sessions": 6,
-        "avgDuration": 31
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
     {
       "wpId": 6331,
       "slug": "meilleur-esim-philippines-2026",
@@ -177,42 +149,14 @@
         "avgDuration": 776
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 7,
         "clicks": 0,
-        "position": 8.8,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5678,
-      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
-      "wordCount": 1657,
-      "widgetCount": 0,
-      "internalLinks": 25,
-      "lastModified": "2026-06-11T05:27:51",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 2
-      },
-      "gsc": {
-        "impressions": 46,
-        "clicks": 0,
-        "position": 28.3,
+        "position": 18,
         "topQueries": [
           {
-            "query": "esim asie du sud est",
-            "position": 28.3,
-            "impressions": 45,
+            "query": "assurance voyage vietnam",
+            "position": 85,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -225,9 +169,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim asie du sud est\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim asie du sud est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -380,10 +324,10 @@
       "slug": "meilleur-esim-cambodge-2026",
       "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
       "url": "https://flashvoyage.com/meilleur-esim-cambodge-2026/",
-      "wordCount": 1232,
+      "wordCount": 1249,
       "widgetCount": 0,
       "internalLinks": 11,
-      "lastModified": "2026-06-14T03:18:27",
+      "lastModified": "2026-06-15T12:00:01",
       "ga4": {
         "pageviews": 0,
         "sessions": 0,
@@ -488,6 +432,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 6195,
+      "slug": "meilleur-esim-thailande-2026",
+      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
+      "url": "https://flashvoyage.com/meilleur-esim-thailande-2026/",
+      "wordCount": 1886,
+      "widgetCount": 0,
+      "internalLinks": 17,
+      "lastModified": "2026-06-11T05:33:01",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5742,
       "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
       "title": "Bangkok : le vrai coût des taxis aéroport 2026",
@@ -513,6 +485,51 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5678,
+      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
+      "wordCount": 1657,
+      "widgetCount": 0,
+      "internalLinks": 25,
+      "lastModified": "2026-06-11T05:27:51",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 46,
+        "clicks": 0,
+        "position": 28.3,
+        "topQueries": [
+          {
+            "query": "esim asie du sud est",
+            "position": 28.3,
+            "impressions": 45,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim asie du sud est\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim asie du sud est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
