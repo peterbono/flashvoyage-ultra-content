@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-06-16T04:40:37.457Z",
+  "timestamp": "2026-06-17T04:37:27.588Z",
   "trendingTopics": [
     {
-      "query": "prix voyage thailande",
-      "traffic": 170,
-      "trafficFormatted": "+170 %",
+      "query": "voyage thailande pas cher",
+      "traffic": 160,
+      "trafficFormatted": "+160 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-16T04:40:28.891Z",
+      "date": "2026-06-17T04:37:18.633Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -17,11 +17,11 @@
     },
     {
       "query": "voyage thailande prix",
-      "traffic": 150,
-      "trafficFormatted": "+150 %",
+      "traffic": 120,
+      "trafficFormatted": "+120 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-16T04:40:28.891Z",
+      "date": "2026-06-17T04:37:18.633Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -30,12 +30,12 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage vietnam pas cher",
-      "traffic": 300,
-      "trafficFormatted": "+300 %",
+      "query": "voyage vietnam prix",
+      "traffic": 120,
+      "trafficFormatted": "+120 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-16T04:40:31.033Z",
+      "date": "2026-06-17T04:37:20.867Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 1,
@@ -44,75 +44,18 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage thailande covid",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-06-16T04:40:28.891Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage thailande phuket",
-      "traffic": 60,
-      "trafficFormatted": "+60 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-06-16T04:40:28.891Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
       "query": "voyage cambodge vietnam",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-16T04:40:35.312Z",
+      "date": "2026-06-17T04:37:25.346Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
       "category": "destination",
       "destination": "cambodge",
       "compositeScore": 0.53
-    },
-    {
-      "query": "prix carburant",
-      "traffic": 200,
-      "trafficFormatted": "200+",
-      "relatedQueries": [],
-      "articles": [
-        {
-          "title": "Pour la première fois depuis le 7 mars, le gazole passe sous les 2 euros",
-          "url": "https://actu.orange.fr/france/pour-la-premiere-fois-depuis-le-7-mars-le-gazole-passe-sous-les-2-euros-magic-CNT000002pZxPd.html",
-          "source": "Orange Actualités"
-        },
-        {
-          "title": "\"1,80 euros le litre dans 15 jours\": enfin une baisse significative des prix du carburant en France?",
-          "url": "https://rmc.bfmtv.com/actualites/societe/transports/1-80-euros-le-litre-dans-15-jours-enfin-une-baisse-significative-des-prix-du-carburant-en-france_AV-202606160105.html",
-          "source": "RMC"
-        },
-        {
-          "title": "Avant même la signature d’un accord avec l’Iran, le gazole revient à son niveau du début de la guerre",
-          "url": "https://www.huffingtonpost.fr/economie/article/prix-du-carburant-avant-meme-la-signature-de-l-accord-sur-l-iran-le-gazole-retrouve-le-niveau-du-debut-de-la-guerre_268590.html",
-          "source": "Le HuffPost"
-        }
-      ],
-      "date": "Mon, 15 Jun 2026 20:20:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "budget",
-      "destination": null,
-      "compositeScore": 0.29016
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-06-16T04:40:49.038Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-06-17T04:37:37.238Z",
+    "elapsedSeconds": 4,
     "totalArticles": 38,
     "articlesWithRecommendations": 5,
     "totalRecommendations": 5,
@@ -92,9 +92,9 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 37,
+        "impressions": 36,
         "clicks": 1,
-        "position": 26.6,
+        "position": 27.1,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -502,14 +502,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 46,
+        "impressions": 50,
         "clicks": 0,
-        "position": 28.3,
+        "position": 27.7,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 28.3,
-            "impressions": 45,
+            "position": 28.2,
+            "impressions": 48,
             "ctr": 0
           }
         ]
@@ -547,9 +547,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 2,
         "clicks": 0,
-        "position": 6,
+        "position": 8.5,
         "topQueries": []
       },
       "reels": {
@@ -739,13 +739,13 @@
       "lastModified": "2026-06-11T05:33:21",
       "ga4": {
         "pageviews": 0,
-        "sessions": 0,
+        "sessions": 1,
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 19,
         "clicks": 0,
-        "position": 35,
+        "position": 33.6,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
@@ -1102,9 +1102,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 8,
         "clicks": 0,
-        "position": 35.3,
+        "position": 33.4,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",

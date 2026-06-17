@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-16T04:40:23.208Z",
+  "timestamp": "2026-06-17T04:37:12.410Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -14,13 +14,13 @@
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "compositeScore": 57,
+      "compositeScore": 54,
       "signals": {
-        "traffic": 0.4,
+        "traffic": 0.25,
         "sessionQuality": 1,
-        "trendAlignment": 0.35,
+        "trendAlignment": 0.41,
         "reelAmplification": 0.38,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 1,
         "frShare": 0.5,
         "frPageviews": 1
@@ -35,11 +35,11 @@
       "wpId": 4487,
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "compositeScore": 46,
+      "compositeScore": 45,
       "signals": {
-        "traffic": 0.4,
+        "traffic": 0.25,
         "sessionQuality": 0.04,
-        "trendAlignment": 0.47,
+        "trendAlignment": 0.62,
         "reelAmplification": 0.1,
         "freshness": 0.86,
         "monetization": 1,
@@ -47,6 +47,7 @@
         "frPageviews": 1
       },
       "flags": [
+        "trending",
         "1_reels"
       ],
       "date": "2026-03-31T16:22:55",
@@ -62,10 +63,10 @@
         "sessionQuality": 0.11,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 0,
-        "frShare": 0.2,
-        "frPageviews": 1
+        "frShare": 0.5,
+        "frPageviews": 4
       },
       "flags": [
         "top_performer"
@@ -77,13 +78,13 @@
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
-      "compositeScore": 43,
+      "compositeScore": 38,
       "signals": {
-        "traffic": 0.4,
+        "traffic": 0.25,
         "sessionQuality": 0,
         "trendAlignment": 0.41,
         "reelAmplification": 0,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 1,
         "frShare": 1,
         "frPageviews": 2
@@ -98,13 +99,13 @@
       "wpId": 4369,
       "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
       "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
-      "compositeScore": 35,
+      "compositeScore": 32,
       "signals": {
-        "traffic": 0.2,
+        "traffic": 0.13,
         "sessionQuality": 0.18,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -117,13 +118,13 @@
       "wpId": 4371,
       "slug": "philippines-10-jours-itineraire-plages-budget-2026",
       "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "compositeScore": 32,
+      "compositeScore": 30,
       "signals": {
-        "traffic": 0.2,
+        "traffic": 0.13,
         "sessionQuality": 0.06,
         "trendAlignment": 0.16,
         "reelAmplification": 0,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 1,
         "frShare": 1,
         "frPageviews": 1
@@ -131,46 +132,6 @@
       "flags": [],
       "date": "2026-03-23T13:18:06",
       "wordCount": 3458
-    },
-    {
-      "wpId": 5072,
-      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
-      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "compositeScore": 29,
-      "signals": {
-        "traffic": 0.2,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0.36,
-        "freshness": 0.88,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [
-        "1_reels"
-      ],
-      "date": "2026-04-05T08:42:10",
-      "wordCount": 1296
-    },
-    {
-      "wpId": 6331,
-      "slug": "meilleur-esim-philippines-2026",
-      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
-      "compositeScore": 28,
-      "signals": {
-        "traffic": 0.4,
-        "sessionQuality": 0.14,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-06-07T03:17:59",
-      "wordCount": 1280
     },
     {
       "wpId": 4373,
@@ -182,7 +143,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0.34,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -204,7 +165,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -219,13 +180,13 @@
       "wpId": 4250,
       "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
       "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
-      "compositeScore": 26,
+      "compositeScore": 27,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
-        "trendAlignment": 0.18,
+        "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -237,23 +198,44 @@
       "wordCount": 3459
     },
     {
-      "wpId": 5333,
-      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+      "wpId": 5072,
+      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
+      "compositeScore": 26,
+      "signals": {
+        "traffic": 0.13,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0.36,
+        "freshness": 0.87,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [
+        "1_reels"
+      ],
+      "date": "2026-04-05T08:42:10",
+      "wordCount": 1296
+    },
+    {
+      "wpId": 6331,
+      "slug": "meilleur-esim-philippines-2026",
+      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
       "compositeScore": 24,
       "signals": {
-        "traffic": 0.2,
-        "sessionQuality": 0.04,
-        "trendAlignment": 0.21,
+        "traffic": 0.25,
+        "sessionQuality": 0.14,
+        "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.9,
+        "freshness": 1,
         "monetization": 0,
-        "frShare": 1,
-        "frPageviews": 1
+        "frShare": 0,
+        "frPageviews": 0
       },
       "flags": [],
-      "date": "2026-04-12T05:34:09",
-      "wordCount": 1408
+      "date": "2026-06-07T03:17:59",
+      "wordCount": 1280
     },
     {
       "wpId": 5119,
@@ -265,7 +247,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.41,
         "reelAmplification": 0.2,
-        "freshness": 0.88,
+        "freshness": 0.87,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -276,6 +258,25 @@
       ],
       "date": "2026-04-06T05:37:25",
       "wordCount": 1493
+    },
+    {
+      "wpId": 5333,
+      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+      "compositeScore": 22,
+      "signals": {
+        "traffic": 0.13,
+        "sessionQuality": 0.04,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 0.89,
+        "monetization": 0,
+        "frShare": 1,
+        "frPageviews": 1
+      },
+      "flags": [],
+      "date": "2026-04-12T05:34:09",
+      "wordCount": 1408
     },
     {
       "wpId": 5260,
@@ -349,7 +350,7 @@
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
-        "trendAlignment": 0.18,
+        "trendAlignment": 0.21,
         "reelAmplification": 0,
         "freshness": 1,
         "monetization": 0,
@@ -384,46 +385,6 @@
       "wordCount": 1888
     },
     {
-      "wpId": 3425,
-      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "compositeScore": 18,
-      "signals": {
-        "traffic": 0.2,
-        "sessionQuality": 0,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.81,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-14T20:55:07",
-      "wordCount": 4917
-    },
-    {
-      "wpId": 5343,
-      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "compositeScore": 17,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.16,
-        "reelAmplification": 0,
-        "freshness": 0.9,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-04-12T08:43:46",
-      "wordCount": 1489
-    },
-    {
       "wpId": 5063,
       "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
       "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
@@ -443,6 +404,27 @@
       ],
       "date": "2026-04-05T05:24:53",
       "wordCount": 1498
+    },
+    {
+      "wpId": 5343,
+      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "compositeScore": 16,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.16,
+        "reelAmplification": 0,
+        "freshness": 0.89,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-04-12T08:43:46",
+      "wordCount": 1489
     },
     {
       "wpId": 5296,
@@ -473,7 +455,7 @@
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
-        "trendAlignment": 0.18,
+        "trendAlignment": 0.21,
         "reelAmplification": 0,
         "freshness": 0.82,
         "monetization": 0,
@@ -508,25 +490,23 @@
       "wordCount": 3216
     },
     {
-      "wpId": 3254,
-      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "wpId": 3425,
+      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "compositeScore": 16,
       "signals": {
-        "traffic": 0,
+        "traffic": 0.13,
         "sessionQuality": 0,
-        "trendAlignment": 0.18,
+        "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.8,
+        "freshness": 0.81,
         "monetization": 0,
-        "frShare": null,
+        "frShare": 0,
         "frPageviews": 0
       },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-03-11T20:13:21",
-      "wordCount": 3583
+      "flags": [],
+      "date": "2026-03-14T20:55:07",
+      "wordCount": 4917
     },
     {
       "wpId": 3090,
@@ -643,7 +623,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.91,
+        "freshness": 0.9,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -679,13 +659,13 @@
       "wpId": 4370,
       "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
       "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "compositeScore": 13,
+      "compositeScore": 12,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -739,6 +719,27 @@
       "wordCount": 4283
     },
     {
+      "wpId": 3254,
+      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "compositeScore": 12,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.8,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-11T20:13:21",
+      "wordCount": 3583
+    },
+    {
       "wpId": 3198,
       "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
       "title": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
@@ -790,7 +791,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.75,
+        "freshness": 0.74,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -803,12 +804,12 @@
     }
   ],
   "summary": {
-    "avgScore": 22,
+    "avgScore": 21,
     "topPerformers": 1,
     "staleArticles": 0,
     "missingWidgets": 0,
     "zeroTraffic": 28,
-    "trending": 0,
+    "trending": 1,
     "frHeavy": 0,
     "frLight": 0,
     "frDiversified": 0
