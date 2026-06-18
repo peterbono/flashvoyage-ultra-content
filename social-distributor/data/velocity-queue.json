@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-06-18T07:41:06.784Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-06-18T13:09:45.378Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "FACT CHECK: Photos of Duterte at airport are fake, AI-generated",
-      "source": "rss_breaking",
-      "destination": "philippines",
-      "link": "https://www.rappler.com/newsbreak/fact-check/rodrigo-duterte-airport-ai-generated/",
-      "velocityScore": 0.448,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 714,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2238,
-      "estimatedTrafficIn24h": 2187,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5.7
-      },
-      "detectedAt": "2026-06-18T02:00:00.000Z",
-      "scoredAt": "2026-06-18T07:41:04.033Z"
-    }
-  ]
+  "queue": []
 }
