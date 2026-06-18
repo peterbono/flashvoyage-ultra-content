@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-17T04:37:32.333Z",
+  "timestamp": "2026-06-18T04:37:20.429Z",
   "queueSize": 13,
   "queue": [
     {
@@ -107,22 +107,6 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 12,
-        "freshness": 0.8,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
       "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
       "articleType": "support",
       "context": {
@@ -135,7 +119,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -151,15 +135,31 @@
       }
     },
     {
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "articleType": "support",
+      "context": {
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
       "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
       "articleType": "support",
       "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "wpId": 5296,
+        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
         "compositeScore": 13,
         "freshness": 0.89,
         "traffic": 0,
@@ -170,16 +170,16 @@
       "rank": 12,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "priorityScore": -3,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
-        "wpId": 5742,
-        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-        "compositeScore": 14,
-        "freshness": 0.91,
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 13,
+        "freshness": 0.88,
         "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     },
     {
@@ -187,11 +187,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
       "articleType": "support",
       "context": {
-        "wpId": 5678,
-        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
         "compositeScore": 14,
         "freshness": 0.9,
         "traffic": 0,

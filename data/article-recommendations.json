@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-06-17T04:37:37.238Z",
+    "generatedAt": "2026-06-18T04:37:25.397Z",
     "elapsedSeconds": 4,
     "totalArticles": 38,
     "articlesWithRecommendations": 5,
@@ -92,14 +92,14 @@
         "avgDuration": 2
       },
       "gsc": {
-        "impressions": 36,
+        "impressions": 37,
         "clicks": 1,
-        "position": 27.1,
+        "position": 27.2,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 33.5,
-            "impressions": 20,
+            "position": 33.4,
+            "impressions": 21,
             "ctr": 0
           },
           {
@@ -149,9 +149,9 @@
         "avgDuration": 776
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 6,
         "clicks": 0,
-        "position": 18,
+        "position": 17.7,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -233,6 +233,57 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4373,
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
+      "wordCount": 4965,
+      "widgetCount": 2,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:21",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 12
+      },
+      "gsc": {
+        "impressions": 19,
+        "clicks": 0,
+        "position": 33.6,
+        "topQueries": [
+          {
+            "query": "15 jours au japon budget",
+            "position": 57.2,
+            "impressions": 9,
+            "ctr": 0
+          },
+          {
+            "query": "budget japon 15 jours",
+            "position": 61,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"15 jours au japon budget\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"15 jours au japon budget\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -502,14 +553,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 50,
+        "impressions": 48,
         "clicks": 0,
         "position": 27.7,
         "topQueries": [
           {
             "query": "esim asie du sud est",
             "position": 28.2,
-            "impressions": 48,
+            "impressions": 46,
             "ctr": 0
           }
         ]
@@ -729,57 +780,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4373,
-      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
-      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
-      "wordCount": 4965,
-      "widgetCount": 2,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:21",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 1,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 19,
-        "clicks": 0,
-        "position": 33.6,
-        "topQueries": [
-          {
-            "query": "15 jours au japon budget",
-            "position": 57.2,
-            "impressions": 9,
-            "ctr": 0
-          },
-          {
-            "query": "budget japon 15 jours",
-            "position": 61,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"15 jours au japon budget\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"15 jours au japon budget\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
       "wpId": 4372,
       "slug": "esim-philippines-globe-smart-comparatif-2026",
       "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
@@ -796,7 +796,7 @@
       "gsc": {
         "impressions": 13,
         "clicks": 0,
-        "position": 14.3,
+        "position": 14.4,
         "topQueries": []
       },
       "reels": {

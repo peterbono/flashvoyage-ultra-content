@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-17T04:37:38.152Z",
+  "timestamp": "2026-06-18T04:37:26.360Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,10 +17,10 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 190,
-    "medianTrafficSignal": "0.190",
+    "medianMonthlyPV": 130,
+    "medianTrafficSignal": "0.130",
     "avgRpm": 2,
-    "articlesAnalyzed": 10
+    "articlesAnalyzed": 11
   },
   "queue": [
     {
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 5.07,
-        "projectedMonthlyTraffic": 190,
-        "projectedMonthlyRevenue": 0.38,
+        "expectedRoi": 3.47,
+        "projectedMonthlyTraffic": 130,
+        "projectedMonthlyRevenue": 0.26,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (190 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (130 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 5.07,
-        "projectedMonthlyTraffic": 190,
-        "projectedMonthlyRevenue": 0.38,
+        "expectedRoi": 3.47,
+        "projectedMonthlyTraffic": 130,
+        "projectedMonthlyRevenue": 0.26,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (190 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (130 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,11 +77,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 5.07,
-        "projectedMonthlyTraffic": 190,
-        "projectedMonthlyRevenue": 0.38,
+        "expectedRoi": 3.47,
+        "projectedMonthlyTraffic": 130,
+        "projectedMonthlyRevenue": 0.26,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (190 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (130 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -191,31 +191,6 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 12,
-        "freshness": 0.8,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
       "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
       "articleType": "support",
       "context": {
@@ -237,7 +212,7 @@
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -262,15 +237,40 @@
       "withinBudget": true
     },
     {
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "articleType": "support",
+      "context": {
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
       "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
       "articleType": "support",
       "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "wpId": 5296,
+        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
         "compositeScore": 13,
         "freshness": 0.89,
         "traffic": 0,
@@ -290,16 +290,16 @@
       "rank": 12,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "priorityScore": -3,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
-        "wpId": 5742,
-        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-        "compositeScore": 14,
-        "freshness": 0.91,
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 13,
+        "freshness": 0.88,
         "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -316,11 +316,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
       "articleType": "support",
       "context": {
-        "wpId": 5678,
-        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
         "compositeScore": 14,
         "freshness": 0.9,
         "traffic": 0,
@@ -342,8 +342,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.038,
-    "expectedDailyRoi": 0.17
+    "expectedDailyRevenue": 0.026,
+    "expectedDailyRoi": 0.12
   },
   "summary": {
     "write_new": 0,
