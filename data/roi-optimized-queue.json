@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-18T04:37:26.360Z",
+  "timestamp": "2026-06-19T04:38:36.542Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -20,7 +20,7 @@
     "medianMonthlyPV": 130,
     "medianTrafficSignal": "0.130",
     "avgRpm": 2,
-    "articlesAnalyzed": 11
+    "articlesAnalyzed": 34
   },
   "queue": [
     {
@@ -88,131 +88,56 @@
     },
     {
       "rank": 4,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 131,
+      "topic": "laos",
       "articleType": "support",
       "context": {
-        "wpId": 2924,
-        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
-        "compositeScore": 11,
-        "freshness": 0.74,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
+        "gapScore": 51,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"laos\" (score 51, source: trends)"
       },
       "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
+        "expectedRoi": 2.96,
+        "projectedMonthlyTraffic": 111,
+        "projectedMonthlyRevenue": 0.222,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (130 PV) × gap boost (0.85)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
       "rank": 5,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "assim madibo",
       "articleType": "support",
       "context": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 12,
-        "freshness": 0.83,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
+        "gapScore": 40,
+        "destination": null,
+        "category": "pratique",
+        "suggestedTitle": "Assim madibo : Guide Pratique 2026",
+        "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
+        "reason": "Content gap: \"assim madibo\" (score 40, source: trends)"
       },
       "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
+        "expectedRoi": 2.32,
+        "projectedMonthlyTraffic": 87,
+        "projectedMonthlyRevenue": 0.174,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (130 PV) × gap boost (0.67)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
       "rank": 6,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
-      "articleType": "support",
-      "context": {
-        "wpId": 4125,
-        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
-        "compositeScore": 12,
-        "freshness": 0.82,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 7,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 4030,
-        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-        "compositeScore": 12,
-        "freshness": 0.82,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 8,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
-      "articleType": "support",
-      "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
-        "compositeScore": 12,
-        "freshness": 0.8,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -222,7 +147,7 @@
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 12,
-        "freshness": 0.78,
+        "freshness": 0.77,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -233,96 +158,21 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "articleType": "support",
-      "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 13,
-        "freshness": 0.89,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "articleType": "support",
-      "context": {
-        "wpId": 5296,
-        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-        "compositeScore": 13,
-        "freshness": 0.89,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 13,
-        "freshness": 0.88,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
-      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
       "articleType": "support",
       "context": {
-        "wpId": 5742,
-        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 14,
-        "freshness": 0.9,
+        "freshness": 0.79,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -333,23 +183,23 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.225,
+    "totalCost": 0.375,
     "dailyBudget": 2,
-    "itemsWithinBudget": 13,
+    "itemsWithinBudget": 7,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.026,
-    "expectedDailyRoi": 0.12
+    "expectedDailyRevenue": 0.039,
+    "expectedDailyRoi": 0.1
   },
   "summary": {
-    "write_new": 0,
+    "write_new": 2,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 10
+    "review": 2
   }
 }
