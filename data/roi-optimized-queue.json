@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-19T04:38:36.542Z",
+  "timestamp": "2026-06-20T04:35:19.451Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -20,7 +20,7 @@
     "medianMonthlyPV": 130,
     "medianTrafficSignal": "0.130",
     "avgRpm": 2,
-    "articlesAnalyzed": 34
+    "articlesAnalyzed": 38
   },
   "queue": [
     {
@@ -113,43 +113,43 @@
     },
     {
       "rank": 5,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 120,
-      "topic": "assim madibo",
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
       "articleType": "support",
       "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "pratique",
-        "suggestedTitle": "Assim madibo : Guide Pratique 2026",
-        "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
-        "reason": "Content gap: \"assim madibo\" (score 40, source: trends)"
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 15,
+        "freshness": 0.77,
+        "traffic": 0.13,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
       },
       "roi": {
-        "expectedRoi": 2.32,
-        "projectedMonthlyTraffic": 87,
-        "projectedMonthlyRevenue": 0.174,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (130 PV) × gap boost (0.67)"
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
       "rank": 6,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "priorityScore": -5,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
       "articleType": "support",
       "context": {
-        "wpId": 3107,
-        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-        "compositeScore": 12,
-        "freshness": 0.77,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 15,
+        "freshness": 0.73,
+        "traffic": 0.13,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -158,45 +158,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
-      "withinBudget": true
-    },
-    {
-      "rank": 7,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
-      "articleType": "support",
-      "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
-        "compositeScore": 14,
-        "freshness": 0.79,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.375,
+    "totalCost": 0.3,
     "dailyBudget": 2,
-    "itemsWithinBudget": 7,
+    "itemsWithinBudget": 6,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.039,
-    "expectedDailyRoi": 0.1
+    "expectedDailyRevenue": 0.033,
+    "expectedDailyRoi": 0.11
   },
   "summary": {
-    "write_new": 2,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

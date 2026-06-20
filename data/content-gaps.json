@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-06-19T04:38:27.655Z",
-  "gapCount": 2,
+  "timestamp": "2026-06-20T04:35:10.541Z",
+  "gapCount": 1,
   "gaps": [
     {
       "topic": "laos",
@@ -18,33 +18,14 @@
       "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
       "articleType": "support",
       "priority": "high"
-    },
-    {
-      "topic": "assim madibo",
-      "source": "trends",
-      "gapScore": 40,
-      "signals": {
-        "searchVolume": 0.29,
-        "trendGrowth": 0.29,
-        "monetization": 0.6,
-        "competition": 0.6
-      },
-      "destination": null,
-      "category": "pratique",
-      "suggestedTitle": "Assim madibo : Guide Pratique 2026",
-      "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
-      "articleType": "support",
-      "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
-      "high": 1,
-      "medium": 1
+      "high": 1
     },
     "byCategory": {
-      "destination": 1,
-      "pratique": 1
+      "destination": 1
     },
     "byDestination": {
       "vietnam": 1

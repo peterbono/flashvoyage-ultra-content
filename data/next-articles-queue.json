@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-06-19T04:38:29.565Z",
-  "queueSize": 7,
+  "timestamp": "2026-06-20T04:35:12.146Z",
+  "queueSize": 6,
   "queue": [
     {
       "rank": 1,
@@ -20,22 +20,6 @@
     },
     {
       "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 120,
-      "topic": "assim madibo",
-      "articleType": "support",
-      "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "pratique",
-        "suggestedTitle": "Assim madibo : Guide Pratique 2026",
-        "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
-        "reason": "Content gap: \"assim madibo\" (score 40, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -47,7 +31,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -59,7 +43,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -71,40 +55,40 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -2,
+      "priorityScore": -5,
       "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
       "articleType": "support",
       "context": {
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-        "compositeScore": 12,
+        "compositeScore": 15,
         "freshness": 0.77,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
+        "traffic": 0.13,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "priorityScore": -5,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
       "articleType": "support",
       "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
-        "compositeScore": 14,
-        "freshness": 0.79,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 15,
+        "freshness": 0.73,
+        "traffic": 0.13,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     }
   ],
   "summary": {
-    "write_new": 2,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

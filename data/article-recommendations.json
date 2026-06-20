@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-06-19T04:38:35.587Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-06-20T04:35:18.629Z",
+    "elapsedSeconds": 6,
     "totalArticles": 38,
     "articlesWithRecommendations": 6,
     "totalRecommendations": 6,
@@ -22,6 +22,34 @@
   },
   "articles": [
     {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2503,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:20",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 3,
+        "avgDuration": 7
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 6331,
       "slug": "meilleur-esim-philippines-2026",
       "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
@@ -33,17 +61,17 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 123
+        "avgDuration": 77
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 3,
         "clicks": 0,
-        "position": 30,
+        "position": 28.7,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
-            "position": 30,
-            "impressions": 2,
+            "position": 28.7,
+            "impressions": 3,
             "ctr": 0
           }
         ]
@@ -67,34 +95,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2503,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:20",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 2,
-        "avgDuration": 367
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -106,12 +106,12 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 106
+        "avgDuration": 4
       },
       "gsc": {
-        "impressions": 37,
-        "clicks": 1,
-        "position": 27.2,
+        "impressions": 35,
+        "clicks": 0,
+        "position": 28.2,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -152,90 +152,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 5333,
-      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "url": "https://flashvoyage.com/thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout/",
-      "wordCount": 1406,
-      "widgetCount": 0,
-      "internalLinks": 23,
-      "lastModified": "2026-06-11T05:33:10",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 133
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4371,
-      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
-      "wordCount": 3456,
-      "widgetCount": 3,
-      "internalLinks": 44,
-      "lastModified": "2026-06-11T05:33:25",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 40
-      },
-      "gsc": {
-        "impressions": 2,
-        "clicks": 0,
-        "position": 6,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4369,
-      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
-      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
-      "url": "https://flashvoyage.com/visa-cambodge-francais-2026-evisa-prix-pieges/",
-      "wordCount": 2440,
-      "widgetCount": 3,
-      "internalLinks": 44,
-      "lastModified": "2026-06-11T05:33:28",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 69
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
@@ -245,14 +161,14 @@
       "internalLinks": 48,
       "lastModified": "2026-06-11T05:33:35",
       "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 776
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 519
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 5,
         "clicks": 0,
-        "position": 17.7,
+        "position": 21.2,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -281,34 +197,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 3425,
-      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "url": "https://flashvoyage.com/coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis/",
-      "wordCount": 4915,
-      "widgetCount": 0,
-      "internalLinks": 50,
-      "lastModified": "2026-06-11T05:33:43",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 6374,
       "slug": "meilleur-esim-cambodge-2026",
       "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
@@ -318,9 +206,9 @@
       "internalLinks": 11,
       "lastModified": "2026-06-15T12:00:01",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 72
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 8
       },
       "gsc": {
         "impressions": 2,
@@ -337,320 +225,23 @@
       "p0Count": 0
     },
     {
-      "wpId": 6327,
-      "slug": "meilleur-esim-bali-2026",
-      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
-      "url": "https://flashvoyage.com/meilleur-esim-bali-2026/",
-      "wordCount": 1263,
+      "wpId": 5333,
+      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout/",
+      "wordCount": 1406,
       "widgetCount": 0,
-      "internalLinks": 11,
-      "lastModified": "2026-06-11T05:32:57",
+      "internalLinks": 23,
+      "lastModified": "2026-06-11T05:33:10",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 0
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 19
       },
       "gsc": {
         "impressions": 0,
         "clicks": 0,
         "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 6323,
-      "slug": "meilleur-esim-vietnam-2026",
-      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
-      "url": "https://flashvoyage.com/meilleur-esim-vietnam-2026/",
-      "wordCount": 1368,
-      "widgetCount": 0,
-      "internalLinks": 11,
-      "lastModified": "2026-06-11T05:32:58",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 6309,
-      "slug": "meilleur-esim-japon-2026",
-      "title": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
-      "url": "https://flashvoyage.com/meilleur-esim-japon-2026/",
-      "wordCount": 1243,
-      "widgetCount": 0,
-      "internalLinks": 11,
-      "lastModified": "2026-06-11T05:33:00",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 6195,
-      "slug": "meilleur-esim-thailande-2026",
-      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
-      "url": "https://flashvoyage.com/meilleur-esim-thailande-2026/",
-      "wordCount": 1886,
-      "widgetCount": 0,
-      "internalLinks": 17,
-      "lastModified": "2026-06-11T05:33:01",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 52
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5742,
-      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
-      "wordCount": 1590,
-      "widgetCount": 0,
-      "internalLinks": 22,
-      "lastModified": "2026-06-11T05:33:02",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 29
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5678,
-      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
-      "wordCount": 1657,
-      "widgetCount": 0,
-      "internalLinks": 25,
-      "lastModified": "2026-06-11T05:27:51",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 53
-      },
-      "gsc": {
-        "impressions": 48,
-        "clicks": 0,
-        "position": 27.7,
-        "topQueries": [
-          {
-            "query": "esim asie du sud est",
-            "position": 28.2,
-            "impressions": 46,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim asie du sud est\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim asie du sud est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5343,
-      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "url": "https://flashvoyage.com/pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu/",
-      "wordCount": 1487,
-      "widgetCount": 0,
-      "internalLinks": 17,
-      "lastModified": "2026-06-11T05:33:09",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 2,
-        "clicks": 0,
-        "position": 8.5,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5270,
-      "slug": "esim-japon-combien-ca-te-coute-vraiment",
-      "title": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "url": "https://flashvoyage.com/esim-japon-combien-ca-te-coute-vraiment/",
-      "wordCount": 1430,
-      "widgetCount": 0,
-      "internalLinks": 21,
-      "lastModified": "2026-06-11T05:33:13",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 118
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5260,
-      "slug": "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage",
-      "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
-      "url": "https://flashvoyage.com/vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage/",
-      "wordCount": 1753,
-      "widgetCount": 0,
-      "internalLinks": 30,
-      "lastModified": "2026-06-11T05:33:14",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 75
-      },
-      "gsc": {
-        "impressions": 4,
-        "clicks": 0,
-        "position": 9.3,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5179,
-      "slug": "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage",
-      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
-      "url": "https://flashvoyage.com/thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage/",
-      "wordCount": 1597,
-      "widgetCount": 0,
-      "internalLinks": 22,
-      "lastModified": "2026-06-11T05:33:15",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 107
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5119,
-      "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
-      "url": "https://flashvoyage.com/thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage/",
-      "wordCount": 1491,
-      "widgetCount": 0,
-      "internalLinks": 19,
-      "lastModified": "2026-06-11T05:33:16",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 330
-      },
-      "gsc": {
-        "impressions": 1,
-        "clicks": 0,
-        "position": 53,
         "topQueries": []
       },
       "reels": {
@@ -671,42 +262,14 @@
       "internalLinks": 16,
       "lastModified": "2026-06-11T05:33:17",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
+        "pageviews": 2,
+        "sessions": 2,
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 1,
         "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5063,
-      "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
-      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
-      "url": "https://flashvoyage.com/thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement/",
-      "wordCount": 1496,
-      "widgetCount": 0,
-      "internalLinks": 19,
-      "lastModified": "2026-06-11T05:33:18",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 112
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
+        "position": 6,
         "topQueries": []
       },
       "reels": {
@@ -727,9 +290,9 @@
       "internalLinks": 45,
       "lastModified": "2026-06-11T05:33:21",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 12
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 9
       },
       "gsc": {
         "impressions": 19,
@@ -769,6 +332,471 @@
       "p0Count": 0
     },
     {
+      "wpId": 4371,
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
+      "wordCount": 3456,
+      "widgetCount": 3,
+      "internalLinks": 44,
+      "lastModified": "2026-06-11T05:33:25",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 26
+      },
+      "gsc": {
+        "impressions": 2,
+        "clicks": 0,
+        "position": 6,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4369,
+      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "url": "https://flashvoyage.com/visa-cambodge-francais-2026-evisa-prix-pieges/",
+      "wordCount": 2440,
+      "widgetCount": 3,
+      "internalLinks": 44,
+      "lastModified": "2026-06-11T05:33:28",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 71
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3425,
+      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "url": "https://flashvoyage.com/coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis/",
+      "wordCount": 4915,
+      "widgetCount": 0,
+      "internalLinks": 50,
+      "lastModified": "2026-06-11T05:33:43",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 3
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 6327,
+      "slug": "meilleur-esim-bali-2026",
+      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
+      "url": "https://flashvoyage.com/meilleur-esim-bali-2026/",
+      "wordCount": 1263,
+      "widgetCount": 0,
+      "internalLinks": 11,
+      "lastModified": "2026-06-11T05:32:57",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 6323,
+      "slug": "meilleur-esim-vietnam-2026",
+      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
+      "url": "https://flashvoyage.com/meilleur-esim-vietnam-2026/",
+      "wordCount": 1368,
+      "widgetCount": 0,
+      "internalLinks": 11,
+      "lastModified": "2026-06-11T05:32:58",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 6309,
+      "slug": "meilleur-esim-japon-2026",
+      "title": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
+      "url": "https://flashvoyage.com/meilleur-esim-japon-2026/",
+      "wordCount": 1243,
+      "widgetCount": 0,
+      "internalLinks": 11,
+      "lastModified": "2026-06-11T05:33:00",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 7
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 6195,
+      "slug": "meilleur-esim-thailande-2026",
+      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
+      "url": "https://flashvoyage.com/meilleur-esim-thailande-2026/",
+      "wordCount": 1886,
+      "widgetCount": 0,
+      "internalLinks": 17,
+      "lastModified": "2026-06-11T05:33:01",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5742,
+      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "url": "https://flashvoyage.com/bangkok-le-vrai-cout-des-taxis-aeroport-2026/",
+      "wordCount": 1590,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-06-11T05:33:02",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 7
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5678,
+      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
+      "wordCount": 1657,
+      "widgetCount": 0,
+      "internalLinks": 25,
+      "lastModified": "2026-06-11T05:27:51",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 7
+      },
+      "gsc": {
+        "impressions": 50,
+        "clicks": 0,
+        "position": 27.7,
+        "topQueries": [
+          {
+            "query": "esim asie du sud est",
+            "position": 28.3,
+            "impressions": 48,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim asie du sud est\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim asie du sud est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5343,
+      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "url": "https://flashvoyage.com/pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu/",
+      "wordCount": 1487,
+      "widgetCount": 0,
+      "internalLinks": 17,
+      "lastModified": "2026-06-11T05:33:09",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 2,
+        "clicks": 0,
+        "position": 8.5,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5296,
+      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "url": "https://flashvoyage.com/choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas/",
+      "wordCount": 1667,
+      "widgetCount": 0,
+      "internalLinks": 18,
+      "lastModified": "2026-06-11T05:33:11",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 5
+      },
+      "gsc": {
+        "impressions": 1,
+        "clicks": 0,
+        "position": 28,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5270,
+      "slug": "esim-japon-combien-ca-te-coute-vraiment",
+      "title": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "url": "https://flashvoyage.com/esim-japon-combien-ca-te-coute-vraiment/",
+      "wordCount": 1430,
+      "widgetCount": 0,
+      "internalLinks": 21,
+      "lastModified": "2026-06-11T05:33:13",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5260,
+      "slug": "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage",
+      "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
+      "url": "https://flashvoyage.com/vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage/",
+      "wordCount": 1753,
+      "widgetCount": 0,
+      "internalLinks": 30,
+      "lastModified": "2026-06-11T05:33:14",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 4,
+        "clicks": 0,
+        "position": 9.3,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5179,
+      "slug": "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage",
+      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
+      "url": "https://flashvoyage.com/thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage/",
+      "wordCount": 1597,
+      "widgetCount": 0,
+      "internalLinks": 22,
+      "lastModified": "2026-06-11T05:33:15",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5119,
+      "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage/",
+      "wordCount": 1491,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-06-11T05:33:16",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 1,
+        "clicks": 0,
+        "position": 53,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5063,
+      "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
+      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+      "url": "https://flashvoyage.com/thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement/",
+      "wordCount": 1496,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-06-11T05:33:18",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 7
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4370,
       "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
       "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
@@ -780,12 +808,40 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 0
+        "avgDuration": 6
       },
       "gsc": {
         "impressions": 2,
         "clicks": 0,
         "position": 8,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4253,
+      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "url": "https://flashvoyage.com/esim-thailande-comparatif-ais-dtac-true-2026/",
+      "wordCount": 3495,
+      "widgetCount": 3,
+      "internalLinks": 39,
+      "lastModified": "2026-06-11T05:33:34",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -808,7 +864,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 140
+        "avgDuration": 7
       },
       "gsc": {
         "impressions": 0,
@@ -836,7 +892,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 299
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
@@ -864,7 +920,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 335
+        "avgDuration": 7
       },
       "gsc": {
         "impressions": 0,
@@ -892,7 +948,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 0
+        "avgDuration": 7
       },
       "gsc": {
         "impressions": 0,
@@ -920,7 +976,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 89
+        "avgDuration": 8
       },
       "gsc": {
         "impressions": 0,
@@ -948,12 +1004,68 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 156
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
         "clicks": 0,
         "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3198,
+      "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+      "title": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "url": "https://flashvoyage.com/maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique/",
+      "wordCount": 3150,
+      "widgetCount": 0,
+      "internalLinks": 38,
+      "lastModified": "2026-06-11T05:33:46",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 7
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3107,
+      "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+      "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "url": "https://flashvoyage.com/optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils/",
+      "wordCount": 1801,
+      "widgetCount": 0,
+      "internalLinks": 28,
+      "lastModified": "2026-06-11T05:33:47",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 5
+      },
+      "gsc": {
+        "impressions": 1,
+        "clicks": 0,
+        "position": 10,
         "topQueries": []
       },
       "reels": {
@@ -976,7 +1088,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 30
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 8,
@@ -1027,7 +1139,7 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 0
+        "avgDuration": 7
       },
       "gsc": {
         "impressions": 0,
@@ -1055,40 +1167,12 @@
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 77
+        "avgDuration": 7
       },
       "gsc": {
         "impressions": 0,
         "clicks": 0,
         "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5296,
-      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "url": "https://flashvoyage.com/choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas/",
-      "wordCount": 1667,
-      "widgetCount": 0,
-      "internalLinks": 18,
-      "lastModified": "2026-06-11T05:33:11",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 1,
-        "clicks": 0,
-        "position": 28,
         "topQueries": []
       },
       "reels": {
@@ -1114,93 +1198,9 @@
         "avgDuration": 117
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 20,
         "clicks": 0,
-        "position": 14.4,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4253,
-      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
-      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
-      "url": "https://flashvoyage.com/esim-thailande-comparatif-ais-dtac-true-2026/",
-      "wordCount": 3495,
-      "widgetCount": 3,
-      "internalLinks": 39,
-      "lastModified": "2026-06-11T05:33:34",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3198,
-      "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
-      "title": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
-      "url": "https://flashvoyage.com/maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique/",
-      "wordCount": 3150,
-      "widgetCount": 0,
-      "internalLinks": 38,
-      "lastModified": "2026-06-11T05:33:46",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 1,
-        "avgDuration": 155
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3107,
-      "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-      "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
-      "url": "https://flashvoyage.com/optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils/",
-      "wordCount": 1801,
-      "widgetCount": 0,
-      "internalLinks": 28,
-      "lastModified": "2026-06-11T05:33:47",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 1,
-        "clicks": 0,
-        "position": 10,
+        "position": 12.7,
         "topQueries": []
       },
       "reels": {
