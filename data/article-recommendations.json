@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-06-20T04:35:18.629Z",
-    "elapsedSeconds": 6,
+    "generatedAt": "2026-06-21T04:38:30.133Z",
+    "elapsedSeconds": 4,
     "totalArticles": 38,
     "articlesWithRecommendations": 6,
     "totalRecommendations": 6,
@@ -31,9 +31,9 @@
       "internalLinks": 45,
       "lastModified": "2026-06-11T05:33:20",
       "ga4": {
-        "pageviews": 4,
-        "sessions": 3,
-        "avgDuration": 7
+        "pageviews": 5,
+        "sessions": 4,
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
@@ -64,14 +64,14 @@
         "avgDuration": 77
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 6,
         "clicks": 0,
-        "position": 28.7,
+        "position": 20.2,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
-            "position": 28.7,
-            "impressions": 3,
+            "position": 28.3,
+            "impressions": 4,
             "ctr": 0
           }
         ]
@@ -109,14 +109,14 @@
         "avgDuration": 4
       },
       "gsc": {
-        "impressions": 35,
+        "impressions": 36,
         "clicks": 0,
-        "position": 28.2,
+        "position": 28.4,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 33.4,
-            "impressions": 21,
+            "position": 33.5,
+            "impressions": 22,
             "ctr": 0
           },
           {
@@ -166,9 +166,9 @@
         "avgDuration": 519
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 7,
         "clicks": 0,
-        "position": 21.2,
+        "position": 18,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -211,9 +211,9 @@
         "avgDuration": 8
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 4,
         "clicks": 0,
-        "position": 9,
+        "position": 7,
         "topQueries": []
       },
       "reels": {
@@ -295,14 +295,14 @@
         "avgDuration": 9
       },
       "gsc": {
-        "impressions": 19,
+        "impressions": 20,
         "clicks": 0,
-        "position": 33.6,
+        "position": 33.5,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 57.2,
-            "impressions": 9,
+            "position": 54.6,
+            "impressions": 10,
             "ctr": 0
           },
           {
@@ -572,7 +572,7 @@
       "gsc": {
         "impressions": 50,
         "clicks": 0,
-        "position": 27.7,
+        "position": 27.8,
         "topQueries": [
           {
             "query": "esim asie du sud est",
@@ -671,9 +671,9 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 2,
         "clicks": 0,
-        "position": 0,
+        "position": 9,
         "topQueries": []
       },
       "reels": {
@@ -1198,9 +1198,9 @@
         "avgDuration": 117
       },
       "gsc": {
-        "impressions": 20,
+        "impressions": 22,
         "clicks": 0,
-        "position": 12.7,
+        "position": 12.3,
         "topQueries": []
       },
       "reels": {
