@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-06-20T18:30:24.140Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-06-21T00:46:23.313Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Thai inhaler spurs Aussie warning",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/thailand/general/3273996/thai-inhaler-spurs-aussie-warning",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 719,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2072,
+      "estimatedTrafficIn24h": 2025,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.4
+      },
+      "detectedAt": "2026-06-20T23:21:00.000Z",
+      "scoredAt": "2026-06-21T00:46:21.670Z"
+    }
+  ]
 }
