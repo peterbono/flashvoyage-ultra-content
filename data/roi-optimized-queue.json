@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-22T04:39:22.261Z",
+  "timestamp": "2026-06-23T04:29:41.045Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -25,31 +25,6 @@
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 61,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 2.99,
-        "projectedMonthlyTraffic": 112,
-        "projectedMonthlyRevenue": 0.224,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (110 PV) × gap boost (1.02)"
-      },
-      "cumulativeCost": 0.075,
-      "withinBudget": true
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -66,11 +41,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.15,
+      "cumulativeCost": 0.075,
       "withinBudget": true
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -87,11 +62,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.15,
       "withinBudget": true
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -108,11 +83,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -133,11 +108,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -158,11 +133,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -183,11 +158,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -208,11 +183,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -233,11 +208,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -258,20 +233,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.3,
+    "totalCost": 0.225,
     "dailyBudget": 2,
-    "itemsWithinBudget": 10,
+    "itemsWithinBudget": 9,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.029,
+    "expectedDailyRevenue": 0.022,
     "expectedDailyRoi": 0.1
   },
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,

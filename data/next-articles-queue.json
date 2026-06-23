@@ -1,25 +1,9 @@
 {
-  "timestamp": "2026-06-22T04:39:15.347Z",
-  "queueSize": 10,
+  "timestamp": "2026-06-23T04:29:34.279Z",
+  "queueSize": 9,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 61,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +15,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +27,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -55,7 +39,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -71,7 +55,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -87,7 +71,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -103,7 +87,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -119,7 +103,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -135,7 +119,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -152,7 +136,7 @@
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,

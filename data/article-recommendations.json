@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-06-22T04:39:21.282Z",
+    "generatedAt": "2026-06-23T04:29:40.309Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 6,
@@ -59,14 +59,14 @@
       "internalLinks": 45,
       "lastModified": "2026-06-11T05:33:21",
       "ga4": {
-        "pageviews": 4,
+        "pageviews": 5,
         "sessions": 3,
-        "avgDuration": 1341
+        "avgDuration": 563
       },
       "gsc": {
-        "impressions": 21,
+        "impressions": 22,
         "clicks": 0,
-        "position": 33.3,
+        "position": 33.1,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
@@ -160,14 +160,14 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 36,
+        "impressions": 35,
         "clicks": 0,
-        "position": 28.4,
+        "position": 28.2,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 33.5,
-            "impressions": 22,
+            "position": 33.4,
+            "impressions": 21,
             "ctr": 0
           },
           {
@@ -1091,14 +1091,14 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 7,
         "clicks": 0,
-        "position": 33.4,
+        "position": 35.3,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
-            "position": 27.3,
-            "impressions": 4,
+            "position": 29.7,
+            "impressions": 3,
             "ctr": 0
           },
           {
@@ -1198,9 +1198,9 @@
         "avgDuration": 117
       },
       "gsc": {
-        "impressions": 22,
+        "impressions": 21,
         "clicks": 0,
-        "position": 12.3,
+        "position": 12.4,
         "topQueries": []
       },
       "reels": {
