@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-06-23T07:14:59.447Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-06-23T12:57:16.974Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Over 5,000 ‘still trapped in Myanmar scam centres’",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/world/3275324/over-5000-still-trapped-in-myanmar-scam-centres",
+      "velocityScore": 0.489,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2444,
+      "estimatedTrafficIn24h": 2388,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.7
+      },
+      "detectedAt": "2026-06-23T10:16:00.000Z",
+      "scoredAt": "2026-06-23T12:57:10.572Z"
+    }
+  ]
 }
