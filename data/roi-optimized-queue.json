@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-23T04:29:41.045Z",
+  "timestamp": "2026-06-24T04:31:34.946Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -97,7 +97,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 14,
-        "freshness": 0.73,
+        "freshness": 0.72,
         "traffic": 0.11,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -141,11 +141,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
       "articleType": "support",
       "context": {
-        "wpId": 4030,
-        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+        "wpId": 4105,
+        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
         "compositeScore": 15,
         "freshness": 0.8,
         "traffic": 0.11,
@@ -166,13 +166,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "wpId": 4030,
+        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 15,
-        "freshness": 0.78,
+        "freshness": 0.8,
         "traffic": 0.11,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       },
