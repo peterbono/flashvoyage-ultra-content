@@ -1,11 +1,55 @@
 {
-  "timestamp": "2026-06-24T04:31:27.247Z",
-  "gapCount": 0,
-  "gaps": [],
+  "timestamp": "2026-06-25T04:30:40.076Z",
+  "gapCount": 2,
+  "gaps": [
+    {
+      "topic": "voyage pas cher",
+      "source": "trends",
+      "gapScore": 61,
+      "signals": {
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "vietnam",
+      "category": "budget",
+      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "laos",
+      "source": "trends",
+      "gapScore": 51,
+      "signals": {
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
+        "competition": 0.8
+      },
+      "destination": "vietnam",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    }
+  ],
   "summary": {
-    "byPriority": {},
-    "byCategory": {},
-    "byDestination": {},
-    "topDestinationGaps": []
+    "byPriority": {
+      "high": 2
+    },
+    "byCategory": {
+      "budget": 1,
+      "destination": 1
+    },
+    "byDestination": {
+      "vietnam": 2
+    },
+    "topDestinationGaps": [
+      "vietnam"
+    ]
   }
 }

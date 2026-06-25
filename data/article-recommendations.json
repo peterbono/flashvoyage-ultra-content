@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-06-24T04:31:34.000Z",
-    "elapsedSeconds": 4,
+    "generatedAt": "2026-06-25T04:30:47.677Z",
+    "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 7,
     "totalRecommendations": 7,
@@ -64,14 +64,14 @@
         "avgDuration": 563
       },
       "gsc": {
-        "impressions": 21,
+        "impressions": 19,
         "clicks": 0,
-        "position": 31.9,
+        "position": 31.5,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 51.6,
-            "impressions": 10,
+            "position": 50.4,
+            "impressions": 9,
             "ctr": 0
           },
           {
@@ -160,20 +160,20 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 32,
+        "impressions": 31,
         "clicks": 0,
-        "position": 28.4,
+        "position": 29,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 33.1,
-            "impressions": 19,
+            "position": 32.9,
+            "impressions": 18,
             "ctr": 0
           },
           {
             "query": "voyage de noces bali vs thailande",
-            "position": 41.7,
-            "impressions": 3,
+            "position": 39.5,
+            "impressions": 4,
             "ctr": 0
           },
           {
@@ -195,51 +195,6 @@
           "metric": "Pas de schema FAQ (keyword principal: \"bali ou thailande\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4252,
-      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
-      "wordCount": 4975,
-      "widgetCount": 3,
-      "internalLinks": 48,
-      "lastModified": "2026-06-11T05:33:35",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 519
-      },
-      "gsc": {
-        "impressions": 7,
-        "clicks": 0,
-        "position": 18,
-        "topQueries": [
-          {
-            "query": "assurance voyage vietnam",
-            "position": 85,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -287,7 +242,7 @@
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 9
+        "avgDuration": 11
       },
       "gsc": {
         "impressions": 0,
@@ -346,9 +301,9 @@
         "avgDuration": 26
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 2,
         "clicks": 0,
-        "position": 7.7,
+        "position": 9,
         "topQueries": []
       },
       "reels": {
@@ -374,13 +329,19 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 6,
         "clicks": 1,
-        "position": 11.8,
+        "position": 19,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 36,
+            "position": 34.5,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "bali lombok gili",
+            "position": 29,
             "impressions": 1,
             "ctr": 0
           }
@@ -430,6 +391,51 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4252,
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
+      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
+      "wordCount": 4975,
+      "widgetCount": 3,
+      "internalLinks": 48,
+      "lastModified": "2026-06-11T05:33:35",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 5
+      },
+      "gsc": {
+        "impressions": 6,
+        "clicks": 0,
+        "position": 20.3,
+        "topQueries": [
+          {
+            "query": "assurance voyage vietnam",
+            "position": 85,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -587,14 +593,14 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 50,
+        "impressions": 48,
         "clicks": 0,
         "position": 27.8,
         "topQueries": [
           {
             "query": "esim asie du sud est",
             "position": 28.3,
-            "impressions": 48,
+            "impressions": 46,
             "ctr": 0
           }
         ]
@@ -716,9 +722,9 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 3,
         "clicks": 0,
-        "position": 9,
+        "position": 24,
         "topQueries": []
       },
       "reels": {
@@ -744,7 +750,7 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 3,
         "clicks": 0,
         "position": 9.3,
         "topQueries": []
@@ -1215,9 +1221,9 @@
         "avgDuration": 117
       },
       "gsc": {
-        "impressions": 21,
+        "impressions": 18,
         "clicks": 0,
-        "position": 12.4,
+        "position": 9.6,
         "topQueries": []
       },
       "reels": {
