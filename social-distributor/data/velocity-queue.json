@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T18:45:26.689Z",
+  "generatedAt": "2026-06-26T00:43:01.918Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "UN agency says it pauses Hormuz ship evacuation initiative after vessel attacked",
+      "topic": "Vietnam requests air travelers to keep power banks in carry-on bags from July",
       "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/un-agency-says-it-pauses-hormuz-ship-evacuation-initiative-after-vessel-attacked",
-      "velocityScore": 0.4,
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/traffic/vietnam-requests-air-travelers-to-keep-power-banks-in-carry-on-bags-from-july-5089621.html",
+      "velocityScore": 0.509,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 11,
+      "hoursRemaining": 717,
       "topicType": {
-        "key": "breaking_news",
-        "halfLifeHours": 12
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1999,
-      "estimatedTrafficIn24h": 500,
-      "trafficLossPerHour": 62,
+      "estimatedTrafficNow": 1696,
+      "estimatedTrafficIn24h": 1657,
+      "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.963,
+        "trendIntensity": 0.68,
+        "timeDecay": 0.997,
         "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 0.6
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 2.7
       },
-      "detectedAt": "2026-06-25T18:06:29.000Z",
-      "scoredAt": "2026-06-25T18:45:23.270Z"
+      "detectedAt": "2026-06-25T22:00:00.000Z",
+      "scoredAt": "2026-06-26T00:42:57.215Z"
     }
   ]
 }
