@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-06-25T04:30:47.677Z",
+    "generatedAt": "2026-06-26T04:34:36.445Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 7,
@@ -64,14 +64,14 @@
         "avgDuration": 563
       },
       "gsc": {
-        "impressions": 19,
+        "impressions": 18,
         "clicks": 0,
-        "position": 31.5,
+        "position": 29.8,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 50.4,
-            "impressions": 9,
+            "position": 49,
+            "impressions": 8,
             "ctr": 0
           },
           {
@@ -115,14 +115,14 @@
         "avgDuration": 77
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 7,
         "clicks": 0,
-        "position": 20.2,
+        "position": 21.6,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
-            "position": 28.3,
-            "impressions": 4,
+            "position": 28.6,
+            "impressions": 5,
             "ctr": 0
           }
         ]
@@ -160,14 +160,14 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 31,
+        "impressions": 30,
         "clicks": 0,
-        "position": 29,
+        "position": 28.8,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 32.9,
-            "impressions": 18,
+            "position": 32.8,
+            "impressions": 17,
             "ctr": 0
           },
           {
@@ -301,9 +301,9 @@
         "avgDuration": 26
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 1,
         "clicks": 0,
-        "position": 9,
+        "position": 11,
         "topQueries": []
       },
       "reels": {
@@ -331,12 +331,12 @@
       "gsc": {
         "impressions": 6,
         "clicks": 1,
-        "position": 19,
+        "position": 23,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 34.5,
-            "impressions": 2,
+            "position": 34,
+            "impressions": 3,
             "ctr": 0
           },
           {
@@ -363,34 +363,6 @@
         }
       ],
       "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4369,
-      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
-      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
-      "url": "https://flashvoyage.com/visa-cambodge-francais-2026-evisa-prix-pieges/",
-      "wordCount": 2440,
-      "widgetCount": 3,
-      "internalLinks": 44,
-      "lastModified": "2026-06-11T05:33:28",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 71
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -848,6 +820,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4369,
+      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "url": "https://flashvoyage.com/visa-cambodge-francais-2026-evisa-prix-pieges/",
+      "wordCount": 2440,
+      "widgetCount": 3,
+      "internalLinks": 44,
+      "lastModified": "2026-06-11T05:33:28",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 5
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4253,
       "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
       "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
@@ -1114,20 +1114,14 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 9,
+        "impressions": 7,
         "clicks": 0,
-        "position": 37.8,
+        "position": 31.4,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
-            "position": 29.7,
-            "impressions": 3,
-            "ctr": 0
-          },
-          {
-            "query": "itinéraire luxe asie du sud-est",
-            "position": 96,
-            "impressions": 1,
+            "position": 32.5,
+            "impressions": 2,
             "ctr": 0
           }
         ]
@@ -1221,9 +1215,9 @@
         "avgDuration": 117
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 17,
         "clicks": 0,
-        "position": 9.6,
+        "position": 9.9,
         "topQueries": []
       },
       "reels": {

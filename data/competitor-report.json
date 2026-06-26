@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-25T04:32:32.391Z",
+  "timestamp": "2026-06-26T04:36:33.149Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,15 +16,189 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 7707,
-      "newUrls": 5
+      "totalUrls": 8712,
+      "newUrls": 1005
     }
   ],
-  "newArticles": [],
+  "newArticles": [
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/robot-restaurant-tokyo/",
+      "lastmod": "2025-11-26T15:25:11+00:00",
+      "destination": "tokyo",
+      "contentType": "gastronomie",
+      "title": "Robot Restaurant Tokyo",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Robot Restaurant Tokyo\" (tokyo, gastronomie) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/trek-tour-annapurnas-nepal/",
+      "lastmod": "2025-11-26T15:25:58+00:00",
+      "destination": "nepal",
+      "contentType": "general",
+      "title": "Trek Tour Annapurnas Nepal",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Trek Tour Annapurnas Nepal\" (nepal, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-ile-james-bond-phang-nga-phuket/",
+      "lastmod": "2025-11-26T15:31:24+00:00",
+      "destination": "phuket",
+      "contentType": "plage",
+      "title": "Visiter Ile James Bond Phang Nga Phuket",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Ile James Bond Phang Nga Phuket\" (phuket, plage) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-nusa-penida-faire-voir/",
+      "lastmod": "2025-11-26T15:45:35+00:00",
+      "destination": "nusa",
+      "contentType": "activites",
+      "title": "Visiter Nusa Penida Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Nusa Penida Faire Voir\" (nusa, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-manille-faire-voir/",
+      "lastmod": "2025-11-26T15:50:02+00:00",
+      "destination": "manille",
+      "contentType": "activites",
+      "title": "Visiter Manille Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Manille Faire Voir\" (manille, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/experience-culturelle-kyoto/",
+      "lastmod": "2025-11-26T16:14:21+00:00",
+      "destination": "kyoto",
+      "contentType": "recit",
+      "title": "Experience Culturelle Kyoto",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Experience Culturelle Kyoto\" (kyoto, recit) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/experience-traditionnelle-tokyo/",
+      "lastmod": "2025-11-26T16:14:24+00:00",
+      "destination": "tokyo",
+      "contentType": "recit",
+      "title": "Experience Traditionnelle Tokyo",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Experience Traditionnelle Tokyo\" (tokyo, recit) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/dormir-penang/",
+      "lastmod": "2026-06-25T10:01:11+00:00",
+      "destination": "penang",
+      "contentType": "general",
+      "title": "Dormir Penang",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Dormir Penang\" (penang, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/specialites-culinaires-philippines/",
+      "lastmod": "2025-11-21T17:36:59+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Specialites Culinaires Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=44, freshness=0.81)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 44,
+        "freshness": 0.81
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/requins-baleines-philippines/",
+      "lastmod": "2025-11-21T17:37:41+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Requins Baleines Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=44, freshness=0.81)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 44,
+        "freshness": 0.81
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/evenements-annuels-philippines/",
+      "lastmod": "2025-11-21T17:40:06+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Evenements Annuels Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=44, freshness=0.81)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 44,
+        "freshness": 0.81
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/iles-japon/",
+      "lastmod": "2025-11-21T18:31:35+00:00",
+      "destination": "japon",
+      "contentType": "plage",
+      "title": "Iles Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=54, freshness=0.81)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 54,
+        "freshness": 0.81
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/bali-indonesie/",
+      "lastmod": "2025-11-26T16:13:41+00:00",
+      "destination": "bali",
+      "contentType": "general",
+      "title": "Bali Indonesie",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas\" (score=19, freshness=0.86)",
+      "matchedArticle": {
+        "wpId": 5296,
+        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+        "compositeScore": 19,
+        "freshness": 0.86
+      }
+    }
+  ],
   "summary": {
-    "totalNew": 0,
-    "contentGaps": 0,
+    "totalNew": 13,
+    "contentGaps": 8,
     "staleRefreshes": 0,
-    "monitoring": 0
+    "monitoring": 5
   }
 }
