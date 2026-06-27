@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-26T04:34:37.375Z",
+  "timestamp": "2026-06-27T04:27:11.197Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -88,6 +88,31 @@
     },
     {
       "rank": 4,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 136,
+      "topic": "agence de voyage",
+      "articleType": "support",
+      "context": {
+        "gapScore": 56,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"agence de voyage\" (score 56, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 2.75,
+        "projectedMonthlyTraffic": 103,
+        "projectedMonthlyRevenue": 0.206,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (110 PV) × gap boost (0.93)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -97,7 +122,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 14,
-        "freshness": 0.72,
+        "freshness": 0.71,
         "traffic": 0.11,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -108,11 +133,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -133,32 +158,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 6,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4105,
-        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-        "compositeScore": 15,
-        "freshness": 0.79,
-        "traffic": 0.11,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -183,36 +183,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
       "rank": 8,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 15,
-        "freshness": 0.77,
-        "traffic": 0.11,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -233,11 +208,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -258,23 +233,23 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.225,
+    "totalCost": 0.3,
     "dailyBudget": 2,
-    "itemsWithinBudget": 10,
+    "itemsWithinBudget": 9,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.022,
+    "expectedDailyRevenue": 0.029,
     "expectedDailyRoi": 0.1
   },
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 7
+    "review": 5
   }
 }

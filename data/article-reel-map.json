@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-26T04:34:29.474Z",
+  "timestamp": "2026-06-27T04:27:03.184Z",
   "articleMap": {
     "japon-couple-15-jours-budget-tout-compris-2026": {
       "wpId": 4373,
@@ -89,6 +89,29 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
+      "wpId": 4252,
+      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-05-11",
+          "format": "avantapres",
+          "platform": "tiktok",
+          "score": 18.8,
+          "engagementRate": 0,
+          "publishedAt": "2026-05-11",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "destination",
+      "igReferralTraffic": null
+    },
     "bali-vs-thailande-premier-voyage-asie-comparatif": {
       "wpId": 4254,
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -122,27 +145,27 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
-      "wpId": 4252,
-      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
+    "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
+      "wpId": 5072,
+      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
       "reels": [
         {
-          "reelId": "tiktok:2026-05-11",
+          "reelId": "tiktok:2026-05-05",
           "format": "avantapres",
           "platform": "tiktok",
-          "score": 18.8,
+          "score": 18.1,
           "engagementRate": 0,
-          "publishedAt": "2026-05-11",
+          "publishedAt": "2026-05-05",
           "isViral": false,
           "matchSource": "tiktok-fuzzy-title"
         }
       ],
       "suggestedFormats": [
         "pick",
-        "month",
-        "avantapres"
+        "poll",
+        "humor"
       ],
-      "category": "destination",
+      "category": "default",
       "igReferralTraffic": null
     },
     "philippines-10-jours-itineraire-plages-budget-2026": {
@@ -181,21 +204,10 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
-      "wpId": 5072,
-      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-05-05",
-          "format": "avantapres",
-          "platform": "tiktok",
-          "score": 18.1,
-          "engagementRate": 0,
-          "publishedAt": "2026-05-05",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
+    "esim-vietnam-comparatif-forfait-2026-frais-caches": {
+      "wpId": 4250,
+      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
+      "reels": [],
       "suggestedFormats": [
         "pick",
         "poll",
@@ -239,16 +251,16 @@
       "category": "destination",
       "igReferralTraffic": null
     },
-    "esim-vietnam-comparatif-forfait-2026-frais-caches": {
-      "wpId": 4250,
-      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
+    "meilleur-esim-cambodge-2026": {
+      "wpId": 6374,
+      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "poll",
-        "humor"
+        "month",
+        "avantapres"
       ],
-      "category": "default",
+      "category": "destination",
       "igReferralTraffic": null
     },
     "meilleur-esim-thailande-2026": {
@@ -298,9 +310,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "meilleur-esim-cambodge-2026": {
-      "wpId": 6374,
-      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+    "meilleur-esim-vietnam-2026": {
+      "wpId": 6323,
+      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -322,18 +334,6 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
-      "wpId": 5343,
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
     "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
       "wpId": 5063,
       "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
@@ -344,6 +344,18 @@
         "avantapres"
       ],
       "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
+      "wpId": 5343,
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
@@ -370,9 +382,33 @@
       "category": "budget",
       "igReferralTraffic": null
     },
+    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
+      "wpId": 4105,
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
     "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
       "wpId": 4071,
       "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
+      "wpId": 3254,
+      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -397,18 +433,6 @@
     "meilleur-esim-bali-2026": {
       "wpId": 6327,
       "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "destination",
-      "igReferralTraffic": null
-    },
-    "meilleur-esim-vietnam-2026": {
-      "wpId": 6323,
-      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -502,33 +526,9 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
-      "wpId": 4105,
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
     "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget": {
       "wpId": 4030,
       "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
-      "wpId": 3254,
-      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
       "reels": [],
       "suggestedFormats": [
         "budget",

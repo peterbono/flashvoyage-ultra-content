@@ -1,22 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-06-26T04:34:36.445Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-06-27T04:27:10.366Z",
+    "elapsedSeconds": 6,
     "totalArticles": 38,
-    "articlesWithRecommendations": 7,
-    "totalRecommendations": 7,
+    "articlesWithRecommendations": 8,
+    "totalRecommendations": 8,
     "byPriority": {
       "P0": 0,
       "P1": 0,
-      "P2": 7
+      "P2": 8
     },
     "byType": {
-      "seo": 7
+      "seo": 8
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
-        "count": 7
+        "count": 8
       }
     ]
   },
@@ -64,14 +64,14 @@
         "avgDuration": 563
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 17,
         "clicks": 0,
-        "position": 29.8,
+        "position": 28.1,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 49,
-            "impressions": 8,
+            "position": 47.6,
+            "impressions": 7,
             "ctr": 0
           },
           {
@@ -115,14 +115,14 @@
         "avgDuration": 77
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 8,
         "clicks": 0,
-        "position": 21.6,
+        "position": 22.6,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
-            "position": 28.6,
-            "impressions": 5,
+            "position": 28.8,
+            "impressions": 6,
             "ctr": 0
           }
         ]
@@ -146,6 +146,51 @@
       "p0Count": 0
     },
     {
+      "wpId": 5072,
+      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
+      "url": "https://flashvoyage.com/kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage/",
+      "wordCount": 1294,
+      "widgetCount": 0,
+      "internalLinks": 16,
+      "lastModified": "2026-06-11T05:33:17",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 2
+      },
+      "gsc": {
+        "impressions": 4,
+        "clicks": 0,
+        "position": 8,
+        "topQueries": [
+          {
+            "query": "kuala lumpur ou singapour",
+            "position": 10.5,
+            "impressions": 2,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"kuala lumpur ou singapour\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"kuala lumpur ou singapour\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -160,14 +205,14 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 30,
+        "impressions": 28,
         "clicks": 0,
-        "position": 28.8,
+        "position": 28.3,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 32.8,
-            "impressions": 17,
+            "position": 32.6,
+            "impressions": 16,
             "ctr": 0
           },
           {
@@ -178,8 +223,8 @@
           },
           {
             "query": "thailande ou bali",
-            "position": 47.5,
-            "impressions": 2,
+            "position": 58,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -259,34 +304,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 5072,
-      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
-      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "url": "https://flashvoyage.com/kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage/",
-      "wordCount": 1294,
-      "widgetCount": 0,
-      "internalLinks": 16,
-      "lastModified": "2026-06-11T05:33:17",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 3
-      },
-      "gsc": {
-        "impressions": 1,
-        "clicks": 0,
-        "position": 6,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4371,
       "slug": "philippines-10-jours-itineraire-plages-budget-2026",
       "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
@@ -329,14 +346,14 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 7,
         "clicks": 1,
-        "position": 23,
+        "position": 24.9,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 34,
-            "impressions": 3,
+            "position": 34.5,
+            "impressions": 4,
             "ctr": 0
           },
           {
@@ -571,7 +588,7 @@
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 28.3,
+            "position": 28.4,
             "impressions": 46,
             "ctr": 0
           }
@@ -722,9 +739,9 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 2,
         "clicks": 0,
-        "position": 9.3,
+        "position": 8.5,
         "topQueries": []
       },
       "reels": {
@@ -1086,9 +1103,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 4,
         "clicks": 0,
-        "position": 24.7,
+        "position": 21.3,
         "topQueries": []
       },
       "reels": {
