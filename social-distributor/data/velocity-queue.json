@@ -1,36 +1,61 @@
 {
-  "generatedAt": "2026-06-28T00:41:13.627Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-06-28T07:21:54.268Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 2
   },
   "queue": [
     {
-      "topic": "Venezuela quakes kill almost 1,500, with millions more in need",
+      "topic": "Hong Kong beautician pleads guilty to luring 2 women into Myanmar scam factory through Thailand",
       "source": "rss_breaking",
-      "destination": "asia",
-      "link": "https://www.scmp.com/news/world/americas/article/3358619/venezuela-quakes-kill-almost-1500-millions-more-need?utm_source=rss_feed",
-      "velocityScore": 0.413,
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/world/3277844/hong-kong-beautician-pleads-guilty-to-luring-2-women-into-myanmar-scam-factory-through-thailand",
+      "velocityScore": 0.488,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 714,
+      "hoursRemaining": 717,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2064,
-      "estimatedTrafficIn24h": 2017,
+      "estimatedTrafficNow": 2442,
+      "estimatedTrafficIn24h": 2386,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.995,
+        "trendIntensity": 0.98,
+        "timeDecay": 0.997,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 5.6
+        "hoursSinceDetection": 3.3
       },
-      "detectedAt": "2026-06-27T19:02:52.000Z",
-      "scoredAt": "2026-06-28T00:41:09.462Z"
+      "detectedAt": "2026-06-28T04:02:00.000Z",
+      "scoredAt": "2026-06-28T07:21:48.067Z"
+    },
+    {
+      "topic": "Australian seized at airport minutes before flight",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/national/australian-seized-at-airport-minutes-before-flight",
+      "velocityScore": 0.449,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2247,
+      "estimatedTrafficIn24h": 2195,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.6
+      },
+      "detectedAt": "2026-06-28T05:45:35.000Z",
+      "scoredAt": "2026-06-28T07:21:47.250Z"
     }
   ]
 }
