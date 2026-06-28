@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-27T04:27:11.197Z",
+  "timestamp": "2026-06-28T04:37:14.426Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -88,31 +88,6 @@
     },
     {
       "rank": 4,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 136,
-      "topic": "agence de voyage",
-      "articleType": "support",
-      "context": {
-        "gapScore": 56,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"agence de voyage\" (score 56, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 2.75,
-        "projectedMonthlyTraffic": 103,
-        "projectedMonthlyRevenue": 0.206,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (110 PV) × gap boost (0.93)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -133,11 +108,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -158,11 +133,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -183,7 +158,32 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "articleType": "support",
+      "context": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 15,
+        "freshness": 0.77,
+        "traffic": 0.11,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
@@ -208,7 +208,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
@@ -233,23 +233,23 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.3,
+    "totalCost": 0.225,
     "dailyBudget": 2,
     "itemsWithinBudget": 9,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.029,
+    "expectedDailyRevenue": 0.022,
     "expectedDailyRoi": 0.1
   },
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 5
+    "review": 6
   }
 }

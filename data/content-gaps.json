@@ -1,37 +1,33 @@
 {
-  "timestamp": "2026-06-27T04:27:02.348Z",
+  "timestamp": "2026-06-28T04:37:04.600Z",
   "gapCount": 1,
   "gaps": [
     {
-      "topic": "agence de voyage",
+      "topic": "argentina",
       "source": "trends",
-      "gapScore": 56,
+      "gapScore": 35,
       "signals": {
-        "searchVolume": 0.47,
-        "trendGrowth": 0.47,
-        "monetization": 0.9,
-        "competition": 0.6
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.8
       },
-      "destination": "vietnam",
-      "category": "destination",
-      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "destination": null,
+      "category": "budget",
+      "suggestedTitle": "Argentina : Le Guide Budget Complet",
+      "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
       "articleType": "support",
-      "priority": "high"
+      "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
-      "high": 1
+      "medium": 1
     },
     "byCategory": {
-      "destination": 1
+      "budget": 1
     },
-    "byDestination": {
-      "vietnam": 1
-    },
-    "topDestinationGaps": [
-      "vietnam"
-    ]
+    "byDestination": {},
+    "topDestinationGaps": []
   }
 }

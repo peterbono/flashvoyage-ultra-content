@@ -1,25 +1,9 @@
 {
-  "timestamp": "2026-06-27T04:27:03.998Z",
+  "timestamp": "2026-06-28T04:37:06.487Z",
   "queueSize": 9,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 136,
-      "topic": "agence de voyage",
-      "articleType": "support",
-      "context": {
-        "gapScore": 56,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"agence de voyage\" (score 56, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +15,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +27,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -55,7 +39,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -71,7 +55,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -87,7 +71,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -98,6 +82,22 @@
         "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 15,
         "freshness": 0.79,
+        "traffic": 0.11,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "articleType": "support",
+      "context": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 15,
+        "freshness": 0.77,
         "traffic": 0.11,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
@@ -136,11 +136,11 @@
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 5
+    "review": 6
   },
   "thresholds": {
     "staleFreshnessThreshold": 0.3,

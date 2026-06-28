@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-27T04:28:50.119Z",
+  "timestamp": "2026-06-28T04:38:51.916Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,100 +16,15 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 8718,
-      "newUrls": 1005
+      "totalUrls": 7723,
+      "newUrls": 5
     }
   ],
-  "newArticles": [
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/airbnb-kyoto/",
-      "lastmod": "2025-04-26T07:48:09+00:00",
-      "destination": "kyoto",
-      "contentType": "general",
-      "title": "Airbnb Kyoto",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Airbnb Kyoto\" (kyoto, general) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/meilleurs-treks-manaslu-nepal/",
-      "lastmod": "2025-04-26T08:41:57+00:00",
-      "destination": "nepal",
-      "contentType": "classement",
-      "title": "Meilleurs Treks Manaslu Nepal",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Meilleurs Treks Manaslu Nepal\" (nepal, classement) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/circuits-safari-sri-lanka/",
-      "lastmod": "2025-04-26T08:44:59+00:00",
-      "destination": "sri-lanka",
-      "contentType": "itineraire",
-      "title": "Circuits Safari Sri Lanka",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Circuits Safari Sri Lanka\" (sri-lanka, itineraire) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-ecoresponsables-maldives/",
-      "lastmod": "2025-04-26T08:33:58+00:00",
-      "destination": "maldives",
-      "contentType": "hebergement",
-      "title": "Hotels Ecoresponsables Maldives",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel\" (score=15, freshness=0.77)",
-      "matchedArticle": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
-        "compositeScore": 15,
-        "freshness": 0.77
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/hotels-ecoresponsables-thailande/",
-      "lastmod": "2025-04-26T08:35:31+00:00",
-      "destination": "thailande",
-      "contentType": "hebergement",
-      "title": "Hotels Ecoresponsables Thailande",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=53, freshness=0.83)",
-      "matchedArticle": {
-        "wpId": 4487,
-        "slug": "voyage-thailande-pas-cher-2026-budget",
-        "compositeScore": 53,
-        "freshness": 0.83
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/circuits-vietnam/",
-      "lastmod": "2025-04-26T08:44:37+00:00",
-      "destination": "vietnam",
-      "contentType": "itineraire",
-      "title": "Circuits Vietnam",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=41, freshness=0.80)",
-      "matchedArticle": {
-        "wpId": 4252,
-        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-        "compositeScore": 41,
-        "freshness": 0.8
-      }
-    }
-  ],
+  "newArticles": [],
   "summary": {
-    "totalNew": 6,
-    "contentGaps": 3,
+    "totalNew": 0,
+    "contentGaps": 0,
     "staleRefreshes": 0,
-    "monitoring": 3
+    "monitoring": 0
   }
 }
