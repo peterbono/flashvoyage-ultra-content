@@ -1,61 +1,10 @@
 {
-  "generatedAt": "2026-06-28T07:21:54.268Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-06-28T12:28:54.291Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Hong Kong beautician pleads guilty to luring 2 women into Myanmar scam factory through Thailand",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/world/3277844/hong-kong-beautician-pleads-guilty-to-luring-2-women-into-myanmar-scam-factory-through-thailand",
-      "velocityScore": 0.488,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2442,
-      "estimatedTrafficIn24h": 2386,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3.3
-      },
-      "detectedAt": "2026-06-28T04:02:00.000Z",
-      "scoredAt": "2026-06-28T07:21:48.067Z"
-    },
-    {
-      "topic": "Australian seized at airport minutes before flight",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/national/australian-seized-at-airport-minutes-before-flight",
-      "velocityScore": 0.449,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2247,
-      "estimatedTrafficIn24h": 2195,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.6
-      },
-      "detectedAt": "2026-06-28T05:45:35.000Z",
-      "scoredAt": "2026-06-28T07:21:47.250Z"
-    }
-  ]
+  "queue": []
 }
