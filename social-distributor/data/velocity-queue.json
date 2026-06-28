@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27T18:25:50.816Z",
+  "generatedAt": "2026-06-28T00:41:13.627Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Strong earthquake hits Hindu Kush, shaking Afghanistan and Pakistan",
+      "topic": "Venezuela quakes kill almost 1,500, with millions more in need",
       "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/strong-earthquake-hits-hindu-kush-shaking-afghanistan-and-pakistan",
+      "destination": "asia",
+      "link": "https://www.scmp.com/news/world/americas/article/3358619/venezuela-quakes-kill-almost-1500-millions-more-need?utm_source=rss_feed",
       "velocityScore": 0.413,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
+      "hoursRemaining": 714,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2067,
-      "estimatedTrafficIn24h": 2020,
+      "estimatedTrafficNow": 2064,
+      "estimatedTrafficIn24h": 2017,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
-        "timeDecay": 0.996,
+        "timeDecay": 0.995,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 3.9
+        "hoursSinceDetection": 5.6
       },
-      "detectedAt": "2026-06-27T14:32:07.000Z",
-      "scoredAt": "2026-06-27T18:25:44.709Z"
+      "detectedAt": "2026-06-27T19:02:52.000Z",
+      "scoredAt": "2026-06-28T00:41:09.462Z"
     }
   ]
 }
