@@ -1,83 +1,55 @@
 {
-  "timestamp": "2026-06-28T04:37:02.335Z",
+  "timestamp": "2026-06-29T04:38:08.922Z",
   "trendingTopics": [
     {
-      "query": "prix voyage bali",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
+      "query": "voyage thailande prix",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-28T04:36:51.279Z",
-      "source": "related-rising",
-      "parentDestination": "bali",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "bali",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage thailande circuit",
-      "traffic": 100,
-      "trafficFormatted": "+100 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-06-28T04:36:53.497Z",
+      "date": "2026-06-29T04:38:00.297Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
-      "category": "itineraire",
+      "category": "budget",
       "destination": "thailande",
       "compositeScore": 0.62
     },
     {
-      "query": "voyage vietnam circuit",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
+      "query": "voyage thailande pas cher",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-28T04:36:55.701Z",
+      "date": "2026-06-29T04:38:00.297Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "thailande",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage vietnam pas cher",
+      "traffic": 130,
+      "trafficFormatted": "+130 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-06-29T04:38:02.453Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 1,
-      "category": "itineraire",
+      "category": "budget",
       "destination": "vietnam",
       "compositeScore": 0.62
     },
     {
-      "query": "leclerc voyage thailande",
+      "query": "voyage cambodge vietnam",
       "traffic": 200,
       "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-28T04:36:53.497Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage thailande covid",
-      "traffic": 110,
-      "trafficFormatted": "+110 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-06-28T04:36:53.497Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage cambodge vietnam",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-06-28T04:37:00.118Z",
+      "date": "2026-06-29T04:38:06.761Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -86,47 +58,18 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage cambodge laos",
-      "traffic": 50,
-      "trafficFormatted": "+50 %",
+      "query": "voyage laos vietnam",
+      "traffic": 120,
+      "trafficFormatted": "+120 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-06-28T04:37:00.118Z",
+      "date": "2026-06-29T04:38:08.921Z",
       "source": "related-rising",
-      "parentDestination": "cambodge",
+      "parentDestination": "laos",
       "relevanceScore": 0.7,
       "category": "destination",
-      "destination": "cambodge",
+      "destination": "laos",
       "compositeScore": 0.53
-    },
-    {
-      "query": "argentina",
-      "traffic": 200,
-      "trafficFormatted": "200+",
-      "relatedQueries": [],
-      "articles": [
-        {
-          "title": "Jordan vs Argentina Highlights | 2026 FIFA World Cup™",
-          "url": "https://www.foxsports.com/watch/fmc-qsulw8ohm86o0deh",
-          "source": "FOX Sports"
-        },
-        {
-          "title": "Lionel Messi scores free kick to break another World Cup record as Argentina beat Jordan: Live updates and reaction",
-          "url": "https://www.nytimes.com/athletic/live-blogs/jordan-argentina-messi-score-result-match-time/Gs0oFLN9UhCW/",
-          "source": "The New York Times"
-        },
-        {
-          "title": "Argentina tops Jordan 3-1 in final group stage match at Dallas Stadium",
-          "url": "https://fox4news.com/live-blog/sports/world-cup-argentina-jordan-dallas-stadium",
-          "source": "FOX 4 News Dallas-Fort Worth"
-        }
-      ],
-      "date": "Sat, 27 Jun 2026 19:50:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "budget",
-      "destination": null,
-      "compositeScore": 0.29016
     }
   ]
 }

@@ -1,32 +1,10 @@
 {
-  "timestamp": "2026-06-28T04:37:04.600Z",
-  "gapCount": 1,
-  "gaps": [
-    {
-      "topic": "argentina",
-      "source": "trends",
-      "gapScore": 35,
-      "signals": {
-        "searchVolume": 0.29,
-        "trendGrowth": 0.29,
-        "monetization": 0.6,
-        "competition": 0.8
-      },
-      "destination": null,
-      "category": "budget",
-      "suggestedTitle": "Argentina : Le Guide Budget Complet",
-      "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
-      "articleType": "support",
-      "priority": "medium"
-    }
-  ],
+  "timestamp": "2026-06-29T04:38:11.131Z",
+  "gapCount": 0,
+  "gaps": [],
   "summary": {
-    "byPriority": {
-      "medium": 1
-    },
-    "byCategory": {
-      "budget": 1
-    },
+    "byPriority": {},
+    "byCategory": {},
     "byDestination": {},
     "topDestinationGaps": []
   }

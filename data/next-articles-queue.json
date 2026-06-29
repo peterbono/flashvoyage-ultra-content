@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-28T04:37:06.487Z",
+  "timestamp": "2026-06-29T04:38:12.712Z",
   "queueSize": 9,
   "queue": [
     {
@@ -65,7 +65,7 @@
         "wpId": 4125,
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 15,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "traffic": 0.11,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
@@ -81,7 +81,7 @@
         "wpId": 4030,
         "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 15,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "traffic": 0.11,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
@@ -97,7 +97,7 @@
         "wpId": 3254,
         "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
         "compositeScore": 15,
-        "freshness": 0.77,
+        "freshness": 0.76,
         "traffic": 0.11,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
@@ -113,7 +113,7 @@
         "wpId": 3198,
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 15,
-        "freshness": 0.77,
+        "freshness": 0.76,
         "traffic": 0.11,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
@@ -129,7 +129,7 @@
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 15,
-        "freshness": 0.75,
+        "freshness": 0.74,
         "traffic": 0.11,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }

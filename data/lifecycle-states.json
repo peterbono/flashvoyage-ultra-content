@@ -1,15 +1,15 @@
 {
-  "timestamp": "2026-06-28T04:38:52.920Z",
+  "timestamp": "2026-06-29T04:40:13.427Z",
   "articleCount": 38,
   "stateCounts": {
-    "GROWING": 36,
-    "DECLINING": 2
+    "GROWING": 35,
+    "DECLINING": 3
   },
-  "totalActions": 78,
+  "totalActions": 79,
   "actionsByPriority": {
-    "P0": 2,
-    "P1": 40,
-    "P2": 36,
+    "P0": 3,
+    "P1": 41,
+    "P2": 35,
     "P3": 0
   },
   "articles": [
@@ -17,15 +17,15 @@
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
       "wpId": 4252,
-      "compositeScore": 43,
+      "compositeScore": 41,
       "date": "2026-03-23T11:57:07",
-      "ageDays": 97,
+      "ageDays": 98,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.232,
-        "trend14d": -0.173,
-        "consecutiveRising": 3,
-        "variance7d": 0.148,
+        "trend7d": -0.163,
+        "trend14d": -0.305,
+        "consecutiveRising": 0,
+        "variance7d": 0.149,
         "dataPoints": 31
       },
       "actions": [
@@ -50,18 +50,52 @@
       ]
     },
     {
+      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
+      "wpId": 4369,
+      "compositeScore": 30,
+      "date": "2026-03-23T13:17:33",
+      "ageDays": 98,
+      "state": "DECLINING",
+      "trajectory": {
+        "trend7d": -0.118,
+        "trend14d": -0.231,
+        "consecutiveRising": 0,
+        "variance7d": 0.058,
+        "dataPoints": 31
+      },
+      "actions": [
+        {
+          "action": "content_refresh",
+          "priority": "P0",
+          "reason": "Article declining -15%+ over 14d — urgent content refresh needed"
+        },
+        {
+          "action": "update_title_meta",
+          "priority": "P1",
+          "reason": "Declining article — refresh title/meta for improved CTR"
+        },
+        {
+          "action": "add_fresh_sections",
+          "priority": "P1",
+          "reason": "Declining article — add 2026 updates, new sections, fresh data"
+        }
+      ],
+      "flags": []
+    },
+    {
       "slug": "meilleur-esim-thailande-2026",
       "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
       "wpId": 6195,
       "compositeScore": 25,
       "date": "2026-05-10T03:15:12",
-      "ageDays": 49,
+      "ageDays": 50,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": 0.136,
-        "trend14d": -0.49,
+        "trend14d": -0.5,
         "consecutiveRising": 0,
-        "variance7d": 0.071,
+        "variance7d": 0.067,
         "dataPoints": 31
       },
       "actions": [
@@ -89,10 +123,10 @@
       "wpId": 4373,
       "compositeScore": 54,
       "date": "2026-03-23T13:20:52",
-      "ageDays": 97,
+      "ageDays": 98,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.385,
+        "trend7d": 0,
         "trend14d": 0.929,
         "consecutiveRising": 0,
         "variance7d": 0.041,
@@ -120,15 +154,15 @@
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
       "wpId": 4487,
-      "compositeScore": 49,
+      "compositeScore": 53,
       "date": "2026-03-31T16:22:55",
-      "ageDays": 89,
+      "ageDays": 90,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.058,
-        "trend14d": 0.043,
-        "consecutiveRising": 0,
-        "variance7d": 0.08,
+        "trend7d": 0.06,
+        "trend14d": 0.128,
+        "consecutiveRising": 1,
+        "variance7d": 0.082,
         "dataPoints": 31
       },
       "actions": [
@@ -144,8 +178,10 @@
         }
       ],
       "flags": [
+        "trending",
         "1_reels",
-        "top_performer"
+        "top_performer",
+        "fr_light"
       ]
     },
     {
@@ -154,13 +190,13 @@
       "wpId": 4372,
       "compositeScore": 44,
       "date": "2026-03-23T13:19:57",
-      "ageDays": 97,
+      "ageDays": 98,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.022,
+        "trend7d": 0.023,
         "trend14d": 0.128,
         "consecutiveRising": 0,
-        "variance7d": 0.008,
+        "variance7d": 0,
         "dataPoints": 31
       },
       "actions": [
@@ -185,13 +221,13 @@
       "wpId": 4254,
       "compositeScore": 40,
       "date": "2026-03-23T12:02:05",
-      "ageDays": 97,
+      "ageDays": 98,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.048,
-        "trend14d": -0.024,
+        "trend7d": -0.024,
+        "trend14d": -0.07,
         "consecutiveRising": 0,
-        "variance7d": 0.075,
+        "variance7d": 0.074,
         "dataPoints": 31
       },
       "actions": [
@@ -216,13 +252,13 @@
       "wpId": 5072,
       "compositeScore": 36,
       "date": "2026-04-05T08:42:10",
-      "ageDays": 84,
+      "ageDays": 85,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.2,
-        "trend14d": 0.286,
-        "consecutiveRising": 3,
-        "variance7d": 0.108,
+        "trend7d": 0.241,
+        "trend14d": 0.241,
+        "consecutiveRising": 0,
+        "variance7d": 0.123,
         "dataPoints": 31
       },
       "actions": [
@@ -242,18 +278,18 @@
       ]
     },
     {
-      "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
-      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
-      "wpId": 4369,
-      "compositeScore": 30,
-      "date": "2026-03-23T13:17:33",
-      "ageDays": 97,
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "wpId": 4371,
+      "compositeScore": 32,
+      "date": "2026-03-23T13:18:06",
+      "ageDays": 98,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.143,
-        "trend14d": -0.118,
-        "consecutiveRising": 0,
-        "variance7d": 0.062,
+        "trend7d": 0,
+        "trend14d": 0.032,
+        "consecutiveRising": 1,
+        "variance7d": 0.048,
         "dataPoints": 31
       },
       "actions": [
@@ -276,11 +312,11 @@
       "wpId": 4253,
       "compositeScore": 30,
       "date": "2026-03-23T11:58:01",
-      "ageDays": 97,
+      "ageDays": 98,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
-        "trend14d": 0.111,
+        "trend14d": 0.071,
         "consecutiveRising": 0,
         "variance7d": 0.048,
         "dataPoints": 31
@@ -303,44 +339,15 @@
       "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
       "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
       "wpId": 4250,
-      "compositeScore": 30,
+      "compositeScore": 29,
       "date": "2026-03-23T11:56:46",
-      "ageDays": 97,
+      "ageDays": 98,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
-        "trend14d": 0.304,
-        "consecutiveRising": 2,
-        "variance7d": 0.063,
-        "dataPoints": 31
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "wpId": 4371,
-      "compositeScore": 29,
-      "date": "2026-03-23T13:18:06",
-      "ageDays": 97,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": -0.121,
-        "trend14d": -0.065,
+        "trend14d": 0.036,
         "consecutiveRising": 0,
-        "variance7d": 0.048,
+        "variance7d": 0.063,
         "dataPoints": 31
       },
       "actions": [
@@ -363,13 +370,13 @@
       "wpId": 5119,
       "compositeScore": 27,
       "date": "2026-04-06T05:37:25",
-      "ageDays": 83,
+      "ageDays": 84,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.036,
-        "trend14d": 0.125,
+        "trend14d": 0,
         "consecutiveRising": 0,
-        "variance7d": 0.113,
+        "variance7d": 0.111,
         "dataPoints": 31
       },
       "actions": [
@@ -394,14 +401,14 @@
       "wpId": 6331,
       "compositeScore": 26,
       "date": "2026-06-07T03:17:59",
-      "ageDays": 21,
+      "ageDays": 22,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.071,
+        "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
-        "dataPoints": 22
+        "dataPoints": 23
       },
       "actions": [
         {
@@ -423,14 +430,14 @@
       "wpId": 6374,
       "compositeScore": 25,
       "date": "2026-06-14T03:18:14",
-      "ageDays": 14,
+      "ageDays": 15,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.038,
-        "trend14d": 0.667,
+        "trend7d": 0,
+        "trend14d": 0.042,
         "consecutiveRising": 0,
         "variance7d": 0.056,
-        "dataPoints": 15
+        "dataPoints": 16
       },
       "actions": [
         {
@@ -452,11 +459,11 @@
       "wpId": 5179,
       "compositeScore": 25,
       "date": "2026-04-08T05:23:01",
-      "ageDays": 81,
+      "ageDays": 82,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.038,
-        "trend14d": 0.136,
+        "trend7d": 0,
+        "trend14d": 0.042,
         "consecutiveRising": 0,
         "variance7d": 0.117,
         "dataPoints": 31
@@ -483,71 +490,13 @@
       "wpId": 5260,
       "compositeScore": 24,
       "date": "2026-04-10T05:37:09",
-      "ageDays": 79,
+      "ageDays": 80,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.04,
-        "trend14d": 0.091,
+        "trend14d": 0,
         "consecutiveRising": 0,
-        "variance7d": 0.132,
-        "dataPoints": 31
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "meilleur-esim-bali-2026",
-      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
-      "wpId": 6327,
-      "compositeScore": 23,
-      "date": "2026-05-31T03:17:48",
-      "ageDays": 28,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": 0.045,
-        "trend14d": 0.533,
-        "consecutiveRising": 1,
-        "variance7d": 0.098,
-        "dataPoints": 29
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "wpId": 4370,
-      "compositeScore": 23,
-      "date": "2026-03-23T13:17:41",
-      "ageDays": 97,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": 0.211,
-        "trend14d": 0.769,
-        "consecutiveRising": 1,
-        "variance7d": 0.08,
+        "variance7d": 0.131,
         "dataPoints": 31
       },
       "actions": [
@@ -570,11 +519,11 @@
       "wpId": 6323,
       "compositeScore": 22,
       "date": "2026-05-24T03:16:15",
-      "ageDays": 35,
+      "ageDays": 36,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
-        "trend14d": 0.467,
+        "trend14d": 0.1,
         "consecutiveRising": 0,
         "variance7d": 0.104,
         "dataPoints": 31
@@ -599,42 +548,13 @@
       "wpId": 5333,
       "compositeScore": 21,
       "date": "2026-04-12T05:34:09",
-      "ageDays": 77,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": -0.16,
-        "trend14d": -0.087,
-        "consecutiveRising": 0,
-        "variance7d": 0.076,
-        "dataPoints": 31
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "wpId": 5296,
-      "compositeScore": 20,
-      "date": "2026-04-11T08:44:09",
       "ageDays": 78,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.13,
-        "trend14d": 0.176,
-        "consecutiveRising": 1,
-        "variance7d": 0.119,
+        "trend7d": 0,
+        "trend14d": -0.125,
+        "consecutiveRising": 0,
+        "variance7d": 0.076,
         "dataPoints": 31
       },
       "actions": [
@@ -657,11 +577,98 @@
       "wpId": 5063,
       "compositeScore": 20,
       "date": "2026-04-05T05:24:53",
-      "ageDays": 84,
+      "ageDays": 85,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.048,
-        "trend14d": 0.176,
+        "trend7d": 0,
+        "trend14d": 0.053,
+        "consecutiveRising": 0,
+        "variance7d": 0.072,
+        "dataPoints": 31
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
+    },
+    {
+      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "wpId": 5343,
+      "compositeScore": 19,
+      "date": "2026-04-12T08:43:46",
+      "ageDays": 78,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.05,
+        "trend14d": 0.118,
+        "consecutiveRising": 1,
+        "variance7d": 0.097,
+        "dataPoints": 31
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
+    },
+    {
+      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "wpId": 5296,
+      "compositeScore": 19,
+      "date": "2026-04-11T08:44:09",
+      "ageDays": 79,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.174,
+        "trend14d": 0.056,
+        "consecutiveRising": 0,
+        "variance7d": 0.086,
+        "dataPoints": 31
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
+    },
+    {
+      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "wpId": 4370,
+      "compositeScore": 19,
+      "date": "2026-03-23T13:17:41",
+      "ageDays": 98,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.136,
+        "trend14d": 0.118,
         "consecutiveRising": 0,
         "variance7d": 0.072,
         "dataPoints": 31
@@ -686,11 +693,11 @@
       "wpId": 4105,
       "compositeScore": 19,
       "date": "2026-03-18T13:26:31",
-      "ageDays": 102,
+      "ageDays": 103,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.05,
-        "trend14d": 0.583,
+        "trend7d": 0,
+        "trend14d": 0.056,
         "consecutiveRising": 0,
         "variance7d": 0.122,
         "dataPoints": 31
@@ -715,13 +722,13 @@
       "wpId": 4071,
       "compositeScore": 19,
       "date": "2026-03-18T10:40:12",
-      "ageDays": 102,
+      "ageDays": 103,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.05,
-        "trend14d": 0.118,
+        "trend14d": 0.188,
         "consecutiveRising": 0,
-        "variance7d": 0.087,
+        "variance7d": 0.084,
         "dataPoints": 31
       },
       "actions": [
@@ -744,14 +751,43 @@
       "wpId": 3090,
       "compositeScore": 19,
       "date": "2026-03-04T19:08:20",
-      "ageDays": 115,
+      "ageDays": 116,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.05,
-        "trend14d": 0.188,
+        "trend7d": 0,
+        "trend14d": 0.118,
         "consecutiveRising": 0,
         "variance7d": 0.019,
         "dataPoints": 31
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
+    },
+    {
+      "slug": "meilleur-esim-bali-2026",
+      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
+      "wpId": 6327,
+      "compositeScore": 18,
+      "date": "2026-05-31T03:17:48",
+      "ageDays": 29,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": -0.143,
+        "trend14d": -0.053,
+        "consecutiveRising": 0,
+        "variance7d": 0.093,
+        "dataPoints": 30
       },
       "actions": [
         {
@@ -773,13 +809,13 @@
       "wpId": 6309,
       "compositeScore": 18,
       "date": "2026-05-17T03:15:44",
-      "ageDays": 42,
+      "ageDays": 43,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.182,
         "trend14d": 0.2,
         "consecutiveRising": 0,
-        "variance7d": 0.075,
+        "variance7d": 0,
         "dataPoints": 31
       },
       "actions": [
@@ -802,13 +838,13 @@
       "wpId": 3425,
       "compositeScore": 18,
       "date": "2026-03-14T20:55:07",
-      "ageDays": 105,
+      "ageDays": 106,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.1,
-        "trend14d": 0.5,
+        "trend7d": -0.053,
+        "trend14d": 0.059,
         "consecutiveRising": 0,
-        "variance7d": 0.103,
+        "variance7d": 0.106,
         "dataPoints": 31
       },
       "actions": [
@@ -831,13 +867,13 @@
       "wpId": 2980,
       "compositeScore": 18,
       "date": "2026-02-23T10:54:23",
-      "ageDays": 125,
+      "ageDays": 126,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.053,
         "trend14d": 0.125,
         "consecutiveRising": 0,
-        "variance7d": 0.092,
+        "variance7d": 0.089,
         "dataPoints": 31
       },
       "actions": [
@@ -860,7 +896,7 @@
       "wpId": 5678,
       "compositeScore": 17,
       "date": "2026-04-15T09:17:09",
-      "ageDays": 74,
+      "ageDays": 75,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
@@ -889,42 +925,13 @@
       "wpId": 5742,
       "compositeScore": 16,
       "date": "2026-04-17T05:37:11",
-      "ageDays": 72,
+      "ageDays": 73,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.059,
         "trend14d": 0.143,
         "consecutiveRising": 0,
-        "variance7d": 0.021,
-        "dataPoints": 31
-      },
-      "actions": [
-        {
-          "action": "add_widgets",
-          "priority": "P1",
-          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
-        },
-        {
-          "action": "create_reel",
-          "priority": "P2",
-          "reason": "Growing article benefits from additional reel amplification"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "wpId": 5343,
-      "compositeScore": 16,
-      "date": "2026-04-12T08:43:46",
-      "ageDays": 77,
-      "state": "GROWING",
-      "trajectory": {
-        "trend7d": -0.2,
-        "trend14d": -0.059,
-        "consecutiveRising": 0,
-        "variance7d": 0.098,
+        "variance7d": 0.027,
         "dataPoints": 31
       },
       "actions": [
@@ -947,13 +954,13 @@
       "wpId": 5270,
       "compositeScore": 16,
       "date": "2026-04-10T09:40:41",
-      "ageDays": 79,
+      "ageDays": 80,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.238,
-        "trend14d": 0.143,
+        "trend7d": -0.2,
+        "trend14d": 0.231,
         "consecutiveRising": 0,
-        "variance7d": 0.084,
+        "variance7d": 0,
         "dataPoints": 31
       },
       "actions": [
@@ -976,10 +983,10 @@
       "wpId": 4125,
       "compositeScore": 15,
       "date": "2026-03-18T19:33:49",
-      "ageDays": 101,
+      "ageDays": 102,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.062,
+        "trend7d": 0,
         "trend14d": 0.25,
         "consecutiveRising": 0,
         "variance7d": 0,
@@ -1005,10 +1012,10 @@
       "wpId": 4030,
       "compositeScore": 15,
       "date": "2026-03-18T06:42:56",
-      "ageDays": 102,
+      "ageDays": 103,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.062,
+        "trend7d": 0,
         "trend14d": 0.25,
         "consecutiveRising": 0,
         "variance7d": 0.132,
@@ -1034,10 +1041,10 @@
       "wpId": 3254,
       "compositeScore": 15,
       "date": "2026-03-11T20:13:21",
-      "ageDays": 108,
+      "ageDays": 109,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.062,
+        "trend7d": 0,
         "trend14d": -0.062,
         "consecutiveRising": 0,
         "variance7d": 0.112,
@@ -1063,10 +1070,10 @@
       "wpId": 3198,
       "compositeScore": 15,
       "date": "2026-03-11T15:15:39",
-      "ageDays": 109,
+      "ageDays": 110,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.062,
+        "trend7d": 0,
         "trend14d": 0.25,
         "consecutiveRising": 0,
         "variance7d": 0,
@@ -1092,7 +1099,7 @@
       "wpId": 3107,
       "compositeScore": 15,
       "date": "2026-03-04T19:51:24",
-      "ageDays": 115,
+      "ageDays": 116,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
@@ -1121,10 +1128,10 @@
       "wpId": 2924,
       "compositeScore": 14,
       "date": "2026-02-21T09:23:42",
-      "ageDays": 127,
+      "ageDays": 128,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.067,
+        "trend7d": 0,
         "trend14d": 0.273,
         "consecutiveRising": 0,
         "variance7d": 0,

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-28T04:36:47.357Z",
+  "timestamp": "2026-06-29T04:37:54.777Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -37,20 +37,22 @@
       "wpId": 4487,
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "compositeScore": 49,
+      "compositeScore": 53,
       "signals": {
         "traffic": 0.56,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.41,
+        "trendAlignment": 0.62,
         "reelAmplification": 0.1,
-        "freshness": 0.83,
+        "freshness": 0.82,
         "monetization": 1,
         "frShare": 0.2,
         "frPageviews": 1
       },
       "flags": [
+        "trending",
         "1_reels",
-        "top_performer"
+        "top_performer",
+        "fr_light"
       ],
       "date": "2026-03-31T16:22:55",
       "wordCount": 2504
@@ -80,11 +82,11 @@
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "compositeScore": 43,
+      "compositeScore": 41,
       "signals": {
         "traffic": 0.22,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.41,
+        "trendAlignment": 0.35,
         "reelAmplification": 0.38,
         "freshness": 0.8,
         "monetization": 1,
@@ -125,7 +127,7 @@
       "compositeScore": 36,
       "signals": {
         "traffic": 0.44,
-        "sessionQuality": 0,
+        "sessionQuality": 0.02,
         "trendAlignment": 0.21,
         "reelAmplification": 0.36,
         "freshness": 0.84,
@@ -138,6 +140,25 @@
       ],
       "date": "2026-04-05T08:42:10",
       "wordCount": 1296
+    },
+    {
+      "wpId": 4371,
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "compositeScore": 32,
+      "signals": {
+        "traffic": 0.22,
+        "sessionQuality": 0.05,
+        "trendAlignment": 0.16,
+        "reelAmplification": 0,
+        "freshness": 0.8,
+        "monetization": 1,
+        "frShare": 0.5,
+        "frPageviews": 1
+      },
+      "flags": [],
+      "date": "2026-03-23T13:18:06",
+      "wordCount": 3458
     },
     {
       "wpId": 4369,
@@ -181,11 +202,11 @@
       "wpId": 4250,
       "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
       "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
-      "compositeScore": 30,
+      "compositeScore": 29,
       "signals": {
         "traffic": 0.11,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
+        "trendAlignment": 0.18,
         "reelAmplification": 0,
         "freshness": 0.8,
         "monetization": 1,
@@ -195,25 +216,6 @@
       "flags": [],
       "date": "2026-03-23T11:56:46",
       "wordCount": 3459
-    },
-    {
-      "wpId": 4371,
-      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "compositeScore": 29,
-      "signals": {
-        "traffic": 0.22,
-        "sessionQuality": 0.05,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.8,
-        "monetization": 1,
-        "frShare": 0.5,
-        "frPageviews": 1
-      },
-      "flags": [],
-      "date": "2026-03-23T13:18:06",
-      "wordCount": 3458
     },
     {
       "wpId": 5119,
@@ -303,7 +305,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.41,
         "reelAmplification": 0.03,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -334,44 +336,6 @@
       "wordCount": 1755
     },
     {
-      "wpId": 6327,
-      "slug": "meilleur-esim-bali-2026",
-      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
-      "compositeScore": 23,
-      "signals": {
-        "traffic": 0.11,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-05-31T03:17:48",
-      "wordCount": 1265
-    },
-    {
-      "wpId": 4370,
-      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "compositeScore": 23,
-      "signals": {
-        "traffic": 0.22,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 0.8,
-        "monetization": 0,
-        "frShare": 0.5,
-        "frPageviews": 1
-      },
-      "flags": [],
-      "date": "2026-03-23T13:17:41",
-      "wordCount": 4126
-    },
-    {
       "wpId": 6323,
       "slug": "meilleur-esim-vietnam-2026",
       "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
@@ -379,7 +343,7 @@
       "signals": {
         "traffic": 0.11,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
+        "trendAlignment": 0.18,
         "reelAmplification": 0,
         "freshness": 0.98,
         "monetization": 0,
@@ -410,25 +374,6 @@
       "wordCount": 1408
     },
     {
-      "wpId": 5296,
-      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "compositeScore": 20,
-      "signals": {
-        "traffic": 0.11,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 0.86,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-04-11T08:44:09",
-      "wordCount": 1669
-    },
-    {
       "wpId": 5063,
       "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
       "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
@@ -448,6 +393,63 @@
       "wordCount": 1498
     },
     {
+      "wpId": 5343,
+      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "compositeScore": 19,
+      "signals": {
+        "traffic": 0.11,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0.16,
+        "reelAmplification": 0,
+        "freshness": 0.86,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-04-12T08:43:46",
+      "wordCount": 1489
+    },
+    {
+      "wpId": 5296,
+      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "compositeScore": 19,
+      "signals": {
+        "traffic": 0.11,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0.16,
+        "reelAmplification": 0,
+        "freshness": 0.85,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-04-11T08:44:09",
+      "wordCount": 1669
+    },
+    {
+      "wpId": 4370,
+      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "compositeScore": 19,
+      "signals": {
+        "traffic": 0.22,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.8,
+        "monetization": 0,
+        "frShare": 0.5,
+        "frPageviews": 1
+      },
+      "flags": [],
+      "date": "2026-03-23T13:17:41",
+      "wordCount": 4126
+    },
+    {
       "wpId": 4105,
       "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
       "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
@@ -455,9 +457,9 @@
       "signals": {
         "traffic": 0.11,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
+        "trendAlignment": 0.18,
         "reelAmplification": 0,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -476,7 +478,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -495,7 +497,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.75,
+        "freshness": 0.74,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -503,6 +505,25 @@
       "flags": [],
       "date": "2026-03-04T19:08:20",
       "wordCount": 1722
+    },
+    {
+      "wpId": 6327,
+      "slug": "meilleur-esim-bali-2026",
+      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
+      "compositeScore": 18,
+      "signals": {
+        "traffic": 0.11,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-05-31T03:17:48",
+      "wordCount": 1265
     },
     {
       "wpId": 6309,
@@ -533,7 +554,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.78,
+        "freshness": 0.77,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -552,7 +573,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.72,
+        "freshness": 0.71,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -600,25 +621,6 @@
       "wordCount": 1592
     },
     {
-      "wpId": 5343,
-      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "compositeScore": 16,
-      "signals": {
-        "traffic": 0.11,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.86,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-04-12T08:43:46",
-      "wordCount": 1489
-    },
-    {
       "wpId": 5270,
       "slug": "esim-japon-combien-ca-te-coute-vraiment",
       "title": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
@@ -647,7 +649,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -666,7 +668,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -685,7 +687,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.77,
+        "freshness": 0.76,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -704,7 +706,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.77,
+        "freshness": 0.76,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -723,7 +725,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.75,
+        "freshness": 0.74,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -753,14 +755,14 @@
     }
   ],
   "summary": {
-    "avgScore": 25,
+    "avgScore": 24,
     "topPerformers": 3,
     "staleArticles": 0,
     "missingWidgets": 0,
     "zeroTraffic": 0,
-    "trending": 0,
+    "trending": 1,
     "frHeavy": 0,
-    "frLight": 1,
+    "frLight": 2,
     "frDiversified": 0
   }
 }

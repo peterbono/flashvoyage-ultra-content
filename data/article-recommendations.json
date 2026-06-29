@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-06-28T04:37:13.471Z",
-    "elapsedSeconds": 6,
+    "generatedAt": "2026-06-29T04:38:18.516Z",
+    "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 8,
     "totalRecommendations": 8,
@@ -64,14 +64,14 @@
         "avgDuration": 563
       },
       "gsc": {
-        "impressions": 17,
+        "impressions": 13,
         "clicks": 0,
-        "position": 28.1,
+        "position": 32.5,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 47.6,
-            "impressions": 7,
+            "position": 47.2,
+            "impressions": 6,
             "ctr": 0
           },
           {
@@ -112,7 +112,7 @@
       "ga4": {
         "pageviews": 4,
         "sessions": 4,
-        "avgDuration": 1
+        "avgDuration": 9
       },
       "gsc": {
         "impressions": 4,
@@ -205,13 +205,13 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 25,
+        "impressions": 24,
         "clicks": 0,
-        "position": 29.8,
+        "position": 31.3,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 32.3,
+            "position": 33.5,
             "impressions": 15,
             "ctr": 0
           },
@@ -346,14 +346,14 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 9,
+        "impressions": 10,
         "clicks": 1,
-        "position": 24.8,
+        "position": 25.9,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 34.4,
-            "impressions": 5,
+            "position": 34.7,
+            "impressions": 6,
             "ctr": 0
           },
           {
@@ -582,14 +582,14 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 48,
+        "impressions": 46,
         "clicks": 0,
-        "position": 27.9,
+        "position": 27.8,
         "topQueries": [
           {
             "query": "esim asie du sud est",
             "position": 28.4,
-            "impressions": 46,
+            "impressions": 44,
             "ctr": 0
           }
         ]
@@ -627,9 +627,9 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 1,
         "clicks": 0,
-        "position": 8.5,
+        "position": 11,
         "topQueries": []
       },
       "reels": {
@@ -739,9 +739,9 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 0,
         "clicks": 0,
-        "position": 7,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
