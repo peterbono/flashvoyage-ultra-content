@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-06-29T07:42:31.553Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-06-29T13:28:37.293Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Thai air crew member arrested at Melbourne airport with heroin worth B11m",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3278315/thai-air-crew-member-arrested-at-melbourne-airport-with-heroin-worth-b11m",
-      "velocityScore": 0.449,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2245,
-      "estimatedTrafficIn24h": 2194,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.1
-      },
-      "detectedAt": "2026-06-29T05:36:00.000Z",
-      "scoredAt": "2026-06-29T07:42:26.698Z"
-    }
-  ]
+  "queue": []
 }
