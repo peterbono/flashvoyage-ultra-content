@@ -1,36 +1,61 @@
 {
-  "generatedAt": "2026-06-30T07:18:17.706Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-06-30T12:41:25.540Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 2
   },
   "queue": [
     {
-      "topic": "Over 100 Venezuelans deported from US missing after quakes level hotel",
+      "topic": "Finnish fugitive wanted through Interpol arrested in Bangkok",
       "source": "rss_breaking",
-      "destination": "asia",
-      "link": "https://www.scmp.com/news/world/americas/article/3358816/over-100-venezuelans-deported-us-hours-earthquakes-are-missing?utm_source=rss_feed",
-      "velocityScore": 0.52,
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/national/finnish-fugitive-arrested-bangkok",
+      "velocityScore": 0.489,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 711,
+      "hoursRemaining": 718,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1734,
-      "estimatedTrafficIn24h": 1695,
+      "estimatedTrafficNow": 2445,
+      "estimatedTrafficIn24h": 2389,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.7,
-        "timeDecay": 0.991,
+        "trendIntensity": 0.98,
+        "timeDecay": 0.998,
         "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 9.3
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.3
       },
-      "detectedAt": "2026-06-29T22:02:53.000Z",
-      "scoredAt": "2026-06-30T07:18:13.478Z"
+      "detectedAt": "2026-06-30T10:25:25.000Z",
+      "scoredAt": "2026-06-30T12:41:18.397Z"
+    },
+    {
+      "topic": "Mother accuses immigration of separating her from her children",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/bangkok/mother-says-her-thai-chinese-children-denied-entry-to-thailand",
+      "velocityScore": 0.448,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2242,
+      "estimatedTrafficIn24h": 2191,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.6
+      },
+      "detectedAt": "2026-06-30T09:04:19.000Z",
+      "scoredAt": "2026-06-30T12:41:19.812Z"
     }
   ]
 }
