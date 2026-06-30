@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-30T00:40:55.909Z",
+  "generatedAt": "2026-06-30T07:18:17.706Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Over 100 Venezuelans deported from the US hours before the earthquakes are missing",
+      "topic": "Over 100 Venezuelans deported from US missing after quakes level hotel",
       "source": "rss_breaking",
       "destination": "asia",
       "link": "https://www.scmp.com/news/world/americas/article/3358816/over-100-venezuelans-deported-us-hours-earthquakes-are-missing?utm_source=rss_feed",
-      "velocityScore": 0.499,
+      "velocityScore": 0.52,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
+      "hoursRemaining": 711,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2494,
-      "estimatedTrafficIn24h": 2437,
+      "estimatedTrafficNow": 1734,
+      "estimatedTrafficIn24h": 1695,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.997,
+        "trendIntensity": 0.7,
+        "timeDecay": 0.991,
         "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.6
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 9.3
       },
       "detectedAt": "2026-06-29T22:02:53.000Z",
-      "scoredAt": "2026-06-30T00:40:48.747Z"
+      "scoredAt": "2026-06-30T07:18:13.478Z"
     }
   ]
 }
