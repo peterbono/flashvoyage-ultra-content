@@ -1,9 +1,41 @@
 {
-  "timestamp": "2026-06-29T04:38:12.712Z",
-  "queueSize": 9,
+  "timestamp": "2026-06-30T04:31:18.366Z",
+  "queueSize": 10,
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 141,
+      "topic": "voyage pas cher",
+      "articleType": "support",
+      "context": {
+        "gapScore": 61,
+        "destination": "vietnam",
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "gessime yassine",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "pratique",
+        "suggestedTitle": "Gessime yassine : Guide Pratique 2026",
+        "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
+        "reason": "Content gap: \"gessime yassine\" (score 40, source: trends)"
+      }
+    },
+    {
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -15,7 +47,7 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -27,7 +59,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -39,7 +71,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -55,7 +87,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -71,7 +103,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -87,23 +119,7 @@
       }
     },
     {
-      "rank": 7,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 15,
-        "freshness": 0.76,
-        "traffic": 0.11,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 8,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -119,7 +135,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -136,11 +152,11 @@
     }
   ],
   "summary": {
-    "write_new": 0,
+    "write_new": 2,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 6
+    "review": 5
   },
   "thresholds": {
     "staleFreshnessThreshold": 0.3,

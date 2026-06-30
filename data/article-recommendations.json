@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-06-29T04:38:18.516Z",
+    "generatedAt": "2026-06-30T04:31:24.048Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 8,
@@ -32,8 +32,8 @@
       "lastModified": "2026-06-11T05:33:20",
       "ga4": {
         "pageviews": 5,
-        "sessions": 4,
-        "avgDuration": 6
+        "sessions": 5,
+        "avgDuration": 5
       },
       "gsc": {
         "impressions": 0,
@@ -64,9 +64,9 @@
         "avgDuration": 563
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 14,
         "clicks": 0,
-        "position": 32.5,
+        "position": 33.1,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
@@ -115,9 +115,9 @@
         "avgDuration": 9
       },
       "gsc": {
-        "impressions": 4,
-        "clicks": 0,
-        "position": 8,
+        "impressions": 6,
+        "clicks": 1,
+        "position": 9.8,
         "topQueries": [
           {
             "query": "kuala lumpur ou singapour",
@@ -183,63 +183,6 @@
           "metric": "Pas de schema FAQ (keyword principal: \"meilleur esim philippines\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"meilleur esim philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4254,
-      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
-      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
-      "url": "https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/",
-      "wordCount": 4825,
-      "widgetCount": 3,
-      "internalLinks": 41,
-      "lastModified": "2026-06-11T05:33:30",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 3
-      },
-      "gsc": {
-        "impressions": 24,
-        "clicks": 0,
-        "position": 31.3,
-        "topQueries": [
-          {
-            "query": "bali ou thailande",
-            "position": 33.5,
-            "impressions": 15,
-            "ctr": 0
-          },
-          {
-            "query": "voyage de noces bali vs thailande",
-            "position": 39.5,
-            "impressions": 4,
-            "ctr": 0
-          },
-          {
-            "query": "thailande ou bali",
-            "position": 58,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"bali ou thailande\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -346,14 +289,14 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 11,
         "clicks": 1,
-        "position": 25.9,
+        "position": 26.7,
         "topQueries": [
           {
             "query": "bali gili lombok",
             "position": 34.7,
-            "impressions": 6,
+            "impressions": 7,
             "ctr": 0
           },
           {
@@ -383,6 +326,57 @@
       "p0Count": 0
     },
     {
+      "wpId": 4254,
+      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
+      "url": "https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/",
+      "wordCount": 4825,
+      "widgetCount": 3,
+      "internalLinks": 41,
+      "lastModified": "2026-06-11T05:33:30",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 5
+      },
+      "gsc": {
+        "impressions": 22,
+        "clicks": 0,
+        "position": 29.6,
+        "topQueries": [
+          {
+            "query": "bali ou thailande",
+            "position": 33.1,
+            "impressions": 14,
+            "ctr": 0
+          },
+          {
+            "query": "voyage de noces bali vs thailande",
+            "position": 38.8,
+            "impressions": 4,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"bali ou thailande\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
@@ -397,9 +391,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 7,
         "clicks": 0,
-        "position": 20.3,
+        "position": 18.3,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -582,14 +576,14 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 46,
+        "impressions": 48,
         "clicks": 0,
-        "position": 27.8,
+        "position": 27.9,
         "topQueries": [
           {
             "query": "esim asie du sud est",
             "position": 28.4,
-            "impressions": 44,
+            "impressions": 46,
             "ctr": 0
           }
         ]

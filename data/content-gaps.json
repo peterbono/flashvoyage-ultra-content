@@ -1,11 +1,56 @@
 {
-  "timestamp": "2026-06-29T04:38:11.131Z",
-  "gapCount": 0,
-  "gaps": [],
+  "timestamp": "2026-06-30T04:31:16.500Z",
+  "gapCount": 2,
+  "gaps": [
+    {
+      "topic": "voyage pas cher",
+      "source": "trends",
+      "gapScore": 61,
+      "signals": {
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "vietnam",
+      "category": "budget",
+      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "gessime yassine",
+      "source": "trends",
+      "gapScore": 40,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.6
+      },
+      "destination": null,
+      "category": "pratique",
+      "suggestedTitle": "Gessime yassine : Guide Pratique 2026",
+      "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
+      "articleType": "support",
+      "priority": "medium"
+    }
+  ],
   "summary": {
-    "byPriority": {},
-    "byCategory": {},
-    "byDestination": {},
-    "topDestinationGaps": []
+    "byPriority": {
+      "high": 1,
+      "medium": 1
+    },
+    "byCategory": {
+      "budget": 1,
+      "pratique": 1
+    },
+    "byDestination": {
+      "vietnam": 1
+    },
+    "topDestinationGaps": [
+      "vietnam"
+    ]
   }
 }
