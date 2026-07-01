@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-06-30T04:31:18.366Z",
-  "queueSize": 10,
+  "timestamp": "2026-07-01T04:38:08.539Z",
+  "queueSize": 9,
   "queue": [
     {
       "rank": 1,
@@ -20,22 +20,6 @@
     },
     {
       "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 120,
-      "topic": "gessime yassine",
-      "articleType": "support",
-      "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "pratique",
-        "suggestedTitle": "Gessime yassine : Guide Pratique 2026",
-        "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
-        "reason": "Content gap: \"gessime yassine\" (score 40, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -47,7 +31,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -59,7 +43,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -71,7 +55,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -81,45 +65,29 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 14,
-        "freshness": 0.71,
-        "traffic": 0.11,
+        "freshness": 0.7,
+        "traffic": 0.13,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     },
     {
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "articleType": "support",
+      "context": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 15,
+        "freshness": 0.76,
+        "traffic": 0.13,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
       "rank": 7,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
-      "articleType": "support",
-      "context": {
-        "wpId": 4125,
-        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
-        "compositeScore": 15,
-        "freshness": 0.78,
-        "traffic": 0.11,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 8,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 4030,
-        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-        "compositeScore": 15,
-        "freshness": 0.78,
-        "traffic": 0.11,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -130,12 +98,12 @@
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 15,
         "freshness": 0.76,
-        "traffic": 0.11,
+        "traffic": 0.13,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     },
     {
-      "rank": 10,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -146,13 +114,29 @@
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 15,
         "freshness": 0.74,
-        "traffic": 0.11,
+        "traffic": 0.13,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 15,
+        "freshness": 0.71,
+        "traffic": 0.13,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     }
   ],
   "summary": {
-    "write_new": 2,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

@@ -1,22 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-06-30T04:31:24.048Z",
+    "generatedAt": "2026-07-01T04:38:14.536Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
-    "articlesWithRecommendations": 8,
-    "totalRecommendations": 8,
+    "articlesWithRecommendations": 9,
+    "totalRecommendations": 9,
     "byPriority": {
       "P0": 0,
       "P1": 0,
-      "P2": 8
+      "P2": 9
     },
     "byType": {
-      "seo": 8
+      "seo": 9
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
-        "count": 8
+        "count": 9
       }
     ]
   },
@@ -36,9 +36,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 2,
         "clicks": 0,
-        "position": 0,
+        "position": 9,
         "topQueries": []
       },
       "reels": {
@@ -64,14 +64,14 @@
         "avgDuration": 563
       },
       "gsc": {
-        "impressions": 14,
+        "impressions": 13,
         "clicks": 0,
-        "position": 33.1,
+        "position": 31.3,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 47.2,
-            "impressions": 6,
+            "position": 45.2,
+            "impressions": 5,
             "ctr": 0
           },
           {
@@ -160,14 +160,14 @@
         "avgDuration": 77
       },
       "gsc": {
-        "impressions": 9,
+        "impressions": 10,
         "clicks": 0,
-        "position": 23.3,
+        "position": 23.2,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
-            "position": 28.9,
-            "impressions": 7,
+            "position": 28,
+            "impressions": 8,
             "ctr": 0
           }
         ]
@@ -191,6 +191,51 @@
       "p0Count": 0
     },
     {
+      "wpId": 4252,
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
+      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
+      "wordCount": 4975,
+      "widgetCount": 3,
+      "internalLinks": 48,
+      "lastModified": "2026-06-11T05:33:35",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 3
+      },
+      "gsc": {
+        "impressions": 7,
+        "clicks": 0,
+        "position": 18.3,
+        "topQueries": [
+          {
+            "query": "assurance voyage vietnam",
+            "position": 85,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 6374,
       "slug": "meilleur-esim-cambodge-2026",
       "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
@@ -205,9 +250,9 @@
         "avgDuration": 12
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 8,
         "clicks": 0,
-        "position": 10.4,
+        "position": 10.5,
         "topQueries": []
       },
       "reels": {
@@ -231,6 +276,34 @@
         "pageviews": 2,
         "sessions": 2,
         "avgDuration": 11
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5333,
+      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout/",
+      "wordCount": 1406,
+      "widgetCount": 0,
+      "internalLinks": 23,
+      "lastModified": "2026-06-11T05:33:10",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 4
       },
       "gsc": {
         "impressions": 0,
@@ -289,14 +362,14 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 11,
+        "impressions": 12,
         "clicks": 1,
-        "position": 26.7,
+        "position": 27.3,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 34.7,
-            "impressions": 7,
+            "position": 34.6,
+            "impressions": 8,
             "ctr": 0
           },
           {
@@ -340,13 +413,13 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 22,
+        "impressions": 24,
         "clicks": 0,
-        "position": 29.6,
+        "position": 29,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 33.1,
+            "position": 33.3,
             "impressions": 14,
             "ctr": 0
           },
@@ -354,6 +427,12 @@
             "query": "voyage de noces bali vs thailande",
             "position": 38.8,
             "impressions": 4,
+            "ctr": 0
+          },
+          {
+            "query": "bali vs thailande",
+            "position": 33,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -369,51 +448,6 @@
           "metric": "Pas de schema FAQ (keyword principal: \"bali ou thailande\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4252,
-      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
-      "wordCount": 4975,
-      "widgetCount": 3,
-      "internalLinks": 48,
-      "lastModified": "2026-06-11T05:33:35",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 5
-      },
-      "gsc": {
-        "impressions": 7,
-        "clicks": 0,
-        "position": 18.3,
-        "topQueries": [
-          {
-            "query": "assurance voyage vietnam",
-            "position": 85,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -576,14 +610,20 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 48,
+        "impressions": 52,
         "clicks": 0,
-        "position": 27.9,
+        "position": 28.9,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 28.4,
-            "impressions": 46,
+            "position": 28.3,
+            "impressions": 49,
+            "ctr": 0
+          },
+          {
+            "query": "esim asie",
+            "position": 87,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -624,34 +664,6 @@
         "impressions": 1,
         "clicks": 0,
         "position": 11,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5333,
-      "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "url": "https://flashvoyage.com/thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout/",
-      "wordCount": 1406,
-      "widgetCount": 0,
-      "internalLinks": 23,
-      "lastModified": "2026-06-11T05:33:10",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 8
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -789,17 +801,34 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 2,
         "clicks": 0,
-        "position": 53,
-        "topQueries": []
+        "position": 51.5,
+        "topQueries": [
+          {
+            "query": "vietnam ou thailande",
+            "position": 50,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [],
-      "recommendationCount": 0,
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"vietnam ou thailande\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"vietnam ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -1125,9 +1154,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 9,
         "clicks": 0,
-        "position": 38,
+        "position": 36,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
