@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-07-01T00:43:07.227Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-07-01T07:30:18.311Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "High-speed link hangs on contract rejig",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3279167/highspeed-link-hangs-on-contract-rejig",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2071,
-      "estimatedTrafficIn24h": 2024,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.9
-      },
-      "detectedAt": "2026-06-30T22:52:00.000Z",
-      "scoredAt": "2026-07-01T00:43:05.839Z"
-    }
-  ]
+  "queue": []
 }
