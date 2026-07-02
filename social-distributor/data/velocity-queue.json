@@ -1,10 +1,61 @@
 {
-  "generatedAt": "2026-07-02T00:40:55.665Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-07-02T08:48:14.537Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 2
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "​Bali Governor Welcomes Clean-Up at Immigration",
+      "source": "rss_breaking",
+      "destination": "indonesia",
+      "link": "https://balidiscovery.com/bali-governor-welcomes-clean-up-at-immigration/",
+      "velocityScore": 0.51,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 720,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 1699,
+      "estimatedTrafficIn24h": 1661,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.68,
+        "timeDecay": 1,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 0.4
+      },
+      "detectedAt": "2026-07-02T08:26:23.000Z",
+      "scoredAt": "2026-07-02T08:48:08.452Z"
+    },
+    {
+      "topic": "Police warn shopping couriers of drug risk, citing past case of heroin in cushions",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/national/police-share-past-case-of-heroin-in-cushions-as-public-warning",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2067,
+      "estimatedTrafficIn24h": 2020,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 4
+      },
+      "detectedAt": "2026-07-02T04:45:17.000Z",
+      "scoredAt": "2026-07-02T08:48:09.902Z"
+    }
+  ]
 }
