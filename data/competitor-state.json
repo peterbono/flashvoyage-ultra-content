@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-07-01T04:38:16.412Z",
+  "timestamp": "2026-07-02T04:29:58.217Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-07-01T04:38:17.194Z",
+      "lastScan": "2026-07-02T04:29:59.160Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-07-01T04:38:17.693Z",
+      "lastScan": "2026-07-02T04:29:59.850Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-07-01T04:39:34.254Z",
-      "urlCount": 9737,
+      "lastScan": "2026-07-02T04:31:12.110Z",
+      "urlCount": 9742,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9878,7 +9878,12 @@
         "https://generationvoyage.fr/dormir-cartagena-de-indias/": "2026-06-30T12:21:13+00:00",
         "https://generationvoyage.fr/etna-enfants/": "2026-06-30T14:22:31+00:00",
         "https://generationvoyage.fr/appartements-alcazar-seville/": "2026-06-30T16:23:39+00:00",
-        "https://generationvoyage.fr/avion-train-bus-deplacer-france/": "2026-06-29T18:24:55+00:00"
+        "https://generationvoyage.fr/avion-train-bus-deplacer-france/": "2026-06-29T18:24:55+00:00",
+        "https://generationvoyage.fr/visiter-cancale-faire-voir/": "2026-07-01T07:50:13+00:00",
+        "https://generationvoyage.fr/vacances-noel-2026/": "2026-07-01T09:51:10+00:00",
+        "https://generationvoyage.fr/randonnees-mongolie/": "2026-07-01T11:53:09+00:00",
+        "https://generationvoyage.fr/remote-france/": "2026-07-01T13:54:51+00:00",
+        "https://generationvoyage.fr/evenements-stellaires-2026/": "2026-07-01T15:57:03+00:00"
       }
     }
   }

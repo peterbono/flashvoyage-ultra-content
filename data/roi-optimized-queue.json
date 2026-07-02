@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-01T04:38:15.464Z",
+  "timestamp": "2026-07-02T04:29:57.204Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -25,31 +25,6 @@
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 61,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 3.52,
-        "projectedMonthlyTraffic": 132,
-        "projectedMonthlyRevenue": 0.264,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (130 PV) × gap boost (1.02)"
-      },
-      "cumulativeCost": 0.075,
-      "withinBudget": true
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -66,11 +41,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (130 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.15,
+      "cumulativeCost": 0.075,
       "withinBudget": true
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -87,11 +62,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (130 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.15,
       "withinBudget": true
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -108,11 +83,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (130 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -133,21 +108,21 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "wpId": 4030,
+        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 15,
-        "freshness": 0.76,
+        "freshness": 0.77,
         "traffic": 0.13,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       },
@@ -158,11 +133,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -172,7 +147,7 @@
         "wpId": 3198,
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 15,
-        "freshness": 0.76,
+        "freshness": 0.75,
         "traffic": 0.13,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       },
@@ -183,11 +158,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -197,7 +172,7 @@
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 15,
-        "freshness": 0.74,
+        "freshness": 0.73,
         "traffic": 0.13,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       },
@@ -208,48 +183,23 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
-      "articleType": "support",
-      "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-        "compositeScore": 15,
-        "freshness": 0.71,
-        "traffic": 0.13,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.3,
+    "totalCost": 0.225,
     "dailyBudget": 2,
-    "itemsWithinBudget": 9,
+    "itemsWithinBudget": 7,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.035,
+    "expectedDailyRevenue": 0.026,
     "expectedDailyRoi": 0.12
   },
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 5
+    "review": 4
   }
 }
