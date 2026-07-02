@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-07-02T13:47:34.765Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-07-02T19:16:51.170Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "​Bali Governor Welcomes Clean-Up at Immigration",
-      "source": "rss_breaking",
-      "destination": "indonesia",
-      "link": "https://balidiscovery.com/bali-governor-welcomes-clean-up-at-immigration/",
-      "velocityScore": 0.507,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1691,
-      "estimatedTrafficIn24h": 1653,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.68,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 5.4
-      },
-      "detectedAt": "2026-07-02T08:26:23.000Z",
-      "scoredAt": "2026-07-02T13:47:26.618Z"
-    }
-  ]
+  "queue": []
 }
