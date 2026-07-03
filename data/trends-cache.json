@@ -1,27 +1,13 @@
 {
-  "timestamp": "2026-07-02T04:29:44.576Z",
+  "timestamp": "2026-07-03T06:36:47.620Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande circuit",
-      "traffic": 100,
-      "trafficFormatted": "+100 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-02T04:29:36.066Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage thailande pas cher",
+      "query": "prix voyage thailande",
       "traffic": 60,
       "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-02T04:29:36.066Z",
+      "date": "2026-07-03T06:36:38.584Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -30,26 +16,12 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage thailande prix",
-      "traffic": 50,
-      "trafficFormatted": "+50 %",
+      "query": "leclerc voyage thailande",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-02T04:29:36.066Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage thailande phuket",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-02T04:29:36.066Z",
+      "date": "2026-07-03T06:36:38.584Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -58,12 +30,54 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage cambodge vietnam",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
+      "query": "voyage thailande phuket",
+      "traffic": 90,
+      "trafficFormatted": "+90 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-02T04:29:42.431Z",
+      "date": "2026-07-03T06:36:38.584Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage vietnam cambodge",
+      "traffic": 160,
+      "trafficFormatted": "+160 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-03T06:36:41.075Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "agence voyage vietnam",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-03T06:36:41.075Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge vietnam",
+      "traffic": 150,
+      "trafficFormatted": "+150 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-03T06:36:45.433Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -72,33 +86,148 @@
       "compositeScore": 0.53
     },
     {
-      "query": "aéroport",
+      "query": "voyage laos vietnam",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-03T06:36:47.619Z",
+      "source": "related-rising",
+      "parentDestination": "laos",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "laos",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "laos",
+      "traffic": 120,
+      "trafficFormatted": "+120 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-03T06:36:41.075Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "autoroute a9",
+      "traffic": 500,
+      "trafficFormatted": "500+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "Incendies dans le Gard: une dizaine de pompiers légèrement blessés à cause des fumées",
+          "url": "https://www.bfmtv.com/replay-emissions/bfm-premiere/video-incendies-dans-le-gard-une-dizaine-de-pompiers-legerement-blesses-a-cause-des-fumees_VN-202607030221.html",
+          "source": "BFM"
+        },
+        {
+          "title": "Incendies à Roquemaure et Béziers, A9 coupée : retour sur un jeudi 2 juillet sous tension",
+          "url": "https://radio.vinci-autoroutes.com/article/incendies-a-roquemaure-et-beziers-a9-coupee-retour-sur-un-jeudi-2-juillet-sous-tension-18675",
+          "source": "Radio VINCI Autoroutes"
+        },
+        {
+          "title": "Incendie : parti de l'aire d'autoroute A9 de Roquemaure Nord, le feu menace tout un lotissement dans le Gard",
+          "url": "https://www.laprovence.com/article/faits-divers-justice/3055240443513614/incendie-parti-de-laire-dautoroute-a9-de-roquemaure-nord-le-feu-menace-tout-un-lotissement-dans-le-gard",
+          "source": "La Provence"
+        }
+      ],
+      "date": "Thu, 2 Jul 2026 23:00:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "itineraire",
+      "destination": null,
+      "compositeScore": 0.2904
+    },
+    {
+      "query": "circuit de silverstone",
+      "traffic": 500,
+      "trafficFormatted": "500+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "« Je pense que ça va être assez triste, pour les pilotes comme pour les spectateurs » : pourquoi le mythique circuit de Silverstone ne fait plus rêver",
+          "url": "https://www.lequipe.fr/Formule-1/Article/-je-pense-que-ca-va-etre-assez-triste-pour-les-pilotes-comme-pour-les-spectateurs-a-l-image-de-ce-que-declare-fernando-alonso-le-circuit-de-silverstone-ne-fait-plus-rever/1700674",
+          "source": "L'Équipe"
+        },
+        {
+          "title": "Formule 1 : à quelle heure et sur quelle chaîne voir le Grand Prix de Grande-Bretagne ?",
+          "url": "https://www.europe1.fr/sport/formule-1-a-quelle-heure-et-sur-quelle-chaine-voir-le-grand-prix-de-grande-bretagne-965115",
+          "source": "Europe 1"
+        },
+        {
+          "title": "GP de Grande-Bretagne de F1 : Frédéric Vasseur espère que Ferrari a trouvé des réponses après l’échec autrichien",
+          "url": "https://www.turbo.fr/actualite-automobile/gp-de-grande-bretagne-de-f1-frederic-vasseur-espere-que-ferrari-trouve-des-reponses-apres-lechec-autrichien-202901",
+          "source": "Turbo.fr"
+        }
+      ],
+      "date": "Thu, 2 Jul 2026 22:50:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "itineraire",
+      "destination": null,
+      "compositeScore": 0.2904
+    },
+    {
+      "query": "volkswagen",
       "traffic": 200,
       "trafficFormatted": "200+",
       "relatedQueries": [],
       "articles": [
         {
-          "title": "L'expresso : Une amende salée et le retour de Batman",
-          "url": "https://www.tf1.fr/lci/bonjour-la-matinale-tf1/videos/lexpresso-une-amende-salee-et-le-retour-de-batman-47369457.html",
-          "source": "TF1+"
+          "title": "Volkswagen braces for boardroom showdown over historic cost-cutting plan",
+          "url": "https://www.cnbc.com/2026/07/02/volkswagen-vw-job-cuts-germany-autos.html",
+          "source": "CNBC"
         },
         {
-          "title": "Une voiture est restée garée à l'aéroport pendant six ans : voici le montant des frais de stationnement",
-          "url": "https://www.linternaute.com/bricolage/id/10820221-voiture-aeroport/",
-          "source": "Linternaute.com"
+          "title": "The faltering engine of Germany’s auto industry",
+          "url": "https://www.ft.com/content/f97cb278-be62-41b0-9d14-c8acb2d77f5f?syn-25a6b1a6=1",
+          "source": "Financial Times"
         },
         {
-          "title": "Il laisse sa voiture au parking de l’aéroport pendant 6 ans et doit désormais une somme colossale",
-          "url": "https://www.cnews.fr/monde/2026-07-01/il-laisse-sa-voiture-au-parking-de-laeroport-depuis-6-ans-et-doit-desormais-une",
-          "source": "CNews"
+          "title": "Volkswagen's crisis in five charts",
+          "url": "https://www.reuters.com/business/autos-transportation/volkswagens-crisis-five-charts-2026-06-30/",
+          "source": "Reuters"
         }
       ],
-      "date": "Wed, 1 Jul 2026 20:50:00 -0700",
+      "date": "Thu, 2 Jul 2026 23:00:00 -0700",
       "source": "rss",
       "relevanceScore": 0.3,
       "category": "transport",
       "destination": null,
       "compositeScore": 0.29016
+    },
+    {
+      "query": "argentine cap vert pronostic",
+      "traffic": 100,
+      "trafficFormatted": "100+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "Entre l'Argentine et le Cap-Vert, un choc entre deux mondes en seizièmes de finale de la Coupe du monde",
+          "url": "https://www.lequipe.fr/Football/Actualites/Entre-l-argentine-et-le-cap-vert-un-choc-entre-deux-mondes-en-seiziemes-de-finale-de-la-coupe-du-monde/1700742",
+          "source": "L'Équipe"
+        },
+        {
+          "title": "Coupe du monde 2026: Pico, le joueur cap-verdien qui a conquis le cœur des Irlandais",
+          "url": "https://www.rfi.fr/fr/sports/20260703-coupe-du-monde-2026-pico-le-joueur-cap-verdien-qui-a-conquis-le-c%C5%93ur-des-irlandais",
+          "source": "RFI"
+        },
+        {
+          "title": "L’équipe du Cap-Vert, le petit Poucet du football qu’on n’avait pas vu venir",
+          "url": "https://fr.news.yahoo.com/l-%C3%A9quipe-cap-vert-petit-030029431.html",
+          "source": "Yahoo Actualités"
+        }
+      ],
+      "date": "Thu, 2 Jul 2026 23:10:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "budget",
+      "destination": null,
+      "compositeScore": 0.29008
     }
   ]
 }

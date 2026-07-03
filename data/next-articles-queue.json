@@ -1,9 +1,57 @@
 {
-  "timestamp": "2026-07-02T04:29:48.596Z",
-  "queueSize": 7,
+  "timestamp": "2026-07-03T06:36:52.255Z",
+  "queueSize": 11,
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 131,
+      "topic": "laos",
+      "articleType": "support",
+      "context": {
+        "gapScore": 51,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"laos\" (score 51, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 125,
+      "topic": "argentine cap vert pronostic",
+      "articleType": "support",
+      "context": {
+        "gapScore": 45,
+        "destination": null,
+        "category": "budget",
+        "suggestedTitle": "Argentine cap vert pronostic : Le Guide Budget Complet",
+        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+        "reason": "Content gap: \"argentine cap vert pronostic\" (score 45, source: trends)"
+      }
+    },
+    {
+      "rank": 3,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "circuit de silverstone",
+      "articleType": "pillar",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "itineraire",
+        "suggestedTitle": "Circuit de silverstone : L'Itineraire Ideal",
+        "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
+        "reason": "Content gap: \"circuit de silverstone\" (score 40, source: trends)"
+      }
+    },
+    {
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -15,7 +63,7 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -27,7 +75,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 6,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -39,7 +87,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -55,7 +103,23 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "articleType": "support",
+      "context": {
+        "wpId": 4125,
+        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
+        "compositeScore": 15,
+        "freshness": 0.77,
+        "traffic": 0.13,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -71,7 +135,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -87,7 +151,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -104,11 +168,11 @@
     }
   ],
   "summary": {
-    "write_new": 0,
+    "write_new": 3,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 4
+    "review": 5
   },
   "thresholds": {
     "staleFreshnessThreshold": 0.3,

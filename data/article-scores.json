@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-02T04:29:30.335Z",
+  "timestamp": "2026-07-03T06:36:32.425Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -37,11 +37,11 @@
       "wpId": 4487,
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "compositeScore": 55,
+      "compositeScore": 51,
       "signals": {
         "traffic": 0.63,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.62,
+        "trendAlignment": 0.41,
         "reelAmplification": 0.1,
         "freshness": 0.81,
         "monetization": 1,
@@ -49,7 +49,6 @@
         "frPageviews": 1
       },
       "flags": [
-        "trending",
         "1_reels",
         "top_performer",
         "fr_light"
@@ -130,7 +129,7 @@
         "sessionQuality": 0.02,
         "trendAlignment": 0.21,
         "reelAmplification": 0.36,
-        "freshness": 0.83,
+        "freshness": 0.82,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -142,14 +141,35 @@
       "wordCount": 1296
     },
     {
+      "wpId": 4370,
+      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "compositeScore": 31,
+      "signals": {
+        "traffic": 0.63,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.79,
+        "monetization": 0,
+        "frShare": 0.8,
+        "frPageviews": 4
+      },
+      "flags": [
+        "top_performer"
+      ],
+      "date": "2026-03-23T13:17:41",
+      "wordCount": 4126
+    },
+    {
       "wpId": 4371,
       "slug": "philippines-10-jours-itineraire-plages-budget-2026",
       "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "compositeScore": 33,
+      "compositeScore": 30,
       "signals": {
         "traffic": 0.25,
         "sessionQuality": 0.05,
-        "trendAlignment": 0.16,
+        "trendAlignment": 0,
         "reelAmplification": 0,
         "freshness": 0.79,
         "monetization": 1,
@@ -324,7 +344,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.41,
         "reelAmplification": 0.03,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -345,7 +365,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -353,25 +373,6 @@
       "flags": [],
       "date": "2026-04-12T05:34:09",
       "wordCount": 1408
-    },
-    {
-      "wpId": 5742,
-      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "compositeScore": 23,
-      "signals": {
-        "traffic": 0.13,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.29,
-        "reelAmplification": 0,
-        "freshness": 0.86,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-04-17T05:37:11",
-      "wordCount": 1592
     },
     {
       "wpId": 6323,
@@ -393,44 +394,6 @@
       "wordCount": 1370
     },
     {
-      "wpId": 5343,
-      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "compositeScore": 20,
-      "signals": {
-        "traffic": 0.13,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.16,
-        "reelAmplification": 0,
-        "freshness": 0.85,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-04-12T08:43:46",
-      "wordCount": 1489
-    },
-    {
-      "wpId": 5296,
-      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "compositeScore": 20,
-      "signals": {
-        "traffic": 0.13,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.16,
-        "reelAmplification": 0,
-        "freshness": 0.85,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-04-11T08:44:09",
-      "wordCount": 1669
-    },
-    {
       "wpId": 5063,
       "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
       "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
@@ -440,7 +403,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.83,
+        "freshness": 0.82,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -486,25 +449,6 @@
       "flags": [],
       "date": "2026-05-31T03:17:48",
       "wordCount": 1265
-    },
-    {
-      "wpId": 4370,
-      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "compositeScore": 19,
-      "signals": {
-        "traffic": 0.25,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.79,
-        "monetization": 0,
-        "frShare": 0.5,
-        "frPageviews": 1
-      },
-      "flags": [],
-      "date": "2026-03-23T13:17:41",
-      "wordCount": 4126
     },
     {
       "wpId": 4105,
@@ -592,7 +536,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.71,
+        "freshness": 0.7,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -621,9 +565,9 @@
       "wordCount": 1245
     },
     {
-      "wpId": 5678,
-      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "wpId": 5742,
+      "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
       "compositeScore": 17,
       "signals": {
         "traffic": 0.13,
@@ -636,8 +580,65 @@
         "frPageviews": 0
       },
       "flags": [],
+      "date": "2026-04-17T05:37:11",
+      "wordCount": 1592
+    },
+    {
+      "wpId": 5678,
+      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "compositeScore": 17,
+      "signals": {
+        "traffic": 0.13,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.85,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
       "date": "2026-04-15T09:17:09",
       "wordCount": 1659
+    },
+    {
+      "wpId": 5343,
+      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "compositeScore": 17,
+      "signals": {
+        "traffic": 0.13,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.85,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-04-12T08:43:46",
+      "wordCount": 1489
+    },
+    {
+      "wpId": 5296,
+      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "compositeScore": 16,
+      "signals": {
+        "traffic": 0.13,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.84,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-04-11T08:44:09",
+      "wordCount": 1669
     },
     {
       "wpId": 5270,
@@ -662,13 +663,13 @@
       "wpId": 4125,
       "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
       "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
-      "compositeScore": 16,
+      "compositeScore": 15,
       "signals": {
         "traffic": 0.13,
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.78,
+        "freshness": 0.77,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -756,11 +757,11 @@
   ],
   "summary": {
     "avgScore": 25,
-    "topPerformers": 3,
+    "topPerformers": 4,
     "staleArticles": 0,
     "missingWidgets": 0,
     "zeroTraffic": 0,
-    "trending": 1,
+    "trending": 0,
     "frHeavy": 0,
     "frLight": 2,
     "frDiversified": 0
