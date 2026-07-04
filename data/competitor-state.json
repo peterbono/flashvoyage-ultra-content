@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-07-03T06:37:00.360Z",
+  "timestamp": "2026-07-04T06:25:04.102Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-07-03T06:37:01.114Z",
+      "lastScan": "2026-07-04T06:25:04.971Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-07-03T06:37:01.645Z",
+      "lastScan": "2026-07-04T06:25:05.505Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-07-03T06:38:51.379Z",
-      "urlCount": 6748,
+      "lastScan": "2026-07-04T06:27:25.491Z",
+      "urlCount": 6754,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -6628,7 +6628,6 @@
         "https://generationvoyage.fr/visiter-boston-faire-voir/": "2026-06-23T12:36:46+00:00",
         "https://generationvoyage.fr/visiter-bruxelles-faire-voir/": "2026-06-23T12:36:53+00:00",
         "https://generationvoyage.fr/visiter-pyrenees-faire-voir/": "2026-06-23T12:36:56+00:00",
-        "https://generationvoyage.fr/visiter-new-york-faire-voir/": "2026-06-23T12:37:02+00:00",
         "https://generationvoyage.fr/visiter-bangkok-faire-voir/": "2026-06-23T12:37:04+00:00",
         "https://generationvoyage.fr/visiter-paros-faire-voir/": "2026-06-23T12:37:08+00:00",
         "https://generationvoyage.fr/visiter-alicante-faire-voir/": "2026-06-23T12:37:11+00:00",
@@ -6889,7 +6888,14 @@
         "https://generationvoyage.fr/visiter-raiatea-faire-voir/": "2026-07-02T09:48:01+00:00",
         "https://generationvoyage.fr/restaurants-atomium/": "2026-07-02T11:49:13+00:00",
         "https://generationvoyage.fr/visiter-la-bresse-faire-voir/": "2026-07-02T13:50:45+00:00",
-        "https://generationvoyage.fr/experiences-europe/": "2026-07-02T15:53:06+00:00"
+        "https://generationvoyage.fr/experiences-europe/": "2026-07-02T15:53:06+00:00",
+        "https://generationvoyage.fr/visiter-mozambique-faire-voir/": "2026-07-03T07:54:54+00:00",
+        "https://generationvoyage.fr/vacances-hiver-2027/": "2026-07-03T09:58:20+00:00",
+        "https://generationvoyage.fr/visiter-abidjan-faire-voir/": "2026-07-03T11:59:55+00:00",
+        "https://generationvoyage.fr/anne-frank-enfants/": "2026-07-03T14:01:32+00:00",
+        "https://generationvoyage.fr/visiter-moorea-faire-voir/": "2026-07-03T16:02:38+00:00",
+        "https://generationvoyage.fr/visiter-new-york-faire-voir/": "2026-07-03T11:31:20+00:00",
+        "https://generationvoyage.fr/compagnie-cancun-france-2026/": "2026-07-03T11:45:05+00:00"
       }
     }
   }

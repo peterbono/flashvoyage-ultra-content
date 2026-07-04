@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-07-03T06:36:52.255Z",
-  "queueSize": 11,
+  "timestamp": "2026-07-04T06:24:56.176Z",
+  "queueSize": 9,
   "queue": [
     {
       "rank": 1,
@@ -20,38 +20,6 @@
     },
     {
       "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 125,
-      "topic": "argentine cap vert pronostic",
-      "articleType": "support",
-      "context": {
-        "gapScore": 45,
-        "destination": null,
-        "category": "budget",
-        "suggestedTitle": "Argentine cap vert pronostic : Le Guide Budget Complet",
-        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
-        "reason": "Content gap: \"argentine cap vert pronostic\" (score 45, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 120,
-      "topic": "circuit de silverstone",
-      "articleType": "pillar",
-      "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "itineraire",
-        "suggestedTitle": "Circuit de silverstone : L'Itineraire Ideal",
-        "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
-        "reason": "Content gap: \"circuit de silverstone\" (score 40, source: trends)"
-      }
-    },
-    {
-      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -63,7 +31,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -75,7 +43,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -87,7 +55,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -97,13 +65,13 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 14,
-        "freshness": 0.7,
+        "freshness": 0.69,
         "traffic": 0.13,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     },
     {
-      "rank": 8,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -119,7 +87,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -135,7 +103,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -151,7 +119,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -168,7 +136,7 @@
     }
   ],
   "summary": {
-    "write_new": 3,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

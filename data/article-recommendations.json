@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-07-03T06:36:58.979Z",
-    "elapsedSeconds": 6,
+    "generatedAt": "2026-07-04T06:25:02.442Z",
+    "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 10,
     "totalRecommendations": 10,
@@ -101,57 +101,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4370,
-      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "url": "https://flashvoyage.com/bali-lombok-gili-10-jours-itineraire-budget-2026/",
-      "wordCount": 4124,
-      "widgetCount": 0,
-      "internalLinks": 47,
-      "lastModified": "2026-06-11T05:33:27",
-      "ga4": {
-        "pageviews": 5,
-        "sessions": 3,
-        "avgDuration": 2
-      },
-      "gsc": {
-        "impressions": 15,
-        "clicks": 1,
-        "position": 26.7,
-        "topQueries": [
-          {
-            "query": "bali gili lombok",
-            "position": 34.5,
-            "impressions": 10,
-            "ctr": 0
-          },
-          {
-            "query": "bali lombok gili",
-            "position": 29,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"bali gili lombok\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali gili lombok\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
       "wpId": 5072,
       "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
@@ -166,9 +115,9 @@
         "avgDuration": 9
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 10,
         "clicks": 1,
-        "position": 9.4,
+        "position": 8.7,
         "topQueries": [
           {
             "query": "kuala lumpur ou singapour",
@@ -234,6 +183,57 @@
           "metric": "Pas de schema FAQ (keyword principal: \"meilleur esim philippines\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"meilleur esim philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4370,
+      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "url": "https://flashvoyage.com/bali-lombok-gili-10-jours-itineraire-budget-2026/",
+      "wordCount": 4124,
+      "widgetCount": 0,
+      "internalLinks": 47,
+      "lastModified": "2026-06-11T05:33:27",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 95
+      },
+      "gsc": {
+        "impressions": 16,
+        "clicks": 1,
+        "position": 27.2,
+        "topQueries": [
+          {
+            "query": "bali gili lombok",
+            "position": 34.5,
+            "impressions": 11,
+            "ctr": 0
+          },
+          {
+            "query": "bali lombok gili",
+            "position": 29,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"bali gili lombok\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali gili lombok\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -413,20 +413,20 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 24,
+        "impressions": 23,
         "clicks": 0,
-        "position": 28.9,
+        "position": 29.9,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 33.5,
-            "impressions": 13,
+            "position": 33.7,
+            "impressions": 12,
             "ctr": 0
           },
           {
             "query": "voyage de noces bali vs thailande",
-            "position": 40,
-            "impressions": 3,
+            "position": 38.3,
+            "impressions": 4,
             "ctr": 0
           },
           {

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-03T06:36:32.425Z",
+  "timestamp": "2026-07-04T06:24:36.490Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -20,7 +20,7 @@
         "sessionQuality": 1,
         "trendAlignment": 0,
         "reelAmplification": 0.34,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 1,
         "frShare": 0.2,
         "frPageviews": 1
@@ -60,13 +60,13 @@
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "compositeScore": 46,
+      "compositeScore": 47,
       "signals": {
         "traffic": 0.38,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.35,
+        "trendAlignment": 0.41,
         "reelAmplification": 0.38,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -87,7 +87,7 @@
         "sessionQuality": 0.23,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 0,
         "frShare": 0.5,
         "frPageviews": 4
@@ -108,7 +108,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.41,
         "reelAmplification": 0,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -141,27 +141,6 @@
       "wordCount": 1296
     },
     {
-      "wpId": 4370,
-      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "compositeScore": 31,
-      "signals": {
-        "traffic": 0.63,
-        "sessionQuality": 0,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.79,
-        "monetization": 0,
-        "frShare": 0.8,
-        "frPageviews": 4
-      },
-      "flags": [
-        "top_performer"
-      ],
-      "date": "2026-03-23T13:17:41",
-      "wordCount": 4126
-    },
-    {
       "wpId": 4371,
       "slug": "philippines-10-jours-itineraire-plages-budget-2026",
       "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
@@ -171,7 +150,7 @@
         "sessionQuality": 0.05,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 1,
         "frShare": 0.5,
         "frPageviews": 1
@@ -190,7 +169,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -209,7 +188,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -222,13 +201,13 @@
       "wpId": 4250,
       "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
       "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
-      "compositeScore": 29,
+      "compositeScore": 30,
       "signals": {
         "traffic": 0.13,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.18,
+        "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -260,13 +239,13 @@
       "wpId": 5119,
       "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
-      "compositeScore": 28,
+      "compositeScore": 27,
       "signals": {
         "traffic": 0.13,
         "sessionQuality": 0.01,
         "trendAlignment": 0.41,
         "reelAmplification": 0.2,
-        "freshness": 0.83,
+        "freshness": 0.82,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -306,7 +285,7 @@
         "sessionQuality": 0.02,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -356,6 +335,25 @@
       "wordCount": 1599
     },
     {
+      "wpId": 4370,
+      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "compositeScore": 25,
+      "signals": {
+        "traffic": 0.38,
+        "sessionQuality": 0.17,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.78,
+        "monetization": 0,
+        "frShare": 0.67,
+        "frPageviews": 2
+      },
+      "flags": [],
+      "date": "2026-03-23T13:17:41",
+      "wordCount": 4126
+    },
+    {
       "wpId": 5333,
       "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
@@ -378,11 +376,11 @@
       "wpId": 6323,
       "slug": "meilleur-esim-vietnam-2026",
       "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
-      "compositeScore": 22,
+      "compositeScore": 23,
       "signals": {
         "traffic": 0.13,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.18,
+        "trendAlignment": 0.21,
         "reelAmplification": 0,
         "freshness": 0.97,
         "monetization": 0,
@@ -411,6 +409,25 @@
       "flags": [],
       "date": "2026-04-05T05:24:53",
       "wordCount": 1498
+    },
+    {
+      "wpId": 4105,
+      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "compositeScore": 20,
+      "signals": {
+        "traffic": 0.13,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 0.77,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-18T13:26:31",
+      "wordCount": 2461
     },
     {
       "wpId": 4071,
@@ -449,25 +466,6 @@
       "flags": [],
       "date": "2026-05-31T03:17:48",
       "wordCount": 1265
-    },
-    {
-      "wpId": 4105,
-      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "compositeScore": 19,
-      "signals": {
-        "traffic": 0.13,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.18,
-        "reelAmplification": 0,
-        "freshness": 0.77,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-18T13:26:31",
-      "wordCount": 2461
     },
     {
       "wpId": 3425,
@@ -606,13 +604,13 @@
       "wpId": 5343,
       "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
       "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "compositeScore": 17,
+      "compositeScore": 16,
       "signals": {
         "traffic": 0.13,
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.85,
+        "freshness": 0.84,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -745,7 +743,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.7,
+        "freshness": 0.69,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -757,7 +755,7 @@
   ],
   "summary": {
     "avgScore": 25,
-    "topPerformers": 4,
+    "topPerformers": 3,
     "staleArticles": 0,
     "missingWidgets": 0,
     "zeroTraffic": 0,
