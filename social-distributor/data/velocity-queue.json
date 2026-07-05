@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-04T19:02:15.555Z",
+  "generatedAt": "2026-07-05T02:35:12.956Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 1,
-    "queue_normal": 0
+    "queue_priority": 0,
+    "queue_normal": 1
   },
   "queue": [
     {
@@ -12,25 +12,25 @@
       "source": "rss_breaking",
       "destination": "vietnam",
       "link": "https://e.vnexpress.net/news/news/environment/storm-maysak-tears-off-roofs-topples-trees-as-it-hits-vietnam-s-northern-border-5093557.html",
-      "velocityScore": 0.62,
-      "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 716,
+      "velocityScore": 0.408,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 708,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2067,
-      "estimatedTrafficIn24h": 2020,
-      "trafficLossPerHour": 2,
+      "estimatedTrafficNow": 1360,
+      "estimatedTrafficIn24h": 1329,
+      "trafficLossPerHour": 1,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.996,
+        "trendIntensity": 0.55,
+        "timeDecay": 0.989,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 4
+        "hoursSinceDetection": 11.6
       },
       "detectedAt": "2026-07-04T15:01:29.000Z",
-      "scoredAt": "2026-07-04T19:02:14.022Z"
+      "scoredAt": "2026-07-05T02:35:10.875Z"
     }
   ]
 }
