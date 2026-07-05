@@ -1,37 +1,33 @@
 {
-  "timestamp": "2026-07-04T06:24:54.458Z",
+  "timestamp": "2026-07-05T06:45:40.065Z",
   "gapCount": 1,
   "gaps": [
     {
-      "topic": "laos",
+      "topic": "moissonneuse",
       "source": "trends",
-      "gapScore": 51,
+      "gapScore": 35,
       "signals": {
-        "searchVolume": 0.47,
-        "trendGrowth": 0.47,
-        "monetization": 0.9,
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
         "competition": 0.8
       },
-      "destination": "vietnam",
-      "category": "destination",
-      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "destination": null,
+      "category": "itineraire",
+      "suggestedTitle": "Moissonneuse : L'Itineraire Ideal",
+      "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
       "articleType": "support",
-      "priority": "high"
+      "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
-      "high": 1
+      "medium": 1
     },
     "byCategory": {
-      "destination": 1
+      "itineraire": 1
     },
-    "byDestination": {
-      "vietnam": 1
-    },
-    "topDestinationGaps": [
-      "vietnam"
-    ]
+    "byDestination": {},
+    "topDestinationGaps": []
   }
 }

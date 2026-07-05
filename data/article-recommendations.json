@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-07-04T06:25:02.442Z",
+    "generatedAt": "2026-07-05T06:45:47.752Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 10,
@@ -64,14 +64,14 @@
         "avgDuration": 563
       },
       "gsc": {
-        "impressions": 11,
+        "impressions": 10,
         "clicks": 0,
-        "position": 31,
+        "position": 28.8,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 43,
-            "impressions": 4,
+            "position": 39.7,
+            "impressions": 3,
             "ctr": 0
           },
           {
@@ -93,6 +93,51 @@
           "metric": "Pas de schema FAQ (keyword principal: \"15 jours au japon budget\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"15 jours au japon budget\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4372,
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
+      "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
+      "wordCount": 5505,
+      "widgetCount": 0,
+      "internalLinks": 56,
+      "lastModified": "2026-06-11T05:33:24",
+      "ga4": {
+        "pageviews": 5,
+        "sessions": 4,
+        "avgDuration": 195
+      },
+      "gsc": {
+        "impressions": 19,
+        "clicks": 0,
+        "position": 12.6,
+        "topQueries": [
+          {
+            "query": "globe sim karte philippinen",
+            "position": 51,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"globe sim karte philippinen\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"globe sim karte philippinen\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -160,9 +205,9 @@
         "avgDuration": 77
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 13,
         "clicks": 0,
-        "position": 23.2,
+        "position": 24.2,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
@@ -205,9 +250,9 @@
         "avgDuration": 95
       },
       "gsc": {
-        "impressions": 16,
-        "clicks": 1,
-        "position": 27.2,
+        "impressions": 17,
+        "clicks": 2,
+        "position": 25.6,
         "topQueries": [
           {
             "query": "bali gili lombok",
@@ -413,14 +458,14 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 23,
+        "impressions": 24,
         "clicks": 0,
-        "position": 29.9,
+        "position": 30.1,
         "topQueries": [
           {
             "query": "bali ou thailande",
             "position": 33.7,
-            "impressions": 12,
+            "impressions": 13,
             "ctr": 0
           },
           {
@@ -610,14 +655,14 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 51,
+        "impressions": 53,
         "clicks": 0,
         "position": 28.3,
         "topQueries": [
           {
             "query": "esim asie du sud est",
             "position": 28.1,
-            "impressions": 45,
+            "impressions": 47,
             "ctr": 0
           },
           {
@@ -1014,9 +1059,9 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 5,
         "clicks": 0,
-        "position": 4,
+        "position": 7.6,
         "topQueries": []
       },
       "reels": {
@@ -1244,51 +1289,6 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4372,
-      "slug": "esim-philippines-globe-smart-comparatif-2026",
-      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
-      "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
-      "wordCount": 5505,
-      "widgetCount": 0,
-      "internalLinks": 56,
-      "lastModified": "2026-06-11T05:33:24",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 1,
-        "avgDuration": 117
-      },
-      "gsc": {
-        "impressions": 19,
-        "clicks": 0,
-        "position": 12.6,
-        "topQueries": [
-          {
-            "query": "globe sim karte philippinen",
-            "position": 51,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"globe sim karte philippinen\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"globe sim karte philippinen\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
       "p0Count": 0
     }
   ]
