@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-05T02:35:12.956Z",
+  "generatedAt": "2026-07-05T08:45:59.691Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Storm Maysak tears off roofs, topples trees as it hits Vietnam's northern border",
+      "topic": "Bali Immigration Deports 342 Foreigners in Semester I of 2026.",
       "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/environment/storm-maysak-tears-off-roofs-topples-trees-as-it-hits-vietnam-s-northern-border-5093557.html",
-      "velocityScore": 0.408,
+      "destination": "indonesia",
+      "link": "https://balidiscovery.com/bali-immigration-deports-342-foreigners-in-semester-i-of-2026/",
+      "velocityScore": 0.509,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 708,
+      "hoursRemaining": 718,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1360,
-      "estimatedTrafficIn24h": 1329,
-      "trafficLossPerHour": 1,
+      "estimatedTrafficNow": 1697,
+      "estimatedTrafficIn24h": 1658,
+      "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.55,
-        "timeDecay": 0.989,
+        "trendIntensity": 0.68,
+        "timeDecay": 0.998,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 11.6
+        "hoursSinceDetection": 2
       },
-      "detectedAt": "2026-07-04T15:01:29.000Z",
-      "scoredAt": "2026-07-05T02:35:10.875Z"
+      "detectedAt": "2026-07-05T06:43:04.000Z",
+      "scoredAt": "2026-07-05T08:45:53.431Z"
     }
   ]
 }
