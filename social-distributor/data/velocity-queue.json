@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-07-05T08:45:59.691Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-07-05T13:20:30.546Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Bali Immigration Deports 342 Foreigners in Semester I of 2026.",
-      "source": "rss_breaking",
-      "destination": "indonesia",
-      "link": "https://balidiscovery.com/bali-immigration-deports-342-foreigners-in-semester-i-of-2026/",
-      "velocityScore": 0.509,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1697,
-      "estimatedTrafficIn24h": 1658,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.68,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 2
-      },
-      "detectedAt": "2026-07-05T06:43:04.000Z",
-      "scoredAt": "2026-07-05T08:45:53.431Z"
-    }
-  ]
+  "queue": []
 }
