@@ -1,27 +1,83 @@
 {
-  "timestamp": "2026-07-05T06:45:36.625Z",
+  "timestamp": "2026-07-06T07:17:50.440Z",
   "trendingTopics": [
     {
-      "query": "voyage bali prix",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
+      "query": "prix voyage thailande",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-05T06:45:25.419Z",
+      "date": "2026-07-06T07:17:40.322Z",
       "source": "related-rising",
-      "parentDestination": "bali",
+      "parentDestination": "thailande",
       "relevanceScore": 1,
       "category": "budget",
-      "destination": "bali",
+      "destination": "thailande",
       "compositeScore": 0.62
     },
     {
-      "query": "leclerc voyage thailande",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
+      "query": "voyage vietnam pas cher",
+      "traffic": 350,
+      "trafficFormatted": "+350 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-05T06:45:27.659Z",
+      "date": "2026-07-06T07:17:42.566Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage vietnam circuit",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-06T07:17:42.566Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "itineraire",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "prix voyage vietnam",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-06T07:17:42.566Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "leclerc voyage bali",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-06T07:17:38.068Z",
+      "source": "related-rising",
+      "parentDestination": "bali",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "bali",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "forum voyage thailande",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-06T07:17:40.322Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -30,61 +86,18 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage cambodge vietnam",
+      "query": "voyage vietnam cambodge",
       "traffic": 250,
       "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-05T06:45:34.384Z",
+      "date": "2026-07-06T07:17:42.566Z",
       "source": "related-rising",
-      "parentDestination": "cambodge",
+      "parentDestination": "vietnam",
       "relevanceScore": 0.7,
       "category": "destination",
-      "destination": "cambodge",
+      "destination": "vietnam",
       "compositeScore": 0.53
-    },
-    {
-      "query": "voyage cambodge laos",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-05T06:45:34.384Z",
-      "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "moissonneuse",
-      "traffic": 500,
-      "trafficFormatted": "500+",
-      "relatedQueries": [],
-      "articles": [
-        {
-          "title": "La moissonneuse-batteuse touche une ligne à 20 000 volts : 3 hectares brûlés près de Mont-Saint-Martin",
-          "url": "https://www.lunion.fr/id815862/article/2026-07-04/la-moissonneuse-batteuse-touche-une-ligne-20-000-volts-3-hectares-brules-pres-de",
-          "source": "L'Union"
-        },
-        {
-          "title": "Incendie à Warmeriville (51) : le feu est éteint",
-          "url": "https://feuxdeforet.fr/marne-51/warmeriville-04-07-2026-1330/",
-          "source": "Feux de Forêt"
-        },
-        {
-          "title": "Plusieurs incendies dans des champs près de Reims",
-          "url": "https://www.lunion.fr/id815861/article/2026-07-04/plusieurs-incendies-dans-des-champs-pres-de-reims",
-          "source": "L'Union"
-        }
-      ],
-      "date": "Sat, 4 Jul 2026 22:50:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "itineraire",
-      "destination": null,
-      "compositeScore": 0.2904
     }
   ]
 }

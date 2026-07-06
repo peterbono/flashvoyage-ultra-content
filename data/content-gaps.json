@@ -1,32 +1,10 @@
 {
-  "timestamp": "2026-07-05T06:45:40.065Z",
-  "gapCount": 1,
-  "gaps": [
-    {
-      "topic": "moissonneuse",
-      "source": "trends",
-      "gapScore": 35,
-      "signals": {
-        "searchVolume": 0.29,
-        "trendGrowth": 0.29,
-        "monetization": 0.6,
-        "competition": 0.8
-      },
-      "destination": null,
-      "category": "itineraire",
-      "suggestedTitle": "Moissonneuse : L'Itineraire Ideal",
-      "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
-      "articleType": "support",
-      "priority": "medium"
-    }
-  ],
+  "timestamp": "2026-07-06T07:17:55.029Z",
+  "gapCount": 0,
+  "gaps": [],
   "summary": {
-    "byPriority": {
-      "medium": 1
-    },
-    "byCategory": {
-      "itineraire": 1
-    },
+    "byPriority": {},
+    "byCategory": {},
     "byDestination": {},
     "topDestinationGaps": []
   }

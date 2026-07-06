@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-07-05T06:45:47.752Z",
+    "generatedAt": "2026-07-06T07:18:02.090Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 10,
@@ -115,9 +115,9 @@
         "avgDuration": 195
       },
       "gsc": {
-        "impressions": 19,
+        "impressions": 18,
         "clicks": 0,
-        "position": 12.6,
+        "position": 12.9,
         "topQueries": [
           {
             "query": "globe sim karte philippinen",
@@ -160,9 +160,9 @@
         "avgDuration": 9
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 12,
         "clicks": 1,
-        "position": 8.7,
+        "position": 8.4,
         "topQueries": [
           {
             "query": "kuala lumpur ou singapour",
@@ -458,14 +458,14 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 24,
+        "impressions": 30,
         "clicks": 0,
-        "position": 30.1,
+        "position": 24.3,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 33.7,
-            "impressions": 13,
+            "position": 33.9,
+            "impressions": 12,
             "ctr": 0
           },
           {
@@ -655,14 +655,14 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 53,
+        "impressions": 49,
         "clicks": 0,
         "position": 28.3,
         "topQueries": [
           {
             "query": "esim asie du sud est",
             "position": 28.1,
-            "impressions": 47,
+            "impressions": 44,
             "ctr": 0
           },
           {
@@ -1199,9 +1199,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 9,
+        "impressions": 8,
         "clicks": 0,
-        "position": 36,
+        "position": 37.9,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",

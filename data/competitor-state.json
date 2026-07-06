@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-07-05T06:45:49.262Z",
+  "timestamp": "2026-07-06T07:18:03.601Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-07-05T06:45:50.152Z",
+      "lastScan": "2026-07-06T07:18:04.515Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-07-05T06:45:50.754Z",
+      "lastScan": "2026-07-06T07:18:05.099Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-07-05T06:47:05.897Z",
-      "urlCount": 9758,
+      "lastScan": "2026-07-06T07:19:24.263Z",
+      "urlCount": 9763,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9899,7 +9899,12 @@
         "https://generationvoyage.fr/visiter-nord-vietnam-faire-voir/": "2026-07-04T10:00:03+00:00",
         "https://generationvoyage.fr/lignes-bus-2026/": "2026-07-04T12:37:06+00:00",
         "https://generationvoyage.fr/restaurants-france/": "2026-07-04T14:38:23+00:00",
-        "https://generationvoyage.fr/visiter-munster-faire-voir/": "2026-07-04T16:39:30+00:00"
+        "https://generationvoyage.fr/visiter-munster-faire-voir/": "2026-07-04T16:39:30+00:00",
+        "https://generationvoyage.fr/iles-vent-europe/": "2026-07-05T07:41:06+00:00",
+        "https://generationvoyage.fr/visiter-houston-faire-voir/": "2026-07-05T09:43:46+00:00",
+        "https://generationvoyage.fr/parkings-plages-montpellier/": "2026-07-05T11:45:30+00:00",
+        "https://generationvoyage.fr/outlets-europe/": "2026-07-05T14:46:35+00:00",
+        "https://generationvoyage.fr/cliches-crete/": "2026-07-05T16:47:35+00:00"
       }
     }
   }
