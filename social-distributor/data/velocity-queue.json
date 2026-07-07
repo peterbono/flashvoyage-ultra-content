@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-07T09:32:20.947Z",
+  "generatedAt": "2026-07-07T14:18:37.508Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -12,25 +12,25 @@
       "source": "rss_breaking",
       "destination": "vietnam",
       "link": "https://e.vnexpress.net/news/news/crime/34-filipinos-chinese-and-malaysian-lured-to-work-for-online-scam-ring-in-vietnam-5094562.html",
-      "velocityScore": 0.562,
+      "velocityScore": 0.559,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
+      "hoursRemaining": 714,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1873,
-      "estimatedTrafficIn24h": 1830,
+      "estimatedTrafficNow": 1865,
+      "estimatedTrafficIn24h": 1822,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.75,
-        "timeDecay": 0.999,
+        "timeDecay": 0.994,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 1
+        "hoursSinceDetection": 5.8
       },
       "detectedAt": "2026-07-07T08:32:05.000Z",
-      "scoredAt": "2026-07-07T09:32:08.205Z"
+      "scoredAt": "2026-07-07T14:18:30.438Z"
     }
   ]
 }
