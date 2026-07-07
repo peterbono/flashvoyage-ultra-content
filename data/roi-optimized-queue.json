@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-06T07:18:02.837Z",
+  "timestamp": "2026-07-07T06:51:43.720Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -25,6 +25,31 @@
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 141,
+      "topic": "voyage pas cher",
+      "articleType": "support",
+      "context": {
+        "gapScore": 61,
+        "destination": "vietnam",
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 5.41,
+        "projectedMonthlyTraffic": 203,
+        "projectedMonthlyRevenue": 0.406,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (200 PV) × gap boost (1.02)"
+      },
+      "cumulativeCost": 0.075,
+      "withinBudget": true
+    },
+    {
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -41,11 +66,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (200 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.075,
+      "cumulativeCost": 0.15,
       "withinBudget": true
     },
     {
-      "rank": 2,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -62,11 +87,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (200 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.15,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -83,20 +108,20 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (200 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.225,
+    "totalCost": 0.3,
     "dailyBudget": 2,
-    "itemsWithinBudget": 3,
+    "itemsWithinBudget": 4,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.04,
+    "expectedDailyRevenue": 0.054,
     "expectedDailyRoi": 0.18
   },
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

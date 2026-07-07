@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-07-06T07:18:02.090Z",
+    "generatedAt": "2026-07-07T06:51:42.778Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 10,
@@ -21,34 +21,6 @@
     ]
   },
   "articles": [
-    {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2503,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:20",
-      "ga4": {
-        "pageviews": 5,
-        "sessions": 5,
-        "avgDuration": 5
-      },
-      "gsc": {
-        "impressions": 2,
-        "clicks": 0,
-        "position": 9,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
     {
       "wpId": 4373,
       "slug": "japon-couple-15-jours-budget-tout-compris-2026",
@@ -160,14 +132,20 @@
         "avgDuration": 9
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 13,
         "clicks": 1,
-        "position": 8.4,
+        "position": 8.5,
         "topQueries": [
           {
             "query": "kuala lumpur ou singapour",
             "position": 10.5,
             "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "singapour ou kuala lumpur",
+            "position": 9,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -188,6 +166,34 @@
         }
       ],
       "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2503,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:20",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 4,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 2,
+        "clicks": 0,
+        "position": 9,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -460,18 +466,18 @@
       "gsc": {
         "impressions": 30,
         "clicks": 0,
-        "position": 24.3,
+        "position": 23.5,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 33.9,
-            "impressions": 12,
+            "position": 33.8,
+            "impressions": 13,
             "ctr": 0
           },
           {
             "query": "voyage de noces bali vs thailande",
-            "position": 38.3,
-            "impressions": 4,
+            "position": 32.7,
+            "impressions": 3,
             "ctr": 0
           },
           {
@@ -655,13 +661,13 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 49,
+        "impressions": 50,
         "clicks": 0,
-        "position": 28.3,
+        "position": 27.8,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 28.1,
+            "position": 28,
             "impressions": 44,
             "ctr": 0
           },
