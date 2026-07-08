@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-07T06:51:35.864Z",
+  "timestamp": "2026-07-08T05:57:00.828Z",
   "articleMap": {
     "japon-couple-15-jours-budget-tout-compris-2026": {
       "wpId": 4373,
@@ -100,6 +100,18 @@
       "category": "destination",
       "igReferralTraffic": null
     },
+    "esim-philippines-globe-smart-comparatif-2026": {
+      "wpId": 4372,
+      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
       "wpId": 5072,
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
@@ -115,18 +127,6 @@
           "matchSource": "tiktok-fuzzy-title"
         }
       ],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "esim-philippines-globe-smart-comparatif-2026": {
-      "wpId": 4372,
-      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
-      "reels": [],
       "suggestedFormats": [
         "pick",
         "poll",
@@ -168,33 +168,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "meilleur-esim-cambodge-2026": {
-      "wpId": 6374,
-      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "destination",
-      "igReferralTraffic": null
-    },
     "philippines-10-jours-itineraire-plages-budget-2026": {
       "wpId": 4371,
       "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "visa-cambodge-francais-2026-evisa-prix-pieges": {
-      "wpId": 4369,
-      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -228,30 +204,6 @@
       "category": "destination",
       "igReferralTraffic": null
     },
-    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
-      "wpId": 5333,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "esim-thailande-comparatif-ais-dtac-true-2026": {
-      "wpId": 4253,
-      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage": {
       "wpId": 5119,
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
@@ -275,9 +227,9 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "bali-lombok-gili-10-jours-itineraire-budget-2026": {
-      "wpId": 4370,
-      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+    "visa-cambodge-francais-2026-evisa-prix-pieges": {
+      "wpId": 4369,
+      "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -287,9 +239,21 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "meilleur-esim-vietnam-2026": {
-      "wpId": 6323,
-      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
+    "esim-thailande-comparatif-ais-dtac-true-2026": {
+      "wpId": 4253,
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "meilleur-esim-cambodge-2026": {
+      "wpId": 6374,
+      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -309,6 +273,18 @@
         "avantapres"
       ],
       "category": "destination",
+      "igReferralTraffic": null
+    },
+    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
+      "wpId": 5333,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
       "igReferralTraffic": null
     },
     "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
@@ -346,21 +322,33 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
-      "wpId": 4105,
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+    "bali-lombok-gili-10-jours-itineraire-budget-2026": {
+      "wpId": 4370,
+      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "meilleur-esim-vietnam-2026": {
+      "wpId": 6323,
+      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
       "reels": [],
       "suggestedFormats": [
         "pick",
         "month",
         "avantapres"
       ],
-      "category": "itineraire",
+      "category": "destination",
       "igReferralTraffic": null
     },
-    "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis": {
-      "wpId": 3425,
-      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
+      "wpId": 4105,
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -418,6 +406,30 @@
       "category": "budget",
       "igReferralTraffic": null
     },
+    "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis": {
+      "wpId": 3425,
+      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
+      "wpId": 3090,
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
     "meilleur-esim-bali-2026": {
       "wpId": 6327,
       "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
@@ -440,18 +452,6 @@
         "poll"
       ],
       "category": "budget",
-      "igReferralTraffic": null
-    },
-    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
-      "wpId": 3090,
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
       "igReferralTraffic": null
     },
     "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte": {

@@ -1,21 +1,21 @@
 {
-  "timestamp": "2026-07-07T06:51:36.821Z",
-  "queueSize": 4,
+  "timestamp": "2026-07-08T05:57:01.770Z",
+  "queueSize": 5,
   "queue": [
     {
       "rank": 1,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
+      "priorityScore": 131,
+      "topic": "laos",
       "articleType": "support",
       "context": {
-        "gapScore": 61,
+        "gapScore": 51,
         "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"laos\" (score 51, source: trends)"
       }
     },
     {
@@ -53,6 +53,22 @@
         "cyclePosition": 1,
         "reason": "Standard editorial calendar rotation (position 2/5)"
       }
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 15,
+        "freshness": 0.68,
+        "traffic": 0.17,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
     }
   ],
   "summary": {
@@ -60,7 +76,7 @@
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 0
+    "review": 1
   },
   "thresholds": {
     "staleFreshnessThreshold": 0.3,

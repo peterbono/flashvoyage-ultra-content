@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-07T06:51:43.720Z",
+  "timestamp": "2026-07-08T05:57:08.475Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,39 +17,14 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 200,
-    "medianTrafficSignal": "0.200",
+    "medianMonthlyPV": 170,
+    "medianTrafficSignal": "0.170",
     "avgRpm": 2,
     "articlesAnalyzed": 38
   },
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 61,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 5.41,
-        "projectedMonthlyTraffic": 203,
-        "projectedMonthlyRevenue": 0.406,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (200 PV) × gap boost (1.02)"
-      },
-      "cumulativeCost": 0.075,
-      "withinBudget": true
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -60,17 +35,17 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 5.33,
-        "projectedMonthlyTraffic": 200,
-        "projectedMonthlyRevenue": 0.4,
+        "expectedRoi": 4.53,
+        "projectedMonthlyTraffic": 170,
+        "projectedMonthlyRevenue": 0.34,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (200 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.15,
+      "cumulativeCost": 0.075,
       "withinBudget": true
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -81,17 +56,17 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 5.33,
-        "projectedMonthlyTraffic": 200,
-        "projectedMonthlyRevenue": 0.4,
+        "expectedRoi": 4.53,
+        "projectedMonthlyTraffic": 170,
+        "projectedMonthlyRevenue": 0.34,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (200 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.15,
       "withinBudget": true
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -102,11 +77,61 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 5.33,
-        "projectedMonthlyTraffic": 200,
-        "projectedMonthlyRevenue": 0.4,
+        "expectedRoi": 4.53,
+        "projectedMonthlyTraffic": 170,
+        "projectedMonthlyRevenue": 0.34,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (200 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 4,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 131,
+      "topic": "laos",
+      "articleType": "support",
+      "context": {
+        "gapScore": 51,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"laos\" (score 51, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 3.87,
+        "projectedMonthlyTraffic": 145,
+        "projectedMonthlyRevenue": 0.29,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (170 PV) × gap boost (0.85)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 15,
+        "freshness": 0.68,
+        "traffic": 0.17,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
       },
       "cumulativeCost": 0.3,
       "withinBudget": true
@@ -115,16 +140,16 @@
   "budgetAllocation": {
     "totalCost": 0.3,
     "dailyBudget": 2,
-    "itemsWithinBudget": 4,
+    "itemsWithinBudget": 5,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.054,
-    "expectedDailyRoi": 0.18
+    "expectedDailyRevenue": 0.044,
+    "expectedDailyRoi": 0.15
   },
   "summary": {
     "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 0
+    "review": 1
   }
 }
