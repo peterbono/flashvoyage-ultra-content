@@ -1,27 +1,13 @@
 {
-  "timestamp": "2026-07-08T05:56:57.342Z",
+  "timestamp": "2026-07-09T06:49:51.909Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande pas cher",
-      "traffic": 130,
-      "trafficFormatted": "+130 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-08T05:56:48.684Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "prix voyage thailande",
+      "query": "voyage thailande prix",
       "traffic": 110,
       "trafficFormatted": "+110 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-08T05:56:48.684Z",
+      "date": "2026-07-09T06:49:42.316Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -30,116 +16,47 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage thailande circuit",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
+      "query": "voyage cambodge laos",
+      "traffic": 140,
+      "trafficFormatted": "+140 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-08T05:56:48.684Z",
+      "date": "2026-07-09T06:49:49.822Z",
       "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "thailande",
-      "compositeScore": 0.62
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
     },
     {
-      "query": "leclerc voyage thailande",
+      "query": "prix carburant",
       "traffic": 100,
-      "trafficFormatted": "+100 %",
+      "trafficFormatted": "100+",
       "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-08T05:56:48.684Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage thailande phuket",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-08T05:56:48.684Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage vietnam cambodge",
-      "traffic": 600,
-      "trafficFormatted": "+600 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-08T05:56:50.873Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage vietnam",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-08T05:56:55.231Z",
-      "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage cambodge vietnam",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-08T05:56:55.231Z",
-      "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage laos cambodge",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-08T05:56:57.340Z",
-      "source": "related-rising",
-      "parentDestination": "laos",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "laos",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "laos",
-      "traffic": 130,
-      "trafficFormatted": "+130 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-08T05:56:50.873Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.5,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.47000000000000003
+      "articles": [
+        {
+          "title": "La question du jour. L’augmentation du prix de l’essence peut-elle contrarier vos projets de vacances ?",
+          "url": "https://www.ouest-france.fr/economie/transports/penurie-de-carburant/la-question-du-jour-laugmentation-du-prix-de-lessence-peut-elle-contrarier-vos-projets-de-vacances-1a821390-7acf-11f1-b6b9-5740d58e7caf",
+          "source": "Ouest-France"
+        },
+        {
+          "title": "La question du jour : Péages, essence... faites baisser la facture",
+          "url": "https://www.tf1.fr/lci/bonjour-la-matinale-tf1/videos/la-question-du-jour-peages-essence-faites-baisser-la-facture-27174046.html",
+          "source": "TF1+"
+        },
+        {
+          "title": "REPORTAGE. Entre vacances au rabais et factures impayées, dans l'Oise, la flambée des carburants pèse encore sur les ménages et les entreprises",
+          "url": "https://www.franceinfo.fr/replay-radio/le-choix-franceinfo/reportage-entre-vacances-au-rabais-et-factures-impayees-dans-l-oise-la-flambee-des-carburants-pese-encore-sur-les-menages-et-les-entreprises_8061605.html",
+          "source": "franceinfo"
+        }
+      ],
+      "date": "Wed, 8 Jul 2026 23:20:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "budget",
+      "destination": null,
+      "compositeScore": 0.29008
     }
   ]
 }

@@ -1,21 +1,21 @@
 {
-  "timestamp": "2026-07-08T05:57:01.770Z",
+  "timestamp": "2026-07-09T06:49:56.820Z",
   "queueSize": 5,
   "queue": [
     {
       "rank": 1,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 131,
-      "topic": "laos",
+      "priorityScore": 120,
+      "topic": "prix carburant",
       "articleType": "support",
       "context": {
-        "gapScore": 51,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"laos\" (score 51, source: trends)"
+        "gapScore": 40,
+        "destination": null,
+        "category": "budget",
+        "suggestedTitle": "Prix carburant : Le Guide Budget Complet",
+        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+        "reason": "Content gap: \"prix carburant\" (score 40, source: trends)"
       }
     },
     {
