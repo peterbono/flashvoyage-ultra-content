@@ -1,61 +1,10 @@
 {
-  "generatedAt": "2026-07-09T09:29:00.696Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-07-09T14:45:18.855Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Taiwan-bound Typhoon Bavi could disrupt air travel",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3283459/taiwanbound-typhoon-bavi-could-disrupt-air-travel",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2070,
-      "estimatedTrafficIn24h": 2023,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.6
-      },
-      "detectedAt": "2026-07-09T06:55:00.000Z",
-      "scoredAt": "2026-07-09T09:28:47.218Z"
-    },
-    {
-      "topic": "Super Typhoon Bavi, roughly the width of France, disrupts 18 SIA and Scoot flights",
-      "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/environment/super-typhoon-bavi-roughly-the-width-of-france-disrupts-18-sia-and-scoot-flights-5095388.html",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2068,
-      "estimatedTrafficIn24h": 2021,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3.6
-      },
-      "detectedAt": "2026-07-09T05:53:23.000Z",
-      "scoredAt": "2026-07-09T09:28:48.006Z"
-    }
-  ]
+  "queue": []
 }
