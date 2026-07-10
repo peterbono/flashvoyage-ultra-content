@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-07-09T19:36:42.527Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-07-10T02:29:25.002Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Japan’s south-western islands on high alert as powerful Typhoon Bavi approaches",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/east-asia/japans-southwestern-islands-on-high-alert-as-powerful-typhoon-bavi-approaches",
+      "velocityScore": 0.415,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 719,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2073,
+      "estimatedTrafficIn24h": 2026,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1
+      },
+      "detectedAt": "2026-07-10T01:27:42.000Z",
+      "scoredAt": "2026-07-10T02:29:20.247Z"
+    }
+  ]
 }
