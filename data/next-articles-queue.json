@@ -1,25 +1,89 @@
 {
-  "timestamp": "2026-07-09T06:49:56.820Z",
-  "queueSize": 5,
+  "timestamp": "2026-07-10T06:50:57.055Z",
+  "queueSize": 10,
   "queue": [
     {
       "rank": 1,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 120,
-      "topic": "prix carburant",
-      "articleType": "support",
+      "priorityScore": 154,
+      "topic": "voyage vietnam circuit",
+      "articleType": "pillar",
       "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "budget",
-        "suggestedTitle": "Prix carburant : Le Guide Budget Complet",
-        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
-        "reason": "Content gap: \"prix carburant\" (score 40, source: trends)"
+        "gapScore": 74,
+        "destination": "vietnam",
+        "category": "itineraire",
+        "suggestedTitle": "Itineraire Vietnam : Le Circuit Parfait de 2 Semaines",
+        "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Vietnam — format pick",
+        "reason": "Content gap: \"voyage vietnam circuit\" (score 74, source: trends)"
       }
     },
     {
       "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 154,
+      "topic": "voyage vietnam pas cher",
+      "articleType": "support",
+      "context": {
+        "gapScore": 74,
+        "destination": "vietnam",
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage vietnam pas cher\" (score 74, source: trends)"
+      }
+    },
+    {
+      "rank": 3,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 147,
+      "topic": "voyage cambodge vietnam",
+      "articleType": "support",
+      "context": {
+        "gapScore": 67,
+        "destination": "cambodge",
+        "category": "destination",
+        "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
+        "reason": "Content gap: \"voyage cambodge vietnam\" (score 67, source: trends)"
+      }
+    },
+    {
+      "rank": 4,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 139,
+      "topic": "voyage laos cambodge",
+      "articleType": "support",
+      "context": {
+        "gapScore": 59,
+        "destination": "laos",
+        "category": "destination",
+        "suggestedTitle": "Laos 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Laos — format pick ou month",
+        "reason": "Content gap: \"voyage laos cambodge\" (score 59, source: trends)"
+      }
+    },
+    {
+      "rank": 5,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "route du rhum",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "itineraire",
+        "suggestedTitle": "Route du rhum : L'Itineraire Ideal",
+        "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
+        "reason": "Content gap: \"route du rhum\" (score 40, source: trends)"
+      }
+    },
+    {
+      "rank": 6,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +95,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 7,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +107,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 8,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -55,7 +119,23 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 15,
+        "freshness": 0.68,
+        "traffic": 0.17,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
@@ -65,18 +145,18 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 15,
-        "freshness": 0.68,
+        "freshness": 0.67,
         "traffic": 0.17,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 5,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 1
+    "review": 2
   },
   "thresholds": {
     "staleFreshnessThreshold": 0.3,

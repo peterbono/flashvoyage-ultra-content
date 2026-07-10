@@ -1,9 +1,77 @@
 {
-  "timestamp": "2026-07-09T06:49:54.933Z",
-  "gapCount": 1,
+  "timestamp": "2026-07-10T06:50:55.155Z",
+  "gapCount": 5,
   "gaps": [
     {
-      "topic": "prix carburant",
+      "topic": "voyage vietnam circuit",
+      "source": "trends",
+      "gapScore": 74,
+      "signals": {
+        "searchVolume": 0.62,
+        "trendGrowth": 0.62,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "vietnam",
+      "category": "itineraire",
+      "suggestedTitle": "Itineraire Vietnam : Le Circuit Parfait de 2 Semaines",
+      "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Vietnam — format pick",
+      "articleType": "pillar",
+      "priority": "critical"
+    },
+    {
+      "topic": "voyage vietnam pas cher",
+      "source": "trends",
+      "gapScore": 74,
+      "signals": {
+        "searchVolume": 0.62,
+        "trendGrowth": 0.62,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "vietnam",
+      "category": "budget",
+      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "critical"
+    },
+    {
+      "topic": "voyage cambodge vietnam",
+      "source": "trends",
+      "gapScore": 67,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "cambodge",
+      "category": "destination",
+      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "voyage laos cambodge",
+      "source": "trends",
+      "gapScore": 59,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.6,
+        "competition": 0.4
+      },
+      "destination": "laos",
+      "category": "destination",
+      "suggestedTitle": "Laos 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Laos — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "route du rhum",
       "source": "trends",
       "gapScore": 40,
       "signals": {
@@ -13,21 +81,33 @@
         "competition": 0.6
       },
       "destination": null,
-      "category": "budget",
-      "suggestedTitle": "Prix carburant : Le Guide Budget Complet",
-      "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+      "category": "itineraire",
+      "suggestedTitle": "Route du rhum : L'Itineraire Ideal",
+      "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
       "articleType": "support",
       "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
+      "critical": 2,
+      "high": 2,
       "medium": 1
     },
     "byCategory": {
-      "budget": 1
+      "itineraire": 2,
+      "budget": 1,
+      "destination": 2
     },
-    "byDestination": {},
-    "topDestinationGaps": []
+    "byDestination": {
+      "vietnam": 2,
+      "cambodge": 1,
+      "laos": 1
+    },
+    "topDestinationGaps": [
+      "vietnam",
+      "cambodge",
+      "laos"
+    ]
   }
 }

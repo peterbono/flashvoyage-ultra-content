@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-09T06:50:03.114Z",
+  "timestamp": "2026-07-10T06:51:03.308Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -25,6 +25,81 @@
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 154,
+      "topic": "voyage vietnam circuit",
+      "articleType": "pillar",
+      "context": {
+        "gapScore": 74,
+        "destination": "vietnam",
+        "category": "itineraire",
+        "suggestedTitle": "Itineraire Vietnam : Le Circuit Parfait de 2 Semaines",
+        "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Vietnam — format pick",
+        "reason": "Content gap: \"voyage vietnam circuit\" (score 74, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 5.6,
+        "projectedMonthlyTraffic": 210,
+        "projectedMonthlyRevenue": 0.42,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (170 PV) × gap boost (1.23)"
+      },
+      "cumulativeCost": 0.075,
+      "withinBudget": true
+    },
+    {
+      "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 154,
+      "topic": "voyage vietnam pas cher",
+      "articleType": "support",
+      "context": {
+        "gapScore": 74,
+        "destination": "vietnam",
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage vietnam pas cher\" (score 74, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 5.6,
+        "projectedMonthlyTraffic": 210,
+        "projectedMonthlyRevenue": 0.42,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (170 PV) × gap boost (1.23)"
+      },
+      "cumulativeCost": 0.15,
+      "withinBudget": true
+    },
+    {
+      "rank": 3,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 147,
+      "topic": "voyage cambodge vietnam",
+      "articleType": "support",
+      "context": {
+        "gapScore": 67,
+        "destination": "cambodge",
+        "category": "destination",
+        "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
+        "reason": "Content gap: \"voyage cambodge vietnam\" (score 67, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 5.07,
+        "projectedMonthlyTraffic": 190,
+        "projectedMonthlyRevenue": 0.38,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (170 PV) × gap boost (1.12)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -41,11 +116,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.075,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 2,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -62,11 +137,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.15,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 3,
+      "rank": 6,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -83,23 +158,48 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.45,
       "withinBudget": true
     },
     {
-      "rank": 4,
+      "rank": 7,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 139,
+      "topic": "voyage laos cambodge",
+      "articleType": "support",
+      "context": {
+        "gapScore": 59,
+        "destination": "laos",
+        "category": "destination",
+        "suggestedTitle": "Laos 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Laos — format pick ou month",
+        "reason": "Content gap: \"voyage laos cambodge\" (score 59, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 4.45,
+        "projectedMonthlyTraffic": 167,
+        "projectedMonthlyRevenue": 0.334,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (170 PV) × gap boost (0.98)"
+      },
+      "cumulativeCost": 0.525,
+      "withinBudget": true
+    },
+    {
+      "rank": 8,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 120,
-      "topic": "prix carburant",
+      "topic": "route du rhum",
       "articleType": "support",
       "context": {
         "gapScore": 40,
         "destination": null,
-        "category": "budget",
-        "suggestedTitle": "Prix carburant : Le Guide Budget Complet",
-        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
-        "reason": "Content gap: \"prix carburant\" (score 40, source: trends)"
+        "category": "itineraire",
+        "suggestedTitle": "Route du rhum : L'Itineraire Ideal",
+        "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
+        "reason": "Content gap: \"route du rhum\" (score 40, source: trends)"
       },
       "roi": {
         "expectedRoi": 3.01,
@@ -108,19 +208,19 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (170 PV) × gap boost (0.67)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.6,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
       "articleType": "support",
       "context": {
-        "wpId": 2924,
-        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 15,
         "freshness": 0.68,
         "traffic": 0.17,
@@ -133,23 +233,48 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.6,
+      "withinBudget": true
+    },
+    {
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 15,
+        "freshness": 0.67,
+        "traffic": 0.17,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.6,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.3,
+    "totalCost": 0.6,
     "dailyBudget": 2,
-    "itemsWithinBudget": 5,
+    "itemsWithinBudget": 10,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.042,
-    "expectedDailyRoi": 0.14
+    "expectedDailyRevenue": 0.093,
+    "expectedDailyRoi": 0.16
   },
   "summary": {
-    "write_new": 1,
+    "write_new": 5,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 1
+    "review": 2
   }
 }

@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-07-09T06:50:02.173Z",
+    "generatedAt": "2026-07-10T06:51:02.337Z",
     "elapsedSeconds": 4,
     "totalArticles": 38,
     "articlesWithRecommendations": 10,
@@ -126,9 +126,9 @@
         "avgDuration": 9
       },
       "gsc": {
-        "impressions": 14,
+        "impressions": 15,
         "clicks": 1,
-        "position": 8.6,
+        "position": 8.7,
         "topQueries": [
           {
             "query": "kuala lumpur ou singapour",
@@ -250,9 +250,9 @@
         "avgDuration": 95
       },
       "gsc": {
-        "impressions": 17,
+        "impressions": 18,
         "clicks": 2,
-        "position": 25.6,
+        "position": 24.7,
         "topQueries": [
           {
             "query": "bali gili lombok",
@@ -430,9 +430,9 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 2,
         "clicks": 0,
-        "position": 50,
+        "position": 48.5,
         "topQueries": [
           {
             "query": "vietnam ou thailande",
@@ -503,20 +503,20 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 28,
+        "impressions": 29,
         "clicks": 0,
-        "position": 23.6,
+        "position": 23.8,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 33.7,
+            "position": 33.6,
             "impressions": 12,
             "ctr": 0
           },
           {
             "query": "voyage de noces bali vs thailande",
-            "position": 32.7,
-            "impressions": 3,
+            "position": 31.5,
+            "impressions": 4,
             "ctr": 0
           },
           {
@@ -700,14 +700,14 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 50,
+        "impressions": 51,
         "clicks": 0,
         "position": 27.7,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 27.9,
-            "impressions": 44,
+            "position": 27.8,
+            "impressions": 45,
             "ctr": 0
           },
           {
@@ -779,9 +779,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 0,
         "clicks": 0,
-        "position": 28,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -1199,14 +1199,14 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 6,
         "clicks": 0,
-        "position": 37.9,
+        "position": 39.7,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
-            "position": 30.3,
-            "impressions": 3,
+            "position": 26,
+            "impressions": 1,
             "ctr": 0
           },
           {
