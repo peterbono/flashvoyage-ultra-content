@@ -1,61 +1,36 @@
 {
-  "generatedAt": "2026-07-10T09:26:00.960Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-07-10T14:10:02.452Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 1
   },
   "queue": [
     {
-      "topic": "Thai Airways cancels flights between Bangkok and Taipei as typhoon moves closer",
+      "topic": "At least 10 airports ground flights as Typhoon Bavi the width of France closes on China's east coast",
       "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3283972/thai-airways-cancels-flights-between-bangkok-and-taipei-as-typhoon-moves-closer",
-      "velocityScore": 0.498,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2490,
-      "estimatedTrafficIn24h": 2433,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.996,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 4.4
-      },
-      "detectedAt": "2026-07-10T05:04:00.000Z",
-      "scoredAt": "2026-07-10T09:25:21.255Z"
-    },
-    {
-      "topic": "Dozens of Hong Kong flights cancelled as Typhoon Bavi nears Taiwan",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/world/3283975/dozens-of-hong-kong-flights-cancelled-as-typhoon-bavi-nears-taiwan",
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/environment/at-least-10-airports-ground-flights-as-typhoon-bavi-the-width-of-france-closes-on-china-s-east-coast-5095939.html",
       "velocityScore": 0.413,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
+      "hoursRemaining": 715,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2067,
-      "estimatedTrafficIn24h": 2020,
+      "estimatedTrafficNow": 2065,
+      "estimatedTrafficIn24h": 2018,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
-        "timeDecay": 0.996,
+        "timeDecay": 0.995,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 4.1
+        "hoursSinceDetection": 4.9
       },
-      "detectedAt": "2026-07-10T05:17:00.000Z",
-      "scoredAt": "2026-07-10T09:25:53.335Z"
+      "detectedAt": "2026-07-10T09:12:56.000Z",
+      "scoredAt": "2026-07-10T14:09:54.978Z"
     }
   ]
 }
