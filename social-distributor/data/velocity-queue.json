@@ -1,10 +1,61 @@
 {
-  "generatedAt": "2026-07-10T19:20:41.596Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-07-11T02:07:07.426Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 2
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "World's best destination tightens visa rules on foreign influencers creating paid content",
+      "source": "rss_breaking",
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/world-s-best-destination-tightens-visa-rules-on-foreign-influencers-creating-paid-content-5094656.html",
+      "velocityScore": 0.478,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 45,
+      "topicType": {
+        "key": "policy_change",
+        "halfLifeHours": 48
+      },
+      "estimatedTrafficNow": 2390,
+      "estimatedTrafficIn24h": 1690,
+      "trafficLossPerHour": 29,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.956,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.1
+      },
+      "detectedAt": "2026-07-10T23:00:00.000Z",
+      "scoredAt": "2026-07-11T02:07:03.872Z"
+    },
+    {
+      "topic": "Typhoon Bavi: Japan warns of landslides and flooding, Taiwan shuts down, China braces for heavy rain",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/east-asia/powerful-typhoon-bavi-hits-japans-okinawa-china-braces-for-heavy-rain",
+      "velocityScore": 0.415,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 719,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2073,
+      "estimatedTrafficIn24h": 2026,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1
+      },
+      "detectedAt": "2026-07-11T01:10:00.000Z",
+      "scoredAt": "2026-07-11T02:07:05.430Z"
+    }
+  ]
 }
