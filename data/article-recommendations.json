@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-07-10T06:51:02.337Z",
-    "elapsedSeconds": 4,
+    "generatedAt": "2026-07-11T05:45:34.621Z",
+    "elapsedSeconds": 6,
     "totalArticles": 38,
     "articlesWithRecommendations": 10,
     "totalRecommendations": 10,
@@ -36,9 +36,9 @@
         "avgDuration": 422
       },
       "gsc": {
-        "impressions": 9,
+        "impressions": 8,
         "clicks": 0,
-        "position": 19.3,
+        "position": 20.9,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
@@ -83,7 +83,7 @@
       "gsc": {
         "impressions": 16,
         "clicks": 0,
-        "position": 13.4,
+        "position": 11.9,
         "topQueries": [
           {
             "query": "globe sim karte philippinen",
@@ -126,7 +126,7 @@
         "avgDuration": 9
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 19,
         "clicks": 1,
         "position": 8.7,
         "topQueries": [
@@ -461,34 +461,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4371,
-      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
-      "wordCount": 3456,
-      "widgetCount": 3,
-      "internalLinks": 44,
-      "lastModified": "2026-06-11T05:33:25",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 26
-      },
-      "gsc": {
-        "impressions": 1,
-        "clicks": 0,
-        "position": 11,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -503,20 +475,20 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 29,
+        "impressions": 31,
         "clicks": 0,
-        "position": 23.8,
+        "position": 24.2,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 33.6,
-            "impressions": 12,
+            "position": 33.4,
+            "impressions": 13,
             "ctr": 0
           },
           {
             "query": "voyage de noces bali vs thailande",
-            "position": 31.5,
-            "impressions": 4,
+            "position": 31.4,
+            "impressions": 5,
             "ctr": 0
           },
           {
@@ -700,14 +672,14 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 51,
+        "impressions": 53,
         "clicks": 0,
-        "position": 27.7,
+        "position": 27.5,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 27.8,
-            "impressions": 45,
+            "position": 27.7,
+            "impressions": 47,
             "ctr": 0
           },
           {
@@ -894,6 +866,34 @@
         "impressions": 0,
         "clicks": 0,
         "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4371,
+      "slug": "philippines-10-jours-itineraire-plages-budget-2026",
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "url": "https://flashvoyage.com/philippines-10-jours-itineraire-plages-budget-2026/",
+      "wordCount": 3456,
+      "widgetCount": 3,
+      "internalLinks": 44,
+      "lastModified": "2026-06-11T05:33:25",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 7
+      },
+      "gsc": {
+        "impressions": 1,
+        "clicks": 0,
+        "position": 11,
         "topQueries": []
       },
       "reels": {

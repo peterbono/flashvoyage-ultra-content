@@ -1,41 +1,55 @@
 {
-  "timestamp": "2026-07-10T06:50:39.871Z",
+  "timestamp": "2026-07-11T05:45:23.124Z",
   "trendingTopics": [
     {
-      "query": "voyage vietnam circuit",
-      "traffic": 300,
-      "trafficFormatted": "+300 %",
+      "query": "voyage thailande prix",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-10T06:50:33.421Z",
+      "date": "2026-07-11T05:45:14.351Z",
       "source": "related-rising",
-      "parentDestination": "vietnam",
+      "parentDestination": "thailande",
       "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "vietnam",
+      "category": "budget",
+      "destination": "thailande",
       "compositeScore": 0.62
     },
     {
-      "query": "voyage vietnam pas cher",
+      "query": "voyage thailande pas cher",
+      "traffic": 80,
+      "trafficFormatted": "+80 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-11T05:45:14.351Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "thailande",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "agence voyage vietnam",
       "traffic": 40,
       "trafficFormatted": "+40 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-10T06:50:33.421Z",
+      "date": "2026-07-11T05:45:16.537Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "budget",
+      "relevanceScore": 0.7,
+      "category": "destination",
       "destination": "vietnam",
-      "compositeScore": 0.62
+      "compositeScore": 0.53
     },
     {
       "query": "voyage cambodge vietnam",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-10T06:50:37.734Z",
+      "date": "2026-07-11T05:45:20.932Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -49,42 +63,13 @@
       "trafficFormatted": "+50 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-10T06:50:39.870Z",
+      "date": "2026-07-11T05:45:23.123Z",
       "source": "related-rising",
       "parentDestination": "laos",
       "relevanceScore": 0.7,
       "category": "destination",
       "destination": "laos",
       "compositeScore": 0.53
-    },
-    {
-      "query": "route du rhum",
-      "traffic": 100,
-      "trafficFormatted": "100+",
-      "relatedQueries": [],
-      "articles": [
-        {
-          "title": "Le nouveau défi Ultim d'Alexia Barrier, qui sera au départ de la Route du Rhum le 1er novembre à Saint-Malo",
-          "url": "https://www.lequipe.fr/Voile/Actualites/Le-nouveau-defi-ultim-d-alexia-barrier-qui-sera-au-depart-de-la-route-du-rhum-le-1er-novembre-a-saint-malo/1702859",
-          "source": "L'Équipe"
-        },
-        {
-          "title": "Route du Rhum : Une première historique pour une navigatrice : Sports - Orange",
-          "url": "https://sports.orange.fr/plus-de-sport/sports-nautiques/article/route-du-rhum-une-premiere-historique-pour-une-navigatrice-exclu-CNT000002qqFIg.html",
-          "source": "Sports - Orange"
-        },
-        {
-          "title": "Route du Rhum : Alexia Barrier annonce sa participation et sera la première femme en solitaire sur Ultim",
-          "url": "https://www.lefigaro.fr/sports/voile/route-du-rhum/route-du-rhum-alexia-barrier-annonce-sa-participation-et-sera-la-premiere-femme-en-solitaire-sur-ultim-20260709",
-          "source": "Le Figaro"
-        }
-      ],
-      "date": "Thu, 9 Jul 2026 22:50:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "itineraire",
-      "destination": null,
-      "compositeScore": 0.29008
     }
   ]
 }

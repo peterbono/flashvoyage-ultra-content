@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-10T06:50:56.113Z",
+  "timestamp": "2026-07-11T05:45:27.139Z",
   "articleMap": {
     "japon-couple-15-jours-budget-tout-compris-2026": {
       "wpId": 4373,
@@ -168,18 +168,6 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "philippines-10-jours-itineraire-plages-budget-2026": {
-      "wpId": 4371,
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
     "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage": {
       "wpId": 5119,
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
@@ -215,18 +203,6 @@
       "category": "destination",
       "igReferralTraffic": null
     },
-    "esim-vietnam-comparatif-forfait-2026-frais-caches": {
-      "wpId": 4250,
-      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "visa-cambodge-francais-2026-evisa-prix-pieges": {
       "wpId": 4369,
       "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
@@ -237,6 +213,42 @@
         "poll"
       ],
       "category": "budget",
+      "igReferralTraffic": null
+    },
+    "esim-thailande-comparatif-ais-dtac-true-2026": {
+      "wpId": 4253,
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "philippines-10-jours-itineraire-plages-budget-2026": {
+      "wpId": 4371,
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "esim-vietnam-comparatif-forfait-2026-frais-caches": {
+      "wpId": 4250,
+      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
       "igReferralTraffic": null
     },
     "meilleur-esim-cambodge-2026": {
@@ -263,21 +275,21 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
-      "wpId": 5333,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+    "meilleur-esim-thailande-2026": {
+      "wpId": 6195,
+      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "poll",
-        "humor"
+        "month",
+        "avantapres"
       ],
-      "category": "default",
+      "category": "destination",
       "igReferralTraffic": null
     },
-    "esim-thailande-comparatif-ais-dtac-true-2026": {
-      "wpId": 4253,
-      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
+      "wpId": 5333,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -334,18 +346,6 @@
       "category": "destination",
       "igReferralTraffic": null
     },
-    "meilleur-esim-thailande-2026": {
-      "wpId": 6195,
-      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "destination",
-      "igReferralTraffic": null
-    },
     "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
       "wpId": 5343,
       "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
@@ -370,9 +370,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
-      "wpId": 4105,
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+    "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
+      "wpId": 5063,
+      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -380,6 +380,18 @@
         "avantapres"
       ],
       "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
+      "wpId": 4071,
+      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis": {
@@ -406,6 +418,18 @@
       "category": "destination",
       "igReferralTraffic": null
     },
+    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
+      "wpId": 4105,
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
     "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
       "wpId": 3090,
       "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
@@ -428,6 +452,18 @@
         "avantapres"
       ],
       "category": "destination",
+      "igReferralTraffic": null
+    },
+    "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte": {
+      "wpId": 2980,
+      "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "bangkok-le-vrai-cout-des-taxis-aeroport-2026": {
@@ -466,33 +502,9 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
-      "wpId": 5063,
-      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
     "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe": {
       "wpId": 4125,
       "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
-      "wpId": 4071,
-      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -547,18 +559,6 @@
         "humor"
       ],
       "category": "visa",
-      "igReferralTraffic": null
-    },
-    "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte": {
-      "wpId": 2980,
-      "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget": {
