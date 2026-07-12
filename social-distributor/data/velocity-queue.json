@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-07-11T18:53:36.750Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-07-12T02:11:03.258Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Flight pulled over typhoon",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/thailand/general/3284810/flight-pulled-over-typhoon",
+      "velocityScore": 0.499,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2493,
+      "estimatedTrafficIn24h": 2436,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.8
+      },
+      "detectedAt": "2026-07-11T23:24:00.000Z",
+      "scoredAt": "2026-07-12T02:10:59.355Z"
+    }
+  ]
 }
