@@ -1,10 +1,32 @@
 {
-  "timestamp": "2026-07-11T05:45:26.390Z",
-  "gapCount": 0,
-  "gaps": [],
+  "timestamp": "2026-07-12T06:08:24.793Z",
+  "gapCount": 1,
+  "gaps": [
+    {
+      "topic": "avion de chasse",
+      "source": "trends",
+      "gapScore": 40,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.6
+      },
+      "destination": null,
+      "category": "transport",
+      "suggestedTitle": "Avion de chasse : Guide Pratique",
+      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+      "articleType": "support",
+      "priority": "medium"
+    }
+  ],
   "summary": {
-    "byPriority": {},
-    "byCategory": {},
+    "byPriority": {
+      "medium": 1
+    },
+    "byCategory": {
+      "transport": 1
+    },
     "byDestination": {},
     "topDestinationGaps": []
   }

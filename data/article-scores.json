@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-11T05:45:08.371Z",
+  "timestamp": "2026-07-12T06:08:08.179Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -14,11 +14,11 @@
       "wpId": 4373,
       "slug": "japon-couple-15-jours-budget-tout-compris-2026",
       "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "compositeScore": 67,
+      "compositeScore": 72,
       "signals": {
         "traffic": 1,
         "sessionQuality": 1,
-        "trendAlignment": 0,
+        "trendAlignment": 0.27,
         "reelAmplification": 0.34,
         "freshness": 0.76,
         "monetization": 1,
@@ -43,7 +43,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.62,
         "reelAmplification": 0.1,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -61,11 +61,11 @@
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "compositeScore": 49,
+      "compositeScore": 50,
       "signals": {
         "traffic": 0.5,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.35,
+        "trendAlignment": 0.41,
         "reelAmplification": 0.38,
         "freshness": 0.76,
         "monetization": 1,
@@ -73,7 +73,8 @@
         "frPageviews": 0
       },
       "flags": [
-        "1_reels"
+        "1_reels",
+        "fr_light"
       ],
       "date": "2026-03-23T11:57:07",
       "wordCount": 4977
@@ -143,6 +144,25 @@
       "wordCount": 4827
     },
     {
+      "wpId": 6374,
+      "slug": "meilleur-esim-cambodge-2026",
+      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+      "compositeScore": 36,
+      "signals": {
+        "traffic": 0.5,
+        "sessionQuality": 0.2,
+        "trendAlignment": 0.18,
+        "reelAmplification": 0,
+        "freshness": 1,
+        "monetization": 0,
+        "frShare": 0.33,
+        "frPageviews": 1
+      },
+      "flags": [],
+      "date": "2026-06-14T03:18:14",
+      "wordCount": 1251
+    },
+    {
       "wpId": 5119,
       "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
@@ -162,25 +182,6 @@
       ],
       "date": "2026-04-06T05:37:25",
       "wordCount": 1493
-    },
-    {
-      "wpId": 6331,
-      "slug": "meilleur-esim-philippines-2026",
-      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
-      "compositeScore": 32,
-      "signals": {
-        "traffic": 0.5,
-        "sessionQuality": 0.18,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.99,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-06-07T03:17:59",
-      "wordCount": 1280
     },
     {
       "wpId": 4369,
@@ -221,6 +222,25 @@
       "wordCount": 3497
     },
     {
+      "wpId": 4250,
+      "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
+      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
+      "compositeScore": 31,
+      "signals": {
+        "traffic": 0.17,
+        "sessionQuality": 0.02,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 0.76,
+        "monetization": 1,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-23T11:56:46",
+      "wordCount": 3459
+    },
+    {
       "wpId": 4371,
       "slug": "philippines-10-jours-itineraire-plages-budget-2026",
       "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
@@ -238,44 +258,6 @@
       "flags": [],
       "date": "2026-03-23T13:18:06",
       "wordCount": 3458
-    },
-    {
-      "wpId": 4250,
-      "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
-      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
-      "compositeScore": 30,
-      "signals": {
-        "traffic": 0.17,
-        "sessionQuality": 0.02,
-        "trendAlignment": 0.18,
-        "reelAmplification": 0,
-        "freshness": 0.76,
-        "monetization": 1,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-23T11:56:46",
-      "wordCount": 3459
-    },
-    {
-      "wpId": 6374,
-      "slug": "meilleur-esim-cambodge-2026",
-      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
-      "compositeScore": 29,
-      "signals": {
-        "traffic": 0.33,
-        "sessionQuality": 0.03,
-        "trendAlignment": 0.18,
-        "reelAmplification": 0,
-        "freshness": 1,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-06-14T03:18:14",
-      "wordCount": 1251
     },
     {
       "wpId": 4370,
@@ -319,11 +301,11 @@
       "wpId": 5333,
       "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "compositeScore": 27,
+      "compositeScore": 28,
       "signals": {
         "traffic": 0.33,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
+        "trendAlignment": 0.27,
         "reelAmplification": 0,
         "freshness": 0.82,
         "monetization": 0,
@@ -382,9 +364,9 @@
       "signals": {
         "traffic": 0.17,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.18,
+        "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.95,
+        "freshness": 0.94,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -451,25 +433,6 @@
       "wordCount": 1498
     },
     {
-      "wpId": 4071,
-      "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
-      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "compositeScore": 21,
-      "signals": {
-        "traffic": 0.17,
-        "sessionQuality": 0.02,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 0.75,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-18T10:40:12",
-      "wordCount": 3216
-    },
-    {
       "wpId": 3425,
       "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
       "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
@@ -479,7 +442,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.74,
+        "freshness": 0.73,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -487,6 +450,25 @@
       "flags": [],
       "date": "2026-03-14T20:55:07",
       "wordCount": 4917
+    },
+    {
+      "wpId": 6331,
+      "slug": "meilleur-esim-philippines-2026",
+      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
+      "compositeScore": 20,
+      "signals": {
+        "traffic": 0.17,
+        "sessionQuality": 0.02,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.98,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-06-07T03:17:59",
+      "wordCount": 1280
     },
     {
       "wpId": 6327,
@@ -498,7 +480,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.97,
+        "freshness": 0.96,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -508,6 +490,25 @@
       "wordCount": 1265
     },
     {
+      "wpId": 5678,
+      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "compositeScore": 20,
+      "signals": {
+        "traffic": 0.17,
+        "sessionQuality": 0.02,
+        "trendAlignment": 0.13,
+        "reelAmplification": 0,
+        "freshness": 0.83,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-04-15T09:17:09",
+      "wordCount": 1659
+    },
+    {
       "wpId": 4105,
       "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
       "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
@@ -515,9 +516,9 @@
       "signals": {
         "traffic": 0.17,
         "sessionQuality": 0.02,
-        "trendAlignment": 0.18,
+        "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.75,
+        "freshness": 0.74,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -525,6 +526,25 @@
       "flags": [],
       "date": "2026-03-18T13:26:31",
       "wordCount": 2461
+    },
+    {
+      "wpId": 4071,
+      "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
+      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "compositeScore": 20,
+      "signals": {
+        "traffic": 0.17,
+        "sessionQuality": 0.02,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 0.74,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-18T10:40:12",
+      "wordCount": 3216
     },
     {
       "wpId": 3090,
@@ -536,7 +556,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.71,
+        "freshness": 0.7,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -555,7 +575,7 @@
         "sessionQuality": 0.02,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.93,
+        "freshness": 0.92,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -593,7 +613,7 @@
         "sessionQuality": 0.02,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.84,
+        "freshness": 0.83,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -601,25 +621,6 @@
       "flags": [],
       "date": "2026-04-17T05:37:11",
       "wordCount": 1592
-    },
-    {
-      "wpId": 5678,
-      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "compositeScore": 18,
-      "signals": {
-        "traffic": 0.17,
-        "sessionQuality": 0.02,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.83,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-04-15T09:17:09",
-      "wordCount": 1659
     },
     {
       "wpId": 5270,
@@ -631,7 +632,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.82,
+        "freshness": 0.81,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -650,7 +651,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.75,
+        "freshness": 0.74,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -669,7 +670,7 @@
         "sessionQuality": 0.02,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.75,
+        "freshness": 0.74,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -688,7 +689,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.73,
+        "freshness": 0.72,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -707,7 +708,7 @@
         "sessionQuality": 0.02,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.73,
+        "freshness": 0.72,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -726,7 +727,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.71,
+        "freshness": 0.7,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -763,7 +764,7 @@
     "zeroTraffic": 0,
     "trending": 1,
     "frHeavy": 0,
-    "frLight": 2,
+    "frLight": 3,
     "frDiversified": 0
   }
 }
