@@ -1,13 +1,27 @@
 {
-  "timestamp": "2026-07-12T06:08:22.236Z",
+  "timestamp": "2026-07-13T06:24:26.474Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande pas cher",
+      "query": "voyage thailande circuit",
       "traffic": 150,
       "trafficFormatted": "+150 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-12T06:08:13.805Z",
+      "date": "2026-07-13T06:24:16.738Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "itineraire",
+      "destination": "thailande",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage thailande pas cher",
+      "traffic": 130,
+      "trafficFormatted": "+130 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-13T06:24:16.738Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -17,11 +31,11 @@
     },
     {
       "query": "prix voyage thailande",
-      "traffic": 130,
-      "trafficFormatted": "+130 %",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-12T06:08:13.805Z",
+      "date": "2026-07-13T06:24:16.738Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -30,26 +44,26 @@
       "compositeScore": 0.62
     },
     {
-      "query": "prix voyage vietnam",
-      "traffic": 190,
-      "trafficFormatted": "+190 %",
+      "query": "carte vietnam",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-12T06:08:15.915Z",
+      "date": "2026-07-13T06:24:19.428Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "budget",
+      "relevanceScore": 0.8,
+      "category": "pratique",
       "destination": "vietnam",
-      "compositeScore": 0.62
+      "compositeScore": 0.56
     },
     {
-      "query": "voyage thailande tout compris",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
+      "query": "leclerc voyage thailande",
+      "traffic": 90,
+      "trafficFormatted": "+90 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-12T06:08:13.805Z",
+      "date": "2026-07-13T06:24:16.738Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -58,12 +72,12 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage vietnam cambodge",
-      "traffic": 150,
-      "trafficFormatted": "+150 %",
+      "query": "voyage au vietnam",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-12T06:08:15.915Z",
+      "date": "2026-07-13T06:24:19.428Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -72,59 +86,87 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage cambodge vietnam",
+      "query": "le vietnam",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-13T06:24:19.428Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "thailande",
       "traffic": 150,
       "trafficFormatted": "+150 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-12T06:08:20.132Z",
+      "date": "2026-07-13T06:24:19.428Z",
       "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
       "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
     },
     {
-      "query": "voyage laos cambodge",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
+      "query": "cambodge",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-12T06:08:22.234Z",
+      "date": "2026-07-13T06:24:19.428Z",
       "source": "related-rising",
-      "parentDestination": "laos",
-      "relevanceScore": 0.7,
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
       "category": "destination",
-      "destination": "laos",
-      "compositeScore": 0.53
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
     },
     {
-      "query": "avion de chasse",
+      "query": "voyage asie",
+      "traffic": 90,
+      "trafficFormatted": "+90 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-13T06:24:19.428Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "monnaie",
       "traffic": 200,
       "trafficFormatted": "200+",
       "relatedQueries": [],
       "articles": [
         {
-          "title": "L'Allemagne intéressée par l'avion de chasse suédois Gripen sur fond de renforcement de la collaboration en matière de défense aérienne entre les deux pays",
-          "url": "https://www.bfmtv.com/economie/entreprises/defense/l-allemagne-interessee-par-l-avion-de-chasse-suedois-gripen-sur-fond-de-renforcement-de-la-collaboration-en-matiere-de-defense-aerienne-entre-les-deux-pays_AD-202607090111.html",
-          "source": "BFM"
+          "title": "Une monnaie a trois fonctions. L’euro n’en a plus que deux",
+          "url": "https://www.tv83.info/une-monnaie-a-trois-fonctions-leuro-nen-a-plus-que-deux/",
+          "source": "TV83"
         },
         {
-          "title": "Défense : l’Allemagne tourne le dos à la France",
-          "url": "https://lessentieldeleco.fr/7837-defense-lallemagne-tourne-le-dos-a-la-france/",
-          "source": "L'Essentiel de l'Éco"
+          "title": "« Dynamiser l’économie locale » en Vendée : où en est la monnaie locale complémentaire Vendéo ?",
+          "url": "https://www.ouest-france.fr/pays-de-la-loire/vendee/dynamiser-leconomie-locale-en-vendee-ou-en-est-la-monnaie-locale-complementaire-vendeo-765eb4aa-6bb3-11f1-9906-89aca45f84ea",
+          "source": "Ouest-France"
         },
         {
-          "title": "Défense aérienne : la Bundeswehr prépare l'arrivée simultanée de trois systèmes de drones en 2029",
-          "url": "https://armees.com/defense-aerienne-bundeswehr-prepare-arrivee-simultanee-trois-systemes/",
-          "source": "Armees.com"
+          "title": "« Dynamiser l’économie locale » en Vendée : où en est la monnaie locale complémentaire Vendéo ?",
+          "url": "https://larochesuryon.maville.com/actu/actudet_--dynamiser-l-economie-locale-en-vendee-ou-en-est-la-monnaie-locale-complementaire-vendeo-_-7400134_actu.Htm",
+          "source": "- La Roche sur Yon.maville.com"
         }
       ],
-      "date": "Sat, 11 Jul 2026 22:30:00 -0700",
+      "date": "Sun, 12 Jul 2026 22:40:00 -0700",
       "source": "rss",
       "relevanceScore": 0.3,
-      "category": "transport",
+      "category": "budget",
       "destination": null,
       "compositeScore": 0.29016
     }

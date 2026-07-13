@@ -1,21 +1,21 @@
 {
-  "timestamp": "2026-07-12T06:08:24.793Z",
+  "timestamp": "2026-07-13T06:24:29.264Z",
   "gapCount": 1,
   "gaps": [
     {
-      "topic": "avion de chasse",
+      "topic": "monnaie",
       "source": "trends",
-      "gapScore": 40,
+      "gapScore": 35,
       "signals": {
         "searchVolume": 0.29,
         "trendGrowth": 0.29,
         "monetization": 0.6,
-        "competition": 0.6
+        "competition": 0.8
       },
       "destination": null,
-      "category": "transport",
-      "suggestedTitle": "Avion de chasse : Guide Pratique",
-      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+      "category": "budget",
+      "suggestedTitle": "Monnaie : Le Guide Budget Complet",
+      "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
       "articleType": "support",
       "priority": "medium"
     }
@@ -25,7 +25,7 @@
       "medium": 1
     },
     "byCategory": {
-      "transport": 1
+      "budget": 1
     },
     "byDestination": {},
     "topDestinationGaps": []

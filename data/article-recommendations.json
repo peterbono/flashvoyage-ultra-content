@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-07-12T06:08:32.637Z",
+    "generatedAt": "2026-07-13T06:24:36.558Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 9,
@@ -36,9 +36,9 @@
         "avgDuration": 422
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 7,
         "clicks": 0,
-        "position": 20.9,
+        "position": 22.6,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
@@ -81,9 +81,9 @@
         "avgDuration": 156
       },
       "gsc": {
-        "impressions": 16,
+        "impressions": 17,
         "clicks": 0,
-        "position": 11.9,
+        "position": 11.7,
         "topQueries": [
           {
             "query": "globe sim karte philippinen",
@@ -270,34 +270,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4252,
-      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
-      "wordCount": 4975,
-      "widgetCount": 3,
-      "internalLinks": 48,
-      "lastModified": "2026-06-11T05:33:35",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 4
-      },
-      "gsc": {
-        "impressions": 6,
-        "clicks": 0,
-        "position": 9.5,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 6195,
       "slug": "meilleur-esim-thailande-2026",
       "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
@@ -340,9 +312,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 4,
         "clicks": 0,
-        "position": 0,
+        "position": 8.3,
         "topQueries": []
       },
       "reels": {
@@ -413,14 +385,14 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 33,
+        "impressions": 34,
         "clicks": 0,
-        "position": 25.5,
+        "position": 25.7,
         "topQueries": [
           {
             "query": "bali ou thailande",
             "position": 33.1,
-            "impressions": 14,
+            "impressions": 15,
             "ctr": 0
           },
           {
@@ -453,6 +425,34 @@
         }
       ],
       "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4252,
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
+      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
+      "wordCount": 4975,
+      "widgetCount": 3,
+      "internalLinks": 48,
+      "lastModified": "2026-06-11T05:33:35",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 4
+      },
+      "gsc": {
+        "impressions": 6,
+        "clicks": 0,
+        "position": 9.5,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -655,14 +655,14 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 54,
+        "impressions": 50,
         "clicks": 0,
-        "position": 27.5,
+        "position": 27.9,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 27.6,
-            "impressions": 47,
+            "position": 27.7,
+            "impressions": 44,
             "ctr": 0
           },
           {
@@ -706,9 +706,9 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 0,
         "clicks": 0,
-        "position": 11,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -1154,9 +1154,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 7,
         "clicks": 0,
-        "position": 20.8,
+        "position": 15.7,
         "topQueries": []
       },
       "reels": {
@@ -1182,9 +1182,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 6,
         "clicks": 0,
-        "position": 45,
+        "position": 49.2,
         "topQueries": [
           {
             "query": "itinéraire luxe asie du sud-est",
