@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-07-13T08:58:20.418Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-07-13T14:21:21.720Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Filipino helpers as surrogates, Chinese scientist’s death in US: 5 weekend reads you missed",
-      "source": "rss_breaking",
-      "destination": "asia",
-      "link": "https://www.scmp.com/news/world/article/3360309/filipino-helpers-surrogates-chinese-scientists-death-us-5-weekend-reads-you-missed?utm_source=rss_feed",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2066,
-      "estimatedTrafficIn24h": 2019,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.996,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 4.5
-      },
-      "detectedAt": "2026-07-13T04:30:06.000Z",
-      "scoredAt": "2026-07-13T08:58:12.275Z"
-    }
-  ]
+  "queue": []
 }
