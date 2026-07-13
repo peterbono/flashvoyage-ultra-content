@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-07-12T18:58:09.367Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-07-13T02:12:18.030Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "You can now tap your Visa card to pay for your LRT2 ride",
+      "source": "rss_breaking",
+      "destination": "philippines",
+      "link": "https://www.rappler.com/business/tap-pay-visa-card-lrt2/",
+      "velocityScore": 0.442,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 47,
+      "topicType": {
+        "key": "policy_change",
+        "halfLifeHours": 48
+      },
+      "estimatedTrafficNow": 2212,
+      "estimatedTrafficIn24h": 1564,
+      "trafficLossPerHour": 27,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 0.983,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.2
+      },
+      "detectedAt": "2026-07-13T01:01:00.000Z",
+      "scoredAt": "2026-07-13T02:12:15.644Z"
+    }
+  ]
 }
