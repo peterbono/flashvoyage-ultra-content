@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T02:12:18.030Z",
+  "generatedAt": "2026-07-13T08:58:20.418Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "You can now tap your Visa card to pay for your LRT2 ride",
+      "topic": "Filipino helpers as surrogates, Chinese scientist’s death in US: 5 weekend reads you missed",
       "source": "rss_breaking",
-      "destination": "philippines",
-      "link": "https://www.rappler.com/business/tap-pay-visa-card-lrt2/",
-      "velocityScore": 0.442,
+      "destination": "asia",
+      "link": "https://www.scmp.com/news/world/article/3360309/filipino-helpers-surrogates-chinese-scientists-death-us-5-weekend-reads-you-missed?utm_source=rss_feed",
+      "velocityScore": 0.413,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 47,
+      "hoursRemaining": 716,
       "topicType": {
-        "key": "policy_change",
-        "halfLifeHours": 48
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2212,
-      "estimatedTrafficIn24h": 1564,
-      "trafficLossPerHour": 27,
+      "estimatedTrafficNow": 2066,
+      "estimatedTrafficIn24h": 2019,
+      "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.983,
+        "trendIntensity": 0.83,
+        "timeDecay": 0.996,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 1.2
+        "hoursSinceDetection": 4.5
       },
-      "detectedAt": "2026-07-13T01:01:00.000Z",
-      "scoredAt": "2026-07-13T02:12:15.644Z"
+      "detectedAt": "2026-07-13T04:30:06.000Z",
+      "scoredAt": "2026-07-13T08:58:12.275Z"
     }
   ]
 }
