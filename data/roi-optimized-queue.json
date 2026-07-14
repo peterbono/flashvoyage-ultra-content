@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-13T06:24:37.408Z",
+  "timestamp": "2026-07-14T05:36:31.918Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,8 +17,8 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 170,
-    "medianTrafficSignal": "0.170",
+    "medianMonthlyPV": 140,
+    "medianTrafficSignal": "0.140",
     "avgRpm": 2,
     "articlesAnalyzed": 38
   },
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 4.53,
-        "projectedMonthlyTraffic": 170,
-        "projectedMonthlyRevenue": 0.34,
+        "expectedRoi": 3.73,
+        "projectedMonthlyTraffic": 140,
+        "projectedMonthlyRevenue": 0.28,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 4.53,
-        "projectedMonthlyTraffic": 170,
-        "projectedMonthlyRevenue": 0.34,
+        "expectedRoi": 3.73,
+        "projectedMonthlyTraffic": 140,
+        "projectedMonthlyRevenue": 0.28,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,11 +77,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 4.53,
-        "projectedMonthlyTraffic": 170,
-        "projectedMonthlyRevenue": 0.34,
+        "expectedRoi": 3.73,
+        "projectedMonthlyTraffic": 140,
+        "projectedMonthlyRevenue": 0.28,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (170 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -90,15 +90,90 @@
       "rank": 4,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -5,
+      "priorityScore": -4,
       "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
       "articleType": "support",
       "context": {
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 14,
+        "freshness": 0.66,
+        "traffic": 0.14,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "articleType": "support",
+      "context": {
+        "wpId": 4125,
+        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 15,
-        "freshness": 0.67,
-        "traffic": 0.17,
+        "freshness": 0.74,
+        "traffic": 0.14,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "articleType": "support",
+      "context": {
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 15,
+        "freshness": 0.72,
+        "traffic": 0.14,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "articleType": "support",
+      "context": {
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 15,
+        "freshness": 0.7,
+        "traffic": 0.14,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       },
       "roi": {
@@ -115,16 +190,16 @@
   "budgetAllocation": {
     "totalCost": 0.225,
     "dailyBudget": 2,
-    "itemsWithinBudget": 4,
+    "itemsWithinBudget": 7,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.034,
-    "expectedDailyRoi": 0.15
+    "expectedDailyRevenue": 0.028,
+    "expectedDailyRoi": 0.12
   },
   "summary": {
     "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 1
+    "review": 4
   }
 }
