@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-07-15T13:24:41.757Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-07-15T19:02:54.491Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Chinese freight truckers told to obey Thai rules",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/thailand/general/3286432/chinese-cargo-truckers-told-to-obey-thai-rules",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 714,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2064,
+      "estimatedTrafficIn24h": 2017,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.995,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 5.6
+      },
+      "detectedAt": "2026-07-15T13:26:00.000Z",
+      "scoredAt": "2026-07-15T19:02:51.775Z"
+    }
+  ]
 }
