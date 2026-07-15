@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-14T05:36:00.535Z",
+  "timestamp": "2026-07-15T05:37:06.492Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -37,18 +37,19 @@
       "wpId": 4487,
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "compositeScore": 50,
+      "compositeScore": 53,
       "signals": {
         "traffic": 0.57,
         "sessionQuality": 0.01,
-        "trendAlignment": 0.47,
+        "trendAlignment": 0.62,
         "reelAmplification": 0.1,
-        "freshness": 0.78,
+        "freshness": 0.77,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
       },
       "flags": [
+        "trending",
         "1_reels",
         "top_performer",
         "fr_light"
@@ -60,10 +61,10 @@
       "wpId": 4372,
       "slug": "esim-philippines-globe-smart-comparatif-2026",
       "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
-      "compositeScore": 44,
+      "compositeScore": 45,
       "signals": {
         "traffic": 1,
-        "sessionQuality": 0.32,
+        "sessionQuality": 0.41,
         "trendAlignment": 0,
         "reelAmplification": 0,
         "freshness": 0.75,
@@ -142,6 +143,25 @@
       "wordCount": 4827
     },
     {
+      "wpId": 4253,
+      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "compositeScore": 34,
+      "signals": {
+        "traffic": 0.29,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 0.75,
+        "monetization": 1,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-23T11:58:01",
+      "wordCount": 3497
+    },
+    {
       "wpId": 5119,
       "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
@@ -201,25 +221,6 @@
       "wordCount": 2442
     },
     {
-      "wpId": 4253,
-      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
-      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
-      "compositeScore": 30,
-      "signals": {
-        "traffic": 0.14,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 0.75,
-        "monetization": 1,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-23T11:58:01",
-      "wordCount": 3497
-    },
-    {
       "wpId": 4250,
       "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
       "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
@@ -267,7 +268,7 @@
         "sessionQuality": 0.03,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.9,
+        "freshness": 0.89,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -324,7 +325,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.41,
         "reelAmplification": 0,
-        "freshness": 0.81,
+        "freshness": 0.8,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -364,7 +365,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -459,7 +460,7 @@
         "sessionQuality": 0.02,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.74,
+        "freshness": 0.73,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -467,25 +468,6 @@
       "flags": [],
       "date": "2026-03-18T10:40:12",
       "wordCount": 3216
-    },
-    {
-      "wpId": 3425,
-      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "compositeScore": 20,
-      "signals": {
-        "traffic": 0.29,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.73,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-14T20:55:07",
-      "wordCount": 4917
     },
     {
       "wpId": 6331,
@@ -516,7 +498,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -524,25 +506,6 @@
       "flags": [],
       "date": "2026-05-31T03:17:48",
       "wordCount": 1265
-    },
-    {
-      "wpId": 3254,
-      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "compositeScore": 19,
-      "signals": {
-        "traffic": 0.14,
-        "sessionQuality": 0.01,
-        "trendAlignment": 0.18,
-        "reelAmplification": 0,
-        "freshness": 0.72,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-11T20:13:21",
-      "wordCount": 3583
     },
     {
       "wpId": 3090,
@@ -554,7 +517,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.7,
+        "freshness": 0.69,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -592,7 +555,7 @@
         "sessionQuality": 0.02,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.92,
+        "freshness": 0.91,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -611,7 +574,7 @@
         "sessionQuality": 0.02,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.83,
+        "freshness": 0.82,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -643,13 +606,13 @@
       "wpId": 5270,
       "slug": "esim-japon-combien-ca-te-coute-vraiment",
       "title": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "compositeScore": 17,
+      "compositeScore": 16,
       "signals": {
         "traffic": 0.14,
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.81,
+        "freshness": 0.8,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -657,25 +620,6 @@
       "flags": [],
       "date": "2026-04-10T09:40:41",
       "wordCount": 1432
-    },
-    {
-      "wpId": 4030,
-      "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "compositeScore": 16,
-      "signals": {
-        "traffic": 0.14,
-        "sessionQuality": 0.02,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.74,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-18T06:42:56",
-      "wordCount": 4283
     },
     {
       "wpId": 4125,
@@ -697,6 +641,63 @@
       "wordCount": 3099
     },
     {
+      "wpId": 4030,
+      "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+      "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "compositeScore": 15,
+      "signals": {
+        "traffic": 0.14,
+        "sessionQuality": 0.02,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.73,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-18T06:42:56",
+      "wordCount": 4283
+    },
+    {
+      "wpId": 3425,
+      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "compositeScore": 15,
+      "signals": {
+        "traffic": 0.14,
+        "sessionQuality": 0.02,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.72,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-14T20:55:07",
+      "wordCount": 4917
+    },
+    {
+      "wpId": 3254,
+      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "compositeScore": 15,
+      "signals": {
+        "traffic": 0.14,
+        "sessionQuality": 0.01,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.72,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-11T20:13:21",
+      "wordCount": 3583
+    },
+    {
       "wpId": 3198,
       "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
       "title": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
@@ -706,7 +707,7 @@
         "sessionQuality": 0.02,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.72,
+        "freshness": 0.71,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -725,7 +726,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.7,
+        "freshness": 0.69,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -760,7 +761,7 @@
     "staleArticles": 0,
     "missingWidgets": 0,
     "zeroTraffic": 0,
-    "trending": 0,
+    "trending": 1,
     "frHeavy": 0,
     "frLight": 2,
     "frDiversified": 0

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-14T05:36:31.918Z",
+  "timestamp": "2026-07-15T05:37:32.183Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -141,13 +141,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "wpId": 4030,
+        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 15,
-        "freshness": 0.72,
+        "freshness": 0.73,
         "traffic": 0.14,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       },
@@ -166,13 +166,88 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -5,
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "articleType": "support",
+      "context": {
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "compositeScore": 15,
+        "freshness": 0.72,
+        "traffic": 0.14,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "articleType": "support",
+      "context": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 15,
+        "freshness": 0.72,
+        "traffic": 0.14,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "articleType": "support",
+      "context": {
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 15,
+        "freshness": 0.71,
+        "traffic": 0.14,
+        "reason": "Low-performing article: score=15, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -5,
       "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
       "articleType": "support",
       "context": {
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 15,
-        "freshness": 0.7,
+        "freshness": 0.69,
         "traffic": 0.14,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       },
@@ -190,7 +265,7 @@
   "budgetAllocation": {
     "totalCost": 0.225,
     "dailyBudget": 2,
-    "itemsWithinBudget": 7,
+    "itemsWithinBudget": 10,
     "itemsOverBudget": 0,
     "expectedDailyRevenue": 0.028,
     "expectedDailyRoi": 0.12
@@ -200,6 +275,6 @@
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 4
+    "review": 7
   }
 }

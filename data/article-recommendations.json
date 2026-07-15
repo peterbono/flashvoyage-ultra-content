@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-07-14T05:36:30.979Z",
+    "generatedAt": "2026-07-15T05:37:31.416Z",
     "elapsedSeconds": 4,
     "totalArticles": 38,
     "articlesWithRecommendations": 9,
@@ -33,22 +33,28 @@
       "ga4": {
         "pageviews": 7,
         "sessions": 6,
-        "avgDuration": 133
+        "avgDuration": 172
       },
       "gsc": {
-        "impressions": 19,
+        "impressions": 21,
         "clicks": 0,
-        "position": 13.1,
+        "position": 16,
         "topQueries": [
           {
             "query": "globe esim",
-            "position": 11,
-            "impressions": 1,
+            "position": 8.5,
+            "impressions": 2,
             "ctr": 0
           },
           {
             "query": "globe sim karte philippinen",
             "position": 51,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "meilleur esim philippines",
+            "position": 83,
             "impressions": 1,
             "ctr": 0
           }
@@ -132,14 +138,14 @@
         "avgDuration": 9
       },
       "gsc": {
-        "impressions": 25,
+        "impressions": 29,
         "clicks": 1,
-        "position": 9.4,
+        "position": 9.7,
         "topQueries": [
           {
             "query": "kuala lumpur ou singapour",
-            "position": 12.5,
-            "impressions": 4,
+            "position": 13.7,
+            "impressions": 6,
             "ctr": 0
           },
           {
@@ -213,7 +219,7 @@
       "gsc": {
         "impressions": 14,
         "clicks": 1,
-        "position": 9,
+        "position": 8.5,
         "topQueries": []
       },
       "reels": {
@@ -391,9 +397,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 33,
+        "impressions": 35,
         "clicks": 0,
-        "position": 25.5,
+        "position": 24.6,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -434,6 +440,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4253,
+      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "url": "https://flashvoyage.com/esim-thailande-comparatif-ais-dtac-true-2026/",
+      "wordCount": 3495,
+      "widgetCount": 3,
+      "internalLinks": 39,
+      "lastModified": "2026-06-11T05:33:34",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 3
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
@@ -462,34 +496,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 3425,
-      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "url": "https://flashvoyage.com/coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis/",
-      "wordCount": 4915,
-      "widgetCount": 0,
-      "internalLinks": 50,
-      "lastModified": "2026-06-11T05:33:43",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 3
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 6331,
       "slug": "meilleur-esim-philippines-2026",
       "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
@@ -504,14 +510,14 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 14,
+        "impressions": 12,
         "clicks": 0,
-        "position": 24.6,
+        "position": 23.7,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
-            "position": 28.1,
-            "impressions": 9,
+            "position": 27.6,
+            "impressions": 7,
             "ctr": 0
           }
         ]
@@ -633,9 +639,9 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 2,
         "clicks": 0,
-        "position": 0,
+        "position": 10,
         "topQueries": []
       },
       "reels": {
@@ -661,14 +667,14 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 50,
+        "impressions": 51,
         "clicks": 0,
-        "position": 27.9,
+        "position": 27.8,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 27.6,
-            "impressions": 44,
+            "position": 27.5,
+            "impressions": 45,
             "ctr": 0
           },
           {
@@ -922,34 +928,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4253,
-      "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
-      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
-      "url": "https://flashvoyage.com/esim-thailande-comparatif-ais-dtac-true-2026/",
-      "wordCount": 3495,
-      "widgetCount": 3,
-      "internalLinks": 39,
-      "lastModified": "2026-06-11T05:33:34",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 6
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4250,
       "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
       "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
@@ -1090,6 +1068,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 3425,
+      "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "url": "https://flashvoyage.com/coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis/",
+      "wordCount": 4915,
+      "widgetCount": 0,
+      "internalLinks": 50,
+      "lastModified": "2026-06-11T05:33:43",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 7
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 3254,
       "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
       "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
@@ -1188,20 +1194,20 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 7,
         "clicks": 0,
-        "position": 49.2,
+        "position": 45,
         "topQueries": [
           {
-            "query": "itinéraire luxe asie du sud-est",
-            "position": 78,
+            "query": "itinéraire asie hors des sentiers battus",
+            "position": 23,
             "impressions": 2,
             "ctr": 0
           },
           {
-            "query": "itinéraire asie hors des sentiers battus",
-            "position": 26,
-            "impressions": 1,
+            "query": "itinéraire luxe asie du sud-est",
+            "position": 78,
+            "impressions": 2,
             "ctr": 0
           }
         ]
@@ -1214,9 +1220,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"itinéraire luxe asie du sud-est\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"itinéraire asie hors des sentiers battus\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"itinéraire luxe asie du sud-est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"itinéraire asie hors des sentiers battus\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
