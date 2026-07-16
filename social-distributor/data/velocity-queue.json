@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-07-16T02:05:00.748Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-07-16T08:03:09.242Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "India bars seafarers from Strait of Hormuz voyages after attacks",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/south-asia/india-bars-seafarers-from-strait-of-hormuz-voyages-after-attacks",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2071,
+      "estimatedTrafficIn24h": 2023,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.2
+      },
+      "detectedAt": "2026-07-16T05:51:00.000Z",
+      "scoredAt": "2026-07-16T08:03:06.403Z"
+    }
+  ]
 }
