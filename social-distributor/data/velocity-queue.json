@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-07-17T08:00:19.965Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-07-17T13:16:20.097Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Thailand video news | Lengthy immigration delays return at Suvarnabhumi Airport, Treat-seeking Krabi cat charms tourists and social media",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/video-podcasts/thailand-video-news-17-07-2026",
-      "velocityScore": 0.498,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2491,
-      "estimatedTrafficIn24h": 2434,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.996,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3.8
-      },
-      "detectedAt": "2026-07-17T04:13:31.000Z",
-      "scoredAt": "2026-07-17T08:00:15.339Z"
-    }
-  ]
+  "queue": []
 }
