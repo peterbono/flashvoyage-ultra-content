@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-07-16T05:44:55.654Z",
+    "generatedAt": "2026-07-17T05:46:16.330Z",
     "elapsedSeconds": 4,
     "totalArticles": 38,
     "articlesWithRecommendations": 9,
@@ -22,6 +22,57 @@
   },
   "articles": [
     {
+      "wpId": 5072,
+      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
+      "url": "https://flashvoyage.com/kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage/",
+      "wordCount": 1294,
+      "widgetCount": 0,
+      "internalLinks": 16,
+      "lastModified": "2026-06-11T05:33:17",
+      "ga4": {
+        "pageviews": 7,
+        "sessions": 7,
+        "avgDuration": 6
+      },
+      "gsc": {
+        "impressions": 30,
+        "clicks": 1,
+        "position": 9.8,
+        "topQueries": [
+          {
+            "query": "kuala lumpur ou singapour",
+            "position": 13.7,
+            "impressions": 6,
+            "ctr": 0
+          },
+          {
+            "query": "singapour ou kuala lumpur",
+            "position": 12.7,
+            "impressions": 3,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"kuala lumpur ou singapour\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"kuala lumpur ou singapour\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 4373,
       "slug": "japon-couple-15-jours-budget-tout-compris-2026",
       "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
@@ -32,18 +83,18 @@
       "lastModified": "2026-06-11T05:33:21",
       "ga4": {
         "pageviews": 7,
-        "sessions": 5,
-        "avgDuration": 338
+        "sessions": 4,
+        "avgDuration": 419
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 6,
         "clicks": 0,
-        "position": 22.6,
+        "position": 21.2,
         "topQueries": [
           {
             "query": "15 jours au japon budget",
-            "position": 30.5,
-            "impressions": 2,
+            "position": 30,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -67,6 +118,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2503,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:20",
+      "ga4": {
+        "pageviews": 5,
+        "sessions": 5,
+        "avgDuration": 5
+      },
+      "gsc": {
+        "impressions": 3,
+        "clicks": 0,
+        "position": 9.7,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4372,
       "slug": "esim-philippines-globe-smart-comparatif-2026",
       "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
@@ -76,14 +155,14 @@
       "internalLinks": 56,
       "lastModified": "2026-06-11T05:33:24",
       "ga4": {
-        "pageviews": 7,
-        "sessions": 6,
-        "avgDuration": 172
+        "pageviews": 4,
+        "sessions": 4,
+        "avgDuration": 64
       },
       "gsc": {
-        "impressions": 14,
+        "impressions": 12,
         "clicks": 0,
-        "position": 19.3,
+        "position": 21.2,
         "topQueries": [
           {
             "query": "globe esim",
@@ -124,85 +203,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 5072,
-      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
-      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "url": "https://flashvoyage.com/kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage/",
-      "wordCount": 1294,
-      "widgetCount": 0,
-      "internalLinks": 16,
-      "lastModified": "2026-06-11T05:33:17",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 9
-      },
-      "gsc": {
-        "impressions": 30,
-        "clicks": 1,
-        "position": 9.8,
-        "topQueries": [
-          {
-            "query": "kuala lumpur ou singapour",
-            "position": 13.7,
-            "impressions": 6,
-            "ctr": 0
-          },
-          {
-            "query": "singapour ou kuala lumpur",
-            "position": 12.7,
-            "impressions": 3,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"kuala lumpur ou singapour\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"kuala lumpur ou singapour\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2503,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:20",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 6
-      },
-      "gsc": {
-        "impressions": 3,
-        "clicks": 0,
-        "position": 9.7,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 6374,
       "slug": "meilleur-esim-cambodge-2026",
       "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
@@ -217,9 +217,9 @@
         "avgDuration": 84
       },
       "gsc": {
-        "impressions": 14,
+        "impressions": 12,
         "clicks": 1,
-        "position": 8.5,
+        "position": 9.1,
         "topQueries": []
       },
       "reels": {
@@ -273,9 +273,9 @@
         "avgDuration": 95
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 19,
         "clicks": 2,
-        "position": 24.7,
+        "position": 23.6,
         "topQueries": [
           {
             "query": "bali gili lombok",
@@ -324,14 +324,14 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 36,
+        "impressions": 35,
         "clicks": 0,
-        "position": 24.2,
+        "position": 23.9,
         "topQueries": [
           {
             "query": "bali ou thailande",
             "position": 33.1,
-            "impressions": 14,
+            "impressions": 13,
             "ctr": 0
           },
           {
@@ -538,9 +538,9 @@
         "avgDuration": 4
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 4,
         "clicks": 0,
-        "position": 11.7,
+        "position": 12.5,
         "topQueries": []
       },
       "reels": {
@@ -566,14 +566,14 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 11,
+        "impressions": 8,
         "clicks": 0,
-        "position": 23.5,
+        "position": 27.9,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
-            "position": 27.8,
-            "impressions": 6,
+            "position": 28,
+            "impressions": 5,
             "ctr": 0
           }
         ]
@@ -697,11 +697,11 @@
       "gsc": {
         "impressions": 49,
         "clicks": 0,
-        "position": 27.7,
+        "position": 27.6,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 27.4,
+            "position": 27.3,
             "impressions": 43,
             "ctr": 0
           },
@@ -802,9 +802,9 @@
         "avgDuration": 6
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 1,
         "clicks": 0,
-        "position": 24,
+        "position": 54,
         "topQueries": []
       },
       "reels": {
@@ -1194,14 +1194,14 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 9,
         "clicks": 0,
-        "position": 45,
+        "position": 39.7,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
-            "position": 23,
-            "impressions": 2,
+            "position": 22,
+            "impressions": 3,
             "ctr": 0
           },
           {
