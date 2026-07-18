@@ -1,25 +1,9 @@
 {
-  "timestamp": "2026-07-17T05:46:11.648Z",
-  "queueSize": 11,
+  "timestamp": "2026-07-18T05:32:43.225Z",
+  "queueSize": 10,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 131,
-      "topic": "laos",
-      "articleType": "support",
-      "context": {
-        "gapScore": 51,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"laos\" (score 51, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +15,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +27,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -52,6 +36,22 @@
       "context": {
         "cyclePosition": 1,
         "reason": "Standard editorial calendar rotation (position 2/5)"
+      }
+    },
+    {
+      "rank": 4,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -4,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "articleType": "support",
+      "context": {
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 14,
+        "freshness": 0.69,
+        "traffic": 0.13,
+        "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     },
     {
@@ -66,7 +66,7 @@
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 14,
         "freshness": 0.65,
-        "traffic": 0.14,
+        "traffic": 0.13,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     },
@@ -82,7 +82,7 @@
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 15,
         "freshness": 0.73,
-        "traffic": 0.14,
+        "traffic": 0.13,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     },
@@ -98,7 +98,7 @@
         "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 15,
         "freshness": 0.73,
-        "traffic": 0.14,
+        "traffic": 0.13,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     },
@@ -114,7 +114,7 @@
         "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 15,
         "freshness": 0.72,
-        "traffic": 0.14,
+        "traffic": 0.13,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     },
@@ -130,7 +130,7 @@
         "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
         "compositeScore": 15,
         "freshness": 0.71,
-        "traffic": 0.14,
+        "traffic": 0.13,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     },
@@ -146,29 +146,13 @@
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 15,
         "freshness": 0.71,
-        "traffic": 0.14,
-        "reason": "Low-performing article: score=15, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -5,
-      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
-      "articleType": "support",
-      "context": {
-        "wpId": 3107,
-        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-        "compositeScore": 15,
-        "freshness": 0.69,
-        "traffic": 0.14,
+        "traffic": 0.13,
         "reason": "Low-performing article: score=15, consider merge/update/delete"
       }
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,

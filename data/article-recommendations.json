@@ -1,22 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-07-17T05:46:16.330Z",
-    "elapsedSeconds": 4,
+    "generatedAt": "2026-07-18T05:32:49.340Z",
+    "elapsedSeconds": 5,
     "totalArticles": 38,
-    "articlesWithRecommendations": 9,
-    "totalRecommendations": 9,
+    "articlesWithRecommendations": 8,
+    "totalRecommendations": 8,
     "byPriority": {
       "P0": 0,
       "P1": 0,
-      "P2": 9
+      "P2": 8
     },
     "byType": {
-      "seo": 9
+      "seo": 8
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
-        "count": 9
+        "count": 8
       }
     ]
   },
@@ -31,14 +31,14 @@
       "internalLinks": 16,
       "lastModified": "2026-06-11T05:33:17",
       "ga4": {
-        "pageviews": 7,
+        "pageviews": 8,
         "sessions": 7,
-        "avgDuration": 6
+        "avgDuration": 7
       },
       "gsc": {
-        "impressions": 30,
+        "impressions": 31,
         "clicks": 1,
-        "position": 9.8,
+        "position": 9.6,
         "topQueries": [
           {
             "query": "kuala lumpur ou singapour",
@@ -87,13 +87,47 @@
         "avgDuration": 419
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 5,
         "clicks": 0,
-        "position": 21.2,
+        "position": 19.4,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4370,
+      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "url": "https://flashvoyage.com/bali-lombok-gili-10-jours-itineraire-budget-2026/",
+      "wordCount": 4124,
+      "widgetCount": 0,
+      "internalLinks": 47,
+      "lastModified": "2026-06-11T05:33:27",
+      "ga4": {
+        "pageviews": 7,
+        "sessions": 5,
+        "avgDuration": 57
+      },
+      "gsc": {
+        "impressions": 18,
+        "clicks": 2,
+        "position": 24.8,
         "topQueries": [
           {
-            "query": "15 jours au japon budget",
-            "position": 30,
+            "query": "bali gili lombok",
+            "position": 34.5,
+            "impressions": 11,
+            "ctr": 0
+          },
+          {
+            "query": "bali lombok gili",
+            "position": 29,
             "impressions": 1,
             "ctr": 0
           }
@@ -107,9 +141,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"15 jours au japon budget\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"bali gili lombok\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"15 jours au japon budget\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali gili lombok\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -160,9 +194,9 @@
         "avgDuration": 64
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 15,
         "clicks": 0,
-        "position": 21.2,
+        "position": 21.7,
         "topQueries": [
           {
             "query": "globe esim",
@@ -217,9 +251,9 @@
         "avgDuration": 84
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 10,
         "clicks": 1,
-        "position": 9.1,
+        "position": 8.7,
         "topQueries": []
       },
       "reels": {
@@ -242,7 +276,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 2,
-        "avgDuration": 4
+        "avgDuration": 7
       },
       "gsc": {
         "impressions": 2,
@@ -259,57 +293,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4370,
-      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "url": "https://flashvoyage.com/bali-lombok-gili-10-jours-itineraire-budget-2026/",
-      "wordCount": 4124,
-      "widgetCount": 0,
-      "internalLinks": 47,
-      "lastModified": "2026-06-11T05:33:27",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 95
-      },
-      "gsc": {
-        "impressions": 19,
-        "clicks": 2,
-        "position": 23.6,
-        "topQueries": [
-          {
-            "query": "bali gili lombok",
-            "position": 34.5,
-            "impressions": 11,
-            "ctr": 0
-          },
-          {
-            "query": "bali lombok gili",
-            "position": 29,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"bali gili lombok\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali gili lombok\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -321,12 +304,12 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 3
+        "avgDuration": 5
       },
       "gsc": {
-        "impressions": 35,
+        "impressions": 36,
         "clicks": 0,
-        "position": 23.9,
+        "position": 23.4,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -364,6 +347,34 @@
         }
       ],
       "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4252,
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
+      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
+      "wordCount": 4975,
+      "widgetCount": 3,
+      "internalLinks": 48,
+      "lastModified": "2026-06-11T05:33:35",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 3
+      },
+      "gsc": {
+        "impressions": 4,
+        "clicks": 0,
+        "position": 12.5,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -524,31 +535,54 @@
       "p0Count": 0
     },
     {
-      "wpId": 4252,
-      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
-      "wordCount": 4975,
-      "widgetCount": 3,
-      "internalLinks": 48,
-      "lastModified": "2026-06-11T05:33:35",
+      "wpId": 3090,
+      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
+      "wordCount": 1721,
+      "widgetCount": 0,
+      "internalLinks": 27,
+      "lastModified": "2026-06-11T05:33:48",
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 4
+        "avgDuration": 3
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 9,
         "clicks": 0,
-        "position": 12.5,
-        "topQueries": []
+        "position": 39.7,
+        "topQueries": [
+          {
+            "query": "itinéraire asie hors des sentiers battus",
+            "position": 22,
+            "impressions": 3,
+            "ctr": 0
+          },
+          {
+            "query": "itinéraire luxe asie du sud-est",
+            "position": 78,
+            "impressions": 2,
+            "ctr": 0
+          }
+        ]
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [],
-      "recommendationCount": 0,
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"itinéraire asie hors des sentiers battus\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"itinéraire asie hors des sentiers battus\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -1166,9 +1200,9 @@
         "avgDuration": 5
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 6,
         "clicks": 0,
-        "position": 15.7,
+        "position": 17.8,
         "topQueries": []
       },
       "reels": {
@@ -1177,57 +1211,6 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 3090,
-      "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "url": "https://flashvoyage.com/asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus/",
-      "wordCount": 1721,
-      "widgetCount": 0,
-      "internalLinks": 27,
-      "lastModified": "2026-06-11T05:33:48",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 5
-      },
-      "gsc": {
-        "impressions": 9,
-        "clicks": 0,
-        "position": 39.7,
-        "topQueries": [
-          {
-            "query": "itinéraire asie hors des sentiers battus",
-            "position": 22,
-            "impressions": 3,
-            "ctr": 0
-          },
-          {
-            "query": "itinéraire luxe asie du sud-est",
-            "position": 78,
-            "impressions": 2,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"itinéraire asie hors des sentiers battus\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"itinéraire asie hors des sentiers battus\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
       "p0Count": 0
     },
     {
