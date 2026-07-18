@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-07-18T01:57:34.175Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-07-18T07:40:21.057Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Cambodian tycoon rents casino space to scam gang",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/national/cambodian-tycoon-rents-casino-space-to-scam-gang",
+      "velocityScore": 0.488,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2442,
+      "estimatedTrafficIn24h": 2386,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.4
+      },
+      "detectedAt": "2026-07-18T04:15:11.000Z",
+      "scoredAt": "2026-07-18T07:40:15.654Z"
+    }
+  ]
 }
