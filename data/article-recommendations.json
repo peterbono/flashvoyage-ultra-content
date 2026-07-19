@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-07-18T05:32:49.340Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-07-19T05:58:48.514Z",
+    "elapsedSeconds": 4,
     "totalArticles": 38,
     "articlesWithRecommendations": 8,
     "totalRecommendations": 8,
@@ -31,8 +31,8 @@
       "internalLinks": 16,
       "lastModified": "2026-06-11T05:33:17",
       "ga4": {
-        "pageviews": 8,
-        "sessions": 7,
+        "pageviews": 7,
+        "sessions": 6,
         "avgDuration": 7
       },
       "gsc": {
@@ -82,14 +82,14 @@
       "internalLinks": 45,
       "lastModified": "2026-06-11T05:33:21",
       "ga4": {
-        "pageviews": 7,
-        "sessions": 4,
-        "avgDuration": 419
+        "pageviews": 6,
+        "sessions": 3,
+        "avgDuration": 557
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 4,
         "clicks": 0,
-        "position": 19.4,
+        "position": 17,
         "topQueries": []
       },
       "reels": {
@@ -110,9 +110,9 @@
       "internalLinks": 47,
       "lastModified": "2026-06-11T05:33:27",
       "ga4": {
-        "pageviews": 7,
-        "sessions": 5,
-        "avgDuration": 57
+        "pageviews": 5,
+        "sessions": 4,
+        "avgDuration": 72
       },
       "gsc": {
         "impressions": 18,
@@ -161,9 +161,9 @@
       "internalLinks": 45,
       "lastModified": "2026-06-11T05:33:20",
       "ga4": {
-        "pageviews": 5,
-        "sessions": 5,
-        "avgDuration": 5
+        "pageviews": 3,
+        "sessions": 4,
+        "avgDuration": 2
       },
       "gsc": {
         "impressions": 3,
@@ -189,14 +189,14 @@
       "internalLinks": 56,
       "lastModified": "2026-06-11T05:33:24",
       "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 64
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 83
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 16,
         "clicks": 0,
-        "position": 21.7,
+        "position": 20.9,
         "topQueries": [
           {
             "query": "globe esim",
@@ -237,6 +237,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4252,
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
+      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
+      "wordCount": 4975,
+      "widgetCount": 3,
+      "internalLinks": 48,
+      "lastModified": "2026-06-11T05:33:35",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 2,
+        "avgDuration": 1
+      },
+      "gsc": {
+        "impressions": 5,
+        "clicks": 0,
+        "position": 12,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 6374,
       "slug": "meilleur-esim-cambodge-2026",
       "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
@@ -246,14 +274,14 @@
       "internalLinks": 11,
       "lastModified": "2026-06-15T12:00:01",
       "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 84
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 123
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 12,
         "clicks": 1,
-        "position": 8.7,
+        "position": 9.1,
         "topQueries": []
       },
       "reels": {
@@ -274,8 +302,8 @@
       "internalLinks": 22,
       "lastModified": "2026-06-11T05:33:02",
       "ga4": {
-        "pageviews": 3,
-        "sessions": 2,
+        "pageviews": 2,
+        "sessions": 1,
         "avgDuration": 7
       },
       "gsc": {
@@ -302,9 +330,9 @@
       "internalLinks": 41,
       "lastModified": "2026-06-11T05:33:30",
       "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 5
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 4
       },
       "gsc": {
         "impressions": 36,
@@ -350,34 +378,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4252,
-      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
-      "wordCount": 4975,
-      "widgetCount": 3,
-      "internalLinks": 48,
-      "lastModified": "2026-06-11T05:33:35",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 3
-      },
-      "gsc": {
-        "impressions": 4,
-        "clicks": 0,
-        "position": 12.5,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4071,
       "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
       "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
@@ -387,9 +387,9 @@
       "internalLinks": 33,
       "lastModified": "2026-06-11T05:33:41",
       "ga4": {
-        "pageviews": 3,
-        "sessions": 2,
-        "avgDuration": 4
+        "pageviews": 2,
+        "sessions": 1,
+        "avgDuration": 1
       },
       "gsc": {
         "impressions": 5,
@@ -415,9 +415,9 @@
       "internalLinks": 17,
       "lastModified": "2026-06-11T05:33:01",
       "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 11
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 16
       },
       "gsc": {
         "impressions": 0,
@@ -443,9 +443,9 @@
       "internalLinks": 23,
       "lastModified": "2026-06-11T05:33:10",
       "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 5
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 3
       },
       "gsc": {
         "impressions": 4,
@@ -471,9 +471,9 @@
       "internalLinks": 19,
       "lastModified": "2026-06-11T05:33:16",
       "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 3
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 2,
@@ -516,9 +516,9 @@
       "internalLinks": 39,
       "lastModified": "2026-06-11T05:33:34",
       "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 3
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -544,9 +544,9 @@
       "internalLinks": 27,
       "lastModified": "2026-06-11T05:33:48",
       "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 3
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 9,
@@ -595,19 +595,19 @@
       "internalLinks": 11,
       "lastModified": "2026-06-11T05:32:55",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 7
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 9,
         "clicks": 0,
-        "position": 27.9,
+        "position": 28,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
-            "position": 28,
-            "impressions": 5,
+            "position": 28.2,
+            "impressions": 6,
             "ctr": 0
           }
         ]
@@ -640,9 +640,9 @@
       "internalLinks": 11,
       "lastModified": "2026-06-11T05:32:57",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 6
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -668,9 +668,9 @@
       "internalLinks": 11,
       "lastModified": "2026-06-11T05:32:58",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 6
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -696,9 +696,9 @@
       "internalLinks": 11,
       "lastModified": "2026-06-11T05:33:00",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 7
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -724,19 +724,19 @@
       "internalLinks": 25,
       "lastModified": "2026-06-11T05:27:51",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 7
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
-        "impressions": 49,
+        "impressions": 51,
         "clicks": 0,
-        "position": 27.6,
+        "position": 27.3,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 27.3,
-            "impressions": 43,
+            "position": 27,
+            "impressions": 45,
             "ctr": 0
           },
           {
@@ -775,9 +775,9 @@
       "internalLinks": 17,
       "lastModified": "2026-06-11T05:33:09",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 6
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -803,9 +803,9 @@
       "internalLinks": 18,
       "lastModified": "2026-06-11T05:33:11",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 5
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -831,9 +831,9 @@
       "internalLinks": 21,
       "lastModified": "2026-06-11T05:33:13",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 6
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 1,
@@ -859,14 +859,14 @@
       "internalLinks": 30,
       "lastModified": "2026-06-11T05:33:14",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 6
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 1,
         "clicks": 0,
-        "position": 0,
+        "position": 21,
         "topQueries": []
       },
       "reels": {
@@ -887,9 +887,9 @@
       "internalLinks": 22,
       "lastModified": "2026-06-11T05:33:15",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 6
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -915,9 +915,9 @@
       "internalLinks": 19,
       "lastModified": "2026-06-11T05:33:18",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 7
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -943,9 +943,9 @@
       "internalLinks": 44,
       "lastModified": "2026-06-11T05:33:25",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 7
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 1,
@@ -971,9 +971,9 @@
       "internalLinks": 44,
       "lastModified": "2026-06-11T05:33:28",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 5
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -999,9 +999,9 @@
       "internalLinks": 39,
       "lastModified": "2026-06-11T05:33:37",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 7
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -1027,9 +1027,9 @@
       "internalLinks": 29,
       "lastModified": "2026-06-11T05:33:38",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 5
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -1055,9 +1055,9 @@
       "internalLinks": 45,
       "lastModified": "2026-06-11T05:33:39",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 7
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -1083,9 +1083,9 @@
       "internalLinks": 39,
       "lastModified": "2026-06-11T05:33:42",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 8
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -1111,9 +1111,9 @@
       "internalLinks": 50,
       "lastModified": "2026-06-11T05:33:43",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 7
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -1139,9 +1139,9 @@
       "internalLinks": 41,
       "lastModified": "2026-06-11T05:33:45",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 5
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -1167,9 +1167,9 @@
       "internalLinks": 38,
       "lastModified": "2026-06-11T05:33:46",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 7
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -1195,9 +1195,9 @@
       "internalLinks": 28,
       "lastModified": "2026-06-11T05:33:47",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 5
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 6,
@@ -1223,9 +1223,9 @@
       "internalLinks": 26,
       "lastModified": "2026-06-11T05:33:50",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 7
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
@@ -1251,9 +1251,9 @@
       "internalLinks": 26,
       "lastModified": "2026-06-11T05:33:51",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 7
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
       },
       "gsc": {
         "impressions": 0,
