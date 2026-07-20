@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-19T06:01:16.506Z",
+  "timestamp": "2026-07-20T06:24:30.405Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,15 +16,33 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 6832,
-      "newUrls": 5
+      "totalUrls": 6837,
+      "newUrls": 6
     }
   ],
-  "newArticles": [],
+  "newArticles": [
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/bali-solo/",
+      "lastmod": "2026-07-19T12:04:56+00:00",
+      "destination": "bali",
+      "contentType": "general",
+      "title": "Bali Solo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=34, freshness=0.74)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 34,
+        "freshness": 0.74
+      }
+    }
+  ],
   "summary": {
-    "totalNew": 0,
+    "totalNew": 1,
     "contentGaps": 0,
     "staleRefreshes": 0,
-    "monitoring": 0
+    "monitoring": 1
   }
 }

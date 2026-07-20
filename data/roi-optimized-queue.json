@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-19T05:58:49.474Z",
+  "timestamp": "2026-07-20T06:22:19.122Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -50,6 +50,31 @@
     },
     {
       "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 141,
+      "topic": "voyage pas cher",
+      "articleType": "support",
+      "context": {
+        "gapScore": 61,
+        "destination": "vietnam",
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 7.87,
+        "projectedMonthlyTraffic": 295,
+        "projectedMonthlyRevenue": 0.59,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (290 PV) × gap boost (1.02)"
+      },
+      "cumulativeCost": 0.15,
+      "withinBudget": true
+    },
+    {
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -66,11 +91,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (290 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.15,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -87,11 +112,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (290 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 4,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -108,11 +133,61 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (290 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "articleType": "support",
+      "context": {
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 10,
+        "freshness": 0.68,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 10,
+        "freshness": 0.65,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -133,11 +208,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -158,11 +233,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -183,11 +258,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -208,11 +283,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -233,11 +308,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -258,11 +333,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -272,7 +347,7 @@
         "wpId": 5678,
         "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
         "compositeScore": 12,
-        "freshness": 0.81,
+        "freshness": 0.8,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -283,19 +358,19 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 15,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
       "articleType": "support",
       "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
         "compositeScore": 12,
         "freshness": 0.79,
         "traffic": 0,
@@ -308,70 +383,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
-      "articleType": "support",
-      "context": {
-        "wpId": 6331,
-        "slug": "meilleur-esim-philippines-2026",
-        "compositeScore": 14,
-        "freshness": 0.96,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
-      "articleType": "support",
-      "context": {
-        "wpId": 6327,
-        "slug": "meilleur-esim-bali-2026",
-        "compositeScore": 14,
-        "freshness": 0.94,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.3,
+    "totalCost": 0.375,
     "dailyBudget": 2,
-    "itemsWithinBudget": 14,
+    "itemsWithinBudget": 15,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.078,
+    "expectedDailyRevenue": 0.098,
     "expectedDailyRoi": 0.26
   },
   "summary": {
-    "write_new": 1,
+    "write_new": 2,
     "update": 0,
     "enrich": 0,
     "standard": 3,

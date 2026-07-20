@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-07-19T05:58:48.514Z",
-    "elapsedSeconds": 4,
+    "generatedAt": "2026-07-20T06:22:18.175Z",
+    "elapsedSeconds": 6,
     "totalArticles": 38,
     "articlesWithRecommendations": 8,
     "totalRecommendations": 8,
@@ -115,14 +115,14 @@
         "avgDuration": 72
       },
       "gsc": {
-        "impressions": 18,
-        "clicks": 2,
-        "position": 24.8,
+        "impressions": 17,
+        "clicks": 1,
+        "position": 24.4,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 34.5,
-            "impressions": 11,
+            "position": 34.3,
+            "impressions": 10,
             "ctr": 0
           },
           {
@@ -152,34 +152,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2503,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:20",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 4,
-        "avgDuration": 2
-      },
-      "gsc": {
-        "impressions": 3,
-        "clicks": 0,
-        "position": 9.7,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4372,
       "slug": "esim-philippines-globe-smart-comparatif-2026",
       "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
@@ -189,9 +161,9 @@
       "internalLinks": 56,
       "lastModified": "2026-06-11T05:33:24",
       "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 83
+        "pageviews": 4,
+        "sessions": 4,
+        "avgDuration": 62
       },
       "gsc": {
         "impressions": 16,
@@ -237,6 +209,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2503,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:20",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 4,
+        "avgDuration": 2
+      },
+      "gsc": {
+        "impressions": 3,
+        "clicks": 0,
+        "position": 9.7,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
@@ -279,9 +279,9 @@
         "avgDuration": 123
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 11,
         "clicks": 1,
-        "position": 9.1,
+        "position": 7.8,
         "topQueries": []
       },
       "reels": {
@@ -549,9 +549,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 9,
+        "impressions": 7,
         "clicks": 0,
-        "position": 39.7,
+        "position": 37.7,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
@@ -729,14 +729,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 51,
+        "impressions": 46,
         "clicks": 0,
-        "position": 27.3,
+        "position": 27.2,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 27,
-            "impressions": 45,
+            "position": 26.8,
+            "impressions": 40,
             "ctr": 0
           },
           {
@@ -948,9 +948,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 0,
         "clicks": 0,
-        "position": 11,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -1200,9 +1200,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 5,
         "clicks": 0,
-        "position": 17.8,
+        "position": 9.2,
         "topQueries": []
       },
       "reels": {

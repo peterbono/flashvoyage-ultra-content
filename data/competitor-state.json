@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-07-19T05:58:50.453Z",
+  "timestamp": "2026-07-20T06:22:20.089Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-07-19T05:58:51.109Z",
+      "lastScan": "2026-07-20T06:22:21.101Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-07-19T05:58:51.554Z",
+      "lastScan": "2026-07-20T06:22:21.726Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-07-19T06:01:16.494Z",
-      "urlCount": 6832,
+      "lastScan": "2026-07-20T06:24:30.393Z",
+      "urlCount": 6837,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -6627,7 +6627,6 @@
         "https://generationvoyage.fr/caire-ete/": "2026-07-06T17:38:00+00:00",
         "https://generationvoyage.fr/visiter-mont-de-marsan-faire-voir/": "2026-07-07T07:33:44+00:00",
         "https://generationvoyage.fr/souvenirs-lombok/": "2026-07-07T09:37:38+00:00",
-        "https://generationvoyage.fr/escales-europe/": "2026-07-06T20:11:13+00:00",
         "https://generationvoyage.fr/europe-fraicheur/": "2026-07-07T11:46:48+00:00",
         "https://generationvoyage.fr/croissant-france/": "2026-07-07T10:54:09+00:00",
         "https://generationvoyage.fr/tenerife-local/": "2026-07-07T14:04:35+00:00",
@@ -6973,7 +6972,13 @@
         "https://generationvoyage.fr/porto-budget/": "2026-07-18T12:19:13+00:00",
         "https://generationvoyage.fr/souvenirs-bruges/": "2026-07-18T14:15:48+00:00",
         "https://generationvoyage.fr/verone-local/": "2026-07-18T16:43:04+00:00",
-        "https://generationvoyage.fr/visiter-morlaix-faire-voir/": "2026-07-18T07:47:00+00:00"
+        "https://generationvoyage.fr/visiter-morlaix-faire-voir/": "2026-07-18T07:47:00+00:00",
+        "https://generationvoyage.fr/athenes-ete/": "2026-07-19T10:17:54+00:00",
+        "https://generationvoyage.fr/visiter-kanazawa-faire-voir/": "2026-07-19T07:44:36+00:00",
+        "https://generationvoyage.fr/bali-solo/": "2026-07-19T12:04:56+00:00",
+        "https://generationvoyage.fr/paella-valence/": "2026-07-19T14:33:12+00:00",
+        "https://generationvoyage.fr/tournage-odyssee/": "2026-07-19T17:08:40+00:00",
+        "https://generationvoyage.fr/escales-europe/": "2026-07-19T15:28:23+00:00"
       }
     }
   }
