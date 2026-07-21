@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-07-20T06:22:18.175Z",
+    "generatedAt": "2026-07-21T05:55:41.871Z",
     "elapsedSeconds": 6,
     "totalArticles": 38,
     "articlesWithRecommendations": 8,
@@ -36,9 +36,9 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 31,
+        "impressions": 32,
         "clicks": 1,
-        "position": 9.6,
+        "position": 9.7,
         "topQueries": [
           {
             "query": "kuala lumpur ou singapour",
@@ -48,8 +48,8 @@
           },
           {
             "query": "singapour ou kuala lumpur",
-            "position": 12.7,
-            "impressions": 3,
+            "position": 12,
+            "impressions": 4,
             "ctr": 0
           }
         ]
@@ -87,9 +87,9 @@
         "avgDuration": 557
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 3,
         "clicks": 0,
-        "position": 17,
+        "position": 19,
         "topQueries": []
       },
       "reels": {
@@ -115,20 +115,14 @@
         "avgDuration": 72
       },
       "gsc": {
-        "impressions": 17,
+        "impressions": 15,
         "clicks": 1,
-        "position": 24.4,
+        "position": 23.5,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 34.3,
-            "impressions": 10,
-            "ctr": 0
-          },
-          {
-            "query": "bali lombok gili",
-            "position": 29,
-            "impressions": 1,
+            "position": 34.4,
+            "impressions": 9,
             "ctr": 0
           }
         ]
@@ -166,9 +160,9 @@
         "avgDuration": 62
       },
       "gsc": {
-        "impressions": 16,
+        "impressions": 18,
         "clicks": 0,
-        "position": 20.9,
+        "position": 19.3,
         "topQueries": [
           {
             "query": "globe esim",
@@ -209,34 +203,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2503,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:20",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 4,
-        "avgDuration": 2
-      },
-      "gsc": {
-        "impressions": 3,
-        "clicks": 0,
-        "position": 9.7,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
@@ -254,34 +220,6 @@
         "impressions": 5,
         "clicks": 0,
         "position": 12,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 6374,
-      "slug": "meilleur-esim-cambodge-2026",
-      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
-      "url": "https://flashvoyage.com/meilleur-esim-cambodge-2026/",
-      "wordCount": 1249,
-      "widgetCount": 0,
-      "internalLinks": 11,
-      "lastModified": "2026-06-15T12:00:01",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 123
-      },
-      "gsc": {
-        "impressions": 11,
-        "clicks": 1,
-        "position": 7.8,
         "topQueries": []
       },
       "reels": {
@@ -335,9 +273,9 @@
         "avgDuration": 4
       },
       "gsc": {
-        "impressions": 36,
+        "impressions": 35,
         "clicks": 0,
-        "position": 23.4,
+        "position": 23.1,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -347,8 +285,8 @@
           },
           {
             "query": "voyage de noces bali vs thailande",
-            "position": 31.4,
-            "impressions": 5,
+            "position": 31,
+            "impressions": 4,
             "ctr": 0
           },
           {
@@ -395,6 +333,34 @@
         "impressions": 5,
         "clicks": 0,
         "position": 7.6,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 6374,
+      "slug": "meilleur-esim-cambodge-2026",
+      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+      "url": "https://flashvoyage.com/meilleur-esim-cambodge-2026/",
+      "wordCount": 1249,
+      "widgetCount": 0,
+      "internalLinks": 11,
+      "lastModified": "2026-06-15T12:00:01",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 229
+      },
+      "gsc": {
+        "impressions": 11,
+        "clicks": 1,
+        "position": 7.8,
         "topQueries": []
       },
       "reels": {
@@ -504,6 +470,34 @@
         }
       ],
       "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2503,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:20",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 2,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 3,
+        "clicks": 0,
+        "position": 9.7,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -731,11 +725,11 @@
       "gsc": {
         "impressions": 46,
         "clicks": 0,
-        "position": 27.2,
+        "position": 26.9,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 26.8,
+            "position": 26.5,
             "impressions": 40,
             "ctr": 0
           },
@@ -836,9 +830,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 0,
         "clicks": 0,
-        "position": 54,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -1200,9 +1194,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 6,
         "clicks": 0,
-        "position": 9.2,
+        "position": 13,
         "topQueries": []
       },
       "reels": {
