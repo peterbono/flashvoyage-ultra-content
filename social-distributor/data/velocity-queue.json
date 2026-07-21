@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-07-21T13:26:25.124Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-07-21T19:11:35.205Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "US K9 sniffs out dead monitor lizard in luggage from Thailand",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3289377/us-k9-sniffs-out-dead-monitor-lizard-in-luggage-from-thailand",
-      "velocityScore": 0.448,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2242,
-      "estimatedTrafficIn24h": 2190,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.996,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3.9
-      },
-      "detectedAt": "2026-07-21T09:32:00.000Z",
-      "scoredAt": "2026-07-21T13:26:19.257Z"
-    }
-  ]
+  "queue": []
 }
