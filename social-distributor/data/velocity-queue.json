@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-07-21T02:07:35.646Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-07-21T08:16:44.906Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Thailand airports to allow baggage inspections without passengers",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/world/aviation/thailand-airports-baggage-inspections-without-passengers",
+      "velocityScore": 0.499,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2495,
+      "estimatedTrafficIn24h": 2438,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2
+      },
+      "detectedAt": "2026-07-21T06:14:57.000Z",
+      "scoredAt": "2026-07-21T08:16:34.240Z"
+    }
+  ]
 }
