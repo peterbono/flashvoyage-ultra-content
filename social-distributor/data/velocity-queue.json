@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-21T08:16:44.906Z",
+  "generatedAt": "2026-07-21T13:26:25.124Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Thailand airports to allow baggage inspections without passengers",
+      "topic": "US K9 sniffs out dead monitor lizard in luggage from Thailand",
       "source": "rss_breaking",
       "destination": "thailand",
-      "link": "https://thethaiger.com/news/world/aviation/thailand-airports-baggage-inspections-without-passengers",
-      "velocityScore": 0.499,
+      "link": "https://www.bangkokpost.com/thailand/general/3289377/us-k9-sniffs-out-dead-monitor-lizard-in-luggage-from-thailand",
+      "velocityScore": 0.448,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
+      "hoursRemaining": 716,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2495,
-      "estimatedTrafficIn24h": 2438,
+      "estimatedTrafficNow": 2242,
+      "estimatedTrafficIn24h": 2190,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.998,
+        "trendIntensity": 0.9,
+        "timeDecay": 0.996,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 2
+        "hoursSinceDetection": 3.9
       },
-      "detectedAt": "2026-07-21T06:14:57.000Z",
-      "scoredAt": "2026-07-21T08:16:34.240Z"
+      "detectedAt": "2026-07-21T09:32:00.000Z",
+      "scoredAt": "2026-07-21T13:26:19.257Z"
     }
   ]
 }
