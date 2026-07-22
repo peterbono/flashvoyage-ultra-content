@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-21T05:55:42.831Z",
+  "timestamp": "2026-07-22T05:54:53.934Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -113,6 +113,56 @@
     },
     {
       "rank": 5,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "argentine football",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "budget",
+        "suggestedTitle": "Argentine football : Le Guide Budget Complet",
+        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+        "reason": "Content gap: \"argentine football\" (score 40, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 5.15,
+        "projectedMonthlyTraffic": 193,
+        "projectedMonthlyRevenue": 0.386,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (290 PV) × gap boost (0.67)"
+      },
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "articleType": "support",
+      "context": {
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 10,
+        "freshness": 0.69,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -133,11 +183,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -158,11 +208,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -171,31 +221,6 @@
       "context": {
         "wpId": 4030,
         "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-        "compositeScore": 11,
-        "freshness": 0.72,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 8,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "articleType": "support",
-      "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 11,
         "freshness": 0.71,
         "traffic": 0,
@@ -208,19 +233,19 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "articleType": "support",
       "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 11,
         "freshness": 0.7,
         "traffic": 0,
@@ -233,21 +258,21 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
       "articleType": "support",
       "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "wpId": 5678,
+        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
         "compositeScore": 12,
-        "freshness": 0.79,
+        "freshness": 0.8,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -258,11 +283,61 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "articleType": "support",
+      "context": {
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 12,
+        "freshness": 0.78,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
+      "articleType": "support",
+      "context": {
+        "wpId": 6309,
+        "slug": "meilleur-esim-japon-2026",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -272,7 +347,7 @@
         "wpId": 6331,
         "slug": "meilleur-esim-philippines-2026",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -283,11 +358,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 15,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -297,7 +372,7 @@
         "wpId": 6327,
         "slug": "meilleur-esim-bali-2026",
         "compositeScore": 14,
-        "freshness": 0.94,
+        "freshness": 0.93,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       },
@@ -308,70 +383,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
-      "articleType": "support",
-      "context": {
-        "wpId": 6309,
-        "slug": "meilleur-esim-japon-2026",
-        "compositeScore": 14,
-        "freshness": 0.9,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 14,
-        "freshness": 0.7,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.3,
+    "totalCost": 0.375,
     "dailyBudget": 2,
-    "itemsWithinBudget": 14,
+    "itemsWithinBudget": 15,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.078,
-    "expectedDailyRoi": 0.26
+    "expectedDailyRevenue": 0.091,
+    "expectedDailyRoi": 0.24
   },
   "summary": {
-    "write_new": 1,
+    "write_new": 2,
     "update": 0,
     "enrich": 0,
     "standard": 3,

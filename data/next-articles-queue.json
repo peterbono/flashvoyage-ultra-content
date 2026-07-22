@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-07-21T05:55:34.495Z",
-  "queueSize": 14,
+  "timestamp": "2026-07-22T05:54:46.869Z",
+  "queueSize": 15,
   "queue": [
     {
       "rank": 1,
@@ -20,6 +20,22 @@
     },
     {
       "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "argentine football",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "budget",
+        "suggestedTitle": "Argentine football : Le Guide Budget Complet",
+        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+        "reason": "Content gap: \"argentine football\" (score 40, source: trends)"
+      }
+    },
+    {
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +47,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +59,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -55,7 +71,23 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "articleType": "support",
+      "context": {
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 10,
+        "freshness": 0.69,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -71,7 +103,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -87,7 +119,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -97,13 +129,13 @@
         "wpId": 4030,
         "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 11,
-        "freshness": 0.72,
+        "freshness": 0.71,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
     },
     {
-      "rank": 8,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -113,29 +145,29 @@
         "wpId": 3425,
         "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 11,
-        "freshness": 0.71,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
-      "articleType": "support",
-      "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
-        "compositeScore": 11,
         "freshness": 0.7,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
     },
     {
-      "rank": 10,
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "articleType": "support",
+      "context": {
+        "wpId": 5678,
+        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+        "compositeScore": 12,
+        "freshness": 0.8,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -145,13 +177,29 @@
         "wpId": 5270,
         "slug": "esim-japon-combien-ca-te-coute-vraiment",
         "compositeScore": 12,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
     },
     {
-      "rank": 11,
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
+      "articleType": "support",
+      "context": {
+        "wpId": 6309,
+        "slug": "meilleur-esim-japon-2026",
+        "compositeScore": 13,
+        "freshness": 0.89,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -161,13 +209,13 @@
         "wpId": 6331,
         "slug": "meilleur-esim-philippines-2026",
         "compositeScore": 14,
-        "freshness": 0.96,
+        "freshness": 0.95,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     },
     {
-      "rank": 12,
+      "rank": 15,
       "action": "review",
       "priority": "P4",
       "priorityScore": -4,
@@ -177,46 +225,14 @@
         "wpId": 6327,
         "slug": "meilleur-esim-bali-2026",
         "compositeScore": 14,
-        "freshness": 0.94,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
-      "articleType": "support",
-      "context": {
-        "wpId": 6309,
-        "slug": "meilleur-esim-japon-2026",
-        "compositeScore": 14,
-        "freshness": 0.9,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 14,
-        "freshness": 0.7,
+        "freshness": 0.93,
         "traffic": 0,
         "reason": "Low-performing article: score=14, consider merge/update/delete"
       }
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 2,
     "update": 0,
     "enrich": 0,
     "standard": 3,

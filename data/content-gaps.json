@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-07-21T05:55:32.606Z",
-  "gapCount": 1,
+  "timestamp": "2026-07-22T05:54:44.929Z",
+  "gapCount": 2,
   "gaps": [
     {
       "topic": "voyage pas cher",
@@ -18,14 +18,32 @@
       "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
       "articleType": "support",
       "priority": "high"
+    },
+    {
+      "topic": "argentine football",
+      "source": "trends",
+      "gapScore": 40,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.6
+      },
+      "destination": null,
+      "category": "budget",
+      "suggestedTitle": "Argentine football : Le Guide Budget Complet",
+      "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
-      "high": 1
+      "high": 1,
+      "medium": 1
     },
     "byCategory": {
-      "budget": 1
+      "budget": 2
     },
     "byDestination": {
       "vietnam": 1

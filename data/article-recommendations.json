@@ -1,22 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-07-21T05:55:41.871Z",
-    "elapsedSeconds": 6,
+    "generatedAt": "2026-07-22T05:54:52.975Z",
+    "elapsedSeconds": 5,
     "totalArticles": 38,
-    "articlesWithRecommendations": 8,
-    "totalRecommendations": 8,
+    "articlesWithRecommendations": 9,
+    "totalRecommendations": 9,
     "byPriority": {
       "P0": 0,
       "P1": 0,
-      "P2": 8
+      "P2": 9
     },
     "byType": {
-      "seo": 8
+      "seo": 9
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
-        "count": 8
+        "count": 9
       }
     ]
   },
@@ -36,9 +36,9 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 32,
+        "impressions": 33,
         "clicks": 1,
-        "position": 9.7,
+        "position": 9.6,
         "topQueries": [
           {
             "query": "kuala lumpur ou singapour",
@@ -73,34 +73,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4373,
-      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
-      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
-      "wordCount": 4965,
-      "widgetCount": 2,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:21",
-      "ga4": {
-        "pageviews": 6,
-        "sessions": 3,
-        "avgDuration": 557
-      },
-      "gsc": {
-        "impressions": 3,
-        "clicks": 0,
-        "position": 19,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4370,
       "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
       "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
@@ -110,19 +82,19 @@
       "internalLinks": 47,
       "lastModified": "2026-06-11T05:33:27",
       "ga4": {
-        "pageviews": 5,
-        "sessions": 4,
-        "avgDuration": 72
+        "pageviews": 4,
+        "sessions": 3,
+        "avgDuration": 96
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 14,
         "clicks": 1,
-        "position": 23.5,
+        "position": 22.8,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 34.4,
-            "impressions": 9,
+            "position": 34.6,
+            "impressions": 8,
             "ctr": 0
           }
         ]
@@ -146,6 +118,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4373,
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
+      "wordCount": 4965,
+      "widgetCount": 2,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:21",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 2,
+        "avgDuration": 1
+      },
+      "gsc": {
+        "impressions": 4,
+        "clicks": 0,
+        "position": 14.5,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4372,
       "slug": "esim-philippines-globe-smart-comparatif-2026",
       "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
@@ -155,9 +155,9 @@
       "internalLinks": 56,
       "lastModified": "2026-06-11T05:33:24",
       "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 62
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 83
       },
       "gsc": {
         "impressions": 18,
@@ -217,9 +217,9 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 6,
         "clicks": 0,
-        "position": 12,
+        "position": 11.8,
         "topQueries": []
       },
       "reels": {
@@ -270,7 +270,7 @@
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 4
+        "avgDuration": 3
       },
       "gsc": {
         "impressions": 35,
@@ -358,17 +358,34 @@
         "avgDuration": 229
       },
       "gsc": {
-        "impressions": 11,
+        "impressions": 12,
         "clicks": 1,
-        "position": 7.8,
-        "topQueries": []
+        "position": 8,
+        "topQueries": [
+          {
+            "query": "esim cellcard",
+            "position": 10,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [],
-      "recommendationCount": 0,
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim cellcard\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim cellcard\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -594,14 +611,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 9,
+        "impressions": 8,
         "clicks": 0,
-        "position": 28,
+        "position": 27.8,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
-            "position": 28.2,
-            "impressions": 6,
+            "position": 27.8,
+            "impressions": 5,
             "ctr": 0
           }
         ]
@@ -723,14 +740,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 46,
+        "impressions": 50,
         "clicks": 0,
         "position": 26.9,
         "topQueries": [
           {
             "query": "esim asie du sud est",
             "position": 26.5,
-            "impressions": 40,
+            "impressions": 44,
             "ctr": 0
           },
           {
