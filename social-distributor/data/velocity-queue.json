@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-07-21T19:11:35.205Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-07-22T02:05:54.879Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Vietnam's international air passenger number surges past 26 million in 6 months",
+      "source": "rss_breaking",
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/traffic/vietnam-s-international-air-passenger-number-surges-past-26-million-in-6-months-5099694.html",
+      "velocityScore": 0.45,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 719,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 1499,
+      "estimatedTrafficIn24h": 1465,
+      "trafficLossPerHour": 1,
+      "breakdown": {
+        "trendIntensity": 0.6,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 0.9
+      },
+      "detectedAt": "2026-07-22T01:13:15.000Z",
+      "scoredAt": "2026-07-22T02:05:54.182Z"
+    }
+  ]
 }
