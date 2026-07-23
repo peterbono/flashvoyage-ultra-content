@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-22T05:54:45.891Z",
+  "timestamp": "2026-07-23T06:05:50.280Z",
   "articleMap": {
     "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
       "wpId": 5072,
@@ -45,59 +45,6 @@
         "avantapres"
       ],
       "category": "destination",
-      "igReferralTraffic": null
-    },
-    "japon-couple-15-jours-budget-tout-compris-2026": {
-      "wpId": 4373,
-      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-05-08",
-          "format": "budget",
-          "platform": "tiktok",
-          "score": 26.4,
-          "engagementRate": 0,
-          "publishedAt": "2026-05-08",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        },
-        {
-          "reelId": "tiktok:2026-04-30",
-          "format": "unknown",
-          "platform": "tiktok",
-          "score": 9.2,
-          "engagementRate": 0,
-          "publishedAt": "2026-04-30",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        },
-        {
-          "reelId": "tiktok:2026-04-04",
-          "format": "pick",
-          "platform": "tiktok",
-          "score": 26.2,
-          "engagementRate": 0,
-          "publishedAt": "2026-04-04",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        },
-        {
-          "reelId": "tiktok:2026-04-27",
-          "format": "pick",
-          "platform": "tiktok",
-          "score": 6.7,
-          "engagementRate": 0,
-          "publishedAt": "2026-04-27",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "bali-vs-thailande-premier-voyage-asie-comparatif": {
@@ -156,6 +103,71 @@
       "category": "budget",
       "igReferralTraffic": null
     },
+    "japon-couple-15-jours-budget-tout-compris-2026": {
+      "wpId": 4373,
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-05-08",
+          "format": "budget",
+          "platform": "tiktok",
+          "score": 26.4,
+          "engagementRate": 0,
+          "publishedAt": "2026-05-08",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        },
+        {
+          "reelId": "tiktok:2026-04-30",
+          "format": "unknown",
+          "platform": "tiktok",
+          "score": 9.2,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-30",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        },
+        {
+          "reelId": "tiktok:2026-04-04",
+          "format": "pick",
+          "platform": "tiktok",
+          "score": 26.2,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-04",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        },
+        {
+          "reelId": "tiktok:2026-04-27",
+          "format": "pick",
+          "platform": "tiktok",
+          "score": 6.7,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-27",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "esim-thailande-comparatif-ais-dtac-true-2026": {
+      "wpId": 4253,
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "meilleur-esim-cambodge-2026": {
       "wpId": 6374,
       "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
@@ -203,9 +215,21 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "esim-thailande-comparatif-ais-dtac-true-2026": {
-      "wpId": 4253,
-      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+    "meilleur-esim-thailande-2026": {
+      "wpId": 6195,
+      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "destination",
+      "igReferralTraffic": null
+    },
+    "esim-philippines-globe-smart-comparatif-2026": {
+      "wpId": 4372,
+      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -215,9 +239,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "esim-philippines-globe-smart-comparatif-2026": {
-      "wpId": 4372,
-      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
+    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
+      "wpId": 5333,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -263,18 +287,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
-      "wpId": 3090,
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
     "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage": {
       "wpId": 5179,
       "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
@@ -310,30 +322,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "meilleur-esim-thailande-2026": {
-      "wpId": 6195,
-      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "destination",
-      "igReferralTraffic": null
-    },
-    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
-      "wpId": 5333,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
       "wpId": 5260,
       "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
@@ -358,18 +346,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "meilleur-esim-vietnam-2026": {
-      "wpId": 6323,
-      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "destination",
-      "igReferralTraffic": null
-    },
     "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
       "wpId": 5063,
       "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
@@ -382,6 +358,30 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
+    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
+      "wpId": 3090,
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "meilleur-esim-vietnam-2026": {
+      "wpId": 6323,
+      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "destination",
+      "igReferralTraffic": null
+    },
     "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
       "wpId": 4105,
       "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
@@ -392,17 +392,6 @@
         "avantapres"
       ],
       "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils": {
-      "wpId": 3107,
-      "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
-      "reels": [],
-      "suggestedFormats": [
-        "poll",
-        "humor"
-      ],
-      "category": "visa",
       "igReferralTraffic": null
     },
     "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
@@ -559,6 +548,17 @@
         "humor"
       ],
       "category": "default",
+      "igReferralTraffic": null
+    },
+    "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils": {
+      "wpId": 3107,
+      "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "reels": [],
+      "suggestedFormats": [
+        "poll",
+        "humor"
+      ],
+      "category": "visa",
       "igReferralTraffic": null
     },
     "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget": {

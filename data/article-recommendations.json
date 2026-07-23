@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-07-22T05:54:52.975Z",
+    "generatedAt": "2026-07-23T06:05:57.185Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 9,
@@ -33,17 +33,17 @@
       "ga4": {
         "pageviews": 7,
         "sessions": 6,
-        "avgDuration": 7
+        "avgDuration": 27
       },
       "gsc": {
-        "impressions": 33,
+        "impressions": 32,
         "clicks": 1,
-        "position": 9.6,
+        "position": 9.8,
         "topQueries": [
           {
             "query": "kuala lumpur ou singapour",
-            "position": 13.7,
-            "impressions": 6,
+            "position": 14.4,
+            "impressions": 5,
             "ctr": 0
           },
           {
@@ -87,14 +87,14 @@
         "avgDuration": 96
       },
       "gsc": {
-        "impressions": 14,
+        "impressions": 13,
         "clicks": 1,
-        "position": 22.8,
+        "position": 21.8,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 34.6,
-            "impressions": 8,
+            "position": 34.4,
+            "impressions": 7,
             "ctr": 0
           }
         ]
@@ -217,9 +217,9 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 7,
         "clicks": 0,
-        "position": 11.8,
+        "position": 11.3,
         "topQueries": []
       },
       "reels": {
@@ -273,9 +273,9 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 35,
+        "impressions": 36,
         "clicks": 0,
-        "position": 23.1,
+        "position": 22.7,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -560,14 +560,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 8,
         "clicks": 0,
-        "position": 37.7,
+        "position": 34.9,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
-            "position": 22,
-            "impressions": 3,
+            "position": 20.3,
+            "impressions": 4,
             "ctr": 0
           },
           {
@@ -611,14 +611,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 7,
         "clicks": 0,
-        "position": 27.8,
+        "position": 27.4,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
-            "position": 27.8,
-            "impressions": 5,
+            "position": 27.3,
+            "impressions": 4,
             "ctr": 0
           }
         ]
@@ -1211,9 +1211,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 5,
         "clicks": 0,
-        "position": 13,
+        "position": 13.4,
         "topQueries": []
       },
       "reels": {

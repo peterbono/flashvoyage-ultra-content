@@ -1,7 +1,24 @@
 {
-  "timestamp": "2026-07-22T05:54:44.929Z",
-  "gapCount": 2,
+  "timestamp": "2026-07-23T06:05:49.345Z",
+  "gapCount": 3,
   "gaps": [
+    {
+      "topic": "voyage laos",
+      "source": "trends",
+      "gapScore": 62,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.6
+      },
+      "destination": "vietnam",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
     {
       "topic": "voyage pas cher",
       "source": "trends",
@@ -20,33 +37,35 @@
       "priority": "high"
     },
     {
-      "topic": "argentine football",
+      "topic": "carte incendie france",
       "source": "trends",
-      "gapScore": 40,
+      "gapScore": 45,
       "signals": {
         "searchVolume": 0.29,
         "trendGrowth": 0.29,
         "monetization": 0.6,
-        "competition": 0.6
+        "competition": 0.4
       },
       "destination": null,
-      "category": "budget",
-      "suggestedTitle": "Argentine football : Le Guide Budget Complet",
-      "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+      "category": "pratique",
+      "suggestedTitle": "Carte incendie france : Guide Pratique 2026",
+      "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
       "articleType": "support",
       "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
-      "high": 1,
+      "high": 2,
       "medium": 1
     },
     "byCategory": {
-      "budget": 2
+      "destination": 1,
+      "budget": 1,
+      "pratique": 1
     },
     "byDestination": {
-      "vietnam": 1
+      "vietnam": 2
     },
     "topDestinationGaps": [
       "vietnam"

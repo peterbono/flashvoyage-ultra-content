@@ -1,9 +1,25 @@
 {
-  "timestamp": "2026-07-22T05:54:46.869Z",
+  "timestamp": "2026-07-23T06:05:51.219Z",
   "queueSize": 15,
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 142,
+      "topic": "voyage laos",
+      "articleType": "support",
+      "context": {
+        "gapScore": 62,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"voyage laos\" (score 62, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 141,
@@ -19,23 +35,23 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 3,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 120,
-      "topic": "argentine football",
+      "priorityScore": 125,
+      "topic": "carte incendie france",
       "articleType": "support",
       "context": {
-        "gapScore": 40,
+        "gapScore": 45,
         "destination": null,
-        "category": "budget",
-        "suggestedTitle": "Argentine football : Le Guide Budget Complet",
-        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
-        "reason": "Content gap: \"argentine football\" (score 40, source: trends)"
+        "category": "pratique",
+        "suggestedTitle": "Carte incendie france : Guide Pratique 2026",
+        "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
+        "reason": "Content gap: \"carte incendie france\" (score 45, source: trends)"
       }
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -47,7 +63,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -59,7 +75,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 6,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -71,7 +87,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -87,7 +103,23 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "articleType": "support",
+      "context": {
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 10,
+        "freshness": 0.67,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -103,7 +135,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -113,13 +145,13 @@
         "wpId": 4125,
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 11,
-        "freshness": 0.72,
+        "freshness": 0.71,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
     },
     {
-      "rank": 9,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -135,7 +167,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -151,7 +183,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -161,13 +193,13 @@
         "wpId": 5678,
         "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
         "compositeScore": 12,
-        "freshness": 0.8,
+        "freshness": 0.79,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
     },
     {
-      "rank": 12,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -183,7 +215,7 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 15,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -197,46 +229,14 @@
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
-      "articleType": "support",
-      "context": {
-        "wpId": 6331,
-        "slug": "meilleur-esim-philippines-2026",
-        "compositeScore": 14,
-        "freshness": 0.95,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 15,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -4,
-      "topic": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
-      "articleType": "support",
-      "context": {
-        "wpId": 6327,
-        "slug": "meilleur-esim-bali-2026",
-        "compositeScore": 14,
-        "freshness": 0.93,
-        "traffic": 0,
-        "reason": "Low-performing article: score=14, consider merge/update/delete"
-      }
     }
   ],
   "summary": {
-    "write_new": 2,
+    "write_new": 3,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 10
+    "review": 9
   },
   "thresholds": {
     "staleFreshnessThreshold": 0.3,
