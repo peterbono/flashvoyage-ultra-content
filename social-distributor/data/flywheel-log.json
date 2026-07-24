@@ -1,37 +1,6 @@
 {
   "runs": [
     {
-      "timestamp": "2026-06-29T18:41:23.723Z",
-      "durationSeconds": 13.4,
-      "phases": {
-        "abTests": {
-          "evaluated": 0,
-          "newTestsCreated": 0,
-          "wins": 0,
-          "losses": 0,
-          "reverted": 0
-        },
-        "velocity": {
-          "topicsScanned": 0,
-          "urgentCount": 0,
-          "priorityCount": 0,
-          "urgentTopic": null
-        },
-        "refreshes": {
-          "refreshed": 0,
-          "skipped": 0
-        }
-      },
-      "dailyUsage": {
-        "date": "2026-06-29",
-        "titleChanges": 0,
-        "widgetAdds": 0,
-        "reelCreations": 0,
-        "internalLinks": 0,
-        "refreshes": 0
-      }
-    },
-    {
       "timestamp": "2026-06-30T00:40:55.910Z",
       "durationSeconds": 14.3,
       "phases": {
@@ -3072,6 +3041,37 @@
     {
       "timestamp": "2026-07-24T13:25:21.030Z",
       "durationSeconds": 14.2,
+      "phases": {
+        "abTests": {
+          "evaluated": 0,
+          "newTestsCreated": 0,
+          "wins": 0,
+          "losses": 0,
+          "reverted": 0
+        },
+        "velocity": {
+          "topicsScanned": 0,
+          "urgentCount": 0,
+          "priorityCount": 0,
+          "urgentTopic": null
+        },
+        "refreshes": {
+          "refreshed": 0,
+          "skipped": 0
+        }
+      },
+      "dailyUsage": {
+        "date": "2026-07-24",
+        "titleChanges": 0,
+        "widgetAdds": 0,
+        "reelCreations": 0,
+        "internalLinks": 0,
+        "refreshes": 0
+      }
+    },
+    {
+      "timestamp": "2026-07-24T19:17:27.533Z",
+      "durationSeconds": 8.2,
       "phases": {
         "abTests": {
           "evaluated": 0,
