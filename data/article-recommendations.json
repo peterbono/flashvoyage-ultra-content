@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-07-23T06:05:57.185Z",
+    "generatedAt": "2026-07-24T05:54:06.100Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 9,
@@ -33,12 +33,12 @@
       "ga4": {
         "pageviews": 7,
         "sessions": 6,
-        "avgDuration": 27
+        "avgDuration": 26
       },
       "gsc": {
-        "impressions": 32,
+        "impressions": 35,
         "clicks": 1,
-        "position": 9.8,
+        "position": 9.6,
         "topQueries": [
           {
             "query": "kuala lumpur ou singapour",
@@ -87,14 +87,14 @@
         "avgDuration": 96
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 11,
         "clicks": 1,
-        "position": 21.8,
+        "position": 21.3,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 34.4,
-            "impressions": 7,
+            "position": 34.5,
+            "impressions": 6,
             "ctr": 0
           }
         ]
@@ -160,9 +160,9 @@
         "avgDuration": 83
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 17,
         "clicks": 0,
-        "position": 19.3,
+        "position": 19.4,
         "topQueries": [
           {
             "query": "globe esim",
@@ -217,9 +217,9 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 9,
         "clicks": 0,
-        "position": 11.3,
+        "position": 11.1,
         "topQueries": []
       },
       "reels": {
@@ -273,9 +273,9 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 36,
+        "impressions": 38,
         "clicks": 0,
-        "position": 22.7,
+        "position": 24.1,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -330,9 +330,9 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 3,
         "clicks": 0,
-        "position": 7.6,
+        "position": 10,
         "topQueries": []
       },
       "reels": {
@@ -386,34 +386,6 @@
         }
       ],
       "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 6195,
-      "slug": "meilleur-esim-thailande-2026",
-      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
-      "url": "https://flashvoyage.com/meilleur-esim-thailande-2026/",
-      "wordCount": 1886,
-      "widgetCount": 0,
-      "internalLinks": 17,
-      "lastModified": "2026-06-11T05:33:01",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 16
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -560,20 +532,20 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 6,
         "clicks": 0,
-        "position": 34.9,
+        "position": 29,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
-            "position": 20.3,
-            "impressions": 4,
+            "position": 18.3,
+            "impressions": 3,
             "ctr": 0
           },
           {
             "query": "itinéraire luxe asie du sud-est",
-            "position": 78,
-            "impressions": 2,
+            "position": 77,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -611,14 +583,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 6,
         "clicks": 0,
-        "position": 27.4,
+        "position": 27.2,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
-            "position": 27.3,
-            "impressions": 4,
+            "position": 26.7,
+            "impressions": 3,
             "ctr": 0
           }
         ]
@@ -726,6 +698,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 6195,
+      "slug": "meilleur-esim-thailande-2026",
+      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
+      "url": "https://flashvoyage.com/meilleur-esim-thailande-2026/",
+      "wordCount": 1886,
+      "widgetCount": 0,
+      "internalLinks": 17,
+      "lastModified": "2026-06-11T05:33:01",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5678,
       "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
       "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
@@ -740,13 +740,13 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 50,
+        "impressions": 53,
         "clicks": 0,
-        "position": 26.9,
+        "position": 27.1,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 26.5,
+            "position": 26.3,
             "impressions": 44,
             "ctr": 0
           },
@@ -1211,9 +1211,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 6,
         "clicks": 0,
-        "position": 13.4,
+        "position": 26.8,
         "topQueries": []
       },
       "reels": {

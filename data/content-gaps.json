@@ -1,74 +1,37 @@
 {
-  "timestamp": "2026-07-23T06:05:49.345Z",
-  "gapCount": 3,
+  "timestamp": "2026-07-24T05:53:58.302Z",
+  "gapCount": 1,
   "gaps": [
     {
-      "topic": "voyage laos",
+      "topic": "l'indépendant",
       "source": "trends",
-      "gapScore": 62,
+      "gapScore": 40,
       "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.6
-      },
-      "destination": "vietnam",
-      "category": "destination",
-      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
-      "topic": "voyage pas cher",
-      "source": "trends",
-      "gapScore": 61,
-      "signals": {
-        "searchVolume": 0.47,
-        "trendGrowth": 0.47,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "vietnam",
-      "category": "budget",
-      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
-      "topic": "carte incendie france",
-      "source": "trends",
-      "gapScore": 45,
-      "signals": {
-        "searchVolume": 0.29,
-        "trendGrowth": 0.29,
+        "searchVolume": 0.35,
+        "trendGrowth": 0.35,
         "monetization": 0.6,
-        "competition": 0.4
+        "competition": 0.8
       },
-      "destination": null,
-      "category": "pratique",
-      "suggestedTitle": "Carte incendie france : Guide Pratique 2026",
-      "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
+      "destination": "inde",
+      "category": "destination",
+      "suggestedTitle": "Inde 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Inde — format pick ou month",
       "articleType": "support",
       "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
-      "high": 2,
       "medium": 1
     },
     "byCategory": {
-      "destination": 1,
-      "budget": 1,
-      "pratique": 1
+      "destination": 1
     },
     "byDestination": {
-      "vietnam": 2
+      "inde": 1
     },
     "topDestinationGaps": [
-      "vietnam"
+      "inde"
     ]
   }
 }

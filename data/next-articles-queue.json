@@ -1,57 +1,25 @@
 {
-  "timestamp": "2026-07-23T06:05:51.219Z",
-  "queueSize": 15,
+  "timestamp": "2026-07-24T05:54:00.177Z",
+  "queueSize": 14,
   "queue": [
     {
       "rank": 1,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 142,
-      "topic": "voyage laos",
+      "priorityScore": 120,
+      "topic": "l'indépendant",
       "articleType": "support",
       "context": {
-        "gapScore": 62,
-        "destination": "vietnam",
+        "gapScore": 40,
+        "destination": "inde",
         "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"voyage laos\" (score 62, source: trends)"
+        "suggestedTitle": "Inde 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Inde — format pick ou month",
+        "reason": "Content gap: \"l'indépendant\" (score 40, source: trends)"
       }
     },
     {
       "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 61,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 125,
-      "topic": "carte incendie france",
-      "articleType": "support",
-      "context": {
-        "gapScore": 45,
-        "destination": null,
-        "category": "pratique",
-        "suggestedTitle": "Carte incendie france : Guide Pratique 2026",
-        "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
-        "reason": "Content gap: \"carte incendie france\" (score 45, source: trends)"
-      }
-    },
-    {
-      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -63,7 +31,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -75,7 +43,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -84,6 +52,38 @@
       "context": {
         "cyclePosition": 1,
         "reason": "Standard editorial calendar rotation (position 2/5)"
+      }
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 9,
+        "freshness": 0.63,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "articleType": "support",
+      "context": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 10,
+        "freshness": 0.69,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
       }
     },
     {
@@ -123,11 +123,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
-      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
       "articleType": "support",
       "context": {
-        "wpId": 2924,
-        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 10,
         "freshness": 0.64,
         "traffic": 0,
@@ -136,6 +136,22 @@
     },
     {
       "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+      "articleType": "support",
+      "context": {
+        "wpId": 5063,
+        "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
+        "compositeScore": 11,
+        "freshness": 0.76,
+        "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -151,7 +167,23 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4105,
+        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+        "compositeScore": 11,
+        "freshness": 0.71,
+        "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -167,7 +199,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -181,62 +213,14 @@
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "articleType": "support",
-      "context": {
-        "wpId": 5678,
-        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-        "compositeScore": 12,
-        "freshness": 0.79,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 12,
-        "freshness": 0.78,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 15,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
-      "articleType": "support",
-      "context": {
-        "wpId": 6309,
-        "slug": "meilleur-esim-japon-2026",
-        "compositeScore": 13,
-        "freshness": 0.89,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
     }
   ],
   "summary": {
-    "write_new": 3,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 9
+    "review": 10
   },
   "thresholds": {
     "staleFreshnessThreshold": 0.3,

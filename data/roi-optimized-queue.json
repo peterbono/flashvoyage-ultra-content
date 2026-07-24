@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-23T06:05:58.114Z",
+  "timestamp": "2026-07-24T05:54:07.049Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -20,61 +20,11 @@
     "medianMonthlyPV": 290,
     "medianTrafficSignal": "0.290",
     "avgRpm": 2,
-    "articlesAnalyzed": 15
+    "articlesAnalyzed": 14
   },
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 142,
-      "topic": "voyage laos",
-      "articleType": "support",
-      "context": {
-        "gapScore": 62,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"voyage laos\" (score 62, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 8,
-        "projectedMonthlyTraffic": 300,
-        "projectedMonthlyRevenue": 0.6,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (290 PV) × gap boost (1.03)"
-      },
-      "cumulativeCost": 0.075,
-      "withinBudget": true
-    },
-    {
-      "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 141,
-      "topic": "voyage pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 61,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 7.87,
-        "projectedMonthlyTraffic": 295,
-        "projectedMonthlyRevenue": 0.59,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (290 PV) × gap boost (1.02)"
-      },
-      "cumulativeCost": 0.15,
-      "withinBudget": true
-    },
-    {
-      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -91,11 +41,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (290 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.075,
       "withinBudget": true
     },
     {
-      "rank": 4,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -112,11 +62,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (290 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.15,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -133,32 +83,82 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (290 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 4,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "l'indépendant",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": "inde",
+        "category": "destination",
+        "suggestedTitle": "Inde 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Inde — format pick ou month",
+        "reason": "Content gap: \"l'indépendant\" (score 40, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 5.15,
+        "projectedMonthlyTraffic": 193,
+        "projectedMonthlyRevenue": 0.386,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (290 PV) × gap boost (0.67)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 9,
+        "freshness": 0.63,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
       "rank": 6,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 125,
-      "topic": "carte incendie france",
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
       "articleType": "support",
       "context": {
-        "gapScore": 45,
-        "destination": null,
-        "category": "pratique",
-        "suggestedTitle": "Carte incendie france : Guide Pratique 2026",
-        "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
-        "reason": "Content gap: \"carte incendie france\" (score 45, source: trends)"
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 10,
+        "freshness": 0.69,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
       },
       "roi": {
-        "expectedRoi": 5.81,
-        "projectedMonthlyTraffic": 218,
-        "projectedMonthlyRevenue": 0.436,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (290 PV) × gap boost (0.75)"
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.45,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -183,7 +183,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.45,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -208,7 +208,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.45,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -216,11 +216,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
-      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
       "articleType": "support",
       "context": {
-        "wpId": 2924,
-        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 10,
         "freshness": 0.64,
         "traffic": 0,
@@ -233,11 +233,36 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.45,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
       "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+      "articleType": "support",
+      "context": {
+        "wpId": 5063,
+        "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
+        "compositeScore": 11,
+        "freshness": 0.76,
+        "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -258,11 +283,36 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.45,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4105,
+        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+        "compositeScore": 11,
+        "freshness": 0.71,
+        "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -283,11 +333,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.45,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -308,98 +358,23 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.45,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "articleType": "support",
-      "context": {
-        "wpId": 5678,
-        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-        "compositeScore": 12,
-        "freshness": 0.79,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.45,
-      "withinBudget": true
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 12,
-        "freshness": 0.78,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.45,
-      "withinBudget": true
-    },
-    {
-      "rank": 15,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
-      "articleType": "support",
-      "context": {
-        "wpId": 6309,
-        "slug": "meilleur-esim-japon-2026",
-        "compositeScore": 13,
-        "freshness": 0.89,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.45,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.45,
+    "totalCost": 0.3,
     "dailyBudget": 2,
-    "itemsWithinBudget": 15,
+    "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.112,
-    "expectedDailyRoi": 0.25
+    "expectedDailyRevenue": 0.071,
+    "expectedDailyRoi": 0.24
   },
   "summary": {
-    "write_new": 3,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,
-    "review": 9
+    "review": 10
   }
 }
