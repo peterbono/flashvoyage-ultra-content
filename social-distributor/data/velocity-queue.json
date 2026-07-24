@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-07-24T02:08:43.782Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-07-24T08:16:11.795Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Is London dangerous? Data shows falling crime as mayor takes aim at ‘negative stories’",
+      "source": "rss_breaking",
+      "destination": "asia",
+      "link": "https://www.scmp.com/news/world/europe/article/3361701/london-dangerous-data-shows-falling-crime-mayor-takes-aim-negative-stories?utm_source=rss_feed",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2069,
+      "estimatedTrafficIn24h": 2022,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.8
+      },
+      "detectedAt": "2026-07-24T05:29:18.000Z",
+      "scoredAt": "2026-07-24T08:16:04.145Z"
+    }
+  ]
 }
