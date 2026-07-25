@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-24T05:56:27.100Z",
+  "timestamp": "2026-07-25T05:49:34.067Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,15 +16,33 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 6857,
-      "newUrls": 7
+      "totalUrls": 5862,
+      "newUrls": 5
     }
   ],
-  "newArticles": [],
+  "newArticles": [
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/pho-vietnam/",
+      "lastmod": "2026-07-24T16:17:05+00:00",
+      "destination": "vietnam",
+      "contentType": "general",
+      "title": "Pho Vietnam",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=43, freshness=0.72)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 43,
+        "freshness": 0.72
+      }
+    }
+  ],
   "summary": {
-    "totalNew": 0,
+    "totalNew": 1,
     "contentGaps": 0,
     "staleRefreshes": 0,
-    "monitoring": 0
+    "monitoring": 1
   }
 }

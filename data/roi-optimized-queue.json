@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-24T05:54:07.049Z",
+  "timestamp": "2026-07-25T05:47:19.654Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -141,6 +141,31 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "articleType": "support",
+      "context": {
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "compositeScore": 10,
+        "freshness": 0.69,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
       "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
       "articleType": "support",
       "context": {
@@ -162,7 +187,7 @@
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -172,32 +197,7 @@
         "wpId": 3198,
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 10,
-        "freshness": 0.69,
-        "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 8,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
-      "articleType": "support",
-      "context": {
-        "wpId": 3107,
-        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-        "compositeScore": 10,
-        "freshness": 0.67,
+        "freshness": 0.68,
         "traffic": 0,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
       },
@@ -216,13 +216,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
       "articleType": "support",
       "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 10,
-        "freshness": 0.64,
+        "freshness": 0.66,
         "traffic": 0,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
       },
@@ -240,16 +240,16 @@
       "rank": 10,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+      "priorityScore": 0,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
       "articleType": "support",
       "context": {
-        "wpId": 5063,
-        "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
-        "compositeScore": 11,
-        "freshness": 0.76,
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 10,
+        "freshness": 0.64,
         "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -322,7 +322,7 @@
         "wpId": 4030,
         "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 11,
-        "freshness": 0.71,
+        "freshness": 0.7,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       },
@@ -340,16 +340,16 @@
       "rank": 14,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "priorityScore": -2,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-        "compositeScore": 11,
-        "freshness": 0.7,
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 12,
+        "freshness": 0.77,
         "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
