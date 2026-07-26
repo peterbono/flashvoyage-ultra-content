@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-25",
+  "lastUpdated": "2026-07-26",
   "formatScores": {
     "poll": 0,
     "pick": 16.5,
@@ -22,8 +22,8 @@
     "vietnam": 6.2,
     "bali": 3.4,
     "thailande": 3.4,
+    "philippines": 2.3,
     "lombok": 2.3,
-    "philippines": 1.7,
     "bangkok": 1.1,
     "cambodge": 0.6
   },
@@ -63,8 +63,8 @@
     "bali": 3.4,
     "thailande": 3.4,
     "vietnam": 2.9,
+    "philippines": 2.3,
     "lombok": 2.3,
-    "philippines": 1.7,
     "bangkok": 1.1,
     "cambodge": 0.6
   },
@@ -77,8 +77,8 @@
     "bali": "ig-only",
     "thailande": "ig-only",
     "vietnam": "merged(60/40)",
-    "lombok": "ig-only",
     "philippines": "ig-only",
+    "lombok": "ig-only",
     "bangkok": "ig-only",
     "cambodge": "ig-only"
   },
