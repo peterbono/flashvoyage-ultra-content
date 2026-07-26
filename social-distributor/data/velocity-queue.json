@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-07-26T02:13:07.776Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-07-26T08:16:56.842Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 0,
+    "queue_priority": 1,
     "queue_normal": 0
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Netizens review-bomb hotel over Italian tourists",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/bangkok/netizens-review-bomb-hotel-over-italian-tourists",
+      "velocityScore": 0.672,
+      "action": "QUEUE_PRIORITY",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2241,
+      "estimatedTrafficIn24h": 2190,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 4
+      },
+      "detectedAt": "2026-07-26T04:15:48.000Z",
+      "scoredAt": "2026-07-26T08:16:53.442Z"
+    }
+  ]
 }
