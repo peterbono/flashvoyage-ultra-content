@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-07-25T05:47:20.622Z",
+  "timestamp": "2026-07-26T06:10:17.795Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-07-25T05:47:21.501Z",
+      "lastScan": "2026-07-26T06:10:18.710Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-07-25T05:47:22.201Z",
+      "lastScan": "2026-07-26T06:10:19.336Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-07-25T05:49:34.038Z",
-      "urlCount": 5862,
+      "lastScan": "2026-07-26T06:12:42.365Z",
+      "urlCount": 5867,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -5999,11 +5999,16 @@
         "https://generationvoyage.fr/corse-solo/": "2026-07-24T14:34:38+00:00",
         "https://generationvoyage.fr/dormir-aeroport-bordeaux/": "2026-07-23T07:15:41+00:00",
         "https://generationvoyage.fr/experiences-new-york/": "2026-07-23T09:11:32+00:00",
+        "https://generationvoyage.fr/madrid-canicule/": "2026-07-25T10:11:44+00:00",
         "https://generationvoyage.fr/tenerife-voiture/": "2026-07-23T12:14:48+00:00",
+        "https://generationvoyage.fr/milan-solo/": "2026-07-25T12:03:37+00:00",
         "https://generationvoyage.fr/louer-camping-car-particuliers/": "2026-07-23T09:39:59+00:00",
         "https://generationvoyage.fr/pho-vietnam/": "2026-07-24T16:17:05+00:00",
         "https://generationvoyage.fr/visiter-cuenca-faire-voir/": "2026-07-24T07:56:10+00:00",
-        "https://generationvoyage.fr/stress-avion/": "2026-07-23T16:11:35+00:00"
+        "https://generationvoyage.fr/visiter-etretat-faire-voir/": "2026-07-25T08:03:31+00:00",
+        "https://generationvoyage.fr/souvenirs-kobe/": "2026-07-25T14:22:37+00:00",
+        "https://generationvoyage.fr/stress-avion/": "2026-07-23T16:11:35+00:00",
+        "https://generationvoyage.fr/bordeaux-chaleur/": "2026-07-25T17:02:04+00:00"
       }
     }
   }

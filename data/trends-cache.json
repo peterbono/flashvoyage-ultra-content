@@ -1,27 +1,41 @@
 {
-  "timestamp": "2026-07-24T05:53:55.567Z",
+  "timestamp": "2026-07-26T06:10:04.996Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande pas cher",
-      "traffic": 300,
-      "trafficFormatted": "+300 %",
+      "query": "voyage vietnam pas cher",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-24T05:53:46.771Z",
+      "date": "2026-07-26T06:09:58.560Z",
       "source": "related-rising",
-      "parentDestination": "thailande",
+      "parentDestination": "vietnam",
       "relevanceScore": 1,
       "category": "budget",
-      "destination": "thailande",
+      "destination": "vietnam",
       "compositeScore": 0.62
     },
     {
+      "query": "vol vietnam",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-26T06:09:58.560Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.8,
+      "category": "transport",
+      "destination": "vietnam",
+      "compositeScore": 0.56
+    },
+    {
       "query": "leclerc voyage thailande",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
+      "traffic": 150,
+      "trafficFormatted": "+150 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-24T05:53:46.771Z",
+      "date": "2026-07-26T06:09:56.419Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -30,12 +44,12 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage thailande tout compris",
-      "traffic": 120,
-      "trafficFormatted": "+120 %",
+      "query": "forum voyage thailande",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-07-24T05:53:46.771Z",
+      "date": "2026-07-26T06:09:56.419Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -44,33 +58,74 @@
       "compositeScore": 0.53
     },
     {
-      "query": "l'indépendant",
-      "traffic": 100,
-      "trafficFormatted": "100+",
+      "query": "voyage thailande phuket",
+      "traffic": 40,
+      "trafficFormatted": "+40 %",
       "relatedQueries": [],
-      "articles": [
-        {
-          "title": "Un incendie en cours à proximité d'une zone commerciale près de Perpignan : les pompiers déploient un gros dispositif",
-          "url": "https://actu.fr/https:/actu.fr/occitanie/cabestany_66028/un-incendie-en-cours-a-proximite-d-une-zone-commerciale-pres-de-perpignan-les-pompiers-deploient-un-gros-dispositif_64577814.html",
-          "source": "Actu.fr"
-        },
-        {
-          "title": "Un feu de végétation s’est déclaré à hauteur d’une zone commerciale près de Perpignan : 600 m2 brûlés, deux magasins évacués",
-          "url": "https://www.lindependant.fr/2026/07/23/depart-de-feu-de-vegetation-a-hauteur-dune-zone-commerciale-pres-de-perpignan-13481075.php",
-          "source": "L'Indépendant"
-        },
-        {
-          "title": "Incendie à Cabestany (66) : le feu est éteint",
-          "url": "https://feuxdeforet.fr/pyrenees-orientales-66/cabestany-23-07-2026-4671/",
-          "source": "Feux de Forêt"
-        }
-      ],
-      "date": "Thu, 23 Jul 2026 21:40:00 -0700",
-      "source": "rss",
+      "articles": [],
+      "date": "2026-07-26T06:09:56.419Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage vietnam cambodge",
+      "traffic": 140,
+      "trafficFormatted": "+140 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-26T06:09:58.560Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge",
+      "traffic": 80,
+      "trafficFormatted": "+80 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-26T06:09:58.560Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "laos",
+      "traffic": 140,
+      "trafficFormatted": "+140 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-26T06:09:58.560Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
       "relevanceScore": 0.5,
       "category": "destination",
-      "destination": "inde",
-      "compositeScore": 0.35008
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "hanoi",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-26T06:09:58.560Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
     }
   ]
 }
