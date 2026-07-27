@@ -1,131 +1,34 @@
 {
-  "timestamp": "2026-07-26T06:10:04.996Z",
+  "timestamp": "2026-07-27T06:34:55.882Z",
   "trendingTopics": [
     {
-      "query": "voyage vietnam pas cher",
-      "traffic": 100,
-      "trafficFormatted": "+100 %",
+      "query": "l'argentière-la-bessée",
+      "traffic": 500,
+      "trafficFormatted": "500+",
       "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-26T06:09:58.560Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
+      "articles": [
+        {
+          "title": "L’Argentière-la-Bessée. Incendie des Écrins : 15 guides de haute montagne mobilisés, des agriculteurs aussi",
+          "url": "https://www.ledauphine.com/faits-divers-justice/2026/07/26/incendie-des-ecrins-15-guides-de-haute-montagne-mobilises-des-agriculteurs-aussi",
+          "source": "Le Dauphiné Libéré"
+        },
+        {
+          "title": "Incendie dans les Hautes-Alpes: la surface parcourue reste stable avec 510 hectares, \"aucune victime civile, ni aucune destruction d'habitations\"",
+          "url": "https://www.bfmtv.com/bfm-dici/incendie-dans-les-hautes-alpes-la-surface-parcourue-reste-stable-avec-510-hectares-aucune-victime-civile-ni-aucune-destruction-d-habitations_AN-202607260182.html",
+          "source": "BFM"
+        },
+        {
+          "title": "Point de situation - Feu de forêt dans les communes de L'Argentière-la-Bessée et de Freissinières",
+          "url": "https://www.hautes-alpes.gouv.fr/Actualites/Communiques-de-presse/Communiques-de-presse-2026/Point-de-situation-Feu-de-foret-dans-les-communes-de-L-Argentiere-la-Bessee-et-de-Freissinieres",
+          "source": "Préfecture des Hautes-Alpes"
+        }
+      ],
+      "date": "Sun, 26 Jul 2026 22:00:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
       "category": "budget",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "vol vietnam",
-      "traffic": 50,
-      "trafficFormatted": "+50 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-26T06:09:58.560Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.8,
-      "category": "transport",
-      "destination": "vietnam",
-      "compositeScore": 0.56
-    },
-    {
-      "query": "leclerc voyage thailande",
-      "traffic": 150,
-      "trafficFormatted": "+150 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-26T06:09:56.419Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "forum voyage thailande",
-      "traffic": 60,
-      "trafficFormatted": "+60 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-26T06:09:56.419Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage thailande phuket",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-26T06:09:56.419Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage vietnam cambodge",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-26T06:09:58.560Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage cambodge",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-26T06:09:58.560Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "laos",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-26T06:09:58.560Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.5,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.47000000000000003
-    },
-    {
-      "query": "hanoi",
-      "traffic": 50,
-      "trafficFormatted": "+50 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-07-26T06:09:58.560Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.5,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.47000000000000003
+      "destination": null,
+      "compositeScore": 0.2904
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-07-26T06:10:15.829Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-07-27T06:35:06.569Z",
+    "elapsedSeconds": 4,
     "totalArticles": 38,
     "articlesWithRecommendations": 9,
     "totalRecommendations": 9,
@@ -144,14 +144,14 @@
         "avgDuration": 96
       },
       "gsc": {
-        "impressions": 9,
+        "impressions": 8,
         "clicks": 1,
-        "position": 18.1,
+        "position": 16.1,
         "topQueries": [
           {
             "query": "bali gili lombok",
             "position": 34,
-            "impressions": 4,
+            "impressions": 3,
             "ctr": 0
           }
         ]
@@ -273,26 +273,20 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 38,
+        "impressions": 36,
         "clicks": 0,
-        "position": 22.9,
+        "position": 22.4,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 31.3,
-            "impressions": 12,
+            "position": 31.1,
+            "impressions": 11,
             "ctr": 0
           },
           {
             "query": "voyage de noces bali vs thailande",
             "position": 30.7,
             "impressions": 3,
-            "ctr": 0
-          },
-          {
-            "query": "bali vs thailande",
-            "position": 33,
-            "impressions": 1,
             "ctr": 0
           },
           {
@@ -364,10 +358,16 @@
         "avgDuration": 229
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 14,
         "clicks": 1,
-        "position": 8.2,
+        "position": 15.9,
         "topQueries": [
+          {
+            "query": "esim cambodge",
+            "position": 63,
+            "impressions": 2,
+            "ctr": 0
+          },
           {
             "query": "esim cellcard",
             "position": 10,
@@ -390,9 +390,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim cellcard\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim cambodge\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim cellcard\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim cambodge\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -443,14 +443,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 1,
         "clicks": 0,
-        "position": 48.5,
+        "position": 47,
         "topQueries": [
           {
             "query": "vietnam ou thailande",
-            "position": 48.5,
-            "impressions": 2,
+            "position": 47,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -488,9 +488,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 1,
         "clicks": 0,
-        "position": 9.7,
+        "position": 11,
         "topQueries": []
       },
       "reels": {
@@ -544,9 +544,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 7,
         "clicks": 0,
-        "position": 34.5,
+        "position": 36.6,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
@@ -595,14 +595,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 5,
         "clicks": 0,
-        "position": 27.2,
+        "position": 28.2,
         "topQueries": [
           {
             "query": "meilleur esim philippines",
-            "position": 26.7,
-            "impressions": 3,
+            "position": 29,
+            "impressions": 2,
             "ctr": 0
           }
         ]
@@ -752,20 +752,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 56,
+        "impressions": 52,
         "clicks": 0,
-        "position": 28.4,
+        "position": 27.2,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 27.7,
-            "impressions": 45,
-            "ctr": 0
-          },
-          {
-            "query": "esim asie",
-            "position": 87,
-            "impressions": 1,
+            "position": 27.6,
+            "impressions": 42,
             "ctr": 0
           }
         ]
