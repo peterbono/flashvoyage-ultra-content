@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-27T06:35:07.531Z",
+  "timestamp": "2026-07-28T05:52:06.610Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,8 +17,8 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 290,
-    "medianTrafficSignal": "0.290",
+    "medianMonthlyPV": 400,
+    "medianTrafficSignal": "0.400",
     "avgRpm": 2,
     "articlesAnalyzed": 14
   },
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 7.73,
-        "projectedMonthlyTraffic": 290,
-        "projectedMonthlyRevenue": 0.58,
+        "expectedRoi": 10.67,
+        "projectedMonthlyTraffic": 400,
+        "projectedMonthlyRevenue": 0.8,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (290 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (400 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 7.73,
-        "projectedMonthlyTraffic": 290,
-        "projectedMonthlyRevenue": 0.58,
+        "expectedRoi": 10.67,
+        "projectedMonthlyTraffic": 400,
+        "projectedMonthlyRevenue": 0.8,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (290 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (400 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,38 +77,38 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 7.73,
-        "projectedMonthlyTraffic": 290,
-        "projectedMonthlyRevenue": 0.58,
+        "expectedRoi": 10.67,
+        "projectedMonthlyTraffic": 400,
+        "projectedMonthlyRevenue": 0.8,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (290 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (400 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
       "rank": 4,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 1,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "prix du baril",
       "articleType": "support",
       "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-        "compositeScore": 9,
-        "freshness": 0.63,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
+        "gapScore": 40,
+        "destination": null,
+        "category": "budget",
+        "suggestedTitle": "Prix du baril : Le Guide Budget Complet",
+        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+        "reason": "Content gap: \"prix du baril\" (score 40, source: trends)"
       },
       "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
+        "expectedRoi": 7.12,
+        "projectedMonthlyTraffic": 267,
+        "projectedMonthlyRevenue": 0.534,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (400 PV) × gap boost (0.67)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -133,7 +133,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -158,7 +158,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -183,7 +183,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -208,7 +208,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -233,11 +233,61 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
       "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "articleType": "support",
+      "context": {
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 11,
+        "freshness": 0.76,
+        "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
+      "articleType": "support",
+      "context": {
+        "wpId": 5260,
+        "slug": "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage",
+        "compositeScore": 11,
+        "freshness": 0.76,
+        "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -258,11 +308,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -283,11 +333,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -308,45 +358,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 4030,
-        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-        "compositeScore": 11,
-        "freshness": 0.7,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.225,
+    "totalCost": 0.3,
     "dailyBudget": 2,
-    "itemsWithinBudget": 13,
+    "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.058,
-    "expectedDailyRoi": 0.26
+    "expectedDailyRevenue": 0.098,
+    "expectedDailyRoi": 0.33
   },
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

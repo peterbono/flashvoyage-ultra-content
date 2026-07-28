@@ -1,20 +1,20 @@
 {
-  "timestamp": "2026-07-27T06:34:59.305Z",
+  "timestamp": "2026-07-28T05:51:56.623Z",
   "gapCount": 1,
   "gaps": [
     {
-      "topic": "l'argentière-la-bessée",
+      "topic": "prix du baril",
       "source": "trends",
-      "gapScore": 35,
+      "gapScore": 40,
       "signals": {
         "searchVolume": 0.29,
         "trendGrowth": 0.29,
         "monetization": 0.6,
-        "competition": 0.8
+        "competition": 0.6
       },
       "destination": null,
       "category": "budget",
-      "suggestedTitle": "L'argentière-la-bessée : Le Guide Budget Complet",
+      "suggestedTitle": "Prix du baril : Le Guide Budget Complet",
       "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
       "articleType": "support",
       "priority": "medium"
