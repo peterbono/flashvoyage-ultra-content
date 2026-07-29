@@ -1,34 +1,131 @@
 {
-  "timestamp": "2026-07-28T05:51:53.794Z",
+  "timestamp": "2026-07-29T05:56:46.622Z",
   "trendingTopics": [
     {
-      "query": "prix du baril",
-      "traffic": 100,
-      "trafficFormatted": "100+",
+      "query": "forum voyage thailande",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
       "relatedQueries": [],
-      "articles": [
-        {
-          "title": "Donald Trump ralentit les frappes sur l’Iran pour une raison bien particulière",
-          "url": "https://www.huffingtonpost.fr/international/article/donald-trump-ralentit-les-frappes-sur-l-iran-pour-une-raison-bien-particuliere_295135.html",
-          "source": "Le HuffPost"
-        },
-        {
-          "title": "Dans le sud de l’Iran, une guerre loin de Téhéran mais omniprésente",
-          "url": "https://www.lemonde.fr/international/article/2026/07/28/dans-le-sud-de-l-iran-une-guerre-loin-de-teheran-mais-omnipresente_6734561_3210.html",
-          "source": "Le Monde.fr"
-        },
-        {
-          "title": "Troisième nuit consécutive sans frappe au Moyen-Orient, les Etats-Unis disent laisser \"de la place\" aux négociations",
-          "url": "https://www.franceinfo.fr/monde/moyen-orient/troisieme-nuit-consecutive-sans-frappes-au-moyen-orient-les-etats-unis-laissent-de-la-place-aux-negociations_8123576.html",
-          "source": "franceinfo"
-        }
-      ],
-      "date": "Mon, 27 Jul 2026 22:40:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "budget",
-      "destination": null,
-      "compositeScore": 0.29008
+      "articles": [],
+      "date": "2026-07-29T05:56:37.989Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge vietnam",
+      "traffic": 400,
+      "trafficFormatted": "+400 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-29T05:56:40.149Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-29T05:56:40.149Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage au vietnam",
+      "traffic": 80,
+      "trafficFormatted": "+80 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-29T05:56:40.149Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage vietnam",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-29T05:56:44.463Z",
+      "source": "related-rising",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "thailande",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-29T05:56:40.149Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "cambodge",
+      "traffic": 90,
+      "trafficFormatted": "+90 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-29T05:56:40.149Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "laos",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-29T05:56:40.150Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "vietnam airlines",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-07-29T05:56:40.150Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
     }
   ]
 }
