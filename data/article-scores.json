@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-29T05:56:32.396Z",
+  "timestamp": "2026-07-30T05:45:46.755Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -44,7 +44,7 @@
         "sessionQuality": 0.13,
         "trendAlignment": 0.27,
         "reelAmplification": 0.36,
-        "freshness": 0.75,
+        "freshness": 0.74,
         "monetization": 0,
         "frShare": 0.2,
         "frPageviews": 1
@@ -254,7 +254,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.47,
         "reelAmplification": 0,
-        "freshness": 0.77,
+        "freshness": 0.76,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -356,7 +356,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.53,
         "reelAmplification": 0.03,
-        "freshness": 0.76,
+        "freshness": 0.75,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -398,7 +398,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.47,
         "reelAmplification": 0,
-        "freshness": 0.75,
+        "freshness": 0.74,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -564,7 +564,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.78,
+        "freshness": 0.77,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -579,13 +579,13 @@
       "wpId": 5343,
       "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
       "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "compositeScore": 12,
+      "compositeScore": 11,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.77,
+        "freshness": 0.76,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
