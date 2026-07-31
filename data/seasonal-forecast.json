@@ -1,145 +1,364 @@
 {
-  "timestamp": "2026-07-30T05:56:42.506Z",
+  "timestamp": "2026-07-31T06:23:22.314Z",
   "totalDestinations": 38,
-  "queriesSucceeded": 0,
-  "queriesFailed": 38,
+  "queriesSucceeded": 25,
+  "queriesFailed": 13,
   "forecastCount": 38,
-  "urgentCount": 13,
-  "upcomingCount": 16,
+  "urgentCount": 3,
+  "upcomingCount": 5,
   "summary": {
     "urgent": [
       {
+        "destination": "hanoi",
+        "publishByDate": "2026-07-21",
+        "daysUntilPublishBy": -10,
+        "peakMonthName": "juin",
+        "confidence": 0.2
+      },
+      {
         "destination": "raja ampat",
         "publishByDate": "2026-07-21",
-        "daysUntilPublishBy": -9,
+        "daysUntilPublishBy": -10,
         "peakMonthName": "octobre",
-        "confidence": 0.4
-      },
-      {
-        "destination": "inde",
-        "publishByDate": "2026-07-21",
-        "daysUntilPublishBy": -9,
-        "peakMonthName": "octobre",
-        "confidence": 0.4
-      },
-      {
-        "destination": "nepal",
-        "publishByDate": "2026-07-21",
-        "daysUntilPublishBy": -9,
-        "peakMonthName": "octobre",
-        "confidence": 0.4
-      },
-      {
-        "destination": "thailande",
-        "publishByDate": "2026-08-20",
-        "daysUntilPublishBy": 21,
-        "peakMonthName": "novembre",
-        "confidence": 0.4
-      },
-      {
-        "destination": "vietnam",
-        "publishByDate": "2026-08-20",
-        "daysUntilPublishBy": 21,
-        "peakMonthName": "novembre",
-        "confidence": 0.4
-      },
-      {
-        "destination": "cambodge",
-        "publishByDate": "2026-08-20",
-        "daysUntilPublishBy": 21,
-        "peakMonthName": "novembre",
-        "confidence": 0.4
-      },
-      {
-        "destination": "laos",
-        "publishByDate": "2026-08-20",
-        "daysUntilPublishBy": 21,
-        "peakMonthName": "novembre",
-        "confidence": 0.4
-      },
-      {
-        "destination": "myanmar",
-        "publishByDate": "2026-08-20",
-        "daysUntilPublishBy": 21,
-        "peakMonthName": "novembre",
-        "confidence": 0.4
-      },
-      {
-        "destination": "bangkok",
-        "publishByDate": "2026-08-20",
-        "daysUntilPublishBy": 21,
-        "peakMonthName": "novembre",
-        "confidence": 0.4
-      },
-      {
-        "destination": "chiang mai",
-        "publishByDate": "2026-08-20",
-        "daysUntilPublishBy": 21,
-        "peakMonthName": "novembre",
-        "confidence": 0.4
-      },
-      {
-        "destination": "phuket",
-        "publishByDate": "2026-08-20",
-        "daysUntilPublishBy": 21,
-        "peakMonthName": "novembre",
         "confidence": 0.4
       },
       {
         "destination": "siem reap",
         "publishByDate": "2026-08-20",
-        "daysUntilPublishBy": 21,
-        "peakMonthName": "novembre",
-        "confidence": 0.4
-      },
-      {
-        "destination": "luang prabang",
-        "publishByDate": "2026-08-20",
-        "daysUntilPublishBy": 21,
+        "daysUntilPublishBy": 20,
         "peakMonthName": "novembre",
         "confidence": 0.4
       }
     ],
     "upcoming60d": [
       {
-        "destination": "philippines",
+        "destination": "singapour",
         "publishByDate": "2026-09-20",
-        "daysUntilPublishBy": 52,
-        "peakMonthName": "decembre"
+        "daysUntilPublishBy": 51,
+        "peakMonthName": "juillet"
       },
       {
-        "destination": "ho chi minh",
+        "destination": "koh samui",
         "publishByDate": "2026-09-20",
-        "daysUntilPublishBy": 52,
-        "peakMonthName": "decembre"
+        "daysUntilPublishBy": 51,
+        "peakMonthName": "janvier"
       },
       {
         "destination": "palawan",
         "publishByDate": "2026-09-20",
-        "daysUntilPublishBy": 52,
+        "daysUntilPublishBy": 51,
         "peakMonthName": "decembre"
       },
       {
         "destination": "el nido",
         "publishByDate": "2026-09-20",
-        "daysUntilPublishBy": 52,
-        "peakMonthName": "decembre"
-      },
-      {
-        "destination": "sri lanka",
-        "publishByDate": "2026-09-20",
-        "daysUntilPublishBy": 52,
-        "peakMonthName": "decembre"
-      },
-      {
-        "destination": "maldives",
-        "publishByDate": "2026-09-20",
-        "daysUntilPublishBy": 52,
+        "daysUntilPublishBy": 51,
         "peakMonthName": "decembre"
       }
     ]
   },
   "forecasts": [
+    {
+      "destination": "hanoi",
+      "keyword": "voyage hanoi",
+      "source": "google-trends",
+      "inflectionMonth": 9,
+      "inflectionMonthName": "septembre",
+      "peakMonth": 6,
+      "peakMonthName": "juin",
+      "peakValue": 23,
+      "troughMonth": 1,
+      "troughValue": 0,
+      "amplitude": 23,
+      "confidence": 0.2,
+      "publishByDate": "2026-07-21",
+      "publishByMonth": 7,
+      "daysUntilPublishBy": -10,
+      "urgent": true,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "budget-2026",
+        "quand-partir",
+        "itineraire-express"
+      ],
+      "calendarValidated": false,
+      "calendarPeakMonths": [
+        9,
+        10,
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 85
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 93
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 100
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 93
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 9
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 31
+        }
+      ]
+    },
     {
       "destination": "raja ampat",
       "keyword": "voyage raja ampat",
@@ -153,247 +372,7 @@
       "confidence": 0.4,
       "publishByDate": "2026-07-21",
       "publishByMonth": 7,
-      "daysUntilPublishBy": -9,
-      "urgent": true,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "budget-2026",
-        "quand-partir",
-        "itineraire-express"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "inde",
-      "keyword": "voyage inde",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 9,
-      "inflectionMonthName": "septembre",
-      "peakMonth": 10,
-      "peakMonthName": "octobre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-07-21",
-      "publishByMonth": 7,
-      "daysUntilPublishBy": -9,
-      "urgent": true,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "budget-2026",
-        "quand-partir",
-        "itineraire-express"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "nepal",
-      "keyword": "voyage nepal",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 9,
-      "inflectionMonthName": "septembre",
-      "peakMonth": 10,
-      "peakMonthName": "octobre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-07-21",
-      "publishByMonth": 7,
-      "daysUntilPublishBy": -9,
-      "urgent": true,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "budget-2026",
-        "quand-partir",
-        "itineraire-express"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "thailande",
-      "keyword": "voyage thailande",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 10,
-      "inflectionMonthName": "octobre",
-      "peakMonth": 11,
-      "peakMonthName": "novembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-08-20",
-      "publishByMonth": 8,
-      "daysUntilPublishBy": 21,
-      "urgent": true,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "budget-2026",
-        "quand-partir",
-        "itineraire-express"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "vietnam",
-      "keyword": "voyage vietnam",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 10,
-      "inflectionMonthName": "octobre",
-      "peakMonth": 11,
-      "peakMonthName": "novembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-08-20",
-      "publishByMonth": 8,
-      "daysUntilPublishBy": 21,
-      "urgent": true,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "budget-2026",
-        "quand-partir",
-        "itineraire-express"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "cambodge",
-      "keyword": "voyage cambodge",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 10,
-      "inflectionMonthName": "octobre",
-      "peakMonth": 11,
-      "peakMonthName": "novembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-08-20",
-      "publishByMonth": 8,
-      "daysUntilPublishBy": 21,
-      "urgent": true,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "budget-2026",
-        "quand-partir",
-        "itineraire-express"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "laos",
-      "keyword": "voyage laos",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 10,
-      "inflectionMonthName": "octobre",
-      "peakMonth": 11,
-      "peakMonthName": "novembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-08-20",
-      "publishByMonth": 8,
-      "daysUntilPublishBy": 21,
-      "urgent": true,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "budget-2026",
-        "quand-partir",
-        "itineraire-express"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "myanmar",
-      "keyword": "voyage myanmar",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 10,
-      "inflectionMonthName": "octobre",
-      "peakMonth": 11,
-      "peakMonthName": "novembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-08-20",
-      "publishByMonth": 8,
-      "daysUntilPublishBy": 21,
-      "urgent": true,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "budget-2026",
-        "quand-partir",
-        "itineraire-express"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "bangkok",
-      "keyword": "voyage bangkok",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 10,
-      "inflectionMonthName": "octobre",
-      "peakMonth": 11,
-      "peakMonthName": "novembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-08-20",
-      "publishByMonth": 8,
-      "daysUntilPublishBy": 21,
-      "urgent": true,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "budget-2026",
-        "quand-partir",
-        "itineraire-express"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "chiang mai",
-      "keyword": "voyage chiang mai",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 10,
-      "inflectionMonthName": "octobre",
-      "peakMonth": 11,
-      "peakMonthName": "novembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-08-20",
-      "publishByMonth": 8,
-      "daysUntilPublishBy": 21,
-      "urgent": true,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "budget-2026",
-        "quand-partir",
-        "itineraire-express"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "phuket",
-      "keyword": "voyage phuket",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 10,
-      "inflectionMonthName": "octobre",
-      "peakMonth": 11,
-      "peakMonthName": "novembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-08-20",
-      "publishByMonth": 8,
-      "daysUntilPublishBy": 21,
+      "daysUntilPublishBy": -10,
       "urgent": true,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -417,7 +396,7 @@
       "confidence": 0.4,
       "publishByDate": "2026-08-20",
       "publishByMonth": 8,
-      "daysUntilPublishBy": 21,
+      "daysUntilPublishBy": 20,
       "urgent": true,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -429,20 +408,22 @@
       "trendsData": []
     },
     {
-      "destination": "luang prabang",
-      "keyword": "voyage luang prabang",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 10,
-      "inflectionMonthName": "octobre",
-      "peakMonth": 11,
-      "peakMonthName": "novembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-08-20",
-      "publishByMonth": 8,
-      "daysUntilPublishBy": 21,
-      "urgent": true,
+      "destination": "vietnam",
+      "keyword": "voyage vietnam",
+      "source": "google-trends",
+      "inflectionMonth": 7,
+      "inflectionMonthName": "juillet",
+      "peakMonth": 1,
+      "peakMonthName": "janvier",
+      "peakValue": 88,
+      "troughMonth": 6,
+      "troughValue": 43,
+      "amplitude": 45,
+      "confidence": 0.46,
+      "publishByDate": "2026-05-20",
+      "publishByMonth": 5,
+      "daysUntilPublishBy": -72,
+      "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
         "budget-2026",
@@ -450,22 +431,1801 @@
         "itineraire-express"
       ],
       "calendarValidated": true,
-      "trendsData": []
+      "calendarPeakMonths": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 56
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 57
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 69
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 64
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 60
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 57
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 56
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 64
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 55
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 78
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 69
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 68
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 77
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 64
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 71
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 42
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 38
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 54
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 55
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 60
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 84
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 80
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 93
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 80
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 71
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 78
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 69
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 75
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 81
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 76
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 39
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 45
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 58
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 45
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 52
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 45
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 52
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 48
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 58
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 46
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 45
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 45
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 38
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 50
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 49
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 43
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 56
+        }
+      ]
     },
     {
-      "destination": "hanoi",
-      "keyword": "voyage hanoi",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 8,
-      "inflectionMonthName": "aout",
+      "destination": "cambodge",
+      "keyword": "voyage cambodge",
+      "source": "google-trends",
+      "inflectionMonth": 7,
+      "inflectionMonthName": "juillet",
+      "peakMonth": 1,
+      "peakMonthName": "janvier",
+      "peakValue": 69,
+      "troughMonth": 4,
+      "troughValue": 24,
+      "amplitude": 45,
+      "confidence": 0.46,
+      "publishByDate": "2026-05-20",
+      "publishByMonth": 5,
+      "daysUntilPublishBy": -72,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "budget-2026",
+        "quand-partir",
+        "itineraire-express"
+      ],
+      "calendarValidated": true,
+      "calendarPeakMonths": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 100
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 61
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 64
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 62
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 31
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 55
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 51
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 49
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 44
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 53
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 60
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 47
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 84
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 49
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 66
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 64
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 69
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 50
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 49
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 63
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 64
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 82
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 66
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 60
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 45
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 60
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 40
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 34
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 35
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 36
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 36
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 36
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 61
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 34
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 29
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 38
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 38
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 41
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 35
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 44
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 11
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 39
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 47
+        }
+      ]
+    },
+    {
+      "destination": "laos",
+      "keyword": "voyage laos",
+      "source": "google-trends",
+      "inflectionMonth": 7,
+      "inflectionMonthName": "juillet",
+      "peakMonth": 1,
+      "peakMonthName": "janvier",
+      "peakValue": 80,
+      "troughMonth": 4,
+      "troughValue": 0,
+      "amplitude": 80,
+      "confidence": 0.46,
+      "publishByDate": "2026-05-20",
+      "publishByMonth": 5,
+      "daysUntilPublishBy": -72,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "budget-2026",
+        "quand-partir",
+        "itineraire-express",
+        "vol-pas-cher",
+        "assurance-voyage"
+      ],
+      "calendarValidated": true,
+      "calendarPeakMonths": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 53
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 42
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 61
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 56
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 48
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 37
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 85
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 50
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 81
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 95
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 55
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 46
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 49
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 52
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 73
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 82
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 82
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 57
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 46
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 67
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 55
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 41
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 36
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 60
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 39
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 9
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 34
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 40
+        }
+      ]
+    },
+    {
+      "destination": "indonesie",
+      "keyword": "voyage indonesie",
+      "source": "google-trends",
+      "inflectionMonth": 7,
+      "inflectionMonthName": "juillet",
+      "peakMonth": 1,
+      "peakMonthName": "janvier",
+      "peakValue": 82,
+      "troughMonth": 3,
+      "troughValue": 0,
+      "amplitude": 82,
+      "confidence": 0.21,
+      "publishByDate": "2026-05-20",
+      "publishByMonth": 5,
+      "daysUntilPublishBy": -72,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "budget-2026",
+        "quand-partir",
+        "itineraire-express",
+        "vol-pas-cher",
+        "assurance-voyage"
+      ],
+      "calendarValidated": false,
+      "calendarPeakMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 88
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 96
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 86
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 65
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 57
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 54
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 53
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 92
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 68
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 50
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 78
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 85
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 79
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 62
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 82
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 78
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 82
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 64
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 56
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 64
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 65
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 76
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 60
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 67
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 71
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 54
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 18
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 58
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 63
+        }
+      ]
+    },
+    {
+      "destination": "kuala lumpur",
+      "keyword": "voyage kuala lumpur",
+      "source": "google-trends",
+      "inflectionMonth": 7,
+      "inflectionMonthName": "juillet",
+      "peakMonth": 8,
+      "peakMonthName": "aout",
+      "peakValue": 31,
+      "troughMonth": 1,
+      "troughValue": 0,
+      "amplitude": 31,
+      "confidence": 0.21,
+      "publishByDate": "2026-05-20",
+      "publishByMonth": 5,
+      "daysUntilPublishBy": -72,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "budget-2026",
+        "quand-partir",
+        "itineraire-express"
+      ],
+      "calendarValidated": false,
+      "calendarPeakMonths": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        12
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 100
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 55
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 5
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 19
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 21
+        }
+      ]
+    },
+    {
+      "destination": "inde",
+      "keyword": "voyage inde",
+      "source": "google-trends",
+      "inflectionMonth": 7,
+      "inflectionMonthName": "juillet",
+      "peakMonth": 2,
+      "peakMonthName": "fevrier",
+      "peakValue": 82,
+      "troughMonth": 6,
+      "troughValue": 40,
+      "amplitude": 42,
+      "confidence": 0.46,
+      "publishByDate": "2026-05-20",
+      "publishByMonth": 5,
+      "daysUntilPublishBy": -72,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "budget-2026",
+        "quand-partir",
+        "itineraire-express"
+      ],
+      "calendarValidated": true,
+      "calendarPeakMonths": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 56
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 75
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 56
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 57
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 47
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 68
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 48
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 56
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 64
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 53
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 62
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 63
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 92
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 75
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 39
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 65
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 68
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 75
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 82
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 72
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 72
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 85
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 68
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 64
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 91
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 67
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 71
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 70
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 67
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 31
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 40
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 54
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 50
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 31
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 50
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 46
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 47
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 48
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 45
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 42
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 24
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 40
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 53
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 42
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 43
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 50
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 51
+        }
+      ]
+    },
+    {
+      "destination": "nepal",
+      "keyword": "voyage nepal",
+      "source": "google-trends",
+      "inflectionMonth": 7,
+      "inflectionMonthName": "juillet",
       "peakMonth": 9,
       "peakMonthName": "septembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-06-20",
-      "publishByMonth": 6,
-      "daysUntilPublishBy": -40,
+      "peakValue": 41,
+      "troughMonth": 4,
+      "troughValue": 0,
+      "amplitude": 41,
+      "confidence": 0.21,
+      "publishByDate": "2026-05-20",
+      "publishByMonth": 5,
+      "daysUntilPublishBy": -72,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -473,23 +2233,601 @@
         "quand-partir",
         "itineraire-express"
       ],
-      "calendarValidated": true,
-      "trendsData": []
+      "calendarValidated": false,
+      "calendarPeakMonths": [
+        10,
+        11,
+        3,
+        4,
+        5
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 100
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 48
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 48
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 70
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 46
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 70
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 47
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 50
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 49
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 62
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 43
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 49
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 42
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 66
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 4
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 18
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 22
+        }
+      ]
     },
     {
-      "destination": "philippines",
-      "keyword": "voyage philippines",
-      "source": "editorial-calendar-fallback",
+      "destination": "koh phangan",
+      "keyword": "voyage koh phangan",
+      "source": "google-trends",
+      "inflectionMonth": 8,
+      "inflectionMonthName": "aout",
+      "peakMonth": 10,
+      "peakMonthName": "octobre",
+      "peakValue": 25,
+      "troughMonth": 1,
+      "troughValue": 0,
+      "amplitude": 25,
+      "confidence": 0.2,
+      "publishByDate": "2026-06-20",
+      "publishByMonth": 6,
+      "daysUntilPublishBy": -41,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "budget-2026",
+        "quand-partir",
+        "itineraire-express"
+      ],
+      "calendarValidated": false,
+      "calendarPeakMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 100
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 9
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "destination": "singapour",
+      "keyword": "voyage singapour",
+      "source": "google-trends",
       "inflectionMonth": 11,
       "inflectionMonthName": "novembre",
-      "peakMonth": 12,
-      "peakMonthName": "decembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
+      "peakMonth": 7,
+      "peakMonthName": "juillet",
+      "peakValue": 50,
+      "troughMonth": 9,
+      "troughValue": 0,
+      "amplitude": 50,
+      "confidence": 0.46,
       "publishByDate": "2026-09-20",
       "publishByMonth": 9,
-      "daysUntilPublishBy": 52,
+      "daysUntilPublishBy": 51,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -499,22 +2837,304 @@
         "arnaques-pieges"
       ],
       "calendarValidated": true,
-      "trendsData": []
+      "calendarPeakMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 75
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 100
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 83
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 71
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 71
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 82
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 62
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 72
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 61
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 94
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 84
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 68
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 62
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 81
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 45
+        }
+      ]
     },
     {
-      "destination": "ho chi minh",
-      "keyword": "voyage ho chi minh",
-      "source": "editorial-calendar-fallback",
+      "destination": "koh samui",
+      "keyword": "voyage koh samui",
+      "source": "google-trends",
       "inflectionMonth": 11,
       "inflectionMonthName": "novembre",
-      "peakMonth": 12,
-      "peakMonthName": "decembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
+      "peakMonth": 1,
+      "peakMonthName": "janvier",
+      "peakValue": 50,
+      "troughMonth": 2,
+      "troughValue": 0,
+      "amplitude": 50,
+      "confidence": 0.46,
       "publishByDate": "2026-09-20",
       "publishByMonth": 9,
-      "daysUntilPublishBy": 52,
+      "daysUntilPublishBy": 51,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -524,7 +3144,284 @@
         "arnaques-pieges"
       ],
       "calendarValidated": true,
-      "trendsData": []
+      "calendarPeakMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 99
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 8
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 36
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 26
+        }
+      ]
     },
     {
       "destination": "palawan",
@@ -539,7 +3436,7 @@
       "confidence": 0.4,
       "publishByDate": "2026-09-20",
       "publishByMonth": 9,
-      "daysUntilPublishBy": 52,
+      "daysUntilPublishBy": 51,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -564,7 +3461,7 @@
       "confidence": 0.4,
       "publishByDate": "2026-09-20",
       "publishByMonth": 9,
-      "daysUntilPublishBy": 52,
+      "daysUntilPublishBy": 51,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -577,69 +3474,322 @@
       "trendsData": []
     },
     {
-      "destination": "sri lanka",
-      "keyword": "voyage sri lanka",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 11,
-      "inflectionMonthName": "novembre",
-      "peakMonth": 12,
-      "peakMonthName": "decembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-09-20",
-      "publishByMonth": 9,
-      "daysUntilPublishBy": 52,
-      "urgent": false,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "budget-2026",
-        "visa-2026",
-        "itineraire-2-semaines",
-        "arnaques-pieges"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "maldives",
-      "keyword": "voyage maldives",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 11,
-      "inflectionMonthName": "novembre",
-      "peakMonth": 12,
-      "peakMonthName": "decembre",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-09-20",
-      "publishByMonth": 9,
-      "daysUntilPublishBy": 52,
-      "urgent": false,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "budget-2026",
-        "visa-2026",
-        "itineraire-2-semaines",
-        "arnaques-pieges"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "singapour",
-      "keyword": "voyage singapour",
-      "source": "editorial-calendar-fallback",
+      "destination": "bali",
+      "keyword": "voyage bali",
+      "source": "google-trends",
       "inflectionMonth": 12,
       "inflectionMonthName": "decembre",
       "peakMonth": 1,
       "peakMonthName": "janvier",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
+      "peakValue": 83,
+      "troughMonth": 11,
+      "troughValue": 40,
+      "amplitude": 43,
+      "confidence": 0.21,
       "publishByDate": "2026-10-20",
       "publishByMonth": 10,
-      "daysUntilPublishBy": 82,
+      "daysUntilPublishBy": 81,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "guide-complet-2026",
+        "comparatif-vs",
+        "digital-nomad",
+        "cout-de-la-vie"
+      ],
+      "calendarValidated": false,
+      "calendarPeakMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 77
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 78
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 69
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 76
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 67
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 68
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 60
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 49
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 50
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 47
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 51
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 61
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 53
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 55
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 41
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 43
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 42
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 36
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 38
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 49
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 47
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 63
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 87
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 68
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 79
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 83
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 72
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 53
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 60
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 63
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 56
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 49
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 47
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 42
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 49
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 50
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 46
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 48
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 43
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 40
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 43
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 45
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 56
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 39
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 44
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 49
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 54
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 59
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 52
+        }
+      ]
+    },
+    {
+      "destination": "philippines",
+      "keyword": "voyage philippines",
+      "source": "google-trends",
+      "inflectionMonth": 12,
+      "inflectionMonthName": "decembre",
+      "peakMonth": 1,
+      "peakMonthName": "janvier",
+      "peakValue": 89,
+      "troughMonth": 9,
+      "troughValue": 48,
+      "amplitude": 41,
+      "confidence": 0.46,
+      "publishByDate": "2026-10-20",
+      "publishByMonth": 10,
+      "daysUntilPublishBy": 81,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -649,22 +3799,298 @@
         "cout-de-la-vie"
       ],
       "calendarValidated": true,
-      "trendsData": []
+      "calendarPeakMonths": [
+        12,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 42
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 43
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 60
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 50
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 51
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 57
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 33
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 47
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 54
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 55
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 61
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 45
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 54
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 43
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 47
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 46
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 48
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 60
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 51
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 57
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 82
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 93
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 80
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 82
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 69
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 78
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 69
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 91
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 54
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 53
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 41
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 74
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 55
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 68
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 57
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 64
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 60
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 46
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 69
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 71
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 30
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 50
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 50
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 35
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 64
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 53
+        }
+      ]
     },
     {
-      "destination": "koh samui",
-      "keyword": "voyage koh samui",
-      "source": "editorial-calendar-fallback",
+      "destination": "malaisie",
+      "keyword": "voyage malaisie",
+      "source": "google-trends",
       "inflectionMonth": 12,
       "inflectionMonthName": "decembre",
       "peakMonth": 1,
       "peakMonthName": "janvier",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
+      "peakValue": 79,
+      "troughMonth": 11,
+      "troughValue": 47,
+      "amplitude": 32,
+      "confidence": 0.21,
       "publishByDate": "2026-10-20",
       "publishByMonth": 10,
-      "daysUntilPublishBy": 82,
+      "daysUntilPublishBy": 81,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -673,58 +4099,584 @@
         "digital-nomad",
         "cout-de-la-vie"
       ],
-      "calendarValidated": true,
-      "trendsData": []
+      "calendarValidated": false,
+      "calendarPeakMonths": [
+        3,
+        4,
+        5,
+        6,
+        9,
+        10
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 90
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 78
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 89
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 78
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 53
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 67
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 60
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 66
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 90
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 48
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 89
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 80
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 81
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 81
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 35
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 81
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 37
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 57
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 72
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 81
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 92
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 76
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 60
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 79
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 62
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 59
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 87
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 96
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 72
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 69
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 61
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 41
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 76
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 49
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 66
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 49
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 46
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 42
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 49
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 41
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 50
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 61
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 63
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 30
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 45
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 80
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 34
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 86
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 59
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 66
+        }
+      ]
     },
     {
-      "destination": "koh phangan",
-      "keyword": "voyage koh phangan",
-      "source": "editorial-calendar-fallback",
+      "destination": "bangkok",
+      "keyword": "voyage bangkok",
+      "source": "google-trends",
       "inflectionMonth": 12,
       "inflectionMonthName": "decembre",
       "peakMonth": 1,
       "peakMonthName": "janvier",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
+      "peakValue": 83,
+      "troughMonth": 8,
+      "troughValue": 25,
+      "amplitude": 58,
+      "confidence": 0.46,
       "publishByDate": "2026-10-20",
       "publishByMonth": 10,
-      "daysUntilPublishBy": 82,
+      "daysUntilPublishBy": 81,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
         "guide-complet-2026",
         "comparatif-vs",
         "digital-nomad",
-        "cout-de-la-vie"
+        "cout-de-la-vie",
+        "vol-pas-cher",
+        "assurance-voyage"
       ],
       "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "kuala lumpur",
-      "keyword": "voyage kuala lumpur",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 12,
-      "inflectionMonthName": "decembre",
-      "peakMonth": 1,
-      "peakMonthName": "janvier",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-10-20",
-      "publishByMonth": 10,
-      "daysUntilPublishBy": 82,
-      "urgent": false,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "guide-complet-2026",
-        "comparatif-vs",
-        "digital-nomad",
-        "cout-de-la-vie"
+      "calendarPeakMonths": [
+        11,
+        12,
+        1,
+        2,
+        3
       ],
-      "calendarValidated": true,
-      "trendsData": []
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 80
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 74
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 52
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 69
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 79
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 50
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 62
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 55
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 56
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 79
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 61
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 60
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 55
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 62
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 76
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 53
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 62
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 94
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 75
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 79
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 77
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 49
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 85
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 57
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 75
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 86
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 73
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 58
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 46
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 74
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 61
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 98
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 58
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 61
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 61
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 53
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 56
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 47
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 50
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 19
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 49
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 51
+        }
+      ]
     },
     {
       "destination": "cebu",
@@ -739,32 +4691,7 @@
       "confidence": 0.4,
       "publishByDate": "2026-10-20",
       "publishByMonth": 10,
-      "daysUntilPublishBy": 82,
-      "urgent": false,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "guide-complet-2026",
-        "comparatif-vs",
-        "digital-nomad",
-        "cout-de-la-vie"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "da nang",
-      "keyword": "voyage da nang",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 1,
-      "inflectionMonthName": "janvier",
-      "peakMonth": 2,
-      "peakMonthName": "fevrier",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-11-20",
-      "publishByMonth": 11,
-      "daysUntilPublishBy": 113,
+      "daysUntilPublishBy": 81,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -789,32 +4716,7 @@
       "confidence": 0.4,
       "publishByDate": "2026-11-20",
       "publishByMonth": 11,
-      "daysUntilPublishBy": 113,
-      "urgent": false,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "guide-complet-2026",
-        "comparatif-vs",
-        "digital-nomad",
-        "cout-de-la-vie"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "malaisie",
-      "keyword": "voyage malaisie",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 2,
-      "inflectionMonthName": "fevrier",
-      "peakMonth": 3,
-      "peakMonthName": "mars",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2026-12-21",
-      "publishByMonth": 12,
-      "daysUntilPublishBy": 144,
+      "daysUntilPublishBy": 112,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -839,7 +4741,7 @@
       "confidence": 0.4,
       "publishByDate": "2026-12-21",
       "publishByMonth": 12,
-      "daysUntilPublishBy": 144,
+      "daysUntilPublishBy": 143,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -864,7 +4766,7 @@
       "confidence": 0.4,
       "publishByDate": "2026-12-21",
       "publishByMonth": 12,
-      "daysUntilPublishBy": 144,
+      "daysUntilPublishBy": 143,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -889,7 +4791,7 @@
       "confidence": 0.4,
       "publishByDate": "2027-01-18",
       "publishByMonth": 1,
-      "daysUntilPublishBy": 172,
+      "daysUntilPublishBy": 171,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -902,19 +4804,21 @@
       "trendsData": []
     },
     {
-      "destination": "bali",
-      "keyword": "voyage bali",
-      "source": "editorial-calendar-fallback",
+      "destination": "luang prabang",
+      "keyword": "voyage luang prabang",
+      "source": "google-trends",
       "inflectionMonth": 4,
       "inflectionMonthName": "avril",
-      "peakMonth": 5,
-      "peakMonthName": "mai",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
+      "peakMonth": 6,
+      "peakMonthName": "juin",
+      "peakValue": 25,
+      "troughMonth": 1,
+      "troughValue": 0,
+      "amplitude": 25,
+      "confidence": 0.2,
       "publishByDate": "2027-02-18",
       "publishByMonth": 2,
-      "daysUntilPublishBy": 203,
+      "daysUntilPublishBy": 202,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -923,58 +4827,281 @@
         "digital-nomad",
         "cout-de-la-vie"
       ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "indonesie",
-      "keyword": "voyage indonesie",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 4,
-      "inflectionMonthName": "avril",
-      "peakMonth": 5,
-      "peakMonthName": "mai",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2027-02-18",
-      "publishByMonth": 2,
-      "daysUntilPublishBy": 203,
-      "urgent": false,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "guide-complet-2026",
-        "comparatif-vs",
-        "digital-nomad",
-        "cout-de-la-vie"
+      "calendarValidated": false,
+      "calendarPeakMonths": [
+        11,
+        12,
+        1,
+        2,
+        3
       ],
-      "calendarValidated": true,
-      "trendsData": []
-    },
-    {
-      "destination": "jakarta",
-      "keyword": "voyage jakarta",
-      "source": "editorial-calendar-fallback",
-      "inflectionMonth": 4,
-      "inflectionMonthName": "avril",
-      "peakMonth": 5,
-      "peakMonthName": "mai",
-      "peakValue": null,
-      "amplitude": null,
-      "confidence": 0.4,
-      "publishByDate": "2027-02-18",
-      "publishByMonth": 2,
-      "daysUntilPublishBy": 203,
-      "urgent": false,
-      "suggestedArticleTypes": [
-        "guide-complet",
-        "guide-complet-2026",
-        "comparatif-vs",
-        "digital-nomad",
-        "cout-de-la-vie"
-      ],
-      "calendarValidated": true,
-      "trendsData": []
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        }
+      ]
     },
     {
       "destination": "ubud",
@@ -989,7 +5116,7 @@
       "confidence": 0.4,
       "publishByDate": "2027-02-18",
       "publishByMonth": 2,
-      "daysUntilPublishBy": 203,
+      "daysUntilPublishBy": 202,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -1014,7 +5141,7 @@
       "confidence": 0.4,
       "publishByDate": "2027-02-18",
       "publishByMonth": 2,
-      "daysUntilPublishBy": 203,
+      "daysUntilPublishBy": 202,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -1039,7 +5166,7 @@
       "confidence": 0.4,
       "publishByDate": "2027-02-18",
       "publishByMonth": 2,
-      "daysUntilPublishBy": 203,
+      "daysUntilPublishBy": 202,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -1064,7 +5191,7 @@
       "confidence": 0.4,
       "publishByDate": "2027-02-18",
       "publishByMonth": 2,
-      "daysUntilPublishBy": 203,
+      "daysUntilPublishBy": 202,
       "urgent": false,
       "suggestedArticleTypes": [
         "guide-complet",
@@ -1075,6 +5202,2708 @@
       ],
       "calendarValidated": true,
       "trendsData": []
+    },
+    {
+      "destination": "myanmar",
+      "keyword": "voyage myanmar",
+      "source": "google-trends",
+      "inflectionMonth": 5,
+      "inflectionMonthName": "mai",
+      "peakMonth": 7,
+      "peakMonthName": "juillet",
+      "peakValue": 20,
+      "troughMonth": 1,
+      "troughValue": 0,
+      "amplitude": 20,
+      "confidence": 0.2,
+      "publishByDate": "2027-03-20",
+      "publishByMonth": 3,
+      "daysUntilPublishBy": 232,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "guide-complet-2026",
+        "comparatif-vs",
+        "digital-nomad",
+        "cout-de-la-vie"
+      ],
+      "calendarValidated": false,
+      "calendarPeakMonths": [
+        11,
+        12,
+        1,
+        2
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "destination": "jakarta",
+      "keyword": "voyage jakarta",
+      "source": "google-trends",
+      "inflectionMonth": 5,
+      "inflectionMonthName": "mai",
+      "peakMonth": 7,
+      "peakMonthName": "juillet",
+      "peakValue": 20,
+      "troughMonth": 1,
+      "troughValue": 0,
+      "amplitude": 20,
+      "confidence": 0.45,
+      "publishByDate": "2027-03-20",
+      "publishByMonth": 3,
+      "daysUntilPublishBy": 232,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "guide-complet-2026",
+        "comparatif-vs",
+        "digital-nomad",
+        "cout-de-la-vie"
+      ],
+      "calendarValidated": true,
+      "calendarPeakMonths": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "destination": "chiang mai",
+      "keyword": "voyage chiang mai",
+      "source": "google-trends",
+      "inflectionMonth": 5,
+      "inflectionMonthName": "mai",
+      "peakMonth": 7,
+      "peakMonthName": "juillet",
+      "peakValue": 20,
+      "troughMonth": 1,
+      "troughValue": 0,
+      "amplitude": 20,
+      "confidence": 0.2,
+      "publishByDate": "2027-03-20",
+      "publishByMonth": 3,
+      "daysUntilPublishBy": 232,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "guide-complet-2026",
+        "comparatif-vs",
+        "digital-nomad",
+        "cout-de-la-vie"
+      ],
+      "calendarValidated": false,
+      "calendarPeakMonths": [
+        11,
+        12,
+        1,
+        2
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "destination": "ho chi minh",
+      "keyword": "voyage ho chi minh",
+      "source": "google-trends",
+      "inflectionMonth": 5,
+      "inflectionMonthName": "mai",
+      "peakMonth": 7,
+      "peakMonthName": "juillet",
+      "peakValue": 33,
+      "troughMonth": 1,
+      "troughValue": 0,
+      "amplitude": 33,
+      "confidence": 0.21,
+      "publishByDate": "2027-03-20",
+      "publishByMonth": 3,
+      "daysUntilPublishBy": 232,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "guide-complet-2026",
+        "comparatif-vs",
+        "digital-nomad",
+        "cout-de-la-vie"
+      ],
+      "calendarValidated": false,
+      "calendarPeakMonths": [
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 66
+        }
+      ]
+    },
+    {
+      "destination": "da nang",
+      "keyword": "voyage da nang",
+      "source": "google-trends",
+      "inflectionMonth": 5,
+      "inflectionMonthName": "mai",
+      "peakMonth": 7,
+      "peakMonthName": "juillet",
+      "peakValue": 20,
+      "troughMonth": 1,
+      "troughValue": 0,
+      "amplitude": 20,
+      "confidence": 0.45,
+      "publishByDate": "2027-03-20",
+      "publishByMonth": 3,
+      "daysUntilPublishBy": 232,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "guide-complet-2026",
+        "comparatif-vs",
+        "digital-nomad",
+        "cout-de-la-vie"
+      ],
+      "calendarValidated": true,
+      "calendarPeakMonths": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "destination": "thailande",
+      "keyword": "voyage thailande",
+      "source": "google-trends",
+      "inflectionMonth": 6,
+      "inflectionMonthName": "juin",
+      "peakMonth": 1,
+      "peakMonthName": "janvier",
+      "peakValue": 87,
+      "troughMonth": 5,
+      "troughValue": 37,
+      "amplitude": 50,
+      "confidence": 0.46,
+      "publishByDate": "2027-04-20",
+      "publishByMonth": 4,
+      "daysUntilPublishBy": 263,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "guide-complet-2026",
+        "comparatif-vs",
+        "digital-nomad",
+        "cout-de-la-vie"
+      ],
+      "calendarValidated": true,
+      "calendarPeakMonths": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 74
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 56
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 64
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 52
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 70
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 50
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 56
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 48
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 65
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 48
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 62
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 61
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 57
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 65
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 65
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 65
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 68
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 61
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 63
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 63
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 63
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 97
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 80
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 90
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 78
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 77
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 70
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 62
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 69
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 70
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 53
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 42
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 42
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 42
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 48
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 46
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 48
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 39
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 35
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 33
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 39
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 38
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 31
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 41
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 40
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 34
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 46
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 52
+        }
+      ]
+    },
+    {
+      "destination": "phuket",
+      "keyword": "voyage phuket",
+      "source": "google-trends",
+      "inflectionMonth": 6,
+      "inflectionMonthName": "juin",
+      "peakMonth": 1,
+      "peakMonthName": "janvier",
+      "peakValue": 70,
+      "troughMonth": 3,
+      "troughValue": 10,
+      "amplitude": 60,
+      "confidence": 0.46,
+      "publishByDate": "2027-04-20",
+      "publishByMonth": 4,
+      "daysUntilPublishBy": 263,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "guide-complet-2026",
+        "comparatif-vs",
+        "digital-nomad",
+        "cout-de-la-vie",
+        "vol-pas-cher",
+        "assurance-voyage"
+      ],
+      "calendarValidated": true,
+      "calendarPeakMonths": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 51
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 54
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 83
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 44
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 55
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 49
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 66
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 50
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 69
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 66
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 72
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 47
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 65
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 0
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 77
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 86
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 71
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 54
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 56
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 84
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 45
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 54
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 76
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 49
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 57
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 53
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 47
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 53
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 0
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 10
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 40
+        }
+      ]
+    },
+    {
+      "destination": "sri lanka",
+      "keyword": "voyage sri lanka",
+      "source": "google-trends",
+      "inflectionMonth": 6,
+      "inflectionMonthName": "juin",
+      "peakMonth": 10,
+      "peakMonthName": "octobre",
+      "peakValue": 79,
+      "troughMonth": 5,
+      "troughValue": 33,
+      "amplitude": 46,
+      "confidence": 0.21,
+      "publishByDate": "2027-04-20",
+      "publishByMonth": 4,
+      "daysUntilPublishBy": 263,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "guide-complet-2026",
+        "comparatif-vs",
+        "digital-nomad",
+        "cout-de-la-vie"
+      ],
+      "calendarValidated": false,
+      "calendarPeakMonths": [
+        12,
+        1,
+        2,
+        3
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 74
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 65
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 53
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 63
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 94
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 60
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 69
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 68
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 63
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 62
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 96
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 78
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 79
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 58
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 85
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 69
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 81
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 90
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 55
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 53
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 66
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 80
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 82
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 85
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 71
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 74
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 69
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 61
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 77
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 94
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 59
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 55
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 43
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 38
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 46
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 62
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 36
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 29
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 34
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 25
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 41
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 70
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 34
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 52
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 44
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 55
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 41
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 50
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 53
+        }
+      ]
+    },
+    {
+      "destination": "maldives",
+      "keyword": "voyage maldives",
+      "source": "google-trends",
+      "inflectionMonth": 6,
+      "inflectionMonthName": "juin",
+      "peakMonth": 1,
+      "peakMonthName": "janvier",
+      "peakValue": 81,
+      "troughMonth": 5,
+      "troughValue": 34,
+      "amplitude": 47,
+      "confidence": 0.46,
+      "publishByDate": "2027-04-20",
+      "publishByMonth": 4,
+      "daysUntilPublishBy": 263,
+      "urgent": false,
+      "suggestedArticleTypes": [
+        "guide-complet",
+        "guide-complet-2026",
+        "comparatif-vs",
+        "digital-nomad",
+        "cout-de-la-vie"
+      ],
+      "calendarValidated": true,
+      "calendarPeakMonths": [
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "monthlyProfile": [
+        {
+          "month": 7,
+          "year": 2025,
+          "value": 51
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 71
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 56
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 73
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 59
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "value": 45
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 44
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 49
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 52
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "value": 46
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 53
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 47
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 63
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "value": 53
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 46
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 40
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 56
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 51
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "value": 47
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 33
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 45
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 52
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "value": 82
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 100
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 86
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 66
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "value": 73
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 67
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 66
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 76
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "value": 58
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 49
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 46
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 32
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 44
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "value": 52
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 44
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 30
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 30
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "value": 39
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 45
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 23
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 41
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "value": 22
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 51
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 33
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 29
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "value": 37
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 40
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 50
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 41
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "value": 44
+        }
+      ]
     }
   ]
 }

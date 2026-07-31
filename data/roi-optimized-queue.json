@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-30T05:46:14.823Z",
+  "timestamp": "2026-07-31T06:18:00.464Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -20,11 +20,36 @@
     "medianMonthlyPV": 400,
     "medianTrafficSignal": "0.400",
     "avgRpm": 2,
-    "articlesAnalyzed": 14
+    "articlesAnalyzed": 13
   },
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 141,
+      "topic": "voyage pas cher",
+      "articleType": "support",
+      "context": {
+        "gapScore": 61,
+        "destination": "vietnam",
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 10.85,
+        "projectedMonthlyTraffic": 407,
+        "projectedMonthlyRevenue": 0.814,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (400 PV) × gap boost (1.02)"
+      },
+      "cumulativeCost": 0.075,
+      "withinBudget": true
+    },
+    {
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -41,11 +66,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (400 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.075,
+      "cumulativeCost": 0.15,
       "withinBudget": true
     },
     {
-      "rank": 2,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -62,11 +87,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (400 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.15,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -82,31 +107,6 @@
         "projectedMonthlyRevenue": 0.8,
         "productionCost": 0.075,
         "trafficSource": "median baseline (400 PV) × gap boost (1.00)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 4,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 131,
-      "topic": "laos",
-      "articleType": "support",
-      "context": {
-        "gapScore": 51,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"laos\" (score 51, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 9.07,
-        "projectedMonthlyTraffic": 340,
-        "projectedMonthlyRevenue": 0.68,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (400 PV) × gap boost (0.85)"
       },
       "cumulativeCost": 0.3,
       "withinBudget": true
@@ -147,7 +147,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 9,
-        "freshness": 0.62,
+        "freshness": 0.61,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
@@ -290,16 +290,16 @@
       "rank": 12,
       "action": "review",
       "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "priorityScore": -1,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
-        "wpId": 3107,
-        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-        "compositeScore": 10,
-        "freshness": 0.65,
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 11,
+        "freshness": 0.76,
         "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -315,16 +315,16 @@
       "rank": 13,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "priorityScore": -2,
+      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
       "articleType": "support",
       "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 11,
-        "freshness": 0.76,
+        "wpId": 5678,
+        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+        "compositeScore": 12,
+        "freshness": 0.77,
         "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -340,16 +340,16 @@
       "rank": 14,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "priorityScore": -3,
+      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
       "articleType": "support",
       "context": {
-        "wpId": 5296,
-        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-        "compositeScore": 11,
-        "freshness": 0.76,
+        "wpId": 6309,
+        "slug": "meilleur-esim-japon-2026",
+        "compositeScore": 13,
+        "freshness": 0.87,
         "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -367,8 +367,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.103,
-    "expectedDailyRoi": 0.34
+    "expectedDailyRevenue": 0.107,
+    "expectedDailyRoi": 0.36
   },
   "summary": {
     "write_new": 1,

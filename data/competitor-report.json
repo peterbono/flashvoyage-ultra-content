@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-30T05:48:48.969Z",
+  "timestamp": "2026-07-31T06:20:08.497Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,15 +16,111 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 5887,
-      "newUrls": 6
+      "totalUrls": 6892,
+      "newUrls": 1005
     }
   ],
-  "newArticles": [],
+  "newArticles": [
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/airbnb-kyoto/",
+      "lastmod": "2025-04-26T07:48:09+00:00",
+      "destination": "kyoto",
+      "contentType": "general",
+      "title": "Airbnb Kyoto",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Airbnb Kyoto\" (kyoto, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/meilleurs-treks-manaslu-nepal/",
+      "lastmod": "2025-04-26T08:41:57+00:00",
+      "destination": "nepal",
+      "contentType": "classement",
+      "title": "Meilleurs Treks Manaslu Nepal",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Meilleurs Treks Manaslu Nepal\" (nepal, classement) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/circuits-safari-sri-lanka/",
+      "lastmod": "2025-04-26T08:44:59+00:00",
+      "destination": "sri-lanka",
+      "contentType": "itineraire",
+      "title": "Circuits Safari Sri Lanka",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Circuits Safari Sri Lanka\" (sri-lanka, itineraire) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/lombok-pluie/",
+      "lastmod": "2026-07-30T07:57:20+00:00",
+      "destination": "lombok",
+      "contentType": "general",
+      "title": "Lombok Pluie",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Lombok Pluie\" (lombok, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotels-ecoresponsables-maldives/",
+      "lastmod": "2025-04-26T08:33:58+00:00",
+      "destination": "maldives",
+      "contentType": "hebergement",
+      "title": "Hotels Ecoresponsables Maldives",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel\" (score=10, freshness=0.67)",
+      "matchedArticle": {
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 10,
+        "freshness": 0.67
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hotels-ecoresponsables-thailande/",
+      "lastmod": "2025-04-26T08:35:31+00:00",
+      "destination": "thailande",
+      "contentType": "hebergement",
+      "title": "Hotels Ecoresponsables Thailande",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal\" (score=43, freshness=0.70)",
+      "matchedArticle": {
+        "wpId": 4254,
+        "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
+        "compositeScore": 43,
+        "freshness": 0.7
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/circuits-vietnam/",
+      "lastmod": "2025-04-26T08:44:37+00:00",
+      "destination": "vietnam",
+      "contentType": "itineraire",
+      "title": "Circuits Vietnam",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=45, freshness=0.70)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 45,
+        "freshness": 0.7
+      }
+    }
+  ],
   "summary": {
-    "totalNew": 0,
-    "contentGaps": 0,
+    "totalNew": 7,
+    "contentGaps": 4,
     "staleRefreshes": 0,
-    "monitoring": 0
+    "monitoring": 3
   }
 }
