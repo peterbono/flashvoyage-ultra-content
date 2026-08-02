@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-01T06:01:24.755Z",
+  "timestamp": "2026-08-02T06:07:29.318Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -90,23 +90,23 @@
       "rank": 4,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 125,
-      "topic": "incendie var carte",
+      "priorityScore": 131,
+      "topic": "laos",
       "articleType": "support",
       "context": {
-        "gapScore": 45,
-        "destination": null,
-        "category": "pratique",
-        "suggestedTitle": "Incendie var carte : Guide Pratique 2026",
-        "suggestedReelAngle": "Reel \"Ce que personne ne te dit\"  — format humor relatable",
-        "reason": "Content gap: \"incendie var carte\" (score 45, source: trends)"
+        "gapScore": 51,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"laos\" (score 51, source: trends)"
       },
       "roi": {
-        "expectedRoi": 8,
-        "projectedMonthlyTraffic": 300,
-        "projectedMonthlyRevenue": 0.6,
+        "expectedRoi": 9.07,
+        "projectedMonthlyTraffic": 340,
+        "projectedMonthlyRevenue": 0.68,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (400 PV) × gap boost (0.75)"
+        "trafficSource": "median baseline (400 PV) × gap boost (0.85)"
       },
       "cumulativeCost": 0.3,
       "withinBudget": true
@@ -122,7 +122,7 @@
         "wpId": 2980,
         "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 9,
-        "freshness": 0.62,
+        "freshness": 0.61,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
@@ -172,31 +172,6 @@
         "wpId": 4125,
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 10,
-        "freshness": 0.69,
-        "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 8,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4105,
-        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-        "compositeScore": 10,
         "freshness": 0.68,
         "traffic": 0,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
@@ -212,7 +187,7 @@
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -237,7 +212,7 @@
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -262,32 +237,7 @@
       "withinBudget": true
     },
     {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 10,
-        "freshness": 0.66,
-        "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 12,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -312,7 +262,7 @@
       "withinBudget": true
     },
     {
-      "rank": 13,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -337,7 +287,32 @@
       "withinBudget": true
     },
     {
-      "rank": 14,
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "articleType": "support",
+      "context": {
+        "wpId": 5678,
+        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+        "compositeScore": 11,
+        "freshness": 0.76,
+        "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -360,6 +335,31 @@
       },
       "cumulativeCost": 0.3,
       "withinBudget": true
+    },
+    {
+      "rank": 14,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "articleType": "support",
+      "context": {
+        "wpId": 5296,
+        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+        "compositeScore": 11,
+        "freshness": 0.75,
+        "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
     }
   ],
   "budgetAllocation": {
@@ -367,8 +367,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.1,
-    "expectedDailyRoi": 0.33
+    "expectedDailyRevenue": 0.103,
+    "expectedDailyRoi": 0.34
   },
   "summary": {
     "write_new": 1,
