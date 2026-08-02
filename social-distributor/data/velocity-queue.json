@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-08-02T02:11:55.698Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-08-02T08:12:59.900Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Pattaya court denies bail for Russian siblings’ murder suspects",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/pattaya/pattaya-court-denies-bail-for-russian-siblings-murder-suspects",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2067,
+      "estimatedTrafficIn24h": 2020,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 4
+      },
+      "detectedAt": "2026-08-02T04:15:30.000Z",
+      "scoredAt": "2026-08-02T08:12:52.961Z"
+    }
+  ]
 }
