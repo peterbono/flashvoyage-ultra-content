@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-02T06:07:29.318Z",
+  "timestamp": "2026-08-03T06:28:49.623Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,10 +17,10 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 400,
-    "medianTrafficSignal": "0.400",
+    "medianMonthlyPV": 290,
+    "medianTrafficSignal": "0.290",
     "avgRpm": 2,
-    "articlesAnalyzed": 13
+    "articlesAnalyzed": 14
   },
   "queue": [
     {
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 10.67,
-        "projectedMonthlyTraffic": 400,
-        "projectedMonthlyRevenue": 0.8,
+        "expectedRoi": 7.73,
+        "projectedMonthlyTraffic": 290,
+        "projectedMonthlyRevenue": 0.58,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (400 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (290 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 10.67,
-        "projectedMonthlyTraffic": 400,
-        "projectedMonthlyRevenue": 0.8,
+        "expectedRoi": 7.73,
+        "projectedMonthlyTraffic": 290,
+        "projectedMonthlyRevenue": 0.58,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (400 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (290 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,11 +77,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 10.67,
-        "projectedMonthlyTraffic": 400,
-        "projectedMonthlyRevenue": 0.8,
+        "expectedRoi": 7.73,
+        "projectedMonthlyTraffic": 290,
+        "projectedMonthlyRevenue": 0.58,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (400 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (290 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -102,11 +102,11 @@
         "reason": "Content gap: \"laos\" (score 51, source: trends)"
       },
       "roi": {
-        "expectedRoi": 9.07,
-        "projectedMonthlyTraffic": 340,
-        "projectedMonthlyRevenue": 0.68,
+        "expectedRoi": 6.59,
+        "projectedMonthlyTraffic": 247,
+        "projectedMonthlyRevenue": 0.494,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (400 PV) × gap boost (0.85)"
+        "trafficSource": "median baseline (290 PV) × gap boost (0.85)"
       },
       "cumulativeCost": 0.3,
       "withinBudget": true
@@ -147,7 +147,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 9,
-        "freshness": 0.61,
+        "freshness": 0.6,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
@@ -291,13 +291,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
-      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
       "articleType": "support",
       "context": {
-        "wpId": 5678,
-        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
         "compositeScore": 11,
-        "freshness": 0.76,
+        "freshness": 0.75,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       },
@@ -313,31 +313,6 @@
     },
     {
       "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "articleType": "support",
-      "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 11,
-        "freshness": 0.76,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -360,6 +335,31 @@
       },
       "cumulativeCost": 0.3,
       "withinBudget": true
+    },
+    {
+      "rank": 14,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "articleType": "support",
+      "context": {
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 11,
+        "freshness": 0.75,
+        "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
     }
   ],
   "budgetAllocation": {
@@ -367,8 +367,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.103,
-    "expectedDailyRoi": 0.34
+    "expectedDailyRevenue": 0.074,
+    "expectedDailyRoi": 0.25
   },
   "summary": {
     "write_new": 1,

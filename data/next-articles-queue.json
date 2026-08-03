@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-02T06:07:20.346Z",
+  "timestamp": "2026-08-03T06:28:42.389Z",
   "queueSize": 14,
   "queue": [
     {
@@ -81,7 +81,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 9,
-        "freshness": 0.61,
+        "freshness": 0.6,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
@@ -171,13 +171,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
-      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
       "articleType": "support",
       "context": {
-        "wpId": 5678,
-        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
         "compositeScore": 11,
-        "freshness": 0.76,
+        "freshness": 0.75,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
@@ -187,13 +187,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
       "articleType": "support",
       "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "wpId": 5296,
+        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
         "compositeScore": 11,
-        "freshness": 0.76,
+        "freshness": 0.75,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
@@ -203,11 +203,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
-      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
-        "wpId": 5296,
-        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
         "compositeScore": 11,
         "freshness": 0.75,
         "traffic": 0,
