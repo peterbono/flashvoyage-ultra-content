@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-04T08:28:22.435Z",
+  "generatedAt": "2026-08-04T13:57:16.262Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Thailand now requires birth certificates for children travelling abroad",
+      "topic": "Fake Thai ID card racket busted in Tak",
       "source": "rss_breaking",
       "destination": "thailand",
-      "link": "https://thethaiger.com/news/national/thailand-child-travel-birth-certificate",
-      "velocityScore": 0.449,
+      "link": "https://www.bangkokpost.com/thailand/general/3296390/fake-thai-id-card-racket-busted-in-tak",
+      "velocityScore": 0.487,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
+      "hoursRemaining": 715,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2247,
-      "estimatedTrafficIn24h": 2195,
+      "estimatedTrafficNow": 2437,
+      "estimatedTrafficIn24h": 2382,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.999,
+        "trendIntensity": 0.98,
+        "timeDecay": 0.995,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 1.5
+        "hoursSinceDetection": 5.4
       },
-      "detectedAt": "2026-08-04T06:56:04.000Z",
-      "scoredAt": "2026-08-04T08:28:13.775Z"
+      "detectedAt": "2026-08-04T08:36:00.000Z",
+      "scoredAt": "2026-08-04T13:57:11.675Z"
     }
   ]
 }
