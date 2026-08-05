@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-05T08:27:03.413Z",
+  "generatedAt": "2026-08-05T13:54:42.893Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Vietnam warns of fraudument e-visa websites targeting foreign travelers",
+      "topic": "Sri Lankan beauty pageant contestant fined with animal cruelty",
       "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/vietnam-warns-of-fraudument-e-visa-websites-targeting-foreign-travelers-5105504.html",
-      "velocityScore": 0.554,
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/south-asia/sri-lankan-beauty-pageant-contestant-fined-with-animal-cruelty",
+      "velocityScore": 0.448,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 47,
+      "hoursRemaining": 716,
       "topicType": {
-        "key": "policy_change",
-        "halfLifeHours": 48
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1846,
-      "estimatedTrafficIn24h": 1305,
-      "trafficLossPerHour": 23,
+      "estimatedTrafficNow": 1495,
+      "estimatedTrafficIn24h": 1461,
+      "trafficLossPerHour": 1,
       "breakdown": {
-        "trendIntensity": 0.75,
-        "timeDecay": 0.984,
+        "trendIntensity": 0.6,
+        "timeDecay": 0.997,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 1.1
+        "hoursSinceDetection": 3.6
       },
-      "detectedAt": "2026-08-05T07:21:03.000Z",
-      "scoredAt": "2026-08-05T08:26:49.501Z"
+      "detectedAt": "2026-08-05T10:20:00.000Z",
+      "scoredAt": "2026-08-05T13:54:30.468Z"
     }
   ]
 }
