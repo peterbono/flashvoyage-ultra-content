@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-05T05:50:35.113Z",
+  "timestamp": "2026-08-06T05:54:48.998Z",
   "queueSize": 14,
   "queue": [
     {
@@ -81,7 +81,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 9,
-        "freshness": 0.6,
+        "freshness": 0.59,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       }

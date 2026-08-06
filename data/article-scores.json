@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-05T05:50:13.751Z",
+  "timestamp": "2026-08-06T05:54:28.272Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -14,13 +14,13 @@
       "wpId": 5072,
       "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "compositeScore": 53,
+      "compositeScore": 52,
       "signals": {
         "traffic": 1,
         "sessionQuality": 0.09,
         "trendAlignment": 0.27,
         "reelAmplification": 0.36,
-        "freshness": 0.73,
+        "freshness": 0.72,
         "monetization": 0,
         "frShare": 0.14,
         "frPageviews": 1
@@ -34,6 +34,27 @@
       "wordCount": 1296
     },
     {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "compositeScore": 45,
+      "signals": {
+        "traffic": 0.43,
+        "sessionQuality": 0.04,
+        "trendAlignment": 0.47,
+        "reelAmplification": 0.1,
+        "freshness": 0.71,
+        "monetization": 1,
+        "frShare": 0.67,
+        "frPageviews": 2
+      },
+      "flags": [
+        "1_reels"
+      ],
+      "date": "2026-03-31T16:22:55",
+      "wordCount": 2504
+    },
+    {
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
@@ -43,7 +64,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.53,
         "reelAmplification": 0.38,
-        "freshness": 0.69,
+        "freshness": 0.68,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -59,13 +80,13 @@
       "wpId": 4373,
       "slug": "japon-couple-15-jours-budget-tout-compris-2026",
       "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "compositeScore": 43,
+      "compositeScore": 42,
       "signals": {
         "traffic": 0.57,
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0.34,
-        "freshness": 0.69,
+        "freshness": 0.68,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -106,7 +127,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0.47,
         "reelAmplification": 0,
-        "freshness": 0.69,
+        "freshness": 0.68,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -118,27 +139,6 @@
       "wordCount": 4827
     },
     {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "compositeScore": 36,
-      "signals": {
-        "traffic": 0.14,
-        "sessionQuality": 0,
-        "trendAlignment": 0.47,
-        "reelAmplification": 0.1,
-        "freshness": 0.71,
-        "monetization": 1,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [
-        "1_reels"
-      ],
-      "date": "2026-03-31T16:22:55",
-      "wordCount": 2504
-    },
-    {
       "wpId": 4253,
       "slug": "esim-thailande-comparatif-ais-dtac-true-2026",
       "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
@@ -148,7 +148,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.47,
         "reelAmplification": 0,
-        "freshness": 0.69,
+        "freshness": 0.68,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -167,7 +167,7 @@
         "sessionQuality": 0.49,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.69,
+        "freshness": 0.68,
         "monetization": 0,
         "frShare": 0.75,
         "frPageviews": 3
@@ -188,7 +188,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.47,
         "reelAmplification": 0,
-        "freshness": 0.69,
+        "freshness": 0.68,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -231,7 +231,7 @@
         "sessionQuality": 0.02,
         "trendAlignment": 0.16,
         "reelAmplification": 0,
-        "freshness": 0.69,
+        "freshness": 0.68,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -250,7 +250,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.27,
         "reelAmplification": 0,
-        "freshness": 0.69,
+        "freshness": 0.68,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -271,7 +271,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.16,
         "reelAmplification": 0,
-        "freshness": 0.69,
+        "freshness": 0.68,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -377,7 +377,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.47,
         "reelAmplification": 0,
-        "freshness": 0.75,
+        "freshness": 0.74,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -417,7 +417,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.47,
         "reelAmplification": 0,
-        "freshness": 0.73,
+        "freshness": 0.72,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -520,7 +520,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.76,
+        "freshness": 0.75,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -581,7 +581,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.16,
         "reelAmplification": 0,
-        "freshness": 0.75,
+        "freshness": 0.74,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -791,7 +791,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.6,
+        "freshness": 0.59,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-05T05:50:34.177Z",
+  "timestamp": "2026-08-06T05:54:48.046Z",
   "articleMap": {
     "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
       "wpId": 5072,
@@ -22,6 +22,29 @@
         "humor"
       ],
       "category": "default",
+      "igReferralTraffic": null
+    },
+    "voyage-thailande-pas-cher-2026-budget": {
+      "wpId": 4487,
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-05-07",
+          "format": "budget",
+          "platform": "tiktok",
+          "score": 4.9,
+          "engagementRate": 0,
+          "publishedAt": "2026-05-07",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
@@ -143,29 +166,6 @@
         "humor"
       ],
       "category": "default",
-      "igReferralTraffic": null
-    },
-    "voyage-thailande-pas-cher-2026-budget": {
-      "wpId": 4487,
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-05-07",
-          "format": "budget",
-          "platform": "tiktok",
-          "score": 4.9,
-          "engagementRate": 0,
-          "publishedAt": "2026-05-07",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "esim-thailande-comparatif-ais-dtac-true-2026": {
