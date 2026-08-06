@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-08-05T19:22:07.936Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-08-06T02:03:06.669Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Helicopter with Trump on board came too close to passenger jet",
+      "source": "rss_breaking",
+      "destination": "asia",
+      "link": "https://www.scmp.com/news/world/united-states-canada/article/3363102/helicopter-trump-board-came-too-close-passenger-jet?utm_source=rss_feed",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2069,
+      "estimatedTrafficIn24h": 2022,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.8
+      },
+      "detectedAt": "2026-08-05T23:13:36.000Z",
+      "scoredAt": "2026-08-06T02:03:03.489Z"
+    }
+  ]
 }
