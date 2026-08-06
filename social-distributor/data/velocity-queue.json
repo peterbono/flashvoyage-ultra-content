@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-06T13:52:11.125Z",
+  "generatedAt": "2026-08-06T23:53:38.826Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Nobel-winning chemist criticizes visa curbs as he relocates from US to China",
+      "topic": "Maymay weakens into LPA; Dolphin enhances southwest monsoon",
       "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/education/nobel-winning-chemist-criticizes-visa-curbs-as-he-relocates-from-us-to-china-5105887.html",
-      "velocityScore": 0.404,
+      "destination": "philippines",
+      "link": "https://www.rappler.com/philippines/weather/tropical-depression-maymay-southwest-monsoon-update-pagasa-forecast-august-7-2026-5am/",
+      "velocityScore": 0.415,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 46,
+      "hoursRemaining": 720,
       "topicType": {
-        "key": "policy_change",
-        "halfLifeHours": 48
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2020,
-      "estimatedTrafficIn24h": 1428,
-      "trafficLossPerHour": 25,
+      "estimatedTrafficNow": 2074,
+      "estimatedTrafficIn24h": 2027,
+      "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
-        "timeDecay": 0.973,
+        "timeDecay": 1,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 1.9
+        "hoursSinceDetection": 0.5
       },
-      "detectedAt": "2026-08-06T12:00:00.000Z",
-      "scoredAt": "2026-08-06T13:52:05.456Z"
+      "detectedAt": "2026-08-06T23:25:31.000Z",
+      "scoredAt": "2026-08-06T23:53:36.396Z"
     }
   ]
 }
