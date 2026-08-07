@@ -1,86 +1,36 @@
 {
-  "generatedAt": "2026-08-07T02:23:53.854Z",
-  "totalTopics": 3,
+  "generatedAt": "2026-08-07T07:05:57.249Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 3
+    "queue_normal": 1
   },
   "queue": [
     {
-      "topic": "Nearly 50 Vietnamese nationals repatriated following deportation from US",
-      "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/nearly-50-vietnamese-nationals-repatriated-following-deportation-from-us-5105773.html",
-      "velocityScore": 0.509,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1698,
-      "estimatedTrafficIn24h": 1659,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.68,
-        "timeDecay": 0.999,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 1.5
-      },
-      "detectedAt": "2026-08-07T00:52:32.000Z",
-      "scoredAt": "2026-08-07T02:23:50.146Z"
-    },
-    {
-      "topic": "Maymay weakens into LPA; Dolphin enhances southwest monsoon",
-      "source": "rss_breaking",
-      "destination": "philippines",
-      "link": "https://www.rappler.com/philippines/weather/tropical-depression-maymay-southwest-monsoon-update-pagasa-forecast-august-7-2026-5am/",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2069,
-      "estimatedTrafficIn24h": 2022,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3
-      },
-      "detectedAt": "2026-08-06T23:25:31.000Z",
-      "scoredAt": "2026-08-07T02:23:50.895Z"
-    },
-    {
-      "topic": "Japan orders evacuations as Typhoon Dolphin approaches, cancels 500 flights",
+      "topic": "3 arrested in Malaysian checkpoint for creating fake immigration movement records",
       "source": "rss_breaking",
       "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/east-asia/japan-orders-evacuations-as-typhoon-dolphin-approaches-cancels-500-flights",
-      "velocityScore": 0.405,
+      "link": "https://www.straitstimes.com/asia/se-asia/3-arrested-in-malaysian-checkpoint-for-creating-fake-immigration-movement-records",
+      "velocityScore": 0.45,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 12,
+      "hoursRemaining": 720,
       "topicType": {
-        "key": "breaking_news",
-        "halfLifeHours": 12
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2024,
-      "estimatedTrafficIn24h": 506,
-      "trafficLossPerHour": 63,
+      "estimatedTrafficNow": 2249,
+      "estimatedTrafficIn24h": 2198,
+      "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.976,
+        "trendIntensity": 0.9,
+        "timeDecay": 1,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
         "hoursSinceDetection": 0.4
       },
-      "detectedAt": "2026-08-07T01:58:06.000Z",
-      "scoredAt": "2026-08-07T02:23:48.948Z"
+      "detectedAt": "2026-08-07T06:41:00.000Z",
+      "scoredAt": "2026-08-07T07:05:56.384Z"
     }
   ]
 }
