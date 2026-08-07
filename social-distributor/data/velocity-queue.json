@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-08-07T07:05:57.249Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-08-07T12:51:13.954Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "3 arrested in Malaysian checkpoint for creating fake immigration movement records",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/se-asia/3-arrested-in-malaysian-checkpoint-for-creating-fake-immigration-movement-records",
-      "velocityScore": 0.45,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 720,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2249,
-      "estimatedTrafficIn24h": 2198,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 1,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 0.4
-      },
-      "detectedAt": "2026-08-07T06:41:00.000Z",
-      "scoredAt": "2026-08-07T07:05:56.384Z"
-    }
-  ]
+  "queue": []
 }
