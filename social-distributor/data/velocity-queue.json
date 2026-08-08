@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-08T01:10:22.940Z",
+  "generatedAt": "2026-08-08T06:41:36.666Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,10 +8,10 @@
   },
   "queue": [
     {
-      "topic": "Malaysia flight passenger tries to open emergency exit, damages window panel",
+      "topic": "Typhoon Dolphin hits Japan’s Okinawa, China shuts ports ahead of landfall",
       "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/traffic/malaysia-flight-passenger-tries-to-open-emergency-exit-damages-window-panel-5106456.html",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/east-asia/typhoon-dolphin-hits-japans-okinawa-china-shuts-ports-ahead-of-landfall",
       "velocityScore": 0.414,
       "action": "QUEUE_NORMAL",
       "hoursRemaining": 718,
@@ -27,10 +27,10 @@
         "timeDecay": 0.998,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 2.2
+        "hoursSinceDetection": 2.1
       },
-      "detectedAt": "2026-08-07T23:00:09.000Z",
-      "scoredAt": "2026-08-08T01:10:22.940Z"
+      "detectedAt": "2026-08-08T04:33:28.000Z",
+      "scoredAt": "2026-08-08T06:41:32.419Z"
     }
   ]
 }
