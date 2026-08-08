@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-08-08T06:41:36.666Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-08-08T12:35:52.234Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Typhoon Dolphin hits Japan’s Okinawa, China shuts ports ahead of landfall",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/east-asia/typhoon-dolphin-hits-japans-okinawa-china-shuts-ports-ahead-of-landfall",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2071,
-      "estimatedTrafficIn24h": 2023,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.1
-      },
-      "detectedAt": "2026-08-08T04:33:28.000Z",
-      "scoredAt": "2026-08-08T06:41:32.419Z"
-    }
-  ]
+  "queue": []
 }
