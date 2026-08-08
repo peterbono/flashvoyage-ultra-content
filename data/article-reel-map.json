@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-07T04:58:42.791Z",
+  "timestamp": "2026-08-08T04:14:05.751Z",
   "articleMap": {
     "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
       "wpId": 5072,
@@ -24,9 +24,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "voyage-thailande-pas-cher-2026-budget": {
-      "wpId": 4487,
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+    "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage": {
+      "wpId": 5119,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
       "reels": [
         {
           "reelId": "tiktok:2026-05-07",
@@ -37,14 +37,24 @@
           "publishedAt": "2026-05-07",
           "isViral": false,
           "matchSource": "tiktok-fuzzy-title"
+        },
+        {
+          "reelId": "tiktok:2026-04-14",
+          "format": "guide",
+          "platform": "tiktok",
+          "score": 10,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-14",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
         }
       ],
       "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
+        "pick",
+        "month",
+        "avantapres"
       ],
-      "category": "budget",
+      "category": "itineraire",
       "igReferralTraffic": null
     },
     "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
@@ -68,6 +78,18 @@
         "avantapres"
       ],
       "category": "destination",
+      "igReferralTraffic": null
+    },
+    "voyage-thailande-pas-cher-2026-budget": {
+      "wpId": 4487,
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "japon-couple-15-jours-budget-tout-compris-2026": {
@@ -121,29 +143,6 @@
         "poll"
       ],
       "category": "budget",
-      "igReferralTraffic": null
-    },
-    "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage": {
-      "wpId": 5119,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-04-14",
-          "format": "guide",
-          "platform": "tiktok",
-          "score": 10,
-          "engagementRate": 0,
-          "publishedAt": "2026-04-14",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
       "igReferralTraffic": null
     },
     "meilleur-esim-cambodge-2026": {
@@ -275,16 +274,16 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "bangkok-le-vrai-cout-des-taxis-aeroport-2026": {
-      "wpId": 5742,
-      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+    "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
+      "wpId": 5260,
+      "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
       "reels": [],
       "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
+        "pick",
+        "poll",
+        "humor"
       ],
-      "category": "budget",
+      "category": "default",
       "igReferralTraffic": null
     },
     "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage": {
@@ -310,16 +309,28 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
-      "wpId": 5260,
-      "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
+    "bangkok-le-vrai-cout-des-taxis-aeroport-2026": {
+      "wpId": 5742,
+      "title": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "meilleur-esim-vietnam-2026": {
+      "wpId": 6323,
+      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "poll",
-        "humor"
+        "month",
+        "avantapres"
       ],
-      "category": "default",
+      "category": "destination",
       "igReferralTraffic": null
     },
     "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
@@ -334,9 +345,21 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "meilleur-esim-vietnam-2026": {
-      "wpId": 6323,
-      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
+    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
+      "wpId": 5333,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "meilleur-esim-thailande-2026": {
+      "wpId": 6195,
+      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -358,16 +381,16 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
-      "wpId": 5333,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
+      "wpId": 4105,
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "poll",
-        "humor"
+        "month",
+        "avantapres"
       ],
-      "category": "default",
+      "category": "itineraire",
       "igReferralTraffic": null
     },
     "meilleur-esim-philippines-2026": {
@@ -406,9 +429,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
-      "wpId": 4105,
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+    "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
+      "wpId": 5063,
+      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -442,6 +465,18 @@
       "category": "destination",
       "igReferralTraffic": null
     },
+    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
+      "wpId": 3254,
+      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte": {
       "wpId": 2980,
       "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
@@ -454,18 +489,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "meilleur-esim-thailande-2026": {
-      "wpId": 6195,
-      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "destination",
-      "igReferralTraffic": null
-    },
     "esim-japon-combien-ca-te-coute-vraiment": {
       "wpId": 5270,
       "title": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
@@ -476,18 +499,6 @@
         "poll"
       ],
       "category": "budget",
-      "igReferralTraffic": null
-    },
-    "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
-      "wpId": 5063,
-      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
       "igReferralTraffic": null
     },
     "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe": {
@@ -524,18 +535,6 @@
         "avantapres"
       ],
       "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
-      "wpId": 3254,
-      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique": {
@@ -1269,8 +1268,8 @@
   ],
   "stats": {
     "totalArticles": 38,
-    "articlesWithReels": 7,
-    "articlesWithoutReels": 31,
+    "articlesWithReels": 6,
+    "articlesWithoutReels": 32,
     "totalReels": 11,
     "viralReels": 0,
     "orphanReels": 115
