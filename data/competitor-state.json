@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-08T04:14:15.272Z",
+  "timestamp": "2026-08-09T04:21:27.551Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-08-08T04:14:15.764Z",
+      "lastScan": "2026-08-09T04:21:28.235Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-08-08T04:14:16.139Z",
+      "lastScan": "2026-08-09T04:21:28.592Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-08-08T04:15:29.335Z",
-      "urlCount": 9931,
+      "lastScan": "2026-08-09T04:22:39.388Z",
+      "urlCount": 9936,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -10042,7 +10042,6 @@
         "https://generationvoyage.fr/mykonos-hors-saison/": "2026-08-02T10:12:12+00:00",
         "https://generationvoyage.fr/luxembourg-solo/": "2026-08-02T12:14:39+00:00",
         "https://generationvoyage.fr/chimichurri-argentine-uruguay/": "2026-08-02T14:18:12+00:00",
-        "https://generationvoyage.fr/visiter-draguignan-faire-voir/": "2026-08-02T16:36:36+00:00",
         "https://generationvoyage.fr/rentable-airbnb-booking/": "2026-07-31T12:21:31+00:00",
         "https://generationvoyage.fr/bruxelles-pluie/": "2026-08-03T07:54:33+00:00",
         "https://generationvoyage.fr/louer-legalement-airbnb/": "2026-07-31T12:29:48+00:00",
@@ -10072,7 +10071,13 @@
         "https://generationvoyage.fr/chaleur-cordoue/": "2026-08-07T10:11:50+00:00",
         "https://generationvoyage.fr/lyon-budget/": "2026-08-07T12:23:28+00:00",
         "https://generationvoyage.fr/souvenirs-dubai/": "2026-08-07T14:26:09+00:00",
-        "https://generationvoyage.fr/faro-hors-saison/": "2026-08-07T16:33:40+00:00"
+        "https://generationvoyage.fr/faro-hors-saison/": "2026-08-07T16:33:40+00:00",
+        "https://generationvoyage.fr/crete-solo/": "2026-08-08T08:01:47+00:00",
+        "https://generationvoyage.fr/pesto/": "2026-08-08T10:14:11+00:00",
+        "https://generationvoyage.fr/visiter-trois-epis-faire-voir/": "2026-08-08T12:11:45+00:00",
+        "https://generationvoyage.fr/corse-pluie/": "2026-08-08T14:05:15+00:00",
+        "https://generationvoyage.fr/essaouira-budget/": "2026-08-08T16:36:03+00:00",
+        "https://generationvoyage.fr/visiter-draguignan-faire-voir/": "2026-08-08T06:38:30+00:00"
       }
     }
   }

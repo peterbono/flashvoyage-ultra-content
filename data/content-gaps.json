@@ -1,11 +1,56 @@
 {
-  "timestamp": "2026-08-08T04:14:04.776Z",
-  "gapCount": 0,
-  "gaps": [],
+  "timestamp": "2026-08-09T04:21:15.832Z",
+  "gapCount": 2,
+  "gaps": [
+    {
+      "topic": "laos",
+      "source": "trends",
+      "gapScore": 51,
+      "signals": {
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
+        "competition": 0.8
+      },
+      "destination": "vietnam",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "demi vollering pause pipi",
+      "source": "trends",
+      "gapScore": 45,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.4
+      },
+      "destination": null,
+      "category": "transport",
+      "suggestedTitle": "Demi vollering pause pipi : Guide Pratique",
+      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+      "articleType": "support",
+      "priority": "medium"
+    }
+  ],
   "summary": {
-    "byPriority": {},
-    "byCategory": {},
-    "byDestination": {},
-    "topDestinationGaps": []
+    "byPriority": {
+      "high": 1,
+      "medium": 1
+    },
+    "byCategory": {
+      "destination": 1,
+      "transport": 1
+    },
+    "byDestination": {
+      "vietnam": 1
+    },
+    "topDestinationGaps": [
+      "vietnam"
+    ]
   }
 }

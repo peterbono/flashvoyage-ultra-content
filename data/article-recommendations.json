@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-08-08T04:14:13.351Z",
-    "elapsedSeconds": 6,
+    "generatedAt": "2026-08-09T04:21:25.613Z",
+    "elapsedSeconds": 7,
     "totalArticles": 38,
     "articlesWithRecommendations": 11,
     "totalRecommendations": 11,
@@ -36,9 +36,9 @@
         "avgDuration": 20
       },
       "gsc": {
-        "impressions": 23,
+        "impressions": 20,
         "clicks": 0,
-        "position": 8.7,
+        "position": 8.9,
         "topQueries": [
           {
             "query": "kuala lumpur ou singapour",
@@ -82,14 +82,14 @@
       "internalLinks": 19,
       "lastModified": "2026-06-11T05:33:16",
       "ga4": {
-        "pageviews": 4,
-        "sessions": 3,
-        "avgDuration": 90
+        "pageviews": 3,
+        "sessions": 2,
+        "avgDuration": 135
       },
       "gsc": {
-        "impressions": 7,
-        "clicks": 0,
-        "position": 34,
+        "impressions": 8,
+        "clicks": 1,
+        "position": 35.5,
         "topQueries": [
           {
             "query": "vietnam ou thailande",
@@ -99,9 +99,9 @@
           },
           {
             "query": "thailande ou vietnam",
-            "position": 39,
-            "impressions": 1,
-            "ctr": 0
+            "position": 42.5,
+            "impressions": 2,
+            "ctr": 50
           }
         ]
       },
@@ -121,34 +121,6 @@
         }
       ],
       "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4373,
-      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
-      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
-      "wordCount": 4965,
-      "widgetCount": 2,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:21",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 3,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 5,
-        "clicks": 0,
-        "position": 7.6,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -180,6 +152,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4373,
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
+      "wordCount": 4965,
+      "widgetCount": 2,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:21",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 2,
+        "avgDuration": 1
+      },
+      "gsc": {
+        "impressions": 5,
+        "clicks": 0,
+        "position": 7.6,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4372,
       "slug": "esim-philippines-globe-smart-comparatif-2026",
       "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
@@ -194,9 +194,9 @@
         "avgDuration": 150
       },
       "gsc": {
-        "impressions": 26,
+        "impressions": 24,
         "clicks": 0,
-        "position": 36.9,
+        "position": 40.5,
         "topQueries": [
           {
             "query": "esim philippines",
@@ -206,14 +206,8 @@
           },
           {
             "query": "carte sim philippines",
-            "position": 66,
-            "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "globe esim",
-            "position": 8.5,
-            "impressions": 2,
+            "position": 67.3,
+            "impressions": 3,
             "ctr": 0
           },
           {
@@ -225,6 +219,12 @@
           {
             "query": "e sim philippines globe",
             "position": 40,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "globe esim",
+            "position": 6,
             "impressions": 1,
             "ctr": 0
           }
@@ -263,14 +263,14 @@
         "avgDuration": 4
       },
       "gsc": {
-        "impressions": 26,
+        "impressions": 28,
         "clicks": 0,
-        "position": 54.3,
+        "position": 56.2,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 75.9,
-            "impressions": 11,
+            "position": 76.7,
+            "impressions": 13,
             "ctr": 0
           },
           {
@@ -354,20 +354,26 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 24,
+        "impressions": 31,
         "clicks": 0,
-        "position": 24.3,
+        "position": 30.4,
         "topQueries": [
           {
-            "query": "thailande ou bali",
-            "position": 42.5,
+            "query": "bali ou thailande",
+            "position": 52.3,
+            "impressions": 4,
+            "ctr": 0
+          },
+          {
+            "query": "bali et thailande",
+            "position": 60.5,
             "impressions": 2,
             "ctr": 0
           },
           {
-            "query": "bali ou thailande",
-            "position": 54,
-            "impressions": 1,
+            "query": "thailande ou bali",
+            "position": 42.5,
+            "impressions": 2,
             "ctr": 0
           },
           {
@@ -377,8 +383,8 @@
             "ctr": 0
           },
           {
-            "query": "thaïlande bali",
-            "position": 77,
+            "query": "thailande bali",
+            "position": 78,
             "impressions": 1,
             "ctr": 0
           }
@@ -392,9 +398,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"thailande ou bali\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"bali ou thailande\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"thailande ou bali\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -419,12 +425,12 @@
       "gsc": {
         "impressions": 19,
         "clicks": 0,
-        "position": 56.4,
+        "position": 59.4,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
-            "position": 83.3,
-            "impressions": 11,
+            "position": 83,
+            "impressions": 12,
             "ctr": 0
           },
           {
@@ -496,14 +502,14 @@
         "avgDuration": 229
       },
       "gsc": {
-        "impressions": 53,
-        "clicks": 1,
-        "position": 45.2,
+        "impressions": 51,
+        "clicks": 0,
+        "position": 49.5,
         "topQueries": [
           {
             "query": "esim cambodge",
             "position": 56.3,
-            "impressions": 39,
+            "impressions": 42,
             "ctr": 0
           },
           {
@@ -561,7 +567,7 @@
       "gsc": {
         "impressions": 39,
         "clicks": 0,
-        "position": 36.8,
+        "position": 36.7,
         "topQueries": [
           {
             "query": "esim asie du sud est",
@@ -632,14 +638,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 17,
         "clicks": 0,
-        "position": 53.8,
+        "position": 55.2,
         "topQueries": [
           {
             "query": "circuit authentique asie du sud-est",
-            "position": 82.4,
-            "impressions": 7,
+            "position": 81.6,
+            "impressions": 8,
             "ctr": 0
           },
           {
@@ -651,6 +657,12 @@
           {
             "query": "itinéraire luxe asie du sud-est",
             "position": 87,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "itinéraires asie du sud-est",
+            "position": 55,
             "impressions": 1,
             "ctr": 0
           }
@@ -689,14 +701,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 25,
+        "impressions": 29,
         "clicks": 0,
-        "position": 82.2,
+        "position": 80.9,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 90.8,
-            "impressions": 21,
+            "position": 90.6,
+            "impressions": 24,
             "ctr": 0
           },
           {
