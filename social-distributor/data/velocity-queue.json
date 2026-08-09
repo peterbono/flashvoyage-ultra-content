@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-08-09T06:44:47.581Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-08-09T12:38:04.275Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Nakhon Phanom flooded, South on alert",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3298879/nakhon-phanom-flooded-south-on-alert",
-      "velocityScore": 0.415,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 720,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2074,
-      "estimatedTrafficIn24h": 2027,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 1,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 0.4
-      },
-      "detectedAt": "2026-08-09T06:23:00.000Z",
-      "scoredAt": "2026-08-09T06:44:41.290Z"
-    }
-  ]
+  "queue": []
 }
