@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-08-10T12:55:25.941Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-08-10T18:48:51.949Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Years of dog poisonings on Koh Phangan beach remain unsolved",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/national/koh-phangan-beach-poisoning",
-      "velocityScore": 0.499,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2496,
-      "estimatedTrafficIn24h": 2439,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.6
-      },
-      "detectedAt": "2026-08-10T11:19:05.000Z",
-      "scoredAt": "2026-08-10T12:55:16.458Z"
-    }
-  ]
+  "queue": []
 }
