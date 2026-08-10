@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-09T04:21:26.576Z",
+  "timestamp": "2026-08-10T04:42:47.275Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -113,27 +113,27 @@
     },
     {
       "rank": 5,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 125,
-      "topic": "demi vollering pause pipi",
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
       "articleType": "support",
       "context": {
-        "gapScore": 45,
-        "destination": null,
-        "category": "transport",
-        "suggestedTitle": "Demi vollering pause pipi : Guide Pratique",
-        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
-        "reason": "Content gap: \"demi vollering pause pipi\" (score 45, source: trends)"
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 9,
+        "freshness": 0.62,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
       "roi": {
-        "expectedRoi": 5.81,
-        "projectedMonthlyTraffic": 218,
-        "projectedMonthlyRevenue": 0.436,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (290 PV) × gap boost (0.75)"
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -147,7 +147,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 9,
-        "freshness": 0.59,
+        "freshness": 0.58,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
@@ -158,7 +158,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -183,7 +183,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -208,7 +208,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -233,7 +233,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -258,7 +258,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -283,61 +283,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
       "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "articleType": "support",
-      "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 11,
-        "freshness": 0.73,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.375,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "articleType": "support",
-      "context": {
-        "wpId": 5296,
-        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-        "compositeScore": 11,
-        "freshness": 0.73,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.375,
-      "withinBudget": true
-    },
-    {
-      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -358,11 +308,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 15,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -383,20 +333,45 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 14,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
+      "articleType": "support",
+      "context": {
+        "wpId": 6309,
+        "slug": "meilleur-esim-japon-2026",
+        "compositeScore": 13,
+        "freshness": 0.84,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.375,
+    "totalCost": 0.3,
     "dailyBudget": 2,
-    "itemsWithinBudget": 15,
+    "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.089,
-    "expectedDailyRoi": 0.24
+    "expectedDailyRevenue": 0.074,
+    "expectedDailyRoi": 0.25
   },
   "summary": {
-    "write_new": 2,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

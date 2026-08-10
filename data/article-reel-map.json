@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-09T04:21:16.820Z",
+  "timestamp": "2026-08-10T04:42:38.362Z",
   "articleMap": {
     "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
       "wpId": 5072,
@@ -22,6 +22,29 @@
         "humor"
       ],
       "category": "default",
+      "igReferralTraffic": null
+    },
+    "voyage-thailande-pas-cher-2026-budget": {
+      "wpId": 4487,
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-05-07",
+          "format": "budget",
+          "platform": "tiktok",
+          "score": 4.9,
+          "engagementRate": 0,
+          "publishedAt": "2026-05-07",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
@@ -52,16 +75,6 @@
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
       "reels": [
         {
-          "reelId": "tiktok:2026-05-07",
-          "format": "budget",
-          "platform": "tiktok",
-          "score": 4.9,
-          "engagementRate": 0,
-          "publishedAt": "2026-05-07",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        },
-        {
           "reelId": "tiktok:2026-04-14",
           "format": "guide",
           "platform": "tiktok",
@@ -78,18 +91,6 @@
         "avantapres"
       ],
       "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "voyage-thailande-pas-cher-2026-budget": {
-      "wpId": 4487,
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "japon-couple-15-jours-budget-tout-compris-2026": {
@@ -238,6 +239,18 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "philippines-10-jours-itineraire-plages-budget-2026": {
+      "wpId": 4371,
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "bali-lombok-gili-10-jours-itineraire-budget-2026": {
       "wpId": 4370,
       "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
@@ -309,16 +322,16 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "philippines-10-jours-itineraire-plages-budget-2026": {
-      "wpId": 4371,
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
+      "wpId": 3090,
+      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
       "reels": [],
       "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
+        "pick",
+        "month",
+        "avantapres"
       ],
-      "category": "budget",
+      "category": "itineraire",
       "igReferralTraffic": null
     },
     "meilleur-esim-vietnam-2026": {
@@ -333,30 +346,6 @@
       "category": "destination",
       "igReferralTraffic": null
     },
-    "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
-      "wpId": 3090,
-      "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
-      "wpId": 5333,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "meilleur-esim-thailande-2026": {
       "wpId": 6195,
       "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
@@ -369,16 +358,16 @@
       "category": "destination",
       "igReferralTraffic": null
     },
-    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
-      "wpId": 4105,
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
+      "wpId": 5333,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "month",
-        "avantapres"
+        "poll",
+        "humor"
       ],
-      "category": "itineraire",
+      "category": "default",
       "igReferralTraffic": null
     },
     "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout": {
@@ -405,15 +394,16 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils": {
-      "wpId": 3107,
-      "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
+      "wpId": 4105,
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
       "reels": [],
       "suggestedFormats": [
-        "poll",
-        "humor"
+        "pick",
+        "month",
+        "avantapres"
       ],
-      "category": "visa",
+      "category": "itineraire",
       "igReferralTraffic": null
     },
     "meilleur-esim-philippines-2026": {
@@ -426,6 +416,30 @@
         "avantapres"
       ],
       "category": "destination",
+      "igReferralTraffic": null
+    },
+    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
+      "wpId": 5343,
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
+      "wpId": 5296,
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
       "igReferralTraffic": null
     },
     "meilleur-esim-bali-2026": {
@@ -462,30 +476,6 @@
         "poll"
       ],
       "category": "budget",
-      "igReferralTraffic": null
-    },
-    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
-      "wpId": 5343,
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
-      "wpId": 5296,
-      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
       "igReferralTraffic": null
     },
     "esim-japon-combien-ca-te-coute-vraiment": {
@@ -558,6 +548,17 @@
         "humor"
       ],
       "category": "default",
+      "igReferralTraffic": null
+    },
+    "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils": {
+      "wpId": 3107,
+      "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "reels": [],
+      "suggestedFormats": [
+        "poll",
+        "humor"
+      ],
+      "category": "visa",
       "igReferralTraffic": null
     },
     "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget": {
@@ -1268,8 +1269,8 @@
   ],
   "stats": {
     "totalArticles": 38,
-    "articlesWithReels": 6,
-    "articlesWithoutReels": 32,
+    "articlesWithReels": 7,
+    "articlesWithoutReels": 31,
     "totalReels": 11,
     "viralReels": 0,
     "orphanReels": 115

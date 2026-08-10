@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-09T04:21:27.551Z",
+  "timestamp": "2026-08-10T04:42:48.056Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-08-09T04:21:28.235Z",
+      "lastScan": "2026-08-10T04:42:48.965Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-08-09T04:21:28.592Z",
+      "lastScan": "2026-08-10T04:42:49.715Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-08-09T04:22:39.388Z",
-      "urlCount": 9936,
+      "lastScan": "2026-08-10T04:44:03.478Z",
+      "urlCount": 9941,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -10077,6 +10077,11 @@
         "https://generationvoyage.fr/visiter-trois-epis-faire-voir/": "2026-08-08T12:11:45+00:00",
         "https://generationvoyage.fr/corse-pluie/": "2026-08-08T14:05:15+00:00",
         "https://generationvoyage.fr/essaouira-budget/": "2026-08-08T16:36:03+00:00",
+        "https://generationvoyage.fr/souvenirs-seville/": "2026-08-09T08:02:02+00:00",
+        "https://generationvoyage.fr/quotidien-ecosse/": "2026-08-09T10:11:07+00:00",
+        "https://generationvoyage.fr/berlin-solo/": "2026-08-09T12:11:47+00:00",
+        "https://generationvoyage.fr/tarte-tatin-sologne/": "2026-08-09T14:30:46+00:00",
+        "https://generationvoyage.fr/visiter-lucerne-faire-voir/": "2026-08-09T16:23:40+00:00",
         "https://generationvoyage.fr/visiter-draguignan-faire-voir/": "2026-08-08T06:38:30+00:00"
       }
     }

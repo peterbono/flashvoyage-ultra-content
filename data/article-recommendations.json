@@ -1,22 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-08-09T04:21:25.613Z",
+    "generatedAt": "2026-08-10T04:42:46.496Z",
     "elapsedSeconds": 7,
     "totalArticles": 38,
-    "articlesWithRecommendations": 11,
-    "totalRecommendations": 11,
+    "articlesWithRecommendations": 12,
+    "totalRecommendations": 12,
     "byPriority": {
       "P0": 0,
       "P1": 0,
-      "P2": 11
+      "P2": 12
     },
     "byType": {
-      "seo": 11
+      "seo": 12
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
-        "count": 11
+        "count": 12
       }
     ]
   },
@@ -36,20 +36,20 @@
         "avgDuration": 20
       },
       "gsc": {
-        "impressions": 20,
+        "impressions": 16,
         "clicks": 0,
-        "position": 8.9,
+        "position": 8.3,
         "topQueries": [
-          {
-            "query": "kuala lumpur ou singapour",
-            "position": 14.3,
-            "impressions": 3,
-            "ctr": 0
-          },
           {
             "query": "singapour ou kuala lumpur",
             "position": 10,
             "impressions": 3,
+            "ctr": 0
+          },
+          {
+            "query": "kuala lumpur ou singapour",
+            "position": 11,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -62,9 +62,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"kuala lumpur ou singapour\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"singapour ou kuala lumpur\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"kuala lumpur ou singapour\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"singapour ou kuala lumpur\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -87,9 +87,9 @@
         "avgDuration": 135
       },
       "gsc": {
-        "impressions": 8,
-        "clicks": 1,
-        "position": 35.5,
+        "impressions": 9,
+        "clicks": 2,
+        "position": 34.2,
         "topQueries": [
           {
             "query": "vietnam ou thailande",
@@ -166,17 +166,34 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 7,
         "clicks": 0,
-        "position": 7.6,
-        "topQueries": []
+        "position": 13.3,
+        "topQueries": [
+          {
+            "query": "voyage japon couple",
+            "position": 46,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [],
-      "recommendationCount": 0,
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"voyage japon couple\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"voyage japon couple\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -194,9 +211,9 @@
         "avgDuration": 150
       },
       "gsc": {
-        "impressions": 24,
+        "impressions": 22,
         "clicks": 0,
-        "position": 40.5,
+        "position": 40.1,
         "topQueries": [
           {
             "query": "esim philippines",
@@ -211,20 +228,14 @@
             "ctr": 0
           },
           {
-            "query": "meilleur esim philippines",
-            "position": 79.5,
-            "impressions": 2,
-            "ctr": 0
-          },
-          {
             "query": "e sim philippines globe",
             "position": 40,
             "impressions": 1,
             "ctr": 0
           },
           {
-            "query": "globe esim",
-            "position": 6,
+            "query": "meilleur esim philippines",
+            "position": 76,
             "impressions": 1,
             "ctr": 0
           }
@@ -263,14 +274,14 @@
         "avgDuration": 4
       },
       "gsc": {
-        "impressions": 28,
+        "impressions": 29,
         "clicks": 0,
-        "position": 56.2,
+        "position": 57,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 76.7,
-            "impressions": 13,
+            "position": 76.9,
+            "impressions": 14,
             "ctr": 0
           },
           {
@@ -326,9 +337,9 @@
         "avgDuration": 7
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 0,
         "clicks": 0,
-        "position": 10,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -354,9 +365,9 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 31,
+        "impressions": 30,
         "clicks": 0,
-        "position": 30.4,
+        "position": 32.4,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -365,14 +376,14 @@
             "ctr": 0
           },
           {
-            "query": "bali et thailande",
-            "position": 60.5,
-            "impressions": 2,
+            "query": "thailande ou bali",
+            "position": 45.7,
+            "impressions": 3,
             "ctr": 0
           },
           {
-            "query": "thailande ou bali",
-            "position": 42.5,
+            "query": "bali et thailande",
+            "position": 60.5,
             "impressions": 2,
             "ctr": 0
           },
@@ -423,14 +434,14 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 19,
+        "impressions": 22,
         "clicks": 0,
-        "position": 59.4,
+        "position": 56.7,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
-            "position": 83,
-            "impressions": 12,
+            "position": 82.9,
+            "impressions": 13,
             "ctr": 0
           },
           {
@@ -502,14 +513,14 @@
         "avgDuration": 229
       },
       "gsc": {
-        "impressions": 51,
+        "impressions": 52,
         "clicks": 0,
-        "position": 49.5,
+        "position": 51.4,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 56.3,
-            "impressions": 42,
+            "position": 56.1,
+            "impressions": 45,
             "ctr": 0
           },
           {
@@ -565,13 +576,13 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 39,
+        "impressions": 40,
         "clicks": 0,
-        "position": 36.7,
+        "position": 38.9,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 37.4,
+            "position": 39.2,
             "impressions": 34,
             "ctr": 0
           }
@@ -638,9 +649,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 17,
+        "impressions": 16,
         "clicks": 0,
-        "position": 55.2,
+        "position": 57.4,
         "topQueries": [
           {
             "query": "circuit authentique asie du sud-est",
@@ -650,8 +661,8 @@
           },
           {
             "query": "itinéraire asie hors des sentiers battus",
-            "position": 17.5,
-            "impressions": 4,
+            "position": 16.7,
+            "impressions": 3,
             "ctr": 0
           },
           {
@@ -701,14 +712,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 29,
+        "impressions": 31,
         "clicks": 0,
-        "position": 80.9,
+        "position": 81.5,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 90.6,
-            "impressions": 24,
+            "position": 90.5,
+            "impressions": 26,
             "ctr": 0
           },
           {

@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-08-09T04:21:17.798Z",
-  "queueSize": 15,
+  "timestamp": "2026-08-10T04:42:39.133Z",
+  "queueSize": 14,
   "queue": [
     {
       "rank": 1,
@@ -20,22 +20,6 @@
     },
     {
       "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 125,
-      "topic": "demi vollering pause pipi",
-      "articleType": "support",
-      "context": {
-        "gapScore": 45,
-        "destination": null,
-        "category": "transport",
-        "suggestedTitle": "Demi vollering pause pipi : Guide Pratique",
-        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
-        "reason": "Content gap: \"demi vollering pause pipi\" (score 45, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -47,7 +31,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -59,7 +43,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -68,6 +52,22 @@
       "context": {
         "cyclePosition": 1,
         "reason": "Standard editorial calendar rotation (position 2/5)"
+      }
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "articleType": "support",
+      "context": {
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 9,
+        "freshness": 0.62,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
     },
     {
@@ -81,7 +81,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 9,
-        "freshness": 0.59,
+        "freshness": 0.58,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
@@ -171,38 +171,6 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "articleType": "support",
-      "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 11,
-        "freshness": 0.73,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "articleType": "support",
-      "context": {
-        "wpId": 5296,
-        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-        "compositeScore": 11,
-        "freshness": 0.73,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
       "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
@@ -215,7 +183,7 @@
       }
     },
     {
-      "rank": 15,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
@@ -229,10 +197,26 @@
         "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
+    },
+    {
+      "rank": 14,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
+      "articleType": "support",
+      "context": {
+        "wpId": 6309,
+        "slug": "meilleur-esim-japon-2026",
+        "compositeScore": 13,
+        "freshness": 0.84,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      }
     }
   ],
   "summary": {
-    "write_new": 2,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,
