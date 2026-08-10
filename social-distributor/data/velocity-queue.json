@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-10T07:20:35.947Z",
+  "generatedAt": "2026-08-10T12:55:25.941Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Shanghai cancels over 1,300 flights as Typhoon Dolphin hits China's eastern coast",
+      "topic": "Years of dog poisonings on Koh Phangan beach remain unsolved",
       "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/environment/shanghai-cancels-over-1-300-flights-as-typhoon-dolphin-hits-china-s-eastern-coast-5107181.html",
-      "velocityScore": 0.413,
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/national/koh-phangan-beach-poisoning",
+      "velocityScore": 0.499,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
+      "hoursRemaining": 718,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2065,
-      "estimatedTrafficIn24h": 2018,
+      "estimatedTrafficNow": 2496,
+      "estimatedTrafficIn24h": 2439,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.995,
+        "trendIntensity": 1,
+        "timeDecay": 0.998,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 5
+        "hoursSinceDetection": 1.6
       },
-      "detectedAt": "2026-08-10T02:19:42.000Z",
-      "scoredAt": "2026-08-10T07:20:26.944Z"
+      "detectedAt": "2026-08-10T11:19:05.000Z",
+      "scoredAt": "2026-08-10T12:55:16.458Z"
     }
   ]
 }
