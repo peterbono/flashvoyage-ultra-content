@@ -1,61 +1,10 @@
 {
-  "generatedAt": "2026-08-11T06:56:53.920Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-08-11T12:51:18.010Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Japanese airlines halt flights as Typhoon Chan-hom nears Tokyo",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/east-asia/japanese-airlines-halt-flights-as-typhoon-chan-hom-nears-tokyo",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2072,
-      "estimatedTrafficIn24h": 2025,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.999,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.6
-      },
-      "detectedAt": "2026-08-11T05:23:17.000Z",
-      "scoredAt": "2026-08-11T06:56:48.301Z"
-    },
-    {
-      "topic": "40% of flights grounded in Shanghai as long-lived Typhoon Dolphin moves north",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/world/3299930/40-of-flights-grounded-in-shanghai-as-longlived-typhoon-dolphin-moves-north",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2070,
-      "estimatedTrafficIn24h": 2023,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.6
-      },
-      "detectedAt": "2026-08-11T04:23:00.000Z",
-      "scoredAt": "2026-08-11T06:56:48.713Z"
-    }
-  ]
+  "queue": []
 }
