@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-08-10T04:42:46.496Z",
-    "elapsedSeconds": 7,
+    "generatedAt": "2026-08-11T04:23:24.094Z",
+    "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
     "totalRecommendations": 12,
@@ -36,14 +36,14 @@
         "avgDuration": 20
       },
       "gsc": {
-        "impressions": 16,
+        "impressions": 14,
         "clicks": 0,
-        "position": 8.3,
+        "position": 8.1,
         "topQueries": [
           {
             "query": "singapour ou kuala lumpur",
-            "position": 10,
-            "impressions": 3,
+            "position": 9.5,
+            "impressions": 2,
             "ctr": 0
           },
           {
@@ -166,9 +166,9 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 8,
         "clicks": 0,
-        "position": 13.3,
+        "position": 13.1,
         "topQueries": [
           {
             "query": "voyage japon couple",
@@ -274,14 +274,14 @@
         "avgDuration": 4
       },
       "gsc": {
-        "impressions": 29,
+        "impressions": 31,
         "clicks": 0,
-        "position": 57,
+        "position": 58.2,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 76.9,
-            "impressions": 14,
+            "position": 76.8,
+            "impressions": 16,
             "ctr": 0
           },
           {
@@ -365,9 +365,9 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 30,
+        "impressions": 29,
         "clicks": 0,
-        "position": 32.4,
+        "position": 33.2,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -499,69 +499,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 6374,
-      "slug": "meilleur-esim-cambodge-2026",
-      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
-      "url": "https://flashvoyage.com/meilleur-esim-cambodge-2026/",
-      "wordCount": 1249,
-      "widgetCount": 0,
-      "internalLinks": 11,
-      "lastModified": "2026-06-15T12:00:01",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 229
-      },
-      "gsc": {
-        "impressions": 52,
-        "clicks": 0,
-        "position": 51.4,
-        "topQueries": [
-          {
-            "query": "esim cambodge",
-            "position": 56.1,
-            "impressions": 45,
-            "ctr": 0
-          },
-          {
-            "query": "e-sim cambodge",
-            "position": 48.5,
-            "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "esim cellcard",
-            "position": 10,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "holafly cambodge",
-            "position": 11,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim cambodge\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim cambodge\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
       "wpId": 5678,
       "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
       "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
@@ -578,11 +515,11 @@
       "gsc": {
         "impressions": 40,
         "clicks": 0,
-        "position": 38.9,
+        "position": 39.6,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 39.2,
+            "position": 40.1,
             "impressions": 34,
             "ctr": 0
           }
@@ -649,14 +586,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 16,
+        "impressions": 17,
         "clicks": 0,
-        "position": 57.4,
+        "position": 58.2,
         "topQueries": [
           {
             "query": "circuit authentique asie du sud-est",
-            "position": 81.6,
-            "impressions": 8,
+            "position": 80.6,
+            "impressions": 9,
             "ctr": 0
           },
           {
@@ -698,6 +635,69 @@
       "p0Count": 0
     },
     {
+      "wpId": 6374,
+      "slug": "meilleur-esim-cambodge-2026",
+      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+      "url": "https://flashvoyage.com/meilleur-esim-cambodge-2026/",
+      "wordCount": 1249,
+      "widgetCount": 0,
+      "internalLinks": 11,
+      "lastModified": "2026-06-15T12:00:01",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 54,
+        "clicks": 0,
+        "position": 51.4,
+        "topQueries": [
+          {
+            "query": "esim cambodge",
+            "position": 56,
+            "impressions": 47,
+            "ctr": 0
+          },
+          {
+            "query": "e-sim cambodge",
+            "position": 48.5,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "esim cellcard",
+            "position": 10,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "holafly cambodge",
+            "position": 11,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim cambodge\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim cambodge\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 6331,
       "slug": "meilleur-esim-philippines-2026",
       "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
@@ -712,14 +712,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 31,
+        "impressions": 33,
         "clicks": 0,
-        "position": 81.5,
+        "position": 81.9,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 90.5,
-            "impressions": 26,
+            "position": 90.4,
+            "impressions": 28,
             "ctr": 0
           },
           {
@@ -993,9 +993,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 6,
         "clicks": 0,
-        "position": 52.4,
+        "position": 45.2,
         "topQueries": [
           {
             "query": "thailande ou vietnam",
