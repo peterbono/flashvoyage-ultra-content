@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-11T04:23:26.029Z",
+  "timestamp": "2026-08-12T04:51:44.945Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-08-11T04:23:26.965Z",
+      "lastScan": "2026-08-12T04:51:45.917Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-08-11T04:23:27.521Z",
+      "lastScan": "2026-08-12T04:51:46.481Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-08-11T04:24:42.972Z",
-      "urlCount": 9946,
+      "lastScan": "2026-08-12T04:52:55.731Z",
+      "urlCount": 9951,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -304,7 +304,6 @@
         "https://generationvoyage.fr/s-il-vous-plait-langues/": "2023-05-31T16:33:32+00:00",
         "https://generationvoyage.fr/6-jobs-freelances-permettent-voyager/": "2023-05-31T16:36:00+00:00",
         "https://generationvoyage.fr/12-bebes-animaux-ventre-mere/": "2023-05-31T16:36:00+00:00",
-        "https://generationvoyage.fr/comparatif-banques-voyage/": "2023-05-31T16:36:04+00:00",
         "https://generationvoyage.fr/ouragan-irma-saint-martin/": "2023-05-31T16:38:29+00:00",
         "https://generationvoyage.fr/trousse-secours-voyage/": "2023-05-31T16:40:55+00:00",
         "https://generationvoyage.fr/36-photos-sous-surface-eau-couper-souffle/": "2023-05-31T16:40:59+00:00",
@@ -3341,7 +3340,6 @@
         "https://generationvoyage.fr/voir-lever-soleil-namibie/": "2025-04-26T09:43:31+00:00",
         "https://generationvoyage.fr/points-de-vue-martinique/": "2025-04-26T09:43:39+00:00",
         "https://generationvoyage.fr/restaurants-historiques-martinique/": "2025-04-26T09:43:44+00:00",
-        "https://generationvoyage.fr/airbnb-luxe-guadeloupe/": "2025-04-26T09:43:48+00:00",
         "https://generationvoyage.fr/activites-deserts-namibie/": "2025-04-26T09:43:51+00:00",
         "https://generationvoyage.fr/bars-historiques-baleares/": "2025-04-26T09:43:57+00:00",
         "https://generationvoyage.fr/merveilles-naturelles-namibie/": "2025-04-26T09:44:05+00:00",
@@ -10087,7 +10085,14 @@
         "https://generationvoyage.fr/chaussures-rando-montagne/": "2026-08-10T12:13:39+00:00",
         "https://generationvoyage.fr/souvenirs-anvers/": "2026-08-10T14:15:36+00:00",
         "https://generationvoyage.fr/visiter-amboise-faire-voir/": "2026-08-10T16:12:10+00:00",
-        "https://generationvoyage.fr/cap-vert-budget/": "2026-08-10T11:18:19+00:00"
+        "https://generationvoyage.fr/grenade-chaleur/": "2026-08-11T07:56:37+00:00",
+        "https://generationvoyage.fr/tirana-budget/": "2026-08-11T10:12:06+00:00",
+        "https://generationvoyage.fr/souvenirs-prague/": "2026-08-11T12:22:08+00:00",
+        "https://generationvoyage.fr/habitudes-porto/": "2026-08-11T14:25:06+00:00",
+        "https://generationvoyage.fr/oslo-solo/": "2026-08-11T16:33:31+00:00",
+        "https://generationvoyage.fr/cap-vert-budget/": "2026-08-10T11:18:19+00:00",
+        "https://generationvoyage.fr/comparatif-banques-voyage/": "2026-08-11T07:02:42+00:00",
+        "https://generationvoyage.fr/airbnb-luxe-guadeloupe/": "2026-08-11T08:01:27+00:00"
       }
     }
   }

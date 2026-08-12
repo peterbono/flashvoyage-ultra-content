@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-11T04:23:16.840Z",
+  "timestamp": "2026-08-12T04:51:35.600Z",
   "articleMap": {
     "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
       "wpId": 5072,
@@ -406,18 +406,6 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "meilleur-esim-philippines-2026": {
-      "wpId": 6331,
-      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "destination",
-      "igReferralTraffic": null
-    },
     "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
       "wpId": 5343,
       "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
@@ -440,6 +428,18 @@
         "humor"
       ],
       "category": "default",
+      "igReferralTraffic": null
+    },
+    "meilleur-esim-philippines-2026": {
+      "wpId": 6331,
+      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "destination",
       "igReferralTraffic": null
     },
     "meilleur-esim-bali-2026": {
