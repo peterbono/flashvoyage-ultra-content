@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-08-13T12:57:13.072Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-08-13T18:55:08.034Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Korean drug and fraud fugitive arrested in Phuket",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3301152/korean-drug-and-fraud-fugitive-arrested-in-phuket",
-      "velocityScore": 0.488,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2442,
-      "estimatedTrafficIn24h": 2387,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3.2
-      },
-      "detectedAt": "2026-08-13T09:44:00.000Z",
-      "scoredAt": "2026-08-13T12:57:08.346Z"
-    }
-  ]
+  "queue": []
 }
