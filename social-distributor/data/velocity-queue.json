@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-08-12T18:54:53.377Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-08-13T01:24:57.530Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Tourists rush to Mount Etna as it erupts, alarming Italian guides",
-      "source": "rss_breaking",
-      "destination": "asia",
-      "link": "https://www.scmp.com/news/world/europe/article/3363825/tourists-rush-mount-etna-it-erupts-alarming-italian-guides?utm_source=rss_feed",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2072,
-      "estimatedTrafficIn24h": 2025,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.6
-      },
-      "detectedAt": "2026-08-12T17:20:44.000Z",
-      "scoredAt": "2026-08-12T18:54:50.341Z"
-    }
-  ]
+  "queue": []
 }
