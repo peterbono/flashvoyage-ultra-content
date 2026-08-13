@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-12T04:51:43.951Z",
+  "timestamp": "2026-08-13T04:55:34.533Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -197,7 +197,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 9,
-        "freshness": 0.58,
+        "freshness": 0.57,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
@@ -241,6 +241,31 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
+      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4105,
+        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+        "compositeScore": 10,
+        "freshness": 0.65,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
       "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
@@ -262,7 +287,7 @@
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -287,15 +312,15 @@
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
       "articleType": "support",
       "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
         "compositeScore": 11,
         "freshness": 0.72,
         "traffic": 0,
@@ -312,44 +337,19 @@
       "withinBudget": true
     },
     {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
-      "articleType": "support",
-      "context": {
-        "wpId": 6309,
-        "slug": "meilleur-esim-japon-2026",
-        "compositeScore": 12,
-        "freshness": 0.83,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
       "rank": 14,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
+      "priorityScore": -1,
+      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
       "articleType": "support",
       "context": {
-        "wpId": 6331,
-        "slug": "meilleur-esim-philippines-2026",
-        "compositeScore": 13,
-        "freshness": 0.89,
+        "wpId": 5296,
+        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+        "compositeScore": 11,
+        "freshness": 0.72,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,

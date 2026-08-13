@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-08-12T04:51:42.975Z",
+    "generatedAt": "2026-08-13T04:55:33.804Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
@@ -38,7 +38,7 @@
       "gsc": {
         "impressions": 14,
         "clicks": 0,
-        "position": 8.1,
+        "position": 8,
         "topQueries": [
           {
             "query": "singapour ou kuala lumpur",
@@ -73,46 +73,46 @@
       "p0Count": 0
     },
     {
-      "wpId": 4372,
-      "slug": "esim-philippines-globe-smart-comparatif-2026",
-      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
-      "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
-      "wordCount": 5505,
+      "wpId": 4370,
+      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "url": "https://flashvoyage.com/bali-lombok-gili-10-jours-itineraire-budget-2026/",
+      "wordCount": 4124,
       "widgetCount": 0,
-      "internalLinks": 56,
-      "lastModified": "2026-06-11T05:33:24",
+      "internalLinks": 47,
+      "lastModified": "2026-06-11T05:33:27",
       "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 113
+        "pageviews": 5,
+        "sessions": 3,
+        "avgDuration": 524
       },
       "gsc": {
-        "impressions": 23,
+        "impressions": 36,
         "clicks": 0,
-        "position": 40.8,
+        "position": 56.4,
         "topQueries": [
           {
-            "query": "esim philippines",
-            "position": 89.3,
-            "impressions": 4,
+            "query": "bali gili lombok",
+            "position": 74.9,
+            "impressions": 18,
             "ctr": 0
           },
           {
-            "query": "carte sim philippines",
-            "position": 67.3,
+            "query": "circuit bali lombok gili",
+            "position": 37.7,
+            "impressions": 7,
+            "ctr": 0
+          },
+          {
+            "query": "itinéraire bali lombok",
+            "position": 72,
             "impressions": 3,
             "ctr": 0
           },
           {
-            "query": "meilleur esim philippines",
-            "position": 66,
+            "query": "bali lombok gili",
+            "position": 75.5,
             "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "e sim philippines globe",
-            "position": 40,
-            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -125,9 +125,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"bali gili lombok\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali gili lombok\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -229,9 +229,9 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 10,
         "clicks": 0,
-        "position": 13.1,
+        "position": 14.2,
         "topQueries": [
           {
             "query": "voyage japon couple",
@@ -260,46 +260,46 @@
       "p0Count": 0
     },
     {
-      "wpId": 4370,
-      "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "url": "https://flashvoyage.com/bali-lombok-gili-10-jours-itineraire-budget-2026/",
-      "wordCount": 4124,
+      "wpId": 4372,
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
+      "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
+      "wordCount": 5505,
       "widgetCount": 0,
-      "internalLinks": 47,
-      "lastModified": "2026-06-11T05:33:27",
+      "internalLinks": 56,
+      "lastModified": "2026-06-11T05:33:24",
       "ga4": {
         "pageviews": 3,
-        "sessions": 2,
-        "avgDuration": 4
+        "sessions": 3,
+        "avgDuration": 67
       },
       "gsc": {
-        "impressions": 33,
+        "impressions": 21,
         "clicks": 0,
-        "position": 57.7,
+        "position": 44.6,
         "topQueries": [
           {
-            "query": "bali gili lombok",
-            "position": 75.9,
-            "impressions": 17,
+            "query": "carte sim philippines",
+            "position": 67.8,
+            "impressions": 4,
             "ctr": 0
           },
           {
-            "query": "circuit bali lombok gili",
-            "position": 38.6,
-            "impressions": 5,
+            "query": "esim philippines",
+            "position": 89.3,
+            "impressions": 4,
             "ctr": 0
           },
           {
-            "query": "itinéraire bali lombok",
-            "position": 72,
-            "impressions": 3,
-            "ctr": 0
-          },
-          {
-            "query": "bali lombok gili",
-            "position": 75.5,
+            "query": "meilleur esim philippines",
+            "position": 66,
             "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "e sim philippines globe",
+            "position": 40,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -312,9 +312,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"bali gili lombok\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"carte sim philippines\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali gili lombok\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"carte sim philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -365,9 +365,9 @@
         "avgDuration": 3
       },
       "gsc": {
-        "impressions": 29,
+        "impressions": 28,
         "clicks": 0,
-        "position": 33.2,
+        "position": 34.2,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -434,14 +434,14 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 23,
+        "impressions": 24,
         "clicks": 0,
-        "position": 57.9,
+        "position": 58.9,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
             "position": 83,
-            "impressions": 14,
+            "impressions": 15,
             "ctr": 0
           },
           {
@@ -515,11 +515,11 @@
       "gsc": {
         "impressions": 40,
         "clicks": 0,
-        "position": 40.4,
+        "position": 41.3,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 41.1,
+            "position": 42,
             "impressions": 34,
             "ctr": 0
           }
@@ -586,14 +586,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 16,
+        "impressions": 17,
         "clicks": 0,
-        "position": 64,
+        "position": 64.7,
         "topQueries": [
           {
             "query": "circuit authentique asie du sud-est",
-            "position": 80.1,
-            "impressions": 10,
+            "position": 79.7,
+            "impressions": 11,
             "ctr": 0
           },
           {
@@ -649,14 +649,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 58,
+        "impressions": 64,
         "clicks": 0,
-        "position": 51.3,
+        "position": 50.2,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 55.8,
-            "impressions": 49,
+            "position": 55.6,
+            "impressions": 53,
             "ctr": 0
           },
           {
@@ -666,14 +666,14 @@
             "ctr": 0
           },
           {
-            "query": "esim cellcard",
-            "position": 10,
-            "impressions": 1,
+            "query": "holafly cambodge",
+            "position": 13.5,
+            "impressions": 2,
             "ctr": 0
           },
           {
-            "query": "holafly cambodge",
-            "position": 11,
+            "query": "esim cellcard",
+            "position": 10,
             "impressions": 1,
             "ctr": 0
           }
@@ -712,14 +712,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 35,
+        "impressions": 36,
         "clicks": 0,
-        "position": 81.9,
+        "position": 82.2,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 90.4,
-            "impressions": 29,
+            "position": 90.5,
+            "impressions": 30,
             "ctr": 0
           },
           {
