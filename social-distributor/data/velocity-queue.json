@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-08-13T18:55:08.034Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-08-14T01:24:23.399Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Thousands stranded at Japan's Narita airport after record rain kills four",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/thousands-stranded-at-japans-narita-airport-after-record-rain-kills-four",
+      "velocityScore": 0.49,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 720,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2449,
+      "estimatedTrafficIn24h": 2394,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 1,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 0.2
+      },
+      "detectedAt": "2026-08-14T01:10:16.000Z",
+      "scoredAt": "2026-08-14T01:24:20.992Z"
+    }
+  ]
 }
