@@ -1,25 +1,9 @@
 {
-  "timestamp": "2026-08-13T04:55:28.125Z",
-  "queueSize": 14,
+  "timestamp": "2026-08-14T04:52:15.182Z",
+  "queueSize": 13,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 131,
-      "topic": "laos",
-      "articleType": "support",
-      "context": {
-        "gapScore": 51,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"laos\" (score 51, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +15,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +27,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -52,6 +36,22 @@
       "context": {
         "cyclePosition": 1,
         "reason": "Standard editorial calendar rotation (position 2/5)"
+      }
+    },
+    {
+      "rank": 4,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "articleType": "support",
+      "context": {
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "compositeScore": 9,
+        "freshness": 0.63,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
     },
     {
@@ -97,13 +97,29 @@
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 9,
-        "freshness": 0.61,
+        "freshness": 0.6,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
     },
     {
       "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 9,
+        "freshness": 0.58,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -119,7 +135,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -128,22 +144,6 @@
       "context": {
         "wpId": 4125,
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
-        "compositeScore": 10,
-        "freshness": 0.65,
-        "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4105,
-        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
         "compositeScore": 10,
         "freshness": 0.65,
         "traffic": 0,
@@ -170,22 +170,6 @@
       "rank": 12,
       "action": "review",
       "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "articleType": "support",
-      "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-        "compositeScore": 10,
-        "freshness": 0.64,
-        "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
       "priorityScore": -1,
       "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
       "articleType": "support",
@@ -199,7 +183,7 @@
       }
     },
     {
-      "rank": 14,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -216,7 +200,7 @@
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,

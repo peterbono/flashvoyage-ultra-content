@@ -1,41 +1,27 @@
 {
-  "timestamp": "2026-08-13T04:55:24.301Z",
+  "timestamp": "2026-08-14T04:52:10.660Z",
   "trendingTopics": [
     {
-      "query": "prix voyage thailande",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
+      "query": "voyage thailande circuit",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-13T04:55:15.021Z",
+      "date": "2026-08-14T04:52:02.233Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
-      "category": "budget",
+      "category": "itineraire",
       "destination": "thailande",
       "compositeScore": 0.62
     },
     {
-      "query": "voyage vietnam pas cher",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-13T04:55:17.484Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
       "query": "leclerc voyage thailande",
-      "traffic": 60,
-      "trafficFormatted": "+60 %",
+      "traffic": 140,
+      "trafficFormatted": "+140 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-13T04:55:15.021Z",
+      "date": "2026-08-14T04:52:02.233Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -45,11 +31,11 @@
     },
     {
       "query": "voyage vietnam cambodge",
-      "traffic": 170,
-      "trafficFormatted": "+170 %",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-13T04:55:17.484Z",
+      "date": "2026-08-14T04:52:04.340Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -58,88 +44,33 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage cambodge",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
+      "query": "vols",
+      "traffic": 1000,
+      "trafficFormatted": "1000+",
       "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-13T04:55:17.484Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage cambodge vietnam",
-      "traffic": 400,
-      "trafficFormatted": "+400 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-13T04:55:22.100Z",
-      "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage cambodge laos",
-      "traffic": 300,
-      "trafficFormatted": "+300 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-13T04:55:22.100Z",
-      "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage vietnam",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-13T04:55:22.100Z",
-      "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "laos",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-13T04:55:17.484Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.5,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.47000000000000003
-    },
-    {
-      "query": "hanoi",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-13T04:55:17.484Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.5,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.47000000000000003
+      "articles": [
+        {
+          "title": "Vols' DL wants to make stopping the run 'our identity' after 2025 struggles",
+          "url": "https://247sports.com/college/tennessee/article/tennessee-football-vols-dl-wants-to-make-stopping-the-run-our-identity-after-2025-struggles-288922830/",
+          "source": "247Sports"
+        },
+        {
+          "title": "Tennessee football's Nathan Robinson on improving the run defense",
+          "url": "https://www.knoxnews.com/videos/sports/college/university-of-tennessee/football/2026/08/12/tennessee-football-defense-nathan-robinson-run/91278001007/",
+          "source": "Knoxville News Sentinel"
+        },
+        {
+          "title": "Could Jeremiah Telander play a fifth year for Tennessee? What the senior linebacker said",
+          "url": "https://www.on3.com/teams/tennessee-volunteers/news/jeremiah-telander-ncaa-5-for-5-tennessee-football-roster/",
+          "source": "On3"
+        }
+      ],
+      "date": "Thu, 13 Aug 2026 18:50:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "transport",
+      "destination": null,
+      "compositeScore": 0.2908
     }
   ]
 }
