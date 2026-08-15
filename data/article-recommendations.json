@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-08-14T04:52:21.146Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-08-15T03:43:44.099Z",
+    "elapsedSeconds": 4,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
     "totalRecommendations": 12,
@@ -82,19 +82,19 @@
       "internalLinks": 47,
       "lastModified": "2026-06-11T05:33:27",
       "ga4": {
-        "pageviews": 5,
-        "sessions": 3,
-        "avgDuration": 506
+        "pageviews": 7,
+        "sessions": 4,
+        "avgDuration": 385
       },
       "gsc": {
-        "impressions": 40,
-        "clicks": 0,
-        "position": 57.8,
+        "impressions": 45,
+        "clicks": 1,
+        "position": 56.1,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 75.6,
-            "impressions": 20,
+            "position": 75.8,
+            "impressions": 21,
             "ctr": 0
           },
           {
@@ -105,14 +105,14 @@
           },
           {
             "query": "bali lombok gili",
-            "position": 77,
-            "impressions": 3,
+            "position": 72.5,
+            "impressions": 4,
             "ctr": 0
           },
           {
             "query": "itinéraire bali lombok",
-            "position": 72,
-            "impressions": 3,
+            "position": 68,
+            "impressions": 4,
             "ctr": 0
           }
         ]
@@ -150,9 +150,9 @@
         "avgDuration": 135
       },
       "gsc": {
-        "impressions": 9,
+        "impressions": 10,
         "clicks": 2,
-        "position": 34.2,
+        "position": 34.5,
         "topQueries": [
           {
             "query": "vietnam ou thailande",
@@ -162,9 +162,9 @@
           },
           {
             "query": "thailande ou vietnam",
-            "position": 42.5,
-            "impressions": 2,
-            "ctr": 50
+            "position": 40.7,
+            "impressions": 3,
+            "ctr": 33.33
           }
         ]
       },
@@ -229,9 +229,9 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 11,
         "clicks": 0,
-        "position": 14.2,
+        "position": 13.8,
         "topQueries": [
           {
             "query": "voyage japon couple",
@@ -274,9 +274,9 @@
         "avgDuration": 127
       },
       "gsc": {
-        "impressions": 23,
+        "impressions": 24,
         "clicks": 0,
-        "position": 48.2,
+        "position": 46.6,
         "topQueries": [
           {
             "query": "esim philippines",
@@ -434,9 +434,9 @@
         "avgDuration": 1
       },
       "gsc": {
-        "impressions": 23,
+        "impressions": 24,
         "clicks": 0,
-        "position": 61,
+        "position": 59,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -509,8 +509,8 @@
       "lastModified": "2026-06-11T05:33:01",
       "ga4": {
         "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 285
+        "sessions": 2,
+        "avgDuration": 135
       },
       "gsc": {
         "impressions": 0,
@@ -543,11 +543,11 @@
       "gsc": {
         "impressions": 40,
         "clicks": 0,
-        "position": 44.1,
+        "position": 45,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 45.3,
+            "position": 46.4,
             "impressions": 34,
             "ctr": 0
           }
@@ -586,9 +586,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 17,
+        "impressions": 18,
         "clicks": 0,
-        "position": 64.7,
+        "position": 62.3,
         "topQueries": [
           {
             "query": "circuit authentique asie du sud-est",
@@ -649,14 +649,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 66,
+        "impressions": 69,
         "clicks": 0,
-        "position": 51.5,
+        "position": 51.6,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 55.4,
-            "impressions": 57,
+            "position": 55.3,
+            "impressions": 60,
             "ctr": 0
           },
           {
@@ -965,14 +965,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 7,
         "clicks": 0,
-        "position": 50,
+        "position": 59.1,
         "topQueries": [
           {
             "query": "thailande ou vietnam",
-            "position": 77,
-            "impressions": 1,
+            "position": 80.3,
+            "impressions": 3,
             "ctr": 0
           },
           {

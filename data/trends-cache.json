@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-14T04:52:10.660Z",
+  "timestamp": "2026-08-15T03:43:33.766Z",
   "trendingTopics": [
     {
       "query": "voyage thailande circuit",
-      "traffic": 110,
-      "trafficFormatted": "+110 %",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-14T04:52:02.233Z",
+      "date": "2026-08-15T03:43:24.753Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -16,26 +16,40 @@
       "compositeScore": 0.62
     },
     {
-      "query": "leclerc voyage thailande",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
+      "query": "voyage vietnam circuit",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-14T04:52:02.233Z",
+      "date": "2026-08-15T03:43:27.003Z",
       "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "itineraire",
+      "destination": "vietnam",
+      "compositeScore": 0.62
     },
     {
-      "query": "voyage vietnam cambodge",
-      "traffic": 250,
-      "trafficFormatted": "+250 %",
+      "query": "circuit vietnam",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-14T04:52:04.340Z",
+      "date": "2026-08-15T03:43:27.003Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.8,
+      "category": "itineraire",
+      "destination": "vietnam",
+      "compositeScore": 0.56
+    },
+    {
+      "query": "voyage cambodge",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-15T03:43:27.003Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -44,28 +58,70 @@
       "compositeScore": 0.53
     },
     {
+      "query": "voyage vietnam",
+      "traffic": 150,
+      "trafficFormatted": "+150 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-15T03:43:31.507Z",
+      "source": "related-rising",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge laos",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-15T03:43:31.507Z",
+      "source": "related-rising",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "laos",
+      "traffic": 90,
+      "trafficFormatted": "+90 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-15T03:43:27.003Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
+    },
+    {
       "query": "vols",
       "traffic": 1000,
       "trafficFormatted": "1000+",
       "relatedQueries": [],
       "articles": [
         {
-          "title": "Vols' DL wants to make stopping the run 'our identity' after 2025 struggles",
-          "url": "https://247sports.com/college/tennessee/article/tennessee-football-vols-dl-wants-to-make-stopping-the-run-our-identity-after-2025-struggles-288922830/",
+          "title": "Kelsey Pope Refuses to Let Tennessee Football Wide Receivers to Feel Like This",
+          "url": "https://sports.yahoo.com/articles/kelsey-pope-refuses-let-tennessee-221235388.html",
+          "source": "Yahoo Sports"
+        },
+        {
+          "title": "Pope: Competition for Vols' third WR job 'wide open' going into first scrimmage",
+          "url": "https://247sports.com/college/tennessee/article/tennessee-football-kelsey-pope-says-competition-for-vols-third-wr-job-wide-open-going-into-first-scrimmage-288942739/",
           "source": "247Sports"
         },
         {
-          "title": "Tennessee football's Nathan Robinson on improving the run defense",
-          "url": "https://www.knoxnews.com/videos/sports/college/university-of-tennessee/football/2026/08/12/tennessee-football-defense-nathan-robinson-run/91278001007/",
-          "source": "Knoxville News Sentinel"
-        },
-        {
-          "title": "Could Jeremiah Telander play a fifth year for Tennessee? What the senior linebacker said",
-          "url": "https://www.on3.com/teams/tennessee-volunteers/news/jeremiah-telander-ncaa-5-for-5-tennessee-football-roster/",
+          "title": "Help wanted: Kelsey Pope has sign up for Tennessee's third wide receiver battle",
+          "url": "https://www.on3.com/teams/tennessee-volunteers/news/tennessee-football-depth-chart-wide-receiver-tk-keys/",
           "source": "On3"
         }
       ],
-      "date": "Thu, 13 Aug 2026 18:50:00 -0700",
+      "date": "Fri, 14 Aug 2026 17:20:00 -0700",
       "source": "rss",
       "relevanceScore": 0.3,
       "category": "transport",
