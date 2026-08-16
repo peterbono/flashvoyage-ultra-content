@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-08-15T18:20:05.280Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-08-16T00:58:03.391Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Rumbling trucks, busy border crossing: How China feeds Vietnam’s factory boom",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/east-asia/rumbling-trucks-busy-border-crossing-how-china-feeds-vietnams-factory-boom",
+      "velocityScore": 0.448,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 1494,
+      "estimatedTrafficIn24h": 1460,
+      "trafficLossPerHour": 1,
+      "breakdown": {
+        "trendIntensity": 0.6,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 4
+      },
+      "detectedAt": "2026-08-15T21:00:00.000Z",
+      "scoredAt": "2026-08-16T00:58:00.958Z"
+    }
+  ]
 }
