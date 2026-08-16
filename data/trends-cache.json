@@ -1,55 +1,69 @@
 {
-  "timestamp": "2026-08-15T03:43:33.766Z",
+  "timestamp": "2026-08-16T03:52:28.723Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande circuit",
-      "traffic": 60,
-      "trafficFormatted": "+60 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-15T03:43:24.753Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage vietnam circuit",
-      "traffic": 60,
-      "trafficFormatted": "+60 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-15T03:43:27.003Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "circuit vietnam",
+      "query": "prix voyage thailande",
       "traffic": 200,
       "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-15T03:43:27.003Z",
+      "date": "2026-08-16T03:52:19.709Z",
       "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.8,
-      "category": "itineraire",
-      "destination": "vietnam",
-      "compositeScore": 0.56
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "thailande",
+      "compositeScore": 0.62
     },
     {
-      "query": "voyage cambodge",
+      "query": "voyage vietnam prix",
+      "traffic": 170,
+      "trafficFormatted": "+170 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-16T03:52:21.964Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage thailande phuket",
       "traffic": 100,
       "trafficFormatted": "+100 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-15T03:43:27.003Z",
+      "date": "2026-08-16T03:52:19.709Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage thailande covid",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-16T03:52:19.709Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-16T03:52:21.964Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -59,11 +73,11 @@
     },
     {
       "query": "voyage vietnam",
-      "traffic": 150,
-      "trafficFormatted": "+150 %",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-15T03:43:31.507Z",
+      "date": "2026-08-16T03:52:26.467Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -72,61 +86,18 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage cambodge laos",
-      "traffic": 60,
-      "trafficFormatted": "+60 %",
+      "query": "voyage cambodge vietnam",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-15T03:43:31.507Z",
+      "date": "2026-08-16T03:52:26.467Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
       "category": "destination",
       "destination": "cambodge",
       "compositeScore": 0.53
-    },
-    {
-      "query": "laos",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-15T03:43:27.003Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.5,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.47000000000000003
-    },
-    {
-      "query": "vols",
-      "traffic": 1000,
-      "trafficFormatted": "1000+",
-      "relatedQueries": [],
-      "articles": [
-        {
-          "title": "Kelsey Pope Refuses to Let Tennessee Football Wide Receivers to Feel Like This",
-          "url": "https://sports.yahoo.com/articles/kelsey-pope-refuses-let-tennessee-221235388.html",
-          "source": "Yahoo Sports"
-        },
-        {
-          "title": "Pope: Competition for Vols' third WR job 'wide open' going into first scrimmage",
-          "url": "https://247sports.com/college/tennessee/article/tennessee-football-kelsey-pope-says-competition-for-vols-third-wr-job-wide-open-going-into-first-scrimmage-288942739/",
-          "source": "247Sports"
-        },
-        {
-          "title": "Help wanted: Kelsey Pope has sign up for Tennessee's third wide receiver battle",
-          "url": "https://www.on3.com/teams/tennessee-volunteers/news/tennessee-football-depth-chart-wide-receiver-tk-keys/",
-          "source": "On3"
-        }
-      ],
-      "date": "Fri, 14 Aug 2026 17:20:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "transport",
-      "destination": null,
-      "compositeScore": 0.2908
     }
   ]
 }
