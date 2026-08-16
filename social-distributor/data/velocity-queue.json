@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-16T06:30:04.577Z",
+  "generatedAt": "2026-08-16T12:28:03.857Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 1,
-    "queue_normal": 0
+    "queue_priority": 0,
+    "queue_normal": 1
   },
   "queue": [
     {
@@ -12,25 +12,25 @@
       "source": "rss_breaking",
       "destination": "vietnam",
       "link": "https://e.vnexpress.net/news/news/traffic/vietnam-airlines-flight-makes-emergency-landing-in-munich-after-technical-issue-5109629.html",
-      "velocityScore": 0.62,
-      "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 716,
+      "velocityScore": 0.408,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 710,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2066,
-      "estimatedTrafficIn24h": 2019,
-      "trafficLossPerHour": 2,
+      "estimatedTrafficNow": 1361,
+      "estimatedTrafficIn24h": 1330,
+      "trafficLossPerHour": 1,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.996,
+        "trendIntensity": 0.55,
+        "timeDecay": 0.99,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 4.3
+        "hoursSinceDetection": 10.3
       },
       "detectedAt": "2026-08-16T02:11:35.000Z",
-      "scoredAt": "2026-08-16T06:29:59.130Z"
+      "scoredAt": "2026-08-16T12:27:59.190Z"
     }
   ]
 }
