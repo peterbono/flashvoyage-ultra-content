@@ -1,9 +1,25 @@
 {
-  "timestamp": "2026-08-16T03:52:34.561Z",
-  "queueSize": 13,
+  "timestamp": "2026-08-17T03:54:20.752Z",
+  "queueSize": 14,
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 131,
+      "topic": "laos",
+      "articleType": "support",
+      "context": {
+        "gapScore": 51,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"laos\" (score 51, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -15,7 +31,7 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -27,7 +43,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -39,7 +55,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -55,7 +71,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -71,7 +87,23 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 7,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "articleType": "support",
+      "context": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 9,
+        "freshness": 0.62,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -87,7 +119,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -103,7 +135,23 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 9,
+        "freshness": 0.57,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -119,7 +167,23 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4071,
+        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
+        "compositeScore": 10,
+        "freshness": 0.64,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -135,7 +199,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -149,58 +213,10 @@
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "articleType": "support",
-      "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 11,
-        "freshness": 0.71,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "articleType": "support",
-      "context": {
-        "wpId": 5296,
-        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-        "compositeScore": 11,
-        "freshness": 0.71,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 11,
-        "freshness": 0.71,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      }
     }
   ],
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

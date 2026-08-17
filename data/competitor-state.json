@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-16T03:52:42.832Z",
+  "timestamp": "2026-08-17T03:54:28.715Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-08-16T03:52:43.621Z",
+      "lastScan": "2026-08-17T03:54:29.148Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-08-16T03:52:44.176Z",
+      "lastScan": "2026-08-17T03:54:29.860Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,8 +139,8 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-08-16T03:53:59.879Z",
-      "urlCount": 9971,
+      "lastScan": "2026-08-17T03:55:39.912Z",
+      "urlCount": 9976,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
         "https://generationvoyage.fr/premier-tour-du-monde-lhistoire/": "2022-09-07T22:39:53+00:00",
@@ -9344,6 +9344,11 @@
         "https://generationvoyage.fr/vie-sicilienne/": "2026-08-15T14:20:36+00:00",
         "https://generationvoyage.fr/marrakech-solo/": "2026-08-15T16:45:37+00:00",
         "https://generationvoyage.fr/visiter-lisieux-faire-voir/": "2026-08-12T11:49:01+00:00",
+        "https://generationvoyage.fr/pain-chocolat-chocolatine/": "2026-08-16T07:59:38+00:00",
+        "https://generationvoyage.fr/visiter-bacalar-faire-voir/": "2026-08-16T10:23:36+00:00",
+        "https://generationvoyage.fr/chaleur-dubai/": "2026-08-16T12:23:28+00:00",
+        "https://generationvoyage.fr/budget-corfou/": "2026-08-16T14:25:38+00:00",
+        "https://generationvoyage.fr/souvenirs-malte/": "2026-08-16T16:08:33+00:00",
         "https://generationvoyage.fr/visiter-corfou-faire-voir/": "2026-08-15T04:00:41+00:00",
         "https://generationvoyage.fr/visiter-minorque-faire-voir/": "2026-08-15T04:01:08+00:00",
         "https://generationvoyage.fr/visiter-malte-faire-voir/": "2026-08-15T04:01:41+00:00",
