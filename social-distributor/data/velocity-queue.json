@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-08-18T12:34:04.817Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-08-18T18:29:18.228Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "RTS Link in final testing, fare and launch date to be announced soon: Malaysia Transport Minister",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/se-asia/rts-link-in-final-testing-fare-and-launch-date-to-be-announced-soon-transport-minister-loke",
-      "velocityScore": 0.45,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 720,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2249,
-      "estimatedTrafficIn24h": 2198,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 1,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 0.5
-      },
-      "detectedAt": "2026-08-18T12:05:00.000Z",
-      "scoredAt": "2026-08-18T12:33:59.058Z"
-    }
-  ]
+  "queue": []
 }
