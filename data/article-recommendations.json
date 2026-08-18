@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-08-17T03:54:26.789Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-08-18T03:49:24.797Z",
+    "elapsedSeconds": 4,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
     "totalRecommendations": 12,
@@ -36,9 +36,9 @@
         "avgDuration": 540
       },
       "gsc": {
-        "impressions": 50,
+        "impressions": 52,
         "clicks": 1,
-        "position": 56.5,
+        "position": 54.6,
         "topQueries": [
           {
             "query": "bali gili lombok",
@@ -77,6 +77,63 @@
           "metric": "Pas de schema FAQ (keyword principal: \"bali gili lombok\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali gili lombok\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 6374,
+      "slug": "meilleur-esim-cambodge-2026",
+      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+      "url": "https://flashvoyage.com/meilleur-esim-cambodge-2026/",
+      "wordCount": 1249,
+      "widgetCount": 0,
+      "internalLinks": 11,
+      "lastModified": "2026-06-15T12:00:01",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 2,
+        "avgDuration": 13
+      },
+      "gsc": {
+        "impressions": 77,
+        "clicks": 0,
+        "position": 52.6,
+        "topQueries": [
+          {
+            "query": "esim cambodge",
+            "position": 55.2,
+            "impressions": 69,
+            "ctr": 0
+          },
+          {
+            "query": "e-sim cambodge",
+            "position": 48.3,
+            "impressions": 4,
+            "ctr": 0
+          },
+          {
+            "query": "holafly cambodge",
+            "position": 13.5,
+            "impressions": 2,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim cambodge\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim cambodge\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -150,16 +207,10 @@
         "avgDuration": 37
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 12,
         "clicks": 0,
-        "position": 7.9,
+        "position": 7.7,
         "topQueries": [
-          {
-            "query": "kuala lumpur ou singapour",
-            "position": 11,
-            "impressions": 1,
-            "ctr": 0
-          },
           {
             "query": "singapour ou kuala lumpur",
             "position": 9,
@@ -176,9 +227,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"kuala lumpur ou singapour\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"singapour ou kuala lumpur\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"kuala lumpur ou singapour\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"singapour ou kuala lumpur\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -197,8 +248,8 @@
       "lastModified": "2026-06-11T05:33:24",
       "ga4": {
         "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 127
+        "sessions": 4,
+        "avgDuration": 151
       },
       "gsc": {
         "impressions": 23,
@@ -278,40 +329,40 @@
       "p0Count": 0
     },
     {
-      "wpId": 6374,
-      "slug": "meilleur-esim-cambodge-2026",
-      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
-      "url": "https://flashvoyage.com/meilleur-esim-cambodge-2026/",
-      "wordCount": 1249,
+      "wpId": 6331,
+      "slug": "meilleur-esim-philippines-2026",
+      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
+      "url": "https://flashvoyage.com/meilleur-esim-philippines-2026/",
+      "wordCount": 1278,
       "widgetCount": 0,
       "internalLinks": 11,
-      "lastModified": "2026-06-15T12:00:01",
+      "lastModified": "2026-06-11T05:32:55",
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
-        "avgDuration": 14
+        "avgDuration": 0
       },
       "gsc": {
-        "impressions": 74,
+        "impressions": 35,
         "clicks": 0,
-        "position": 52.5,
+        "position": 83.7,
         "topQueries": [
           {
-            "query": "esim cambodge",
-            "position": 55.3,
-            "impressions": 66,
+            "query": "esim philippines",
+            "position": 90.5,
+            "impressions": 30,
             "ctr": 0
           },
           {
-            "query": "e-sim cambodge",
-            "position": 48.3,
-            "impressions": 4,
-            "ctr": 0
-          },
-          {
-            "query": "holafly cambodge",
-            "position": 13.5,
+            "query": "meilleur esim philippines",
+            "position": 65,
             "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "best esim for philippines 2026",
+            "position": 58,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -324,9 +375,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim cambodge\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim cambodge\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -379,11 +430,11 @@
       "gsc": {
         "impressions": 36,
         "clicks": 0,
-        "position": 49,
+        "position": 49.9,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 51.4,
+            "position": 52.5,
             "impressions": 30,
             "ctr": 0
           }
@@ -422,9 +473,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 11,
+        "impressions": 14,
         "clicks": 0,
-        "position": 14.5,
+        "position": 13.4,
         "topQueries": [
           {
             "query": "voyage japon couple",
@@ -469,7 +520,7 @@
       "gsc": {
         "impressions": 31,
         "clicks": 0,
-        "position": 33.9,
+        "position": 35.8,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -514,63 +565,6 @@
           "metric": "Pas de schema FAQ (keyword principal: \"bali ou thailande\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 6331,
-      "slug": "meilleur-esim-philippines-2026",
-      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
-      "url": "https://flashvoyage.com/meilleur-esim-philippines-2026/",
-      "wordCount": 1278,
-      "widgetCount": 0,
-      "internalLinks": 11,
-      "lastModified": "2026-06-11T05:32:55",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 35,
-        "clicks": 0,
-        "position": 83.7,
-        "topQueries": [
-          {
-            "query": "esim philippines",
-            "position": 90.5,
-            "impressions": 30,
-            "ctr": 0
-          },
-          {
-            "query": "meilleur esim philippines",
-            "position": 65,
-            "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "best esim for philippines 2026",
-            "position": 58,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -1008,9 +1002,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 24,
+        "impressions": 23,
         "clicks": 0,
-        "position": 58.9,
+        "position": 61.1,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
@@ -1311,9 +1305,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 17,
         "clicks": 0,
-        "position": 62.3,
+        "position": 65.1,
         "topQueries": [
           {
             "query": "circuit authentique asie du sud-est",
@@ -1324,7 +1318,7 @@
           {
             "query": "itinéraire asie hors des sentiers battus",
             "position": 15,
-            "impressions": 2,
+            "impressions": 1,
             "ctr": 0
           },
           {

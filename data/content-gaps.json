@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-08-17T03:54:18.822Z",
-  "gapCount": 1,
+  "timestamp": "2026-08-18T03:49:18.260Z",
+  "gapCount": 2,
   "gaps": [
     {
       "topic": "laos",
@@ -18,20 +18,39 @@
       "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
       "articleType": "support",
       "priority": "high"
+    },
+    {
+      "topic": "désindexation des retraites",
+      "source": "trends",
+      "gapScore": 50,
+      "signals": {
+        "searchVolume": 0.36,
+        "trendGrowth": 0.36,
+        "monetization": 0.6,
+        "competition": 0.4
+      },
+      "destination": "inde",
+      "category": "destination",
+      "suggestedTitle": "Inde 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Inde — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
     }
   ],
   "summary": {
     "byPriority": {
-      "high": 1
+      "high": 2
     },
     "byCategory": {
-      "destination": 1
+      "destination": 2
     },
     "byDestination": {
-      "vietnam": 1
+      "vietnam": 1,
+      "inde": 1
     },
     "topDestinationGaps": [
-      "vietnam"
+      "vietnam",
+      "inde"
     ]
   }
 }

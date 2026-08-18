@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-17T03:54:27.751Z",
+  "timestamp": "2026-08-18T03:49:25.493Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,10 +17,10 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 375,
-    "medianTrafficSignal": "0.375",
+    "medianMonthlyPV": 500,
+    "medianTrafficSignal": "0.500",
     "avgRpm": 2,
-    "articlesAnalyzed": 10
+    "articlesAnalyzed": 11
   },
   "queue": [
     {
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 10,
-        "projectedMonthlyTraffic": 375,
-        "projectedMonthlyRevenue": 0.75,
+        "expectedRoi": 13.33,
+        "projectedMonthlyTraffic": 500,
+        "projectedMonthlyRevenue": 1,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (375 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (500 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 10,
-        "projectedMonthlyTraffic": 375,
-        "projectedMonthlyRevenue": 0.75,
+        "expectedRoi": 13.33,
+        "projectedMonthlyTraffic": 500,
+        "projectedMonthlyRevenue": 1,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (375 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (500 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,11 +77,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 10,
-        "projectedMonthlyTraffic": 375,
-        "projectedMonthlyRevenue": 0.75,
+        "expectedRoi": 13.33,
+        "projectedMonthlyTraffic": 500,
+        "projectedMonthlyRevenue": 1,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (375 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (500 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -102,17 +102,42 @@
         "reason": "Content gap: \"laos\" (score 51, source: trends)"
       },
       "roi": {
-        "expectedRoi": 8.51,
-        "projectedMonthlyTraffic": 319,
-        "projectedMonthlyRevenue": 0.638,
+        "expectedRoi": 11.33,
+        "projectedMonthlyTraffic": 425,
+        "projectedMonthlyRevenue": 0.85,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (375 PV) × gap boost (0.85)"
+        "trafficSource": "median baseline (500 PV) × gap boost (0.85)"
       },
       "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
       "rank": 5,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 130,
+      "topic": "désindexation des retraites",
+      "articleType": "support",
+      "context": {
+        "gapScore": 50,
+        "destination": "inde",
+        "category": "destination",
+        "suggestedTitle": "Inde 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Inde — format pick ou month",
+        "reason": "Content gap: \"désindexation des retraites\" (score 50, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 11.12,
+        "projectedMonthlyTraffic": 417,
+        "projectedMonthlyRevenue": 0.834,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (500 PV) × gap boost (0.83)"
+      },
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -133,19 +158,19 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
       "articleType": "support",
       "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "wpId": 4125,
+        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 9,
         "freshness": 0.63,
         "traffic": 0,
@@ -158,19 +183,44 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "wpId": 4030,
+        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+        "compositeScore": 9,
+        "freshness": 0.63,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "articleType": "support",
+      "context": {
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 9,
         "freshness": 0.62,
         "traffic": 0,
@@ -183,11 +233,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -197,7 +247,7 @@
         "wpId": 3198,
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 9,
-        "freshness": 0.62,
+        "freshness": 0.61,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
@@ -208,11 +258,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -222,7 +272,7 @@
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 9,
-        "freshness": 0.6,
+        "freshness": 0.59,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
@@ -233,121 +283,21 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 1,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
-      "articleType": "support",
-      "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-        "compositeScore": 9,
-        "freshness": 0.57,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
-      "articleType": "support",
-      "context": {
-        "wpId": 4125,
-        "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
-        "compositeScore": 10,
-        "freshness": 0.64,
-        "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
       "rank": 12,
       "action": "review",
       "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4071,
-        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
-        "compositeScore": 10,
-        "freshness": 0.64,
-        "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 4030,
-        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-        "compositeScore": 10,
-        "freshness": 0.64,
-        "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
       "priorityScore": -1,
-      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
-        "wpId": 5742,
-        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
         "compositeScore": 11,
-        "freshness": 0.73,
+        "freshness": 0.7,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       },
@@ -358,20 +308,95 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
+      "articleType": "support",
+      "context": {
+        "wpId": 6309,
+        "slug": "meilleur-esim-japon-2026",
+        "compositeScore": 12,
+        "freshness": 0.81,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 14,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
+      "articleType": "support",
+      "context": {
+        "wpId": 6327,
+        "slug": "meilleur-esim-bali-2026",
+        "compositeScore": 13,
+        "freshness": 0.85,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.375,
+      "withinBudget": true
+    },
+    {
+      "rank": 15,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -3,
+      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "articleType": "support",
+      "context": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 13,
+        "freshness": 0.72,
+        "traffic": 0,
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.375,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.3,
+    "totalCost": 0.375,
     "dailyBudget": 2,
-    "itemsWithinBudget": 14,
+    "itemsWithinBudget": 15,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.096,
-    "expectedDailyRoi": 0.32
+    "expectedDailyRevenue": 0.156,
+    "expectedDailyRoi": 0.42
   },
   "summary": {
-    "write_new": 1,
+    "write_new": 2,
     "update": 0,
     "enrich": 0,
     "standard": 3,
