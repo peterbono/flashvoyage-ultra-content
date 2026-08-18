@@ -1,10 +1,86 @@
 {
-  "generatedAt": "2026-08-18T00:54:31.577Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-08-18T06:33:14.793Z",
+  "totalTopics": 3,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 3
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Foreign man denied boarding over Machu Picchu passport stamp",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/bangkok/foreign-man-denied-boarding-machu-picchu-passport-stamp",
+      "velocityScore": 0.499,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2493,
+      "estimatedTrafficIn24h": 2437,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.7
+      },
+      "detectedAt": "2026-08-18T03:50:20.000Z",
+      "scoredAt": "2026-08-18T06:33:06.498Z"
+    },
+    {
+      "topic": "Police raid Bangkok visa agency over fake bank statements",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/bangkok/bangkok-visa-agency-raid-fake-bank-statements-europe",
+      "velocityScore": 0.464,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 44,
+      "topicType": {
+        "key": "policy_change",
+        "halfLifeHours": 48
+      },
+      "estimatedTrafficNow": 2321,
+      "estimatedTrafficIn24h": 1641,
+      "trafficLossPerHour": 28,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.947,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.7
+      },
+      "detectedAt": "2026-08-18T02:49:01.000Z",
+      "scoredAt": "2026-08-18T06:33:07.652Z"
+    },
+    {
+      "topic": "Suvarnabhumi Auto Gate to open to 31 more nationalities",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/travel/suvarnabhumi-auto-gates-31-more-nationalities",
+      "velocityScore": 0.449,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2245,
+      "estimatedTrafficIn24h": 2194,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.1
+      },
+      "detectedAt": "2026-08-18T04:25:02.000Z",
+      "scoredAt": "2026-08-18T06:33:08.368Z"
+    }
+  ]
 }
