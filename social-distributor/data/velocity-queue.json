@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-08-17T18:30:38.076Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-08-18T00:54:31.577Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "First 9 Months of 2026: Bali Foreign Tourist Tax Collection hits Rp235 billion.",
-      "source": "rss_breaking",
-      "destination": "indonesia",
-      "link": "https://balidiscovery.com/first-9-months-of-2026-bali-foreign-tourist-tax-collection-hits-rp235-billion/",
-      "velocityScore": 0.509,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1698,
-      "estimatedTrafficIn24h": 1659,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.68,
-        "timeDecay": 0.999,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 1
-      },
-      "detectedAt": "2026-08-17T17:27:40.000Z",
-      "scoredAt": "2026-08-17T18:30:31.816Z"
-    }
-  ]
+  "queue": []
 }
