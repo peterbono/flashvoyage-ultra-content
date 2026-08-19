@@ -1,41 +1,25 @@
 {
-  "timestamp": "2026-08-18T03:49:19.645Z",
-  "queueSize": 15,
+  "timestamp": "2026-08-19T03:50:50.604Z",
+  "queueSize": 14,
   "queue": [
     {
       "rank": 1,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 131,
-      "topic": "laos",
+      "priorityScore": 136,
+      "topic": "agence de voyage",
       "articleType": "support",
       "context": {
-        "gapScore": 51,
+        "gapScore": 56,
         "destination": "vietnam",
         "category": "destination",
         "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
         "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"laos\" (score 51, source: trends)"
+        "reason": "Content gap: \"agence de voyage\" (score 56, source: trends)"
       }
     },
     {
       "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 130,
-      "topic": "désindexation des retraites",
-      "articleType": "support",
-      "context": {
-        "gapScore": 50,
-        "destination": "inde",
-        "category": "destination",
-        "suggestedTitle": "Inde 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Inde — format pick ou month",
-        "reason": "Content gap: \"désindexation des retraites\" (score 50, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -47,7 +31,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -59,7 +43,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -68,6 +52,22 @@
       "context": {
         "cyclePosition": 1,
         "reason": "Standard editorial calendar rotation (position 2/5)"
+      }
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 2,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 8,
+        "freshness": 0.56,
+        "traffic": 0,
+        "reason": "Low-performing article: score=8, consider merge/update/delete"
       }
     },
     {
@@ -107,6 +107,38 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
+      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4105,
+        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+        "compositeScore": 9,
+        "freshness": 0.63,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4071,
+        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
+        "compositeScore": 9,
+        "freshness": 0.63,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
       "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
@@ -119,7 +151,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -135,7 +167,23 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "articleType": "support",
+      "context": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 9,
+        "freshness": 0.61,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -151,7 +199,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -165,74 +213,10 @@
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
-      "articleType": "support",
-      "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 11,
-        "freshness": 0.7,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
-      "articleType": "support",
-      "context": {
-        "wpId": 6309,
-        "slug": "meilleur-esim-japon-2026",
-        "compositeScore": 12,
-        "freshness": 0.81,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
-      "articleType": "support",
-      "context": {
-        "wpId": 6327,
-        "slug": "meilleur-esim-bali-2026",
-        "compositeScore": 13,
-        "freshness": 0.85,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 15,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "articleType": "support",
-      "context": {
-        "wpId": 5742,
-        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-        "compositeScore": 13,
-        "freshness": 0.72,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
-      }
     }
   ],
   "summary": {
-    "write_new": 2,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

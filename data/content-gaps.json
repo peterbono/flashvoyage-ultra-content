@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-08-18T03:49:18.260Z",
-  "gapCount": 2,
+  "timestamp": "2026-08-19T03:50:48.737Z",
+  "gapCount": 1,
   "gaps": [
     {
-      "topic": "laos",
+      "topic": "agence de voyage",
       "source": "trends",
-      "gapScore": 51,
+      "gapScore": 56,
       "signals": {
         "searchVolume": 0.47,
         "trendGrowth": 0.47,
         "monetization": 0.9,
-        "competition": 0.8
+        "competition": 0.6
       },
       "destination": "vietnam",
       "category": "destination",
@@ -18,39 +18,20 @@
       "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
       "articleType": "support",
       "priority": "high"
-    },
-    {
-      "topic": "désindexation des retraites",
-      "source": "trends",
-      "gapScore": 50,
-      "signals": {
-        "searchVolume": 0.36,
-        "trendGrowth": 0.36,
-        "monetization": 0.6,
-        "competition": 0.4
-      },
-      "destination": "inde",
-      "category": "destination",
-      "suggestedTitle": "Inde 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Inde — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
     }
   ],
   "summary": {
     "byPriority": {
-      "high": 2
+      "high": 1
     },
     "byCategory": {
-      "destination": 2
+      "destination": 1
     },
     "byDestination": {
-      "vietnam": 1,
-      "inde": 1
+      "vietnam": 1
     },
     "topDestinationGaps": [
-      "vietnam",
-      "inde"
+      "vietnam"
     ]
   }
 }

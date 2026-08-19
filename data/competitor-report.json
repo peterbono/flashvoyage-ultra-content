@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-18T03:51:32.005Z",
+  "timestamp": "2026-08-19T03:53:02.498Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,33 +16,15 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 9980,
-      "newUrls": 4
+      "totalUrls": 7987,
+      "newUrls": 5
     }
   ],
-  "newArticles": [
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/bali-authentique/",
-      "lastmod": "2026-08-17T07:59:45+00:00",
-      "destination": "bali",
-      "contentType": "general",
-      "title": "Bali Authentique",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=50, freshness=0.65)",
-      "matchedArticle": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 50,
-        "freshness": 0.65
-      }
-    }
-  ],
+  "newArticles": [],
   "summary": {
-    "totalNew": 1,
+    "totalNew": 0,
     "contentGaps": 0,
     "staleRefreshes": 0,
-    "monitoring": 1
+    "monitoring": 0
   }
 }
