@@ -1,41 +1,55 @@
 {
-  "timestamp": "2026-08-19T03:50:41.278Z",
+  "timestamp": "2026-08-20T03:51:00.180Z",
   "trendingTopics": [
     {
-      "query": "voyage vietnam circuit",
-      "traffic": 250,
-      "trafficFormatted": "+250 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-19T03:50:34.220Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage vietnam cambodge",
+      "query": "prix voyage thailande",
       "traffic": 200,
       "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-19T03:50:34.220Z",
+      "date": "2026-08-20T03:50:51.288Z",
       "source": "related-rising",
-      "parentDestination": "vietnam",
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "thailande",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage thailande circuit",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-20T03:50:51.288Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "itineraire",
+      "destination": "thailande",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "leclerc voyage thailande",
+      "traffic": 150,
+      "trafficFormatted": "+150 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-20T03:50:51.288Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
       "relevanceScore": 0.7,
       "category": "destination",
-      "destination": "vietnam",
+      "destination": "thailande",
       "compositeScore": 0.53
     },
     {
       "query": "voyage cambodge",
-      "traffic": 160,
-      "trafficFormatted": "+160 %",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-19T03:50:34.220Z",
+      "date": "2026-08-20T03:50:53.507Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -44,12 +58,12 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage vietnam blog",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
+      "query": "voyage au vietnam",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-19T03:50:34.220Z",
+      "date": "2026-08-20T03:50:53.507Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -59,25 +73,11 @@
     },
     {
       "query": "voyage vietnam",
-      "traffic": 180,
-      "trafficFormatted": "+180 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-19T03:50:38.865Z",
-      "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage cambodge vietnam",
       "traffic": 140,
       "trafficFormatted": "+140 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-19T03:50:38.865Z",
+      "date": "2026-08-20T03:50:57.964Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -86,61 +86,33 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage laos vietnam",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-19T03:50:41.277Z",
-      "source": "related-rising",
-      "parentDestination": "laos",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "laos",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "agence de voyage",
-      "traffic": 100,
-      "trafficFormatted": "+100 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-19T03:50:34.220Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.5,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.47000000000000003
-    },
-    {
       "query": "vols",
-      "traffic": 200,
-      "trafficFormatted": "200+",
+      "traffic": 500,
+      "trafficFormatted": "500+",
       "relatedQueries": [],
       "articles": [
         {
-          "title": "Tennessee S Farooq suffers season-ending torn patellar tendon",
-          "url": "https://www.espn.com/college-football/story/_/id/49618393/tennessee-s-farooq-suffers-season-ending-torn-patellar-tendon",
-          "source": "ESPN"
+          "title": "Third Saturday In Full Color: Tennessee, Alabama To Wear Home Jerseys In 2026-27 Matchups",
+          "url": "https://utsports.com/news/2026/8/19/football-third-saturday-in-full-color-tennessee-alabama-to-wear-home-jerseys-in-2026-27-matchups",
+          "source": "University of Tennessee Athletics"
         },
         {
-          "title": "Anthony Poindexter goes in-depth on Tennessee’s safeties during final week of preseason camp",
-          "url": "https://247sports.com/college/tennessee/longformarticle/anthony-poindexter-tennessee-vols-co-defensive-coordinator-assesses-safety-position-preseason-camp-289017245/",
-          "source": "247Sports"
+          "title": "Tennessee vs Alabama football game bringing back orange, crimson jerseys",
+          "url": "https://www.knoxnews.com/story/sports/college/university-of-tennessee/football/2026/08/19/tennessee-vs-alabama-football-game-orange-crimson-uniforms-jerseys/91308483007/",
+          "source": "Knoxville News Sentinel"
         },
         {
-          "title": "Why Tennessee has confidence in Dejuan Lane at safety after Edrees Farooq injury",
-          "url": "https://www.on3.com/teams/tennessee-volunteers/news/dejuan-lane-tennessee-football-depth-chart-safety-jim-knowles/",
-          "source": "On3"
+          "title": "Alabama-Tennessee to Wear Home Jerseys in 2026-27 Contests",
+          "url": "https://rolltide.com/news/2026/8/19/football-alabama-tennessee-to-wear-home-jerseys-in-2026-27-contests",
+          "source": "Alabama Athletics"
         }
       ],
-      "date": "Tue, 18 Aug 2026 19:50:00 -0700",
+      "date": "Wed, 19 Aug 2026 18:40:00 -0700",
       "source": "rss",
       "relevanceScore": 0.3,
       "category": "transport",
       "destination": null,
-      "compositeScore": 0.29016
+      "compositeScore": 0.2904
     }
   ]
 }

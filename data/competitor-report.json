@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-19T03:53:02.498Z",
+  "timestamp": "2026-08-20T03:52:53.451Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -16,15 +16,1222 @@
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
-      "totalUrls": 7987,
-      "newUrls": 5
+      "totalUrls": 8991,
+      "newUrls": 3187
     }
   ],
-  "newArticles": [],
+  "newArticles": [
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/robot-restaurant-tokyo/",
+      "lastmod": "2025-11-26T15:25:11+00:00",
+      "destination": "tokyo",
+      "contentType": "gastronomie",
+      "title": "Robot Restaurant Tokyo",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Robot Restaurant Tokyo\" (tokyo, gastronomie) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/trek-tour-annapurnas-nepal/",
+      "lastmod": "2025-11-26T15:25:58+00:00",
+      "destination": "nepal",
+      "contentType": "general",
+      "title": "Trek Tour Annapurnas Nepal",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Trek Tour Annapurnas Nepal\" (nepal, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/experience-culturelle-kyoto/",
+      "lastmod": "2025-11-26T16:14:21+00:00",
+      "destination": "kyoto",
+      "contentType": "recit",
+      "title": "Experience Culturelle Kyoto",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Experience Culturelle Kyoto\" (kyoto, recit) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/experience-traditionnelle-tokyo/",
+      "lastmod": "2025-11-26T16:14:24+00:00",
+      "destination": "tokyo",
+      "contentType": "recit",
+      "title": "Experience Traditionnelle Tokyo",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Experience Traditionnelle Tokyo\" (tokyo, recit) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/endroits-manga-tokyo/",
+      "lastmod": "2025-11-26T16:14:26+00:00",
+      "destination": "tokyo",
+      "contentType": "general",
+      "title": "Endroits Manga Tokyo",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Endroits Manga Tokyo\" (tokyo, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/tablaos-spectacle-flamenco-madrid/",
+      "lastmod": "2025-11-26T16:16:51+00:00",
+      "destination": "laos",
+      "contentType": "general",
+      "title": "Tablaos Spectacle Flamenco Madrid",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Tablaos Spectacle Flamenco Madrid\" (laos, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/plage-phuket/",
+      "lastmod": "2025-11-26T16:25:34+00:00",
+      "destination": "phuket",
+      "contentType": "plage",
+      "title": "Plage Phuket",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Plage Phuket\" (phuket, plage) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/faire-visiter-luang-prabang-laos/",
+      "lastmod": "2025-12-11T10:16:01+00:00",
+      "destination": "laos",
+      "contentType": "activites",
+      "title": "Faire Visiter Luang Prabang Laos",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Faire Visiter Luang Prabang Laos\" (laos, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-lombok/",
+      "lastmod": "2026-08-19T08:20:11+00:00",
+      "destination": "lombok",
+      "contentType": "general",
+      "title": "Loger Lombok",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Lombok\" (lombok, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-ho-chi-minh-ville/",
+      "lastmod": "2026-08-19T08:20:31+00:00",
+      "destination": "ho-chi-minh",
+      "contentType": "general",
+      "title": "Loger Ho Chi Minh Ville",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Ho Chi Minh Ville\" (ho-chi-minh, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-jakarta/",
+      "lastmod": "2026-08-19T08:20:49+00:00",
+      "destination": "jakarta",
+      "contentType": "general",
+      "title": "Loger Jakarta",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Jakarta\" (jakarta, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-manille/",
+      "lastmod": "2026-08-19T08:21:24+00:00",
+      "destination": "manille",
+      "contentType": "general",
+      "title": "Loger Manille",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Manille\" (manille, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-palawan/",
+      "lastmod": "2026-08-19T08:21:28+00:00",
+      "destination": "palawan",
+      "contentType": "general",
+      "title": "Loger Palawan",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Palawan\" (palawan, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-penang/",
+      "lastmod": "2026-08-19T08:21:39+00:00",
+      "destination": "penang",
+      "contentType": "general",
+      "title": "Loger Penang",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Penang\" (penang, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-phnom-penh/",
+      "lastmod": "2026-08-19T08:23:04+00:00",
+      "destination": "phnom-penh",
+      "contentType": "general",
+      "title": "Loger Phnom Penh",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Phnom Penh\" (phnom-penh, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-sri-lanka/",
+      "lastmod": "2026-08-19T08:23:33+00:00",
+      "destination": "sri-lanka",
+      "contentType": "general",
+      "title": "Loger Sri Lanka",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Sri Lanka\" (sri-lanka, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-cebu/",
+      "lastmod": "2026-08-19T08:23:52+00:00",
+      "destination": "cebu",
+      "contentType": "general",
+      "title": "Loger Cebu",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Cebu\" (cebu, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/dormir-aeroport-manille/",
+      "lastmod": "2026-08-19T08:24:41+00:00",
+      "destination": "manille",
+      "contentType": "general",
+      "title": "Dormir Aeroport Manille",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Dormir Aeroport Manille\" (manille, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-siem-reap/",
+      "lastmod": "2026-08-19T08:25:30+00:00",
+      "destination": "siem-reap",
+      "contentType": "general",
+      "title": "Loger Siem Reap",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Siem Reap\" (siem-reap, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-hanoi/",
+      "lastmod": "2026-08-19T08:26:52+00:00",
+      "destination": "hanoi",
+      "contentType": "general",
+      "title": "Loger Hanoi",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Hanoi\" (hanoi, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-vientiane/",
+      "lastmod": "2026-08-19T08:27:03+00:00",
+      "destination": "vientiane",
+      "contentType": "general",
+      "title": "Loger Vientiane",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Vientiane\" (vientiane, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-taiwan/",
+      "lastmod": "2026-08-19T08:28:10+00:00",
+      "destination": "taiwan",
+      "contentType": "general",
+      "title": "Loger Taiwan",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Taiwan\" (taiwan, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-tokyo/",
+      "lastmod": "2026-08-19T08:33:35+00:00",
+      "destination": "tokyo",
+      "contentType": "general",
+      "title": "Loger Tokyo",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Tokyo\" (tokyo, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-phuket/",
+      "lastmod": "2026-08-19T08:34:13+00:00",
+      "destination": "phuket",
+      "contentType": "general",
+      "title": "Loger Phuket",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Phuket\" (phuket, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-osaka/",
+      "lastmod": "2026-08-19T08:34:43+00:00",
+      "destination": "osaka",
+      "contentType": "general",
+      "title": "Loger Osaka",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Osaka\" (osaka, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-kyoto/",
+      "lastmod": "2026-08-19T08:35:15+00:00",
+      "destination": "kyoto",
+      "contentType": "general",
+      "title": "Loger Kyoto",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Kyoto\" (kyoto, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/dormir-penang/",
+      "lastmod": "2026-08-19T08:35:57+00:00",
+      "destination": "penang",
+      "contentType": "general",
+      "title": "Dormir Penang",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Dormir Penang\" (penang, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/que-visiter-osaka/",
+      "lastmod": "2026-08-19T08:38:50+00:00",
+      "destination": "osaka",
+      "contentType": "activites",
+      "title": "Que Visiter Osaka",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Que Visiter Osaka\" (osaka, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/9-choses-a-faire-a-kyoto/",
+      "lastmod": "2026-08-19T08:42:48+00:00",
+      "destination": "kyoto",
+      "contentType": "general",
+      "title": "9 Choses A Faire A Kyoto",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"9 Choses A Faire A Kyoto\" (kyoto, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/faire-visiter-hanoi/",
+      "lastmod": "2026-08-19T08:46:30+00:00",
+      "destination": "hanoi",
+      "contentType": "activites",
+      "title": "Faire Visiter Hanoi",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Faire Visiter Hanoi\" (hanoi, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/7-idees-choses-a-faire-phnom-penh/",
+      "lastmod": "2026-08-19T08:50:05+00:00",
+      "destination": "phnom-penh",
+      "contentType": "general",
+      "title": "7 Idees Choses A Faire Phnom Penh",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"7 Idees Choses A Faire Phnom Penh\" (phnom-penh, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-manille-faire-voir/",
+      "lastmod": "2026-08-19T08:53:30+00:00",
+      "destination": "manille",
+      "contentType": "activites",
+      "title": "Visiter Manille Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Manille Faire Voir\" (manille, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/vientiane-10-incontournables/",
+      "lastmod": "2026-08-19T08:55:15+00:00",
+      "destination": "vientiane",
+      "contentType": "activites",
+      "title": "Vientiane 10 Incontournables",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Vientiane 10 Incontournables\" (vientiane, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-statue-unite-inde/",
+      "lastmod": "2026-08-19T08:58:43+00:00",
+      "destination": "inde",
+      "contentType": "activites",
+      "title": "Visiter Statue Unite Inde",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Statue Unite Inde\" (inde, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-ile-james-bond-phang-nga-phuket/",
+      "lastmod": "2026-08-19T08:59:08+00:00",
+      "destination": "phuket",
+      "contentType": "plage",
+      "title": "Visiter Ile James Bond Phang Nga Phuket",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Ile James Bond Phang Nga Phuket\" (phuket, plage) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visite-bat-trang-village-porcelaine-hanoi/",
+      "lastmod": "2026-08-19T09:01:35+00:00",
+      "destination": "hanoi",
+      "contentType": "activites",
+      "title": "Visite Bat Trang Village Porcelaine Hanoi",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visite Bat Trang Village Porcelaine Hanoi\" (hanoi, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-iles-gili-faire-voir/",
+      "lastmod": "2026-08-19T09:16:32+00:00",
+      "destination": "gili",
+      "contentType": "plage",
+      "title": "Visiter Iles Gili Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Iles Gili Faire Voir\" (gili, plage) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-parc-national-sirinat-phuket/",
+      "lastmod": "2026-08-19T09:16:33+00:00",
+      "destination": "phuket",
+      "contentType": "activites",
+      "title": "Visiter Parc National Sirinat Phuket",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Parc National Sirinat Phuket\" (phuket, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-da-nang-faire-voir/",
+      "lastmod": "2026-08-19T09:19:35+00:00",
+      "destination": "da-nang",
+      "contentType": "activites",
+      "title": "Visiter Da Nang Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Da Nang Faire Voir\" (da-nang, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-langkawi-faire-voir/",
+      "lastmod": "2026-08-19T09:20:43+00:00",
+      "destination": "langkawi",
+      "contentType": "activites",
+      "title": "Visiter Langkawi Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Langkawi Faire Voir\" (langkawi, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-lombok-faire-voir/",
+      "lastmod": "2026-08-19T09:27:28+00:00",
+      "destination": "lombok",
+      "contentType": "activites",
+      "title": "Visiter Lombok Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Lombok Faire Voir\" (lombok, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-tokyo-faire-voir/",
+      "lastmod": "2026-08-19T09:28:18+00:00",
+      "destination": "tokyo",
+      "contentType": "activites",
+      "title": "Visiter Tokyo Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Tokyo Faire Voir\" (tokyo, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-ubud-faire-voir/",
+      "lastmod": "2026-08-19T09:29:12+00:00",
+      "destination": "ubud",
+      "contentType": "activites",
+      "title": "Visiter Ubud Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Ubud Faire Voir\" (ubud, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-krabi-faire-voir/",
+      "lastmod": "2026-08-19T09:34:50+00:00",
+      "destination": "krabi",
+      "contentType": "activites",
+      "title": "Visiter Krabi Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Krabi Faire Voir\" (krabi, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-penang-faire-voir/",
+      "lastmod": "2026-08-19T09:37:34+00:00",
+      "destination": "penang",
+      "contentType": "activites",
+      "title": "Visiter Penang Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Penang Faire Voir\" (penang, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-agios-nikolaos-faire-voir/",
+      "lastmod": "2026-08-19T09:38:44+00:00",
+      "destination": "laos",
+      "contentType": "activites",
+      "title": "Visiter Agios Nikolaos Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Agios Nikolaos Faire Voir\" (laos, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-jakarta-faire-voir/",
+      "lastmod": "2026-08-19T09:39:28+00:00",
+      "destination": "jakarta",
+      "contentType": "activites",
+      "title": "Visiter Jakarta Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Jakarta Faire Voir\" (jakarta, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-cebu-faire-voir/",
+      "lastmod": "2026-08-19T09:40:43+00:00",
+      "destination": "cebu",
+      "contentType": "activites",
+      "title": "Visiter Cebu Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Cebu Faire Voir\" (cebu, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-sri-lanka-faire-voir/",
+      "lastmod": "2026-08-19T09:49:47+00:00",
+      "destination": "sri-lanka",
+      "contentType": "activites",
+      "title": "Visiter Sri Lanka Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Sri Lanka Faire Voir\" (sri-lanka, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-siem-reap-faire-voir/",
+      "lastmod": "2026-08-19T09:49:59+00:00",
+      "destination": "siem-reap",
+      "contentType": "activites",
+      "title": "Visiter Siem Reap Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Siem Reap Faire Voir\" (siem-reap, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-ho-chi-minh-ville-faire-voir/",
+      "lastmod": "2026-08-19T09:51:47+00:00",
+      "destination": "ho-chi-minh",
+      "contentType": "activites",
+      "title": "Visiter Ho Chi Minh Ville Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Ho Chi Minh Ville Faire Voir\" (ho-chi-minh, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-nusa-penida-faire-voir/",
+      "lastmod": "2026-08-19T09:51:58+00:00",
+      "destination": "nusa",
+      "contentType": "activites",
+      "title": "Visiter Nusa Penida Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Nusa Penida Faire Voir\" (nusa, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-koh-samui-faire-voir/",
+      "lastmod": "2026-08-19T09:52:00+00:00",
+      "destination": "koh-samui",
+      "contentType": "activites",
+      "title": "Visiter Koh Samui Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Koh Samui Faire Voir\" (koh-samui, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-phuket-faire-voir/",
+      "lastmod": "2026-08-19T09:52:47+00:00",
+      "destination": "phuket",
+      "contentType": "activites",
+      "title": "Visiter Phuket Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Phuket Faire Voir\" (phuket, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/specialites-culinaires-philippines/",
+      "lastmod": "2025-11-21T17:36:59+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Specialites Culinaires Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=26, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 26,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/requins-baleines-philippines/",
+      "lastmod": "2025-11-21T17:37:41+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Requins Baleines Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=26, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 26,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/evenements-annuels-philippines/",
+      "lastmod": "2025-11-21T17:40:06+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Evenements Annuels Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=26, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 26,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/iles-japon/",
+      "lastmod": "2025-11-21T18:31:35+00:00",
+      "destination": "japon",
+      "contentType": "plage",
+      "title": "Iles Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=33, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 33,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/bali-indonesie/",
+      "lastmod": "2025-11-26T16:13:41+00:00",
+      "destination": "bali",
+      "contentType": "general",
+      "title": "Bali Indonesie",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=50, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 50,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/guide-quartier-thonburi-bangkok/",
+      "lastmod": "2025-11-26T16:18:33+00:00",
+      "destination": "bangkok",
+      "contentType": "guide",
+      "title": "Guide Quartier Thonburi Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=11, freshness=0.72)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 11,
+        "freshness": 0.72
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/guide-quartier-khao-san-road-bangkok/",
+      "lastmod": "2025-11-26T16:18:38+00:00",
+      "destination": "bangkok",
+      "contentType": "guide",
+      "title": "Guide Quartier Khao San Road Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=11, freshness=0.72)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 11,
+        "freshness": 0.72
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/jardin-traditionnel-japonais-tokyo/",
+      "lastmod": "2025-11-26T16:24:31+00:00",
+      "destination": "japon",
+      "contentType": "general",
+      "title": "Jardin Traditionnel Japonais Tokyo",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=33, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 33,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/carte-plan-bali/",
+      "lastmod": "2025-12-11T09:45:48+00:00",
+      "destination": "bali",
+      "contentType": "general",
+      "title": "Carte Plan Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=50, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 50,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/prenez-cours-cuisine-thai-bangkok/",
+      "lastmod": "2025-12-11T09:45:57+00:00",
+      "destination": "bangkok",
+      "contentType": "gastronomie",
+      "title": "Prenez Cours Cuisine Thai Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=11, freshness=0.72)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 11,
+        "freshness": 0.72
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-kuala-lumpur/",
+      "lastmod": "2026-08-19T08:20:28+00:00",
+      "destination": "kuala-lumpur",
+      "contentType": "general",
+      "title": "Loger Kuala Lumpur",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis\" (score=13, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 13,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-chiang-mai/",
+      "lastmod": "2026-08-19T08:27:36+00:00",
+      "destination": "chiang-mai",
+      "contentType": "general",
+      "title": "Loger Chiang Mai",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant\" (score=9, freshness=0.61)",
+      "matchedArticle": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 9,
+        "freshness": 0.61
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-bangkok/",
+      "lastmod": "2026-08-19T08:32:40+00:00",
+      "destination": "bangkok",
+      "contentType": "general",
+      "title": "Loger Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=11, freshness=0.72)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 11,
+        "freshness": 0.72
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-bali/",
+      "lastmod": "2026-08-19T08:33:32+00:00",
+      "destination": "bali",
+      "contentType": "general",
+      "title": "Loger Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=50, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 50,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-maldives/",
+      "lastmod": "2026-08-19T08:33:50+00:00",
+      "destination": "maldives",
+      "contentType": "general",
+      "title": "Loger Maldives",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel\" (score=9, freshness=0.61)",
+      "matchedArticle": {
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 9,
+        "freshness": 0.61
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-singapour/",
+      "lastmod": "2026-08-19T08:34:52+00:00",
+      "destination": "singapour",
+      "contentType": "general",
+      "title": "Loger Singapour",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?\" (score=34, freshness=0.68)",
+      "matchedArticle": {
+        "wpId": 5072,
+        "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+        "compositeScore": 34,
+        "freshness": 0.68
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-chiang-mai-faire-voir/",
+      "lastmod": "2026-08-19T08:50:44+00:00",
+      "destination": "chiang-mai",
+      "contentType": "activites",
+      "title": "Visiter Chiang Mai Faire Voir",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant\" (score=9, freshness=0.61)",
+      "matchedArticle": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 9,
+        "freshness": 0.61
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-cascade-tegenungan-bali/",
+      "lastmod": "2026-08-19T08:56:54+00:00",
+      "destination": "bali",
+      "contentType": "activites",
+      "title": "Visiter Cascade Tegenungan Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=50, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 50,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-marches-flottants-bangkok/",
+      "lastmod": "2026-08-19T08:57:46+00:00",
+      "destination": "bangkok",
+      "contentType": "activites",
+      "title": "Visiter Marches Flottants Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=11, freshness=0.72)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 11,
+        "freshness": 0.72
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-rizieres-bali/",
+      "lastmod": "2026-08-19T08:57:56+00:00",
+      "destination": "bali",
+      "contentType": "activites",
+      "title": "Visiter Rizieres Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=50, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 50,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/cardamomes-cambodge/",
+      "lastmod": "2026-08-19T08:59:24+00:00",
+      "destination": "cambodge",
+      "contentType": "general",
+      "title": "Cardamomes Cambodge",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard\" (score=32, freshness=0.89)",
+      "matchedArticle": {
+        "wpId": 6374,
+        "slug": "meilleur-esim-cambodge-2026",
+        "compositeScore": 32,
+        "freshness": 0.89
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/hue-rappelle-passe-imperial-du-vietnam/",
+      "lastmod": "2026-08-19T09:00:52+00:00",
+      "destination": "vietnam",
+      "contentType": "general",
+      "title": "Hue Rappelle Passe Imperial Du Vietnam",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=36, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 36,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/budget-bali/",
+      "lastmod": "2026-08-19T09:01:02+00:00",
+      "destination": "bali",
+      "contentType": "budget",
+      "title": "Budget Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=50, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 50,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/paradis-terre-larchipel-del-nido-aux-philippines/",
+      "lastmod": "2026-08-19T09:01:29+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Paradis Terre Larchipel Del Nido Aux Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=26, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 26,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-charmante-ville-hoi-an-au-vietnam/",
+      "lastmod": "2026-08-19T09:01:31+00:00",
+      "destination": "vietnam",
+      "contentType": "activites",
+      "title": "Visiter Charmante Ville Hoi An Au Vietnam",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=36, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 36,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/ville-dalat-airs-france-au-vietnam/",
+      "lastmod": "2026-08-19T09:01:51+00:00",
+      "destination": "vietnam",
+      "contentType": "general",
+      "title": "Ville Dalat Airs France Au Vietnam",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=36, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 36,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/nha-trang-ses-plages-populaires-au-vietnam/",
+      "lastmod": "2026-08-19T09:01:55+00:00",
+      "destination": "vietnam",
+      "contentType": "plage",
+      "title": "Nha Trang Ses Plages Populaires Au Vietnam",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=36, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 36,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-japon-meiji-mura/",
+      "lastmod": "2026-08-19T09:02:06+00:00",
+      "destination": "japon",
+      "contentType": "activites",
+      "title": "Visiter Japon Meiji Mura",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=33, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 33,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/endroits-visiter-japon/",
+      "lastmod": "2026-08-19T09:03:50+00:00",
+      "destination": "japon",
+      "contentType": "activites",
+      "title": "Endroits Visiter Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=33, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 33,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/plus-beaux-endroits-philippines/",
+      "lastmod": "2026-08-19T09:04:55+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Plus Beaux Endroits Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=26, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 26,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-nord-vietnam-faire-voir/",
+      "lastmod": "2026-08-19T09:20:29+00:00",
+      "destination": "vietnam",
+      "contentType": "activites",
+      "title": "Visiter Nord Vietnam Faire Voir",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=36, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 36,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-bali-faire-voir/",
+      "lastmod": "2026-08-19T09:27:02+00:00",
+      "destination": "bali",
+      "contentType": "activites",
+      "title": "Visiter Bali Faire Voir",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=50, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 50,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-bangkok-faire-voir/",
+      "lastmod": "2026-08-19T09:30:09+00:00",
+      "destination": "bangkok",
+      "contentType": "activites",
+      "title": "Visiter Bangkok Faire Voir",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=11, freshness=0.72)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 11,
+        "freshness": 0.72
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-kuala-lumpur-faire-voir/",
+      "lastmod": "2026-08-19T09:30:48+00:00",
+      "destination": "kuala-lumpur",
+      "contentType": "activites",
+      "title": "Visiter Kuala Lumpur Faire Voir",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis\" (score=13, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 13,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-singapour-faire-voir/",
+      "lastmod": "2026-08-19T09:38:07+00:00",
+      "destination": "singapour",
+      "contentType": "activites",
+      "title": "Visiter Singapour Faire Voir",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?\" (score=34, freshness=0.68)",
+      "matchedArticle": {
+        "wpId": 5072,
+        "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+        "compositeScore": 34,
+        "freshness": 0.68
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-maldives-faire-voir/",
+      "lastmod": "2026-08-19T09:51:55+00:00",
+      "destination": "maldives",
+      "contentType": "activites",
+      "title": "Visiter Maldives Faire Voir",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel\" (score=9, freshness=0.61)",
+      "matchedArticle": {
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 9,
+        "freshness": 0.61
+      }
+    }
+  ],
   "summary": {
-    "totalNew": 0,
-    "contentGaps": 0,
+    "totalNew": 90,
+    "contentGaps": 54,
     "staleRefreshes": 0,
-    "monitoring": 0
+    "monitoring": 36
   }
 }
