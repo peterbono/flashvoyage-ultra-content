@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-08-20T00:54:59.716Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-08-20T06:35:51.240Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Indonesia’s renewed macaque export push pits research demand against conservation concerns",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.channelnewsasia.com/asia/indonesia-long-tailed-macaque-exports-research-6322256",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2069,
-      "estimatedTrafficIn24h": 2022,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.9
-      },
-      "detectedAt": "2026-08-19T22:00:00.000Z",
-      "scoredAt": "2026-08-20T00:54:54.548Z"
-    }
-  ]
+  "queue": []
 }
