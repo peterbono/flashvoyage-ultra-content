@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-08-20T18:30:34.296Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-08-21T00:59:22.214Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Thai woman finds missing perfume bottle after Vietnam-Bangkok flight",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/world/aviation/thai-woman-finds-perfume-missing-after-vietjet-air-flight",
-      "velocityScore": 0.521,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 712,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1736,
-      "estimatedTrafficIn24h": 1696,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.7,
-        "timeDecay": 0.992,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 8.3
-      },
-      "detectedAt": "2026-08-20T10:14:01.000Z",
-      "scoredAt": "2026-08-20T18:30:23.719Z"
-    }
-  ]
+  "queue": []
 }
