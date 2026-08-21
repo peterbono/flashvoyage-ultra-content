@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-20T03:51:00.180Z",
+  "timestamp": "2026-08-21T03:53:43.420Z",
   "trendingTopics": [
     {
-      "query": "prix voyage thailande",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
+      "query": "voyage thailande pas cher",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-20T03:50:51.288Z",
+      "date": "2026-08-21T03:53:34.787Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -17,11 +17,11 @@
     },
     {
       "query": "voyage thailande circuit",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-20T03:50:51.288Z",
+      "date": "2026-08-21T03:53:34.787Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -30,12 +30,40 @@
       "compositeScore": 0.62
     },
     {
-      "query": "leclerc voyage thailande",
+      "query": "voyage vietnam pas cher",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-21T03:53:36.939Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage vietnam circuit",
       "traffic": 150,
       "trafficFormatted": "+150 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-20T03:50:51.288Z",
+      "date": "2026-08-21T03:53:36.939Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "itineraire",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage thailande phuket",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-21T03:53:34.787Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -45,11 +73,11 @@
     },
     {
       "query": "voyage cambodge",
-      "traffic": 100,
-      "trafficFormatted": "+100 %",
+      "traffic": 120,
+      "trafficFormatted": "+120 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-20T03:50:53.507Z",
+      "date": "2026-08-21T03:53:36.939Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -63,7 +91,7 @@
       "trafficFormatted": "+70 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-20T03:50:53.507Z",
+      "date": "2026-08-21T03:53:36.939Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -77,7 +105,7 @@
       "trafficFormatted": "+140 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-20T03:50:57.964Z",
+      "date": "2026-08-21T03:53:41.262Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -86,33 +114,47 @@
       "compositeScore": 0.53
     },
     {
-      "query": "vols",
-      "traffic": 500,
-      "trafficFormatted": "500+",
+      "query": "voyage cambodge laos",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-21T03:53:41.262Z",
+      "source": "related-rising",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "moïse kouamé",
+      "traffic": 200,
+      "trafficFormatted": "200+",
       "relatedQueries": [],
       "articles": [
         {
-          "title": "Third Saturday In Full Color: Tennessee, Alabama To Wear Home Jerseys In 2026-27 Matchups",
-          "url": "https://utsports.com/news/2026/8/19/football-third-saturday-in-full-color-tennessee-alabama-to-wear-home-jerseys-in-2026-27-matchups",
-          "source": "University of Tennessee Athletics"
+          "title": "Moïse Kouame franchit le premier tour au Challenger de Cancun, sa première victoire depuis Roland-Garros",
+          "url": "https://www.lequipe.fr/Tennis/Actualites/Moise-kouame-franchit-le-premier-tour-au-challenger-de-cancun-sa-premiere-victoire-depuis-roland-garros/1712256",
+          "source": "L'Équipe"
         },
         {
-          "title": "Tennessee vs Alabama football game bringing back orange, crimson jerseys",
-          "url": "https://www.knoxnews.com/story/sports/college/university-of-tennessee/football/2026/08/19/tennessee-vs-alabama-football-game-orange-crimson-uniforms-jerseys/91308483007/",
-          "source": "Knoxville News Sentinel"
+          "title": "Enfin une victoire pour Kouame depuis Roland-Garros ! : Sports - Orange",
+          "url": "https://sports.orange.fr/tennis/atp/article/enfin-une-victoire-pour-kouame-depuis-roland-garros-exclu-CNT000002rqNiF.html",
+          "source": "Sports - Orange"
         },
         {
-          "title": "Alabama-Tennessee to Wear Home Jerseys in 2026-27 Contests",
-          "url": "https://rolltide.com/news/2026/8/19/football-alabama-tennessee-to-wear-home-jerseys-in-2026-27-contests",
-          "source": "Alabama Athletics"
+          "title": "Tennis. Moïse Kouamé décroche sa première victoire depuis sa belle épopée à Roland-Garros",
+          "url": "https://www.ouest-france.fr/sport/tennis/tennis-moise-kouame-decroche-sa-premiere-victoire-depuis-sa-belle-epopee-a-roland-garros-12a8a8b0-9c7a-11f1-a150-d338aff2f727",
+          "source": "Ouest-France"
         }
       ],
-      "date": "Wed, 19 Aug 2026 18:40:00 -0700",
+      "date": "Thu, 20 Aug 2026 18:40:00 -0700",
       "source": "rss",
       "relevanceScore": 0.3,
-      "category": "transport",
+      "category": "itineraire",
       "destination": null,
-      "compositeScore": 0.2904
+      "compositeScore": 0.29016
     }
   ]
 }

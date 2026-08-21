@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-20T03:51:04.439Z",
+  "timestamp": "2026-08-21T03:53:48.203Z",
   "articleMap": {
     "bali-lombok-gili-10-jours-itineraire-budget-2026": {
       "wpId": 4370,
@@ -13,9 +13,9 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage": {
-      "wpId": 5119,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
+    "voyage-thailande-pas-cher-2026-budget": {
+      "wpId": 4487,
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
       "reels": [
         {
           "reelId": "tiktok:2026-05-07",
@@ -26,7 +26,20 @@
           "publishedAt": "2026-05-07",
           "isViral": false,
           "matchSource": "tiktok-fuzzy-title"
-        },
+        }
+      ],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage": {
+      "wpId": 5119,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
+      "reels": [
         {
           "reelId": "tiktok:2026-04-14",
           "format": "guide",
@@ -44,18 +57,6 @@
         "avantapres"
       ],
       "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "voyage-thailande-pas-cher-2026-budget": {
-      "wpId": 4487,
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "bali-vs-thailande-premier-voyage-asie-comparatif": {
@@ -262,6 +263,18 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "philippines-10-jours-itineraire-plages-budget-2026": {
+      "wpId": 4371,
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
       "wpId": 5260,
       "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
@@ -295,18 +308,6 @@
         "humor"
       ],
       "category": "default",
-      "igReferralTraffic": null
-    },
-    "philippines-10-jours-itineraire-plages-budget-2026": {
-      "wpId": 4371,
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "meilleur-esim-philippines-2026": {
@@ -381,6 +382,30 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
+    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
+      "wpId": 5343,
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
+      "wpId": 5296,
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
       "wpId": 5063,
       "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
@@ -391,18 +416,6 @@
         "avantapres"
       ],
       "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
-      "wpId": 4071,
-      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus": {
@@ -417,9 +430,9 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte": {
-      "wpId": 2980,
-      "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
+      "wpId": 3254,
+      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -453,30 +466,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
-      "wpId": 5343,
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
-      "wpId": 5296,
-      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "esim-japon-combien-ca-te-coute-vraiment": {
       "wpId": 5270,
       "title": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
@@ -492,6 +481,18 @@
     "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe": {
       "wpId": 4125,
       "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
+      "wpId": 4071,
+      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -525,18 +526,6 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
-      "wpId": 3254,
-      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
     "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique": {
       "wpId": 3198,
       "title": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
@@ -558,6 +547,18 @@
         "humor"
       ],
       "category": "visa",
+      "igReferralTraffic": null
+    },
+    "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte": {
+      "wpId": 2980,
+      "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget": {
@@ -1268,8 +1269,8 @@
   ],
   "stats": {
     "totalArticles": 38,
-    "articlesWithReels": 6,
-    "articlesWithoutReels": 32,
+    "articlesWithReels": 7,
+    "articlesWithoutReels": 31,
     "totalReels": 11,
     "viralReels": 0,
     "orphanReels": 115

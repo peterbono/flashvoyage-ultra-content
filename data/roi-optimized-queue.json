@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-20T03:51:11.047Z",
+  "timestamp": "2026-08-21T03:53:56.301Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -88,6 +88,56 @@
     },
     {
       "rank": 4,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "moïse kouamé",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "itineraire",
+        "suggestedTitle": "Moïse kouamé : L'Itineraire Ideal",
+        "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
+        "reason": "Content gap: \"moïse kouamé\" (score 40, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 5.15,
+        "projectedMonthlyTraffic": 193,
+        "projectedMonthlyRevenue": 0.386,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (290 PV) × gap boost (0.67)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 2,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 8,
+        "freshness": 0.56,
+        "traffic": 0,
+        "reason": "Low-performing article: score=8, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -108,11 +158,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -133,44 +183,19 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
-      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
       "articleType": "support",
       "context": {
-        "wpId": 4030,
-        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-        "compositeScore": 9,
-        "freshness": 0.63,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 7,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 1,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "articleType": "support",
-      "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "wpId": 4071,
+        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
         "compositeScore": 9,
         "freshness": 0.62,
         "traffic": 0,
@@ -183,19 +208,44 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
       "articleType": "support",
       "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "wpId": 4030,
+        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+        "compositeScore": 9,
+        "freshness": 0.62,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "articleType": "support",
+      "context": {
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 9,
         "freshness": 0.61,
         "traffic": 0,
@@ -208,11 +258,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -222,7 +272,7 @@
         "wpId": 3198,
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 9,
-        "freshness": 0.61,
+        "freshness": 0.6,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
@@ -233,11 +283,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -247,7 +297,7 @@
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 9,
-        "freshness": 0.59,
+        "freshness": 0.58,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
@@ -258,11 +308,36 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "articleType": "support",
+      "context": {
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 10,
+        "freshness": 0.69,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -272,7 +347,7 @@
         "wpId": 5742,
         "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
         "compositeScore": 11,
-        "freshness": 0.72,
+        "freshness": 0.71,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       },
@@ -283,70 +358,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "articleType": "support",
-      "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 11,
-        "freshness": 0.7,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "articleType": "support",
-      "context": {
-        "wpId": 5296,
-        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-        "compositeScore": 11,
-        "freshness": 0.7,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.225,
+    "totalCost": 0.3,
     "dailyBudget": 2,
-    "itemsWithinBudget": 13,
+    "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.058,
-    "expectedDailyRoi": 0.26
+    "expectedDailyRevenue": 0.071,
+    "expectedDailyRoi": 0.24
   },
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

@@ -1,10 +1,32 @@
 {
-  "timestamp": "2026-08-20T03:51:03.867Z",
-  "gapCount": 0,
-  "gaps": [],
+  "timestamp": "2026-08-21T03:53:47.458Z",
+  "gapCount": 1,
+  "gaps": [
+    {
+      "topic": "moïse kouamé",
+      "source": "trends",
+      "gapScore": 40,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.6
+      },
+      "destination": null,
+      "category": "itineraire",
+      "suggestedTitle": "Moïse kouamé : L'Itineraire Ideal",
+      "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
+      "articleType": "support",
+      "priority": "medium"
+    }
+  ],
   "summary": {
-    "byPriority": {},
-    "byCategory": {},
+    "byPriority": {
+      "medium": 1
+    },
+    "byCategory": {
+      "itineraire": 1
+    },
     "byDestination": {},
     "topDestinationGaps": []
   }
