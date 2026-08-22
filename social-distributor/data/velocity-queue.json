@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-08-22T00:54:44.190Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-08-22T06:29:55.421Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Landing gear fails to retract on Thai Airways flight",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/world/aviation/landing-gear-fails-to-retract-on-thai-airways-flight",
+      "velocityScore": 0.499,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2495,
+      "estimatedTrafficIn24h": 2438,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.2
+      },
+      "detectedAt": "2026-08-22T04:15:51.000Z",
+      "scoredAt": "2026-08-22T06:29:46.931Z"
+    }
+  ]
 }
