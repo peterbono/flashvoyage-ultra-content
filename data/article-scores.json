@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-21T03:53:29.450Z",
+  "timestamp": "2026-08-22T03:45:09.361Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -35,19 +35,20 @@
       "wpId": 4487,
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "compositeScore": 41,
+      "compositeScore": 43,
       "signals": {
         "traffic": 0.29,
         "sessionQuality": 0.02,
         "trendAlignment": 0.62,
-        "reelAmplification": 0,
+        "reelAmplification": 0.1,
         "freshness": 0.66,
         "monetization": 1,
         "frShare": 1,
         "frPageviews": 2
       },
       "flags": [
-        "trending"
+        "trending",
+        "1_reels"
       ],
       "date": "2026-03-31T16:22:55",
       "wordCount": 2504
@@ -56,12 +57,12 @@
       "wpId": 5119,
       "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
-      "compositeScore": 38,
+      "compositeScore": 39,
       "signals": {
         "traffic": 0.43,
         "sessionQuality": 0.25,
         "trendAlignment": 0.53,
-        "reelAmplification": 0.15,
+        "reelAmplification": 0.2,
         "freshness": 0.68,
         "monetization": 0,
         "frShare": 1,
@@ -69,7 +70,7 @@
       },
       "flags": [
         "trending",
-        "2_reels"
+        "1_reels"
       ],
       "date": "2026-04-06T05:37:25",
       "wordCount": 1493
@@ -119,27 +120,6 @@
       "wordCount": 4977
     },
     {
-      "wpId": 5072,
-      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
-      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "compositeScore": 34,
-      "signals": {
-        "traffic": 0.43,
-        "sessionQuality": 0.07,
-        "trendAlignment": 0.27,
-        "reelAmplification": 0.36,
-        "freshness": 0.68,
-        "monetization": 0,
-        "frShare": 0.33,
-        "frPageviews": 1
-      },
-      "flags": [
-        "1_reels"
-      ],
-      "date": "2026-04-05T08:42:10",
-      "wordCount": 1296
-    },
-    {
       "wpId": 4373,
       "slug": "japon-couple-15-jours-budget-tout-compris-2026",
       "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
@@ -170,7 +150,7 @@
         "sessionQuality": 0.03,
         "trendAlignment": 0.27,
         "reelAmplification": 0,
-        "freshness": 0.89,
+        "freshness": 0.88,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -178,6 +158,27 @@
       "flags": [],
       "date": "2026-06-14T03:18:14",
       "wordCount": 1251
+    },
+    {
+      "wpId": 5072,
+      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
+      "compositeScore": 30,
+      "signals": {
+        "traffic": 0.29,
+        "sessionQuality": 0,
+        "trendAlignment": 0.27,
+        "reelAmplification": 0.36,
+        "freshness": 0.68,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [
+        "1_reels"
+      ],
+      "date": "2026-04-05T08:42:10",
+      "wordCount": 1296
     },
     {
       "wpId": 4372,
@@ -333,7 +334,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.53,
         "reelAmplification": 0.03,
-        "freshness": 0.69,
+        "freshness": 0.68,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -356,7 +357,7 @@
         "sessionQuality": 0.1,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.87,
+        "freshness": 0.86,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -455,7 +456,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.27,
         "reelAmplification": 0,
-        "freshness": 0.63,
+        "freshness": 0.62,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -488,27 +489,6 @@
       "wordCount": 1489
     },
     {
-      "wpId": 5296,
-      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "compositeScore": 14,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.16,
-        "reelAmplification": 0,
-        "freshness": 0.7,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-04-11T08:44:09",
-      "wordCount": 1669
-    },
-    {
       "wpId": 5063,
       "slug": "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement",
       "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
@@ -518,7 +498,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.68,
+        "freshness": 0.67,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -551,16 +531,16 @@
       "wordCount": 1722
     },
     {
-      "wpId": 3254,
-      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "wpId": 5296,
+      "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
       "compositeScore": 13,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
-        "trendAlignment": 0.18,
+        "trendAlignment": 0.16,
         "reelAmplification": 0,
-        "freshness": 0.61,
+        "freshness": 0.69,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -568,8 +548,29 @@
       "flags": [
         "zero_traffic"
       ],
-      "date": "2026-03-11T20:13:21",
-      "wordCount": 3583
+      "date": "2026-04-11T08:44:09",
+      "wordCount": 1669
+    },
+    {
+      "wpId": 4071,
+      "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
+      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "compositeScore": 13,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 0.62,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-18T10:40:12",
+      "wordCount": 3216
     },
     {
       "wpId": 6309,
@@ -591,6 +592,27 @@
       ],
       "date": "2026-05-17T03:15:44",
       "wordCount": 1245
+    },
+    {
+      "wpId": 2980,
+      "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+      "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "compositeScore": 12,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.21,
+        "reelAmplification": 0,
+        "freshness": 0.55,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-02-23T10:54:23",
+      "wordCount": 3218
     },
     {
       "wpId": 5742,
@@ -644,7 +666,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.63,
+        "freshness": 0.62,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -654,27 +676,6 @@
       ],
       "date": "2026-03-18T19:33:49",
       "wordCount": 3099
-    },
-    {
-      "wpId": 4071,
-      "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
-      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "compositeScore": 9,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.62,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-03-18T10:40:12",
-      "wordCount": 3216
     },
     {
       "wpId": 4030,
@@ -719,6 +720,27 @@
       "wordCount": 4917
     },
     {
+      "wpId": 3254,
+      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "compositeScore": 9,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.6,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-11T20:13:21",
+      "wordCount": 3583
+    },
+    {
       "wpId": 3198,
       "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
       "title": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
@@ -759,27 +781,6 @@
       ],
       "date": "2026-03-04T19:51:24",
       "wordCount": 1802
-    },
-    {
-      "wpId": 2980,
-      "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-      "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
-      "compositeScore": 8,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0,
-        "reelAmplification": 0,
-        "freshness": 0.56,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-02-23T10:54:23",
-      "wordCount": 3218
     },
     {
       "wpId": 2924,

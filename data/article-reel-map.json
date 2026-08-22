@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-21T03:53:48.203Z",
+  "timestamp": "2026-08-22T03:45:27.983Z",
   "articleMap": {
     "bali-lombok-gili-10-jours-itineraire-budget-2026": {
       "wpId": 4370,
@@ -115,29 +115,6 @@
       "category": "destination",
       "igReferralTraffic": null
     },
-    "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
-      "wpId": 5072,
-      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-05-05",
-          "format": "avantapres",
-          "platform": "tiktok",
-          "score": 18.1,
-          "engagementRate": 0,
-          "publishedAt": "2026-05-05",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "japon-couple-15-jours-budget-tout-compris-2026": {
       "wpId": 4373,
       "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
@@ -201,6 +178,29 @@
         "avantapres"
       ],
       "category": "destination",
+      "igReferralTraffic": null
+    },
+    "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
+      "wpId": 5072,
+      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-05-05",
+          "format": "avantapres",
+          "platform": "tiktok",
+          "score": 18.1,
+          "engagementRate": 0,
+          "publishedAt": "2026-05-05",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
       "igReferralTraffic": null
     },
     "esim-philippines-globe-smart-comparatif-2026": {
@@ -394,18 +394,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
-      "wpId": 5296,
-      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
       "wpId": 5063,
       "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
@@ -430,9 +418,21 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
-      "wpId": 3254,
-      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+    "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
+      "wpId": 5296,
+      "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
+      "wpId": 4071,
+      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
       "reels": [],
       "suggestedFormats": [
         "budget",
@@ -452,6 +452,18 @@
         "avantapres"
       ],
       "category": "destination",
+      "igReferralTraffic": null
+    },
+    "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte": {
+      "wpId": 2980,
+      "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "bangkok-le-vrai-cout-des-taxis-aeroport-2026": {
@@ -490,18 +502,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
-      "wpId": 4071,
-      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
     "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget": {
       "wpId": 4030,
       "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
@@ -526,6 +526,18 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
+    "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
+      "wpId": 3254,
+      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique": {
       "wpId": 3198,
       "title": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
@@ -547,18 +559,6 @@
         "humor"
       ],
       "category": "visa",
-      "igReferralTraffic": null
-    },
-    "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte": {
-      "wpId": 2980,
-      "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget": {

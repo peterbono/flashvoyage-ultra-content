@@ -1,25 +1,9 @@
 {
-  "timestamp": "2026-08-21T03:53:48.945Z",
-  "queueSize": 14,
+  "timestamp": "2026-08-22T03:45:28.930Z",
+  "queueSize": 13,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 120,
-      "topic": "moïse kouamé",
-      "articleType": "support",
-      "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "itineraire",
-        "suggestedTitle": "Moïse kouamé : L'Itineraire Ideal",
-        "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
-        "reason": "Content gap: \"moïse kouamé\" (score 40, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +15,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +27,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -55,23 +39,7 @@
       }
     },
     {
-      "rank": 5,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 2,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
-      "articleType": "support",
-      "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-        "compositeScore": 8,
-        "freshness": 0.56,
-        "traffic": 0,
-        "reason": "Low-performing article: score=8, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 6,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -87,7 +55,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -97,29 +65,13 @@
         "wpId": 4125,
         "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
         "compositeScore": 9,
-        "freshness": 0.63,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 8,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 1,
-      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "articleType": "support",
-      "context": {
-        "wpId": 4071,
-        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
-        "compositeScore": 9,
         "freshness": 0.62,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
     },
     {
-      "rank": 9,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -135,7 +87,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -151,7 +103,23 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "articleType": "support",
+      "context": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 9,
+        "freshness": 0.6,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -167,7 +135,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -183,7 +151,7 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -199,7 +167,7 @@
       }
     },
     {
-      "rank": 14,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -213,10 +181,26 @@
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
+    },
+    {
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
+      "articleType": "support",
+      "context": {
+        "wpId": 6309,
+        "slug": "meilleur-esim-japon-2026",
+        "compositeScore": 12,
+        "freshness": 0.8,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
+      }
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,

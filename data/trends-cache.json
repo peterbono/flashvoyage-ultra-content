@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-21T03:53:43.420Z",
+  "timestamp": "2026-08-22T03:45:24.100Z",
   "trendingTopics": [
     {
       "query": "voyage thailande pas cher",
-      "traffic": 110,
-      "trafficFormatted": "+110 %",
+      "traffic": 140,
+      "trafficFormatted": "+140 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-21T03:53:34.787Z",
+      "date": "2026-08-22T03:45:15.098Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -16,54 +16,26 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage thailande circuit",
+      "query": "prix voyage thailande",
       "traffic": 100,
       "trafficFormatted": "+100 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-21T03:53:34.787Z",
+      "date": "2026-08-22T03:45:15.098Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
-      "category": "itineraire",
+      "category": "budget",
       "destination": "thailande",
       "compositeScore": 0.62
     },
     {
-      "query": "voyage vietnam pas cher",
-      "traffic": 250,
-      "trafficFormatted": "+250 %",
+      "query": "leclerc voyage thailande",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-21T03:53:36.939Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage vietnam circuit",
-      "traffic": 150,
-      "trafficFormatted": "+150 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-21T03:53:36.939Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage thailande phuket",
-      "traffic": 250,
-      "trafficFormatted": "+250 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-21T03:53:34.787Z",
+      "date": "2026-08-22T03:45:15.098Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -73,11 +45,11 @@
     },
     {
       "query": "voyage cambodge",
-      "traffic": 120,
-      "trafficFormatted": "+120 %",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-21T03:53:36.939Z",
+      "date": "2026-08-22T03:45:17.293Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -91,7 +63,7 @@
       "trafficFormatted": "+70 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-21T03:53:36.939Z",
+      "date": "2026-08-22T03:45:17.293Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -100,61 +72,18 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage vietnam",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
+      "query": "voyage vietnam blog",
+      "traffic": 40,
+      "trafficFormatted": "+40 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-21T03:53:41.262Z",
+      "date": "2026-08-22T03:45:17.293Z",
       "source": "related-rising",
-      "parentDestination": "cambodge",
+      "parentDestination": "vietnam",
       "relevanceScore": 0.7,
       "category": "destination",
-      "destination": "cambodge",
+      "destination": "vietnam",
       "compositeScore": 0.53
-    },
-    {
-      "query": "voyage cambodge laos",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-21T03:53:41.262Z",
-      "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "moïse kouamé",
-      "traffic": 200,
-      "trafficFormatted": "200+",
-      "relatedQueries": [],
-      "articles": [
-        {
-          "title": "Moïse Kouame franchit le premier tour au Challenger de Cancun, sa première victoire depuis Roland-Garros",
-          "url": "https://www.lequipe.fr/Tennis/Actualites/Moise-kouame-franchit-le-premier-tour-au-challenger-de-cancun-sa-premiere-victoire-depuis-roland-garros/1712256",
-          "source": "L'Équipe"
-        },
-        {
-          "title": "Enfin une victoire pour Kouame depuis Roland-Garros ! : Sports - Orange",
-          "url": "https://sports.orange.fr/tennis/atp/article/enfin-une-victoire-pour-kouame-depuis-roland-garros-exclu-CNT000002rqNiF.html",
-          "source": "Sports - Orange"
-        },
-        {
-          "title": "Tennis. Moïse Kouamé décroche sa première victoire depuis sa belle épopée à Roland-Garros",
-          "url": "https://www.ouest-france.fr/sport/tennis/tennis-moise-kouame-decroche-sa-premiere-victoire-depuis-sa-belle-epopee-a-roland-garros-12a8a8b0-9c7a-11f1-a150-d338aff2f727",
-          "source": "Ouest-France"
-        }
-      ],
-      "date": "Thu, 20 Aug 2026 18:40:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "itineraire",
-      "destination": null,
-      "compositeScore": 0.29016
     }
   ]
 }
