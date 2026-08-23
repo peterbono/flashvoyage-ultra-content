@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-08-22T03:45:35.283Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-08-23T03:54:24.768Z",
+    "elapsedSeconds": 6,
     "totalArticles": 38,
     "articlesWithRecommendations": 11,
     "totalRecommendations": 11,
@@ -36,13 +36,13 @@
         "avgDuration": 540
       },
       "gsc": {
-        "impressions": 64,
+        "impressions": 70,
         "clicks": 2,
-        "position": 52.4,
+        "position": 54.4,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 74.3,
+            "position": 73.9,
             "impressions": 28,
             "ctr": 0
           },
@@ -54,8 +54,8 @@
           },
           {
             "query": "bali lombok gili",
-            "position": 70,
-            "impressions": 5,
+            "position": 69.6,
+            "impressions": 8,
             "ctr": 0
           },
           {
@@ -66,8 +66,8 @@
           },
           {
             "query": "circuit bali lombok",
-            "position": 87,
-            "impressions": 1,
+            "position": 85.8,
+            "impressions": 4,
             "ctr": 0
           }
         ]
@@ -105,14 +105,14 @@
         "avgDuration": 14
       },
       "gsc": {
-        "impressions": 87,
+        "impressions": 88,
         "clicks": 0,
-        "position": 52.5,
+        "position": 52.2,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 54.8,
-            "impressions": 79,
+            "position": 54.5,
+            "impressions": 80,
             "ctr": 0
           },
           {
@@ -213,9 +213,9 @@
         "avgDuration": 213
       },
       "gsc": {
-        "impressions": 26,
+        "impressions": 24,
         "clicks": 0,
-        "position": 54.8,
+        "position": 58.7,
         "topQueries": [
           {
             "query": "esim philippines",
@@ -332,14 +332,20 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 17,
+        "impressions": 18,
         "clicks": 0,
-        "position": 14.2,
+        "position": 14.8,
         "topQueries": [
           {
             "query": "voyage japon couple",
             "position": 41,
             "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "15 jours au japon budget",
+            "position": 26,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -377,14 +383,14 @@
         "avgDuration": 53
       },
       "gsc": {
-        "impressions": 38,
+        "impressions": 39,
         "clicks": 0,
-        "position": 84.4,
+        "position": 84.7,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 90.6,
-            "impressions": 33,
+            "position": 90.8,
+            "impressions": 34,
             "ctr": 0
           },
           {
@@ -490,14 +496,20 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 28,
+        "impressions": 36,
         "clicks": 0,
-        "position": 58,
+        "position": 60.3,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 58,
+            "position": 58.2,
             "impressions": 27,
+            "ctr": 0
+          },
+          {
+            "query": "asie du sud-est sim locale internet conseils",
+            "position": 67.8,
+            "impressions": 8,
             "ctr": 0
           }
         ]
@@ -535,9 +547,9 @@
         "avgDuration": 258
       },
       "gsc": {
-        "impressions": 30,
+        "impressions": 31,
         "clicks": 0,
-        "position": 40.2,
+        "position": 39,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -991,14 +1003,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 21,
+        "impressions": 20,
         "clicks": 0,
-        "position": 66.1,
+        "position": 65.2,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
-            "position": 83,
-            "impressions": 15,
+            "position": 82.9,
+            "impressions": 14,
             "ctr": 0
           },
           {
@@ -1294,14 +1306,26 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 16,
         "clicks": 0,
-        "position": 66.9,
+        "position": 65.9,
         "topQueries": [
           {
             "query": "circuit authentique asie du sud-est",
-            "position": 79.7,
-            "impressions": 11,
+            "position": 79.3,
+            "impressions": 10,
+            "ctr": 0
+          },
+          {
+            "query": "asie du sud-est slow travel longue durée",
+            "position": 88,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "itinéraire asie hors des sentiers battus",
+            "position": 46,
+            "impressions": 1,
             "ctr": 0
           },
           {

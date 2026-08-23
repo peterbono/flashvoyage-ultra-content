@@ -1,9 +1,41 @@
 {
-  "timestamp": "2026-08-22T03:45:28.930Z",
-  "queueSize": 13,
+  "timestamp": "2026-08-23T03:54:17.572Z",
+  "queueSize": 15,
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 142,
+      "topic": "voyage laos",
+      "articleType": "support",
+      "context": {
+        "gapScore": 62,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"voyage laos\" (score 62, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 141,
+      "topic": "voyage pas cher",
+      "articleType": "support",
+      "context": {
+        "gapScore": 61,
+        "destination": "vietnam",
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
+      }
+    },
+    {
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -15,7 +47,7 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -27,7 +59,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -39,7 +71,23 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 2,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 8,
+        "freshness": 0.55,
+        "traffic": 0,
+        "reason": "Low-performing article: score=8, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -49,13 +97,13 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 8,
-        "freshness": 0.55,
+        "freshness": 0.54,
         "traffic": 0,
         "reason": "Low-performing article: score=8, consider merge/update/delete"
       }
     },
     {
-      "rank": 5,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -71,7 +119,23 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "articleType": "support",
+      "context": {
+        "wpId": 4071,
+        "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
+        "compositeScore": 9,
+        "freshness": 0.62,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -87,7 +151,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -103,7 +167,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -119,7 +183,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -135,7 +199,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -151,7 +215,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 15,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -165,42 +229,10 @@
         "traffic": 0,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
       }
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
-      "articleType": "support",
-      "context": {
-        "wpId": 5742,
-        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-        "compositeScore": 11,
-        "freshness": 0.71,
-        "traffic": 0,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
-      "articleType": "support",
-      "context": {
-        "wpId": 6309,
-        "slug": "meilleur-esim-japon-2026",
-        "compositeScore": 12,
-        "freshness": 0.8,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      }
     }
   ],
   "summary": {
-    "write_new": 0,
+    "write_new": 2,
     "update": 0,
     "enrich": 0,
     "standard": 3,

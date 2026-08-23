@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-22T03:45:09.361Z",
+  "timestamp": "2026-08-23T03:53:55.841Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -14,13 +14,13 @@
       "wpId": 4370,
       "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
       "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "compositeScore": 50,
+      "compositeScore": 49,
       "signals": {
         "traffic": 1,
         "sessionQuality": 1,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.64,
+        "freshness": 0.63,
         "monetization": 0,
         "frShare": 0.71,
         "frPageviews": 5
@@ -35,11 +35,11 @@
       "wpId": 4487,
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "compositeScore": 43,
+      "compositeScore": 40,
       "signals": {
         "traffic": 0.29,
         "sessionQuality": 0.02,
-        "trendAlignment": 0.62,
+        "trendAlignment": 0.47,
         "reelAmplification": 0.1,
         "freshness": 0.66,
         "monetization": 1,
@@ -47,7 +47,6 @@
         "frPageviews": 2
       },
       "flags": [
-        "trending",
         "1_reels"
       ],
       "date": "2026-03-31T16:22:55",
@@ -63,7 +62,7 @@
         "sessionQuality": 0.25,
         "trendAlignment": 0.53,
         "reelAmplification": 0.2,
-        "freshness": 0.68,
+        "freshness": 0.67,
         "monetization": 0,
         "frShare": 1,
         "frPageviews": 3
@@ -85,7 +84,7 @@
         "sessionQuality": 0.48,
         "trendAlignment": 0.41,
         "reelAmplification": 0,
-        "freshness": 0.64,
+        "freshness": 0.63,
         "monetization": 1,
         "frShare": 1,
         "frPageviews": 1
@@ -106,7 +105,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.53,
         "reelAmplification": 0.38,
-        "freshness": 0.64,
+        "freshness": 0.63,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -129,7 +128,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0.34,
-        "freshness": 0.64,
+        "freshness": 0.63,
         "monetization": 1,
         "frShare": 0,
         "frPageviews": 0
@@ -163,13 +162,13 @@
       "wpId": 5072,
       "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "compositeScore": 30,
+      "compositeScore": 29,
       "signals": {
         "traffic": 0.29,
         "sessionQuality": 0,
         "trendAlignment": 0.27,
         "reelAmplification": 0.36,
-        "freshness": 0.68,
+        "freshness": 0.67,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -190,7 +189,7 @@
         "sessionQuality": 0.39,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.64,
+        "freshness": 0.63,
         "monetization": 0,
         "frShare": 0.33,
         "frPageviews": 1
@@ -228,7 +227,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.27,
         "reelAmplification": 0,
-        "freshness": 0.64,
+        "freshness": 0.63,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -249,7 +248,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.27,
         "reelAmplification": 0,
-        "freshness": 0.64,
+        "freshness": 0.63,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -270,7 +269,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.64,
+        "freshness": 0.63,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -291,7 +290,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.16,
         "reelAmplification": 0,
-        "freshness": 0.64,
+        "freshness": 0.63,
         "monetization": 1,
         "frShare": null,
         "frPageviews": 0
@@ -416,7 +415,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.27,
         "reelAmplification": 0,
-        "freshness": 0.7,
+        "freshness": 0.69,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -437,7 +436,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.71,
+        "freshness": 0.7,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -466,27 +465,6 @@
       ],
       "date": "2026-03-18T13:26:31",
       "wordCount": 2461
-    },
-    {
-      "wpId": 5343,
-      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "compositeScore": 14,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.16,
-        "reelAmplification": 0,
-        "freshness": 0.7,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-04-12T08:43:46",
-      "wordCount": 1489
     },
     {
       "wpId": 5063,
@@ -531,6 +509,27 @@
       "wordCount": 1722
     },
     {
+      "wpId": 5343,
+      "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "compositeScore": 13,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.16,
+        "reelAmplification": 0,
+        "freshness": 0.69,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-04-12T08:43:46",
+      "wordCount": 1489
+    },
+    {
       "wpId": 5296,
       "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
       "title": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
@@ -552,27 +551,6 @@
       "wordCount": 1669
     },
     {
-      "wpId": 4071,
-      "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
-      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
-      "compositeScore": 13,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 0.62,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-03-18T10:40:12",
-      "wordCount": 3216
-    },
-    {
       "wpId": 6309,
       "slug": "meilleur-esim-japon-2026",
       "title": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
@@ -592,27 +570,6 @@
       ],
       "date": "2026-05-17T03:15:44",
       "wordCount": 1245
-    },
-    {
-      "wpId": 2980,
-      "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-      "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
-      "compositeScore": 12,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.21,
-        "reelAmplification": 0,
-        "freshness": 0.55,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-02-23T10:54:23",
-      "wordCount": 3218
     },
     {
       "wpId": 5742,
@@ -676,6 +633,27 @@
       ],
       "date": "2026-03-18T19:33:49",
       "wordCount": 3099
+    },
+    {
+      "wpId": 4071,
+      "slug": "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides",
+      "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
+      "compositeScore": 9,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.62,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-18T10:40:12",
+      "wordCount": 3216
     },
     {
       "wpId": 4030,
@@ -783,6 +761,27 @@
       "wordCount": 1802
     },
     {
+      "wpId": 2980,
+      "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+      "title": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "compositeScore": 8,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.55,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-02-23T10:54:23",
+      "wordCount": 3218
+    },
+    {
       "wpId": 2924,
       "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
       "title": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
@@ -792,7 +791,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.55,
+        "freshness": 0.54,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -810,7 +809,7 @@
     "staleArticles": 0,
     "missingWidgets": 0,
     "zeroTraffic": 26,
-    "trending": 5,
+    "trending": 4,
     "frHeavy": 0,
     "frLight": 0,
     "frDiversified": 0
