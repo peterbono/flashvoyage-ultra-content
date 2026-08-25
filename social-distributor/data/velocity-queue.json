@@ -1,10 +1,111 @@
 {
-  "generatedAt": "2026-08-25T06:36:35.570Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-08-25T12:36:28.743Z",
+  "totalTopics": 4,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 0,
-    "queue_normal": 0
+    "queue_priority": 1,
+    "queue_normal": 3
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Woman sues airline for $100M after being denied entry to Vietnam over missing visa",
+      "source": "rss_breaking",
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/woman-sues-airline-for-100m-after-being-denied-entry-to-vietnam-over-missing-visa-5113220.html",
+      "velocityScore": 0.65,
+      "action": "QUEUE_PRIORITY",
+      "hoursRemaining": 45,
+      "topicType": {
+        "key": "policy_change",
+        "halfLifeHours": 48
+      },
+      "estimatedTrafficNow": 2167,
+      "estimatedTrafficIn24h": 1532,
+      "trafficLossPerHour": 26,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 0.963,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 2.6
+      },
+      "detectedAt": "2026-08-25T10:00:00.000Z",
+      "scoredAt": "2026-08-25T12:36:17.789Z"
+    },
+    {
+      "topic": "Chinese fraud suspect arrested in Chiang Mai over 6 billion baht scheme",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/hot-news/crime/chinese-fraud-suspect-arrested-chiang-mai-6-billion-baht",
+      "velocityScore": 0.488,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2440,
+      "estimatedTrafficIn24h": 2384,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 4.4
+      },
+      "detectedAt": "2026-08-25T08:13:10.000Z",
+      "scoredAt": "2026-08-25T12:36:21.738Z"
+    },
+    {
+      "topic": "THAI says typhoon could disrupt Taipei, Shanghai flights",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/thailand/general/3307749/thai-says-typhoon-could-disrupt-taipei-shanghai-flights",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 719,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2072,
+      "estimatedTrafficIn24h": 2025,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.4
+      },
+      "detectedAt": "2026-08-25T11:14:00.000Z",
+      "scoredAt": "2026-08-25T12:36:16.908Z"
+    },
+    {
+      "topic": "Hundreds of flights cancelled as typhoon bears down on Okinawa",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/east-asia/hundreds-of-flights-canceled-as-typhoon-bears-down-on-okinawa",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2068,
+      "estimatedTrafficIn24h": 2021,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.3
+      },
+      "detectedAt": "2026-08-25T09:20:00.000Z",
+      "scoredAt": "2026-08-25T12:36:18.555Z"
+    }
+  ]
 }
