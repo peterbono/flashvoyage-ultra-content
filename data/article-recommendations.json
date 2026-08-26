@@ -1,22 +1,26 @@
 {
   "summary": {
-    "generatedAt": "2026-08-25T03:52:51.802Z",
+    "generatedAt": "2026-08-26T03:56:58.124Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 11,
-    "totalRecommendations": 11,
+    "totalRecommendations": 13,
     "byPriority": {
       "P0": 0,
-      "P1": 0,
+      "P1": 2,
       "P2": 11
     },
     "byType": {
-      "seo": 11
+      "seo": 13
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
         "count": 11
+      },
+      {
+        "action": "FIX_CANNIBALIZATION",
+        "count": 2
       }
     ]
   },
@@ -36,26 +40,20 @@
         "avgDuration": 540
       },
       "gsc": {
-        "impressions": 77,
+        "impressions": 75,
         "clicks": 2,
-        "position": 57.5,
+        "position": 57.1,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 73.6,
+            "position": 73,
             "impressions": 29,
             "ctr": 0
           },
           {
             "query": "circuit bali lombok",
-            "position": 77.5,
-            "impressions": 11,
-            "ctr": 0
-          },
-          {
-            "query": "circuit bali lombok gili",
-            "position": 36.7,
-            "impressions": 9,
+            "position": 76.9,
+            "impressions": 12,
             "ctr": 0
           },
           {
@@ -65,9 +63,15 @@
             "ctr": 0
           },
           {
+            "query": "circuit bali lombok gili",
+            "position": 36.4,
+            "impressions": 8,
+            "ctr": 0
+          },
+          {
             "query": "itinéraire bali lombok",
-            "position": 66,
-            "impressions": 5,
+            "position": 57,
+            "impressions": 3,
             "ctr": 0
           }
         ]
@@ -105,14 +109,14 @@
         "avgDuration": 14
       },
       "gsc": {
-        "impressions": 88,
+        "impressions": 87,
         "clicks": 0,
-        "position": 51.9,
+        "position": 51.8,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 54.1,
-            "impressions": 80,
+            "position": 54,
+            "impressions": 79,
             "ctr": 0
           },
           {
@@ -199,6 +203,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2503,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:20",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 8
+      },
+      "gsc": {
+        "impressions": 3,
+        "clicks": 1,
+        "position": 12,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5072,
       "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
@@ -213,37 +245,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 14,
         "clicks": 0,
-        "position": 7.2,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2503,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:20",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 13
-      },
-      "gsc": {
-        "impressions": 3,
-        "clicks": 1,
-        "position": 12,
+        "position": 7.4,
         "topQueries": []
       },
       "reels": {
@@ -269,9 +273,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 19,
         "clicks": 0,
-        "position": 14.8,
+        "position": 16.6,
         "topQueries": [
           {
             "query": "voyage japon couple",
@@ -282,6 +286,12 @@
           {
             "query": "15 jours au japon budget",
             "position": 26,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "budget 15 jours japon",
+            "position": 48,
             "impressions": 1,
             "ctr": 0
           }
@@ -320,14 +330,14 @@
         "avgDuration": 219
       },
       "gsc": {
-        "impressions": 26,
+        "impressions": 29,
         "clicks": 0,
-        "position": 60,
+        "position": 61.8,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 89.8,
-            "impressions": 9,
+            "position": 88.9,
+            "impressions": 11,
             "ctr": 0
           },
           {
@@ -337,14 +347,14 @@
             "ctr": 0
           },
           {
-            "query": "e sim philippines globe",
-            "position": 40,
-            "impressions": 1,
+            "query": "meilleur esim philippines",
+            "position": 59,
+            "impressions": 2,
             "ctr": 0
           },
           {
-            "query": "meilleur esim philippines",
-            "position": 56,
+            "query": "e sim philippines globe",
+            "position": 40,
             "impressions": 1,
             "ctr": 0
           }
@@ -357,6 +367,15 @@
       "recommendations": [
         {
           "type": "seo",
+          "priority": "P1",
+          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 44 impressions totales",
+          "action": "FIX_CANNIBALIZATION",
+          "details": "Cet article est en competition avec \"meilleur-esim-philippines-2026\" (pos 91.5) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
+          "effort": "30min",
+          "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
+        },
+        {
+          "type": "seo",
           "priority": "P2",
           "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
           "action": "ADD_FAQ_SCHEMA",
@@ -365,7 +384,7 @@
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
       ],
-      "recommendationCount": 1,
+      "recommendationCount": 2,
       "p0Count": 0
     },
     {
@@ -385,23 +404,23 @@
       "gsc": {
         "impressions": 39,
         "clicks": 0,
-        "position": 85.2,
+        "position": 85.1,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 91,
-            "impressions": 34,
+            "position": 91.5,
+            "impressions": 33,
+            "ctr": 0
+          },
+          {
+            "query": "meilleur esim philippines",
+            "position": 73.5,
+            "impressions": 2,
             "ctr": 0
           },
           {
             "query": "best esim for philippines 2026",
             "position": 58,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "meilleur esim philippines",
-            "position": 73,
             "impressions": 1,
             "ctr": 0
           }
@@ -414,6 +433,15 @@
       "recommendations": [
         {
           "type": "seo",
+          "priority": "P1",
+          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 44 impressions totales",
+          "action": "FIX_CANNIBALIZATION",
+          "details": "Cet article est en competition avec \"esim-philippines-globe-smart-comparatif-2026\" (pos 88.9) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
+          "effort": "30min",
+          "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
+        },
+        {
+          "type": "seo",
           "priority": "P2",
           "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
           "action": "ADD_FAQ_SCHEMA",
@@ -422,7 +450,7 @@
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
       ],
-      "recommendationCount": 1,
+      "recommendationCount": 2,
       "p0Count": 0
     },
     {
@@ -496,13 +524,13 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 37,
+        "impressions": 38,
         "clicks": 0,
-        "position": 60.4,
+        "position": 61.6,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 58.4,
+            "position": 58.7,
             "impressions": 28,
             "ctr": 0
           },
@@ -510,6 +538,12 @@
             "query": "asie du sud-est sim locale internet conseils",
             "position": 67.8,
             "impressions": 8,
+            "ctr": 0
+          },
+          {
+            "query": "meilleur esim asie",
+            "position": 99,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -547,9 +581,9 @@
         "avgDuration": 258
       },
       "gsc": {
-        "impressions": 30,
+        "impressions": 31,
         "clicks": 0,
-        "position": 40.1,
+        "position": 39.1,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -1003,20 +1037,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 17,
+        "impressions": 16,
         "clicks": 0,
-        "position": 61.5,
+        "position": 60.7,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
             "position": 82,
             "impressions": 11,
-            "ctr": 0
-          },
-          {
-            "query": "meilleure assurance voyage vietnam",
-            "position": 75,
-            "impressions": 1,
             "ctr": 0
           }
         ]

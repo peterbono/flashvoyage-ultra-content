@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-25T03:52:52.763Z",
+  "timestamp": "2026-08-26T03:56:59.054Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -316,11 +316,11 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
       "articleType": "support",
       "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
         "compositeScore": 10,
         "freshness": 0.68,
         "traffic": 0,
