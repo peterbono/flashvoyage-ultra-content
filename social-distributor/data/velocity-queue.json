@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-26T00:57:43.412Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-08-26T06:38:25.456Z",
+  "totalTopics": 3,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 2,
-    "queue_normal": 0
+    "queue_priority": 0,
+    "queue_normal": 3
   },
   "queue": [
     {
@@ -12,50 +12,75 @@
       "source": "rss_breaking",
       "destination": "vietnam",
       "link": "https://e.vnexpress.net/news/news/crime/man-who-lived-in-us-for-20-years-arrested-moments-after-returning-to-vietnam-over-alleged-theft-5113261.html",
-      "velocityScore": 0.747,
-      "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 716,
+      "velocityScore": 0.594,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 710,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2490,
-      "estimatedTrafficIn24h": 2434,
+      "estimatedTrafficNow": 1982,
+      "estimatedTrafficIn24h": 1936,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.8,
+        "timeDecay": 0.991,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 9.6
+      },
+      "detectedAt": "2026-08-25T21:00:00.000Z",
+      "scoredAt": "2026-08-26T06:38:21.722Z"
+    },
+    {
+      "topic": "Nepal flash flood washes away villages, project sites near Tibet border",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/nepal-flash-flood-washes-away-villages-project-sites-near-tibet-border",
+      "velocityScore": 0.5,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 720,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2499,
+      "estimatedTrafficIn24h": 2442,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 1,
-        "timeDecay": 0.996,
+        "timeDecay": 1,
         "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 4
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 0.3
       },
-      "detectedAt": "2026-08-25T21:00:00.000Z",
-      "scoredAt": "2026-08-26T00:57:41.146Z"
+      "detectedAt": "2026-08-26T06:18:48.000Z",
+      "scoredAt": "2026-08-26T06:38:13.653Z"
     },
     {
-      "topic": "DMW seeks P11-billion budget to help OFWs in 2027",
+      "topic": "China’s coastal regions on high alert as Typhoon Saudel cancels flights, ferries",
       "source": "rss_breaking",
-      "destination": "philippines",
-      "link": "https://www.rappler.com/philippines/department-migrant-workers-proposed-2027-budget/",
-      "velocityScore": 0.621,
-      "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 718,
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/world/3308370/chinas-coastal-regions-on-high-alert-as-typhoon-saudel-cancels-flights-ferries",
+      "velocityScore": 0.415,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 720,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2071,
-      "estimatedTrafficIn24h": 2024,
+      "estimatedTrafficNow": 2074,
+      "estimatedTrafficIn24h": 2027,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
-        "timeDecay": 0.998,
+        "timeDecay": 1,
         "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 1.8
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 0.4
       },
-      "detectedAt": "2026-08-25T23:11:11.000Z",
-      "scoredAt": "2026-08-26T00:57:39.713Z"
+      "detectedAt": "2026-08-26T06:12:00.000Z",
+      "scoredAt": "2026-08-26T06:38:14.479Z"
     }
   ]
 }
