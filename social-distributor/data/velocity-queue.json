@@ -1,36 +1,61 @@
 {
-  "generatedAt": "2026-08-25T18:31:58.877Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-08-26T00:57:43.412Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 0,
-    "queue_normal": 1
+    "queue_priority": 2,
+    "queue_normal": 0
   },
   "queue": [
     {
-      "topic": "Death penalty sought for 9 in drug trafficking case involving Vietnam flight attendants",
+      "topic": "Man who lived in US for 20 years arrested moments after returning to Vietnam over alleged theft",
       "source": "rss_breaking",
       "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/crime/death-penalty-sought-for-9-in-drug-trafficking-case-involving-vietnam-flight-attendants-5113348.html",
-      "velocityScore": 0.508,
-      "action": "QUEUE_NORMAL",
+      "link": "https://e.vnexpress.net/news/news/crime/man-who-lived-in-us-for-20-years-arrested-moments-after-returning-to-vietnam-over-alleged-theft-5113261.html",
+      "velocityScore": 0.747,
+      "action": "QUEUE_PRIORITY",
       "hoursRemaining": 716,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1693,
-      "estimatedTrafficIn24h": 1655,
+      "estimatedTrafficNow": 2490,
+      "estimatedTrafficIn24h": 2434,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.68,
+        "trendIntensity": 1,
         "timeDecay": 0.996,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
         "hoursSinceDetection": 4
       },
-      "detectedAt": "2026-08-25T14:31:48.000Z",
-      "scoredAt": "2026-08-25T18:31:57.392Z"
+      "detectedAt": "2026-08-25T21:00:00.000Z",
+      "scoredAt": "2026-08-26T00:57:41.146Z"
+    },
+    {
+      "topic": "DMW seeks P11-billion budget to help OFWs in 2027",
+      "source": "rss_breaking",
+      "destination": "philippines",
+      "link": "https://www.rappler.com/philippines/department-migrant-workers-proposed-2027-budget/",
+      "velocityScore": 0.621,
+      "action": "QUEUE_PRIORITY",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2071,
+      "estimatedTrafficIn24h": 2024,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 1.8
+      },
+      "detectedAt": "2026-08-25T23:11:11.000Z",
+      "scoredAt": "2026-08-26T00:57:39.713Z"
     }
   ]
 }
