@@ -1,67 +1,42 @@
 {
-  "generatedAt": "2026-08-26T06:38:25.456Z",
-  "totalTopics": 3,
+  "generatedAt": "2026-08-26T12:40:02.135Z",
+  "totalTopics": 5,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 3
+    "queue_normal": 5
   },
   "queue": [
     {
-      "topic": "Man who lived in US for 20 years arrested moments after returning to Vietnam over alleged theft",
-      "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/crime/man-who-lived-in-us-for-20-years-arrested-moments-after-returning-to-vietnam-over-alleged-theft-5113261.html",
-      "velocityScore": 0.594,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 710,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1982,
-      "estimatedTrafficIn24h": 1936,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.8,
-        "timeDecay": 0.991,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 9.6
-      },
-      "detectedAt": "2026-08-25T21:00:00.000Z",
-      "scoredAt": "2026-08-26T06:38:21.722Z"
-    },
-    {
-      "topic": "Nepal flash flood washes away villages, project sites near Tibet border",
+      "topic": "Over 380 missing, including tourists, after flash flood on Nepal-Tibet border kills at least 22",
       "source": "rss_breaking",
       "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/nepal-flash-flood-washes-away-villages-project-sites-near-tibet-border",
-      "velocityScore": 0.5,
+      "link": "https://www.channelnewsasia.com/asia/nepal-tibet-border-flood-tourists-malaysia-india-us-uk-missing-6342366",
+      "velocityScore": 0.415,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 720,
+      "hoursRemaining": 719,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2499,
-      "estimatedTrafficIn24h": 2442,
+      "estimatedTrafficNow": 2073,
+      "estimatedTrafficIn24h": 2025,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 1,
+        "trendIntensity": 0.83,
+        "timeDecay": 0.999,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 0.3
+        "hoursSinceDetection": 1.2
       },
-      "detectedAt": "2026-08-26T06:18:48.000Z",
-      "scoredAt": "2026-08-26T06:38:13.653Z"
+      "detectedAt": "2026-08-26T11:28:00.000Z",
+      "scoredAt": "2026-08-26T12:39:48.338Z"
     },
     {
-      "topic": "China’s coastal regions on high alert as Typhoon Saudel cancels flights, ferries",
+      "topic": "What triggered the catastrophic flood on the Nepal-Tibet border?",
       "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/world/3308370/chinas-coastal-regions-on-high-alert-as-typhoon-saudel-cancels-flights-ferries",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/what-triggered-the-catastrophic-flood-on-the-nepal-tibet-border",
       "velocityScore": 0.415,
       "action": "QUEUE_NORMAL",
       "hoursRemaining": 720,
@@ -69,7 +44,7 @@
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2074,
+      "estimatedTrafficNow": 2075,
       "estimatedTrafficIn24h": 2027,
       "trafficLossPerHour": 2,
       "breakdown": {
@@ -77,10 +52,85 @@
         "timeDecay": 1,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 0.4
+        "hoursSinceDetection": 0.2
       },
-      "detectedAt": "2026-08-26T06:12:00.000Z",
-      "scoredAt": "2026-08-26T06:38:14.479Z"
+      "detectedAt": "2026-08-26T12:29:09.000Z",
+      "scoredAt": "2026-08-26T12:39:50.437Z"
+    },
+    {
+      "topic": "Nepal floods kill eight, cause ‘major casualties’ in Tibet",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/world/3308428/nepal-floods-kill-eight-cause-major-casualties-in-tibet",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2069,
+      "estimatedTrafficIn24h": 2022,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.9
+      },
+      "detectedAt": "2026-08-26T09:45:00.000Z",
+      "scoredAt": "2026-08-26T12:39:52.089Z"
+    },
+    {
+      "topic": "Deadly disasters in the Himalayas over a dozen years",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/deadly-disasters-in-the-himalayas-over-a-dozen-years",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2069,
+      "estimatedTrafficIn24h": 2021,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.2
+      },
+      "detectedAt": "2026-08-26T09:29:19.000Z",
+      "scoredAt": "2026-08-26T12:39:52.882Z"
+    },
+    {
+      "topic": "Devastating flash flood on Nepal-Tibet border kills 18, hundreds of tourists missing",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/nepal-flash-flood-washes-away-villages-project-sites-near-tibet-border",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 714,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2064,
+      "estimatedTrafficIn24h": 2017,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.995,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 5.6
+      },
+      "detectedAt": "2026-08-26T07:05:05.000Z",
+      "scoredAt": "2026-08-26T12:39:49.122Z"
     }
   ]
 }
