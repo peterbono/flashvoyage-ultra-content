@@ -1,17 +1,67 @@
 {
-  "generatedAt": "2026-08-26T19:42:17.571Z",
-  "totalTopics": 3,
+  "generatedAt": "2026-08-27T06:48:30.112Z",
+  "totalTopics": 4,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 3
+    "queue_normal": 4
   },
   "queue": [
     {
-      "topic": "Glacier collapse may have triggered deadly Nepal flash flood, experts say",
+      "topic": "Scores of Hindu pilgrims missing in Tibet-Nepal floods",
       "source": "rss_breaking",
       "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/glacier-collapse-may-have-triggered-deadly-nepal-flash-flood-experts-say",
+      "link": "https://www.straitstimes.com/asia/south-asia/scores-of-hindu-pilgrims-missing-in-tibet-nepal-floods",
+      "velocityScore": 0.415,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 720,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2075,
+      "estimatedTrafficIn24h": 2027,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 1,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 0.2
+      },
+      "detectedAt": "2026-08-27T06:35:00.000Z",
+      "scoredAt": "2026-08-27T06:48:06.076Z"
+    },
+    {
+      "topic": "South Africa intercepts Thai men with 468 parrot eggs in separate cases",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/hot-news/crime/south-africa-thai-men-468-parrot-egg-smuggling",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2070,
+      "estimatedTrafficIn24h": 2023,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.5
+      },
+      "detectedAt": "2026-08-27T04:20:09.000Z",
+      "scoredAt": "2026-08-27T06:48:08.769Z"
+    },
+    {
+      "topic": "Thai caught smuggling parrot eggs in South Africa",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/world/3308968/thai-caught-smuggling-parrot-eggs-in-south-africa",
       "velocityScore": 0.414,
       "action": "QUEUE_NORMAL",
       "hoursRemaining": 717,
@@ -19,68 +69,43 @@
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2068,
-      "estimatedTrafficIn24h": 2021,
+      "estimatedTrafficNow": 2070,
+      "estimatedTrafficIn24h": 2022,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
         "timeDecay": 0.997,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 3.5
+        "hoursSinceDetection": 2.7
       },
-      "detectedAt": "2026-08-26T16:14:00.000Z",
-      "scoredAt": "2026-08-26T19:42:08.841Z"
+      "detectedAt": "2026-08-27T04:05:00.000Z",
+      "scoredAt": "2026-08-27T06:48:10.463Z"
     },
     {
-      "topic": "341 foreign tourists missing after flash flood kills at least 95 on Nepal-Tibet border",
+      "topic": "What scientists know so far about the deadly Nepal-Tibet floods",
       "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/environment/341-foreign-tourists-missing-after-flash-flood-kills-at-least-95-on-nepal-tibet-border-5113850.html",
+      "destination": "southeast-asia",
+      "link": "https://www.channelnewsasia.com/asia/what-scientists-know-so-far-about-deadly-nepal-tibet-floods-6343951",
       "velocityScore": 0.413,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
+      "hoursRemaining": 714,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2066,
-      "estimatedTrafficIn24h": 2019,
+      "estimatedTrafficNow": 2064,
+      "estimatedTrafficIn24h": 2016,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
-        "timeDecay": 0.996,
+        "timeDecay": 0.994,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 4.4
+        "hoursSinceDetection": 5.8
       },
-      "detectedAt": "2026-08-26T15:15:48.000Z",
-      "scoredAt": "2026-08-26T19:42:07.382Z"
-    },
-    {
-      "topic": "Dozens dead in catastrophic Nepal-Tibet floods",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/world/3308428/dozens-dead-in-catastrophic-nepaltibet-floods",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2065,
-      "estimatedTrafficIn24h": 2018,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5.1
-      },
-      "detectedAt": "2026-08-26T14:35:00.000Z",
-      "scoredAt": "2026-08-26T19:42:08.146Z"
+      "detectedAt": "2026-08-27T01:02:00.000Z",
+      "scoredAt": "2026-08-27T06:48:12.542Z"
     }
   ]
 }
