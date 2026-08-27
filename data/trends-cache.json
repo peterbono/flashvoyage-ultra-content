@@ -1,27 +1,69 @@
 {
-  "timestamp": "2026-08-26T03:56:46.910Z",
+  "timestamp": "2026-08-27T13:59:12.318Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande circuit",
-      "traffic": 50,
-      "trafficFormatted": "+50 %",
+      "query": "voyage thailande pas cher",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-26T03:56:37.894Z",
+      "date": "2026-08-27T13:59:03.866Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
-      "category": "itineraire",
+      "category": "budget",
       "destination": "thailande",
       "compositeScore": 0.62
     },
     {
-      "query": "voyage cambodge",
-      "traffic": 300,
-      "trafficFormatted": "+300 %",
+      "query": "voyage vietnam pas cher",
+      "traffic": 190,
+      "trafficFormatted": "+190 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-26T03:56:40.148Z",
+      "date": "2026-08-27T13:59:05.985Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage thailande phuket",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-27T13:59:03.866Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage thailande tout compris",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-27T13:59:03.866Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage au vietnam",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-27T13:59:05.985Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -30,18 +72,47 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage vietnam",
-      "traffic": 100,
-      "trafficFormatted": "+100 %",
+      "query": "voyage cambodge vietnam",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-26T03:56:44.676Z",
+      "date": "2026-08-27T13:59:10.205Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
       "category": "destination",
       "destination": "cambodge",
       "compositeScore": 0.53
+    },
+    {
+      "query": "avion rafale",
+      "traffic": 2000,
+      "trafficFormatted": "2000+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "Dassault pense que son nouveau Rafale F5 sera prêt entre 2033 et 2035",
+          "url": "https://www.20minutes.fr/economie/4241160-20260826-rafale-dassault-pense-nouvel-avion-combat-pret-entre-2033-2035",
+          "source": "20 Minutes"
+        },
+        {
+          "title": "«Les industriels français sont totalement engagés derrière leurs armées», souligne Éric Trappier, président du groupe Dassault, à la REF 2026",
+          "url": "https://www.lefigaro.fr/societes/les-industriels-francais-sont-totalement-engages-derriere-leurs-armees-souligne-eric-trappier-president-du-groupe-dassault-a-la-ref-2026-20260826",
+          "source": "Le Figaro"
+        },
+        {
+          "title": "Rafale, élection présidentielle, Moyen-Orient… Les vérités du PDG de Dassault Aviation",
+          "url": "https://www.bfmtv.com/economie/replay-emissions/les-editions-speciales/video-rafale-election-presidentielle-moyen-orient-les-verites-du-pdg-de-dassault-aviation_VN-202608260739.html",
+          "source": "BFM"
+        }
+      ],
+      "date": "Thu, 27 Aug 2026 06:00:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "transport",
+      "destination": null,
+      "compositeScore": 0.2916
     }
   ]
 }

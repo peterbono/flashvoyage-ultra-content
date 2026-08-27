@@ -1,10 +1,32 @@
 {
-  "timestamp": "2026-08-26T03:56:50.449Z",
-  "gapCount": 0,
-  "gaps": [],
+  "timestamp": "2026-08-27T13:59:17.407Z",
+  "gapCount": 1,
+  "gaps": [
+    {
+      "topic": "avion rafale",
+      "source": "trends",
+      "gapScore": 40,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.6
+      },
+      "destination": null,
+      "category": "transport",
+      "suggestedTitle": "Avion rafale : Guide Pratique",
+      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+      "articleType": "support",
+      "priority": "medium"
+    }
+  ],
   "summary": {
-    "byPriority": {},
-    "byCategory": {},
+    "byPriority": {
+      "medium": 1
+    },
+    "byCategory": {
+      "transport": 1
+    },
     "byDestination": {},
     "topDestinationGaps": []
   }

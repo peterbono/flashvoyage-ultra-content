@@ -1,9 +1,25 @@
 {
-  "timestamp": "2026-08-26T03:56:52.314Z",
-  "queueSize": 13,
+  "timestamp": "2026-08-27T13:59:19.336Z",
+  "queueSize": 14,
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "avion rafale",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "transport",
+        "suggestedTitle": "Avion rafale : Guide Pratique",
+        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+        "reason": "Content gap: \"avion rafale\" (score 40, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -15,7 +31,7 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -27,7 +43,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -39,7 +55,23 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 2,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "articleType": "support",
+      "context": {
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 8,
+        "freshness": 0.56,
+        "traffic": 0,
+        "reason": "Low-performing article: score=8, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -55,7 +87,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -65,13 +97,13 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 8,
-        "freshness": 0.54,
+        "freshness": 0.53,
         "traffic": 0,
         "reason": "Low-performing article: score=8, consider merge/update/delete"
       }
     },
     {
-      "rank": 6,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -87,7 +119,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -103,7 +135,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -119,7 +151,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -129,29 +161,13 @@
         "wpId": 3425,
         "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 9,
-        "freshness": 0.6,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 1,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 9,
         "freshness": 0.59,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -167,40 +183,40 @@
       }
     },
     {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 1,
-      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
-      "articleType": "support",
-      "context": {
-        "wpId": 3107,
-        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-        "compositeScore": 9,
-        "freshness": 0.57,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
-      }
-    },
-    {
       "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
       "articleType": "support",
       "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
         "compositeScore": 10,
-        "freshness": 0.68,
+        "freshness": 0.69,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 14,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "articleType": "support",
+      "context": {
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 10,
+        "freshness": 0.67,
         "traffic": 0,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
       }
     }
   ],
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-26T03:56:59.054Z",
+  "timestamp": "2026-08-27T13:59:26.319Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -88,6 +88,56 @@
     },
     {
       "rank": 4,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "avion rafale",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "transport",
+        "suggestedTitle": "Avion rafale : Guide Pratique",
+        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+        "reason": "Content gap: \"avion rafale\" (score 40, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 5.15,
+        "projectedMonthlyTraffic": 193,
+        "projectedMonthlyRevenue": 0.386,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (290 PV) × gap boost (0.67)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 5,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 2,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "articleType": "support",
+      "context": {
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 8,
+        "freshness": 0.56,
+        "traffic": 0,
+        "reason": "Low-performing article: score=8, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -108,11 +158,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -122,7 +172,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 8,
-        "freshness": 0.54,
+        "freshness": 0.53,
         "traffic": 0,
         "reason": "Low-performing article: score=8, consider merge/update/delete"
       },
@@ -133,11 +183,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -158,11 +208,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -183,11 +233,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -208,11 +258,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -221,31 +271,6 @@
       "context": {
         "wpId": 3425,
         "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-        "compositeScore": 9,
-        "freshness": 0.6,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 1,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
         "compositeScore": 9,
         "freshness": 0.59,
         "traffic": 0,
@@ -258,11 +283,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -283,32 +308,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 1,
-      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
-      "articleType": "support",
-      "context": {
-        "wpId": 3107,
-        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-        "compositeScore": 9,
-        "freshness": 0.57,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
@@ -316,13 +316,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
       "articleType": "support",
       "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
         "compositeScore": 10,
-        "freshness": 0.68,
+        "freshness": 0.69,
         "traffic": 0,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
       },
@@ -333,20 +333,45 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.225,
+      "cumulativeCost": 0.3,
+      "withinBudget": true
+    },
+    {
+      "rank": 14,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "articleType": "support",
+      "context": {
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
+        "compositeScore": 10,
+        "freshness": 0.67,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.3,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.225,
+    "totalCost": 0.3,
     "dailyBudget": 2,
-    "itemsWithinBudget": 13,
+    "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.058,
-    "expectedDailyRoi": 0.26
+    "expectedDailyRevenue": 0.071,
+    "expectedDailyRoi": 0.24
   },
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

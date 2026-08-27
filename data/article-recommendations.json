@@ -1,22 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-08-26T03:56:58.124Z",
+    "generatedAt": "2026-08-27T13:59:25.364Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
-    "articlesWithRecommendations": 11,
-    "totalRecommendations": 13,
+    "articlesWithRecommendations": 12,
+    "totalRecommendations": 14,
     "byPriority": {
       "P0": 0,
       "P1": 2,
-      "P2": 11
+      "P2": 12
     },
     "byType": {
-      "seo": 13
+      "seo": 14
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
-        "count": 11
+        "count": 12
       },
       {
         "action": "FIX_CANNIBALIZATION",
@@ -40,32 +40,32 @@
         "avgDuration": 540
       },
       "gsc": {
-        "impressions": 75,
+        "impressions": 76,
         "clicks": 2,
-        "position": 57.1,
+        "position": 57.6,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 73,
+            "position": 72.5,
             "impressions": 29,
             "ctr": 0
           },
           {
             "query": "circuit bali lombok",
-            "position": 76.9,
-            "impressions": 12,
+            "position": 75.8,
+            "impressions": 15,
             "ctr": 0
           },
           {
             "query": "bali lombok gili",
-            "position": 69.6,
-            "impressions": 8,
+            "position": 70.1,
+            "impressions": 7,
             "ctr": 0
           },
           {
             "query": "circuit bali lombok gili",
-            "position": 36.4,
-            "impressions": 8,
+            "position": 36.3,
+            "impressions": 7,
             "ctr": 0
           },
           {
@@ -109,14 +109,14 @@
         "avgDuration": 14
       },
       "gsc": {
-        "impressions": 87,
+        "impressions": 89,
         "clicks": 0,
-        "position": 51.8,
+        "position": 51.9,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 54,
-            "impressions": 79,
+            "position": 54.1,
+            "impressions": 81,
             "ctr": 0
           },
           {
@@ -166,9 +166,9 @@
         "avgDuration": 135
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 14,
         "clicks": 2,
-        "position": 33.8,
+        "position": 35.1,
         "topQueries": [
           {
             "query": "vietnam ou thailande",
@@ -181,6 +181,12 @@
             "position": 40.7,
             "impressions": 3,
             "ctr": 33.33
+          },
+          {
+            "query": "thailande et vietnam",
+            "position": 52,
+            "impressions": 1,
+            "ctr": 0
           }
         ]
       },
@@ -214,7 +220,7 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 8
+        "avgDuration": 11
       },
       "gsc": {
         "impressions": 3,
@@ -245,17 +251,34 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 14,
+        "impressions": 15,
         "clicks": 0,
-        "position": 7.4,
-        "topQueries": []
+        "position": 7.6,
+        "topQueries": [
+          {
+            "query": "comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?",
+            "position": 11,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [],
-      "recommendationCount": 0,
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -330,20 +353,20 @@
         "avgDuration": 219
       },
       "gsc": {
-        "impressions": 29,
+        "impressions": 33,
         "clicks": 0,
-        "position": 61.8,
+        "position": 61.1,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 88.9,
-            "impressions": 11,
+            "position": 87.3,
+            "impressions": 13,
             "ctr": 0
           },
           {
             "query": "carte sim philippines",
-            "position": 70.8,
-            "impressions": 5,
+            "position": 68.7,
+            "impressions": 6,
             "ctr": 0
           },
           {
@@ -368,9 +391,9 @@
         {
           "type": "seo",
           "priority": "P1",
-          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 44 impressions totales",
+          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 48 impressions totales",
           "action": "FIX_CANNIBALIZATION",
-          "details": "Cet article est en competition avec \"meilleur-esim-philippines-2026\" (pos 91.5) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
+          "details": "Cet article est en competition avec \"meilleur-esim-philippines-2026\" (pos 92.1) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
           "effort": "30min",
           "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
         },
@@ -402,14 +425,14 @@
         "avgDuration": 53
       },
       "gsc": {
-        "impressions": 39,
+        "impressions": 42,
         "clicks": 0,
-        "position": 85.1,
+        "position": 84,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 91.5,
-            "impressions": 33,
+            "position": 92.1,
+            "impressions": 35,
             "ctr": 0
           },
           {
@@ -434,9 +457,9 @@
         {
           "type": "seo",
           "priority": "P1",
-          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 44 impressions totales",
+          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 48 impressions totales",
           "action": "FIX_CANNIBALIZATION",
-          "details": "Cet article est en competition avec \"esim-philippines-globe-smart-comparatif-2026\" (pos 88.9) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
+          "details": "Cet article est en competition avec \"esim-philippines-globe-smart-comparatif-2026\" (pos 87.3) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
           "effort": "30min",
           "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
         },
@@ -526,11 +549,11 @@
       "gsc": {
         "impressions": 38,
         "clicks": 0,
-        "position": 61.6,
+        "position": 61.7,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 58.7,
+            "position": 58.8,
             "impressions": 28,
             "ctr": 0
           },
@@ -581,9 +604,9 @@
         "avgDuration": 258
       },
       "gsc": {
-        "impressions": 31,
+        "impressions": 30,
         "clicks": 0,
-        "position": 39.1,
+        "position": 40.3,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -610,8 +633,8 @@
             "ctr": 0
           },
           {
-            "query": "bali thailand",
-            "position": 75,
+            "query": "thailand bali",
+            "position": 69,
             "impressions": 1,
             "ctr": 0
           }
@@ -1334,9 +1357,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 14,
         "clicks": 0,
-        "position": 60.6,
+        "position": 63.1,
         "topQueries": [
           {
             "query": "circuit authentique asie du sud-est",
