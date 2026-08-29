@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-28T15:10:28.742Z",
+  "timestamp": "2026-08-29T09:52:43.611Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande prix",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
+      "query": "voyage thailande pas cher",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-28T15:10:19.399Z",
+      "date": "2026-08-29T09:52:35.165Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -16,54 +16,12 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage thailande circuit",
+      "query": "voyage thailande phuket",
       "traffic": 50,
       "trafficFormatted": "+50 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-28T15:10:19.399Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage vietnam circuit",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-28T15:10:21.915Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "visa vietnam",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-28T15:10:21.915Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.8,
-      "category": "visa",
-      "destination": "vietnam",
-      "compositeScore": 0.56
-    },
-    {
-      "query": "voyage thailande phuket",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-08-28T15:10:19.399Z",
+      "date": "2026-08-29T09:52:35.165Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -73,11 +31,11 @@
     },
     {
       "query": "voyage cambodge",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
+      "traffic": 190,
+      "trafficFormatted": "+190 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-28T15:10:21.915Z",
+      "date": "2026-08-29T09:52:37.287Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -91,13 +49,56 @@
       "trafficFormatted": "+70 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-28T15:10:26.489Z",
+      "date": "2026-08-29T09:52:41.505Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
       "category": "destination",
       "destination": "cambodge",
       "compositeScore": 0.53
+    },
+    {
+      "query": "voyage vietnam",
+      "traffic": 40,
+      "trafficFormatted": "+40 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-29T09:52:43.610Z",
+      "source": "related-rising",
+      "parentDestination": "laos",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "laos",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "avion",
+      "traffic": 2000,
+      "trafficFormatted": "2000+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "L’avion foudroyé à l’EuroAirport n’a pas pu rapatrier des Alsaciens bloqués en Sicile après l’éruption de l’Etna",
+          "url": "https://www.lalsace.fr/economie/2026/08/28/l-avion-foudroye-a-l-euroairport-n-a-pas-pu-rapatrier-des-alsaciens-bloques-en-sicile-apres-l-eruption-de-l-etna",
+          "source": "L'Alsace"
+        },
+        {
+          "title": "Collision mortelle à l’aéroport LaGuardia, à New York : des contrôleurs aériens ont débauché plus tôt que prévu, avant l’accident, selon « The Wall Street Journal »",
+          "url": "https://www.lemonde.fr/international/article/2026/08/28/collision-mortelle-a-l-aeroport-laguardia-a-new-york-des-controleurs-aeriens-ont-debauche-plus-tot-que-prevu-avant-l-accident-selon-le-wall-street-journal_6758969_3210.html",
+          "source": "Le Monde.fr"
+        },
+        {
+          "title": "Deux pilotes ont perdu la vie dans l'accident: avant la collision entre un avion et un camion de pompiers à New York, des contrôleurs aériens avaient quitté leur poste plus tôt que prévu",
+          "url": "https://www.bfmtv.com/economie/entreprises/transports/deux-pilotes-ont-perdu-la-vie-dans-l-accident-avant-la-collision-entre-un-avion-et-un-camion-de-pompiers-a-new-york-des-controleurs-aeriens-avaient-quitte-leur-poste-plus-tot-que-prevu_AD-202608280666.html",
+          "source": "BFM"
+        }
+      ],
+      "date": "Sat, 29 Aug 2026 02:30:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "transport",
+      "destination": null,
+      "compositeScore": 0.2916
     }
   ]
 }

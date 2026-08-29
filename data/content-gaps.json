@@ -1,10 +1,32 @@
 {
-  "timestamp": "2026-08-28T15:10:31.116Z",
-  "gapCount": 0,
-  "gaps": [],
+  "timestamp": "2026-08-29T09:52:47.134Z",
+  "gapCount": 1,
+  "gaps": [
+    {
+      "topic": "avion",
+      "source": "trends",
+      "gapScore": 35,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.8
+      },
+      "destination": null,
+      "category": "transport",
+      "suggestedTitle": "Avion : Guide Pratique",
+      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+      "articleType": "support",
+      "priority": "medium"
+    }
+  ],
   "summary": {
-    "byPriority": {},
-    "byCategory": {},
+    "byPriority": {
+      "medium": 1
+    },
+    "byCategory": {
+      "transport": 1
+    },
     "byDestination": {},
     "topDestinationGaps": []
   }
