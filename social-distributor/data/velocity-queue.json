@@ -1,61 +1,10 @@
 {
-  "generatedAt": "2026-08-29T12:08:37.977Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-08-29T20:18:04.829Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Widow of man who died in 2024 turbulence sues airline",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3310304/widow-of-man-who-died-in-2024-turbulence-sues-airline",
-      "velocityScore": 0.499,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2497,
-      "estimatedTrafficIn24h": 2440,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.999,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.3
-      },
-      "detectedAt": "2026-08-29T10:53:00.000Z",
-      "scoredAt": "2026-08-29T12:08:25.925Z"
-    },
-    {
-      "topic": "Tour boss searches for missing brother and 54 pilgrims by air after Nepal floods",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/south-asia/tour-boss-searches-by-air-for-missing-brother-and-54-pilgrims-after-flash-flood",
-      "velocityScore": 0.415,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 720,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2074,
-      "estimatedTrafficIn24h": 2027,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 1,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 0.5
-      },
-      "detectedAt": "2026-08-29T11:40:00.000Z",
-      "scoredAt": "2026-08-29T12:08:28.373Z"
-    }
-  ]
+  "queue": []
 }
