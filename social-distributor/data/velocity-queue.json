@@ -1,10 +1,61 @@
 {
-  "generatedAt": "2026-08-29T20:18:04.829Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-08-30T03:08:10.613Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 2
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Was climate change to blame for the Nepal floods? Here's what we know",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/video/world/3310655/was-climate-change-to-blame-for-the-nepal-floods-heres-what-we-know",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2072,
+      "estimatedTrafficIn24h": 2025,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.5
+      },
+      "detectedAt": "2026-08-30T01:36:00.000Z",
+      "scoredAt": "2026-08-30T03:08:03.872Z"
+    },
+    {
+      "topic": "The missing in Nepal-Tibet flash floods",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/world/3310645/the-missing-in-nepaltibet-flash-floods",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2070,
+      "estimatedTrafficIn24h": 2023,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.4
+      },
+      "detectedAt": "2026-08-30T00:45:00.000Z",
+      "scoredAt": "2026-08-30T03:08:06.273Z"
+    }
+  ]
 }
