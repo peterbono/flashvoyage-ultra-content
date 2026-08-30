@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-29T09:54:08.863Z",
+  "timestamp": "2026-08-30T09:05:14.827Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -17,25 +17,25 @@
       "id": "generationvoyage",
       "name": "Generation Voyage",
       "totalUrls": 9995,
-      "newUrls": 456
+      "newUrls": 383
     }
   ],
   "newArticles": [
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-lombok/",
-      "lastmod": "2026-08-29T03:35:46+00:00",
-      "destination": "lombok",
+      "url": "https://generationvoyage.fr/tokyo-solo/",
+      "lastmod": "2026-08-30T07:55:30+00:00",
+      "destination": "tokyo",
       "contentType": "general",
-      "title": "Loger Lombok",
+      "title": "Tokyo Solo",
       "action": "content_gap",
       "priority": "P1",
-      "reason": "Competitor covers \"Loger Lombok\" (lombok, general) — no matching FlashVoyage article found"
+      "reason": "Competitor covers \"Tokyo Solo\" (tokyo, general) — no matching FlashVoyage article found"
     },
     {
       "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/loger-ho-chi-minh-ville/",
-      "lastmod": "2026-08-29T03:47:39+00:00",
+      "lastmod": "2026-08-30T03:44:24+00:00",
       "destination": "ho-chi-minh",
       "contentType": "general",
       "title": "Loger Ho Chi Minh Ville",
@@ -46,7 +46,7 @@
     {
       "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/loger-tokyo/",
-      "lastmod": "2026-08-29T03:54:45+00:00",
+      "lastmod": "2026-08-30T03:52:07+00:00",
       "destination": "tokyo",
       "contentType": "general",
       "title": "Loger Tokyo",
@@ -56,30 +56,30 @@
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-jakarta/",
-      "lastmod": "2026-08-29T04:25:57+00:00",
-      "destination": "jakarta",
+      "url": "https://generationvoyage.fr/loger-manille/",
+      "lastmod": "2026-08-30T04:02:13+00:00",
+      "destination": "manille",
       "contentType": "general",
-      "title": "Loger Jakarta",
+      "title": "Loger Manille",
       "action": "content_gap",
       "priority": "P1",
-      "reason": "Competitor covers \"Loger Jakarta\" (jakarta, general) — no matching FlashVoyage article found"
+      "reason": "Competitor covers \"Loger Manille\" (manille, general) — no matching FlashVoyage article found"
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visiter-penang-faire-voir/",
-      "lastmod": "2026-08-29T04:50:44+00:00",
-      "destination": "penang",
-      "contentType": "activites",
-      "title": "Visiter Penang Faire Voir",
+      "url": "https://generationvoyage.fr/loger-siem-reap/",
+      "lastmod": "2026-08-30T04:23:48+00:00",
+      "destination": "siem-reap",
+      "contentType": "general",
+      "title": "Loger Siem Reap",
       "action": "content_gap",
       "priority": "P1",
-      "reason": "Competitor covers \"Visiter Penang Faire Voir\" (penang, activites) — no matching FlashVoyage article found"
+      "reason": "Competitor covers \"Loger Siem Reap\" (siem-reap, general) — no matching FlashVoyage article found"
     },
     {
       "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/visiter-agios-nikolaos-faire-voir/",
-      "lastmod": "2026-08-29T04:58:45+00:00",
+      "lastmod": "2026-08-30T04:49:03+00:00",
       "destination": "laos",
       "contentType": "activites",
       "title": "Visiter Agios Nikolaos Faire Voir",
@@ -90,7 +90,7 @@
     {
       "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/visiter-jakarta-faire-voir/",
-      "lastmod": "2026-08-29T05:03:44+00:00",
+      "lastmod": "2026-08-30T04:53:29+00:00",
       "destination": "jakarta",
       "contentType": "activites",
       "title": "Visiter Jakarta Faire Voir",
@@ -100,53 +100,25 @@
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visiter-sri-lanka-faire-voir/",
-      "lastmod": "2026-08-29T06:23:24+00:00",
-      "destination": "sri-lanka",
-      "contentType": "activites",
-      "title": "Visiter Sri Lanka Faire Voir",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Visiter Sri Lanka Faire Voir\" (sri-lanka, activites) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-bali/",
-      "lastmod": "2026-08-29T03:34:37+00:00",
-      "destination": "bali",
-      "contentType": "general",
-      "title": "Loger Bali",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=44, freshness=0.62)",
-      "matchedArticle": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 44,
-        "freshness": 0.62
-      }
-    },
-    {
-      "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/loger-kuala-lumpur/",
-      "lastmod": "2026-08-29T03:46:24+00:00",
+      "lastmod": "2026-08-30T03:43:45+00:00",
       "destination": "kuala-lumpur",
       "contentType": "general",
       "title": "Loger Kuala Lumpur",
       "action": "monitor",
       "priority": "P3",
-      "reason": "We cover this topic: \"Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis\" (score=8, freshness=0.53)",
+      "reason": "We cover this topic: \"Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis\" (score=12, freshness=0.53)",
       "matchedArticle": {
         "wpId": 2980,
         "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-        "compositeScore": 8,
+        "compositeScore": 12,
         "freshness": 0.53
       }
     },
     {
       "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/loger-singapour/",
-      "lastmod": "2026-08-29T04:33:07+00:00",
+      "lastmod": "2026-08-30T04:24:44+00:00",
       "destination": "singapour",
       "contentType": "general",
       "title": "Loger Singapour",
@@ -163,7 +135,7 @@
     {
       "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/visiter-singapour-faire-voir/",
-      "lastmod": "2026-08-29T04:54:56+00:00",
+      "lastmod": "2026-08-30T04:46:15+00:00",
       "destination": "singapour",
       "contentType": "activites",
       "title": "Visiter Singapour Faire Voir",
@@ -179,9 +151,9 @@
     }
   ],
   "summary": {
-    "totalNew": 12,
-    "contentGaps": 8,
+    "totalNew": 10,
+    "contentGaps": 7,
     "staleRefreshes": 0,
-    "monitoring": 4
+    "monitoring": 3
   }
 }

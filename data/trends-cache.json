@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-29T09:52:43.611Z",
+  "timestamp": "2026-08-30T09:03:47.264Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande pas cher",
-      "traffic": 50,
-      "trafficFormatted": "+50 %",
+      "query": "voyage thailande prix",
+      "traffic": 300,
+      "trafficFormatted": "+300 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-29T09:52:35.165Z",
+      "date": "2026-08-30T09:03:38.236Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -16,12 +16,40 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage thailande phuket",
-      "traffic": 50,
-      "trafficFormatted": "+50 %",
+      "query": "prix voyage thailande",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-29T09:52:35.165Z",
+      "date": "2026-08-30T09:03:38.236Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "thailande",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage vietnam circuit",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-30T09:03:40.485Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "itineraire",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "leclerc voyage thailande",
+      "traffic": 180,
+      "trafficFormatted": "+180 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-30T09:03:38.236Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -30,12 +58,26 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage cambodge",
-      "traffic": 190,
-      "trafficFormatted": "+190 %",
+      "query": "voyage thailande phuket",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-29T09:52:37.287Z",
+      "date": "2026-08-30T09:03:38.236Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage vietnam cambodge",
+      "traffic": 350,
+      "trafficFormatted": "+350 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-30T09:03:40.485Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -44,12 +86,40 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage cambodge laos",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
+      "query": "voyage cambodge",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-29T09:52:41.505Z",
+      "date": "2026-08-30T09:03:40.485Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "agence voyage vietnam",
+      "traffic": 170,
+      "trafficFormatted": "+170 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-30T09:03:40.485Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage vietnam",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-08-30T09:03:45.006Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -58,47 +128,18 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage vietnam",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
+      "query": "voyage cambodge vietnam",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-08-29T09:52:43.610Z",
+      "date": "2026-08-30T09:03:45.006Z",
       "source": "related-rising",
-      "parentDestination": "laos",
+      "parentDestination": "cambodge",
       "relevanceScore": 0.7,
       "category": "destination",
-      "destination": "laos",
+      "destination": "cambodge",
       "compositeScore": 0.53
-    },
-    {
-      "query": "avion",
-      "traffic": 2000,
-      "trafficFormatted": "2000+",
-      "relatedQueries": [],
-      "articles": [
-        {
-          "title": "L’avion foudroyé à l’EuroAirport n’a pas pu rapatrier des Alsaciens bloqués en Sicile après l’éruption de l’Etna",
-          "url": "https://www.lalsace.fr/economie/2026/08/28/l-avion-foudroye-a-l-euroairport-n-a-pas-pu-rapatrier-des-alsaciens-bloques-en-sicile-apres-l-eruption-de-l-etna",
-          "source": "L'Alsace"
-        },
-        {
-          "title": "Collision mortelle à l’aéroport LaGuardia, à New York : des contrôleurs aériens ont débauché plus tôt que prévu, avant l’accident, selon « The Wall Street Journal »",
-          "url": "https://www.lemonde.fr/international/article/2026/08/28/collision-mortelle-a-l-aeroport-laguardia-a-new-york-des-controleurs-aeriens-ont-debauche-plus-tot-que-prevu-avant-l-accident-selon-le-wall-street-journal_6758969_3210.html",
-          "source": "Le Monde.fr"
-        },
-        {
-          "title": "Deux pilotes ont perdu la vie dans l'accident: avant la collision entre un avion et un camion de pompiers à New York, des contrôleurs aériens avaient quitté leur poste plus tôt que prévu",
-          "url": "https://www.bfmtv.com/economie/entreprises/transports/deux-pilotes-ont-perdu-la-vie-dans-l-accident-avant-la-collision-entre-un-avion-et-un-camion-de-pompiers-a-new-york-des-controleurs-aeriens-avaient-quitte-leur-poste-plus-tot-que-prevu_AD-202608280666.html",
-          "source": "BFM"
-        }
-      ],
-      "date": "Sat, 29 Aug 2026 02:30:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "transport",
-      "destination": null,
-      "compositeScore": 0.2916
     }
   ]
 }
