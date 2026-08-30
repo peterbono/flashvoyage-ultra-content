@@ -1,86 +1,10 @@
 {
-  "generatedAt": "2026-08-30T11:04:28.770Z",
-  "totalTopics": 3,
+  "generatedAt": "2026-08-30T15:54:22.846Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 3
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Hong Kong traveller confronts alleged mainland Chinese thief on Bangkok flight",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/national/hong-kong-traveller-confronts-alleged-mainland-chinese-thief",
-      "velocityScore": 0.499,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2494,
-      "estimatedTrafficIn24h": 2438,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.3
-      },
-      "detectedAt": "2026-08-30T08:46:44.000Z",
-      "scoredAt": "2026-08-30T11:04:20.421Z"
-    },
-    {
-      "topic": "Nepal-Tibet flood missing toll hits 2,478",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/world/nepal-tibet-flood-missing-toll-hits-2478",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2066,
-      "estimatedTrafficIn24h": 2019,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.996,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 4.3
-      },
-      "detectedAt": "2026-08-30T06:45:53.000Z",
-      "scoredAt": "2026-08-30T11:04:21.200Z"
-    },
-    {
-      "topic": "Thai PM blocks CP’s exit from rail deal",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/national/thai-pm-blocks-cps-exit-from-rail-deal",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2064,
-      "estimatedTrafficIn24h": 2017,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5.3
-      },
-      "detectedAt": "2026-08-30T05:45:39.000Z",
-      "scoredAt": "2026-08-30T11:04:22.002Z"
-    }
-  ]
+  "queue": []
 }
