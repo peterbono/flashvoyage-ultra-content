@@ -145,6 +145,35 @@ add_filter( 'no_texturize_shortcodes', function ( $shortcodes ) {
 } );
 
 /**
+ * Keep verdict table footers spanning every comparison column on desktop.
+ *
+ * Some theme table rules turn footer elements into block-level boxes. That
+ * prevents a colspan cell from using the full table width and leaves the
+ * verdict card constrained to the first column.
+ */
+add_action( 'wp_head', function () {
+    if ( ! is_singular( 'post' ) ) {
+        return;
+    }
+    ?>
+    <style id="fv-verdict-table-layout-fix">
+    @media (min-width: 720px) {
+        .entry-content .fv-verdict-table tfoot {
+            display: table-footer-group !important;
+        }
+        .entry-content .fv-verdict-table tfoot tr {
+            display: table-row !important;
+        }
+        .entry-content .fv-verdict-table tfoot td {
+            display: table-cell !important;
+            width: auto !important;
+        }
+    }
+    </style>
+    <?php
+}, 20 );
+
+/**
  * Register fv_schema_json custom field so it can be set via the REST API.
  */
 add_action( 'init', function () {
@@ -234,4 +263,3 @@ add_action( 'wp_head', function () {
         echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
     }
 }, 1 );
-
