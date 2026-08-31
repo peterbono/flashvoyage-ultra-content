@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-08-30T09:03:58.627Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-08-31T09:31:37.792Z",
+    "elapsedSeconds": 4,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
     "totalRecommendations": 14,
@@ -35,19 +35,19 @@
       "internalLinks": 47,
       "lastModified": "2026-06-11T05:33:27",
       "ga4": {
-        "pageviews": 7,
-        "sessions": 4,
-        "avgDuration": 540
+        "pageviews": 9,
+        "sessions": 6,
+        "avgDuration": 394
       },
       "gsc": {
-        "impressions": 83,
+        "impressions": 84,
         "clicks": 2,
-        "position": 57.7,
+        "position": 57.8,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 71.5,
-            "impressions": 27,
+            "position": 71.3,
+            "impressions": 28,
             "ctr": 0
           },
           {
@@ -111,11 +111,11 @@
       "gsc": {
         "impressions": 86,
         "clicks": 0,
-        "position": 52.2,
+        "position": 52.1,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 53.8,
+            "position": 53.7,
             "impressions": 81,
             "ctr": 0
           },
@@ -166,9 +166,9 @@
         "avgDuration": 135
       },
       "gsc": {
-        "impressions": 16,
+        "impressions": 15,
         "clicks": 2,
-        "position": 34.6,
+        "position": 36.3,
         "topQueries": [
           {
             "query": "vietnam ou thailande",
@@ -229,9 +229,9 @@
         "avgDuration": 11
       },
       "gsc": {
-        "impressions": 3,
+        "impressions": 4,
         "clicks": 1,
-        "position": 10,
+        "position": 9,
         "topQueries": []
       },
       "reels": {
@@ -302,9 +302,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 20,
+        "impressions": 19,
         "clicks": 0,
-        "position": 17.3,
+        "position": 17.8,
         "topQueries": [
           {
             "query": "voyage japon couple",
@@ -359,32 +359,26 @@
         "avgDuration": 219
       },
       "gsc": {
-        "impressions": 36,
+        "impressions": 35,
         "clicks": 0,
-        "position": 68.9,
+        "position": 72,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 85.8,
-            "impressions": 19,
+            "position": 85.4,
+            "impressions": 20,
             "ctr": 0
           },
           {
             "query": "carte sim philippines",
-            "position": 68.7,
-            "impressions": 6,
+            "position": 69.4,
+            "impressions": 5,
             "ctr": 0
           },
           {
             "query": "meilleur esim philippines",
             "position": 59,
             "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "e sim philippines globe",
-            "position": 40,
-            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -397,9 +391,9 @@
         {
           "type": "seo",
           "priority": "P1",
-          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 53 impressions totales",
+          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 54 impressions totales",
           "action": "FIX_CANNIBALIZATION",
-          "details": "Cet article est en competition avec \"meilleur-esim-philippines-2026\" (pos 93.4) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
+          "details": "Cet article est en competition avec \"meilleur-esim-philippines-2026\" (pos 93.5) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
           "effort": "30min",
           "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
         },
@@ -461,11 +455,11 @@
       "gsc": {
         "impressions": 40,
         "clicks": 0,
-        "position": 86.9,
+        "position": 87,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 93.4,
+            "position": 93.5,
             "impressions": 34,
             "ctr": 0
           },
@@ -491,9 +485,9 @@
         {
           "type": "seo",
           "priority": "P1",
-          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 53 impressions totales",
+          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 54 impressions totales",
           "action": "FIX_CANNIBALIZATION",
-          "details": "Cet article est en competition avec \"esim-philippines-globe-smart-comparatif-2026\" (pos 85.8) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
+          "details": "Cet article est en competition avec \"esim-philippines-globe-smart-comparatif-2026\" (pos 85.4) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
           "effort": "30min",
           "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
         },
@@ -581,14 +575,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 38,
+        "impressions": 39,
         "clicks": 0,
         "position": 61.9,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 59,
-            "impressions": 28,
+            "position": 59.2,
+            "impressions": 29,
             "ctr": 0
           },
           {
@@ -638,9 +632,9 @@
         "avgDuration": 258
       },
       "gsc": {
-        "impressions": 27,
+        "impressions": 29,
         "clicks": 0,
-        "position": 40.3,
+        "position": 40.7,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -661,14 +655,14 @@
             "ctr": 0
           },
           {
-            "query": "thailand bali",
-            "position": 69,
+            "query": "bali, thailand",
+            "position": 87,
             "impressions": 1,
             "ctr": 0
           },
           {
-            "query": "thailande ou bali",
-            "position": 52,
+            "query": "thailand bali",
+            "position": 69,
             "impressions": 1,
             "ctr": 0
           }
@@ -707,14 +701,14 @@
         "avgDuration": 514
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 12,
         "clicks": 0,
-        "position": 55.7,
+        "position": 53.5,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
             "position": 81.9,
-            "impressions": 8,
+            "impressions": 7,
             "ctr": 0
           }
         ]
@@ -1111,9 +1105,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 0,
         "clicks": 0,
-        "position": 8,
+        "position": 0,
         "topQueries": []
       },
       "reels": {

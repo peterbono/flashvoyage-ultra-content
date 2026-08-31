@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-30T09:03:59.556Z",
+  "timestamp": "2026-08-31T09:31:38.759Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,8 +17,8 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 215,
-    "medianTrafficSignal": "0.215",
+    "medianMonthlyPV": 165,
+    "medianTrafficSignal": "0.165",
     "avgRpm": 2,
     "articlesAnalyzed": 16
   },
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 5.73,
-        "projectedMonthlyTraffic": 215,
-        "projectedMonthlyRevenue": 0.43,
+        "expectedRoi": 4.4,
+        "projectedMonthlyTraffic": 165,
+        "projectedMonthlyRevenue": 0.33,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (215 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (165 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 5.73,
-        "projectedMonthlyTraffic": 215,
-        "projectedMonthlyRevenue": 0.43,
+        "expectedRoi": 4.4,
+        "projectedMonthlyTraffic": 165,
+        "projectedMonthlyRevenue": 0.33,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (215 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (165 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,11 +77,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 5.73,
-        "projectedMonthlyTraffic": 215,
-        "projectedMonthlyRevenue": 0.43,
+        "expectedRoi": 4.4,
+        "projectedMonthlyTraffic": 165,
+        "projectedMonthlyRevenue": 0.33,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (215 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (165 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -97,7 +97,7 @@
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 8,
-        "freshness": 0.56,
+        "freshness": 0.55,
         "traffic": 0,
         "reason": "Low-performing article: score=8, consider merge/update/delete"
       },
@@ -147,7 +147,7 @@
         "wpId": 4030,
         "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 9,
-        "freshness": 0.6,
+        "freshness": 0.59,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
@@ -166,13 +166,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
       "articleType": "support",
       "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
         "compositeScore": 9,
-        "freshness": 0.58,
+        "freshness": 0.57,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
@@ -190,16 +190,16 @@
       "rank": 8,
       "action": "review",
       "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "priorityScore": 1,
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
       "articleType": "support",
       "context": {
-        "wpId": 5742,
-        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-        "compositeScore": 10,
-        "freshness": 0.69,
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 9,
+        "freshness": 0.57,
         "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -216,13 +216,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
       "articleType": "support",
       "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
         "compositeScore": 10,
-        "freshness": 0.67,
+        "freshness": 0.68,
         "traffic": 0,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
       },
@@ -241,13 +241,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
-      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
-        "wpId": 5296,
-        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+        "wpId": 5270,
+        "slug": "esim-japon-combien-ca-te-coute-vraiment",
         "compositeScore": 10,
-        "freshness": 0.67,
+        "freshness": 0.66,
         "traffic": 0,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
       },
@@ -265,16 +265,16 @@
       "rank": 11,
       "action": "review",
       "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
+      "priorityScore": -2,
+      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
       "articleType": "support",
       "context": {
-        "wpId": 5270,
-        "slug": "esim-japon-combien-ca-te-coute-vraiment",
-        "compositeScore": 10,
-        "freshness": 0.67,
+        "wpId": 6309,
+        "slug": "meilleur-esim-japon-2026",
+        "compositeScore": 12,
+        "freshness": 0.77,
         "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -291,13 +291,13 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
       "articleType": "support",
       "context": {
-        "wpId": 6309,
-        "slug": "meilleur-esim-japon-2026",
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 12,
-        "freshness": 0.78,
+        "freshness": 0.53,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -315,16 +315,16 @@
       "rank": 13,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "priorityScore": -3,
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
       "articleType": "support",
       "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 12,
-        "freshness": 0.58,
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "compositeScore": 13,
+        "freshness": 0.67,
         "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
+        "reason": "Low-performing article: score=13, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -342,8 +342,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.043,
-    "expectedDailyRoi": 0.19
+    "expectedDailyRevenue": 0.033,
+    "expectedDailyRoi": 0.15
   },
   "summary": {
     "write_new": 0,
