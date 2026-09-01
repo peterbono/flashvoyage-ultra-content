@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-01T10:57:45.449Z",
-  "totalTopics": 3,
+  "generatedAt": "2026-09-01T15:56:59.306Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 1,
-    "queue_normal": 2
+    "queue_priority": 0,
+    "queue_normal": 1
   },
   "queue": [
     {
@@ -12,75 +12,25 @@
       "source": "rss_breaking",
       "destination": "indonesia",
       "link": "https://balidiscovery.com/australian-citizen-sought-by-indonesian-immigration-nabbed-at-bali-ngurah-rai-airport/",
-      "velocityScore": 0.673,
-      "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 717,
+      "velocityScore": 0.446,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 712,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2243,
-      "estimatedTrafficIn24h": 2192,
-      "trafficLossPerHour": 2,
+      "estimatedTrafficNow": 1488,
+      "estimatedTrafficIn24h": 1454,
+      "trafficLossPerHour": 1,
       "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.997,
+        "trendIntensity": 0.6,
+        "timeDecay": 0.992,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 3.2
+        "hoursSinceDetection": 8.1
       },
       "detectedAt": "2026-09-01T07:48:26.000Z",
-      "scoredAt": "2026-09-01T10:57:37.567Z"
-    },
-    {
-      "topic": "Pilandok now a tropical storm; heavy rain in 4 areas due to southwest monsoon",
-      "source": "rss_breaking",
-      "destination": "philippines",
-      "link": "https://www.rappler.com/philippines/weather/tropical-storm-pilandok-southwest-monsoon-update-pagasa-forecast-september-1-2026-5pm/",
-      "velocityScore": 0.415,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2074,
-      "estimatedTrafficIn24h": 2026,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.999,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 0.6
-      },
-      "detectedAt": "2026-09-01T10:19:43.000Z",
-      "scoredAt": "2026-09-01T10:57:35.758Z"
-    },
-    {
-      "topic": "Chinese rescue work in Tibet flood disaster zone still trudging along days later",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/chinese-rescue-work-in-tibet-flood-disaster-zone-still-trudging-along-days-later",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2066,
-      "estimatedTrafficIn24h": 2019,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.996,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 4.4
-      },
-      "detectedAt": "2026-09-01T06:35:51.000Z",
-      "scoredAt": "2026-09-01T10:57:38.289Z"
+      "scoredAt": "2026-09-01T15:56:55.931Z"
     }
   ]
 }
