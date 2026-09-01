@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-08-31T22:18:00.371Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-09-01T03:08:46.263Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Visitor numbers to Japan’s Kumamoto Castle drop after quake reopening",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/east-asia/visitors-to-japans-kumamoto-castle-half-from-year-before-after-quake-reopening",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2070,
+      "estimatedTrafficIn24h": 2023,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.5
+      },
+      "detectedAt": "2026-09-01T00:37:00.000Z",
+      "scoredAt": "2026-09-01T03:08:44.803Z"
+    }
+  ]
 }
