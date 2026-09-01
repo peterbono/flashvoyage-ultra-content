@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-09-01T15:56:59.306Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-09-01T20:24:44.327Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Australian Citizen Sought by Indonesian Immigration, Nabbed at Bali Ngurah Rai Airport",
-      "source": "rss_breaking",
-      "destination": "indonesia",
-      "link": "https://balidiscovery.com/australian-citizen-sought-by-indonesian-immigration-nabbed-at-bali-ngurah-rai-airport/",
-      "velocityScore": 0.446,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 712,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1488,
-      "estimatedTrafficIn24h": 1454,
-      "trafficLossPerHour": 1,
-      "breakdown": {
-        "trendIntensity": 0.6,
-        "timeDecay": 0.992,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 8.1
-      },
-      "detectedAt": "2026-09-01T07:48:26.000Z",
-      "scoredAt": "2026-09-01T15:56:55.931Z"
-    }
-  ]
+  "queue": []
 }
