@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-31T09:31:31.438Z",
+  "timestamp": "2026-09-01T08:28:29.086Z",
   "articleMap": {
     "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
       "wpId": 4252,
@@ -59,29 +59,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage": {
-      "wpId": 5119,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-04-14",
-          "format": "guide",
-          "platform": "tiktok",
-          "score": 10,
-          "engagementRate": 0,
-          "publishedAt": "2026-04-14",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
     "bali-vs-thailande-premier-voyage-asie-comparatif": {
       "wpId": 4254,
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -115,16 +92,27 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "esim-vietnam-comparatif-forfait-2026-frais-caches": {
-      "wpId": 4250,
-      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
-      "reels": [],
+    "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage": {
+      "wpId": 5119,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-04-14",
+          "format": "guide",
+          "platform": "tiktok",
+          "score": 10,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-14",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
       "suggestedFormats": [
         "pick",
-        "poll",
-        "humor"
+        "month",
+        "avantapres"
       ],
-      "category": "default",
+      "category": "itineraire",
       "igReferralTraffic": null
     },
     "japon-couple-15-jours-budget-tout-compris-2026": {
@@ -192,6 +180,18 @@
       "category": "destination",
       "igReferralTraffic": null
     },
+    "esim-vietnam-comparatif-forfait-2026-frais-caches": {
+      "wpId": 4250,
+      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
     "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
       "wpId": 5072,
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
@@ -215,28 +215,16 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe": {
-      "wpId": 4125,
-      "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
-      "igReferralTraffic": null
-    },
-    "meilleur-esim-thailande-2026": {
-      "wpId": 6195,
-      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
+    "esim-philippines-globe-smart-comparatif-2026": {
+      "wpId": 4372,
+      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "month",
-        "avantapres"
+        "poll",
+        "humor"
       ],
-      "category": "destination",
+      "category": "default",
       "igReferralTraffic": null
     },
     "visa-cambodge-francais-2026-evisa-prix-pieges": {
@@ -275,6 +263,30 @@
       "category": "budget",
       "igReferralTraffic": null
     },
+    "meilleur-esim-thailande-2026": {
+      "wpId": 6195,
+      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "destination",
+      "igReferralTraffic": null
+    },
+    "meilleur-esim-philippines-2026": {
+      "wpId": 6331,
+      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "destination",
+      "igReferralTraffic": null
+    },
     "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
       "wpId": 5260,
       "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
@@ -310,21 +322,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "esim-philippines-globe-smart-comparatif-2026": {
-      "wpId": 4372,
-      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "meilleur-esim-philippines-2026": {
-      "wpId": 6331,
-      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
+    "meilleur-esim-bali-2026": {
+      "wpId": 6327,
+      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -332,23 +332,23 @@
         "avantapres"
       ],
       "category": "destination",
+      "igReferralTraffic": null
+    },
+    "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe": {
+      "wpId": 4125,
+      "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
       "igReferralTraffic": null
     },
     "meilleur-esim-vietnam-2026": {
       "wpId": 6323,
       "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "destination",
-      "igReferralTraffic": null
-    },
-    "meilleur-esim-bali-2026": {
-      "wpId": 6327,
-      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -370,45 +370,9 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout": {
-      "wpId": 5678,
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
       "wpId": 5063,
       "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
-      "wpId": 4105,
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis": {
-      "wpId": 3425,
-      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -428,6 +392,18 @@
         "avantapres"
       ],
       "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout": {
+      "wpId": 5678,
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
       "igReferralTraffic": null
     },
     "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
@@ -454,6 +430,18 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
+      "wpId": 4105,
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
     "budget-backpack-200-000-donnees-revelent-les-vrais-prix-et-contredisent-les-guides": {
       "wpId": 4071,
       "title": "Budget backpack : 200 000 données révèlent les vrais prix (et contredisent les guides)",
@@ -476,6 +464,18 @@
         "avantapres"
       ],
       "category": "destination",
+      "igReferralTraffic": null
+    },
+    "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis": {
+      "wpId": 3425,
+      "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
       "igReferralTraffic": null
     },
     "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte": {

@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-08-31T09:31:37.792Z",
-    "elapsedSeconds": 4,
+    "generatedAt": "2026-09-01T08:28:36.201Z",
+    "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
     "totalRecommendations": 14,
@@ -35,19 +35,19 @@
       "internalLinks": 47,
       "lastModified": "2026-06-11T05:33:27",
       "ga4": {
-        "pageviews": 9,
-        "sessions": 6,
-        "avgDuration": 394
+        "pageviews": 12,
+        "sessions": 7,
+        "avgDuration": 396
       },
       "gsc": {
-        "impressions": 84,
+        "impressions": 86,
         "clicks": 2,
-        "position": 57.8,
+        "position": 57.3,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 71.3,
-            "impressions": 28,
+            "position": 71.1,
+            "impressions": 29,
             "ctr": 0
           },
           {
@@ -95,6 +95,72 @@
       "p0Count": 0
     },
     {
+      "wpId": 4372,
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
+      "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
+      "wordCount": 5505,
+      "widgetCount": 0,
+      "internalLinks": 56,
+      "lastModified": "2026-06-11T05:33:24",
+      "ga4": {
+        "pageviews": 5,
+        "sessions": 3,
+        "avgDuration": 738
+      },
+      "gsc": {
+        "impressions": 37,
+        "clicks": 0,
+        "position": 71.4,
+        "topQueries": [
+          {
+            "query": "esim philippines",
+            "position": 85,
+            "impressions": 22,
+            "ctr": 0
+          },
+          {
+            "query": "carte sim philippines",
+            "position": 69.4,
+            "impressions": 5,
+            "ctr": 0
+          },
+          {
+            "query": "meilleur esim philippines",
+            "position": 59,
+            "impressions": 2,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P1",
+          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 56 impressions totales",
+          "action": "FIX_CANNIBALIZATION",
+          "details": "Cet article est en competition avec \"meilleur-esim-philippines-2026\" (pos 93.5) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
+          "effort": "30min",
+          "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
+        },
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 2,
+      "p0Count": 0
+    },
+    {
       "wpId": 6374,
       "slug": "meilleur-esim-cambodge-2026",
       "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
@@ -104,19 +170,19 @@
       "internalLinks": 11,
       "lastModified": "2026-06-15T12:00:01",
       "ga4": {
-        "pageviews": 3,
-        "sessions": 2,
-        "avgDuration": 14
+        "pageviews": 4,
+        "sessions": 3,
+        "avgDuration": 10
       },
       "gsc": {
-        "impressions": 86,
+        "impressions": 87,
         "clicks": 0,
-        "position": 52.1,
+        "position": 52,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 53.7,
-            "impressions": 81,
+            "position": 53.6,
+            "impressions": 82,
             "ctr": 0
           },
           {
@@ -243,6 +309,100 @@
       "p0Count": 0
     },
     {
+      "wpId": 6331,
+      "slug": "meilleur-esim-philippines-2026",
+      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
+      "url": "https://flashvoyage.com/meilleur-esim-philippines-2026/",
+      "wordCount": 1278,
+      "widgetCount": 0,
+      "internalLinks": 11,
+      "lastModified": "2026-06-11T05:32:55",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 29
+      },
+      "gsc": {
+        "impressions": 40,
+        "clicks": 0,
+        "position": 87.1,
+        "topQueries": [
+          {
+            "query": "esim philippines",
+            "position": 93.5,
+            "impressions": 34,
+            "ctr": 0
+          },
+          {
+            "query": "meilleur esim philippines",
+            "position": 73.5,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "best esim for philippines 2026",
+            "position": 58,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P1",
+          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 56 impressions totales",
+          "action": "FIX_CANNIBALIZATION",
+          "details": "Cet article est en competition avec \"esim-philippines-globe-smart-comparatif-2026\" (pos 85) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
+          "effort": "30min",
+          "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
+        },
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 2,
+      "p0Count": 0
+    },
+    {
+      "wpId": 6327,
+      "slug": "meilleur-esim-bali-2026",
+      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
+      "url": "https://flashvoyage.com/meilleur-esim-bali-2026/",
+      "wordCount": 1263,
+      "widgetCount": 0,
+      "internalLinks": 11,
+      "lastModified": "2026-06-11T05:32:57",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 18
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5072,
       "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
       "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
@@ -257,9 +417,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 16,
         "clicks": 0,
-        "position": 7.8,
+        "position": 7.9,
         "topQueries": [
           {
             "query": "comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?",
@@ -302,9 +462,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 19,
+        "impressions": 20,
         "clicks": 0,
-        "position": 17.8,
+        "position": 17.6,
         "topQueries": [
           {
             "query": "voyage japon couple",
@@ -345,279 +505,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4372,
-      "slug": "esim-philippines-globe-smart-comparatif-2026",
-      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
-      "url": "https://flashvoyage.com/esim-philippines-globe-smart-comparatif-2026/",
-      "wordCount": 5505,
-      "widgetCount": 0,
-      "internalLinks": 56,
-      "lastModified": "2026-06-11T05:33:24",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 219
-      },
-      "gsc": {
-        "impressions": 35,
-        "clicks": 0,
-        "position": 72,
-        "topQueries": [
-          {
-            "query": "esim philippines",
-            "position": 85.4,
-            "impressions": 20,
-            "ctr": 0
-          },
-          {
-            "query": "carte sim philippines",
-            "position": 69.4,
-            "impressions": 5,
-            "ctr": 0
-          },
-          {
-            "query": "meilleur esim philippines",
-            "position": 59,
-            "impressions": 2,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P1",
-          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 54 impressions totales",
-          "action": "FIX_CANNIBALIZATION",
-          "details": "Cet article est en competition avec \"meilleur-esim-philippines-2026\" (pos 93.5) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
-          "effort": "30min",
-          "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
-        },
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 2,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4125,
-      "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
-      "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
-      "url": "https://flashvoyage.com/hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe/",
-      "wordCount": 3098,
-      "widgetCount": 0,
-      "internalLinks": 29,
-      "lastModified": "2026-06-11T05:33:38",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 1,
-        "avgDuration": 579
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 6331,
-      "slug": "meilleur-esim-philippines-2026",
-      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
-      "url": "https://flashvoyage.com/meilleur-esim-philippines-2026/",
-      "wordCount": 1278,
-      "widgetCount": 0,
-      "internalLinks": 11,
-      "lastModified": "2026-06-11T05:32:55",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 53
-      },
-      "gsc": {
-        "impressions": 40,
-        "clicks": 0,
-        "position": 87,
-        "topQueries": [
-          {
-            "query": "esim philippines",
-            "position": 93.5,
-            "impressions": 34,
-            "ctr": 0
-          },
-          {
-            "query": "meilleur esim philippines",
-            "position": 73.5,
-            "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "best esim for philippines 2026",
-            "position": 58,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P1",
-          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 54 impressions totales",
-          "action": "FIX_CANNIBALIZATION",
-          "details": "Cet article est en competition avec \"esim-philippines-globe-smart-comparatif-2026\" (pos 85.4) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
-          "effort": "30min",
-          "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
-        },
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 2,
-      "p0Count": 0
-    },
-    {
-      "wpId": 6327,
-      "slug": "meilleur-esim-bali-2026",
-      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
-      "url": "https://flashvoyage.com/meilleur-esim-bali-2026/",
-      "wordCount": 1263,
-      "widgetCount": 0,
-      "internalLinks": 11,
-      "lastModified": "2026-06-11T05:32:57",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 6195,
-      "slug": "meilleur-esim-thailande-2026",
-      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
-      "url": "https://flashvoyage.com/meilleur-esim-thailande-2026/",
-      "wordCount": 1886,
-      "widgetCount": 0,
-      "internalLinks": 17,
-      "lastModified": "2026-06-11T05:33:01",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 271
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5678,
-      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
-      "wordCount": 1657,
-      "widgetCount": 0,
-      "internalLinks": 25,
-      "lastModified": "2026-06-11T05:27:51",
-      "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 39,
-        "clicks": 0,
-        "position": 61.9,
-        "topQueries": [
-          {
-            "query": "esim asie du sud est",
-            "position": 59.2,
-            "impressions": 29,
-            "ctr": 0
-          },
-          {
-            "query": "asie du sud-est sim locale internet conseils",
-            "position": 67.8,
-            "impressions": 8,
-            "ctr": 0
-          },
-          {
-            "query": "meilleur esim asie",
-            "position": 99,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim asie du sud est\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim asie du sud est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -627,14 +514,14 @@
       "internalLinks": 41,
       "lastModified": "2026-06-11T05:33:30",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 258
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 129
       },
       "gsc": {
-        "impressions": 29,
+        "impressions": 27,
         "clicks": 0,
-        "position": 40.7,
+        "position": 40.6,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -696,19 +583,19 @@
       "internalLinks": 48,
       "lastModified": "2026-06-11T05:33:35",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 514
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 1938
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 11,
         "clicks": 0,
-        "position": 53.5,
+        "position": 51,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
-            "position": 81.9,
-            "impressions": 7,
+            "position": 82,
+            "impressions": 6,
             "ctr": 0
           }
         ]
@@ -724,6 +611,119 @@
           "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4125,
+      "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
+      "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "url": "https://flashvoyage.com/hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe/",
+      "wordCount": 3098,
+      "widgetCount": 0,
+      "internalLinks": 29,
+      "lastModified": "2026-06-11T05:33:38",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 1,
+        "avgDuration": 579
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 6195,
+      "slug": "meilleur-esim-thailande-2026",
+      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
+      "url": "https://flashvoyage.com/meilleur-esim-thailande-2026/",
+      "wordCount": 1886,
+      "widgetCount": 0,
+      "internalLinks": 17,
+      "lastModified": "2026-06-11T05:33:01",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 271
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5678,
+      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
+      "wordCount": 1657,
+      "widgetCount": 0,
+      "internalLinks": 25,
+      "lastModified": "2026-06-11T05:27:51",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 39,
+        "clicks": 0,
+        "position": 62,
+        "topQueries": [
+          {
+            "query": "esim asie du sud est",
+            "position": 59.3,
+            "impressions": 29,
+            "ctr": 0
+          },
+          {
+            "query": "asie du sud-est sim locale internet conseils",
+            "position": 67.8,
+            "impressions": 8,
+            "ctr": 0
+          },
+          {
+            "query": "meilleur esim asie",
+            "position": 99,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim asie du sud est\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim asie du sud est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -1329,9 +1329,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 6,
         "clicks": 0,
-        "position": 30,
+        "position": 42.7,
         "topQueries": []
       },
       "reels": {
@@ -1357,9 +1357,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 13,
         "clicks": 0,
-        "position": 59.9,
+        "position": 56.8,
         "topQueries": [
           {
             "query": "circuit authentique asie du sud-est",
