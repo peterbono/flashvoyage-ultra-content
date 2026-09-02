@@ -1,36 +1,61 @@
 {
-  "generatedAt": "2026-09-02T10:26:13.474Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-09-02T15:49:42.013Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 2
   },
   "queue": [
+    {
+      "topic": "Nepal to rebuild early-warning system on China border after deadly flood, sources say",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/nepal-to-rebuild-early-warning-system-on-china-border-after-deadly-flood-sources-say",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2071,
+      "estimatedTrafficIn24h": 2024,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2
+      },
+      "detectedAt": "2026-09-02T13:46:34.000Z",
+      "scoredAt": "2026-09-02T15:49:31.026Z"
+    },
     {
       "topic": "Tropical Storm Pilandok may exit PAR on September 3",
       "source": "rss_breaking",
       "destination": "philippines",
       "link": "https://www.rappler.com/philippines/weather/tropical-storm-pilandok-southwest-monsoon-update-pagasa-forecast-september-2-2026-5pm/",
-      "velocityScore": 0.415,
+      "velocityScore": 0.413,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 720,
+      "hoursRemaining": 714,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2075,
-      "estimatedTrafficIn24h": 2027,
+      "estimatedTrafficNow": 2064,
+      "estimatedTrafficIn24h": 2017,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
-        "timeDecay": 1,
+        "timeDecay": 0.995,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 0.2
+        "hoursSinceDetection": 5.6
       },
       "detectedAt": "2026-09-02T10:15:54.000Z",
-      "scoredAt": "2026-09-02T10:25:58.023Z"
+      "scoredAt": "2026-09-02T15:49:32.648Z"
     }
   ]
 }
