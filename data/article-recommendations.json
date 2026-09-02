@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-09-01T08:28:36.201Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-09-02T07:46:43.575Z",
+    "elapsedSeconds": 6,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
     "totalRecommendations": 14,
@@ -37,17 +37,17 @@
       "ga4": {
         "pageviews": 12,
         "sessions": 7,
-        "avgDuration": 396
+        "avgDuration": 491
       },
       "gsc": {
-        "impressions": 86,
-        "clicks": 2,
-        "position": 57.3,
+        "impressions": 90,
+        "clicks": 3,
+        "position": 55.8,
         "topQueries": [
           {
             "query": "bali gili lombok",
             "position": 71.1,
-            "impressions": 29,
+            "impressions": 30,
             "ctr": 0
           },
           {
@@ -57,14 +57,14 @@
             "ctr": 0
           },
           {
-            "query": "bali lombok gili",
-            "position": 70,
+            "query": "circuit bali lombok gili",
+            "position": 36.4,
             "impressions": 10,
             "ctr": 0
           },
           {
-            "query": "circuit bali lombok gili",
-            "position": 36.3,
+            "query": "bali lombok gili",
+            "position": 68.3,
             "impressions": 9,
             "ctr": 0
           },
@@ -106,23 +106,23 @@
       "ga4": {
         "pageviews": 5,
         "sessions": 3,
-        "avgDuration": 738
+        "avgDuration": 505
       },
       "gsc": {
-        "impressions": 37,
+        "impressions": 41,
         "clicks": 0,
-        "position": 71.4,
+        "position": 72.1,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 85,
-            "impressions": 22,
+            "position": 84.7,
+            "impressions": 25,
             "ctr": 0
           },
           {
             "query": "carte sim philippines",
-            "position": 69.4,
-            "impressions": 5,
+            "position": 69.7,
+            "impressions": 6,
             "ctr": 0
           },
           {
@@ -141,9 +141,9 @@
         {
           "type": "seo",
           "priority": "P1",
-          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 56 impressions totales",
+          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 60 impressions totales",
           "action": "FIX_CANNIBALIZATION",
-          "details": "Cet article est en competition avec \"meilleur-esim-philippines-2026\" (pos 93.5) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
+          "details": "Cet article est en competition avec \"meilleur-esim-philippines-2026\" (pos 93.6) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
           "effort": "30min",
           "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
         },
@@ -172,16 +172,16 @@
       "ga4": {
         "pageviews": 4,
         "sessions": 3,
-        "avgDuration": 10
+        "avgDuration": 14
       },
       "gsc": {
         "impressions": 87,
         "clicks": 0,
-        "position": 52,
+        "position": 51.8,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 53.6,
+            "position": 53.4,
             "impressions": 82,
             "ctr": 0
           },
@@ -218,6 +218,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2503,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:20",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 4,
+        "avgDuration": 24
+      },
+      "gsc": {
+        "impressions": 4,
+        "clicks": 1,
+        "position": 9,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 5119,
       "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
@@ -232,14 +260,14 @@
         "avgDuration": 135
       },
       "gsc": {
-        "impressions": 15,
+        "impressions": 13,
         "clicks": 2,
-        "position": 36.3,
+        "position": 37,
         "topQueries": [
           {
             "query": "vietnam ou thailande",
-            "position": 39.4,
-            "impressions": 7,
+            "position": 39.3,
+            "impressions": 4,
             "ctr": 0
           },
           {
@@ -249,14 +277,14 @@
             "ctr": 33.33
           },
           {
-            "query": "thailande et vietnam",
-            "position": 52,
-            "impressions": 1,
+            "query": "thailande vietnam",
+            "position": 56,
+            "impressions": 2,
             "ctr": 0
           },
           {
-            "query": "thailande vietnam",
-            "position": 56,
+            "query": "thailande et vietnam",
+            "position": 52,
             "impressions": 1,
             "ctr": 0
           }
@@ -281,31 +309,48 @@
       "p0Count": 0
     },
     {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2503,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:20",
+      "wpId": 4252,
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
+      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
+      "wordCount": 4975,
+      "widgetCount": 3,
+      "internalLinks": 48,
+      "lastModified": "2026-06-11T05:33:35",
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 11
+        "avgDuration": 375
       },
       "gsc": {
-        "impressions": 4,
-        "clicks": 1,
-        "position": 9,
-        "topQueries": []
+        "impressions": 10,
+        "clicks": 0,
+        "position": 48,
+        "topQueries": [
+          {
+            "query": "assurance voyage vietnam",
+            "position": 82.2,
+            "impressions": 5,
+            "ctr": 0
+          }
+        ]
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [],
-      "recommendationCount": 0,
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -320,29 +365,23 @@
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 29
+        "avgDuration": 64
       },
       "gsc": {
         "impressions": 40,
         "clicks": 0,
-        "position": 87.1,
+        "position": 88.1,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 93.5,
-            "impressions": 34,
+            "position": 93.6,
+            "impressions": 35,
             "ctr": 0
           },
           {
             "query": "meilleur esim philippines",
             "position": 73.5,
             "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "best esim for philippines 2026",
-            "position": 58,
-            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -355,9 +394,9 @@
         {
           "type": "seo",
           "priority": "P1",
-          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 56 impressions totales",
+          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 60 impressions totales",
           "action": "FIX_CANNIBALIZATION",
-          "details": "Cet article est en competition avec \"esim-philippines-globe-smart-comparatif-2026\" (pos 85) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
+          "details": "Cet article est en competition avec \"esim-philippines-globe-smart-comparatif-2026\" (pos 84.7) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
           "effort": "30min",
           "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
         },
@@ -386,7 +425,7 @@
       "ga4": {
         "pageviews": 2,
         "sessions": 2,
-        "avgDuration": 18
+        "avgDuration": 6
       },
       "gsc": {
         "impressions": 0,
@@ -417,9 +456,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 16,
+        "impressions": 18,
         "clicks": 0,
-        "position": 7.9,
+        "position": 7.8,
         "topQueries": [
           {
             "query": "comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?",
@@ -521,7 +560,7 @@
       "gsc": {
         "impressions": 27,
         "clicks": 0,
-        "position": 40.6,
+        "position": 40.7,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -566,51 +605,6 @@
           "metric": "Pas de schema FAQ (keyword principal: \"bali ou thailande\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4252,
-      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
-      "wordCount": 4975,
-      "widgetCount": 3,
-      "internalLinks": 48,
-      "lastModified": "2026-06-11T05:33:35",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 1938
-      },
-      "gsc": {
-        "impressions": 11,
-        "clicks": 0,
-        "position": 51,
-        "topQueries": [
-          {
-            "query": "assurance voyage vietnam",
-            "position": 82,
-            "impressions": 6,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -691,11 +685,11 @@
       "gsc": {
         "impressions": 39,
         "clicks": 0,
-        "position": 62,
+        "position": 62.1,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 59.3,
+            "position": 59.4,
             "impressions": 29,
             "ctr": 0
           },
@@ -1357,14 +1351,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 12,
         "clicks": 0,
-        "position": 56.8,
+        "position": 54.7,
         "topQueries": [
           {
             "query": "circuit authentique asie du sud-est",
-            "position": 77.5,
-            "impressions": 6,
+            "position": 76.6,
+            "impressions": 5,
             "ctr": 0
           },
           {

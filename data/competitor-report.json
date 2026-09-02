@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-01T08:29:47.152Z",
+  "timestamp": "2026-09-02T07:48:04.703Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -17,14 +17,14 @@
       "id": "generationvoyage",
       "name": "Generation Voyage",
       "totalUrls": 9995,
-      "newUrls": 246
+      "newUrls": 417
     }
   ],
   "newArticles": [
     {
       "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/loger-lombok/",
-      "lastmod": "2026-09-01T03:35:58+00:00",
+      "lastmod": "2026-09-02T03:35:15+00:00",
       "destination": "lombok",
       "contentType": "general",
       "title": "Loger Lombok",
@@ -35,7 +35,7 @@
     {
       "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/loger-ho-chi-minh-ville/",
-      "lastmod": "2026-09-01T03:47:16+00:00",
+      "lastmod": "2026-09-02T03:47:16+00:00",
       "destination": "ho-chi-minh",
       "contentType": "general",
       "title": "Loger Ho Chi Minh Ville",
@@ -45,19 +45,8 @@
     },
     {
       "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-kyoto/",
-      "lastmod": "2026-09-01T03:54:10+00:00",
-      "destination": "kyoto",
-      "contentType": "general",
-      "title": "Loger Kyoto",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Loger Kyoto\" (kyoto, general) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/loger-tokyo/",
-      "lastmod": "2026-09-01T03:55:36+00:00",
+      "lastmod": "2026-09-02T03:55:11+00:00",
       "destination": "tokyo",
       "contentType": "general",
       "title": "Loger Tokyo",
@@ -68,7 +57,7 @@
     {
       "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/loger-penang/",
-      "lastmod": "2026-09-01T04:01:56+00:00",
+      "lastmod": "2026-09-02T04:02:50+00:00",
       "destination": "penang",
       "contentType": "general",
       "title": "Loger Penang",
@@ -78,8 +67,30 @@
     },
     {
       "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-manille/",
+      "lastmod": "2026-09-02T04:07:22+00:00",
+      "destination": "manille",
+      "contentType": "general",
+      "title": "Loger Manille",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Manille\" (manille, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-osaka/",
+      "lastmod": "2026-09-02T04:25:49+00:00",
+      "destination": "osaka",
+      "contentType": "general",
+      "title": "Loger Osaka",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Osaka\" (osaka, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/loger-jakarta/",
-      "lastmod": "2026-09-01T04:26:37+00:00",
+      "lastmod": "2026-09-02T04:28:52+00:00",
       "destination": "jakarta",
       "contentType": "general",
       "title": "Loger Jakarta",
@@ -89,8 +100,63 @@
     },
     {
       "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-siem-reap/",
+      "lastmod": "2026-09-02T04:35:18+00:00",
+      "destination": "siem-reap",
+      "contentType": "general",
+      "title": "Loger Siem Reap",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Siem Reap\" (siem-reap, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-cebu/",
+      "lastmod": "2026-09-02T04:47:03+00:00",
+      "destination": "cebu",
+      "contentType": "general",
+      "title": "Loger Cebu",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Cebu\" (cebu, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-penang-faire-voir/",
+      "lastmod": "2026-09-02T04:54:48+00:00",
+      "destination": "penang",
+      "contentType": "activites",
+      "title": "Visiter Penang Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Penang Faire Voir\" (penang, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-agios-nikolaos-faire-voir/",
+      "lastmod": "2026-09-02T05:03:00+00:00",
+      "destination": "laos",
+      "contentType": "activites",
+      "title": "Visiter Agios Nikolaos Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Agios Nikolaos Faire Voir\" (laos, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-jakarta-faire-voir/",
+      "lastmod": "2026-09-02T05:07:44+00:00",
+      "destination": "jakarta",
+      "contentType": "activites",
+      "title": "Visiter Jakarta Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Jakarta Faire Voir\" (jakarta, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/loger-bangkok/",
-      "lastmod": "2026-09-01T03:31:00+00:00",
+      "lastmod": "2026-09-02T03:30:41+00:00",
       "destination": "bangkok",
       "contentType": "general",
       "title": "Loger Bangkok",
@@ -106,8 +172,25 @@
     },
     {
       "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-bali/",
+      "lastmod": "2026-09-02T03:34:29+00:00",
+      "destination": "bali",
+      "contentType": "general",
+      "title": "Loger Bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=47, freshness=0.60)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 47,
+        "freshness": 0.6
+      }
+    },
+    {
+      "competitor": "generationvoyage",
       "url": "https://generationvoyage.fr/loger-kuala-lumpur/",
-      "lastmod": "2026-09-01T03:46:29+00:00",
+      "lastmod": "2026-09-02T03:46:20+00:00",
       "destination": "kuala-lumpur",
       "contentType": "general",
       "title": "Loger Kuala Lumpur",
@@ -120,12 +203,63 @@
         "compositeScore": 12,
         "freshness": 0.52
       }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-singapour/",
+      "lastmod": "2026-09-02T04:36:07+00:00",
+      "destination": "singapour",
+      "contentType": "general",
+      "title": "Loger Singapour",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?\" (score=25, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 5072,
+        "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+        "compositeScore": 25,
+        "freshness": 0.64
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-chiang-mai/",
+      "lastmod": "2026-09-02T04:45:11+00:00",
+      "destination": "chiang-mai",
+      "contentType": "general",
+      "title": "Loger Chiang Mai",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant\" (score=12, freshness=0.57)",
+      "matchedArticle": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 12,
+        "freshness": 0.57
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-singapour-faire-voir/",
+      "lastmod": "2026-09-02T04:58:42+00:00",
+      "destination": "singapour",
+      "contentType": "activites",
+      "title": "Visiter Singapour Faire Voir",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?\" (score=25, freshness=0.64)",
+      "matchedArticle": {
+        "wpId": 5072,
+        "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+        "compositeScore": 25,
+        "freshness": 0.64
+      }
     }
   ],
   "summary": {
-    "totalNew": 8,
-    "contentGaps": 6,
+    "totalNew": 18,
+    "contentGaps": 12,
     "staleRefreshes": 0,
-    "monitoring": 2
+    "monitoring": 6
   }
 }
