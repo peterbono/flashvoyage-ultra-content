@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-09-02T20:25:02.913Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-09-03T02:35:02.871Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Nepal to rebuild early-warning system on China border after deadly flood, sources say",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.channelnewsasia.com/asia/nepal-rebuild-early-warning-system-deadly-flood-6357956",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 714,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2063,
+      "estimatedTrafficIn24h": 2016,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.994,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 5.9
+      },
+      "detectedAt": "2026-09-02T20:43:00.000Z",
+      "scoredAt": "2026-09-03T02:34:56.628Z"
+    }
+  ]
 }
