@@ -1,13 +1,27 @@
 {
-  "timestamp": "2026-09-02T07:46:31.118Z",
+  "timestamp": "2026-09-03T07:55:07.385Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande prix",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
+      "query": "voyage bali pas cher",
+      "traffic": 160,
+      "trafficFormatted": "+160 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-02T07:46:22.222Z",
+      "date": "2026-09-03T07:54:56.781Z",
+      "source": "related-rising",
+      "parentDestination": "bali",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "bali",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage thailande prix",
+      "traffic": 130,
+      "trafficFormatted": "+130 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-09-03T07:54:58.922Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -16,40 +30,12 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage vietnam prix",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-02T07:46:24.429Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage vietnam pas cher",
-      "traffic": 110,
-      "trafficFormatted": "+110 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-02T07:46:24.429Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
       "query": "voyage thailande phuket",
-      "traffic": 250,
-      "trafficFormatted": "+250 %",
+      "traffic": 40,
+      "trafficFormatted": "+40 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-02T07:46:22.222Z",
+      "date": "2026-09-03T07:54:58.922Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -59,11 +45,11 @@
     },
     {
       "query": "voyage cambodge",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-02T07:46:24.429Z",
+      "date": "2026-09-03T07:55:01.029Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -72,18 +58,75 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage au vietnam",
-      "traffic": 60,
-      "trafficFormatted": "+60 %",
+      "query": "voyage vietnam cambodge",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-02T07:46:24.429Z",
+      "date": "2026-09-03T07:55:01.029Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
       "category": "destination",
       "destination": "vietnam",
       "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge laos",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-09-03T07:55:05.282Z",
+      "source": "related-rising",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage vietnam",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-09-03T07:55:07.384Z",
+      "source": "related-rising",
+      "parentDestination": "laos",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "laos",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "grève volotea",
+      "traffic": 200,
+      "trafficFormatted": "200+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "Les pilotes de Volotea appelés à la grève du 4 au 6 septembre en France, la compagnie alerte sur des perturbations",
+          "url": "https://www.leparisien.fr/economie/les-pilotes-de-volotea-appeles-a-la-greve-du-4-au-6-septembre-en-france-la-compagnie-alerte-sur-des-perturbations-03-09-2026-PIDFGHIJXNAZXGBIQYIY7SM52U.php",
+          "source": "Le Parisien"
+        },
+        {
+          "title": "Un appel à la grève des pilotes d’une compagnie aérienne : des perturbations possibles à",
+          "url": "https://nantes.maville.com/actu/actudet_-un-appel-a-la-greve-des-pilotes-d-une-compagnie-aerienne-des-perturbations-possibles-a-l-aeroport-de-nantes_dep-7460678_actu.Htm",
+          "source": "Maville Nantes"
+        },
+        {
+          "title": "Attention si vous prenez l’avion : un appel à la grève lancé pour les pilotes d’une compagnie low cost en septembre en France",
+          "url": "https://www.nicematin.com/societe/greves/attention-si-vous-prenez-l-avion-un-appel-a-la-greve-lance-pour-les-pilotes-d-une-compagnie-low-cost-en-septembre-en-france-10714946",
+          "source": "Nice-Matin"
+        }
+      ],
+      "date": "Thu, 3 Sep 2026 00:20:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "transport",
+      "destination": null,
+      "compositeScore": 0.29016
     }
   ]
 }

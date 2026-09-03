@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-09-02T07:46:43.575Z",
-    "elapsedSeconds": 6,
+    "generatedAt": "2026-09-03T07:55:18.820Z",
+    "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
     "totalRecommendations": 14,
@@ -37,16 +37,16 @@
       "ga4": {
         "pageviews": 12,
         "sessions": 7,
-        "avgDuration": 491
+        "avgDuration": 464
       },
       "gsc": {
         "impressions": 90,
-        "clicks": 3,
-        "position": 55.8,
+        "clicks": 4,
+        "position": 56.9,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 71.1,
+            "position": 71.2,
             "impressions": 30,
             "ctr": 0
           },
@@ -69,9 +69,9 @@
             "ctr": 0
           },
           {
-            "query": "itinéraire bali lombok",
-            "position": 57,
-            "impressions": 3,
+            "query": "itinéraire bali 10 jours",
+            "position": 80,
+            "impressions": 4,
             "ctr": 0
           }
         ]
@@ -109,14 +109,14 @@
         "avgDuration": 505
       },
       "gsc": {
-        "impressions": 41,
+        "impressions": 44,
         "clicks": 0,
-        "position": 72.1,
+        "position": 72.4,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 84.7,
-            "impressions": 25,
+            "position": 84.6,
+            "impressions": 27,
             "ctr": 0
           },
           {
@@ -141,9 +141,9 @@
         {
           "type": "seo",
           "priority": "P1",
-          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 60 impressions totales",
+          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 62 impressions totales",
           "action": "FIX_CANNIBALIZATION",
-          "details": "Cet article est en competition avec \"meilleur-esim-philippines-2026\" (pos 93.6) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
+          "details": "Cet article est en competition avec \"meilleur-esim-philippines-2026\" (pos 94.1) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
           "effort": "30min",
           "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
         },
@@ -229,12 +229,12 @@
       "ga4": {
         "pageviews": 4,
         "sessions": 4,
-        "avgDuration": 24
+        "avgDuration": 32
       },
       "gsc": {
-        "impressions": 4,
-        "clicks": 1,
-        "position": 9,
+        "impressions": 3,
+        "clicks": 0,
+        "position": 3.7,
         "topQueries": []
       },
       "reels": {
@@ -260,25 +260,25 @@
         "avgDuration": 135
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 10,
         "clicks": 2,
-        "position": 37,
+        "position": 37.2,
         "topQueries": [
           {
-            "query": "vietnam ou thailande",
-            "position": 39.3,
-            "impressions": 4,
-            "ctr": 0
-          },
-          {
             "query": "thailande ou vietnam",
-            "position": 40.7,
-            "impressions": 3,
-            "ctr": 33.33
+            "position": 41.5,
+            "impressions": 2,
+            "ctr": 50
           },
           {
             "query": "thailande vietnam",
             "position": 56,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "vietnam ou thailande",
+            "position": 43.5,
             "impressions": 2,
             "ctr": 0
           },
@@ -298,9 +298,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"vietnam ou thailande\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"thailande ou vietnam\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"vietnam ou thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"thailande ou vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -320,17 +320,17 @@
       "ga4": {
         "pageviews": 3,
         "sessions": 3,
-        "avgDuration": 375
+        "avgDuration": 242
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 9,
         "clicks": 0,
-        "position": 48,
+        "position": 44.2,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
-            "position": 82.2,
-            "impressions": 5,
+            "position": 82.3,
+            "impressions": 4,
             "ctr": 0
           }
         ]
@@ -370,11 +370,11 @@
       "gsc": {
         "impressions": 40,
         "clicks": 0,
-        "position": 88.1,
+        "position": 88.4,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 93.6,
+            "position": 94.1,
             "impressions": 35,
             "ctr": 0
           },
@@ -394,9 +394,9 @@
         {
           "type": "seo",
           "priority": "P1",
-          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 60 impressions totales",
+          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 62 impressions totales",
           "action": "FIX_CANNIBALIZATION",
-          "details": "Cet article est en competition avec \"esim-philippines-globe-smart-comparatif-2026\" (pos 84.7) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
+          "details": "Cet article est en competition avec \"esim-philippines-globe-smart-comparatif-2026\" (pos 84.6) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
           "effort": "30min",
           "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
         },
@@ -442,108 +442,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 5072,
-      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
-      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "url": "https://flashvoyage.com/kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage/",
-      "wordCount": 1294,
-      "widgetCount": 0,
-      "internalLinks": 16,
-      "lastModified": "2026-06-11T05:33:17",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 18,
-        "clicks": 0,
-        "position": 7.8,
-        "topQueries": [
-          {
-            "query": "comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?",
-            "position": 11,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4373,
-      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
-      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
-      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
-      "wordCount": 4965,
-      "widgetCount": 2,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:21",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 20,
-        "clicks": 0,
-        "position": 17.6,
-        "topQueries": [
-          {
-            "query": "voyage japon couple",
-            "position": 41.3,
-            "impressions": 3,
-            "ctr": 0
-          },
-          {
-            "query": "15 jours au japon budget",
-            "position": 26,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "budget 15 jours japon",
-            "position": 48,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"voyage japon couple\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"voyage japon couple\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -558,9 +456,9 @@
         "avgDuration": 129
       },
       "gsc": {
-        "impressions": 27,
+        "impressions": 26,
         "clicks": 0,
-        "position": 40.7,
+        "position": 40.3,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -669,39 +567,51 @@
       "p0Count": 0
     },
     {
-      "wpId": 5678,
-      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
-      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
-      "wordCount": 1657,
-      "widgetCount": 0,
-      "internalLinks": 25,
-      "lastModified": "2026-06-11T05:27:51",
+      "wpId": 4373,
+      "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+      "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
+      "url": "https://flashvoyage.com/japon-couple-15-jours-budget-tout-compris-2026/",
+      "wordCount": 4965,
+      "widgetCount": 2,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:21",
       "ga4": {
         "pageviews": 1,
         "sessions": 1,
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 39,
+        "impressions": 23,
         "clicks": 0,
-        "position": 62.1,
+        "position": 23.5,
         "topQueries": [
           {
-            "query": "esim asie du sud est",
-            "position": 59.4,
-            "impressions": 29,
+            "query": "voyage japon couple",
+            "position": 41.3,
+            "impressions": 3,
             "ctr": 0
           },
           {
-            "query": "asie du sud-est sim locale internet conseils",
-            "position": 67.8,
-            "impressions": 8,
+            "query": "voyage japon pour 2 personnes",
+            "position": 62,
+            "impressions": 2,
             "ctr": 0
           },
           {
-            "query": "meilleur esim asie",
-            "position": 99,
+            "query": "15 jours au japon budget",
+            "position": 26,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "budget 15 jours japon",
+            "position": 48,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "honeymoon in japan cost",
+            "position": 65,
             "impressions": 1,
             "ctr": 0
           }
@@ -715,9 +625,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim asie du sud est\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"voyage japon couple\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim asie du sud est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"voyage japon couple\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -766,6 +676,34 @@
         "pageviews": 1,
         "sessions": 1,
         "avgDuration": 107
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 3254,
+      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "url": "https://flashvoyage.com/chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget/",
+      "wordCount": 3581,
+      "widgetCount": 0,
+      "internalLinks": 41,
+      "lastModified": "2026-06-11T05:33:45",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 25
       },
       "gsc": {
         "impressions": 0,
@@ -866,6 +804,63 @@
       "p0Count": 0
     },
     {
+      "wpId": 5678,
+      "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+      "title": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "url": "https://flashvoyage.com/choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout/",
+      "wordCount": 1657,
+      "widgetCount": 0,
+      "internalLinks": 25,
+      "lastModified": "2026-06-11T05:27:51",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 40,
+        "clicks": 0,
+        "position": 62.1,
+        "topQueries": [
+          {
+            "query": "esim asie du sud est",
+            "position": 59.5,
+            "impressions": 30,
+            "ctr": 0
+          },
+          {
+            "query": "asie du sud-est sim locale internet conseils",
+            "position": 67.8,
+            "impressions": 8,
+            "ctr": 0
+          },
+          {
+            "query": "meilleur esim asie",
+            "position": 99,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim asie du sud est\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim asie du sud est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 5343,
       "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
       "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
@@ -908,9 +903,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 0,
         "clicks": 0,
-        "position": 68,
+        "position": 0,
         "topQueries": []
       },
       "reels": {
@@ -992,20 +987,20 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 4,
         "clicks": 0,
-        "position": 61.6,
+        "position": 63,
         "topQueries": [
           {
             "query": "thailande ou vietnam",
-            "position": 80.3,
-            "impressions": 3,
+            "position": 82,
+            "impressions": 2,
             "ctr": 0
           },
           {
             "query": "vietnam ou thailande",
-            "position": 75,
-            "impressions": 2,
+            "position": 79,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -1054,6 +1049,51 @@
       },
       "recommendations": [],
       "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 5072,
+      "slug": "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage",
+      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
+      "url": "https://flashvoyage.com/kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage/",
+      "wordCount": 1294,
+      "widgetCount": 0,
+      "internalLinks": 16,
+      "lastModified": "2026-06-11T05:33:17",
+      "ga4": {
+        "pageviews": 0,
+        "sessions": 0,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 18,
+        "clicks": 0,
+        "position": 8.4,
+        "topQueries": [
+          {
+            "query": "comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?",
+            "position": 11,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -1253,34 +1293,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 3254,
-      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "url": "https://flashvoyage.com/chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget/",
-      "wordCount": 3581,
-      "widgetCount": 0,
-      "internalLinks": 41,
-      "lastModified": "2026-06-11T05:33:45",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 3198,
       "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
       "title": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
@@ -1323,9 +1335,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 5,
         "clicks": 0,
-        "position": 42.7,
+        "position": 48,
         "topQueries": []
       },
       "reels": {
@@ -1351,14 +1363,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 10,
         "clicks": 0,
-        "position": 54.7,
+        "position": 54.8,
         "topQueries": [
           {
             "query": "circuit authentique asie du sud-est",
-            "position": 76.6,
-            "impressions": 5,
+            "position": 75,
+            "impressions": 4,
             "ctr": 0
           },
           {

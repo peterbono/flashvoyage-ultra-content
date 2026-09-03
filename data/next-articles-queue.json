@@ -1,9 +1,25 @@
 {
-  "timestamp": "2026-09-02T07:46:36.247Z",
-  "queueSize": 13,
+  "timestamp": "2026-09-03T07:55:12.706Z",
+  "queueSize": 14,
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "grève volotea",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "transport",
+        "suggestedTitle": "Grève volotea : Guide Pratique",
+        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+        "reason": "Content gap: \"grève volotea\" (score 40, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -15,7 +31,7 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -27,7 +43,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -39,7 +55,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -49,13 +65,13 @@
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 8,
-        "freshness": 0.55,
+        "freshness": 0.54,
         "traffic": 0,
         "reason": "Low-performing article: score=8, consider merge/update/delete"
       }
     },
     {
-      "rank": 5,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -71,7 +87,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -81,13 +97,13 @@
         "wpId": 4030,
         "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 9,
-        "freshness": 0.59,
+        "freshness": 0.58,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
     },
     {
-      "rank": 7,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -103,7 +119,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -113,13 +129,29 @@
         "wpId": 5742,
         "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
         "compositeScore": 10,
-        "freshness": 0.68,
+        "freshness": 0.67,
         "traffic": 0,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
       }
     },
     {
-      "rank": 9,
+      "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "articleType": "support",
+      "context": {
+        "wpId": 5678,
+        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+        "compositeScore": 10,
+        "freshness": 0.67,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -129,45 +161,29 @@
         "wpId": 5270,
         "slug": "esim-japon-combien-ca-te-coute-vraiment",
         "compositeScore": 10,
-        "freshness": 0.66,
+        "freshness": 0.65,
         "traffic": 0,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
       }
     },
     {
-      "rank": 10,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -2,
+      "priorityScore": -1,
       "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
       "articleType": "support",
       "context": {
         "wpId": 6309,
         "slug": "meilleur-esim-japon-2026",
-        "compositeScore": 12,
-        "freshness": 0.77,
+        "compositeScore": 11,
+        "freshness": 0.76,
         "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
     },
     {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 12,
-        "freshness": 0.57,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 12,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -183,24 +199,24 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -3,
-      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
       "articleType": "support",
       "context": {
-        "wpId": 5678,
-        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
         "compositeScore": 13,
-        "freshness": 0.67,
-        "traffic": 0.08,
+        "freshness": 0.66,
+        "traffic": 0,
         "reason": "Low-performing article: score=13, consider merge/update/delete"
       }
     }
   ],
   "summary": {
-    "write_new": 0,
+    "write_new": 1,
     "update": 0,
     "enrich": 0,
     "standard": 3,

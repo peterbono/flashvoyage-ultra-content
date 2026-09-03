@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-09-02T07:46:45.506Z",
+  "timestamp": "2026-09-03T07:55:20.692Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-09-02T07:46:51.869Z",
+      "lastScan": "2026-09-03T07:55:21.381Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-09-02T07:46:52.361Z",
+      "lastScan": "2026-09-03T07:55:21.846Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,7 +139,7 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-09-02T07:48:04.673Z",
+      "lastScan": "2026-09-03T07:56:31.610Z",
       "urlCount": 9995,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
@@ -9748,6 +9748,12 @@
         "https://generationvoyage.fr/visiter-lourdes-faire-voir/": "2026-09-01T05:04:01+00:00",
         "https://generationvoyage.fr/visiter-grisons-faire-voir/": "2026-09-01T05:04:33+00:00",
         "https://generationvoyage.fr/visiter-maribor-faire-voir/": "2026-09-01T05:05:01+00:00",
+        "https://generationvoyage.fr/hiver-prague/": "2026-09-02T08:03:35+00:00",
+        "https://generationvoyage.fr/budget-madrid/": "2026-09-02T10:12:03+00:00",
+        "https://generationvoyage.fr/souvenirs-oslo/": "2026-09-02T12:11:39+00:00",
+        "https://generationvoyage.fr/santorin-hors-saison/": "2026-09-02T14:16:03+00:00",
+        "https://generationvoyage.fr/cap-vert-solo/": "2026-09-02T16:33:37+00:00",
+        "https://generationvoyage.fr/tarte-flambee/": "2026-09-03T07:55:32+00:00",
         "https://generationvoyage.fr/loger-bangkok/": "2026-09-02T03:30:41+00:00",
         "https://generationvoyage.fr/loger-londres/": "2026-09-02T03:31:01+00:00",
         "https://generationvoyage.fr/loger-johannesburg/": "2026-09-02T03:31:27+00:00",
@@ -10130,13 +10136,7 @@
         "https://generationvoyage.fr/visiter-chalki-faire-voir/": "2026-09-02T06:09:01+00:00",
         "https://generationvoyage.fr/visiter-suva-faire-voir/": "2026-09-02T06:09:37+00:00",
         "https://generationvoyage.fr/visiter-peljesac-faire-voir/": "2026-09-02T06:10:03+00:00",
-        "https://generationvoyage.fr/visiter-serifos-faire-voir/": "2026-09-02T06:10:32+00:00",
-        "https://generationvoyage.fr/visiter-gaspesie-faire-voir/": "2026-09-02T06:11:07+00:00",
-        "https://generationvoyage.fr/visiter-blois-faire-voir/": "2026-09-02T06:11:24+00:00",
-        "https://generationvoyage.fr/visiter-hawai-faire-voir/": "2026-09-02T06:11:58+00:00",
-        "https://generationvoyage.fr/visiter-saint-louis-senegal-faire-voir/": "2026-09-02T06:12:22+00:00",
-        "https://generationvoyage.fr/visiter-berne-faire-voir/": "2026-09-02T06:13:16+00:00",
-        "https://generationvoyage.fr/visiter-nimes-faire-voir/": "2026-09-02T06:13:35+00:00"
+        "https://generationvoyage.fr/visiter-serifos-faire-voir/": "2026-09-02T06:10:32+00:00"
       }
     }
   }
