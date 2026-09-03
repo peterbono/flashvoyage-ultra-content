@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-03T15:39:00.133Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-09-03T20:24:20.643Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 1
   },
   "queue": [
     {
@@ -12,50 +12,25 @@
       "source": "rss_breaking",
       "destination": "indonesia",
       "link": "https://balidiscovery.com/chicken-meat-and-airfare-drive-balis-0-61-percent-inflation/",
-      "velocityScore": 0.51,
+      "velocityScore": 0.507,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
+      "hoursRemaining": 714,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1698,
-      "estimatedTrafficIn24h": 1660,
+      "estimatedTrafficNow": 1691,
+      "estimatedTrafficIn24h": 1652,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.68,
-        "timeDecay": 0.999,
+        "timeDecay": 0.994,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 1
+        "hoursSinceDetection": 5.8
       },
       "detectedAt": "2026-09-03T14:39:01.000Z",
-      "scoredAt": "2026-09-03T15:38:51.194Z"
-    },
-    {
-      "topic": "Nepali survivor recounts 'fight through darkness' to escape flood-hit tunnel",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/nepali-survivor-recounts-fight-through-darkness-to-escape-flood-hit-tunnel",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2069,
-      "estimatedTrafficIn24h": 2021,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3.2
-      },
-      "detectedAt": "2026-09-03T12:26:17.000Z",
-      "scoredAt": "2026-09-03T15:38:52.715Z"
+      "scoredAt": "2026-09-03T20:24:09.813Z"
     }
   ]
 }
