@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-03T07:55:19.751Z",
+  "timestamp": "2026-09-04T07:58:10.666Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -88,27 +88,27 @@
     },
     {
       "rank": 4,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 120,
-      "topic": "grève volotea",
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 2,
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
       "articleType": "support",
       "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "transport",
-        "suggestedTitle": "Grève volotea : Guide Pratique",
-        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
-        "reason": "Content gap: \"grève volotea\" (score 40, source: trends)"
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 8,
+        "freshness": 0.56,
+        "traffic": 0,
+        "reason": "Low-performing article: score=8, consider merge/update/delete"
       },
       "roi": {
-        "expectedRoi": 3.01,
-        "projectedMonthlyTraffic": 113,
-        "projectedMonthlyRevenue": 0.226,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (170 PV) × gap boost (0.67)"
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
@@ -133,7 +133,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
@@ -158,7 +158,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
@@ -183,36 +183,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
       "rank": 8,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 1,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
-      "articleType": "support",
-      "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
-        "compositeScore": 9,
-        "freshness": 0.57,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.3,
-      "withinBudget": true
-    },
-    {
-      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -233,11 +208,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -258,11 +233,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -283,11 +258,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -308,21 +283,21 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 13,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
       "articleType": "support",
       "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "wpId": 4105,
+        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
         "compositeScore": 12,
-        "freshness": 0.52,
+        "freshness": 0.58,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
@@ -333,23 +308,23 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 14,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "priorityScore": -2,
+      "topic": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
       "articleType": "support",
       "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 13,
-        "freshness": 0.66,
+        "wpId": 3090,
+        "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+        "compositeScore": 12,
+        "freshness": 0.54,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
@@ -358,20 +333,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.3,
+    "totalCost": 0.225,
     "dailyBudget": 2,
-    "itemsWithinBudget": 14,
+    "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.042,
-    "expectedDailyRoi": 0.14
+    "expectedDailyRevenue": 0.034,
+    "expectedDailyRoi": 0.15
   },
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,

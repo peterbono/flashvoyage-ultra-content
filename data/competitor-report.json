@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-03T07:56:31.624Z",
+  "timestamp": "2026-09-04T07:59:27.501Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -17,14 +17,148 @@
       "id": "generationvoyage",
       "name": "Generation Voyage",
       "totalUrls": 9995,
-      "newUrls": 6
+      "newUrls": 404
     }
   ],
-  "newArticles": [],
+  "newArticles": [
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-ho-chi-minh-ville/",
+      "lastmod": "2026-09-04T03:46:44+00:00",
+      "destination": "ho-chi-minh",
+      "contentType": "general",
+      "title": "Loger Ho Chi Minh Ville",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Ho Chi Minh Ville\" (ho-chi-minh, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-kyoto/",
+      "lastmod": "2026-09-04T03:53:21+00:00",
+      "destination": "kyoto",
+      "contentType": "general",
+      "title": "Loger Kyoto",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Kyoto\" (kyoto, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-manille/",
+      "lastmod": "2026-09-04T04:06:07+00:00",
+      "destination": "manille",
+      "contentType": "general",
+      "title": "Loger Manille",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Manille\" (manille, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-osaka/",
+      "lastmod": "2026-09-04T04:23:32+00:00",
+      "destination": "osaka",
+      "contentType": "general",
+      "title": "Loger Osaka",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Osaka\" (osaka, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-jakarta/",
+      "lastmod": "2026-09-04T04:26:10+00:00",
+      "destination": "jakarta",
+      "contentType": "general",
+      "title": "Loger Jakarta",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Jakarta\" (jakarta, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-cebu/",
+      "lastmod": "2026-09-04T04:45:21+00:00",
+      "destination": "cebu",
+      "contentType": "general",
+      "title": "Loger Cebu",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Loger Cebu\" (cebu, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-penang-faire-voir/",
+      "lastmod": "2026-09-04T04:52:37+00:00",
+      "destination": "penang",
+      "contentType": "activites",
+      "title": "Visiter Penang Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Penang Faire Voir\" (penang, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-jakarta-faire-voir/",
+      "lastmod": "2026-09-04T05:04:19+00:00",
+      "destination": "jakarta",
+      "contentType": "activites",
+      "title": "Visiter Jakarta Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Jakarta Faire Voir\" (jakarta, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-cebu-faire-voir/",
+      "lastmod": "2026-09-04T05:15:18+00:00",
+      "destination": "cebu",
+      "contentType": "activites",
+      "title": "Visiter Cebu Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Cebu Faire Voir\" (cebu, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-bangkok/",
+      "lastmod": "2026-09-04T03:31:16+00:00",
+      "destination": "bangkok",
+      "contentType": "general",
+      "title": "Loger Bangkok",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=10, freshness=0.67)",
+      "matchedArticle": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 10,
+        "freshness": 0.67
+      }
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/loger-chiang-mai/",
+      "lastmod": "2026-09-04T04:43:28+00:00",
+      "destination": "chiang-mai",
+      "contentType": "general",
+      "title": "Loger Chiang Mai",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant\" (score=15, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 15,
+        "freshness": 0.56
+      }
+    }
+  ],
   "summary": {
-    "totalNew": 0,
-    "contentGaps": 0,
+    "totalNew": 11,
+    "contentGaps": 9,
     "staleRefreshes": 0,
-    "monitoring": 0
+    "monitoring": 2
   }
 }

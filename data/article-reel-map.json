@@ -1,10 +1,33 @@
 {
-  "timestamp": "2026-09-03T07:55:11.754Z",
+  "timestamp": "2026-09-04T07:58:02.361Z",
   "articleMap": {
     "bali-lombok-gili-10-jours-itineraire-budget-2026": {
       "wpId": 4370,
       "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
       "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "voyage-thailande-pas-cher-2026-budget": {
+      "wpId": 4487,
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-05-07",
+          "format": "budget",
+          "platform": "tiktok",
+          "score": 4.9,
+          "engagementRate": 0,
+          "publishedAt": "2026-05-07",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
       "suggestedFormats": [
         "budget",
         "versus",
@@ -34,29 +57,6 @@
         "avantapres"
       ],
       "category": "destination",
-      "igReferralTraffic": null
-    },
-    "voyage-thailande-pas-cher-2026-budget": {
-      "wpId": 4487,
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-05-07",
-          "format": "budget",
-          "platform": "tiktok",
-          "score": 4.9,
-          "engagementRate": 0,
-          "publishedAt": "2026-05-07",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "bali-vs-thailande-premier-voyage-asie-comparatif": {
@@ -115,18 +115,6 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "esim-vietnam-comparatif-forfait-2026-frais-caches": {
-      "wpId": 4250,
-      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "esim-philippines-globe-smart-comparatif-2026": {
       "wpId": 4372,
       "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
@@ -139,16 +127,16 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "meilleur-esim-cambodge-2026": {
-      "wpId": 6374,
-      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+    "esim-vietnam-comparatif-forfait-2026-frais-caches": {
+      "wpId": 4250,
+      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "month",
-        "avantapres"
+        "poll",
+        "humor"
       ],
-      "category": "destination",
+      "category": "default",
       "igReferralTraffic": null
     },
     "japon-couple-15-jours-budget-tout-compris-2026": {
@@ -202,6 +190,18 @@
         "poll"
       ],
       "category": "budget",
+      "igReferralTraffic": null
+    },
+    "meilleur-esim-cambodge-2026": {
+      "wpId": 6374,
+      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "destination",
       "igReferralTraffic": null
     },
     "visa-cambodge-francais-2026-evisa-prix-pieges": {
@@ -264,29 +264,6 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage": {
-      "wpId": 5179,
-      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-04-06",
-          "format": "versus",
-          "platform": "tiktok",
-          "score": 1.5,
-          "engagementRate": 0,
-          "publishedAt": "2026-04-06",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
     "meilleur-esim-bali-2026": {
       "wpId": 6327,
       "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
@@ -297,18 +274,6 @@
         "avantapres"
       ],
       "category": "destination",
-      "igReferralTraffic": null
-    },
-    "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
-      "wpId": 5260,
-      "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
       "igReferralTraffic": null
     },
     "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
@@ -346,16 +311,39 @@
       "category": "destination",
       "igReferralTraffic": null
     },
-    "meilleur-esim-vietnam-2026": {
-      "wpId": 6323,
-      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
+    "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
+      "wpId": 5260,
+      "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "month",
-        "avantapres"
+        "poll",
+        "humor"
       ],
-      "category": "destination",
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage": {
+      "wpId": 5179,
+      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-04-06",
+          "format": "versus",
+          "platform": "tiktok",
+          "score": 1.5,
+          "engagementRate": 0,
+          "publishedAt": "2026-04-06",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
       "igReferralTraffic": null
     },
     "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
@@ -370,16 +358,16 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
-      "wpId": 5333,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+    "meilleur-esim-vietnam-2026": {
+      "wpId": 6323,
+      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "poll",
-        "humor"
+        "month",
+        "avantapres"
       ],
-      "category": "default",
+      "category": "destination",
       "igReferralTraffic": null
     },
     "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget": {
@@ -394,21 +382,21 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
-      "wpId": 5063,
-      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
+      "wpId": 5333,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
       "reels": [],
       "suggestedFormats": [
         "pick",
-        "month",
-        "avantapres"
+        "poll",
+        "humor"
       ],
-      "category": "itineraire",
+      "category": "default",
       "igReferralTraffic": null
     },
-    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
-      "wpId": 4105,
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+    "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
+      "wpId": 5063,
+      "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -445,6 +433,18 @@
     "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis": {
       "wpId": 3425,
       "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
+      "wpId": 4105,
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
       "reels": [],
       "suggestedFormats": [
         "pick",

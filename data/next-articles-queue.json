@@ -1,25 +1,9 @@
 {
-  "timestamp": "2026-09-03T07:55:12.706Z",
-  "queueSize": 14,
+  "timestamp": "2026-09-04T07:58:03.327Z",
+  "queueSize": 13,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 120,
-      "topic": "grève volotea",
-      "articleType": "support",
-      "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "transport",
-        "suggestedTitle": "Grève volotea : Guide Pratique",
-        "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
-        "reason": "Content gap: \"grève volotea\" (score 40, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +15,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +27,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -52,6 +36,22 @@
       "context": {
         "cyclePosition": 1,
         "reason": "Standard editorial calendar rotation (position 2/5)"
+      }
+    },
+    {
+      "rank": 4,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 2,
+      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
+      "articleType": "support",
+      "context": {
+        "wpId": 3198,
+        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
+        "compositeScore": 8,
+        "freshness": 0.56,
+        "traffic": 0,
+        "reason": "Low-performing article: score=8, consider merge/update/delete"
       }
     },
     {
@@ -106,22 +106,6 @@
       "rank": 8,
       "action": "review",
       "priority": "P4",
-      "priorityScore": 1,
-      "topic": "Maratua ou Maldives : j&rsquo;ai choisi pour ma lune de miel",
-      "articleType": "support",
-      "context": {
-        "wpId": 3198,
-        "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
-        "compositeScore": 9,
-        "freshness": 0.57,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
       "priorityScore": 0,
       "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
       "articleType": "support",
@@ -135,7 +119,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -151,7 +135,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -167,7 +151,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -183,40 +167,40 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "topic": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
       "articleType": "support",
       "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "wpId": 4105,
+        "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
         "compositeScore": 12,
-        "freshness": 0.52,
+        "freshness": 0.58,
         "traffic": 0,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
     },
     {
-      "rank": 14,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "priorityScore": -2,
+      "topic": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
       "articleType": "support",
       "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 13,
-        "freshness": 0.66,
+        "wpId": 3090,
+        "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
+        "compositeScore": 12,
+        "freshness": 0.54,
         "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,
