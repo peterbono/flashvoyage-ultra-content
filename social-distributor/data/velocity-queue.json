@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-09-03T20:24:20.643Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-09-04T02:34:45.107Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Chicken Meat and Airfare Drive Bali’s 0.61 Percent Inflation",
-      "source": "rss_breaking",
-      "destination": "indonesia",
-      "link": "https://balidiscovery.com/chicken-meat-and-airfare-drive-balis-0-61-percent-inflation/",
-      "velocityScore": 0.507,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 714,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1691,
-      "estimatedTrafficIn24h": 1652,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.68,
-        "timeDecay": 0.994,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 5.8
-      },
-      "detectedAt": "2026-09-03T14:39:01.000Z",
-      "scoredAt": "2026-09-03T20:24:09.813Z"
-    }
-  ]
+  "queue": []
 }
