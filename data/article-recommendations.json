@@ -1,26 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-09-04T07:58:09.720Z",
+    "generatedAt": "2026-09-05T07:32:36.238Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
-    "totalRecommendations": 14,
+    "totalRecommendations": 12,
     "byPriority": {
       "P0": 0,
-      "P1": 2,
+      "P1": 0,
       "P2": 12
     },
     "byType": {
-      "seo": 14
+      "seo": 12
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
         "count": 12
-      },
-      {
-        "action": "FIX_CANNIBALIZATION",
-        "count": 2
       }
     ]
   },
@@ -35,18 +31,18 @@
       "internalLinks": 47,
       "lastModified": "2026-06-11T05:33:27",
       "ga4": {
-        "pageviews": 12,
+        "pageviews": 13,
         "sessions": 8,
-        "avgDuration": 427
+        "avgDuration": 462
       },
       "gsc": {
-        "impressions": 91,
+        "impressions": 92,
         "clicks": 4,
-        "position": 56.5,
+        "position": 56.6,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 70.6,
+            "position": 70.3,
             "impressions": 29,
             "ctr": 0
           },
@@ -70,8 +66,8 @@
           },
           {
             "query": "itinéraire bali 10 jours",
-            "position": 78.8,
-            "impressions": 5,
+            "position": 77.7,
+            "impressions": 6,
             "ctr": 0
           }
         ]
@@ -109,14 +105,14 @@
         "avgDuration": 505
       },
       "gsc": {
-        "impressions": 46,
+        "impressions": 48,
         "clicks": 0,
-        "position": 71.5,
+        "position": 72,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 84.7,
-            "impressions": 29,
+            "position": 84.6,
+            "impressions": 31,
             "ctr": 0
           },
           {
@@ -140,15 +136,6 @@
       "recommendations": [
         {
           "type": "seo",
-          "priority": "P1",
-          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 62 impressions totales",
-          "action": "FIX_CANNIBALIZATION",
-          "details": "Cet article est en competition avec \"meilleur-esim-philippines-2026\" (pos 94.7) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
-          "effort": "30min",
-          "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
-        },
-        {
-          "type": "seo",
           "priority": "P2",
           "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
           "action": "ADD_FAQ_SCHEMA",
@@ -157,7 +144,7 @@
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
       ],
-      "recommendationCount": 2,
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -177,11 +164,11 @@
       "gsc": {
         "impressions": 89,
         "clicks": 0,
-        "position": 51.5,
+        "position": 51.4,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 53.2,
+            "position": 53.1,
             "impressions": 82,
             "ctr": 0
           },
@@ -224,34 +211,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2503,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:20",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 4,
-        "avgDuration": 32
-      },
-      "gsc": {
-        "impressions": 3,
-        "clicks": 0,
-        "position": 3.7,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 5119,
       "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
@@ -266,9 +225,9 @@
         "avgDuration": 135
       },
       "gsc": {
-        "impressions": 9,
-        "clicks": 1,
-        "position": 36.2,
+        "impressions": 8,
+        "clicks": 0,
+        "position": 37.8,
         "topQueries": [
           {
             "query": "thailande vietnam",
@@ -329,14 +288,14 @@
         "avgDuration": 242
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 7,
         "clicks": 0,
-        "position": 33.8,
+        "position": 31.3,
         "topQueries": [
           {
             "query": "assurance voyage vietnam",
-            "position": 83,
-            "impressions": 3,
+            "position": 83.5,
+            "impressions": 2,
             "ctr": 0
           }
         ]
@@ -376,11 +335,11 @@
       "gsc": {
         "impressions": 37,
         "clicks": 0,
-        "position": 90.4,
+        "position": 90.8,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 94.7,
+            "position": 95.1,
             "impressions": 33,
             "ctr": 0
           },
@@ -399,15 +358,6 @@
       "recommendations": [
         {
           "type": "seo",
-          "priority": "P1",
-          "metric": "Cannibalisation: \"esim philippines\" — 2 articles en competition, 62 impressions totales",
-          "action": "FIX_CANNIBALIZATION",
-          "details": "Cet article est en competition avec \"esim-philippines-globe-smart-comparatif-2026\" (pos 84.7) pour le keyword \"esim philippines\". Google ne sait pas quel article classer. Actions : 1) Si les articles couvrent le meme sujet : fusionner le meilleur contenu dans un seul article et 301-redirect l'autre. 2) Si sujets differents : differencier les titres H1 et meta descriptions pour cibler des intentions differentes. 3) Ajouter un lien canonical vers l'article principal si overlap eleve. 4) Supprimer le keyword exact du title de l'article secondaire.",
-          "effort": "30min",
-          "expectedImpact": "Consolidation = position amelioree de 3-5 places pour \"esim philippines\""
-        },
-        {
-          "type": "seo",
           "priority": "P2",
           "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
           "action": "ADD_FAQ_SCHEMA",
@@ -416,7 +366,7 @@
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
       ],
-      "recommendationCount": 2,
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -448,6 +398,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2503,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:20",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 51
+      },
+      "gsc": {
+        "impressions": 3,
+        "clicks": 0,
+        "position": 3.7,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4254,
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
@@ -464,7 +442,7 @@
       "gsc": {
         "impressions": 20,
         "clicks": 0,
-        "position": 35,
+        "position": 32.9,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -487,12 +465,6 @@
           {
             "query": "thailande bali",
             "position": 72,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "thailande ou bali",
-            "position": 52,
             "impressions": 1,
             "ctr": 0
           }
@@ -587,14 +559,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 24,
+        "impressions": 22,
         "clicks": 0,
-        "position": 22.8,
+        "position": 22.3,
         "topQueries": [
           {
             "query": "voyage japon couple",
-            "position": 41.3,
-            "impressions": 3,
+            "position": 39,
+            "impressions": 2,
             "ctr": 0
           },
           {
@@ -796,9 +768,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 1,
         "clicks": 0,
-        "position": 0,
+        "position": 7,
         "topQueries": []
       },
       "reels": {
@@ -824,14 +796,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 41,
+        "impressions": 39,
         "clicks": 0,
-        "position": 63,
+        "position": 63.4,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 60.7,
-            "impressions": 30,
+            "position": 60.9,
+            "impressions": 29,
             "ctr": 0
           },
           {
