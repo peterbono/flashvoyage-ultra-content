@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-06T14:47:24.540Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-09-06T19:53:22.811Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 1,
+    "queue_priority": 0,
     "queue_normal": 1
   },
   "queue": [
@@ -12,50 +12,25 @@
       "source": "rss_breaking",
       "destination": "southeast-asia",
       "link": "https://www.channelnewsasia.com/singapore/travel-chaos-changi-airport-soekarno-hatta-volcano-6365516",
-      "velocityScore": 0.672,
-      "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 715,
+      "velocityScore": 0.446,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 710,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2240,
-      "estimatedTrafficIn24h": 2188,
-      "trafficLossPerHour": 2,
+      "estimatedTrafficNow": 1486,
+      "estimatedTrafficIn24h": 1452,
+      "trafficLossPerHour": 1,
       "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.995,
+        "trendIntensity": 0.6,
+        "timeDecay": 0.991,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 4.8
+        "hoursSinceDetection": 9.9
       },
       "detectedAt": "2026-09-06T09:59:00.000Z",
-      "scoredAt": "2026-09-06T14:47:14.761Z"
-    },
-    {
-      "topic": "Tibet death toll from Himalayas flood now 43 with 519 missing: Chinese media",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.channelnewsasia.com/east-asia/tibet-death-toll-himalayas-flood-now-43-519-missing-chinese-media-6365566",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2067,
-      "estimatedTrafficIn24h": 2019,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.996,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 4.3
-      },
-      "detectedAt": "2026-09-06T10:31:34.000Z",
-      "scoredAt": "2026-09-06T14:47:21.031Z"
+      "scoredAt": "2026-09-06T19:53:18.513Z"
     }
   ]
 }
