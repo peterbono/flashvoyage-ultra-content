@@ -1,10 +1,111 @@
 {
-  "generatedAt": "2026-09-06T02:29:07.725Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-09-06T10:07:15.650Z",
+  "totalTopics": 4,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 0,
-    "queue_normal": 0
+    "queue_priority": 2,
+    "queue_normal": 2
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Travel chaos hits Changi and Jakarta airports as volcanic ash grounds flights between the two hubs",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.channelnewsasia.com/singapore/travel-chaos-changi-airport-soekarno-hatta-volcano-6365516",
+      "velocityScore": 0.675,
+      "action": "QUEUE_PRIORITY",
+      "hoursRemaining": 720,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2250,
+      "estimatedTrafficIn24h": 2198,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 1,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 0.1
+      },
+      "detectedAt": "2026-09-06T09:59:39.000Z",
+      "scoredAt": "2026-09-06T10:07:04.530Z"
+    },
+    {
+      "topic": "BREAKING NEWS: Jakarta’s Soekarno-Hatta Airport Closed Due to the Eruptions of Krakatau Volcano",
+      "source": "rss_breaking",
+      "destination": "indonesia",
+      "link": "https://balidiscovery.com/breaking-news-jakartas-soekarno-hatta-airport-closed-due-to-the-eruptions-of-krakatau-volcano/",
+      "velocityScore": 0.621,
+      "action": "QUEUE_PRIORITY",
+      "hoursRemaining": 9,
+      "topicType": {
+        "key": "breaking_news",
+        "halfLifeHours": 12
+      },
+      "estimatedTrafficNow": 2071,
+      "estimatedTrafficIn24h": 518,
+      "trafficLossPerHour": 65,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.829,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 3.3
+      },
+      "detectedAt": "2026-09-06T06:51:47.000Z",
+      "scoredAt": "2026-09-06T10:07:08.273Z"
+    },
+    {
+      "topic": "Indonesia's main airport suspends flights as Krakatoa erupts",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/world/3314953/indonesias-main-airport-suspends-flights-as-krakatoa-erupts",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2070,
+      "estimatedTrafficIn24h": 2023,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.4
+      },
+      "detectedAt": "2026-09-06T07:45:00.000Z",
+      "scoredAt": "2026-09-06T10:07:06.664Z"
+    },
+    {
+      "topic": "At flood-destroyed China-Nepal border, no sign of a once-busy port",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/south-asia/at-flood-destroyed-china-nepal-border-no-sign-of-a-once-busy-port-reuters-witnesses",
+      "velocityScore": 0.414,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2070,
+      "estimatedTrafficIn24h": 2023,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.6
+      },
+      "detectedAt": "2026-09-06T07:31:36.000Z",
+      "scoredAt": "2026-09-06T10:07:07.520Z"
+    }
+  ]
 }
