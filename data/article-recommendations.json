@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-09-05T07:32:36.238Z",
+    "generatedAt": "2026-09-06T07:46:19.605Z",
     "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
@@ -36,14 +36,14 @@
         "avgDuration": 462
       },
       "gsc": {
-        "impressions": 92,
-        "clicks": 4,
-        "position": 56.6,
+        "impressions": 96,
+        "clicks": 5,
+        "position": 55.4,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 70.3,
-            "impressions": 29,
+            "position": 70,
+            "impressions": 28,
             "ctr": 0
           },
           {
@@ -53,21 +53,21 @@
             "ctr": 0
           },
           {
+            "query": "bali lombok gili",
+            "position": 66.3,
+            "impressions": 11,
+            "ctr": 0
+          },
+          {
             "query": "circuit bali lombok gili",
             "position": 36.5,
             "impressions": 11,
             "ctr": 0
           },
           {
-            "query": "bali lombok gili",
-            "position": 68.3,
-            "impressions": 9,
-            "ctr": 0
-          },
-          {
             "query": "itinéraire bali 10 jours",
-            "position": 77.7,
-            "impressions": 6,
+            "position": 77,
+            "impressions": 7,
             "ctr": 0
           }
         ]
@@ -105,14 +105,14 @@
         "avgDuration": 505
       },
       "gsc": {
-        "impressions": 48,
+        "impressions": 52,
         "clicks": 0,
-        "position": 72,
+        "position": 72.8,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 84.6,
-            "impressions": 31,
+            "position": 84.3,
+            "impressions": 35,
             "ctr": 0
           },
           {
@@ -162,25 +162,25 @@
         "avgDuration": 14
       },
       "gsc": {
-        "impressions": 89,
+        "impressions": 94,
         "clicks": 0,
         "position": 51.4,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 53.1,
-            "impressions": 82,
-            "ctr": 0
-          },
-          {
-            "query": "e sim cambodge",
-            "position": 47.5,
-            "impressions": 2,
+            "position": 53,
+            "impressions": 85,
             "ctr": 0
           },
           {
             "query": "e-sim cambodge",
             "position": 48,
+            "impressions": 4,
+            "ctr": 0
+          },
+          {
+            "query": "e sim cambodge",
+            "position": 47.5,
             "impressions": 2,
             "ctr": 0
           },
@@ -203,69 +203,6 @@
           "metric": "Pas de schema FAQ (keyword principal: \"esim cambodge\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim cambodge\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 5119,
-      "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
-      "url": "https://flashvoyage.com/thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage/",
-      "wordCount": 1491,
-      "widgetCount": 0,
-      "internalLinks": 19,
-      "lastModified": "2026-06-11T05:33:16",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 2,
-        "avgDuration": 135
-      },
-      "gsc": {
-        "impressions": 8,
-        "clicks": 0,
-        "position": 37.8,
-        "topQueries": [
-          {
-            "query": "thailande vietnam",
-            "position": 56,
-            "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "vietnam ou thailande",
-            "position": 43.5,
-            "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "thailande et vietnam",
-            "position": 52,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "thailande ou vietnam",
-            "position": 37,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"thailande vietnam\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"thailande vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -333,14 +270,14 @@
         "avgDuration": 64
       },
       "gsc": {
-        "impressions": 37,
+        "impressions": 39,
         "clicks": 0,
-        "position": 90.8,
+        "position": 91.5,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 95.1,
-            "impressions": 33,
+            "position": 95.7,
+            "impressions": 35,
             "ctr": 0
           },
           {
@@ -398,6 +335,75 @@
       "p0Count": 0
     },
     {
+      "wpId": 5119,
+      "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
+      "url": "https://flashvoyage.com/thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage/",
+      "wordCount": 1491,
+      "widgetCount": 0,
+      "internalLinks": 19,
+      "lastModified": "2026-06-11T05:33:16",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 1,
+        "avgDuration": 87
+      },
+      "gsc": {
+        "impressions": 14,
+        "clicks": 0,
+        "position": 43.6,
+        "topQueries": [
+          {
+            "query": "thailande vietnam",
+            "position": 56,
+            "impressions": 4,
+            "ctr": 0
+          },
+          {
+            "query": "vietnam ou thailande",
+            "position": 45,
+            "impressions": 3,
+            "ctr": 0
+          },
+          {
+            "query": "thailande et vietnam",
+            "position": 52,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "thailande ou vietnam",
+            "position": 42,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "thaïlande ou vietnam",
+            "position": 50,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"thailande vietnam\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"thailande vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 4487,
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
@@ -440,31 +446,37 @@
         "avgDuration": 129
       },
       "gsc": {
-        "impressions": 20,
+        "impressions": 27,
         "clicks": 0,
-        "position": 32.9,
+        "position": 39.2,
         "topQueries": [
           {
             "query": "bali ou thailande",
-            "position": 57,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "bali, thailand",
-            "position": 87,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "thailand bali",
-            "position": 69,
-            "impressions": 1,
+            "position": 55,
+            "impressions": 2,
             "ctr": 0
           },
           {
             "query": "thailande bali",
+            "position": 77,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "bali et thailande",
+            "position": 65,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "bali thailand",
             "position": 72,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "bali thailande",
+            "position": 69,
             "impressions": 1,
             "ctr": 0
           }
@@ -559,9 +571,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 22,
+        "impressions": 21,
         "clicks": 0,
-        "position": 22.3,
+        "position": 22.8,
         "topQueries": [
           {
             "query": "voyage japon couple",
@@ -798,11 +810,11 @@
       "gsc": {
         "impressions": 39,
         "clicks": 0,
-        "position": 63.4,
+        "position": 63.5,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 60.9,
+            "position": 61,
             "impressions": 29,
             "ctr": 0
           },
@@ -965,20 +977,20 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 5,
         "clicks": 0,
-        "position": 63,
+        "position": 81.8,
         "topQueries": [
           {
             "query": "thailande ou vietnam",
             "position": 82,
-            "impressions": 2,
+            "impressions": 3,
             "ctr": 0
           },
           {
             "query": "vietnam ou thailande",
-            "position": 79,
-            "impressions": 1,
+            "position": 81.5,
+            "impressions": 2,
             "ctr": 0
           }
         ]
@@ -1341,25 +1353,31 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 8,
+        "impressions": 12,
         "clicks": 0,
-        "position": 52.1,
+        "position": 53.1,
         "topQueries": [
           {
+            "query": "itinéraire asie hors des sentiers battus",
+            "position": 48.8,
+            "impressions": 4,
+            "ctr": 0
+          },
+          {
             "query": "circuit authentique asie du sud-est",
-            "position": 74.7,
-            "impressions": 3,
+            "position": 76,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "itinéraires asie du sud-est",
+            "position": 71.5,
+            "impressions": 2,
             "ctr": 0
           },
           {
             "query": "asie du sud-est slow travel longue durée",
             "position": 88,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "itinéraire asie hors des sentiers battus",
-            "position": 46,
             "impressions": 1,
             "ctr": 0
           }
@@ -1373,9 +1391,9 @@
         {
           "type": "seo",
           "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"circuit authentique asie du sud-est\")",
+          "metric": "Pas de schema FAQ (keyword principal: \"itinéraire asie hors des sentiers battus\")",
           "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"circuit authentique asie du sud-est\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"itinéraire asie hors des sentiers battus\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
