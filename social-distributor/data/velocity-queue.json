@@ -1,36 +1,86 @@
 {
-  "generatedAt": "2026-09-07T02:26:13.252Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-09-07T11:22:01.331Z",
+  "totalTopics": 3,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 0,
-    "queue_normal": 1
+    "queue_priority": 1,
+    "queue_normal": 2
   },
   "queue": [
     {
-      "topic": "‘Mummy, mummy’: 5-year-old stuck in muddy sludge rescued three days after Nepal’s flood disaster",
+      "topic": "Indonesians board buses and trains as volcano ash from Mount Anak Krakatau halts flights",
       "source": "rss_breaking",
       "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/south-asia/miracle-child-reunited-with-mum-and-dad-in-kathmandu-hospital-days-after-nepals-flash-floods",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
+      "link": "https://www.straitstimes.com/asia/se-asia/indonesians-board-buses-and-trains-as-volcano-ash-from-mount-anak-krakatau-halts-flights",
+      "velocityScore": 0.619,
+      "action": "QUEUE_PRIORITY",
       "hoursRemaining": 715,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2064,
-      "estimatedTrafficIn24h": 2017,
+      "estimatedTrafficNow": 2065,
+      "estimatedTrafficIn24h": 2018,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
         "timeDecay": 0.995,
         "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5.4
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 5.1
       },
-      "detectedAt": "2026-09-06T21:00:00.000Z",
-      "scoredAt": "2026-09-07T02:26:08.836Z"
+      "detectedAt": "2026-09-07T06:15:00.000Z",
+      "scoredAt": "2026-09-07T11:21:46.891Z"
+    },
+    {
+      "topic": "Indonesia flight disruptions send travellers on marathon journeys as fares surge, trains sell out",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.channelnewsasia.com/asia/indonesia-airport-disruption-mount-anak-krakatau-6366766",
+      "velocityScore": 0.489,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2446,
+      "estimatedTrafficIn24h": 2390,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.6
+      },
+      "detectedAt": "2026-09-07T09:45:00.000Z",
+      "scoredAt": "2026-09-07T11:21:45.827Z"
+    },
+    {
+      "topic": "Mount Anak Krakatau: What to know about the volcano disrupting Indonesia flights",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/se-asia/mount-anak-krakatau-what-to-know-about-the-volcano-disrupting-indonesia-flights",
+      "velocityScore": 0.409,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 712,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 1364,
+      "estimatedTrafficIn24h": 1333,
+      "trafficLossPerHour": 1,
+      "breakdown": {
+        "trendIntensity": 0.55,
+        "timeDecay": 0.992,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 8
+      },
+      "detectedAt": "2026-09-07T03:19:41.000Z",
+      "scoredAt": "2026-09-07T11:21:47.605Z"
     }
   ]
 }
