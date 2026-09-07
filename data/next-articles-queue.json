@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-06T07:46:13.331Z",
+  "timestamp": "2026-09-07T08:06:00.183Z",
   "queueSize": 13,
   "queue": [
     {
@@ -49,29 +49,13 @@
         "wpId": 3198,
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 8,
-        "freshness": 0.56,
+        "freshness": 0.55,
         "traffic": 0,
         "reason": "Low-performing article: score=8, consider merge/update/delete"
       }
     },
     {
       "rank": 5,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 2,
-      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
-      "articleType": "support",
-      "context": {
-        "wpId": 3107,
-        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-        "compositeScore": 8,
-        "freshness": 0.54,
-        "traffic": 0,
-        "reason": "Low-performing article: score=8, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -87,7 +71,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -97,13 +81,13 @@
         "wpId": 4030,
         "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 9,
-        "freshness": 0.58,
+        "freshness": 0.57,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
     },
     {
-      "rank": 8,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -113,13 +97,13 @@
         "wpId": 5742,
         "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
         "compositeScore": 10,
-        "freshness": 0.67,
+        "freshness": 0.66,
         "traffic": 0,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
       }
     },
     {
-      "rank": 9,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -135,7 +119,39 @@
       }
     },
     {
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "articleType": "support",
+      "context": {
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "compositeScore": 10,
+        "freshness": 0.65,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      }
+    },
+    {
       "rank": 10,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
+      "articleType": "support",
+      "context": {
+        "wpId": 5296,
+        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
+        "compositeScore": 10,
+        "freshness": 0.64,
+        "traffic": 0,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -145,13 +161,13 @@
         "wpId": 5270,
         "slug": "esim-japon-combien-ca-te-coute-vraiment",
         "compositeScore": 10,
-        "freshness": 0.65,
+        "freshness": 0.64,
         "traffic": 0,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
       }
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -167,35 +183,19 @@
       }
     },
     {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
-      "articleType": "support",
-      "context": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-        "compositeScore": 12,
-        "freshness": 0.51,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
-      }
-    },
-    {
       "rank": 13,
       "action": "review",
       "priority": "P4",
-      "priorityScore": -3,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "priorityScore": -1,
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
       "articleType": "support",
       "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 13,
-        "freshness": 0.65,
-        "traffic": 0,
-        "reason": "Low-performing article: score=13, consider merge/update/delete"
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 11,
+        "freshness": 0.55,
+        "traffic": 0.08,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
     }
   ],
