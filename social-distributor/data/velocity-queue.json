@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T19:53:22.811Z",
+  "generatedAt": "2026-09-07T02:26:13.252Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Travel chaos hits Changi and Jakarta airports as volcanic ash grounds flights between the two hubs",
+      "topic": "‘Mummy, mummy’: 5-year-old stuck in muddy sludge rescued three days after Nepal’s flood disaster",
       "source": "rss_breaking",
       "destination": "southeast-asia",
-      "link": "https://www.channelnewsasia.com/singapore/travel-chaos-changi-airport-soekarno-hatta-volcano-6365516",
-      "velocityScore": 0.446,
+      "link": "https://www.straitstimes.com/asia/south-asia/miracle-child-reunited-with-mum-and-dad-in-kathmandu-hospital-days-after-nepals-flash-floods",
+      "velocityScore": 0.413,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 710,
+      "hoursRemaining": 715,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1486,
-      "estimatedTrafficIn24h": 1452,
-      "trafficLossPerHour": 1,
+      "estimatedTrafficNow": 2064,
+      "estimatedTrafficIn24h": 2017,
+      "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.6,
-        "timeDecay": 0.991,
+        "trendIntensity": 0.83,
+        "timeDecay": 0.995,
         "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 9.9
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 5.4
       },
-      "detectedAt": "2026-09-06T09:59:00.000Z",
-      "scoredAt": "2026-09-06T19:53:18.513Z"
+      "detectedAt": "2026-09-06T21:00:00.000Z",
+      "scoredAt": "2026-09-07T02:26:08.836Z"
     }
   ]
 }
