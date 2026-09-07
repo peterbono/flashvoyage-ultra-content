@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-09-07T17:04:42.110Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-09-07T21:01:06.650Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Indonesians board buses and trains as volcano ash from Mount Anak Krakatau halts flights",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/se-asia/indonesians-board-buses-and-trains-as-volcano-ash-from-mount-anak-krakatau-halts-flights",
-      "velocityScore": 0.408,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 709,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1361,
-      "estimatedTrafficIn24h": 1330,
-      "trafficLossPerHour": 1,
-      "breakdown": {
-        "trendIntensity": 0.55,
-        "timeDecay": 0.99,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 10.8
-      },
-      "detectedAt": "2026-09-07T06:15:00.000Z",
-      "scoredAt": "2026-09-07T17:04:31.582Z"
-    }
-  ]
+  "queue": []
 }
