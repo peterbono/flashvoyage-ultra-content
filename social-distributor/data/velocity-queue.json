@@ -1,10 +1,86 @@
 {
-  "generatedAt": "2026-09-07T21:01:06.650Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-09-08T02:39:17.941Z",
+  "totalTopics": 3,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 3
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Bali Airport Operations Unaffected by Anak Krakatau Eruption 1,300 KM to the West",
+      "source": "rss_breaking",
+      "destination": "indonesia",
+      "link": "https://balidiscovery.com/bali-airport-operations-unaffected-by-anak-krakatau-eruption-1300-km-to-the-west/",
+      "velocityScore": 0.582,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 11,
+      "topicType": {
+        "key": "breaking_news",
+        "halfLifeHours": 12
+      },
+      "estimatedTrafficNow": 1939,
+      "estimatedTrafficIn24h": 485,
+      "trafficLossPerHour": 61,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.934,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 1.2
+      },
+      "detectedAt": "2026-09-08T01:28:43.000Z",
+      "scoredAt": "2026-09-08T02:39:10.016Z"
+    },
+    {
+      "topic": "Jakarta airport and four others near Indonesia’s capital reopen after volcanic ash disruption",
+      "source": "rss_breaking",
+      "destination": "southeast-asia",
+      "link": "https://www.straitstimes.com/asia/se-asia/jakarta-airport-and-others-reopen-after-volcanic-ash-crisis",
+      "velocityScore": 0.507,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 715,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 1691,
+      "estimatedTrafficIn24h": 1653,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.68,
+        "timeDecay": 0.995,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 5.2
+      },
+      "detectedAt": "2026-09-07T21:25:30.000Z",
+      "scoredAt": "2026-09-08T02:39:12.533Z"
+    },
+    {
+      "topic": "Indonesia reopens Jakarta airport, four others after Anak Krakatau ash clears",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/world/3315928/indonesia-reopens-jakarta-airport-four-others-after-anak-krakatau-ash-clears",
+      "velocityScore": 0.415,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 719,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2073,
+      "estimatedTrafficIn24h": 2026,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 0.8
+      },
+      "detectedAt": "2026-09-08T01:54:00.000Z",
+      "scoredAt": "2026-09-08T02:39:14.799Z"
+    }
+  ]
 }
