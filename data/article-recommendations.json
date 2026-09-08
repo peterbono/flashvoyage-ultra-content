@@ -1,22 +1,27 @@
 {
   "summary": {
-    "generatedAt": "2026-09-07T08:06:06.724Z",
+    "generatedAt": "2026-09-08T07:56:56.418Z",
     "elapsedSeconds": 6,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
-    "totalRecommendations": 12,
+    "totalRecommendations": 13,
     "byPriority": {
       "P0": 0,
-      "P1": 0,
+      "P1": 1,
       "P2": 12
     },
     "byType": {
+      "engagement": 1,
       "seo": 12
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
         "count": 12
+      },
+      {
+        "action": "IMPROVE_READABILITY",
+        "count": 1
       }
     ]
   },
@@ -31,18 +36,18 @@
       "internalLinks": 47,
       "lastModified": "2026-06-11T05:33:27",
       "ga4": {
-        "pageviews": 13,
-        "sessions": 8,
-        "avgDuration": 462
+        "pageviews": 21,
+        "sessions": 15,
+        "avgDuration": 246
       },
       "gsc": {
-        "impressions": 95,
+        "impressions": 96,
         "clicks": 5,
-        "position": 56.5,
+        "position": 56.3,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 70.4,
+            "position": 70.8,
             "impressions": 28,
             "ctr": 0
           },
@@ -59,14 +64,14 @@
             "ctr": 0
           },
           {
-            "query": "circuit bali lombok gili",
-            "position": 36.5,
-            "impressions": 10,
+            "query": "itinéraire bali 10 jours",
+            "position": 76.7,
+            "impressions": 9,
             "ctr": 0
           },
           {
-            "query": "itinéraire bali 10 jours",
-            "position": 76.9,
+            "query": "circuit bali lombok gili",
+            "position": 36.8,
             "impressions": 8,
             "ctr": 0
           }
@@ -78,6 +83,15 @@
       },
       "recommendations": [
         {
+          "type": "engagement",
+          "priority": "P1",
+          "metric": "Temps lu: 246s / 1237s attendus (20% du contenu lu)",
+          "action": "IMPROVE_READABILITY",
+          "details": "Seulement 20% du contenu est lu (4124 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
+          "effort": "30min",
+          "expectedImpact": "Temps sur page +40 a +60%, meilleur signal qualite pour Google"
+        },
+        {
           "type": "seo",
           "priority": "P2",
           "metric": "Pas de schema FAQ (keyword principal: \"bali gili lombok\")",
@@ -87,7 +101,7 @@
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
       ],
-      "recommendationCount": 1,
+      "recommendationCount": 2,
       "p0Count": 0
     },
     {
@@ -105,20 +119,20 @@
         "avgDuration": 505
       },
       "gsc": {
-        "impressions": 55,
+        "impressions": 56,
         "clicks": 0,
-        "position": 73.7,
+        "position": 74.5,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 84.2,
-            "impressions": 38,
+            "position": 84.7,
+            "impressions": 40,
             "ctr": 0
           },
           {
             "query": "carte sim philippines",
-            "position": 70.3,
-            "impressions": 6,
+            "position": 70.6,
+            "impressions": 5,
             "ctr": 0
           },
           {
@@ -162,14 +176,14 @@
         "avgDuration": 14
       },
       "gsc": {
-        "impressions": 93,
+        "impressions": 90,
         "clicks": 0,
-        "position": 51.5,
+        "position": 52.3,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 53,
-            "impressions": 86,
+            "position": 53.1,
+            "impressions": 85,
             "ctr": 0
           },
           {
@@ -182,12 +196,6 @@
             "query": "e-sim cambodge",
             "position": 48,
             "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "holafly cambodge",
-            "position": 16,
-            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -225,34 +233,45 @@
         "avgDuration": 242
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 5,
         "clicks": 0,
-        "position": 22.5,
-        "topQueries": [
-          {
-            "query": "assurance voyage vietnam",
-            "position": 83,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
+        "position": 10.4,
+        "topQueries": []
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4125,
+      "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
+      "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "url": "https://flashvoyage.com/hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe/",
+      "wordCount": 3098,
+      "widgetCount": 0,
+      "internalLinks": 29,
+      "lastModified": "2026-06-11T05:33:38",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 2,
+        "avgDuration": 389
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {
@@ -377,9 +396,9 @@
         "avgDuration": 129
       },
       "gsc": {
-        "impressions": 28,
+        "impressions": 29,
         "clicks": 0,
-        "position": 40.4,
+        "position": 39.3,
         "topQueries": [
           {
             "query": "bali ou thailande",
@@ -432,34 +451,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4125,
-      "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
-      "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
-      "url": "https://flashvoyage.com/hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe/",
-      "wordCount": 3098,
-      "widgetCount": 0,
-      "internalLinks": 29,
-      "lastModified": "2026-06-11T05:33:38",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 289
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 6195,
       "slug": "meilleur-esim-thailande-2026",
       "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
@@ -502,9 +493,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 21,
+        "impressions": 19,
         "clicks": 0,
-        "position": 22.8,
+        "position": 23.3,
         "topQueries": [
           {
             "query": "voyage japon couple",
@@ -741,11 +732,11 @@
       "gsc": {
         "impressions": 39,
         "clicks": 0,
-        "position": 63.7,
+        "position": 63.8,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 61.3,
+            "position": 61.4,
             "impressions": 29,
             "ctr": 0
           },
@@ -1056,9 +1047,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 18,
+        "impressions": 17,
         "clicks": 0,
-        "position": 8.4,
+        "position": 8.7,
         "topQueries": [
           {
             "query": "comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?",
@@ -1325,17 +1316,40 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 6,
+        "impressions": 11,
         "clicks": 0,
-        "position": 45.3,
-        "topQueries": []
+        "position": 39.9,
+        "topQueries": [
+          {
+            "query": "visa nomade digital asie",
+            "position": 43,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "digital nomad asie du sud-est guide",
+            "position": 34,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [],
-      "recommendationCount": 0,
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"visa nomade digital asie\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"visa nomade digital asie\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -1355,7 +1369,7 @@
       "gsc": {
         "impressions": 11,
         "clicks": 0,
-        "position": 51,
+        "position": 46.4,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
@@ -1372,12 +1386,6 @@
           {
             "query": "asie du sud-est slow travel longue durée",
             "position": 88,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "circuit authentique asie du sud-est",
-            "position": 76,
             "impressions": 1,
             "ctr": 0
           }
