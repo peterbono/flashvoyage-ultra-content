@@ -1,9 +1,41 @@
 {
-  "timestamp": "2026-09-08T07:56:49.641Z",
-  "queueSize": 13,
+  "timestamp": "2026-09-09T07:59:36.764Z",
+  "queueSize": 15,
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 141,
+      "topic": "voyage pas cher",
+      "articleType": "support",
+      "context": {
+        "gapScore": 61,
+        "destination": "vietnam",
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage pas cher\" (score 61, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 131,
+      "topic": "laos",
+      "articleType": "support",
+      "context": {
+        "gapScore": 51,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"laos\" (score 51, source: trends)"
+      }
+    },
+    {
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -15,7 +47,7 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -27,7 +59,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -39,7 +71,23 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 6,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 3,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
+      "articleType": "support",
+      "context": {
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 7,
+        "freshness": 0.49,
+        "traffic": 0,
+        "reason": "Low-performing article: score=7, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -55,7 +103,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -71,23 +119,7 @@
       }
     },
     {
-      "rank": 6,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 2,
-      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 2924,
-        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
-        "compositeScore": 8,
-        "freshness": 0.5,
-        "traffic": 0,
-        "reason": "Low-performing article: score=8, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 7,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -103,7 +135,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -119,7 +151,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -135,7 +167,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -151,23 +183,7 @@
       }
     },
     {
-      "rank": 11,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 10,
-        "freshness": 0.55,
-        "traffic": 0.05,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 12,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -183,7 +199,7 @@
       }
     },
     {
-      "rank": 13,
+      "rank": 14,
       "action": "review",
       "priority": "P4",
       "priorityScore": -2,
@@ -197,10 +213,26 @@
         "traffic": 0.05,
         "reason": "Low-performing article: score=12, consider merge/update/delete"
       }
+    },
+    {
+      "rank": 15,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 12,
+        "freshness": 0.5,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
+      }
     }
   ],
   "summary": {
-    "write_new": 0,
+    "write_new": 2,
     "update": 0,
     "enrich": 0,
     "standard": 3,

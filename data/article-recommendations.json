@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-09-08T07:56:56.418Z",
-    "elapsedSeconds": 6,
+    "generatedAt": "2026-09-09T07:59:42.070Z",
+    "elapsedSeconds": 4,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
     "totalRecommendations": 13,
@@ -38,17 +38,17 @@
       "ga4": {
         "pageviews": 21,
         "sessions": 15,
-        "avgDuration": 246
+        "avgDuration": 250
       },
       "gsc": {
-        "impressions": 96,
+        "impressions": 94,
         "clicks": 5,
-        "position": 56.3,
+        "position": 56,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 70.8,
-            "impressions": 28,
+            "position": 69.7,
+            "impressions": 27,
             "ctr": 0
           },
           {
@@ -59,20 +59,20 @@
           },
           {
             "query": "bali lombok gili",
-            "position": 66.3,
-            "impressions": 11,
+            "position": 64.9,
+            "impressions": 10,
             "ctr": 0
           },
           {
             "query": "itinéraire bali 10 jours",
-            "position": 76.7,
-            "impressions": 9,
+            "position": 76.8,
+            "impressions": 10,
             "ctr": 0
           },
           {
             "query": "circuit bali lombok gili",
-            "position": 36.8,
-            "impressions": 8,
+            "position": 36.9,
+            "impressions": 7,
             "ctr": 0
           }
         ]
@@ -85,7 +85,7 @@
         {
           "type": "engagement",
           "priority": "P1",
-          "metric": "Temps lu: 246s / 1237s attendus (20% du contenu lu)",
+          "metric": "Temps lu: 250s / 1237s attendus (20% du contenu lu)",
           "action": "IMPROVE_READABILITY",
           "details": "Seulement 20% du contenu est lu (4124 mots). L'article est trop dense ou mal structure. Actions : 1) Ajouter une image contextuelle tous les 300 mots. 2) Decouper chaque paragraphe de +100 mots en 2-3 blocs. 3) Ajouter des sous-titres H2/H3 descriptifs (pas \"Partie 2\" mais \"Meilleur quartier a Bali pour les familles\"). 4) Inserer un tableau comparatif si l'article compare des destinations/options. 5) Convertir les listes de texte en bullet points. 6) Ajouter un encart \"A retenir\" (background colore) toutes les 800 mots.",
           "effort": "30min",
@@ -121,11 +121,11 @@
       "gsc": {
         "impressions": 56,
         "clicks": 0,
-        "position": 74.5,
+        "position": 75.1,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 84.7,
+            "position": 84.4,
             "impressions": 40,
             "ctr": 0
           },
@@ -137,8 +137,8 @@
           },
           {
             "query": "meilleur esim philippines",
-            "position": 62,
-            "impressions": 1,
+            "position": 58.5,
+            "impressions": 2,
             "ctr": 0
           }
         ]
@@ -176,14 +176,14 @@
         "avgDuration": 14
       },
       "gsc": {
-        "impressions": 90,
+        "impressions": 88,
         "clicks": 0,
-        "position": 52.3,
+        "position": 52.4,
         "topQueries": [
           {
             "query": "esim cambodge",
             "position": 53.1,
-            "impressions": 85,
+            "impressions": 83,
             "ctr": 0
           },
           {
@@ -219,6 +219,34 @@
       "p0Count": 0
     },
     {
+      "wpId": 4125,
+      "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
+      "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "url": "https://flashvoyage.com/hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe/",
+      "wordCount": 3098,
+      "widgetCount": 0,
+      "internalLinks": 29,
+      "lastModified": "2026-06-11T05:33:38",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 3,
+        "avgDuration": 303
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
@@ -247,34 +275,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4125,
-      "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
-      "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
-      "url": "https://flashvoyage.com/hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe/",
-      "wordCount": 3098,
-      "widgetCount": 0,
-      "internalLinks": 29,
-      "lastModified": "2026-06-11T05:33:38",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 2,
-        "avgDuration": 389
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 6331,
       "slug": "meilleur-esim-philippines-2026",
       "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
@@ -289,20 +289,20 @@
         "avgDuration": 64
       },
       "gsc": {
-        "impressions": 39,
+        "impressions": 41,
         "clicks": 0,
-        "position": 92.3,
+        "position": 92.2,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 95.9,
-            "impressions": 36,
+            "position": 96,
+            "impressions": 37,
             "ctr": 0
           },
           {
             "query": "meilleur esim philippines",
-            "position": 74,
-            "impressions": 1,
+            "position": 78.5,
+            "impressions": 2,
             "ctr": 0
           }
         ]
@@ -493,9 +493,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 19,
+        "impressions": 20,
         "clicks": 0,
-        "position": 23.3,
+        "position": 24,
         "topQueries": [
           {
             "query": "voyage japon couple",
@@ -730,14 +730,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 39,
+        "impressions": 37,
         "clicks": 0,
-        "position": 63.8,
+        "position": 63.9,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 61.4,
-            "impressions": 29,
+            "position": 61.5,
+            "impressions": 27,
             "ctr": 0
           },
           {

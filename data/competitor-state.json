@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-09-08T07:56:58.307Z",
+  "timestamp": "2026-09-09T07:59:44.013Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-09-08T07:56:58.988Z",
+      "lastScan": "2026-09-09T07:59:44.708Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-09-08T07:56:59.415Z",
+      "lastScan": "2026-09-09T07:59:45.145Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,7 +139,7 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-09-08T07:58:02.484Z",
+      "lastScan": "2026-09-09T08:00:53.153Z",
       "urlCount": 9995,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
@@ -8836,7 +8836,6 @@
         "https://generationvoyage.fr/visiter-okinawa-faire-voir/": "2026-08-19T09:20:02+00:00",
         "https://generationvoyage.fr/visiter-etretat-faire-voir/": "2026-08-19T09:20:03+00:00",
         "https://generationvoyage.fr/visiter-meaux-faire-voir/": "2026-08-19T09:20:05+00:00",
-        "https://generationvoyage.fr/visiter-mont-de-marsan-faire-voir/": "2026-08-19T09:20:07+00:00",
         "https://generationvoyage.fr/visiter-koh-mak-faire-voir/": "2026-08-19T09:20:10+00:00",
         "https://generationvoyage.fr/visiter-cancale-faire-voir/": "2026-08-19T09:20:13+00:00",
         "https://generationvoyage.fr/visiter-moorea-faire-voir/": "2026-08-19T09:20:15+00:00",
@@ -8856,7 +8855,6 @@
         "https://generationvoyage.fr/visiter-langkawi-faire-voir/": "2026-08-19T09:20:43+00:00",
         "https://generationvoyage.fr/visiter-kanazawa-faire-voir/": "2026-08-19T09:20:44+00:00",
         "https://generationvoyage.fr/visiter-lisieux-faire-voir/": "2026-08-19T09:20:46+00:00",
-        "https://generationvoyage.fr/visiter-corfou-faire-voir/": "2026-08-19T09:25:48+00:00",
         "https://generationvoyage.fr/visiter-minorque-faire-voir/": "2026-08-19T09:25:50+00:00",
         "https://generationvoyage.fr/visiter-crete-faire-voir/": "2026-08-19T09:25:52+00:00",
         "https://generationvoyage.fr/visiter-malte-faire-voir/": "2026-08-19T09:25:54+00:00",
@@ -9805,7 +9803,10 @@
         "https://generationvoyage.fr/boston-froid/": "2026-09-07T12:14:37+00:00",
         "https://generationvoyage.fr/ibiza-budget/": "2026-09-07T14:20:41+00:00",
         "https://generationvoyage.fr/souvenirs-luxembourg/": "2026-09-07T16:31:54+00:00",
-        "https://generationvoyage.fr/loger-lac-de-garde/": "2026-09-08T03:30:25+00:00",
+        "https://generationvoyage.fr/peloponnese-local/": "2026-09-08T08:02:18+00:00",
+        "https://generationvoyage.fr/fes-solo/": "2026-09-08T10:02:03+00:00",
+        "https://generationvoyage.fr/socca/": "2026-09-08T12:33:36+00:00",
+        "https://generationvoyage.fr/pluie-anvers/": "2026-09-08T14:39:11+00:00",
         "https://generationvoyage.fr/loger-bangkok/": "2026-09-08T03:30:51+00:00",
         "https://generationvoyage.fr/loger-londres/": "2026-09-08T03:31:13+00:00",
         "https://generationvoyage.fr/loger-milan/": "2026-09-08T03:31:33+00:00",
@@ -10135,8 +10136,7 @@
         "https://generationvoyage.fr/visiter-amiens-faire-voir/": "2026-09-08T05:51:45+00:00",
         "https://generationvoyage.fr/visiter-koh-kood-faire-voir/": "2026-09-08T05:52:34+00:00",
         "https://generationvoyage.fr/visiter-amneville-faire-voir/": "2026-09-08T05:52:54+00:00",
-        "https://generationvoyage.fr/visiter-anchorage-faire-voir/": "2026-09-08T05:53:37+00:00",
-        "https://generationvoyage.fr/visiter-pune-faire-voir/": "2026-09-08T05:53:59+00:00"
+        "https://generationvoyage.fr/visiter-anchorage-faire-voir/": "2026-09-08T05:53:37+00:00"
       }
     }
   }

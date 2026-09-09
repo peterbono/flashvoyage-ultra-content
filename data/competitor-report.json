@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-08T07:58:02.511Z",
+  "timestamp": "2026-09-09T08:00:53.172Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -17,159 +17,14 @@
       "id": "generationvoyage",
       "name": "Generation Voyage",
       "totalUrls": 9995,
-      "newUrls": 377
+      "newUrls": 4
     }
   ],
-  "newArticles": [
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visiter-siem-reap-faire-voir/",
-      "lastmod": "2026-09-07T06:15:20+00:00",
-      "destination": "siem-reap",
-      "contentType": "activites",
-      "title": "Visiter Siem Reap Faire Voir",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Visiter Siem Reap Faire Voir\" (siem-reap, activites) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-penang/",
-      "lastmod": "2026-09-08T03:59:47+00:00",
-      "destination": "penang",
-      "contentType": "general",
-      "title": "Loger Penang",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Loger Penang\" (penang, general) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-manille/",
-      "lastmod": "2026-09-08T04:04:28+00:00",
-      "destination": "manille",
-      "contentType": "general",
-      "title": "Loger Manille",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Loger Manille\" (manille, general) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-vientiane/",
-      "lastmod": "2026-09-08T04:15:29+00:00",
-      "destination": "vientiane",
-      "contentType": "general",
-      "title": "Loger Vientiane",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Loger Vientiane\" (vientiane, general) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-osaka/",
-      "lastmod": "2026-09-08T04:22:02+00:00",
-      "destination": "osaka",
-      "contentType": "general",
-      "title": "Loger Osaka",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Loger Osaka\" (osaka, general) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-siem-reap/",
-      "lastmod": "2026-09-08T04:31:35+00:00",
-      "destination": "siem-reap",
-      "contentType": "general",
-      "title": "Loger Siem Reap",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Loger Siem Reap\" (siem-reap, general) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-cebu/",
-      "lastmod": "2026-09-08T04:43:40+00:00",
-      "destination": "cebu",
-      "contentType": "general",
-      "title": "Loger Cebu",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Loger Cebu\" (cebu, general) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visiter-penang-faire-voir/",
-      "lastmod": "2026-09-08T04:52:18+00:00",
-      "destination": "penang",
-      "contentType": "activites",
-      "title": "Visiter Penang Faire Voir",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Visiter Penang Faire Voir\" (penang, activites) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visiter-agios-nikolaos-faire-voir/",
-      "lastmod": "2026-09-08T05:00:23+00:00",
-      "destination": "laos",
-      "contentType": "activites",
-      "title": "Visiter Agios Nikolaos Faire Voir",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Visiter Agios Nikolaos Faire Voir\" (laos, activites) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visiter-jakarta-faire-voir/",
-      "lastmod": "2026-09-08T05:04:44+00:00",
-      "destination": "jakarta",
-      "contentType": "activites",
-      "title": "Visiter Jakarta Faire Voir",
-      "action": "content_gap",
-      "priority": "P1",
-      "reason": "Competitor covers \"Visiter Jakarta Faire Voir\" (jakarta, activites) — no matching FlashVoyage article found"
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-bangkok/",
-      "lastmod": "2026-09-08T03:30:51+00:00",
-      "destination": "bangkok",
-      "contentType": "general",
-      "title": "Loger Bangkok",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Bangkok : le vrai coût des taxis aéroport 2026\" (score=10, freshness=0.66)",
-      "matchedArticle": {
-        "wpId": 5742,
-        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-        "compositeScore": 10,
-        "freshness": 0.66
-      }
-    },
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/loger-kuala-lumpur/",
-      "lastmod": "2026-09-08T03:44:40+00:00",
-      "destination": "kuala-lumpur",
-      "contentType": "general",
-      "title": "Loger Kuala Lumpur",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis\" (score=12, freshness=0.50)",
-      "matchedArticle": {
-        "wpId": 2980,
-        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
-        "compositeScore": 12,
-        "freshness": 0.5
-      }
-    }
-  ],
+  "newArticles": [],
   "summary": {
-    "totalNew": 12,
-    "contentGaps": 10,
+    "totalNew": 0,
+    "contentGaps": 0,
     "staleRefreshes": 0,
-    "monitoring": 2
+    "monitoring": 0
   }
 }
