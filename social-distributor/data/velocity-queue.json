@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-09-09T10:37:48.369Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-09-09T15:46:54.244Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Foreign Nationals Affected by Eruption Granted Immigration Waivers",
-      "source": "rss_breaking",
-      "destination": "indonesia",
-      "link": "https://balidiscovery.com/foreign-nationals-affected-by-eruption-granted-immigration-waivers/",
-      "velocityScore": 0.442,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 10,
-      "topicType": {
-        "key": "breaking_news",
-        "halfLifeHours": 12
-      },
-      "estimatedTrafficNow": 2211,
-      "estimatedTrafficIn24h": 553,
-      "trafficLossPerHour": 69,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.884,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.1
-      },
-      "detectedAt": "2026-09-09T08:30:08.000Z",
-      "scoredAt": "2026-09-09T10:37:42.208Z"
-    }
-  ]
+  "queue": []
 }
