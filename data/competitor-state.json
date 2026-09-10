@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-09-09T07:59:44.013Z",
+  "timestamp": "2026-09-10T07:59:35.519Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-09-09T07:59:44.708Z",
+      "lastScan": "2026-09-10T07:59:36.391Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-09-09T07:59:45.145Z",
+      "lastScan": "2026-09-10T07:59:37.032Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,7 +139,7 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-09-09T08:00:53.153Z",
+      "lastScan": "2026-09-10T08:00:43.278Z",
       "urlCount": 9995,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
@@ -9517,7 +9517,6 @@
         "https://generationvoyage.fr/visiter-ile-de-france-faire-voir/": "2026-09-05T06:34:53+00:00",
         "https://generationvoyage.fr/visiter-new-delhi-faire-voir/": "2026-09-05T06:35:23+00:00",
         "https://generationvoyage.fr/visiter-moscou-faire-voir/": "2026-09-05T06:38:25+00:00",
-        "https://generationvoyage.fr/kibbeh/": "2026-09-07T07:59:07+00:00",
         "https://generationvoyage.fr/visiter-pakistan-faire-voir/": "2026-09-07T10:12:01+00:00",
         "https://generationvoyage.fr/loger-valence/": "2026-09-06T03:31:28+00:00",
         "https://generationvoyage.fr/loger-tromso/": "2026-09-06T03:31:42+00:00",
@@ -10136,7 +10135,8 @@
         "https://generationvoyage.fr/visiter-amiens-faire-voir/": "2026-09-08T05:51:45+00:00",
         "https://generationvoyage.fr/visiter-koh-kood-faire-voir/": "2026-09-08T05:52:34+00:00",
         "https://generationvoyage.fr/visiter-amneville-faire-voir/": "2026-09-08T05:52:54+00:00",
-        "https://generationvoyage.fr/visiter-anchorage-faire-voir/": "2026-09-08T05:53:37+00:00"
+        "https://generationvoyage.fr/visiter-anchorage-faire-voir/": "2026-09-08T05:53:37+00:00",
+        "https://generationvoyage.fr/visiter-pune-faire-voir/": "2026-09-08T05:53:59+00:00"
       }
     }
   }
