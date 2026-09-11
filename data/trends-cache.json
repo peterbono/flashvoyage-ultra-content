@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-09-10T07:59:20.927Z",
+  "timestamp": "2026-09-11T07:55:24.607Z",
   "trendingTopics": [
     {
       "query": "voyage thailande pas cher",
-      "traffic": 250,
-      "trafficFormatted": "+250 %",
+      "traffic": 350,
+      "trafficFormatted": "+350 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-10T07:59:11.975Z",
+      "date": "2026-09-11T07:55:16.141Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -16,54 +16,68 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage vietnam pas cher",
-      "traffic": 50,
-      "trafficFormatted": "+50 %",
+      "query": "voyage thailande prix",
+      "traffic": 160,
+      "trafficFormatted": "+160 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-10T07:59:14.156Z",
+      "date": "2026-09-11T07:55:16.141Z",
       "source": "related-rising",
-      "parentDestination": "vietnam",
+      "parentDestination": "thailande",
       "relevanceScore": 1,
       "category": "budget",
-      "destination": "vietnam",
+      "destination": "thailande",
       "compositeScore": 0.62
     },
     {
-      "query": "circuit vietnam",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-10T07:59:14.156Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.8,
-      "category": "itineraire",
-      "destination": "vietnam",
-      "compositeScore": 0.56
-    },
-    {
       "query": "leclerc voyage thailande",
-      "traffic": 100,
-      "trafficFormatted": "+100 %",
+      "traffic": 170,
+      "trafficFormatted": "+170 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-10T07:59:11.975Z",
+      "date": "2026-09-11T07:55:16.141Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
       "category": "destination",
       "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage thailande phuket",
+      "traffic": 90,
+      "trafficFormatted": "+90 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-09-11T07:55:16.141Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "blog voyage vietnam",
+      "traffic": 80,
+      "trafficFormatted": "+80 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-09-11T07:55:18.253Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
       "compositeScore": 0.53
     },
     {
       "query": "voyage cambodge",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-10T07:59:14.156Z",
+      "date": "2026-09-11T07:55:18.253Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -72,12 +86,12 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage vietnam cambodge",
+      "query": "voyage au vietnam",
       "traffic": 60,
       "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-10T07:59:14.156Z",
+      "date": "2026-09-11T07:55:18.253Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -87,11 +101,11 @@
     },
     {
       "query": "voyage cambodge vietnam",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
+      "traffic": 170,
+      "trafficFormatted": "+170 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-10T07:59:18.657Z",
+      "date": "2026-09-11T07:55:22.495Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -100,18 +114,61 @@
       "compositeScore": 0.53
     },
     {
-      "query": "laos",
-      "traffic": 160,
-      "trafficFormatted": "+160 %",
+      "query": "voyage vietnam",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-10T07:59:14.156Z",
+      "date": "2026-09-11T07:55:22.495Z",
       "source": "related-rising",
-      "parentDestination": "vietnam",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge laos",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-09-11T07:55:22.495Z",
+      "source": "related-rising",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "balistique",
+      "traffic": 200,
+      "trafficFormatted": "200+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "Assassinat de Federico Martín Aramburú : « C’est une exécution », les images de vidéosurveillance des tirs dévoilées à l’audience",
+          "url": "https://www.sudouest.fr/pyrenees-atlantiques/biarritz/assassinat-de-federico-martin-aramburu-c-est-une-execution-les-images-de-videosurveillance-des-tirs-devoilees-a-l-audience-30564207.php",
+          "source": "Sud Ouest"
+        },
+        {
+          "title": "Huit secondes, dix tirs : l'analyse balistique qui contredit l'existence de tirs dissuasifs ou de sommation",
+          "url": "https://www.lequipe.fr/Rugby/Article/Huit-secondes-dix-tirs-l-analyse-balistique-qui-contredit-l-existence-de-tirs-dissuasifs-ou-de-sommation/1717788",
+          "source": "L'Équipe"
+        },
+        {
+          "title": "Affaire Aramburu - Maria, la veuve de Federico Martín Aramburu, fait face aux images de vidéosurveillance dans la salle",
+          "url": "https://www.rugbyrama.fr/2026/09/10/affaire-aramburu-maria-la-veuve-de-federico-martin-aramburu-fait-face-aux-images-de-videosurveillance-dans-la-salle-13544731.php",
+          "source": "Rugbyrama"
+        }
+      ],
+      "date": "Fri, 11 Sep 2026 00:10:00 -0700",
+      "source": "rss",
       "relevanceScore": 0.5,
       "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.47000000000000003
+      "destination": "bali",
+      "compositeScore": 0.35016
     }
   ]
 }

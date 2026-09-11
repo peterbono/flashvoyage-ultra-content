@@ -1,37 +1,37 @@
 {
-  "timestamp": "2026-09-10T07:59:24.468Z",
+  "timestamp": "2026-09-11T07:55:27.693Z",
   "gapCount": 1,
   "gaps": [
     {
-      "topic": "laos",
+      "topic": "balistique",
       "source": "trends",
-      "gapScore": 51,
+      "gapScore": 47,
       "signals": {
-        "searchVolume": 0.47,
-        "trendGrowth": 0.47,
+        "searchVolume": 0.35,
+        "trendGrowth": 0.35,
         "monetization": 0.9,
         "competition": 0.8
       },
-      "destination": "vietnam",
+      "destination": "bali",
       "category": "destination",
-      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "suggestedTitle": "Bali 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Bali — format pick ou month",
       "articleType": "support",
-      "priority": "high"
+      "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
-      "high": 1
+      "medium": 1
     },
     "byCategory": {
       "destination": 1
     },
     "byDestination": {
-      "vietnam": 1
+      "bali": 1
     },
     "topDestinationGaps": [
-      "vietnam"
+      "bali"
     ]
   }
 }
