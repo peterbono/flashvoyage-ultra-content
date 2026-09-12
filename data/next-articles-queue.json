@@ -1,21 +1,21 @@
 {
-  "timestamp": "2026-09-11T07:55:29.628Z",
+  "timestamp": "2026-09-12T07:48:00.759Z",
   "queueSize": 14,
   "queue": [
     {
       "rank": 1,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 127,
-      "topic": "balistique",
+      "priorityScore": 131,
+      "topic": "laos",
       "articleType": "support",
       "context": {
-        "gapScore": 47,
-        "destination": "bali",
+        "gapScore": 51,
+        "destination": "vietnam",
         "category": "destination",
-        "suggestedTitle": "Bali 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Bali — format pick ou month",
-        "reason": "Content gap: \"balistique\" (score 47, source: trends)"
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"laos\" (score 51, source: trends)"
       }
     },
     {
@@ -65,7 +65,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 7,
-        "freshness": 0.49,
+        "freshness": 0.48,
         "traffic": 0,
         "reason": "Low-performing article: score=7, consider merge/update/delete"
       }

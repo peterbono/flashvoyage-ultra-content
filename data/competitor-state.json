@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-09-11T07:55:38.296Z",
+  "timestamp": "2026-09-12T07:48:08.456Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-09-11T07:55:38.945Z",
+      "lastScan": "2026-09-12T07:48:09.442Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-09-11T07:55:39.403Z",
+      "lastScan": "2026-09-12T07:48:10.057Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,7 +139,7 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-09-11T07:56:58.502Z",
+      "lastScan": "2026-09-12T07:49:20.624Z",
       "urlCount": 9995,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
@@ -8956,8 +8956,13 @@
         "https://generationvoyage.fr/souvenirs-annecy/": "2026-09-10T12:11:56+00:00",
         "https://generationvoyage.fr/bruxelles-local/": "2026-09-10T14:18:13+00:00",
         "https://generationvoyage.fr/pyrenees-solo/": "2026-09-10T16:09:39+00:00",
+        "https://generationvoyage.fr/kouign-amann/": "2026-09-11T08:02:35+00:00",
         "https://generationvoyage.fr/applications-gestes-quotidiens-actions/": "2026-09-09T15:20:39+00:00",
+        "https://generationvoyage.fr/visiter-liban-faire-voir/": "2026-09-11T10:10:41+00:00",
+        "https://generationvoyage.fr/pluie-heraklion/": "2026-09-11T12:12:32+00:00",
         "https://generationvoyage.fr/kibbeh/": "2026-09-09T16:53:02+00:00",
+        "https://generationvoyage.fr/split-budget/": "2026-09-11T14:15:15+00:00",
+        "https://generationvoyage.fr/souvenirs-bali/": "2026-09-11T16:20:09+00:00",
         "https://generationvoyage.fr/piscines-marrakech/": "2026-09-10T11:40:45+00:00",
         "https://generationvoyage.fr/visiter-johannesburg-faire-voir/": "2026-09-10T15:17:19+00:00",
         "https://generationvoyage.fr/visiter-le-cap-faire-voir/": "2026-09-10T15:17:22+00:00",
@@ -9319,8 +9324,6 @@
         "https://generationvoyage.fr/visiter-istanbul-faire-voir/": "2026-09-10T15:30:02+00:00",
         "https://generationvoyage.fr/visiter-dubai-faire-voir/": "2026-09-10T15:30:03+00:00",
         "https://generationvoyage.fr/visiter-corfou-faire-voir/": "2026-09-10T15:44:36+00:00",
-        "https://generationvoyage.fr/loger-lac-de-garde/": "2026-09-10T16:24:32+00:00",
-        "https://generationvoyage.fr/loger-corfou/": "2026-09-10T16:24:34+00:00",
         "https://generationvoyage.fr/loger-ardeche/": "2026-09-10T16:24:35+00:00",
         "https://generationvoyage.fr/loger-bangkok/": "2026-09-10T16:24:37+00:00",
         "https://generationvoyage.fr/loger-londres/": "2026-09-10T16:24:38+00:00",
@@ -10133,10 +10136,7 @@
         "https://generationvoyage.fr/visiter-tarbes-faire-voir/": "2026-09-10T16:44:50+00:00",
         "https://generationvoyage.fr/visiter-transylvanie-faire-voir/": "2026-09-10T16:44:52+00:00",
         "https://generationvoyage.fr/visiter-assouan-faire-voir/": "2026-09-10T16:44:53+00:00",
-        "https://generationvoyage.fr/visiter-aigueze-faire-voir/": "2026-09-10T16:44:54+00:00",
-        "https://generationvoyage.fr/visiter-heidelberg-faire-voir/": "2026-09-10T16:44:56+00:00",
-        "https://generationvoyage.fr/visiter-draguignan-faire-voir/": "2026-09-10T16:44:58+00:00",
-        "https://generationvoyage.fr/visiter-siem-reap-faire-voir/": "2026-09-10T16:44:59+00:00"
+        "https://generationvoyage.fr/visiter-aigueze-faire-voir/": "2026-09-10T16:44:54+00:00"
       }
     }
   }

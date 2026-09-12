@@ -1,6 +1,18 @@
 {
-  "timestamp": "2026-09-11T07:55:28.666Z",
+  "timestamp": "2026-09-12T07:48:00.256Z",
   "articleMap": {
+    "bali-lombok-gili-10-jours-itineraire-budget-2026": {
+      "wpId": 4370,
+      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "assurance-voyage-vietnam-rapatriement-frais-caches-2026": {
       "wpId": 4252,
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
@@ -22,18 +34,6 @@
         "avantapres"
       ],
       "category": "destination",
-      "igReferralTraffic": null
-    },
-    "bali-lombok-gili-10-jours-itineraire-budget-2026": {
-      "wpId": 4370,
-      "title": "Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "voyage-thailande-pas-cher-2026-budget": {
@@ -169,6 +169,18 @@
       "category": "budget",
       "igReferralTraffic": null
     },
+    "meilleur-esim-cambodge-2026": {
+      "wpId": 6374,
+      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "destination",
+      "igReferralTraffic": null
+    },
     "visa-cambodge-francais-2026-evisa-prix-pieges": {
       "wpId": 4369,
       "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
@@ -181,9 +193,33 @@
       "category": "budget",
       "igReferralTraffic": null
     },
-    "meilleur-esim-cambodge-2026": {
-      "wpId": 6374,
-      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+    "esim-thailande-comparatif-ais-dtac-true-2026": {
+      "wpId": 4253,
+      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "philippines-10-jours-itineraire-plages-budget-2026": {
+      "wpId": 4371,
+      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
+    "meilleur-esim-thailande-2026": {
+      "wpId": 6195,
+      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -216,10 +252,21 @@
       "category": "itineraire",
       "igReferralTraffic": null
     },
-    "esim-thailande-comparatif-ais-dtac-true-2026": {
-      "wpId": 4253,
-      "title": "eSIM Thaïlande : AIS, DTAC ou True Move ? Le comparatif brutal",
-      "reels": [],
+    "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
+      "wpId": 5072,
+      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
+      "reels": [
+        {
+          "reelId": "tiktok:2026-05-05",
+          "format": "avantapres",
+          "platform": "tiktok",
+          "score": 18.1,
+          "engagementRate": 0,
+          "publishedAt": "2026-05-05",
+          "isViral": false,
+          "matchSource": "tiktok-fuzzy-title"
+        }
+      ],
       "suggestedFormats": [
         "pick",
         "poll",
@@ -228,16 +275,16 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "philippines-10-jours-itineraire-plages-budget-2026": {
-      "wpId": 4371,
-      "title": "Philippines en 10 jours : l’itinéraire plages et budget que les blogs ne te montrent pas",
+    "meilleur-esim-bali-2026": {
+      "wpId": 6327,
+      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
       "reels": [],
       "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
+        "pick",
+        "month",
+        "avantapres"
       ],
-      "category": "budget",
+      "category": "destination",
       "igReferralTraffic": null
     },
     "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage": {
@@ -275,53 +322,6 @@
       "category": "default",
       "igReferralTraffic": null
     },
-    "kuala-lumpur-ou-singapour-quel-stopover-optimisera-vraiment-ton-voyage": {
-      "wpId": 5072,
-      "title": "Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?",
-      "reels": [
-        {
-          "reelId": "tiktok:2026-05-05",
-          "format": "avantapres",
-          "platform": "tiktok",
-          "score": 18.1,
-          "engagementRate": 0,
-          "publishedAt": "2026-05-05",
-          "isViral": false,
-          "matchSource": "tiktok-fuzzy-title"
-        }
-      ],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "meilleur-esim-thailande-2026": {
-      "wpId": 6195,
-      "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "destination",
-      "igReferralTraffic": null
-    },
-    "meilleur-esim-vietnam-2026": {
-      "wpId": 6323,
-      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "destination",
-      "igReferralTraffic": null
-    },
     "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe": {
       "wpId": 4125,
       "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
@@ -346,21 +346,9 @@
       "category": "destination",
       "igReferralTraffic": null
     },
-    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
-      "wpId": 5333,
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "poll",
-        "humor"
-      ],
-      "category": "default",
-      "igReferralTraffic": null
-    },
-    "meilleur-esim-bali-2026": {
-      "wpId": 6327,
-      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
+    "meilleur-esim-vietnam-2026": {
+      "wpId": 6323,
+      "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
       "reels": [],
       "suggestedFormats": [
         "pick",
@@ -368,30 +356,6 @@
         "avantapres"
       ],
       "category": "destination",
-      "igReferralTraffic": null
-    },
-    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
-      "wpId": 4105,
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "reels": [],
-      "suggestedFormats": [
-        "pick",
-        "month",
-        "avantapres"
-      ],
-      "category": "itineraire",
-      "igReferralTraffic": null
-    },
-    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
-      "wpId": 5343,
-      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "reels": [],
-      "suggestedFormats": [
-        "budget",
-        "versus",
-        "poll"
-      ],
-      "category": "budget",
       "igReferralTraffic": null
     },
     "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas": {
@@ -406,9 +370,45 @@
       "category": "default",
       "igReferralTraffic": null
     },
+    "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout": {
+      "wpId": 5333,
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "poll",
+        "humor"
+      ],
+      "category": "default",
+      "igReferralTraffic": null
+    },
+    "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu": {
+      "wpId": 5343,
+      "title": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "reels": [],
+      "suggestedFormats": [
+        "budget",
+        "versus",
+        "poll"
+      ],
+      "category": "budget",
+      "igReferralTraffic": null
+    },
     "thailande-litineraire-cache-qui-transforme-chaque-choix-en-renoncement": {
       "wpId": 5063,
       "title": "Thaïlande : l&rsquo;itinéraire caché qui transforme chaque choix en renoncement",
+      "reels": [],
+      "suggestedFormats": [
+        "pick",
+        "month",
+        "avantapres"
+      ],
+      "category": "itineraire",
+      "igReferralTraffic": null
+    },
+    "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher": {
+      "wpId": 4105,
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
       "reels": [],
       "suggestedFormats": [
         "pick",

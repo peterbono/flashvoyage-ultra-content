@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-11T07:55:37.329Z",
+  "timestamp": "2026-09-12T07:48:07.923Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,8 +17,8 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 90,
-    "medianTrafficSignal": "0.090",
+    "medianMonthlyPV": 100,
+    "medianTrafficSignal": "0.100",
     "avgRpm": 2,
     "articlesAnalyzed": 14
   },
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 2.4,
-        "projectedMonthlyTraffic": 90,
-        "projectedMonthlyRevenue": 0.18,
+        "expectedRoi": 2.67,
+        "projectedMonthlyTraffic": 100,
+        "projectedMonthlyRevenue": 0.2,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (90 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 2.4,
-        "projectedMonthlyTraffic": 90,
-        "projectedMonthlyRevenue": 0.18,
+        "expectedRoi": 2.67,
+        "projectedMonthlyTraffic": 100,
+        "projectedMonthlyRevenue": 0.2,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (90 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,11 +77,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 2.4,
-        "projectedMonthlyTraffic": 90,
-        "projectedMonthlyRevenue": 0.18,
+        "expectedRoi": 2.67,
+        "projectedMonthlyTraffic": 100,
+        "projectedMonthlyRevenue": 0.2,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (90 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (100 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -90,23 +90,23 @@
       "rank": 4,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 127,
-      "topic": "balistique",
+      "priorityScore": 131,
+      "topic": "laos",
       "articleType": "support",
       "context": {
-        "gapScore": 47,
-        "destination": "bali",
+        "gapScore": 51,
+        "destination": "vietnam",
         "category": "destination",
-        "suggestedTitle": "Bali 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Bali — format pick ou month",
-        "reason": "Content gap: \"balistique\" (score 47, source: trends)"
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"laos\" (score 51, source: trends)"
       },
       "roi": {
-        "expectedRoi": 1.89,
-        "projectedMonthlyTraffic": 71,
-        "projectedMonthlyRevenue": 0.142,
+        "expectedRoi": 2.27,
+        "projectedMonthlyTraffic": 85,
+        "projectedMonthlyRevenue": 0.17,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (90 PV) × gap boost (0.78)"
+        "trafficSource": "median baseline (100 PV) × gap boost (0.85)"
       },
       "cumulativeCost": 0.3,
       "withinBudget": true
@@ -122,7 +122,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 7,
-        "freshness": 0.49,
+        "freshness": 0.48,
         "traffic": 0,
         "reason": "Low-performing article: score=7, consider merge/update/delete"
       },
@@ -367,8 +367,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 14,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.023,
-    "expectedDailyRoi": 0.08
+    "expectedDailyRevenue": 0.026,
+    "expectedDailyRoi": 0.09
   },
   "summary": {
     "write_new": 1,
