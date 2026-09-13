@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-12T07:49:20.639Z",
+  "timestamp": "2026-09-13T08:10:19.821Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -17,32 +17,14 @@
       "id": "generationvoyage",
       "name": "Generation Voyage",
       "totalUrls": 9995,
-      "newUrls": 5
+      "newUrls": 4
     }
   ],
-  "newArticles": [
-    {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/souvenirs-bali/",
-      "lastmod": "2026-09-11T16:20:09+00:00",
-      "destination": "bali",
-      "contentType": "general",
-      "title": "Souvenirs Bali",
-      "action": "monitor",
-      "priority": "P3",
-      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=43, freshness=0.57)",
-      "matchedArticle": {
-        "wpId": 4370,
-        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
-        "compositeScore": 43,
-        "freshness": 0.57
-      }
-    }
-  ],
+  "newArticles": [],
   "summary": {
-    "totalNew": 1,
+    "totalNew": 0,
     "contentGaps": 0,
     "staleRefreshes": 0,
-    "monitoring": 1
+    "monitoring": 0
   }
 }
