@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-13T08:09:09.043Z",
+  "timestamp": "2026-09-14T08:43:34.538Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,8 +17,8 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 140,
-    "medianTrafficSignal": "0.140",
+    "medianMonthlyPV": 160,
+    "medianTrafficSignal": "0.160",
     "avgRpm": 2,
     "articlesAnalyzed": 13
   },
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 3.73,
-        "projectedMonthlyTraffic": 140,
-        "projectedMonthlyRevenue": 0.28,
+        "expectedRoi": 4.27,
+        "projectedMonthlyTraffic": 160,
+        "projectedMonthlyRevenue": 0.32,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (160 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 3.73,
-        "projectedMonthlyTraffic": 140,
-        "projectedMonthlyRevenue": 0.28,
+        "expectedRoi": 4.27,
+        "projectedMonthlyTraffic": 160,
+        "projectedMonthlyRevenue": 0.32,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (160 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,11 +77,11 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 3.73,
-        "projectedMonthlyTraffic": 140,
-        "projectedMonthlyRevenue": 0.28,
+        "expectedRoi": 4.27,
+        "projectedMonthlyTraffic": 160,
+        "projectedMonthlyRevenue": 0.32,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (140 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (160 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
@@ -122,7 +122,7 @@
         "wpId": 4030,
         "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 8,
-        "freshness": 0.56,
+        "freshness": 0.55,
         "traffic": 0,
         "reason": "Low-performing article: score=8, consider merge/update/delete"
       },
@@ -147,7 +147,7 @@
         "wpId": 3198,
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 8,
-        "freshness": 0.54,
+        "freshness": 0.53,
         "traffic": 0,
         "reason": "Low-performing article: score=8, consider merge/update/delete"
       },
@@ -191,56 +191,6 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "articleType": "support",
-      "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 9,
-        "freshness": 0.63,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 9,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 1,
-      "topic": "Choisir le bon plan eSIM pour Bali en 2026 : ce qu&rsquo;on ne te dit pas",
-      "articleType": "support",
-      "context": {
-        "wpId": 5296,
-        "slug": "choisir-le-bon-plan-esim-pour-bali-en-2026-ce-quon-ne-te-dit-pas",
-        "compositeScore": 9,
-        "freshness": 0.63,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 1,
       "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
@@ -262,7 +212,7 @@
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -287,7 +237,7 @@
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -312,7 +262,32 @@
       "withinBudget": true
     },
     {
-      "rank": 13,
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 0,
+      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "articleType": "support",
+      "context": {
+        "wpId": 3254,
+        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+        "compositeScore": 10,
+        "freshness": 0.53,
+        "traffic": 0.05,
+        "reason": "Low-performing article: score=10, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -335,6 +310,31 @@
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
+    },
+    {
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "articleType": "support",
+      "context": {
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "compositeScore": 11,
+        "freshness": 0.54,
+        "traffic": 0.05,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
     }
   ],
   "budgetAllocation": {
@@ -342,8 +342,8 @@
     "dailyBudget": 2,
     "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.028,
-    "expectedDailyRoi": 0.12
+    "expectedDailyRevenue": 0.032,
+    "expectedDailyRoi": 0.14
   },
   "summary": {
     "write_new": 0,
