@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-09-14T08:43:33.610Z",
-    "elapsedSeconds": 4,
+    "generatedAt": "2026-09-15T08:31:40.297Z",
+    "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
     "totalRecommendations": 12,
@@ -36,20 +36,20 @@
         "avgDuration": 142
       },
       "gsc": {
-        "impressions": 90,
-        "clicks": 4,
-        "position": 58.5,
+        "impressions": 98,
+        "clicks": 5,
+        "position": 56.1,
         "topQueries": [
           {
             "query": "bali gili lombok",
             "position": 69.3,
-            "impressions": 25,
+            "impressions": 24,
             "ctr": 0
           },
           {
             "query": "circuit bali lombok",
             "position": 75.9,
-            "impressions": 20,
+            "impressions": 22,
             "ctr": 0
           },
           {
@@ -105,9 +105,9 @@
         "avgDuration": 883
       },
       "gsc": {
-        "impressions": 59,
+        "impressions": 60,
         "clicks": 0,
-        "position": 76.6,
+        "position": 75.5,
         "topQueries": [
           {
             "query": "esim philippines",
@@ -159,16 +159,16 @@
       "ga4": {
         "pageviews": 4,
         "sessions": 3,
-        "avgDuration": 14
+        "avgDuration": 34
       },
       "gsc": {
         "impressions": 87,
         "clicks": 0,
-        "position": 52.7,
+        "position": 52.6,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 52.9,
+            "position": 52.8,
             "impressions": 83,
             "ctr": 0
           },
@@ -233,6 +233,57 @@
       "p0Count": 0
     },
     {
+      "wpId": 6331,
+      "slug": "meilleur-esim-philippines-2026",
+      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
+      "url": "https://flashvoyage.com/meilleur-esim-philippines-2026/",
+      "wordCount": 1278,
+      "widgetCount": 0,
+      "internalLinks": 11,
+      "lastModified": "2026-06-11T05:32:55",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 43
+      },
+      "gsc": {
+        "impressions": 43,
+        "clicks": 0,
+        "position": 92.7,
+        "topQueries": [
+          {
+            "query": "esim philippines",
+            "position": 96.3,
+            "impressions": 39,
+            "ctr": 0
+          },
+          {
+            "query": "meilleur esim philippines",
+            "position": 78.5,
+            "impressions": 2,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 4487,
       "slug": "voyage-thailande-pas-cher-2026-budget",
       "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
@@ -247,9 +298,9 @@
         "avgDuration": 90
       },
       "gsc": {
-        "impressions": 5,
+        "impressions": 6,
         "clicks": 0,
-        "position": 6.2,
+        "position": 6.7,
         "topQueries": []
       },
       "reels": {
@@ -358,57 +409,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 6331,
-      "slug": "meilleur-esim-philippines-2026",
-      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
-      "url": "https://flashvoyage.com/meilleur-esim-philippines-2026/",
-      "wordCount": 1278,
-      "widgetCount": 0,
-      "internalLinks": 11,
-      "lastModified": "2026-06-11T05:32:55",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 64
-      },
-      "gsc": {
-        "impressions": 44,
-        "clicks": 0,
-        "position": 92.7,
-        "topQueries": [
-          {
-            "query": "esim philippines",
-            "position": 96.2,
-            "impressions": 40,
-            "ctr": 0
-          },
-          {
-            "query": "meilleur esim philippines",
-            "position": 78.5,
-            "impressions": 2,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"esim philippines\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"esim philippines\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
       "wpId": 6327,
       "slug": "meilleur-esim-bali-2026",
       "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
@@ -446,14 +446,14 @@
       "internalLinks": 45,
       "lastModified": "2026-06-11T05:33:21",
       "ga4": {
-        "pageviews": 1,
-        "sessions": 1,
-        "avgDuration": 0
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 38
       },
       "gsc": {
-        "impressions": 20,
+        "impressions": 23,
         "clicks": 0,
-        "position": 31.8,
+        "position": 30,
         "topQueries": [
           {
             "query": "prix voyage japon 15 jours",
@@ -718,11 +718,11 @@
       "gsc": {
         "impressions": 37,
         "clicks": 0,
-        "position": 64,
+        "position": 64.1,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 61.6,
+            "position": 61.8,
             "impressions": 27,
             "ctr": 0
           },
@@ -1033,9 +1033,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 12,
         "clicks": 0,
-        "position": 8.8,
+        "position": 9,
         "topQueries": [
           {
             "query": "comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?",
@@ -1353,9 +1353,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 11,
         "clicks": 0,
-        "position": 48.9,
+        "position": 46.4,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",

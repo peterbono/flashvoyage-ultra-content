@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-14T08:43:28.276Z",
+  "timestamp": "2026-09-15T08:31:34.822Z",
   "queueSize": 13,
   "queue": [
     {
@@ -49,7 +49,7 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 7,
-        "freshness": 0.48,
+        "freshness": 0.47,
         "traffic": 0,
         "reason": "Low-performing article: score=7, consider merge/update/delete"
       }
@@ -107,6 +107,22 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
+      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
+      "articleType": "support",
+      "context": {
+        "wpId": 5678,
+        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
+        "compositeScore": 9,
+        "freshness": 0.63,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 9,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
       "topic": "Esim Japon : Combien Ça Te Coûte Vraiment ?",
       "articleType": "support",
       "context": {
@@ -119,7 +135,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
@@ -128,22 +144,6 @@
       "context": {
         "wpId": 5742,
         "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
-        "compositeScore": 10,
-        "freshness": 0.64,
-        "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Choisir son eSIM pour l&rsquo;Asie du Sud-Est : l&rsquo;arbitrage qui change tout",
-      "articleType": "support",
-      "context": {
-        "wpId": 5678,
-        "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
         "compositeScore": 10,
         "freshness": 0.64,
         "traffic": 0,
