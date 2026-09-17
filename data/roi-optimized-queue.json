@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-16T08:25:33.542Z",
+  "timestamp": "2026-09-17T08:31:24.914Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -17,8 +17,8 @@
     "pvPerSignalUnit": 1000
   },
   "trafficBaseline": {
-    "medianMonthlyPV": 160,
-    "medianTrafficSignal": "0.160",
+    "medianMonthlyPV": 110,
+    "medianTrafficSignal": "0.110",
     "avgRpm": 2,
     "articlesAnalyzed": 13
   },
@@ -35,11 +35,11 @@
         "reason": "Standard editorial calendar rotation (position 5/5)"
       },
       "roi": {
-        "expectedRoi": 4.27,
-        "projectedMonthlyTraffic": 160,
-        "projectedMonthlyRevenue": 0.32,
+        "expectedRoi": 2.93,
+        "projectedMonthlyTraffic": 110,
+        "projectedMonthlyRevenue": 0.22,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (160 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.075,
       "withinBudget": true
@@ -56,11 +56,11 @@
         "reason": "Standard editorial calendar rotation (position 1/5)"
       },
       "roi": {
-        "expectedRoi": 4.27,
-        "projectedMonthlyTraffic": 160,
-        "projectedMonthlyRevenue": 0.32,
+        "expectedRoi": 2.93,
+        "projectedMonthlyTraffic": 110,
+        "projectedMonthlyRevenue": 0.22,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (160 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.15,
       "withinBudget": true
@@ -77,63 +77,63 @@
         "reason": "Standard editorial calendar rotation (position 2/5)"
       },
       "roi": {
-        "expectedRoi": 4.27,
-        "projectedMonthlyTraffic": 160,
-        "projectedMonthlyRevenue": 0.32,
+        "expectedRoi": 2.93,
+        "projectedMonthlyTraffic": 110,
+        "projectedMonthlyRevenue": 0.22,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (160 PV) × gap boost (1.00)"
+        "trafficSource": "median baseline (110 PV) × gap boost (1.00)"
       },
       "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
       "rank": 4,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 136,
-      "topic": "agence de voyage",
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 3,
+      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
       "articleType": "support",
       "context": {
-        "gapScore": 56,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"agence de voyage\" (score 56, source: trends)"
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 7,
+        "freshness": 0.47,
+        "traffic": 0,
+        "reason": "Low-performing article: score=7, consider merge/update/delete"
       },
       "roi": {
-        "expectedRoi": 3.97,
-        "projectedMonthlyTraffic": 149,
-        "projectedMonthlyRevenue": 0.298,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (160 PV) × gap boost (0.93)"
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
       "rank": 5,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 125,
-      "topic": "budget 2027 retraités",
-      "articleType": "news",
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 2,
+      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
+      "articleType": "support",
       "context": {
-        "gapScore": 45,
-        "destination": null,
-        "category": "budget",
-        "suggestedTitle": "Budget 2027 retraités : Le Guide Budget Complet",
-        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
-        "reason": "Content gap: \"budget 2027 retraités\" (score 45, source: trends)"
+        "wpId": 4030,
+        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
+        "compositeScore": 8,
+        "freshness": 0.54,
+        "traffic": 0,
+        "reason": "Low-performing article: score=8, consider merge/update/delete"
       },
       "roi": {
-        "expectedRoi": 3.2,
-        "projectedMonthlyTraffic": 120,
-        "projectedMonthlyRevenue": 0.24,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (160 PV) × gap boost (0.75)"
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
@@ -147,7 +147,7 @@
         "wpId": 3198,
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 8,
-        "freshness": 0.53,
+        "freshness": 0.52,
         "traffic": 0,
         "reason": "Low-performing article: score=8, consider merge/update/delete"
       },
@@ -158,7 +158,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
@@ -172,7 +172,7 @@
         "wpId": 3107,
         "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
         "compositeScore": 8,
-        "freshness": 0.51,
+        "freshness": 0.5,
         "traffic": 0,
         "reason": "Low-performing article: score=8, consider merge/update/delete"
       },
@@ -183,11 +183,36 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
       "rank": 8,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "articleType": "support",
+      "context": {
+        "wpId": 5742,
+        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "compositeScore": 9,
+        "freshness": 0.63,
+        "traffic": 0,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -208,11 +233,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 9,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -222,7 +247,7 @@
         "wpId": 5270,
         "slug": "esim-japon-combien-ca-te-coute-vraiment",
         "compositeScore": 9,
-        "freshness": 0.62,
+        "freshness": 0.61,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       },
@@ -233,32 +258,7 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
-      "withinBudget": true
-    },
-    {
-      "rank": 10,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 1,
-      "topic": "Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 2924,
-        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
-        "compositeScore": 9,
-        "freshness": 0.47,
-        "traffic": 0,
-        "reason": "Low-performing article: score=9, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
@@ -266,14 +266,14 @@
       "action": "review",
       "priority": "P4",
       "priorityScore": 0,
-      "topic": "Bangkok : le vrai coût des taxis aéroport 2026",
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "articleType": "support",
       "context": {
-        "wpId": 5742,
-        "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 10,
-        "freshness": 0.64,
-        "traffic": 0,
+        "freshness": 0.53,
+        "traffic": 0.05,
         "reason": "Low-performing article: score=10, consider merge/update/delete"
       },
       "roi": {
@@ -283,36 +283,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
       "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
-      "articleType": "support",
-      "context": {
-        "wpId": 4030,
-        "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
-        "compositeScore": 10,
-        "freshness": 0.55,
-        "traffic": 0,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.375,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -333,36 +308,11 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     },
     {
-      "rank": 14,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -1,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "articleType": "support",
-      "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-        "compositeScore": 11,
-        "freshness": 0.54,
-        "traffic": 0.05,
-        "reason": "Low-performing article: score=11, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.375,
-      "withinBudget": true
-    },
-    {
-      "rank": 15,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -372,7 +322,7 @@
         "wpId": 2980,
         "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 11,
-        "freshness": 0.48,
+        "freshness": 0.47,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       },
@@ -383,20 +333,20 @@
         "productionCost": 0,
         "trafficSource": "no direct traffic (review only)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.225,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.375,
+    "totalCost": 0.225,
     "dailyBudget": 2,
-    "itemsWithinBudget": 15,
+    "itemsWithinBudget": 13,
     "itemsOverBudget": 0,
-    "expectedDailyRevenue": 0.05,
-    "expectedDailyRoi": 0.13
+    "expectedDailyRevenue": 0.022,
+    "expectedDailyRoi": 0.1
   },
   "summary": {
-    "write_new": 2,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,

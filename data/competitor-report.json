@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-16T08:26:53.168Z",
+  "timestamp": "2026-09-17T08:32:37.715Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -10,46 +10,596 @@
     {
       "id": "noobvoyage",
       "name": "Noobvoyage",
-      "totalUrls": 0,
-      "newUrls": 0
+      "totalUrls": 126,
+      "newUrls": 126
     },
     {
       "id": "generationvoyage",
       "name": "Generation Voyage",
       "totalUrls": 9995,
-      "newUrls": 143
+      "newUrls": 79
     }
   ],
   "newArticles": [
     {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visiter-jakarta-faire-voir/",
-      "lastmod": "2026-09-15T07:49:46+00:00",
-      "destination": "jakarta",
-      "contentType": "activites",
-      "title": "Visiter Jakarta Faire Voir",
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/sun-moon-lake-taiwan/",
+      "lastmod": "2014-03-19T05:09:49+00:00",
+      "destination": "taiwan",
+      "contentType": "general",
+      "title": "Sun Moon Lake Taiwan",
       "action": "content_gap",
       "priority": "P1",
-      "reason": "Competitor covers \"Visiter Jakarta Faire Voir\" (jakarta, activites) — no matching FlashVoyage article found"
+      "reason": "Competitor covers \"Sun Moon Lake Taiwan\" (taiwan, general) — no matching FlashVoyage article found"
     },
     {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visiter-cebu-faire-voir/",
-      "lastmod": "2026-09-15T08:14:02+00:00",
-      "destination": "cebu",
-      "contentType": "activites",
-      "title": "Visiter Cebu Faire Voir",
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/culture/critique-livre-shantaram-inde/",
+      "lastmod": "2014-01-22T11:47:17+00:00",
+      "destination": "inde",
+      "contentType": "general",
+      "title": "Critique Livre Shantaram Inde",
       "action": "content_gap",
       "priority": "P1",
-      "reason": "Competitor covers \"Visiter Cebu Faire Voir\" (cebu, activites) — no matching FlashVoyage article found"
+      "reason": "Competitor covers \"Critique Livre Shantaram Inde\" (inde, general) — no matching FlashVoyage article found"
     },
     {
-      "competitor": "generationvoyage",
-      "url": "https://generationvoyage.fr/visiter-singapour-faire-voir/",
-      "lastmod": "2026-09-15T07:28:38+00:00",
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/visiter-borobudur-java-indonesie/",
+      "lastmod": "2014-01-22T06:33:56+00:00",
+      "destination": "indonesie",
+      "contentType": "activites",
+      "title": "Visiter Borobudur Java Indonesie",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Borobudur Java Indonesie\" (indonesie, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/cavernes-ajanta-ellora-inde/",
+      "lastmod": "2014-01-22T06:08:17+00:00",
+      "destination": "inde",
+      "contentType": "general",
+      "title": "Cavernes Ajanta Ellora Inde",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Cavernes Ajanta Ellora Inde\" (inde, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/hampi-inde-du-sud/",
+      "lastmod": "2014-01-22T06:01:07+00:00",
+      "destination": "inde",
+      "contentType": "general",
+      "title": "Hampi Inde Du Sud",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Hampi Inde Du Sud\" (inde, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/volcan-bromo-java-indonesie/",
+      "lastmod": "2014-01-22T05:57:46+00:00",
+      "destination": "indonesie",
+      "contentType": "transport",
+      "title": "Volcan Bromo Java Indonesie",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Volcan Bromo Java Indonesie\" (indonesie, transport) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/images/video_myanmar/",
+      "lastmod": "2014-01-22T05:02:07+00:00",
+      "destination": "myanmar",
+      "contentType": "general",
+      "title": "Video_myanmar",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Video_myanmar\" (myanmar, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/images/video-une-journee-en-inde/",
+      "lastmod": "2014-01-17T06:42:10+00:00",
+      "destination": "inde",
+      "contentType": "general",
+      "title": "Video Une Journee En Inde",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Video Une Journee En Inde\" (inde, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/quoi-faire-au-nepal/",
+      "lastmod": "2014-01-15T03:30:56+00:00",
+      "destination": "nepal",
+      "contentType": "guide",
+      "title": "Quoi Faire Au Nepal",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Quoi Faire Au Nepal\" (nepal, guide) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/quoi-faire-a-brunei/",
+      "lastmod": "2014-01-15T03:26:40+00:00",
+      "destination": "brunei",
+      "contentType": "guide",
+      "title": "Quoi Faire A Brunei",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Quoi Faire A Brunei\" (brunei, guide) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/parc-national-gorges-taroko-taiwan/",
+      "lastmod": "2014-01-10T07:56:24+00:00",
+      "destination": "taiwan",
+      "contentType": "general",
+      "title": "Parc National Gorges Taroko Taiwan",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Parc National Gorges Taroko Taiwan\" (taiwan, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/culture/film-seediq-bale-taiwan/",
+      "lastmod": "2014-01-10T07:52:00+00:00",
+      "destination": "taiwan",
+      "contentType": "general",
+      "title": "Film Seediq Bale Taiwan",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Film Seediq Bale Taiwan\" (taiwan, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-inde/",
+      "lastmod": "2013-11-28T06:11:27+00:00",
+      "destination": "inde",
+      "contentType": "guide",
+      "title": "Infos Pratiques Inde",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Infos Pratiques Inde\" (inde, guide) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-voyage-laos/",
+      "lastmod": "2013-10-19T06:30:00+00:00",
+      "destination": "laos",
+      "contentType": "guide",
+      "title": "Infos Pratiques Voyage Laos",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Infos Pratiques Voyage Laos\" (laos, guide) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-taiwan/",
+      "lastmod": "2013-10-16T02:52:44+00:00",
+      "destination": "taiwan",
+      "contentType": "guide",
+      "title": "Infos Pratiques Taiwan",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Infos Pratiques Taiwan\" (taiwan, guide) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-sri-lanka/",
+      "lastmod": "2013-10-16T02:52:33+00:00",
+      "destination": "sri-lanka",
+      "contentType": "guide",
+      "title": "Infos Pratiques Sri Lanka",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Infos Pratiques Sri Lanka\" (sri-lanka, guide) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-myanmar/",
+      "lastmod": "2013-10-16T02:50:18+00:00",
+      "destination": "myanmar",
+      "contentType": "guide",
+      "title": "Infos Pratiques Myanmar",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Infos Pratiques Myanmar\" (myanmar, guide) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/taj_mahal_inde/",
+      "lastmod": "2013-10-11T03:17:26+00:00",
+      "destination": "inde",
+      "contentType": "general",
+      "title": "Taj_mahal_inde",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Taj_mahal_inde\" (inde, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-malaisie/",
+      "lastmod": "2013-10-16T02:48:00+00:00",
+      "destination": "malaisie",
+      "contentType": "guide",
+      "title": "Infos Pratiques Malaisie",
+      "action": "stale_refresh",
+      "priority": "P2",
+      "reason": "Competitor updated \"Infos Pratiques Malaisie\" — our article \"Malaisie : Les 11 Frais Cachés qui Font Exploser Ton Budget\" is stale (freshness=0.47)",
+      "matchedArticle": {
+        "wpId": 2924,
+        "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
+        "compositeScore": 7,
+        "freshness": 0.47
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-philippines/",
+      "lastmod": "2014-03-13T04:26:06+00:00",
+      "destination": "philippines",
+      "contentType": "guide",
+      "title": "Infos Pratiques Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=29, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 29,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/que-faire-au-japon/",
+      "lastmod": "2014-03-11T14:14:18+00:00",
+      "destination": "japon",
+      "contentType": "general",
+      "title": "Que Faire Au Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=27, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 27,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/a-voir-faire-absolument-en-thailande/",
+      "lastmod": "2014-03-10T15:53:18+00:00",
+      "destination": "thailande",
+      "contentType": "general",
+      "title": "A Voir Faire Absolument En Thailande",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=38, freshness=0.58)",
+      "matchedArticle": {
+        "wpId": 4487,
+        "slug": "voyage-thailande-pas-cher-2026-budget",
+        "compositeScore": 38,
+        "freshness": 0.58
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-thailande/",
+      "lastmod": "2014-03-08T08:38:12+00:00",
+      "destination": "thailande",
+      "contentType": "guide",
+      "title": "Infos Pratiques Thailande",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=38, freshness=0.58)",
+      "matchedArticle": {
+        "wpId": 4487,
+        "slug": "voyage-thailande-pas-cher-2026-budget",
+        "compositeScore": 38,
+        "freshness": 0.58
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/top10bali/",
+      "lastmod": "2014-03-08T08:31:35+00:00",
+      "destination": "bali",
+      "contentType": "classement",
+      "title": "Top10bali",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Bali, Lombok, Gili en 10 jours : itinéraire testé et budget 2026\" (score=40, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4370,
+        "slug": "bali-lombok-gili-10-jours-itineraire-budget-2026",
+        "compositeScore": 40,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/sur_la_route/voyage-philippines-avis-impressions/",
+      "lastmod": "2014-03-06T12:47:47+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Voyage Philippines Avis Impressions",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=29, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 29,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/ile-de-corregidor-philippines/",
+      "lastmod": "2014-03-04T10:09:04+00:00",
+      "destination": "philippines",
+      "contentType": "plage",
+      "title": "Ile De Corregidor Philippines",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=29, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 29,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/sur_la_route/philippines-malate-le-ghetto-backpacker-de-manila/",
+      "lastmod": "2014-03-03T12:32:22+00:00",
+      "destination": "philippines",
+      "contentType": "general",
+      "title": "Philippines Malate Le Ghetto Backpacker De Manila",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)\" (score=29, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4372,
+        "slug": "esim-philippines-globe-smart-comparatif-2026",
+        "compositeScore": 29,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/visiter-angkor-wat-cambodge/",
+      "lastmod": "2014-02-04T08:55:16+00:00",
+      "destination": "cambodge",
+      "contentType": "activites",
+      "title": "Visiter Angkor Wat Cambodge",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas\" (score=23, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4369,
+        "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+        "compositeScore": 23,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/culture/meilleurs-films-coree-du-sud/",
+      "lastmod": "2014-01-22T14:32:42+00:00",
+      "destination": "coree",
+      "contentType": "classement",
+      "title": "Meilleurs Films Coree Du Sud",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu\" (score=12, freshness=0.62)",
+      "matchedArticle": {
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "compositeScore": 12,
+        "freshness": 0.62
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/guide-voyage-indonesie/",
+      "lastmod": "2014-01-22T06:15:54+00:00",
+      "destination": "indonesie",
+      "contentType": "guide",
+      "title": "Guide Voyage Indonesie",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=41, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 41,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-japon/",
+      "lastmod": "2014-01-14T06:01:32+00:00",
+      "destination": "japon",
+      "contentType": "guide",
+      "title": "Infos Pratiques Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=27, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 27,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/thailande/top-things-to-do-see-in-thailand/",
+      "lastmod": "2014-01-14T05:40:20+00:00",
+      "destination": "thailande",
+      "contentType": "classement",
+      "title": "Top Things To Do See In Thailand",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans\" (score=38, freshness=0.58)",
+      "matchedArticle": {
+        "wpId": 4487,
+        "slug": "voyage-thailande-pas-cher-2026-budget",
+        "compositeScore": 38,
+        "freshness": 0.58
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/images/vietnam_son_doong/",
+      "lastmod": "2013-12-17T11:25:09+00:00",
+      "destination": "vietnam",
+      "contentType": "general",
+      "title": "Vietnam_son_doong",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=41, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 41,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/photos_de_voyage/photos_coree_du_sud/",
+      "lastmod": "2013-11-28T06:15:11+00:00",
+      "destination": "coree",
+      "contentType": "general",
+      "title": "Photos_coree_du_sud",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu\" (score=12, freshness=0.62)",
+      "matchedArticle": {
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "compositeScore": 12,
+        "freshness": 0.62
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-voyage-cambodge/",
+      "lastmod": "2013-11-28T06:11:06+00:00",
+      "destination": "cambodge",
+      "contentType": "guide",
+      "title": "Infos Pratiques Voyage Cambodge",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas\" (score=23, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4369,
+        "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
+        "compositeScore": 23,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/culture/departures-film-japon/",
+      "lastmod": "2013-11-03T05:33:37+00:00",
+      "destination": "japon",
+      "contentType": "general",
+      "title": "Departures Film Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=27, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 27,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/mont-koya-japon/",
+      "lastmod": "2013-10-26T04:52:08+00:00",
+      "destination": "japon",
+      "contentType": "general",
+      "title": "Mont Koya Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=27, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 27,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/aventures/conseils-visite-hiroshima-miyajima-japon/",
+      "lastmod": "2013-10-16T03:45:47+00:00",
+      "destination": "japon",
+      "contentType": "activites",
+      "title": "Conseils Visite Hiroshima Miyajima Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=27, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 27,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-coree-du-sud/",
+      "lastmod": "2013-10-16T02:52:37+00:00",
+      "destination": "coree",
+      "contentType": "guide",
+      "title": "Infos Pratiques Coree Du Sud",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu\" (score=12, freshness=0.62)",
+      "matchedArticle": {
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "compositeScore": 12,
+        "freshness": 0.62
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-vietnam/",
+      "lastmod": "2013-10-16T02:52:23+00:00",
+      "destination": "vietnam",
+      "contentType": "guide",
+      "title": "Infos Pratiques Vietnam",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=41, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 41,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/guide/infos-pratiques-singapour/",
+      "lastmod": "2013-10-16T02:52:19+00:00",
       "destination": "singapour",
-      "contentType": "activites",
-      "title": "Visiter Singapour Faire Voir",
+      "contentType": "guide",
+      "title": "Infos Pratiques Singapour",
       "action": "monitor",
       "priority": "P3",
       "reason": "We cover this topic: \"Kuala Lumpur ou Singapour : quel stopover optimisera vraiment ton voyage ?\" (score=20, freshness=0.60)",
@@ -59,12 +609,63 @@
         "compositeScore": 20,
         "freshness": 0.6
       }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/interview/interview_vietnam/",
+      "lastmod": "2013-10-11T03:15:26+00:00",
+      "destination": "vietnam",
+      "contentType": "general",
+      "title": "Interview_vietnam",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet\" (score=41, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4252,
+        "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+        "compositeScore": 41,
+        "freshness": 0.56
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/sur_la_route/impressions_coree_du_sud/",
+      "lastmod": "2013-10-11T02:01:44+00:00",
+      "destination": "coree",
+      "contentType": "general",
+      "title": "Impressions_coree_du_sud",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu\" (score=12, freshness=0.62)",
+      "matchedArticle": {
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "compositeScore": 12,
+        "freshness": 0.62
+      }
+    },
+    {
+      "competitor": "noobvoyage",
+      "url": "http://noobvoyage.fr/working_holiday_visa/obtenir-whv-japon/",
+      "lastmod": "2013-06-12T17:42:33+00:00",
+      "destination": "japon",
+      "contentType": "visa",
+      "title": "Obtenir Whv Japon",
+      "action": "monitor",
+      "priority": "P3",
+      "reason": "We cover this topic: \"Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne\" (score=27, freshness=0.56)",
+      "matchedArticle": {
+        "wpId": 4373,
+        "slug": "japon-couple-15-jours-budget-tout-compris-2026",
+        "compositeScore": 27,
+        "freshness": 0.56
+      }
     }
   ],
   "summary": {
-    "totalNew": 3,
-    "contentGaps": 2,
-    "staleRefreshes": 0,
-    "monitoring": 1
+    "totalNew": 44,
+    "contentGaps": 18,
+    "staleRefreshes": 1,
+    "monitoring": 25
   }
 }
