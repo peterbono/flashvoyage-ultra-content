@@ -1,36 +1,36 @@
 {
-  "generatedAt": "2026-09-17T02:59:32.265Z",
+  "generatedAt": "2026-09-17T10:49:53.968Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 0,
-    "queue_normal": 1
+    "queue_priority": 1,
+    "queue_normal": 0
   },
   "queue": [
     {
-      "topic": "Chinese scam gang paid 900,000 baht a month for Bangkok mansion to target victims in Japan",
+      "topic": "This is Only a Test! Bali’s Ngurah Rai Airport to Hold Airport Emergency Exercise",
       "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/bangkok/chinese-scam-gang-paid-900000-baht-a-month-for-bangkok-mansion-to-target-victims-in-japan",
-      "velocityScore": 0.49,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 720,
+      "destination": "indonesia",
+      "link": "https://balidiscovery.com/this-is-only-a-test-balis-ngurah-rai-airport-to-hold-airport-emergency-exercise/",
+      "velocityScore": 0.622,
+      "action": "QUEUE_PRIORITY",
+      "hoursRemaining": 718,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2449,
-      "estimatedTrafficIn24h": 2393,
+      "estimatedTrafficNow": 2072,
+      "estimatedTrafficIn24h": 2024,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 1,
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
         "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 0.5
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 1.7
       },
-      "detectedAt": "2026-09-17T02:30:17.000Z",
-      "scoredAt": "2026-09-17T02:59:24.893Z"
+      "detectedAt": "2026-09-17T09:09:51.000Z",
+      "scoredAt": "2026-09-17T10:49:50.190Z"
     }
   ]
 }
