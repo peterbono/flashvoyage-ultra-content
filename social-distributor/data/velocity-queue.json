@@ -1,61 +1,36 @@
 {
-  "generatedAt": "2026-09-17T16:03:58.615Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-09-17T20:52:00.176Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 1
   },
   "queue": [
-    {
-      "topic": "Vietnamese woman arrested for stealing Chinese tourist's luggage at Bangkok airport",
-      "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/crime/vietnamese-woman-arrested-for-stealing-chinese-tourist-s-luggage-at-bangkok-airport-5121445.html",
-      "velocityScore": 0.508,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1692,
-      "estimatedTrafficIn24h": 1653,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.68,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 5.1
-      },
-      "detectedAt": "2026-09-17T11:00:00.000Z",
-      "scoredAt": "2026-09-17T16:03:51.832Z"
-    },
     {
       "topic": "This is Only a Test! Bali’s Ngurah Rai Airport to Hold Airport Emergency Exercise",
       "source": "rss_breaking",
       "destination": "indonesia",
       "link": "https://balidiscovery.com/this-is-only-a-test-balis-ngurah-rai-airport-to-hold-airport-emergency-exercise/",
-      "velocityScore": 0.41,
+      "velocityScore": 0.408,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 713,
+      "hoursRemaining": 708,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1366,
-      "estimatedTrafficIn24h": 1335,
+      "estimatedTrafficNow": 1360,
+      "estimatedTrafficIn24h": 1329,
       "trafficLossPerHour": 1,
       "breakdown": {
         "trendIntensity": 0.55,
-        "timeDecay": 0.993,
+        "timeDecay": 0.989,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 6.9
+        "hoursSinceDetection": 11.7
       },
       "detectedAt": "2026-09-17T09:09:51.000Z",
-      "scoredAt": "2026-09-17T16:03:57.119Z"
+      "scoredAt": "2026-09-17T20:52:00.176Z"
     }
   ]
 }
