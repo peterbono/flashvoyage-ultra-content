@@ -1,17 +1,17 @@
 {
-  "timestamp": "2026-09-17T08:32:38.750Z",
+  "timestamp": "2026-09-18T08:07:09.409Z",
   "articleCount": 38,
   "stateCounts": {
-    "GROWING": 17,
-    "DECLINING": 9,
+    "GROWING": 19,
+    "DECLINING": 7,
     "EVERGREEN": 5,
     "DEAD": 7
   },
-  "totalActions": 80,
+  "totalActions": 78,
   "actionsByPriority": {
-    "P0": 9,
-    "P1": 35,
-    "P2": 31,
+    "P0": 7,
+    "P1": 33,
+    "P2": 33,
     "P3": 5
   },
   "articles": [
@@ -21,13 +21,13 @@
       "wpId": 4370,
       "compositeScore": 40,
       "date": "2026-03-23T13:17:41",
-      "ageDays": 178,
+      "ageDays": 179,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.091,
-        "trend14d": -0.2,
+        "trend7d": -0.024,
+        "trend14d": -0.184,
         "consecutiveRising": 0,
-        "variance7d": 0.031,
+        "variance7d": 0.033,
         "dataPoints": 31
       },
       "actions": [
@@ -57,12 +57,12 @@
       "wpId": 5119,
       "compositeScore": 23,
       "date": "2026-04-06T05:37:25",
-      "ageDays": 164,
+      "ageDays": 165,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": 0.211,
-        "trend14d": -0.303,
-        "consecutiveRising": 1,
+        "trend7d": 0,
+        "trend14d": -0.258,
+        "consecutiveRising": 0,
         "variance7d": 0.07,
         "dataPoints": 31
       },
@@ -90,86 +90,18 @@
       ]
     },
     {
-      "slug": "meilleur-esim-cambodge-2026",
-      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
-      "wpId": 6374,
-      "compositeScore": 19,
-      "date": "2026-06-14T03:18:14",
-      "ageDays": 95,
-      "state": "DECLINING",
-      "trajectory": {
-        "trend7d": -0.208,
-        "trend14d": -0.321,
-        "consecutiveRising": 0,
-        "variance7d": 0.073,
-        "dataPoints": 31
-      },
-      "actions": [
-        {
-          "action": "content_refresh",
-          "priority": "P0",
-          "reason": "Article declining -15%+ over 14d — urgent content refresh needed"
-        },
-        {
-          "action": "update_title_meta",
-          "priority": "P1",
-          "reason": "Declining article — refresh title/meta for improved CTR"
-        },
-        {
-          "action": "add_fresh_sections",
-          "priority": "P1",
-          "reason": "Declining article — add 2026 updates, new sections, fresh data"
-        }
-      ],
-      "flags": []
-    },
-    {
       "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
       "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
       "wpId": 4125,
-      "compositeScore": 17,
+      "compositeScore": 19,
       "date": "2026-03-18T19:33:49",
-      "ageDays": 183,
+      "ageDays": 184,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.15,
-        "trend14d": -0.292,
-        "consecutiveRising": 0,
-        "variance7d": 0.026,
-        "dataPoints": 31
-      },
-      "actions": [
-        {
-          "action": "content_refresh",
-          "priority": "P0",
-          "reason": "Article declining -15%+ over 14d — urgent content refresh needed"
-        },
-        {
-          "action": "update_title_meta",
-          "priority": "P1",
-          "reason": "Declining article — refresh title/meta for improved CTR"
-        },
-        {
-          "action": "add_fresh_sections",
-          "priority": "P1",
-          "reason": "Declining article — add 2026 updates, new sections, fresh data"
-        }
-      ],
-      "flags": []
-    },
-    {
-      "slug": "meilleur-esim-philippines-2026",
-      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
-      "wpId": 6331,
-      "compositeScore": 15,
-      "date": "2026-06-07T03:17:59",
-      "ageDays": 102,
-      "state": "DECLINING",
-      "trajectory": {
-        "trend7d": -0.062,
-        "trend14d": -0.211,
-        "consecutiveRising": 0,
-        "variance7d": 0.047,
+        "trend7d": 0.118,
+        "trend14d": -0.208,
+        "consecutiveRising": 1,
+        "variance7d": 0.03,
         "dataPoints": 31
       },
       "actions": [
@@ -195,15 +127,15 @@
       "slug": "meilleur-esim-bali-2026",
       "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
       "wpId": 6327,
-      "compositeScore": 15,
+      "compositeScore": 17,
       "date": "2026-05-31T03:17:48",
-      "ageDays": 109,
+      "ageDays": 110,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": 0,
-        "trend14d": -0.25,
-        "consecutiveRising": 0,
-        "variance7d": 0.094,
+        "trend7d": 0.214,
+        "trend14d": -0.15,
+        "consecutiveRising": 1,
+        "variance7d": 0.084,
         "dataPoints": 31
       },
       "actions": [
@@ -231,13 +163,13 @@
       "wpId": 6195,
       "compositeScore": 15,
       "date": "2026-05-10T03:15:12",
-      "ageDays": 130,
+      "ageDays": 131,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.286,
+        "trend7d": -0.211,
         "trend14d": -0.318,
         "consecutiveRising": 0,
-        "variance7d": 0.126,
+        "variance7d": 0.111,
         "dataPoints": 31
       },
       "actions": [
@@ -267,13 +199,13 @@
       "wpId": 5296,
       "compositeScore": 12,
       "date": "2026-04-11T08:44:09",
-      "ageDays": 159,
+      "ageDays": 160,
       "state": "DECLINING",
       "trajectory": {
         "trend7d": -0.077,
         "trend14d": -0.25,
         "consecutiveRising": 0,
-        "variance7d": 0.178,
+        "variance7d": 0.182,
         "dataPoints": 31
       },
       "actions": [
@@ -301,14 +233,14 @@
       "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
       "title": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
       "wpId": 3425,
-      "compositeScore": 10,
+      "compositeScore": 11,
       "date": "2026-03-14T20:55:07",
-      "ageDays": 186,
+      "ageDays": 187,
       "state": "DECLINING",
       "trajectory": {
-        "trend7d": -0.167,
-        "trend14d": -0.231,
-        "consecutiveRising": 0,
+        "trend7d": 0,
+        "trend14d": -0.154,
+        "consecutiveRising": 1,
         "variance7d": 0.032,
         "dataPoints": 31
       },
@@ -335,15 +267,15 @@
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
       "wpId": 4252,
-      "compositeScore": 41,
+      "compositeScore": 43,
       "date": "2026-03-23T11:57:07",
-      "ageDays": 178,
+      "ageDays": 179,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.025,
-        "trend14d": -0.128,
-        "consecutiveRising": 1,
-        "variance7d": 0.029,
+        "trend7d": 0.024,
+        "trend14d": 0,
+        "consecutiveRising": 2,
+        "variance7d": 0.034,
         "dataPoints": 31
       },
       "actions": [
@@ -369,13 +301,13 @@
       "wpId": 4487,
       "compositeScore": 38,
       "date": "2026-03-31T16:22:55",
-      "ageDays": 170,
+      "ageDays": 171,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.027,
-        "trend14d": -0.073,
+        "trend7d": 0.056,
+        "trend14d": -0.136,
         "consecutiveRising": 0,
-        "variance7d": 0.056,
+        "variance7d": 0.057,
         "dataPoints": 31
       },
       "actions": [
@@ -391,21 +323,49 @@
         }
       ],
       "flags": [
-        "trending",
         "1_reels"
       ]
+    },
+    {
+      "slug": "esim-philippines-globe-smart-comparatif-2026",
+      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
+      "wpId": 4372,
+      "compositeScore": 33,
+      "date": "2026-03-23T13:19:57",
+      "ageDays": 179,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": 0.065,
+        "trend14d": 0.1,
+        "consecutiveRising": 1,
+        "variance7d": 0.036,
+        "dataPoints": 31
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
     },
     {
       "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
       "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
       "wpId": 4254,
-      "compositeScore": 32,
+      "compositeScore": 31,
       "date": "2026-03-23T12:02:05",
-      "ageDays": 178,
+      "ageDays": 179,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.032,
-        "trend14d": -0.059,
+        "trend7d": 0,
+        "trend14d": -0.088,
         "consecutiveRising": 0,
         "variance7d": 0.027,
         "dataPoints": 31
@@ -427,18 +387,18 @@
       ]
     },
     {
-      "slug": "esim-philippines-globe-smart-comparatif-2026",
-      "title": "eSIM Philippines 2026 : Globe vs Smart vs Holafly — le comparatif complet (tarifs PHP vérifiés)",
-      "wpId": 4372,
+      "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
+      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
+      "wpId": 4250,
       "compositeScore": 29,
-      "date": "2026-03-23T13:19:57",
-      "ageDays": 178,
+      "date": "2026-03-23T11:56:46",
+      "ageDays": 179,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.115,
+        "trend7d": 0,
         "trend14d": -0.033,
-        "consecutiveRising": 0,
-        "variance7d": 0.024,
+        "consecutiveRising": 1,
+        "variance7d": 0.025,
         "dataPoints": 31
       },
       "actions": [
@@ -456,18 +416,18 @@
       "flags": []
     },
     {
-      "slug": "esim-vietnam-comparatif-forfait-2026-frais-caches",
-      "title": "eSIM Vietnam : j&rsquo;ai payé 49 € pour 3,80 € de data",
-      "wpId": 4250,
+      "slug": "meilleur-esim-cambodge-2026",
+      "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
+      "wpId": 6374,
       "compositeScore": 28,
-      "date": "2026-03-23T11:56:46",
-      "ageDays": 178,
+      "date": "2026-06-14T03:18:14",
+      "ageDays": 96,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.125,
-        "trend14d": -0.125,
-        "consecutiveRising": 0,
-        "variance7d": 0.025,
+        "trend7d": 0.217,
+        "trend14d": 0.077,
+        "consecutiveRising": 1,
+        "variance7d": 0.103,
         "dataPoints": 31
       },
       "actions": [
@@ -490,13 +450,13 @@
       "wpId": 4373,
       "compositeScore": 27,
       "date": "2026-03-23T13:20:52",
-      "ageDays": 178,
+      "ageDays": 179,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0.08,
         "trend14d": 0,
         "consecutiveRising": 0,
-        "variance7d": 0.056,
+        "variance7d": 0.053,
         "dataPoints": 31
       },
       "actions": [
@@ -519,14 +479,14 @@
       "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
       "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
       "wpId": 4369,
-      "compositeScore": 23,
+      "compositeScore": 24,
       "date": "2026-03-23T13:17:33",
-      "ageDays": 178,
+      "ageDays": 179,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": -0.042,
-        "trend14d": -0.042,
-        "consecutiveRising": 0,
+        "trend7d": 0,
+        "trend14d": -0.04,
+        "consecutiveRising": 1,
         "variance7d": 0.015,
         "dataPoints": 31
       },
@@ -552,10 +512,10 @@
       "wpId": 4253,
       "compositeScore": 23,
       "date": "2026-03-23T11:58:01",
-      "ageDays": 178,
+      "ageDays": 179,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.045,
+        "trend7d": 0,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0.015,
@@ -583,7 +543,7 @@
       "wpId": 4371,
       "compositeScore": 22,
       "date": "2026-03-23T13:18:06",
-      "ageDays": 178,
+      "ageDays": 179,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
@@ -614,12 +574,12 @@
       "wpId": 5260,
       "compositeScore": 20,
       "date": "2026-04-10T05:37:09",
-      "ageDays": 160,
+      "ageDays": 161,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.176,
-        "trend14d": 0,
-        "consecutiveRising": 1,
+        "trend7d": 0,
+        "trend14d": 0.111,
+        "consecutiveRising": 0,
         "variance7d": 0.062,
         "dataPoints": 31
       },
@@ -646,12 +606,12 @@
       "wpId": 5179,
       "compositeScore": 20,
       "date": "2026-04-08T05:23:01",
-      "ageDays": 162,
+      "ageDays": 163,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0.176,
-        "trend14d": -0.048,
-        "consecutiveRising": 1,
+        "trend7d": 0,
+        "trend14d": 0.111,
+        "consecutiveRising": 0,
         "variance7d": 0.052,
         "dataPoints": 31
       },
@@ -679,11 +639,11 @@
       "wpId": 5072,
       "compositeScore": 20,
       "date": "2026-04-05T08:42:10",
-      "ageDays": 165,
+      "ageDays": 166,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
-        "trend14d": 0,
+        "trend14d": 0.053,
         "consecutiveRising": 0,
         "variance7d": 0,
         "dataPoints": 31
@@ -706,18 +666,47 @@
       ]
     },
     {
+      "slug": "meilleur-esim-philippines-2026",
+      "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
+      "wpId": 6331,
+      "compositeScore": 16,
+      "date": "2026-06-07T03:17:59",
+      "ageDays": 103,
+      "state": "GROWING",
+      "trajectory": {
+        "trend7d": 0.067,
+        "trend14d": -0.111,
+        "consecutiveRising": 1,
+        "variance7d": 0.04,
+        "dataPoints": 31
+      },
+      "actions": [
+        {
+          "action": "add_widgets",
+          "priority": "P1",
+          "reason": "Article gaining traction — monetize with Travelpayouts widgets"
+        },
+        {
+          "action": "create_reel",
+          "priority": "P2",
+          "reason": "Growing article benefits from additional reel amplification"
+        }
+      ],
+      "flags": []
+    },
+    {
       "slug": "meilleur-esim-vietnam-2026",
       "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
       "wpId": 6323,
       "compositeScore": 16,
       "date": "2026-05-24T03:16:15",
-      "ageDays": 116,
+      "ageDays": 117,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.059,
-        "trend14d": -0.059,
+        "trend14d": 0.067,
         "consecutiveRising": 0,
-        "variance7d": 0.052,
+        "variance7d": 0.047,
         "dataPoints": 31
       },
       "actions": [
@@ -740,12 +729,12 @@
       "slug": "thailande-ou-vietnam-en-2026-larbitrage-qui-change-tout",
       "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 2026",
       "wpId": 5333,
-      "compositeScore": 15,
+      "compositeScore": 14,
       "date": "2026-04-12T05:34:09",
-      "ageDays": 158,
+      "ageDays": 159,
       "state": "GROWING",
       "trajectory": {
-        "trend7d": 0,
+        "trend7d": -0.067,
         "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0.034,
@@ -773,7 +762,7 @@
       "wpId": 5063,
       "compositeScore": 13,
       "date": "2026-04-05T05:24:53",
-      "ageDays": 165,
+      "ageDays": 166,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
@@ -804,13 +793,13 @@
       "wpId": 5343,
       "compositeScore": 12,
       "date": "2026-04-12T08:43:46",
-      "ageDays": 158,
+      "ageDays": 159,
       "state": "GROWING",
       "trajectory": {
         "trend7d": -0.077,
         "trend14d": -0.077,
         "consecutiveRising": 0,
-        "variance7d": 0.109,
+        "variance7d": 0.105,
         "dataPoints": 31
       },
       "actions": [
@@ -835,7 +824,7 @@
       "wpId": 6309,
       "compositeScore": 11,
       "date": "2026-05-17T03:15:44",
-      "ageDays": 123,
+      "ageDays": 124,
       "state": "GROWING",
       "trajectory": {
         "trend7d": 0,
@@ -861,18 +850,42 @@
       ]
     },
     {
+      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
+      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
+      "wpId": 3254,
+      "compositeScore": 14,
+      "date": "2026-03-11T20:13:21",
+      "ageDays": 190,
+      "state": "EVERGREEN",
+      "trajectory": {
+        "trend7d": 0.077,
+        "trend14d": -0.067,
+        "consecutiveRising": 1,
+        "variance7d": 0.121,
+        "dataPoints": 31
+      },
+      "actions": [
+        {
+          "action": "annual_review",
+          "priority": "P3",
+          "reason": "Evergreen article — light annual fact-check and date update"
+        }
+      ],
+      "flags": []
+    },
+    {
       "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
       "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
       "wpId": 4105,
       "compositeScore": 13,
       "date": "2026-03-18T13:26:31",
-      "ageDays": 183,
+      "ageDays": 184,
       "state": "EVERGREEN",
       "trajectory": {
         "trend7d": -0.071,
-        "trend14d": -0.071,
+        "trend14d": 0.083,
         "consecutiveRising": 0,
-        "variance7d": 0.053,
+        "variance7d": 0.049,
         "dataPoints": 31
       },
       "actions": [
@@ -887,40 +900,16 @@
       ]
     },
     {
-      "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-      "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "wpId": 3254,
-      "compositeScore": 13,
-      "date": "2026-03-11T20:13:21",
-      "ageDays": 190,
-      "state": "EVERGREEN",
-      "trajectory": {
-        "trend7d": 0.3,
-        "trend14d": -0.133,
-        "consecutiveRising": 0,
-        "variance7d": 0.112,
-        "dataPoints": 31
-      },
-      "actions": [
-        {
-          "action": "annual_review",
-          "priority": "P3",
-          "reason": "Evergreen article — light annual fact-check and date update"
-        }
-      ],
-      "flags": []
-    },
-    {
       "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
       "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
       "wpId": 3090,
       "compositeScore": 13,
       "date": "2026-03-04T19:08:20",
-      "ageDays": 197,
+      "ageDays": 198,
       "state": "EVERGREEN",
       "trajectory": {
         "trend7d": 0,
-        "trend14d": 0,
+        "trend14d": 0.083,
         "consecutiveRising": 0,
         "variance7d": 0,
         "dataPoints": 31
@@ -942,13 +931,13 @@
       "wpId": 4071,
       "compositeScore": 12,
       "date": "2026-03-18T10:40:12",
-      "ageDays": 183,
+      "ageDays": 184,
       "state": "EVERGREEN",
       "trajectory": {
-        "trend7d": 0.5,
+        "trend7d": -0.077,
         "trend14d": -0.077,
         "consecutiveRising": 0,
-        "variance7d": 0.04,
+        "variance7d": 0.037,
         "dataPoints": 31
       },
       "actions": [
@@ -968,10 +957,10 @@
       "wpId": 2980,
       "compositeScore": 11,
       "date": "2026-02-23T10:54:23",
-      "ageDays": 206,
+      "ageDays": 207,
       "state": "EVERGREEN",
       "trajectory": {
-        "trend7d": 0.375,
+        "trend7d": 0,
         "trend14d": -0.083,
         "consecutiveRising": 0,
         "variance7d": 0,
@@ -994,13 +983,13 @@
       "wpId": 5742,
       "compositeScore": 9,
       "date": "2026-04-17T05:37:11",
-      "ageDays": 153,
+      "ageDays": 154,
       "state": "DEAD",
       "trajectory": {
         "trend7d": -0.1,
         "trend14d": -0.1,
         "consecutiveRising": 0,
-        "variance7d": 0.035,
+        "variance7d": 0.047,
         "dataPoints": 31
       },
       "actions": [
@@ -1025,7 +1014,7 @@
       "wpId": 5678,
       "compositeScore": 9,
       "date": "2026-04-15T09:17:09",
-      "ageDays": 155,
+      "ageDays": 156,
       "state": "DEAD",
       "trajectory": {
         "trend7d": -0.1,
@@ -1056,7 +1045,7 @@
       "wpId": 5270,
       "compositeScore": 9,
       "date": "2026-04-10T09:40:41",
-      "ageDays": 160,
+      "ageDays": 161,
       "state": "DEAD",
       "trajectory": {
         "trend7d": 0,
@@ -1087,7 +1076,7 @@
       "wpId": 4030,
       "compositeScore": 8,
       "date": "2026-03-18T06:42:56",
-      "ageDays": 183,
+      "ageDays": 184,
       "state": "DEAD",
       "trajectory": {
         "trend7d": 0,
@@ -1118,11 +1107,11 @@
       "wpId": 3198,
       "compositeScore": 8,
       "date": "2026-03-11T15:15:39",
-      "ageDays": 190,
+      "ageDays": 191,
       "state": "DEAD",
       "trajectory": {
         "trend7d": 0,
-        "trend14d": -0.111,
+        "trend14d": 0,
         "consecutiveRising": 0,
         "variance7d": 0,
         "dataPoints": 31
@@ -1149,7 +1138,7 @@
       "wpId": 3107,
       "compositeScore": 8,
       "date": "2026-03-04T19:51:24",
-      "ageDays": 197,
+      "ageDays": 198,
       "state": "DEAD",
       "trajectory": {
         "trend7d": 0,
@@ -1180,7 +1169,7 @@
       "wpId": 2924,
       "compositeScore": 7,
       "date": "2026-02-21T09:23:42",
-      "ageDays": 208,
+      "ageDays": 209,
       "state": "DEAD",
       "trajectory": {
         "trend7d": 0,

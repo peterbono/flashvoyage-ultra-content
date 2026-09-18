@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-17T08:31:18.504Z",
+  "timestamp": "2026-09-18T08:05:58.687Z",
   "queueSize": 13,
   "queue": [
     {
@@ -129,7 +129,7 @@
         "wpId": 5678,
         "slug": "choisir-son-esim-pour-lasie-du-sud-est-larbitrage-qui-change-tout",
         "compositeScore": 9,
-        "freshness": 0.63,
+        "freshness": 0.62,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
@@ -154,22 +154,6 @@
       "rank": 11,
       "action": "review",
       "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
-      "articleType": "support",
-      "context": {
-        "wpId": 3425,
-        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
-        "compositeScore": 10,
-        "freshness": 0.53,
-        "traffic": 0.05,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
       "priorityScore": -1,
       "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
       "articleType": "support",
@@ -179,6 +163,22 @@
         "compositeScore": 11,
         "freshness": 0.72,
         "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Corée du Sud en solo : l&rsquo;itinéraire qu&rsquo;on te cache (et ses vrais compromis)",
+      "articleType": "support",
+      "context": {
+        "wpId": 3425,
+        "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
+        "compositeScore": 11,
+        "freshness": 0.53,
+        "traffic": 0.06,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
     },

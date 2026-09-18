@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-09-17T08:31:23.920Z",
-    "elapsedSeconds": 4,
+    "generatedAt": "2026-09-18T08:06:05.347Z",
+    "elapsedSeconds": 6,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
     "totalRecommendations": 12,
@@ -31,25 +31,25 @@
       "internalLinks": 47,
       "lastModified": "2026-06-11T05:33:27",
       "ga4": {
-        "pageviews": 19,
-        "sessions": 14,
-        "avgDuration": 152
+        "pageviews": 16,
+        "sessions": 13,
+        "avgDuration": 122
       },
       "gsc": {
-        "impressions": 102,
+        "impressions": 97,
         "clicks": 4,
-        "position": 56.5,
+        "position": 55.4,
         "topQueries": [
           {
             "query": "bali gili lombok",
             "position": 68.4,
-            "impressions": 25,
+            "impressions": 24,
             "ctr": 0
           },
           {
             "query": "circuit bali lombok",
-            "position": 74.3,
-            "impressions": 24,
+            "position": 72.5,
+            "impressions": 23,
             "ctr": 0
           },
           {
@@ -59,15 +59,15 @@
             "ctr": 0
           },
           {
-            "query": "bali lombok gili",
-            "position": 64.6,
+            "query": "circuit bali lombok gili",
+            "position": 37,
             "impressions": 9,
             "ctr": 0
           },
           {
-            "query": "circuit bali lombok gili",
-            "position": 37,
-            "impressions": 9,
+            "query": "bali lombok gili",
+            "position": 62.3,
+            "impressions": 6,
             "ctr": 0
           }
         ]
@@ -100,19 +100,19 @@
       "internalLinks": 56,
       "lastModified": "2026-06-11T05:33:24",
       "ga4": {
-        "pageviews": 7,
-        "sessions": 2,
-        "avgDuration": 1195
+        "pageviews": 8,
+        "sessions": 3,
+        "avgDuration": 808
       },
       "gsc": {
-        "impressions": 71,
+        "impressions": 73,
         "clicks": 0,
-        "position": 73.1,
+        "position": 73.5,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 83.8,
-            "impressions": 51,
+            "position": 83.9,
+            "impressions": 53,
             "ctr": 0
           },
           {
@@ -154,159 +154,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 4125,
-      "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
-      "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
-      "url": "https://flashvoyage.com/hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe/",
-      "wordCount": 3098,
-      "widgetCount": 0,
-      "internalLinks": 29,
-      "lastModified": "2026-06-11T05:33:38",
-      "ga4": {
-        "pageviews": 4,
-        "sessions": 3,
-        "avgDuration": 303
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
-      "wordCount": 2503,
-      "widgetCount": 4,
-      "internalLinks": 45,
-      "lastModified": "2026-06-11T05:33:20",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 90
-      },
-      "gsc": {
-        "impressions": 7,
-        "clicks": 0,
-        "position": 6,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4254,
-      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
-      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
-      "url": "https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/",
-      "wordCount": 4825,
-      "widgetCount": 3,
-      "internalLinks": 41,
-      "lastModified": "2026-06-11T05:33:30",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 124
-      },
-      "gsc": {
-        "impressions": 27,
-        "clicks": 0,
-        "position": 33.7,
-        "topQueries": [
-          {
-            "query": "bali thailande",
-            "position": 71.3,
-            "impressions": 3,
-            "ctr": 0
-          },
-          {
-            "query": "bali et thailande",
-            "position": 65,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "bali ou thailande",
-            "position": 53,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "bali thailand",
-            "position": 72,
-            "impressions": 1,
-            "ctr": 0
-          },
-          {
-            "query": "bali, thailand",
-            "position": 87,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"bali thailande\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
-      "wpId": 4252,
-      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
-      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
-      "wordCount": 4975,
-      "widgetCount": 3,
-      "internalLinks": 48,
-      "lastModified": "2026-06-11T05:33:35",
-      "ga4": {
-        "pageviews": 3,
-        "sessions": 3,
-        "avgDuration": 242
-      },
-      "gsc": {
-        "impressions": 2,
-        "clicks": 0,
-        "position": 10,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 6374,
       "slug": "meilleur-esim-cambodge-2026",
       "title": "Meilleur eSIM Cambodge 2026 : Holafly vs Airalo vs Cellcard",
@@ -316,18 +163,18 @@
       "internalLinks": 11,
       "lastModified": "2026-06-15T12:00:01",
       "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 41
+        "pageviews": 5,
+        "sessions": 3,
+        "avgDuration": 79
       },
       "gsc": {
         "impressions": 90,
         "clicks": 0,
-        "position": 51.3,
+        "position": 51.5,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 52.9,
+            "position": 53,
             "impressions": 83,
             "ctr": 0
           },
@@ -370,6 +217,118 @@
       "p0Count": 0
     },
     {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "url": "https://flashvoyage.com/voyage-thailande-pas-cher-2026-budget/",
+      "wordCount": 2503,
+      "widgetCount": 4,
+      "internalLinks": 45,
+      "lastModified": "2026-06-11T05:33:20",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 4,
+        "avgDuration": 75
+      },
+      "gsc": {
+        "impressions": 7,
+        "clicks": 0,
+        "position": 6,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4125,
+      "slug": "hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe",
+      "title": "Hokkaido en 9 jours sans voiture : l&rsquo;arbitrage entre JR Pass et coûts cachés que personne n&rsquo;anticipe",
+      "url": "https://flashvoyage.com/hokkaido-en-9-jours-sans-voiture-larbitrage-entre-jr-pass-et-couts-caches-que-personne-nanticipe/",
+      "wordCount": 3098,
+      "widgetCount": 0,
+      "internalLinks": 29,
+      "lastModified": "2026-06-11T05:33:38",
+      "ga4": {
+        "pageviews": 4,
+        "sessions": 3,
+        "avgDuration": 303
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 6327,
+      "slug": "meilleur-esim-bali-2026",
+      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
+      "url": "https://flashvoyage.com/meilleur-esim-bali-2026/",
+      "wordCount": 1263,
+      "widgetCount": 0,
+      "internalLinks": 11,
+      "lastModified": "2026-06-11T05:32:57",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 20
+      },
+      "gsc": {
+        "impressions": 0,
+        "clicks": 0,
+        "position": 0,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4252,
+      "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
+      "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
+      "url": "https://flashvoyage.com/assurance-voyage-vietnam-rapatriement-frais-caches-2026/",
+      "wordCount": 4975,
+      "widgetCount": 3,
+      "internalLinks": 48,
+      "lastModified": "2026-06-11T05:33:35",
+      "ga4": {
+        "pageviews": 3,
+        "sessions": 3,
+        "avgDuration": 242
+      },
+      "gsc": {
+        "impressions": 2,
+        "clicks": 0,
+        "position": 10,
+        "topQueries": []
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [],
+      "recommendationCount": 0,
+      "p0Count": 0
+    },
+    {
       "wpId": 6331,
       "slug": "meilleur-esim-philippines-2026",
       "title": "Meilleur eSIM Philippines 2026 : Holafly vs Airalo vs SIM locale",
@@ -384,14 +343,14 @@
         "avgDuration": 40
       },
       "gsc": {
-        "impressions": 46,
+        "impressions": 45,
         "clicks": 0,
-        "position": 88.5,
+        "position": 88.4,
         "topQueries": [
           {
             "query": "esim philippines",
             "position": 96.6,
-            "impressions": 39,
+            "impressions": 38,
             "ctr": 0
           },
           {
@@ -427,34 +386,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 6327,
-      "slug": "meilleur-esim-bali-2026",
-      "title": "Meilleur eSIM Bali 2026 : Holafly vs Airalo vs Telkomsel",
-      "url": "https://flashvoyage.com/meilleur-esim-bali-2026/",
-      "wordCount": 1263,
-      "widgetCount": 0,
-      "internalLinks": 11,
-      "lastModified": "2026-06-11T05:32:57",
-      "ga4": {
-        "pageviews": 2,
-        "sessions": 2,
-        "avgDuration": 6
-      },
-      "gsc": {
-        "impressions": 0,
-        "clicks": 0,
-        "position": 0,
-        "topQueries": []
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [],
-      "recommendationCount": 0,
-      "p0Count": 0
-    },
-    {
       "wpId": 4373,
       "slug": "japon-couple-15-jours-budget-tout-compris-2026",
       "title": "Japon en couple 15 jours : budget tout compris et les frais que personne ne mentionne",
@@ -469,9 +400,9 @@
         "avgDuration": 11
       },
       "gsc": {
-        "impressions": 25,
+        "impressions": 24,
         "clicks": 0,
-        "position": 30.2,
+        "position": 30.3,
         "topQueries": [
           {
             "query": "prix voyage japon 15 jours",
@@ -492,14 +423,14 @@
             "ctr": 0
           },
           {
-            "query": "15 jours au japon budget",
-            "position": 26,
+            "query": "budget 15 jours japon",
+            "position": 48,
             "impressions": 1,
             "ctr": 0
           },
           {
-            "query": "budget 15 jours japon",
-            "position": 48,
+            "query": "budget japon 15 jours",
+            "position": 49,
             "impressions": 1,
             "ctr": 0
           }
@@ -516,6 +447,75 @@
           "metric": "Pas de schema FAQ (keyword principal: \"prix voyage japon 15 jours\")",
           "action": "ADD_FAQ_SCHEMA",
           "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"prix voyage japon 15 jours\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
+      "wpId": 4254,
+      "slug": "bali-vs-thailande-premier-voyage-asie-comparatif",
+      "title": "Bali ou Thaïlande pour un premier voyage en Asie : le comparatif brutal",
+      "url": "https://flashvoyage.com/bali-vs-thailande-premier-voyage-asie-comparatif/",
+      "wordCount": 4825,
+      "widgetCount": 3,
+      "internalLinks": 41,
+      "lastModified": "2026-06-11T05:33:30",
+      "ga4": {
+        "pageviews": 2,
+        "sessions": 2,
+        "avgDuration": 57
+      },
+      "gsc": {
+        "impressions": 27,
+        "clicks": 0,
+        "position": 36.4,
+        "topQueries": [
+          {
+            "query": "bali thailande",
+            "position": 71.3,
+            "impressions": 3,
+            "ctr": 0
+          },
+          {
+            "query": "bali et thailande",
+            "position": 65,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "bali indonesia thailand",
+            "position": 77,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "bali ou thailande",
+            "position": 53,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "bali thailand",
+            "position": 72,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"bali thailande\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"bali thailande\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
           "effort": "20min",
           "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
         }
@@ -734,20 +734,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 37,
+        "impressions": 29,
         "clicks": 0,
-        "position": 64.2,
+        "position": 63.2,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 61.9,
+            "position": 61.8,
             "impressions": 27,
-            "ctr": 0
-          },
-          {
-            "query": "asie du sud-est sim locale internet conseils",
-            "position": 67.8,
-            "impressions": 8,
             "ctr": 0
           },
           {
@@ -791,9 +785,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 1,
+        "impressions": 2,
         "clicks": 0,
-        "position": 2,
+        "position": 4,
         "topQueries": []
       },
       "reels": {
@@ -1371,26 +1365,20 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 10,
         "clicks": 0,
-        "position": 42.9,
+        "position": 38.1,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
-            "position": 48.8,
-            "impressions": 4,
+            "position": 49.7,
+            "impressions": 3,
             "ctr": 0
           },
           {
             "query": "itinéraires asie du sud-est",
             "position": 71.5,
             "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "asie du sud-est slow travel longue durée",
-            "position": 88,
-            "impressions": 1,
             "ctr": 0
           }
         ]
