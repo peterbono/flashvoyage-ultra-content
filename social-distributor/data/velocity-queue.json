@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-09-17T20:52:00.176Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-09-18T02:46:32.626Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "This is Only a Test! Bali’s Ngurah Rai Airport to Hold Airport Emergency Exercise",
-      "source": "rss_breaking",
-      "destination": "indonesia",
-      "link": "https://balidiscovery.com/this-is-only-a-test-balis-ngurah-rai-airport-to-hold-airport-emergency-exercise/",
-      "velocityScore": 0.408,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 708,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1360,
-      "estimatedTrafficIn24h": 1329,
-      "trafficLossPerHour": 1,
-      "breakdown": {
-        "trendIntensity": 0.55,
-        "timeDecay": 0.989,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 11.7
-      },
-      "detectedAt": "2026-09-17T09:09:51.000Z",
-      "scoredAt": "2026-09-17T20:52:00.176Z"
-    }
-  ]
+  "queue": []
 }
