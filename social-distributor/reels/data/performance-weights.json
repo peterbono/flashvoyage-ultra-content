@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-18",
+  "lastUpdated": "2026-09-19",
   "formatScores": {
     "poll": 0,
     "pick": 16.5,
@@ -21,9 +21,9 @@
     "singapour": 18.1,
     "vietnam": 5.5,
     "bali": 4,
-    "lombok": 3,
-    "philippines": 1.9,
-    "thailande": 1.1,
+    "lombok": 3.2,
+    "philippines": 2,
+    "thailande": 1.2,
     "cambodge": 1,
     "chiang mai": 0.2,
     "phuket": 0.2
@@ -61,10 +61,10 @@
   },
   "igDestinationScores": {
     "bali": 4,
-    "lombok": 3,
-    "philippines": 1.9,
-    "thailande": 1.1,
-    "vietnam": 1.1,
+    "lombok": 3.2,
+    "philippines": 2,
+    "thailande": 1.2,
+    "vietnam": 1.2,
     "cambodge": 1,
     "chiang mai": 0.2,
     "phuket": 0.2
