@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-09-19T07:56:00.467Z",
-    "elapsedSeconds": 6,
+    "generatedAt": "2026-09-20T08:26:11.967Z",
+    "elapsedSeconds": 5,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
     "totalRecommendations": 12,
@@ -36,20 +36,20 @@
         "avgDuration": 122
       },
       "gsc": {
-        "impressions": 98,
+        "impressions": 93,
         "clicks": 4,
         "position": 54.5,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 68.1,
-            "impressions": 23,
+            "position": 67.7,
+            "impressions": 22,
             "ctr": 0
           },
           {
             "query": "circuit bali lombok",
-            "position": 73,
-            "impressions": 21,
+            "position": 72.9,
+            "impressions": 19,
             "ctr": 0
           },
           {
@@ -61,7 +61,7 @@
           {
             "query": "circuit bali lombok gili",
             "position": 36.9,
-            "impressions": 10,
+            "impressions": 9,
             "ctr": 0
           },
           {
@@ -105,14 +105,14 @@
         "avgDuration": 804
       },
       "gsc": {
-        "impressions": 72,
+        "impressions": 68,
         "clicks": 0,
-        "position": 73.2,
+        "position": 73.4,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 83.7,
-            "impressions": 52,
+            "position": 83.6,
+            "impressions": 50,
             "ctr": 0
           },
           {
@@ -168,14 +168,14 @@
         "avgDuration": 46
       },
       "gsc": {
-        "impressions": 89,
+        "impressions": 87,
         "clicks": 0,
         "position": 51.5,
         "topQueries": [
           {
             "query": "esim cambodge",
             "position": 53.1,
-            "impressions": 82,
+            "impressions": 80,
             "ctr": 0
           },
           {
@@ -231,9 +231,9 @@
         "avgDuration": 78
       },
       "gsc": {
-        "impressions": 7,
+        "impressions": 6,
         "clicks": 0,
-        "position": 6,
+        "position": 6.5,
         "topQueries": []
       },
       "reels": {
@@ -315,14 +315,14 @@
         "avgDuration": 40
       },
       "gsc": {
-        "impressions": 43,
+        "impressions": 41,
         "clicks": 0,
-        "position": 88.1,
+        "position": 88.5,
         "topQueries": [
           {
             "query": "esim philippines",
             "position": 96.8,
-            "impressions": 36,
+            "impressions": 35,
             "ctr": 0
           },
           {
@@ -400,9 +400,9 @@
         "avgDuration": 57
       },
       "gsc": {
-        "impressions": 30,
+        "impressions": 29,
         "clicks": 0,
-        "position": 35.8,
+        "position": 36.8,
         "topQueries": [
           {
             "query": "bali thailande",
@@ -469,9 +469,9 @@
         "avgDuration": 22
       },
       "gsc": {
-        "impressions": 24,
+        "impressions": 25,
         "clicks": 0,
-        "position": 30.3,
+        "position": 29.2,
         "topQueries": [
           {
             "query": "prix voyage japon 15 jours",
@@ -734,14 +734,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 29,
+        "impressions": 28,
         "clicks": 0,
         "position": 63.1,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 61.8,
-            "impressions": 27,
+            "position": 61.7,
+            "impressions": 26,
             "ctr": 0
           },
           {
@@ -976,7 +976,7 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 14,
+        "impressions": 13,
         "clicks": 0,
         "position": 49,
         "topQueries": [
@@ -993,12 +993,6 @@
             "ctr": 0
           },
           {
-            "query": "vietnam ou thailande",
-            "position": 48.5,
-            "impressions": 2,
-            "ctr": 0
-          },
-          {
             "query": "thailande ou vietnam",
             "position": 47,
             "impressions": 1,
@@ -1007,6 +1001,12 @@
           {
             "query": "thaïlande ou vietnam",
             "position": 50,
+            "impressions": 1,
+            "ctr": 0
+          },
+          {
+            "query": "vietnam ou thailande",
+            "position": 48,
             "impressions": 1,
             "ctr": 0
           }
@@ -1047,7 +1047,7 @@
       "gsc": {
         "impressions": 11,
         "clicks": 1,
-        "position": 8.9,
+        "position": 9.2,
         "topQueries": [
           {
             "query": "comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?",
@@ -1314,9 +1314,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 9,
         "clicks": 0,
-        "position": 42.6,
+        "position": 38.1,
         "topQueries": [
           {
             "query": "visa nomade digital asie",
@@ -1367,12 +1367,12 @@
       "gsc": {
         "impressions": 10,
         "clicks": 0,
-        "position": 38.1,
+        "position": 38.5,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",
-            "position": 49.7,
-            "impressions": 3,
+            "position": 43,
+            "impressions": 4,
             "ctr": 0
           },
           {

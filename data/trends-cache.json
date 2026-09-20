@@ -1,69 +1,13 @@
 {
-  "timestamp": "2026-09-19T07:55:49.556Z",
+  "timestamp": "2026-09-20T08:26:01.199Z",
   "trendingTopics": [
     {
-      "query": "voyage bali pas cher",
-      "traffic": 100,
-      "trafficFormatted": "+100 %",
+      "query": "leclerc voyage thailande",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-19T07:55:38.604Z",
-      "source": "related-rising",
-      "parentDestination": "bali",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "bali",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage thailande circuit",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-19T07:55:40.782Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage vietnam circuit",
-      "traffic": 250,
-      "trafficFormatted": "+250 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-19T07:55:42.991Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "prix voyage vietnam",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-19T07:55:42.991Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage thailande phuket",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-19T07:55:40.782Z",
+      "date": "2026-09-20T08:25:52.766Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -72,12 +16,26 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage vietnam cambodge",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
+      "query": "voyage thailande phuket",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-19T07:55:42.991Z",
+      "date": "2026-09-20T08:25:52.766Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge",
+      "traffic": 190,
+      "trafficFormatted": "+190 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-09-20T08:25:54.877Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -87,17 +45,88 @@
     },
     {
       "query": "voyage au vietnam",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-19T07:55:42.991Z",
+      "date": "2026-09-20T08:25:54.877Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
       "category": "destination",
       "destination": "vietnam",
       "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge vietnam",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-09-20T08:25:59.089Z",
+      "source": "related-rising",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage laos vietnam",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-09-20T08:26:01.198Z",
+      "source": "related-rising",
+      "parentDestination": "laos",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "laos",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "thaïlande",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-09-20T08:25:52.766Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "budget 2027 retraités",
+      "traffic": 2000,
+      "trafficFormatted": "2000+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "Budget 2027 : les impôts vont bien augmenter et la dette va s'envoler",
+          "url": "https://www.lesechos.fr/economie-france/budget-fiscalite/budget-2027-les-impots-vont-bien-augmenter-et-la-dette-senvoler-2252517",
+          "source": "Les Echos"
+        },
+        {
+          "title": "Retraites : gel des pensions, suppression de l'abattement fiscal... comparez le montant de votre pension avec les différents paliers qu'envisage le gouvernement dans le budget 2027",
+          "url": "https://www.ladepeche.fr/2026/09/20/retraites-gel-des-pensions-suppression-de-labattement-fiscal-comparez-le-montant-de-votre-pension-avec-les-differents-paliers-quenvisage-le-13560023.php",
+          "source": "ladepeche.fr"
+        },
+        {
+          "title": "Budget : le gouvernement envisage un plafond de 3 000 euros pour l’abattement fiscal des retraités",
+          "url": "https://www.sudouest.fr/economie/budget-le-gouvernement-envisage-un-plafond-de-3-000-euros-pour-l-abattement-fiscal-des-retraites-30695989.php",
+          "source": "Sud Ouest"
+        }
+      ],
+      "date": "Sat, 19 Sep 2026 22:00:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "budget",
+      "destination": null,
+      "compositeScore": 0.2916
     }
   ]
 }
