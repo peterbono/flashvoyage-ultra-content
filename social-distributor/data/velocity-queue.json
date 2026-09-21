@@ -1,10 +1,86 @@
 {
-  "generatedAt": "2026-09-21T02:54:39.972Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-09-21T11:45:46.253Z",
+  "totalTopics": 3,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 3
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "3 Thai women held at Sri Lanka airport with nearly 8kg of cannabis",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/hot-news/crime/3-thai-women-arrested-with-cannabis-at-sri-lanka-airport",
+      "velocityScore": 0.51,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 719,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 1699,
+      "estimatedTrafficIn24h": 1660,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.68,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 0.8
+      },
+      "detectedAt": "2026-09-21T10:56:31.000Z",
+      "scoredAt": "2026-09-21T11:45:40.686Z"
+    },
+    {
+      "topic": "Typhoon cuts short one of the world's biggest video game fairs, grounds hundreds of flights in Japan",
+      "source": "rss_breaking",
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/traffic/typhoon-cuts-short-one-of-the-world-s-biggest-video-game-fairs-grounds-hundreds-of-flights-in-japan-5122955.html",
+      "velocityScore": 0.489,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2444,
+      "estimatedTrafficIn24h": 2388,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.7
+      },
+      "detectedAt": "2026-09-21T09:06:05.000Z",
+      "scoredAt": "2026-09-21T11:45:37.398Z"
+    },
+    {
+      "topic": "Russian tourist expelled, banned from Vietnam for reckless motorcycle stunts",
+      "source": "rss_breaking",
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/crime/russian-tourist-expelled-banned-from-vietnam-for-reckless-motorcycle-stunts-5122861.html",
+      "velocityScore": 0.448,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 1495,
+      "estimatedTrafficIn24h": 1460,
+      "trafficLossPerHour": 1,
+      "breakdown": {
+        "trendIntensity": 0.6,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 3.8
+      },
+      "detectedAt": "2026-09-21T08:00:21.000Z",
+      "scoredAt": "2026-09-21T11:45:38.275Z"
+    }
+  ]
 }
