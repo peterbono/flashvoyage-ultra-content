@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-09-20T08:26:11.967Z",
-    "elapsedSeconds": 5,
+    "generatedAt": "2026-09-21T08:45:05.131Z",
+    "elapsedSeconds": 6,
     "totalArticles": 38,
     "articlesWithRecommendations": 12,
     "totalRecommendations": 12,
@@ -36,20 +36,20 @@
         "avgDuration": 122
       },
       "gsc": {
-        "impressions": 93,
+        "impressions": 94,
         "clicks": 4,
-        "position": 54.5,
+        "position": 53.6,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 67.7,
-            "impressions": 22,
+            "position": 67.6,
+            "impressions": 21,
             "ctr": 0
           },
           {
             "query": "circuit bali lombok",
-            "position": 72.9,
-            "impressions": 19,
+            "position": 73.1,
+            "impressions": 18,
             "ctr": 0
           },
           {
@@ -61,7 +61,7 @@
           {
             "query": "circuit bali lombok gili",
             "position": 36.9,
-            "impressions": 9,
+            "impressions": 12,
             "ctr": 0
           },
           {
@@ -105,14 +105,14 @@
         "avgDuration": 804
       },
       "gsc": {
-        "impressions": 68,
+        "impressions": 66,
         "clicks": 0,
-        "position": 73.4,
+        "position": 72.2,
         "topQueries": [
           {
             "query": "esim philippines",
             "position": 83.6,
-            "impressions": 50,
+            "impressions": 48,
             "ctr": 0
           },
           {
@@ -122,14 +122,14 @@
             "ctr": 0
           },
           {
-            "query": "meilleur esim philippines",
-            "position": 58.5,
-            "impressions": 2,
+            "query": "holafly philippines",
+            "position": 24,
+            "impressions": 1,
             "ctr": 0
           },
           {
-            "query": "holafly philippines",
-            "position": 24,
+            "query": "meilleur esim philippines",
+            "position": 55,
             "impressions": 1,
             "ctr": 0
           }
@@ -168,14 +168,14 @@
         "avgDuration": 46
       },
       "gsc": {
-        "impressions": 87,
+        "impressions": 84,
         "clicks": 0,
-        "position": 51.5,
+        "position": 51.4,
         "topQueries": [
           {
             "query": "esim cambodge",
             "position": 53.1,
-            "impressions": 80,
+            "impressions": 77,
             "ctr": 0
           },
           {
@@ -315,14 +315,14 @@
         "avgDuration": 40
       },
       "gsc": {
-        "impressions": 41,
+        "impressions": 39,
         "clicks": 0,
-        "position": 88.5,
+        "position": 88.6,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 96.8,
-            "impressions": 35,
+            "position": 96.7,
+            "impressions": 34,
             "ctr": 0
           },
           {
@@ -333,8 +333,8 @@
           },
           {
             "query": "meilleur esim philippines",
-            "position": 78.5,
-            "impressions": 2,
+            "position": 83,
+            "impressions": 1,
             "ctr": 0
           }
         ]
@@ -402,12 +402,12 @@
       "gsc": {
         "impressions": 29,
         "clicks": 0,
-        "position": 36.8,
+        "position": 39.2,
         "topQueries": [
           {
             "query": "bali thailande",
-            "position": 71.3,
-            "impressions": 3,
+            "position": 72.8,
+            "impressions": 4,
             "ctr": 0
           },
           {
@@ -469,9 +469,9 @@
         "avgDuration": 22
       },
       "gsc": {
-        "impressions": 25,
+        "impressions": 24,
         "clicks": 0,
-        "position": 29.2,
+        "position": 28.4,
         "topQueries": [
           {
             "query": "prix voyage japon 15 jours",
@@ -492,14 +492,14 @@
             "ctr": 0
           },
           {
-            "query": "budget 15 jours japon",
-            "position": 48,
+            "query": "budget japon 15 jours",
+            "position": 49,
             "impressions": 1,
             "ctr": 0
           },
           {
-            "query": "budget japon 15 jours",
-            "position": 49,
+            "query": "honeymoon in japan cost",
+            "position": 65,
             "impressions": 1,
             "ctr": 0
           }
@@ -734,20 +734,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 28,
+        "impressions": 26,
         "clicks": 0,
-        "position": 63.1,
+        "position": 61.7,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 61.7,
-            "impressions": 26,
-            "ctr": 0
-          },
-          {
-            "query": "meilleur esim asie",
-            "position": 99,
-            "impressions": 1,
+            "position": 61.6,
+            "impressions": 25,
             "ctr": 0
           }
         ]
@@ -1045,9 +1039,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 11,
+        "impressions": 10,
         "clicks": 1,
-        "position": 9.2,
+        "position": 9.1,
         "topQueries": [
           {
             "query": "comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?",
