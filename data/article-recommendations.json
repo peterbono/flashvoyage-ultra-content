@@ -1,22 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-09-21T08:45:05.131Z",
+    "generatedAt": "2026-09-22T08:23:26.618Z",
     "elapsedSeconds": 6,
     "totalArticles": 38,
-    "articlesWithRecommendations": 12,
-    "totalRecommendations": 12,
+    "articlesWithRecommendations": 11,
+    "totalRecommendations": 11,
     "byPriority": {
       "P0": 0,
       "P1": 0,
-      "P2": 12
+      "P2": 11
     },
     "byType": {
-      "seo": 12
+      "seo": 11
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
-        "count": 12
+        "count": 11
       }
     ]
   },
@@ -36,20 +36,20 @@
         "avgDuration": 122
       },
       "gsc": {
-        "impressions": 94,
+        "impressions": 90,
         "clicks": 4,
-        "position": 53.6,
+        "position": 52.9,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 67.6,
-            "impressions": 21,
+            "position": 67.7,
+            "impressions": 20,
             "ctr": 0
           },
           {
             "query": "circuit bali lombok",
-            "position": 73.1,
-            "impressions": 18,
+            "position": 73.5,
+            "impressions": 15,
             "ctr": 0
           },
           {
@@ -105,20 +105,20 @@
         "avgDuration": 804
       },
       "gsc": {
-        "impressions": 66,
+        "impressions": 61,
         "clicks": 0,
-        "position": 72.2,
+        "position": 72.9,
         "topQueries": [
           {
             "query": "esim philippines",
             "position": 83.6,
-            "impressions": 48,
+            "impressions": 45,
             "ctr": 0
           },
           {
             "query": "carte sim philippines",
-            "position": 68.4,
-            "impressions": 7,
+            "position": 70.2,
+            "impressions": 6,
             "ctr": 0
           },
           {
@@ -168,14 +168,14 @@
         "avgDuration": 46
       },
       "gsc": {
-        "impressions": 84,
+        "impressions": 80,
         "clicks": 0,
-        "position": 51.4,
+        "position": 51.2,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 53.1,
-            "impressions": 77,
+            "position": 53,
+            "impressions": 73,
             "ctr": 0
           },
           {
@@ -315,14 +315,14 @@
         "avgDuration": 40
       },
       "gsc": {
-        "impressions": 39,
+        "impressions": 36,
         "clicks": 0,
-        "position": 88.6,
+        "position": 90.2,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 96.7,
-            "impressions": 34,
+            "position": 96.5,
+            "impressions": 32,
             "ctr": 0
           },
           {
@@ -400,9 +400,9 @@
         "avgDuration": 57
       },
       "gsc": {
-        "impressions": 29,
+        "impressions": 28,
         "clicks": 0,
-        "position": 39.2,
+        "position": 37.6,
         "topQueries": [
           {
             "query": "bali thailande",
@@ -734,14 +734,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 26,
+        "impressions": 25,
         "clicks": 0,
-        "position": 61.7,
+        "position": 61.6,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 61.6,
-            "impressions": 25,
+            "position": 61.5,
+            "impressions": 24,
             "ctr": 0
           }
         ]
@@ -970,9 +970,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 13,
+        "impressions": 12,
         "clicks": 0,
-        "position": 49,
+        "position": 48.8,
         "topQueries": [
           {
             "query": "thailande vietnam",
@@ -983,7 +983,7 @@
           {
             "query": "thailande et vietnam",
             "position": 52,
-            "impressions": 2,
+            "impressions": 1,
             "ctr": 0
           },
           {
@@ -1039,34 +1039,17 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 11,
         "clicks": 1,
-        "position": 9.1,
-        "topQueries": [
-          {
-            "query": "comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?",
-            "position": 11,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
+        "position": 8.5,
+        "topQueries": []
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"comment singapour se compare-t-elle à kuala lumpur comme base pour les voyages d'aventure en asie du sud-est ?\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
+      "recommendations": [],
+      "recommendationCount": 0,
       "p0Count": 0
     },
     {

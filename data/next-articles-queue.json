@@ -1,25 +1,9 @@
 {
-  "timestamp": "2026-09-21T08:44:58.174Z",
-  "queueSize": 14,
+  "timestamp": "2026-09-22T08:23:19.290Z",
+  "queueSize": 13,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 125,
-      "topic": "prix carburant allemagne",
-      "articleType": "support",
-      "context": {
-        "gapScore": 45,
-        "destination": null,
-        "category": "budget",
-        "suggestedTitle": "Prix carburant allemagne : Le Guide Budget Complet",
-        "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
-        "reason": "Content gap: \"prix carburant allemagne\" (score 45, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -31,7 +15,7 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -43,7 +27,7 @@
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -55,23 +39,7 @@
       }
     },
     {
-      "rank": 5,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 3,
-      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
-      "articleType": "support",
-      "context": {
-        "wpId": 3107,
-        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-        "compositeScore": 7,
-        "freshness": 0.49,
-        "traffic": 0,
-        "reason": "Low-performing article: score=7, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 6,
+      "rank": 4,
       "action": "review",
       "priority": "P4",
       "priorityScore": 3,
@@ -81,13 +49,13 @@
         "wpId": 2924,
         "slug": "malaisie-les-11-frais-caches-qui-font-exploser-ton-budget",
         "compositeScore": 7,
-        "freshness": 0.46,
+        "freshness": 0.45,
         "traffic": 0,
         "reason": "Low-performing article: score=7, consider merge/update/delete"
       }
     },
     {
-      "rank": 7,
+      "rank": 5,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -103,7 +71,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 6,
       "action": "review",
       "priority": "P4",
       "priorityScore": 2,
@@ -119,7 +87,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 7,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -135,7 +103,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 8,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -151,7 +119,7 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 9,
       "action": "review",
       "priority": "P4",
       "priorityScore": 1,
@@ -167,23 +135,7 @@
       }
     },
     {
-      "rank": 12,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": 0,
-      "topic": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
-      "articleType": "support",
-      "context": {
-        "wpId": 3254,
-        "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
-        "compositeScore": 10,
-        "freshness": 0.51,
-        "traffic": 0.06,
-        "reason": "Low-performing article: score=10, consider merge/update/delete"
-      }
-    },
-    {
-      "rank": 13,
+      "rank": 10,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -199,7 +151,7 @@
       }
     },
     {
-      "rank": 14,
+      "rank": 11,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -213,10 +165,42 @@
         "traffic": 0.06,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
+    },
+    {
+      "rank": 12,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -1,
+      "topic": "Taipei vs Kuala Lumpur 2026 : Comparatif Prix et Avis",
+      "articleType": "support",
+      "context": {
+        "wpId": 2980,
+        "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
+        "compositeScore": 11,
+        "freshness": 0.46,
+        "traffic": 0,
+        "reason": "Low-performing article: score=11, consider merge/update/delete"
+      }
+    },
+    {
+      "rank": 13,
+      "action": "review",
+      "priority": "P4",
+      "priorityScore": -2,
+      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
+      "articleType": "support",
+      "context": {
+        "wpId": 5343,
+        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
+        "compositeScore": 12,
+        "freshness": 0.6,
+        "traffic": 0,
+        "reason": "Low-performing article: score=12, consider merge/update/delete"
+      }
     }
   ],
   "summary": {
-    "write_new": 1,
+    "write_new": 0,
     "update": 0,
     "enrich": 0,
     "standard": 3,
