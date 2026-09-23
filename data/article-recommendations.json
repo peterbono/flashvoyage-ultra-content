@@ -1,22 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-09-22T08:23:26.618Z",
-    "elapsedSeconds": 6,
+    "generatedAt": "2026-09-23T08:25:17.725Z",
+    "elapsedSeconds": 5,
     "totalArticles": 38,
-    "articlesWithRecommendations": 11,
-    "totalRecommendations": 11,
+    "articlesWithRecommendations": 12,
+    "totalRecommendations": 12,
     "byPriority": {
       "P0": 0,
       "P1": 0,
-      "P2": 11
+      "P2": 12
     },
     "byType": {
-      "seo": 11
+      "seo": 12
     },
     "topActions": [
       {
         "action": "ADD_FAQ_SCHEMA",
-        "count": 11
+        "count": 12
       }
     ]
   },
@@ -36,26 +36,26 @@
         "avgDuration": 122
       },
       "gsc": {
-        "impressions": 90,
+        "impressions": 86,
         "clicks": 4,
-        "position": 52.9,
+        "position": 51.8,
         "topQueries": [
           {
             "query": "bali gili lombok",
-            "position": 67.7,
-            "impressions": 20,
-            "ctr": 0
-          },
-          {
-            "query": "circuit bali lombok",
-            "position": 73.5,
-            "impressions": 15,
+            "position": 67.8,
+            "impressions": 19,
             "ctr": 0
           },
           {
             "query": "itinéraire bali 10 jours",
             "position": 73.8,
             "impressions": 14,
+            "ctr": 0
+          },
+          {
+            "query": "circuit bali lombok",
+            "position": 72.1,
+            "impressions": 12,
             "ctr": 0
           },
           {
@@ -105,14 +105,14 @@
         "avgDuration": 804
       },
       "gsc": {
-        "impressions": 61,
+        "impressions": 60,
         "clicks": 0,
-        "position": 72.9,
+        "position": 72.3,
         "topQueries": [
           {
             "query": "esim philippines",
-            "position": 83.6,
-            "impressions": 45,
+            "position": 83.5,
+            "impressions": 43,
             "ctr": 0
           },
           {
@@ -122,14 +122,14 @@
             "ctr": 0
           },
           {
-            "query": "holafly philippines",
-            "position": 24,
-            "impressions": 1,
+            "query": "meilleur esim philippines",
+            "position": 56.5,
+            "impressions": 2,
             "ctr": 0
           },
           {
-            "query": "meilleur esim philippines",
-            "position": 55,
+            "query": "holafly philippines",
+            "position": 24,
             "impressions": 1,
             "ctr": 0
           }
@@ -168,14 +168,14 @@
         "avgDuration": 46
       },
       "gsc": {
-        "impressions": 80,
+        "impressions": 78,
         "clicks": 0,
-        "position": 51.2,
+        "position": 51.3,
         "topQueries": [
           {
             "query": "esim cambodge",
-            "position": 53,
-            "impressions": 73,
+            "position": 53.1,
+            "impressions": 71,
             "ctr": 0
           },
           {
@@ -287,17 +287,34 @@
         "avgDuration": 242
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 3,
         "clicks": 0,
-        "position": 10,
-        "topQueries": []
+        "position": 37.3,
+        "topQueries": [
+          {
+            "query": "assurance voyage vietnam",
+            "position": 92,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
       },
       "reels": {
         "linkedReels": 0,
         "totalViews": 0
       },
-      "recommendations": [],
-      "recommendationCount": 0,
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"assurance voyage vietnam\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"assurance voyage vietnam\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
       "p0Count": 0
     },
     {
@@ -315,14 +332,14 @@
         "avgDuration": 40
       },
       "gsc": {
-        "impressions": 36,
+        "impressions": 35,
         "clicks": 0,
-        "position": 90.2,
+        "position": 87.3,
         "topQueries": [
           {
             "query": "esim philippines",
             "position": 96.5,
-            "impressions": 32,
+            "impressions": 30,
             "ctr": 0
           },
           {
@@ -402,7 +419,7 @@
       "gsc": {
         "impressions": 28,
         "clicks": 0,
-        "position": 37.6,
+        "position": 37.7,
         "topQueries": [
           {
             "query": "bali thailande",
@@ -608,6 +625,57 @@
       "p0Count": 0
     },
     {
+      "wpId": 3107,
+      "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+      "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "url": "https://flashvoyage.com/optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils/",
+      "wordCount": 1801,
+      "widgetCount": 0,
+      "internalLinks": 28,
+      "lastModified": "2026-06-11T05:33:47",
+      "ga4": {
+        "pageviews": 1,
+        "sessions": 1,
+        "avgDuration": 0
+      },
+      "gsc": {
+        "impressions": 9,
+        "clicks": 0,
+        "position": 38.1,
+        "topQueries": [
+          {
+            "query": "visa nomade digital asie",
+            "position": 43,
+            "impressions": 2,
+            "ctr": 0
+          },
+          {
+            "query": "digital nomad asie du sud-est guide",
+            "position": 34,
+            "impressions": 1,
+            "ctr": 0
+          }
+        ]
+      },
+      "reels": {
+        "linkedReels": 0,
+        "totalViews": 0
+      },
+      "recommendations": [
+        {
+          "type": "seo",
+          "priority": "P2",
+          "metric": "Pas de schema FAQ (keyword principal: \"visa nomade digital asie\")",
+          "action": "ADD_FAQ_SCHEMA",
+          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"visa nomade digital asie\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
+          "effort": "20min",
+          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
+        }
+      ],
+      "recommendationCount": 1,
+      "p0Count": 0
+    },
+    {
       "wpId": 6323,
       "slug": "meilleur-esim-vietnam-2026",
       "title": "Meilleur eSIM Vietnam 2026 : Airalo vs Holafly vs Viettel",
@@ -706,9 +774,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 3,
         "clicks": 0,
-        "position": 8.5,
+        "position": 9,
         "topQueries": []
       },
       "reels": {
@@ -734,14 +802,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 25,
+        "impressions": 24,
         "clicks": 0,
-        "position": 61.6,
+        "position": 61.7,
         "topQueries": [
           {
             "query": "esim asie du sud est",
-            "position": 61.5,
-            "impressions": 24,
+            "position": 61.6,
+            "impressions": 23,
             "ctr": 0
           }
         ]
@@ -779,7 +847,7 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 3,
         "clicks": 0,
         "position": 4,
         "topQueries": []
@@ -807,9 +875,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 0,
+        "impressions": 1,
         "clicks": 0,
-        "position": 0,
+        "position": 7,
         "topQueries": []
       },
       "reels": {
@@ -863,9 +931,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 2,
+        "impressions": 3,
         "clicks": 0,
-        "position": 7.5,
+        "position": 7.7,
         "topQueries": []
       },
       "reels": {
@@ -891,9 +959,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 4,
+        "impressions": 5,
         "clicks": 0,
-        "position": 80.8,
+        "position": 66.4,
         "topQueries": [
           {
             "query": "thailande ou vietnam",
@@ -970,14 +1038,14 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 12,
+        "impressions": 11,
         "clicks": 0,
-        "position": 48.8,
+        "position": 48.1,
         "topQueries": [
           {
             "query": "thailande vietnam",
-            "position": 56.6,
-            "impressions": 5,
+            "position": 56.8,
+            "impressions": 4,
             "ctr": 0
           },
           {
@@ -1277,57 +1345,6 @@
       "p0Count": 0
     },
     {
-      "wpId": 3107,
-      "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-      "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
-      "url": "https://flashvoyage.com/optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils/",
-      "wordCount": 1801,
-      "widgetCount": 0,
-      "internalLinks": 28,
-      "lastModified": "2026-06-11T05:33:47",
-      "ga4": {
-        "pageviews": 0,
-        "sessions": 0,
-        "avgDuration": 0
-      },
-      "gsc": {
-        "impressions": 9,
-        "clicks": 0,
-        "position": 38.1,
-        "topQueries": [
-          {
-            "query": "visa nomade digital asie",
-            "position": 43,
-            "impressions": 2,
-            "ctr": 0
-          },
-          {
-            "query": "digital nomad asie du sud-est guide",
-            "position": 34,
-            "impressions": 1,
-            "ctr": 0
-          }
-        ]
-      },
-      "reels": {
-        "linkedReels": 0,
-        "totalViews": 0
-      },
-      "recommendations": [
-        {
-          "type": "seo",
-          "priority": "P2",
-          "metric": "Pas de schema FAQ (keyword principal: \"visa nomade digital asie\")",
-          "action": "ADD_FAQ_SCHEMA",
-          "details": "L'article n'a pas de schema FAQ. Les FAQs enrichissent l'affichage dans les SERPs (accordeon sous le resultat) et augmentent le CTR. Ajouter 3-5 questions/reponses pertinentes ciblant \"visa nomade digital asie\" et ses variations. Utiliser le format Schema.org FAQPage en JSON-LD dans un bloc WPCode.",
-          "effort": "20min",
-          "expectedImpact": "CTR +20 a +30% grace aux rich results FAQ, plus de surface dans les SERPs"
-        }
-      ],
-      "recommendationCount": 1,
-      "p0Count": 0
-    },
-    {
       "wpId": 3090,
       "slug": "asie-du-sud-est-choix-ditineraires-pour-un-voyage-hors-des-sentiers-battus",
       "title": "Asie du Sud-Est : Choix d&rsquo;Itinéraires pour un Voyage Hors des Sentiers Battus",
@@ -1342,9 +1359,9 @@
         "avgDuration": 0
       },
       "gsc": {
-        "impressions": 10,
+        "impressions": 11,
         "clicks": 0,
-        "position": 38.5,
+        "position": 35.2,
         "topQueries": [
           {
             "query": "itinéraire asie hors des sentiers battus",

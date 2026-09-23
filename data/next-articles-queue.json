@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-22T08:23:19.290Z",
+  "timestamp": "2026-09-23T08:25:11.478Z",
   "queueSize": 13,
   "queue": [
     {
@@ -97,7 +97,7 @@
         "wpId": 5742,
         "slug": "bangkok-le-vrai-cout-des-taxis-aeroport-2026",
         "compositeScore": 9,
-        "freshness": 0.62,
+        "freshness": 0.61,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
@@ -129,7 +129,7 @@
         "wpId": 5270,
         "slug": "esim-japon-combien-ca-te-coute-vraiment",
         "compositeScore": 9,
-        "freshness": 0.6,
+        "freshness": 0.59,
         "traffic": 0,
         "reason": "Low-performing article: score=9, consider merge/update/delete"
       }
@@ -145,7 +145,7 @@
         "wpId": 6309,
         "slug": "meilleur-esim-japon-2026",
         "compositeScore": 11,
-        "freshness": 0.71,
+        "freshness": 0.7,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
@@ -161,7 +161,7 @@
         "wpId": 3425,
         "slug": "coree-du-sud-en-solo-litineraire-quon-te-cache-et-ses-vrais-compromis",
         "compositeScore": 11,
-        "freshness": 0.52,
+        "freshness": 0.51,
         "traffic": 0.06,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
       }
