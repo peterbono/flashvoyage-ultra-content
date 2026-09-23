@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-23T10:38:00.521Z",
+  "generatedAt": "2026-09-23T15:57:04.602Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 1,
-    "queue_normal": 0
+    "queue_priority": 0,
+    "queue_normal": 1
   },
   "queue": [
     {
@@ -12,25 +12,25 @@
       "source": "rss_breaking",
       "destination": "vietnam",
       "link": "https://e.vnexpress.net/news/news/traveler-forgets-55-000-gold-rolex-at-vietnam-airport-security-gets-it-back-as-his-flight-boards-5123876.html",
-      "velocityScore": 0.674,
-      "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 718,
+      "velocityScore": 0.447,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 713,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2247,
-      "estimatedTrafficIn24h": 2195,
-      "trafficLossPerHour": 2,
+      "estimatedTrafficNow": 1490,
+      "estimatedTrafficIn24h": 1456,
+      "trafficLossPerHour": 1,
       "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.999,
+        "trendIntensity": 0.6,
+        "timeDecay": 0.993,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 1.5
+        "hoursSinceDetection": 6.8
       },
       "detectedAt": "2026-09-23T09:06:31.000Z",
-      "scoredAt": "2026-09-23T10:37:52.011Z"
+      "scoredAt": "2026-09-23T15:56:57.754Z"
     }
   ]
 }
