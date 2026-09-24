@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-09-23T20:58:07.616Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-09-24T02:45:37.474Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Traveler forgets $55,000 gold Rolex at Vietnam airport security, gets it back as his flight boards",
-      "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/traveler-forgets-55-000-gold-rolex-at-vietnam-airport-security-gets-it-back-as-his-flight-boards-5123876.html",
-      "velocityScore": 0.445,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 708,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1483,
-      "estimatedTrafficIn24h": 1449,
-      "trafficLossPerHour": 1,
-      "breakdown": {
-        "trendIntensity": 0.6,
-        "timeDecay": 0.989,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 11.9
-      },
-      "detectedAt": "2026-09-23T09:06:31.000Z",
-      "scoredAt": "2026-09-23T20:58:04.569Z"
-    }
-  ]
+  "queue": []
 }
