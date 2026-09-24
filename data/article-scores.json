@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-23T08:24:48.927Z",
+  "timestamp": "2026-09-24T08:17:16.603Z",
   "scoringWeights": {
     "traffic": 0.3,
     "sessionQuality": 0.1,
@@ -14,11 +14,11 @@
       "wpId": 4252,
       "slug": "assurance-voyage-vietnam-rapatriement-frais-caches-2026",
       "title": "Assurance voyage Vietnam 2026 : obligatoire ? Le guide complet",
-      "compositeScore": 41,
+      "compositeScore": 43,
       "signals": {
         "traffic": 0.19,
         "sessionQuality": 0.3,
-        "trendAlignment": 0.41,
+        "trendAlignment": 0.53,
         "reelAmplification": 0.38,
         "freshness": 0.54,
         "monetization": 1,
@@ -26,10 +26,33 @@
         "frPageviews": 2
       },
       "flags": [
+        "trending",
         "1_reels"
       ],
       "date": "2026-03-23T11:57:07",
       "wordCount": 4977
+    },
+    {
+      "wpId": 4487,
+      "slug": "voyage-thailande-pas-cher-2026-budget",
+      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
+      "compositeScore": 41,
+      "signals": {
+        "traffic": 0.25,
+        "sessionQuality": 0.1,
+        "trendAlignment": 0.62,
+        "reelAmplification": 0.1,
+        "freshness": 0.56,
+        "monetization": 1,
+        "frShare": 0.75,
+        "frPageviews": 3
+      },
+      "flags": [
+        "trending",
+        "1_reels"
+      ],
+      "date": "2026-03-31T16:22:55",
+      "wordCount": 2504
     },
     {
       "wpId": 4370,
@@ -51,27 +74,6 @@
       ],
       "date": "2026-03-23T13:17:41",
       "wordCount": 4126
-    },
-    {
-      "wpId": 4487,
-      "slug": "voyage-thailande-pas-cher-2026-budget",
-      "title": "Voyage Thaïlande Pas Cher 2026 : Budget Complet et Bons Plans",
-      "compositeScore": 38,
-      "signals": {
-        "traffic": 0.25,
-        "sessionQuality": 0.1,
-        "trendAlignment": 0.47,
-        "reelAmplification": 0.1,
-        "freshness": 0.57,
-        "monetization": 1,
-        "frShare": 0.75,
-        "frPageviews": 3
-      },
-      "flags": [
-        "1_reels"
-      ],
-      "date": "2026-03-31T16:22:55",
-      "wordCount": 2504
     },
     {
       "wpId": 4372,
@@ -142,7 +144,7 @@
         "sessionQuality": 0.06,
         "trendAlignment": 0.27,
         "reelAmplification": 0,
-        "freshness": 0.79,
+        "freshness": 0.78,
         "monetization": 0,
         "frShare": 0.8,
         "frPageviews": 4
@@ -176,11 +178,11 @@
       "wpId": 4369,
       "slug": "visa-cambodge-francais-2026-evisa-prix-pieges",
       "title": "Visa Cambodge 2026 : e-visa, prix, pièges et ce que les sites officiels ne disent pas",
-      "compositeScore": 24,
+      "compositeScore": 23,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
-        "trendAlignment": 0.28,
+        "trendAlignment": 0.27,
         "reelAmplification": 0,
         "freshness": 0.54,
         "monetization": 1,
@@ -192,6 +194,29 @@
       ],
       "date": "2026-03-23T13:17:33",
       "wordCount": 2442
+    },
+    {
+      "wpId": 5119,
+      "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
+      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
+      "compositeScore": 22,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.53,
+        "reelAmplification": 0.2,
+        "freshness": 0.58,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "trending",
+        "1_reels",
+        "zero_traffic"
+      ],
+      "date": "2026-04-06T05:37:25",
+      "wordCount": 1493
     },
     {
       "wpId": 4253,
@@ -236,26 +261,49 @@
       "wordCount": 3458
     },
     {
-      "wpId": 5119,
-      "slug": "thailande-ou-vietnam-le-dilemme-cache-du-premier-voyage",
-      "title": "Thaïlande ou Vietnam : j&rsquo;ai choisi en 3 semaines",
+      "wpId": 5179,
+      "slug": "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage",
+      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
       "compositeScore": 20,
       "signals": {
         "traffic": 0,
         "sessionQuality": 0,
-        "trendAlignment": 0.41,
-        "reelAmplification": 0.2,
+        "trendAlignment": 0.53,
+        "reelAmplification": 0.03,
         "freshness": 0.58,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
       },
       "flags": [
+        "trending",
         "1_reels",
         "zero_traffic"
       ],
-      "date": "2026-04-06T05:37:25",
-      "wordCount": 1493
+      "date": "2026-04-08T05:23:01",
+      "wordCount": 1599
+    },
+    {
+      "wpId": 5260,
+      "slug": "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage",
+      "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
+      "compositeScore": 19,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.53,
+        "reelAmplification": 0,
+        "freshness": 0.59,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "trending",
+        "zero_traffic"
+      ],
+      "date": "2026-04-10T05:37:09",
+      "wordCount": 1755
     },
     {
       "wpId": 5072,
@@ -289,7 +337,7 @@
         "sessionQuality": 0.38,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.53,
+        "freshness": 0.52,
         "monetization": 0,
         "frShare": 0.5,
         "frPageviews": 2
@@ -297,49 +345,6 @@
       "flags": [],
       "date": "2026-03-18T19:33:49",
       "wordCount": 3099
-    },
-    {
-      "wpId": 5179,
-      "slug": "thailande-vs-vietnam-pourquoi-chaque-choix-compte-pour-un-premier-voyage",
-      "title": "Thaïlande vs Vietnam : Pourquoi chaque choix compte pour un premier voyage",
-      "compositeScore": 18,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.41,
-        "reelAmplification": 0.03,
-        "freshness": 0.59,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "1_reels",
-        "zero_traffic"
-      ],
-      "date": "2026-04-08T05:23:01",
-      "wordCount": 1599
-    },
-    {
-      "wpId": 5260,
-      "slug": "vietnam-vs-thailande-en-2026-larbitrage-crucial-pour-un-premier-voyage",
-      "title": "Thaïlande ou Vietnam en 2026 ? J&rsquo;ai choisi",
-      "compositeScore": 17,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.41,
-        "reelAmplification": 0,
-        "freshness": 0.59,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-04-10T05:37:09",
-      "wordCount": 1755
     },
     {
       "wpId": 6331,
@@ -351,7 +356,7 @@
         "sessionQuality": 0.05,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.77,
+        "freshness": 0.76,
         "monetization": 0,
         "frShare": 0.5,
         "frPageviews": 1
@@ -391,7 +396,7 @@
         "sessionQuality": 0.01,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.75,
+        "freshness": 0.74,
         "monetization": 0,
         "frShare": 0.5,
         "frPageviews": 1
@@ -422,25 +427,6 @@
       "wordCount": 1408
     },
     {
-      "wpId": 3107,
-      "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
-      "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
-      "compositeScore": 15,
-      "signals": {
-        "traffic": 0.06,
-        "sessionQuality": 0,
-        "trendAlignment": 0.28,
-        "reelAmplification": 0,
-        "freshness": 0.49,
-        "monetization": 0,
-        "frShare": 0,
-        "frPageviews": 0
-      },
-      "flags": [],
-      "date": "2026-03-04T19:51:24",
-      "wordCount": 1802
-    },
-    {
       "wpId": 6195,
       "slug": "meilleur-esim-thailande-2026",
       "title": "Meilleur eSIM Thaïlande 2026 : Holafly vs Airalo vs AIS",
@@ -460,27 +446,6 @@
       ],
       "date": "2026-05-10T03:15:12",
       "wordCount": 1888
-    },
-    {
-      "wpId": 4105,
-      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
-      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
-      "compositeScore": 14,
-      "signals": {
-        "traffic": 0,
-        "sessionQuality": 0,
-        "trendAlignment": 0.28,
-        "reelAmplification": 0,
-        "freshness": 0.53,
-        "monetization": 0,
-        "frShare": null,
-        "frPageviews": 0
-      },
-      "flags": [
-        "zero_traffic"
-      ],
-      "date": "2026-03-18T13:26:31",
-      "wordCount": 2461
     },
     {
       "wpId": 5063,
@@ -504,6 +469,27 @@
       "wordCount": 1498
     },
     {
+      "wpId": 4105,
+      "slug": "vietnam-central-13-jours-3-choix-impossibles-a-faire-et-comment-les-trancher",
+      "title": "Vietnam central : 13 jours, 3 choix impossibles à faire (et comment les trancher)",
+      "compositeScore": 13,
+      "signals": {
+        "traffic": 0,
+        "sessionQuality": 0,
+        "trendAlignment": 0.28,
+        "reelAmplification": 0,
+        "freshness": 0.52,
+        "monetization": 0,
+        "frShare": null,
+        "frPageviews": 0
+      },
+      "flags": [
+        "zero_traffic"
+      ],
+      "date": "2026-03-18T13:26:31",
+      "wordCount": 2461
+    },
+    {
       "wpId": 3254,
       "slug": "chiang-mai-vs-phuket-ou-combiner-travail-a-distance-et-muay-thai-sans-sacrifier-ton-budget",
       "title": "Chiang Mai ou Phuket : où je m&rsquo;entraîne au Muay Thai en travaillant",
@@ -513,7 +499,7 @@
         "sessionQuality": 0.03,
         "trendAlignment": 0.18,
         "reelAmplification": 0,
-        "freshness": 0.51,
+        "freshness": 0.5,
         "monetization": 0,
         "frShare": 0,
         "frPageviews": 0
@@ -574,7 +560,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.16,
         "reelAmplification": 0,
-        "freshness": 0.6,
+        "freshness": 0.59,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -595,7 +581,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.53,
+        "freshness": 0.52,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -656,7 +642,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0.21,
         "reelAmplification": 0,
-        "freshness": 0.46,
+        "freshness": 0.45,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -731,6 +717,25 @@
       "wordCount": 1432
     },
     {
+      "wpId": 3107,
+      "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+      "title": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "compositeScore": 9,
+      "signals": {
+        "traffic": 0.06,
+        "sessionQuality": 0.02,
+        "trendAlignment": 0,
+        "reelAmplification": 0,
+        "freshness": 0.48,
+        "monetization": 0,
+        "frShare": 0,
+        "frPageviews": 0
+      },
+      "flags": [],
+      "date": "2026-03-04T19:51:24",
+      "wordCount": 1802
+    },
+    {
       "wpId": 4030,
       "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
       "title": "Corée du Sud : les 2 frais cachés du tourisme dentaire qui doublent votre budget",
@@ -740,7 +745,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.53,
+        "freshness": 0.52,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -761,7 +766,7 @@
         "sessionQuality": 0,
         "trendAlignment": 0,
         "reelAmplification": 0,
-        "freshness": 0.51,
+        "freshness": 0.5,
         "monetization": 0,
         "frShare": null,
         "frPageviews": 0
@@ -800,7 +805,7 @@
     "staleArticles": 0,
     "missingWidgets": 0,
     "zeroTraffic": 24,
-    "trending": 0,
+    "trending": 5,
     "frHeavy": 0,
     "frLight": 0,
     "frDiversified": 0

@@ -1,10 +1,32 @@
 {
-  "timestamp": "2026-09-23T08:25:09.607Z",
-  "gapCount": 0,
-  "gaps": [],
+  "timestamp": "2026-09-24T08:17:34.501Z",
+  "gapCount": 1,
+  "gaps": [
+    {
+      "topic": "vaccination",
+      "source": "trends",
+      "gapScore": 31,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.45,
+        "competition": 0.8
+      },
+      "destination": null,
+      "category": "securite",
+      "suggestedTitle": "Vaccination : Ce Que les Voyageurs Doivent Savoir",
+      "suggestedReelAngle": "Reel \"3 arnaques a eviter\"  — format avant/apres ou humor",
+      "articleType": "support",
+      "priority": "medium"
+    }
+  ],
   "summary": {
-    "byPriority": {},
-    "byCategory": {},
+    "byPriority": {
+      "medium": 1
+    },
+    "byCategory": {
+      "securite": 1
+    },
     "byDestination": {},
     "topDestinationGaps": []
   }

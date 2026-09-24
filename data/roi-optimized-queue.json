@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-23T08:25:18.683Z",
+  "timestamp": "2026-09-24T08:17:44.018Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -122,7 +122,7 @@
         "wpId": 4030,
         "slug": "coree-du-sud-les-2-frais-caches-du-tourisme-dentaire-qui-doublent-votre-budget",
         "compositeScore": 8,
-        "freshness": 0.53,
+        "freshness": 0.52,
         "traffic": 0,
         "reason": "Low-performing article: score=8, consider merge/update/delete"
       },
@@ -147,7 +147,7 @@
         "wpId": 3198,
         "slug": "maratua-vs-maldives-pour-une-lune-de-miel-arbitrer-entre-authenticite-et-logistique",
         "compositeScore": 8,
-        "freshness": 0.51,
+        "freshness": 0.5,
         "traffic": 0,
         "reason": "Low-performing article: score=8, consider merge/update/delete"
       },
@@ -240,6 +240,31 @@
       "rank": 10,
       "action": "review",
       "priority": "P4",
+      "priorityScore": 1,
+      "topic": "Visa Nomade Digital Asie 2026 : Stratégies et Pièges",
+      "articleType": "support",
+      "context": {
+        "wpId": 3107,
+        "slug": "optimiser-son-visa-de-nomade-digital-en-asie-du-sud-est-strategies-et-ecueils",
+        "compositeScore": 9,
+        "freshness": 0.48,
+        "traffic": 0.06,
+        "reason": "Low-performing article: score=9, consider merge/update/delete"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0,
+        "trafficSource": "no direct traffic (review only)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 11,
+      "action": "review",
+      "priority": "P4",
       "priorityScore": -1,
       "topic": "Meilleur eSIM Japon 2026 : Holafly vs Airalo vs Sakura Mobile",
       "articleType": "support",
@@ -262,7 +287,7 @@
       "withinBudget": true
     },
     {
-      "rank": 11,
+      "rank": 12,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -287,7 +312,7 @@
       "withinBudget": true
     },
     {
-      "rank": 12,
+      "rank": 13,
       "action": "review",
       "priority": "P4",
       "priorityScore": -1,
@@ -297,34 +322,9 @@
         "wpId": 2980,
         "slug": "choisir-entre-taipei-et-kuala-lumpur-un-itineraire-de-4-jours-qui-compte",
         "compositeScore": 11,
-        "freshness": 0.46,
+        "freshness": 0.45,
         "traffic": 0,
         "reason": "Low-performing article: score=11, consider merge/update/delete"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0,
-        "trafficSource": "no direct traffic (review only)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 13,
-      "action": "review",
-      "priority": "P4",
-      "priorityScore": -2,
-      "topic": "Pourquoi ton premier mois en Corée du Sud te coûtera plus cher que prévu",
-      "articleType": "support",
-      "context": {
-        "wpId": 5343,
-        "slug": "pourquoi-ton-premier-mois-en-coree-du-sud-te-coutera-plus-cher-que-prevu",
-        "compositeScore": 12,
-        "freshness": 0.6,
-        "traffic": 0,
-        "reason": "Low-performing article: score=12, consider merge/update/delete"
       },
       "roi": {
         "expectedRoi": 0,
