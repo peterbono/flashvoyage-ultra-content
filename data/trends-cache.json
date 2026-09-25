@@ -1,27 +1,13 @@
 {
-  "timestamp": "2026-09-24T08:17:31.083Z",
+  "timestamp": "2026-09-25T08:41:22.363Z",
   "trendingTopics": [
     {
       "query": "voyage thailande pas cher",
-      "traffic": 110,
-      "trafficFormatted": "+110 %",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-24T08:17:22.263Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage thailande prix",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-24T08:17:22.263Z",
+      "date": "2026-09-25T08:41:13.624Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -31,11 +17,11 @@
     },
     {
       "query": "voyage thailande circuit",
-      "traffic": 50,
-      "trafficFormatted": "+50 %",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-24T08:17:22.263Z",
+      "date": "2026-09-25T08:41:13.624Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -44,12 +30,26 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage vietnam pas cher",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
+      "query": "voyage vietnam circuit",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-24T08:17:24.466Z",
+      "date": "2026-09-25T08:41:15.827Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "itineraire",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "prix voyage vietnam",
+      "traffic": 140,
+      "trafficFormatted": "+140 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-09-25T08:41:15.827Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 1,
@@ -58,26 +58,12 @@
       "compositeScore": 0.62
     },
     {
-      "query": "circuit vietnam",
+      "query": "forum voyage thailande",
       "traffic": 100,
       "trafficFormatted": "+100 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-24T08:17:24.466Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.8,
-      "category": "itineraire",
-      "destination": "vietnam",
-      "compositeScore": 0.56
-    },
-    {
-      "query": "leclerc voyage thailande",
-      "traffic": 190,
-      "trafficFormatted": "+190 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-24T08:17:22.263Z",
+      "date": "2026-09-25T08:41:13.624Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -87,11 +73,11 @@
     },
     {
       "query": "voyage thailande phuket",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-24T08:17:22.263Z",
+      "date": "2026-09-25T08:41:13.624Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -100,89 +86,18 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage vietnam cambodge",
-      "traffic": 160,
-      "trafficFormatted": "+160 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-24T08:17:24.466Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.53
-    },
-    {
       "query": "voyage cambodge",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-24T08:17:24.466Z",
+      "date": "2026-09-25T08:41:15.827Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
       "category": "destination",
       "destination": "vietnam",
       "compositeScore": 0.53
-    },
-    {
-      "query": "voyage vietnam",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-24T08:17:28.859Z",
-      "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage cambodge laos",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-24T08:17:28.859Z",
-      "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "vaccination",
-      "traffic": 500,
-      "trafficFormatted": "500+",
-      "relatedQueries": [],
-      "articles": [
-        {
-          "title": "Campagne de vaccination 2026-2027 contre la grippe saisonnière et la Covid-19",
-          "url": "https://www.ordre.pharmacien.fr/les-communications/focus-sur/les-actualites/campagne-de-vaccination-2026-2027-contre-la-grippe-saisonniere-et-la-covid-19",
-          "source": "Ordre National des Pharmaciens"
-        },
-        {
-          "title": "Vaccins antigrippaux : ce que change la prescription obligatoire",
-          "url": "https://www.lequotidiendupharmacien.fr/exercice-pro/vaccins-antigrippaux-ce-que-change-la-prescription-obligatoire",
-          "source": "Le Quotidien du Pharmacien"
-        },
-        {
-          "title": "Dix-neuf millions de Français vont pouvoir se faire vacciner à partir du 13 octobre contre le Covid-19 et la grippe",
-          "url": "https://www.franceinfo.fr/sante/19-millions-de-francais-vont-pouvoir-se-faire-vacciner-a-partir-du-13-octobre-contre-le-covid-19-et-la-grippe_8206697.html",
-          "source": "franceinfo"
-        }
-      ],
-      "date": "Thu, 24 Sep 2026 01:00:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "securite",
-      "destination": null,
-      "compositeScore": 0.2904
     }
   ]
 }

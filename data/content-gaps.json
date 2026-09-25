@@ -1,33 +1,144 @@
 {
-  "timestamp": "2026-09-24T08:17:34.501Z",
-  "gapCount": 1,
+  "timestamp": "2026-09-25T08:39:53.875Z",
+  "gapCount": 7,
   "gaps": [
     {
-      "topic": "vaccination",
+      "topic": "voyage thailande pas cher",
       "source": "trends",
-      "gapScore": 31,
+      "gapScore": 74,
       "signals": {
-        "searchVolume": 0.29,
-        "trendGrowth": 0.29,
-        "monetization": 0.45,
-        "competition": 0.8
+        "searchVolume": 0.62,
+        "trendGrowth": 0.62,
+        "monetization": 0.9,
+        "competition": 0.4
       },
-      "destination": null,
-      "category": "securite",
-      "suggestedTitle": "Vaccination : Ce Que les Voyageurs Doivent Savoir",
-      "suggestedReelAngle": "Reel \"3 arnaques a eviter\"  — format avant/apres ou humor",
+      "destination": "thailande",
+      "category": "budget",
+      "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
       "articleType": "support",
-      "priority": "medium"
+      "priority": "critical"
+    },
+    {
+      "topic": "voyage thailande circuit",
+      "source": "trends",
+      "gapScore": 74,
+      "signals": {
+        "searchVolume": 0.62,
+        "trendGrowth": 0.62,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "thailande",
+      "category": "itineraire",
+      "suggestedTitle": "Itineraire Thailande : Le Circuit Parfait de 2 Semaines",
+      "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Thailande — format pick",
+      "articleType": "pillar",
+      "priority": "critical"
+    },
+    {
+      "topic": "voyage vietnam circuit",
+      "source": "trends",
+      "gapScore": 74,
+      "signals": {
+        "searchVolume": 0.62,
+        "trendGrowth": 0.62,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "vietnam",
+      "category": "itineraire",
+      "suggestedTitle": "Itineraire Vietnam : Le Circuit Parfait de 2 Semaines",
+      "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Vietnam — format pick",
+      "articleType": "pillar",
+      "priority": "critical"
+    },
+    {
+      "topic": "prix voyage vietnam",
+      "source": "trends",
+      "gapScore": 74,
+      "signals": {
+        "searchVolume": 0.62,
+        "trendGrowth": 0.62,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "vietnam",
+      "category": "budget",
+      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "critical"
+    },
+    {
+      "topic": "forum voyage thailande",
+      "source": "trends",
+      "gapScore": 67,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "thailande",
+      "category": "destination",
+      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "voyage thailande phuket",
+      "source": "trends",
+      "gapScore": 67,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "thailande",
+      "category": "destination",
+      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "voyage cambodge",
+      "source": "trends",
+      "gapScore": 62,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.6
+      },
+      "destination": "vietnam",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
     }
   ],
   "summary": {
     "byPriority": {
-      "medium": 1
+      "critical": 4,
+      "high": 3
     },
     "byCategory": {
-      "securite": 1
+      "budget": 2,
+      "itineraire": 2,
+      "destination": 3
     },
-    "byDestination": {},
-    "topDestinationGaps": []
+    "byDestination": {
+      "thailande": 4,
+      "vietnam": 3
+    },
+    "topDestinationGaps": [
+      "thailande",
+      "vietnam"
+    ]
   }
 }
