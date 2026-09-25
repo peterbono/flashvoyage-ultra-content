@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-09-25T10:58:29.442Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-09-25T16:20:24.580Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "221 passengers evacuate Air Seoul flight to Vietnam after fire breaks out in bag, power bank suspected",
+      "source": "rss_breaking",
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/traffic/221-passengers-evacuate-air-seoul-flight-to-vietnam-after-fire-breaks-out-in-bag-power-bank-suspected-5124838.html",
+      "velocityScore": 0.508,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 1694,
+      "estimatedTrafficIn24h": 1655,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.68,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 3.6
+      },
+      "detectedAt": "2026-09-25T12:44:36.000Z",
+      "scoredAt": "2026-09-25T16:20:24.459Z"
+    }
+  ]
 }
