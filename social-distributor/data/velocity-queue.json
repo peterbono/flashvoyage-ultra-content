@@ -1,61 +1,36 @@
 {
-  "generatedAt": "2026-09-26T10:40:07.289Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-09-26T15:34:44.726Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 1
   },
   "queue": [
     {
-      "topic": "Agencies team up to provide flood travel updates",
+      "topic": "THAI offers flood-affected ticket holders free date change",
       "source": "rss_breaking",
       "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3326564/agencies-team-up-to-provide-flood-travel-updates",
-      "velocityScore": 0.498,
+      "link": "https://www.bangkokpost.com/thailand/general/3326623/thai-offers-floodaffected-ticket-holders-free-date-change",
+      "velocityScore": 0.499,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
+      "hoursRemaining": 718,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2490,
-      "estimatedTrafficIn24h": 2433,
+      "estimatedTrafficNow": 2495,
+      "estimatedTrafficIn24h": 2438,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 1,
-        "timeDecay": 0.996,
+        "timeDecay": 0.998,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 4.3
+        "hoursSinceDetection": 2.2
       },
-      "detectedAt": "2026-09-26T06:21:00.000Z",
-      "scoredAt": "2026-09-26T10:40:07.143Z"
-    },
-    {
-      "topic": "Why Pakistan’s endless war on militants fails to break the cycle",
-      "source": "rss_breaking",
-      "destination": "asia",
-      "link": "https://www.scmp.com/week-asia/politics/article/3368825/why-pakistans-endless-war-militants-fails-break-cycle?utm_source=rss_feed",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 714,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2064,
-      "estimatedTrafficIn24h": 2017,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5.7
-      },
-      "detectedAt": "2026-09-26T05:00:17.000Z",
-      "scoredAt": "2026-09-26T10:40:07.270Z"
+      "detectedAt": "2026-09-26T13:20:00.000Z",
+      "scoredAt": "2026-09-26T15:34:44.524Z"
     }
   ]
 }
