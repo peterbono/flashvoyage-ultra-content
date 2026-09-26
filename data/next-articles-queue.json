@@ -1,9 +1,25 @@
 {
-  "timestamp": "2026-09-25T08:39:55.546Z",
+  "timestamp": "2026-09-26T08:26:55.480Z",
   "queueSize": 8,
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 154,
+      "topic": "prix voyage thailande",
+      "articleType": "support",
+      "context": {
+        "gapScore": 74,
+        "destination": "thailande",
+        "category": "budget",
+        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
+        "reason": "Content gap: \"prix voyage thailande\" (score 74, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
@@ -19,55 +35,23 @@
       }
     },
     {
-      "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 154,
-      "topic": "voyage thailande circuit",
-      "articleType": "pillar",
-      "context": {
-        "gapScore": 74,
-        "destination": "thailande",
-        "category": "itineraire",
-        "suggestedTitle": "Itineraire Thailande : Le Circuit Parfait de 2 Semaines",
-        "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Thailande — format pick",
-        "reason": "Content gap: \"voyage thailande circuit\" (score 74, source: trends)"
-      }
-    },
-    {
       "rank": 3,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 154,
-      "topic": "voyage vietnam circuit",
-      "articleType": "pillar",
+      "priorityScore": 147,
+      "topic": "leclerc voyage thailande",
+      "articleType": "support",
       "context": {
-        "gapScore": 74,
-        "destination": "vietnam",
-        "category": "itineraire",
-        "suggestedTitle": "Itineraire Vietnam : Le Circuit Parfait de 2 Semaines",
-        "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Vietnam — format pick",
-        "reason": "Content gap: \"voyage vietnam circuit\" (score 74, source: trends)"
+        "gapScore": 67,
+        "destination": "thailande",
+        "category": "destination",
+        "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+        "reason": "Content gap: \"leclerc voyage thailande\" (score 67, source: trends)"
       }
     },
     {
       "rank": 4,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 154,
-      "topic": "prix voyage vietnam",
-      "articleType": "support",
-      "context": {
-        "gapScore": 74,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"prix voyage vietnam\" (score 74, source: trends)"
-      }
-    },
-    {
-      "rank": 5,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 147,
@@ -80,6 +64,22 @@
         "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
         "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
         "reason": "Content gap: \"forum voyage thailande\" (score 67, source: trends)"
+      }
+    },
+    {
+      "rank": 5,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 147,
+      "topic": "voyage thailande phuket",
+      "articleType": "support",
+      "context": {
+        "gapScore": 67,
+        "destination": "thailande",
+        "category": "destination",
+        "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+        "reason": "Content gap: \"voyage thailande phuket\" (score 67, source: trends)"
       }
     },
     {
