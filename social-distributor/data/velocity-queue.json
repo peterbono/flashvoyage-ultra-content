@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-27T16:14:09.518Z",
+  "generatedAt": "2026-09-27T20:43:12.859Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -12,25 +12,25 @@
       "source": "rss_breaking",
       "destination": "philippines",
       "link": "https://www.rappler.com/philippines/weather/typhoon-queenie-itcz-update-pagasa-forecast-september-27-2026-8pm/",
-      "velocityScore": 0.622,
+      "velocityScore": 0.619,
       "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 719,
+      "hoursRemaining": 715,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2073,
-      "estimatedTrafficIn24h": 2026,
+      "estimatedTrafficNow": 2064,
+      "estimatedTrafficIn24h": 2017,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
-        "timeDecay": 0.999,
+        "timeDecay": 0.995,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 1
+        "hoursSinceDetection": 5.5
       },
       "detectedAt": "2026-09-27T15:15:25.000Z",
-      "scoredAt": "2026-09-27T16:14:09.305Z"
+      "scoredAt": "2026-09-27T20:43:12.352Z"
     }
   ]
 }
