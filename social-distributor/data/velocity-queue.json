@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-09-28T12:40:45.050Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-09-28T22:52:06.680Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "In kayaks or waist-deep in floodwater, shoppers return to Bangkok markets",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.channelnewsasia.com/asia/bangkok-market-floods-shoppers-return-6415736",
-      "velocityScore": 0.5,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2498,
-      "estimatedTrafficIn24h": 2441,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.999,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 0.8
-      },
-      "detectedAt": "2026-09-28T11:50:00.000Z",
-      "scoredAt": "2026-09-28T12:40:44.489Z"
-    }
-  ]
+  "queue": []
 }
