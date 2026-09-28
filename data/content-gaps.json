@@ -1,24 +1,7 @@
 {
-  "timestamp": "2026-09-27T09:04:54.515Z",
-  "gapCount": 10,
+  "timestamp": "2026-09-28T09:32:59.771Z",
+  "gapCount": 12,
   "gaps": [
-    {
-      "topic": "voyage thailande pas cher",
-      "source": "trends",
-      "gapScore": 74,
-      "signals": {
-        "searchVolume": 0.62,
-        "trendGrowth": 0.62,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "thailande",
-      "category": "budget",
-      "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-      "articleType": "support",
-      "priority": "critical"
-    },
     {
       "topic": "prix voyage thailande",
       "source": "trends",
@@ -54,21 +37,21 @@
       "priority": "critical"
     },
     {
-      "topic": "leclerc voyage thailande",
+      "topic": "voyage vietnam prix",
       "source": "trends",
-      "gapScore": 67,
+      "gapScore": 74,
       "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
+        "searchVolume": 0.62,
+        "trendGrowth": 0.62,
         "monetization": 0.9,
         "competition": 0.4
       },
-      "destination": "thailande",
-      "category": "destination",
-      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "destination": "vietnam",
+      "category": "budget",
+      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
       "articleType": "support",
-      "priority": "high"
+      "priority": "critical"
     },
     {
       "topic": "voyage thailande phuket",
@@ -105,6 +88,23 @@
       "priority": "high"
     },
     {
+      "topic": "voyage cambodge vietnam",
+      "source": "trends",
+      "gapScore": 67,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "cambodge",
+      "category": "destination",
+      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
       "topic": "voyage cambodge",
       "source": "trends",
       "gapScore": 62,
@@ -122,31 +122,65 @@
       "priority": "high"
     },
     {
-      "topic": "voyage pas cher",
+      "topic": "voyage laos",
       "source": "trends",
-      "gapScore": 61,
+      "gapScore": 62,
       "signals": {
-        "searchVolume": 0.47,
-        "trendGrowth": 0.47,
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
         "monetization": 0.9,
-        "competition": 0.4
+        "competition": 0.6
       },
       "destination": "vietnam",
-      "category": "budget",
-      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "voyage au vietnam",
+      "source": "trends",
+      "gapScore": 62,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.6
+      },
+      "destination": "vietnam",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
       "articleType": "support",
       "priority": "high"
     },
     {
       "topic": "voyage vietnam",
       "source": "trends",
-      "gapScore": 54,
+      "gapScore": 62,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.6
+      },
+      "destination": "cambodge",
+      "category": "destination",
+      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "voyage laos cambodge",
+      "source": "trends",
+      "gapScore": 59,
       "signals": {
         "searchVolume": 0.53,
         "trendGrowth": 0.53,
         "monetization": 0.6,
-        "competition": 0.6
+        "competition": 0.4
       },
       "destination": "laos",
       "category": "destination",
@@ -156,43 +190,43 @@
       "priority": "high"
     },
     {
-      "topic": "minibus",
+      "topic": "voyage laos vietnam",
       "source": "trends",
-      "gapScore": 35,
+      "gapScore": 59,
       "signals": {
-        "searchVolume": 0.29,
-        "trendGrowth": 0.29,
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
         "monetization": 0.6,
-        "competition": 0.8
+        "competition": 0.4
       },
-      "destination": null,
-      "category": "transport",
-      "suggestedTitle": "Minibus : Guide Pratique",
-      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+      "destination": "laos",
+      "category": "destination",
+      "suggestedTitle": "Laos 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Laos — format pick ou month",
       "articleType": "support",
-      "priority": "medium"
+      "priority": "high"
     }
   ],
   "summary": {
     "byPriority": {
       "critical": 3,
-      "high": 6,
-      "medium": 1
+      "high": 9
     },
     "byCategory": {
-      "budget": 3,
+      "budget": 2,
       "itineraire": 1,
-      "destination": 5,
-      "transport": 1
+      "destination": 9
     },
     "byDestination": {
-      "thailande": 5,
-      "vietnam": 3,
-      "laos": 1
+      "thailande": 3,
+      "vietnam": 5,
+      "cambodge": 2,
+      "laos": 2
     },
     "topDestinationGaps": [
-      "thailande",
       "vietnam",
+      "thailande",
+      "cambodge",
       "laos"
     ]
   }
