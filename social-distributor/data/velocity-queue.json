@@ -1,36 +1,61 @@
 {
-  "generatedAt": "2026-09-27T20:43:12.859Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-09-28T03:08:35.767Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 1,
-    "queue_normal": 0
+    "queue_priority": 0,
+    "queue_normal": 2
   },
   "queue": [
+    {
+      "topic": "Bangkok immigration offices closes Sept 28–29 as floods persist",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/guides/visa-information/bangkok-immigration-offices-closes-sept-28-29-as-floods-persist",
+      "velocityScore": 0.5,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 719,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2498,
+      "estimatedTrafficIn24h": 2441,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 0.9
+      },
+      "detectedAt": "2026-09-28T02:16:53.000Z",
+      "scoredAt": "2026-09-28T03:08:35.105Z"
+    },
     {
       "topic": "ITCZ affects parts of Philippines; Typhoon Queenie exits PAR",
       "source": "rss_breaking",
       "destination": "philippines",
       "link": "https://www.rappler.com/philippines/weather/typhoon-queenie-itcz-update-pagasa-forecast-september-27-2026-8pm/",
-      "velocityScore": 0.619,
-      "action": "QUEUE_PRIORITY",
-      "hoursRemaining": 715,
+      "velocityScore": 0.408,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 708,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2064,
-      "estimatedTrafficIn24h": 2017,
-      "trafficLossPerHour": 2,
+      "estimatedTrafficNow": 1359,
+      "estimatedTrafficIn24h": 1328,
+      "trafficLossPerHour": 1,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.995,
+        "trendIntensity": 0.55,
+        "timeDecay": 0.989,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
-        "hoursSinceDetection": 5.5
+        "hoursSinceDetection": 11.9
       },
       "detectedAt": "2026-09-27T15:15:25.000Z",
-      "scoredAt": "2026-09-27T20:43:12.352Z"
+      "scoredAt": "2026-09-28T03:08:35.462Z"
     }
   ]
 }
