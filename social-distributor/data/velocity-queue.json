@@ -1,61 +1,10 @@
 {
-  "generatedAt": "2026-09-29T11:58:48.651Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-09-29T17:51:38.861Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Thai Airways apologises as floods delay flights, strand 5,600 bags",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/national/thai-airways-floods-delay-flights-strand-5600-bags",
-      "velocityScore": 0.499,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2496,
-      "estimatedTrafficIn24h": 2439,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.6
-      },
-      "detectedAt": "2026-09-29T10:19:56.000Z",
-      "scoredAt": "2026-09-29T11:58:47.871Z"
-    },
-    {
-      "topic": "5,600 delayed bags, 330 stalled flights prompt THAI apology",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3328200/5600-delayed-bags-330-stalled-flights-prompt-thai-apology",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2071,
-      "estimatedTrafficIn24h": 2024,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.9
-      },
-      "detectedAt": "2026-09-29T10:02:00.000Z",
-      "scoredAt": "2026-09-29T11:58:48.245Z"
-    }
-  ]
+  "queue": []
 }
