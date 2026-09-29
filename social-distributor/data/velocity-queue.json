@@ -1,86 +1,61 @@
 {
-  "generatedAt": "2026-09-29T03:47:16.884Z",
-  "totalTopics": 3,
+  "generatedAt": "2026-09-29T11:58:48.651Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 3
+    "queue_normal": 2
   },
   "queue": [
     {
-      "topic": "Thai Air Force assists with delayed luggage at Suvarnabhumi",
+      "topic": "Thai Airways apologises as floods delay flights, strand 5,600 bags",
       "source": "rss_breaking",
       "destination": "thailand",
-      "link": "https://thethaiger.com/news/bangkok/royal-thai-air-force-personnel-assist-with-stranded-luggage-at-suvarnabhumi-airport",
-      "velocityScore": 0.5,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 720,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2499,
-      "estimatedTrafficIn24h": 2442,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 1,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 0.3
-      },
-      "detectedAt": "2026-09-29T03:26:58.000Z",
-      "scoredAt": "2026-09-29T03:47:15.942Z"
-    },
-    {
-      "topic": "Thai Airways’ staff shortage, delayed baggage, flight cancellations due to flooding",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/world/aviation/thai-airways-cancels-flights-amid-bangkok-flooding",
+      "link": "https://thethaiger.com/news/national/thai-airways-floods-delay-flights-strand-5600-bags",
       "velocityScore": 0.499,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
+      "hoursRemaining": 718,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2497,
-      "estimatedTrafficIn24h": 2440,
+      "estimatedTrafficNow": 2496,
+      "estimatedTrafficIn24h": 2439,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 1,
-        "timeDecay": 0.999,
+        "timeDecay": 0.998,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 1.1
+        "hoursSinceDetection": 1.6
       },
-      "detectedAt": "2026-09-29T02:40:31.000Z",
-      "scoredAt": "2026-09-29T03:47:16.107Z"
+      "detectedAt": "2026-09-29T10:19:56.000Z",
+      "scoredAt": "2026-09-29T11:58:47.871Z"
     },
     {
-      "topic": "Suvarnabhumi Airport to add 16 more automated passport gates",
+      "topic": "5,600 delayed bags, 330 stalled flights prompt THAI apology",
       "source": "rss_breaking",
       "destination": "thailand",
-      "link": "https://thethaiger.com/news/bangkok/suvarnabhumi-airport-to-add-16-more-automated-passport-gates",
-      "velocityScore": 0.45,
+      "link": "https://www.bangkokpost.com/thailand/general/3328200/5600-delayed-bags-330-stalled-flights-prompt-thai-apology",
+      "velocityScore": 0.414,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
+      "hoursRemaining": 718,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2248,
-      "estimatedTrafficIn24h": 2196,
+      "estimatedTrafficNow": 2071,
+      "estimatedTrafficIn24h": 2024,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.999,
+        "trendIntensity": 0.83,
+        "timeDecay": 0.998,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 1.1
+        "hoursSinceDetection": 1.9
       },
-      "detectedAt": "2026-09-29T02:39:25.000Z",
-      "scoredAt": "2026-09-29T03:47:16.559Z"
+      "detectedAt": "2026-09-29T10:02:00.000Z",
+      "scoredAt": "2026-09-29T11:58:48.245Z"
     }
   ]
 }
