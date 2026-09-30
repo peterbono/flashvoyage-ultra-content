@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-09-29T09:38:49.764Z",
+  "timestamp": "2026-09-30T09:30:41.048Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande pas cher",
-      "traffic": 190,
-      "trafficFormatted": "+190 %",
+      "query": "prix voyage thailande",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-29T09:38:40.938Z",
+      "date": "2026-09-30T09:30:32.538Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -16,54 +16,26 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage thailande circuit",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-29T09:38:40.938Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage vietnam circuit",
-      "traffic": 300,
-      "trafficFormatted": "+300 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-29T09:38:43.144Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "itineraire",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage vietnam prix",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-09-29T09:38:43.144Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "vietnam",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "leclerc voyage thailande",
+      "query": "voyage vietnam pas cher",
       "traffic": 140,
       "trafficFormatted": "+140 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-29T09:38:40.938Z",
+      "date": "2026-09-30T09:30:34.674Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage thailande phuket",
+      "traffic": 160,
+      "trafficFormatted": "+160 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-09-30T09:30:32.538Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -72,12 +44,12 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage thailande phuket",
+      "query": "leclerc voyage thailande",
       "traffic": 90,
       "trafficFormatted": "+90 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-29T09:38:40.938Z",
+      "date": "2026-09-30T09:30:32.538Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -86,12 +58,12 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage vietnam cambodge",
-      "traffic": 190,
-      "trafficFormatted": "+190 %",
+      "query": "voyage cambodge",
+      "traffic": 300,
+      "trafficFormatted": "+300 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-29T09:38:43.144Z",
+      "date": "2026-09-30T09:30:34.674Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -101,11 +73,11 @@
     },
     {
       "query": "voyage au vietnam",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-09-29T09:38:43.144Z",
+      "date": "2026-09-30T09:30:34.674Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -114,33 +86,18 @@
       "compositeScore": 0.53
     },
     {
-      "query": "budget",
-      "traffic": 2000,
-      "trafficFormatted": "2000+",
+      "query": "voyage cambodge laos",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
-      "articles": [
-        {
-          "title": "EXCLUSIVE: Russia raises 2027 military spending by 27%, budget documents show",
-          "url": "https://www.reuters.com/world/russia-raises-2027-military-spending-by-27-budget-documents-show-2026-09-28/",
-          "source": "Reuters"
-        },
-        {
-          "title": "Russia Raises 2027 Military Spending by 27%, Budget Documents Show",
-          "url": "https://www.themoscowtimes.com/2026/09/28/russia-raises-2027-military-spending-by-27-budget-documents-show-a93810",
-          "source": "The Moscow Times"
-        },
-        {
-          "title": "Russia's finance ministry raises taxes to bolster military budget",
-          "url": "https://www.euronews.com/2026/09/27/russias-finance-ministry-raises-taxes-to-bolster-putins-military-budget",
-          "source": "Euronews"
-        }
-      ],
-      "date": "Tue, 29 Sep 2026 01:00:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "budget",
-      "destination": null,
-      "compositeScore": 0.2916
+      "articles": [],
+      "date": "2026-09-30T09:30:38.929Z",
+      "source": "related-rising",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
     }
   ]
 }
