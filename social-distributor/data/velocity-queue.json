@@ -1,86 +1,36 @@
 {
-  "generatedAt": "2026-09-30T17:27:18.638Z",
-  "totalTopics": 3,
+  "generatedAt": "2026-09-30T21:46:45.326Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 3
+    "queue_normal": 1
   },
   "queue": [
     {
-      "topic": "Russia sends nuclear warning to Nato over its Kaliningrad enclave",
+      "topic": "Israel PM hails Indian pilot wounded in diverted flydubai flight",
       "source": "rss_breaking",
       "destination": "asia",
-      "link": "https://www.scmp.com/news/world/europe/article/3369374/russia-sends-nuclear-warning-nato-over-its-kaliningrad-enclave?utm_source=rss_feed",
-      "velocityScore": 0.414,
+      "link": "https://www.scmp.com/news/world/middle-east/article/3369392/israel-pm-hails-indian-pilot-wounded-diverted-flydubai-flight?utm_source=rss_feed",
+      "velocityScore": 0.415,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
+      "hoursRemaining": 719,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2069,
-      "estimatedTrafficIn24h": 2022,
+      "estimatedTrafficNow": 2073,
+      "estimatedTrafficIn24h": 2026,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
-        "timeDecay": 0.997,
+        "timeDecay": 0.999,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 3.1
+        "hoursSinceDetection": 1
       },
-      "detectedAt": "2026-09-30T14:19:35.000Z",
-      "scoredAt": "2026-09-30T17:27:17.790Z"
-    },
-    {
-      "topic": "Only 18% of 10,000-bag backlog cleared at Suvarnabhumi",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3328994/only-18-of-10000bag-backlog-cleared-at-suvarnabhumi",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2069,
-      "estimatedTrafficIn24h": 2022,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3.1
-      },
-      "detectedAt": "2026-09-30T14:20:00.000Z",
-      "scoredAt": "2026-09-30T17:27:18.156Z"
-    },
-    {
-      "topic": "Rush-hour downpour freezes HCMC traffic",
-      "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/photo/traffic/rush-hour-downpour-freezes-hcmc-traffic-5126811.html",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2065,
-      "estimatedTrafficIn24h": 2018,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5
-      },
-      "detectedAt": "2026-09-30T12:27:09.000Z",
-      "scoredAt": "2026-09-30T17:27:18.169Z"
+      "detectedAt": "2026-09-30T20:45:03.000Z",
+      "scoredAt": "2026-09-30T21:46:45.278Z"
     }
   ]
 }
