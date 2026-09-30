@@ -1,10 +1,61 @@
 {
-  "generatedAt": "2026-09-30T03:35:48.069Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-09-30T11:47:02.070Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 2
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "‘I don’t think I can continue to defend the company,’ Thai Airways worker says",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/national/thai-airways-employee-vents-exhaustion-crisis",
+      "velocityScore": 0.498,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2492,
+      "estimatedTrafficIn24h": 2435,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.4
+      },
+      "detectedAt": "2026-09-30T08:21:24.000Z",
+      "scoredAt": "2026-09-30T11:47:01.794Z"
+    },
+    {
+      "topic": "FlyDubai flight to Israel diverted to Saudi Arabia after incident in cockpit",
+      "source": "rss_breaking",
+      "destination": "asia",
+      "link": "https://www.scmp.com/news/world/middle-east/article/3369318/flydubai-flight-israel-diverted-saudi-arabia-after-incident-cockpit?utm_source=rss_feed",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2067,
+      "estimatedTrafficIn24h": 2020,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.9
+      },
+      "detectedAt": "2026-09-30T07:54:04.000Z",
+      "scoredAt": "2026-09-30T11:47:01.999Z"
+    }
+  ]
 }
