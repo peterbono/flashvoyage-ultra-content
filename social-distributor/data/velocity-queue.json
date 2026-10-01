@@ -1,61 +1,36 @@
 {
-  "generatedAt": "2026-10-01T12:15:51.397Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-10-01T22:14:38.271Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
-    "queue_priority": 1,
+    "queue_priority": 0,
     "queue_normal": 1
   },
   "queue": [
     {
-      "topic": "Ambulance sirens wail in vain as heavy thunderstorm triggers hour-long gridlock to Vietnam's busiest airport",
+      "topic": "Inundation reduces hotel bookings",
       "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/photo/traffic/ambulance-sirens-wail-in-vain-as-heavy-thunderstorm-triggers-hour-long-gridlock-to-vietnams-busiest-airport-5127311.html",
-      "velocityScore": 0.622,
-      "action": "QUEUE_PRIORITY",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/business/general/3329803/inundation-reduces-hotel-bookings",
+      "velocityScore": 0.45,
+      "action": "QUEUE_NORMAL",
       "hoursRemaining": 719,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2074,
-      "estimatedTrafficIn24h": 2026,
-      "trafficLossPerHour": 2,
+      "estimatedTrafficNow": 1499,
+      "estimatedTrafficIn24h": 1465,
+      "trafficLossPerHour": 1,
       "breakdown": {
-        "trendIntensity": 0.83,
+        "trendIntensity": 0.6,
         "timeDecay": 0.999,
         "competitionGap": 0.5,
         "monetizationBoost": 1.5,
         "hoursSinceDetection": 0.6
       },
-      "detectedAt": "2026-10-01T11:36:59.000Z",
-      "scoredAt": "2026-10-01T12:15:50.506Z"
-    },
-    {
-      "topic": "Thai Airways battles 10,000-bag backlog after Bangkok floods",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/se-asia/thai-airways-battles-10000-bag-backlog-after-bangkok-floods",
-      "velocityScore": 0.498,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2491,
-      "estimatedTrafficIn24h": 2434,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3.6
-      },
-      "detectedAt": "2026-10-01T08:40:00.000Z",
-      "scoredAt": "2026-10-01T12:15:50.559Z"
+      "detectedAt": "2026-10-01T21:39:00.000Z",
+      "scoredAt": "2026-10-01T22:14:38.070Z"
     }
   ]
 }
