@@ -1,17 +1,67 @@
 {
-  "generatedAt": "2026-09-30T21:46:45.326Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-10-01T03:40:36.552Z",
+  "totalTopics": 4,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 4
   },
   "queue": [
     {
-      "topic": "Israel PM hails Indian pilot wounded in diverted flydubai flight",
+      "topic": "EU aviation agency issues Saudi airspace advisory after Houthi attacks",
       "source": "rss_breaking",
-      "destination": "asia",
-      "link": "https://www.scmp.com/news/world/middle-east/article/3369392/israel-pm-hails-indian-pilot-wounded-diverted-flydubai-flight?utm_source=rss_feed",
+      "destination": "philippines",
+      "link": "https://www.rappler.com/world/europe/eu-aviation-agency-saudi-airspace-advisory-houthi-attacks-october-2026/",
+      "velocityScore": 0.499,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2495,
+      "estimatedTrafficIn24h": 2438,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2
+      },
+      "detectedAt": "2026-10-01T01:41:08.000Z",
+      "scoredAt": "2026-10-01T03:40:36.104Z"
+    },
+    {
+      "topic": "Floods in world's most visited city force national airline to halt cargo for 6 days",
+      "source": "rss_breaking",
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/traffic/floods-in-world-s-most-visited-city-force-national-airline-to-halt-cargo-for-6-days-5126841.html",
+      "velocityScore": 0.499,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2493,
+      "estimatedTrafficIn24h": 2436,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 2.8
+      },
+      "detectedAt": "2026-10-01T00:52:49.000Z",
+      "scoredAt": "2026-10-01T03:40:36.193Z"
+    },
+    {
+      "topic": "Pilot attack on Flydubai prompts emergency landing in Saudi Arabia",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/world/flydubai-co-pilot-accused-of-stabbing-pilot-mid-flight",
       "velocityScore": 0.415,
       "action": "QUEUE_NORMAL",
       "hoursRemaining": 719,
@@ -19,7 +69,7 @@
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2073,
+      "estimatedTrafficNow": 2074,
       "estimatedTrafficIn24h": 2026,
       "trafficLossPerHour": 2,
       "breakdown": {
@@ -27,10 +77,35 @@
         "timeDecay": 0.999,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 1
+        "hoursSinceDetection": 0.6
       },
-      "detectedAt": "2026-09-30T20:45:03.000Z",
-      "scoredAt": "2026-09-30T21:46:45.278Z"
+      "detectedAt": "2026-10-01T03:05:41.000Z",
+      "scoredAt": "2026-10-01T03:40:36.224Z"
+    },
+    {
+      "topic": "THAI shares plunge during airport chaos",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/business/general/3329309/thai-shares-plunge-during-airport-chaos",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 715,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2066,
+      "estimatedTrafficIn24h": 2019,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 4.6
+      },
+      "detectedAt": "2026-09-30T23:02:00.000Z",
+      "scoredAt": "2026-10-01T03:40:36.236Z"
     }
   ]
 }
