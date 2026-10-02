@@ -1,136 +1,36 @@
 {
-  "generatedAt": "2026-10-02T11:44:53.248Z",
-  "totalTopics": 5,
+  "generatedAt": "2026-10-02T17:17:00.315Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 5
+    "queue_normal": 1
   },
   "queue": [
-    {
-      "topic": "Hotelier returns 100,000 baht in euros to French tourist",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3330233/hotelier-returns-100000-baht-in-euros-to-french-tourist",
-      "velocityScore": 0.508,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1692,
-      "estimatedTrafficIn24h": 1654,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.68,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 4.7
-      },
-      "detectedAt": "2026-10-02T07:00:00.000Z",
-      "scoredAt": "2026-10-02T11:44:53.093Z"
-    },
-    {
-      "topic": "Thai Airways chief says he was fired by board after Bangkok flood chaos",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/se-asia/thai-airways-chief-sidelined-by-board-over-flood-chaos-local-media-reports",
-      "velocityScore": 0.499,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2494,
-      "estimatedTrafficIn24h": 2437,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.6
-      },
-      "detectedAt": "2026-10-02T09:07:59.000Z",
-      "scoredAt": "2026-10-02T11:44:53.012Z"
-    },
-    {
-      "topic": "Thai Airways opens self-collection hub for luggage as flooding backlog eases",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/se-asia/thai-airways-opens-self-collection-hub-for-luggages-as-flooding-backlog-eases",
-      "velocityScore": 0.498,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2492,
-      "estimatedTrafficIn24h": 2435,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3.2
-      },
-      "detectedAt": "2026-10-02T08:30:00.000Z",
-      "scoredAt": "2026-10-02T11:44:53.137Z"
-    },
     {
       "topic": "Thai Airways CEO ousted over flood mishaps",
       "source": "rss_breaking",
       "destination": "thailand",
       "link": "https://www.bangkokpost.com/thailand/general/3330240/thai-airways-ceo-ousted-over-flood-mishaps",
-      "velocityScore": 0.414,
+      "velocityScore": 0.498,
       "action": "QUEUE_NORMAL",
       "hoursRemaining": 716,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2068,
-      "estimatedTrafficIn24h": 2021,
+      "estimatedTrafficNow": 2490,
+      "estimatedTrafficIn24h": 2433,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.997,
+        "trendIntensity": 1,
+        "timeDecay": 0.996,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 3.6
+        "hoursSinceDetection": 4
       },
-      "detectedAt": "2026-10-02T08:08:00.000Z",
-      "scoredAt": "2026-10-02T11:44:53.185Z"
-    },
-    {
-      "topic": "Baggage claims to be moved to new location, Transport Ministry promises THAI compensation",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3330214/baggage-claims-to-be-moved-to-new-location-transport-ministry-promises-thai-compensation",
-      "velocityScore": 0.413,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 715,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2065,
-      "estimatedTrafficIn24h": 2018,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5
-      },
-      "detectedAt": "2026-10-02T06:42:00.000Z",
-      "scoredAt": "2026-10-02T11:44:53.141Z"
+      "detectedAt": "2026-10-02T13:15:00.000Z",
+      "scoredAt": "2026-10-02T17:16:59.864Z"
     }
   ]
 }
