@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-10-02T17:17:00.315Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-10-02T21:43:27.255Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Thai Airways CEO ousted over flood mishaps",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3330240/thai-airways-ceo-ousted-over-flood-mishaps",
-      "velocityScore": 0.498,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2490,
-      "estimatedTrafficIn24h": 2433,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 1,
-        "timeDecay": 0.996,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 4
-      },
-      "detectedAt": "2026-10-02T13:15:00.000Z",
-      "scoredAt": "2026-10-02T17:16:59.864Z"
-    }
-  ]
+  "queue": []
 }
