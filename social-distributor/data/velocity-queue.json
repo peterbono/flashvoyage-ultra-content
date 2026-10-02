@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-01T22:14:38.271Z",
+  "generatedAt": "2026-10-02T03:40:12.753Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Inundation reduces hotel bookings",
+      "topic": "Cops widen cross-border scam fight",
       "source": "rss_breaking",
       "destination": "thailand",
-      "link": "https://www.bangkokpost.com/business/general/3329803/inundation-reduces-hotel-bookings",
-      "velocityScore": 0.45,
+      "link": "https://www.bangkokpost.com/thailand/general/3330058/cops-widen-crossborder-scam-fight",
+      "velocityScore": 0.498,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
+      "hoursRemaining": 716,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1499,
-      "estimatedTrafficIn24h": 1465,
-      "trafficLossPerHour": 1,
+      "estimatedTrafficNow": 2489,
+      "estimatedTrafficIn24h": 2433,
+      "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.6,
-        "timeDecay": 0.999,
+        "trendIntensity": 1,
+        "timeDecay": 0.996,
         "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 0.6
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 4.4
       },
-      "detectedAt": "2026-10-01T21:39:00.000Z",
-      "scoredAt": "2026-10-01T22:14:38.070Z"
+      "detectedAt": "2026-10-01T23:15:00.000Z",
+      "scoredAt": "2026-10-02T03:40:12.184Z"
     }
   ]
 }
