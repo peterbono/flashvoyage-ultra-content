@@ -1,9 +1,26 @@
 {
-  "timestamp": "2026-10-02T09:32:08.235Z",
-  "gapCount": 6,
+  "timestamp": "2026-10-03T08:59:43.957Z",
+  "gapCount": 7,
   "gaps": [
     {
-      "topic": "voyage thailande prix",
+      "topic": "voyage bali prix",
+      "source": "trends",
+      "gapScore": 74,
+      "signals": {
+        "searchVolume": 0.62,
+        "trendGrowth": 0.62,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "bali",
+      "category": "budget",
+      "suggestedTitle": "Budget Bali 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Bali — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "critical"
+    },
+    {
+      "topic": "prix voyage thailande",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -20,7 +37,7 @@
       "priority": "critical"
     },
     {
-      "topic": "voyage vietnam circuit",
+      "topic": "voyage thailande circuit",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -29,12 +46,29 @@
         "monetization": 0.9,
         "competition": 0.4
       },
-      "destination": "vietnam",
+      "destination": "thailande",
       "category": "itineraire",
-      "suggestedTitle": "Itineraire Vietnam : Le Circuit Parfait de 2 Semaines",
-      "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Vietnam — format pick",
+      "suggestedTitle": "Itineraire Thailande : Le Circuit Parfait de 2 Semaines",
+      "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Thailande — format pick",
       "articleType": "pillar",
       "priority": "critical"
+    },
+    {
+      "topic": "leclerc voyage bali",
+      "source": "trends",
+      "gapScore": 67,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "bali",
+      "category": "destination",
+      "suggestedTitle": "Bali 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Bali — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
     },
     {
       "topic": "voyage cambodge vietnam",
@@ -54,40 +88,6 @@
       "priority": "high"
     },
     {
-      "topic": "voyage cambodge laos",
-      "source": "trends",
-      "gapScore": 67,
-      "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "cambodge",
-      "category": "destination",
-      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
-      "topic": "voyage cambodge",
-      "source": "trends",
-      "gapScore": 62,
-      "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.6
-      },
-      "destination": "vietnam",
-      "category": "destination",
-      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
       "topic": "voyage vietnam",
       "source": "trends",
       "gapScore": 62,
@@ -103,27 +103,46 @@
       "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
       "articleType": "support",
       "priority": "high"
+    },
+    {
+      "topic": "voyage pas cher",
+      "source": "trends",
+      "gapScore": 61,
+      "signals": {
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "vietnam",
+      "category": "budget",
+      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "high"
     }
   ],
   "summary": {
     "byPriority": {
-      "critical": 2,
+      "critical": 3,
       "high": 4
     },
     "byCategory": {
-      "budget": 1,
+      "budget": 3,
       "itineraire": 1,
-      "destination": 4
+      "destination": 3
     },
     "byDestination": {
-      "thailande": 1,
-      "vietnam": 2,
-      "cambodge": 3
+      "bali": 2,
+      "thailande": 2,
+      "cambodge": 2,
+      "vietnam": 1
     },
     "topDestinationGaps": [
+      "bali",
+      "thailande",
       "cambodge",
-      "vietnam",
-      "thailande"
+      "vietnam"
     ]
   }
 }
