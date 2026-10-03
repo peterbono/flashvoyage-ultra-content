@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-10-03T10:58:11.101Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-10-03T15:35:13.495Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "UAE: flydubai co-pilot was planning ‘terrorist act’",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/world/3330783/uae-flydubai-copilot-was-planning-terrorist-act",
+      "velocityScore": 0.415,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 719,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2073,
+      "estimatedTrafficIn24h": 2025,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.999,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.1
+      },
+      "detectedAt": "2026-10-03T14:30:00.000Z",
+      "scoredAt": "2026-10-03T15:35:13.279Z"
+    }
+  ]
 }
