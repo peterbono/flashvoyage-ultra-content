@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-10-02T21:43:27.255Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-10-03T03:24:41.396Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Thai Airways chief says he was fired by board after Bangkok flood chaos",
+      "source": "rss_breaking",
+      "destination": "vietnam",
+      "link": "https://e.vnexpress.net/news/news/traffic/thai-airways-chief-says-he-was-fired-by-board-after-bangkok-flood-chaos-5127878.html",
+      "velocityScore": 0.499,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 718,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2496,
+      "estimatedTrafficIn24h": 2439,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 1,
+        "timeDecay": 0.998,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 1.8
+      },
+      "detectedAt": "2026-10-03T01:37:01.000Z",
+      "scoredAt": "2026-10-03T03:24:40.918Z"
+    }
+  ]
 }
