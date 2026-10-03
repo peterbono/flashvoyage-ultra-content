@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T15:35:13.495Z",
+  "generatedAt": "2026-10-03T20:28:34.341Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -12,25 +12,25 @@
       "source": "rss_breaking",
       "destination": "thailand",
       "link": "https://www.bangkokpost.com/world/3330783/uae-flydubai-copilot-was-planning-terrorist-act",
-      "velocityScore": 0.415,
+      "velocityScore": 0.413,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
+      "hoursRemaining": 714,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2073,
-      "estimatedTrafficIn24h": 2025,
+      "estimatedTrafficNow": 2063,
+      "estimatedTrafficIn24h": 2016,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
-        "timeDecay": 0.999,
+        "timeDecay": 0.994,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 1.1
+        "hoursSinceDetection": 6
       },
       "detectedAt": "2026-10-03T14:30:00.000Z",
-      "scoredAt": "2026-10-03T15:35:13.279Z"
+      "scoredAt": "2026-10-03T20:28:34.221Z"
     }
   ]
 }
