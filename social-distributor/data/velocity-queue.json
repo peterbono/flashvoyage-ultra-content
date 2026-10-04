@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T20:28:34.341Z",
+  "generatedAt": "2026-10-04T03:52:18.112Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "UAE: flydubai co-pilot was planning ‘terrorist act’",
+      "topic": "Suvarnabhumi baggage backlog tied to outsourced ground staff",
       "source": "rss_breaking",
       "destination": "thailand",
-      "link": "https://www.bangkokpost.com/world/3330783/uae-flydubai-copilot-was-planning-terrorist-act",
-      "velocityScore": 0.413,
+      "link": "https://thethaiger.com/news/national/suvarnabhumi-baggage-backlog-tied-to-outsourced-ground-staff",
+      "velocityScore": 0.414,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 714,
+      "hoursRemaining": 718,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2063,
-      "estimatedTrafficIn24h": 2016,
+      "estimatedTrafficNow": 2071,
+      "estimatedTrafficIn24h": 2024,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
-        "timeDecay": 0.994,
+        "timeDecay": 0.998,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 6
+        "hoursSinceDetection": 1.9
       },
-      "detectedAt": "2026-10-03T14:30:00.000Z",
-      "scoredAt": "2026-10-03T20:28:34.221Z"
+      "detectedAt": "2026-10-04T02:00:26.000Z",
+      "scoredAt": "2026-10-04T03:52:17.881Z"
     }
   ]
 }
