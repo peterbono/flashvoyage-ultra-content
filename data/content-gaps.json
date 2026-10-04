@@ -1,26 +1,9 @@
 {
-  "timestamp": "2026-10-03T08:59:43.957Z",
-  "gapCount": 7,
+  "timestamp": "2026-10-04T09:31:12.668Z",
+  "gapCount": 10,
   "gaps": [
     {
-      "topic": "voyage bali prix",
-      "source": "trends",
-      "gapScore": 74,
-      "signals": {
-        "searchVolume": 0.62,
-        "trendGrowth": 0.62,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "bali",
-      "category": "budget",
-      "suggestedTitle": "Budget Bali 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Bali — format listicle avec prix reels",
-      "articleType": "support",
-      "priority": "critical"
-    },
-    {
-      "topic": "prix voyage thailande",
+      "topic": "voyage thailande pas cher",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -37,7 +20,7 @@
       "priority": "critical"
     },
     {
-      "topic": "voyage thailande circuit",
+      "topic": "voyage thailande prix",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -47,14 +30,48 @@
         "competition": 0.4
       },
       "destination": "thailande",
-      "category": "itineraire",
-      "suggestedTitle": "Itineraire Thailande : Le Circuit Parfait de 2 Semaines",
-      "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Thailande — format pick",
-      "articleType": "pillar",
+      "category": "budget",
+      "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
+      "articleType": "support",
       "priority": "critical"
     },
     {
-      "topic": "leclerc voyage bali",
+      "topic": "voyage vietnam pas cher",
+      "source": "trends",
+      "gapScore": 74,
+      "signals": {
+        "searchVolume": 0.62,
+        "trendGrowth": 0.62,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "vietnam",
+      "category": "budget",
+      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "critical"
+    },
+    {
+      "topic": "voyage vietnam prix",
+      "source": "trends",
+      "gapScore": 74,
+      "signals": {
+        "searchVolume": 0.62,
+        "trendGrowth": 0.62,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "vietnam",
+      "category": "budget",
+      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "critical"
+    },
+    {
+      "topic": "voyage thailande tout compris",
       "source": "trends",
       "gapScore": 67,
       "signals": {
@@ -63,10 +80,61 @@
         "monetization": 0.9,
         "competition": 0.4
       },
-      "destination": "bali",
+      "destination": "thailande",
       "category": "destination",
-      "suggestedTitle": "Bali 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Bali — format pick ou month",
+      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "leclerc voyage thailande",
+      "source": "trends",
+      "gapScore": 67,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "thailande",
+      "category": "destination",
+      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "voyage thailande phuket",
+      "source": "trends",
+      "gapScore": 67,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "thailande",
+      "category": "destination",
+      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "voyage vietnam leclerc",
+      "source": "trends",
+      "gapScore": 67,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "vietnam",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
       "articleType": "support",
       "priority": "high"
     },
@@ -88,7 +156,7 @@
       "priority": "high"
     },
     {
-      "topic": "voyage vietnam",
+      "topic": "voyage cambodge",
       "source": "trends",
       "gapScore": 62,
       "signals": {
@@ -97,52 +165,32 @@
         "monetization": 0.9,
         "competition": 0.6
       },
-      "destination": "cambodge",
-      "category": "destination",
-      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
-      "topic": "voyage pas cher",
-      "source": "trends",
-      "gapScore": 61,
-      "signals": {
-        "searchVolume": 0.47,
-        "trendGrowth": 0.47,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
       "destination": "vietnam",
-      "category": "budget",
-      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
       "articleType": "support",
       "priority": "high"
     }
   ],
   "summary": {
     "byPriority": {
-      "critical": 3,
-      "high": 4
+      "critical": 4,
+      "high": 6
     },
     "byCategory": {
-      "budget": 3,
-      "itineraire": 1,
-      "destination": 3
+      "budget": 4,
+      "destination": 6
     },
     "byDestination": {
-      "bali": 2,
-      "thailande": 2,
-      "cambodge": 2,
-      "vietnam": 1
+      "thailande": 5,
+      "vietnam": 4,
+      "cambodge": 1
     },
     "topDestinationGaps": [
-      "bali",
       "thailande",
-      "cambodge",
-      "vietnam"
+      "vietnam",
+      "cambodge"
     ]
   }
 }
