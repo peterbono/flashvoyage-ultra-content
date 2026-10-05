@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-10-05T13:21:36.358Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-10-05T23:36:27.866Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Philippines arrests 244 'mostly Chinese' workers in online scam crackdown",
-      "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/crime/philippines-arrests-244-mostly-chinese-workers-in-online-scam-crackdown-5128252.html",
-      "velocityScore": 0.483,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 709,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 1609,
-      "estimatedTrafficIn24h": 1572,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.65,
-        "timeDecay": 0.99,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 10.6
-      },
-      "detectedAt": "2026-10-05T02:46:09.000Z",
-      "scoredAt": "2026-10-05T13:21:36.281Z"
-    }
-  ]
+  "queue": []
 }
