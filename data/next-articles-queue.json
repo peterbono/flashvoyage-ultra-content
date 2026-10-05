@@ -1,25 +1,9 @@
 {
-  "timestamp": "2026-10-04T09:31:14.612Z",
+  "timestamp": "2026-10-05T10:11:48.673Z",
   "queueSize": 8,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 154,
-      "topic": "voyage thailande pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 74,
-        "destination": "thailande",
-        "category": "budget",
-        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage thailande pas cher\" (score 74, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
@@ -32,6 +16,22 @@
         "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
         "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
         "reason": "Content gap: \"voyage thailande prix\" (score 74, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 154,
+      "topic": "prix voyage thailande",
+      "articleType": "support",
+      "context": {
+        "gapScore": 74,
+        "destination": "thailande",
+        "category": "budget",
+        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
+        "reason": "Content gap: \"prix voyage thailande\" (score 74, source: trends)"
       }
     },
     {
@@ -54,24 +54,8 @@
       "rank": 4,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 154,
-      "topic": "voyage vietnam prix",
-      "articleType": "support",
-      "context": {
-        "gapScore": 74,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage vietnam prix\" (score 74, source: trends)"
-      }
-    },
-    {
-      "rank": 5,
-      "action": "write_new",
-      "priority": "P2",
       "priorityScore": 147,
-      "topic": "voyage thailande tout compris",
+      "topic": "voyage thailande phuket",
       "articleType": "support",
       "context": {
         "gapScore": 67,
@@ -79,7 +63,23 @@
         "category": "destination",
         "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
         "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
-        "reason": "Content gap: \"voyage thailande tout compris\" (score 67, source: trends)"
+        "reason": "Content gap: \"voyage thailande phuket\" (score 67, source: trends)"
+      }
+    },
+    {
+      "rank": 5,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 147,
+      "topic": "voyage vietnam cambodge",
+      "articleType": "support",
+      "context": {
+        "gapScore": 67,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"voyage vietnam cambodge\" (score 67, source: trends)"
       }
     },
     {

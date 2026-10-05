@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-04T09:31:12.668Z",
-  "gapCount": 10,
+  "timestamp": "2026-10-05T10:11:47.076Z",
+  "gapCount": 8,
   "gaps": [
     {
-      "topic": "voyage thailande pas cher",
+      "topic": "voyage thailande prix",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -20,7 +20,7 @@
       "priority": "critical"
     },
     {
-      "topic": "voyage thailande prix",
+      "topic": "prix voyage thailande",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -54,57 +54,6 @@
       "priority": "critical"
     },
     {
-      "topic": "voyage vietnam prix",
-      "source": "trends",
-      "gapScore": 74,
-      "signals": {
-        "searchVolume": 0.62,
-        "trendGrowth": 0.62,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "vietnam",
-      "category": "budget",
-      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-      "articleType": "support",
-      "priority": "critical"
-    },
-    {
-      "topic": "voyage thailande tout compris",
-      "source": "trends",
-      "gapScore": 67,
-      "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "thailande",
-      "category": "destination",
-      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
-      "topic": "leclerc voyage thailande",
-      "source": "trends",
-      "gapScore": 67,
-      "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "thailande",
-      "category": "destination",
-      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
       "topic": "voyage thailande phuket",
       "source": "trends",
       "gapScore": 67,
@@ -122,7 +71,7 @@
       "priority": "high"
     },
     {
-      "topic": "voyage vietnam leclerc",
+      "topic": "voyage vietnam cambodge",
       "source": "trends",
       "gapScore": 67,
       "signals": {
@@ -171,21 +120,38 @@
       "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
       "articleType": "support",
       "priority": "high"
+    },
+    {
+      "topic": "voyage vietnam",
+      "source": "trends",
+      "gapScore": 62,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.6
+      },
+      "destination": "cambodge",
+      "category": "destination",
+      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
     }
   ],
   "summary": {
     "byPriority": {
-      "critical": 4,
-      "high": 6
+      "critical": 3,
+      "high": 5
     },
     "byCategory": {
-      "budget": 4,
-      "destination": 6
+      "budget": 3,
+      "destination": 5
     },
     "byDestination": {
-      "thailande": 5,
-      "vietnam": 4,
-      "cambodge": 1
+      "thailande": 3,
+      "vietnam": 3,
+      "cambodge": 2
     },
     "topDestinationGaps": [
       "thailande",
