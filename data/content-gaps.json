@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-05T10:11:47.076Z",
-  "gapCount": 8,
+  "timestamp": "2026-10-06T09:56:03.656Z",
+  "gapCount": 11,
   "gaps": [
     {
-      "topic": "voyage thailande prix",
+      "topic": "voyage thailande pas cher",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -20,7 +20,7 @@
       "priority": "critical"
     },
     {
-      "topic": "prix voyage thailande",
+      "topic": "voyage thailande prix",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -54,7 +54,7 @@
       "priority": "critical"
     },
     {
-      "topic": "voyage thailande phuket",
+      "topic": "leclerc voyage thailande",
       "source": "trends",
       "gapScore": 67,
       "signals": {
@@ -71,14 +71,14 @@
       "priority": "high"
     },
     {
-      "topic": "voyage vietnam cambodge",
+      "topic": "voyage cambodge",
       "source": "trends",
-      "gapScore": 67,
+      "gapScore": 62,
       "signals": {
         "searchVolume": 0.53,
         "trendGrowth": 0.53,
         "monetization": 0.9,
-        "competition": 0.4
+        "competition": 0.6
       },
       "destination": "vietnam",
       "category": "destination",
@@ -88,24 +88,7 @@
       "priority": "high"
     },
     {
-      "topic": "voyage cambodge vietnam",
-      "source": "trends",
-      "gapScore": 67,
-      "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "cambodge",
-      "category": "destination",
-      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
-      "topic": "voyage cambodge",
+      "topic": "voyage laos",
       "source": "trends",
       "gapScore": 62,
       "signals": {
@@ -137,26 +120,97 @@
       "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
       "articleType": "support",
       "priority": "high"
+    },
+    {
+      "topic": "voyage laos cambodge",
+      "source": "trends",
+      "gapScore": 59,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.6,
+        "competition": 0.4
+      },
+      "destination": "laos",
+      "category": "destination",
+      "suggestedTitle": "Laos 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Laos — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "meteo vietnam",
+      "source": "trends",
+      "gapScore": 56,
+      "signals": {
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
+        "competition": 0.6
+      },
+      "destination": "vietnam",
+      "category": "destination",
+      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "thaïlande",
+      "source": "trends",
+      "gapScore": 51,
+      "signals": {
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
+        "competition": 0.8
+      },
+      "destination": "thailande",
+      "category": "destination",
+      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "monnaie",
+      "source": "trends",
+      "gapScore": 35,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.8
+      },
+      "destination": null,
+      "category": "budget",
+      "suggestedTitle": "Monnaie : Le Guide Budget Complet",
+      "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
       "critical": 3,
-      "high": 5
+      "high": 7,
+      "medium": 1
     },
     "byCategory": {
-      "budget": 3,
-      "destination": 5
+      "budget": 4,
+      "destination": 7
     },
     "byDestination": {
-      "thailande": 3,
-      "vietnam": 3,
-      "cambodge": 2
+      "thailande": 4,
+      "vietnam": 4,
+      "cambodge": 1,
+      "laos": 1
     },
     "topDestinationGaps": [
       "thailande",
       "vietnam",
-      "cambodge"
+      "cambodge",
+      "laos"
     ]
   }
 }

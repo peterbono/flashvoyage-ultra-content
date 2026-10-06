@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-10-05T10:13:18.148Z",
+  "timestamp": "2026-10-06T09:57:41.882Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande prix",
-      "traffic": 100,
-      "trafficFormatted": "+100 %",
+      "query": "voyage thailande pas cher",
+      "traffic": 140,
+      "trafficFormatted": "+140 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-05T10:13:09.118Z",
+      "date": "2026-10-06T09:57:33.428Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -16,12 +16,12 @@
       "compositeScore": 0.62
     },
     {
-      "query": "prix voyage thailande",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
+      "query": "voyage thailande prix",
+      "traffic": 140,
+      "trafficFormatted": "+140 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-05T10:13:09.118Z",
+      "date": "2026-10-06T09:57:33.428Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -31,11 +31,11 @@
     },
     {
       "query": "voyage vietnam pas cher",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-05T10:13:11.312Z",
+      "date": "2026-10-06T09:57:35.539Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 1,
@@ -44,12 +44,12 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage thailande phuket",
-      "traffic": 170,
-      "trafficFormatted": "+170 %",
+      "query": "leclerc voyage thailande",
+      "traffic": 40,
+      "trafficFormatted": "+40 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-05T10:13:09.118Z",
+      "date": "2026-10-06T09:57:33.428Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -59,25 +59,11 @@
     },
     {
       "query": "voyage cambodge",
-      "traffic": 500,
-      "trafficFormatted": "+500 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-05T10:13:11.312Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage vietnam cambodge",
       "traffic": 200,
       "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-05T10:13:11.312Z",
+      "date": "2026-10-06T09:57:35.539Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -86,12 +72,26 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage cambodge vietnam",
-      "traffic": 550,
-      "trafficFormatted": "+550 %",
+      "query": "voyage laos",
+      "traffic": 90,
+      "trafficFormatted": "+90 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-05T10:13:15.840Z",
+      "date": "2026-10-06T09:57:35.539Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage vietnam",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-06T09:57:39.775Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -100,18 +100,75 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage vietnam",
-      "traffic": 500,
-      "trafficFormatted": "+500 %",
+      "query": "voyage laos cambodge",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-05T10:13:15.840Z",
+      "date": "2026-10-06T09:57:41.881Z",
       "source": "related-rising",
-      "parentDestination": "cambodge",
+      "parentDestination": "laos",
       "relevanceScore": 0.7,
       "category": "destination",
-      "destination": "cambodge",
+      "destination": "laos",
       "compositeScore": 0.53
+    },
+    {
+      "query": "thaïlande",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-06T09:57:33.428Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "meteo vietnam",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-06T09:57:35.539Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "monnaie",
+      "traffic": 500,
+      "trafficFormatted": "500+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "Des archéologues français ont découvert un bocal rempli de plus de 40 000 pièces de monnaie romaines datant d'il y a 1 800 ans",
+          "url": "https://www.science-et-vie.com/science-et-culture/des-archeologues-francais-ont-decouvert-un-bocal-rempli-de-plus-de-40-000-pieces-de-monnaie-romaines-datant-dil-y-a-environ-1-800-ans-259147.html",
+          "source": "Science et vie"
+        },
+        {
+          "title": "Stablecoins, dépôts tokenisés, monnaie de banque centrale : la nouvelle bataille de l'argent",
+          "url": "https://www.lesechos.fr/finance-marches/marches-financiers/stablecoins-depots-tokenises-monnaie-de-banque-centrale-la-nouvelle-bataille-de-largent-2255243",
+          "source": "Les Echos"
+        },
+        {
+          "title": "La BCE imagine trois façons de faire passer l’euro sur la blockchain",
+          "url": "https://android-mt.ouest-france.fr/news/decryptage/la-bce-imagine-trois-facons-de-faire-passer-leuro-sur-la-blockchain/224328/",
+          "source": "Android MT"
+        }
+      ],
+      "date": "Tue, 6 Oct 2026 02:40:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "budget",
+      "destination": null,
+      "compositeScore": 0.2904
     }
   ]
 }
