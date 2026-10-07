@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-10-07T03:51:11.097Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-10-07T12:30:09.156Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Thai passenger recalls terrifying Flydubai flight",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/world/aviation/thai-passenger-recalls-flydubai-cockpit-attack-ordeal",
-      "velocityScore": 0.415,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2073,
-      "estimatedTrafficIn24h": 2025,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.999,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.1
-      },
-      "detectedAt": "2026-10-07T02:42:24.000Z",
-      "scoredAt": "2026-10-07T03:51:11.015Z"
-    }
-  ]
+  "queue": []
 }
