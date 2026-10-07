@@ -1,25 +1,9 @@
 {
-  "timestamp": "2026-10-06T09:56:05.594Z",
+  "timestamp": "2026-10-07T10:02:04.180Z",
   "queueSize": 8,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 154,
-      "topic": "voyage thailande pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 74,
-        "destination": "thailande",
-        "category": "budget",
-        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage thailande pas cher\" (score 74, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
@@ -35,11 +19,11 @@
       }
     },
     {
-      "rank": 3,
+      "rank": 2,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
-      "topic": "voyage vietnam pas cher",
+      "topic": "prix voyage vietnam",
       "articleType": "support",
       "context": {
         "gapScore": 74,
@@ -47,15 +31,15 @@
         "category": "budget",
         "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
         "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage vietnam pas cher\" (score 74, source: trends)"
+        "reason": "Content gap: \"prix voyage vietnam\" (score 74, source: trends)"
       }
     },
     {
-      "rank": 4,
+      "rank": 3,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 147,
-      "topic": "leclerc voyage thailande",
+      "topic": "voyage thailande phuket",
       "articleType": "support",
       "context": {
         "gapScore": 67,
@@ -63,23 +47,39 @@
         "category": "destination",
         "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
         "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
-        "reason": "Content gap: \"leclerc voyage thailande\" (score 67, source: trends)"
+        "reason": "Content gap: \"voyage thailande phuket\" (score 67, source: trends)"
+      }
+    },
+    {
+      "rank": 4,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 147,
+      "topic": "voyage vietnam cambodge",
+      "articleType": "support",
+      "context": {
+        "gapScore": 67,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"voyage vietnam cambodge\" (score 67, source: trends)"
       }
     },
     {
       "rank": 5,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 142,
-      "topic": "voyage cambodge",
+      "priorityScore": 147,
+      "topic": "agence de voyage vietnam",
       "articleType": "support",
       "context": {
-        "gapScore": 62,
+        "gapScore": 67,
         "destination": "vietnam",
         "category": "destination",
         "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
         "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"voyage cambodge\" (score 62, source: trends)"
+        "reason": "Content gap: \"agence de voyage vietnam\" (score 67, source: trends)"
       }
     },
     {

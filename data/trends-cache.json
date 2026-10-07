@@ -1,27 +1,13 @@
 {
-  "timestamp": "2026-10-06T09:57:41.882Z",
+  "timestamp": "2026-10-07T10:03:38.008Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande pas cher",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-06T09:57:33.428Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
       "query": "voyage thailande prix",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
+      "traffic": 80,
+      "trafficFormatted": "+80 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-06T09:57:33.428Z",
+      "date": "2026-10-07T10:03:29.553Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -30,12 +16,12 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage vietnam pas cher",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
+      "query": "prix voyage vietnam",
+      "traffic": 180,
+      "trafficFormatted": "+180 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-06T09:57:35.539Z",
+      "date": "2026-10-07T10:03:31.661Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 1,
@@ -44,12 +30,12 @@
       "compositeScore": 0.62
     },
     {
-      "query": "leclerc voyage thailande",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
+      "query": "voyage thailande phuket",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-06T09:57:33.428Z",
+      "date": "2026-10-07T10:03:29.553Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -59,11 +45,11 @@
     },
     {
       "query": "voyage cambodge",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
+      "traffic": 180,
+      "trafficFormatted": "+180 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-06T09:57:35.539Z",
+      "date": "2026-10-07T10:03:31.661Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -72,12 +58,40 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage laos",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
+      "query": "voyage vietnam cambodge",
+      "traffic": 170,
+      "trafficFormatted": "+170 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-06T09:57:35.539Z",
+      "date": "2026-10-07T10:03:31.661Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "agence de voyage vietnam",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-07T10:03:31.661Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage au vietnam",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-07T10:03:31.661Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -87,11 +101,11 @@
     },
     {
       "query": "voyage vietnam",
-      "traffic": 100,
-      "trafficFormatted": "+100 %",
+      "traffic": 90,
+      "trafficFormatted": "+90 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-06T09:57:39.775Z",
+      "date": "2026-10-07T10:03:35.879Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -100,17 +114,31 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage laos cambodge",
+      "query": "voyage cambodge laos",
+      "traffic": 80,
+      "trafficFormatted": "+80 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-07T10:03:35.879Z",
+      "source": "related-rising",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge vietnam",
       "traffic": 60,
       "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-06T09:57:41.881Z",
+      "date": "2026-10-07T10:03:35.879Z",
       "source": "related-rising",
-      "parentDestination": "laos",
+      "parentDestination": "cambodge",
       "relevanceScore": 0.7,
       "category": "destination",
-      "destination": "laos",
+      "destination": "cambodge",
       "compositeScore": 0.53
     },
     {
@@ -119,56 +147,13 @@
       "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-06T09:57:33.428Z",
+      "date": "2026-10-07T10:03:29.553Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.5,
       "category": "destination",
       "destination": "thailande",
       "compositeScore": 0.47000000000000003
-    },
-    {
-      "query": "meteo vietnam",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-06T09:57:35.539Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.5,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.47000000000000003
-    },
-    {
-      "query": "monnaie",
-      "traffic": 500,
-      "trafficFormatted": "500+",
-      "relatedQueries": [],
-      "articles": [
-        {
-          "title": "Des archéologues français ont découvert un bocal rempli de plus de 40 000 pièces de monnaie romaines datant d'il y a 1 800 ans",
-          "url": "https://www.science-et-vie.com/science-et-culture/des-archeologues-francais-ont-decouvert-un-bocal-rempli-de-plus-de-40-000-pieces-de-monnaie-romaines-datant-dil-y-a-environ-1-800-ans-259147.html",
-          "source": "Science et vie"
-        },
-        {
-          "title": "Stablecoins, dépôts tokenisés, monnaie de banque centrale : la nouvelle bataille de l'argent",
-          "url": "https://www.lesechos.fr/finance-marches/marches-financiers/stablecoins-depots-tokenises-monnaie-de-banque-centrale-la-nouvelle-bataille-de-largent-2255243",
-          "source": "Les Echos"
-        },
-        {
-          "title": "La BCE imagine trois façons de faire passer l’euro sur la blockchain",
-          "url": "https://android-mt.ouest-france.fr/news/decryptage/la-bce-imagine-trois-facons-de-faire-passer-leuro-sur-la-blockchain/224328/",
-          "source": "Android MT"
-        }
-      ],
-      "date": "Tue, 6 Oct 2026 02:40:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "budget",
-      "destination": null,
-      "compositeScore": 0.2904
     }
   ]
 }

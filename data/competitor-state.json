@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-10-06T09:56:09.011Z",
+  "timestamp": "2026-10-07T10:02:07.782Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-10-06T09:56:09.694Z",
+      "lastScan": "2026-10-07T10:02:08.520Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-10-06T09:56:10.173Z",
+      "lastScan": "2026-10-07T10:02:09.115Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,7 +139,7 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-10-06T09:57:26.879Z",
+      "lastScan": "2026-10-07T10:03:23.421Z",
       "urlCount": 9995,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
@@ -4971,7 +4971,6 @@
         "https://generationvoyage.fr/voyager-animal-astuces/": "2025-11-07T11:24:03+00:00",
         "https://generationvoyage.fr/glamping-france/": "2025-11-07T11:24:04+00:00",
         "https://generationvoyage.fr/pourquoi-utiliser-vpn-voyage/": "2025-11-07T11:24:06+00:00",
-        "https://generationvoyage.fr/type-voilier-sortie-mer/": "2025-11-07T11:24:09+00:00",
         "https://generationvoyage.fr/choisir-vacances-all-inclusive/": "2025-11-07T11:24:11+00:00",
         "https://generationvoyage.fr/plages-france-chiens/": "2025-11-07T11:24:15+00:00",
         "https://generationvoyage.fr/mandu-cite-fantome-en-inde/": "2025-11-07T11:24:20+00:00",
@@ -8848,7 +8847,6 @@
         "https://generationvoyage.fr/visiter-cuenca-faire-voir/": "2026-08-19T09:20:41+00:00",
         "https://generationvoyage.fr/visiter-langkawi-faire-voir/": "2026-08-19T09:20:43+00:00",
         "https://generationvoyage.fr/visiter-kanazawa-faire-voir/": "2026-08-19T09:20:44+00:00",
-        "https://generationvoyage.fr/visiter-lisieux-faire-voir/": "2026-08-19T09:20:46+00:00",
         "https://generationvoyage.fr/visiter-limoges-faire-voir/": "2026-08-20T12:26:36+00:00",
         "https://generationvoyage.fr/genes-pluie/": "2026-08-20T14:26:13+00:00",
         "https://generationvoyage.fr/budapest-budget/": "2026-08-20T16:43:34+00:00",
@@ -10136,7 +10134,9 @@
         "https://generationvoyage.fr/visiter-dieppe-faire-voir/": "2026-09-15T10:05:22+00:00",
         "https://generationvoyage.fr/visiter-monza-faire-voir/": "2026-09-15T10:06:01+00:00",
         "https://generationvoyage.fr/visiter-lucques-faire-voir/": "2026-09-15T10:06:35+00:00",
-        "https://generationvoyage.fr/visiter-aarhus-faire-voir/": "2026-09-15T10:07:16+00:00"
+        "https://generationvoyage.fr/visiter-aarhus-faire-voir/": "2026-09-15T10:07:16+00:00",
+        "https://generationvoyage.fr/visiter-taipei-faire-voir/": "2026-09-15T10:07:57+00:00",
+        "https://generationvoyage.fr/visiter-santiago-faire-voir/": "2026-09-15T10:08:32+00:00"
       }
     }
   }
