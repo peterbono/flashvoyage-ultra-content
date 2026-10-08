@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-07T10:02:02.230Z",
-  "gapCount": 11,
+  "timestamp": "2026-10-08T10:15:04.430Z",
+  "gapCount": 9,
   "gaps": [
     {
-      "topic": "voyage thailande prix",
+      "topic": "voyage thailande circuit",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -13,14 +13,14 @@
         "competition": 0.4
       },
       "destination": "thailande",
-      "category": "budget",
-      "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-      "articleType": "support",
+      "category": "itineraire",
+      "suggestedTitle": "Itineraire Thailande : Le Circuit Parfait de 2 Semaines",
+      "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Thailande — format pick",
+      "articleType": "pillar",
       "priority": "critical"
     },
     {
-      "topic": "prix voyage vietnam",
+      "topic": "voyage vietnam pas cher",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -37,7 +37,7 @@
       "priority": "critical"
     },
     {
-      "topic": "voyage thailande phuket",
+      "topic": "forum voyage thailande",
       "source": "trends",
       "gapScore": 67,
       "signals": {
@@ -71,7 +71,7 @@
       "priority": "high"
     },
     {
-      "topic": "agence de voyage vietnam",
+      "topic": "forum voyage vietnam",
       "source": "trends",
       "gapScore": 67,
       "signals": {
@@ -105,41 +105,7 @@
       "priority": "high"
     },
     {
-      "topic": "voyage cambodge vietnam",
-      "source": "trends",
-      "gapScore": 67,
-      "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "cambodge",
-      "category": "destination",
-      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
       "topic": "voyage cambodge",
-      "source": "trends",
-      "gapScore": 62,
-      "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.6
-      },
-      "destination": "vietnam",
-      "category": "destination",
-      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
-      "topic": "voyage au vietnam",
       "source": "trends",
       "gapScore": 62,
       "signals": {
@@ -173,19 +139,19 @@
       "priority": "high"
     },
     {
-      "topic": "thaïlande",
+      "topic": "voyage pas cher",
       "source": "trends",
-      "gapScore": 51,
+      "gapScore": 61,
       "signals": {
         "searchVolume": 0.47,
         "trendGrowth": 0.47,
         "monetization": 0.9,
-        "competition": 0.8
+        "competition": 0.4
       },
-      "destination": "thailande",
-      "category": "destination",
-      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "destination": "vietnam",
+      "category": "budget",
+      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
       "articleType": "support",
       "priority": "high"
     }
@@ -193,16 +159,17 @@
   "summary": {
     "byPriority": {
       "critical": 2,
-      "high": 9
+      "high": 7
     },
     "byCategory": {
+      "itineraire": 1,
       "budget": 2,
-      "destination": 9
+      "destination": 6
     },
     "byDestination": {
-      "thailande": 3,
+      "thailande": 2,
       "vietnam": 5,
-      "cambodge": 3
+      "cambodge": 2
     },
     "topDestinationGaps": [
       "vietnam",

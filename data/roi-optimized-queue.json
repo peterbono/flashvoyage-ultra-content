@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-07T10:02:06.798Z",
+  "timestamp": "2026-10-08T10:15:08.675Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -28,15 +28,15 @@
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
-      "topic": "voyage thailande prix",
-      "articleType": "support",
+      "topic": "voyage thailande circuit",
+      "articleType": "pillar",
       "context": {
         "gapScore": 74,
         "destination": "thailande",
-        "category": "budget",
-        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage thailande prix\" (score 74, source: trends)"
+        "category": "itineraire",
+        "suggestedTitle": "Itineraire Thailande : Le Circuit Parfait de 2 Semaines",
+        "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Thailande — format pick",
+        "reason": "Content gap: \"voyage thailande circuit\" (score 74, source: trends)"
       },
       "roi": {
         "expectedRoi": 0,
@@ -53,7 +53,7 @@
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
-      "topic": "prix voyage vietnam",
+      "topic": "voyage vietnam pas cher",
       "articleType": "support",
       "context": {
         "gapScore": 74,
@@ -61,7 +61,7 @@
         "category": "budget",
         "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
         "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"prix voyage vietnam\" (score 74, source: trends)"
+        "reason": "Content gap: \"voyage vietnam pas cher\" (score 74, source: trends)"
       },
       "roi": {
         "expectedRoi": 0,
@@ -78,7 +78,7 @@
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 147,
-      "topic": "voyage thailande phuket",
+      "topic": "forum voyage thailande",
       "articleType": "support",
       "context": {
         "gapScore": 67,
@@ -86,7 +86,7 @@
         "category": "destination",
         "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
         "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
-        "reason": "Content gap: \"voyage thailande phuket\" (score 67, source: trends)"
+        "reason": "Content gap: \"forum voyage thailande\" (score 67, source: trends)"
       },
       "roi": {
         "expectedRoi": 0,
@@ -128,7 +128,7 @@
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 147,
-      "topic": "agence de voyage vietnam",
+      "topic": "forum voyage vietnam",
       "articleType": "support",
       "context": {
         "gapScore": 67,
@@ -136,7 +136,7 @@
         "category": "destination",
         "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
         "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"agence de voyage vietnam\" (score 67, source: trends)"
+        "reason": "Content gap: \"forum voyage vietnam\" (score 67, source: trends)"
       },
       "roi": {
         "expectedRoi": 0,
