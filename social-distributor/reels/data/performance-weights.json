@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-09",
+  "lastUpdated": "2026-10-10",
   "formatScores": {
     "poll": 0,
     "pick": 16.5,
@@ -21,15 +21,15 @@
     "singapour": 18.1,
     "vietnam": 5.3,
     "philippines": 4,
-    "bali": 2.7,
     "cambodge": 2.7,
+    "bali": 2,
     "thailande": 2,
-    "lombok": 1.3
+    "lombok": 0.7
   },
   "recommendations": [
     "philippines content trending — prioritize",
-    "bali content trending — prioritize",
     "cambodge content trending — prioritize",
+    "bali content trending — prioritize",
     "Top TikTok format: humor (avg 19.4, 2 videos)"
   ],
   "igFormatScores": {
@@ -59,11 +59,11 @@
   },
   "igDestinationScores": {
     "philippines": 4,
-    "bali": 2.7,
     "cambodge": 2.7,
+    "bali": 2,
     "thailande": 2,
-    "lombok": 1.3,
-    "vietnam": 0.7
+    "vietnam": 0.7,
+    "lombok": 0.7
   },
   "tiktokDestinationScores": {
     "vietnam": 8.4,
@@ -71,11 +71,11 @@
   },
   "destinationScoreSource": {
     "philippines": "ig-only",
-    "bali": "ig-only",
     "cambodge": "ig-only",
+    "bali": "ig-only",
     "thailande": "ig-only",
-    "lombok": "ig-only",
     "vietnam": "merged(60/40)",
+    "lombok": "ig-only",
     "singapour": "tiktok-only"
   },
   "mergeConfig": {
