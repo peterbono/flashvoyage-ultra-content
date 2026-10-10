@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-09T10:16:13.215Z",
+  "timestamp": "2026-10-10T09:36:48.100Z",
   "gapCount": 9,
   "gaps": [
     {
-      "topic": "voyage thailande circuit",
+      "topic": "voyage thailande pas cher",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -13,14 +13,14 @@
         "competition": 0.4
       },
       "destination": "thailande",
-      "category": "itineraire",
-      "suggestedTitle": "Itineraire Thailande : Le Circuit Parfait de 2 Semaines",
-      "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Thailande — format pick",
-      "articleType": "pillar",
+      "category": "budget",
+      "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
+      "articleType": "support",
       "priority": "critical"
     },
     {
-      "topic": "voyage vietnam pas cher",
+      "topic": "prix voyage thailande",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -29,15 +29,32 @@
         "monetization": 0.9,
         "competition": 0.4
       },
-      "destination": "vietnam",
+      "destination": "thailande",
       "category": "budget",
-      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
       "articleType": "support",
       "priority": "critical"
     },
     {
-      "topic": "forum voyage thailande",
+      "topic": "leclerc voyage thailande",
+      "source": "trends",
+      "gapScore": 67,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "thailande",
+      "category": "destination",
+      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "voyage thailande phuket",
       "source": "trends",
       "gapScore": 67,
       "signals": {
@@ -71,24 +88,7 @@
       "priority": "high"
     },
     {
-      "topic": "forum voyage vietnam",
-      "source": "trends",
-      "gapScore": 67,
-      "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "vietnam",
-      "category": "destination",
-      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
-      "topic": "voyage cambodge laos",
+      "topic": "voyage cambodge vietnam",
       "source": "trends",
       "gapScore": 67,
       "signals": {
@@ -139,42 +139,44 @@
       "priority": "high"
     },
     {
-      "topic": "voyage pas cher",
+      "topic": "singapour",
       "source": "trends",
-      "gapScore": 61,
+      "gapScore": 47,
       "signals": {
-        "searchVolume": 0.47,
-        "trendGrowth": 0.47,
+        "searchVolume": 0.35,
+        "trendGrowth": 0.35,
         "monetization": 0.9,
-        "competition": 0.4
+        "competition": 0.8
       },
-      "destination": "vietnam",
-      "category": "budget",
-      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "destination": "singapour",
+      "category": "destination",
+      "suggestedTitle": "Singapour 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Singapour — format pick ou month",
       "articleType": "support",
-      "priority": "high"
+      "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
       "critical": 2,
-      "high": 7
+      "high": 6,
+      "medium": 1
     },
     "byCategory": {
-      "itineraire": 1,
       "budget": 2,
-      "destination": 6
+      "destination": 7
     },
     "byDestination": {
-      "thailande": 2,
-      "vietnam": 5,
-      "cambodge": 2
+      "thailande": 4,
+      "vietnam": 2,
+      "cambodge": 2,
+      "singapour": 1
     },
     "topDestinationGaps": [
-      "vietnam",
       "thailande",
-      "cambodge"
+      "vietnam",
+      "cambodge",
+      "singapour"
     ]
   }
 }

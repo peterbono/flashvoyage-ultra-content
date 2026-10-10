@@ -1,13 +1,27 @@
 {
-  "timestamp": "2026-10-09T10:17:47.088Z",
+  "timestamp": "2026-10-10T09:38:19.210Z",
   "trendingTopics": [
     {
-      "query": "prix voyage thailande",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
+      "query": "voyage thailande pas cher",
+      "traffic": 150,
+      "trafficFormatted": "+150 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-09T10:17:37.954Z",
+      "date": "2026-10-10T09:38:10.690Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "thailande",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "prix voyage thailande",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-10T09:38:10.690Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -17,25 +31,11 @@
     },
     {
       "query": "leclerc voyage thailande",
-      "traffic": 150,
-      "trafficFormatted": "+150 %",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-09T10:17:37.954Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage thailande tout compris",
-      "traffic": 130,
-      "trafficFormatted": "+130 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-09T10:17:37.954Z",
+      "date": "2026-10-10T09:38:10.690Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -45,11 +45,11 @@
     },
     {
       "query": "voyage thailande phuket",
-      "traffic": 100,
-      "trafficFormatted": "+100 %",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-09T10:17:37.954Z",
+      "date": "2026-10-10T09:38:10.690Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -58,12 +58,12 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage cambodge",
-      "traffic": 60,
-      "trafficFormatted": "+60 %",
+      "query": "voyage vietnam cambodge",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-09T10:17:40.283Z",
+      "date": "2026-10-10T09:38:12.813Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -72,12 +72,12 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage au vietnam",
-      "traffic": 50,
-      "trafficFormatted": "+50 %",
+      "query": "voyage cambodge",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-09T10:17:40.283Z",
+      "date": "2026-10-10T09:38:12.813Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -87,11 +87,11 @@
     },
     {
       "query": "voyage vietnam",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-09T10:17:44.791Z",
+      "date": "2026-10-10T09:38:17.098Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -100,18 +100,47 @@
       "compositeScore": 0.53
     },
     {
-      "query": "meteo vietnam",
-      "traffic": 40,
-      "trafficFormatted": "+40 %",
+      "query": "voyage cambodge vietnam",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-09T10:17:40.283Z",
+      "date": "2026-10-10T09:38:17.098Z",
       "source": "related-rising",
-      "parentDestination": "vietnam",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "singapour",
+      "traffic": 2000,
+      "trafficFormatted": "2000+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "Grand Prix de F1 de Singapour : suivez la course sprint sur le circuit de Marina Bay grâce au chronométrage en direct",
+          "url": "https://fr.motorsport.com/f1/live-text/f1-singapore-gp-follow-sprint-qualifying-at-marina-bay-circuit-with-live-timing-1128002/1128005/",
+          "source": "Motorsport.com"
+        },
+        {
+          "title": "Le départ de la course sprint retardé par la pluie à Singapour",
+          "url": "https://www.lequipe.fr/Formule-1/Actualites/Le-depart-de-la-course-sprint-retarde-par-la-pluie-a-singapour/1724652",
+          "source": "L'Équipe"
+        },
+        {
+          "title": "F1 - GP de Singapour : Suivez la course sprint en direct à partir de 11h00",
+          "url": "https://sports.orange.fr/plus-de-sport/auto-moto/live/f1-gp-de-singapour-suivez-la-course-sprint-en-direct-a-partir-de-11h00-exclu-CNT000002sytKV.html",
+          "source": "Sports - Orange"
+        }
+      ],
+      "date": "Sat, 10 Oct 2026 02:00:00 -0700",
+      "source": "rss",
       "relevanceScore": 0.5,
       "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.47000000000000003
+      "destination": "singapour",
+      "compositeScore": 0.3516
     }
   ]
 }
