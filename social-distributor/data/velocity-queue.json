@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-10-11T03:29:34.907Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-10-11T11:58:12.162Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Thai Hotels Association rejects 1,000-baht departure tax",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/national/thai-hotels-association-rejects-1000-baht-departure-tax",
+      "velocityScore": 0.449,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 1496,
+      "estimatedTrafficIn24h": 1461,
+      "trafficLossPerHour": 1,
+      "breakdown": {
+        "trendIntensity": 0.6,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1.5,
+        "hoursSinceDetection": 3
+      },
+      "detectedAt": "2026-10-11T08:56:50.000Z",
+      "scoredAt": "2026-10-11T11:58:11.529Z"
+    }
+  ]
 }
