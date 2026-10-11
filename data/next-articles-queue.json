@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-10T09:36:50.028Z",
+  "timestamp": "2026-10-11T09:49:27.368Z",
   "queueSize": 8,
   "queue": [
     {
@@ -7,51 +7,19 @@
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
-      "topic": "voyage thailande pas cher",
+      "topic": "voyage vietnam pas cher",
       "articleType": "support",
       "context": {
         "gapScore": 74,
-        "destination": "thailande",
+        "destination": "vietnam",
         "category": "budget",
-        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage thailande pas cher\" (score 74, source: trends)"
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage vietnam pas cher\" (score 74, source: trends)"
       }
     },
     {
       "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 154,
-      "topic": "prix voyage thailande",
-      "articleType": "support",
-      "context": {
-        "gapScore": 74,
-        "destination": "thailande",
-        "category": "budget",
-        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"prix voyage thailande\" (score 74, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 147,
-      "topic": "leclerc voyage thailande",
-      "articleType": "support",
-      "context": {
-        "gapScore": 67,
-        "destination": "thailande",
-        "category": "destination",
-        "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
-        "reason": "Content gap: \"leclerc voyage thailande\" (score 67, source: trends)"
-      }
-    },
-    {
-      "rank": 4,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 147,
@@ -67,19 +35,51 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 3,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 147,
-      "topic": "voyage vietnam cambodge",
+      "priorityScore": 142,
+      "topic": "voyage cambodge",
       "articleType": "support",
       "context": {
-        "gapScore": 67,
+        "gapScore": 62,
         "destination": "vietnam",
         "category": "destination",
         "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
         "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"voyage vietnam cambodge\" (score 67, source: trends)"
+        "reason": "Content gap: \"voyage cambodge\" (score 62, source: trends)"
+      }
+    },
+    {
+      "rank": 4,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 127,
+      "topic": "vietnam",
+      "articleType": "support",
+      "context": {
+        "gapScore": 47,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"vietnam\" (score 47, source: trends)"
+      }
+    },
+    {
+      "rank": 5,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 120,
+      "topic": "accident de la route",
+      "articleType": "support",
+      "context": {
+        "gapScore": 40,
+        "destination": null,
+        "category": "itineraire",
+        "suggestedTitle": "Accident de la route : L'Itineraire Ideal",
+        "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
+        "reason": "Content gap: \"accident de la route\" (score 40, source: trends)"
       }
     },
     {

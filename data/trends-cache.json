@@ -1,83 +1,41 @@
 {
-  "timestamp": "2026-10-10T09:38:19.210Z",
+  "timestamp": "2026-10-11T09:50:58.535Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande pas cher",
-      "traffic": 150,
-      "trafficFormatted": "+150 %",
+      "query": "voyage vietnam pas cher",
+      "traffic": 300,
+      "trafficFormatted": "+300 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-10T09:38:10.690Z",
+      "date": "2026-10-11T09:50:51.942Z",
       "source": "related-rising",
-      "parentDestination": "thailande",
+      "parentDestination": "vietnam",
       "relevanceScore": 1,
       "category": "budget",
-      "destination": "thailande",
+      "destination": "vietnam",
       "compositeScore": 0.62
-    },
-    {
-      "query": "prix voyage thailande",
-      "traffic": 110,
-      "trafficFormatted": "+110 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-10T09:38:10.690Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "leclerc voyage thailande",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-10T09:38:10.690Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
     },
     {
       "query": "voyage thailande phuket",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
+      "traffic": 140,
+      "trafficFormatted": "+140 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-10T09:38:10.690Z",
+      "date": "2026-10-11T09:50:49.743Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
       "category": "destination",
       "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage vietnam cambodge",
-      "traffic": 250,
-      "trafficFormatted": "+250 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-10T09:38:12.813Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "vietnam",
       "compositeScore": 0.53
     },
     {
       "query": "voyage cambodge",
-      "traffic": 110,
-      "trafficFormatted": "+110 %",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-10T09:38:12.813Z",
+      "date": "2026-10-11T09:50:51.942Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -86,61 +44,62 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage vietnam",
-      "traffic": 250,
-      "trafficFormatted": "+250 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-10T09:38:17.098Z",
-      "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage cambodge vietnam",
+      "query": "vietnam",
       "traffic": 200,
-      "trafficFormatted": "+200 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-10T09:38:17.098Z",
-      "source": "related-rising",
-      "parentDestination": "cambodge",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "cambodge",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "singapour",
-      "traffic": 2000,
-      "trafficFormatted": "2000+",
+      "trafficFormatted": "200+",
       "relatedQueries": [],
       "articles": [
         {
-          "title": "Grand Prix de F1 de Singapour : suivez la course sprint sur le circuit de Marina Bay grâce au chronométrage en direct",
-          "url": "https://fr.motorsport.com/f1/live-text/f1-singapore-gp-follow-sprint-qualifying-at-marina-bay-circuit-with-live-timing-1128002/1128005/",
-          "source": "Motorsport.com"
+          "title": "La Russie sollicite le Vietnam pour louer des avions avec équipage, maintenance et assurance",
+          "url": "https://www.air-journal.fr/2026-10-11-la-russie-sollicite-le-vietnam-pour-louer-des-avions-avec-equipage-maintenance-et-assurance-5278125.html",
+          "source": "Air Journal"
         },
         {
-          "title": "Le départ de la course sprint retardé par la pluie à Singapour",
-          "url": "https://www.lequipe.fr/Formule-1/Actualites/Le-depart-de-la-course-sprint-retarde-par-la-pluie-a-singapour/1724652",
-          "source": "L'Équipe"
+          "title": "Douze hommes arrêtés pour le vol de 2 700 chats destinés à être mangés au Viêt Nam",
+          "url": "https://www.leparisien.fr/animaux/douze-hommes-arretes-pour-le-vol-de-2700-chats-destines-a-etre-manges-au-vietnam-05-10-2026-G352KMUNRJEDRPRUVM3772AOKU.php",
+          "source": "Le Parisien"
         },
         {
-          "title": "F1 - GP de Singapour : Suivez la course sprint en direct à partir de 11h00",
-          "url": "https://sports.orange.fr/plus-de-sport/auto-moto/live/f1-gp-de-singapour-suivez-la-course-sprint-en-direct-a-partir-de-11h00-exclu-CNT000002sytKV.html",
-          "source": "Sports - Orange"
+          "title": "Poursuite de 12 accusés dans un réseau de vol et de consommation d'environ 2 700 chats à Hô Chi Minh-Ville",
+          "url": "https://fr.laodong.vn/video/khoi-to-12-bi-can-trong-duong-day-trom-tieu-thu-khoang-2700-con-meo-o-tphcm-1777770.ldo",
+          "source": "Laodong.vn"
         }
       ],
-      "date": "Sat, 10 Oct 2026 02:00:00 -0700",
+      "date": "Sun, 11 Oct 2026 02:10:00 -0700",
       "source": "rss",
       "relevanceScore": 0.5,
       "category": "destination",
-      "destination": "singapour",
-      "compositeScore": 0.3516
+      "destination": "vietnam",
+      "compositeScore": 0.35016
+    },
+    {
+      "query": "accident de la route",
+      "traffic": 500,
+      "trafficFormatted": "500+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "\"C'est le deuxième joueur qu'on perd\" : le décès de Diego, 24 ans, dans un dramatique accident de la route, replonge ce club du Gers dans le deuil",
+          "url": "https://www.ladepeche.fr/2026/10/10/cest-le-deuxieme-joueur-quon-perd-le-deces-de-diego-24-ans-dans-un-dramatique-accident-de-la-route-replonge-ce-club-du-gers-dans-le-deuil-13593854.php",
+          "source": "ladepeche.fr"
+        },
+        {
+          "title": "Béarn et Hautes-Pyrénées : un accident de la route mortel, des condamnations… 5 faits divers à lire ce samedi",
+          "url": "https://www.larepubliquedespyrenees.fr/societe/accident/bearn-et-hautes-pyrenees-un-accident-de-la-route-mortel-des-condamnations-5-faits-divers-a-lire-ce-samedi-31004244.php",
+          "source": "La République des Pyrénées"
+        },
+        {
+          "title": "Riscle - Carnet noir - Le club de rugby pleure Diego, emporté à 24 ans dans un tragique accident à Villefranque",
+          "url": "https://www.lasemainedespyrenees.fr/riscle-carnet-noir-le-club-de-rugby-pleure-diego-emporte-a-24-ans-dans-un-tragique-accident-a-villefranque/",
+          "source": "La Semaine des Pyrénées"
+        }
+      ],
+      "date": "Sun, 11 Oct 2026 02:10:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "itineraire",
+      "destination": null,
+      "compositeScore": 0.2904
     }
   ]
 }
