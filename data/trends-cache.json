@@ -1,13 +1,55 @@
 {
-  "timestamp": "2026-10-11T09:50:58.535Z",
+  "timestamp": "2026-10-12T10:31:00.607Z",
   "trendingTopics": [
     {
-      "query": "voyage vietnam pas cher",
-      "traffic": 300,
-      "trafficFormatted": "+300 %",
+      "query": "voyage pas cher thailande",
+      "traffic": 80,
+      "trafficFormatted": "+80 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-11T09:50:51.942Z",
+      "date": "2026-10-12T10:30:52.167Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "thailande",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "prix voyage thailande",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-12T10:30:52.167Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "thailande",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage vietnam circuit",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-12T10:30:54.281Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "itineraire",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage vietnam pas cher",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-12T10:30:54.281Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 1,
@@ -16,12 +58,26 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage thailande phuket",
-      "traffic": 140,
-      "trafficFormatted": "+140 %",
+      "query": "vol thailande",
+      "traffic": 90,
+      "trafficFormatted": "+90 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-11T09:50:49.743Z",
+      "date": "2026-10-12T10:30:52.167Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.8,
+      "category": "transport",
+      "destination": "thailande",
+      "compositeScore": 0.56
+    },
+    {
+      "query": "leclerc voyage thailande",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-12T10:30:52.167Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -30,12 +86,26 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage cambodge",
+      "query": "voyage thailande phuket",
       "traffic": 100,
       "trafficFormatted": "+100 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-11T09:50:51.942Z",
+      "date": "2026-10-12T10:30:52.167Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage laos",
+      "traffic": 90,
+      "trafficFormatted": "+90 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-12T10:30:54.281Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -44,62 +114,88 @@
       "compositeScore": 0.53
     },
     {
-      "query": "vietnam",
-      "traffic": 200,
-      "trafficFormatted": "200+",
+      "query": "blog voyage vietnam",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
-      "articles": [
-        {
-          "title": "La Russie sollicite le Vietnam pour louer des avions avec équipage, maintenance et assurance",
-          "url": "https://www.air-journal.fr/2026-10-11-la-russie-sollicite-le-vietnam-pour-louer-des-avions-avec-equipage-maintenance-et-assurance-5278125.html",
-          "source": "Air Journal"
-        },
-        {
-          "title": "Douze hommes arrêtés pour le vol de 2 700 chats destinés à être mangés au Viêt Nam",
-          "url": "https://www.leparisien.fr/animaux/douze-hommes-arretes-pour-le-vol-de-2700-chats-destines-a-etre-manges-au-vietnam-05-10-2026-G352KMUNRJEDRPRUVM3772AOKU.php",
-          "source": "Le Parisien"
-        },
-        {
-          "title": "Poursuite de 12 accusés dans un réseau de vol et de consommation d'environ 2 700 chats à Hô Chi Minh-Ville",
-          "url": "https://fr.laodong.vn/video/khoi-to-12-bi-can-trong-duong-day-trom-tieu-thu-khoang-2700-con-meo-o-tphcm-1777770.ldo",
-          "source": "Laodong.vn"
-        }
-      ],
-      "date": "Sun, 11 Oct 2026 02:10:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.5,
+      "articles": [],
+      "date": "2026-10-12T10:30:54.281Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
       "category": "destination",
       "destination": "vietnam",
-      "compositeScore": 0.35016
+      "compositeScore": 0.53
     },
     {
-      "query": "accident de la route",
-      "traffic": 500,
-      "trafficFormatted": "500+",
+      "query": "voyage cambodge vietnam",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
-      "articles": [
-        {
-          "title": "\"C'est le deuxième joueur qu'on perd\" : le décès de Diego, 24 ans, dans un dramatique accident de la route, replonge ce club du Gers dans le deuil",
-          "url": "https://www.ladepeche.fr/2026/10/10/cest-le-deuxieme-joueur-quon-perd-le-deces-de-diego-24-ans-dans-un-dramatique-accident-de-la-route-replonge-ce-club-du-gers-dans-le-deuil-13593854.php",
-          "source": "ladepeche.fr"
-        },
-        {
-          "title": "Béarn et Hautes-Pyrénées : un accident de la route mortel, des condamnations… 5 faits divers à lire ce samedi",
-          "url": "https://www.larepubliquedespyrenees.fr/societe/accident/bearn-et-hautes-pyrenees-un-accident-de-la-route-mortel-des-condamnations-5-faits-divers-a-lire-ce-samedi-31004244.php",
-          "source": "La République des Pyrénées"
-        },
-        {
-          "title": "Riscle - Carnet noir - Le club de rugby pleure Diego, emporté à 24 ans dans un tragique accident à Villefranque",
-          "url": "https://www.lasemainedespyrenees.fr/riscle-carnet-noir-le-club-de-rugby-pleure-diego-emporte-a-24-ans-dans-un-tragique-accident-a-villefranque/",
-          "source": "La Semaine des Pyrénées"
-        }
-      ],
-      "date": "Sun, 11 Oct 2026 02:10:00 -0700",
-      "source": "rss",
-      "relevanceScore": 0.3,
-      "category": "itineraire",
-      "destination": null,
-      "compositeScore": 0.2904
+      "articles": [],
+      "date": "2026-10-12T10:30:58.500Z",
+      "source": "related-rising",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage leclerc",
+      "traffic": 150,
+      "trafficFormatted": "+150 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-12T10:30:52.167Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "voyage pas cher",
+      "traffic": 130,
+      "trafficFormatted": "+130 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-12T10:30:52.167Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.5,
+      "category": "budget",
+      "destination": "thailande",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "voyage privé",
+      "traffic": 100,
+      "trafficFormatted": "+100 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-12T10:30:52.167Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.47000000000000003
+    },
+    {
+      "query": "phuket",
+      "traffic": 90,
+      "trafficFormatted": "+90 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-12T10:30:52.167Z",
+      "source": "related-rising",
+      "parentDestination": "thailande",
+      "relevanceScore": 0.5,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.47000000000000003
     }
   ]
 }

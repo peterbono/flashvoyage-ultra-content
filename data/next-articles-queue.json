@@ -1,9 +1,57 @@
 {
-  "timestamp": "2026-10-11T09:49:27.368Z",
+  "timestamp": "2026-10-12T10:29:26.587Z",
   "queueSize": 8,
   "queue": [
     {
       "rank": 1,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 154,
+      "topic": "voyage pas cher thailande",
+      "articleType": "support",
+      "context": {
+        "gapScore": 74,
+        "destination": "thailande",
+        "category": "budget",
+        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage pas cher thailande\" (score 74, source: trends)"
+      }
+    },
+    {
+      "rank": 2,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 154,
+      "topic": "prix voyage thailande",
+      "articleType": "support",
+      "context": {
+        "gapScore": 74,
+        "destination": "thailande",
+        "category": "budget",
+        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
+        "reason": "Content gap: \"prix voyage thailande\" (score 74, source: trends)"
+      }
+    },
+    {
+      "rank": 3,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 154,
+      "topic": "voyage vietnam circuit",
+      "articleType": "pillar",
+      "context": {
+        "gapScore": 74,
+        "destination": "vietnam",
+        "category": "itineraire",
+        "suggestedTitle": "Itineraire Vietnam : Le Circuit Parfait de 2 Semaines",
+        "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Vietnam — format pick",
+        "reason": "Content gap: \"voyage vietnam circuit\" (score 74, source: trends)"
+      }
+    },
+    {
+      "rank": 4,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
@@ -19,11 +67,11 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 5,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 147,
-      "topic": "voyage thailande phuket",
+      "topic": "leclerc voyage thailande",
       "articleType": "support",
       "context": {
         "gapScore": 67,
@@ -31,55 +79,7 @@
         "category": "destination",
         "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
         "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
-        "reason": "Content gap: \"voyage thailande phuket\" (score 67, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 142,
-      "topic": "voyage cambodge",
-      "articleType": "support",
-      "context": {
-        "gapScore": 62,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"voyage cambodge\" (score 62, source: trends)"
-      }
-    },
-    {
-      "rank": 4,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 127,
-      "topic": "vietnam",
-      "articleType": "support",
-      "context": {
-        "gapScore": 47,
-        "destination": "vietnam",
-        "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"vietnam\" (score 47, source: trends)"
-      }
-    },
-    {
-      "rank": 5,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 120,
-      "topic": "accident de la route",
-      "articleType": "support",
-      "context": {
-        "gapScore": 40,
-        "destination": null,
-        "category": "itineraire",
-        "suggestedTitle": "Accident de la route : L'Itineraire Ideal",
-        "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
-        "reason": "Content gap: \"accident de la route\" (score 40, source: trends)"
+        "reason": "Content gap: \"leclerc voyage thailande\" (score 67, source: trends)"
       }
     },
     {
