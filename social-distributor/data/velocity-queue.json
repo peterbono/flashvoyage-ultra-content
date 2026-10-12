@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-10-11T21:22:49.050Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-10-12T03:53:24.105Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Saudi Arabia reports injuries in new attack at Riyadh airport, day after strike kills 13",
+      "source": "rss_breaking",
+      "destination": "philippines",
+      "link": "https://www.rappler.com/world/middle-east/saudi-arabia-injuries-new-attack-riyadh-airport-october-11-2026/",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 716,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2067,
+      "estimatedTrafficIn24h": 2020,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.996,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.8
+      },
+      "detectedAt": "2026-10-12T00:07:22.000Z",
+      "scoredAt": "2026-10-12T03:53:23.955Z"
+    }
+  ]
 }
