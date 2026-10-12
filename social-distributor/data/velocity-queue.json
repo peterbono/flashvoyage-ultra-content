@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T03:53:24.105Z",
+  "generatedAt": "2026-10-12T14:11:17.239Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Saudi Arabia reports injuries in new attack at Riyadh airport, day after strike kills 13",
+      "topic": "Chinese man arrested over flight theft, 293,000 baht card fraud",
       "source": "rss_breaking",
-      "destination": "philippines",
-      "link": "https://www.rappler.com/world/middle-east/saudi-arabia-injuries-new-attack-riyadh-airport-october-11-2026/",
-      "velocityScore": 0.413,
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/national/chinese-man-arrested-over-flight-theft-293000-baht-card-fraud",
+      "velocityScore": 0.487,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
+      "hoursRemaining": 714,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2067,
-      "estimatedTrafficIn24h": 2020,
+      "estimatedTrafficNow": 2436,
+      "estimatedTrafficIn24h": 2381,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.996,
+        "trendIntensity": 0.98,
+        "timeDecay": 0.994,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 3.8
+        "hoursSinceDetection": 5.9
       },
-      "detectedAt": "2026-10-12T00:07:22.000Z",
-      "scoredAt": "2026-10-12T03:53:23.955Z"
+      "detectedAt": "2026-10-12T08:17:50.000Z",
+      "scoredAt": "2026-10-12T14:11:16.758Z"
     }
   ]
 }
