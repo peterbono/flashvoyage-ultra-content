@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-10-12T14:11:17.239Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-10-13T00:02:54.521Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Chinese man arrested over flight theft, 293,000 baht card fraud",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/national/chinese-man-arrested-over-flight-theft-293000-baht-card-fraud",
-      "velocityScore": 0.487,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 714,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2436,
-      "estimatedTrafficIn24h": 2381,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 0.994,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5.9
-      },
-      "detectedAt": "2026-10-12T08:17:50.000Z",
-      "scoredAt": "2026-10-12T14:11:16.758Z"
-    }
-  ]
+  "queue": []
 }
