@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-10-13T00:02:54.521Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-10-13T13:23:09.132Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Suvarnabhumi airport ends free parking for flooded motorists",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/thailand/general/3336275/suvarnabhumi-airport-ends-free-parking-for-flooded-motorists",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 714,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2063,
+      "estimatedTrafficIn24h": 2016,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.994,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 5.9
+      },
+      "detectedAt": "2026-10-13T07:31:00.000Z",
+      "scoredAt": "2026-10-13T13:23:08.821Z"
+    }
+  ]
 }
