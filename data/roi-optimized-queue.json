@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-12T10:29:29.182Z",
+  "timestamp": "2026-10-13T10:19:32.570Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -78,15 +78,15 @@
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
-      "topic": "voyage vietnam circuit",
-      "articleType": "pillar",
+      "topic": "prix voyage vietnam",
+      "articleType": "support",
       "context": {
         "gapScore": 74,
         "destination": "vietnam",
-        "category": "itineraire",
-        "suggestedTitle": "Itineraire Vietnam : Le Circuit Parfait de 2 Semaines",
-        "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Vietnam — format pick",
-        "reason": "Content gap: \"voyage vietnam circuit\" (score 74, source: trends)"
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"prix voyage vietnam\" (score 74, source: trends)"
       },
       "roi": {
         "expectedRoi": 0,
@@ -102,23 +102,23 @@
       "rank": 4,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 154,
-      "topic": "voyage vietnam pas cher",
+      "priorityScore": 147,
+      "topic": "voyage cambodge vietnam",
       "articleType": "support",
       "context": {
-        "gapScore": 74,
-        "destination": "vietnam",
-        "category": "budget",
-        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage vietnam pas cher\" (score 74, source: trends)"
+        "gapScore": 67,
+        "destination": "cambodge",
+        "category": "destination",
+        "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
+        "reason": "Content gap: \"voyage cambodge vietnam\" (score 67, source: trends)"
       },
       "roi": {
         "expectedRoi": 0,
         "projectedMonthlyTraffic": 0,
         "projectedMonthlyRevenue": 0,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (0 PV) × gap boost (1.23)"
+        "trafficSource": "median baseline (0 PV) × gap boost (1.12)"
       },
       "cumulativeCost": 0.3,
       "withinBudget": true
@@ -127,23 +127,23 @@
       "rank": 5,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 147,
-      "topic": "leclerc voyage thailande",
+      "priorityScore": 142,
+      "topic": "voyage cambodge",
       "articleType": "support",
       "context": {
-        "gapScore": 67,
-        "destination": "thailande",
+        "gapScore": 62,
+        "destination": "vietnam",
         "category": "destination",
-        "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
-        "reason": "Content gap: \"leclerc voyage thailande\" (score 67, source: trends)"
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"voyage cambodge\" (score 62, source: trends)"
       },
       "roi": {
         "expectedRoi": 0,
         "projectedMonthlyTraffic": 0,
         "projectedMonthlyRevenue": 0,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (0 PV) × gap boost (1.12)"
+        "trafficSource": "median baseline (0 PV) × gap boost (1.03)"
       },
       "cumulativeCost": 0.375,
       "withinBudget": true
