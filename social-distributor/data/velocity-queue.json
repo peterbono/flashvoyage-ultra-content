@@ -1,61 +1,10 @@
 {
-  "generatedAt": "2026-10-14T11:00:57.211Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-10-14T16:21:00.533Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "FM Sihasak says Chinese airfield in Laos poses no immediate concern",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3336939/fm-sihasak-says-chinese-airfield-in-laos-poses-no-immediate-concern",
-      "velocityScore": 0.449,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2244,
-      "estimatedTrafficIn24h": 2192,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3
-      },
-      "detectedAt": "2026-10-14T08:02:00.000Z",
-      "scoredAt": "2026-10-14T11:00:56.681Z"
-    },
-    {
-      "topic": "Thai Airways offers new help after baggage crisis",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3336974/thai-airways-offers-new-help-after-baggage-crisis",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2072,
-      "estimatedTrafficIn24h": 2024,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1.7
-      },
-      "detectedAt": "2026-10-14T09:19:00.000Z",
-      "scoredAt": "2026-10-14T11:00:56.551Z"
-    }
-  ]
+  "queue": []
 }
