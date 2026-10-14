@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-10-13T10:21:06.824Z",
+  "timestamp": "2026-10-14T08:33:47.938Z",
   "trendingTopics": [
     {
-      "query": "voyage pas cher thailande",
-      "traffic": 190,
-      "trafficFormatted": "+190 %",
+      "query": "voyage thailande pas cher",
+      "traffic": 350,
+      "trafficFormatted": "+350 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-13T10:20:58.320Z",
+      "date": "2026-10-14T08:33:39.198Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -17,11 +17,11 @@
     },
     {
       "query": "prix voyage thailande",
-      "traffic": 120,
-      "trafficFormatted": "+120 %",
+      "traffic": 190,
+      "trafficFormatted": "+190 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-13T10:20:58.320Z",
+      "date": "2026-10-14T08:33:39.198Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -30,26 +30,26 @@
       "compositeScore": 0.62
     },
     {
-      "query": "prix voyage vietnam",
-      "traffic": 80,
-      "trafficFormatted": "+80 %",
+      "query": "voyage thailande phuket",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-13T10:21:00.450Z",
+      "date": "2026-10-14T08:33:39.198Z",
       "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "vietnam",
-      "compositeScore": 0.62
+      "parentDestination": "thailande",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "thailande",
+      "compositeScore": 0.53
     },
     {
       "query": "voyage cambodge",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
+      "traffic": 150,
+      "trafficFormatted": "+150 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-13T10:21:00.450Z",
+      "date": "2026-10-14T08:33:41.404Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
@@ -58,12 +58,12 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage cambodge vietnam",
-      "traffic": 190,
-      "trafficFormatted": "+190 %",
+      "query": "voyage cambodge laos",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-13T10:21:04.696Z",
+      "date": "2026-10-14T08:33:45.781Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -72,46 +72,76 @@
       "compositeScore": 0.53
     },
     {
-      "query": "phuket",
-      "traffic": 350,
-      "trafficFormatted": "+350 %",
+      "query": "voyage laos cambodge",
+      "traffic": 200,
+      "trafficFormatted": "+200 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-13T10:20:58.320Z",
+      "date": "2026-10-14T08:33:47.937Z",
       "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.5,
+      "parentDestination": "laos",
+      "relevanceScore": 0.7,
       "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.47000000000000003
+      "destination": "laos",
+      "compositeScore": 0.53
     },
     {
-      "query": "bangkok",
-      "traffic": 300,
-      "trafficFormatted": "+300 %",
+      "query": "monnaie",
+      "traffic": 500,
+      "trafficFormatted": "500+",
       "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-13T10:20:58.320Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.5,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.47000000000000003
-    },
-    {
-      "query": "voyage pas cher",
-      "traffic": 120,
-      "trafficFormatted": "+120 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-13T10:20:58.320Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.5,
+      "articles": [
+        {
+          "title": "La monnaie n’appartient pas à l’État",
+          "url": "https://contrepoints.org/la-monnaie-nappartient-pas-a-letat/",
+          "source": "Contrepoints"
+        },
+        {
+          "title": "Budget 2027 : après l’échec de la motion de rejet déposée par le Parti socialiste, les débats reprendront mercredi après-midi",
+          "url": "https://www.lemonde.fr/politique/live/2026/10/13/en-direct-budget-2027-les-debats-sur-le-projet-de-loi-de-finances-commencent-a-l-assemblee-nationale_6793072_823448.html",
+          "source": "Le Monde.fr"
+        },
+        {
+          "title": "Le gouvernement promet de ramener le déficit public à 2,8% du PIB en 2029",
+          "url": "https://www.journaldunet.com/business/action-publique/1556575-le-gouvernement-promet-de-ramener-le-deficit-public-a-2-8-du-pib-en-2029/",
+          "source": "JDN"
+        }
+      ],
+      "date": "Wed, 14 Oct 2026 01:10:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
       "category": "budget",
-      "destination": "thailande",
-      "compositeScore": 0.47000000000000003
+      "destination": null,
+      "compositeScore": 0.2904
+    },
+    {
+      "query": "félix auger-aliassime",
+      "traffic": 200,
+      "trafficFormatted": "200+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "Ruud - Auger-Aliassime, ATP 1000, Shanghai, Huitièmes de finale, match en direct le 14-10-2026",
+          "url": "https://www.lequipe.fr/Tennis/shanghai/epreuve-simple-messieurs/annee-2026/match-direct/casper-ruud-felix-auger-aliassime-live/672257",
+          "source": "L'Équipe"
+        },
+        {
+          "title": "Le tenant est tombé : Vacherot sorti sèchement par Paul",
+          "url": "https://www.eurosport.fr/tennis/atp-shanghai/2026/atp-1000-shanghai-i-felix-auger-aliassime-sen-sort-face-a-pablo-carreno-busta-casper-ruud-solide-contre-learner-tien_sto23344922/story.shtml",
+          "source": "Eurosport"
+        },
+        {
+          "title": "Tournoi de Shanghai | Auger-Aliassime gagne son premier match",
+          "url": "https://www.lapresse.ca/sports/tennis/2026-10-10/tournoi-de-shanghai/auger-aliassime-gagne-son-premier-match.php",
+          "source": "La Presse"
+        }
+      ],
+      "date": "Wed, 14 Oct 2026 00:40:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "pratique",
+      "destination": null,
+      "compositeScore": 0.29016
     }
   ]
 }
