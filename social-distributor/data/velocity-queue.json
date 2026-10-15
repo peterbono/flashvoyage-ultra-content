@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-10-15T16:09:17.239Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-10-15T20:50:46.783Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Blast simulation, university probes, robotics fine, AI spies: 7 US-China relations reads",
-      "source": "rss_breaking",
-      "destination": "asia",
-      "link": "https://www.scmp.com/news/china/diplomacy/article/3370921/blast-simulation-university-probes-robotics-fine-ai-spies-7-us-china-relations-reads?utm_source=rss_feed",
-      "velocityScore": 0.489,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 718,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2445,
-      "estimatedTrafficIn24h": 2389,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 0.998,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 2.2
-      },
-      "detectedAt": "2026-10-15T14:00:05.000Z",
-      "scoredAt": "2026-10-15T16:09:17.090Z"
-    }
-  ]
+  "queue": []
 }
