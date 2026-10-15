@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-10-14T08:32:17.998Z",
+  "timestamp": "2026-10-15T08:07:14.452Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-10-14T08:32:18.935Z",
+      "lastScan": "2026-10-15T08:07:15.219Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-10-14T08:32:19.494Z",
+      "lastScan": "2026-10-15T08:07:15.705Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,7 +139,7 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-10-14T08:33:33.325Z",
+      "lastScan": "2026-10-15T08:08:24.927Z",
       "urlCount": 9995,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
@@ -9533,7 +9533,6 @@
         "https://generationvoyage.fr/visiter-colorado-faire-voir/": "2026-09-14T08:24:12+00:00",
         "https://generationvoyage.fr/visiter-valdeblore-la-colmiane-faire-voir/": "2026-09-14T08:24:16+00:00",
         "https://generationvoyage.fr/visiter-potosi-faire-voir/": "2026-09-14T08:24:21+00:00",
-        "https://generationvoyage.fr/visiter-sine-saloum-faire-voir/": "2026-09-14T08:24:27+00:00",
         "https://generationvoyage.fr/visiter-arras-faire-voir/": "2026-09-14T08:24:31+00:00",
         "https://generationvoyage.fr/visiter-versailles-faire-voir/": "2026-09-14T08:24:36+00:00",
         "https://generationvoyage.fr/visiter-alpes-maritimes-faire-voir/": "2026-09-14T08:24:42+00:00",
@@ -10136,7 +10135,8 @@
         "https://generationvoyage.fr/visiter-lucques-faire-voir/": "2026-09-15T10:06:35+00:00",
         "https://generationvoyage.fr/visiter-aarhus-faire-voir/": "2026-09-15T10:07:16+00:00",
         "https://generationvoyage.fr/visiter-taipei-faire-voir/": "2026-09-15T10:07:57+00:00",
-        "https://generationvoyage.fr/visiter-santiago-faire-voir/": "2026-09-15T10:08:32+00:00"
+        "https://generationvoyage.fr/visiter-santiago-faire-voir/": "2026-09-15T10:08:32+00:00",
+        "https://generationvoyage.fr/visiter-ile-d-oleron-faire-voir/": "2026-09-15T10:09:16+00:00"
       }
     }
   }
