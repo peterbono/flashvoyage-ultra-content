@@ -1,61 +1,36 @@
 {
-  "generatedAt": "2026-10-15T10:44:01.159Z",
-  "totalTopics": 2,
+  "generatedAt": "2026-10-15T16:09:17.239Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 2
+    "queue_normal": 1
   },
   "queue": [
     {
-      "topic": "Chinese woman held on suspicion of people-smuggling",
+      "topic": "Blast simulation, university probes, robotics fine, AI spies: 7 US-China relations reads",
       "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://www.bangkokpost.com/thailand/general/3337593/chinese-woman-held-on-suspicion-of-peoplesmuggling",
-      "velocityScore": 0.449,
+      "destination": "asia",
+      "link": "https://www.scmp.com/news/china/diplomacy/article/3370921/blast-simulation-university-probes-robotics-fine-ai-spies-7-us-china-relations-reads?utm_source=rss_feed",
+      "velocityScore": 0.489,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
+      "hoursRemaining": 718,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2244,
-      "estimatedTrafficIn24h": 2192,
+      "estimatedTrafficNow": 2445,
+      "estimatedTrafficIn24h": 2389,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.997,
+        "trendIntensity": 0.98,
+        "timeDecay": 0.998,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 3
+        "hoursSinceDetection": 2.2
       },
-      "detectedAt": "2026-10-15T07:44:00.000Z",
-      "scoredAt": "2026-10-15T10:44:00.920Z"
-    },
-    {
-      "topic": "Chinese ex-flight attendant held for aiding illegal border crossings",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/hot-news/crime/chinese-ex-flight-attendant-aiding-illegal-border-crossings",
-      "velocityScore": 0.449,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2243,
-      "estimatedTrafficIn24h": 2192,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.9,
-        "timeDecay": 0.997,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 3.3
-      },
-      "detectedAt": "2026-10-15T07:24:51.000Z",
-      "scoredAt": "2026-10-15T10:44:00.969Z"
+      "detectedAt": "2026-10-15T14:00:05.000Z",
+      "scoredAt": "2026-10-15T16:09:17.090Z"
     }
   ]
 }
