@@ -1,10 +1,61 @@
 {
-  "generatedAt": "2026-10-15T02:49:37.079Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-10-15T10:44:01.159Z",
+  "totalTopics": 2,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 2
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Chinese woman held on suspicion of people-smuggling",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/thailand/general/3337593/chinese-woman-held-on-suspicion-of-peoplesmuggling",
+      "velocityScore": 0.449,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2244,
+      "estimatedTrafficIn24h": 2192,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3
+      },
+      "detectedAt": "2026-10-15T07:44:00.000Z",
+      "scoredAt": "2026-10-15T10:44:00.920Z"
+    },
+    {
+      "topic": "Chinese ex-flight attendant held for aiding illegal border crossings",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/hot-news/crime/chinese-ex-flight-attendant-aiding-illegal-border-crossings",
+      "velocityScore": 0.449,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 717,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2243,
+      "estimatedTrafficIn24h": 2192,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.9,
+        "timeDecay": 0.997,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 3.3
+      },
+      "detectedAt": "2026-10-15T07:24:51.000Z",
+      "scoredAt": "2026-10-15T10:44:00.969Z"
+    }
+  ]
 }
