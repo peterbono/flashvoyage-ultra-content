@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-15T08:07:09.882Z",
-  "gapCount": 18,
+  "timestamp": "2026-10-16T08:00:23.196Z",
+  "gapCount": 17,
   "gaps": [
     {
-      "topic": "voyage pas cher thailande",
+      "topic": "prix voyage thailande",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -20,24 +20,7 @@
       "priority": "critical"
     },
     {
-      "topic": "voyage thailande circuit",
-      "source": "trends",
-      "gapScore": 74,
-      "signals": {
-        "searchVolume": 0.62,
-        "trendGrowth": 0.62,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "thailande",
-      "category": "itineraire",
-      "suggestedTitle": "Itineraire Thailande : Le Circuit Parfait de 2 Semaines",
-      "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Thailande — format pick",
-      "articleType": "pillar",
-      "priority": "critical"
-    },
-    {
-      "topic": "prix voyage thailande",
+      "topic": "voyage thailande pas cher",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -71,41 +54,7 @@
       "priority": "critical"
     },
     {
-      "topic": "voyage vietnam prix",
-      "source": "trends",
-      "gapScore": 74,
-      "signals": {
-        "searchVolume": 0.62,
-        "trendGrowth": 0.62,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "vietnam",
-      "category": "budget",
-      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-      "articleType": "support",
-      "priority": "critical"
-    },
-    {
       "topic": "leclerc voyage thailande",
-      "source": "trends",
-      "gapScore": 67,
-      "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "thailande",
-      "category": "destination",
-      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
-      "topic": "voyage thailande phuket",
       "source": "trends",
       "gapScore": 67,
       "signals": {
@@ -156,6 +105,23 @@
       "priority": "high"
     },
     {
+      "topic": "voyage cambodge vietnam",
+      "source": "trends",
+      "gapScore": 67,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "cambodge",
+      "category": "destination",
+      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
       "topic": "vol thailande",
       "source": "trends",
       "gapScore": 64,
@@ -169,6 +135,23 @@
       "category": "transport",
       "suggestedTitle": "Comment Se Deplacer a Thailande : Guide Transport Complet",
       "suggestedReelAngle": "Reel \"Comment se deplacer\" a Thailande — format pick avec photos",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "hotel thailande",
+      "source": "trends",
+      "gapScore": 62,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.6
+      },
+      "destination": "thailande",
+      "category": "destination",
+      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
       "articleType": "support",
       "priority": "high"
     },
@@ -207,6 +190,23 @@
       "priority": "high"
     },
     {
+      "topic": "voyage vietnam",
+      "source": "trends",
+      "gapScore": 62,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.6
+      },
+      "destination": "cambodge",
+      "category": "destination",
+      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
       "topic": "voyage pas cher",
       "source": "trends",
       "gapScore": 61,
@@ -220,23 +220,6 @@
       "category": "budget",
       "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
       "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
-      "topic": "partir en thailande",
-      "source": "trends",
-      "gapScore": 56,
-      "signals": {
-        "searchVolume": 0.47,
-        "trendGrowth": 0.47,
-        "monetization": 0.9,
-        "competition": 0.6
-      },
-      "destination": "thailande",
-      "category": "destination",
-      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
       "articleType": "support",
       "priority": "high"
     },
@@ -292,39 +275,39 @@
       "priority": "high"
     },
     {
-      "topic": "airbus a350",
+      "topic": "immigration",
       "source": "trends",
-      "gapScore": 40,
+      "gapScore": 31,
       "signals": {
         "searchVolume": 0.29,
         "trendGrowth": 0.29,
-        "monetization": 0.6,
-        "competition": 0.6
+        "monetization": 0.45,
+        "competition": 0.8
       },
       "destination": null,
-      "category": "transport",
-      "suggestedTitle": "Airbus a350 : Guide Pratique",
-      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
+      "category": "visa",
+      "suggestedTitle": "Visa Immigration : Tout Ce Qu'il Faut Savoir en 2026",
+      "suggestedReelAngle": "Reel \"Savais-tu ?\" sur les conditions de visa  — format poll/quiz",
       "articleType": "support",
       "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
-      "critical": 5,
-      "high": 12,
+      "critical": 3,
+      "high": 13,
       "medium": 1
     },
     "byCategory": {
-      "budget": 5,
-      "itineraire": 1,
-      "destination": 10,
-      "transport": 2
+      "budget": 4,
+      "destination": 11,
+      "transport": 1,
+      "visa": 1
     },
     "byDestination": {
-      "thailande": 11,
-      "vietnam": 5,
-      "cambodge": 1
+      "thailande": 9,
+      "vietnam": 4,
+      "cambodge": 3
     },
     "topDestinationGaps": [
       "thailande",
