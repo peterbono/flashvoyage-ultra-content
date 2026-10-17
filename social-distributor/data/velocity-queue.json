@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-10-17T02:38:07.239Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-10-17T10:01:40.344Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "THAI opens compensation site for flood-hit passengers",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://www.bangkokpost.com/thailand/general/3338783/thai-opens-compensation-site-for-floodhit-passengers",
+      "velocityScore": 0.413,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 715,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2065,
+      "estimatedTrafficIn24h": 2017,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.83,
+        "timeDecay": 0.995,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 5.2
+      },
+      "detectedAt": "2026-10-17T04:50:00.000Z",
+      "scoredAt": "2026-10-17T10:01:40.222Z"
+    }
+  ]
 }
