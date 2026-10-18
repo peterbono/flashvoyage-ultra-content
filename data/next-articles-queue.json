@@ -1,57 +1,9 @@
 {
-  "timestamp": "2026-10-17T07:38:22.870Z",
-  "queueSize": 8,
+  "timestamp": "2026-10-18T07:54:00.907Z",
+  "queueSize": 6,
   "queue": [
     {
       "rank": 1,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 154,
-      "topic": "voyage bali pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 74,
-        "destination": "bali",
-        "category": "budget",
-        "suggestedTitle": "Budget Bali 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Bali — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage bali pas cher\" (score 74, source: trends)"
-      }
-    },
-    {
-      "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 154,
-      "topic": "prix voyage thailande",
-      "articleType": "support",
-      "context": {
-        "gapScore": 74,
-        "destination": "thailande",
-        "category": "budget",
-        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"prix voyage thailande\" (score 74, source: trends)"
-      }
-    },
-    {
-      "rank": 3,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 154,
-      "topic": "voyage thailande prix",
-      "articleType": "support",
-      "context": {
-        "gapScore": 74,
-        "destination": "thailande",
-        "category": "budget",
-        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage thailande prix\" (score 74, source: trends)"
-      }
-    },
-    {
-      "rank": 4,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
@@ -67,23 +19,39 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 2,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 147,
-      "topic": "leclerc voyage thailande",
+      "priorityScore": 154,
+      "topic": "prix voyage vietnam",
       "articleType": "support",
       "context": {
-        "gapScore": 67,
-        "destination": "thailande",
-        "category": "destination",
-        "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
-        "reason": "Content gap: \"leclerc voyage thailande\" (score 67, source: trends)"
+        "gapScore": 74,
+        "destination": "vietnam",
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"prix voyage vietnam\" (score 74, source: trends)"
       }
     },
     {
-      "rank": 6,
+      "rank": 3,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 142,
+      "topic": "voyage cambodge",
+      "articleType": "support",
+      "context": {
+        "gapScore": 62,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"voyage cambodge\" (score 62, source: trends)"
+      }
+    },
+    {
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -95,7 +63,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -107,7 +75,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 6,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -120,7 +88,7 @@
     }
   ],
   "summary": {
-    "write_new": 5,
+    "write_new": 3,
     "update": 0,
     "enrich": 0,
     "standard": 3,

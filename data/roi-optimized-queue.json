@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-17T07:38:24.862Z",
+  "timestamp": "2026-10-18T07:54:03.109Z",
   "config": {
     "dailyBudget": 2,
     "defaultRpm": 2,
@@ -28,81 +28,6 @@
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
-      "topic": "voyage bali pas cher",
-      "articleType": "support",
-      "context": {
-        "gapScore": 74,
-        "destination": "bali",
-        "category": "budget",
-        "suggestedTitle": "Budget Bali 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Bali — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage bali pas cher\" (score 74, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (0 PV) × gap boost (1.23)"
-      },
-      "cumulativeCost": 0.075,
-      "withinBudget": true
-    },
-    {
-      "rank": 2,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 154,
-      "topic": "prix voyage thailande",
-      "articleType": "support",
-      "context": {
-        "gapScore": 74,
-        "destination": "thailande",
-        "category": "budget",
-        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"prix voyage thailande\" (score 74, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (0 PV) × gap boost (1.23)"
-      },
-      "cumulativeCost": 0.15,
-      "withinBudget": true
-    },
-    {
-      "rank": 3,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 154,
-      "topic": "voyage thailande prix",
-      "articleType": "support",
-      "context": {
-        "gapScore": 74,
-        "destination": "thailande",
-        "category": "budget",
-        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage thailande prix\" (score 74, source: trends)"
-      },
-      "roi": {
-        "expectedRoi": 0,
-        "projectedMonthlyTraffic": 0,
-        "projectedMonthlyRevenue": 0,
-        "productionCost": 0.075,
-        "trafficSource": "median baseline (0 PV) × gap boost (1.23)"
-      },
-      "cumulativeCost": 0.225,
-      "withinBudget": true
-    },
-    {
-      "rank": 4,
-      "action": "write_new",
-      "priority": "P2",
-      "priorityScore": 154,
       "topic": "voyage thailande pas cher",
       "articleType": "support",
       "context": {
@@ -120,36 +45,61 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (0 PV) × gap boost (1.23)"
       },
-      "cumulativeCost": 0.3,
+      "cumulativeCost": 0.075,
       "withinBudget": true
     },
     {
-      "rank": 5,
+      "rank": 2,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 147,
-      "topic": "leclerc voyage thailande",
+      "priorityScore": 154,
+      "topic": "prix voyage vietnam",
       "articleType": "support",
       "context": {
-        "gapScore": 67,
-        "destination": "thailande",
-        "category": "destination",
-        "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
-        "reason": "Content gap: \"leclerc voyage thailande\" (score 67, source: trends)"
+        "gapScore": 74,
+        "destination": "vietnam",
+        "category": "budget",
+        "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+        "reason": "Content gap: \"prix voyage vietnam\" (score 74, source: trends)"
       },
       "roi": {
         "expectedRoi": 0,
         "projectedMonthlyTraffic": 0,
         "projectedMonthlyRevenue": 0,
         "productionCost": 0.075,
-        "trafficSource": "median baseline (0 PV) × gap boost (1.12)"
+        "trafficSource": "median baseline (0 PV) × gap boost (1.23)"
       },
-      "cumulativeCost": 0.375,
+      "cumulativeCost": 0.15,
       "withinBudget": true
     },
     {
-      "rank": 6,
+      "rank": 3,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 142,
+      "topic": "voyage cambodge",
+      "articleType": "support",
+      "context": {
+        "gapScore": 62,
+        "destination": "vietnam",
+        "category": "destination",
+        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+        "reason": "Content gap: \"voyage cambodge\" (score 62, source: trends)"
+      },
+      "roi": {
+        "expectedRoi": 0,
+        "projectedMonthlyTraffic": 0,
+        "projectedMonthlyRevenue": 0,
+        "productionCost": 0.075,
+        "trafficSource": "median baseline (0 PV) × gap boost (1.03)"
+      },
+      "cumulativeCost": 0.225,
+      "withinBudget": true
+    },
+    {
+      "rank": 4,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -166,11 +116,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (0 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.45,
+      "cumulativeCost": 0.3,
       "withinBudget": true
     },
     {
-      "rank": 7,
+      "rank": 5,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -187,11 +137,11 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (0 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.525,
+      "cumulativeCost": 0.375,
       "withinBudget": true
     },
     {
-      "rank": 8,
+      "rank": 6,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -208,20 +158,20 @@
         "productionCost": 0.075,
         "trafficSource": "median baseline (0 PV) × gap boost (1.00)"
       },
-      "cumulativeCost": 0.6,
+      "cumulativeCost": 0.45,
       "withinBudget": true
     }
   ],
   "budgetAllocation": {
-    "totalCost": 0.6,
+    "totalCost": 0.45,
     "dailyBudget": 2,
-    "itemsWithinBudget": 8,
+    "itemsWithinBudget": 6,
     "itemsOverBudget": 0,
     "expectedDailyRevenue": 0,
     "expectedDailyRoi": 0
   },
   "summary": {
-    "write_new": 5,
+    "write_new": 3,
     "update": 0,
     "enrich": 0,
     "standard": 3,

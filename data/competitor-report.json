@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-17T07:39:47.564Z",
+  "timestamp": "2026-10-18T07:55:21.842Z",
   "competitors": [
     {
       "id": "voyagespirates",
@@ -17,13 +17,190 @@
       "id": "generationvoyage",
       "name": "Generation Voyage",
       "totalUrls": 9995,
-      "newUrls": 0
+      "newUrls": 646
     }
   ],
-  "newArticles": [],
+  "newArticles": [
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/bangkok-solo/",
+      "lastmod": "2026-09-16T12:13:46+00:00",
+      "destination": "bangkok",
+      "contentType": "general",
+      "title": "Bangkok Solo",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Bangkok Solo\" (bangkok, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/bali-pluie/",
+      "lastmod": "2026-09-19T14:33:52+00:00",
+      "destination": "bali",
+      "contentType": "general",
+      "title": "Bali Pluie",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Bali Pluie\" (bali, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/lombok-local/",
+      "lastmod": "2026-10-02T16:23:34+00:00",
+      "destination": "lombok",
+      "contentType": "general",
+      "title": "Lombok Local",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Lombok Local\" (lombok, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/souvenirs-bangkok/",
+      "lastmod": "2026-10-03T16:18:41+00:00",
+      "destination": "bangkok",
+      "contentType": "general",
+      "title": "Souvenirs Bangkok",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Souvenirs Bangkok\" (bangkok, general) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-palawan-faire-voir/",
+      "lastmod": "2026-10-06T12:23:31+00:00",
+      "destination": "palawan",
+      "contentType": "activites",
+      "title": "Visiter Palawan Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Palawan Faire Voir\" (palawan, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-boracay-faire-voir/",
+      "lastmod": "2026-10-13T14:15:42+00:00",
+      "destination": "boracay",
+      "contentType": "activites",
+      "title": "Visiter Boracay Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Boracay Faire Voir\" (boracay, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-lombok-faire-voir/",
+      "lastmod": "2026-10-17T07:57:59+00:00",
+      "destination": "lombok",
+      "contentType": "activites",
+      "title": "Visiter Lombok Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Lombok Faire Voir\" (lombok, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-tokyo-faire-voir/",
+      "lastmod": "2026-10-17T08:09:04+00:00",
+      "destination": "tokyo",
+      "contentType": "activites",
+      "title": "Visiter Tokyo Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Tokyo Faire Voir\" (tokyo, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-ubud-faire-voir/",
+      "lastmod": "2026-10-17T08:20:21+00:00",
+      "destination": "ubud",
+      "contentType": "activites",
+      "title": "Visiter Ubud Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Ubud Faire Voir\" (ubud, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-bangkok-faire-voir/",
+      "lastmod": "2026-10-17T08:33:34+00:00",
+      "destination": "bangkok",
+      "contentType": "activites",
+      "title": "Visiter Bangkok Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Bangkok Faire Voir\" (bangkok, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-kuala-lumpur-faire-voir/",
+      "lastmod": "2026-10-17T08:42:05+00:00",
+      "destination": "kuala-lumpur",
+      "contentType": "activites",
+      "title": "Visiter Kuala Lumpur Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Kuala Lumpur Faire Voir\" (kuala-lumpur, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-krabi-faire-voir/",
+      "lastmod": "2026-10-17T09:28:19+00:00",
+      "destination": "krabi",
+      "contentType": "activites",
+      "title": "Visiter Krabi Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Krabi Faire Voir\" (krabi, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-penang-faire-voir/",
+      "lastmod": "2026-10-17T10:02:35+00:00",
+      "destination": "penang",
+      "contentType": "activites",
+      "title": "Visiter Penang Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Penang Faire Voir\" (penang, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-singapour-faire-voir/",
+      "lastmod": "2026-10-17T10:09:32+00:00",
+      "destination": "singapour",
+      "contentType": "activites",
+      "title": "Visiter Singapour Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Singapour Faire Voir\" (singapour, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-jakarta-faire-voir/",
+      "lastmod": "2026-10-17T10:22:35+00:00",
+      "destination": "jakarta",
+      "contentType": "activites",
+      "title": "Visiter Jakarta Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Jakarta Faire Voir\" (jakarta, activites) — no matching FlashVoyage article found"
+    },
+    {
+      "competitor": "generationvoyage",
+      "url": "https://generationvoyage.fr/visiter-cebu-faire-voir/",
+      "lastmod": "2026-10-17T10:37:25+00:00",
+      "destination": "cebu",
+      "contentType": "activites",
+      "title": "Visiter Cebu Faire Voir",
+      "action": "content_gap",
+      "priority": "P1",
+      "reason": "Competitor covers \"Visiter Cebu Faire Voir\" (cebu, activites) — no matching FlashVoyage article found"
+    }
+  ],
   "summary": {
-    "totalNew": 0,
-    "contentGaps": 0,
+    "totalNew": 16,
+    "contentGaps": 16,
     "staleRefreshes": 0,
     "monitoring": 0
   }
