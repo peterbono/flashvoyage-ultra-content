@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-10-18T07:54:00.907Z",
-  "queueSize": 6,
+  "timestamp": "2026-10-19T08:38:57.280Z",
+  "queueSize": 8,
   "queue": [
     {
       "rank": 1,
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
-      "topic": "voyage thailande pas cher",
+      "topic": "prix voyage thailande",
       "articleType": "support",
       "context": {
         "gapScore": 74,
@@ -15,7 +15,7 @@
         "category": "budget",
         "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
         "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-        "reason": "Content gap: \"voyage thailande pas cher\" (score 74, source: trends)"
+        "reason": "Content gap: \"prix voyage thailande\" (score 74, source: trends)"
       }
     },
     {
@@ -23,7 +23,39 @@
       "action": "write_new",
       "priority": "P2",
       "priorityScore": 154,
-      "topic": "prix voyage vietnam",
+      "topic": "voyage pas cher thailande",
+      "articleType": "support",
+      "context": {
+        "gapScore": 74,
+        "destination": "thailande",
+        "category": "budget",
+        "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+        "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
+        "reason": "Content gap: \"voyage pas cher thailande\" (score 74, source: trends)"
+      }
+    },
+    {
+      "rank": 3,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 154,
+      "topic": "voyage thailande circuit",
+      "articleType": "pillar",
+      "context": {
+        "gapScore": 74,
+        "destination": "thailande",
+        "category": "itineraire",
+        "suggestedTitle": "Itineraire Thailande : Le Circuit Parfait de 2 Semaines",
+        "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Thailande — format pick",
+        "reason": "Content gap: \"voyage thailande circuit\" (score 74, source: trends)"
+      }
+    },
+    {
+      "rank": 4,
+      "action": "write_new",
+      "priority": "P2",
+      "priorityScore": 154,
+      "topic": "voyage vietnam prix",
       "articleType": "support",
       "context": {
         "gapScore": 74,
@@ -31,27 +63,27 @@
         "category": "budget",
         "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
         "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-        "reason": "Content gap: \"prix voyage vietnam\" (score 74, source: trends)"
+        "reason": "Content gap: \"voyage vietnam prix\" (score 74, source: trends)"
       }
     },
     {
-      "rank": 3,
+      "rank": 5,
       "action": "write_new",
       "priority": "P2",
-      "priorityScore": 142,
-      "topic": "voyage cambodge",
+      "priorityScore": 147,
+      "topic": "voyage thailande phuket",
       "articleType": "support",
       "context": {
-        "gapScore": 62,
-        "destination": "vietnam",
+        "gapScore": 67,
+        "destination": "thailande",
         "category": "destination",
-        "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-        "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
-        "reason": "Content gap: \"voyage cambodge\" (score 62, source: trends)"
+        "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+        "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+        "reason": "Content gap: \"voyage thailande phuket\" (score 67, source: trends)"
       }
     },
     {
-      "rank": 4,
+      "rank": 6,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 40,
@@ -63,7 +95,7 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 7,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 39,
@@ -75,7 +107,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 8,
       "action": "standard",
       "priority": "P3",
       "priorityScore": 38,
@@ -88,7 +120,7 @@
     }
   ],
   "summary": {
-    "write_new": 3,
+    "write_new": 5,
     "update": 0,
     "enrich": 0,
     "standard": 3,

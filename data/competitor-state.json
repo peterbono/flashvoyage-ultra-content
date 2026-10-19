@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-10-18T07:54:03.845Z",
+  "timestamp": "2026-10-19T08:39:00.756Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-10-18T07:54:04.884Z",
+      "lastScan": "2026-10-19T08:39:01.453Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-10-18T07:54:05.529Z",
+      "lastScan": "2026-10-19T08:39:01.915Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,7 +139,7 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-10-18T07:55:21.819Z",
+      "lastScan": "2026-10-19T08:40:16.762Z",
       "urlCount": 9995,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",
@@ -4785,7 +4785,6 @@
         "https://generationvoyage.fr/sites-archeologiques-turquie/": "2025-11-07T11:10:49+00:00",
         "https://generationvoyage.fr/cap-vert-vacances/": "2025-11-07T11:10:57+00:00",
         "https://generationvoyage.fr/sardine-run-afrique-sud/": "2025-11-07T11:11:08+00:00",
-        "https://generationvoyage.fr/visa-cap-vert/": "2025-11-07T11:11:10+00:00",
         "https://generationvoyage.fr/visa-egypte/": "2025-11-07T11:11:16+00:00",
         "https://generationvoyage.fr/bateau-croisiere-egypte/": "2025-11-07T11:11:22+00:00",
         "https://generationvoyage.fr/voyages-organises-egypte/": "2025-11-07T11:11:24+00:00",
@@ -5617,7 +5616,6 @@
         "https://generationvoyage.fr/ateliers-alcool-paris/": "2025-11-26T15:22:21+00:00",
         "https://generationvoyage.fr/ateliers-terrarium-paris/": "2025-11-26T15:22:23+00:00",
         "https://generationvoyage.fr/saut-en-parachute-paris/": "2025-11-26T15:22:24+00:00",
-        "https://generationvoyage.fr/parcs-aquatiques-paris/": "2025-11-26T15:22:27+00:00",
         "https://generationvoyage.fr/ateliers-artistes-paris/": "2025-11-26T15:22:30+00:00",
         "https://generationvoyage.fr/survol-paris-versailles-helicoptere/": "2025-11-26T15:22:32+00:00",
         "https://generationvoyage.fr/ruelles-paris/": "2025-11-26T15:22:34+00:00",
@@ -7076,7 +7074,6 @@
         "https://generationvoyage.fr/location-jet-ski-cannes/": "2026-04-13T13:20:36+00:00",
         "https://generationvoyage.fr/choisir-planche-surf/": "2026-04-13T13:20:40+00:00",
         "https://generationvoyage.fr/experiences-bien-etre-france/": "2026-04-13T13:20:44+00:00",
-        "https://generationvoyage.fr/meilleurs-spots-peche-bretagne/": "2026-04-13T13:20:58+00:00",
         "https://generationvoyage.fr/croisieres-seine-paris/": "2026-04-13T13:21:07+00:00",
         "https://generationvoyage.fr/canyoning-andalousie/": "2026-04-13T13:21:23+00:00",
         "https://generationvoyage.fr/session-surf-biarritz/": "2026-04-13T13:21:36+00:00",
@@ -8445,7 +8442,6 @@
         "https://generationvoyage.fr/visiter-reserve-naturelle-neouvielle/": "2026-08-19T08:52:38+00:00",
         "https://generationvoyage.fr/visiter-las-vegas-faire-voir/": "2026-08-19T08:52:43+00:00",
         "https://generationvoyage.fr/visiter-parc-vanoise/": "2026-08-19T08:52:50+00:00",
-        "https://generationvoyage.fr/visiter-karpathos-faire-voir/": "2026-08-19T08:52:52+00:00",
         "https://generationvoyage.fr/visiter-symi-guide-complet/": "2026-08-19T08:52:53+00:00",
         "https://generationvoyage.fr/visiter-douala-faire-voir/": "2026-08-19T08:52:54+00:00",
         "https://generationvoyage.fr/visiter-iles-lavezzi-corse/": "2026-08-19T08:52:59+00:00",
@@ -8742,7 +8738,6 @@
         "https://generationvoyage.fr/endroits-visiter-pologne/": "2026-08-19T09:04:10+00:00",
         "https://generationvoyage.fr/endroits-visiter-danemark/": "2026-08-19T09:04:14+00:00",
         "https://generationvoyage.fr/plus-beaux-endroits-philippines/": "2026-08-19T09:04:55+00:00",
-        "https://generationvoyage.fr/endroits-visiter-portugal/": "2026-08-19T09:05:10+00:00",
         "https://generationvoyage.fr/endroits-visiter-norvege/": "2026-08-19T09:05:13+00:00",
         "https://generationvoyage.fr/endroits-visiter-quebec/": "2026-08-19T09:05:21+00:00",
         "https://generationvoyage.fr/endroits-visiter-cote-amalfitaine/": "2026-08-19T09:05:50+00:00",
@@ -9667,6 +9662,11 @@
         "https://generationvoyage.fr/pyrenees-local/": "2026-10-17T12:13:59+00:00",
         "https://generationvoyage.fr/lisbonne-solo/": "2026-10-17T14:21:05+00:00",
         "https://generationvoyage.fr/visiter-ouganda-faire-voir/": "2026-10-17T16:17:43+00:00",
+        "https://generationvoyage.fr/pluie-ischia/": "2026-10-18T07:57:02+00:00",
+        "https://generationvoyage.fr/bordeaux-budget/": "2026-10-18T10:13:01+00:00",
+        "https://generationvoyage.fr/souvenirs-essaouira/": "2026-10-18T12:14:27+00:00",
+        "https://generationvoyage.fr/visiter-epire-faire-voir/": "2026-10-18T14:37:10+00:00",
+        "https://generationvoyage.fr/alicante-local/": "2026-10-18T16:37:06+00:00",
         "https://generationvoyage.fr/visiter-corfou-faire-voir/": "2026-10-17T07:35:27+00:00",
         "https://generationvoyage.fr/visiter-minorque-faire-voir/": "2026-10-17T07:35:53+00:00",
         "https://generationvoyage.fr/visiter-malte-faire-voir/": "2026-10-17T07:36:23+00:00",
@@ -9704,7 +9704,6 @@
         "https://generationvoyage.fr/visiter-annecy-faire-voir/": "2026-10-17T07:50:50+00:00",
         "https://generationvoyage.fr/visiter-saragosse-faire-voir/": "2026-10-17T07:51:16+00:00",
         "https://generationvoyage.fr/visiter-madrid-faire-voir/": "2026-10-17T07:51:48+00:00",
-        "https://generationvoyage.fr/visiter-verone-faire-voir/": "2026-10-17T07:52:24+00:00",
         "https://generationvoyage.fr/visiter-londres-faire-voir/": "2026-10-17T07:53:03+00:00",
         "https://generationvoyage.fr/visiter-lille-faire-voir/": "2026-10-17T07:53:33+00:00",
         "https://generationvoyage.fr/visiter-budapest-faire-voir/": "2026-10-17T07:54:01+00:00",
@@ -9903,7 +9902,6 @@
         "https://generationvoyage.fr/visiter-calvi-faire-voir/": "2026-10-17T09:20:51+00:00",
         "https://generationvoyage.fr/visiter-coimbra-faire-voir/": "2026-10-17T09:21:29+00:00",
         "https://generationvoyage.fr/visiter-bristol-faire-voir/": "2026-10-17T09:21:56+00:00",
-        "https://generationvoyage.fr/visiter-propriano-faire-voir/": "2026-10-17T09:22:26+00:00",
         "https://generationvoyage.fr/visiter-touquet-faire-voir/": "2026-10-17T09:23:10+00:00",
         "https://generationvoyage.fr/visiter-quiberon-faire-voir/": "2026-10-17T09:23:46+00:00",
         "https://generationvoyage.fr/visiter-gorges-tarn-faire-voir/": "2026-10-17T09:24:03+00:00",
@@ -10033,6 +10031,7 @@
         "https://generationvoyage.fr/visiter-vezelay-faire-voir/": "2026-10-17T10:15:34+00:00",
         "https://generationvoyage.fr/visiter-verdun-faire-voir/": "2026-10-17T10:15:53+00:00",
         "https://generationvoyage.fr/visiter-malmo-faire-voir/": "2026-10-17T10:16:15+00:00",
+        "https://generationvoyage.fr/djerba-solo/": "2026-10-19T07:59:00+00:00",
         "https://generationvoyage.fr/visiter-aveyron-faire-voir/": "2026-10-17T10:16:36+00:00",
         "https://generationvoyage.fr/visiter-glasgow-faire-voir/": "2026-10-17T10:17:01+00:00",
         "https://generationvoyage.fr/visiter-cabourg-faire-voir/": "2026-10-17T10:17:23+00:00",
@@ -10136,7 +10135,8 @@
         "https://generationvoyage.fr/visiter-saint-paul-de-vence-faire-voir/": "2026-10-17T10:58:10+00:00",
         "https://generationvoyage.fr/visiter-yport-faire-voir/": "2026-10-17T10:58:31+00:00",
         "https://generationvoyage.fr/visiter-saint-cirq-lapopie-faire-voir/": "2026-10-17T10:58:48+00:00",
-        "https://generationvoyage.fr/visiter-la-ciotat-faire-voir/": "2026-10-17T10:59:07+00:00"
+        "https://generationvoyage.fr/visiter-la-ciotat-faire-voir/": "2026-10-17T10:59:07+00:00",
+        "https://generationvoyage.fr/visiter-cher-faire-voir/": "2026-10-17T10:59:31+00:00"
       }
     }
   }
