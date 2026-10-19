@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-18T19:58:26.338Z",
+  "generatedAt": "2026-10-19T02:52:54.904Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "DR Congo’s fast-moving Ebola outbreak spreads to eighth province",
+      "topic": "Bomb threat forces Austrian Airlines flight from Tel Aviv to divert to Bulgaria",
       "source": "rss_breaking",
       "destination": "asia",
-      "link": "https://www.scmp.com/news/world/africa/article/3371328/dr-congos-fast-moving-ebola-outbreak-spreads-eighth-province?utm_source=rss_feed",
-      "velocityScore": 0.414,
+      "link": "https://www.scmp.com/news/world/middle-east/article/3371337/bomb-threat-forces-austrian-airlines-flight-tel-aviv-divert-bulgaria?utm_source=rss_feed",
+      "velocityScore": 0.415,
       "action": "QUEUE_NORMAL",
       "hoursRemaining": 719,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2072,
-      "estimatedTrafficIn24h": 2025,
+      "estimatedTrafficNow": 2074,
+      "estimatedTrafficIn24h": 2026,
       "trafficLossPerHour": 2,
       "breakdown": {
         "trendIntensity": 0.83,
         "timeDecay": 0.999,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 1.4
+        "hoursSinceDetection": 0.7
       },
-      "detectedAt": "2026-10-18T18:36:18.000Z",
-      "scoredAt": "2026-10-18T19:58:26.209Z"
+      "detectedAt": "2026-10-19T02:12:37.000Z",
+      "scoredAt": "2026-10-19T02:52:54.784Z"
     }
   ]
 }
