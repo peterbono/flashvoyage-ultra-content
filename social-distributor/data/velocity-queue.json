@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T10:49:03.786Z",
+  "generatedAt": "2026-10-20T16:12:34.797Z",
   "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
@@ -8,29 +8,29 @@
   },
   "queue": [
     {
-      "topic": "Chinese and South Korean nationals held for call centre scam operation",
+      "topic": "Super Typhoon Rosal slightly strengthens over Philippine Sea",
       "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/bangkok/10-chinese-and-south-korean-arrested-in-bangkok-scam-raid",
-      "velocityScore": 0.487,
+      "destination": "philippines",
+      "link": "https://www.rappler.com/philippines/weather/super-typhoon-rosal-update-pagasa-forecast-october-20-2026-5pm/",
+      "velocityScore": 0.413,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 714,
+      "hoursRemaining": 715,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2436,
-      "estimatedTrafficIn24h": 2381,
+      "estimatedTrafficNow": 2065,
+      "estimatedTrafficIn24h": 2017,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 0.994,
+        "trendIntensity": 0.83,
+        "timeDecay": 0.995,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 5.9
+        "hoursSinceDetection": 5.2
       },
-      "detectedAt": "2026-10-20T04:56:35.000Z",
-      "scoredAt": "2026-10-20T10:49:03.617Z"
+      "detectedAt": "2026-10-20T11:00:19.000Z",
+      "scoredAt": "2026-10-20T16:12:34.682Z"
     }
   ]
 }
