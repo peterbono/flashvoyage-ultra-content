@@ -1,10 +1,36 @@
 {
-  "generatedAt": "2026-10-20T03:02:57.518Z",
-  "totalTopics": 0,
+  "generatedAt": "2026-10-20T10:49:03.786Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 0
+    "queue_normal": 1
   },
-  "queue": []
+  "queue": [
+    {
+      "topic": "Chinese and South Korean nationals held for call centre scam operation",
+      "source": "rss_breaking",
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/bangkok/10-chinese-and-south-korean-arrested-in-bangkok-scam-raid",
+      "velocityScore": 0.487,
+      "action": "QUEUE_NORMAL",
+      "hoursRemaining": 714,
+      "topicType": {
+        "key": "evergreen_trend",
+        "halfLifeHours": 720
+      },
+      "estimatedTrafficNow": 2436,
+      "estimatedTrafficIn24h": 2381,
+      "trafficLossPerHour": 2,
+      "breakdown": {
+        "trendIntensity": 0.98,
+        "timeDecay": 0.994,
+        "competitionGap": 0.5,
+        "monetizationBoost": 1,
+        "hoursSinceDetection": 5.9
+      },
+      "detectedAt": "2026-10-20T04:56:35.000Z",
+      "scoredAt": "2026-10-20T10:49:03.617Z"
+    }
+  ]
 }
