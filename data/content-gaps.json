@@ -1,26 +1,9 @@
 {
-  "timestamp": "2026-10-20T08:19:53.553Z",
-  "gapCount": 8,
+  "timestamp": "2026-10-21T08:24:02.203Z",
+  "gapCount": 7,
   "gaps": [
     {
-      "topic": "voyage thailande circuit",
-      "source": "trends",
-      "gapScore": 74,
-      "signals": {
-        "searchVolume": 0.62,
-        "trendGrowth": 0.62,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "thailande",
-      "category": "itineraire",
-      "suggestedTitle": "Itineraire Thailande : Le Circuit Parfait de 2 Semaines",
-      "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Thailande — format pick",
-      "articleType": "pillar",
-      "priority": "critical"
-    },
-    {
-      "topic": "voyage vietnam circuit",
+      "topic": "prix voyage vietnam",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -30,28 +13,28 @@
         "competition": 0.4
       },
       "destination": "vietnam",
-      "category": "itineraire",
-      "suggestedTitle": "Itineraire Vietnam : Le Circuit Parfait de 2 Semaines",
-      "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Vietnam — format pick",
-      "articleType": "pillar",
+      "category": "budget",
+      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "articleType": "support",
       "priority": "critical"
     },
     {
-      "topic": "leclerc voyage thailande",
+      "topic": "voyage vietnam pas cher",
       "source": "trends",
-      "gapScore": 67,
+      "gapScore": 74,
       "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
+        "searchVolume": 0.62,
+        "trendGrowth": 0.62,
         "monetization": 0.9,
         "competition": 0.4
       },
-      "destination": "thailande",
-      "category": "destination",
-      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "destination": "vietnam",
+      "category": "budget",
+      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
       "articleType": "support",
-      "priority": "high"
+      "priority": "critical"
     },
     {
       "topic": "voyage thailande phuket",
@@ -88,31 +71,31 @@
       "priority": "high"
     },
     {
-      "topic": "voyage cambodge",
+      "topic": "voyage cambodge vietnam",
       "source": "trends",
-      "gapScore": 62,
+      "gapScore": 67,
       "signals": {
         "searchVolume": 0.53,
         "trendGrowth": 0.53,
         "monetization": 0.9,
-        "competition": 0.6
+        "competition": 0.4
       },
-      "destination": "vietnam",
+      "destination": "cambodge",
       "category": "destination",
-      "suggestedTitle": "Vietnam 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
+      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
       "articleType": "support",
       "priority": "high"
     },
     {
-      "topic": "voyage vietnam",
+      "topic": "voyage cambodge laos",
       "source": "trends",
-      "gapScore": 62,
+      "gapScore": 67,
       "signals": {
         "searchVolume": 0.53,
         "trendGrowth": 0.53,
         "monetization": 0.9,
-        "competition": 0.6
+        "competition": 0.4
       },
       "destination": "cambodge",
       "category": "destination",
@@ -142,22 +125,22 @@
   "summary": {
     "byPriority": {
       "critical": 2,
-      "high": 6
+      "high": 5
     },
     "byCategory": {
-      "itineraire": 2,
-      "destination": 6
+      "budget": 2,
+      "destination": 5
     },
     "byDestination": {
-      "thailande": 3,
       "vietnam": 3,
-      "cambodge": 1,
+      "thailande": 1,
+      "cambodge": 2,
       "laos": 1
     },
     "topDestinationGaps": [
-      "thailande",
       "vietnam",
       "cambodge",
+      "thailande",
       "laos"
     ]
   }
