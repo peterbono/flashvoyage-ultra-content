@@ -1,36 +1,10 @@
 {
-  "generatedAt": "2026-10-22T16:28:12.078Z",
-  "totalTopics": 1,
+  "generatedAt": "2026-10-22T21:06:39.300Z",
+  "totalTopics": 0,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 1
+    "queue_normal": 0
   },
-  "queue": [
-    {
-      "topic": "Immigration raids 3 Bangkok houses over online gambling and scam network",
-      "source": "rss_breaking",
-      "destination": "thailand",
-      "link": "https://thethaiger.com/news/bangkok/14-foreign-and-thai-suspects-held-over-gambling-and-scam-network",
-      "velocityScore": 0.487,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 714,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2437,
-      "estimatedTrafficIn24h": 2381,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 5.5
-      },
-      "detectedAt": "2026-10-22T10:55:34.000Z",
-      "scoredAt": "2026-10-22T16:28:11.730Z"
-    }
-  ]
+  "queue": []
 }
