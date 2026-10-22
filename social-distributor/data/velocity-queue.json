@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-22T10:59:41.916Z",
-  "totalTopics": 3,
+  "generatedAt": "2026-10-22T16:28:12.078Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 3
+    "queue_normal": 1
   },
   "queue": [
     {
@@ -12,75 +12,25 @@
       "source": "rss_breaking",
       "destination": "thailand",
       "link": "https://thethaiger.com/news/bangkok/14-foreign-and-thai-suspects-held-over-gambling-and-scam-network",
-      "velocityScore": 0.49,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 720,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2450,
-      "estimatedTrafficIn24h": 2394,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.98,
-        "timeDecay": 1,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 0.1
-      },
-      "detectedAt": "2026-10-22T10:55:34.000Z",
-      "scoredAt": "2026-10-22T10:59:41.398Z"
-    },
-    {
-      "topic": "Anti-Narcotics Agency Issues Warning: Tourists Bringing Marijuana to Bali Could Face Life in Prison",
-      "source": "rss_breaking",
-      "destination": "indonesia",
-      "link": "https://balidiscovery.com/anti-narcotics-agency-issues-warning-tourists-bringing-marijuana-to-bali-could-face-life-in-prison/",
-      "velocityScore": 0.448,
+      "velocityScore": 0.487,
       "action": "QUEUE_NORMAL",
       "hoursRemaining": 714,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 1492,
-      "estimatedTrafficIn24h": 1458,
-      "trafficLossPerHour": 1,
-      "breakdown": {
-        "trendIntensity": 0.6,
-        "timeDecay": 0.995,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1.5,
-        "hoursSinceDetection": 5.7
-      },
-      "detectedAt": "2026-10-22T05:16:56.000Z",
-      "scoredAt": "2026-10-22T10:59:41.690Z"
-    },
-    {
-      "topic": "Typhoon Champi nears Taiwan, causing 200 flight cancellations and disrupting US-Japan drills",
-      "source": "rss_breaking",
-      "destination": "vietnam",
-      "link": "https://e.vnexpress.net/news/news/environment/typhoon-champi-nears-taiwan-causing-200-flight-cancellations-and-disrupting-us-japan-drills-5135617.html",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 717,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2069,
-      "estimatedTrafficIn24h": 2022,
+      "estimatedTrafficNow": 2437,
+      "estimatedTrafficIn24h": 2381,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.997,
+        "trendIntensity": 0.98,
+        "timeDecay": 0.995,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 2.8
+        "hoursSinceDetection": 5.5
       },
-      "detectedAt": "2026-10-22T08:11:57.000Z",
-      "scoredAt": "2026-10-22T10:59:41.473Z"
+      "detectedAt": "2026-10-22T10:55:34.000Z",
+      "scoredAt": "2026-10-22T16:28:11.730Z"
     }
   ]
 }
