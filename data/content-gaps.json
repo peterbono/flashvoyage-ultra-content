@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-21T08:24:02.203Z",
-  "gapCount": 7,
+  "timestamp": "2026-10-22T08:26:23.138Z",
+  "gapCount": 6,
   "gaps": [
     {
-      "topic": "prix voyage vietnam",
+      "topic": "voyage thailande pas cher",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -12,15 +12,32 @@
         "monetization": 0.9,
         "competition": 0.4
       },
-      "destination": "vietnam",
+      "destination": "thailande",
       "category": "budget",
-      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
+      "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
       "articleType": "support",
       "priority": "critical"
     },
     {
-      "topic": "voyage vietnam pas cher",
+      "topic": "prix voyage thailande",
+      "source": "trends",
+      "gapScore": 74,
+      "signals": {
+        "searchVolume": 0.62,
+        "trendGrowth": 0.62,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "thailande",
+      "category": "budget",
+      "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "critical"
+    },
+    {
+      "topic": "prix voyage vietnam",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -54,7 +71,7 @@
       "priority": "high"
     },
     {
-      "topic": "voyage vietnam cambodge",
+      "topic": "leclerc voyage thailande",
       "source": "trends",
       "gapScore": 67,
       "signals": {
@@ -62,6 +79,23 @@
         "trendGrowth": 0.53,
         "monetization": 0.9,
         "competition": 0.4
+      },
+      "destination": "thailande",
+      "category": "destination",
+      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "voyage cambodge",
+      "source": "trends",
+      "gapScore": 62,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.6
       },
       "destination": "vietnam",
       "category": "destination",
@@ -69,79 +103,24 @@
       "suggestedReelAngle": "Reel decouverte Vietnam — format pick ou month",
       "articleType": "support",
       "priority": "high"
-    },
-    {
-      "topic": "voyage cambodge vietnam",
-      "source": "trends",
-      "gapScore": 67,
-      "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "cambodge",
-      "category": "destination",
-      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
-      "topic": "voyage cambodge laos",
-      "source": "trends",
-      "gapScore": 67,
-      "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "cambodge",
-      "category": "destination",
-      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
-    },
-    {
-      "topic": "voyage laos cambodge",
-      "source": "trends",
-      "gapScore": 59,
-      "signals": {
-        "searchVolume": 0.53,
-        "trendGrowth": 0.53,
-        "monetization": 0.6,
-        "competition": 0.4
-      },
-      "destination": "laos",
-      "category": "destination",
-      "suggestedTitle": "Laos 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Laos — format pick ou month",
-      "articleType": "support",
-      "priority": "high"
     }
   ],
   "summary": {
     "byPriority": {
-      "critical": 2,
-      "high": 5
+      "critical": 3,
+      "high": 3
     },
     "byCategory": {
-      "budget": 2,
-      "destination": 5
+      "budget": 3,
+      "destination": 3
     },
     "byDestination": {
-      "vietnam": 3,
-      "thailande": 1,
-      "cambodge": 2,
-      "laos": 1
+      "thailande": 4,
+      "vietnam": 2
     },
     "topDestinationGaps": [
-      "vietnam",
-      "cambodge",
       "thailande",
-      "laos"
+      "vietnam"
     ]
   }
 }
