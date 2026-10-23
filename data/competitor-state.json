@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-10-22T08:26:26.562Z",
+  "timestamp": "2026-10-23T08:22:43.508Z",
   "competitors": {
     "voyagespirates": {
-      "lastScan": "2026-10-22T08:26:27.404Z",
+      "lastScan": "2026-10-23T08:22:44.302Z",
       "urlCount": 0,
       "urls": {}
     },
     "noobvoyage": {
-      "lastScan": "2026-10-22T08:26:27.953Z",
+      "lastScan": "2026-10-23T08:22:44.794Z",
       "urlCount": 126,
       "urls": {
         "http://noobvoyage.fr/aventures/que-faire-en-nouvelle-zelande/": "2014-03-27T03:49:03+00:00",
@@ -139,7 +139,7 @@
       }
     },
     "generationvoyage": {
-      "lastScan": "2026-10-22T08:27:47.970Z",
+      "lastScan": "2026-10-23T08:24:07.895Z",
       "urlCount": 9995,
       "urls": {
         "https://generationvoyage.fr/chiffres-du-trafic-aerien-dans-le-monde/": "2022-09-07T22:38:40+00:00",

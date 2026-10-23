@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-10-22T08:28:02.209Z",
+  "timestamp": "2026-10-23T08:24:23.336Z",
   "trendingTopics": [
     {
       "query": "voyage thailande pas cher",
-      "traffic": 120,
-      "trafficFormatted": "+120 %",
+      "traffic": 180,
+      "trafficFormatted": "+180 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-22T08:27:53.552Z",
+      "date": "2026-10-23T08:24:14.304Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -17,11 +17,11 @@
     },
     {
       "query": "prix voyage thailande",
-      "traffic": 90,
-      "trafficFormatted": "+90 %",
+      "traffic": 110,
+      "trafficFormatted": "+110 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-22T08:27:53.552Z",
+      "date": "2026-10-23T08:24:14.304Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -30,12 +30,26 @@
       "compositeScore": 0.62
     },
     {
-      "query": "prix voyage vietnam",
-      "traffic": 200,
-      "trafficFormatted": "+200 %",
+      "query": "voyage vietnam pas cher",
+      "traffic": 180,
+      "trafficFormatted": "+180 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-22T08:27:55.704Z",
+      "date": "2026-10-23T08:24:16.555Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 1,
+      "category": "budget",
+      "destination": "vietnam",
+      "compositeScore": 0.62
+    },
+    {
+      "query": "voyage vietnam prix",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-23T08:24:16.555Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 1,
@@ -45,25 +59,11 @@
     },
     {
       "query": "voyage thailande phuket",
-      "traffic": 300,
-      "trafficFormatted": "+300 %",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-22T08:27:53.552Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "leclerc voyage thailande",
-      "traffic": 110,
-      "trafficFormatted": "+110 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-22T08:27:53.552Z",
+      "date": "2026-10-23T08:24:14.304Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 0.7,
@@ -73,17 +73,74 @@
     },
     {
       "query": "voyage cambodge",
-      "traffic": 60,
-      "trafficFormatted": "+60 %",
+      "traffic": 300,
+      "trafficFormatted": "+300 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-22T08:27:55.704Z",
+      "date": "2026-10-23T08:24:16.555Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 0.7,
       "category": "destination",
       "destination": "vietnam",
       "compositeScore": 0.53
+    },
+    {
+      "query": "voyage vietnam",
+      "traffic": 50,
+      "trafficFormatted": "+50 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-23T08:24:21.095Z",
+      "source": "related-rising",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage laos cambodge",
+      "traffic": 70,
+      "trafficFormatted": "+70 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-23T08:24:23.335Z",
+      "source": "related-rising",
+      "parentDestination": "laos",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "laos",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "prix du gaz",
+      "traffic": 100,
+      "trafficFormatted": "100+",
+      "relatedQueries": [],
+      "articles": [
+        {
+          "title": "En novembre, le prix du gaz sera 80 % plus élevé que lors du bouclier tarifaire de la crise de 2021",
+          "url": "https://www.jechange.fr/energie/gaz/news/gaz-novembre-80-pourcent-plus-cher-bouclier-tarifaire-crise-2021",
+          "source": "JeChange"
+        },
+        {
+          "title": "Chauffage au gaz : la clause de votre contrat qui menace de vous faire payer 3,8 % de plus en décembre",
+          "url": "https://selectra.info/energie/actualites/marche/gaz-decembre-2026-prix-repere-estimation-3-8-pct",
+          "source": "Selectra"
+        },
+        {
+          "title": "Prix du gaz : le choc s’annonce bien pire qu’en 2022, faute d’aides du gouvernement",
+          "url": "https://www.marianne.net/economie/energies/prix-du-gaz-le-choc-s-annonce-bien-pire-qu-en-2022-faute-d-aides-du-gouvernement",
+          "source": "Marianne"
+        }
+      ],
+      "date": "Fri, 23 Oct 2026 00:00:00 -0700",
+      "source": "rss",
+      "relevanceScore": 0.3,
+      "category": "budget",
+      "destination": null,
+      "compositeScore": 0.29008
     }
   ]
 }
