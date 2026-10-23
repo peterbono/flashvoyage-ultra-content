@@ -1,86 +1,36 @@
 {
-  "generatedAt": "2026-10-23T03:00:02.500Z",
-  "totalTopics": 3,
+  "generatedAt": "2026-10-23T10:53:24.679Z",
+  "totalTopics": 1,
   "byAction": {
     "publish_now": 0,
     "queue_priority": 0,
-    "queue_normal": 3
+    "queue_normal": 1
   },
   "queue": [
     {
-      "topic": "Taiwan shuts down ahead of typhoon, hundreds of flights canceled",
+      "topic": "Thai Airways cancels Taipei, Kaohsiung flights on Oct 23-24",
       "source": "rss_breaking",
-      "destination": "philippines",
-      "link": "https://www.rappler.com/world/asia-pacific/taiwan-shuts-down-typhoon-champi-flights-canceled/",
-      "velocityScore": 0.415,
+      "destination": "thailand",
+      "link": "https://thethaiger.com/news/world/aviation/thai-airways-cancels-six-taiwan-flights-over-typhoon-champi",
+      "velocityScore": 0.499,
       "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
+      "hoursRemaining": 717,
       "topicType": {
         "key": "evergreen_trend",
         "halfLifeHours": 720
       },
-      "estimatedTrafficNow": 2074,
-      "estimatedTrafficIn24h": 2027,
+      "estimatedTrafficNow": 2493,
+      "estimatedTrafficIn24h": 2436,
       "trafficLossPerHour": 2,
       "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 1,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 0.5
-      },
-      "detectedAt": "2026-10-23T02:29:29.000Z",
-      "scoredAt": "2026-10-23T03:00:02.076Z"
-    },
-    {
-      "topic": "Nepal to get $20 million from climate fund after deadly August flood",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/nepal-to-get-20-million-from-climate-fund-after-deadly-august-flood",
-      "velocityScore": 0.415,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 719,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2073,
-      "estimatedTrafficIn24h": 2026,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
-        "timeDecay": 0.999,
-        "competitionGap": 0.5,
-        "monetizationBoost": 1,
-        "hoursSinceDetection": 1
-      },
-      "detectedAt": "2026-10-23T02:01:39.000Z",
-      "scoredAt": "2026-10-23T03:00:02.187Z"
-    },
-    {
-      "topic": "Taiwan shuts down ahead of Typhoon Champi; hundreds of flights cancelled",
-      "source": "rss_breaking",
-      "destination": "southeast-asia",
-      "link": "https://www.straitstimes.com/asia/taiwan-shuts-down-ahead-of-weakening-typhoon-champi-hundreds-of-flights-cancelled",
-      "velocityScore": 0.414,
-      "action": "QUEUE_NORMAL",
-      "hoursRemaining": 716,
-      "topicType": {
-        "key": "evergreen_trend",
-        "halfLifeHours": 720
-      },
-      "estimatedTrafficNow": 2068,
-      "estimatedTrafficIn24h": 2021,
-      "trafficLossPerHour": 2,
-      "breakdown": {
-        "trendIntensity": 0.83,
+        "trendIntensity": 1,
         "timeDecay": 0.997,
         "competitionGap": 0.5,
         "monetizationBoost": 1,
-        "hoursSinceDetection": 3.6
+        "hoursSinceDetection": 2.8
       },
-      "detectedAt": "2026-10-22T23:26:46.000Z",
-      "scoredAt": "2026-10-23T03:00:02.001Z"
+      "detectedAt": "2026-10-23T08:03:00.000Z",
+      "scoredAt": "2026-10-23T10:53:24.279Z"
     }
   ]
 }
