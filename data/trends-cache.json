@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-10-23T08:24:23.336Z",
+  "timestamp": "2026-10-24T08:00:56.628Z",
   "trendingTopics": [
     {
-      "query": "voyage thailande pas cher",
-      "traffic": 180,
-      "trafficFormatted": "+180 %",
+      "query": "voyage thailande prix",
+      "traffic": 80,
+      "trafficFormatted": "+80 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-23T08:24:14.304Z",
+      "date": "2026-10-24T08:00:47.251Z",
       "source": "related-rising",
       "parentDestination": "thailande",
       "relevanceScore": 1,
@@ -16,26 +16,12 @@
       "compositeScore": 0.62
     },
     {
-      "query": "prix voyage thailande",
-      "traffic": 110,
-      "trafficFormatted": "+110 %",
+      "query": "prix voyage vietnam",
+      "traffic": 250,
+      "trafficFormatted": "+250 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-23T08:24:14.304Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 1,
-      "category": "budget",
-      "destination": "thailande",
-      "compositeScore": 0.62
-    },
-    {
-      "query": "voyage vietnam pas cher",
-      "traffic": 180,
-      "trafficFormatted": "+180 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-23T08:24:16.555Z",
+      "date": "2026-10-24T08:00:49.629Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 1,
@@ -44,54 +30,40 @@
       "compositeScore": 0.62
     },
     {
-      "query": "voyage vietnam prix",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
+      "query": "voyage vietnam circuit",
+      "traffic": 190,
+      "trafficFormatted": "+190 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-23T08:24:16.555Z",
+      "date": "2026-10-24T08:00:49.629Z",
       "source": "related-rising",
       "parentDestination": "vietnam",
       "relevanceScore": 1,
-      "category": "budget",
+      "category": "itineraire",
       "destination": "vietnam",
       "compositeScore": 0.62
-    },
-    {
-      "query": "voyage thailande phuket",
-      "traffic": 50,
-      "trafficFormatted": "+50 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-23T08:24:14.304Z",
-      "source": "related-rising",
-      "parentDestination": "thailande",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "thailande",
-      "compositeScore": 0.53
     },
     {
       "query": "voyage cambodge",
+      "traffic": 180,
+      "trafficFormatted": "+180 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-24T08:00:49.629Z",
+      "source": "related-rising",
+      "parentDestination": "vietnam",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "vietnam",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage cambodge vietnam",
       "traffic": 300,
       "trafficFormatted": "+300 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-23T08:24:16.555Z",
-      "source": "related-rising",
-      "parentDestination": "vietnam",
-      "relevanceScore": 0.7,
-      "category": "destination",
-      "destination": "vietnam",
-      "compositeScore": 0.53
-    },
-    {
-      "query": "voyage vietnam",
-      "traffic": 50,
-      "trafficFormatted": "+50 %",
-      "relatedQueries": [],
-      "articles": [],
-      "date": "2026-10-23T08:24:21.095Z",
+      "date": "2026-10-24T08:00:54.425Z",
       "source": "related-rising",
       "parentDestination": "cambodge",
       "relevanceScore": 0.7,
@@ -100,12 +72,26 @@
       "compositeScore": 0.53
     },
     {
-      "query": "voyage laos cambodge",
-      "traffic": 70,
-      "trafficFormatted": "+70 %",
+      "query": "voyage cambodge laos",
+      "traffic": 60,
+      "trafficFormatted": "+60 %",
       "relatedQueries": [],
       "articles": [],
-      "date": "2026-10-23T08:24:23.335Z",
+      "date": "2026-10-24T08:00:54.425Z",
+      "source": "related-rising",
+      "parentDestination": "cambodge",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "cambodge",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "voyage laos vietnam",
+      "traffic": 160,
+      "trafficFormatted": "+160 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-24T08:00:56.626Z",
       "source": "related-rising",
       "parentDestination": "laos",
       "relevanceScore": 0.7,
@@ -114,33 +100,47 @@
       "compositeScore": 0.53
     },
     {
-      "query": "prix du gaz",
-      "traffic": 100,
-      "trafficFormatted": "100+",
+      "query": "voyage laos cambodge",
+      "traffic": 150,
+      "trafficFormatted": "+150 %",
+      "relatedQueries": [],
+      "articles": [],
+      "date": "2026-10-24T08:00:56.626Z",
+      "source": "related-rising",
+      "parentDestination": "laos",
+      "relevanceScore": 0.7,
+      "category": "destination",
+      "destination": "laos",
+      "compositeScore": 0.53
+    },
+    {
+      "query": "autoroute a69",
+      "traffic": 200,
+      "trafficFormatted": "200+",
       "relatedQueries": [],
       "articles": [
         {
-          "title": "En novembre, le prix du gaz sera 80 % plus élevé que lors du bouclier tarifaire de la crise de 2021",
-          "url": "https://www.jechange.fr/energie/gaz/news/gaz-novembre-80-pourcent-plus-cher-bouclier-tarifaire-crise-2021",
-          "source": "JeChange"
+          "title": "A69 : le tarif de péage de la future autoroute, à plus de 20 euros l’aller-retour, embarrasse ses partisans",
+          "url": "https://www.lemonde.fr/planete/article/2026/10/24/autoroute-a69-a-plus-de-20-euros-l-aller-retour-le-tarif-du-peage-embarrasse-les-partisans-de-l-equipement_6799664_3244.html",
+          "source": "Le Monde.fr"
         },
         {
-          "title": "Chauffage au gaz : la clause de votre contrat qui menace de vous faire payer 3,8 % de plus en décembre",
-          "url": "https://selectra.info/energie/actualites/marche/gaz-decembre-2026-prix-repere-estimation-3-8-pct",
-          "source": "Selectra"
+          "title": "Castres. Comment Via 81 se mobilise pour l'après-A69",
+          "url": "https://www.lejournaldici.com/actualite-26392-castres-comment-via-81-se-mobilise-pour-l-apres-a69",
+          "source": "lejournaldici.com"
         },
         {
-          "title": "Prix du gaz : le choc s’annonce bien pire qu’en 2022, faute d’aides du gouvernement",
-          "url": "https://www.marianne.net/economie/energies/prix-du-gaz-le-choc-s-annonce-bien-pire-qu-en-2022-faute-d-aides-du-gouvernement",
-          "source": "Marianne"
+          "title": "Autoroute A69 : la radio \"A69 info trafic\" est déjà en service avant même l'ouverture de l'autoroute",
+          "url": "https://www.ladepeche.fr/2026/10/21/autoroute-a69-la-radio-a69-info-trafic-est-deja-en-service-avant-meme-louverture-de-lautoroute-13603233.php",
+          "source": "ladepeche.fr"
         }
       ],
-      "date": "Fri, 23 Oct 2026 00:00:00 -0700",
+      "date": "Sat, 24 Oct 2026 00:30:00 -0700",
       "source": "rss",
       "relevanceScore": 0.3,
-      "category": "budget",
+      "category": "itineraire",
       "destination": null,
-      "compositeScore": 0.29008
+      "compositeScore": 0.29016
     }
   ]
 }

@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-23T08:22:37.989Z",
-  "gapCount": 9,
+  "timestamp": "2026-10-24T07:59:04.525Z",
+  "gapCount": 13,
   "gaps": [
     {
-      "topic": "voyage thailande pas cher",
+      "topic": "voyage thailande prix",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -20,24 +20,7 @@
       "priority": "critical"
     },
     {
-      "topic": "prix voyage thailande",
-      "source": "trends",
-      "gapScore": 74,
-      "signals": {
-        "searchVolume": 0.62,
-        "trendGrowth": 0.62,
-        "monetization": 0.9,
-        "competition": 0.4
-      },
-      "destination": "thailande",
-      "category": "budget",
-      "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
-      "articleType": "support",
-      "priority": "critical"
-    },
-    {
-      "topic": "voyage vietnam pas cher",
+      "topic": "prix voyage vietnam",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -54,7 +37,7 @@
       "priority": "critical"
     },
     {
-      "topic": "voyage vietnam prix",
+      "topic": "voyage vietnam circuit",
       "source": "trends",
       "gapScore": 74,
       "signals": {
@@ -64,14 +47,14 @@
         "competition": 0.4
       },
       "destination": "vietnam",
-      "category": "budget",
-      "suggestedTitle": "Budget Vietnam 2026 : Combien Coute Vraiment un Voyage ?",
-      "suggestedReelAngle": "Reel \"Budget Jour\" a Vietnam — format listicle avec prix reels",
-      "articleType": "support",
+      "category": "itineraire",
+      "suggestedTitle": "Itineraire Vietnam : Le Circuit Parfait de 2 Semaines",
+      "suggestedReelAngle": "Reel \"X spots a ne pas rater\" a Vietnam — format pick",
+      "articleType": "pillar",
       "priority": "critical"
     },
     {
-      "topic": "voyage thailande phuket",
+      "topic": "voyage cambodge vietnam",
       "source": "trends",
       "gapScore": 67,
       "signals": {
@@ -80,10 +63,44 @@
         "monetization": 0.9,
         "competition": 0.4
       },
-      "destination": "thailande",
+      "destination": "cambodge",
       "category": "destination",
-      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "voyage cambodge laos",
+      "source": "trends",
+      "gapScore": 67,
+      "signals": {
+        "searchVolume": 0.53,
+        "trendGrowth": 0.53,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "cambodge",
+      "category": "destination",
+      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "vol thailande",
+      "source": "trends",
+      "gapScore": 64,
+      "signals": {
+        "searchVolume": 0.56,
+        "trendGrowth": 0.56,
+        "monetization": 0.9,
+        "competition": 0.6
+      },
+      "destination": "thailande",
+      "category": "transport",
+      "suggestedTitle": "Comment Se Deplacer a Thailande : Guide Transport Complet",
+      "suggestedReelAngle": "Reel \"Comment se deplacer\" a Thailande — format pick avec photos",
       "articleType": "support",
       "priority": "high"
     },
@@ -105,19 +122,36 @@
       "priority": "high"
     },
     {
-      "topic": "voyage vietnam",
+      "topic": "voyage pas cher",
       "source": "trends",
-      "gapScore": 62,
+      "gapScore": 61,
+      "signals": {
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
+        "competition": 0.4
+      },
+      "destination": "thailande",
+      "category": "budget",
+      "suggestedTitle": "Budget Thailande 2026 : Combien Coute Vraiment un Voyage ?",
+      "suggestedReelAngle": "Reel \"Budget Jour\" a Thailande — format listicle avec prix reels",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "voyage laos vietnam",
+      "source": "trends",
+      "gapScore": 59,
       "signals": {
         "searchVolume": 0.53,
         "trendGrowth": 0.53,
-        "monetization": 0.9,
-        "competition": 0.6
+        "monetization": 0.6,
+        "competition": 0.4
       },
-      "destination": "cambodge",
+      "destination": "laos",
       "category": "destination",
-      "suggestedTitle": "Cambodge 2026 : Le Guide Ultime Pour Voyageurs Francais",
-      "suggestedReelAngle": "Reel decouverte Cambodge — format pick ou month",
+      "suggestedTitle": "Laos 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Laos — format pick ou month",
       "articleType": "support",
       "priority": "high"
     },
@@ -139,7 +173,24 @@
       "priority": "high"
     },
     {
-      "topic": "prix du gaz",
+      "topic": "phuket thailande",
+      "source": "trends",
+      "gapScore": 56,
+      "signals": {
+        "searchVolume": 0.47,
+        "trendGrowth": 0.47,
+        "monetization": 0.9,
+        "competition": 0.6
+      },
+      "destination": "thailande",
+      "category": "destination",
+      "suggestedTitle": "Thailande 2026 : Le Guide Ultime Pour Voyageurs Francais",
+      "suggestedReelAngle": "Reel decouverte Thailande — format pick ou month",
+      "articleType": "support",
+      "priority": "high"
+    },
+    {
+      "topic": "autoroute a69",
       "source": "trends",
       "gapScore": 40,
       "signals": {
@@ -149,28 +200,47 @@
         "competition": 0.6
       },
       "destination": null,
-      "category": "budget",
-      "suggestedTitle": "Prix du gaz : Le Guide Budget Complet",
-      "suggestedReelAngle": "Reel \"Budget Jour\"  — format listicle avec prix reels",
+      "category": "itineraire",
+      "suggestedTitle": "Autoroute a69 : L'Itineraire Ideal",
+      "suggestedReelAngle": "Reel \"X spots a ne pas rater\"  — format pick",
+      "articleType": "support",
+      "priority": "medium"
+    },
+    {
+      "topic": "aleksandr volkov",
+      "source": "trends",
+      "gapScore": 40,
+      "signals": {
+        "searchVolume": 0.29,
+        "trendGrowth": 0.29,
+        "monetization": 0.6,
+        "competition": 0.6
+      },
+      "destination": null,
+      "category": "transport",
+      "suggestedTitle": "Aleksandr volkov : Guide Pratique",
+      "suggestedReelAngle": "Reel \"Comment se deplacer\"  — format pick avec photos",
       "articleType": "support",
       "priority": "medium"
     }
   ],
   "summary": {
     "byPriority": {
-      "critical": 4,
-      "high": 4,
-      "medium": 1
+      "critical": 3,
+      "high": 8,
+      "medium": 2
     },
     "byCategory": {
-      "budget": 5,
-      "destination": 4
+      "budget": 3,
+      "itineraire": 2,
+      "destination": 6,
+      "transport": 2
     },
     "byDestination": {
-      "thailande": 3,
+      "thailande": 4,
       "vietnam": 3,
-      "cambodge": 1,
-      "laos": 1
+      "cambodge": 2,
+      "laos": 2
     },
     "topDestinationGaps": [
       "thailande",
